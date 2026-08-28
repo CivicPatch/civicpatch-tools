@@ -152,3 +152,37 @@ def test_contributors_cannot_start_an_import():
     """Publishing what an import proposes is a maintainer action, and so is raising it."""
     response = _client(UserRole.CONTRIBUTORS).post(_PREFIX)
     assert response.status_code in (401, 403)
+
+
+@pytest.mark.unit
+def test_no_import_ever_run_is_not_an_error():
+    """The page asks on every load, and "nothing yet" is the ordinary first answer."""
+    with patch(
+        "routers.api.imports.request_batches.latest",
+        new_callable=AsyncMock,
+        return_value=None,
+    ):
+        response = _client().get(f"{_PREFIX}/latest")
+
+    assert response.status_code == 200
+    assert response.json()["data"] is None
+
+
+@pytest.mark.unit
+def test_latest_is_not_read_as_a_batch_id():
+    """`/latest` is declared before `/{batch_id}`; swapping them would route it into the
+    progress lookup and 404."""
+    with patch(
+        "routers.api.imports.request_batches.get",
+        new_callable=AsyncMock,
+        return_value=None,
+    ) as by_id:
+        with patch(
+            "routers.api.imports.request_batches.latest",
+            new_callable=AsyncMock,
+            return_value=None,
+        ):
+            response = _client().get(f"{_PREFIX}/latest")
+
+    assert response.status_code == 200
+    by_id.assert_not_awaited()

@@ -4,7 +4,7 @@ from enum import StrEnum
 from temporalio import workflow
 from temporalio.common import RetryPolicy
 
-from lib.temporal.types import OpenDataCommitRequest
+from lib.temporal.types import OpenDataBatchCommitRequest, OpenDataCommitRequest
 
 
 class ScheduleId(StrEnum):
@@ -26,6 +26,7 @@ with workflow.unsafe.imports_passed_through():
     from routers.temporal.activities import (
         cleanup_stale_review_entries_activity,
         commit_open_data_activity,
+        commit_open_data_batch_activity,
         expire_stale_pipeline_runs_activity,
         od_sync_activity,
         od_sync_targeted_activity,
@@ -114,6 +115,34 @@ class OpenDataCommitWorkflow:
                 maximum_attempts=0,
                 # A malformed request will never succeed, so it fails fast instead of
                 # retrying for days.
+                non_retryable_error_types=["ValueError"],
+            ),
+        )
+
+
+@workflow.defn
+class OpenDataBatchCommitWorkflow:
+    """Write every jurisdiction a bulk publish made live, as one commit.
+
+    Same durability as `OpenDataCommitWorkflow` — the activity re-renders from the database, so
+    retrying is safe and worth doing forever. What differs is the conflict domain: this moves
+    the branch ref rather than one blob, so two batches racing means one loses the fast-forward
+    and retries against the other's commit.
+    """
+
+    @workflow.run
+    async def run(self, request: OpenDataBatchCommitRequest) -> None:
+        await workflow.execute_activity(
+            commit_open_data_batch_activity,
+            request,
+            # Longer than the single-file write: this renders one roster per jurisdiction
+            # before it writes anything.
+            start_to_close_timeout=timedelta(minutes=10),
+            retry_policy=RetryPolicy(
+                initial_interval=timedelta(seconds=5),
+                backoff_coefficient=2.0,
+                maximum_interval=timedelta(minutes=10),
+                maximum_attempts=0,
                 non_retryable_error_types=["ValueError"],
             ),
         )

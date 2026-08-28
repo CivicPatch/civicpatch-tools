@@ -31,3 +31,26 @@ class OpenDataCommitRequest:
     # lose the data if the write then failed.
     delete_path: str | None = None
     delete_message: str | None = None
+
+
+@dataclass
+class OpenDataCommitItem:
+    """One jurisdiction inside a batch commit."""
+
+    file_path: str
+    request_id: str
+    jurisdiction_ocdid: str
+
+
+@dataclass
+class OpenDataBatchCommitRequest:
+    """Every jurisdiction a bulk publish made live, as one commit.
+
+    A file at a time would leave forty commits for one reviewer action, which is not what
+    happened — they published once. `source` is absent because a batch is always a publish, so
+    it always renders from the live roster.
+    """
+
+    batch_id: str
+    items: list[OpenDataCommitItem]
+    commit_message: str

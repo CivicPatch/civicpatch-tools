@@ -743,3 +743,50 @@ export const fetchJurisdiction = async (jurisdictionOcdid) => {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
+
+// ── Curated-sheet imports ────────────────────────────────────────────────────
+
+const IMPORTS_URL = `${API_URL}/api/internal/imports`;
+
+async function importsRequest(path, method) {
+  const res = await fetch(`${IMPORTS_URL}${path}`, {
+    credentials: "include",
+    method,
+    headers: { "X-CSRF-Token": getCsrfCookie() },
+  });
+  const body = await res.json();
+  // The router's failures are all actionable text (unshared sheet, import already
+  // running), so the message is worth more to the caller than the status code.
+  if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);
+  return body;
+}
+
+export const previewImport = async () => importsRequest("/preview", "POST");
+
+export const startImport = async () => importsRequest("", "POST");
+
+export const fetchLatestImport = async () => importsRequest("/latest", "GET");
+
+export const fetchImportProgress = async (batchId) =>
+  importsRequest(`/${batchId}`, "GET");
+
+export const fetchBatchReview = async (batchId) =>
+  importsRequest(`/${batchId}/review`, "GET");
+
+export const releaseImport = async (batchId) =>
+  importsRequest(`/${batchId}`, "DELETE");
+
+export const publishBatch = async (batchId, jurisdictionOcdids) => {
+  const res = await fetch(`${IMPORTS_URL}/${batchId}/publish`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({ jurisdiction_ocdids: jurisdictionOcdids }),
+  });
+  const body = await res.json();
+  if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);
+  return body;
+};

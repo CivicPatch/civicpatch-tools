@@ -12,11 +12,11 @@ import logging
 import uuid
 from collections import Counter
 from datetime import datetime, timezone
-from enum import StrEnum
 
 from core.entry_rows import (
     JURISDICTION,
     ImportRow,
+    ImportStatus,
     jurisdiction_columns,
     parse_rows,
     ready_jurisdictions,
@@ -37,14 +37,6 @@ from shared.utils.taxonomy import Taxonomy, build_taxonomy
 logger = logging.getLogger(__name__)
 
 
-class Disposition(StrEnum):
-    IMPORTED = "imported"
-    # People stored, posts not. Re-derivable from the sightings, so not a failure.
-    PARTIAL = "partial"
-    SKIPPED = "skipped"
-    FAILED = "failed"
-
-
 class SheetRead(BaseModel):
     """What one read of the entry tabs yielded. A model rather than a tuple: the preview
     endpoint wants only `preview`, and discarding two positions to get it invites the throwaway
@@ -59,7 +51,7 @@ class JurisdictionResult(BaseModel):
     """One jurisdiction's outcome, for the run's response and the sheet write-back."""
 
     jurisdiction_ocdid: str
-    disposition: Disposition
+    status: ImportStatus
     request_id: str | None = None
     people: int = 0
     sightings: int = 0
@@ -87,7 +79,7 @@ async def import_rows(
             results.append(
                 JurisdictionResult(
                     jurisdiction_ocdid=jurisdiction_ocdid,
-                    disposition=Disposition.SKIPPED,
+                    status=ImportStatus.SKIPPED,
                     error="not marked ready",
                 )
             )
@@ -131,7 +123,7 @@ async def _import_jurisdiction(
         )
         return JurisdictionResult(
             jurisdiction_ocdid=jurisdiction_ocdid,
-            disposition=Disposition.FAILED,
+            status=ImportStatus.FAILED,
             error=str(e),
         )
 
@@ -140,7 +132,7 @@ async def _import_jurisdiction(
     )
     return JurisdictionResult(
         jurisdiction_ocdid=jurisdiction_ocdid,
-        disposition=Disposition.IMPORTED if error is None else Disposition.PARTIAL,
+        status=ImportStatus.IMPORTED if error is None else ImportStatus.PARTIAL,
         request_id=request_id,
         people=len(roster),
         sightings=sightings,
@@ -254,13 +246,12 @@ async def write_back(results: list[JurisdictionResult]) -> None:
         imported = {
             ocdid
             for ocdid, result in by_ocdid.items()
-            if result.disposition
-            in (Disposition.IMPORTED, Disposition.PARTIAL)
+            if result.status in (ImportStatus.IMPORTED, ImportStatus.PARTIAL)
         }
         skipped = {
             ocdid
             for ocdid, result in by_ocdid.items()
-            if result.disposition is Disposition.SKIPPED
+            if result.status is ImportStatus.SKIPPED
         }
 
         await asyncio.to_thread(
@@ -277,7 +268,7 @@ async def write_back(results: list[JurisdictionResult]) -> None:
                 [row.get(JURISDICTION, "") for row in worklist],
                 Counter(row.jurisdiction_ocdid for row in parsed),
                 {
-                    ocdid: (result.disposition.value, result.error)
+                    ocdid: (result.status.value, result.error)
                     for ocdid, result in by_ocdid.items()
                 },
                 stamp,

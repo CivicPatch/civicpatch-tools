@@ -12,6 +12,7 @@ invite "Bob Smith" and "Robert Smith" to become two people.
 """
 
 import re
+from enum import StrEnum
 
 from pydantic import BaseModel
 
@@ -22,11 +23,22 @@ READY = "ready"
 # failed last time and is fine now must not keep last time's message.
 STATUS_COLUMNS = ("status", "error", "last_import_at")
 
-# What `status` can say.
+# What a row's `status` can say.
 IMPORTED = "imported"
 ERROR = "error"
 SKIPPED = "skipped"
 BLOCKED = "blocked"
+
+
+class ImportStatus(StrEnum):
+    """What a whole jurisdiction's `status` can say. Coarser than a row's: a town is the unit
+    that succeeds or fails, because a town is the unit that gets imported."""
+
+    IMPORTED = "imported"
+    # People stored, posts not. Re-derivable from the sightings, so not a failure.
+    PARTIAL = "partial"
+    SKIPPED = "skipped"
+    FAILED = "failed"
 
 _OPTIONAL = ("url", "phone", "email", "image", "start_date", "end_date")
 _REQUIRED = (JURISDICTION, "name", "label")
@@ -165,6 +177,27 @@ def _duplicate_errors(rows: list[ImportRow]) -> list[RowError]:
     return errors
 
 
+def unknown_jurisdiction_errors(
+    rows: list[ImportRow], known: set[str]
+) -> list[RowError]:
+    """Rows naming a jurisdiction we do not have.
+
+    Jurisdictions come from the jurisdictions repo, never from a contributor, so an ocdid the
+    database does not know is a typo and nothing else. Caught here rather than left to the
+    request insert, where it surfaces as a foreign-key error written into somebody's sheet.
+    """
+    return [
+        RowError(
+            line=row.line,
+            jurisdiction_ocdid=row.jurisdiction_ocdid,
+            column=JURISDICTION,
+            message="no such jurisdiction",
+        )
+        for row in rows
+        if row.jurisdiction_ocdid not in known
+    ]
+
+
 def rows_by_jurisdiction(rows: list[ImportRow]) -> dict[str, list[ImportRow]]:
     grouped: dict[str, list[ImportRow]] = {}
     for row in rows:
@@ -250,8 +283,8 @@ def jurisdiction_columns(
     """
     status, message = [], []
     for ocdid in ocdids:
-        disposition, error = results.get(ocdid, ("", None))
-        status.append(disposition)
+        outcome, error = results.get(ocdid, ("", None))
+        status.append(outcome)
         message.append(error or "")
 
     return {

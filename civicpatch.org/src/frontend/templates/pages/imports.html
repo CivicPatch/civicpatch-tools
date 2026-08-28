@@ -1,0 +1,8 @@
+{% extends "layouts/base.html" %}
+{% block scripts %}<script type="module" src="{{ vite_asset('assets/imports.ts') }}"></script>{% endblock %}
+{% block styles %}{% for href in vite_css('assets/imports.ts') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %} {% block title %}Sheet import{% endblock %}
+{% block content %}
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
+
+<import-page></import-page>
+{% endblock %}

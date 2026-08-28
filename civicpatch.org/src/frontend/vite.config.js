@@ -20,6 +20,7 @@ export default defineConfig(({ command }) => ({
         roles: "./assets/roles.js",
         settings: "./assets/settings.ts",
         municipalities: "./assets/municipalities.ts",
+        imports: "./assets/imports.ts",
       },
     },
   },

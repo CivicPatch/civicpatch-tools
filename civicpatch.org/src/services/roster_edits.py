@@ -170,14 +170,18 @@ async def _record_edits(
     )
 
 
-async def publish(
+async def publish_to_database(
     request_id: str,
     jurisdiction_ocdid: str,
     edited: List[dict] | None,
     resolved_by_user_id: str | None,
 ) -> None:
-    """Make this scrape's roster live. `edited` is the reviewer's patched result; when they
-    published without editing, the submitted roster stands."""
+    """Make this scrape's roster live, without mirroring it into open-data.
+
+    Separate from `publish` for the sake of bulk publishing, which mirrors every jurisdiction it
+    made live in one commit rather than one each. Anything publishing a single jurisdiction
+    wants `publish` — this on its own leaves open-data behind the database.
+    """
     roster = edited
     if roster is None:
         # `proposed_roster`, not `scraped_roster`: publishing without editing still has to
@@ -190,6 +194,19 @@ async def publish(
     # Photos promote with the data: publishing is what moves them off the artifacts bucket.
     await publish_people(
         request_id, jurisdiction_ocdid, promote_images(roster), resolved_by_user_id
+    )
+
+
+async def publish(
+    request_id: str,
+    jurisdiction_ocdid: str,
+    edited: List[dict] | None,
+    resolved_by_user_id: str | None,
+) -> None:
+    """Make this scrape's roster live. `edited` is the reviewer's patched result; when they
+    published without editing, the submitted roster stands."""
+    await publish_to_database(
+        request_id, jurisdiction_ocdid, edited, resolved_by_user_id
     )
     # The scrape leaves the unreviewed path for the canonical one. Queued, so a slow or failed
     # GitHub write cannot affect a publish that has already committed.

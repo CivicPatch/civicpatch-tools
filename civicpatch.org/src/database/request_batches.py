@@ -105,6 +105,35 @@ async def get(batch_id: str) -> dict | None:
     return dict(zip(columns, row))
 
 
+async def latest(kind: BatchKind) -> dict | None:
+    """The most recent batch of this kind, so a page load can find one already under way.
+
+    Server-side rather than remembered by whoever started it: one spreadsheet means one import,
+    and a second maintainer opening the page should see the run in progress rather than a
+    Start button that will 409.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT b.id::text, b.kind, b.lock_key, b.arguments_json, b.status,
+                   b.items_total,
+                   (SELECT count(*) FROM requests WHERE requests.batch_id = b.id) AS items_done,
+                   b.error, b.started_by_user_id::text, b.started_at, b.finished_at
+            FROM request_batches b
+            WHERE b.kind = %s
+            ORDER BY b.started_at DESC
+            LIMIT 1
+            """,
+            (kind.value,),
+        )
+        row = await cur.fetchone()
+        if row is None:
+            return None
+        columns = [column.name for column in cur.description or []]
+    return dict(zip(columns, row))
+
+
 async def items(batch_id: str) -> list[dict]:
     """The batch's requests with their *current* review state, not the state they were made in.
 

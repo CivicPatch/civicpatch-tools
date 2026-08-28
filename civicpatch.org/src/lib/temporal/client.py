@@ -1,3 +1,4 @@
+import hashlib
 import os
 import uuid
 from datetime import datetime, timezone
@@ -8,9 +9,10 @@ from temporalio.common import WorkflowIDConflictPolicy
 from temporalio.service import RPCError, RPCStatusCode
 
 from core.temporal_workflow_state import TemporalWorkflowState, summarize
-from lib.temporal.types import OpenDataCommitRequest
+from lib.temporal.types import OpenDataBatchCommitRequest, OpenDataCommitRequest
 from lib.temporal.workflows import (
     OdSyncTargetedWorkflow,
+    OpenDataBatchCommitWorkflow,
     OpenDataCommitWorkflow,
     ScheduleId,
     TASK_QUEUE,
@@ -109,6 +111,26 @@ async def enqueue_open_data_commit(request: OpenDataCommitRequest) -> None:
         OpenDataCommitWorkflow.run,
         request,
         id=f"open-data-commit:{request.file_path}",
+        task_queue=TASK_QUEUE,
+        id_conflict_policy=WorkflowIDConflictPolicy.USE_EXISTING,
+    )
+
+
+async def enqueue_open_data_batch_commit(request: OpenDataBatchCommitRequest) -> None:
+    """Queue a durable write of one commit covering every jurisdiction in the request.
+
+    The workflow id covers the batch *and* what was selected, not the batch alone: a reviewer
+    who publishes ten towns and then ten more has done two things, and keying on the batch
+    would let USE_EXISTING drop the second. Identical selections still dedupe, which is what
+    makes a double-clicked Publish harmless.
+    """
+    client = await _get_client()
+    selection = ",".join(sorted(item.request_id for item in request.items))
+    digest = hashlib.sha256(selection.encode()).hexdigest()[:12]
+    await client.start_workflow(
+        OpenDataBatchCommitWorkflow.run,
+        request,
+        id=f"open-data-batch-commit:{request.batch_id}:{digest}",
         task_queue=TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.USE_EXISTING,
     )

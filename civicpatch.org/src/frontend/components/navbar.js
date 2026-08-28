@@ -103,6 +103,9 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
             ${user.permissions?.can_write_config
               ? html`<a href="/roles" class="${active("/roles")}">Roles</a>`
               : ""}
+            ${user.permissions?.can_write_config
+              ? html`<a href="/imports" class="${active("/imports")}">Sheet import</a>`
+              : ""}
           </div>
         </details>`
       : ""}

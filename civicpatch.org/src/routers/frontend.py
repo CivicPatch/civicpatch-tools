@@ -128,6 +128,13 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/roles.html", {"request": request, "user": user})
 
+    @router.get("/imports", response_class=HTMLResponse, include_in_schema=False)
+    async def imports_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
+        user = _build_user_dict(identity)
+        if not user["authenticated"] or not user["permissions"]["can_write_config"]:
+            return RedirectResponse("/", status_code=303)
+        return templates.TemplateResponse("pages/imports.html", {"request": request, "user": user})
+
     @router.get("/admin", response_class=HTMLResponse, include_in_schema=False)
     async def admin_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)

@@ -12,19 +12,42 @@ test. `requests` cascades to `source_records`, so the rows go with it.
 """
 
 from typing import LiteralString
+from unittest.mock import AsyncMock, patch
 
 import pytest
 import pytest_asyncio
 
-from core.entry_rows import parse_rows, ready_jurisdictions
+from core.entry_rows import ImportStatus, parse_rows, ready_jurisdictions
 from lib.csv import parse_csv
 from database import request_batches
 from database.database import get_pool
-from services.sheet_import import Disposition, import_rows
+from services.batch_review import batch_review, publish_selected
+from services.publish import reviewed_file_path
+from services.sheet_import import import_rows
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_sheet_test/government"
+# A second town, so "one commit for the whole batch" is a claim a test can actually falsify.
+_OCDID_2 = "ocd-jurisdiction/country:us/state:zz/place:zz_sheet_test_two/government"
+_OCDIDS = [_OCDID, _OCDID_2]
 _SHEET = "https://docs.google.com/spreadsheets/d/test/export?format=csv"
 _EMAIL = "zz-sheet-import@test.civicpatch.org"
+
+
+@pytest.fixture(autouse=True)
+def batch_commit():
+    """Publishing queues its open-data commit on Temporal, which is not running for tests.
+
+    Patched at the enqueue rather than at `promote_batch_to_reviewed`, so the part worth
+    checking — which jurisdictions made it in, and what file each renders to — still runs for
+    real. Yields the batch enqueue; the single-jurisdiction one is only silenced.
+    """
+    with (
+        patch("lib.temporal.client.enqueue_open_data_commit", new_callable=AsyncMock),
+        patch(
+            "lib.temporal.client.enqueue_open_data_batch_commit", new_callable=AsyncMock
+        ) as enqueued,
+    ):
+        yield enqueued
 
 
 async def _cleanup():
@@ -32,20 +55,37 @@ async def _cleanup():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "DELETE FROM memberships WHERE post_id IN "
-            "(SELECT id FROM posts WHERE jurisdiction_ocdid = %s)",
-            (_OCDID,),
+            "(SELECT id FROM posts WHERE jurisdiction_ocdid = ANY(%s))",
+            (_OCDIDS,),
         )
-        await cur.execute("DELETE FROM posts WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute(
-            "DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_OCDID,)
+            "DELETE FROM posts WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
         )
-        await cur.execute("DELETE FROM divisions WHERE jurisdiction_ocdid = %s", (_OCDID,))
-        await cur.execute("DELETE FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,))
-        await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute(
-            "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OCDID,)
+            "DELETE FROM organizations WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
         )
-        await cur.execute("DELETE FROM request_batches WHERE lock_key = %s", (f"sheet:{_OCDID}",))
+        await cur.execute(
+            "DELETE FROM divisions WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
+        )
+        await cur.execute(
+            "DELETE FROM requests WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
+        )
+        await cur.execute(
+            "DELETE FROM people WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
+        )
+        await cur.execute(
+            "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
+        )
+        await cur.execute(
+            "DELETE FROM request_batches WHERE lock_key = %s", (f"sheet:{_OCDID}",)
+        )
+        # Publishing can leave assertions behind, and `assertions.asserted_by` is NOT NULL with
+        # no cascade — so the user cannot go until they do.
+        await cur.execute(
+            "DELETE FROM assertions WHERE asserted_by IN "
+            "(SELECT id FROM users WHERE email = %s)",
+            (_EMAIL,),
+        )
         await cur.execute("DELETE FROM users WHERE email = %s", (_EMAIL,))
         await conn.commit()
 
@@ -57,8 +97,9 @@ async def user_id():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO jurisdictions (jurisdiction_ocdid, state) VALUES (%s, 'zz')",
-            (_OCDID,),
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, state) "
+            "SELECT unnest(%s::text[]), 'zz'",
+            (_OCDIDS,),
         )
         await cur.execute(
             "INSERT INTO users (email, provider, provider_user_id, role) "
@@ -83,9 +124,9 @@ async def batch_id(user_id):
     )
 
 
-def _sheet_rows(*people) -> list[dict]:
+def _sheet_rows(*people, ocdid: str = _OCDID) -> list[dict]:
     return [
-        {"jurisdiction_ocdid": _OCDID, "name": name, "label": label}
+        {"jurisdiction_ocdid": ocdid, "name": name, "label": label}
         for name, label in people
     ]
 
@@ -118,7 +159,7 @@ async def test_an_import_writes_sightings_and_lands_in_the_review_queue(
 
     [result] = await import_rows(rows, {_OCDID}, user_id, batch_id)
 
-    assert result.disposition is Disposition.IMPORTED
+    assert result.status is ImportStatus.IMPORTED
     assert result.people == 2
     assert result.sightings == 2
 
@@ -187,7 +228,7 @@ async def test_a_jurisdiction_nobody_marked_ready_is_skipped(user_id, batch_id):
 
     [result] = await import_rows(rows, set(), user_id, batch_id)
 
-    assert result.disposition is Disposition.SKIPPED
+    assert result.status is ImportStatus.SKIPPED
     assert result.request_id is None
     assert (
         await _scalar(
@@ -232,8 +273,8 @@ async def test_one_jurisdiction_failing_does_not_cost_the_others(user_id, batch_
     results = await import_rows(good + bad, {_OCDID, missing}, user_id, batch_id)
     by_ocdid = {result.jurisdiction_ocdid: result for result in results}
 
-    assert by_ocdid[_OCDID].disposition is Disposition.IMPORTED
-    assert by_ocdid[missing].disposition is Disposition.FAILED
+    assert by_ocdid[_OCDID].status is ImportStatus.IMPORTED
+    assert by_ocdid[missing].status is ImportStatus.FAILED
     assert by_ocdid[missing].error
 
 
@@ -262,7 +303,7 @@ async def test_end_to_end_from_csv_text(user_id, batch_id):
 
     [result] = await import_rows(rows, ready, user_id, batch_id)
 
-    assert result.disposition is Disposition.IMPORTED
+    assert result.status is ImportStatus.IMPORTED
     assert result.people == 2
     assert result.posts >= 1
     # A quoted comma survives the whole way to the sighting.
@@ -273,3 +314,169 @@ async def test_end_to_end_from_csv_text(user_id, batch_id):
         )
         == 1
     )
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_the_batch_review_shows_the_towns_it_made(user_id, batch_id):
+    """One pass over what the run produced — the limited view, with people from the sightings."""
+    rows = await _parsed(
+        ("Ana Reyes", "Select Board Chair"), ("Bo Chen", "Select Board Member")
+    )
+    await import_rows(rows, {_OCDID}, user_id, batch_id)
+
+    review = await batch_review(batch_id)
+
+    assert review is not None
+    [jurisdiction] = review.jurisdictions
+    assert jurisdiction.jurisdiction_ocdid == _OCDID
+    assert jurisdiction.review_status == "pending"
+    assert sorted(person.name for person in jurisdiction.people) == [
+        "Ana Reyes",
+        "Bo Chen",
+    ]
+    # The seat, rendered — what makes forty towns scannable.
+    assert all(person.label for person in jurisdiction.people)
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_skipped_town_never_reaches_the_review(user_id, batch_id):
+    """It has no request, so there is nothing to review — the volunteer hears about it in the
+    sheet instead."""
+    rows = await _parsed(("Ana Reyes", "Select Board Chair"))
+    await import_rows(rows, set(), user_id, batch_id)
+
+    review = await batch_review(batch_id)
+
+    assert review is not None
+    assert review.jurisdictions == []
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_an_unknown_batch_reviews_as_nothing(user_id):
+    assert await batch_review("00000000-0000-4000-8000-00000000dead") is None
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_publishing_a_selection_leaves_the_rest_pending(user_id, batch_id):
+    """The page is a view, not a queue: publishing some does not make the others disappear."""
+    rows = await _parsed(("Ana Reyes", "Select Board Chair"))
+    await import_rows(rows, {_OCDID}, user_id, batch_id)
+
+    [result] = await publish_selected(batch_id, {_OCDID}, user_id)
+    assert result.published is True
+
+    review = await batch_review(batch_id)
+    assert review is not None
+    [jurisdiction] = review.jurisdictions
+    assert jurisdiction.review_status == "published"
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_town_nobody_selected_is_left_alone(user_id, batch_id):
+    rows = await _parsed(("Ana Reyes", "Select Board Chair"))
+    await import_rows(rows, {_OCDID}, user_id, batch_id)
+
+    assert await publish_selected(batch_id, set(), user_id) == []
+
+    review = await batch_review(batch_id)
+    assert review is not None
+    assert review.jurisdictions[0].review_status == "pending"
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_publishing_twice_does_not_republish(user_id, batch_id):
+    """A town already live — published here or from the ordinary queue — is skipped rather than
+    superseding itself for nothing."""
+    rows = await _parsed(("Ana Reyes", "Select Board Chair"))
+    await import_rows(rows, {_OCDID}, user_id, batch_id)
+    await publish_selected(batch_id, {_OCDID}, user_id)
+
+    assert await publish_selected(batch_id, {_OCDID}, user_id) == []
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_publishing_two_towns_queues_one_commit(user_id, batch_id, batch_commit):
+    """The reviewer published once, so open-data should say so once — not one commit per town.
+
+    Asserted at the enqueue because that is the only place the batching is observable: below it
+    is Temporal, above it is a per-jurisdiction loop that looks the same either way.
+    """
+    rows, errors = parse_rows(
+        _sheet_rows(("Ana Reyes", "Select Board Chair"))
+        + _sheet_rows(("Bo Nunez", "Town Clerk"), ocdid=_OCDID_2),
+        _SHEET,
+    )
+    assert errors == []
+    await import_rows(rows, set(_OCDIDS), user_id, batch_id)
+
+    results = await publish_selected(batch_id, set(_OCDIDS), user_id)
+    assert [result.published for result in results] == [True, True]
+
+    batch_commit.assert_awaited_once()
+    request = batch_commit.await_args.args[0]
+    assert request.batch_id == batch_id
+    assert {item.jurisdiction_ocdid for item in request.items} == set(_OCDIDS)
+    assert {item.file_path for item in request.items} == {
+        reviewed_file_path(_OCDID),
+        reviewed_file_path(_OCDID_2),
+    }
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_town_that_refused_to_publish_stays_out_of_the_commit(
+    user_id, batch_id, batch_commit
+):
+    """One jurisdiction failing must not keep the others out of open-data, and must not put
+    itself in — the commit covers what reached the database, not what was selected."""
+    rows, errors = parse_rows(
+        _sheet_rows(("Ana Reyes", "Select Board Chair"))
+        + _sheet_rows(("Bo Nunez", "Town Clerk"), ocdid=_OCDID_2),
+        _SHEET,
+    )
+    assert errors == []
+    await import_rows(rows, set(_OCDIDS), user_id, batch_id)
+
+    with patch(
+        "services.batch_review.roster_edits.publish_to_database",
+        new_callable=AsyncMock,
+        side_effect=[RuntimeError("supersede guard"), None],
+    ):
+        results = await publish_selected(batch_id, set(_OCDIDS), user_id)
+
+    assert sorted(result.published for result in results) == [False, True]
+    [item] = batch_commit.await_args.args[0].items
+    published = next(result for result in results if result.published)
+    assert item.jurisdiction_ocdid == published.jurisdiction_ocdid
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_publishing_nothing_queues_no_commit(user_id, batch_id, batch_commit):
+    """An empty commit is not a record of anything."""
+    rows = await _parsed(("Ana Reyes", "Select Board Chair"))
+    await import_rows(rows, {_OCDID}, user_id, batch_id)
+
+    assert await publish_selected(batch_id, set(), user_id) == []
+    batch_commit.assert_not_awaited()
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_the_running_import_is_findable_without_being_remembered(
+    user_id, batch_id
+):
+    """Whoever opens the page finds the import under way — there is one spreadsheet and one
+    lock, so it is a fact about the system, not about the browser that started it."""
+    found = await request_batches.latest(request_batches.BatchKind.SHEET_IMPORT)
+
+    assert found is not None
+    assert found["id"] == batch_id
+    assert found["status"] == request_batches.BatchStatus.RUNNING

@@ -11,6 +11,7 @@ import logging
 import environment
 import lib.buckets as buckets
 import lib.github.api as github_service
+import lib.github.git_data as git_data
 import lib.storage as storage_service
 import services.change_logs as change_logs
 import shared.utils.id_utils
@@ -21,7 +22,12 @@ from database.database import get_pool
 from database.people import get_roster
 from database.publications import dismiss_request, publish_request, record_open_data_url
 from database.roles import get_roles
-from lib.temporal.types import CommitSource, OpenDataCommitRequest
+from lib.temporal.types import (
+    CommitSource,
+    OpenDataBatchCommitRequest,
+    OpenDataCommitItem,
+    OpenDataCommitRequest,
+)
 from services.roster import proposed_roster
 from shared.schemas import Person, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
@@ -174,6 +180,34 @@ async def commit_rendered_file(
     return commit_url
 
 
+async def commit_rendered_files(
+    items: list[OpenDataCommitItem], commit_message: str
+) -> str | None:
+    """Render every jurisdiction out of the database and write them as one commit.
+
+    Same contract as `commit_rendered_file` one file at a time: rendering happens per attempt,
+    so a retry carries what is true when it lands. Every request is stamped with the one commit
+    url, because that is genuinely where each of them landed.
+    """
+    contents = {}
+    for item in items:
+        roster = await _render(
+            CommitSource.ROSTER, item.request_id, item.jurisdiction_ocdid
+        )
+        contents[item.file_path] = yaml_dump(roster)
+
+    commit_url = await git_data.commit_github_files(
+        branch_name=github_service.DEFAULT_BRANCH,
+        contents=contents,
+        commit_message=commit_message,
+    )
+    if not commit_url:
+        return None
+    for item in items:
+        await record_open_data_url(item.request_id, commit_url)
+    return commit_url
+
+
 def reviewed_file_path(jurisdiction_ocdid: str) -> str:
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
     return f"data/{folder}.yml"
@@ -200,5 +234,36 @@ async def promote_to_reviewed(request_id: str, jurisdiction_ocdid: str) -> None:
             source=CommitSource.ROSTER,
             delete_path=unreviewed_file_path(jurisdiction_ocdid),
             delete_message=f"Promote {jurisdiction_ocdid} out of unreviewed ({request_id})",
+        )
+    )
+
+
+async def promote_batch_to_reviewed(
+    batch_id: str, published: dict[str, str]
+) -> None:
+    """One open-data commit for everything a bulk publish made live.
+
+    `published` maps request_id to jurisdiction_ocdid — every jurisdiction that reached the
+    database, which is not every jurisdiction the reviewer selected: one refusing must not keep
+    the rest out of open-data.
+    """
+    # avoid circular import: lib.temporal.workflows imports the activities module, which
+    # imports this one, so importing the client at module scope closes the loop
+    import lib.temporal.client as temporal_client
+
+    if not published:
+        return
+    await temporal_client.enqueue_open_data_batch_commit(
+        OpenDataBatchCommitRequest(
+            batch_id=batch_id,
+            items=[
+                OpenDataCommitItem(
+                    file_path=reviewed_file_path(jurisdiction_ocdid),
+                    request_id=request_id,
+                    jurisdiction_ocdid=jurisdiction_ocdid,
+                )
+                for request_id, jurisdiction_ocdid in sorted(published.items())
+            ],
+            commit_message=f"Publish {len(published)} jurisdictions ({batch_id})",
         )
     )
