@@ -5,7 +5,7 @@ import lib.github.api as github_service
 import services.open_data_sync as data_sync
 import services.publish as publish_service
 from database.issues import upsert_issue
-from lib.temporal.types import OpenDataCommitRequest
+from lib.temporal.types import OpenDataBatchCommitRequest, OpenDataCommitRequest
 from shared.utils.statuses import PipelineIssueType
 from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
 from temporalio import activity
@@ -50,6 +50,24 @@ async def cleanup_stale_review_entries_activity() -> None:
         activity.logger.info(
             "Review session cleanup: %d entries deleted",
             result["entries_deleted"],
+        )
+
+
+@activity.defn
+async def commit_open_data_batch_activity(request: OpenDataBatchCommitRequest) -> None:
+    """Render every jurisdiction in the batch and write them to open-data as one commit.
+
+    Raises on failure so Temporal retries, including when another commit won the branch in
+    between: the next attempt re-reads the ref and re-renders, so it lands on top rather than
+    over the top.
+    """
+    written = await publish_service.commit_rendered_files(
+        request.items, request.commit_message
+    )
+    if not written:
+        raise RuntimeError(
+            f"open-data batch write rejected for {request.batch_id} "
+            f"({len(request.items)} jurisdictions)"
         )
 
 

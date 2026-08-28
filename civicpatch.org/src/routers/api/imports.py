@@ -10,7 +10,12 @@ from fastapi import APIRouter, BackgroundTasks, Depends
 from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory, UserRole
-from schemas.imports import ImportProgress, StartImportResponse
+from schemas.imports import (
+    ImportProgress,
+    PublishSelectionRequest,
+    StartImportResponse,
+)
+from services import batch_review as batch_review_service
 from services import entry_sheet, sheet_import
 
 logger = logging.getLogger(__name__)
@@ -80,6 +85,21 @@ def get_router() -> APIRouter:
         )
         return {"data": StartImportResponse(batch_id=batch_id, preview=read.preview)}
 
+    # Declared before `/{batch_id}` or the path parameter swallows it.
+    @router.get("/latest")
+    async def latest_import_endpoint(
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+        ),
+    ):
+        """The import already under way, if there is one.
+
+        There is one spreadsheet and one lock, so an import is a fact about the system rather
+        than about whoever started it — anyone opening the page should find it.
+        """
+        batch = await request_batches.latest(request_batches.BatchKind.SHEET_IMPORT)
+        return {"data": _progress(batch) if batch else None}
+
     @router.get("/{batch_id}")
     async def import_progress_endpoint(
         batch_id: str,
@@ -90,19 +110,37 @@ def get_router() -> APIRouter:
         batch = await request_batches.get(batch_id)
         if batch is None:
             return JSONResponse({"error": "No such import."}, status_code=404)
-        return {
-            "data": ImportProgress(
-                batch_id=batch["id"],
-                status=batch["status"],
-                items_total=batch["items_total"],
-                items_done=batch["items_done"],
-                error=batch["error"],
-                started_at=batch["started_at"].isoformat(),
-                finished_at=batch["finished_at"].isoformat()
-                if batch["finished_at"]
-                else None,
-            )
-        }
+        return {"data": _progress(batch)}
+
+    @router.get("/{batch_id}/review")
+    async def batch_review_endpoint(
+        batch_id: str,
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+        ),
+    ):
+        """Everything the batch produced, for reviewing it in one pass."""
+        review = await batch_review_service.batch_review(batch_id)
+        if review is None:
+            return JSONResponse({"error": "No such import."}, status_code=404)
+        return {"data": review}
+
+    @router.post("/{batch_id}/publish")
+    async def publish_batch_endpoint(
+        batch_id: str,
+        body: PublishSelectionRequest,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+        ),
+    ):
+        """Publish the towns a reviewer selected. Partial success is normal, so the response
+        says what happened to each rather than one status for the lot."""
+        if not user.user_id:
+            return JSONResponse({"error": "User ID not available"}, status_code=401)
+        results = await batch_review_service.publish_selected(
+            batch_id, set(body.jurisdiction_ocdids), user.user_id
+        )
+        return {"data": results}
 
     @router.delete("/{batch_id}")
     async def release_import_endpoint(
@@ -121,6 +159,20 @@ def get_router() -> APIRouter:
         return {"data": {"released": released}}
 
     return router
+
+
+def _progress(batch: dict) -> ImportProgress:
+    return ImportProgress(
+        batch_id=batch["id"],
+        status=batch["status"],
+        items_total=batch["items_total"],
+        items_done=batch["items_done"],
+        error=batch["error"],
+        started_at=batch["started_at"].isoformat(),
+        finished_at=batch["finished_at"].isoformat()
+        if batch["finished_at"]
+        else None,
+    )
 
 
 def _sharing_hint(error: Exception) -> str:

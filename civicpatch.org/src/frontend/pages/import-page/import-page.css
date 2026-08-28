@@ -1,0 +1,202 @@
+/* Page */
+
+.import-page__header {
+  margin: 0.5rem 0 1.5rem;
+}
+
+.import-page__header h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 0 0 0.25rem;
+}
+
+/* Shared bits */
+
+.import-towns__title {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0 0 0.25rem;
+}
+
+.import-towns__title span {
+  color: var(--pico-muted-color);
+  font-weight: 400;
+}
+
+.import-towns__hint {
+  color: var(--pico-muted-color);
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem;
+}
+
+.import-empty {
+  color: var(--pico-muted-color);
+  margin: 1rem 0;
+}
+
+.import-summary {
+  margin: 0 0 1rem;
+}
+
+.import-action {
+  margin: 1rem 0 0;
+  width: auto;
+}
+
+.import-error {
+  border-left: 3px solid var(--pico-del-color);
+  padding: 0.5rem 0.75rem;
+  margin: 0 0 1rem;
+}
+
+/* Preview */
+
+.import-towns {
+  margin: 0 0 1.5rem;
+}
+
+.import-towns__list {
+  font-family: var(--pico-font-family-monospace);
+  font-size: 0.85rem;
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.import-errors {
+  margin: 0 0 1.5rem;
+}
+
+.import-errors__table {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.import-errors__line {
+  font-family: var(--pico-font-family-monospace);
+  text-align: right;
+}
+
+/* Progress */
+
+.import-progress {
+  margin: 1rem 0;
+}
+
+.import-progress__count {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.75rem;
+  margin: 0 0 0.25rem;
+}
+
+/* Publish results */
+
+.import-results {
+  border-left: 3px solid var(--pico-ins-color);
+  padding: 0.5rem 0.75rem;
+  margin: 0 0 1.5rem;
+}
+
+.import-results p {
+  margin: 0;
+}
+
+.import-results__failure {
+  color: var(--pico-del-color);
+  font-size: 0.9rem;
+}
+
+/* Bulk review */
+
+.review-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.review-toolbar__link {
+  background: none;
+  border: none;
+  color: var(--pico-color);
+  font-size: 0.9rem;
+  padding: 0;
+  text-decoration: underline;
+  width: auto;
+}
+
+.review-toolbar .import-action {
+  margin: 0 0 0 auto;
+}
+
+.review-jurisdiction {
+  border-bottom: 1px solid var(--pico-muted-border-color);
+  padding: 0.75rem 0;
+}
+
+.review-jurisdiction--settled {
+  opacity: 0.55;
+}
+
+.review-jurisdiction__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.review-jurisdiction__pick {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.review-jurisdiction__name {
+  font-weight: 600;
+}
+
+.review-jurisdiction__count,
+.review-jurisdiction__status {
+  color: var(--pico-muted-color);
+  font-size: 0.85rem;
+}
+
+.review-jurisdiction__status {
+  margin-left: auto;
+}
+
+.review-jurisdiction__people {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0 0 0 1.75rem;
+}
+
+.review-person {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.review-person__image {
+  border-radius: 50%;
+  height: 1.75rem;
+  object-fit: cover;
+  width: 1.75rem;
+}
+
+.review-person__image--none {
+  align-items: center;
+  background: var(--pico-muted-border-color);
+  display: flex;
+  font-size: 0.8rem;
+  justify-content: center;
+}
+
+.review-person__label {
+  color: var(--pico-muted-color);
+}
