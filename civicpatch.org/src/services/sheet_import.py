@@ -177,7 +177,7 @@ async def read_sheet(spreadsheet_id: str) -> SheetRead:
     roster_rows, worklist_rows = await asyncio.gather(
         asyncio.to_thread(sheets.read_tab, spreadsheet_id, entry_sheet.ROSTER_TAB),
         asyncio.to_thread(
-            sheets.read_tab, spreadsheet_id, entry_sheet.JURISDICTIONS_TAB
+            sheets.read_tab, spreadsheet_id, entry_sheet.LIVE_JURISDICTIONS_TAB
         ),
     )
     rows, errors = parse_rows(roster_rows, source_url)
@@ -237,7 +237,7 @@ async def write_back(results: list[JurisdictionResult]) -> None:
         roster, worklist = await asyncio.gather(
             asyncio.to_thread(sheets.read_tab, spreadsheet_id, entry_sheet.ROSTER_TAB),
             asyncio.to_thread(
-                sheets.read_tab, spreadsheet_id, entry_sheet.JURISDICTIONS_TAB
+                sheets.read_tab, spreadsheet_id, entry_sheet.LIVE_JURISDICTIONS_TAB
             ),
         )
         parsed, errors = parse_rows(roster, "")
@@ -263,7 +263,7 @@ async def write_back(results: list[JurisdictionResult]) -> None:
         await asyncio.to_thread(
             sheets.write_columns,
             spreadsheet_id,
-            entry_sheet.JURISDICTIONS_TAB,
+            entry_sheet.LIVE_JURISDICTIONS_TAB,
             jurisdiction_columns(
                 [row.get(JURISDICTION, "") for row in worklist],
                 Counter(row.jurisdiction_ocdid for row in parsed),

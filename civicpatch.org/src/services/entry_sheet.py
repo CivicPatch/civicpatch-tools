@@ -11,15 +11,15 @@ to Sheets, not what we keep there.
 import environment
 
 # Volunteer-owned.
-ROSTER_TAB = "Entry · Roster"
-JURISDICTIONS_TAB = "Entry · Jurisdictions"
+ROSTER_TAB = "Entry[Roster]"
 
 # App-owned: reference, so a curator can match existing wording rather than invent near-misses.
-LIVE_PEOPLE_TAB = "Live · People"
-LIVE_POSTS_TAB = "Live · Posts"
+LIVE_PEOPLE_TAB = "Live[People]"
+LIVE_POSTS_TAB = "Live[Posts]"
 
-# App-owned and hidden: the dropdown source, so an ocdid is never hand-typed.
-VOCAB_JURISDICTIONS_TAB = "Vocab · Jurisdictions"
+# App-written, except `ready` — which is the worklist gate, so this tab is read as well as
+# written. It is also the roster dropdown's source, so an ocdid is never hand-typed.
+LIVE_JURISDICTIONS_TAB = "Live[Jurisdictions]"
 
 
 class SheetNotConfigured(Exception):
@@ -28,7 +28,7 @@ class SheetNotConfigured(Exception):
 
 def spreadsheet_id() -> str:
     """The one data-entry sheet. Configured, not chosen: civicpatch owns it, so which sheet to
-    work against is not a question anyone answers per run."""
+    work against is not a question anyone answers per run. docker-compose defaults it for dev."""
     found = environment.get_env_vars().get("ENTRY_SPREADSHEET_ID")
     if not found:
         raise SheetNotConfigured("ENTRY_SPREADSHEET_ID is not set.")

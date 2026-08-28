@@ -21,6 +21,8 @@ class JurisdictionSearchResult(BaseModel):
     # Friendly form ("Albion"). Absent until open-data emits it; callers fall back.
     display_name: str | None = None
     population: int | None = None
+    # The jurisdiction's official site. Already in the row's `data`, so this costs no query.
+    url: str | None = None
 
 
 class PaginationLinks(BaseModel):

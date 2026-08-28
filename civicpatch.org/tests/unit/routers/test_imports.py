@@ -45,7 +45,7 @@ def _client(role: UserRole = UserRole.MAINTAINERS) -> TestClient:
 @pytest.mark.unit
 def test_an_unconfigured_sheet_is_a_503():
     """There is one curated sheet and it is configured, not chosen — so a missing setting is a
-    deployment problem, not something the caller got wrong."""
+    deployment problem, not something the caller got wrong. docker-compose defaults it in dev."""
     with patch(
         "routers.api.imports.entry_sheet.spreadsheet_id",
         side_effect=SheetNotConfigured("ENTRY_SPREADSHEET_ID is not set."),
