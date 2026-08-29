@@ -19,7 +19,6 @@ from core.entry_rows import (
     ImportStatus,
     jurisdiction_columns,
     parse_rows,
-    ready_jurisdictions,
     roster_columns,
     rows_by_jurisdiction,
 )
@@ -43,7 +42,6 @@ class SheetRead(BaseModel):
     names to collide with something."""
 
     rows: list[ImportRow]
-    ready: set[str]
     preview: ImportPreview
 
 
@@ -61,11 +59,10 @@ class JurisdictionResult(BaseModel):
 
 async def import_rows(
     rows: list[ImportRow],
-    ready: set[str],
     user_id: str,
     batch_id: str,
 ) -> list[JurisdictionResult]:
-    """Ingest every ready jurisdiction, one at a time.
+    """Ingest every jurisdiction the sheet named, one at a time.
 
     Jurisdictions are independent, so one failing must not cost the others theirs.
     """
@@ -75,15 +72,6 @@ async def import_rows(
 
     results = []
     for jurisdiction_ocdid, jurisdiction_rows in rows_by_jurisdiction(rows).items():
-        if jurisdiction_ocdid not in ready:
-            results.append(
-                JurisdictionResult(
-                    jurisdiction_ocdid=jurisdiction_ocdid,
-                    status=ImportStatus.SKIPPED,
-                    error="not marked ready",
-                )
-            )
-            continue
         results.append(
             await _import_jurisdiction(
                 jurisdiction_ocdid, jurisdiction_rows, user_id, batch_id, roles, taxonomy
@@ -163,47 +151,50 @@ async def _derive_posts(
         return 0, f"people imported, but posts could not be derived: {e}"
 
 
-async def read_sheet(spreadsheet_id: str) -> SheetRead:
-    """Both entry tabs, parsed, with a preview of what an import would do.
+def read_rows(rows: list[dict], source_url: str) -> SheetRead:
+    """Raw roster rows, parsed, with a preview of what importing them would do.
 
-    Cheap enough to run on every "Check": after the two reads it is `parse_rows`, which is pure.
-    There is no deeper dry run — the importer stops at ingest, so the real preview is the review
-    card it raises.
-
-    The reads go to a thread: `googleapiclient` is synchronous, and calling it straight from a
-    handler would block the event loop for the round trip — the whole API, not just this request.
+    Pure, and the only place that decides what "ready" and "blocked" mean. Both callers reach
+    it: the one that opens the spreadsheet and the one that is handed rows over HTTP, so the two
+    cannot come to different conclusions about the same rows.
     """
-    source_url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}"
-    roster_rows, worklist_rows = await asyncio.gather(
-        asyncio.to_thread(sheets.read_tab, spreadsheet_id, entry_sheet.ROSTER_TAB),
-        asyncio.to_thread(
-            sheets.read_tab, spreadsheet_id, entry_sheet.LIVE_JURISDICTIONS_TAB
-        ),
-    )
-    rows, errors = parse_rows(roster_rows, source_url)
-    ready = ready_jurisdictions(worklist_rows)
+    parsed, errors = parse_rows(rows, source_url)
 
-    seen = {row.jurisdiction_ocdid for row in rows}
+    seen = {row.jurisdiction_ocdid for row in parsed}
     # Blocked whole, never partly: importing six rows of seven proposes a roster missing
     # somebody, which review then reads as a departure.
     blocked = {error.jurisdiction_ocdid for error in errors}
-    importable = ready - blocked
+    importable = seen - blocked
 
     return SheetRead(
-        rows=[row for row in rows if row.jurisdiction_ocdid in importable],
-        ready=importable,
+        rows=[row for row in parsed if row.jurisdiction_ocdid in importable],
         preview=ImportPreview(
-            jurisdictions_ready=sorted(importable & seen),
+            jurisdictions_ready=sorted(importable),
             jurisdictions_blocked=sorted(blocked),
-            jurisdictions_skipped=sorted(seen - ready),
-            rows=len(rows),
+            rows=len(parsed),
             errors=errors,
         ),
     )
 
 
+async def read_sheet(spreadsheet_id: str) -> SheetRead:
+    """The roster tab, read and previewed.
+
+    Cheap enough to run on every "Check": after the read it is `read_rows`, which is pure. There
+    is no deeper dry run — the importer stops at ingest, so the real preview is the review card
+    it raises.
+
+    The read goes to a thread: `googleapiclient` is synchronous, and calling it straight from a
+    handler would block the event loop for the round trip — the whole API, not just this request.
+    """
+    roster_rows = await asyncio.to_thread(
+        sheets.read_tab, spreadsheet_id, entry_sheet.ROSTER_TAB
+    )
+    return read_rows(roster_rows, entry_sheet.spreadsheet_url())
+
+
 async def run_import(
-    batch_id: str, rows: list[ImportRow], ready: set[str], user_id: str
+    batch_id: str, rows: list[ImportRow], user_id: str
 ) -> None:
     """The background half: ingest, report back into the sheet, close the batch.
 
@@ -213,7 +204,7 @@ async def run_import(
     status = request_batches.BatchStatus.SUCCEEDED
     error = None
     try:
-        results = await import_rows(rows, ready, user_id, batch_id)
+        results = await import_rows(rows, user_id, batch_id)
         await write_back(results)
     except Exception as e:
         logger.error(f"[{batch_id}] import failed: {e}", exc_info=True)
@@ -248,17 +239,11 @@ async def write_back(results: list[JurisdictionResult]) -> None:
             for ocdid, result in by_ocdid.items()
             if result.status in (ImportStatus.IMPORTED, ImportStatus.PARTIAL)
         }
-        skipped = {
-            ocdid
-            for ocdid, result in by_ocdid.items()
-            if result.status is ImportStatus.SKIPPED
-        }
-
         await asyncio.to_thread(
             sheets.write_columns,
             spreadsheet_id,
             entry_sheet.ROSTER_TAB,
-            roster_columns(parsed, errors, len(roster), imported, skipped, stamp),
+            roster_columns(parsed, errors, len(roster), imported, stamp),
         )
         await asyncio.to_thread(
             sheets.write_columns,

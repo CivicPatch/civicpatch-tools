@@ -24,7 +24,6 @@ export type RowError = {
 export type ImportPreview = {
   jurisdictions_ready: string[];
   jurisdictions_blocked: string[];
-  jurisdictions_skipped: string[];
   rows: number;
   errors: RowError[];
 };
@@ -39,11 +38,20 @@ export type ImportProgress = {
   finished_at: string | null;
 };
 
+// Mirrors schemas/imports.py: ReviewPerson. Everything the sheet supplied, as it will be
+// written, plus whether the label resolved to a role.
 export type ReviewPerson = {
   id: string;
   name: string;
   label: string;
   image: string | null;
+  urls: string[];
+  phones: string[];
+  emails: string[];
+  start_date: string | null;
+  end_date: string | null;
+  role_id: string | null;
+  unmatched_text: string[];
 };
 
 export type ReviewJurisdiction = {

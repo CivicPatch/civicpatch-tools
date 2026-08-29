@@ -1,5 +1,7 @@
+import math
+import re
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
 
 from database import posts
@@ -76,6 +78,34 @@ def get_router() -> APIRouter:
         if not deleted:
             return JSONResponse({"error": "No such post."}, status_code=404)
         return {"data": {"ok": True}}
+
+    # Declared before `/{jurisdiction_ocdid:path}` or the path parameter swallows it.
+    @router.get("/bulk")
+    async def bulk_posts_endpoint(
+        state: str,
+        page: int = Query(1, ge=1),
+        per_page: int = Query(200, ge=1, le=500),
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+    ):
+        """Every post in a state, paged.
+
+        One request per page instead of one per jurisdiction. Signed-in rather than public for
+        the same reason as `/people/bulk`: the same rows are readable a jurisdiction at a time,
+        but handing out a state in one call is a different thing to offer anonymously.
+        """
+        if not re.fullmatch(r"[A-Za-z]{2}", state):
+            raise HTTPException(
+                status_code=400, detail="state must be a two-letter code, e.g. 'wa'"
+            )
+        total, rows = await posts.list_page_for_state(
+            state.lower(), per_page, (page - 1) * per_page
+        )
+        return {
+            "total_items": total,
+            "page": page,
+            "total_pages": math.ceil(total / per_page) if total > 0 else 1,
+            "data": rows,
+        }
 
     @router.get("/{jurisdiction_ocdid:path}")
     async def get_posts_endpoint(jurisdiction_ocdid: str):

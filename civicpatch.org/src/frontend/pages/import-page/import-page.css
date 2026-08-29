@@ -1,72 +1,138 @@
 /* Page */
 
 .import-page__header {
-  margin: 0.5rem 0 1.5rem;
+  margin: 0.5rem 0 2rem;
 }
 
 .import-page__header h1 {
   font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
-  margin: 0 0 0.25rem;
+  margin: 0 0 0.5rem;
 }
 
-/* Shared bits */
+/* Panels — one per step, so the page reads as a sequence rather than a wall */
 
-.import-towns__title {
+.import-panel {
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  margin: 0 0 1.75rem;
+  padding: 1.5rem;
+}
+
+.import-panel__title {
   font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
-  font-size: 1.05rem;
-  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
+  margin: 0 0 0.75rem;
 }
 
-.import-towns__title span {
+/* Sections within a panel */
+
+.import-section {
+  margin: 0 0 2rem;
+}
+
+.import-section:last-child {
+  margin-bottom: 0;
+}
+
+.import-section__title {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+}
+
+.import-section__title span {
   color: var(--pico-muted-color);
   font-weight: 400;
+  margin-left: 0.35rem;
 }
 
-.import-towns__hint {
+.import-hint {
   color: var(--pico-muted-color);
   font-size: 0.9rem;
-  margin: 0 0 0.5rem;
+  line-height: 1.5;
+  margin: 0 0 1.25rem;
+  max-width: 60ch;
 }
 
 .import-empty {
   color: var(--pico-muted-color);
-  margin: 1rem 0;
-}
-
-.import-summary {
-  margin: 0 0 1rem;
-}
-
-.import-action {
-  margin: 1rem 0 0;
-  width: auto;
+  margin: 0;
 }
 
 .import-error {
   border-left: 3px solid var(--pico-del-color);
-  padding: 0.5rem 0.75rem;
-  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  margin: 0 0 1.75rem;
 }
 
-/* Preview */
+/* Locality lists */
 
-.import-towns {
+/* `!important` because Pico's list rules win on specificity, as css/styles.css already found. */
+.import-list {
+  list-style: none !important;
   margin: 0 0 1.5rem;
+  padding: 0;
 }
 
-.import-towns__list {
-  font-family: var(--pico-font-family-monospace);
-  font-size: 0.85rem;
+.import-list li {
+  list-style: none !important;
   margin: 0;
-  padding-left: 1.1rem;
+  padding: 0;
 }
 
-.import-errors {
-  margin: 0 0 1.5rem;
+.import-list--scrolls {
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  max-height: 18rem;
+  overflow-y: auto;
+  padding: 0.5rem 0.75rem;
 }
+
+.import-list li + li {
+  margin-top: 0.35rem;
+}
+
+/* The selected count lives in the heading, not on the button. */
+.import-panel__title span {
+  color: var(--pico-muted-color);
+  font-weight: 400;
+}
+
+.import-cell--ocdid {
+  font-family: var(--pico-font-family-monospace);
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
+/* Toolbar and actions */
+
+.import-toolbar {
+  align-items: center;
+  display: flex;
+  gap: 1.25rem;
+  margin: 0 0 0.85rem;
+}
+
+.import-link {
+  background: none;
+  border: none;
+  color: var(--pico-color);
+  font-size: 0.9rem;
+  padding: 0;
+  text-decoration: underline;
+  width: auto;
+}
+
+.import-action {
+  margin: 1.5rem 0 0;
+  width: auto;
+}
+
+/* Rejected rows */
 
 .import-errors__table {
   font-size: 0.9rem;
@@ -81,21 +147,21 @@
 /* Progress */
 
 .import-progress {
-  margin: 1rem 0;
+  margin: 0;
 }
 
 .import-progress__count {
   font-family: "Space Grotesk", sans-serif;
   font-size: 1.75rem;
-  margin: 0 0 0.25rem;
+  margin: 0 0 0.5rem;
 }
 
 /* Publish results */
 
 .import-results {
   border-left: 3px solid var(--pico-ins-color);
-  padding: 0.5rem 0.75rem;
-  margin: 0 0 1.5rem;
+  padding: 0.75rem 1rem;
+  margin: 0 0 1.75rem;
 }
 
 .import-results p {
@@ -105,34 +171,83 @@
 .import-results__failure {
   color: var(--pico-del-color);
   font-size: 0.9rem;
+  margin-top: 0.35rem;
+}
+
+/* Person rows.
+   The jurisdiction directory's shape at a smaller scale: many localities on one screen, so the
+   photo is 2.5rem and long values are clipped rather than pushing the layout wide. */
+
+.review-person {
+  align-items: center;
+  display: flex;
+  gap: 0.6rem;
+  min-width: 0;
+  padding: 0.4rem 0;
+}
+
+.review-person__info {
+  min-width: 0;
+}
+
+.review-person__name {
+  font-size: var(--text-md);
+  font-weight: 600;
+  margin: 0;
+}
+
+.review-person__office {
+  align-items: center;
+  color: var(--pico-muted-color);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-sm);
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.review-person__term {
+  font-variant-numeric: tabular-nums;
+}
+
+.review-person__contact {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-xs);
+  gap: 0.1rem 0.75rem;
+  margin-top: 0.1rem;
+  min-width: 0;
+}
+
+.review-person__contact a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 22rem;
+}
+
+/* A warning, not an error: an unresolved title still mints a post, it just wants a look. Same
+   tinted treatment the badges use, so it reads as warning rather than failure. */
+.review-unmatched {
+  background: rgba(var(--tone-yellow), 0.12);
+  border: 1px solid rgba(var(--tone-yellow), 0.4);
+  border-radius: var(--pico-border-radius);
+  color: rgb(var(--tone-yellow));
+  flex: none;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 0.05rem 0.4rem;
 }
 
 /* Bulk review */
 
-.review-toolbar {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: 1rem 0 1.5rem;
-}
-
-.review-toolbar__link {
-  background: none;
-  border: none;
-  color: var(--pico-color);
-  font-size: 0.9rem;
-  padding: 0;
-  text-decoration: underline;
-  width: auto;
-}
-
-.review-toolbar .import-action {
-  margin: 0 0 0 auto;
-}
-
 .review-jurisdiction {
   border-bottom: 1px solid var(--pico-muted-border-color);
-  padding: 0.75rem 0;
+  padding: 1rem 0;
+}
+
+.review-jurisdiction:last-child {
+  border-bottom: none;
 }
 
 .review-jurisdiction--settled {
@@ -140,15 +255,19 @@
 }
 
 .review-jurisdiction__header {
-  display: flex;
   align-items: center;
+  display: flex;
   gap: 0.75rem;
 }
 
 .review-jurisdiction__pick {
-  display: flex;
   align-items: center;
-  gap: 0.5rem;
+  display: flex;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.review-jurisdiction__pick input {
   margin: 0;
 }
 
@@ -166,37 +285,17 @@
   margin-left: auto;
 }
 
+/* Two up where there is room: a roster is a dozen people, and one per line makes a bulk review
+   scroll for no reason. */
 .review-jurisdiction__people {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
-  list-style: none;
+  display: grid;
+  gap: 0 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
   margin: 0.5rem 0 0;
-  padding: 0 0 0 1.75rem;
+  padding: 0 0 0 1.9rem;
 }
 
-.review-person {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-}
-
-.review-person__image {
-  border-radius: 50%;
-  height: 1.75rem;
-  object-fit: cover;
-  width: 1.75rem;
-}
-
-.review-person__image--none {
-  align-items: center;
-  background: var(--pico-muted-border-color);
-  display: flex;
-  font-size: 0.8rem;
-  justify-content: center;
-}
-
-.review-person__label {
-  color: var(--pico-muted-color);
+.import-sheet-link {
+  display: inline-block;
+  margin-left: 0.4rem;
 }

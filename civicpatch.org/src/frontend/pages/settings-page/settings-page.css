@@ -39,3 +39,84 @@
 .settings-page__submit {
   align-self: flex-start;
 }
+
+/* API keys */
+
+.api-keys {
+  border-top: 1px solid var(--pico-muted-border-color);
+  margin: 2.5rem 0 0;
+  padding-top: 1.5rem;
+}
+
+.api-keys__title {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin: 0 0 0.25rem;
+}
+
+.api-keys__hint {
+  color: var(--pico-muted-color);
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+}
+
+.api-keys__error {
+  border-left: 3px solid var(--pico-del-color);
+  padding: 0.5rem 0.75rem;
+  margin: 0 0 1rem;
+}
+
+.api-keys__created {
+  border-left: 3px solid var(--pico-ins-color);
+  padding: 0.5rem 0.75rem;
+  margin: 0 0 1rem;
+}
+
+.api-keys__created p {
+  margin: 0 0 0.5rem;
+}
+
+.api-keys__secret {
+  font-family: var(--pico-font-family-monospace);
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+
+.api-keys__table {
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+}
+
+.api-key__suffix {
+  font-family: var(--pico-font-family-monospace);
+}
+
+.api-key--revoked {
+  opacity: 0.55;
+}
+
+.api-key__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.api-key__link {
+  background: none;
+  border: none;
+  color: var(--pico-color);
+  font-size: 0.9rem;
+  padding: 0;
+  text-decoration: underline;
+  width: auto;
+}
+
+.api-key__link--danger {
+  color: var(--pico-del-color);
+}
+
+.api-keys__create {
+  margin: 0;
+  width: auto;
+}

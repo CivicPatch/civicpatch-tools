@@ -767,14 +767,13 @@ export const startImport = async () => importsRequest("", "POST");
 
 export const fetchLatestImport = async () => importsRequest("/latest", "GET");
 
+export const fetchSheetUrl = async () => importsRequest("/sheet", "GET");
+
 export const fetchImportProgress = async (batchId) =>
   importsRequest(`/${batchId}`, "GET");
 
 export const fetchBatchReview = async (batchId) =>
   importsRequest(`/${batchId}/review`, "GET");
-
-export const releaseImport = async (batchId) =>
-  importsRequest(`/${batchId}`, "DELETE");
 
 export const publishBatch = async (batchId, jurisdictionOcdids) => {
   const res = await fetch(`${IMPORTS_URL}/${batchId}/publish`, {
@@ -790,3 +789,28 @@ export const publishBatch = async (batchId, jurisdictionOcdids) => {
   if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);
   return body;
 };
+
+// ── API keys ─────────────────────────────────────────────────────────────────
+
+const API_KEYS_URL = `${API_URL}/api/internal/api_keys`;
+
+async function apiKeysRequest(path, method) {
+  const res = await fetch(`${API_KEYS_URL}${path}`, {
+    credentials: "include",
+    method,
+    headers: { "X-CSRF-Token": getCsrfCookie() },
+  });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.detail || `HTTP ${res.status}`);
+  return body;
+}
+
+export const fetchApiKeys = async () => apiKeysRequest("", "GET");
+
+export const createApiKey = async () => apiKeysRequest("", "POST");
+
+export const revokeApiKey = async (apiKeyId) =>
+  apiKeysRequest(`/${apiKeyId}/revoke`, "POST");
+
+export const deleteApiKey = async (apiKeyId) =>
+  apiKeysRequest(`/${apiKeyId}`, "DELETE");

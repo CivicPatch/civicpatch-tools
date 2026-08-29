@@ -4,8 +4,8 @@ import {
   REVIEW_PENDING,
   type BatchReview,
   type ReviewJurisdiction,
-  type ReviewPerson,
 } from "./import-types.js";
+import { renderReviewPerson } from "./review-person.js";
 import { selectableOcdids, toggleSelection } from "./batch-selection.js";
 
 const PUBLISH_EVENT = "publish-selection";
@@ -14,25 +14,6 @@ type BatchReviewHost = HTMLElement & {
   review: BatchReview | null;
   busy: boolean;
 };
-
-function personCard(person: ReviewPerson) {
-  return html`
-    <li class="review-person">
-      ${person.image
-        ? html`<img
-            class="review-person__image"
-            src=${person.image}
-            alt=""
-            loading="lazy"
-          />`
-        : html`<span class="review-person__image review-person__image--none">
-            ${person.name.slice(0, 1)}
-          </span>`}
-      <span class="review-person__name">${person.name}</span>
-      <span class="review-person__label">${person.label || "—"}</span>
-    </li>
-  `;
-}
 
 function BatchReviewPanel(host: BatchReviewHost) {
   const [selected, setSelected] = useState<string[]>([]);
@@ -87,19 +68,22 @@ function BatchReviewPanel(host: BatchReviewHost) {
             : null}
         </header>
         ${jurisdiction.people.length
-          ? html`<ul class="review-jurisdiction__people">
-              ${jurisdiction.people.map(personCard)}
-            </ul>`
+          ? html`<div class="review-jurisdiction__people">
+              ${jurisdiction.people.map(renderReviewPerson)}
+            </div>`
           : null}
       </section>
     `;
   };
 
   return html`
-    <div class="review-toolbar">
+    <h2 class="import-panel__title">
+      Review and publish <span>[${selected.length}]</span>
+    </h2>
+    <div class="import-toolbar">
       <button
         type="button"
-        class="review-toolbar__link"
+        class="import-link"
         ?disabled=${!selectable.length || host.busy}
         @click=${handleSelectAll}
       >
@@ -107,24 +91,24 @@ function BatchReviewPanel(host: BatchReviewHost) {
       </button>
       <button
         type="button"
-        class="review-toolbar__link"
+        class="import-link"
         ?disabled=${!selected.length || host.busy}
         @click=${handleClear}
       >
         Deselect all
       </button>
-      <button
-        type="button"
-        class="import-action"
-        ?disabled=${!selected.length || host.busy}
-        @click=${handlePublish}
-      >
-        Publish ${selected.length}
-        town${selected.length === 1 ? "" : "s"}
-      </button>
     </div>
 
     ${review.jurisdictions.map(jurisdictionCard)}
+
+    <button
+      type="button"
+      class="import-action"
+      ?disabled=${!selected.length || host.busy}
+      @click=${handlePublish}
+    >
+      Publish
+    </button>
   `;
 }
 

@@ -10,9 +10,19 @@ class ImportPreview(BaseModel):
 
     jurisdictions_ready: list[str]
     jurisdictions_blocked: list[str]
-    jurisdictions_skipped: list[str]
     rows: int
     errors: list[RowError]
+
+
+class PushedRowsRequest(BaseModel):
+    """What the Apps Script sends: the roster tab, header-keyed, exactly as it reads it.
+
+    Raw rows rather than anything pre-validated — `parse_rows` is the one definition of a valid
+    row, and duplicating it in Apps Script is how the two drift.
+    """
+
+    rows: list[dict]
+    source_url: str = ""
 
 
 class StartImportResponse(BaseModel):
@@ -31,12 +41,26 @@ class ImportProgress(BaseModel):
 
 
 class ReviewPerson(BaseModel):
-    """The limited view: enough to scan forty towns, not enough to audit one."""
+    """Everything the sheet supplied for this person, as it will be written.
+
+    Wider than the first cut, which showed name and seat only: a reviewer approving a bulk
+    import is approving the phone numbers and emails too, and cannot approve what they cannot
+    see. Lists because a person reconciled from several sightings can carry more than one.
+    """
 
     id: str
     name: str
     label: str
     image: str | None = None
+    urls: list[str] = []
+    phones: list[str] = []
+    emails: list[str] = []
+    start_date: str | None = None
+    end_date: str | None = None
+    # None when no label resolved to a role. `unmatched_text` is the wording that did not
+    # resolve, which is what a curator would need to fix in the sheet.
+    role_id: str | None = None
+    unmatched_text: list[str] = []
 
 
 class ReviewJurisdiction(BaseModel):

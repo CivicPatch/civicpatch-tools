@@ -5,8 +5,8 @@
  * access to it, which is every volunteer. This one opens the sheet by id and runs as whoever
  * authorized it, so there is no service account and no key anywhere.
  *
- * Idempotent: it creates what is missing and rewrites headers. It never deletes a tab, a column
- * or a row — volunteers' work lives in this file.
+ * Idempotent. It never deletes anything on Entry[Roster], where the typing happens, and carries
+ * the importer's own columns forward on the tabs it rewrites.
  *
  * HEADERS ARE A CONTRACT. They must match civicpatch.org/src/core/entry_rows.py
  * (_REQUIRED, _OPTIONAL, STATUS_COLUMNS) exactly. Matching is case-insensitive and order does
@@ -30,18 +30,19 @@ const ROSTER_HEADERS = [
   "end_date",
 ].concat(APP_OWNED);
 
-// Jurisdictions is three things at once: the reference list, the roster dropdown's source
-// (validation can only point inside the same file), and the worklist that `ready` ticks.
+// Jurisdictions is the reference list and the roster dropdown's source at once: Sheets
+// validation can only point at a range inside the same file.
 const LIVE_JURISDICTIONS_TAB = "Live[Jurisdictions]";
 const LIVE_PEOPLE_TAB = "Live[People]";
 const LIVE_POSTS_TAB = "Live[Posts]";
 
-// `ready` is the one cell a volunteer owns on the Jurisdictions tab.
-const READY = "ready";
+// Written by the import, not by this script. A setup run must carry them forward or it erases
+// the last import's report on a tab it also owns.
+const IMPORT_REPORT = ["rows"].concat(APP_OWNED);
+
 const LIVE_JURISDICTION_HEADERS = [
   "jurisdiction_ocdid",
   "name",
-  READY,
   "url",
   "population",
   "level",
@@ -66,20 +67,18 @@ const LIVE_PEOPLE_HEADERS = [
 ];
 const LIVE_POST_HEADERS = [
   "jurisdiction_ocdid",
-  "organization",
   "post_label",
   "role_id",
   "division_ocdid",
 ];
-
-// Past this the per-jurisdiction reference fetches run into the execution limit.
-const MAX_WORKLIST = 200;
 
 // `/search` is a public route, so this needs no credential. 50 is its `MAX_SEARCH_LIMIT`.
 // Apps Script runs on Google's network and cannot reach localhost, so this is always a
 // deployed instance — override with the CIVICPATCH_URL script property.
 const DEFAULT_CIVICPATCH_URL = "https://civicpatch.org";
 const SEARCH_PAGE_SIZE = 50;
+// The bulk reads cap at 500 a page, so a state is a handful of requests rather than one a town.
+const BULK_PAGE_SIZE = 500;
 
 // The dev Washington sheet. Not a secret — access is Drive sharing, not knowing this id.
 const ENTRY_SPREADSHEET_ID = "16tGgkC40p3OGp7kRNlkqsA4V86Y5JdbEPQLK5cBkuIc";
@@ -96,6 +95,11 @@ const ENTRY_LEVELS = "";
  * missing ones at once instead of failing on the first.
  */
 const PROPERTIES = [
+  {
+    name: "CIVICPATCH_API_KEY",
+    required: true,
+    about: "mint one at /settings → API keys; the bulk reads are signed-in only",
+  },
   {
     name: "CIVICPATCH_URL",
     required: false,
@@ -115,9 +119,9 @@ function setUpEntrySheet() {
   const jurisdictions = refreshLiveJurisdictions(spreadsheet);
   pointOcdidAtJurisdictions(
     roster,
-    jurisdictions.getRange(2, 1, jurisdictions.getLastRow() - 1, 1),
+    jurisdictions.getRange(2, 1, Math.max(jurisdictions.getLastRow() - 1, 1), 1),
   );
-  refreshLiveTabs(spreadsheet, jurisdictions);
+  refreshLiveTabs(spreadsheet);
 
   Logger.log("Entry sheet is set up: " + spreadsheet.getUrl());
 }
@@ -168,10 +172,63 @@ function civicpatchUrl() {
   return (configured || DEFAULT_CIVICPATCH_URL).replace(/\/+$/, "");
 }
 
+function apiKey() {
+  const key =
+    PropertiesService.getScriptProperties().getProperty("CIVICPATCH_API_KEY");
+  if (!key) {
+    throw new Error(
+      "CIVICPATCH_API_KEY is not set. Mint one at /settings → API keys.",
+    );
+  }
+  // The header takes the bare key, not "Bearer <key>".
+  return { Authorization: key };
+}
+
+/**
+ * Every page of a state-scoped bulk read: page one gives the count, the rest go together.
+ */
+function fetchStatePages(path) {
+  const headers = apiKey();
+  const first = fetchAllJson([bulkPageUrl(path, 1)], headers)[0];
+  if (!first) {
+    throw new Error(
+      "Could not read " +
+        civicpatchUrl() +
+        path +
+        " for " +
+        ENTRY_STATE +
+        ". Check CIVICPATCH_API_KEY is valid and belongs to a maintainer.",
+    );
+  }
+
+  const remaining = [];
+  for (var page = 2; page <= first.total_pages; page++) {
+    remaining.push(bulkPageUrl(path, page));
+  }
+  return [first].concat(
+    fetchAllJson(remaining, headers).filter(function (body) {
+      return body;
+    }),
+  );
+}
+
+function bulkPageUrl(path, page) {
+  return (
+    civicpatchUrl() +
+    path +
+    "?state=" +
+    encodeURIComponent(ENTRY_STATE) +
+    "&per_page=" +
+    BULK_PAGE_SIZE +
+    "&page=" +
+    page
+  );
+}
+
 /** Independent requests sent together — round trips dominate. A bad one is null, not a throw. */
-function fetchAllJson(urls) {
+function fetchAllJson(urls, headers) {
   const requests = urls.map(function (url) {
-    return { url: url, muteHttpExceptions: true };
+    return { url: url, muteHttpExceptions: true, headers: headers || {} };
   });
   return UrlFetchApp.fetchAll(requests).map(function (response) {
     if (response.getResponseCode() !== 200) return null;
@@ -245,76 +302,9 @@ function refreshLiveJurisdictions(spreadsheet) {
     LIVE_JURISDICTIONS_TAB + ": " + rows.length + " " + ENTRY_STATE + " jurisdictions",
   );
 
-  return writeJurisdictions(spreadsheet, rows);
-}
-
-/**
- * Writes the jurisdiction list, keeping whatever is ticked `ready`.
- *
- * The list is a projection of civicpatch and gets rewritten whole, but `ready` is the one cell a
- * volunteer owns on this tab. It is restored by ocdid, so a town keeps its tick even if the list
- * reorders or grows underneath it.
- */
-function writeJurisdictions(spreadsheet, rows) {
-  const sheet =
-    spreadsheet.getSheetByName(LIVE_JURISDICTIONS_TAB) ||
-    spreadsheet.insertSheet(LIVE_JURISDICTIONS_TAB);
-  const wasReady = readyByOcdid(sheet);
-  const readyColumn = LIVE_JURISDICTION_HEADERS.indexOf(READY);
-
-  const values = rows.map(function (row) {
-    const filled = LIVE_JURISDICTION_HEADERS.map(function (_, index) {
-      return index < row.length ? row[index] : "";
-    });
-    filled[readyColumn] = wasReady[row[0]] === true;
-    return filled;
-  });
-
-  sheet.clear();
-  sheet
-    .getRange(1, 1, 1, LIVE_JURISDICTION_HEADERS.length)
-    .setValues([LIVE_JURISDICTION_HEADERS])
-    .setFontWeight("bold")
-    .setBackground(HEADER_BACKGROUND);
-  sheet.setFrozenRows(1);
-  if (values.length) {
-    sheet
-      .getRange(2, 1, values.length, LIVE_JURISDICTION_HEADERS.length)
-      .setValues(values);
-  }
-  sheet
-    .getRange(2, readyColumn + 1, Math.max(sheet.getMaxRows() - 1, 1), 1)
-    .insertCheckboxes();
-
-  // Everything but `ready` is app-owned, so protect around it rather than the whole tab.
-  LIVE_JURISDICTION_HEADERS.forEach(function (header, index) {
-    if (header === READY) return;
-    const column = sheet.getRange(1, index + 1, sheet.getMaxRows(), 1);
-    column.setBackground(APP_OWNED_BACKGROUND);
-    protectRange(sheet, column, LIVE_JURISDICTIONS_TAB + " " + header);
-  });
-
+  const sheet = writeJurisdictions(spreadsheet, rows);
+  // Column A only: over every column, requireValueInRange would accept a name as an ocdid.
   return sheet;
-}
-
-/** What is ticked today, keyed by ocdid, so a rewrite does not lose it. */
-function readyByOcdid(sheet) {
-  const lastRow = sheet.getLastRow();
-  if (lastRow < 2) return {};
-  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-  const ocdidColumn = headers.indexOf("jurisdiction_ocdid");
-  const readyColumn = headers.indexOf(READY);
-  if (ocdidColumn === -1 || readyColumn === -1) return {};
-
-  const ticked = {};
-  sheet
-    .getRange(2, 1, lastRow - 1, sheet.getLastColumn())
-    .getValues()
-    .forEach(function (row) {
-      const ocdid = String(row[ocdidColumn] || "").trim();
-      if (ocdid && row[readyColumn] === true) ticked[ocdid] = true;
-    });
-  return ticked;
 }
 
 function searchPageUrl(page) {
@@ -330,14 +320,67 @@ function searchPageUrl(page) {
   );
 }
 
+/**
+ * Rewrites the jurisdiction list, keeping whatever the importer last reported.
+ *
+ * The list itself is a projection and gets replaced wholesale, but `rows`/`status`/`error`/
+ * `last_import_at` belong to the import. Carried forward by ocdid, so they survive the list
+ * being reordered or growing underneath them.
+ */
+function writeJurisdictions(spreadsheet, rows) {
+  const sheet =
+    spreadsheet.getSheetByName(LIVE_JURISDICTIONS_TAB) ||
+    spreadsheet.insertSheet(LIVE_JURISDICTIONS_TAB);
+  const reported = importReportByOcdid(sheet);
+
+  const withReport = rows.map(function (row) {
+    const carried = reported[row[0]] || {};
+    return LIVE_JURISDICTION_HEADERS.map(function (header, index) {
+      if (IMPORT_REPORT.indexOf(header) !== -1) return carried[header] || "";
+      return index < row.length ? row[index] : "";
+    });
+  });
+
+  return writeReferenceTab(
+    spreadsheet,
+    LIVE_JURISDICTIONS_TAB,
+    LIVE_JURISDICTION_HEADERS,
+    withReport,
+  );
+}
+
+/** What the importer last wrote, keyed by ocdid, so a rewrite does not erase it. */
+function importReportByOcdid(sheet) {
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return {};
+  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  const ocdidColumn = headers.indexOf("jurisdiction_ocdid");
+  if (ocdidColumn === -1) return {};
+
+  const reported = {};
+  sheet
+    .getRange(2, 1, lastRow - 1, sheet.getLastColumn())
+    .getValues()
+    .forEach(function (row) {
+      const ocdid = String(row[ocdidColumn] || "").trim();
+      if (!ocdid) return;
+      const carried = {};
+      IMPORT_REPORT.forEach(function (header) {
+        const at = headers.indexOf(header);
+        if (at !== -1) carried[header] = row[at];
+      });
+      reported[ocdid] = carried;
+    });
+  return reported;
+}
+
 function collectJurisdictions(rows, body) {
   (body.data || []).forEach(function (jurisdiction) {
-    // Positions match LIVE_JURISDICTION_HEADERS up to `level`; `ready` is filled on write and
-    // the app-owned tail is left to the importer.
+    // Positions match LIVE_JURISDICTION_HEADERS up to `level`; `rows` and the app-owned tail
+    // are the importer's to fill, and `writeReferenceTab` pads them.
     rows.push([
       jurisdiction.jurisdiction_ocdid,
       jurisdiction.name || "",
-      false,
       jurisdiction.url || "",
       jurisdiction.population || "",
       jurisdiction.level || "",
@@ -410,4 +453,124 @@ function protectRange(sheet, range, description) {
     });
 
   range.protect().setDescription(description).setWarningOnly(true);
+}
+
+/* ── The Live tabs ─────────────────────────────────────────────────────────── */
+
+/**
+ * What civicpatch already holds for the whole state, so a curator matches existing wording
+ * instead of minting "Selectboard Member" next to "Select Board Member".
+ */
+function refreshLiveTabs(spreadsheet) {
+  writeReferenceTab(
+    spreadsheet,
+    LIVE_PEOPLE_TAB,
+    LIVE_PEOPLE_HEADERS,
+    livePeopleRows(),
+  );
+  writeReferenceTab(
+    spreadsheet,
+    LIVE_POSTS_TAB,
+    LIVE_POST_HEADERS,
+    livePostRows(),
+  );
+}
+
+function livePeopleRows() {
+  const rows = [];
+  fetchStatePages("/api/v1/people/bulk").forEach(function (body) {
+    (body.data || []).forEach(function (person) {
+      // Someone with no open membership still belongs here — they are exactly the person about
+      // to be re-added under a slightly different spelling.
+      const memberships = (person.memberships || []).length
+        ? person.memberships
+        : [{}];
+      memberships.forEach(function (membership) {
+        rows.push(personRow(person.jurisdiction_ocdid, person, membership));
+      });
+    });
+  });
+  Logger.log(LIVE_PEOPLE_TAB + ": " + rows.length + " rows");
+  return rows;
+}
+
+function livePostRows() {
+  const rows = [];
+  fetchStatePages("/api/v1/posts/bulk").forEach(function (body) {
+    (body.data || []).forEach(function (post) {
+      rows.push([
+        post.jurisdiction_ocdid,
+        post.label || "",
+        post.role_id || "",
+        post.division_ocdid || "",
+      ]);
+    });
+  });
+  Logger.log(LIVE_POSTS_TAB + ": " + rows.length + " posts");
+  return rows;
+}
+
+function personRow(ocdid, person, membership) {
+  return [
+    ocdid,
+    person.name || "",
+    membership.post_label || "",
+    membership.label || "",
+    joined(person.urls),
+    joined(person.phones),
+    joined(person.emails),
+    person.cdn_image || person.image || "",
+    person.start_date || "",
+    person.end_date || "",
+    joined(person.other_names),
+    joined(person.source_urls),
+  ];
+}
+
+function joined(values) {
+  return (values || []).join("; ");
+}
+
+/** Every distinct, non-empty ocdid in a sheet's `jurisdiction_ocdid` column. */
+function ocdidsIn(sheet) {
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return [];
+  const column = headerIndex(sheet, "jurisdiction_ocdid");
+  const seen = {};
+  const ocdids = [];
+  sheet
+    .getRange(2, column, lastRow - 1, 1)
+    .getValues()
+    .forEach(function (row) {
+      const ocdid = String(row[0] || "").trim();
+      if (!ocdid || seen[ocdid]) return;
+      seen[ocdid] = true;
+      ocdids.push(ocdid);
+    });
+  return ocdids;
+}
+
+/** Rewritten whole: these are projections, and a stale row shows a seat that no longer exists. */
+function writeReferenceTab(spreadsheet, name, headers, rows) {
+  const sheet =
+    spreadsheet.getSheetByName(name) || spreadsheet.insertSheet(name);
+  sheet.clear();
+  sheet
+    .getRange(1, 1, 1, headers.length)
+    .setValues([headers])
+    .setFontWeight("bold")
+    .setBackground(HEADER_BACKGROUND);
+  sheet.setFrozenRows(1);
+  if (rows.length) {
+    // Padded to the header width: a caller that leaves the app-owned tail to the importer
+    // hands back a short row, and Sheets rejects a mismatched range outright.
+    const padded = rows.map(function (row) {
+      return headers.map(function (_, index) {
+        return index < row.length ? row[index] : "";
+      });
+    });
+    sheet.getRange(2, 1, padded.length, headers.length).setValues(padded);
+  }
+  protectRange(sheet, sheet.getDataRange(), name + " (app-owned)");
+  return sheet;
 }
