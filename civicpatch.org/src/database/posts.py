@@ -327,6 +327,46 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     return [_with_label(dict(zip(columns, row))) for row in await cur.fetchall()]
 
 
+async def list_page_for_state(
+    state: str, limit: int, offset: int
+) -> tuple[int, list[dict]]:
+    """One page of every post in a state, and the total behind it.
+
+    Same projection as `list_for_jurisdiction`, plus the jurisdiction each belongs to — a
+    state-wide read has to say which town a seat is in.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT COUNT(*) OVER() AS total,
+                   posts.jurisdiction_ocdid,
+                   posts.id::text, posts.organization_id::text, posts.role_id,
+                   posts.division_ocdid, posts._headcount, posts._is_tracked,
+                   {POST_IS_VERIFIED} AS _is_verified,
+                   roles.label AS role_label
+            FROM posts LEFT JOIN roles ON roles.id = posts.role_id
+            WHERE posts.jurisdiction_ocdid LIKE %(prefix)s
+            ORDER BY posts.jurisdiction_ocdid, posts.role_id, posts.division_ocdid
+            LIMIT %(limit)s OFFSET %(offset)s
+            """,
+            {
+                "prefix": f"ocd-jurisdiction/country:us/state:{state.lower()}%",
+                "limit": limit,
+                "offset": offset,
+            },
+        )
+        rows = await cur.fetchall()
+        columns = [column.name for column in cur.description or []]
+    if not rows:
+        return 0, []
+    total = rows[0][0]
+    return total, [
+        _with_label({k: v for k, v in zip(columns, row) if k != "total"})
+        for row in rows
+    ]
+
+
 async def ids_by_identity(
     cur, jurisdiction_ocdids: list[str]
 ) -> dict[tuple[str, str, str], str]:

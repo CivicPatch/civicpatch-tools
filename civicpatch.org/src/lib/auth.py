@@ -1,3 +1,4 @@
+import hmac
 import logging
 from typing import cast, Optional
 
@@ -35,8 +36,9 @@ async def get_user(
     # 2. Then check Authorization header
     elif authorization:
         token = authorization.strip()
-        # Check if it's the service API key
-        if service_api_key and token == service_api_key:
+        # Constant-time: a plain == leaks how much of the secret matched, and this one
+        # bypasses every role check.
+        if service_api_key and hmac.compare_digest(token, service_api_key):
             token_source = "service_api_key"
         else:
             token_source = "header"

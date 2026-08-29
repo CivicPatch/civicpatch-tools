@@ -32,6 +32,13 @@ def _person(person: dict) -> ReviewPerson:
         name=person.get("name", ""),
         label=person.get("label") or "",
         image=person.get("cdn_image") or person.get("image"),
+        urls=person.get("urls") or [],
+        phones=person.get("phones") or [],
+        emails=person.get("emails") or [],
+        start_date=person.get("start_date"),
+        end_date=person.get("end_date"),
+        role_id=person.get("role_id"),
+        unmatched_text=person.get("unmatched_text") or [],
     )
 
 

@@ -206,6 +206,10 @@ def _rendered(person: Person, records: list[PersonRecord], taxonomy: Taxonomy) -
             )
         ),
         "labels": person.labels,
+        # Already computed for the label above; kept so a reviewer can be shown which labels
+        # resolved to nothing rather than having to spot it in the rendered text.
+        "role_id": derived.role,
+        "unmatched_text": derived.unmatched,
         "division_ocdid": derived.division_ocdid,
         "phones": person.phones,
         "emails": person.emails,

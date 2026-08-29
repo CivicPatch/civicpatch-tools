@@ -17,7 +17,7 @@ from unittest.mock import AsyncMock, patch
 import pytest
 import pytest_asyncio
 
-from core.entry_rows import ImportStatus, parse_rows, ready_jurisdictions
+from core.entry_rows import ImportStatus, parse_rows
 from lib.csv import parse_csv
 from database import request_batches
 from database.database import get_pool
@@ -157,7 +157,7 @@ async def test_an_import_writes_sightings_and_lands_in_the_review_queue(
         ("Ana Reyes", "Select Board Chair"), ("Bo Chen", "Select Board Member")
     )
 
-    [result] = await import_rows(rows, {_OCDID}, user_id, batch_id)
+    [result] = await import_rows(rows, user_id, batch_id)
 
     assert result.status is ImportStatus.IMPORTED
     assert result.people == 2
@@ -186,7 +186,7 @@ async def test_every_sighting_gets_an_identity(user_id, batch_id):
     would be evidence nothing can find."""
     rows = await _parsed(("Ana Reyes", "Select Board Chair"))
 
-    [result] = await import_rows(rows, {_OCDID}, user_id, batch_id)
+    [result] = await import_rows(rows, user_id, batch_id)
 
     assert (
         await _scalar(
@@ -208,7 +208,7 @@ async def test_a_label_mints_the_post_it_implies(user_id, batch_id):
     is what makes the 194 MA jurisdictions with no posts importable at all."""
     rows = await _parsed(("Ana Reyes", "Select Board Chair"))
 
-    [result] = await import_rows(rows, {_OCDID}, user_id, batch_id)
+    [result] = await import_rows(rows, user_id, batch_id)
 
     assert result.posts >= 1
     assert (
@@ -221,31 +221,12 @@ async def test_a_label_mints_the_post_it_implies(user_id, batch_id):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_jurisdiction_nobody_marked_ready_is_skipped(user_id, batch_id):
-    """Only the volunteer knows a town is finished. Without the tick nothing is written — no
-    request, so no card for half-typed work."""
-    rows = await _parsed(("Ana Reyes", "Select Board Chair"))
-
-    [result] = await import_rows(rows, set(), user_id, batch_id)
-
-    assert result.status is ImportStatus.SKIPPED
-    assert result.request_id is None
-    assert (
-        await _scalar(
-            "SELECT count(*) FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,)
-        )
-        == 0
-    )
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
 async def test_the_batch_is_recorded_on_the_request(user_id, batch_id):
     """So a card can name the import that raised it, and the bulk review screen can ask
     `requests` for this batch's *current* state rather than reading a run-time snapshot."""
     rows = await _parsed(("Ana Reyes", "Select Board Chair"))
 
-    [result] = await import_rows(rows, {_OCDID}, user_id, batch_id)
+    [result] = await import_rows(rows, user_id, batch_id)
 
     assert (
         await _scalar(
@@ -270,7 +251,7 @@ async def test_one_jurisdiction_failing_does_not_cost_the_others(user_id, batch_
         [{"jurisdiction_ocdid": missing, "name": "Cy Diaz", "label": "Chair"}], _SHEET
     )
 
-    results = await import_rows(good + bad, {_OCDID, missing}, user_id, batch_id)
+    results = await import_rows(good + bad, user_id, batch_id)
     by_ocdid = {result.jurisdiction_ocdid: result for result in results}
 
     assert by_ocdid[_OCDID].status is ImportStatus.IMPORTED
@@ -292,16 +273,13 @@ async def test_end_to_end_from_csv_text(user_id, batch_id):
         f"{_OCDID},Bo Chen,Select Board Member,bo@zz.gov\n"
         f"{_OCDID},Cy Diaz,,cy@zz.gov\n"
     )
-    jurisdictions_csv = f"jurisdiction_ocdid,ready\n{_OCDID},TRUE\n"
-
     rows, errors = parse_rows(parse_csv(roster_csv), _SHEET)
-    ready = ready_jurisdictions(parse_csv(jurisdictions_csv))
 
     # The label-less row is rejected, and takes nobody else with it.
     assert [(error.line, error.column) for error in errors] == [(4, "label")]
     assert len(rows) == 2
 
-    [result] = await import_rows(rows, ready, user_id, batch_id)
+    [result] = await import_rows(rows, user_id, batch_id)
 
     assert result.status is ImportStatus.IMPORTED
     assert result.people == 2
@@ -323,7 +301,7 @@ async def test_the_batch_review_shows_the_towns_it_made(user_id, batch_id):
     rows = await _parsed(
         ("Ana Reyes", "Select Board Chair"), ("Bo Chen", "Select Board Member")
     )
-    await import_rows(rows, {_OCDID}, user_id, batch_id)
+    await import_rows(rows, user_id, batch_id)
 
     review = await batch_review(batch_id)
 
@@ -341,20 +319,6 @@ async def test_the_batch_review_shows_the_towns_it_made(user_id, batch_id):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_skipped_town_never_reaches_the_review(user_id, batch_id):
-    """It has no request, so there is nothing to review — the volunteer hears about it in the
-    sheet instead."""
-    rows = await _parsed(("Ana Reyes", "Select Board Chair"))
-    await import_rows(rows, set(), user_id, batch_id)
-
-    review = await batch_review(batch_id)
-
-    assert review is not None
-    assert review.jurisdictions == []
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
 async def test_an_unknown_batch_reviews_as_nothing(user_id):
     assert await batch_review("00000000-0000-4000-8000-00000000dead") is None
 
@@ -364,7 +328,7 @@ async def test_an_unknown_batch_reviews_as_nothing(user_id):
 async def test_publishing_a_selection_leaves_the_rest_pending(user_id, batch_id):
     """The page is a view, not a queue: publishing some does not make the others disappear."""
     rows = await _parsed(("Ana Reyes", "Select Board Chair"))
-    await import_rows(rows, {_OCDID}, user_id, batch_id)
+    await import_rows(rows, user_id, batch_id)
 
     [result] = await publish_selected(batch_id, {_OCDID}, user_id)
     assert result.published is True
@@ -379,7 +343,7 @@ async def test_publishing_a_selection_leaves_the_rest_pending(user_id, batch_id)
 @pytest.mark.asyncio
 async def test_a_town_nobody_selected_is_left_alone(user_id, batch_id):
     rows = await _parsed(("Ana Reyes", "Select Board Chair"))
-    await import_rows(rows, {_OCDID}, user_id, batch_id)
+    await import_rows(rows, user_id, batch_id)
 
     assert await publish_selected(batch_id, set(), user_id) == []
 
@@ -394,7 +358,7 @@ async def test_publishing_twice_does_not_republish(user_id, batch_id):
     """A town already live — published here or from the ordinary queue — is skipped rather than
     superseding itself for nothing."""
     rows = await _parsed(("Ana Reyes", "Select Board Chair"))
-    await import_rows(rows, {_OCDID}, user_id, batch_id)
+    await import_rows(rows, user_id, batch_id)
     await publish_selected(batch_id, {_OCDID}, user_id)
 
     assert await publish_selected(batch_id, {_OCDID}, user_id) == []
@@ -414,7 +378,7 @@ async def test_publishing_two_towns_queues_one_commit(user_id, batch_id, batch_c
         _SHEET,
     )
     assert errors == []
-    await import_rows(rows, set(_OCDIDS), user_id, batch_id)
+    await import_rows(rows, user_id, batch_id)
 
     results = await publish_selected(batch_id, set(_OCDIDS), user_id)
     assert [result.published for result in results] == [True, True]
@@ -442,7 +406,7 @@ async def test_a_town_that_refused_to_publish_stays_out_of_the_commit(
         _SHEET,
     )
     assert errors == []
-    await import_rows(rows, set(_OCDIDS), user_id, batch_id)
+    await import_rows(rows, user_id, batch_id)
 
     with patch(
         "services.batch_review.roster_edits.publish_to_database",
@@ -462,7 +426,7 @@ async def test_a_town_that_refused_to_publish_stays_out_of_the_commit(
 async def test_publishing_nothing_queues_no_commit(user_id, batch_id, batch_commit):
     """An empty commit is not a record of anything."""
     rows = await _parsed(("Ana Reyes", "Select Board Chair"))
-    await import_rows(rows, {_OCDID}, user_id, batch_id)
+    await import_rows(rows, user_id, batch_id)
 
     assert await publish_selected(batch_id, set(), user_id) == []
     batch_commit.assert_not_awaited()

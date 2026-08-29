@@ -9,9 +9,11 @@ from database import request_batches
 from fastapi import APIRouter, BackgroundTasks, Depends
 from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
+from lib.sheets import SheetsNotConfigured
 from schemas.common import Identity, RouteCategory, UserRole
 from schemas.imports import (
     ImportProgress,
+    PushedRowsRequest,
     PublishSelectionRequest,
     StartImportResponse,
 )
@@ -22,10 +24,10 @@ logger = logging.getLogger(__name__)
 
 
 async def run_import_task(
-    batch_id: str, rows: list, ready: set, user_id: str
+    batch_id: str, rows: list, user_id: str
 ) -> None:
     """Module level per the background-task convention: importable, no closed-over state."""
-    await sheet_import.run_import(batch_id, rows, ready, user_id)
+    await sheet_import.run_import(batch_id, rows, user_id)
 
 
 def get_router() -> APIRouter:
@@ -40,11 +42,43 @@ def get_router() -> APIRouter:
         """What an import would do. Reads the sheet, writes nothing, takes no lock."""
         try:
             read = await sheet_import.read_sheet(entry_sheet.spreadsheet_id())
-        except entry_sheet.SheetNotConfigured as e:
+        except (entry_sheet.SheetNotConfigured, SheetsNotConfigured) as e:
             return JSONResponse({"error": str(e)}, status_code=503)
         except Exception as e:
             return JSONResponse({"error": _sharing_hint(e)}, status_code=502)
         return {"data": read.preview}
+
+    @router.post("/rows")
+    async def import_rows_endpoint(
+        body: PushedRowsRequest,
+        background_tasks: BackgroundTasks,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+        ),
+    ):
+        """Ingest rows the sheet pushed, rather than opening the sheet ourselves.
+
+        This is the path that needs no Google credentials: the Apps Script runs as a person and
+        sends what it read. Parsing still happens here, so the sheet cannot disagree with us
+        about what a valid row is.
+        """
+        if not user.user_id:
+            return JSONResponse({"error": "User ID not available"}, status_code=401)
+
+        read = sheet_import.read_rows(body.rows, body.source_url)
+        try:
+            batch_id = await request_batches.start(
+                request_batches.BatchKind.SHEET_IMPORT,
+                f"sheet:{body.source_url or 'pushed'}",
+                user.user_id,
+                {"source_url": body.source_url, "rows": len(body.rows)},
+                items_total=len(read.preview.jurisdictions_ready),
+            )
+        except request_batches.BatchAlreadyRunning as e:
+            return JSONResponse({"error": str(e)}, status_code=409)
+
+        background_tasks.add_task(run_import_task, batch_id, read.rows, user.user_id)
+        return {"data": StartImportResponse(batch_id=batch_id, preview=read.preview)}
 
     @router.post("")
     async def start_import_endpoint(
@@ -63,7 +97,7 @@ def get_router() -> APIRouter:
         try:
             spreadsheet_id = entry_sheet.spreadsheet_id()
             read = await sheet_import.read_sheet(spreadsheet_id)
-        except entry_sheet.SheetNotConfigured as e:
+        except (entry_sheet.SheetNotConfigured, SheetsNotConfigured) as e:
             return JSONResponse({"error": str(e)}, status_code=503)
         except Exception as e:
             return JSONResponse({"error": _sharing_hint(e)}, status_code=502)
@@ -74,18 +108,28 @@ def get_router() -> APIRouter:
                 f"sheet:{spreadsheet_id}",
                 user.user_id,
                 {"spreadsheet_id": spreadsheet_id},
-                items_total=len(read.ready),
+                items_total=len(read.preview.jurisdictions_ready),
             )
         except request_batches.BatchAlreadyRunning as e:
             # Not queued: two runs would race each other's write-back.
             return JSONResponse({"error": str(e)}, status_code=409)
 
-        background_tasks.add_task(
-            run_import_task, batch_id, read.rows, read.ready, user.user_id
-        )
+        background_tasks.add_task(run_import_task, batch_id, read.rows, user.user_id)
         return {"data": StartImportResponse(batch_id=batch_id, preview=read.preview)}
 
     # Declared before `/{batch_id}` or the path parameter swallows it.
+    @router.get("/sheet")
+    async def sheet_endpoint(
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+        ),
+    ):
+        """Where the rows being imported live, so the page can link to them."""
+        try:
+            return {"data": {"url": entry_sheet.spreadsheet_url()}}
+        except entry_sheet.SheetNotConfigured as e:
+            return JSONResponse({"error": str(e)}, status_code=503)
+
     @router.get("/latest")
     async def latest_import_endpoint(
         _: Identity = Depends(

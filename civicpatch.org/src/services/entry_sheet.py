@@ -26,6 +26,12 @@ class SheetNotConfigured(Exception):
     pass
 
 
+def spreadsheet_url() -> str:
+    """Where a volunteer goes to look at or fix the rows. One place builds it, so the link on
+    the import page and the `source_url` stamped onto every sighting cannot disagree."""
+    return f"https://docs.google.com/spreadsheets/d/{spreadsheet_id()}"
+
+
 def spreadsheet_id() -> str:
     """The one data-entry sheet. Configured, not chosen: civicpatch owns it, so which sheet to
     work against is not a question anyone answers per run. docker-compose defaults it for dev."""

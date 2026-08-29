@@ -125,17 +125,33 @@ def update_spreadsheet(sheet_name, values):
 _TOKEN_URI = "https://oauth2.googleapis.com/token"
 
 
+class SheetsNotConfigured(Exception):
+    """No usable Google credentials. Distinct from a sheet we cannot read: nothing was sent."""
+
+
 def get_credentials():
     env = environment.get_env_vars()
-    if env["GOOGLE_SHEETS_PRIVATE_KEY_BASE64"] is None or env["GOOGLE_SHEETS_PRIVATE_KEY_BASE64"] == "":
-        raise ValueError("GOOGLE_SHEETS_PRIVATE_KEY_BASE64 environment variable is not set.")
+    if not env["GOOGLE_SHEETS_PRIVATE_KEY_BASE64"]:
+        raise SheetsNotConfigured("GOOGLE_SHEETS_PRIVATE_KEY_BASE64 is not set.")
 
-    if env["GOOGLE_SHEETS_CLIENT_EMAIL"] is None or env["GOOGLE_SHEETS_CLIENT_EMAIL"] == "":
-        raise ValueError("GOOGLE_SHEETS_CLIENT_EMAIL environment variable is not set.")
+    if not env["GOOGLE_SHEETS_CLIENT_EMAIL"]:
+        raise SheetsNotConfigured("GOOGLE_SHEETS_CLIENT_EMAIL is not set.")
 
     scopes =  ["https://www.googleapis.com/auth/spreadsheets"]
+    try:
+        private_key = base64.b64decode(
+            env["GOOGLE_SHEETS_PRIVATE_KEY_BASE64"], validate=True
+        ).decode("utf-8")
+    except Exception as e:
+        # A placeholder like NO_KEY_PROVIDED lands here, and it is a deployment problem rather
+        # than an unreadable sheet — saying "share it with us" sends people chasing the wrong
+        # thing entirely.
+        raise SheetsNotConfigured(
+            f"GOOGLE_SHEETS_PRIVATE_KEY_BASE64 is not valid base64: {e}"
+        ) from e
+
     account_info = {
-        "private_key": base64.b64decode(env["GOOGLE_SHEETS_PRIVATE_KEY_BASE64"]).decode("utf-8"),
+        "private_key": private_key,
         "client_email": env["GOOGLE_SHEETS_CLIENT_EMAIL"],
         "token_uri": _TOKEN_URI,
     }

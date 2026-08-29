@@ -175,3 +175,38 @@ When adding a new endpoint, pick the prefix deliberately. If it returns frontend
 - Run tests: `mise run tcp`
 - **Integration tests must not be modified unless the behavior they test has genuinely changed.** If an integration test fails during a refactor, stop and flag it before proceeding — do not edit the test to make it pass. Integration tests describe observable behavior; a failing integration test means the refactor changed behavior, which requires explicit sign-off.
 - **When tests must change alongside a refactor:** enumerate each test to be changed, the behavior it previously described, and the behavior it now describes. A test is not fixed by removing assertions — that is a regression. Every test change requires a one-sentence justification: "This test verified [old claim]. It now verifies [new claim] because [reason]." If that sentence cannot be completed, the test does not change.
+
+## End-to-end tests (Playwright)
+
+There is a full e2e suite. It lives in **`e2e/` at the repository root** — not under
+`civicpatch.org/` — with specs in `e2e/tests/` and shared fixtures in `e2e/fixtures/`.
+
+**Always run it through mise. Never invoke `npx playwright` directly and never
+`npx playwright install` by hand** — the tasks set `BASE_URL`, `E2E_DB_URL`, `E2E_REDIS_HOST`
+and `E2E_REDIS_PORT`, bring the isolated stack up, and install the pinned browser. Running
+Playwright by hand silently downloads a *different* browser build into the shared cache.
+
+| task | what it does |
+|---|---|
+| `mise run e2e-install` | once per machine: npm deps + the pinned chromium |
+| `mise run e2e` | build frontend, start the stack, open the Playwright UI, tear down on exit |
+| `mise run e2e-ci` | headless in a fully isolated docker stack |
+| `mise run visual` | screenshot every page in both themes, diff against the committed baseline |
+| `mise run visual-update` | accept the current rendering as the new baseline — only when intended |
+
+**A frontend change needs a rebuild *and* a container restart.** The backend caches the Vite
+manifest at startup, so `npm run build` alone leaves the stack serving a stale bundle and every
+failure points at the wrong thing. Both `visual` tasks do this; `e2e` rebuilds but relies on the
+stack being brought up fresh.
+
+### Writing a spec
+
+- Start from `e2e/fixtures/index.js`: `authenticatedPage` (default role) and `maintainerPage`
+  (`can_write_config`) inject session cookies; `dbFixtures` seeds and tears down automatically.
+- Seed through `e2e/fixtures/db.js`, which owns the fixed ids so teardown can target them.
+- **Stub what the stack has no credentials for.** GitHub, Google Sheets and Temporal are not
+  reachable, so route-stub those endpoints with `page.route` and assert the client wiring — that
+  each control reaches the right endpoint with the right payload and drives the right state.
+- Be explicit in the spec's header comment about what stubbing does *not* cover: a stub is a
+  hand-written copy of the API's shape, so it cannot catch the backend changing that shape. Only
+  a seeded fixture answered by the real endpoint catches contract drift.

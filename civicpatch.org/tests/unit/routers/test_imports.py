@@ -22,7 +22,6 @@ _PREFIX = "/imports"
 _EMPTY_PREVIEW = ImportPreview(
     jurisdictions_ready=[],
     jurisdictions_blocked=[],
-    jurisdictions_skipped=[],
     rows=0,
     errors=[],
 )
@@ -80,7 +79,7 @@ def test_a_second_import_over_one_sheet_is_a_409():
         patch("routers.api.imports.entry_sheet.spreadsheet_id", return_value="abc"),
         patch(
             "routers.api.imports.sheet_import.read_sheet",
-            return_value=SheetRead(rows=[], ready=set(), preview=_EMPTY_PREVIEW),
+            return_value=SheetRead(rows=[], preview=_EMPTY_PREVIEW),
         ),
         patch(
             "routers.api.imports.request_batches.start",
@@ -99,7 +98,7 @@ def test_starting_returns_the_batch_and_defers_the_work():
         patch("routers.api.imports.entry_sheet.spreadsheet_id", return_value="abc"),
         patch(
             "routers.api.imports.sheet_import.read_sheet",
-            return_value=SheetRead(rows=[], ready={"ocd-x"}, preview=_EMPTY_PREVIEW),
+            return_value=SheetRead(rows=[], preview=_EMPTY_PREVIEW),
         ),
         patch(
             "routers.api.imports.request_batches.start",
@@ -124,7 +123,7 @@ def test_preview_takes_no_lock():
         patch("routers.api.imports.entry_sheet.spreadsheet_id", return_value="abc"),
         patch(
             "routers.api.imports.sheet_import.read_sheet",
-            return_value=SheetRead(rows=[], ready=set(), preview=_EMPTY_PREVIEW),
+            return_value=SheetRead(rows=[], preview=_EMPTY_PREVIEW),
         ),
         patch(
             "routers.api.imports.request_batches.start", new_callable=AsyncMock
@@ -186,3 +185,66 @@ def test_latest_is_not_read_as_a_batch_id():
 
     assert response.status_code == 200
     by_id.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_pushed_rows_need_no_google_credentials():
+    """The whole point of the push path: the sheet sends what it read, so nothing here opens a
+    spreadsheet and no service account is involved."""
+    with (
+        patch(
+            "routers.api.imports.request_batches.start",
+            new_callable=AsyncMock,
+            return_value="batch-9",
+        ),
+        patch("routers.api.imports.run_import_task", new_callable=AsyncMock) as task,
+        patch("routers.api.imports.sheet_import.read_sheet") as read_sheet,
+    ):
+        response = _client().post(
+            f"{_PREFIX}/rows",
+            json={
+                "rows": [
+                    {
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:sedro-woolley/government",
+                        "name": "Jennifer Powers",
+                        "label": "Council Member",
+                    }
+                ],
+                "source_url": "https://docs.google.com/spreadsheets/d/abc",
+            },
+        )
+
+    assert response.status_code == 200
+    assert response.json()["data"]["batch_id"] == "batch-9"
+    task.assert_awaited_once()
+    read_sheet.assert_not_called()
+
+
+@pytest.mark.unit
+def test_a_bad_row_is_reported_and_blocks_only_its_own_town():
+    """Parsing stays server-side, so the sheet cannot disagree about what a valid row is."""
+    town = "ocd-jurisdiction/country:us/state:wa/place:sedro-woolley/government"
+    other = "ocd-jurisdiction/country:us/state:wa/place:aberdeen/government"
+    with (
+        patch(
+            "routers.api.imports.request_batches.start",
+            new_callable=AsyncMock,
+            return_value="batch-9",
+        ),
+        patch("routers.api.imports.run_import_task", new_callable=AsyncMock),
+    ):
+        response = _client().post(
+            f"{_PREFIX}/rows",
+            json={
+                "rows": [
+                    {"jurisdiction_ocdid": town, "name": "Jennifer Powers", "label": ""},
+                    {"jurisdiction_ocdid": other, "name": "Ada Whitfield", "label": "Mayor"},
+                ],
+                "source_url": "s",
+            },
+        )
+
+    preview = response.json()["data"]["preview"]
+    assert preview["jurisdictions_blocked"] == [town]
+    assert preview["jurisdictions_ready"] == [other]
+    assert [(e["line"], e["column"]) for e in preview["errors"]] == [(2, "label")]

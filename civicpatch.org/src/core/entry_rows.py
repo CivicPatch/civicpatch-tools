@@ -17,7 +17,6 @@ from enum import StrEnum
 from pydantic import BaseModel
 
 JURISDICTION = "jurisdiction_ocdid"
-READY = "ready"
 
 # Written by the import, never by a volunteer. Every row gets a value on every run: a row that
 # failed last time and is fine now must not keep last time's message.
@@ -26,7 +25,6 @@ STATUS_COLUMNS = ("status", "error", "last_import_at")
 # What a row's `status` can say.
 IMPORTED = "imported"
 ERROR = "error"
-SKIPPED = "skipped"
 BLOCKED = "blocked"
 
 
@@ -37,17 +35,14 @@ class ImportStatus(StrEnum):
     IMPORTED = "imported"
     # People stored, posts not. Re-derivable from the sightings, so not a failure.
     PARTIAL = "partial"
-    SKIPPED = "skipped"
     FAILED = "failed"
+
 
 _OPTIONAL = ("url", "phone", "email", "image", "start_date", "end_date")
 _REQUIRED = (JURISDICTION, "name", "label")
 
 # Partial dates allowed: `source_records.start_date` is text for that reason.
 _DATE = re.compile(r"^\d{4}(-\d{2}(-\d{2})?)?$")
-
-_TRUTHY = frozenset({"true", "yes", "y", "1", "x", "✓"})
-_FALSEY = frozenset({"false", "no", "n", "0", ""})
 
 
 class RowError(BaseModel):
@@ -89,13 +84,6 @@ def _clean(value) -> str:
 
 def _optional(value) -> str | None:
     return _clean(value) or None
-
-
-def _boolean(value) -> bool | None:
-    text = _clean(value).lower()
-    if text in _TRUTHY:
-        return True
-    return False if text in _FALSEY else None
 
 
 def parse_rows(
@@ -177,44 +165,11 @@ def _duplicate_errors(rows: list[ImportRow]) -> list[RowError]:
     return errors
 
 
-def unknown_jurisdiction_errors(
-    rows: list[ImportRow], known: set[str]
-) -> list[RowError]:
-    """Rows naming a jurisdiction we do not have.
-
-    Jurisdictions come from the jurisdictions repo, never from a contributor, so an ocdid the
-    database does not know is a typo and nothing else. Caught here rather than left to the
-    request insert, where it surfaces as a foreign-key error written into somebody's sheet.
-    """
-    return [
-        RowError(
-            line=row.line,
-            jurisdiction_ocdid=row.jurisdiction_ocdid,
-            column=JURISDICTION,
-            message="no such jurisdiction",
-        )
-        for row in rows
-        if row.jurisdiction_ocdid not in known
-    ]
-
-
 def rows_by_jurisdiction(rows: list[ImportRow]) -> dict[str, list[ImportRow]]:
     grouped: dict[str, list[ImportRow]] = {}
     for row in rows:
         grouped.setdefault(row.jurisdiction_ocdid, []).append(row)
     return grouped
-
-
-def ready_jurisdictions(ready_rows: list[dict]) -> set[str]:
-    """The towns a volunteer marked finished, from `Entry · Jurisdictions`.
-
-    Only they know a town is done; the maintainer running the import cannot.
-    """
-    return {
-        _clean(row[JURISDICTION])
-        for row in ready_rows
-        if _clean(row.get(JURISDICTION)) and _boolean(row.get(READY))
-    }
 
 
 # ── Columns out ──────────────────────────────────────────────────────────────
@@ -225,7 +180,6 @@ def roster_columns(
     errors: list[RowError],
     row_count: int,
     imported: set[str],
-    skipped: set[str],
     stamp: str,
 ) -> dict[str, list]:
     """`status`, `error` and `last_import_at` for every row of the roster tab.
@@ -253,9 +207,6 @@ def roster_columns(
         elif jurisdiction in imported:
             status.append(IMPORTED)
             message.append("")
-        elif jurisdiction in skipped:
-            status.append(SKIPPED)
-            message.append("not marked ready")
         elif jurisdiction in blocked:
             status.append(BLOCKED)
             message.append("another row in this town was rejected")

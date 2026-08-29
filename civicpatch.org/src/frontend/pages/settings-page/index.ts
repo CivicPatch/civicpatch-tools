@@ -1,11 +1,14 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { fetchDisplayNameSuggestion, setDisplayName } from "../../api.js";
+import "./api-keys.js";
+import { canManageApiKeys } from "./api-key-access.js";
 import "./settings-page.css";
 
 type User = {
   authenticated: boolean;
   display_name: string | null;
+  permissions?: { can_write_config?: boolean };
 };
 
 function SettingsPage({ user }: { user: string }) {
@@ -16,6 +19,7 @@ function SettingsPage({ user }: { user: string }) {
     /* fall through with default */
   }
   const needsDisplayName = !userData.display_name;
+  const canHoldKeys = canManageApiKeys(userData);
 
   const [value, setValue] = useState(userData.display_name || "");
   const [error, setError] = useState<string | null>(null);
@@ -75,6 +79,7 @@ function SettingsPage({ user }: { user: string }) {
           ${saving ? "Saving…" : "Save"}
         </button>
       </form>
+      ${canHoldKeys ? html`<api-keys></api-keys>` : null}
     </main>
   `;
 }

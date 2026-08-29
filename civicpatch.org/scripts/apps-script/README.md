@@ -19,8 +19,10 @@ A standalone script opens the spreadsheet by id and is invisible to them.
 
 1. [script.google.com](https://script.google.com) → **New project**, named `civicpatch entry sheet`
 2. Paste `entry-sheet-setup.gs` in, then **+ → Script** and paste `live-tabs.gs` as a second file
-3. **Project Settings → Script Properties** — only if you are not pointing at prod:
-   - `CIVICPATCH_URL` = e.g. a tailscale funnel to your dev instance
+3. **Project Settings → Script Properties**:
+   - `CIVICPATCH_API_KEY` — **required**. Mint one at `/settings → API keys` as a maintainer;
+     the bulk reads that fill the Live tabs are signed-in only.
+   - `CIVICPATCH_URL` — optional, e.g. a tailscale funnel to your dev instance
 
 `ENTRY_SPREADSHEET_ID` and `ENTRY_STATE` are constants at the top of the file, not properties:
 one sheet per state, so which sheet this script drives is a property of the script, not of a
@@ -44,10 +46,9 @@ a rename there is a manual edit here.
 | tab | volunteer columns | app-owned |
 |---|---|---|
 | `Entry[Roster]` | `jurisdiction_ocdid`, `name`, `label` (required); `url`, `phone`, `email`, `image`, `start_date`, `end_date` | `status`, `error`, `last_import_at` |
-| `Entry[Jurisdictions]` | `jurisdiction_ocdid`, `ready` | `rows`, `status`, `error`, `last_import_at` |
-| `Live[Jurisdictions]` | — | `jurisdiction_ocdid`, `name`, `level` (the whole state) |
-| `Live[People]` | — | `jurisdiction_ocdid`, `name`, `labels`, `image` |
-| `Live[Posts]` | — | `jurisdiction_ocdid`, `organization`, `label`, `role_id`, `division_ocdid` |
+| `Live[Jurisdictions]` | — | `jurisdiction_ocdid`, `name`, `url`, `population`, `level`, `rows`, `status`, `error`, `last_import_at` |
+| `Live[People]` | — | `jurisdiction_ocdid`, `name`, `post_label`, `membership_label`, `urls`, `phones`, `emails`, `image`, `start_date`, `end_date`, `other_names`, `source_urls` |
+| `Live[Posts]` | — | `jurisdiction_ocdid`, `post_label`, `role_id`, `division_ocdid` |
 
 ## The Live tabs
 
@@ -59,9 +60,9 @@ Their job is stopping near-misses: someone who can see Sherborn already has a
 "Select Board Member" will not type "Selectboard Member" and mint a second post for the same
 seat.
 
-`Live[People]` and `Live[Posts]` cover **only the jurisdictions named on the worklist**, not
-the whole state — reference for forty towns is useful, and for three hundred and fifty it is one
-request per town for data nobody reads. Both reads are public routes, so still no credential.
+`Live[People]` and `Live[Posts]` cover the **whole state**, via `/api/v1/people/bulk` and
+`/api/v1/posts/bulk` — paged at 500, so Washington is a handful of requests rather than one per
+town. Both are signed-in only, which is what `CIVICPATCH_API_KEY` is for.
 
 ## One state at a time
 
@@ -71,7 +72,7 @@ constants rather than script properties — configuration nobody was going to ch
 thing to get wrong.
 
 To switch states, finish or clear the entry rows first. `setUpEntrySheet` refuses to run while
-`Entry[Roster]` or `Entry[Jurisdictions]` hold rows for another state: re-pointing the dropdown
+`Entry[Roster]` holds rows for another state: re-pointing the dropdown
 under them would leave every one of those rows failing validation, and this script never deletes
 what a volunteer typed, so it cannot tidy up after itself.
 

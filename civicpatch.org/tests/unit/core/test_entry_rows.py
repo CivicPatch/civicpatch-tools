@@ -6,7 +6,6 @@ from core.entry_rows import (
     Sighting,
     jurisdiction_columns,
     parse_rows,
-    ready_jurisdictions,
     roster_columns,
     rows_by_jurisdiction,
 )
@@ -140,7 +139,7 @@ def test_the_same_name_in_two_jurisdictions_is_ordinary():
     assert errors == []
 
 
-# --- grouping and the ready gate ---
+# --- grouping ---
 
 
 @pytest.mark.unit
@@ -153,32 +152,7 @@ def test_rows_group_by_jurisdiction():
     assert len(grouped[_SHERBORN]) == 2
 
 
-@pytest.mark.unit
-def test_ready_comes_from_the_jurisdictions_tab():
-    """A volunteer finishes towns, not rows. One tick per town, not nine."""
-    assert ready_jurisdictions(
-        [
-            {"jurisdiction_ocdid": _SHERBORN, "ready": "TRUE"},
-            {"jurisdiction_ocdid": _CONCORD, "ready": "FALSE"},
-        ]
-    ) == {_SHERBORN}
-
-
-@pytest.mark.unit
-@pytest.mark.parametrize("value", ["FALSE", "", "no", "maybe"])
-def test_only_an_affirmative_tick_counts(value):
-    """Anything unreadable is not ready — importing a town nobody said was finished is worse
-    than making them tick it again."""
-    assert ready_jurisdictions([{"jurisdiction_ocdid": _SHERBORN, "ready": value}]) == set()
-
-
-@pytest.mark.unit
-def test_a_blank_jurisdiction_row_is_ignored():
-    assert ready_jurisdictions([{"jurisdiction_ocdid": "", "ready": "TRUE"}]) == set()
-
-
 # ── Columns out ──────────────────────────────────────────────────────────────
-
 
 _STAMP = "2026-08-27 14:02"
 
@@ -202,14 +176,14 @@ def _row_error(line: int, ocdid: str = _SHERBORN, column: str | None = "label") 
 
 @pytest.mark.unit
 def test_an_imported_row_says_so_and_carries_no_error():
-    columns = roster_columns([_parsed_row(2)], [], 1, {_SHERBORN}, set(), _STAMP)
+    columns = roster_columns([_parsed_row(2)], [], 1, {_SHERBORN}, _STAMP)
     assert columns["status"] == ["imported"]
     assert columns["error"] == [""]
 
 
 @pytest.mark.unit
 def test_a_rejected_row_names_its_column():
-    columns = roster_columns([], [_row_error(2)], 1, set(), set(), _STAMP)
+    columns = roster_columns([], [_row_error(2)], 1, set(), _STAMP)
     assert columns["status"] == ["error"]
     assert columns["error"] == ["label: required"]
 
@@ -218,23 +192,16 @@ def test_a_rejected_row_names_its_column():
 def test_a_good_row_in_a_blocked_town_points_elsewhere():
     """Most of a blocked town is rows that are perfectly fine. Saying 'error' against them would
     have the volunteer hunting for a fault that is on somebody else's line."""
-    columns = roster_columns([_parsed_row(2)], [_row_error(3)], 2, set(), set(), _STAMP)
+    columns = roster_columns([_parsed_row(2)], [_row_error(3)], 2, set(), _STAMP)
     assert columns["status"] == ["blocked", "error"]
     assert columns["error"][0] == "another row in this town was rejected"
-
-
-@pytest.mark.unit
-def test_a_row_in_an_unready_town_says_so():
-    columns = roster_columns([_parsed_row(2)], [], 1, set(), {_SHERBORN}, _STAMP)
-    assert columns["status"] == ["skipped"]
-    assert columns["error"] == ["not marked ready"]
 
 
 @pytest.mark.unit
 def test_every_row_gets_a_value_so_stale_errors_clear():
     """A row that failed last run and is fine now must not keep last run's message — the
     volunteer would chase a problem they already fixed."""
-    columns = roster_columns([_parsed_row(2), _parsed_row(3, name="Bo Chen")], [], 2, {_SHERBORN}, set(), _STAMP)
+    columns = roster_columns([_parsed_row(2), _parsed_row(3, name="Bo Chen")], [], 2, {_SHERBORN}, _STAMP)
     assert columns["error"] == ["", ""]
     assert len(columns["status"]) == 2
     assert columns["last_import_at"] == [_STAMP, _STAMP]
@@ -243,7 +210,7 @@ def test_every_row_gets_a_value_so_stale_errors_clear():
 @pytest.mark.unit
 def test_columns_are_as_long_as_the_tab():
     """They are written as whole ranges, so a short column would leave the tail untouched."""
-    columns = roster_columns([_parsed_row(2)], [], 5, {_SHERBORN}, set(), _STAMP)
+    columns = roster_columns([_parsed_row(2)], [], 5, {_SHERBORN}, _STAMP)
     assert all(len(values) == 5 for values in columns.values())
 
 
@@ -256,12 +223,12 @@ def test_outcomes_land_on_the_town_they_belong_to():
     columns = jurisdiction_columns(
         [_CONCORD, _SHERBORN],
         {_SHERBORN: 5, _CONCORD: 9},
-        {_SHERBORN: ("imported", None), _CONCORD: ("skipped", "not marked ready")},
+        {_SHERBORN: ("imported", None), _CONCORD: ("failed", "no such jurisdiction")},
         _STAMP,
     )
-    assert columns["status"] == ["skipped", "imported"]
+    assert columns["status"] == ["failed", "imported"]
     assert columns["rows"] == [9, 5]
-    assert columns["error"] == ["not marked ready", ""]
+    assert columns["error"] == ["no such jurisdiction", ""]
 
 
 @pytest.mark.unit
