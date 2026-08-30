@@ -55,14 +55,12 @@ async def batch_review(batch_id: str) -> BatchReview | None:
     if batch is None:
         return None
 
-    # Only pending cards need their roster read: a published one is already `people`, and a
-    # dismissed one is not going to be republished from here.
-    pending = [
-        item["request_id"]
-        for item in items
-        if item["review_status"] == RequestReviewStatus.PENDING
-    ]
-    rosters = await proposed_rosters(pending)
+    # Every card, published or not. This is what *this import* proposed, derived from its own
+    # sightings — which outlive publishing. Reading only the pending ones left a published
+    # locality claiming "0 people", and reading the jurisdiction's live roster instead would
+    # answer a different question: who is seated there now, including people no scrape in this
+    # batch ever saw.
+    rosters = await proposed_rosters([item["request_id"] for item in items])
 
     return BatchReview(
         batch_id=batch["id"],

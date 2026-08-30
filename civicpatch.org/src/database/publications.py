@@ -15,6 +15,7 @@ import logging
 from core.post_derivation import DerivedPost
 from core.people_edits import values_to_accept, with_stated_values
 from database import assertions, divisions, memberships, organizations, posts
+import database.requests as requests_db
 from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
 from database.pipeline_runs import get_sourced_at
@@ -62,6 +63,16 @@ async def dismiss_request(
             logger.info(f"[{request_id}] Dropped {dropped} post(s) nobody claimed")
 
 
+class SupersededRoster(ValueError):
+    """A newer roster for this jurisdiction is already live.
+
+    An expected state, not a fault: two imports minutes apart leave two cards, and publishing
+    the newer one makes the older one stale. Its own type so the API can say that rather than
+    answering 500, but still a `ValueError` — every caller that already treated a refusal as one
+    keeps working.
+    """
+
+
 async def _refuse_if_superseded(
     cur, request_id: str, jurisdiction_ocdid: str, last_seen_at
 ) -> None:
@@ -82,7 +93,7 @@ async def _refuse_if_superseded(
     )
     newer = await cur.fetchone()
     if newer:
-        raise ValueError(
+        raise SupersededRoster(
             f"Refusing to publish {request_id}: request {newer[0]} already published a "
             f"newer roster for {jurisdiction_ocdid} ({newer[1]} > {last_seen_at})."
         )
@@ -204,5 +215,15 @@ async def publish_request(
         await memberships.close_absent(
             cur, jurisdiction_ocdid, incoming_ids, last_seen_at
         )
+
+        # Same transaction, so a published roster and the cards it obsoletes cannot disagree.
+        stale = await requests_db.dismiss_superseded_by(
+            cur, request_id, jurisdiction_ocdid, last_seen_at
+        )
+        if stale:
+            logger.info(
+                f"[{request_id}] Superseded {len(stale)} stale card(s) for "
+                f"{jurisdiction_ocdid}: {stale}"
+            )
 
     return len(rows)

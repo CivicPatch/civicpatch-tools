@@ -422,6 +422,7 @@ function buildTab(spreadsheet, name, headers) {
     .setFontWeight("bold")
     .setBackground(HEADER_BACKGROUND);
   sheet.setFrozenRows(1);
+  formatAsText(sheet, headers.length);
 
   protectRange(
     sheet,
@@ -550,6 +551,18 @@ function ocdidsIn(sheet) {
   return ocdids;
 }
 
+/**
+ * Plain text, so Sheets stores what was typed instead of interpreting it.
+ *
+ * Three things this prevents, all of which have bitten: a phone like "+1 360 555 0177" parsed
+ * as a formula and rendered #ERROR!, a date typed as 2024-01-01 stored as the serial 45292, and
+ * anything starting with "=" becoming a live formula.
+ */
+function formatAsText(sheet, columns) {
+  const rows = Math.max(sheet.getMaxRows() - 1, 1);
+  sheet.getRange(2, 1, rows, columns).setNumberFormat("@");
+}
+
 /** Rewritten whole: these are projections, and a stale row shows a seat that no longer exists. */
 function writeReferenceTab(spreadsheet, name, headers, rows) {
   const sheet =
@@ -561,6 +574,7 @@ function writeReferenceTab(spreadsheet, name, headers, rows) {
     .setFontWeight("bold")
     .setBackground(HEADER_BACKGROUND);
   sheet.setFrozenRows(1);
+  formatAsText(sheet, headers.length);
   if (rows.length) {
     // Padded to the header width: a caller that leaves the app-owned tail to the importer
     // hands back a short row, and Sheets rejects a mismatched range outright.

@@ -1,10 +1,10 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import {
-  previewImport,
   startImport,
   fetchLatestImport,
   fetchSheetUrl,
+  fetchImportHistory,
   fetchImportProgress,
   fetchBatchReview,
   publishBatch,
@@ -17,11 +17,16 @@ import {
   type ImportProgress,
   type PublishResult,
 } from "./import-types.js";
+import "../../components/civ-tab-bar/civ-tab-bar.js";
+import "./import-history.js";
 import "./import-preview.js";
 import "./batch-review.js";
 import "./import-page.css";
 
 const POLL_INTERVAL_MS = 2000;
+const TABS = [{ label: "Import" }, { label: "History" }];
+const IMPORT_TAB = 0;
+const HISTORY_TAB = 1;
 
 function progressPanel(batch: ImportProgress | null) {
   // Null for the moment between starting and the first poll returning.
@@ -75,6 +80,18 @@ function ImportPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sheetUrl, setSheetUrl] = useState<string | null>(null);
+  const [tab, setTab] = useState(IMPORT_TAB);
+  const [history, setHistory] = useState<ImportProgress[]>([]);
+
+  // Refreshed whenever a batch changes, so finishing an import updates the list behind the tab
+  // rather than leaving it stale until a reload.
+  useEffect(() => {
+    fetchImportHistory()
+      .then(({ data }) => setHistory(data))
+      .catch(() => {
+        // A missing history is not worth an error banner over the import itself.
+      });
+  }, [batch?.batch_id, batch?.status]);
 
   useEffect(() => {
     fetchSheetUrl()
@@ -120,7 +137,11 @@ function ImportPage() {
         }
         if (data.status === BATCH_FAILED && data.error) setError(data.error);
         const reviewBody = await fetchBatchReview(batchId);
-        if (!stopped) setReview(reviewBody.data);
+        if (stopped) return;
+        setReview(reviewBody.data);
+        // Finished, so it is a past import now: the review lives beside the run that produced
+        // it rather than under the button that starts the next one.
+        setTab(HISTORY_TAB);
       } catch (e) {
         if (!stopped) setError(String(e));
       }
@@ -137,19 +158,6 @@ function ImportPage() {
   // import starts the page shows it rather than flashing back to the Check panel.
   const running = batchId !== null && (batch === null || !isFinished(batch.status));
 
-  const handleCheck = async () => {
-    setBusy(true);
-    setError(null);
-    try {
-      const { data } = await previewImport();
-      setPreview(data);
-    } catch (e) {
-      setError(String(e));
-    } finally {
-      setBusy(false);
-    }
-  };
-
   const handleStart = async () => {
     setBusy(true);
     setError(null);
@@ -165,6 +173,15 @@ function ImportPage() {
     } finally {
       setBusy(false);
     }
+  };
+
+  // Opening a past batch swaps which one the page is following: the poll effect keys on the
+  // id, so setting it is enough to load that batch's review instead of the latest one's.
+  const handleOpenBatch = (e: CustomEvent) => {
+    setReview(null);
+    setResults([]);
+    setError(null);
+    setBatchId(e.detail.batch_id);
   };
 
   const handlePublish = async (e: CustomEvent) => {
@@ -198,44 +215,48 @@ function ImportPage() {
         </p>
       </header>
 
+      <civ-tab-bar
+        .tabs=${TABS}
+        .selectedIndex=${tab}
+        .onTabClick=${(index: number) => setTab(index)}
+      ></civ-tab-bar>
+
       ${error ? html`<p class="import-error">${error}</p>` : null}
       ${resultsPanel(results)}
 
-      ${running
+      ${tab === HISTORY_TAB
+        ? html`<section class="import-panel">
+            <h2 class="import-panel__title">Past imports</h2>
+            <import-history
+              .batches=${history}
+              .currentBatchId=${batchId}
+              @open-batch=${handleOpenBatch}
+            ></import-history>
+          </section>`
+        : html`${running
         ? progressPanel(batch)
         : html`
             <section class="import-panel">
               <h2 class="import-panel__title">Import from the sheet</h2>
-              <p class="import-hint">
-                Reads the roster tab and reports what an import would do. It
-                writes nothing, so it is safe to run while somebody is still
-                typing.
-                ${sheetUrl
-                  ? html`<a
-                      class="import-sheet-link"
-                      href=${sheetUrl}
-                      target="_blank"
-                      rel="noreferrer"
+              ${sheetUrl
+                ? html`<p class="import-hint">
+                    <a href=${sheetUrl} target="_blank" rel="noreferrer"
                       >Open the sheet</a
-                    >`
-                  : null}
-              </p>
+                    >
+                  </p>`
+                : null}
               <button
                 type="button"
                 class="import-action"
                 ?disabled=${busy}
-                @click=${handleCheck}
+                @click=${handleStart}
               >
-                ${busy ? "Checking…" : "Check for changes"}
+                ${busy ? "Importing…" : "Import"}
               </button>
-              <import-preview
-                .preview=${preview}
-                .busy=${busy}
-                @start-import=${handleStart}
-              ></import-preview>
+              <import-preview .preview=${preview}></import-preview>
             </section>
-          `}
-      ${review
+          `}`}
+      ${tab === HISTORY_TAB && review
         ? html`<section class="import-panel">
             <batch-review
               .review=${review}

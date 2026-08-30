@@ -2,11 +2,11 @@ import { html } from "lit-html";
 import { component } from "haunted";
 import { type ImportPreview, type RowError } from "./import-types.js";
 
-const START_EVENT = "start-import";
+// What the import found, once it has run. The ocdids themselves are not listed: unreadable in
+// bulk, and every rejected one is already named against its own row below.
 
 type ImportPreviewHost = HTMLElement & {
   preview: ImportPreview | null;
-  busy: boolean;
 };
 
 function errorRow(error: RowError) {
@@ -20,80 +20,35 @@ function errorRow(error: RowError) {
   `;
 }
 
-function blockedList(ocdids: string[]) {
-  if (!ocdids.length) return null;
-  return html`
-    <section class="import-section">
-      <h3 class="import-section__title">Blocked <span>${ocdids.length}</span></h3>
-      <p class="import-hint">
-        A row in these localities was rejected. A locality imports whole or not
-        at all, so fix the rows below and check again.
-      </p>
-      <ul class="import-list">
-        ${ocdids.map(
-          (ocdid) => html`<li class="import-cell--ocdid">${ocdid}</li>`,
-        )}
-      </ul>
-    </section>
-  `;
-}
-
 function ImportPreviewPanel(host: ImportPreviewHost) {
   const preview = host.preview;
-
-  if (!preview) {
-    return html`
-      <p class="import-empty">
-        Check the sheet to see what an import would do. Nothing is written until
-        you start one.
-      </p>
-    `;
-  }
-
-  const ready = preview.jurisdictions_ready;
-
-  // Importing is not the destructive step: it stops at ingest and raises review cards, so
-  // there is nothing to choose here. Publishing is where the picking happens.
-  const handleStart = () =>
-    host.dispatchEvent(
-      new CustomEvent(START_EVENT, { bubbles: true, composed: true }),
-    );
+  if (!preview) return html``;
 
   return html`
-    <section class="import-section">
-      <h3 class="import-section__title">
-        Ready <span>[${ready.length}]</span>
-      </h3>
-      <p class="import-hint">
-        ${preview.rows} row${preview.rows === 1 ? "" : "s"} read. Each locality
-        becomes a review card. Nothing is published until you say so.
-      </p>
-
-      ${ready.length
-        ? html`<ul class="import-list import-list--scrolls">
-            ${ready.map(
-              (ocdid) => html`<li class="import-cell--ocdid">${ocdid}</li>`,
-            )}
-          </ul>`
-        : html`<p class="import-hint">Nothing ready to import.</p>`}
-
-      <button
-        type="button"
-        class="import-action"
-        ?disabled=${host.busy || !ready.length}
-        @click=${handleStart}
-      >
-        Import
-      </button>
-    </section>
-
-    ${blockedList(preview.jurisdictions_blocked)}
+    <table class="import-summary">
+      <tbody>
+        <tr>
+          <th>rows found</th>
+          <td>${preview.rows}</td>
+        </tr>
+        <tr>
+          <th>jurisdictions found</th>
+          <td>${preview.jurisdictions_ready.length}</td>
+        </tr>
+        ${preview.jurisdictions_blocked.length
+          ? html`<tr>
+              <th>blocked</th>
+              <td>${preview.jurisdictions_blocked.length}</td>
+            </tr>`
+          : null}
+      </tbody>
+    </table>
 
     ${preview.errors.length
       ? html`
           <section class="import-section">
             <h3 class="import-section__title">
-              Rejected rows <span>${preview.errors.length}</span>
+              Rejected rows <span>[${preview.errors.length}]</span>
             </h3>
             <table class="import-errors__table">
               <thead>

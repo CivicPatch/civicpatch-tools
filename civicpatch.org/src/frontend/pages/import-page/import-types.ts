@@ -5,7 +5,6 @@
 export const BATCH_RUNNING = "running";
 export const BATCH_SUCCEEDED = "succeeded";
 export const BATCH_FAILED = "failed";
-export const BATCH_ABANDONED = "abandoned";
 
 export const REVIEW_PENDING = "pending";
 export const REVIEW_PUBLISHED = "published";

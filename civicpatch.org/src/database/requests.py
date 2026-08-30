@@ -360,6 +360,39 @@ async def dismiss_as_unchanged(cur, request_id: str) -> bool:
     return cur.rowcount > 0
 
 
+async def dismiss_superseded_by(
+    cur, request_id: str, jurisdiction_ocdid: str, sourced_at
+) -> list[str]:
+    """Dismiss the cards this publish just made pointless, in the publishing transaction.
+
+    `_refuse_if_superseded` makes a stale card unpublishable; this stops it being offered at
+    all. The sweep still runs — it catches two *pending* scrapes, which have no publish to hang
+    off, and re-checks holds as they expire.
+    """
+    await cur.execute(
+        f"""
+        UPDATE requests
+           SET dismissed_at = now(), dismissed_reason = '{DISMISSED_SUPERSEDED}'
+         WHERE id IN (
+             SELECT r.id FROM requests r
+             WHERE r.jurisdiction_ocdid = %s
+               AND r.id::text <> %s
+               AND r.sourced_at IS NOT NULL
+               AND r.sourced_at < %s
+               AND {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
+         )
+        RETURNING id::text
+        """,
+        (
+            jurisdiction_ocdid,
+            request_id,
+            sourced_at,
+            timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES),
+        ),
+    )
+    return [row[0] for row in await cur.fetchall()]
+
+
 async def supersede_stacked_requests() -> list[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

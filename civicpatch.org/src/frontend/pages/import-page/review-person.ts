@@ -54,7 +54,7 @@ function unmatched(person: ReviewPerson) {
 export function renderReviewPerson(person: ReviewPerson) {
   return html`
     <div class="review-person">
-      <person-image .person=${person} .size=${"2.5rem"}></person-image>
+      <person-image .person=${person} .size=${"2.1rem"}></person-image>
       <div class="review-person__info">
         <p class="review-person__name">${person.name}</p>
         <p class="review-person__office">

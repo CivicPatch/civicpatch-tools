@@ -409,7 +409,7 @@ async def _pending_scrape(sourced_at: datetime.datetime) -> str:
 async def test_a_hand_edit_supersedes_a_pending_scrape():
     """Deliberate: the edit is the newest word on the roster. Publishing the older scrape over
     it would retire anyone the edit added, and `_refuse_if_superseded` would refuse it anyway —
-    so the sweep dismisses it rather than leaving a card nobody can publish."""
+    so publishing dismisses it rather than leaving a card nobody can publish."""
     person_id, user = await _seed()
     scrape = await _pending_scrape(
         datetime.datetime(2026, 6, 1, tzinfo=datetime.timezone.utc)
@@ -419,7 +419,9 @@ async def test_a_hand_edit_supersedes_a_pending_scrape():
         _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
     )
 
-    assert scrape in await supersede_stacked_requests()
+    # In the publish's own transaction, so there is nothing left for the sweep to find. The
+    # sweep still has its own cases — two pending scrapes with no publish between them.
+    assert await supersede_stacked_requests() == []
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(

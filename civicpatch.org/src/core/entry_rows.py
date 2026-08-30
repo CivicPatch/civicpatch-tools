@@ -12,6 +12,7 @@ invite "Bob Smith" and "Robert Smith" to become two people.
 """
 
 import re
+from datetime import date, timedelta
 from enum import StrEnum
 
 from pydantic import BaseModel
@@ -43,6 +44,15 @@ _REQUIRED = (JURISDICTION, "name", "label")
 
 # Partial dates allowed: `source_records.start_date` is text for that reason.
 _DATE = re.compile(r"^\d{4}(-\d{2}(-\d{2})?)?$")
+
+# Sheets stores a date as days since this, and the import reads UNFORMATTED_VALUE so a phone
+# number survives as typed — which means a full date arrives as its serial instead.
+_SHEETS_EPOCH = date(1899, 12, 30)
+# A bare year is also an integer, so the two are told apart by range: years run to 2200, and
+# serials do not start until 1854. Nothing valid falls in both.
+_YEAR_MAX = 2200
+_SERIAL_MIN = 20000
+_SERIAL_MAX = 80000
 
 
 class RowError(BaseModel):
@@ -86,6 +96,20 @@ def _optional(value) -> str | None:
     return _clean(value) or None
 
 
+def _date(value) -> str:
+    """A date cell as text, converting the serial Sheets hands back for a real date.
+
+    `2024` stays `2024` — a bare year is an integer too, and the ranges do not overlap.
+    """
+    text = _clean(value)
+    if not text.isdigit():
+        return text
+    number = int(text)
+    if _SERIAL_MIN <= number <= _SERIAL_MAX:
+        return (_SHEETS_EPOCH + timedelta(days=number)).isoformat()
+    return text
+
+
 def parse_rows(
     rows: list[dict], source_url: str
 ) -> tuple[list[ImportRow], list[RowError]]:
@@ -126,7 +150,7 @@ def _row_errors(row: dict, line: int) -> list[RowError]:
     errors.extend(
         _error(row, line, column, f"not YYYY, YYYY-MM or YYYY-MM-DD: {value!r}")
         for column in ("start_date", "end_date")
-        if (value := _clean(row.get(column))) and not _DATE.match(value)
+        if (value := _date(row.get(column))) and not _DATE.match(value)
     )
     return errors
 
@@ -139,7 +163,14 @@ def _import_row(row: dict, line: int, source_url: str) -> ImportRow:
             name=_clean(row["name"]),
             label=_clean(row["label"]),
             source_url=source_url,
-            **{column: _optional(row.get(column)) for column in _OPTIONAL},
+            **{
+                column: (
+                    _date(row.get(column)) or None
+                    if column in ("start_date", "end_date")
+                    else _optional(row.get(column))
+                )
+                for column in _OPTIONAL
+            },
         ),
     )
 

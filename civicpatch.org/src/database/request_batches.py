@@ -22,8 +22,6 @@ class BatchStatus(StrEnum):
     RUNNING = "running"
     SUCCEEDED = "succeeded"
     FAILED = "failed"
-    # Written by a person clearing a crashed run, never by a timeout.
-    ABANDONED = "abandoned"
 
 
 class BatchAlreadyRunning(Exception):
@@ -105,12 +103,11 @@ async def get(batch_id: str) -> dict | None:
     return dict(zip(columns, row))
 
 
-async def latest(kind: BatchKind) -> dict | None:
-    """The most recent batch of this kind, so a page load can find one already under way.
+async def list_recent(kind: BatchKind, limit: int = 25) -> list[dict]:
+    """Recent batches of this kind, newest first.
 
-    Server-side rather than remembered by whoever started it: one spreadsheet means one import,
-    and a second maintainer opening the page should see the run in progress rather than a
-    Start button that will 409.
+    The history view and `latest` ask the same question at different depths, so they share a
+    query rather than drifting over what "recent" means.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -123,15 +120,24 @@ async def latest(kind: BatchKind) -> dict | None:
             FROM request_batches b
             WHERE b.kind = %s
             ORDER BY b.started_at DESC
-            LIMIT 1
+            LIMIT %s
             """,
-            (kind.value,),
+            (kind.value, limit),
         )
-        row = await cur.fetchone()
-        if row is None:
-            return None
+        rows = await cur.fetchall()
         columns = [column.name for column in cur.description or []]
-    return dict(zip(columns, row))
+    return [dict(zip(columns, row)) for row in rows]
+
+
+async def latest(kind: BatchKind) -> dict | None:
+    """The most recent batch of this kind, so a page load can find one already under way.
+
+    Server-side rather than remembered by whoever started it: one spreadsheet means one import,
+    and a second maintainer opening the page should see the run in progress rather than a
+    Start button that will 409.
+    """
+    recent = await list_recent(kind, limit=1)
+    return recent[0] if recent else None
 
 
 async def items(batch_id: str) -> list[dict]:
@@ -157,27 +163,3 @@ async def items(batch_id: str) -> list[dict]:
         )
         columns = [column.name for column in cur.description or []]
         return [dict(zip(columns, row)) for row in await cur.fetchall()]
-
-
-async def release(lock_key: str, unlocked_by_user_id: str) -> int:
-    """Clear a batch somebody decided is not coming back. Returns how many it closed.
-
-    No timeout on purpose: a slow batch and a dead one look identical from here.
-    """
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            UPDATE request_batches
-               SET status = %s,
-                   finished_at = now(),
-                   error = COALESCE(error, %s)
-             WHERE lock_key = %s AND finished_at IS NULL
-            """,
-            (
-                BatchStatus.ABANDONED.value,
-                f"released by {unlocked_by_user_id}",
-                lock_key,
-            ),
-        )
-        return cur.rowcount

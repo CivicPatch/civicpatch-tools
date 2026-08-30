@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import pg from "pg";
 
 const { Client } = pg;
@@ -17,6 +18,33 @@ const TEST_USER_PROVIDER_ID = "test-user-e2e";
 export const TEST_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:nj/place:e2e_test/government";
 export const TEST_REQUEST_ID = "00000000-0000-0000-eeee-000000000001";
+// person_id is a uuid since migration 144 — the old "e2e-jane" style fails at the insert now.
+export const JANE_PERSON_ID = "00000000-0000-0000-aaaa-000000000001";
+
+/** A deterministic person uuid per request, so teardown and assertions can both find it. */
+function personIdFor(requestId) {
+  return "00000000-0000-0000-aaaa-" + requestId.slice(-12);
+}
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
+ * Fixture people are named by readable slugs — "recon-maria", "dup-shared" — but
+ * `source_record_identities.person_id` became a uuid in migration 144, so the slug can no
+ * longer be inserted. Hashing keeps the fixtures readable and stable: the same slug always
+ * yields the same id, which is what lets two sightings deliberately share a person.
+ */
+function personUuid(slug) {
+  if (UUID.test(slug)) return slug;
+  const hex = crypto.createHash("md5").update(slug).digest("hex");
+  return [
+    hex.slice(0, 8),
+    hex.slice(8, 12),
+    hex.slice(12, 16),
+    hex.slice(16, 20),
+    hex.slice(20, 32),
+  ].join("-");
+}
 
 // issue_key for the seeded unrecognized_role issue. It is the role name itself —
 // see upsert_issue in database/issues.py, which keys this issue type on the role.
@@ -159,7 +187,7 @@ export const TX_REQUEST_ID = "00000000-0000-0000-eeee-000000000010";
 const TX_PR_ID = "00000000-0000-0000-eeee-000000000011";
 
 // Issue-markers fixture — reconcile mode (scraped_at set), no existing people so
-// every proposed person renders as an "added" card. Its review_json carries
+// every proposed person renders as an "added" card. Its issues carry
 // structured issues that anchor to proposed person ids, exercising the review card's
 // per-card markers. Own state (me) and deep-linked by request_id, like the others.
 export const MARKERS_JURISDICTION_OCDID =
@@ -171,7 +199,7 @@ const MARKERS_PR_NUMBER = 12;
 // Read-only fixture — a published request, the state a card lands in once it has
 // been published. It is the only fixture with published_at set, so the only one that
 // renders the terminal-status banner, the open-data link and the jurisdiction website
-// link, and that hides the publish/save/close actions. Its pull_requests row is still
+// link, and that hides the publish/save/close actions. Its request is still
 // 'merged' because the card's link still reads PR metadata.
 // Own state (ri) and deep-linked by request_id: a published request is out of the
 // review pool, so it is only reachable by link, which is how reviewers reach it too.
@@ -222,6 +250,103 @@ const STATE_JURISDICTIONS = [
 
 const stateOcdid = (code) => `ocd-jurisdiction/country:us/state:${code}/government`;
 
+/**
+ * The fixtures describe people as the old `data_json` did — name, office, contact lists. A
+ * sighting is flatter and singular, which is what `source_records` stores.
+ */
+function asSightings(proposed) {
+  return proposed.map(function (person) {
+    return {
+      person_id: person.id,
+      name: person.name,
+      label: person.office?.name ?? "",
+      email: person.emails?.[0] ?? null,
+      phone: person.phones?.[0] ?? null,
+      url: person.urls?.[0] ?? null,
+      image: person.image ?? null,
+      start_date: person.start_date ?? null,
+      end_date: person.end_date ?? null,
+    };
+  });
+}
+
+/**
+ * A review card as the current schema models one.
+ *
+ * `AVAILABLE_FOR_REVIEW` is `EXISTS (source_records for this request)`, so the sightings are
+ * what put a card in the pool — the open `pull_requests` row that used to do it went with
+ * migration 141, and `requests.data_json` with 142. The roster a reviewer sees is derived from
+ * these sightings, not stored.
+ */
+async function seedReviewCard(
+  client,
+  { requestId, ocdid, people = [], publishedAt = null },
+) {
+  await client.query(
+    `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json,
+                           status, progress, sourced_at, created_at, published_at)
+     VALUES ($1, 'people_collection', $2, '{}', 'success', 100, NOW(), NOW(), $3)
+     ON CONFLICT (id) DO NOTHING`,
+    [requestId, ocdid, publishedAt],
+  );
+  // Re-seeding must not double the sightings: source_records has an auto id, so there is
+  // nothing to ON CONFLICT on.
+  await client.query(`DELETE FROM source_records WHERE request_id = $1`, [
+    requestId,
+  ]);
+  for (const person of people) {
+    const { rows } = await client.query(
+      `INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url,
+                                   url, phone, email, image, start_date, end_date)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+       RETURNING id`,
+      [
+        requestId,
+        ocdid,
+        person.name,
+        person.label ?? "",
+        person.source_url ?? "https://example.gov/roster",
+        person.url ?? null,
+        person.phone ?? null,
+        person.email ?? null,
+        person.image ?? null,
+        person.start_date ?? null,
+        person.end_date ?? null,
+      ],
+    );
+    await client.query(
+      `INSERT INTO source_record_identities (source_record_id, person_id, resolved_at)
+       VALUES ($1, $2, NOW())`,
+      [rows[0].id, personUuid(person.person_id)],
+    );
+  }
+}
+
+/** A published person. `people.data` and `people.status` are gone — these are real columns now,
+ *  and whether somebody is seated is a memberships question. */
+async function seedPerson(client, ocdid, person) {
+  await client.query(
+    `INSERT INTO people (id, jurisdiction_ocdid, name, other_names, phones, emails,
+                         urls, source_urls, image, cdn_image, updated_at)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,NOW())
+     ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name`,
+    [
+      // Same slug-to-uuid mapping as the sightings, so an existing person and a sighting that
+      // proposes a change to them resolve to the same id.
+      personUuid(person.id),
+      ocdid,
+      person.name,
+      person.other_names ?? [],
+      person.phones ?? [],
+      person.emails ?? [],
+      person.urls ?? [],
+      person.source_urls ?? [],
+      person.image ?? null,
+      person.cdn_image ?? null,
+    ],
+  );
+}
+
 export async function seedE2eFixtures() {
   const client = makeClient();
   await client.connect();
@@ -261,36 +386,17 @@ export async function seedE2eFixtures() {
       [TEST_JURISDICTION_OCDID],
     );
 
-    // Request with proposed people (data_json) and one issue (review_json)
-    // data_json populated so the navigate endpoint skips the GitHub YAML fetch
-    await client.query(
-      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
-       VALUES ($1, 'people_collection', $2, '{}',
-               '[{"id":"e2e-jane","name":"Jane Smith","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:nj/place:e2e_test"},"emails":[],"phones":[],"urls":[],"other_names":[],"source_urls":["https://example.gov/roster"]}]',
-               '{"issues":[{"type":"missing_email","key":"jane-smith"}]}',
-               NOW(), NOW())
-       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
-      [TEST_REQUEST_ID, TEST_JURISDICTION_OCDID],
-    );
-
-    // pipeline_runs row required for get_pipeline_run_data_json
-    await client.query(
-      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
-       VALUES ($1, 'success', 100, NOW(), NOW())
-       ON CONFLICT DO NOTHING`,
-      [TEST_REQUEST_ID],
-    );
-
-    // Pull request — status='open' makes the card appear in the review queue
-    // url=NULL so sync_single_pr_state exits early (no GitHub call)
-    // pr_number must be non-zero: the publish/save/close actions all guard on a
-    // truthy pr.number, so a 0 here makes those three buttons silent no-ops.
-    await client.query(
-      `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
-       VALUES ($1, $2, 1, NULL, 'open', NOW(), NOW())
-       ON CONFLICT (request_id) DO NOTHING`,
-      [TEST_PR_ID, TEST_REQUEST_ID],
-    );
+    await seedReviewCard(client, {
+      requestId: TEST_REQUEST_ID,
+      ocdid: TEST_JURISDICTION_OCDID,
+      people: [
+        {
+          person_id: JANE_PERSON_ID,
+          name: "Jane Smith",
+          label: "Council Member",
+        },
+      ],
+    });
 
     // Second card
     for (const [jOcdid, jName, reqId, prId, prNum, stateCode, geoidPrefix] of [
@@ -332,24 +438,17 @@ export async function seedE2eFixtures() {
           stateCode,
         ],
       );
-      await client.query(
-        `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
-         VALUES ($1, 'people_collection', $2, '{}', '[]', '{}', NOW(), NOW())
-         ON CONFLICT (id) DO NOTHING`,
-        [reqId, jOcdid],
-      );
-      await client.query(
-        `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
-         VALUES ($1, 'success', 100, NOW(), NOW())
-         ON CONFLICT DO NOTHING`,
-        [reqId],
-      );
-      await client.query(
-        `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
-         VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
-         ON CONFLICT (request_id) DO NOTHING`,
-        [prId, reqId, prNum],
-      );
+      await seedReviewCard(client, {
+        requestId: reqId,
+        ocdid: jOcdid,
+        people: [
+          {
+            person_id: personIdFor(reqId),
+            name: `${jName} Member`,
+            label: "Council Member",
+          },
+        ],
+      });
     }
 
     // Baseline card — scraped_at intentionally omitted (NULL) → BASELINE mode.
@@ -360,26 +459,17 @@ export async function seedE2eFixtures() {
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
       [BASELINE_JURISDICTION_OCDID],
     );
-    await client.query(
-      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
-       VALUES ($1, 'people_collection', $2, '{}',
-               '[{"id":"e2e-jane-baseline","name":"Jane Baseline","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:vt/place:e2e_baseline"},"emails":[],"phones":[],"urls":[],"other_names":[],"source_urls":["https://example.gov/roster"]}]',
-               '{}', NOW(), NOW())
-       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
-      [BASELINE_REQUEST_ID, BASELINE_JURISDICTION_OCDID],
-    );
-    await client.query(
-      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
-       VALUES ($1, 'success', 100, NOW(), NOW())
-       ON CONFLICT DO NOTHING`,
-      [BASELINE_REQUEST_ID],
-    );
-    await client.query(
-      `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
-       VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
-       ON CONFLICT (request_id) DO NOTHING`,
-      [BASELINE_PR_ID, BASELINE_REQUEST_ID, BASELINE_PR_NUMBER],
-    );
+    await seedReviewCard(client, {
+      requestId: BASELINE_REQUEST_ID,
+      ocdid: BASELINE_JURISDICTION_OCDID,
+      people: [
+        {
+          person_id: personIdFor(BASELINE_REQUEST_ID),
+          name: "Jane Baseline",
+          label: "Council Member",
+        },
+      ],
+    });
 
     // Populated reconcile card — scraped_at set → RECONCILE mode, with existing
     // people so the diff renders changed / added / removed states.
@@ -423,11 +513,7 @@ export async function seedE2eFixtures() {
       RECONCILE_JURISDICTION_OCDID,
     ]);
     for (const person of reconcileExisting) {
-      await client.query(
-        `INSERT INTO people (jurisdiction_ocdid, data, name, status, updated_at)
-         VALUES ($1, $2, $2::jsonb->>'name', 'active', NOW())`,
-        [RECONCILE_JURISDICTION_OCDID, JSON.stringify(person)],
-      );
+      await seedPerson(client, RECONCILE_JURISDICTION_OCDID, person);
     }
     // Proposed: maria changed (office + added email + removed phone), tom added.
     const reconcileProposed = [
@@ -455,28 +541,11 @@ export async function seedE2eFixtures() {
         source_urls: ["https://example.gov/roster"],
       },
     ];
-    await client.query(
-      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
-       VALUES ($1, 'people_collection', $2, '{}', $3, '{}', NOW(), NOW())
-       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
-      [
-        RECONCILE_REQUEST_ID,
-        RECONCILE_JURISDICTION_OCDID,
-        JSON.stringify(reconcileProposed),
-      ],
-    );
-    await client.query(
-      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
-       VALUES ($1, 'success', 100, NOW(), NOW())
-       ON CONFLICT DO NOTHING`,
-      [RECONCILE_REQUEST_ID],
-    );
-    await client.query(
-      `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
-       VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
-       ON CONFLICT (request_id) DO NOTHING`,
-      [RECONCILE_PR_ID, RECONCILE_REQUEST_ID, RECONCILE_PR_NUMBER],
-    );
+    await seedReviewCard(client, {
+      requestId: RECONCILE_REQUEST_ID,
+      ocdid: RECONCILE_JURISDICTION_OCDID,
+      people: asSightings(reconcileProposed),
+    });
 
     // Scale card — 38 existing, 40 proposed (3 dropped, 5 added, 10 changed).
     await client.query(
@@ -490,11 +559,7 @@ export async function seedE2eFixtures() {
       SCALE_JURISDICTION_OCDID,
     ]);
     for (const person of buildScaleExisting()) {
-      await client.query(
-        `INSERT INTO people (jurisdiction_ocdid, data, name, status, updated_at)
-         VALUES ($1, $2, $2::jsonb->>'name', 'active', NOW())`,
-        [SCALE_JURISDICTION_OCDID, JSON.stringify(person)],
-      );
+      await seedPerson(client, SCALE_JURISDICTION_OCDID, person);
     }
     // Issues too, so the collapse rule's "an anchored issue keeps a field
     // visible" path is exercised at density, not only on a three-person card.
@@ -515,29 +580,11 @@ export async function seedE2eFixtures() {
         },
       ],
     };
-    await client.query(
-      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
-       VALUES ($1, 'people_collection', $2, '{}', $3, $4, NOW(), NOW())
-       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json, review_json = EXCLUDED.review_json`,
-      [
-        SCALE_REQUEST_ID,
-        SCALE_JURISDICTION_OCDID,
-        JSON.stringify(buildScaleProposed()),
-        JSON.stringify(scaleReview),
-      ],
-    );
-    await client.query(
-      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
-       VALUES ($1, 'success', 100, NOW(), NOW())
-       ON CONFLICT DO NOTHING`,
-      [SCALE_REQUEST_ID],
-    );
-    await client.query(
-      `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
-       VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
-       ON CONFLICT (request_id) DO NOTHING`,
-      [SCALE_PR_ID, SCALE_REQUEST_ID, SCALE_PR_NUMBER],
-    );
+    await seedReviewCard(client, {
+      requestId: SCALE_REQUEST_ID,
+      ocdid: SCALE_JURISDICTION_OCDID,
+      people: asSightings(buildScaleProposed()),
+    });
 
     // Duplicate-id card — two proposed people share `dup-shared`.
     await client.query(
@@ -581,28 +628,11 @@ export async function seedE2eFixtures() {
         source_urls: ["https://example.gov/roster"],
       },
     ];
-    await client.query(
-      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
-       VALUES ($1, 'people_collection', $2, '{}', $3, '{}', NOW(), NOW())
-       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json`,
-      [
-        DUPLICATE_REQUEST_ID,
-        DUPLICATE_JURISDICTION_OCDID,
-        JSON.stringify(duplicateProposed),
-      ],
-    );
-    await client.query(
-      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
-       VALUES ($1, 'success', 100, NOW(), NOW())
-       ON CONFLICT DO NOTHING`,
-      [DUPLICATE_REQUEST_ID],
-    );
-    await client.query(
-      `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
-       VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
-       ON CONFLICT (request_id) DO NOTHING`,
-      [DUPLICATE_PR_ID, DUPLICATE_REQUEST_ID, DUPLICATE_PR_NUMBER],
-    );
+    await seedReviewCard(client, {
+      requestId: DUPLICATE_REQUEST_ID,
+      ocdid: DUPLICATE_JURISDICTION_OCDID,
+      people: asSightings(duplicateProposed),
+    });
 
     // Issue-markers card — reconcile mode, all proposed render as added cards.
     await client.query(
@@ -678,29 +708,11 @@ export async function seedE2eFixtures() {
         { name: "Alice Mayor", in_research: true, in_data: true },
       ],
     };
-    await client.query(
-      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, created_at, updated_at)
-       VALUES ($1, 'people_collection', $2, '{}', $3, $4, NOW(), NOW())
-       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json, review_json = EXCLUDED.review_json`,
-      [
-        MARKERS_REQUEST_ID,
-        MARKERS_JURISDICTION_OCDID,
-        JSON.stringify(markersProposed),
-        JSON.stringify(markersReview),
-      ],
-    );
-    await client.query(
-      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
-       VALUES ($1, 'success', 100, NOW(), NOW())
-       ON CONFLICT DO NOTHING`,
-      [MARKERS_REQUEST_ID],
-    );
-    await client.query(
-      `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
-       VALUES ($1, $2, $3, NULL, 'open', NOW(), NOW())
-       ON CONFLICT (request_id) DO NOTHING`,
-      [MARKERS_PR_ID, MARKERS_REQUEST_ID, MARKERS_PR_NUMBER],
-    );
+    await seedReviewCard(client, {
+      requestId: MARKERS_REQUEST_ID,
+      ocdid: MARKERS_JURISDICTION_OCDID,
+      people: asSightings(markersProposed),
+    });
 
     // Read-only card — merged PR, so the card renders in its terminal state.
     // `url` on the jurisdiction data is what surfaces as the website link.
@@ -718,31 +730,22 @@ export async function seedE2eFixtures() {
         }),
       ],
     );
-    await client.query(
-      `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, data_json, review_json, published_at, created_at, updated_at)
-       VALUES ($1, 'people_collection', $2, '{}',
-               '[{"id":"e2e-jane-published","name":"Jane Published","office":{"name":"Council Member","division_ocdid":"ocd-division/country:us/state:ri/place:e2e_read_only/ward:3"},"emails":["jane@ri.gov","press@ri.gov"],"phones":["(555) 040-0001"],"urls":[],"other_names":[],"source_urls":["https://example.gov/roster"],"image":"https://ri.gov/jane.jpg","start_date":"2022"}]',
-               '{}', NOW(), NOW(), NOW())
-       ON CONFLICT (id) DO UPDATE SET data_json = EXCLUDED.data_json, published_at = EXCLUDED.published_at`,
-      [READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID],
-    );
-    await client.query(
-      `INSERT INTO pipeline_runs (request_id, status, progress, created_at, updated_at)
-       VALUES ($1, 'success', 100, NOW(), NOW())
-       ON CONFLICT DO NOTHING`,
-      [READ_ONLY_REQUEST_ID],
-    );
-    await client.query(
-      `INSERT INTO pull_requests (id, request_id, pr_number, url, status, created_at, updated_at)
-       VALUES ($1, $2, $3, $4, 'merged', NOW(), NOW())
-       ON CONFLICT (request_id) DO NOTHING`,
-      [
-        READ_ONLY_PR_ID,
-        READ_ONLY_REQUEST_ID,
-        READ_ONLY_PR_NUMBER,
-        READ_ONLY_PR_URL,
+    await seedReviewCard(client, {
+      requestId: READ_ONLY_REQUEST_ID,
+      ocdid: READ_ONLY_JURISDICTION_OCDID,
+      publishedAt: new Date().toISOString(),
+      people: [
+        {
+          person_id: "e2e-jane-published",
+          name: "Jane Published",
+          label: "Council Member",
+          email: "jane@ri.gov",
+          phone: "(555) 040-0001",
+          image: "https://ri.gov/jane.jpg",
+          start_date: "2022",
+        },
       ],
-    );
+    });
 
     // Map status fixtures — one per bucket (fresh / stale / gap / untracked).
     // The presence of a `url` and a `people` row drives the status the map paints.
@@ -767,8 +770,8 @@ export async function seedE2eFixtures() {
       );
       if (peopleAgeDays !== null) {
         await client.query(
-          `INSERT INTO people (jurisdiction_ocdid, data, name, status, updated_at)
-           VALUES ($1, '{"name":"E2E Person"}', 'E2E Person', 'active', NOW() - ($2 || ' days')::interval)`,
+          `INSERT INTO people (jurisdiction_ocdid, name, updated_at)
+           VALUES ($1, 'E2E Person', NOW() - ($2 || ' days')::interval)`,
           [ocdid, peopleAgeDays],
         );
       }
@@ -846,10 +849,7 @@ export async function teardownE2eFixtures() {
       [MARKERS_PR_ID, MARKERS_REQUEST_ID, MARKERS_JURISDICTION_OCDID],
       [READ_ONLY_PR_ID, READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID],
     ]) {
-      await client.query(`DELETE FROM pull_requests WHERE id = $1`, [prId]);
-      await client.query(`DELETE FROM pipeline_runs WHERE request_id = $1`, [
-        reqId,
-      ]);
+      // source_records cascades from requests; identities cascade from source_records.
       await client.query(`DELETE FROM requests WHERE id = $1`, [reqId]);
       await client.query(
         `DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`,

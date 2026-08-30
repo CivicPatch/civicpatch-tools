@@ -736,3 +736,27 @@ def test_get_reported_issues_allows_default_role():
         response = client.get(f"/pull_requests/{TEST_REQUEST_ID}/issues")
 
     assert response.status_code == 200
+
+
+@pytest.mark.unit
+def test_publishing_a_superseded_roster_is_a_409_not_a_500(client):
+    """Two imports minutes apart leave two cards. Publishing the newer one makes the older
+    stale, which is an expected state and has to read as one — it used to surface as a server
+    error, which sends a reviewer hunting for a fault that is not there."""
+    from database.publications import SupersededRoster
+
+    with (
+        patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
+        patch(
+            "routers.api.review_actions.roster_edits.publish",
+            new_callable=AsyncMock,
+            side_effect=SupersededRoster("A newer roster was already published"),
+        ),
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_REQUEST_ID}/publish",
+            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
+        )
+
+    assert response.status_code == 409
+    assert "newer roster" in response.json()["detail"]
