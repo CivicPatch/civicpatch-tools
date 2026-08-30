@@ -14,17 +14,6 @@ class ImportPreview(BaseModel):
     errors: list[RowError]
 
 
-class PushedRowsRequest(BaseModel):
-    """What the Apps Script sends: the roster tab, header-keyed, exactly as it reads it.
-
-    Raw rows rather than anything pre-validated — `parse_rows` is the one definition of a valid
-    row, and duplicating it in Apps Script is how the two drift.
-    """
-
-    rows: list[dict]
-    source_url: str = ""
-
-
 class StartImportResponse(BaseModel):
     batch_id: str
     preview: ImportPreview

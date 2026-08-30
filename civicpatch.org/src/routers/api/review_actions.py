@@ -14,6 +14,7 @@ import database.review_session_entries as review_session_entries_db
 import database.users
 import services.review_issue_report as review_issue_report_service
 import services.roster_edits as roster_edits
+from database.publications import SupersededRoster
 from core.people_edits import PeopleValidationError, PersonPatch
 from fastapi import (
     APIRouter,
@@ -76,6 +77,8 @@ def _http_error(exc: Exception) -> HTTPException:
         return HTTPException(status_code=422, detail=exc.failures)
     if isinstance(exc, roster_edits.AnonymousEdit):
         return HTTPException(status_code=401, detail="Sign in to record an edit.")
+    if isinstance(exc, SupersededRoster):
+        return HTTPException(status_code=409, detail=str(exc))
     return HTTPException(status_code=409, detail=MISSING_ROSTER_DETAIL)
 
 
@@ -170,7 +173,12 @@ def get_router(api_key_header):
             await roster_edits.publish(
                 request.request_id, request.jurisdiction_ocdid, edited, user.user_id
             )
-        except (roster_edits.MissingRoster, roster_edits.AnonymousEdit, PeopleValidationError) as exc:
+        except (
+            roster_edits.MissingRoster,
+            roster_edits.AnonymousEdit,
+            PeopleValidationError,
+            SupersededRoster,
+        ) as exc:
             raise _http_error(exc)
         await review_session_entries_db.resolve_entries_for_request(request.request_id)
         return {"status": "published"}

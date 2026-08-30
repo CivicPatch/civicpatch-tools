@@ -761,13 +761,14 @@ async function importsRequest(path, method) {
   return body;
 }
 
-export const previewImport = async () => importsRequest("/preview", "POST");
-
 export const startImport = async () => importsRequest("", "POST");
 
 export const fetchLatestImport = async () => importsRequest("/latest", "GET");
 
 export const fetchSheetUrl = async () => importsRequest("/sheet", "GET");
+
+export const fetchImportHistory = async () =>
+  importsRequest("/history", "GET");
 
 export const fetchImportProgress = async (batchId) =>
   importsRequest(`/${batchId}`, "GET");

@@ -236,3 +236,40 @@ def test_a_town_the_run_never_reached_is_left_blank():
     columns = jurisdiction_columns([_SHERBORN], {}, {}, _STAMP)
     assert columns["status"] == [""]
     assert columns["rows"] == [0]
+
+
+# --- what Sheets does to a date ---
+
+
+@pytest.mark.unit
+def test_a_date_arrives_as_a_sheets_serial():
+    """The import reads UNFORMATTED_VALUE so a phone number survives as typed, which means a
+    real date comes back as days since 1899-12-30 rather than the text somebody entered."""
+    rows, errors = parse_rows([_row(start_date="45292", end_date="45658")], _SHEET)
+    assert errors == []
+    assert rows[0].sighting.start_date == "2024-01-01"
+    assert rows[0].sighting.end_date == "2025-01-01"
+
+
+@pytest.mark.unit
+def test_a_bare_year_is_left_alone():
+    """A year is an integer too. 2024 must stay 2024, not become 1905-07-16."""
+    rows, errors = parse_rows([_row(start_date="2024")], _SHEET)
+    assert errors == []
+    assert rows[0].sighting.start_date == "2024"
+
+
+@pytest.mark.unit
+def test_a_partial_date_survives():
+    rows, errors = parse_rows([_row(start_date="2022-01")], _SHEET)
+    assert errors == []
+    assert rows[0].sighting.start_date == "2022-01"
+
+
+@pytest.mark.unit
+def test_text_that_is_not_a_date_still_fails():
+    """Converting serials must not turn the check into a rubber stamp."""
+    _, errors = parse_rows([_row(start_date="Jan 2026")], _SHEET)
+    assert [(e.column, "not YYYY" in e.message) for e in errors] == [
+        ("start_date", True)
+    ]

@@ -76,8 +76,12 @@ async def _cleanup():
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
         )
+        # By owner, not by lock key: a test that starts a second batch picks its own key, and
+        # `started_by_user_id` is NOT NULL, so a missed row pins the user below.
         await cur.execute(
-            "DELETE FROM request_batches WHERE lock_key = %s", (f"sheet:{_OCDID}",)
+            "DELETE FROM request_batches WHERE started_by_user_id IN "
+            "(SELECT id FROM users WHERE email = %s)",
+            (_EMAIL,),
         )
         # Publishing can leave assertions behind, and `assertions.asserted_by` is NOT NULL with
         # no cascade — so the user cannot go until they do.
@@ -444,3 +448,71 @@ async def test_the_running_import_is_findable_without_being_remembered(
     assert found is not None
     assert found["id"] == batch_id
     assert found["status"] == request_batches.BatchStatus.RUNNING
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_publishing_dismisses_the_cards_it_makes_pointless(
+    user_id, batch_id, batch_commit
+):
+    """Two imports minutes apart leave two cards for one locality. Publishing the newer one
+    makes the older obviously stale, and it used to sit in the queue until a timed sweep
+    noticed — offering a reviewer a card that could only ever refuse."""
+    rows = await _parsed(("Ana Reyes", "Select Board Chair"))
+    await import_rows(rows, user_id, batch_id)
+    older = await _scalar(
+        "SELECT id::text FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,)
+    )
+
+    # A second import of the same locality, which is what a re-run produces.
+    second = await request_batches.start(
+        request_batches.BatchKind.SHEET_IMPORT,
+        f"sheet:{_OCDID}:again",
+        user_id,
+        {"spreadsheet_id": "test"},
+    )
+    await import_rows(await _parsed(("Bo Nunez", "Town Clerk")), user_id, second)
+
+    [result] = await publish_selected(second, {_OCDID}, user_id)
+    assert result.published is True
+
+    assert (
+        await _scalar(
+            "SELECT dismissed_reason FROM requests WHERE id = %s", (older,)
+        )
+        == "superseded"
+    )
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_one_sheet_cannot_have_two_imports_at_once(user_id, batch_id):
+    """Enforced by a partial unique index, not by application code checking first — a
+    check-then-insert has a window two callers can both pass through.
+
+    Two runs over one sheet would each raise a review card per locality, which is how a single
+    import turns into duplicate cards nobody can tell apart.
+    """
+    with pytest.raises(request_batches.BatchAlreadyRunning):
+        await request_batches.start(
+            request_batches.BatchKind.SHEET_IMPORT,
+            f"sheet:{_OCDID}",
+            user_id,
+            {"spreadsheet_id": "test"},
+        )
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_the_lock_lifts_when_the_batch_finishes(user_id, batch_id):
+    """The index is partial on `finished_at IS NULL`, and `run_import` stamps it on success and
+    failure alike — so the sheet frees itself for the next run either way."""
+    await request_batches.finish(batch_id, request_batches.BatchStatus.SUCCEEDED)
+
+    again = await request_batches.start(
+        request_batches.BatchKind.SHEET_IMPORT,
+        f"sheet:{_OCDID}",
+        user_id,
+        {"spreadsheet_id": "test"},
+    )
+    assert again != batch_id

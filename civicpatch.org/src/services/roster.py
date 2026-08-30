@@ -50,20 +50,29 @@ async def scraped_roster(request_id: str, jurisdiction_ocdid: str) -> list[dict]
     return roster
 
 
+# One roster holds two pool connections at its widest, and the pool is 20. An unbounded gather
+# over a bulk import's forty requests therefore asks for more than exists and every one of them
+# waits out the timeout instead. The overlap is worth little — the work is CPU — so a small
+# window keeps what it was for without the failure mode.
+_ROSTER_CONCURRENCY = 4
+
+
 async def proposed_rosters(request_ids: list[str]) -> dict[str, list[dict]]:
     """One roster per request, for a page of review cards.
 
     Derived per request rather than in one query: a roster is Python over that scrape's own
-    sightings, so there is nothing to batch. `gather` buys little — the work is CPU — but it
-    keeps the two database reads per request overlapping.
+    sightings, so there is nothing to batch.
     """
     if not request_ids:
         return {}
     ocdids = await requests_db.jurisdictions_for_requests(request_ids)
+    limit = asyncio.Semaphore(_ROSTER_CONCURRENCY)
+
+    async def one(request_id: str, ocdid: str) -> list[dict]:
+        async with limit:
+            return await proposed_roster(request_id, ocdid)
+
     rosters = await asyncio.gather(
-        *[
-            proposed_roster(request_id, ocdid)
-            for request_id, ocdid in ocdids.items()
-        ]
+        *[one(request_id, ocdid) for request_id, ocdid in ocdids.items()]
     )
     return dict(zip(ocdids, rosters))

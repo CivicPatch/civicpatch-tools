@@ -13,7 +13,6 @@ from lib.sheets import SheetsNotConfigured
 from schemas.common import Identity, RouteCategory, UserRole
 from schemas.imports import (
     ImportProgress,
-    PushedRowsRequest,
     PublishSelectionRequest,
     StartImportResponse,
 )
@@ -47,38 +46,6 @@ def get_router() -> APIRouter:
         except Exception as e:
             return JSONResponse({"error": _sharing_hint(e)}, status_code=502)
         return {"data": read.preview}
-
-    @router.post("/rows")
-    async def import_rows_endpoint(
-        body: PushedRowsRequest,
-        background_tasks: BackgroundTasks,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
-        ),
-    ):
-        """Ingest rows the sheet pushed, rather than opening the sheet ourselves.
-
-        This is the path that needs no Google credentials: the Apps Script runs as a person and
-        sends what it read. Parsing still happens here, so the sheet cannot disagree with us
-        about what a valid row is.
-        """
-        if not user.user_id:
-            return JSONResponse({"error": "User ID not available"}, status_code=401)
-
-        read = sheet_import.read_rows(body.rows, body.source_url)
-        try:
-            batch_id = await request_batches.start(
-                request_batches.BatchKind.SHEET_IMPORT,
-                f"sheet:{body.source_url or 'pushed'}",
-                user.user_id,
-                {"source_url": body.source_url, "rows": len(body.rows)},
-                items_total=len(read.preview.jurisdictions_ready),
-            )
-        except request_batches.BatchAlreadyRunning as e:
-            return JSONResponse({"error": str(e)}, status_code=409)
-
-        background_tasks.add_task(run_import_task, batch_id, read.rows, user.user_id)
-        return {"data": StartImportResponse(batch_id=batch_id, preview=read.preview)}
 
     @router.post("")
     async def start_import_endpoint(
@@ -118,6 +85,18 @@ def get_router() -> APIRouter:
         return {"data": StartImportResponse(batch_id=batch_id, preview=read.preview)}
 
     # Declared before `/{batch_id}` or the path parameter swallows it.
+    @router.get("/history")
+    async def history_endpoint(
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+        ),
+    ):
+        """Recent imports, newest first. Each row deep-links to its own review."""
+        batches = await request_batches.list_recent(
+            request_batches.BatchKind.SHEET_IMPORT
+        )
+        return {"data": [_progress(batch) for batch in batches]}
+
     @router.get("/sheet")
     async def sheet_endpoint(
         _: Identity = Depends(
@@ -185,22 +164,6 @@ def get_router() -> APIRouter:
             batch_id, set(body.jurisdiction_ocdids), user.user_id
         )
         return {"data": results}
-
-    @router.delete("/{batch_id}")
-    async def release_import_endpoint(
-        batch_id: str,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
-        ),
-    ):
-        """Clear a batch that is not coming back, freeing its lock. Manual on purpose."""
-        if not user.user_id:
-            return JSONResponse({"error": "User ID not available"}, status_code=401)
-        batch = await request_batches.get(batch_id)
-        if batch is None:
-            return JSONResponse({"error": "No such import."}, status_code=404)
-        released = await request_batches.release(batch["lock_key"], user.user_id)
-        return {"data": {"released": released}}
 
     return router
 
