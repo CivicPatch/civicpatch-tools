@@ -112,7 +112,7 @@ async def get_review_stats(
             await cur.execute(
                 f"""
                 SELECT COUNT(*) AS available_count
-                FROM requests r
+                FROM changesets r
                 WHERE {AVAILABLE_FOR_REVIEW}
                   AND r.jurisdiction_ocdid LIKE %s
                   AND NOT EXISTS (

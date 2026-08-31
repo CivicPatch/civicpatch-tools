@@ -78,24 +78,24 @@ async def open_pr():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO requests (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
+            "INSERT INTO changesets (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
             (ocdid,),
         )
         request_id = (await cur.fetchone())[0]  # type: ignore[index]
         await cur.execute(
             # The review pool is "this scrape saw somebody" — one sighting is a roster.
-            "INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url) "
+            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
             "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
             (request_id, ocdid),
         )
-        await cur.execute("UPDATE requests SET status = 'SUCCESS', "
+        await cur.execute("UPDATE changesets SET status = 'SUCCESS', "
             "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (request_id,))
 
     yield request_id, ocdid
 
     async with pool.connection() as conn:
         # The run lives on the request now; deleting the request takes it.
-        await conn.execute("DELETE FROM requests WHERE id::text = %s", (request_id,))
+        await conn.execute("DELETE FROM changesets WHERE id::text = %s", (request_id,))
         await conn.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
 
 

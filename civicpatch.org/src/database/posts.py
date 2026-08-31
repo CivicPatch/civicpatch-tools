@@ -194,7 +194,7 @@ async def delete_unclaimed(cur, request_id: str) -> int:
             SELECT (change_logs.changes ->> 'post_id')::uuid
             FROM change_logs
             WHERE change_logs.type = 'add_post'
-              AND change_logs.request_id = %s
+              AND change_logs.changeset_id = %s
               AND change_logs.changes ? 'post_id'
         )
           AND NOT EXISTS (

@@ -30,7 +30,7 @@ async def record_open_data_url(request_id: str, url: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "UPDATE requests SET open_data_url = %s WHERE id = %s", (url, request_id)
+            "UPDATE changesets SET open_data_url = %s WHERE id = %s", (url, request_id)
         )
 
 
@@ -51,7 +51,7 @@ async def dismiss_request(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            UPDATE requests
+            UPDATE changesets
                SET dismissed_at = COALESCE(dismissed_at, now()),
                    resolved_by_user_id = COALESCE(%s, resolved_by_user_id)
              WHERE id = %s AND published_at IS NULL
@@ -81,7 +81,7 @@ async def _refuse_if_superseded(
     await cur.execute(
         """
         SELECT r.id::text, r.sourced_at
-        FROM requests r
+        FROM changesets r
         WHERE r.jurisdiction_ocdid = %s
           AND r.published_at IS NOT NULL
           AND r.id::text <> %s
@@ -110,14 +110,14 @@ async def _record_publish(
     await cur.execute(
         """
         UPDATE jurisdictions j SET scraped_at = r.created_at
-        FROM requests r
+        FROM changesets r
         WHERE r.id = %s AND j.jurisdiction_ocdid = %s
         """,
         (request_id, jurisdiction_ocdid),
     )
     await cur.execute(
         """
-        UPDATE requests
+        UPDATE changesets
            SET published_at = COALESCE(published_at, now()),
                resolved_by_user_id = COALESCE(%s, resolved_by_user_id)
          WHERE id = %s

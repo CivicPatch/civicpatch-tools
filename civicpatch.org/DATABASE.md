@@ -36,7 +36,7 @@ erDiagram
         timestamptz     synced_at           "default: now()"
     }
 
-    requests {
+    changesets {
         uuid            id                  PK
         text            request_type
         text_null       jurisdiction_ocdid  FK  "idx"
@@ -50,16 +50,16 @@ erDiagram
         int_null        progress            "147: was pipeline_runs.progress"
         timestamptz_null sourced_at         "147: when the run last read the source; dates last_seen_at, and orders supersede"
         timestamptz     created_at
-        uuid_null       batch_id            FK  "idx. NULL for every request made outside a batch, which is most"
+        uuid_null       batch_id            FK  "idx. NULL for every changeset made outside a batch, which is most"
     }
 
-    request_batches {
+    changeset_batches {
         uuid            id                  PK
         text            kind                "CHECK sheet_import|state_scrape"
         text            lock_key            "idx: (lock_key, started_at DESC). 'sheet:<id>' | 'state:wa' — what this run must not race"
         jsonb           arguments_json      "producer-specific inputs: the spreadsheet, or the state and how many"
         text            status              "CHECK running|succeeded|failed|abandoned. lifecycle only, never progress"
-        int_null        items_total         "how many the run will attempt. progress is count(requests WHERE batch_id) out of this — the requests are the items, so no counter and no result blob"
+        int_null        items_total         "how many the run will attempt. progress is count(changesets WHERE batch_id) out of this — the changesets are the items, so no counter and no result blob"
         text_null       error
         uuid            started_by_user_id  FK
         timestamptz     started_at
@@ -139,7 +139,7 @@ erDiagram
         uuid            id                  PK
         text            type                FK  "references change_log_types(type)"
         text_null       jurisdiction_ocdid  "idx"
-        text_null       request_id          "the request the change belongs to; NULL for non-review changes"
+        text_null       changeset_id        "the changeset the change belongs to; NULL for non-review changes"
         jsonb_null      changes             "type-specific payload; {field,from,to} diff for edit_person"
         uuid_null       user_id             FK
         timestamptz     created_at          "idx: created_at DESC, default: now()"
@@ -147,7 +147,7 @@ erDiagram
 
     source_records {
         uuid            id                  PK
-        uuid            request_id          FK  "idx; ON DELETE CASCADE — which scrape"
+        uuid            changeset_id        FK  "idx; ON DELETE CASCADE — which scrape"
         text            jurisdiction_ocdid  FK  "idx"
         text            name                "verbatim, as the page spelled it"
         text            label               "idx; verbatim. ONE RECORD PER LABEL is the contract with the pipeline — a person seen under two titles is two rows"
@@ -256,16 +256,16 @@ erDiagram
     roles ||--o{ membership_roles : "role_id"
     memberships ||--o{ membership_roles : "membership_id"
     users ||--o{ assertions : "asserted_by"
-    users ||--o{ request_batches : "started_by_user_id"
-    request_batches ||--o{ requests : "batch_id"
-    requests ||--o{ source_records : "request_id"
+    users ||--o{ changeset_batches : "started_by_user_id"
+    changeset_batches ||--o{ changesets : "batch_id"
+    changesets ||--o{ source_records : "changeset_id"
     jurisdictions ||--o{ source_records : "jurisdiction_ocdid"
     source_records ||--o| source_record_identities : "source_record_id"
-    jurisdictions ||--o{ requests : "jurisdiction_ocdid"
+    jurisdictions ||--o{ changesets : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
-    requests }o--o{ issues : "request_ids"
+    changesets }o--o{ issues : "request_ids"
     users ||--o{ review_sessions : "user_id"
-    users ||--o{ requests : "requested_by_user_id"
+    users ||--o{ changesets : "requested_by_user_id"
     users ||--o{ api_keys : "user_id (ON DELETE CASCADE)"
     users ||--o| api_usage_limits : "user_id (ON DELETE CASCADE)"
     change_log_types ||--o{ change_logs : "type"
@@ -278,7 +278,8 @@ erDiagram
 **Notes:**
 - `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
 - `pipeline_runs` was folded into `requests` in migration 147: `request_id` was UNIQUE NOT NULL and every request had exactly one run, so the two tables were a vertical partition of one entity that 21 queries had to join. `pull_requests` went the same way in 141 — nothing opens a pull request for a scrape any more, and every column it held either lived on `requests` already or died with the merge queue.
-- `people` has no FK to `requests` — it is written by the publish transaction, not by a merge
+- **`requests` became `changesets` in migration 152**, with `request_batches` → `changeset_batches`, `source_records.request_id` → `changeset_id`, and `change_logs.request_id` → `changeset_id`. Pure rename, including every index and constraint name — a rename that leaves `requests_pkey` on `changesets` puts the old vocabulary back into the schema in a dozen places. The table grew from "a job someone asked for" and that fits only the oldest of its four producers: nobody *requests* a sheet import, and both hand-edit kinds are born published. What all four are is a bundle of proposed changes to one jurisdiction, by one producer, at one time, awaiting a decision. `submissions` was rejected as past tense — it misnames the whole dispatched-and-running phase of a scrape, which exists at `status = PENDING, progress = 0` before it has any `source_records`, exactly the state an OSM changeset models as open-and-empty. **Two columns keep the old word deliberately**: `issues.request_ids` and `review_session_entries.request_ids` are different columns that 152 did not touch.
+- `people` has no FK to `changesets` — it is written by the publish transaction, not by a merge
 - `state_configs` was **dropped in migration 150**, along with `sync_log` (superseded by `synced_files` and untouched since migration 003) and `logs` (0 rows, no reader; application logs go to Grafana). 103 had dropped `state_configs.min_scraped_at` when freshness became a computed rolling window and kept the shell as the home for the next per-state setting; two months on it held none, had no reader, and `jurisdictions.state` already answered which states exist. Bringing it back is one statement if a per-state setting ever arrives.
 - `publish_timestamp_backup_117` was **dropped in migration 151**, on the judgement that 117 is permanent. It was never in this diagram — it was 117's snapshot of the `published_at` / `dismissed_at` / `resolved_by_user_id` values it re-stamped, kept because they cannot be recomputed (115 stored `pr.updated_at` as it stood then, and pr_sync rewrote that column on every reconciliation). **151 is deliberately irreversible**: its down is a no-op rather than an empty recreation, because 117's down is an `UPDATE … FROM` that against an empty table would update zero rows and report success — silently leaving the re-stamped values in place while appearing to restore them. Note 117's up could not be replayed anyway: it reads `pull_requests`, dropped in 141.
 - `roles` replaced `role_terms` / `role_aliases` in migration 106, and migration 109 **flattened it**: the `scope` column (NULL=global / state ocdid / place ocdid) is gone, along with per-scope resolution, alias unioning, and the `roles_global_complete` check. It carried 24 global rows and 1 scoped test row while costing the promotion trap — promoting a role was DELETE + INSERT, minting a new uuid and breaking any FK pointing at it. One flat list, `unique (lower(label))`. #2470 and #2471 ask for *more* hierarchy and are inverted by this; see `.scratch/2026-08-12-plan-flat-roles.md`.

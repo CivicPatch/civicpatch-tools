@@ -2,12 +2,12 @@ from database.database import get_pool
 from database.requests import AVAILABLE_FOR_REVIEW
 
 _OPEN_PRS_GLOBAL = f"""
-    (SELECT COUNT(*) FROM requests r
+    (SELECT COUNT(*) FROM changesets r
      WHERE {AVAILABLE_FOR_REVIEW})
 """
 
 _OPEN_PRS_STATE = f"""
-    (SELECT COUNT(*) FROM requests r
+    (SELECT COUNT(*) FROM changesets r
      JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
      WHERE {AVAILABLE_FOR_REVIEW} AND jur.state = %s)
 """
@@ -20,7 +20,7 @@ _ISSUES_SUBQUERIES_STATE = """
     , (SELECT COUNT(*) FROM issues pi2
        WHERE pi2.status IN ('pending', 'pr_opened')
        AND EXISTS (
-           SELECT 1 FROM requests r2
+           SELECT 1 FROM changesets r2
            JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r2.jurisdiction_ocdid
            WHERE r2.id::text = ANY(pi2.request_ids) AND jur.state = %s
        ))

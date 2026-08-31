@@ -16,7 +16,7 @@ from database.database import get_pool
 
 _INSERT_RECORD = """
     INSERT INTO source_records
-        (id, request_id, jurisdiction_ocdid, name, label, source_url,
+        (id, changeset_id, jurisdiction_ocdid, name, label, source_url,
          url, phone, email, image, cdn_image, start_date, end_date)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
 """
@@ -86,12 +86,12 @@ async def get_source_records_for_request(request_id: str) -> list[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT s.id::text, s.request_id::text, i.person_id::text, s.jurisdiction_ocdid,
+            SELECT s.id::text, s.changeset_id::text, i.person_id::text, s.jurisdiction_ocdid,
                    s.name, s.label, s.source_url, s.url, s.phone, s.email,
                    s.image, s.cdn_image, s.start_date, s.end_date, s.created_at
             FROM source_records s
             JOIN source_record_identities i ON i.source_record_id = s.id
-            WHERE s.request_id = %s
+            WHERE s.changeset_id = %s
             ORDER BY s.created_at, s.label
             """,
             (request_id,),

@@ -36,7 +36,7 @@ async def list_open_pull_requests(
             sql.SQL("""
             SELECT COUNT(*),
                    COUNT(*) FILTER (WHERE {count} > 0)
-            FROM requests r
+            FROM changesets r
             {}
             """).format(
                 where,
@@ -54,7 +54,7 @@ async def list_open_pull_requests(
                    jur.data->>'name' AS jurisdiction_name,
                    r.created_at,
                    {count} AS issue_count
-            FROM requests r
+            FROM changesets r
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             {}
             ORDER BY {priority} DESC, r.created_at DESC
@@ -88,7 +88,7 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    jur.data->>'url' AS jurisdiction_website_url
-            FROM requests r
+            FROM changesets r
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE r.id = %s AND r.request_type != %s
             """,
@@ -123,7 +123,7 @@ async def get_pull_request_data_by_request_id(request_id: str) -> Optional[dict]
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    jur.data->>'url' AS jurisdiction_website_url
-            FROM requests r
+            FROM changesets r
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE r.id::text = %s AND r.request_type != %s
             """,
@@ -154,7 +154,7 @@ async def get_open_pr_ocdids_by_state(state_code: str) -> set[str]:
         await cur.execute(
             f"""
             SELECT DISTINCT r.jurisdiction_ocdid
-            FROM requests r
+            FROM changesets r
             WHERE {WORK_IN_FLIGHT}
               AND r.jurisdiction_ocdid LIKE %s
             """,
@@ -170,7 +170,7 @@ async def has_open_pr_for_jurisdiction(jurisdiction_ocdid: str) -> bool:
         await cur.execute(
             f"""
             SELECT 1
-            FROM requests r
+            FROM changesets r
             WHERE {WORK_IN_FLIGHT}
               AND r.jurisdiction_ocdid = %s
             LIMIT 1

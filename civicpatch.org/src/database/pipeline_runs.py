@@ -13,7 +13,7 @@ async def get_sourced_at(cur, request_id: str) -> datetime:
     a replayed artifact.
     """
     await cur.execute(
-        "SELECT sourced_at FROM requests WHERE id::text = %s",
+        "SELECT sourced_at FROM changesets WHERE id::text = %s",
         (request_id,),
     )
     row = await cur.fetchone()
@@ -29,7 +29,7 @@ async def get_pipeline_run(request_id: str):
             """
             SELECT r.status, r.progress, r.arguments_json,
                    r.created_at, r.sourced_at, r.open_data_url
-            FROM requests r
+            FROM changesets r
             WHERE r.id = %s;
             """,
             (request_id,),
@@ -54,7 +54,7 @@ async def get_active_pipeline_run_jurisdiction_ocdids() -> set[str]:
         await cur.execute(
             """
             SELECT DISTINCT r.jurisdiction_ocdid
-            FROM requests r
+            FROM changesets r
             WHERE r.status IS NOT NULL AND r.status != ALL(%s)
             AND r.jurisdiction_ocdid IS NOT NULL
             """,
@@ -72,7 +72,7 @@ async def get_active_pipeline_run_jurisdiction_ocdids_by_state(
         await cur.execute(
             """
             SELECT DISTINCT r.jurisdiction_ocdid
-            FROM requests r
+            FROM changesets r
             WHERE r.status IS NOT NULL AND r.status != ALL(%s)
             AND r.jurisdiction_ocdid LIKE %s
             """,
@@ -92,11 +92,11 @@ async def get_active_pipeline_runs(
             SELECT r.id::text, r.status, r.progress, r.created_at, r.sourced_at,
                    r.jurisdiction_ocdid, jur.state, jur.data->>'name',
                    COUNT(*) OVER() AS total_count
-            FROM requests r
+            FROM changesets r
             JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE r.status IS NOT NULL AND r.status != ALL(%s)
             AND r.jurisdiction_ocdid IS NOT NULL
-            AND r.request_type = 'people'
+            AND r.kind = 'people'
         """
         params: list = [list(TERMINAL_PIPELINE_RUN_STATUSES)]
         if state_code:
@@ -127,7 +127,7 @@ async def get_pipeline_run_status(request_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT status, progress FROM requests
+            SELECT status, progress FROM changesets
             WHERE id = %s;
             """,
             (request_id,),
@@ -164,7 +164,7 @@ async def update_pipeline_run_status(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             sql.SQL(f"""
-            UPDATE requests
+            UPDATE changesets
             SET {set_clause_str}
             WHERE id = %s;
             """),
@@ -173,7 +173,7 @@ async def update_pipeline_run_status(
 
 
 RUN_NOT_TERMINAL = (
-    "requests.status IS NOT NULL AND requests.status != ALL(ARRAY["
+    "changesets.status IS NOT NULL AND changesets.status != ALL(ARRAY["
     + ", ".join(f"'{status.value}'" for status in TERMINAL_PIPELINE_RUN_STATUSES)
     + "])"
 )
@@ -186,7 +186,7 @@ async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            UPDATE requests
+            UPDATE changesets
             SET status = 'ERROR'
             WHERE {RUN_NOT_TERMINAL}
             AND sourced_at < NOW() - %s::interval

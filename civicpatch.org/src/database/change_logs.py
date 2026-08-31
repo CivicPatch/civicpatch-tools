@@ -31,7 +31,7 @@ async def get_change_logs_for_roles(
 
         await cur.execute(
             """
-            SELECT cl.id::text, cl.type, cl.jurisdiction_ocdid, cl.request_id,
+            SELECT cl.id::text, cl.type, cl.jurisdiction_ocdid, cl.changeset_id,
                    cl.changes, cl.created_at,
                    COALESCE(u.display_name, 'Anonymous') AS author_name, u.role AS author_role,
                    COALESCE(j.data->>'name', cl.jurisdiction_ocdid) AS jurisdiction_name,
@@ -39,7 +39,7 @@ async def get_change_logs_for_roles(
             FROM change_logs cl
             JOIN users u ON u.id = cl.user_id
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = cl.jurisdiction_ocdid
-            LEFT JOIN requests r ON r.id::text = cl.request_id
+            LEFT JOIN changesets r ON r.id::text = cl.changeset_id
             WHERE u.role = ANY(%s)
             ORDER BY cl.created_at DESC
             LIMIT %s OFFSET %s
@@ -77,7 +77,7 @@ async def create_change_log(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO change_logs (type, jurisdiction_ocdid, request_id, changes, user_id)
+            INSERT INTO change_logs (type, jurisdiction_ocdid, changeset_id, changes, user_id)
             VALUES (%s, %s, %s, %s, %s)
             """,
             (change_type, jurisdiction_ocdid, request_id, payload, user_id),
@@ -106,7 +106,7 @@ async def record_change(
     """
     await cur.execute(
         """
-        INSERT INTO change_logs (type, jurisdiction_ocdid, changes, user_id, request_id)
+        INSERT INTO change_logs (type, jurisdiction_ocdid, changes, user_id, changeset_id)
         VALUES (%s, %s, %s, %s, %s)
         """,
         (

@@ -68,7 +68,7 @@ async def _cleanup():
             "DELETE FROM divisions WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
         )
         await cur.execute(
-            "DELETE FROM requests WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
+            "DELETE FROM changesets WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
         )
         await cur.execute(
             "DELETE FROM people WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
@@ -79,7 +79,7 @@ async def _cleanup():
         # By owner, not by lock key: a test that starts a second batch picks its own key, and
         # `started_by_user_id` is NOT NULL, so a missed row pins the user below.
         await cur.execute(
-            "DELETE FROM request_batches WHERE started_by_user_id IN "
+            "DELETE FROM changeset_batches WHERE started_by_user_id IN "
             "(SELECT id FROM users WHERE email = %s)",
             (_EMAIL,),
         )
@@ -119,7 +119,7 @@ async def user_id():
 
 @pytest_asyncio.fixture
 async def batch_id(user_id):
-    """`requests.batch_id` is a real foreign key, so a literal string will not do."""
+    """`changesets.batch_id` is a real foreign key, so a literal string will not do."""
     return await request_batches.start(
         request_batches.BatchKind.SHEET_IMPORT,
         f"sheet:{_OCDID}",
@@ -169,7 +169,7 @@ async def test_an_import_writes_sightings_and_lands_in_the_review_queue(
 
     assert (
         await _scalar(
-            "SELECT count(*) FROM source_records WHERE request_id = %s::uuid",
+            "SELECT count(*) FROM source_records WHERE changeset_id = %s::uuid",
             (result.request_id,),
         )
         == 2
@@ -177,7 +177,7 @@ async def test_an_import_writes_sightings_and_lands_in_the_review_queue(
     # Unpublished: an import proposes a roster, it does not decide one.
     assert (
         await _scalar(
-            "SELECT published_at FROM requests WHERE id = %s::uuid", (result.request_id,)
+            "SELECT published_at FROM changesets WHERE id = %s::uuid", (result.request_id,)
         )
         is None
     )
@@ -197,7 +197,7 @@ async def test_every_sighting_gets_an_identity(user_id, batch_id):
             """
             SELECT count(*) FROM source_records sr
             JOIN source_record_identities i ON i.source_record_id = sr.id
-            WHERE sr.request_id = %s::uuid
+            WHERE sr.changeset_id = %s::uuid
             """,
             (result.request_id,),
         )
@@ -234,7 +234,7 @@ async def test_the_batch_is_recorded_on_the_request(user_id, batch_id):
 
     assert (
         await _scalar(
-            "SELECT batch_id::text FROM requests WHERE id = %s::uuid",
+            "SELECT batch_id::text FROM changesets WHERE id = %s::uuid",
             (result.request_id,),
         )
         == batch_id
@@ -291,7 +291,7 @@ async def test_end_to_end_from_csv_text(user_id, batch_id):
     # A quoted comma survives the whole way to the sighting.
     assert (
         await _scalar(
-            "SELECT count(*) FROM source_records WHERE request_id = %s::uuid AND name = %s",
+            "SELECT count(*) FROM source_records WHERE changeset_id = %s::uuid AND name = %s",
             (result.request_id, "Reyes, Ana"),
         )
         == 1
@@ -461,7 +461,7 @@ async def test_publishing_dismisses_the_cards_it_makes_pointless(
     rows = await _parsed(("Ana Reyes", "Select Board Chair"))
     await import_rows(rows, user_id, batch_id)
     older = await _scalar(
-        "SELECT id::text FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        "SELECT id::text FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
     )
 
     # A second import of the same locality, which is what a re-run produces.
@@ -478,7 +478,7 @@ async def test_publishing_dismisses_the_cards_it_makes_pointless(
 
     assert (
         await _scalar(
-            "SELECT dismissed_reason FROM requests WHERE id = %s", (older,)
+            "SELECT dismissed_reason FROM changesets WHERE id = %s", (older,)
         )
         == "superseded"
     )
@@ -539,7 +539,7 @@ async def test_a_locality_the_sheet_says_is_handled_raises_no_second_card(
     assert results[0].request_id is None
     assert (
         await _scalar(
-            "SELECT count(*) FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,)
+            "SELECT count(*) FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         == 0
     )
@@ -563,7 +563,7 @@ async def test_clearing_one_row_brings_the_whole_roster_back(user_id, batch_id):
     assert result.status is ImportStatus.IMPORTED
     assert (
         await _scalar(
-            "SELECT count(*) FROM source_records WHERE request_id = %s::uuid",
+            "SELECT count(*) FROM source_records WHERE changeset_id = %s::uuid",
             (result.request_id,),
         )
         == 2

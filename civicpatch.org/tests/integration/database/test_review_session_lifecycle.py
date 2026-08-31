@@ -112,18 +112,18 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO requests (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
+            "INSERT INTO changesets (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
             (ocdid,),
         )
         request_id = (await cur.fetchone())[0]
         await cur.execute(
             # The review pool is "this scrape saw somebody" — one sighting is a roster.
-            "INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url) "
+            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
             "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
             (request_id, ocdid),
         )
         await cur.execute(
-            "UPDATE requests SET status = 'SUCCESS', "
+            "UPDATE changesets SET status = 'SUCCESS', "
             "sourced_at = CURRENT_TIMESTAMP WHERE id = %s",
             (request_id,),
         )
@@ -134,7 +134,7 @@ async def _cleanup_open_pr(request_id: str, ocdid: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         # The run lives on the request now; deleting the request takes it.
-        await conn.execute("DELETE FROM requests WHERE id::text = %s", (request_id,))
+        await conn.execute("DELETE FROM changesets WHERE id::text = %s", (request_id,))
         await conn.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
 
 
@@ -550,11 +550,11 @@ async def test_a_scrape_with_no_roster_never_reaches_the_pool():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO requests (jurisdiction_ocdid) VALUES (%s) RETURNING id::text", (ocdid,)
+            "INSERT INTO changesets (jurisdiction_ocdid) VALUES (%s) RETURNING id::text", (ocdid,)
         )
         request_id = (await cur.fetchone())[0]
         await cur.execute(
-            "UPDATE requests SET status = 'SUCCESS', "
+            "UPDATE changesets SET status = 'SUCCESS', "
             "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (request_id,)
         )
 
@@ -577,18 +577,18 @@ async def test_a_scrape_that_changed_nothing_leaves_the_pool_saying_why():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO requests (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
+            "INSERT INTO changesets (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
             (ocdid,),
         )
         request_id = (await cur.fetchone())[0]
         await cur.execute(
             # The review pool is "this scrape saw somebody" — one sighting is a roster.
-            "INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url) "
+            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
             "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
             (request_id, ocdid),
         )
         await cur.execute(
-            "UPDATE requests SET status = 'SUCCESS', "
+            "UPDATE changesets SET status = 'SUCCESS', "
             "sourced_at = CURRENT_TIMESTAMP WHERE id = %s",
             (request_id,),
         )
@@ -606,7 +606,7 @@ async def test_a_scrape_that_changed_nothing_leaves_the_pool_saying_why():
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT dismissed_reason FROM requests WHERE id::text = %s", (request_id,)
+            "SELECT dismissed_reason FROM changesets WHERE id::text = %s", (request_id,)
         )
         assert (await cur.fetchone())[0] == DISMISSED_UNCHANGED
 
@@ -625,14 +625,14 @@ async def test_auto_resolve_loses_the_race_to_a_reviewer_publishing():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO requests (jurisdiction_ocdid, published_at) "
+            "INSERT INTO changesets (jurisdiction_ocdid, published_at) "
             "VALUES (%s, now()) RETURNING id::text",
             (ocdid,),
         )
         request_id = (await cur.fetchone())[0]
         await cur.execute(
             # The review pool is "this scrape saw somebody" — one sighting is a roster.
-            "INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url) "
+            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
             "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
             (request_id, ocdid),
         )
@@ -640,7 +640,7 @@ async def test_auto_resolve_loses_the_race_to_a_reviewer_publishing():
         assert await dismiss_as_unchanged(cur, request_id) is False
 
         await cur.execute(
-            "SELECT dismissed_at, dismissed_reason FROM requests WHERE id::text = %s",
+            "SELECT dismissed_at, dismissed_reason FROM changesets WHERE id::text = %s",
             (request_id,),
         )
         assert await cur.fetchone() == (None, None)

@@ -41,7 +41,7 @@ async def _wipe():
             "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s",
             (_OCDID,),
         )
-        for table in ("posts", "divisions", "organizations", "requests", "people"):
+        for table in ("posts", "divisions", "organizations", "changesets", "people"):
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_OCDID,)
             )

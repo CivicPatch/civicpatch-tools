@@ -31,7 +31,7 @@ _PRODUCES_SOMETHING = {"SUCCESS", "RESOLVED"}
 async def _cleanup():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("DELETE FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,))
+        await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
@@ -53,14 +53,14 @@ async def _a_run_in_flight() -> str:
         )
         await cur.execute(
             """
-            INSERT INTO requests (request_type, jurisdiction_ocdid, arguments_json)
+            INSERT INTO changesets (request_type, jurisdiction_ocdid, arguments_json)
             VALUES ('people', %s, '{}'::jsonb) RETURNING id::text
             """,
             (_OCDID,),
         )
         request_id = (await cur.fetchone())[0]
         await cur.execute(
-            "UPDATE requests SET status = 'RUNNING', "
+            "UPDATE changesets SET status = 'RUNNING', "
             "sourced_at = CURRENT_TIMESTAMP WHERE id = %s",
             (request_id,),
         )
@@ -73,7 +73,7 @@ async def _is_still_pending_work(request_id: str) -> bool:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT published_at IS NULL AND dismissed_at IS NULL FROM requests WHERE id::text = %s",
+            "SELECT published_at IS NULL AND dismissed_at IS NULL FROM changesets WHERE id::text = %s",
             (request_id,),
         )
         return (await cur.fetchone())[0]
@@ -143,7 +143,7 @@ async def _set_run(request_id: str, status: str, age_hours: int) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "UPDATE requests SET status = %s, "
+            "UPDATE changesets SET status = %s, "
             "sourced_at = NOW() - make_interval(hours => %s) WHERE id = %s",
             (status, age_hours, request_id),
         )
@@ -154,7 +154,7 @@ async def _status(request_id: str) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT status FROM requests WHERE id = %s", (request_id,)
+            "SELECT status FROM changesets WHERE id = %s", (request_id,)
         )
         return (await cur.fetchone())[0]
 

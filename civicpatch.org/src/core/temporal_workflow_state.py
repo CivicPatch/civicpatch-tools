@@ -4,7 +4,7 @@ Pure — takes Temporal's description and returns a summary. No client, no I/O, 
 interesting part (what a stuck run looks like) is testable without a Temporal server.
 
 Only rendered while a scrape is in flight and never stored: a workflow that has finished has
-nothing to say that `requests.status` does not already say better.
+nothing to say that `changesets.status` does not already say better.
 """
 
 from dataclasses import dataclass
@@ -17,7 +17,7 @@ class TemporalWorkflowState:
 
     `attempt` is 1 for a healthy run and climbs while something retries — which is the whole
     reason this is worth surfacing. A run stuck on attempt 7 looks identical to a healthy one
-    from `requests.status` alone: both say RUNNING.
+    from `changesets.status` alone: both say RUNNING.
     """
 
     activity: str | None

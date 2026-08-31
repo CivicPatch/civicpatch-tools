@@ -48,7 +48,7 @@ async def _wipe():
         # this the wipe raises at *setup* of every test in the file, so one leftover row
         # takes the whole module down — and takes new breakage with it, silently.
         # `source_records` and `pipeline_runs` cascade from the request.
-        await cur.execute("DELETE FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,))
+        await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
         # The curator, and the assertions pointing at them. `asserted_by` is a FK, so the user
         # cannot go first — and `assertions` has none to memberships, so its rows outlive the
@@ -351,7 +351,7 @@ async def test_publish_writes_memberships_for_the_roster():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO requests (id, jurisdiction_ocdid, request_type)
+            INSERT INTO changesets (id, jurisdiction_ocdid, request_type)
             VALUES (%s, %s, 'pipeline_run')
             ON CONFLICT (id) DO NOTHING
             """,
@@ -360,7 +360,7 @@ async def test_publish_writes_memberships_for_the_roster():
         # Publish reads `sourced_at` as the observation's clock, so this is where `_T0` goes.
         await cur.execute(
             """
-            UPDATE requests SET status = 'SUCCESS', progress = 100,
+            UPDATE changesets SET status = 'SUCCESS', progress = 100,
                                 created_at = %s, sourced_at = %s
             WHERE id = %s
             """,
@@ -434,7 +434,7 @@ async def test_publish_writes_memberships_for_the_roster():
         assert source_urls == ["https://example.gov"]
         assert emails == [], "a person with no emails has none, not NULL"
 
-        await cur.execute("DELETE FROM requests WHERE id = %s", (request_id,))
+        await cur.execute("DELETE FROM changesets WHERE id = %s", (request_id,))
         await conn.commit()
 
     # `office` is no longer stored — it is rebuilt from the membership publish just wrote.
@@ -799,7 +799,7 @@ async def _seed_request() -> str:
             (_OCDID, json.dumps({})),
         )
         await cur.execute(
-            "INSERT INTO requests (id, jurisdiction_ocdid, request_type) "
+            "INSERT INTO changesets (id, jurisdiction_ocdid, request_type) "
             "VALUES (%s, %s, 'pipeline_run')",
             (request_id, _OCDID),
         )
@@ -812,7 +812,7 @@ async def _add_post_logs(request_id: str) -> list[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT changes, user_id FROM change_logs "
-            "WHERE type = 'add_post' AND request_id = %s",
+            "WHERE type = 'add_post' AND changeset_id = %s",
             (request_id,),
         )
         return [{"changes": row[0], "user_id": row[1]} for row in await cur.fetchall()]
@@ -945,7 +945,7 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         await memberships.upsert(cur, DerivedMember(person_id=person_id), post_id, org, _T0)
         await cur.execute(
-            "INSERT INTO requests (id, jurisdiction_ocdid, request_type) "
+            "INSERT INTO changesets (id, jurisdiction_ocdid, request_type) "
             "VALUES (%s, %s, 'pipeline_run')",
             (request_id := str(uuid.uuid4()), _OCDID),
         )
@@ -953,7 +953,7 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         # old close-at-ingest path would raise on the missing run and this test would pass
         # against the very behaviour it exists to forbid.
         await cur.execute(
-            "UPDATE requests SET status = 'SUCCESS', progress = 100, "
+            "UPDATE changesets SET status = 'SUCCESS', progress = 100, "
             "created_at = %s, sourced_at = %s WHERE id = %s",
             (_T1, _T1, request_id),
         )

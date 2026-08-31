@@ -47,7 +47,7 @@ async def start(
         try:
             await cur.execute(
                 """
-                INSERT INTO request_batches
+                INSERT INTO changeset_batches
                     (kind, lock_key, arguments_json, started_by_user_id, items_total)
                 VALUES (%s, %s, %s, %s, %s)
                 RETURNING id::text
@@ -74,7 +74,7 @@ async def finish(batch_id: str, status: BatchStatus, error: str | None = None) -
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            UPDATE request_batches
+            UPDATE changeset_batches
                SET status = %s, error = %s, finished_at = now()
              WHERE id = %s
             """,
@@ -90,9 +90,9 @@ async def get(batch_id: str) -> dict | None:
             """
             SELECT b.id::text, b.kind, b.lock_key, b.arguments_json, b.status,
                    b.items_total,
-                   (SELECT count(*) FROM requests WHERE requests.batch_id = b.id) AS items_done,
+                   (SELECT count(*) FROM changesets WHERE changesets.batch_id = b.id) AS items_done,
                    b.error, b.started_by_user_id::text, b.started_at, b.finished_at
-            FROM request_batches b WHERE b.id = %s
+            FROM changeset_batches b WHERE b.id = %s
             """,
             (batch_id,),
         )
@@ -115,9 +115,9 @@ async def list_recent(kind: BatchKind, limit: int = 25) -> list[dict]:
             """
             SELECT b.id::text, b.kind, b.lock_key, b.arguments_json, b.status,
                    b.items_total,
-                   (SELECT count(*) FROM requests WHERE requests.batch_id = b.id) AS items_done,
+                   (SELECT count(*) FROM changesets WHERE changesets.batch_id = b.id) AS items_done,
                    b.error, b.started_by_user_id::text, b.started_at, b.finished_at
-            FROM request_batches b
+            FROM changeset_batches b
             WHERE b.kind = %s
             ORDER BY b.started_at DESC
             LIMIT %s
@@ -143,7 +143,7 @@ async def latest(kind: BatchKind) -> dict | None:
 async def items(batch_id: str) -> list[dict]:
     """The batch's requests with their *current* review state, not the state they were made in.
 
-    That is the whole reason `requests.batch_id` exists rather than a stored result: between the
+    That is the whole reason `changesets.batch_id` exists rather than a stored result: between the
     import and somebody opening this page, a card may have been published or dismissed from the
     ordinary review queue, which an import-time snapshot would never know.
     """
@@ -154,7 +154,7 @@ async def items(batch_id: str) -> list[dict]:
             SELECT r.id::text AS request_id, r.jurisdiction_ocdid,
                    {REVIEW_STATUS} AS review_status,
                    j.data->>'name' AS name
-            FROM requests r
+            FROM changesets r
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE r.batch_id = %s
             ORDER BY j.data->>'name', r.jurisdiction_ocdid
