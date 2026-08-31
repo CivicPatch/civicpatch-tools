@@ -1,7 +1,6 @@
 import asyncio
 import logging
 from datetime import datetime, timezone
-from typing import Tuple
 
 import database.jurisdictions as jurisdictions_db
 import database.synced_files as synced_files_db
@@ -21,36 +20,22 @@ from database.synced_files import get_synced_file_shas
 logger = logging.getLogger(__name__)
 
 
-def get_current_tree(
-    tree: github_service.RepoTree,
-) -> Tuple[dict[str, str], dict[str, str]]:
-    jurisdictions = {}
-    people = {}
-
-    for candidate_path, candidate_sha in tree.entries.items():
-        path_type = classify_path(candidate_path)
-        if path_type is SyncFileKind.JURISDICTIONS:
-            jurisdictions[candidate_path] = candidate_sha
-        elif path_type is SyncFileKind.PEOPLE:
-            people[candidate_path] = candidate_sha
-
-    return jurisdictions, people
+# Jurisdictions only. The people half went with migration 150: `data/**` is rendered *from*
+# the database now, so a cursor over it describes a direction that no longer exists.
+def get_current_tree(tree: github_service.RepoTree) -> dict[str, str]:
+    return {
+        path: sha
+        for path, sha in tree.entries.items()
+        if classify_path(path) is SyncFileKind.JURISDICTIONS
+    }
 
 
-def get_stored_tree(
-    synced_files: dict[str, str],
-) -> Tuple[dict[str, str], dict[str, str]]:
-    jurisdictions = {}
-    people = {}
-
-    for candidate_path, candidate_sha in synced_files.items():
-        path_type = classify_path(candidate_path)
-        if path_type is SyncFileKind.JURISDICTIONS:
-            jurisdictions[candidate_path] = candidate_sha
-        elif path_type is SyncFileKind.PEOPLE:
-            people[candidate_path] = candidate_sha
-
-    return jurisdictions, people
+def get_stored_tree(synced_files: dict[str, str]) -> dict[str, str]:
+    return {
+        path: sha
+        for path, sha in synced_files.items()
+        if classify_path(path) is SyncFileKind.JURISDICTIONS
+    }
 
 
 async def _sync_jurisdiction_level(paths: list[str], now, fetch) -> list[str]:
@@ -106,10 +91,10 @@ async def sync_all():
     env = environment.get_env_vars()
     tree = await github_service.get_tree(env["OPEN_DATA_REPO_URL"])
 
-    current_jurisdictions, _ = get_current_tree(tree)
+    current_jurisdictions = get_current_tree(tree)
 
     synced_files = await get_synced_file_shas()
-    stored_jurisdictions, _ = get_stored_tree(synced_files)
+    stored_jurisdictions = get_stored_tree(synced_files)
 
     jurisdiction_diffs = diff_tree(current_jurisdictions, stored_jurisdictions)
 
