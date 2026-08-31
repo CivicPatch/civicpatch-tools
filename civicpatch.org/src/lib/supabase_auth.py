@@ -1,10 +1,9 @@
 from typing import Optional
 
+import environment
 from fastapi import Request
 from pydantic import BaseModel
 from supabase import AsyncClient, acreate_client
-
-import environment
 
 
 class SupabaseUser(BaseModel):
@@ -55,12 +54,7 @@ def get_supabase_admin_client(request: Request) -> AsyncClient:
 
 
 def to_supabase_user(user_obj) -> SupabaseUser:
-    """Build a typed SupabaseUser from a supabase-py user object.
-
-    Display name falls back through user_metadata keys that different OAuth
-    providers populate; email-OTP signups have none of them so the user row
-    ends up with NULL display_name (see TODOs.md).
-    """
+    """Build a typed SupabaseUser from a supabase-py user object."""
     user_metadata = getattr(user_obj, "user_metadata", {}) or {}
     display_name = (
         user_metadata.get("full_name")
@@ -72,5 +66,3 @@ def to_supabase_user(user_obj) -> SupabaseUser:
         email=getattr(user_obj, "email", None),
         display_name=display_name,
     )
-
-

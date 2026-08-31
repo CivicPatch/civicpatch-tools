@@ -1,9 +1,11 @@
 import logging
 
+from core.change_logs import field_changes
+from core.jurisdiction_patch import JurisdictionPatch
 from core.people_diff import diff_people
 from database.change_logs import create_change_log
 from database.requests import get_request_jurisdiction
-from schemas.change_logs import FieldChange, JurisdictionChangePayload
+from schemas.change_logs import JurisdictionChangePayload
 from shared.utils.statuses import ChangeLogType
 
 logger = logging.getLogger(__name__)
@@ -48,15 +50,17 @@ async def record_jurisdiction_edit(
     jurisdiction_ocdid: str,
     jurisdiction_name: str,
     user_id: str,
-    before_url: str | None,
-    after_url: str | None,
+    before: JurisdictionPatch,
+    after: JurisdictionPatch,
 ) -> None:
+    """`before` names the fields the edit was scoped to, so the diff covers all of them —
+    every other field used to go unrecorded because only `url` was passed."""
     # Best-effort: the PR is already open, so a logging failure must not surface as one.
     try:
         payload = JurisdictionChangePayload(
             jurisdiction_ocdid=jurisdiction_ocdid,
             jurisdiction_name=jurisdiction_name,
-            fields=[FieldChange(field="url", before=before_url, after=after_url)],
+            fields=field_changes(before, after),
         )
         await create_change_log(
             ChangeLogType.EDIT_JURISDICTION, user_id, jurisdiction_ocdid, request_id, payload

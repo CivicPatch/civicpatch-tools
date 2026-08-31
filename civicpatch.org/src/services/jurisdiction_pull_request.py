@@ -180,14 +180,14 @@ async def commit_jurisdiction_patch(
     )
 
     # The change log records the url specifically, so it only fires when url moved.
-    if user_id and "url" in patch and before.get("url") != patch["url"]:
+    if user_id:
         await change_logs.record_jurisdiction_edit(
             request_id=request_id,
             jurisdiction_ocdid=jurisdiction_ocdid,
             jurisdiction_name=entry["name"],
             user_id=user_id,
-            before_url=before.get("url"),
-            after_url=patch["url"],
+            before=before,
+            after=patch,
         )
 
     return commit_url, commit_url, request_id

@@ -2,6 +2,7 @@ import datetime
 import json
 import logging
 import math
+from collections.abc import Mapping
 from typing import List
 
 import shared.utils.id_utils
@@ -623,7 +624,9 @@ async def get_jurisdiction_entry(jurisdiction_ocdid: str) -> dict | None:
     return row[0] if row else None
 
 
-async def patch_jurisdiction_entry(jurisdiction_ocdid: str, patch: dict) -> None:
+async def patch_jurisdiction_entry(
+    jurisdiction_ocdid: str, patch: Mapping[str, object]
+) -> None:
     """Merge a patch into the stored entry, leaving every other key alone.
 
     `||` rather than a whole-row write: the patch carries only what the editor sent, and an

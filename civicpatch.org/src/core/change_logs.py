@@ -1,5 +1,23 @@
-"""Pure formatter that turns a (type, changes) pair into a human-readable
-summary string for the activity feed."""
+"""Pure change-log helpers: the field diff a payload carries, and the formatter that turns a
+(type, changes) pair into a human-readable summary string for the activity feed."""
+
+from collections.abc import Mapping
+
+from schemas.change_logs import FieldChange
+
+
+def field_changes(
+    before: Mapping[str, object], after: Mapping[str, object]
+) -> list[FieldChange]:
+    """Only the keys `before` names — the caller decides what was in scope for the edit.
+
+    `object`, not `Any`: the values are compared and passed through, never inspected.
+    """
+    return [
+        FieldChange(field=field, before=before[field], after=after[field])
+        for field in before
+        if before[field] != after[field]
+    ]
 
 
 def _alias_summary(payload: dict) -> str:

@@ -147,17 +147,20 @@ def unreviewed_file_path(jurisdiction_ocdid: str) -> str:
 
 
 async def _render(
-    source: CommitSource, request_id: str, jurisdiction_ocdid: str
+    source: CommitSource, request_id: str | None, jurisdiction_ocdid: str
 ) -> list[dict]:
     if source is CommitSource.ROSTER:
         return await get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
 
+    # Only a scrape render needs the request: it is the proposal's only address.
+    if request_id is None:
+        raise ValueError(f"a scrape render needs a request ({jurisdiction_ocdid})")
     return await proposed_roster(request_id, jurisdiction_ocdid) or []
 
 
 async def commit_rendered_file(
     file_path: str,
-    request_id: str,
+    request_id: str | None,
     jurisdiction_ocdid: str,
     commit_message: str,
     source: CommitSource = CommitSource.SCRAPE,
@@ -175,7 +178,7 @@ async def commit_rendered_file(
         content_str=yaml_dump(roster),
         commit_message=commit_message,
     )
-    if commit_url:
+    if commit_url and request_id:
         await record_open_data_url(request_id, commit_url)
     return commit_url
 
@@ -234,6 +237,32 @@ async def promote_to_reviewed(request_id: str, jurisdiction_ocdid: str) -> None:
             source=CommitSource.ROSTER,
             delete_path=unreviewed_file_path(jurisdiction_ocdid),
             delete_message=f"Promote {jurisdiction_ocdid} out of unreviewed ({request_id})",
+        )
+    )
+
+
+async def commit_roster(jurisdiction_ocdid: str, commit_message: str) -> None:
+    """Mirror a jurisdiction's live roster into open-data after an edit that is not a publish.
+
+    No request id: these edits have no request row, and minting one would make the edit
+    supersede the jurisdiction's pending scrape cards.
+    """
+    # avoid circular import: lib.temporal.workflows imports the activities module, which
+    # imports this one, so importing the client at module scope closes the loop
+    import lib.temporal.client as temporal_client
+
+    # Writing an empty file over a real one is the one case where stale beats stomped.
+    if not await get_roster(jurisdiction_ocdid=jurisdiction_ocdid):
+        logger.warning(f"No seated roster for {jurisdiction_ocdid}; not mirroring")
+        return
+
+    await temporal_client.enqueue_open_data_commit(
+        OpenDataCommitRequest(
+            file_path=reviewed_file_path(jurisdiction_ocdid),
+            request_id=None,
+            jurisdiction_ocdid=jurisdiction_ocdid,
+            commit_message=commit_message,
+            source=CommitSource.ROSTER,
         )
     )
 
