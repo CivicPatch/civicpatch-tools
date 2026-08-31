@@ -43,7 +43,7 @@ DISMISSED_UNCHANGED = "unchanged"
 # "A scrape still awaiting human review". Requires the requests table aliased `r`.
 #
 AVAILABLE_FOR_REVIEW = (
-    "EXISTS (SELECT 1 FROM source_records sr WHERE sr.request_id = r.id) "
+    "EXISTS (SELECT 1 FROM source_records sr WHERE sr.changeset_id = r.id) "
     "AND r.published_at IS NULL AND r.dismissed_at IS NULL "
     f"AND r.request_type != '{RequestType.JURISDICTION_MANUAL_EDIT.value}' "
     "AND NOT EXISTS ("
@@ -96,7 +96,7 @@ async def register_request_with_pipeline_run(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id, created_at)
+            INSERT INTO changesets (id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id, created_at)
             VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
             """,
             (
@@ -110,7 +110,7 @@ async def register_request_with_pipeline_run(
 
         await conn.execute(
             """
-            UPDATE requests SET status = %s, progress = %s,
+            UPDATE changesets SET status = %s, progress = %s,
                                 sourced_at = CURRENT_TIMESTAMP
             WHERE id = %s
             """,
@@ -128,7 +128,7 @@ async def register_request_with_pipeline_run_if_not_exists(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json, created_at)
+            INSERT INTO changesets (id, request_type, jurisdiction_ocdid, arguments_json, created_at)
             VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP)
             ON CONFLICT (id) DO NOTHING
             """,
@@ -136,7 +136,7 @@ async def register_request_with_pipeline_run_if_not_exists(
         )
         await conn.execute(
             """
-            UPDATE requests SET status = %s, progress = %s,
+            UPDATE changesets SET status = %s, progress = %s,
                                 sourced_at = CURRENT_TIMESTAMP
             WHERE id = %s AND status IS NULL
             """,
@@ -159,7 +159,7 @@ async def register_foreign_request(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO requests (id, request_type, jurisdiction_ocdid, created_at)
+            INSERT INTO changesets (id, request_type, jurisdiction_ocdid, created_at)
             VALUES (%s, 'people', %s, CURRENT_TIMESTAMP)
             """,
             (request_id, jurisdiction_ocdid),
@@ -169,7 +169,7 @@ async def register_foreign_request(
         # elsewhere.
         await conn.execute(
             """
-            UPDATE requests SET status = %s, progress = 100,
+            UPDATE changesets SET status = %s, progress = 100,
                                 sourced_at = CURRENT_TIMESTAMP
             WHERE id = %s
             """,
@@ -195,7 +195,7 @@ async def register_people_edit_request(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO requests (
+            INSERT INTO changesets (
                 id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id,
                 published_at, resolved_by_user_id, created_at, sourced_at
             )
@@ -236,7 +236,7 @@ async def register_sheet_import_request(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO requests (
+            INSERT INTO changesets (
                 id, request_type, jurisdiction_ocdid, requested_by_user_id, batch_id,
                 created_at, sourced_at
             )
@@ -264,7 +264,7 @@ async def register_jurisdiction_edit_request(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO requests (
+            INSERT INTO changesets (
                 id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id,
                 open_data_url, published_at, resolved_by_user_id, created_at
             )
@@ -286,7 +286,7 @@ async def get_request_jurisdiction(request_id: str) -> str | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT jurisdiction_ocdid FROM requests WHERE id::text = %s",
+            "SELECT jurisdiction_ocdid FROM changesets WHERE id::text = %s",
             (request_id,),
         )
         row = await cur.fetchone()
@@ -301,7 +301,7 @@ async def jurisdictions_for_requests(request_ids: list[str]) -> dict[str, str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT id::text, jurisdiction_ocdid FROM requests WHERE id::text = ANY(%s)",
+            "SELECT id::text, jurisdiction_ocdid FROM changesets WHERE id::text = ANY(%s)",
             (request_ids,),
         )
         return {request_id: ocdid for request_id, ocdid in await cur.fetchall()}
@@ -311,7 +311,7 @@ async def get_request_type(request_id: str) -> str | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT request_type FROM requests WHERE id::text = %s",
+            "SELECT request_type FROM changesets WHERE id::text = %s",
             (request_id,),
         )
         row = await cur.fetchone()
@@ -325,7 +325,7 @@ async def get_issue_request_details(request_ids: list[str]) -> list[dict]:
             """
             SELECT r.id::text, r.jurisdiction_ocdid, r.arguments_json,
                    COALESCE(j.data->>'name', r.jurisdiction_ocdid) AS jurisdiction_name
-            FROM requests r
+            FROM changesets r
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE r.id::text = ANY(%s)
             ORDER BY r.created_at
@@ -352,7 +352,7 @@ async def dismiss_as_unchanged(cur, request_id: str) -> bool:
     """
     await cur.execute(
         f"""
-        UPDATE requests
+        UPDATE changesets
            SET dismissed_at = now(), dismissed_reason = '{DISMISSED_UNCHANGED}'
          WHERE id::text = %s AND published_at IS NULL AND dismissed_at IS NULL
         """,
@@ -372,10 +372,10 @@ async def dismiss_superseded_by(
     """
     await cur.execute(
         f"""
-        UPDATE requests
+        UPDATE changesets
            SET dismissed_at = now(), dismissed_reason = '{DISMISSED_SUPERSEDED}'
          WHERE id IN (
-             SELECT r.id FROM requests r
+             SELECT r.id FROM changesets r
              WHERE r.jurisdiction_ocdid = %s
                AND r.id::text <> %s
                AND r.sourced_at IS NOT NULL
@@ -409,7 +409,7 @@ async def supersede_stacked_requests() -> list[str]:
             -- once it exists, anything typed in rather than scraped.
             WITH candidates AS (
                 SELECT r.id, r.jurisdiction_ocdid, r.sourced_at
-                FROM requests r
+                FROM changesets r
                 WHERE {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
                   AND r.sourced_at IS NOT NULL
             ),
@@ -424,10 +424,10 @@ async def supersede_stacked_requests() -> list[str]:
                 SELECT jurisdiction_ocdid, sourced_at FROM candidates
                 UNION ALL
                 SELECT r.jurisdiction_ocdid, r.sourced_at
-                FROM requests r
+                FROM changesets r
                 WHERE r.published_at IS NOT NULL AND r.sourced_at IS NOT NULL
             )
-            UPDATE requests
+            UPDATE changesets
                SET dismissed_at = now(), dismissed_reason = '{DISMISSED_SUPERSEDED}'
              WHERE id IN (
                  SELECT older.id

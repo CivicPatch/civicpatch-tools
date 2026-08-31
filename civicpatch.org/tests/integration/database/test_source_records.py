@@ -35,7 +35,7 @@ async def _cleanup():
     async with pool.connection() as conn, conn.cursor() as cur:
         # source_records cascades on request delete; the jurisdiction is FK'd by both.
         await cur.execute(
-            "DELETE FROM requests WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
+            "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
         )
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
@@ -53,7 +53,7 @@ async def sentinel_request():
         )
         await cur.execute(
             """
-            INSERT INTO requests (request_type, jurisdiction_ocdid, arguments_json)
+            INSERT INTO changesets (request_type, jurisdiction_ocdid, arguments_json)
             VALUES ('people', %s, '{}'::jsonb) RETURNING id::text
             """,
             (_SENTINEL_OCDID,),
@@ -134,7 +134,7 @@ async def test_labels_are_queryable_as_a_column(sentinel_request):
             SELECT i.person_id::text
             FROM source_records s
             JOIN source_record_identities i ON i.source_record_id = s.id
-            WHERE s.request_id = %s AND s.label = 'City Attorney'
+            WHERE s.changeset_id = %s AND s.label = 'City Attorney'
             """,
             (sentinel_request,),
         )
@@ -221,7 +221,7 @@ async def test_a_record_is_never_written_without_its_identity(sentinel_request):
             SELECT count(*)
             FROM source_records s
             LEFT JOIN source_record_identities i ON i.source_record_id = s.id
-            WHERE s.request_id = %s AND i.source_record_id IS NULL
+            WHERE s.changeset_id = %s AND i.source_record_id IS NULL
             """,
             (sentinel_request,),
         )

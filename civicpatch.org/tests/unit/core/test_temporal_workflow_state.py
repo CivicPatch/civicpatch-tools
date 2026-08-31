@@ -1,6 +1,6 @@
 """What a running scrape's Temporal state reduces to.
 
-The case worth covering is the stuck run: `requests.status` says RUNNING whether a scrape
+The case worth covering is the stuck run: `changesets.status` says RUNNING whether a scrape
 is healthy or has been failing the same activity for an hour, so this summary is the only thing
 that tells them apart.
 """

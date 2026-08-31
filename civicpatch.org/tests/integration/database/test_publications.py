@@ -51,7 +51,7 @@ async def _cleanup():
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
             )
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,))
-        await cur.execute("DELETE FROM requests WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,))
+        await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,))
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
         )
@@ -69,14 +69,14 @@ async def sentinel_request():
         )
         await cur.execute(
             """
-            INSERT INTO requests (request_type, jurisdiction_ocdid, arguments_json)
+            INSERT INTO changesets (request_type, jurisdiction_ocdid, arguments_json)
             VALUES ('people', %s, '{}'::jsonb) RETURNING id::text
             """,
             (_SENTINEL_OCDID,),
         )
         request_id = (await cur.fetchone())[0]
         await cur.execute(
-            "UPDATE requests SET status = 'done', "
+            "UPDATE changesets SET status = 'done', "
             "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (request_id,)
         )
         await conn.commit()
@@ -211,7 +211,7 @@ async def test_publish_stamps_scraped_at_from_the_pipeline_run(sentinel_request)
         await cur.execute(
             """
             SELECT j.scraped_at = pr.created_at
-            FROM jurisdictions j, requests pr
+            FROM jurisdictions j, changesets pr
             WHERE j.jurisdiction_ocdid = %s AND pr.id = %s
             """,
             (_SENTINEL_OCDID, sentinel_request),
@@ -244,7 +244,7 @@ async def _request_state(request_id: str) -> tuple:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT published_at, dismissed_at, resolved_by_user_id FROM requests WHERE id = %s",
+            "SELECT published_at, dismissed_at, resolved_by_user_id FROM changesets WHERE id = %s",
             (request_id,),
         )
         return await cur.fetchone()

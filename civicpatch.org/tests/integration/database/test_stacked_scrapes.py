@@ -40,7 +40,7 @@ async def _wipe():
             "DELETE FROM people WHERE jurisdiction_ocdid IN (%s, %s)", (_OCDID, _OTHER)
         )
         await cur.execute(
-            "DELETE FROM requests WHERE jurisdiction_ocdid IN (%s, %s)", (_OCDID, _OTHER)
+            "DELETE FROM changesets WHERE jurisdiction_ocdid IN (%s, %s)", (_OCDID, _OTHER)
         )
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
         await cur.execute("DELETE FROM users WHERE email = 'zz-stacked@example.test'")
@@ -77,7 +77,7 @@ async def _request(sourced_at: str, ocdid: str = _OCDID) -> str:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO requests (request_type, jurisdiction_ocdid, arguments_json, sourced_at)
+            INSERT INTO changesets (request_type, jurisdiction_ocdid, arguments_json, sourced_at)
             VALUES ('people', %s, '{}'::jsonb, %s::timestamptz)
             RETURNING id::text
             """,
@@ -87,14 +87,14 @@ async def _request(sourced_at: str, ocdid: str = _OCDID) -> str:
         # One sighting, because `AVAILABLE_FOR_REVIEW` is now "this scrape saw somebody".
         await cur.execute(
             """
-            INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url)
+            INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url)
             VALUES (%s, %s, 'Ann Lee', 'Mayor', 'https://zz.gov/council')
             """,
             (request_id, ocdid),
         )
         await cur.execute(
             """
-            UPDATE requests SET status = 'SUCCESS', progress = 100,
+            UPDATE changesets SET status = 'SUCCESS', progress = 100,
                                 created_at = %s::timestamptz, sourced_at = %s::timestamptz
             WHERE id = %s
             """,
@@ -108,7 +108,7 @@ async def _dismissed_at(request_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT dismissed_at, resolved_by_user_id FROM requests WHERE id::text = %s",
+            "SELECT dismissed_at, resolved_by_user_id FROM changesets WHERE id::text = %s",
             (request_id,),
         )
         return await cur.fetchone()
@@ -153,7 +153,7 @@ async def _published_request(sourced_at: str, ocdid: str = _OCDID) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "UPDATE requests SET published_at = now() WHERE id::text = %s", (request_id,)
+            "UPDATE changesets SET published_at = now() WHERE id::text = %s", (request_id,)
         )
         await conn.commit()
     return request_id
@@ -207,7 +207,7 @@ async def test_giving_up_on_a_run_does_not_restamp_the_source_clock():
     async with pool.connection() as conn, conn.cursor() as cur:
         # The fixture stamps SUCCESS, which is terminal. A run only expires while in flight.
         await cur.execute(
-            "UPDATE requests SET status = 'PENDING' WHERE id::text = %s", (abandoned,)
+            "UPDATE changesets SET status = 'PENDING' WHERE id::text = %s", (abandoned,)
         )
         await conn.commit()
 
@@ -215,7 +215,7 @@ async def test_giving_up_on_a_run_does_not_restamp_the_source_clock():
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT status, sourced_at::text FROM requests WHERE id::text = %s",
+            "SELECT status, sourced_at::text FROM changesets WHERE id::text = %s",
             (abandoned,),
         )
         status, sourced_at = await cur.fetchone()

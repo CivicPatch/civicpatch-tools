@@ -54,7 +54,7 @@ async def _wipe():
             "DELETE FROM source_records WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_OCDID,))
-        await cur.execute("DELETE FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,))
+        await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM users WHERE email = %s", (_EMAIL,))
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OCDID,)
@@ -189,7 +189,7 @@ async def test_the_request_is_born_published_and_never_enters_the_review_pool():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT published_at IS NOT NULL, status IS NULL, sourced_at IS NOT NULL "
-            "FROM requests WHERE id::text = %s",
+            "FROM changesets WHERE id::text = %s",
             (request_id,),
         )
         row = await cur.fetchone()
@@ -376,7 +376,7 @@ async def test_a_refused_edit_leaves_no_request_behind():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT count(*) FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,)
+            "SELECT count(*) FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         row = await cur.fetchone()
     assert row is not None and row[0] == 0, "a refused edit registered a request"
@@ -387,7 +387,7 @@ async def _pending_scrape(sourced_at: datetime.datetime) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO requests (request_type, jurisdiction_ocdid, arguments_json, status, "
+            "INSERT INTO changesets (request_type, jurisdiction_ocdid, arguments_json, status, "
             "                      progress, created_at, sourced_at) "
             "VALUES ('people', %s, '{}'::jsonb, 'SUCCESS', 100, %s, %s) RETURNING id::text",
             (_OCDID, sourced_at, sourced_at),
@@ -396,7 +396,7 @@ async def _pending_scrape(sourced_at: datetime.datetime) -> str:
         assert row is not None
         request_id = row[0]
         await cur.execute(
-            "INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url) "
+            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
             "VALUES (%s, %s, 'Cy Okonkwo', 'Clerk', 'https://editville.gov/clerk')",
             (request_id, _OCDID),
         )
@@ -425,7 +425,7 @@ async def test_a_hand_edit_supersedes_a_pending_scrape():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT dismissed_reason FROM requests WHERE id::text = %s", (scrape,)
+            "SELECT dismissed_reason FROM changesets WHERE id::text = %s", (scrape,)
         )
         row = await cur.fetchone()
     assert row is not None and row[0] == DISMISSED_SUPERSEDED

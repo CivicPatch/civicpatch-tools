@@ -35,7 +35,7 @@ async def get_pending_issue_ocdids() -> set[str]:
             """
             SELECT DISTINCT r.jurisdiction_ocdid
             FROM issues pi
-            JOIN requests r ON r.id::text = ANY(pi.request_ids)
+            JOIN changesets r ON r.id::text = ANY(pi.request_ids)
             WHERE pi.status IN (%s, %s)
               AND r.jurisdiction_ocdid IS NOT NULL
             """,
@@ -52,7 +52,7 @@ async def get_pending_issue_ocdids_by_state(state_code: str) -> set[str]:
             """
             SELECT DISTINCT r.jurisdiction_ocdid
             FROM issues pi
-            JOIN requests r ON r.id::text = ANY(pi.request_ids)
+            JOIN changesets r ON r.id::text = ANY(pi.request_ids)
             WHERE pi.status IN (%s, %s)
               AND r.jurisdiction_ocdid LIKE %s
             """,
@@ -123,7 +123,7 @@ async def supersede_prior_jurisdiction_issues(jurisdiction_ocdid: str, current_r
             WHERE status = %s
               AND NOT (%s = ANY(request_ids))
               AND EXISTS (
-                SELECT 1 FROM requests r
+                SELECT 1 FROM changesets r
                 WHERE r.id::text = ANY(issues.request_ids)
                   AND r.jurisdiction_ocdid = %s
               )
@@ -279,7 +279,7 @@ async def get_issues_page(
         params.extend(issue_types)
     if state_code:
         conditions.append(sql.SQL(
-            "EXISTS (SELECT 1 FROM requests r WHERE r.id::text = ANY(ri.request_ids) AND r.jurisdiction_ocdid LIKE %s)"
+            "EXISTS (SELECT 1 FROM changesets r WHERE r.id::text = ANY(ri.request_ids) AND r.jurisdiction_ocdid LIKE %s)"
         ))
         params.append(f"%state:{state_code.lower()}%")
     where_clause = sql.SQL("WHERE ") + sql.SQL(" AND ").join(conditions)
@@ -294,7 +294,7 @@ async def get_issues_page(
                        array_agg(DISTINCT r.jurisdiction_ocdid)
                            FILTER (WHERE r.jurisdiction_ocdid IS NOT NULL) AS ocdids
                 FROM issues ri
-                LEFT JOIN requests r ON r.id::text = ANY(ri.request_ids)
+                LEFT JOIN changesets r ON r.id::text = ANY(ri.request_ids)
                 GROUP BY ri.id
             )
             SELECT ri.id::text, ri.issue_type, ri.issue_key, ri.request_ids,
@@ -345,7 +345,7 @@ async def get_issue_counts(state_code: str | None = None) -> dict[str, int]:
     state_filter = sql.SQL("")
     if state_code:
         state_filter = sql.SQL(
-            "AND EXISTS (SELECT 1 FROM requests r WHERE r.id::text = ANY(pi.request_ids) AND r.jurisdiction_ocdid LIKE %s)"
+            "AND EXISTS (SELECT 1 FROM changesets r WHERE r.id::text = ANY(pi.request_ids) AND r.jurisdiction_ocdid LIKE %s)"
         )
         params.append(f"%state:{state_code.lower()}%")
     query = sql.SQL("""

@@ -283,7 +283,7 @@ async function seedReviewCard(
   { requestId, ocdid, people = [], publishedAt = null },
 ) {
   await client.query(
-    `INSERT INTO requests (id, request_type, jurisdiction_ocdid, arguments_json,
+    `INSERT INTO changesets (id, request_type, jurisdiction_ocdid, arguments_json,
                            status, progress, sourced_at, created_at, published_at)
      VALUES ($1, 'people_collection', $2, '{}', 'success', 100, NOW(), NOW(), $3)
      ON CONFLICT (id) DO NOTHING`,
@@ -291,12 +291,12 @@ async function seedReviewCard(
   );
   // Re-seeding must not double the sightings: source_records has an auto id, so there is
   // nothing to ON CONFLICT on.
-  await client.query(`DELETE FROM source_records WHERE request_id = $1`, [
+  await client.query(`DELETE FROM source_records WHERE changeset_id = $1`, [
     requestId,
   ]);
   for (const person of people) {
     const { rows } = await client.query(
-      `INSERT INTO source_records (request_id, jurisdiction_ocdid, name, label, source_url,
+      `INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url,
                                    url, phone, email, image, start_date, end_date)
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
        RETURNING id`,
@@ -322,8 +322,87 @@ async function seedReviewCard(
   }
 }
 
+// Whether somebody is seated is a memberships question, and `get_roster` — which is what the
+// review card sends as `existing` — filters on `IS_ON_THE_ROSTER`: an open membership. A person
+// row alone is invisible to it, so every proposed person diffs as `added` and no card ever
+// collapses to a strip. Seating needs four rows, because a membership points at a post, a post
+// at an organization and a division, and `posts.role_id` is a real FK.
+const SEAT_ROLE_FALLBACK = "council-member";
+
+const roleSlug = (name) =>
+  (name || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+async function seatPerson(client, ocdid, person) {
+  const { rows: org } = await client.query(
+    `WITH found AS (SELECT id FROM organizations WHERE jurisdiction_ocdid = $1 LIMIT 1),
+          made AS (INSERT INTO organizations (jurisdiction_ocdid, name)
+                   SELECT $1, 'Council' WHERE NOT EXISTS (SELECT 1 FROM found)
+                   RETURNING id)
+     SELECT id FROM found UNION ALL SELECT id FROM made`,
+    [ocdid],
+  );
+  const organizationId = org[0].id;
+
+  // The person's own ward when the fixture gave them one, else the jurisdiction itself.
+  const division = person.office?.division_ocdid ?? ocdid.replace("/government", "");
+  await client.query(
+    `INSERT INTO divisions (ocdid, jurisdiction_ocdid) VALUES ($1, $2)
+     ON CONFLICT (ocdid) DO NOTHING`,
+    [division, ocdid],
+  );
+
+  // Fall back rather than fail: a fixture office that slugs to no seeded role would otherwise
+  // break seeding on a foreign key, which reads as a schema fault rather than a fixture one.
+  const wanted = roleSlug(person.office?.name);
+  const { rows: role } = await client.query(`SELECT id FROM roles WHERE id = $1`, [
+    wanted,
+  ]);
+  const roleId = role.length ? wanted : SEAT_ROLE_FALLBACK;
+
+  const { rows: post } = await client.query(
+    `INSERT INTO posts (jurisdiction_ocdid, organization_id, role_id, division_ocdid)
+     VALUES ($1, $2, $3, $4)
+     ON CONFLICT (organization_id, role_id, division_ocdid)
+       DO UPDATE SET role_id = EXCLUDED.role_id
+     RETURNING id`,
+    [ocdid, organizationId, roleId, division],
+  );
+
+  await client.query(
+    `INSERT INTO memberships (post_id, organization_id, person_id, first_seen_at, last_seen_at)
+     VALUES ($1, $2, $3, NOW(), NOW())
+     ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL DO NOTHING`,
+    [post[0].id, organizationId, personUuid(person.id)],
+  );
+}
+
+/** A jurisdiction's whole roster: the people and the four rows that seat them.
+ *
+ *  Order is load-bearing and none of these cascade — a membership points at a person and a
+ *  post, a post at an organization and a division, and all three at the jurisdiction. Deleting
+ *  people (or the jurisdiction) first fails on a foreign key.
+ */
+async function clearRoster(client, ocdid) {
+  await client.query(
+    `DELETE FROM memberships WHERE post_id IN
+       (SELECT id FROM posts WHERE jurisdiction_ocdid = $1)
+        OR person_id IN (SELECT id FROM people WHERE jurisdiction_ocdid = $1)`,
+    [ocdid],
+  );
+  await client.query(`DELETE FROM posts WHERE jurisdiction_ocdid = $1`, [ocdid]);
+  await client.query(`DELETE FROM organizations WHERE jurisdiction_ocdid = $1`, [
+    ocdid,
+  ]);
+  await client.query(`DELETE FROM divisions WHERE jurisdiction_ocdid = $1`, [ocdid]);
+  await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [ocdid]);
+}
+
 /** A published person. `people.data` and `people.status` are gone — these are real columns now,
- *  and whether somebody is seated is a memberships question. */
+ *  and whether somebody is seated is a memberships question, answered by `seatPerson`. */
 async function seedPerson(client, ocdid, person) {
   await client.query(
     `INSERT INTO people (id, jurisdiction_ocdid, name, other_names, phones, emails,
@@ -345,6 +424,7 @@ async function seedPerson(client, ocdid, person) {
       person.cdn_image ?? null,
     ],
   );
+  await seatPerson(client, ocdid, person);
 }
 
 export async function seedE2eFixtures() {
@@ -509,9 +589,7 @@ export async function seedE2eFixtures() {
     ];
     // people PK is an auto-uuid, so re-seeding can't ON CONFLICT — clear first
     // to keep the row set deterministic if a prior run didn't tear down cleanly.
-    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [
-      RECONCILE_JURISDICTION_OCDID,
-    ]);
+    await clearRoster(client, RECONCILE_JURISDICTION_OCDID);
     for (const person of reconcileExisting) {
       await seedPerson(client, RECONCILE_JURISDICTION_OCDID, person);
     }
@@ -555,9 +633,7 @@ export async function seedE2eFixtures() {
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
       [SCALE_JURISDICTION_OCDID],
     );
-    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [
-      SCALE_JURISDICTION_OCDID,
-    ]);
+    await clearRoster(client, SCALE_JURISDICTION_OCDID);
     for (const person of buildScaleExisting()) {
       await seedPerson(client, SCALE_JURISDICTION_OCDID, person);
     }
@@ -831,12 +907,8 @@ export async function teardownE2eFixtures() {
     );
     // The reconcile and scale fixtures seed people; clear them before their
     // jurisdiction rows.
-    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [
-      RECONCILE_JURISDICTION_OCDID,
-    ]);
-    await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [
-      SCALE_JURISDICTION_OCDID,
-    ]);
+    await clearRoster(client, RECONCILE_JURISDICTION_OCDID);
+    await clearRoster(client, SCALE_JURISDICTION_OCDID);
     for (const [prId, reqId, jOcdid] of [
       [TEST_PR_ID, TEST_REQUEST_ID, TEST_JURISDICTION_OCDID],
       [TEST_PR_ID_2, TEST_REQUEST_ID_2, TEST_JURISDICTION_OCDID_2],
@@ -849,17 +921,16 @@ export async function teardownE2eFixtures() {
       [MARKERS_PR_ID, MARKERS_REQUEST_ID, MARKERS_JURISDICTION_OCDID],
       [READ_ONLY_PR_ID, READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID],
     ]) {
-      // source_records cascades from requests; identities cascade from source_records.
-      await client.query(`DELETE FROM requests WHERE id = $1`, [reqId]);
+      // source_records cascades from changesets; identities cascade from source_records.
+      await client.query(`DELETE FROM changesets WHERE id = $1`, [reqId]);
+      await clearRoster(client, jOcdid);
       await client.query(
         `DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`,
         [jOcdid],
       );
     }
     for (const ocdid of Object.values(MAP_FIXTURES)) {
-      await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [
-        ocdid,
-      ]);
+      await clearRoster(client, ocdid);
       await client.query(
         `DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`,
         [ocdid],

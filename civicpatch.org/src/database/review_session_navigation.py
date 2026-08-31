@@ -72,7 +72,7 @@ async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list
         f"""
         SELECT r.id::text AS request_id,
                r.jurisdiction_ocdid AS jurisdiction_ocdid
-        FROM requests r
+        FROM changesets r
         WHERE {AVAILABLE_FOR_REVIEW}
           AND r.jurisdiction_ocdid LIKE %s
           AND r.id::text != ALL(%s::text[])
@@ -224,7 +224,7 @@ async def navigate_to_entry(
             await cur.execute(
                 f"""
                 SELECT COUNT(*) AS available
-                FROM requests r
+                FROM changesets r
                 WHERE {AVAILABLE_FOR_REVIEW}
                   AND r.jurisdiction_ocdid LIKE %s
                 """,

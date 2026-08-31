@@ -21,7 +21,7 @@ from schemas.common import (
 )
 from schemas.jurisdictions import JurisdictionSearchResult
 from shared.schemas import Person
-from shared.utils.statuses import RequestType
+from shared.utils.statuses import ChangesetKind
 
 logger = logging.getLogger(__name__)
 
@@ -540,17 +540,17 @@ async def get_jurisdiction_history(
                    r.created_at,
                    r.sourced_at,
                    r.status, r.progress, r.open_data_url, {REVIEW_STATUS},
-                   r.request_type,
+                   r.kind,
                    r.published_at,
                    {RUN_IN_FLIGHT} AS is_running,
                    {AVAILABLE_FOR_REVIEW} AS awaiting_review
-            FROM requests r
-            WHERE r.jurisdiction_ocdid = %s AND r.request_type = ANY(%s)
+            FROM changesets r
+            WHERE r.jurisdiction_ocdid = %s AND r.kind = ANY(%s)
             ORDER BY r.created_at DESC;
             """,
             (
                 jurisdiction_ocdid,
-                [RequestType.PEOPLE.value, RequestType.JURISDICTION_MANUAL_EDIT.value],
+                [ChangesetKind.PEOPLE.value, ChangesetKind.JURISDICTION_EDIT.value],
             ),
         )
         rows = await cur.fetchall()
@@ -696,7 +696,7 @@ async def stamp_scraped_at(jurisdiction_ocdid: str, request_id: str) -> bool:
     async with pool.connection() as conn:
         result = await conn.execute(
             "UPDATE jurisdictions j SET scraped_at = r.created_at "
-            "FROM requests r "
+            "FROM changesets r "
             "WHERE r.id = %s AND r.status IS NOT NULL "
             "AND j.jurisdiction_ocdid = %s",
             (request_id, jurisdiction_ocdid),
