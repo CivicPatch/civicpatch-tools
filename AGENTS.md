@@ -124,7 +124,7 @@ Always use `mise run <task>` — never `uv run pytest` directly. Key tasks:
 
 ## TODOs
 
-At the start of each session, check `.scratch/TODOs.md` and surface any unchecked items to the user before getting into other work.
+At the start of each session, check `.scratch/TODO.md` and surface any unchecked items to the user before getting into other work.
 
 ## General
 

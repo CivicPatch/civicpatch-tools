@@ -1,4 +1,5 @@
 import json
+from collections.abc import Mapping
 from datetime import timedelta
 from typing import Optional
 
@@ -254,7 +255,7 @@ async def register_sheet_import_request(
 async def register_jurisdiction_edit_request(
     request_id: str,
     jurisdiction_ocdid: str,
-    arguments_json: dict,
+    arguments_json: Mapping[str, object],
     open_data_url: str,
     requested_by_user_id: Optional[str] = None,
 ):

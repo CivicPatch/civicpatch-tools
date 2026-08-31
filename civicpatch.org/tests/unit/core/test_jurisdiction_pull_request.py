@@ -275,8 +275,8 @@ async def test_commit_jurisdiction_patch_commits_and_syncs_the_row():
 
     mock_record.assert_awaited_once()
     record_kwargs = mock_record.call_args.kwargs
-    assert record_kwargs["before_url"] == "https://old.example.com"
-    assert record_kwargs["after_url"] == "https://new.example.com"
+    assert record_kwargs["before"] == {"url": "https://old.example.com"}
+    assert record_kwargs["after"] == {"url": "https://new.example.com"}
     assert record_kwargs["jurisdiction_name"] == "Austin"
 
 

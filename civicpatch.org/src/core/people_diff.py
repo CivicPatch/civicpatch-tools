@@ -1,5 +1,6 @@
 from typing import Any
 
+from core.change_logs import field_changes
 from core.people_edits import EDITABLE_FIELDS
 from schemas.change_logs import FieldChange, PersonChange, PersonChangePayload
 from shared.utils.statuses import ChangeLogType
@@ -25,9 +26,9 @@ def diff_people(before: list[dict], after: list[dict]) -> list[PersonChange]:
         if before_person is None:
             added.append(after_person)
             continue
-        field_changes = _field_changes(_comparable(before_person), _comparable(after_person))
-        if field_changes:
-            changes.append(_edited(after_person, field_changes))
+        changed_fields = field_changes(_comparable(before_person), _comparable(after_person))
+        if changed_fields:
+            changes.append(_edited(after_person, changed_fields))
 
     removed = [p for pid, p in before_by_id.items() if pid not in after_by_id]
 
@@ -54,14 +55,6 @@ def _cancel_relinks(added: list[dict], removed: list[dict]) -> tuple[list[dict],
         else:
             remaining_removed.remove(match)
     return real_added, remaining_removed
-
-
-def _field_changes(before: dict[str, Any], after: dict[str, Any]) -> list[FieldChange]:
-    return [
-        FieldChange(field=field, before=before[field], after=after[field])
-        for field in before
-        if before[field] != after[field]
-    ]
 
 
 def _added(person: dict) -> PersonChange:

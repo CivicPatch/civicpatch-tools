@@ -6,12 +6,29 @@ tested with no mocks.
 """
 
 import copy
-
-# Everything else in a jurisdictions.yml entry is upstream-owned or derived.
-PATCHABLE_FIELDS = ("url", "population", "geoid")
+from typing import TypedDict, cast
 
 
-def build_patch(fields: dict) -> dict:
+class JurisdictionPatch(TypedDict, total=False):
+    """The editable half of a jurisdictions.yml entry; everything else is upstream-owned or
+    derived.
+
+    `total=False` is the contract, not laxness: any subset of these keys may be present, which
+    is what JSON Merge Patch means. It also types the `before` side, whose keys are the patch's
+    by construction — though those values come from YAML and are validated by nothing, so on
+    that side the types describe intent rather than a guarantee.
+    """
+
+    url: str | None
+    population: int | None
+    geoid: str | None
+
+
+# Derived, so adding a field to the request model cannot leave this behind.
+PATCHABLE_FIELDS = tuple(JurisdictionPatch.__optional_keys__)
+
+
+def build_patch(fields: dict) -> JurisdictionPatch:
     """Keep only the patchable keys the caller actually sent.
 
     JSON Merge Patch semantics, matching people_edits: a key that is absent is left alone,
@@ -19,7 +36,12 @@ def build_patch(fields: dict) -> dict:
     That distinction cannot be made after the fact, so `fields` must already carry only what
     was provided — see the router's model_dump(exclude_unset=True).
     """
-    return {key: value for key, value in fields.items() if key in PATCHABLE_FIELDS}
+    # cast: the comprehension filters to exactly the TypedDict's keys, which a checker cannot
+    # see through a runtime membership test.
+    return cast(
+        JurisdictionPatch,
+        {key: value for key, value in fields.items() if key in PATCHABLE_FIELDS},
+    )
 
 
 def find_jurisdiction(doc: dict, jurisdiction_ocdid: str) -> dict | None:
@@ -29,12 +51,12 @@ def find_jurisdiction(doc: dict, jurisdiction_ocdid: str) -> dict | None:
     return None
 
 
-def current_values(entry: dict, patch: dict) -> dict:
+def current_values(entry: dict, patch: JurisdictionPatch) -> JurisdictionPatch:
     """What the patched keys hold now — the "before" side of the change."""
-    return {key: entry.get(key) for key in patch}
+    return cast(JurisdictionPatch, {key: entry.get(key) for key in patch})
 
 
-def apply_patch(doc: dict, jurisdiction_ocdid: str, patch: dict) -> dict:
+def apply_patch(doc: dict, jurisdiction_ocdid: str, patch: JurisdictionPatch) -> dict:
     patched = copy.deepcopy(doc)
     for entry in patched.get("jurisdictions", []):
         if entry.get("id") == jurisdiction_ocdid:
