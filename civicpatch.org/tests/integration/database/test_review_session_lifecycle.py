@@ -112,7 +112,7 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO changesets (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
+            "INSERT INTO changesets (kind, status, jurisdiction_ocdid) VALUES ('scrape', 'SUCCESS', %s) RETURNING id::text",
             (ocdid,),
         )
         request_id = (await cur.fetchone())[0]
@@ -550,7 +550,7 @@ async def test_a_scrape_with_no_roster_never_reaches_the_pool():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO changesets (jurisdiction_ocdid) VALUES (%s) RETURNING id::text", (ocdid,)
+            "INSERT INTO changesets (kind, status, jurisdiction_ocdid) VALUES ('scrape', 'SUCCESS', %s) RETURNING id::text", (ocdid,)
         )
         request_id = (await cur.fetchone())[0]
         await cur.execute(
@@ -577,7 +577,7 @@ async def test_a_scrape_that_changed_nothing_leaves_the_pool_saying_why():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO changesets (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
+            "INSERT INTO changesets (kind, status, jurisdiction_ocdid) VALUES ('scrape', 'SUCCESS', %s) RETURNING id::text",
             (ocdid,),
         )
         request_id = (await cur.fetchone())[0]
@@ -625,8 +625,8 @@ async def test_auto_resolve_loses_the_race_to_a_reviewer_publishing():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO changesets (jurisdiction_ocdid, published_at) "
-            "VALUES (%s, now()) RETURNING id::text",
+            "INSERT INTO changesets (kind, status, jurisdiction_ocdid, published_at) "
+            "VALUES ('scrape', 'SUCCESS', %s, now()) RETURNING id::text",
             (ocdid,),
         )
         request_id = (await cur.fetchone())[0]

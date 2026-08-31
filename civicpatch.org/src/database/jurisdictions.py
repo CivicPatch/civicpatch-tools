@@ -21,7 +21,6 @@ from schemas.common import (
 )
 from schemas.jurisdictions import JurisdictionSearchResult
 from shared.schemas import Person
-from shared.utils.statuses import ChangesetKind
 
 logger = logging.getLogger(__name__)
 
@@ -545,13 +544,13 @@ async def get_jurisdiction_history(
                    {RUN_IN_FLIGHT} AS is_running,
                    {AVAILABLE_FOR_REVIEW} AS awaiting_review
             FROM changesets r
-            WHERE r.jurisdiction_ocdid = %s AND r.kind = ANY(%s)
+            WHERE r.jurisdiction_ocdid = %s
             ORDER BY r.created_at DESC;
             """,
-            (
-                jurisdiction_ocdid,
-                [ChangesetKind.PEOPLE.value, ChangesetKind.JURISDICTION_EDIT.value],
-            ),
+            # No kind filter. It used to read `= ANY(['people','jurisdiction_manual_edit'])`,
+            # which was every value the column could hold — a no-op wearing the shape of a
+            # filter. The timeline wants everything that happened to this jurisdiction.
+            (jurisdiction_ocdid,),
         )
         rows = await cur.fetchall()
         history = []

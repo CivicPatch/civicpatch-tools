@@ -14,7 +14,7 @@ from shared.utils.statuses import (
     PipelineIssueType,
     PipelineRunStatus,
     RequestReviewStatus,
-    RequestType,
+    ChangesetKind,
 )
 
 # Derived from the two timestamps, never stored; a CHECK forbids both being set.
@@ -30,7 +30,7 @@ REVIEW_STATUS = (
 # Errored and cancelled runs leave both timestamps NULL, so they must not count.
 WORK_IN_FLIGHT = (
     "r.published_at IS NULL AND r.dismissed_at IS NULL "
-    f"AND r.request_type != '{RequestType.JURISDICTION_MANUAL_EDIT.value}' "
+    f"AND r.kind != '{ChangesetKind.JURISDICTION_EDIT.value}' "
     f"AND r.status NOT IN ('{PipelineRunStatus.ERROR.value}', "
     f"'{PipelineRunStatus.CANCELLED.value}', '{PipelineRunStatus.RESOLVED.value}') "
     "AND r.status IS NOT NULL"
@@ -45,7 +45,7 @@ DISMISSED_UNCHANGED = "unchanged"
 AVAILABLE_FOR_REVIEW = (
     "EXISTS (SELECT 1 FROM source_records sr WHERE sr.changeset_id = r.id) "
     "AND r.published_at IS NULL AND r.dismissed_at IS NULL "
-    f"AND r.request_type != '{RequestType.JURISDICTION_MANUAL_EDIT.value}' "
+    f"AND r.kind != '{ChangesetKind.JURISDICTION_EDIT.value}' "
     "AND NOT EXISTS ("
     "SELECT 1 FROM issues i "
     f"WHERE i.issue_type = '{PipelineIssueType.USER_REPORTED.value}' "
@@ -85,7 +85,7 @@ HELD_BY_REVIEWER = (
 
 async def register_request_with_pipeline_run(
     request_id: str,
-    job_type: str,
+    kind: str,
     arguments_json: dict,
     jurisdiction_ocdid: Optional[str] = None,
     requested_by_user_id: Optional[str] = None,
@@ -96,12 +96,12 @@ async def register_request_with_pipeline_run(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO changesets (id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id, created_at)
+            INSERT INTO changesets (id, kind, jurisdiction_ocdid, arguments_json, requested_by_user_id, created_at)
             VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
             """,
             (
                 request_id,
-                job_type,
+                kind,
                 jurisdiction_ocdid,
                 json.dumps(arguments_json),
                 requested_by_user_id,
@@ -120,7 +120,7 @@ async def register_request_with_pipeline_run(
 
 async def register_request_with_pipeline_run_if_not_exists(
     request_id: str,
-    job_type: str,
+    kind: str,
     arguments_json: dict,
     jurisdiction_ocdid: Optional[str] = None,
 ):
@@ -128,11 +128,11 @@ async def register_request_with_pipeline_run_if_not_exists(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO changesets (id, request_type, jurisdiction_ocdid, arguments_json, created_at)
+            INSERT INTO changesets (id, kind, jurisdiction_ocdid, arguments_json, created_at)
             VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP)
             ON CONFLICT (id) DO NOTHING
             """,
-            (request_id, job_type, jurisdiction_ocdid, json.dumps(arguments_json)),
+            (request_id, kind, jurisdiction_ocdid, json.dumps(arguments_json)),
         )
         await conn.execute(
             """
@@ -159,8 +159,8 @@ async def register_foreign_request(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO changesets (id, request_type, jurisdiction_ocdid, created_at)
-            VALUES (%s, 'people', %s, CURRENT_TIMESTAMP)
+            INSERT INTO changesets (id, kind, jurisdiction_ocdid, created_at)
+            VALUES (%s, 'scrape', %s, CURRENT_TIMESTAMP)
             """,
             (request_id, jurisdiction_ocdid),
         )
@@ -183,7 +183,7 @@ async def register_people_edit_request(
     jurisdiction_ocdid: str,
     requested_by_user_id: str,
 ):
-    """A maintainer's hand edit of a live roster. `PEOPLE` with a null `status`: nothing ran.
+    """A maintainer's hand edit of a live roster. `PEOPLE_EDIT` with a null `status`: nothing ran.
 
     Born published, and it has to be — the edit writes sightings for anyone added, and those
     would put a pending request straight into the review pool.
@@ -196,14 +196,14 @@ async def register_people_edit_request(
         await conn.execute(
             """
             INSERT INTO changesets (
-                id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id,
+                id, kind, jurisdiction_ocdid, arguments_json, requested_by_user_id,
                 published_at, resolved_by_user_id, created_at, sourced_at
             )
             VALUES (%s, %s, %s, '{}'::jsonb, %s, now(), %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
             (
                 request_id,
-                RequestType.PEOPLE,
+                ChangesetKind.PEOPLE_EDIT,
                 jurisdiction_ocdid,
                 requested_by_user_id,
                 requested_by_user_id,
@@ -237,14 +237,14 @@ async def register_sheet_import_request(
         await conn.execute(
             """
             INSERT INTO changesets (
-                id, request_type, jurisdiction_ocdid, requested_by_user_id, batch_id,
+                id, kind, jurisdiction_ocdid, requested_by_user_id, batch_id,
                 created_at, sourced_at
             )
             VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
             (
                 request_id,
-                RequestType.PEOPLE,
+                ChangesetKind.SHEET_IMPORT,
                 jurisdiction_ocdid,
                 requested_by_user_id,
                 batch_id,
@@ -265,14 +265,14 @@ async def register_jurisdiction_edit_request(
         await conn.execute(
             """
             INSERT INTO changesets (
-                id, request_type, jurisdiction_ocdid, arguments_json, requested_by_user_id,
+                id, kind, jurisdiction_ocdid, arguments_json, requested_by_user_id,
                 open_data_url, published_at, resolved_by_user_id, created_at
             )
             VALUES (%s, %s, %s, %s, %s, %s, now(), %s, CURRENT_TIMESTAMP)
             """,
             (
                 request_id,
-                RequestType.JURISDICTION_MANUAL_EDIT,
+                ChangesetKind.JURISDICTION_EDIT,
                 jurisdiction_ocdid,
                 json.dumps(arguments_json),
                 requested_by_user_id,
@@ -307,15 +307,6 @@ async def jurisdictions_for_requests(request_ids: list[str]) -> dict[str, str]:
         return {request_id: ocdid for request_id, ocdid in await cur.fetchall()}
 
 
-async def get_request_type(request_id: str) -> str | None:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT request_type FROM changesets WHERE id::text = %s",
-            (request_id,),
-        )
-        row = await cur.fetchone()
-    return row[0] if row else None
 
 
 async def get_issue_request_details(request_ids: list[str]) -> list[dict]:

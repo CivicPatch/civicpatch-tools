@@ -4,7 +4,7 @@ import { dateStringToFriendly, durationBetween } from "../../../utils/date-utils
 import { cancelPipelineRun } from "../../../api.js";
 import "./history-modal.js";
 import "../../../components/status-badge.js";
-import { REQUEST_TYPE } from "../awaiting-review.ts";
+import { CHANGESET_KIND } from "../awaiting-review.ts";
 import { REVIEW_STATUS } from "../../../components/review-status.js";
 import { LOGIN_PATH, reviewSessionUrl as reviewUrl } from "../../review-routes.ts";
 import { jurisdictionOcdidToState } from "../../../components/ocdid-utils.js";
@@ -207,7 +207,7 @@ function HistoryList({ history, pipelineRunStatus, canCancel, onCancel, isSigned
                             color="${statusBadgeProps(item.review_status).color}"
                           ></civ-status-badge>
                         `}
-                        ${item.review_status === REVIEW_STATUS.PENDING && item.request_type !== REQUEST_TYPE.JURISDICTION_MANUAL_EDIT ? html`
+                        ${item.review_status === REVIEW_STATUS.PENDING && item.kind !== CHANGESET_KIND.JURISDICTION_EDIT ? html`
                           <a class="sh-review-link" href=${isSignedIn
                             ? reviewUrl(jurisdictionOcdidToState(item.jurisdiction_ocdid), item.request_id)
                             : LOGIN_PATH}>
