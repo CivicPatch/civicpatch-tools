@@ -17,6 +17,7 @@ from core.entry_rows import (
     JURISDICTION,
     ImportRow,
     ImportStatus,
+    already_handled,
     jurisdiction_columns,
     parse_rows,
     roster_columns,
@@ -62,9 +63,13 @@ async def import_rows(
     user_id: str,
     batch_id: str,
 ) -> list[JurisdictionResult]:
-    """Ingest every jurisdiction the sheet named, one at a time.
+    """Ingest every jurisdiction the sheet named whose rows have changed, one at a time.
 
     Jurisdictions are independent, so one failing must not cost the others theirs.
+
+    A locality whose rows all carry a status is left alone — re-reading a sheet nobody has
+    touched should do nothing, rather than stack a duplicate card for supersede to clear up
+    later. The volunteer decides: clear a row's status cell and it comes back.
     """
     # Read once: a roles edit landing mid-import would classify jurisdictions differently.
     roles = await get_roles()
@@ -72,6 +77,15 @@ async def import_rows(
 
     results = []
     for jurisdiction_ocdid, jurisdiction_rows in rows_by_jurisdiction(rows).items():
+        if already_handled(jurisdiction_rows):
+            results.append(
+                JurisdictionResult(
+                    jurisdiction_ocdid=jurisdiction_ocdid,
+                    status=ImportStatus.UNCHANGED,
+                    people=len(jurisdiction_rows),
+                )
+            )
+            continue
         results.append(
             await _import_jurisdiction(
                 jurisdiction_ocdid, jurisdiction_rows, user_id, batch_id, roles, taxonomy

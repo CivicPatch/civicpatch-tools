@@ -37,6 +37,8 @@ class ImportStatus(StrEnum):
     # People stored, posts not. Re-derivable from the sightings, so not a failure.
     PARTIAL = "partial"
     FAILED = "failed"
+    # The sheet says exactly what it said last run, so no card was raised.
+    UNCHANGED = "unchanged"
 
 
 _OPTIONAL = ("url", "phone", "email", "image", "start_date", "end_date")
@@ -86,6 +88,9 @@ class ImportRow(BaseModel):
     line: int
     jurisdiction_ocdid: str
     sighting: Sighting
+    # What the last run wrote here. Blank for a row nobody has imported, and blank again when a
+    # volunteer clears it to say "look at this one again".
+    status: str = ""
 
 
 def _clean(value) -> str:
@@ -159,6 +164,7 @@ def _import_row(row: dict, line: int, source_url: str) -> ImportRow:
     return ImportRow(
         line=line,
         jurisdiction_ocdid=_clean(row[JURISDICTION]),
+        status=_clean(row.get("status")),
         sighting=Sighting(
             name=_clean(row["name"]),
             label=_clean(row["label"]),
@@ -196,6 +202,10 @@ def _duplicate_errors(rows: list[ImportRow]) -> list[RowError]:
     return errors
 
 
+def already_handled(rows: list[ImportRow]) -> bool:
+    return all(row.status for row in rows)
+
+
 def rows_by_jurisdiction(rows: list[ImportRow]) -> dict[str, list[ImportRow]]:
     grouped: dict[str, list[ImportRow]] = {}
     for row in rows:
@@ -221,7 +231,12 @@ def roster_columns(
     A row is `blocked` when its own jurisdiction was rejected over somebody else's bad row —
     which is most of a blocked town, and the reason has to point elsewhere or it reads as a
     fault in a row that is perfectly fine.
+
+    **A row this run did not touch keeps what it already said.** Blanking it would erase the
+    very thing the next run reads to decide it has already been handled — which is a loop: the
+    skip blanks the status, the blank asks for a re-import, the re-import writes it back.
     """
+    previous = {row.line: row.status for row in rows}
     error_by_line = {error.line: error for error in errors}
     jurisdiction_by_line = {row.line: row.jurisdiction_ocdid for row in rows}
     blocked = {error.jurisdiction_ocdid for error in errors}
@@ -234,7 +249,9 @@ def roster_columns(
         )
         if error:
             status.append(ERROR)
-            message.append(f"{error.column}: {error.message}" if error.column else error.message)
+            message.append(
+                f"{error.column}: {error.message}" if error.column else error.message
+            )
         elif jurisdiction in imported:
             status.append(IMPORTED)
             message.append("")
@@ -242,7 +259,8 @@ def roster_columns(
             status.append(BLOCKED)
             message.append("another row in this town was rejected")
         else:
-            status.append("")
+            # Untouched this run — a skipped locality, or a row the parse never reached.
+            status.append(previous.get(line, ""))
             message.append("")
 
     return {

@@ -4,6 +4,7 @@ from core.entry_rows import (
     ImportRow,
     RowError,
     Sighting,
+    already_handled,
     jurisdiction_columns,
     parse_rows,
     roster_columns,
@@ -273,3 +274,56 @@ def test_text_that_is_not_a_date_still_fails():
     assert [(e.column, "not YYYY" in e.message) for e in errors] == [
         ("start_date", True)
     ]
+
+
+# --- the status column decides whether a locality is re-imported ---
+
+
+def _parsed(*rows: dict):
+    parsed, errors = parse_rows(list(rows), _SHEET)
+    assert errors == []
+    return parsed
+
+
+@pytest.mark.unit
+def test_a_locality_whose_rows_all_say_imported_is_done():
+    assert already_handled(_parsed(_row(status="imported"), _row(name="Bo", status="imported")))
+
+
+@pytest.mark.unit
+def test_a_blank_status_brings_the_locality_back():
+    """What a volunteer does after fixing a row: clear the cell, press Import."""
+    assert not already_handled(_parsed(_row(status="imported"), _row(name="Bo", status="")))
+
+
+@pytest.mark.unit
+def test_any_status_counts_as_handled_not_just_imported():
+    """The column is the app's account of what it did. `error` and `blocked` have been answered
+    for too — the volunteer clears the cell to ask again."""
+    assert already_handled(_parsed(_row(status="error")))
+    assert already_handled(_parsed(_row(status="blocked")))
+
+
+@pytest.mark.unit
+def test_a_row_this_run_did_not_touch_keeps_its_status():
+    """The loop this closes: the write-back blanked every row it had not just imported, so the
+    next run saw a blank, re-imported, and the run after skipped again — unchanged, imported,
+    unchanged, on a sheet nobody edited."""
+    rows = _parsed(_row(status="imported"))
+    columns = roster_columns(rows, [], len(rows), set(), _STAMP)
+
+    assert columns["status"] == ["imported"]
+
+
+@pytest.mark.unit
+def test_a_never_imported_locality_has_no_status_at_all():
+    assert not already_handled(_parsed(_row()))
+
+
+@pytest.mark.unit
+def test_one_row_wanting_attention_brings_the_whole_roster():
+    """All, not any. A card carrying only the cleared row would propose closing everybody
+    else's membership when published."""
+    rows = _parsed(_row(status="imported"), _row(name="Bo", status=""))
+    assert not already_handled(rows)
+    assert len(rows) == 2

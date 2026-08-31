@@ -32,7 +32,7 @@ function progressPanel(batch: ImportProgress | null) {
   // Null for the moment between starting and the first poll returning.
   const total = batch?.items_total;
   return html`
-    <section class="import-progress">
+    <section class="import-panel import-progress">
       <h3 class="import-section__title">Importing…</h3>
       <p class="import-progress__count">
         ${batch ? batch.items_done : 0}${total == null ? "" : ` of ${total}`}
