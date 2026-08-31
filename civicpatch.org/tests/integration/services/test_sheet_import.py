@@ -516,3 +516,55 @@ async def test_the_lock_lifts_when_the_batch_finishes(user_id, batch_id):
         {"spreadsheet_id": "test"},
     )
     assert again != batch_id
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_locality_the_sheet_says_is_handled_raises_no_second_card(
+    user_id, batch_id
+):
+    """Re-reading a sheet nobody has touched should do nothing. It used to raise a duplicate
+    card per locality per run and lean on supersede to tidy up: six runs on dev left Centralia
+    with five cards, four swept and one published."""
+    rows, errors = parse_rows(
+        _sheet_rows(("Ana Reyes", "Select Board Chair")), _SHEET
+    )
+    assert errors == []
+    for row in rows:
+        row.status = ImportStatus.IMPORTED
+
+    results = await import_rows(rows, user_id, batch_id)
+
+    assert [result.status for result in results] == [ImportStatus.UNCHANGED]
+    assert results[0].request_id is None
+    assert (
+        await _scalar(
+            "SELECT count(*) FROM requests WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        == 0
+    )
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_clearing_one_row_brings_the_whole_roster_back(user_id, batch_id):
+    """Whole, not just the cleared row: a card carrying one of two people would propose closing
+    the other's membership when published."""
+    rows, errors = parse_rows(
+        _sheet_rows(("Ana Reyes", "Select Board Chair"), ("Bo Chen", "Town Clerk")),
+        _SHEET,
+    )
+    assert errors == []
+    rows[0].status = ImportStatus.IMPORTED
+    rows[1].status = ""
+
+    [result] = await import_rows(rows, user_id, batch_id)
+
+    assert result.status is ImportStatus.IMPORTED
+    assert (
+        await _scalar(
+            "SELECT count(*) FROM source_records WHERE request_id = %s::uuid",
+            (result.request_id,),
+        )
+        == 2
+    )

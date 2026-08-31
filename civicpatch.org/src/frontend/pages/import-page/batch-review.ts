@@ -119,6 +119,18 @@ function BatchReviewPanel(host: BatchReviewHost) {
     `;
   };
 
+  // No cards at all: every locality in the sheet said what it said last run. Distinct from the
+  // settled case below, where cards exist and have all been decided.
+  if (!review.jurisdictions.length) {
+    return html`
+      <h2 class="import-panel__title">Nothing changed</h2>
+      <p class="import-hint">
+        Every locality in the sheet reads exactly as it did on the last import,
+        so no review cards were raised. Edit the sheet and import again.
+      </p>
+    `;
+  }
+
   // Nothing left to decide: every locality is published, dismissed or superseded. Offering a
   // disabled tick and two dead Publish buttons reads as broken rather than finished.
   if (!everything.length) {

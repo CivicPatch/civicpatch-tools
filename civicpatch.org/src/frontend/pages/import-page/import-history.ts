@@ -42,9 +42,11 @@ function ImportHistory(host: ImportHistoryHost) {
             : null}
         </td>
         <td class="import-history__count">
-          ${batch.items_done}${batch.items_total == null
-            ? ""
-            : ` / ${batch.items_total}`}
+          ${batch.items_done === 0 && batch.status !== BATCH_FAILED
+            ? "nothing changed"
+            : html`${batch.items_done}${batch.items_total == null
+                ? ""
+                : ` / ${batch.items_total}`}`}
         </td>
         <td>
           <button type="button" class="import-link btn-ghost" @click=${open}>

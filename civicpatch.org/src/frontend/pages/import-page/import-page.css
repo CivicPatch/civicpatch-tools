@@ -183,8 +183,12 @@
 
 /* Progress */
 
-.import-progress {
-  margin: 0;
+/* The box comes from .import-panel, so starting an import does not drop the frame the
+   other states have. The hint ends the panel, so its own bottom margin would double with
+   the padding. */
+
+.import-progress .import-hint:last-child {
+  margin-bottom: 0;
 }
 
 .import-progress__count {
