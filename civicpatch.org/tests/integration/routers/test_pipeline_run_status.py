@@ -53,8 +53,8 @@ async def _a_run_in_flight() -> str:
         )
         await cur.execute(
             """
-            INSERT INTO changesets (request_type, jurisdiction_ocdid, arguments_json)
-            VALUES ('people', %s, '{}'::jsonb) RETURNING id::text
+            INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json)
+            VALUES ('scrape', 'SUCCESS', %s, '{}'::jsonb) RETURNING id::text
             """,
             (_OCDID,),
         )

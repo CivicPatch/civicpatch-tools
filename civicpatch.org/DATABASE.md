@@ -38,7 +38,7 @@ erDiagram
 
     changesets {
         uuid            id                  PK
-        text            request_type
+        text            kind                "CHECK scrape|sheet_import|people_edit|jurisdiction_edit; CHECK (kind=scrape) = (status IS NOT NULL)"
         text_null       jurisdiction_ocdid  FK  "idx"
         uuid_null       requested_by_user_id FK
         jsonb           arguments_json
@@ -55,7 +55,7 @@ erDiagram
 
     changeset_batches {
         uuid            id                  PK
-        text            kind                "CHECK sheet_import|state_scrape"
+        text            kind                "CHECK sheet_import|scrape — same vocabulary as changesets.kind"
         text            lock_key            "idx: (lock_key, started_at DESC). 'sheet:<id>' | 'state:wa' — what this run must not race"
         jsonb           arguments_json      "producer-specific inputs: the spreadsheet, or the state and how many"
         text            status              "CHECK running|succeeded|failed|abandoned. lifecycle only, never progress"
@@ -279,6 +279,7 @@ erDiagram
 - `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
 - `pipeline_runs` was folded into `requests` in migration 147: `request_id` was UNIQUE NOT NULL and every request had exactly one run, so the two tables were a vertical partition of one entity that 21 queries had to join. `pull_requests` went the same way in 141 — nothing opens a pull request for a scrape any more, and every column it held either lived on `requests` already or died with the merge queue.
 - **`requests` became `changesets` in migration 152**, with `request_batches` → `changeset_batches`, `source_records.request_id` → `changeset_id`, and `change_logs.request_id` → `changeset_id`. Pure rename, including every index and constraint name — a rename that leaves `requests_pkey` on `changesets` puts the old vocabulary back into the schema in a dozen places. The table grew from "a job someone asked for" and that fits only the oldest of its four producers: nobody *requests* a sheet import, and both hand-edit kinds are born published. What all four are is a bundle of proposed changes to one jurisdiction, by one producer, at one time, awaiting a decision. `submissions` was rejected as past tense — it misnames the whole dispatched-and-running phase of a scrape, which exists at `status = PENDING, progress = 0` before it has any `source_records`, exactly the state an OSM changeset models as open-and-empty. **Two columns keep the old word deliberately**: `issues.request_ids` and `review_session_entries.request_ids` are different columns that 152 did not touch.
+- **`request_type` became `kind` in migration 153**, and started saying *which producer made this changeset* rather than which domain object it was about. Every row used to read `people`, leaving three producers told apart by a conjunction of `status IS NULL` and `batch_id IS NOT NULL` — neither of which is about provenance. Two CHECKs now hold what nothing enforced: the four-value vocabulary, and `(kind = 'scrape') = (status IS NOT NULL)`, which makes the nullable pipeline columns a *consequence* of the kind instead of the only way to guess it. **The default was dropped deliberately** — a writer that does not say which producer it is should fail, not quietly become a scrape. `changeset_batches.kind` lost its `state_` prefix in the same migration so both columns share one vocabulary, which is what lets the backfill read the batch's own answer rather than infer from `batch_id IS NOT NULL` — a rule that holds only while state scrapes create no batch rows. `jurisdiction_edit` is a kind here only until those edits move to their own table; see the ▶ Next entry in `.scratch/TODO.md`.
 - `people` has no FK to `changesets` — it is written by the publish transaction, not by a merge
 - `state_configs` was **dropped in migration 150**, along with `sync_log` (superseded by `synced_files` and untouched since migration 003) and `logs` (0 rows, no reader; application logs go to Grafana). 103 had dropped `state_configs.min_scraped_at` when freshness became a computed rolling window and kept the shell as the home for the next per-state setting; two months on it held none, had no reader, and `jurisdictions.state` already answered which states exist. Bringing it back is one statement if a per-state setting ever arrives.
 - `publish_timestamp_backup_117` was **dropped in migration 151**, on the judgement that 117 is permanent. It was never in this diagram — it was 117's snapshot of the `published_at` / `dismissed_at` / `resolved_by_user_id` values it re-stamped, kept because they cannot be recomputed (115 stored `pr.updated_at` as it stood then, and pr_sync rewrote that column on every reconciliation). **151 is deliberately irreversible**: its down is a no-op rather than an empty recreation, because 117's down is an `UPDATE … FROM` that against an empty table would update zero rows and report success — silently leaving the re-stamped values in place while appearing to restore them. Note 117's up could not be replayed anyway: it reads `pull_requests`, dropped in 141.

@@ -283,9 +283,9 @@ async function seedReviewCard(
   { requestId, ocdid, people = [], publishedAt = null },
 ) {
   await client.query(
-    `INSERT INTO changesets (id, request_type, jurisdiction_ocdid, arguments_json,
+    `INSERT INTO changesets (id, kind, jurisdiction_ocdid, arguments_json,
                            status, progress, sourced_at, created_at, published_at)
-     VALUES ($1, 'people_collection', $2, '{}', 'success', 100, NOW(), NOW(), $3)
+     VALUES ($1, 'scrape', $2, '{}', 'success', 100, NOW(), NOW(), $3)
      ON CONFLICT (id) DO NOTHING`,
     [requestId, ocdid, publishedAt],
   );

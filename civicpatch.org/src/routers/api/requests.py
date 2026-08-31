@@ -8,6 +8,7 @@ import services.people_csv_export as requests_export_service
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from schemas.common import Identity, UserRole, RouteCategory
+from shared.utils.statuses import ChangesetKind
 from schemas.pipeline_runs import CreateRegisterRequest
 from lib.auth import require_route_access
 
@@ -34,7 +35,7 @@ def get_router(api_key_header):
         _response = await database.requests.register_request_with_pipeline_run(
             requested_by_user_id=user.user_id,
             request_id=request.request_id,
-            job_type="people",
+            kind=ChangesetKind.SCRAPE,
             arguments_json=request.arguments,
         )
         return {"request_id": request.request_id, "status": "pending"}

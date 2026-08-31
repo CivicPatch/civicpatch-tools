@@ -6,7 +6,7 @@ import {
   jurisdictionEditBlockers,
   editingBlockedReason,
   jurisdictionEditBlockedReason,
-  REQUEST_TYPE,
+  CHANGESET_KIND,
   type HistoryEntry,
 } from "../pages/jurisdictions-page/awaiting-review.ts";
 
@@ -15,7 +15,7 @@ const entry = (overrides: Partial<HistoryEntry> = {}): HistoryEntry => ({
   created_at: "2026-07-12T00:00:00Z",
   open_data_url: "https://github.com/CivicPatch/open-data/pull/4821",
   review_status: "pending",
-  request_type: REQUEST_TYPE.PEOPLE,
+  kind: CHANGESET_KIND.SCRAPE,
   ...overrides,
 });
 
@@ -85,7 +85,7 @@ describe("editingBlockedReason", () => {
 describe("edit blockers", () => {
   const open = [
     entry({ request_id: "scrape" }),
-    entry({ request_id: "edit", request_type: REQUEST_TYPE.JURISDICTION_MANUAL_EDIT }),
+    entry({ request_id: "edit", kind: CHANGESET_KIND.JURISDICTION_EDIT }),
   ];
 
   it("blocks people edits on scrapes only", () => {
@@ -97,8 +97,8 @@ describe("edit blockers", () => {
   });
 
   it("treats an unknown type as a people blocker, which is the safe default", () => {
-    expect(peopleEditBlockers([entry({ request_type: null })])).toHaveLength(1);
-    expect(jurisdictionEditBlockers([entry({ request_type: null })])).toHaveLength(0);
+    expect(peopleEditBlockers([entry({ kind: null })])).toHaveLength(1);
+    expect(jurisdictionEditBlockers([entry({ kind: null })])).toHaveLength(0);
   });
 });
 
@@ -108,7 +108,7 @@ describe("edit blockers", () => {
 // so publishing it would silently drop the first.
 describe("jurisdictionEditBlockedReason", () => {
   const stuck = (overrides = {}) =>
-    entry({ request_type: REQUEST_TYPE.JURISDICTION_MANUAL_EDIT, ...overrides });
+    entry({ kind: CHANGESET_KIND.JURISDICTION_EDIT, ...overrides });
 
   it("is null when nothing is stuck", () => {
     expect(jurisdictionEditBlockedReason([])).toBeNull();

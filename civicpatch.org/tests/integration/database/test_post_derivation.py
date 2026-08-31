@@ -351,8 +351,8 @@ async def test_publish_writes_memberships_for_the_roster():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO changesets (id, jurisdiction_ocdid, request_type)
-            VALUES (%s, %s, 'pipeline_run')
+            INSERT INTO changesets (id, jurisdiction_ocdid, kind, status)
+            VALUES (%s, %s, 'scrape', 'SUCCESS')
             ON CONFLICT (id) DO NOTHING
             """,
             (request_id := str(uuid.uuid4()), _OCDID),
@@ -799,8 +799,8 @@ async def _seed_request() -> str:
             (_OCDID, json.dumps({})),
         )
         await cur.execute(
-            "INSERT INTO changesets (id, jurisdiction_ocdid, request_type) "
-            "VALUES (%s, %s, 'pipeline_run')",
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind) "
+            "VALUES (%s, %s, 'people_edit')",
             (request_id, _OCDID),
         )
         await conn.commit()
@@ -945,8 +945,8 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         await memberships.upsert(cur, DerivedMember(person_id=person_id), post_id, org, _T0)
         await cur.execute(
-            "INSERT INTO changesets (id, jurisdiction_ocdid, request_type) "
-            "VALUES (%s, %s, 'pipeline_run')",
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, status) "
+            "VALUES (%s, %s, 'scrape', 'SUCCESS')",
             (request_id := str(uuid.uuid4()), _OCDID),
         )
         # The run too: `_apply_scrape_changes` swallows its own errors, so without this the

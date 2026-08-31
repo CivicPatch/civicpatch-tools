@@ -3,7 +3,7 @@ from typing import List, Optional
 from psycopg import sql
 import shared.utils.id_utils
 from shared.utils.statuses import (
-    RequestType,
+    ChangesetKind,
 )
 from database.database import get_pool, to_iso
 from database.requests import AVAILABLE_FOR_REVIEW, REVIEW_STATUS, WORK_IN_FLIGHT
@@ -90,9 +90,9 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
                    jur.data->>'url' AS jurisdiction_website_url
             FROM changesets r
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE r.id = %s AND r.request_type != %s
+            WHERE r.id = %s AND r.kind != %s
             """,
-            (request_id, RequestType.JURISDICTION_MANUAL_EDIT),
+            (request_id, ChangesetKind.JURISDICTION_EDIT),
         )
         row = await cur.fetchone()
         if not row:
@@ -125,9 +125,9 @@ async def get_pull_request_data_by_request_id(request_id: str) -> Optional[dict]
                    jur.data->>'url' AS jurisdiction_website_url
             FROM changesets r
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE r.id::text = %s AND r.request_type != %s
+            WHERE r.id::text = %s AND r.kind != %s
             """,
-            (request_id, RequestType.JURISDICTION_MANUAL_EDIT),
+            (request_id, ChangesetKind.JURISDICTION_EDIT),
         )
         row = await cur.fetchone()
         if not row:

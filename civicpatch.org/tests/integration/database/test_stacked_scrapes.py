@@ -77,8 +77,8 @@ async def _request(sourced_at: str, ocdid: str = _OCDID) -> str:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO changesets (request_type, jurisdiction_ocdid, arguments_json, sourced_at)
-            VALUES ('people', %s, '{}'::jsonb, %s::timestamptz)
+            INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json, sourced_at)
+            VALUES ('scrape', 'SUCCESS', %s, '{}'::jsonb, %s::timestamptz)
             RETURNING id::text
             """,
             (ocdid, sourced_at),

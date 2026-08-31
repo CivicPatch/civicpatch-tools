@@ -78,7 +78,7 @@ async def open_pr():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO changesets (jurisdiction_ocdid) VALUES (%s) RETURNING id::text",
+            "INSERT INTO changesets (kind, status, jurisdiction_ocdid) VALUES ('scrape', 'SUCCESS', %s) RETURNING id::text",
             (ocdid,),
         )
         request_id = (await cur.fetchone())[0]  # type: ignore[index]

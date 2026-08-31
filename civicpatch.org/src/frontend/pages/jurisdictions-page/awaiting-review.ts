@@ -10,16 +10,20 @@ import { jurisdictionOcdidToState } from "../../components/ocdid-utils.js";
 import { LOGIN_PATH, reviewSessionUrl } from "../review-routes.js";
 import { REVIEW_STATUS } from "../../components/review-status.js";
 
-// Mirrors shared/utils/statuses.py RequestType. Only PEOPLE has a scrape behind it.
-export const REQUEST_TYPE = Object.freeze({
-  PEOPLE: "people",
-  JURISDICTION_MANUAL_EDIT: "jurisdiction_manual_edit",
+// Mirrors shared/utils/statuses.py ChangesetKind — which producer made the changeset.
+// Only SCRAPE has a pipeline run behind it. JURISDICTION_EDIT is here only while those edits
+// still live in `changesets`; they move to their own table when the PR flow is restored.
+export const CHANGESET_KIND = Object.freeze({
+  SCRAPE: "scrape",
+  SHEET_IMPORT: "sheet_import",
+  PEOPLE_EDIT: "people_edit",
+  JURISDICTION_EDIT: "jurisdiction_edit",
 });
 
 export interface HistoryEntry {
   request_id: string;
   created_at: string;
-  request_type?: string | null;
+  kind?: string | null;
   open_data_url?: string | null;
   review_status?: string | null;
   // When a person published it. `created_at` above is the machine's clock — the two differ by
@@ -53,7 +57,7 @@ export const pendingReviews = (history: HistoryEntry[]): HistoryEntry[] =>
   history.filter((entry) => entry.awaiting_review);
 
 const isManualEdit = (entry: HistoryEntry) =>
-  entry.request_type === REQUEST_TYPE.JURISDICTION_MANUAL_EDIT;
+  entry.kind === CHANGESET_KIND.JURISDICTION_EDIT;
 
 // The two kinds edit different files, so they block independently: an open scrape
 // must not lock the website field, and an open website edit must not lock the

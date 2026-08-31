@@ -387,9 +387,9 @@ async def _pending_scrape(sourced_at: datetime.datetime) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO changesets (request_type, jurisdiction_ocdid, arguments_json, status, "
+            "INSERT INTO changesets (kind, jurisdiction_ocdid, arguments_json, status, "
             "                      progress, created_at, sourced_at) "
-            "VALUES ('people', %s, '{}'::jsonb, 'SUCCESS', 100, %s, %s) RETURNING id::text",
+            "VALUES ('scrape', %s, '{}'::jsonb, 'SUCCESS', 100, %s, %s) RETURNING id::text",
             (_OCDID, sourced_at, sourced_at),
         )
         row = await cur.fetchone()

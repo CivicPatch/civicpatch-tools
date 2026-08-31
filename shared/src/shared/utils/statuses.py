@@ -87,16 +87,22 @@ class RequestReviewStatus(StrEnum):
     DISMISSED = "dismissed"
 
 
-class RequestType(StrEnum):
-    """What a request asked the system to do.
+class ChangesetKind(StrEnum):
+    """Which producer made this changeset. The discriminator, mandatory and exact.
 
-    Only PEOPLE has a pipeline run behind it. JURISDICTION_MANUAL_EDIT exists so a
-    hand-edited jurisdiction field gets a tracked PR like any other change, and must
-    be kept out of the review pool — there is nothing in it to review.
+    It used to say which domain object the row was *about* (`people`), which left three
+    producers sharing one value and told apart by a conjunction of `status IS NULL` and
+    `batch_id IS NOT NULL` — neither of which is about provenance.
+
+    Only SCRAPE has a pipeline run behind it, and a CHECK enforces that both ways.
+    JURISDICTION_EDIT is kept out of the review pool: it edits a registry civicpatch does
+    not own, so there is nothing here to review.
     """
 
-    PEOPLE = "people"
-    JURISDICTION_MANUAL_EDIT = "jurisdiction_manual_edit"
+    SCRAPE = "scrape"
+    SHEET_IMPORT = "sheet_import"
+    PEOPLE_EDIT = "people_edit"
+    JURISDICTION_EDIT = "jurisdiction_edit"
 
 
 class ChangeLogType(StrEnum):

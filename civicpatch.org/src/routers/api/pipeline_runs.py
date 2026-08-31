@@ -56,6 +56,7 @@ from schemas.pipeline_runs import (
 )
 from services import people_collector
 from shared.utils.statuses import (
+    ChangesetKind,
     TERMINAL_PIPELINE_RUN_STATUSES,
     PipelineRunStatus,
 )
@@ -180,7 +181,7 @@ async def _register_pipeline_run_bg(request: RegisterPipelineRunRequest) -> None
     try:
         await register_request_with_pipeline_run_if_not_exists(
             request_id=request.request_id,
-            job_type="people",
+            kind=ChangesetKind.SCRAPE,
             arguments_json={
                 "jurisdiction_ocdid": request.jurisdiction_ocdid,
                 "name": request.name,
@@ -230,7 +231,7 @@ def get_router(api_key_header):
             request_id = shared.utils.id_utils.make_request_id()
             await register_request_with_pipeline_run(
                 request_id=request_id,
-                job_type="people",
+                kind=ChangesetKind.SCRAPE,
                 arguments_json={
                     "jurisdiction_ocdid": request.jurisdiction_ocdid,
                     "name": request.name,
@@ -281,7 +282,7 @@ def get_router(api_key_header):
             request_id = shared.utils.id_utils.make_request_id()
             await register_request_with_pipeline_run(
                 request_id=request_id,
-                job_type="people",
+                kind=ChangesetKind.SCRAPE,
                 arguments_json={
                     "jurisdiction_ocdid": candidate.id,
                     "name": candidate.name,
