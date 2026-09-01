@@ -24,7 +24,7 @@ class OpenDataCommitRequest:
     """
     file_path: str
     # None for an edit with no request row, which is every write that is not a publish.
-    request_id: str | None
+    changeset_id: str | None
     jurisdiction_ocdid: str
     commit_message: str
     source: CommitSource = CommitSource.SCRAPE
@@ -39,7 +39,7 @@ class OpenDataCommitItem:
     """One jurisdiction inside a batch commit."""
 
     file_path: str
-    request_id: str
+    changeset_id: str
     jurisdiction_ocdid: str
 
 

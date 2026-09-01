@@ -60,7 +60,7 @@ async def batch_review(batch_id: str) -> BatchReview | None:
     # locality claiming "0 people", and reading the jurisdiction's live roster instead would
     # answer a different question: who is seated there now, including people no scrape in this
     # batch ever saw.
-    rosters = await proposed_rosters([item["request_id"] for item in items])
+    rosters = await proposed_rosters([item["changeset_id"] for item in items])
 
     return BatchReview(
         batch_id=batch["id"],
@@ -69,11 +69,11 @@ async def batch_review(batch_id: str) -> BatchReview | None:
             ReviewJurisdiction(
                 jurisdiction_ocdid=item["jurisdiction_ocdid"],
                 name=item["name"] or item["jurisdiction_ocdid"],
-                request_id=item["request_id"],
+                changeset_id=item["changeset_id"],
                 review_status=item["review_status"],
                 people=[
                     _person(person)
-                    for person in rosters.get(item["request_id"], [])
+                    for person in rosters.get(item["changeset_id"], [])
                 ],
             )
             for item in items
@@ -107,11 +107,11 @@ async def publish_selected(
     for item in wanted:
         try:
             await roster_edits.publish_to_database(
-                item["request_id"], item["jurisdiction_ocdid"], None, user_id
+                item["changeset_id"], item["jurisdiction_ocdid"], None, user_id
             )
         except Exception as e:
             logger.error(
-                f"[{item['request_id']}] {item['jurisdiction_ocdid']}: publish failed: {e}",
+                f"[{item['changeset_id']}] {item['jurisdiction_ocdid']}: publish failed: {e}",
                 exc_info=True,
             )
             results.append(
@@ -122,7 +122,7 @@ async def publish_selected(
                 )
             )
             continue
-        published[item["request_id"]] = item["jurisdiction_ocdid"]
+        published[item["changeset_id"]] = item["jurisdiction_ocdid"]
         results.append(
             PublishResult(
                 jurisdiction_ocdid=item["jurisdiction_ocdid"], published=True

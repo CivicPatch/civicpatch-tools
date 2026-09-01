@@ -32,7 +32,7 @@ const closeDrawer = async (page) => {
 };
 
 const openMarkers = async (page) => {
-  await page.goto(`/review/session?request_id=${MARKERS_REQUEST_ID}`);
+  await page.goto(`/review/session?changeset_id=${MARKERS_REQUEST_ID}`);
   await expect(trigger(page)).toBeVisible();
 };
 
@@ -129,8 +129,8 @@ test.describe("Issue checklist", () => {
     await items(page).first().locator("input").check();
     await expect(count(page)).toContainText("1/3");
 
-    await page.goto(`/review/session?request_id=${READ_ONLY_REQUEST_ID}`);
-    await page.goto(`/review/session?request_id=${MARKERS_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${READ_ONLY_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${MARKERS_REQUEST_ID}`);
     await expect(count(page)).toContainText("1/3");
   });
 
@@ -139,7 +139,7 @@ test.describe("Issue checklist", () => {
   }) => {
     // A published card can still be read through and ticked off — the tick is
     // progress in this browser, not a mutation of the card (§8.3, §10).
-    await page.goto(`/review/session?request_id=${READ_ONLY_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${READ_ONLY_REQUEST_ID}`);
     await openDrawer(page);
     const readOnlyItems = items(page);
     if (await readOnlyItems.count()) {

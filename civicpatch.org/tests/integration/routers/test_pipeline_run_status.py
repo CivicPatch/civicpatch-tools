@@ -1,6 +1,6 @@
 """The invariant that has to survive the requests/pipeline_runs refactor.
 
-`pipeline_runs.request_id` is UNIQUE and NOT NULL, so a run and a request are one piece of work
+`pipeline_runs.changeset_id` is UNIQUE and NOT NULL, so a run and a request are one piece of work
 in two tables. Nothing obliges their two statuses to agree, and that gap is where the phantom
 scrapes came from: a run ended, the request stayed `pending` forever, and the jurisdiction page
 listed it and disabled editing from that same set.
@@ -58,34 +58,34 @@ async def _a_run_in_flight() -> str:
             """,
             (_OCDID,),
         )
-        request_id = (await cur.fetchone())[0]
+        changeset_id = (await cur.fetchone())[0]
         await cur.execute(
             "UPDATE changesets SET status = 'RUNNING', "
             "sourced_at = CURRENT_TIMESTAMP WHERE id = %s",
-            (request_id,),
+            (changeset_id,),
         )
         await conn.commit()
-    return request_id
+    return changeset_id
 
 
-async def _is_still_pending_work(request_id: str) -> bool:
+async def _is_still_pending_work(changeset_id: str) -> bool:
     """The question the jurisdiction page asks, and the edit blocker reads from."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT published_at IS NULL AND dismissed_at IS NULL FROM changesets WHERE id::text = %s",
-            (request_id,),
+            (changeset_id,),
         )
         return (await cur.fetchone())[0]
 
 
-async def _apply(request_id: str, status: str) -> None:
+async def _apply(changeset_id: str, status: str) -> None:
     # Redis is a real process boundary; the DB is not, and the DB is what this asserts on.
     with patch(
         "routers.api.pipeline_runs.pubsub_service.publish", new_callable=AsyncMock
     ):
         await pipeline_runs_router.apply_pipeline_run_status(
-            request_id=request_id, status=status, progress=None, jurisdiction_ocdid=_OCDID
+            changeset_id=changeset_id, status=status, progress=None, jurisdiction_ocdid=_OCDID
         )
 
 
@@ -95,11 +95,11 @@ async def _apply(request_id: str, status: str) -> None:
 async def test_a_terminal_run_never_leaves_its_request_pending_without_a_reason(status):
     """Every terminal status, not a hand-picked two — a new one added to the enum shows up here
     automatically rather than quietly inheriting whichever branch it falls into."""
-    request_id = await _a_run_in_flight()
+    changeset_id = await _a_run_in_flight()
 
-    await _apply(request_id, status)
+    await _apply(changeset_id, status)
 
-    still_pending = await _is_still_pending_work(request_id)
+    still_pending = await _is_still_pending_work(changeset_id)
     assert still_pending == (status in _PRODUCES_SOMETHING), (
         f"{status}: a run that produced nothing must settle its request, and one that "
         f"produced a roster must leave it for review"
@@ -111,11 +111,11 @@ async def test_a_terminal_run_never_leaves_its_request_pending_without_a_reason(
 async def test_a_run_still_going_settles_nothing():
     """The other half of the rule. Progress is not an outcome, and dismissing on one would
     discard a scrape mid-flight."""
-    request_id = await _a_run_in_flight()
+    changeset_id = await _a_run_in_flight()
 
-    await _apply(request_id, "RUNNING")
+    await _apply(changeset_id, "RUNNING")
 
-    assert await _is_still_pending_work(request_id) is True
+    assert await _is_still_pending_work(changeset_id) is True
 
 
 @pytest.mark.asyncio
@@ -125,12 +125,12 @@ async def test_the_history_row_answers_whether_the_run_is_going(status):
     """The page used to test the raw status against its own copy of the terminal set — one in
     Python, one in JavaScript, free to drift. `is_running` is derived beside `REVIEW_STATUS`
     so both sides are told the same answer."""
-    request_id = await _a_run_in_flight()
+    changeset_id = await _a_run_in_flight()
 
     before = await get_jurisdiction_history(_OCDID)
     assert before[0]["is_running"] is True
 
-    await _apply(request_id, status)
+    await _apply(changeset_id, status)
 
     after = await get_jurisdiction_history(_OCDID)
     assert after[0]["is_running"] is False
@@ -139,22 +139,22 @@ async def test_the_history_row_answers_whether_the_run_is_going(status):
 # --- the stuck-run sweeper ---------------------------------------------------------
 
 
-async def _set_run(request_id: str, status: str, age_hours: int) -> None:
+async def _set_run(changeset_id: str, status: str, age_hours: int) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "UPDATE changesets SET status = %s, "
             "sourced_at = NOW() - make_interval(hours => %s) WHERE id = %s",
-            (status, age_hours, request_id),
+            (status, age_hours, changeset_id),
         )
         await conn.commit()
 
 
-async def _status(request_id: str) -> str:
+async def _status(changeset_id: str) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT status FROM changesets WHERE id = %s", (request_id,)
+            "SELECT status FROM changesets WHERE id = %s", (changeset_id,)
         )
         return (await cur.fetchone())[0]
 
@@ -172,13 +172,13 @@ async def test_a_run_stuck_on_a_step_is_expired():
 
     from database.pipeline_runs import expire_stale_pipeline_runs
 
-    request_id = await _a_run_in_flight()
-    await _set_run(request_id, "SCRAPE_PAGE", age_hours=48)
+    changeset_id = await _a_run_in_flight()
+    await _set_run(changeset_id, "SCRAPE_PAGE", age_hours=48)
 
     expired = await expire_stale_pipeline_runs(timedelta(hours=6))
 
-    assert request_id in expired
-    assert await _status(request_id) == "ERROR"
+    assert changeset_id in expired
+    assert await _status(changeset_id) == "ERROR"
 
 
 @pytest.mark.integration
@@ -189,11 +189,11 @@ async def test_a_terminal_run_is_left_alone():
 
     from database.pipeline_runs import expire_stale_pipeline_runs
 
-    request_id = await _a_run_in_flight()
-    await _set_run(request_id, "SUCCESS", age_hours=48)
+    changeset_id = await _a_run_in_flight()
+    await _set_run(changeset_id, "SUCCESS", age_hours=48)
 
-    assert request_id not in await expire_stale_pipeline_runs(timedelta(hours=6))
-    assert await _status(request_id) == "SUCCESS"
+    assert changeset_id not in await expire_stale_pipeline_runs(timedelta(hours=6))
+    assert await _status(changeset_id) == "SUCCESS"
 
 
 @pytest.mark.integration
@@ -204,8 +204,8 @@ async def test_a_run_still_reporting_is_left_alone():
 
     from database.pipeline_runs import expire_stale_pipeline_runs
 
-    request_id = await _a_run_in_flight()
-    await _set_run(request_id, "SCRAPE_PAGE", age_hours=1)
+    changeset_id = await _a_run_in_flight()
+    await _set_run(changeset_id, "SCRAPE_PAGE", age_hours=1)
 
-    assert request_id not in await expire_stale_pipeline_runs(timedelta(hours=6))
-    assert await _status(request_id) == "SCRAPE_PAGE"
+    assert changeset_id not in await expire_stale_pipeline_runs(timedelta(hours=6))
+    assert await _status(changeset_id) == "SCRAPE_PAGE"

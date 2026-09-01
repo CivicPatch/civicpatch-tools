@@ -28,7 +28,7 @@ test.describe("Review issue markers", () => {
   test("anchors person-scoped issues to their cards; list-level stays off the diff", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?request_id=${MARKERS_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${MARKERS_REQUEST_ID}`);
     await openDetail(page);
 
     // Row-level: new_official (no field) → marker on Carol's card, above the fields.
@@ -62,7 +62,7 @@ test.describe("Review issue markers", () => {
   test("clear-on-edit: editing a marked card drops its marker", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?request_id=${MARKERS_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${MARKERS_REQUEST_ID}`);
     await openDetail(page);
 
     const carol = editorFor(page, "Carol Extra");

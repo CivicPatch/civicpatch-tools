@@ -71,7 +71,7 @@ async def list_open_pull_requests(
 
     results = [
         {
-            "request_id": r[0],
+            "changeset_id": r[0],
             "created_at": to_iso(r[5]),
             "issue_count": r[6],
             "jurisdiction": {"ocdid": r[3], "name": r[4], "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(r[3])},
@@ -82,7 +82,7 @@ async def list_open_pull_requests(
     return results, total, with_issues
 
 
-async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
+async def get_pull_request_for_review(changeset_id: str) -> Optional[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -95,13 +95,13 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE r.id = %s AND r.kind != %s
             """,
-            (request_id, ChangesetKind.JURISDICTION_EDIT),
+            (changeset_id, ChangesetKind.JURISDICTION_EDIT),
         )
         row = await cur.fetchone()
         if not row:
             return None
         return {
-            "request_id": request_id,
+            "changeset_id": changeset_id,
             "jurisdiction": {
                 "ocdid": row[2],
                 "name": row[3],
@@ -117,7 +117,7 @@ async def get_pull_request_for_review(request_id: str) -> Optional[dict]:
 
 
 
-async def get_pull_request_data_by_request_id(request_id: str) -> Optional[dict]:
+async def get_pull_request_data_by_request_id(changeset_id: str) -> Optional[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -130,13 +130,13 @@ async def get_pull_request_data_by_request_id(request_id: str) -> Optional[dict]
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE r.id::text = %s AND r.kind != %s
             """,
-            (request_id, ChangesetKind.JURISDICTION_EDIT),
+            (changeset_id, ChangesetKind.JURISDICTION_EDIT),
         )
         row = await cur.fetchone()
         if not row:
             return None
         return {
-            "request_id": row[0],
+            "changeset_id": row[0],
             "jurisdiction_ocdid": row[3],
             "jurisdiction_name": row[4],
             "jurisdiction_website_url": row[5],

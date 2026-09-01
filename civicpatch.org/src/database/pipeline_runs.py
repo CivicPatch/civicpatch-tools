@@ -6,7 +6,7 @@ from psycopg import sql
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
 
 
-async def get_sourced_at(cur, request_id: str) -> datetime:
+async def get_sourced_at(cur, changeset_id: str) -> datetime:
     """When the run last read the source.
 
     Stamped by the pipeline's own report, not at ingest, which can be hours later on a retry or
@@ -14,15 +14,15 @@ async def get_sourced_at(cur, request_id: str) -> datetime:
     """
     await cur.execute(
         "SELECT sourced_at FROM changesets WHERE id::text = %s",
-        (request_id,),
+        (changeset_id,),
     )
     row = await cur.fetchone()
     if row is None:
-        raise ValueError(f"No pipeline run for request {request_id}")
+        raise ValueError(f"No pipeline run for request {changeset_id}")
     return row[0]
 
 
-async def get_pipeline_run(request_id: str):
+async def get_pipeline_run(changeset_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -32,12 +32,12 @@ async def get_pipeline_run(request_id: str):
             FROM changesets r
             WHERE r.id = %s;
             """,
-            (request_id,),
+            (changeset_id,),
         )
         row = await cur.fetchone()
         if row:
             return {
-                "request_id": request_id,
+                "changeset_id": changeset_id,
                 "status": row[0],
                 "progress": row[1],
                 "arguments_json": row[2],
@@ -109,7 +109,7 @@ async def get_active_pipeline_runs(
         total = rows[0][8] if rows else 0
         return [
             {
-                "request_id": row[0],
+                "changeset_id": row[0],
                 "status": row[1],
                 "progress": row[2],
                 "created_at": to_iso(row[3]),
@@ -122,7 +122,7 @@ async def get_active_pipeline_runs(
         ], total
 
 
-async def get_pipeline_run_status(request_id: str):
+async def get_pipeline_run_status(changeset_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -130,16 +130,16 @@ async def get_pipeline_run_status(request_id: str):
             SELECT status, progress FROM changesets
             WHERE id = %s;
             """,
-            (request_id,),
+            (changeset_id,),
         )
         row = await cur.fetchone()
         if row:
-            return {"request_id": request_id, "status": row[0], "progress": row[1]}
+            return {"changeset_id": changeset_id, "status": row[0], "progress": row[1]}
         return None
 
 
 async def update_pipeline_run_status(
-    request_id: str, status: str | None = None, progress: Optional[int] = None
+    changeset_id: str, status: str | None = None, progress: Optional[int] = None
 ):
     pool = await get_pool()
     set_clauses = []
@@ -158,7 +158,7 @@ async def update_pipeline_run_status(
     if not set_clauses:
         return
 
-    params.append(request_id)
+    params.append(changeset_id)
     set_clause_str = ", ".join(set_clauses)
 
     async with pool.connection() as conn, conn.cursor() as cur:

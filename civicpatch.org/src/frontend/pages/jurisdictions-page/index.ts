@@ -145,7 +145,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
       );
       const now = new Date().toISOString();
       const newEntry = {
-        request_id: result.request_id,
+        changeset_id: result.changeset_id,
         pipeline_run_status: result.status,
         pipeline_run_progress: 0,
         created_at: now,
@@ -168,11 +168,11 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
     return result.data;
   };
 
-  const handleCancelRun = (requestId: string) => {
+  const handleCancelRun = (changesetId: string) => {
     setHistory((prev: any) => ({
       ...prev,
       data: prev.data.map((j: any) =>
-        j.request_id === requestId ? { ...j, pipeline_run_status: "CANCELLED" } : j,
+        j.changeset_id === changesetId ? { ...j, pipeline_run_status: "CANCELLED" } : j,
       ),
     }));
   };

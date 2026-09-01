@@ -51,13 +51,13 @@ logger = logging.getLogger(__name__)
 
 
 class SaveAndMergeRequest(BaseModel):
-    request_id: str
+    changeset_id: str
     jurisdiction_ocdid: str
     data: List[PersonPatch] | None = None
 
 
 class SaveReviewRequest(BaseModel):
-    request_id: str
+    changeset_id: str
     jurisdiction_ocdid: str
     data: List[PersonPatch]
 
@@ -68,7 +68,7 @@ class SaveReviewRequest(BaseModel):
 
 
 class DeleteJobResponse(BaseModel):
-    request_id: str
+    changeset_id: str
     status: str
 
 
@@ -123,12 +123,12 @@ def get_router(api_key_header):
     )
     async def get_pull_request_data_endpoint(
         jurisdiction_ocdid: str,
-        request_id: str,
+        changeset_id: str,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         existing, proposed = await asyncio.gather(
             database.people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
-            proposed_roster(request_id, jurisdiction_ocdid),
+            proposed_roster(changeset_id, jurisdiction_ocdid),
         )
         if not proposed:
             return JSONResponse(
@@ -136,7 +136,7 @@ def get_router(api_key_header):
             )
 
         return {
-            "request_id": request_id,
+            "changeset_id": changeset_id,
             "file_path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(
                 jurisdiction_ocdid
             ),
@@ -176,7 +176,7 @@ def get_router(api_key_header):
                 if pr.get("jurisdiction")
             }
         )
-        request_ids = list({pr["request_id"] for pr in paged_pull_requests})
+        request_ids = list({pr["changeset_id"] for pr in paged_pull_requests})
         published, rosters, proposals = await asyncio.gather(
             database.people.get_people_by_jurisdictions(jurisdiction_ocdids, view=view),
             services_roster.proposed_rosters(request_ids),
@@ -189,7 +189,7 @@ def get_router(api_key_header):
         for pr in paged_pull_requests:
             proposed = [
                 database.people.projected(person, view)
-                for person in rosters.get(pr["request_id"], [])
+                for person in rosters.get(pr["changeset_id"], [])
             ]
             unique_source_urls = list(
                 {
@@ -205,10 +205,10 @@ def get_router(api_key_header):
                     "proposed": proposed,
                     "changes": [
                         change.model_dump()
-                        for change in proposals.get(pr["request_id"], [])
+                        for change in proposals.get(pr["changeset_id"], [])
                     ],
                     "sources": build_sources(
-                        pr["request_id"],
+                        pr["changeset_id"],
                         pr["jurisdiction"]["ocdid"],
                         unique_source_urls,
                     ),
@@ -227,27 +227,27 @@ def get_router(api_key_header):
         }
 
     # -- One card by deep link, the shape a review session navigates ---
-    @router.get("/by-request/{request_id}")
+    @router.get("/by-request/{changeset_id}")
     async def get_pull_request_by_request_id_endpoint(
-        request_id: str,
+        changeset_id: str,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        result = await pull_requests_db.get_pull_request_data_by_request_id(request_id)
+        result = await pull_requests_db.get_pull_request_data_by_request_id(changeset_id)
         if not result:
             raise HTTPException(status_code=404, detail="Pull request not found")
 
-        request_id = result["request_id"]
+        changeset_id = result["changeset_id"]
         jurisdiction_ocdid = result["jurisdiction_ocdid"]
 
         existing, proposed, scraped_at, proposals = await asyncio.gather(
             database.people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
-            proposed_roster(request_id, jurisdiction_ocdid),
+            proposed_roster(changeset_id, jurisdiction_ocdid),
             jurisdictions_db.get_scraped_at(jurisdiction_ocdid),
             # What this scrape would change about who holds what. The queue listing has carried
             # it since the proposal landed; the review session reads this endpoint instead, and
             # without it a proposed person has no post to name — the post does not exist yet, so
             # the derivation is the only thing that knows.
-            proposals_for_requests([request_id]),
+            proposals_for_requests([changeset_id]),
         )
         unique_source_urls = list(
             {url for person in proposed for url in (person.get("source_urls") or [])}
@@ -255,7 +255,7 @@ def get_router(api_key_header):
 
         return {
             "data": {
-                "request_id": request_id,
+                "changeset_id": changeset_id,
                 "entry_number": 1,
                 "has_next": False,
                 "has_prev": False,
@@ -272,32 +272,32 @@ def get_router(api_key_header):
                 "existing": existing,
                 "proposed": proposed,
                 "changes": [
-                    change.model_dump() for change in proposals.get(request_id, [])
+                    change.model_dump() for change in proposals.get(changeset_id, [])
                 ],
                 "assertions": await assertions_for_people(
                     [person["id"] for person in existing if person.get("id")]
                 ),
                 "sources": build_sources(
-                    request_id, jurisdiction_ocdid, unique_source_urls
+                    changeset_id, jurisdiction_ocdid, unique_source_urls
                 ),
             }
         }
 
     # -- The review summary: stored issues plus the ones computed from posts ---
-    @router.get("/{request_id}/review")
+    @router.get("/{changeset_id}/review")
     async def get_pull_request_review_endpoint(
-        request_id: str,
+        changeset_id: str,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        return {"data": await review_summary_for_request(request_id)}
+        return {"data": await review_summary_for_request(changeset_id)}
 
     # -- Issues a reviewer filed by hand on this scrape ---
-    @router.get("/{request_id}/issues")
+    @router.get("/{changeset_id}/issues")
     async def get_reported_issues_endpoint(
-        request_id: str,
+        changeset_id: str,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        result = await database.issues.get_user_reported_issues_for_request(request_id)
+        result = await database.issues.get_user_reported_issues_for_request(changeset_id)
         return {"data": result}
 
     return router

@@ -16,19 +16,19 @@ async def send_success(context: PeopleCollectorContext, api_client: httpx.AsyncC
     env = get_env_vars()
     SERVICE_API_KEY = env["SERVICE_API_KEY"]
     CIVICPATCH_ORG_URL = env["CIVICPATCH_ORG_URL"]
-    request_id = context.request_id
+    changeset_id = context.changeset_id
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
 
     if not SERVICE_API_KEY:
         logger.error(f"Generate api key from CRUDDER at {CIVICPATCH_ORG_URL}")
         raise RuntimeError("SERVICE_API_KEY is not set; cannot submit job artifacts.")
 
-    zip_file_path = file_utils.zip_job_artifacts(request_id, jurisdiction_ocdid, include_data=True)
+    zip_file_path = file_utils.zip_job_artifacts(changeset_id, jurisdiction_ocdid, include_data=True)
     zip_size_bytes = os.path.getsize(zip_file_path)
     logger.info(f"Submitting job artifacts to {CIVICPATCH_ORG_URL} (zip size: {zip_size_bytes} bytes)")
 
     response = await services.civicpatch_api.submit_job_artifacts(
-        api_client, request_id, jurisdiction_ocdid, zip_file_path, pipeline_run_status=PipelineRunStatus.SUCCESS
+        api_client, changeset_id, jurisdiction_ocdid, zip_file_path, pipeline_run_status=PipelineRunStatus.SUCCESS
     )
     if not response:
         raise RuntimeError("Failed to get a response from Crudder after retries.")

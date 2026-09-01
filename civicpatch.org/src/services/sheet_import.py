@@ -51,7 +51,7 @@ class JurisdictionResult(BaseModel):
 
     jurisdiction_ocdid: str
     status: ImportStatus
-    request_id: str | None = None
+    changeset_id: str | None = None
     people: int = 0
     sightings: int = 0
     posts: int = 0
@@ -102,7 +102,7 @@ async def _import_jurisdiction(
     roles: list[Role],
     taxonomy: Taxonomy,
 ) -> JurisdictionResult:
-    request_id = str(uuid.uuid4())
+    changeset_id = str(uuid.uuid4())
     try:
         identities = await roster_ingest.published_identities(jurisdiction_ocdid)
         roster, records_by_person = await roster_ingest.reconcile_roster(
@@ -112,16 +112,16 @@ async def _import_jurisdiction(
             taxonomy,
         )
         await register_sheet_import_request(
-            request_id, jurisdiction_ocdid, user_id, batch_id
+            changeset_id, jurisdiction_ocdid, user_id, batch_id
         )
         sightings = await insert_source_records(
-            request_id, jurisdiction_ocdid, records_by_person
+            changeset_id, jurisdiction_ocdid, records_by_person
         )
     except Exception as e:
         # Fatal for this jurisdiction only. A request registered before the sightings failed is
         # inert — no sightings means no card.
         logger.error(
-            f"[{request_id}] {jurisdiction_ocdid}: import failed: {e}", exc_info=True
+            f"[{changeset_id}] {jurisdiction_ocdid}: import failed: {e}", exc_info=True
         )
         return JurisdictionResult(
             jurisdiction_ocdid=jurisdiction_ocdid,
@@ -130,12 +130,12 @@ async def _import_jurisdiction(
         )
 
     posts, error = await _derive_posts(
-        request_id, jurisdiction_ocdid, roster, roles, taxonomy
+        changeset_id, jurisdiction_ocdid, roster, roles, taxonomy
     )
     return JurisdictionResult(
         jurisdiction_ocdid=jurisdiction_ocdid,
         status=ImportStatus.IMPORTED if error is None else ImportStatus.PARTIAL,
-        request_id=request_id,
+        changeset_id=changeset_id,
         people=len(roster),
         sightings=sightings,
         posts=posts,
@@ -144,7 +144,7 @@ async def _import_jurisdiction(
 
 
 async def _derive_posts(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     roster: list[dict],
     roles: list[Role],
@@ -159,7 +159,7 @@ async def _derive_posts(
         return len(derived), None
     except Exception as e:
         logger.error(
-            f"[{request_id}] {jurisdiction_ocdid}: post derivation failed: {e}",
+            f"[{changeset_id}] {jurisdiction_ocdid}: post derivation failed: {e}",
             exc_info=True,
         )
         return 0, f"people imported, but posts could not be derived: {e}"

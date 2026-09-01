@@ -124,7 +124,7 @@ def test_rejecting_a_scrape_dismisses_it(client):
     ):
         response = client.delete(
             f"/pull_requests/{TEST_REQUEST_ID}",
-            params={"request_id": TEST_REQUEST_ID},
+            params={"changeset_id": TEST_REQUEST_ID},
         )
 
     assert response.status_code == 200
@@ -148,7 +148,7 @@ def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
     ):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/publish",
-            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
+            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
         )
 
     assert response.status_code == 409
@@ -168,7 +168,7 @@ def test_save_refuses_when_the_scrape_recorded_no_roster(client):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/save",
             json={
-                "request_id": TEST_REQUEST_ID,
+                "changeset_id": TEST_REQUEST_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
                 "data": [{"id": "p1", "fields": {"phones": ["9168085300"]}}],
             },
@@ -191,7 +191,7 @@ def test_publish_returns_200_and_queues_no_merge(client):
     ):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/publish",
-            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
+            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
         )
 
     assert response.status_code == 200
@@ -229,7 +229,7 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/publish",
             json={
-                "request_id": TEST_REQUEST_ID,
+                "changeset_id": TEST_REQUEST_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
                 "data": [{"id": "p1", "fields": {"phones": ["9168085300"]}}],
             },
@@ -256,7 +256,7 @@ def test_save_and_merge_rejects_invalid_field(client):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/publish",
             json={
-                "request_id": TEST_REQUEST_ID,
+                "changeset_id": TEST_REQUEST_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
                 "data": [{"id": "p1", "fields": {"phones": ["not-a-phone"]}}],
             },
@@ -288,7 +288,7 @@ def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
     ):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/save",
-            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
+            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
         )
 
     assert response.status_code == 200
@@ -316,7 +316,7 @@ def test_reformatting_a_number_the_scrape_already_found_claims_nothing(client):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/save",
             json={
-                "request_id": TEST_REQUEST_ID,
+                "changeset_id": TEST_REQUEST_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
                 "data": [{"id": "p1", "fields": {"phones": ["9168085300"]}}],
             },
@@ -338,7 +338,7 @@ def test_save_records_the_edited_field_canonicalized(client):
     ):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/save",
-            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
+            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
         )
 
     assert response.status_code == 200
@@ -390,7 +390,7 @@ def test_a_person_added_by_hand_becomes_evidence_and_claims(client):
     ):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/save",
-            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": [added]},
+            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": [added]},
         )
 
     assert response.status_code == 200
@@ -418,7 +418,7 @@ def test_save_rejects_invalid_field_without_marking_the_entry(client):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/save",
             json={
-                "request_id": TEST_REQUEST_ID,
+                "changeset_id": TEST_REQUEST_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
                 "data": [{"id": "p1", "fields": {"phones": ["not-a-phone"]}}],
             },
@@ -449,7 +449,7 @@ def test_save_returns_500_and_does_not_mark_the_entry_when_the_write_fails():
     ):
         response = failing_client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/save",
-            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
+            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
         )
 
     assert response.status_code == 500
@@ -460,7 +460,7 @@ def test_save_returns_500_and_does_not_mark_the_entry_when_the_write_fails():
 def test_save_requires_data(client):
     response = client.post(
         f"/pull_requests/{TEST_REQUEST_ID}/save",
-        json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
+        json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
     )
     assert response.status_code == 422
 
@@ -468,7 +468,7 @@ def test_save_requires_data(client):
 # ── get_pull_request_by_number tests ──────────────────────────────────────
 
 OPEN_PR_DB_RESULT = {
-    "request_id": TEST_REQUEST_ID,
+    "changeset_id": TEST_REQUEST_ID,
     "jurisdiction_ocdid": TEST_OCDID,
     "jurisdiction_name": "Oakland",
     "jurisdiction_website_url": "https://oaklandca.gov",
@@ -528,7 +528,7 @@ def test_get_by_request_200_for_open_pr(client):
 
     assert response.status_code == 200
     data = response.json()["data"]
-    assert data["request_id"] == TEST_REQUEST_ID
+    assert data["changeset_id"] == TEST_REQUEST_ID
     assert data["pr"]["status"] == "open"
     assert data["has_next"] is False
     assert data["has_prev"] is False
@@ -595,7 +595,7 @@ def run(coro):
 @pytest.mark.parametrize(
     "method,url",
     [
-        ("delete", f"/pull_requests/{TEST_PR_NUMBER}?request_id={TEST_REQUEST_ID}"),
+        ("delete", f"/pull_requests/{TEST_PR_NUMBER}?changeset_id={TEST_REQUEST_ID}"),
     ],
 )
 def test_pull_request_writes_reject_default_role(method, url):
@@ -621,7 +621,7 @@ def test_publish_allows_default_role():
     ):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/publish",
-            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
+            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
         )
 
     assert response.status_code == 200
@@ -751,7 +751,7 @@ def test_publishing_a_superseded_roster_is_a_409_not_a_500(client):
     ):
         response = client.post(
             f"/pull_requests/{TEST_REQUEST_ID}/publish",
-            json={"request_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
+            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
         )
 
     assert response.status_code == 409

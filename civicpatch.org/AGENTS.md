@@ -96,7 +96,7 @@ The role → capability mapping is documented in `README.md` under the **Permiss
   unpicking them is one deliberate pass, not an incremental fix. Note `j` already means
   `jurisdictions` in most of the codebase and `pipeline_runs` in these — which is the ambiguity
   the rule exists to prevent.
-- **UUID columns**: psycopg returns UUID columns as Python `uuid.UUID` objects. Always cast UUID columns to text in the SQL query (`id::text`, `request_id::text`) so callers receive plain strings — never scatter `str()` calls in routers or services. The DB function is the boundary; it owns the type contract.
+- **UUID columns**: psycopg returns UUID columns as Python `uuid.UUID` objects. Always cast UUID columns to text in the SQL query (`id::text`, `changeset_id::text`) so callers receive plain strings — never scatter `str()` calls in routers or services. The DB function is the boundary; it owns the type contract.
 
 ## Environment
 

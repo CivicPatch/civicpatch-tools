@@ -30,7 +30,7 @@ def pipeline_run_context_factory(
     default_steps.update(steps)
 
     return PeopleCollectorContext(
-        request_id="random-request-id",
+        changeset_id="random-request-id",
         current_state=PipelineStatus.SAVE_OUTPUT,
         data=PeopleCollectorData(
             config=PipelineRunConfig(

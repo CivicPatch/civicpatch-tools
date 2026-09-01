@@ -10,17 +10,17 @@ function ActiveJobs({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange
 
   if (!jobs || (jobs.length === 0 && totalPages <= 1)) return null;
 
-  const handleCancel = async (requestId) => {
-    setCancellingIds(prev => new Set(prev).add(requestId));
+  const handleCancel = async (changesetId) => {
+    setCancellingIds(prev => new Set(prev).add(changesetId));
     try {
-      await cancelPipelineRun(requestId);
-      if (onCancel) onCancel(requestId);
+      await cancelPipelineRun(changesetId);
+      if (onCancel) onCancel(changesetId);
     } catch (_) {
       // noop — leave the row visible so the user can retry
     } finally {
       setCancellingIds(prev => {
         const next = new Set(prev);
-        next.delete(requestId);
+        next.delete(changesetId);
         return next;
       });
     }
@@ -52,15 +52,15 @@ function ActiveJobs({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange
               <td class="pipeline-run-meta">${job.state}</td>
               <td class="pipeline-run-meta">${job.status}</td>
               <td class="pipeline-run-meta">${job.progress ?? 0}%</td>
-              <td class="pipeline-run-meta pipeline-run-mono pipeline-run-request-id">${job.request_id}</td>
+              <td class="pipeline-run-meta pipeline-run-mono pipeline-run-changeset-id">${job.changeset_id}</td>
               <td class="pipeline-run-meta">${durationBetween(job.created_at, job.updated_at)}</td>
               ${canCancel ? html`
                 <td>
                   <button
                     class="pipeline-run-cancel-btn"
-                    ?disabled=${cancellingIds.has(job.request_id)}
-                    @click=${() => handleCancel(job.request_id)}
-                  >${cancellingIds.has(job.request_id) ? "Cancelling…" : "Cancel"}</button>
+                    ?disabled=${cancellingIds.has(job.changeset_id)}
+                    @click=${() => handleCancel(job.changeset_id)}
+                  >${cancellingIds.has(job.changeset_id) ? "Cancelling…" : "Cancel"}</button>
                 </td>
               ` : null}
             </tr>

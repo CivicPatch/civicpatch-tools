@@ -34,7 +34,7 @@ endpoint AS (
 -- `raw` is one record on the rows the backfill wrote and an array on the ones ingest writes,
 -- so the shape is asked rather than assumed.
 record_name AS (
-    SELECT request_id, jurisdiction_ocdid, person_id,
+    SELECT changeset_id, jurisdiction_ocdid, person_id,
            lower(trim(CASE WHEN jsonb_typeof(raw) = 'array'
                            THEN raw->0->>'name' ELSE raw->>'name' END)) AS name
     FROM source_records
@@ -42,7 +42,7 @@ record_name AS (
 observed AS (
     SELECT DISTINCT record_name.jurisdiction_ocdid, record_name.person_id, record_name.name
     FROM record_name
-    JOIN requests ON requests.id = record_name.request_id
+    JOIN requests ON requests.id = record_name.changeset_id
     LEFT JOIN last_publish
            ON last_publish.jurisdiction_ocdid = record_name.jurisdiction_ocdid
     WHERE last_publish.published_at IS NULL
@@ -51,7 +51,7 @@ observed AS (
 endpoint_people AS (
     SELECT record_name.jurisdiction_ocdid, record_name.person_id, record_name.name
     FROM record_name
-    JOIN endpoint ON endpoint.id = record_name.request_id
+    JOIN endpoint ON endpoint.id = record_name.changeset_id
 ),
 transients AS (
     SELECT observed.jurisdiction_ocdid, observed.person_id, observed.name

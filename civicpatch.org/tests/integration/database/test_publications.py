@@ -75,13 +75,13 @@ async def sentinel_request():
             """,
             (_SENTINEL_OCDID,),
         )
-        request_id = (await cur.fetchone())[0]
+        changeset_id = (await cur.fetchone())[0]
         await cur.execute(
             "UPDATE changesets SET status = 'done', "
-            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (request_id,)
+            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,)
         )
         await conn.commit()
-    yield request_id
+    yield changeset_id
     await _cleanup()
 
 
@@ -241,12 +241,12 @@ async def test_a_failed_publish_writes_nothing(sentinel_request):
 # ── request publish state (migration 115) ────────────────────────────────────
 
 
-async def _request_state(request_id: str) -> tuple:
+async def _request_state(changeset_id: str) -> tuple:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT published_at, dismissed_at, resolved_by_user_id FROM changesets WHERE id = %s",
-            (request_id,),
+            (changeset_id,),
         )
         return await cur.fetchone()
 

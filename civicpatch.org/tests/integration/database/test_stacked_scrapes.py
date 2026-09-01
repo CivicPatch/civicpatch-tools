@@ -83,14 +83,14 @@ async def _request(sourced_at: str, ocdid: str = _OCDID) -> str:
             """,
             (ocdid, sourced_at),
         )
-        request_id = (await cur.fetchone())[0]
+        changeset_id = (await cur.fetchone())[0]
         # One sighting, because `AVAILABLE_FOR_REVIEW` is now "this scrape saw somebody".
         await cur.execute(
             """
             INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url)
             VALUES (%s, %s, 'Ann Lee', 'Mayor', 'https://zz.gov/council')
             """,
-            (request_id, ocdid),
+            (changeset_id, ocdid),
         )
         await cur.execute(
             """
@@ -98,23 +98,23 @@ async def _request(sourced_at: str, ocdid: str = _OCDID) -> str:
                                 created_at = %s::timestamptz, sourced_at = %s::timestamptz
             WHERE id = %s
             """,
-            (sourced_at, sourced_at, request_id),
+            (sourced_at, sourced_at, changeset_id),
         )
         await conn.commit()
-    return request_id
+    return changeset_id
 
 
-async def _dismissed_at(request_id: str):
+async def _dismissed_at(changeset_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT dismissed_at, resolved_by_user_id FROM changesets WHERE id::text = %s",
-            (request_id,),
+            (changeset_id,),
         )
         return await cur.fetchone()
 
 
-async def _hold(request_id: str, status: str, ocdid: str = _OCDID) -> None:
+async def _hold(changeset_id: str, status: str, ocdid: str = _OCDID) -> None:
     """Put a request in a reviewer's hands."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -141,7 +141,7 @@ async def _hold(request_id: str, status: str, ocdid: str = _OCDID) -> None:
                 (review_session_id, jurisdiction_ocdid, status, request_ids)
             VALUES (%s, %s, %s, ARRAY[%s])
             """,
-            (session_id, ocdid, status, request_id),
+            (session_id, ocdid, status, changeset_id),
         )
         await conn.commit()
 
@@ -149,14 +149,14 @@ async def _hold(request_id: str, status: str, ocdid: str = _OCDID) -> None:
 async def _published_request(sourced_at: str, ocdid: str = _OCDID) -> str:
     """A request that already went live. No longer a review candidate, but still the newest
     thing anyone said about this jurisdiction."""
-    request_id = await _request(sourced_at, ocdid)
+    changeset_id = await _request(sourced_at, ocdid)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "UPDATE changesets SET published_at = now() WHERE id::text = %s", (request_id,)
+            "UPDATE changesets SET published_at = now() WHERE id::text = %s", (changeset_id,)
         )
         await conn.commit()
-    return request_id
+    return changeset_id
 
 
 # --- the sweep -----------------------------------------------------------------------------
@@ -320,11 +320,11 @@ async def test_the_guard_refuses_a_roster_older_than_one_already_published():
 async def test_the_guard_permits_republishing_the_same_request():
     """`r.id <> %s` excludes the request being published, so replay stays harmless."""
     await _jurisdiction()
-    request_id = await _request(_NEW)
+    changeset_id = await _request(_NEW)
     people = [{**_person(), "updated_at": _NEW}]
 
-    await publish_request(request_id, _OCDID, people)
-    await publish_request(request_id, _OCDID, people)  # must not raise
+    await publish_request(changeset_id, _OCDID, people)
+    await publish_request(changeset_id, _OCDID, people)  # must not raise
 
 
 @pytest.mark.asyncio

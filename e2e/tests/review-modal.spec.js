@@ -12,7 +12,7 @@ import { SCALE_REQUEST_ID } from "../fixtures/db.js";
 import { openOverview, rowFor, editorFor, fieldIn } from "./helpers/review-card.js";
 
 const openCardModal = async (page, name) => {
-  await page.goto(`/review/session?request_id=${SCALE_REQUEST_ID}`);
+  await page.goto(`/review/session?changeset_id=${SCALE_REQUEST_ID}`);
   await expect(page.locator("review-overview")).toBeVisible();
   await rowFor(page, name).locator(".review-row__open").click();
   await expect(page.locator("review-modal dialog")).toBeVisible();

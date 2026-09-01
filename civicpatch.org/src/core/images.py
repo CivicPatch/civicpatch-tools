@@ -7,10 +7,10 @@ maps the caller supplies — the file read and the env read are the caller's job
 
 Publish — the photo is promoted out of the run-scoped artifacts bucket:
 
-    {artifacts}/{request_id}/data_source/{state}/local/{place}/images/{file}
+    {artifacts}/{changeset_id}/data_source/{state}/local/{place}/images/{file}
     {cdn}/open-data/{state}/local/{place}/images/{file}
 
-Dropping `request_id` is the point of the rename: the permanent key is stable across
+Dropping `changeset_id` is the point of the rename: the permanent key is stable across
 re-scrapes, so a person's photo URL does not change every time the pipeline runs.
 
 The two halves meet on one string: `cdn_urls` builds `https://{artifacts}.{domain}/{key}` at
@@ -121,7 +121,7 @@ def artifacts_key(cdn_image: str, artifacts_bucket: str) -> str | None:
 
 
 def promoted_key(key: str) -> str | None:
-    """Strip the run-scoped prefix (`{request_id}/data_source/`) and re-root under the CDN
+    """Strip the run-scoped prefix (`{changeset_id}/data_source/`) and re-root under the CDN
     prefix. None if the key is too short to carry one, which means it was not written by
     `_upload_files` and must not be guessed at."""
     segments = key.split("/")

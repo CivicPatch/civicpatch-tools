@@ -48,7 +48,7 @@ def test_create_job_returns_request_id(client):
 
     assert response.status_code == 200
     data = response.json()
-    assert "request_id" in data
+    assert "changeset_id" in data
     assert "status" in data
 
 
@@ -127,7 +127,7 @@ def test_patch_job_status_returns_updated_status(client):
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "complete"
-    assert data["request_id"] == TEST_REQUEST_ID
+    assert data["changeset_id"] == TEST_REQUEST_ID
 
 
 @pytest.mark.unit
@@ -139,7 +139,7 @@ async def test_apply_pipeline_run_status_publishes_when_jurisdiction_provided():
     ):
         await apply_pipeline_run_status(TEST_REQUEST_ID, "running", 50, "ocd-division/country:us/state:ca/place:oakland")
 
-        mock_update.assert_awaited_once_with(request_id=TEST_REQUEST_ID, status="running", progress=50)
+        mock_update.assert_awaited_once_with(changeset_id=TEST_REQUEST_ID, status="running", progress=50)
         mock_publish.assert_awaited_once()
 
 
@@ -187,7 +187,7 @@ def test_delete_context_returns_request_id(client):
         response = client.delete(f"/pipeline_runs/{TEST_REQUEST_ID}/context")
 
     assert response.status_code == 200
-    assert response.json()["request_id"] == TEST_REQUEST_ID
+    assert response.json()["changeset_id"] == TEST_REQUEST_ID
 
 
 @pytest.mark.unit
@@ -205,7 +205,7 @@ def test_get_issues_returns_paginated_list(client):
     assert "total" in data
 
 
-# ── POST /pipeline_runs/{request_id}/cancel ───────────────────────────────────
+# ── POST /pipeline_runs/{changeset_id}/cancel ───────────────────────────────────
 
 TEST_OCDID = "ocd-jurisdiction/country:us/state:wa/place:buckley/government"
 

@@ -9,7 +9,7 @@ type ActionState = {
 };
 
 export type ReviewLogEntry = {
-  request_id: string;
+  changeset_id: string;
   jurisdiction_name: string;
   status: string;
 };
@@ -21,30 +21,30 @@ const LOGGED_ACTIONS = [
 ];
 
 export function useReviewActions() {
-  // Keyed on request_id: there is no pull request behind a scrape any more.
+  // Keyed on changeset_id: there is no pull request behind a scrape any more.
   const [actionState, setActionState] = useState<Record<string, ActionState>>({});
 
-  const setStatus = (requestId: string, jurisdictionName: string, status: string, error?: string) =>
+  const setStatus = (changesetId: string, jurisdictionName: string, status: string, error?: string) =>
     setActionState((prev) => ({
       ...prev,
-      [requestId]: { status, jurisdiction_name: jurisdictionName, ...(error ? { error } : {}) },
+      [changesetId]: { status, jurisdiction_name: jurisdictionName, ...(error ? { error } : {}) },
     }));
 
   // Run a review action, recording its lifecycle (loading -> done, or error) for the publish log.
   const track = async (opts: {
-    requestId: string;
+    changesetId: string;
     jurisdictionName: string;
     loading: string;
     done: string;
     run: () => Promise<unknown>;
   }): Promise<void> => {
-    const { requestId, jurisdictionName, loading, done, run } = opts;
-    setStatus(requestId, jurisdictionName, loading);
+    const { changesetId, jurisdictionName, loading, done, run } = opts;
+    setStatus(changesetId, jurisdictionName, loading);
     try {
       await run();
-      setStatus(requestId, jurisdictionName, done);
+      setStatus(changesetId, jurisdictionName, done);
     } catch (err: any) {
-      setStatus(requestId, jurisdictionName, REVIEW_ACTION.ERROR, err?.message ?? String(err));
+      setStatus(changesetId, jurisdictionName, REVIEW_ACTION.ERROR, err?.message ?? String(err));
     }
   };
 
@@ -53,36 +53,36 @@ export function useReviewActions() {
   // {ok:false, error} rather than throwing, so the review session can keep the reviewer
   // on a failed entry.
   const trackApprove = async (
-    requestId: string,
+    changesetId: string,
     jurisdictionOcdid: string,
     people: any[] | null,
     jurisdictionName: string,
   ): Promise<{ ok: boolean; error?: string }> => {
-    setStatus(requestId, jurisdictionName, REVIEW_ACTION.APPROVING);
+    setStatus(changesetId, jurisdictionName, REVIEW_ACTION.APPROVING);
     try {
-      await publishReview(requestId, jurisdictionOcdid, people);
+      await publishReview(changesetId, jurisdictionOcdid, people);
     } catch (err: any) {
       const error = err?.message ?? String(err);
-      setStatus(requestId, jurisdictionName, REVIEW_ACTION.ERROR, error);
+      setStatus(changesetId, jurisdictionName, REVIEW_ACTION.ERROR, error);
       return { ok: false, error };
     }
-    setStatus(requestId, jurisdictionName, REVIEW_ACTION.APPROVED);
+    setStatus(changesetId, jurisdictionName, REVIEW_ACTION.APPROVED);
     return { ok: true };
   };
 
-  const trackReject = (requestId: string, jurisdictionName: string): Promise<void> =>
+  const trackReject = (changesetId: string, jurisdictionName: string): Promise<void> =>
     track({
-      requestId,
+      changesetId,
       jurisdictionName,
       loading: REVIEW_ACTION.REJECTING,
       done: REVIEW_ACTION.REJECTED,
-      run: () => dismissReview(requestId),
+      run: () => dismissReview(changesetId),
     });
 
   const entries: ReviewLogEntry[] = Object.entries(actionState)
     .filter(([, s]) => LOGGED_ACTIONS.includes(s.status))
-    .map(([requestId, s]) => ({
-      request_id: requestId,
+    .map(([changesetId, s]) => ({
+      changeset_id: changesetId,
       jurisdiction_name: s.jurisdiction_name,
       status: s.status,
     }));

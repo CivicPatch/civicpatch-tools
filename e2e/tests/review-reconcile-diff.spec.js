@@ -21,7 +21,7 @@ import { RECONCILE_REQUEST_ID } from "../fixtures/db.js";
 import { openDetail, editorFor, fieldIn } from "./helpers/review-card.js";
 
 const openCard = async (page) => {
-  await page.goto(`/review/session?request_id=${RECONCILE_REQUEST_ID}`);
+  await page.goto(`/review/session?changeset_id=${RECONCILE_REQUEST_ID}`);
   await openDetail(page);
 };
 

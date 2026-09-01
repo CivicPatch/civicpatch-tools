@@ -40,7 +40,7 @@ function fakeEffects(api: ReviewApi): Effects {
 
 function cardData(overrides = {}) {
   return {
-    request_id: "req-1",
+    changeset_id: "req-1",
     entry_number: 2,
     total: 5,
     has_next: true,
@@ -108,7 +108,7 @@ describe("boot", () => {
         data: activeSession({ session_request_ids: ["req-1", "req-7"] }),
       })),
       navigateToEntry: vi.fn(async () => ({
-        data: cardData({ request_id: "req-7", entry_number: 2 }),
+        data: cardData({ changeset_id: "req-7", entry_number: 2 }),
       })),
     });
     const e = fakeEffects(api);
@@ -116,7 +116,7 @@ describe("boot", () => {
 
     // Entry 2, because `session_request_ids` is ordered by entry number — parked at 1.
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 2);
-    expect(lastAction(e).payload.current_entry.request_id).toBe("req-7");
+    expect(lastAction(e).payload.current_entry.changeset_id).toBe("req-7");
     expect(lastAction(e).payload.session).toEqual({ id: "s1", daily_goal: 10 });
     expect(api.fetchPullRequestByRequestId).not.toHaveBeenCalled();
   });
@@ -208,7 +208,7 @@ describe("endSessionAndExit", () => {
 });
 
 const current: CurrentEntry = {
-  request_id: "req-1",
+  changeset_id: "req-1",
   jurisdiction: { ocdid: "ocd-x", name: "X City", path: null },
   pr: { url: "u", status: "pending" },
   pr_people: { existing: [], proposed: [] },
@@ -313,7 +313,7 @@ describe("mergeCurrent", () => {
 
   it("does nothing without a request id", async () => {
     const e = fakeEffects(fakeApi());
-    await mergeCurrent({ ...current, request_id: null } as any, "s1", 2, null, STATE, e);
+    await mergeCurrent({ ...current, changeset_id: null } as any, "s1", 2, null, STATE, e);
     expect(e.trackApprove).not.toHaveBeenCalled();
     expect(e.dispatch).not.toHaveBeenCalled();
   });
@@ -363,7 +363,7 @@ describe("saveCurrent", () => {
 
   it("does nothing without a request id", async () => {
     const e = fakeEffects(fakeApi());
-    await saveCurrent({ ...current, request_id: null } as any, "s1", 2, [], STATE, e);
+    await saveCurrent({ ...current, changeset_id: null } as any, "s1", 2, [], STATE, e);
     expect(e.api.saveReviewData).not.toHaveBeenCalled();
     expect(e.dispatch).not.toHaveBeenCalled();
   });

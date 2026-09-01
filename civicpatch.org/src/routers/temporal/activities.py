@@ -37,9 +37,9 @@ async def expire_stale_pipeline_runs_activity() -> None:
     activity.logger.warning(
         "Expired %d stale pipeline run(s): %s", len(expired), expired
     )
-    for request_id in expired:
+    for changeset_id in expired:
         await upsert_issue(
-            request_id, PipelineIssueType.PIPELINE_ERROR, [_STALE_RUN_ISSUE_DETAIL]
+            changeset_id, PipelineIssueType.PIPELINE_ERROR, [_STALE_RUN_ISSUE_DETAIL]
         )
 
 
@@ -81,7 +81,7 @@ async def commit_open_data_activity(request: OpenDataCommitRequest) -> None:
     """
     written = await publish_service.commit_rendered_file(
         file_path=request.file_path,
-        request_id=request.request_id,
+        changeset_id=request.changeset_id,
         jurisdiction_ocdid=request.jurisdiction_ocdid,
         commit_message=request.commit_message,
         source=request.source,

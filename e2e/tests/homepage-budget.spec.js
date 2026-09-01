@@ -22,18 +22,18 @@ test.describe("Homepage size budget", () => {
     const cdp = await context.newCDPSession(page);
     await cdp.send("Network.enable");
 
-    const responses = new Map(); // requestId -> { url, mime, encodedDataLength }
+    const responses = new Map(); // changesetId -> { url, mime, encodedDataLength }
     cdp.on("Network.responseReceived", (event) => {
-      const existing = responses.get(event.requestId) ?? {};
-      responses.set(event.requestId, {
+      const existing = responses.get(event.changesetId) ?? {};
+      responses.set(event.changesetId, {
         ...existing,
         url: event.response.url,
         mime: event.response.mimeType,
       });
     });
     cdp.on("Network.loadingFinished", (event) => {
-      const existing = responses.get(event.requestId) ?? {};
-      responses.set(event.requestId, {
+      const existing = responses.get(event.changesetId) ?? {};
+      responses.set(event.changesetId, {
         ...existing,
         encodedDataLength: event.encodedDataLength,
       });

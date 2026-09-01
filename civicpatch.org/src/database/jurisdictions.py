@@ -560,7 +560,7 @@ async def get_jurisdiction_history(
             )
             history.append(
                 {
-                    "request_id": row[0],
+                    "changeset_id": row[0],
                     "created_at": to_iso(row[1]),
                     "updated_at": to_iso(row[2]),
                     "pipeline_run_status": row[3],
@@ -687,7 +687,7 @@ async def deactivate_jurisdictions_not_in(
         )
 
 
-async def stamp_scraped_at(jurisdiction_ocdid: str, request_id: str) -> bool:
+async def stamp_scraped_at(jurisdiction_ocdid: str, changeset_id: str) -> bool:
     # "Last scraped" = when the request was created, stamped when a job PR merges. Guarded on
     # `status IS NOT NULL` so a request no pipeline ran cannot blank `scraped_at` — an
     # external merge, or a roster typed in rather than scraped.
@@ -698,7 +698,7 @@ async def stamp_scraped_at(jurisdiction_ocdid: str, request_id: str) -> bool:
             "FROM changesets r "
             "WHERE r.id = %s AND r.status IS NOT NULL "
             "AND j.jurisdiction_ocdid = %s",
-            (request_id, jurisdiction_ocdid),
+            (changeset_id, jurisdiction_ocdid),
         )
     return result.rowcount > 0
 

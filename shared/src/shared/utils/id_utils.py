@@ -28,7 +28,7 @@ def _decode_from_slug(value: str) -> str:
     return value
 
 
-def make_request_id():
+def make_changeset_id():
     return str(uuid.uuid4())
 
 
@@ -193,7 +193,7 @@ def jurisdiction_ocdid_to_slug(jurisdiction_ocdid: str) -> str:
     return slug.lower()
 
 
-def make_git_branch(jurisdiction_ocdid: str, request_id: str) -> str:
+def make_git_branch(jurisdiction_ocdid: str, changeset_id: str) -> str:
     """
     Converts a jurisdiction ID to a reversible, human-friendly git branch name.
     Example:
@@ -201,12 +201,12 @@ def make_git_branch(jurisdiction_ocdid: str, request_id: str) -> str:
       -> "2025-09-25-1a2b-state-wa-place-seattle"
     """
     slug = jurisdiction_ocdid_to_slug(jurisdiction_ocdid)
-    return f"{request_id}__{slug}".lower()
+    return f"{changeset_id}__{slug}".lower()
 
 
-def make_job_branch(jurisdiction_ocdid: str, request_id: str) -> str:
+def make_job_branch(jurisdiction_ocdid: str, changeset_id: str) -> str:
     folder = jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    return f"job/{folder}/{request_id}"
+    return f"job/{folder}/{changeset_id}"
 
 
 def _parse_slug_to_parts(slug: str) -> list[str]:
@@ -278,7 +278,7 @@ def slug_to_jurisdiction_ocdid(slug: str) -> str:
     return "/".join(parts)
 
 
-_REQUEST_ID_RE = re.compile(
+_CHANGESET_ID_RE = re.compile(
     r"^(?:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"  # UUID v4
     r"|\d{4}-\d{2}-\d{2}-[0-9a-f]+)$"  # legacy YYYY-MM-DD-XXXX
 )
@@ -286,29 +286,29 @@ _REQUEST_ID_RE = re.compile(
 
 def git_branch_to_parts(branch: str) -> dict:
     """
-    Extracts the request_id from a git branch name.
+    Extracts the changeset_id from a git branch name.
 
-    New format: "job/wa/local/place_seattle/2025-09-25-1a2b" -> {"request_id": "2025-09-25-1a2b"}
+    New format: "job/wa/local/place_seattle/2025-09-25-1a2b" -> {"changeset_id": "2025-09-25-1a2b"}
     Legacy format: "2025-09-25-1a2b__state_wa__place_seattle__government"
-        -> {"request_id": "...", "jurisdiction_ocdid": "..."}
+        -> {"changeset_id": "...", "jurisdiction_ocdid": "..."}
     """
     if branch.startswith("job/"):
-        request_id = branch.split("/")[-1]
-        if not _REQUEST_ID_RE.match(request_id):
+        changeset_id = branch.split("/")[-1]
+        if not _CHANGESET_ID_RE.match(changeset_id):
             raise ValueError(
                 f"Branch does not end with a recognised request ID: {branch}"
             )
-        return {"request_id": request_id}
+        return {"changeset_id": changeset_id}
     # Legacy format: uuid__slug (no job/ prefix) — kept for in-flight PRs
     parts = branch.split("__", 1)
     if len(parts) < 2:
         raise ValueError(f"Branch name format invalid: {branch}")
-    if not _REQUEST_ID_RE.match(parts[0]):
+    if not _CHANGESET_ID_RE.match(parts[0]):
         raise ValueError(
             f"Branch does not begin with a recognised request ID: {branch}"
         )
     return {
-        "request_id": parts[0],
+        "changeset_id": parts[0],
         "jurisdiction_ocdid": slug_to_jurisdiction_ocdid(parts[1]),
     }
 

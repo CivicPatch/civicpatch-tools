@@ -8,9 +8,9 @@ from shared.utils.data_path_utils import (
 )
 
 
-def zip_job_artifacts(request_id: str, jurisdiction_ocdid: str, include_data: bool = True) -> str:
+def zip_job_artifacts(changeset_id: str, jurisdiction_ocdid: str, include_data: bool = True) -> str:
     data_source_path = get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
-    git_branch_name = id_utils.make_git_branch(jurisdiction_ocdid, request_id)
+    git_branch_name = id_utils.make_git_branch(jurisdiction_ocdid, changeset_id)
     zip_file_path = os.path.join("crudder_data", f"{git_branch_name}.zip")
     os.makedirs(os.path.dirname(zip_file_path), exist_ok=True)
 

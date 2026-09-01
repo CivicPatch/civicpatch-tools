@@ -28,11 +28,11 @@ _INSERT_IDENTITY = """
 
 
 def _record_row(
-    record_id: str, request_id: str, jurisdiction_ocdid: str, record: dict
+    record_id: str, changeset_id: str, jurisdiction_ocdid: str, record: dict
 ) -> tuple:
     return (
         record_id,
-        request_id,
+        changeset_id,
         jurisdiction_ocdid,
         record["name"],
         record["label"],
@@ -48,7 +48,7 @@ def _record_row(
 
 
 async def insert_source_records(
-    request_id: str, jurisdiction_ocdid: str, records_by_person: dict[str, list[dict]]
+    changeset_id: str, jurisdiction_ocdid: str, records_by_person: dict[str, list[dict]]
 ) -> int:
     """Every sighting the scrape saw, and which person each one was resolved to.
 
@@ -69,7 +69,7 @@ async def insert_source_records(
         await cur.executemany(
             _INSERT_RECORD,
             [
-                _record_row(record_id, request_id, jurisdiction_ocdid, record)
+                _record_row(record_id, changeset_id, jurisdiction_ocdid, record)
                 for record_id, _, record in sightings
             ],
         )
@@ -80,7 +80,7 @@ async def insert_source_records(
     return len(sightings)
 
 
-async def get_source_records_for_request(request_id: str) -> list[dict]:
+async def get_source_records_for_request(changeset_id: str) -> list[dict]:
     """Every sighting one scrape saw, each with the person it was resolved to."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -94,7 +94,7 @@ async def get_source_records_for_request(request_id: str) -> list[dict]:
             WHERE s.changeset_id = %s
             ORDER BY s.created_at, s.label
             """,
-            (request_id,),
+            (changeset_id,),
         )
         columns = [column.name for column in cur.description or []]
         return [dict(zip(columns, row)) for row in await cur.fetchall()]

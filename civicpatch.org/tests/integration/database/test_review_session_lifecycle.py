@@ -103,7 +103,7 @@ async def _create_session(user_id: uuid.UUID) -> uuid.UUID:
 
 
 async def _seed_open_pr(suffix: str) -> tuple[str, str]:
-    """Insert a jurisdiction + request + pipeline_run + open pull_request in state zz. Returns (request_id, ocdid)."""
+    """Insert a jurisdiction + request + pipeline_run + open pull_request in state zz. Returns (changeset_id, ocdid)."""
     ocdid = f"ocd-jurisdiction/country:us/state:zz/place:pool_{suffix}/government"
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -115,26 +115,26 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
             "INSERT INTO changesets (kind, status, jurisdiction_ocdid) VALUES ('scrape', 'SUCCESS', %s) RETURNING id::text",
             (ocdid,),
         )
-        request_id = (await cur.fetchone())[0]
+        changeset_id = (await cur.fetchone())[0]
         await cur.execute(
             # The review pool is "this scrape saw somebody" — one sighting is a roster.
             "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
             "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
-            (request_id, ocdid),
+            (changeset_id, ocdid),
         )
         await cur.execute(
             "UPDATE changesets SET status = 'SUCCESS', "
             "sourced_at = CURRENT_TIMESTAMP WHERE id = %s",
-            (request_id,),
+            (changeset_id,),
         )
-    return request_id, ocdid
+    return changeset_id, ocdid
 
 
-async def _cleanup_open_pr(request_id: str, ocdid: str) -> None:
+async def _cleanup_open_pr(changeset_id: str, ocdid: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         # The run lives on the request now; deleting the request takes it.
-        await conn.execute("DELETE FROM changesets WHERE id::text = %s", (request_id,))
+        await conn.execute("DELETE FROM changesets WHERE id::text = %s", (changeset_id,))
         await conn.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
 
 
@@ -422,17 +422,17 @@ async def test_publishing_removes_the_card_from_the_pool_for_good():
     there is nothing to un-park — and the regression the park guarded against (an already
     published scrape reappearing) is now impossible rather than defended.
     """
-    request_id, ocdid = await _seed_open_pr("x")
+    changeset_id, ocdid = await _seed_open_pr("x")
     try:
         before, _, _ = await list_open_pull_requests(state_code="zz")
-        assert request_id in [r["request_id"] for r in before], "unpublished scrape starts in the pool"
+        assert changeset_id in [r["changeset_id"] for r in before], "unpublished scrape starts in the pool"
 
-        await publish_request(request_id, ocdid, [])
+        await publish_request(changeset_id, ocdid, [])
 
         after, _, _ = await list_open_pull_requests(state_code="zz")
-        assert request_id not in [r["request_id"] for r in after], "published scrape must leave the pool"
+        assert changeset_id not in [r["changeset_id"] for r in after], "published scrape must leave the pool"
     finally:
-        await _cleanup_open_pr(request_id, ocdid)
+        await _cleanup_open_pr(changeset_id, ocdid)
 
 
 # ── availability pool: a reported issue parks a PR until the issue is resolved ──
@@ -444,25 +444,25 @@ async def test_reported_pr_leaves_pool_until_issue_resolved():
     Reporting an issue against a review removes its PR from the pool while the issue is live,
     and it returns once the issue reaches a terminal state (here, an admin resolving it).
     """
-    request_id, ocdid = await _seed_open_pr("reported")
+    changeset_id, ocdid = await _seed_open_pr("reported")
     try:
         before, _, _ = await list_open_pull_requests(state_code="zz")
-        assert request_id in [r["request_id"] for r in before], "open PR should start in the pool"
+        assert changeset_id in [r["changeset_id"] for r in before], "open PR should start in the pool"
 
         issue_id = await create_user_reported_issue(
-            request_id, "title", "body", "https://github.com/x/y/issues/1", 1, str(uuid.uuid4())
+            changeset_id, "title", "body", "https://github.com/x/y/issues/1", 1, str(uuid.uuid4())
         )
         reported, _, _ = await list_open_pull_requests(state_code="zz")
-        assert request_id not in [r["request_id"] for r in reported], "reported PR must leave the pool"
+        assert changeset_id not in [r["changeset_id"] for r in reported], "reported PR must leave the pool"
 
         await resolve_issue(issue_id)
         after, _, _ = await list_open_pull_requests(state_code="zz")
-        assert request_id in [r["request_id"] for r in after], "PR returns to the pool once the issue is resolved"
+        assert changeset_id in [r["changeset_id"] for r in after], "PR returns to the pool once the issue is resolved"
     finally:
         pool = await get_pool()
         async with pool.connection() as conn:
-            await conn.execute("DELETE FROM issues WHERE %s = ANY(request_ids)", (request_id,))
-        await _cleanup_open_pr(request_id, ocdid)
+            await conn.execute("DELETE FROM issues WHERE %s = ANY(request_ids)", (changeset_id,))
+        await _cleanup_open_pr(changeset_id, ocdid)
 
 
 # ── navigation: has_next respects the goal cap, not just pool availability ─────
@@ -499,7 +499,7 @@ async def test_available_count_excludes_jurisdiction_claimed_by_another_user(tes
     """
     from database.review_session_stats import get_review_stats
 
-    request_id, ocdid = await _seed_open_pr("stats")
+    changeset_id, ocdid = await _seed_open_pr("stats")
     provider_id = f"stats-other-{uuid.uuid4().hex[:8]}"
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -532,7 +532,7 @@ async def test_available_count_excludes_jurisdiction_claimed_by_another_user(tes
             )
             await conn.execute("DELETE FROM review_sessions WHERE user_id = %s", (other_user,))
             await conn.execute("DELETE FROM users WHERE provider = 'test' AND provider_user_id = %s", (provider_id,))
-        await _cleanup_open_pr(request_id, ocdid)
+        await _cleanup_open_pr(changeset_id, ocdid)
 
 
 @pytest.mark.integration
@@ -552,14 +552,14 @@ async def test_a_scrape_with_no_roster_never_reaches_the_pool():
         await cur.execute(
             "INSERT INTO changesets (kind, status, jurisdiction_ocdid) VALUES ('scrape', 'SUCCESS', %s) RETURNING id::text", (ocdid,)
         )
-        request_id = (await cur.fetchone())[0]
+        changeset_id = (await cur.fetchone())[0]
         await cur.execute(
             "UPDATE changesets SET status = 'SUCCESS', "
-            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (request_id,)
+            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,)
         )
 
     rows, _, _ = await list_open_pull_requests(jurisdiction_ocdid=ocdid)
-    assert request_id not in [r["request_id"] for r in rows]
+    assert changeset_id not in [r["changeset_id"] for r in rows]
 
 
 @pytest.mark.integration
@@ -580,33 +580,33 @@ async def test_a_scrape_that_changed_nothing_leaves_the_pool_saying_why():
             "INSERT INTO changesets (kind, status, jurisdiction_ocdid) VALUES ('scrape', 'SUCCESS', %s) RETURNING id::text",
             (ocdid,),
         )
-        request_id = (await cur.fetchone())[0]
+        changeset_id = (await cur.fetchone())[0]
         await cur.execute(
             # The review pool is "this scrape saw somebody" — one sighting is a roster.
             "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
             "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
-            (request_id, ocdid),
+            (changeset_id, ocdid),
         )
         await cur.execute(
             "UPDATE changesets SET status = 'SUCCESS', "
             "sourced_at = CURRENT_TIMESTAMP WHERE id = %s",
-            (request_id,),
+            (changeset_id,),
         )
         await conn.commit()
 
     rows, _, _ = await list_open_pull_requests(jurisdiction_ocdid=ocdid)
-    assert request_id in [r["request_id"] for r in rows]
+    assert changeset_id in [r["changeset_id"] for r in rows]
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        assert await dismiss_as_unchanged(cur, request_id) is True
+        assert await dismiss_as_unchanged(cur, changeset_id) is True
         await conn.commit()
 
     rows, _, _ = await list_open_pull_requests(jurisdiction_ocdid=ocdid)
-    assert request_id not in [r["request_id"] for r in rows]
+    assert changeset_id not in [r["changeset_id"] for r in rows]
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT dismissed_reason FROM changesets WHERE id::text = %s", (request_id,)
+            "SELECT dismissed_reason FROM changesets WHERE id::text = %s", (changeset_id,)
         )
         assert (await cur.fetchone())[0] == DISMISSED_UNCHANGED
 
@@ -629,19 +629,19 @@ async def test_auto_resolve_loses_the_race_to_a_reviewer_publishing():
             "VALUES ('scrape', 'SUCCESS', %s, now()) RETURNING id::text",
             (ocdid,),
         )
-        request_id = (await cur.fetchone())[0]
+        changeset_id = (await cur.fetchone())[0]
         await cur.execute(
             # The review pool is "this scrape saw somebody" — one sighting is a roster.
             "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
             "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
-            (request_id, ocdid),
+            (changeset_id, ocdid),
         )
 
-        assert await dismiss_as_unchanged(cur, request_id) is False
+        assert await dismiss_as_unchanged(cur, changeset_id) is False
 
         await cur.execute(
             "SELECT dismissed_at, dismissed_reason FROM changesets WHERE id::text = %s",
-            (request_id,),
+            (changeset_id,),
         )
         assert await cur.fetchone() == (None, None)
         await conn.rollback()

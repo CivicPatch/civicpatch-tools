@@ -12,9 +12,9 @@ import { jurisdictionOcdidToState } from "../../../components/ocdid-utils.js";
 function HistoryList({ history, pipelineRunStatus, canCancel, onCancel, isSignedIn = false }) {
   let parsedHistory = history?.["data"] ?? [];
 
-  if (pipelineRunStatus && pipelineRunStatus.request_id) {
+  if (pipelineRunStatus && pipelineRunStatus.changeset_id) {
     parsedHistory = parsedHistory.map(item =>
-      item.request_id === pipelineRunStatus.request_id
+      item.changeset_id === pipelineRunStatus.changeset_id
         ? { ...item, pipeline_run_progress: pipelineRunStatus.progress, pipeline_run_status: pipelineRunStatus.status }
         : item
     );
@@ -27,17 +27,17 @@ function HistoryList({ history, pipelineRunStatus, canCancel, onCancel, isSigned
   const openFor = (item) => { setSelectedItem(item); setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); setSelectedItem(null); };
 
-  const handleCancel = async (requestId) => {
-    setCancellingIds(prev => new Set(prev).add(requestId));
+  const handleCancel = async (changesetId) => {
+    setCancellingIds(prev => new Set(prev).add(changesetId));
     try {
-      await cancelPipelineRun(requestId);
-      if (onCancel) onCancel(requestId);
+      await cancelPipelineRun(changesetId);
+      if (onCancel) onCancel(changesetId);
     } catch (_) {
       // noop — leave the row visible so the user can retry
     } finally {
       setCancellingIds(prev => {
         const next = new Set(prev);
-        next.delete(requestId);
+        next.delete(changesetId);
         return next;
       });
     }
@@ -209,7 +209,7 @@ function HistoryList({ history, pipelineRunStatus, canCancel, onCancel, isSigned
                         `}
                         ${item.review_status === REVIEW_STATUS.PENDING && item.kind !== CHANGESET_KIND.JURISDICTION_EDIT ? html`
                           <a class="sh-review-link" href=${isSignedIn
-                            ? reviewUrl(jurisdictionOcdidToState(item.jurisdiction_ocdid), item.request_id)
+                            ? reviewUrl(jurisdictionOcdidToState(item.jurisdiction_ocdid), item.changeset_id)
                             : LOGIN_PATH}>
                             ${isSignedIn ? "Needs review →" : "Sign in to review"}
                           </a>
@@ -221,9 +221,9 @@ function HistoryList({ history, pipelineRunStatus, canCancel, onCancel, isSigned
                     <td>
                       <button
                         class="sh-cancel-btn"
-                        ?disabled=${cancellingIds.has(item.request_id)}
-                        @click=${() => handleCancel(item.request_id)}
-                      >${cancellingIds.has(item.request_id) ? "Cancelling…" : "Cancel"}</button>
+                        ?disabled=${cancellingIds.has(item.changeset_id)}
+                        @click=${() => handleCancel(item.changeset_id)}
+                      >${cancellingIds.has(item.changeset_id) ? "Cancelling…" : "Cancel"}</button>
                     </td>
                   ` : html`<td></td>`}
                 </tr>

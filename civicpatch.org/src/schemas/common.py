@@ -54,15 +54,15 @@ def has_at_least(user_role: str | None, required: UserRole) -> bool:
 class PullRequest(BaseModel):
     branch_name: str
     jurisdiction_ocdid: str = ""
-    request_id: str = ""
+    changeset_id: str = ""
     url: str
     pull_request_number: str = ""
 
     def model_post_init(self, __context):
         try:
-            if not self.request_id and self.branch_name:
+            if not self.changeset_id and self.branch_name:
                 parts = id_utils.git_branch_to_parts(self.branch_name)
-                self.request_id = parts.get("request_id", "")
+                self.changeset_id = parts.get("changeset_id", "")
                 self.jurisdiction_ocdid = parts.get("jurisdiction_ocdid", "")
             if self.url:
                 self.pull_request_number = self.url.split("/")[-1]
@@ -134,7 +134,7 @@ class VerifyOtpRequest(BaseModel):
 
 
 class PeoplePipelineRunHistory(BaseModel):
-    request_id: str
+    changeset_id: str
     created_at: float
     updated_at: float
     status: str

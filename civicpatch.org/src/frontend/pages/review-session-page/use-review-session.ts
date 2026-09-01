@@ -31,7 +31,7 @@ export function useReviewSession(
     api: { fetchActiveReviewSession, navigateToEntry, fetchReview, endReviewSession, fetchPullRequestByRequestId, saveReviewData },
     dispatch,
     navigate: deps.navigate ?? ((url) => { window.location.href = url; }),
-    setRequestIdParam: (requestId) => updateParams({ [REQUEST_ID_PARAM]: requestId }),
+    setRequestIdParam: (changesetId) => updateParams({ [REQUEST_ID_PARAM]: changesetId }),
     trackApprove: deps.trackApprove,
     trackReject: deps.trackReject,
   };

@@ -30,15 +30,15 @@ def get_router(api_key_header):
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
     ):
         print(
-            f"Registering request: {request.request_id} by user {user.provider_user_id} from provider {user.provider}"
+            f"Registering request: {request.changeset_id} by user {user.provider_user_id} from provider {user.provider}"
         )
         _response = await database.changesets.register_request_with_pipeline_run(
             requested_by_user_id=user.user_id,
-            request_id=request.request_id,
+            changeset_id=request.changeset_id,
             kind=ChangesetKind.SCRAPE,
             arguments_json=request.arguments,
         )
-        return {"request_id": request.request_id, "status": "pending"}
+        return {"changeset_id": request.changeset_id, "status": "pending"}
 
     @router.get(
         "/people-export.csv",

@@ -18,11 +18,11 @@ async def send_error(context: PeopleCollectorContext, api_client: httpx.AsyncCli
 
     try:
         zip_file_path = file_utils.zip_job_artifacts(
-            context.request_id, context.data.jurisdiction_ocdid, include_data=False
+            context.changeset_id, context.data.jurisdiction_ocdid, include_data=False
         )
 
         response = await services.civicpatch_api.submit_job_artifacts(
-            api_client, context.request_id, context.data.jurisdiction_ocdid, zip_file_path, pipeline_run_status=PipelineRunStatus.ERROR
+            api_client, context.changeset_id, context.data.jurisdiction_ocdid, zip_file_path, pipeline_run_status=PipelineRunStatus.ERROR
         )
         if not response:
             return MaybeSendToGitHubStep(status="failed_no_response")

@@ -37,8 +37,8 @@ function ReviewSessionPage() {
   const handleSave = (e: CustomEvent) => save(e.detail.people);
   const handleNavigateTo = (e: CustomEvent) => navigateTo(e.detail.entry_number);
 
-  const requestId = currentEntry?.request_id;
-  const isRejecting = requestId != null && actionState[requestId]?.status === REVIEW_ACTION.REJECTING;
+  const changesetId = currentEntry?.changeset_id;
+  const isRejecting = changesetId != null && actionState[changesetId]?.status === REVIEW_ACTION.REJECTING;
 
   const progress = reviewing
     ? {

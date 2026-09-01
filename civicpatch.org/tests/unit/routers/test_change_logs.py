@@ -25,7 +25,7 @@ ROW = {
     "id": "cl-1",
     "type": "edit_person",
     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
-    "request_id": "req-1",
+    "changeset_id": "req-1",
     "changes": {
         "person_id": "p1",
         "person_name": "Jane Doe",

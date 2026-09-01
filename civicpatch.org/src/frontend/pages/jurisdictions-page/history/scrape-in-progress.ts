@@ -26,7 +26,7 @@ type ScrapeInProgressProps = {
   scrape: any;
   canCancel: boolean;
   canViewTemporalWorkflowState: boolean;
-  onCancel: (requestId: string) => void;
+  onCancel: (changesetId: string) => void;
   temporalUrl: string | null;
 };
 
@@ -49,7 +49,7 @@ function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onC
   useEffect(() => {
     // Admin-only, so non-admins never poll: the server would reject it anyway, and a
     // rejected request every few seconds is noise in everyone else's console.
-    if (!scrape?.request_id || !canViewTemporalWorkflowState) return;
+    if (!scrape?.changeset_id || !canViewTemporalWorkflowState) return;
 
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout>;
@@ -63,7 +63,7 @@ function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onC
 
     const poll = () => {
       if (!isVisible()) return scheduleNext(temporal);
-      fetchTemporalWorkflowState(scrape.request_id)
+      fetchTemporalWorkflowState(scrape.changeset_id)
         .then((state: TemporalWorkflowState | null) => {
           if (cancelled) return;
           setTemporal(state);
@@ -77,13 +77,13 @@ function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onC
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [scrape?.request_id, canViewTemporalWorkflowState]);
+  }, [scrape?.changeset_id, canViewTemporalWorkflowState]);
 
   if (!scrape) return html``;
 
   const handleCancel = () => {
     setCancelling(true);
-    onCancel(scrape.request_id);
+    onCancel(scrape.changeset_id);
   };
 
   return html`

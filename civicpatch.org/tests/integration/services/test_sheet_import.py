@@ -170,14 +170,14 @@ async def test_an_import_writes_sightings_and_lands_in_the_review_queue(
     assert (
         await _scalar(
             "SELECT count(*) FROM source_records WHERE changeset_id = %s::uuid",
-            (result.request_id,),
+            (result.changeset_id,),
         )
         == 2
     )
     # Unpublished: an import proposes a roster, it does not decide one.
     assert (
         await _scalar(
-            "SELECT published_at FROM changesets WHERE id = %s::uuid", (result.request_id,)
+            "SELECT published_at FROM changesets WHERE id = %s::uuid", (result.changeset_id,)
         )
         is None
     )
@@ -199,7 +199,7 @@ async def test_every_sighting_gets_an_identity(user_id, batch_id):
             JOIN source_record_identities i ON i.source_record_id = sr.id
             WHERE sr.changeset_id = %s::uuid
             """,
-            (result.request_id,),
+            (result.changeset_id,),
         )
         == 1
     )
@@ -238,7 +238,7 @@ async def test_the_batch_is_recorded_on_the_request(user_id, batch_id):
     assert (
         await _scalar(
             "SELECT batch_id::text FROM changesets WHERE id = %s::uuid",
-            (result.request_id,),
+            (result.changeset_id,),
         )
         == batch_id
     )
@@ -295,7 +295,7 @@ async def test_end_to_end_from_csv_text(user_id, batch_id):
     assert (
         await _scalar(
             "SELECT count(*) FROM source_records WHERE changeset_id = %s::uuid AND name = %s",
-            (result.request_id, "Reyes, Ana"),
+            (result.changeset_id, "Reyes, Ana"),
         )
         == 1
     )
@@ -539,7 +539,7 @@ async def test_a_locality_the_sheet_says_is_handled_raises_no_second_card(
     results = await import_rows(rows, user_id, batch_id)
 
     assert [result.status for result in results] == [ImportStatus.UNCHANGED]
-    assert results[0].request_id is None
+    assert results[0].changeset_id is None
     assert (
         await _scalar(
             "SELECT count(*) FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
@@ -567,7 +567,7 @@ async def test_clearing_one_row_brings_the_whole_roster_back(user_id, batch_id):
     assert (
         await _scalar(
             "SELECT count(*) FROM source_records WHERE changeset_id = %s::uuid",
-            (result.request_id,),
+            (result.changeset_id,),
         )
         == 2
     )

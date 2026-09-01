@@ -125,7 +125,7 @@ def test_patch_people_data_returns_the_request_it_recorded(client):
         )
 
     assert response.status_code == 200
-    assert response.json()["data"] == {"request_id": "req-1"}
+    assert response.json()["data"] == {"changeset_id": "req-1"}
     edit.assert_awaited_once()
     assert edit.await_args.args[0] == ocdid
 

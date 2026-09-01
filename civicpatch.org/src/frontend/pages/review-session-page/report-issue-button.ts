@@ -17,11 +17,11 @@ type ReportedIssue = {
 const PENDING_STATUS = "pending";
 
 type ReportIssueButtonHost = HTMLElement & {
-  requestId: string | null;
+  changesetId: string | null;
 };
 
 function ReportIssueButton(host: ReportIssueButtonHost) {
-  const { requestId } = host;
+  const { changesetId } = host;
 
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,14 +29,14 @@ function ReportIssueButton(host: ReportIssueButtonHost) {
   const [reportedIssues, setReportedIssues] = useState<ReportedIssue[]>([]);
 
   useEffect(() => {
-    if (!requestId) {
+    if (!changesetId) {
       setReportedIssues([]);
       return;
     }
-    fetchReportedIssues(requestId)
+    fetchReportedIssues(changesetId)
       .then((result: { data: ReportedIssue[] }) => setReportedIssues(result.data))
       .catch(() => setReportedIssues([]));
-  }, [requestId]);
+  }, [changesetId]);
 
   const handleOpen = () => {
     setSubmitError(null);
@@ -50,11 +50,11 @@ function ReportIssueButton(host: ReportIssueButtonHost) {
 
   const handleConfirmed = async (ev: CustomEvent) => {
     const { description } = ev.detail as { description: string };
-    if (!requestId || isSubmitting) return;
+    if (!changesetId || isSubmitting) return;
     setIsSubmitting(true);
     setSubmitError(null);
     try {
-      const result = await reportReviewIssue(requestId, description);
+      const result = await reportReviewIssue(changesetId, description);
       setReportedIssues((prev) => [
         {
           id: result.data.id,

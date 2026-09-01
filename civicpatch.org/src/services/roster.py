@@ -16,8 +16,8 @@ from shared.utils.taxonomy import build_taxonomy
 logger = logging.getLogger(__name__)
 
 
-async def _roster(request_id: str, jurisdiction_ocdid: str) -> tuple[list[dict], dict]:
-    sightings = await get_source_records_for_request(request_id)
+async def _roster(changeset_id: str, jurisdiction_ocdid: str) -> tuple[list[dict], dict]:
+    sightings = await get_source_records_for_request(changeset_id)
     if not sightings:
         return [], {}
 
@@ -38,15 +38,15 @@ async def _roster(request_id: str, jurisdiction_ocdid: str) -> tuple[list[dict],
     ), stated
 
 
-async def proposed_roster(request_id: str, jurisdiction_ocdid: str) -> list[dict]:
-    roster, stated = await _roster(request_id, jurisdiction_ocdid)
+async def proposed_roster(changeset_id: str, jurisdiction_ocdid: str) -> list[dict]:
+    roster, stated = await _roster(changeset_id, jurisdiction_ocdid)
     return [
         with_stated_values(person, stated.get(person["id"], {})) for person in roster
     ]
 
 
-async def scraped_roster(request_id: str, jurisdiction_ocdid: str) -> list[dict]:
-    roster, _ = await _roster(request_id, jurisdiction_ocdid)
+async def scraped_roster(changeset_id: str, jurisdiction_ocdid: str) -> list[dict]:
+    roster, _ = await _roster(changeset_id, jurisdiction_ocdid)
     return roster
 
 
@@ -68,11 +68,11 @@ async def proposed_rosters(request_ids: list[str]) -> dict[str, list[dict]]:
     ocdids = await changesets_db.jurisdictions_for_requests(request_ids)
     limit = asyncio.Semaphore(_ROSTER_CONCURRENCY)
 
-    async def one(request_id: str, ocdid: str) -> list[dict]:
+    async def one(changeset_id: str, ocdid: str) -> list[dict]:
         async with limit:
-            return await proposed_roster(request_id, ocdid)
+            return await proposed_roster(changeset_id, ocdid)
 
     rosters = await asyncio.gather(
-        *[one(request_id, ocdid) for request_id, ocdid in ocdids.items()]
+        *[one(changeset_id, ocdid) for changeset_id, ocdid in ocdids.items()]
     )
     return dict(zip(ocdids, rosters))

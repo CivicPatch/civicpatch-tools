@@ -56,7 +56,7 @@ export type ReviewPerson = {
 export type ReviewJurisdiction = {
   jurisdiction_ocdid: string;
   name: string;
-  request_id: string;
+  changeset_id: string;
   review_status: string;
   people: ReviewPerson[];
 };

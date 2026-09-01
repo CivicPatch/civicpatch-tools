@@ -52,7 +52,7 @@ async def test_returns_row_for_a_pending_review():
         result = await get_pull_request_data_by_request_id("req-abc")
 
     assert result is not None
-    assert result["request_id"] == "req-abc"
+    assert result["changeset_id"] == "req-abc"
     assert result["pr"]["status"] == "pending"
     assert result["jurisdiction_ocdid"] == "ocd-jurisdiction/country:us/state:tx/place:austin/government"
     assert result["jurisdiction_name"] == "Austin"
@@ -82,7 +82,7 @@ async def test_returns_row_for_a_published_review():
 @pytest.mark.unit
 async def test_lookup_is_scoped_to_people_requests():
     """The pool filters decide what gets *offered*; this decides what a caller can
-    *ask for*. Without the scope, deeplinking a jurisdiction edit's request_id would
+    *ask for*. Without the scope, deeplinking a jurisdiction edit's changeset_id would
     resolve as a review card with an empty roster and a Publish button."""
     cur = _make_cursor(None)
     with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
