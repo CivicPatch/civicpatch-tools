@@ -73,7 +73,7 @@ def test_a_sheet_we_cannot_read_says_how_to_fix_it():
 def test_a_second_import_over_one_sheet_is_a_409():
     """Two runs would race each other's write-back, and the second would report against rows
     the first had already changed."""
-    from database.request_batches import BatchAlreadyRunning
+    from database.changeset_batches import BatchAlreadyRunning
 
     with (
         patch("routers.api.imports.entry_sheet.spreadsheet_id", return_value="abc"),
@@ -82,7 +82,7 @@ def test_a_second_import_over_one_sheet_is_a_409():
             return_value=SheetRead(rows=[], preview=_EMPTY_PREVIEW),
         ),
         patch(
-            "routers.api.imports.request_batches.start",
+            "routers.api.imports.changeset_batches.start",
             new_callable=AsyncMock,
             side_effect=BatchAlreadyRunning("sheet:abc"),
         ),
@@ -101,7 +101,7 @@ def test_starting_returns_the_batch_and_defers_the_work():
             return_value=SheetRead(rows=[], preview=_EMPTY_PREVIEW),
         ),
         patch(
-            "routers.api.imports.request_batches.start",
+            "routers.api.imports.changeset_batches.start",
             new_callable=AsyncMock,
             return_value="batch-1",
         ),
@@ -126,7 +126,7 @@ def test_preview_takes_no_lock():
             return_value=SheetRead(rows=[], preview=_EMPTY_PREVIEW),
         ),
         patch(
-            "routers.api.imports.request_batches.start", new_callable=AsyncMock
+            "routers.api.imports.changeset_batches.start", new_callable=AsyncMock
         ) as start,
     ):
         response = _client().post(f"{_PREFIX}/preview")
@@ -138,7 +138,7 @@ def test_preview_takes_no_lock():
 @pytest.mark.unit
 def test_polling_an_unknown_batch_is_a_404():
     with patch(
-        "routers.api.imports.request_batches.get",
+        "routers.api.imports.changeset_batches.get",
         new_callable=AsyncMock,
         return_value=None,
     ):
@@ -157,7 +157,7 @@ def test_contributors_cannot_start_an_import():
 def test_no_import_ever_run_is_not_an_error():
     """The page asks on every load, and "nothing yet" is the ordinary first answer."""
     with patch(
-        "routers.api.imports.request_batches.latest",
+        "routers.api.imports.changeset_batches.latest",
         new_callable=AsyncMock,
         return_value=None,
     ):
@@ -172,12 +172,12 @@ def test_latest_is_not_read_as_a_batch_id():
     """`/latest` is declared before `/{batch_id}`; swapping them would route it into the
     progress lookup and 404."""
     with patch(
-        "routers.api.imports.request_batches.get",
+        "routers.api.imports.changeset_batches.get",
         new_callable=AsyncMock,
         return_value=None,
     ) as by_id:
         with patch(
-            "routers.api.imports.request_batches.latest",
+            "routers.api.imports.changeset_batches.latest",
             new_callable=AsyncMock,
             return_value=None,
         ):

@@ -667,25 +667,6 @@ export async function seedE2eFixtures() {
     for (const person of buildScaleExisting()) {
       await seedPerson(client, SCALE_JURISDICTION_OCDID, person);
     }
-    // Issues too, so the collapse rule's "an anchored issue keeps a field
-    // visible" path is exercised at density, not only on a three-person card.
-    const scaleReview = {
-      issues: [
-        {
-          code: "duplicate_unique_role",
-          message:
-            "Role 'council president' is marked as unique but found in multiple officials: Councillor 09 Scale, Councillor 21 Scale",
-          person_ids: ["scale-p09", "scale-p21"],
-          field: "post_id",
-        },
-        {
-          code: "new_official",
-          message: "Extra official: Newcomer 05 Scale",
-          person_ids: ["scale-n05"],
-          field: null,
-        },
-      ],
-    };
     await seedReviewCard(client, {
       requestId: SCALE_REQUEST_ID,
       ocdid: SCALE_JURISDICTION_OCDID,
@@ -781,39 +762,6 @@ export async function seedE2eFixtures() {
         source_urls: ["https://example.gov/roster"],
       },
     ];
-    // new_official → row-level marker (Carol); duplicate_unique_role → field-level
-    // marker under Post (Alice + Bob); absent_official → list-level (no card marker).
-    const markersReview = {
-      issues: [
-        {
-          code: "new_official",
-          message: "Extra official: Carol Extra",
-          person_ids: ["markers-carol"],
-          field: null,
-        },
-        {
-          code: "duplicate_unique_role",
-          message:
-            "Role 'mayor' is marked as unique but found in multiple officials: Alice Mayor, Bob Council",
-          person_ids: ["markers-alice", "markers-bob"],
-          field: "post_id",
-        },
-        {
-          code: "absent_official",
-          message: "Dropped official: Dave Absent",
-          person_ids: [],
-          field: null,
-        },
-      ],
-      // The drawer's since-last-scrape table, matching the issues above:
-      // Carol is the extra official (this scrape only), Dave the dropped one
-      // (baseline only), Alice appears on both sides and needs no decision.
-      people_by_source: [
-        { name: "Carol Extra", in_research: false, in_data: true },
-        { name: "Dave Absent", in_research: true, in_data: false },
-        { name: "Alice Mayor", in_research: true, in_data: true },
-      ],
-    };
     await seedReviewCard(client, {
       requestId: MARKERS_REQUEST_ID,
       ocdid: MARKERS_JURISDICTION_OCDID,

@@ -5,7 +5,7 @@
 
 import logging
 
-from database import request_batches
+from database import changeset_batches
 from fastapi import APIRouter, BackgroundTasks, Depends
 from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
@@ -70,14 +70,14 @@ def get_router() -> APIRouter:
             return JSONResponse({"error": _sharing_hint(e)}, status_code=502)
 
         try:
-            batch_id = await request_batches.start(
-                request_batches.BatchKind.SHEET_IMPORT,
+            batch_id = await changeset_batches.start(
+                changeset_batches.BatchKind.SHEET_IMPORT,
                 f"sheet:{spreadsheet_id}",
                 user.user_id,
                 {"spreadsheet_id": spreadsheet_id},
                 items_total=len(read.preview.jurisdictions_ready),
             )
-        except request_batches.BatchAlreadyRunning as e:
+        except changeset_batches.BatchAlreadyRunning as e:
             # Not queued: two runs would race each other's write-back.
             return JSONResponse({"error": str(e)}, status_code=409)
 
@@ -92,8 +92,8 @@ def get_router() -> APIRouter:
         ),
     ):
         """Recent imports, newest first. Each row deep-links to its own review."""
-        batches = await request_batches.list_recent(
-            request_batches.BatchKind.SHEET_IMPORT
+        batches = await changeset_batches.list_recent(
+            changeset_batches.BatchKind.SHEET_IMPORT
         )
         return {"data": [_progress(batch) for batch in batches]}
 
@@ -120,7 +120,7 @@ def get_router() -> APIRouter:
         There is one spreadsheet and one lock, so an import is a fact about the system rather
         than about whoever started it — anyone opening the page should find it.
         """
-        batch = await request_batches.latest(request_batches.BatchKind.SHEET_IMPORT)
+        batch = await changeset_batches.latest(changeset_batches.BatchKind.SHEET_IMPORT)
         return {"data": _progress(batch) if batch else None}
 
     @router.get("/{batch_id}")
@@ -130,7 +130,7 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
-        batch = await request_batches.get(batch_id)
+        batch = await changeset_batches.get(batch_id)
         if batch is None:
             return JSONResponse({"error": "No such import."}, status_code=404)
         return {"data": _progress(batch)}

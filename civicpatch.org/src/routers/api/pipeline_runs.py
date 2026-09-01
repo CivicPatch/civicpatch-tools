@@ -32,7 +32,7 @@ from database.pipeline_runs import (
 from database.pull_requests import (
     has_open_pr_for_jurisdiction,
 )
-from database.requests import (
+from database.changesets import (
     get_issue_request_details,
     register_request_with_pipeline_run,
     register_request_with_pipeline_run_if_not_exists,

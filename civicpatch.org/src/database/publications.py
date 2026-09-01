@@ -15,7 +15,7 @@ import logging
 from core.post_derivation import DerivedPost
 from core.people_edits import values_to_accept, with_stated_values
 from database import assertions, memberships, organizations, posts
-import database.requests as requests_db
+import database.changesets as changesets_db
 from database.change_logs import record_dismissal
 from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
@@ -234,7 +234,7 @@ async def publish_request(
         )
 
         # Same transaction, so a published roster and the cards it obsoletes cannot disagree.
-        stale = await requests_db.dismiss_superseded_by(
+        stale = await changesets_db.dismiss_superseded_by(
             cur, request_id, jurisdiction_ocdid, last_seen_at
         )
         if stale:

@@ -24,7 +24,7 @@ test.describe("Review preview", () => {
     // they are already absent — the same filter buildPeoplePatch applies.
     await expect(page.locator(".review-preview .review-row")).toHaveCount(40);
     await expect(page.locator(".review-preview__bar")).toContainText("40 officials");
-    await expect(page.locator(".review-preview__bar")).toContainText("5 new · 3 dropped");
+    await expect(page.locator(".review-preview__bar")).toContainText("5 new, 3 dropped");
   });
 
   test("drops someone the reviewer removed, live", async ({ authenticatedPage: page }) => {
@@ -70,7 +70,7 @@ test.describe("Publish gating", () => {
 
     const publish = page.locator(".review-page__approve-btn");
     await expect(publish).toBeDisabled();
-    await expect(publish).toContainText("to fix before publishing");
+    await expect(publish).toContainText("to fix before approving");
 
     // Save updates is never gated — parking incomplete work is what it is for.
     await expect(page.locator(".review-page__save-btn")).toBeEnabled();
@@ -95,16 +95,17 @@ test.describe("Publish gating", () => {
   }) => {
     await page.goto(`/review/session?request_id=${SCALE_REQUEST_ID}`);
     await openDetail(page);
-    // Office rather than Name: clearing the name would invalidate the locator
-    // that finds this editor, since it matches on the name header. Office is
-    // unchanged on this person, so the collapse rule hides it until expanded.
+    // Name, because it is the only required scalar: clearing one row of Source urls leaves an
+    // empty string rather than an empty list, and the Post field is a picker that cannot be
+    // emptied into an error while the derivation still names a post.
     const editor = editorFor(page, "Councillor 02 Scale");
     await editor.locator(".person-editor__expander").click();
-    await fieldIn(editor, "Office").first().locator("input").fill("");
+    await fieldIn(editor, "Name").locator("input").first().fill("");
     await expect(page.locator(".review-page__approve-btn")).toBeDisabled();
 
-    // Dropping them makes the error irrelevant — it is not part of the payload.
-    await editor.locator(".person-editor__delete").click();
+    // The card is findable by the fallback the editor renders once the name is gone, which is
+    // what lets the name be the blocker here at all.
+    await editorFor(page, "(unnamed)").locator(".person-editor__delete").click();
     await expect(page.locator(".review-page__approve-btn")).toBeEnabled();
   });
 });

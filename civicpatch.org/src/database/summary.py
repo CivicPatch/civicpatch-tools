@@ -1,5 +1,5 @@
 from database.database import get_pool
-from database.requests import AVAILABLE_FOR_REVIEW
+from database.changesets import AVAILABLE_FOR_REVIEW
 
 _OPEN_PRS_GLOBAL = f"""
     (SELECT COUNT(*) FROM changesets r

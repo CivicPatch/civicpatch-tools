@@ -11,7 +11,7 @@ click away for anything that looks wrong.
 import asyncio
 import logging
 
-from database import request_batches
+from database import changeset_batches
 from schemas.imports import (
     BatchReview,
     PublishResult,
@@ -50,7 +50,7 @@ async def batch_review(batch_id: str) -> BatchReview | None:
     requests are ordinary review cards, not a private set.
     """
     batch, items = await asyncio.gather(
-        request_batches.get(batch_id), request_batches.items(batch_id)
+        changeset_batches.get(batch_id), changeset_batches.items(batch_id)
     )
     if batch is None:
         return None
@@ -94,7 +94,7 @@ async def publish_selected(
     Only pending ones. A town published from the ordinary queue since the page loaded is
     already live, and re-publishing it would supersede itself for nothing.
     """
-    items = await request_batches.items(batch_id)
+    items = await changeset_batches.items(batch_id)
     wanted = [
         item
         for item in items

@@ -13,7 +13,7 @@ import pytest_asyncio
 from database.database import get_pool
 from database.pipeline_runs import expire_stale_pipeline_runs
 from database.publications import publish_request
-from database.requests import supersede_stacked_requests
+from database.changesets import supersede_stacked_requests
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_stacked/government"
 _OTHER = "ocd-jurisdiction/country:us/state:zz/place:zz_stacked_other/government"

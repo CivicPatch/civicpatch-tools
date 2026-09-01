@@ -13,7 +13,7 @@ from core.membership_proposal import (
 )
 from core.post_derivation import DerivedPost
 from database import memberships as memberships_db
-from database import requests as requests_db
+from database import changesets as changesets_db
 from database.database import get_pool
 from database.issues import upsert_issue
 from database.pipeline_runs import (
@@ -134,7 +134,7 @@ async def _dismiss_if_nothing_to_review(
     """
     if not nothing_to_review(changes):
         return
-    if await requests_db.dismiss_as_unchanged(cur, request_id):
+    if await changesets_db.dismiss_as_unchanged(cur, request_id):
         logger.info(f"[{request_id}] Dismissed: nothing to review")
 
 

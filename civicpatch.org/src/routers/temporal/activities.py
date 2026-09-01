@@ -1,5 +1,5 @@
 import database.pipeline_runs as pipeline_runs_db
-import database.requests as requests_db
+import database.changesets as changesets_db
 import database.review_session_entries as review_session_entries_db
 import lib.github.api as github_service
 import services.open_data_sync as data_sync
@@ -103,7 +103,7 @@ async def commit_open_data_activity(request: OpenDataCommitRequest) -> None:
 
 @activity.defn
 async def supersede_stacked_requests_activity() -> None:
-    dismissed = await requests_db.supersede_stacked_requests()
+    dismissed = await changesets_db.supersede_stacked_requests()
     if dismissed:
         activity.logger.info(
             "Superseded %d stacked request(s): %s", len(dismissed), dismissed

@@ -23,8 +23,8 @@ from core.entry_rows import (
     roster_columns,
     rows_by_jurisdiction,
 )
-from database.requests import register_sheet_import_request
-from database import request_batches
+from database.changesets import register_sheet_import_request
+from database import changeset_batches
 from database.roles import get_roles
 from database.source_records import insert_source_records
 from pydantic import BaseModel
@@ -215,15 +215,15 @@ async def run_import(
     `finish` releases the lock, so it must happen either way — including when the write-back
     fails, which must not hold the sheet against every future import.
     """
-    status = request_batches.BatchStatus.SUCCEEDED
+    status = changeset_batches.BatchStatus.SUCCEEDED
     error = None
     try:
         results = await import_rows(rows, user_id, batch_id)
         await write_back(results)
     except Exception as e:
         logger.error(f"[{batch_id}] import failed: {e}", exc_info=True)
-        status, error = request_batches.BatchStatus.FAILED, str(e)
-    await request_batches.finish(batch_id, status, error=error)
+        status, error = changeset_batches.BatchStatus.FAILED, str(e)
+    await changeset_batches.finish(batch_id, status, error=error)
 
 
 async def write_back(results: list[JurisdictionResult]) -> None:
