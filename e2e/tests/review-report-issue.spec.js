@@ -43,7 +43,7 @@ async function stubNoExistingIssues(page) {
 async function openFirstCard(page) {
   await page.goto("/review");
   await page.locator(".review-page__start-btn").click();
-  await expect(page.getByText("E2E Test City")).toBeVisible();
+  await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 }
 
 test.describe("Report issue", () => {

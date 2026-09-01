@@ -25,7 +25,7 @@ const FIRST_CARD_REQUEST_ID = "00000000-0000-0000-eeee-000000000001";
 async function openFirstCard(page) {
   await page.goto("/review");
   await page.locator(".review-page__start-btn").click();
-  await expect(page.getByText("E2E Test City")).toBeVisible();
+  await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 }
 
 test.describe("Approve", () => {

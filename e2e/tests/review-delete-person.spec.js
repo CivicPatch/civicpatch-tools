@@ -128,7 +128,7 @@ test.describe("Delete a person", () => {
     await openOverview(page);
     await expect(rowFor(page, "Maria González")).toHaveClass(/review-row--deleted/);
     await expect(
-      page.locator(".review-overview__faces").getByText("Maria González"),
+      page.locator(".review-overview__strip").getByText("Maria González"),
     ).toHaveCount(0);
   });
 

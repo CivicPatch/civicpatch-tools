@@ -12,7 +12,7 @@ test.describe("Review session lifecycle", () => {
   test("end session returns to landing page", async ({ authenticatedPage: page }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 
     await page.locator(".review-page__end-btn").click();
 
@@ -23,7 +23,7 @@ test.describe("Review session lifecycle", () => {
   test("restarting a session after ending shows a card", async ({ authenticatedPage: page }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 
     // End the session
     await page.locator(".review-page__end-btn").click();
@@ -31,13 +31,13 @@ test.describe("Review session lifecycle", () => {
 
     // Start again — should show a card (session is fresh)
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
   });
 
   test("session progress dots are visible during review", async ({ authenticatedPage: page }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 
     // At least one dot should be rendered
     await expect(page.locator(".review-page__dot").first()).toBeVisible();
@@ -60,7 +60,7 @@ test.describe("Review session lifecycle", () => {
   test("direct link Exit button returns to landing", async ({ authenticatedPage: page }) => {
     // Deeplink moved to /review/session; Exit still returns to the /review landing.
     await page.goto("/review/session?request_id=00000000-0000-0000-eeee-000000000001");
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 
     await page.locator(".review-page__end-btn").click();
 
@@ -71,7 +71,7 @@ test.describe("Review session lifecycle", () => {
   test("refreshing mid-session resumes at the correct position", async ({ authenticatedPage: page }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 
     // Advance to card 2 so the resume has a non-trivial position to restore
     await page.locator(".review-page__next-btn").click();
@@ -86,7 +86,7 @@ test.describe("Review session lifecycle", () => {
   test("back button is disabled on first card", async ({ authenticatedPage: page }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 
     // First card has no previous entry — Back must be disabled
     await expect(page.locator(".review-page__back-btn")).toBeDisabled();
