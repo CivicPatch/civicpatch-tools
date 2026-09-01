@@ -2,7 +2,7 @@
 re-keying that moves the photo out of the run-scoped artifacts bucket at publish.
 
 A scrape's photo is keyed by the run that produced it; publishing re-keys it by jurisdiction
-alone. Dropping `request_id` is the whole point: without it a person's photo URL would change
+alone. Dropping `changeset_id` is the whole point: without it a person's photo URL would change
 on every re-scrape, so these pin the transformation rather than trusting it.
 """
 

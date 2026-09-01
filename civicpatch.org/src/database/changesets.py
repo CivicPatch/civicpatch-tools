@@ -89,7 +89,7 @@ HELD_BY_REVIEWER = (
 
 
 async def register_request_with_pipeline_run(
-    request_id: str,
+    changeset_id: str,
     kind: str,
     arguments_json: dict,
     jurisdiction_ocdid: Optional[str] = None,
@@ -105,7 +105,7 @@ async def register_request_with_pipeline_run(
             VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
             """,
             (
-                request_id,
+                changeset_id,
                 kind,
                 jurisdiction_ocdid,
                 json.dumps(arguments_json),
@@ -119,12 +119,12 @@ async def register_request_with_pipeline_run(
                                 sourced_at = CURRENT_TIMESTAMP
             WHERE id = %s
             """,
-            (status, progress, request_id),
+            (status, progress, changeset_id),
         )
 
 
 async def register_request_with_pipeline_run_if_not_exists(
-    request_id: str,
+    changeset_id: str,
     kind: str,
     arguments_json: dict,
     jurisdiction_ocdid: Optional[str] = None,
@@ -137,7 +137,7 @@ async def register_request_with_pipeline_run_if_not_exists(
             VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP)
             ON CONFLICT (id) DO NOTHING
             """,
-            (request_id, kind, jurisdiction_ocdid, json.dumps(arguments_json)),
+            (changeset_id, kind, jurisdiction_ocdid, json.dumps(arguments_json)),
         )
         await conn.execute(
             """
@@ -145,12 +145,12 @@ async def register_request_with_pipeline_run_if_not_exists(
                                 sourced_at = CURRENT_TIMESTAMP
             WHERE id = %s AND status IS NULL
             """,
-            (PipelineRunStatus.PENDING, 0, request_id),
+            (PipelineRunStatus.PENDING, 0, changeset_id),
         )
 
 
 async def register_people_edit_request(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     requested_by_user_id: str,
 ):
@@ -173,7 +173,7 @@ async def register_people_edit_request(
             VALUES (%s, %s, %s, '{}'::jsonb, %s, now(), %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
             (
-                request_id,
+                changeset_id,
                 ChangesetKind.PEOPLE_EDIT,
                 jurisdiction_ocdid,
                 requested_by_user_id,
@@ -183,7 +183,7 @@ async def register_people_edit_request(
 
 
 async def register_sheet_import_request(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     requested_by_user_id: str,
     batch_id: str,
@@ -214,7 +214,7 @@ async def register_sheet_import_request(
             VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
             (
-                request_id,
+                changeset_id,
                 ChangesetKind.SHEET_IMPORT,
                 jurisdiction_ocdid,
                 requested_by_user_id,
@@ -224,7 +224,7 @@ async def register_sheet_import_request(
 
 
 async def register_jurisdiction_edit_request(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     arguments_json: Mapping[str, object],
     open_data_url: str,
@@ -242,7 +242,7 @@ async def register_jurisdiction_edit_request(
             VALUES (%s, %s, %s, %s, %s, %s, now(), %s, CURRENT_TIMESTAMP)
             """,
             (
-                request_id,
+                changeset_id,
                 ChangesetKind.JURISDICTION_EDIT,
                 jurisdiction_ocdid,
                 json.dumps(arguments_json),
@@ -253,12 +253,12 @@ async def register_jurisdiction_edit_request(
         )
 
 
-async def get_request_jurisdiction(request_id: str) -> str | None:
+async def get_request_jurisdiction(changeset_id: str) -> str | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT jurisdiction_ocdid FROM changesets WHERE id::text = %s",
-            (request_id,),
+            (changeset_id,),
         )
         row = await cur.fetchone()
     return row[0] if row else None
@@ -275,7 +275,7 @@ async def jurisdictions_for_requests(request_ids: list[str]) -> dict[str, str]:
             "SELECT id::text, jurisdiction_ocdid FROM changesets WHERE id::text = ANY(%s)",
             (request_ids,),
         )
-        return {request_id: ocdid for request_id, ocdid in await cur.fetchall()}
+        return {changeset_id: ocdid for changeset_id, ocdid in await cur.fetchall()}
 
 
 async def get_issue_request_details(request_ids: list[str]) -> list[dict]:
@@ -295,7 +295,7 @@ async def get_issue_request_details(request_ids: list[str]) -> list[dict]:
         rows = await cur.fetchall()
     return [
         {
-            "request_id": r[0],
+            "changeset_id": r[0],
             "jurisdiction_ocdid": r[1],
             "arguments_json": r[2] or {},
             "jurisdiction_name": r[3],
@@ -304,7 +304,7 @@ async def get_issue_request_details(request_ids: list[str]) -> list[dict]:
     ]
 
 
-async def dismiss_as_unchanged(cur, request_id: str) -> bool:
+async def dismiss_as_unchanged(cur, changeset_id: str) -> bool:
     """Retire a scrape that asserted nothing new. Returns whether it was still open.
 
     Guarded in the statement rather than by checking first: a reviewer may be publishing this
@@ -317,17 +317,17 @@ async def dismiss_as_unchanged(cur, request_id: str) -> bool:
          WHERE id::text = %s AND published_at IS NULL AND dismissed_at IS NULL
         RETURNING jurisdiction_ocdid
         """,
-        (request_id,),
+        (changeset_id,),
     )
     row = await cur.fetchone()
     if row is None:
         return False
-    await record_dismissal(cur, request_id, row[0], None, DismissalReason.UNCHANGED)
+    await record_dismissal(cur, changeset_id, row[0], None, DismissalReason.UNCHANGED)
     return True
 
 
 async def dismiss_superseded_by(
-    cur, request_id: str, jurisdiction_ocdid: str, sourced_at
+    cur, changeset_id: str, jurisdiction_ocdid: str, sourced_at
 ) -> list[str]:
     """Dismiss the cards this publish just made pointless, in the publishing transaction.
 
@@ -351,7 +351,7 @@ async def dismiss_superseded_by(
         """,
         (
             jurisdiction_ocdid,
-            request_id,
+            changeset_id,
             sourced_at,
             timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES),
         ),

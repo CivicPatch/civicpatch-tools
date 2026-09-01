@@ -119,30 +119,30 @@ async def _navigate_response(session_id: str, entry_number: int):
         await review_sessions_db.end_review_session(session_id)
         return {"data": None, "reason": result["done"]}
 
-    request_id = result["request_id"]
+    changeset_id = result["changeset_id"]
     jurisdiction_ocdid = result["jurisdiction_ocdid"]
 
     pr_meta, existing, proposed, scraped_at = await asyncio.gather(
-        pull_requests_db.get_pull_request_for_review(request_id),
+        pull_requests_db.get_pull_request_for_review(changeset_id),
         database_people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
-        proposed_roster(request_id, jurisdiction_ocdid),
+        proposed_roster(changeset_id, jurisdiction_ocdid),
         jurisdictions_db.get_scraped_at(jurisdiction_ocdid),
     )
 
     # This is the endpoint a review session actually navigates through — `by-request` serves
     # deep links. Both need it, because a proposed person holds no membership yet and the
     # derivation is the only thing that knows which post they would land in.
-    proposals = await proposals_for_requests([request_id])
+    proposals = await proposals_for_requests([changeset_id])
     unique_source_urls = list(
         {url for person in proposed for url in (person.get("source_urls") or [])}
     )
-    sources = build_sources(request_id, jurisdiction_ocdid, unique_source_urls)
+    sources = build_sources(changeset_id, jurisdiction_ocdid, unique_source_urls)
 
     if pr_meta is None:
         raise HTTPException(status_code=404, detail="Pull request metadata not found")
     return {
         "data": {
-            "request_id": request_id,
+            "changeset_id": changeset_id,
             "entry_number": result["entry_number"],
             "total": result["total"],
             "goal": result["goal"],
@@ -154,7 +154,7 @@ async def _navigate_response(session_id: str, entry_number: int):
             "existing": existing,
             "proposed": proposed,
             "changes": [
-                change.model_dump() for change in proposals.get(request_id, [])
+                change.model_dump() for change in proposals.get(changeset_id, [])
             ],
             # Both sides: a reviewer's edit is asserted against the *proposed* person, who is
             # not in `existing` until they publish — so tagging only published ids would hide

@@ -181,7 +181,7 @@ async def test_the_request_is_born_published_and_never_enters_the_review_pool():
     AVAILABLE_FOR_REVIEW and flash into the queue between the two writes."""
     person_id, user = await _seed()
 
-    request_id, _ = await roster_edits.edit_published(
+    changeset_id, _ = await roster_edits.edit_published(
         _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
     )
 
@@ -190,7 +190,7 @@ async def test_the_request_is_born_published_and_never_enters_the_review_pool():
         await cur.execute(
             "SELECT published_at IS NOT NULL, status IS NULL, sourced_at IS NOT NULL "
             "FROM changesets WHERE id::text = %s",
-            (request_id,),
+            (changeset_id,),
         )
         row = await cur.fetchone()
     assert row == (True, True, True)
@@ -394,14 +394,14 @@ async def _pending_scrape(sourced_at: datetime.datetime) -> str:
         )
         row = await cur.fetchone()
         assert row is not None
-        request_id = row[0]
+        changeset_id = row[0]
         await cur.execute(
             "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
             "VALUES (%s, %s, 'Cy Okonkwo', 'Clerk', 'https://editville.gov/clerk')",
-            (request_id, _OCDID),
+            (changeset_id, _OCDID),
         )
         await conn.commit()
-    return request_id
+    return changeset_id
 
 
 @pytest.mark.asyncio

@@ -15,10 +15,10 @@ import shared.utils.url_utils
 
 
 def _cached_markdown_url(
-    request_id: str, jurisdiction_folder: str, source_url: str
+    changeset_id: str, jurisdiction_folder: str, source_url: str
 ) -> Optional[str]:
     relative_path = os.path.join(
-        request_id,
+        changeset_id,
         "data_source",
         jurisdiction_folder,
         "cache",
@@ -29,10 +29,10 @@ def _cached_markdown_url(
 
 
 def build_sources(
-    request_id: str, jurisdiction_ocdid: str, source_urls: list[str]
+    changeset_id: str, jurisdiction_ocdid: str, source_urls: list[str]
 ) -> list[dict]:
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
     return [
-        {"url": url, "markdown": _cached_markdown_url(request_id, folder, url)}
+        {"url": url, "markdown": _cached_markdown_url(changeset_id, folder, url)}
         for url in source_urls
     ]

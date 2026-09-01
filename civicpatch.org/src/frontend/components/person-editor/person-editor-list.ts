@@ -26,7 +26,7 @@ interface PersonEditorListProps {
   frozen: FrozenFields;
   // Expansion is per card, so it resets when the reviewer moves on. §21.4 also
   // wants it invalidated by identity-changing actions — that lands with merge.
-  requestId: string | null;
+  changesetId: string | null;
   dirtyIds: Set<string>;
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
@@ -45,14 +45,14 @@ interface PersonEditorListProps {
 }
 
 const NO_EXPANSION = {
-  requestId: null as string | null,
+  changesetId: null as string | null,
   ids: new Set<string>(),
 };
 
 function PersonEditorList({
   cards,
   frozen,
-  requestId,
+  changesetId,
   dirtyIds,
   isReadOnly,
   jurisdictionOcdid,
@@ -75,13 +75,13 @@ function PersonEditorList({
   // remounted between them — so the id it was opened for has to be checked
   // rather than assumed, or expansion leaks from one reviewer's card to the next.
   const expandedIds =
-    expansion.requestId === requestId ? expansion.ids : NO_EXPANSION.ids;
+    expansion.changesetId === changesetId ? expansion.ids : NO_EXPANSION.ids;
 
   const toggleExpand = (personId: string) => {
     const ids = new Set(expandedIds);
     if (ids.has(personId)) ids.delete(personId);
     else ids.add(personId);
-    setExpansion({ requestId, ids });
+    setExpansion({ changesetId, ids });
   };
 
   if (!cards.length) {

@@ -11,8 +11,8 @@
 import { test, expect } from "../fixtures/index.js";
 import { SCALE_REQUEST_ID, RECONCILE_REQUEST_ID } from "../fixtures/db.js";
 
-const openEditor = async (page, requestId) => {
-  await page.goto(`/review/session?request_id=${requestId}&view=detail`);
+const openEditor = async (page, changesetId) => {
+  await page.goto(`/review/session?changeset_id=${changesetId}&view=detail`);
   await expect(page.locator("person-editor-list")).toBeVisible();
 };
 
@@ -28,7 +28,7 @@ test.describe("Review editor (Detail v2)", () => {
     // Previously this asserted that the default still rendered people-diff,
     // which described the interim state while both existed. §1.1 makes Overview
     // the default and people-diff is gone.
-    await page.goto(`/review/session?request_id=${RECONCILE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${RECONCILE_REQUEST_ID}`);
     await expect(page.locator("review-overview")).toBeVisible();
     await expect(page.locator("person-editor-list")).toHaveCount(0);
 
@@ -39,7 +39,7 @@ test.describe("Review editor (Detail v2)", () => {
   test("switching view writes ?view=, and a reload lands back there", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?request_id=${RECONCILE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${RECONCILE_REQUEST_ID}`);
     await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
     await expect(page).toHaveURL(/view=detail/);
 

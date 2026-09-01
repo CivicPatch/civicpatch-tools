@@ -88,7 +88,7 @@ class ChangeLogEntry(BaseModel):
     jurisdiction_ocdid: str | None
     jurisdiction_name: str | None
     jurisdiction_path: str | None = None
-    request_id: str | None
+    changeset_id: str | None
     pull_request_url: str | None = None
     # Raw JSONB payload — shape varies by type. Kept as a dict so the wire
     # contract doesn't break when new types are added; humans read `summary`,

@@ -39,7 +39,7 @@ export type ReviewModeValue = typeof ReviewMode[keyof typeof ReviewMode];
 
 // The data for the entry currently displayed in the review card.
 export type CurrentEntry = {
-  request_id: string;
+  changeset_id: string;
   jurisdiction: { ocdid: string | null; name: string | null; path?: string | null; website_url?: string | null };
   pr: { url: string | null; status: string | null; reviewState: string | null; number?: number | null };
   mode: ReviewModeValue;

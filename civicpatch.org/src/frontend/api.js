@@ -106,15 +106,15 @@ export const fetchPullRequestsWithData = async (stateCode, page = 1, perPage = 1
 
 // Publishing, start to finish: a 200 means the roster is live and stamped. Throws (with a
 // parsed message) on a validation or publish rejection.
-export const publishReview = async (request_id, jurisdiction_ocdid, people) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/${request_id}/publish`, {
+export const publishReview = async (changeset_id, jurisdiction_ocdid, people) => {
+  const res = await fetch(`${API_URL}/api/v1/reviews/${changeset_id}/publish`, {
     credentials: "include",
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-CSRF-Token": getCsrfCookie(),
     },
-    body: JSON.stringify({ request_id, jurisdiction_ocdid, ...(people ? { data: people } : {}) }),
+    body: JSON.stringify({ changeset_id, jurisdiction_ocdid, ...(people ? { data: people } : {}) }),
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
@@ -127,15 +127,15 @@ export const publishReview = async (request_id, jurisdiction_ocdid, people) => {
 
 // Commit the reviewer's edits to `data_json` without publishing. The request stays in the
 // review pool; the session entry is held until the session is released.
-export const saveReviewData = async (request_id, jurisdiction_ocdid, people) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/${request_id}/save`, {
+export const saveReviewData = async (changeset_id, jurisdiction_ocdid, people) => {
+  const res = await fetch(`${API_URL}/api/v1/reviews/${changeset_id}/save`, {
     credentials: "include",
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-CSRF-Token": getCsrfCookie(),
     },
-    body: JSON.stringify({ request_id, jurisdiction_ocdid, data: people }),
+    body: JSON.stringify({ changeset_id, jurisdiction_ocdid, data: people }),
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
@@ -164,10 +164,10 @@ export const batchResolvePeople = async (jurisdictionOcdid, people) => {
   return res.json();
 };
 
-export const fetchPullRequestData = async (jurisdictionOcdid, requestId) => {
+export const fetchPullRequestData = async (jurisdictionOcdid, changesetId) => {
   const params = new URLSearchParams({
     jurisdiction_ocdid: jurisdictionOcdid,
-    request_id: requestId,
+    changeset_id: changesetId,
   });
   const res = await fetch(`${API_URL}/api/v1/reviews/data?${params}`, {
     credentials: "include",
@@ -308,24 +308,24 @@ export const generatePersonId = async () => {
   return data.data.person_id;
 };
 
-export const fetchReview = async (requestId) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/${requestId}/review`, {
+export const fetchReview = async (changesetId) => {
+  const res = await fetch(`${API_URL}/api/v1/reviews/${changesetId}/review`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
-export const fetchReportedIssues = async (requestId) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/${requestId}/issues`, {
+export const fetchReportedIssues = async (changesetId) => {
+  const res = await fetch(`${API_URL}/api/v1/reviews/${changesetId}/issues`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
-export const reportReviewIssue = async (requestId, description) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/${requestId}/issues`, {
+export const reportReviewIssue = async (changesetId, description) => {
+  const res = await fetch(`${API_URL}/api/v1/reviews/${changesetId}/issues`, {
     credentials: "include",
     method: "POST",
     headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
@@ -335,8 +335,8 @@ export const reportReviewIssue = async (requestId, description) => {
   return res.json();
 };
 
-export const dismissReview = async (request_id) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/${request_id}`, {
+export const dismissReview = async (changeset_id) => {
+  const res = await fetch(`${API_URL}/api/v1/reviews/${changeset_id}`, {
     credentials: "include",
     method: "DELETE",
     headers: {
@@ -495,8 +495,8 @@ export const fetchActivePipelineRuns = async (stateCode, page = 1, perPage = 25)
 // Live Temporal state for a run still in flight. Admin-gated, so a 403 is an ordinary
 // outcome for most viewers — resolves to null rather than throwing, and the caller shows
 // nothing. Diagnostics must never be the reason a page fails to render.
-export const fetchTemporalWorkflowState = async (requestId) => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/${requestId}/temporal-workflow-state`, {
+export const fetchTemporalWorkflowState = async (changesetId) => {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/${changesetId}/temporal-workflow-state`, {
     credentials: "include",
   });
   if (!res.ok) return null;
@@ -504,8 +504,8 @@ export const fetchTemporalWorkflowState = async (requestId) => {
   return body.data ?? null;
 };
 
-export const cancelPipelineRun = async (requestId) => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/${requestId}/cancel`, {
+export const cancelPipelineRun = async (changesetId) => {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/${changesetId}/cancel`, {
     method: "POST",
     credentials: "include",
     headers: { "X-CSRF-Token": getCsrfCookie() },
@@ -594,8 +594,8 @@ export const fetchAllJurisdictionsForState = async (stateCode) => {
   return res.json();
 };
 
-export const fetchPullRequestByRequestId = async (requestId) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/by-request/${requestId}`, {
+export const fetchPullRequestByRequestId = async (changesetId) => {
+  const res = await fetch(`${API_URL}/api/v1/reviews/by-request/${changesetId}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

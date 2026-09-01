@@ -90,7 +90,7 @@ async def open_jurisdiction_edit_pr(
             return None, f"Jurisdiction {jurisdiction_ocdid} not found in {file_path}"
 
     content_str = yaml_dump(entries)
-    branch_name = f"civicpatch/jurisdiction-edit/{id_utils.make_request_id()}"
+    branch_name = f"civicpatch/jurisdiction-edit/{id_utils.make_changeset_id()}"
 
     return await open_attributed_pr(
         branch_name=branch_name,
@@ -129,30 +129,30 @@ async def commit_jurisdiction_patch(
     9 in wa/state. Fields would survive (the DB stores entries verbatim, `generated_comments`
     and `issues` included); the comments would not.
 
-    Returns (commit_url, url_or_error, request_id).
+    Returns (commit_url, url_or_error, changeset_id).
     """
     state = _extract_state(jurisdiction_ocdid)
     file_path = f"data_source/{state}/{LOCAL_LEVEL}/jurisdictions.yml"
-    request_id = id_utils.make_request_id()
+    changeset_id = id_utils.make_changeset_id()
 
     patch = jurisdiction_patch.build_patch(fields)
     if not patch:
-        return None, EditRejection.NO_FIELDS, request_id
+        return None, EditRejection.NO_FIELDS, changeset_id
 
     raw = await github_service.get_github_file_contents(file_path)
     if not raw:
-        return None, f"Failed to fetch {file_path}", request_id
+        return None, f"Failed to fetch {file_path}", changeset_id
 
     # Round-tripped through ruamel so quotes, comments and layout survive: this touches one
     # value in a file listing every jurisdiction in the state.
     doc = yaml_load(raw)
     entry = jurisdiction_patch.find_jurisdiction(doc, jurisdiction_ocdid)
     if entry is None:
-        return None, f"Jurisdiction {jurisdiction_ocdid} not found in {file_path}", request_id
+        return None, f"Jurisdiction {jurisdiction_ocdid} not found in {file_path}", changeset_id
 
     before = jurisdiction_patch.current_values(entry, patch)
     if before == patch:
-        return None, EditRejection.NO_CHANGES, request_id
+        return None, EditRejection.NO_CHANGES, changeset_id
 
     changed = ", ".join(sorted(patch))
     commit_url = await github_service.upsert_github_file(
@@ -162,7 +162,7 @@ async def commit_jurisdiction_patch(
         commit_message=f"Update {changed}: {jurisdiction_ocdid}",
     )
     if not commit_url:
-        return None, f"Failed to commit {file_path}", request_id
+        return None, f"Failed to commit {file_path}", changeset_id
 
     # Kept in step so the page reflects the edit immediately. od_sync would bring the same
     # value back from the file on its next run; writing it here removes the wait, and is what
@@ -172,7 +172,7 @@ async def commit_jurisdiction_patch(
     # Published on commit: there is no review step between the edit and the file, so the
     # request is born resolved rather than waiting for a merge to tell us.
     await changesets_db.register_jurisdiction_edit_request(
-        request_id=request_id,
+        changeset_id=changeset_id,
         jurisdiction_ocdid=jurisdiction_ocdid,
         arguments_json=patch,
         open_data_url=commit_url,
@@ -182,7 +182,7 @@ async def commit_jurisdiction_patch(
     # The change log records the url specifically, so it only fires when url moved.
     if user_id:
         await change_logs.record_jurisdiction_edit(
-            request_id=request_id,
+            changeset_id=changeset_id,
             jurisdiction_ocdid=jurisdiction_ocdid,
             jurisdiction_name=entry["name"],
             user_id=user_id,
@@ -190,11 +190,11 @@ async def commit_jurisdiction_patch(
             after=patch,
         )
 
-    return commit_url, commit_url, request_id
+    return commit_url, commit_url, changeset_id
 
 
 async def merge_jurisdiction_pr(
-    pull_request_number: str, approved_by: str | None, request_id: str
+    pull_request_number: str, approved_by: str | None, changeset_id: str
 ) -> None:
     # Best-effort auto-merge: any failure leaves the PR open for a manual merge.
     # open-data, not the jurisdictions repo — that is where the PR was opened.
@@ -225,7 +225,7 @@ async def merge_jurisdiction_pr(
     # write: this path merged the PR, so it already knows. A failure here is not a merge
     # failure — the merge stands and the hourly od_sync is the backstop.
     try:
-        jurisdiction_ocdid = await changesets_db.get_request_jurisdiction(request_id)
+        jurisdiction_ocdid = await changesets_db.get_request_jurisdiction(changeset_id)
         if jurisdiction_ocdid:
             await sync_jurisdictions_by_ocdids([jurisdiction_ocdid])
     except Exception:
@@ -233,5 +233,5 @@ async def merge_jurisdiction_pr(
             "Merged jurisdiction PR %s but recording/syncing it failed for request %s; "
             "the hourly od_sync will pick it up",
             pull_request_number,
-            request_id,
+            changeset_id,
         )

@@ -31,7 +31,7 @@ import type { ProposedChange } from "../../components/people/person-cards.js";
 import type { PersonAssertion } from "../../components/person-editor/field-provenance.js";
 
 type CurrentEntry = {
-  request_id: string;
+  changeset_id: string;
   jurisdiction: { ocdid: string | null; name: string | null; path?: string | null; website_url?: string | null };
   pr: { url: string | null; status: string | null; reviewState: string | null; number?: number | null };
   mode: ReviewModeValue;
@@ -82,7 +82,7 @@ function ReviewSession(host: ReviewSessionHost) {
   const [debugOpen, setDebugOpen] = useState(false);
   const hasSourceContent = Boolean(source_content_urls && source_content_urls.length > 0);
 
-  const requestId = currentEntry?.request_id ?? null;
+  const changesetId = currentEntry?.changeset_id ?? null;
 
   // Which view is open. Held as state, not read from the URL each render: replaceState does not
   // re-render, and the tab bar (§17 steps 6–7) needs the same handle. The URL is
@@ -101,7 +101,7 @@ function ReviewSession(host: ReviewSessionHost) {
   // out rather than accumulating forever.
   const allIssues = review_data?.issues ?? [];
   const [issueChecks, setIssueChecks] = useLocalStorage(
-    issueChecksKey(requestId ?? "none"),
+    issueChecksKey(changesetId ?? "none"),
     {},
     { ttl: ISSUE_CHECKS_TTL_MS },
   ) as [IssueChecks, (next: IssueChecks) => void];
@@ -124,7 +124,7 @@ function ReviewSession(host: ReviewSessionHost) {
     // The seat is not a field, so the diff cannot see a move on its own.
     proposals: proposalsByPersonId(changes ?? []),
   });
-  const frozen = useFrozenFields(requestId, cardFields(cards));
+  const frozen = useFrozenFields(changesetId, cardFields(cards));
 
   // Two scraped people resolving to one id collapse into a single diff entry —
   // last wins — so one of them is on screen nowhere. Everything downstream is
@@ -294,7 +294,7 @@ function ReviewSession(host: ReviewSessionHost) {
             : ""}
           ${publishedUrl ? html`<a class="btn btn-sm" href=${publishedUrl} target="_blank" rel="noopener">View published data <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
           ${hasSourceContent ? html`<button class="btn btn-sm secondary" @click=${() => setDebugOpen(true)}>Debug</button>` : ""}
-          <report-issue-button .requestId=${requestId}></report-issue-button>
+          <report-issue-button .changesetId=${changesetId}></report-issue-button>
         </div>
       </div>
       <div class="review-page__views" role="tablist" aria-label="Review views">
@@ -331,7 +331,7 @@ function ReviewSession(host: ReviewSessionHost) {
         : html`<person-editor-list
             .cards=${cards}
             .frozen=${frozen}
-            .requestId=${requestId}
+            .changesetId=${changesetId}
             .dirtyIds=${dirtyIds}
             .isReadOnly=${is_read_only}
             .jurisdictionOcdid=${jurisdictionOcdid}

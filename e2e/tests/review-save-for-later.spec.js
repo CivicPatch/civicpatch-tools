@@ -55,7 +55,7 @@ test.describe("Save updates", () => {
     await page.locator(".review-page__save-btn").click();
 
     await expect.poll(() => savedBody).not.toBeNull();
-    expect(savedBody.request_id).toBe("00000000-0000-0000-eeee-000000000001");
+    expect(savedBody.changeset_id).toBe("00000000-0000-0000-eeee-000000000001");
     // The edit must actually reach the server — this is the payload the button wires up.
     expect(JSON.stringify(savedBody.data)).toContain("Janey Smith");
   });

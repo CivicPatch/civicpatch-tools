@@ -356,7 +356,7 @@ async def test_publish_writes_memberships_for_the_roster():
             VALUES (%s, %s, 'scrape', 'SUCCESS')
             ON CONFLICT (id) DO NOTHING
             """,
-            (request_id := str(uuid.uuid4()), _OCDID),
+            (changeset_id := str(uuid.uuid4()), _OCDID),
         )
         # Publish reads `sourced_at` as the observation's clock, so this is where `_T0` goes.
         await cur.execute(
@@ -365,7 +365,7 @@ async def test_publish_writes_memberships_for_the_roster():
                                 created_at = %s, sourced_at = %s
             WHERE id = %s
             """,
-            (_T0, _T0, request_id),
+            (_T0, _T0, changeset_id),
         )
         await conn.commit()
 
@@ -398,7 +398,7 @@ async def test_publish_writes_memberships_for_the_roster():
         )
     ]
 
-    written = await publish_request(request_id, _OCDID, people, None, derived=derived)
+    written = await publish_request(changeset_id, _OCDID, people, None, derived=derived)
     assert written == 1
 
     pool = await get_pool()
@@ -435,7 +435,7 @@ async def test_publish_writes_memberships_for_the_roster():
         assert source_urls == ["https://example.gov"]
         assert emails == [], "a person with no emails has none, not NULL"
 
-        await cur.execute("DELETE FROM changesets WHERE id = %s", (request_id,))
+        await cur.execute("DELETE FROM changesets WHERE id = %s", (changeset_id,))
         await conn.commit()
 
     # `office` is no longer stored — it is rebuilt from the membership publish just wrote.
@@ -788,7 +788,7 @@ async def _already_published() -> None:
 
 
 async def _seed_request() -> str:
-    request_id = str(uuid.uuid4())
+    changeset_id = str(uuid.uuid4())
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -802,19 +802,19 @@ async def _seed_request() -> str:
         await cur.execute(
             "INSERT INTO changesets (id, jurisdiction_ocdid, kind) "
             "VALUES (%s, %s, 'people_edit')",
-            (request_id, _OCDID),
+            (changeset_id, _OCDID),
         )
         await conn.commit()
-    return request_id
+    return changeset_id
 
 
-async def _add_post_logs(request_id: str) -> list[dict]:
+async def _add_post_logs(changeset_id: str) -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT changes, user_id FROM change_logs "
             "WHERE type = 'add_post' AND changeset_id = %s",
-            (request_id,),
+            (changeset_id,),
         )
         return [{"changes": row[0], "user_id": row[1]} for row in await cur.fetchall()]
 
@@ -845,11 +845,11 @@ async def test_minting_a_post_is_logged_against_the_scrape_that_caused_it():
     """"Publishing this roster created a seat" is the event a reviewer needs told about, and it
     is answered from the log rather than a column on `posts` — creation happens once and never
     changes, so it is an event, not a property of the row."""
-    request_id = await _seed_request()
+    changeset_id = await _seed_request()
 
-    await _mint([_derived("mayor", _BASE)], request_id)
+    await _mint([_derived("mayor", _BASE)], changeset_id)
 
-    logs = await _add_post_logs(request_id)
+    logs = await _add_post_logs(changeset_id)
     assert len(logs) == 1
     assert logs[0]["changes"]["role_id"] == "mayor"
     # No user: nobody asserted this. A null user beside a request is what says "a scrape did
@@ -875,8 +875,8 @@ async def test_matching_an_existing_post_logs_nothing():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_only_the_new_seat_is_logged_when_a_scrape_mixes_both():
-    request_id = await _seed_request()
-    await _mint([_derived("mayor", _BASE)], request_id)
+    changeset_id = await _seed_request()
+    await _mint([_derived("mayor", _BASE)], changeset_id)
 
     later = await _seed_request()
     await _mint([_derived("mayor", _BASE), _derived("council-member", _WARD_3)], later)
@@ -952,7 +952,7 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         await cur.execute(
             "INSERT INTO changesets (id, jurisdiction_ocdid, kind, status) "
             "VALUES (%s, %s, 'scrape', 'SUCCESS')",
-            (request_id := str(uuid.uuid4()), _OCDID),
+            (changeset_id := str(uuid.uuid4()), _OCDID),
         )
         # The run too: `_apply_scrape_changes` swallows its own errors, so without this the
         # old close-at-ingest path would raise on the missing run and this test would pass
@@ -960,14 +960,14 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         await cur.execute(
             "UPDATE changesets SET status = 'SUCCESS', progress = 100, "
             "created_at = %s, sourced_at = %s WHERE id = %s",
-            (_T1, _T1, request_id),
+            (_T1, _T1, changeset_id),
         )
         await conn.commit()
 
     # A scrape naming somebody else entirely: the seated person is absent from it.
     other_id = await _seed_person()
     await _apply_scrape_changes(
-        request_id,
+        changeset_id,
         _OCDID,
         [
             DerivedPost(

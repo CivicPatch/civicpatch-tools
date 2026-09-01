@@ -11,17 +11,17 @@ from shared.utils.statuses import ChangeLogType
 logger = logging.getLogger(__name__)
 
 
-async def record_publish(request_id: str, user_id: str | None) -> None:
+async def record_publish(changeset_id: str, user_id: str | None) -> None:
     # Best-effort: the publish already succeeded, so a logging failure must not surface as one.
     try:
-        jurisdiction_ocdid = await get_request_jurisdiction(request_id)
-        await create_change_log(ChangeLogType.MERGE_REVIEW, user_id, jurisdiction_ocdid, request_id)
+        jurisdiction_ocdid = await get_request_jurisdiction(changeset_id)
+        await create_change_log(ChangeLogType.MERGE_REVIEW, user_id, jurisdiction_ocdid, changeset_id)
     except Exception:
-        logger.exception("Failed to record merge_review change log for request %s", request_id)
+        logger.exception("Failed to record merge_review change log for request %s", changeset_id)
 
 
 async def record_manual_edits(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     user_id: str,
     before: list[dict],
@@ -31,13 +31,13 @@ async def record_manual_edits(
     # versus the content just written to GitHub. Best-effort, like the event records above.
     try:
         for change in diff_people(before, after):
-            await create_change_log(change.type, user_id, jurisdiction_ocdid, request_id, change.payload)
+            await create_change_log(change.type, user_id, jurisdiction_ocdid, changeset_id, change.payload)
     except Exception:
-        logger.exception("Failed to record manual edits for request %s", request_id)
+        logger.exception("Failed to record manual edits for request %s", changeset_id)
 
 
 async def record_jurisdiction_edit(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     jurisdiction_name: str,
     user_id: str,
@@ -54,7 +54,7 @@ async def record_jurisdiction_edit(
             fields=field_changes(before, after),
         )
         await create_change_log(
-            ChangeLogType.EDIT_JURISDICTION, user_id, jurisdiction_ocdid, request_id, payload
+            ChangeLogType.EDIT_JURISDICTION, user_id, jurisdiction_ocdid, changeset_id, payload
         )
     except Exception:
         logger.exception("Failed to record jurisdiction edit for %s", jurisdiction_ocdid)

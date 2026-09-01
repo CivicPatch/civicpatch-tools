@@ -35,8 +35,8 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
       setReviewLoading(true);
       try {
         const [review, prData] = await Promise.all([
-          fetchReview(entry.request_id),
-          fetchPullRequestData(entry.jurisdiction.ocdid, entry.request_id),
+          fetchReview(entry.changeset_id),
+          fetchPullRequestData(entry.jurisdiction.ocdid, entry.changeset_id),
         ]);
         setReviewData(review?.data ?? null);
         setFullData({ existing: prData?.existing ?? [], pull_request: prData?.data ?? [] });
@@ -50,7 +50,7 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
   const handleApprove = (el) => {
     el.currentTarget.dispatchEvent(
       new CustomEvent(APPROVE_EVENT, {
-        detail: { request_id: entry.request_id, jurisdiction_ocdid: entry.jurisdiction.ocdid },
+        detail: { changeset_id: entry.changeset_id, jurisdiction_ocdid: entry.jurisdiction.ocdid },
         bubbles: true,
       }),
     );
@@ -59,7 +59,7 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
   const handleReject = (el) => {
     el.currentTarget.dispatchEvent(
       new CustomEvent(REJECT_EVENT, {
-        detail: { request_id: entry.request_id },
+        detail: { changeset_id: entry.changeset_id },
         bubbles: true,
       }),
     );

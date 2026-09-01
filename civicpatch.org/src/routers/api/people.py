@@ -159,7 +159,7 @@ def get_router() -> APIRouter:
         ),
     ):
         try:
-            request_id, _ = await roster_edits.edit_published(
+            changeset_id, _ = await roster_edits.edit_published(
                 request.jurisdiction_ocdid, request.data, user
             )
         except PeopleValidationError as exc:
@@ -171,6 +171,6 @@ def get_router() -> APIRouter:
                 status_code=409,
                 detail="That edit would leave the jurisdiction with nobody on it.",
             )
-        return {"data": {"request_id": request_id}}
+        return {"data": {"changeset_id": changeset_id}}
 
     return router

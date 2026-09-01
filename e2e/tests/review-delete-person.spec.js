@@ -45,7 +45,7 @@ async function stubMerge(page) {
 }
 
 async function openReconcileCard(page) {
-  await page.goto(`/review/session?request_id=${RECONCILE_REQUEST_ID}`);
+  await page.goto(`/review/session?changeset_id=${RECONCILE_REQUEST_ID}`);
   await openDetail(page);
 }
 

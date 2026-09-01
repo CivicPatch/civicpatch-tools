@@ -49,13 +49,13 @@ async def handle_submit_pipeline_run_artifacts(
         return await _handle_submit_pipeline_run_artifacts(request)
     except Exception as e:
         logger.error(
-            f"[{request.request_id}] Artifact submission failed: {e}", exc_info=True
+            f"[{request.changeset_id}] Artifact submission failed: {e}", exc_info=True
         )
         await update_pipeline_run_status(
-            request.request_id, status=PipelineRunStatus.ERROR, progress=None
+            request.changeset_id, status=PipelineRunStatus.ERROR, progress=None
         )
         await upsert_issue(
-            request.request_id, PipelineIssueType.PIPELINE_ERROR, [{"error": str(e)}]
+            request.changeset_id, PipelineIssueType.PIPELINE_ERROR, [{"error": str(e)}]
         )
         raise
 
@@ -98,19 +98,19 @@ def _image_url_maps(image_file_dir: str, filenames_to_urls: dict) -> tuple[dict,
 
 
 async def _store_source_records(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     records_by_person: dict[str, list[dict]],
 ) -> None:
     """Every sighting as the page gave it. Never fatal."""
     try:
         stored = await insert_source_records(
-            request_id, jurisdiction_ocdid, records_by_person
+            changeset_id, jurisdiction_ocdid, records_by_person
         )
-        logger.info(f"[{request_id}] Stored {stored} source record(s)")
+        logger.info(f"[{changeset_id}] Stored {stored} source record(s)")
     except Exception as e:
         logger.error(
-            f"[{request_id}] Failed to store source records: {e}", exc_info=True
+            f"[{changeset_id}] Failed to store source records: {e}", exc_info=True
         )
 
 
@@ -125,7 +125,7 @@ async def _get_proposed_changes(
 
 
 async def _dismiss_if_nothing_to_review(
-    cur, request_id: str, changes: list[ProposedChange]
+    cur, changeset_id: str, changes: list[ProposedChange]
 ) -> None:
     """Retire a scrape nothing needs to be asked about.
 
@@ -134,12 +134,12 @@ async def _dismiss_if_nothing_to_review(
     """
     if not nothing_to_review(changes):
         return
-    if await changesets_db.dismiss_as_unchanged(cur, request_id):
-        logger.info(f"[{request_id}] Dismissed: nothing to review")
+    if await changesets_db.dismiss_as_unchanged(cur, changeset_id):
+        logger.info(f"[{changeset_id}] Dismissed: nothing to review")
 
 
 async def _derive_posts(
-    request_id: str,
+    changeset_id: str,
     records: list[dict],
     roles: list[Role],
     taxonomy: Taxonomy,
@@ -151,15 +151,15 @@ async def _derive_posts(
     """
     try:
         derived = await roster_ingest.derive_posts(records, roles, taxonomy)
-        logger.info(f"[{request_id}] Derived {len(derived)} post(s)")
+        logger.info(f"[{changeset_id}] Derived {len(derived)} post(s)")
         return derived
     except Exception as e:
-        logger.error(f"[{request_id}] Failed to derive posts: {e}", exc_info=True)
+        logger.error(f"[{changeset_id}] Failed to derive posts: {e}", exc_info=True)
         return []
 
 
 async def _record_resolved_url(
-    request_id: str, jurisdiction_ocdid: str, workflow_context: dict
+    changeset_id: str, jurisdiction_ocdid: str, workflow_context: dict
 ) -> None:
     """Point the registry at wherever the scrape found the jurisdiction. Never fatal."""
     url = resolved_url(workflow_context)
@@ -169,7 +169,7 @@ async def _record_resolved_url(
         await record_resolved_url(jurisdiction_ocdid, url)
     except Exception as e:
         logger.error(
-            f"[{request_id}] Failed to record resolved URL: {e}", exc_info=True
+            f"[{changeset_id}] Failed to record resolved URL: {e}", exc_info=True
         )
 
 
@@ -205,23 +205,23 @@ async def _ingest_roster(
         f.write(yaml_dump(updated_data))
 
     await _store_source_records(
-        request.request_id,
+        request.changeset_id,
         request.jurisdiction_ocdid,
         records_with_images(records_by_person, source_urls, served),
     )
-    derived = await _derive_posts(request.request_id, updated_data, roles, taxonomy)
-    await _apply_scrape_changes(request.request_id, request.jurisdiction_ocdid, derived)
+    derived = await _derive_posts(request.changeset_id, updated_data, roles, taxonomy)
+    await _apply_scrape_changes(request.changeset_id, request.jurisdiction_ocdid, derived)
     await _record_resolved_url(
-        request.request_id, request.jurisdiction_ocdid, workflow_context
+        request.changeset_id, request.jurisdiction_ocdid, workflow_context
     )
 
 
     for issue in workflow_context.get("data", {}).get("issues", []):
-        await upsert_issue(request.request_id, issue["type"], [issue.get("data") or {}])
+        await upsert_issue(request.changeset_id, issue["type"], [issue.get("data") or {}])
 
 
 async def _apply_scrape_changes(
-    request_id: str, jurisdiction_ocdid: str, derived: list[DerivedPost]
+    changeset_id: str, jurisdiction_ocdid: str, derived: list[DerivedPost]
 ) -> None:
     """Retire the scrape if it proposes nothing anyone needs to look at.
 
@@ -239,18 +239,18 @@ async def _apply_scrape_changes(
         pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
             changes = await _get_proposed_changes(cur, jurisdiction_ocdid, derived)
-            await _dismiss_if_nothing_to_review(cur, request_id, changes)
+            await _dismiss_if_nothing_to_review(cur, changeset_id, changes)
             await conn.commit()
     except Exception as e:
         logger.error(
-            f"[{request_id}] Failed to apply the scrape's changes: {e}", exc_info=True
+            f"[{changeset_id}] Failed to apply the scrape's changes: {e}", exc_info=True
         )
 
 
-async def _record_pipeline_error(request_id: str, workflow_context: dict) -> None:
+async def _record_pipeline_error(changeset_id: str, workflow_context: dict) -> None:
     context_data = workflow_context.get("data", {})
     error_step = context_data.get("error_step") or PipelineIssueType.PIPELINE_ERROR
-    await upsert_issue(request_id, error_step, [context_data.get("error_detail") or {}])
+    await upsert_issue(changeset_id, error_step, [context_data.get("error_detail") or {}])
 
 
 async def _handle_submit_pipeline_run_artifacts(
@@ -259,17 +259,17 @@ async def _handle_submit_pipeline_run_artifacts(
     dirs = await artifacts.unpack(request.zip_path, request.temp_dir)
 
     filenames_to_urls = await storage_service.upload_directory(
-        PUBLIC_BUCKET, dirs.images, request.request_id
+        PUBLIC_BUCKET, dirs.images, request.changeset_id
     )
     await storage_service.upload_directory(
-        PRIVATE_BUCKET, dirs.debug, request.request_id
+        PRIVATE_BUCKET, dirs.debug, request.changeset_id
     )
 
     try:
         await pipeline_costs.send_costs(dirs.debug)
     except Exception as e:
         logger.error(
-            f"Failed to send costs for {request.request_id}: {e}", exc_info=True
+            f"Failed to send costs for {request.changeset_id}: {e}", exc_info=True
         )
 
     workflow_context = artifacts.read_workflow_context(dirs.debug)
@@ -277,10 +277,10 @@ async def _handle_submit_pipeline_run_artifacts(
     if request.pipeline_run_status == PipelineRunStatus.SUCCESS:
         await _ingest_roster(request, dirs, filenames_to_urls, workflow_context)
     else:
-        await _record_pipeline_error(request.request_id, workflow_context)
+        await _record_pipeline_error(request.changeset_id, workflow_context)
 
     return SubmitPipelineRunArtifactsResponse(
         status="uploaded",
-        request_id=request.request_id,
+        changeset_id=request.changeset_id,
         jurisdiction_ocdid=request.jurisdiction_ocdid,
     )

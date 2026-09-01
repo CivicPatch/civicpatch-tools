@@ -69,7 +69,7 @@ def _split_content_into_chunks(content: str, max_chars: int) -> list[str]:
 
 async def _process_with_llm_in_chunks(
     source_url: str,
-    request_id,
+    changeset_id,
     jurisdiction_ocdid: str,
     content: str,
     prompt: str,
@@ -85,7 +85,7 @@ async def _process_with_llm_in_chunks(
     for chunk in chunks:
         found = await process_with_llm(
             source_url,
-            request_id,
+            changeset_id,
             jurisdiction_ocdid,
             chunk,
             prompt,
@@ -245,7 +245,7 @@ async def check_page_relevance(
         page_to_process.url, context.data.config.name or "", known_roles
     )
     raw_response = await open_router_llm.run_prompt(
-        context.request_id,
+        context.changeset_id,
         context.data.jurisdiction_ocdid,
         prompt,
         response_schema=RelevantPageResponseSchema,
@@ -300,7 +300,7 @@ async def collect_page_records(
         logger.info(f"Running LLM: openrouter_seed seed={seed}")
         people_found_in_page = await _process_with_llm_in_chunks(
             page_to_process.url,
-            context.request_id,
+            context.changeset_id,
             context.data.jurisdiction_ocdid,
             content,
             prompt,
@@ -331,14 +331,14 @@ async def collect_page_records(
 
 async def process_with_llm(
     source_url: str,
-    request_id,
+    changeset_id,
     jurisdiction_ocdid: str,
     content: str,
     prompt: str,
     seed: Optional[int] = None,
 ) -> List[PersonRecord]:
     response = await open_router_llm.run_prompt(
-        request_id,
+        changeset_id,
         jurisdiction_ocdid,
         prompt,
         response_schema=PeopleArrayLLMResponseSchema,

@@ -44,7 +44,7 @@ async def _get_client() -> Client:
 
 async def start_people_collector_workflow(
     jurisdiction_ocdid: str,
-    request_id: str,
+    changeset_id: str,
     dispatch_mode: str = "remote",
     url: Optional[str] = None,
     source_urls: Optional[list[str]] = None,
@@ -55,7 +55,7 @@ async def start_people_collector_workflow(
     # The frontend is responsible for not calling this endpoint when a job is actively running.
     handle = await client.start_workflow(
         WORKFLOW_CLASS_NAME,
-        args=[jurisdiction_ocdid, request_id, dispatch_mode, url, source_urls],
+        args=[jurisdiction_ocdid, changeset_id, dispatch_mode, url, source_urls],
         id=workflow_id,
         task_queue=PEOPLE_COLLECTOR_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
@@ -125,7 +125,7 @@ async def enqueue_open_data_batch_commit(request: OpenDataBatchCommitRequest) ->
     makes a double-clicked Publish harmless.
     """
     client = await _get_client()
-    selection = ",".join(sorted(item.request_id for item in request.items))
+    selection = ",".join(sorted(item.changeset_id for item in request.items))
     digest = hashlib.sha256(selection.encode()).hexdigest()[:12]
     await client.start_workflow(
         OpenDataBatchCommitWorkflow.run,

@@ -17,7 +17,7 @@ from pipelines_environment import get_env_vars
 from services.civicpatch_api import get_jurisdiction_info, register_pipeline_run
 
 
-async def run_pipeline_cli(request_id: str, request: PeopleCollectorJobRequest):
+async def run_pipeline_cli(changeset_id: str, request: PeopleCollectorJobRequest):
     warnings, errors = validate_people_request(request)
     if errors:
         print("Errors:", errors)
@@ -28,7 +28,7 @@ async def run_pipeline_cli(request_id: str, request: PeopleCollectorJobRequest):
 
     try:
         await start_people_collector(
-            request_id=request_id,
+            changeset_id=changeset_id,
             jurisdiction_ocdid=request.jurisdiction_ocdid,
             config=request.config,
         )
@@ -38,7 +38,7 @@ async def run_pipeline_cli(request_id: str, request: PeopleCollectorJobRequest):
         sys.exit(1)  # Already logged in people_collector.main
 
 async def _run_pipeline_async(args):
-    request_id = args.request_id or id_utils.make_request_id()
+    changeset_id = args.changeset_id or id_utils.make_changeset_id()
     source_urls = json.loads(args.source_urls) if args.source_urls else None
     name = args.name
     url = args.url
@@ -49,7 +49,7 @@ async def _run_pipeline_async(args):
             info = await get_jurisdiction_info(client, args.jurisdiction_ocdid)
             name = name or info.get("name")
             url = url or info.get("url")
-        await register_pipeline_run(client, request_id, args.jurisdiction_ocdid, name, url)
+        await register_pipeline_run(client, changeset_id, args.jurisdiction_ocdid, name, url)
 
     request = PeopleCollectorJobRequest(
         jurisdiction_ocdid=args.jurisdiction_ocdid,
@@ -59,7 +59,7 @@ async def _run_pipeline_async(args):
             source_urls=source_urls,
         ),
     )
-    await run_pipeline_cli(request_id, request)
+    await run_pipeline_cli(changeset_id, request)
 
 
 def main():
@@ -97,7 +97,7 @@ def main():
         "--url", required=False, default=None, help="URL of the city council page"
     )
     run_pipeline_parser.add_argument(
-        "--request-id", required=False, help="Optional request ID"
+        "--changeset-id", required=False, help="Optional changeset ID"
     )
     run_pipeline_parser.add_argument(
         "--source-urls", required=False, help="JSON array of specific URLs to scrape"

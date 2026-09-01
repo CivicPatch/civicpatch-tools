@@ -22,8 +22,8 @@ export const TEST_REQUEST_ID = "00000000-0000-0000-eeee-000000000001";
 export const JANE_PERSON_ID = "00000000-0000-0000-aaaa-000000000001";
 
 /** A deterministic person uuid per request, so teardown and assertions can both find it. */
-function personIdFor(requestId) {
-  return "00000000-0000-0000-aaaa-" + requestId.slice(-12);
+function personIdFor(changesetId) {
+  return "00000000-0000-0000-aaaa-" + changesetId.slice(-12);
 }
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -63,7 +63,7 @@ const TEST_PR_ID_3 = "00000000-0000-0000-eeee-000000000006";
 
 // Baseline fixture — a first-capture jurisdiction (scraped_at left NULL) so the
 // review renders in BASELINE mode (banner, no diff panel). The baseline-mode spec
-// deep-links to it by request_id. Kept in its own state (vt) so this extra open
+// deep-links to it by changeset_id. Kept in its own state (vt) so this extra open
 // card doesn't pollute the nj review queue the state-switching specs count on.
 export const BASELINE_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:vt/place:e2e_baseline/government";
@@ -73,7 +73,7 @@ const BASELINE_PR_NUMBER = 4;
 
 // Populated reconcile fixture — a previously-scraped jurisdiction (scraped_at
 // set) with existing people, so the diff renders real changed/added/removed
-// states. Own state (vt2 → "nh") and deep-linked by request_id, like baseline.
+// states. Own state (vt2 → "nh") and deep-linked by changeset_id, like baseline.
 export const RECONCILE_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:nh/place:e2e_reconcile/government";
 export const RECONCILE_REQUEST_ID = "00000000-0000-0000-eeee-000000000009";
@@ -189,7 +189,7 @@ const TX_PR_ID = "00000000-0000-0000-eeee-000000000011";
 // Issue-markers fixture — reconcile mode (scraped_at set), no existing people so
 // every proposed person renders as an "added" card. Its issues carry
 // structured issues that anchor to proposed person ids, exercising the review card's
-// per-card markers. Own state (me) and deep-linked by request_id, like the others.
+// per-card markers. Own state (me) and deep-linked by changeset_id, like the others.
 export const MARKERS_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:me/place:e2e_markers/government";
 export const MARKERS_REQUEST_ID = "00000000-0000-0000-eeee-000000000012";
@@ -201,7 +201,7 @@ const MARKERS_PR_NUMBER = 12;
 // renders the terminal-status banner, the open-data link and the jurisdiction website
 // link, and that hides the publish/save/close actions. Its request is still
 // 'merged' because the card's link still reads PR metadata.
-// Own state (ri) and deep-linked by request_id: a published request is out of the
+// Own state (ri) and deep-linked by changeset_id: a published request is out of the
 // review pool, so it is only reachable by link, which is how reviewers reach it too.
 export const READ_ONLY_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:ri/place:e2e_read_only/government";
@@ -290,7 +290,7 @@ function asSightings(proposed) {
  */
 async function seedReviewCard(
   client,
-  { requestId, ocdid, people = [], publishedAt = null, ageSeconds = 0 },
+  { changesetId, ocdid, people = [], publishedAt = null, ageSeconds = 0 },
 ) {
   await client.query(
     // `ageSeconds` makes the queue order intentional rather than an accident of insertion
@@ -302,12 +302,12 @@ async function seedReviewCard(
      VALUES ($1, 'scrape', $2, '{}', 'success', 100, NOW(),
              NOW() - ($4 * INTERVAL '1 second'), $3)
      ON CONFLICT (id) DO NOTHING`,
-    [requestId, ocdid, publishedAt, ageSeconds],
+    [changesetId, ocdid, publishedAt, ageSeconds],
   );
   // Re-seeding must not double the sightings: source_records has an auto id, so there is
   // nothing to ON CONFLICT on.
   await client.query(`DELETE FROM source_records WHERE changeset_id = $1`, [
-    requestId,
+    changesetId,
   ]);
   for (const person of people) {
     const { rows } = await client.query(
@@ -316,7 +316,7 @@ async function seedReviewCard(
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
        RETURNING id`,
       [
-        requestId,
+        changesetId,
         ocdid,
         person.name,
         person.label ?? "",
@@ -492,7 +492,7 @@ export async function seedE2eFixtures() {
     );
 
     await seedReviewCard(client, {
-      requestId: TEST_REQUEST_ID,
+      changesetId: TEST_REQUEST_ID,
       ocdid: TEST_JURISDICTION_OCDID,
       people: [
         {
@@ -544,7 +544,7 @@ export async function seedE2eFixtures() {
         ],
       );
       await seedReviewCard(client, {
-        requestId: reqId,
+        changesetId: reqId,
         ocdid: jOcdid,
         // City 1 newest, so it is the first card — which is what the review specs assert.
         ageSeconds: prNum,
@@ -567,7 +567,7 @@ export async function seedE2eFixtures() {
       [BASELINE_JURISDICTION_OCDID],
     );
     await seedReviewCard(client, {
-      requestId: BASELINE_REQUEST_ID,
+      changesetId: BASELINE_REQUEST_ID,
       ocdid: BASELINE_JURISDICTION_OCDID,
       people: [
         {
@@ -650,7 +650,7 @@ export async function seedE2eFixtures() {
       },
     ];
     await seedReviewCard(client, {
-      requestId: RECONCILE_REQUEST_ID,
+      changesetId: RECONCILE_REQUEST_ID,
       ocdid: RECONCILE_JURISDICTION_OCDID,
       people: asSightings(reconcileProposed),
     });
@@ -668,7 +668,7 @@ export async function seedE2eFixtures() {
       await seedPerson(client, SCALE_JURISDICTION_OCDID, person);
     }
     await seedReviewCard(client, {
-      requestId: SCALE_REQUEST_ID,
+      changesetId: SCALE_REQUEST_ID,
       ocdid: SCALE_JURISDICTION_OCDID,
       people: asSightings(buildScaleProposed()),
     });
@@ -716,7 +716,7 @@ export async function seedE2eFixtures() {
       },
     ];
     await seedReviewCard(client, {
-      requestId: DUPLICATE_REQUEST_ID,
+      changesetId: DUPLICATE_REQUEST_ID,
       ocdid: DUPLICATE_JURISDICTION_OCDID,
       people: asSightings(duplicateProposed),
     });
@@ -763,7 +763,7 @@ export async function seedE2eFixtures() {
       },
     ];
     await seedReviewCard(client, {
-      requestId: MARKERS_REQUEST_ID,
+      changesetId: MARKERS_REQUEST_ID,
       ocdid: MARKERS_JURISDICTION_OCDID,
       people: asSightings(markersProposed),
     });
@@ -785,7 +785,7 @@ export async function seedE2eFixtures() {
       ],
     );
     await seedReviewCard(client, {
-      requestId: READ_ONLY_REQUEST_ID,
+      changesetId: READ_ONLY_REQUEST_ID,
       ocdid: READ_ONLY_JURISDICTION_OCDID,
       publishedAt: new Date().toISOString(),
       people: [

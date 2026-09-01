@@ -25,7 +25,7 @@ function HistoryModal({ open, item, onClose }) {
       .content=${html`
         <div>
           <p><strong>Date / Time:</strong> ${fmtDate(item.created_at)}</p>
-          <p><strong>Request ID:</strong> <code>${item.request_id}</code></p>
+          <p><strong>Request ID:</strong> <code>${item.changeset_id}</code></p>
           <p><strong>Job status:</strong> ${item.pipeline_run_status}</p>
           <p><strong>Progress:</strong> ${item.pipeline_run_progress ?? "?"}%</p>
           <p><strong>Time to scrape:</strong> ${getDurationString(item.created_at, item.updated_at)}</p>

@@ -112,7 +112,7 @@ def get_cost_tracker(jurisdiction_ocdid: str):
 
 def add_llm_cost(
         logger: log_utils.PipelineRunLogger,
-        request_id: str,
+        changeset_id: str,
         jurisdiction_ocdid: str,
         llm_name: str,
         model: str,
@@ -150,7 +150,7 @@ def add_llm_cost(
     cost_tracker = get_cost_tracker(jurisdiction_ocdid)
     cost_tracker['llm_costs'].append({
         "timestamp": result.timestamp,
-        "request_id": request_id,
+        "changeset_id": changeset_id,
         "jurisdiction_ocdid": result.jurisdiction_ocdid,
         "llm_name": result.llm_name,
         "model": result.model,
@@ -168,7 +168,7 @@ def add_llm_cost(
     logger.info(f"LLM Cost added: {result.llm_name} model {result.model} - Input tokens: {input_tokens}, Output tokens: {output_tokens}, Total cost: ${result.total_cost:.6f}")
 
 
-def total_cost_by_request(request_id, jurisdiction_ocdid: str) -> dict[str, Decimal]:
+def total_cost_by_request(changeset_id, jurisdiction_ocdid: str) -> dict[str, Decimal]:
     cost_tracker = get_cost_tracker(jurisdiction_ocdid)
     llm_costs = cost_tracker['llm_costs']
     total_costs_llm = sum([item['total_cost'] for item in llm_costs])
@@ -180,7 +180,7 @@ def total_cost_by_request(request_id, jurisdiction_ocdid: str) -> dict[str, Deci
         if key not in grouped_llm_costs:
             grouped_llm_costs[key] = {
                 "timestamp": item['timestamp'],
-                "request_id": item['request_id'],
+                "changeset_id": item['changeset_id'],
                 "jurisdiction_ocdid": item['jurisdiction_ocdid'],
                 "llm_name": item['llm_name'],
                 "input_tokens": 0,
@@ -198,7 +198,7 @@ def total_cost_by_request(request_id, jurisdiction_ocdid: str) -> dict[str, Deci
     # Build the total_cost_by_request_id array with dynamic LLM columns
     total_cost_row = {
         "timestamp": get_timestamp(),
-        "request_id": request_id,
+        "changeset_id": changeset_id,
         "jurisdiction_ocdid" : jurisdiction_ocdid,
         "total_costs_llm": total_costs_llm,
     }
@@ -212,14 +212,14 @@ def total_cost_by_request(request_id, jurisdiction_ocdid: str) -> dict[str, Deci
     total_cost_row["total_cost"] = total_costs_llm
     return total_cost_row
 
-def log_costs(request_id, jurisdiction_ocdid):
+def log_costs(changeset_id, jurisdiction_ocdid):
     cost_tracker = get_cost_tracker(jurisdiction_ocdid)
     llm_costs = cost_tracker['llm_costs']
 
     data_path = data_path_utils.get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
     costs_file_path = os.path.join(data_path, "costs.json")
 
-    total_cost_row = total_cost_by_request(request_id, jurisdiction_ocdid)
+    total_cost_row = total_cost_by_request(changeset_id, jurisdiction_ocdid)
 
     with open(costs_file_path, mode='w') as file:
         json_object = json.dumps({

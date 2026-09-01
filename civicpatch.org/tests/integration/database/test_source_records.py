@@ -58,9 +58,9 @@ async def sentinel_request():
             """,
             (_SENTINEL_OCDID,),
         )
-        request_id = (await cur.fetchone())[0]
+        changeset_id = (await cur.fetchone())[0]
         await conn.commit()
-    yield request_id
+    yield changeset_id
     await _cleanup()
 
 

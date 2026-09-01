@@ -21,7 +21,7 @@ export const CHANGESET_KIND = Object.freeze({
 });
 
 export interface HistoryEntry {
-  request_id: string;
+  changeset_id: string;
   created_at: string;
   kind?: string | null;
   open_data_url?: string | null;
@@ -117,7 +117,7 @@ function renderRow(entry: HistoryEntry, ocdid: string, isSignedIn: boolean) {
         ${manualEdit
           ? nothing
           : isSignedIn
-            ? html`<a class="btn-primary" href=${reviewSessionUrl(state, entry.request_id)}>
+            ? html`<a class="btn-primary" href=${reviewSessionUrl(state, entry.changeset_id)}>
                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Review
               </a>`
             : html`<a class="btn-primary" href=${LOGIN_PATH}>

@@ -13,7 +13,7 @@ from shared.utils.statuses import PipelineRunStatus
 
 def make_request(**kwargs):
     defaults = dict(
-        request_id="test-request-id",
+        changeset_id="test-request-id",
         jurisdiction_ocdid="ocd-division/country:us/state:ca/place:oakland",
         server_detail=ServerDetail(user_email="test@civicpatch.org", server_url="civicpatch.org"),
         zip_path="/tmp/test.zip",

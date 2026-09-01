@@ -68,7 +68,7 @@ async def other_reviewer():
 
 @pytest_asyncio.fixture
 async def open_pr():
-    """An open, reviewable PR in state zz. Yields (request_id, ocdid)."""
+    """An open, reviewable PR in state zz. Yields (changeset_id, ocdid)."""
     suffix = uuid.uuid4().hex[:8]
     ocdid = f"ocd-jurisdiction/country:us/state:zz/place:saved_{suffix}/government"
     pool = await get_pool()
@@ -81,21 +81,21 @@ async def open_pr():
             "INSERT INTO changesets (kind, status, jurisdiction_ocdid) VALUES ('scrape', 'SUCCESS', %s) RETURNING id::text",
             (ocdid,),
         )
-        request_id = (await cur.fetchone())[0]  # type: ignore[index]
+        changeset_id = (await cur.fetchone())[0]  # type: ignore[index]
         await cur.execute(
             # The review pool is "this scrape saw somebody" — one sighting is a roster.
             "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
             "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
-            (request_id, ocdid),
+            (changeset_id, ocdid),
         )
         await cur.execute("UPDATE changesets SET status = 'SUCCESS', "
-            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (request_id,))
+            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,))
 
-    yield request_id, ocdid
+    yield changeset_id, ocdid
 
     async with pool.connection() as conn:
         # The run lives on the request now; deleting the request takes it.
-        await conn.execute("DELETE FROM changesets WHERE id::text = %s", (request_id,))
+        await conn.execute("DELETE FROM changesets WHERE id::text = %s", (changeset_id,))
         await conn.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
 
 
@@ -104,7 +104,7 @@ async def _create_session(user_id: uuid.UUID) -> str:
     return result["id"]
 
 
-async def _insert_entry(session_id: str, entry_number: int, status: str, request_id: str, ocdid: str) -> None:
+async def _insert_entry(session_id: str, entry_number: int, status: str, changeset_id: str, ocdid: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
@@ -113,7 +113,7 @@ async def _insert_entry(session_id: str, entry_number: int, status: str, request
                 (review_session_id, request_ids, jurisdiction_ocdid, status, entry_number)
             VALUES (%s, %s, %s, %s, %s)
             """,
-            (session_id, [request_id], ocdid, status, entry_number),
+            (session_id, [changeset_id], ocdid, status, entry_number),
         )
 
 
@@ -146,41 +146,41 @@ async def test_saved_card_is_not_reoffered_to_its_own_session(reviewer, open_pr)
     Saving must take the card off this reviewer's queue. It stays in the pool
     (unpublished), so without the hold it would be handed straight back.
     """
-    request_id, ocdid = open_pr
+    changeset_id, ocdid = open_pr
     session_id = await _create_session(reviewer)
-    await _insert_entry(session_id, 1, "claimed", request_id, ocdid)
+    await _insert_entry(session_id, 1, "claimed", changeset_id, ocdid)
 
-    await save_entries_for_request(request_id)
+    await save_entries_for_request(changeset_id)
 
     result = await navigate_to_entry(session_id, 2)
     assert result is not None
-    assert result.get("request_id") != request_id, "A saved card must not be re-offered later in the same session"
+    assert result.get("changeset_id") != changeset_id, "A saved card must not be re-offered later in the same session"
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_saved_card_is_held_from_another_reviewers_session(reviewer, other_reviewer, open_pr):
     """A saved card belongs to its session — another reviewer must not be offered it."""
-    request_id, ocdid = open_pr
+    changeset_id, ocdid = open_pr
     session_id = await _create_session(reviewer)
-    await _insert_entry(session_id, 1, "claimed", request_id, ocdid)
-    await save_entries_for_request(request_id)
+    await _insert_entry(session_id, 1, "claimed", changeset_id, ocdid)
+    await save_entries_for_request(changeset_id)
 
     other_session = await _create_session(other_reviewer)
     result = await navigate_to_entry(other_session, 1)
 
     assert result is not None
-    assert result.get("request_id") != request_id, "Another reviewer must not be offered a card saved by a live session"
+    assert result.get("changeset_id") != changeset_id, "Another reviewer must not be offered a card saved by a live session"
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_saved_card_returns_to_the_pool_once_the_session_ends(reviewer, other_reviewer, open_pr):
     """The hold lasts exactly as long as the session does."""
-    request_id, ocdid = open_pr
+    changeset_id, ocdid = open_pr
     session_id = await _create_session(reviewer)
-    await _insert_entry(session_id, 1, "claimed", request_id, ocdid)
-    await save_entries_for_request(request_id)
+    await _insert_entry(session_id, 1, "claimed", changeset_id, ocdid)
+    await save_entries_for_request(changeset_id)
 
     await end_review_session(session_id)
 
@@ -188,7 +188,7 @@ async def test_saved_card_returns_to_the_pool_once_the_session_ends(reviewer, ot
     result = await navigate_to_entry(other_session, 1)
 
     assert result is not None
-    assert result.get("request_id") == request_id, "Ending the session must release the saved card back to the pool"
+    assert result.get("changeset_id") == changeset_id, "Ending the session must release the saved card back to the pool"
 
 
 # ── the sweeps ────────────────────────────────────────────────────────────────
@@ -201,9 +201,9 @@ async def test_entry_age_sweep_releases_a_claimed_card_but_not_a_saved_one(revie
     the entry's own age, not on session activity. Exempting 'saved' is what stops
     it handing a saved card to another reviewer mid-session.
     """
-    request_id, ocdid = open_pr
+    changeset_id, ocdid = open_pr
     session_id = await _create_session(reviewer)
-    await _insert_entry(session_id, 1, "claimed", request_id, ocdid)
+    await _insert_entry(session_id, 1, "claimed", changeset_id, ocdid)
     await _insert_entry(session_id, 2, "saved", f"{uuid.uuid4()}", f"{ocdid}_two")
     await _age_entries(session_id, minutes=40)
 
@@ -222,10 +222,10 @@ async def test_idle_session_sweep_releases_saved_cards(reviewer, open_pr):
     The saved hold must not be permanent: once the *session* goes idle,
     purge_stale_idle_sessions releases it like any other unresolved entry.
     """
-    request_id, ocdid = open_pr
+    changeset_id, ocdid = open_pr
     session_id = await _create_session(reviewer)
-    await _insert_entry(session_id, 1, "claimed", request_id, ocdid)
-    await save_entries_for_request(request_id)
+    await _insert_entry(session_id, 1, "claimed", changeset_id, ocdid)
+    await save_entries_for_request(changeset_id)
 
     pool = await get_pool()
     async with pool.connection() as conn:
@@ -244,12 +244,12 @@ async def test_idle_session_sweep_releases_saved_cards(reviewer, open_pr):
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_saving_twice_is_a_no_op(reviewer, open_pr):
-    request_id, ocdid = open_pr
+    changeset_id, ocdid = open_pr
     session_id = await _create_session(reviewer)
-    await _insert_entry(session_id, 1, "claimed", request_id, ocdid)
+    await _insert_entry(session_id, 1, "claimed", changeset_id, ocdid)
 
-    await save_entries_for_request(request_id)
-    await save_entries_for_request(request_id)
+    await save_entries_for_request(changeset_id)
+    await save_entries_for_request(changeset_id)
 
     assert await _entry_status(session_id, 1) == "saved"
 
@@ -258,12 +258,12 @@ async def test_saving_twice_is_a_no_op(reviewer, open_pr):
 @pytest.mark.integration
 async def test_publishing_a_saved_card_promotes_it_to_resolved(reviewer, open_pr):
     """Back-navigating to a saved card and publishing it must credit the review."""
-    request_id, ocdid = open_pr
+    changeset_id, ocdid = open_pr
     session_id = await _create_session(reviewer)
-    await _insert_entry(session_id, 1, "claimed", request_id, ocdid)
-    await save_entries_for_request(request_id)
+    await _insert_entry(session_id, 1, "claimed", changeset_id, ocdid)
+    await save_entries_for_request(changeset_id)
 
-    await resolve_entries_for_request(request_id)
+    await resolve_entries_for_request(changeset_id)
 
     assert await _entry_status(session_id, 1) == "resolved"
 
@@ -271,10 +271,10 @@ async def test_publishing_a_saved_card_promotes_it_to_resolved(reviewer, open_pr
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_saving_does_not_downgrade_a_resolved_entry(reviewer, open_pr):
-    request_id, ocdid = open_pr
+    changeset_id, ocdid = open_pr
     session_id = await _create_session(reviewer)
-    await _insert_entry(session_id, 1, "resolved", request_id, ocdid)
+    await _insert_entry(session_id, 1, "resolved", changeset_id, ocdid)
 
-    await save_entries_for_request(request_id)
+    await save_entries_for_request(changeset_id)
 
     assert await _entry_status(session_id, 1) == "resolved"

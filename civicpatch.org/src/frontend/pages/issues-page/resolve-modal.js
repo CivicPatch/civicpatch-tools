@@ -38,7 +38,7 @@ function ResolveModal(host) {
     setDebugTab(0);
     setLogContent(null);
     setContextContent(null);
-  }, [detail?.request_id]);
+  }, [detail?.changeset_id]);
 
   useEffect(() => {
     if (!detail) return;
@@ -62,7 +62,7 @@ function ResolveModal(host) {
         .then((j) => setContextContent(JSON.stringify(j, null, 2)))
         .catch(() => setContextContent("Failed to load context."));
     }
-  }, [debugTab, detail?.request_id]);
+  }, [debugTab, detail?.changeset_id]);
 
   const dispatch = (name, detail) =>
     host.dispatchEvent(new CustomEvent(name, { detail, bubbles: true, composed: true }));

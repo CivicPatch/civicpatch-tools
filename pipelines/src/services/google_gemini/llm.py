@@ -28,7 +28,7 @@ FIND_JURISDICTION_URL_MODEL_FALLBACKS = [
 
 
 async def run_prompt(
-    request_id,
+    changeset_id,
     jurisdiction_ocdid: str,
     prompt,
     response_schema=None,
@@ -68,7 +68,7 @@ async def run_prompt(
 
         cost_utils.add_llm_cost(
             logger,
-            request_id,
+            changeset_id,
             jurisdiction_ocdid,
             "google_gemini",
             model,

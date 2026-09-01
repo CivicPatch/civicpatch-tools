@@ -18,34 +18,34 @@ const jurisdictionUrl = (ocdid: string) => `/${jurisdictionOcdidToPath(ocdid)}`;
 const isTerminalStatus = (status: string | null | undefined) =>
   status === REVIEW_STATUS.PUBLISHED || status === REVIEW_STATUS.DISMISSED;
 
-const belongsToSession = (active: any, requestId: string | null) =>
-  requestId != null && (active?.session_request_ids ?? []).includes(requestId);
+const belongsToSession = (active: any, changesetId: string | null) =>
+  changesetId != null && (active?.session_request_ids ?? []).includes(changesetId);
 
 // The injected boundary: everything the action functions touch that isn't pure.
 // The hook fills this with the real api/DOM; tests pass fakes.
 export type ReviewApi = {
   fetchActiveReviewSession: (stateCode: string) => Promise<any>;
   navigateToEntry: (sessionId: string, entryNumber: number) => Promise<any>;
-  fetchReview: (requestId: string) => Promise<any>;
+  fetchReview: (changesetId: string) => Promise<any>;
   endReviewSession: (sessionId: string) => Promise<any>;
-  fetchPullRequestByRequestId: (requestId: string) => Promise<any>;
-  saveReviewData: (requestId: string, jurisdictionOcdid: string, people: any[]) => Promise<any>;
+  fetchPullRequestByRequestId: (changesetId: string) => Promise<any>;
+  saveReviewData: (changesetId: string, jurisdictionOcdid: string, people: any[]) => Promise<any>;
 };
 
 export type Effects = {
   api: ReviewApi;
   dispatch: (a: ReviewAction) => void;
   navigate: (url: string) => void;
-  setRequestIdParam: (requestId: string | null) => void;
-  trackApprove: (requestId: string, jurisdictionOcdid: string, people: any[] | null, jurisdictionName: string) => Promise<{ ok: boolean; error?: string }>;
-  trackReject: (requestId: string, jurisdictionName: string) => void;
+  setRequestIdParam: (changesetId: string | null) => void;
+  trackApprove: (changesetId: string, jurisdictionOcdid: string, people: any[] | null, jurisdictionName: string) => Promise<{ ok: boolean; error?: string }>;
+  trackReject: (changesetId: string, jurisdictionName: string) => void;
 };
 
 // Assemble a CurrentEntry from a navigate/by-request response plus its review json.
 export async function buildEntry(data: any, api: ReviewApi): Promise<CurrentEntry> {
-  const review = await api.fetchReview(data.request_id).catch(() => null);
+  const review = await api.fetchReview(data.changeset_id).catch(() => null);
   return {
-    request_id: data.request_id,
+    changeset_id: data.changeset_id,
     jurisdiction: data.jurisdiction,
     pr: data.pr,
     mode: data.mode ?? ReviewMode.RECONCILE,
@@ -69,41 +69,41 @@ async function loadFirstEntry(data: any, session: SessionMeta | null, resolvedEn
     type: ActionType.SESSION_LOADED,
     payload: { current_entry: entry, entry_number: data.entry_number ?? 1, total: data.total ?? data.entry_number ?? 1, session, resolved_entry_numbers: resolvedEntryNumbers },
   });
-  e.setRequestIdParam(entry.request_id ?? null);
+  e.setRequestIdParam(entry.changeset_id ?? null);
 }
 
 // `session_request_ids` is ordered by entry number, so position n is entry n + 1.
-const entryNumberOf = (active: any, requestId: string | null): number | null => {
-  const at = (active?.session_request_ids ?? []).indexOf(requestId);
+const entryNumberOf = (active: any, changesetId: string | null): number | null => {
+  const at = (active?.session_request_ids ?? []).indexOf(changesetId);
   return at < 0 ? null : at + 1;
 };
 
-// Resumes at `requestId` when the session holds it, otherwise where it was parked. That is
+// Resumes at `changesetId` when the session holds it, otherwise where it was parked. That is
 // what lets the url name a card and nothing else: whether a session is open, and where it
 // left off, are things the session already knows.
 async function resumeSession(
   active: any,
   stateCode: string,
   e: Effects,
-  requestId: string | null = null,
+  changesetId: string | null = null,
 ): Promise<void> {
-  const entryNumber = entryNumberOf(active, requestId) ?? active.current_entry_number;
+  const entryNumber = entryNumberOf(active, changesetId) ?? active.current_entry_number;
   const data = (await e.api.navigateToEntry(active.session_id, entryNumber))?.data;
   if (!data) return e.navigate(landingUrl(stateCode));
   await loadFirstEntry(data, { id: active.session_id, daily_goal: active.daily_goal }, active.resolved_entry_numbers ?? [], e);
 }
 
 // A standalone deeplink may point at a stale/missing PR; treat a 404 as "no PR".
-async function fetchPrOrNull(requestId: string, api: ReviewApi): Promise<any> {
+async function fetchPrOrNull(changesetId: string, api: ReviewApi): Promise<any> {
   try {
-    return (await api.fetchPullRequestByRequestId(requestId))?.data ?? null;
+    return (await api.fetchPullRequestByRequestId(changesetId))?.data ?? null;
   } catch {
     return null;
   }
 }
 
-async function showStandaloneCard(requestId: string, stateCode: string, e: Effects): Promise<void> {
-  const data = await fetchPrOrNull(requestId, e.api);
+async function showStandaloneCard(changesetId: string, stateCode: string, e: Effects): Promise<void> {
+  const data = await fetchPrOrNull(changesetId, e.api);
   if (!data) return e.navigate(landingUrl(stateCode));
   await loadFirstEntry(data, null, [], e);
 }
@@ -111,13 +111,13 @@ async function showStandaloneCard(requestId: string, stateCode: string, e: Effec
 // The url names a card and nothing else. A card the active session holds opens inside it, at
 // that card; one it does not opens standalone; naming none resumes where the session was
 // parked, or lands. Nothing about the session is in the url, because the session knows.
-export async function boot(stateCode: string, requestId: string | null, e: Effects): Promise<void> {
+export async function boot(stateCode: string, changesetId: string | null, e: Effects): Promise<void> {
   try {
     const active = (await e.api.fetchActiveReviewSession(stateCode))?.data;
-    if (active && (requestId == null || belongsToSession(active, requestId))) {
-      return resumeSession(active, stateCode, e, requestId);
+    if (active && (changesetId == null || belongsToSession(active, changesetId))) {
+      return resumeSession(active, stateCode, e, changesetId);
     }
-    if (requestId != null) return showStandaloneCard(requestId, stateCode, e);
+    if (changesetId != null) return showStandaloneCard(changesetId, stateCode, e);
     e.navigate(landingUrl(stateCode));
   } catch (err) {
     e.dispatch({ type: ActionType.LOAD_FAILED, payload: { message: errMessage(err) } });
@@ -133,7 +133,7 @@ export async function goToEntry(sessionId: string | null, targetEntry: number, s
     if (!data) return endSessionAndExit(sessionId, stateCode, e); // exhausted: server already ended it
     const entry = await buildEntry(data, e.api);
     e.dispatch({ type: ActionType.ENTRY_LOADED, payload: { current_entry: entry, entry_number: data.entry_number, total: data.total ?? data.entry_number } });
-    e.setRequestIdParam(entry.request_id ?? null);
+    e.setRequestIdParam(entry.changeset_id ?? null);
   } catch (err) {
     e.dispatch({ type: ActionType.LOAD_FAILED, payload: { message: errMessage(err) } });
   }
@@ -158,11 +158,11 @@ async function advanceOrReturn(
 }
 
 export async function mergeCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, people: any[] | null, stateCode: string, e: Effects): Promise<void> {
-  const { request_id, jurisdiction } = current;
+  const { changeset_id, jurisdiction } = current;
   // No pull request check: publishing is keyed on the request, and a scrape committed
   // straight to open-data has no pull request to guard on.
-  if (!request_id) return;
-  const result = await e.trackApprove(request_id, jurisdiction.ocdid!, people, jurisdiction.name ?? request_id);
+  if (!changeset_id) return;
+  const result = await e.trackApprove(changeset_id, jurisdiction.ocdid!, people, jurisdiction.name ?? changeset_id);
   if (!result.ok) {
     // Publishing is synchronous now, so a rejection is the whole outcome: flag the entry
     // red and keep the reviewer here to fix it.
@@ -177,10 +177,10 @@ export async function mergeCurrent(current: CurrentEntry, sessionId: string | nu
 // so the outcome is known here. A rejection keeps the reviewer on the entry, same as a
 // failed publish.
 export async function saveCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, people: any[], stateCode: string, e: Effects): Promise<void> {
-  const { request_id, jurisdiction } = current;
-  if (!request_id) return;
+  const { changeset_id, jurisdiction } = current;
+  if (!changeset_id) return;
   try {
-    await e.api.saveReviewData(request_id, jurisdiction.ocdid!, people);
+    await e.api.saveReviewData(changeset_id, jurisdiction.ocdid!, people);
   } catch (err) {
     e.dispatch({ type: ActionType.MARK_FAILED, payload: { entry_number: entryNumber, message: errMessage(err) } });
     return;
@@ -191,8 +191,8 @@ export async function saveCurrent(current: CurrentEntry, sessionId: string | nul
 }
 
 export async function closeCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, stateCode: string, e: Effects): Promise<void> {
-  const { request_id, jurisdiction } = current;
-  if (!request_id) return;
-  e.trackReject(request_id, jurisdiction.name ?? request_id);
+  const { changeset_id, jurisdiction } = current;
+  if (!changeset_id) return;
+  e.trackReject(changeset_id, jurisdiction.name ?? changeset_id);
   await advanceOrReturn(current, sessionId, entryNumber, stateCode, e);
 }

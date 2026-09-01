@@ -53,7 +53,7 @@ async def get_change_logs_for_roles(
             "id": r[0],
             "type": r[1],
             "jurisdiction_ocdid": r[2],
-            "request_id": r[3],
+            "changeset_id": r[3],
             "changes": r[4],
             "created_at": r[5],
             "author_name": r[6],
@@ -70,7 +70,7 @@ async def create_change_log(
     change_type: ChangeLogType,
     user_id: str | None,
     jurisdiction_ocdid: str | None = None,
-    request_id: str | None = None,
+    changeset_id: str | None = None,
     changes: PersonChangePayload | JurisdictionChangePayload | None = None,
 ) -> None:
     payload = json.dumps(changes.model_dump()) if changes else None
@@ -81,7 +81,7 @@ async def create_change_log(
             INSERT INTO change_logs (type, jurisdiction_ocdid, changeset_id, changes, user_id)
             VALUES (%s, %s, %s, %s, %s)
             """,
-            (change_type, jurisdiction_ocdid, request_id, payload, user_id),
+            (change_type, jurisdiction_ocdid, changeset_id, payload, user_id),
         )
 
 
@@ -95,14 +95,14 @@ async def record_change(
     | AssertionChangePayload
     | DismissalPayload
     | None = None,
-    request_id: str | None = None,
+    changeset_id: str | None = None,
 ) -> None:
     """Write a change log on an existing cursor, so it commits with what it describes.
 
     `create_change_log` above opens its own connection and cannot do that. Callers already
     inside a transaction use this one.
 
-    `request_id` names the scrape responsible, for the events no person asked for — a post
+    `changeset_id` names the scrape responsible, for the events no person asked for — a post
     minted because a source listed a seat. With no user and no request a row says only that
     something happened, which is not enough to act on.
     """
@@ -116,7 +116,7 @@ async def record_change(
             jurisdiction_ocdid,
             json.dumps(changes.model_dump()) if changes else None,
             user_id,
-            request_id,
+            changeset_id,
         ),
     )
 
@@ -143,5 +143,5 @@ async def record_dismissal(
         user_id,
         jurisdiction_ocdid,
         DismissalPayload(reason=reason),
-        request_id=changeset_id,
+        changeset_id=changeset_id,
     )

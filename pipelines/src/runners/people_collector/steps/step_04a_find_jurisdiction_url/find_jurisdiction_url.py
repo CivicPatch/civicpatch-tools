@@ -29,7 +29,7 @@ async def find_jurisdiction_url(context: PeopleCollectorContext) -> FindJurisdic
             content = content_path.read_text(encoding="utf-8")
             if content.strip():
                 check = await open_router_llm.run_prompt(
-                    context.request_id,
+                    context.changeset_id,
                     context.data.jurisdiction_ocdid,
                     open_router_prompts.is_official_jurisdiction_url_prompt(),
                     response_schema=OfficialJurisdictionUrlResponseSchema,
@@ -46,7 +46,7 @@ async def find_jurisdiction_url(context: PeopleCollectorContext) -> FindJurisdic
         stale_url=context.data.config.url,
     )
     response = await google_gemini_llm.run_prompt(
-        context.request_id,
+        context.changeset_id,
         context.data.jurisdiction_ocdid,
         prompt,
         with_search=True,

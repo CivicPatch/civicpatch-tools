@@ -15,9 +15,9 @@ test.describe("Review baseline mode (first capture)", () => {
   test("baseline review shows the banner and suppresses the diff panel", async ({
     authenticatedPage: page,
   }) => {
-    // Deep-link straight to the baseline card by request_id (state-agnostic —
+    // Deep-link straight to the baseline card by changeset_id (state-agnostic —
     // boot() resolves it via the by-request endpoint, which carries `mode`).
-    await page.goto(`/review/session?request_id=${BASELINE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${BASELINE_REQUEST_ID}`);
 
     const banner = page.locator(".review-page__baseline-banner");
     await expect(banner).toBeVisible();

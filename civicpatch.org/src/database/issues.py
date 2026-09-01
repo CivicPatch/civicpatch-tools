@@ -137,7 +137,7 @@ async def supersede_prior_jurisdiction_issues(jurisdiction_ocdid: str, current_r
         )
 
 
-async def upsert_issue(request_id: str, issue_type: str, issues: list[dict]) -> None:
+async def upsert_issue(changeset_id: str, issue_type: str, issues: list[dict]) -> None:
     if not issues:
         return
     rows = []
@@ -147,9 +147,9 @@ async def upsert_issue(request_id: str, issue_type: str, issues: list[dict]) -> 
             issue_key = issue["role"]
             data = json.dumps({"person_names": [issue.get("person_name", "")]})
         else:
-            issue_key = request_id
+            issue_key = changeset_id
             data = json.dumps(issue)
-        rows.append((issue_type, issue_key, [request_id], data, PipelineIssueStatus.PENDING))
+        rows.append((issue_type, issue_key, [changeset_id], data, PipelineIssueStatus.PENDING))
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -189,7 +189,7 @@ async def upsert_issue(request_id: str, issue_type: str, issues: list[dict]) -> 
 
 
 async def create_user_reported_issue(
-    request_id: str,
+    changeset_id: str,
     title: str,
     body: str,
     github_issue_url: str,
@@ -214,7 +214,7 @@ async def create_user_reported_issue(
             (
                 PipelineIssueType.USER_REPORTED,
                 str(uuid.uuid4()),
-                [request_id],
+                [changeset_id],
                 data,
                 PipelineIssueStatus.PENDING,
             ),
@@ -224,7 +224,7 @@ async def create_user_reported_issue(
     return row[0]
 
 
-async def get_user_reported_issues_for_request(request_id: str) -> list[dict]:
+async def get_user_reported_issues_for_request(changeset_id: str) -> list[dict]:
     """Reviewer-filed GitHub issues for this request only — not pipeline-internal
     issue types (those are browsed separately, via the admin issues page)."""
     pool = await get_pool()
@@ -236,7 +236,7 @@ async def get_user_reported_issues_for_request(request_id: str) -> list[dict]:
             WHERE issue_type = %s AND %s = ANY(request_ids)
             ORDER BY created_at DESC
             """,
-            (PipelineIssueType.USER_REPORTED, request_id),
+            (PipelineIssueType.USER_REPORTED, changeset_id),
         )
         rows = await cur.fetchall()
     return [

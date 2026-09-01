@@ -10,9 +10,9 @@ import {
 
 const SESSION: SessionMeta = { id: "session-1", daily_goal: 10 };
 
-function entry(requestId = "req-1"): CurrentEntry {
+function entry(changesetId = "req-1"): CurrentEntry {
   return {
-    request_id: requestId,
+    changeset_id: changesetId,
     jurisdiction: { ocdid: "ocd-jurisdiction/country:us/state:nj/place:x", name: "X City", path: null },
     pr: { url: "https://example/pr/3", status: "open", reviewState: null, number: 3 },
     pr_people: { existing: [], proposed: [] },
@@ -86,7 +86,7 @@ describe("reduceReview", () => {
     if (next.fsm.kind !== "reviewing") throw new Error("expected reviewing");
     expect(next.fsm.session).toBe(SESSION);
     expect([...next.fsm.resolved_entry_numbers]).toEqual([1]);
-    expect(next.fsm.current_entry.request_id).toBe("req-2");
+    expect(next.fsm.current_entry.changeset_id).toBe("req-2");
     expect(next.fsm.entry_number).toBe(3);
     expect(next.fsm.total).toBe(7);
     expect(next.fsm.busy).toBe(false);

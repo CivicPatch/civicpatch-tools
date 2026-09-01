@@ -2,7 +2,7 @@
 
 A batch records the fan-out, not the outcome: `finished_at` means the requests exist, and what
 happens to each afterwards is `requests`' business. Its items *are* its requests, so there is no
-per-item store — what one did reads off `source_records` by `request_id`.
+per-item store — what one did reads off `source_records` by `changeset_id`.
 """
 
 import json
@@ -151,7 +151,7 @@ async def items(batch_id: str) -> list[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT r.id::text AS request_id, r.jurisdiction_ocdid,
+            SELECT r.id::text AS changeset_id, r.jurisdiction_ocdid,
                    {REVIEW_STATUS} AS review_status,
                    j.data->>'name' AS name
             FROM changesets r

@@ -81,17 +81,17 @@ export function pruneToLiving(
 }
 
 export interface FrozenState {
-  requestId: string | null;
+  changesetId: string | null;
   frozen: FrozenFields;
 }
 
 export const INITIAL_FROZEN_STATE: FrozenState = {
-  requestId: null,
+  changesetId: null,
   frozen: EMPTY_FROZEN,
 };
 
 // One card's worth of freezing, as a transition. Advancing to the next card is
-// a new load, so a different request_id starts from empty.
+// a new load, so a different changeset_id starts from empty.
 //
 // There is no separate "wait for the people to arrive" step, and there doesn't
 // need to be: `useReviewPeople` resolves matches asynchronously, so the first
@@ -103,10 +103,10 @@ export const INITIAL_FROZEN_STATE: FrozenState = {
 // identity instead of deep-comparing.
 export function nextFrozen(
   previous: FrozenState,
-  requestId: string | null,
+  changesetId: string | null,
   cards: CardFields[],
 ): FrozenState {
-  const sameCard = previous.requestId === requestId;
+  const sameCard = previous.changesetId === changesetId;
   const carried = sameCard ? previous.frozen : EMPTY_FROZEN;
   // An empty list means the people have not arrived yet, not that everyone left,
   // so pruning waits for a populated one. A merge always leaves a survivor, so
@@ -116,7 +116,7 @@ export function nextFrozen(
     : carried;
   const frozen = foldVisible(living, cards);
   if (sameCard && frozen === previous.frozen) return previous;
-  return { requestId, frozen };
+  return { changesetId, frozen };
 }
 
 export function visibleFields(

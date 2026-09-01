@@ -8,8 +8,8 @@
 import { type Issue } from "../fields/field-model.js";
 import { ISSUE_CHECKS_PREFIX } from "../../utils/storage-keys.js";
 
-export const issueChecksKey = (requestId: string) =>
-  `${ISSUE_CHECKS_PREFIX}${requestId}`;
+export const issueChecksKey = (changesetId: string) =>
+  `${ISSUE_CHECKS_PREFIX}${changesetId}`;
 
 // A card can sit open for days, which is the requirement (§8.4). Weeks is not —
 // past that the ticks describe a card the reviewer no longer remembers.

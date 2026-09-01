@@ -41,19 +41,19 @@ logger = logging.getLogger(__name__)
 
 
 async def trigger_people_job_workflow(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     name: str | None = None,
     url: str | None = None,
     source_urls: list[str] | None = None,
 ):
     logger.info(
-        f"Triggering people job workflow for request_id={request_id}, jurisdiction_ocdid={jurisdiction_ocdid}, name={name}, url={url}"
+        f"Triggering people job workflow for changeset_id={changeset_id}, jurisdiction_ocdid={jurisdiction_ocdid}, name={name}, url={url}"
     )
     data = {
         "ref": "main",
         "inputs": {
-            "request_id": request_id,
+            "changeset_id": changeset_id,
             "jurisdiction_ocdid": jurisdiction_ocdid,
         },
     }
@@ -255,12 +255,12 @@ async def delete_github_file(
 
 
 async def get_pull_request_context(
-    request_id: str, jurisdiction_ocdid: str
+    changeset_id: str, jurisdiction_ocdid: str
 ) -> dict | None:
     """Fetch and parse pipeline_run_context.json from a specific PR branch."""
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
     file_path = f"data_source/{folder}/pipeline_run_context.json"
-    branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, request_id)
+    branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, changeset_id)
     content = await get_github_file_contents(file_path, ref=branch_name)
     if content is None:
         return None
@@ -274,10 +274,10 @@ async def get_pull_request_context(
 
 
 async def get_pull_request_file_yaml(
-    request_id: str, jurisdiction_ocdid: str, file_path: str
+    changeset_id: str, jurisdiction_ocdid: str, file_path: str
 ) -> list | dict | None:
     """Fetch and parse a YAML file from a specific branch."""
-    branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, request_id)
+    branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, changeset_id)
     content = await get_github_file_contents(file_path, ref=branch_name)
     if content is None:
         return None

@@ -34,7 +34,7 @@ function ReviewCardList({ cards, actionState, loading, error, page, perPage, tot
                 @approve=${onApprove}
                 @reject=${onReject}
                 .entry=${card}
-                .state=${actionState[card.request_id]}
+                .state=${actionState[card.changeset_id]}
                 .viewMode=${viewMode}
               ></review-card>
             `)}

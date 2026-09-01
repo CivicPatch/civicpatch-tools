@@ -53,7 +53,7 @@ def _maintainer():
     )
 
 
-REQUEST_ID = "2026-07-31-abcd"
+CHANGESET_ID = "2026-07-31-abcd"
 
 PATCH_BODY = {
     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland",
@@ -72,7 +72,7 @@ def test_patch_jurisdiction_data_commits_for_maintainer(client):
     with patch(
         "services.jurisdiction_pull_request.commit_jurisdiction_patch",
         new_callable=AsyncMock,
-        return_value=(COMMIT_URL, COMMIT_URL, REQUEST_ID),
+        return_value=(COMMIT_URL, COMMIT_URL, CHANGESET_ID),
     ):
         response = client.patch("/jurisdictions/data", json=PATCH_BODY)
 
@@ -107,7 +107,7 @@ def test_patch_jurisdiction_data_allows_clearing_the_url(client):
         patch(
             "services.jurisdiction_pull_request.commit_jurisdiction_patch",
             new_callable=AsyncMock,
-            return_value=(42, "https://github.com/x/pull/42", REQUEST_ID),
+            return_value=(42, "https://github.com/x/pull/42", CHANGESET_ID),
         ),
     ):
         response = client.patch("/jurisdictions/data", json={**PATCH_BODY, "url": ""})
@@ -170,7 +170,7 @@ def test_get_jurisdiction_history_returns_data(client):
     with patch(
         "database.jurisdictions.get_jurisdiction_history",
         new_callable=AsyncMock,
-        return_value=[{"request_id": "req-1", "status": "complete"}],
+        return_value=[{"changeset_id": "req-1", "status": "complete"}],
     ):
         response = client.get(
             "/jurisdictions/history",

@@ -109,34 +109,34 @@ async def _get_derived_posts(people: list[dict]) -> list[DerivedPost]:
 
 
 async def publish_people(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     people: list[dict],
     resolved_by_user_id: str | None = None,
 ) -> int:
     """Publish one scrape's roster. Returns the number of people written."""
     written = await publish_request(
-        request_id,
+        changeset_id,
         jurisdiction_ocdid,
         people,
         resolved_by_user_id,
         derived=await _get_derived_posts(people),
     )
-    logger.info(f"[{request_id}] Published {written} people for {jurisdiction_ocdid}")
+    logger.info(f"[{changeset_id}] Published {written} people for {jurisdiction_ocdid}")
     # Audited here rather than at the caller: publishing is this function, and the previous
     # home for this was the merge worker, which is going away.
-    await change_logs.record_publish(request_id, resolved_by_user_id)
+    await change_logs.record_publish(changeset_id, resolved_by_user_id)
     return written
 
 
 async def dismiss_people(
-    request_id: str, resolved_by_user_id: str | None = None
+    changeset_id: str, resolved_by_user_id: str | None = None
 ) -> None:
     """Mark a scrape reviewed-and-not-published. Leaves the roster untouched."""
     # `dismiss_request` writes the close_review log itself now, with the reason — so every
     # dismissal has one, not just the reviewer's. That is what retires `record_close`.
-    await dismiss_request(request_id, DismissalReason.REJECTED, resolved_by_user_id)
-    logger.info(f"[{request_id}] Dismissed without publishing")
+    await dismiss_request(changeset_id, DismissalReason.REJECTED, resolved_by_user_id)
+    logger.info(f"[{changeset_id}] Dismissed without publishing")
 
 
 def unreviewed_file_path(jurisdiction_ocdid: str) -> str:
@@ -147,20 +147,20 @@ def unreviewed_file_path(jurisdiction_ocdid: str) -> str:
 
 
 async def _render(
-    source: CommitSource, request_id: str | None, jurisdiction_ocdid: str
+    source: CommitSource, changeset_id: str | None, jurisdiction_ocdid: str
 ) -> list[dict]:
     if source is CommitSource.ROSTER:
         return await get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
 
     # Only a scrape render needs the request: it is the proposal's only address.
-    if request_id is None:
+    if changeset_id is None:
         raise ValueError(f"a scrape render needs a request ({jurisdiction_ocdid})")
-    return await proposed_roster(request_id, jurisdiction_ocdid) or []
+    return await proposed_roster(changeset_id, jurisdiction_ocdid) or []
 
 
 async def commit_rendered_file(
     file_path: str,
-    request_id: str | None,
+    changeset_id: str | None,
     jurisdiction_ocdid: str,
     commit_message: str,
     source: CommitSource = CommitSource.SCRAPE,
@@ -171,15 +171,15 @@ async def commit_rendered_file(
     content: git holds a projection of the database, and a write that lands late should carry
     what is true when it lands, not what was true when it was queued.
     """
-    roster = await _render(source, request_id, jurisdiction_ocdid)
+    roster = await _render(source, changeset_id, jurisdiction_ocdid)
     commit_url = await github_service.upsert_github_file(
         branch_name=github_service.DEFAULT_BRANCH,
         file_path=file_path,
         content_str=yaml_dump(roster),
         commit_message=commit_message,
     )
-    if commit_url and request_id:
-        await record_open_data_url(request_id, commit_url)
+    if commit_url and changeset_id:
+        await record_open_data_url(changeset_id, commit_url)
     return commit_url
 
 
@@ -195,7 +195,7 @@ async def commit_rendered_files(
     contents = {}
     for item in items:
         roster = await _render(
-            CommitSource.ROSTER, item.request_id, item.jurisdiction_ocdid
+            CommitSource.ROSTER, item.changeset_id, item.jurisdiction_ocdid
         )
         contents[item.file_path] = yaml_dump(roster)
 
@@ -207,7 +207,7 @@ async def commit_rendered_files(
     if not commit_url:
         return None
     for item in items:
-        await record_open_data_url(item.request_id, commit_url)
+        await record_open_data_url(item.changeset_id, commit_url)
     return commit_url
 
 
@@ -216,7 +216,7 @@ def reviewed_file_path(jurisdiction_ocdid: str) -> str:
     return f"data/{folder}.yml"
 
 
-async def promote_to_reviewed(request_id: str, jurisdiction_ocdid: str) -> None:
+async def promote_to_reviewed(changeset_id: str, jurisdiction_ocdid: str) -> None:
     """Move a published jurisdiction from the unreviewed path to the canonical one.
 
     Queued rather than immediate, like every other open-data write: publishing is already a
@@ -231,12 +231,12 @@ async def promote_to_reviewed(request_id: str, jurisdiction_ocdid: str) -> None:
     await temporal_client.enqueue_open_data_commit(
         OpenDataCommitRequest(
             file_path=reviewed_file_path(jurisdiction_ocdid),
-            request_id=request_id,
+            changeset_id=changeset_id,
             jurisdiction_ocdid=jurisdiction_ocdid,
-            commit_message=f"Publish {jurisdiction_ocdid} ({request_id})",
+            commit_message=f"Publish {jurisdiction_ocdid} ({changeset_id})",
             source=CommitSource.ROSTER,
             delete_path=unreviewed_file_path(jurisdiction_ocdid),
-            delete_message=f"Promote {jurisdiction_ocdid} out of unreviewed ({request_id})",
+            delete_message=f"Promote {jurisdiction_ocdid} out of unreviewed ({changeset_id})",
         )
     )
 
@@ -259,7 +259,7 @@ async def commit_roster(jurisdiction_ocdid: str, commit_message: str) -> None:
     await temporal_client.enqueue_open_data_commit(
         OpenDataCommitRequest(
             file_path=reviewed_file_path(jurisdiction_ocdid),
-            request_id=None,
+            changeset_id=None,
             jurisdiction_ocdid=jurisdiction_ocdid,
             commit_message=commit_message,
             source=CommitSource.ROSTER,
@@ -272,7 +272,7 @@ async def promote_batch_to_reviewed(
 ) -> None:
     """One open-data commit for everything a bulk publish made live.
 
-    `published` maps request_id to jurisdiction_ocdid — every jurisdiction that reached the
+    `published` maps changeset_id to jurisdiction_ocdid — every jurisdiction that reached the
     database, which is not every jurisdiction the reviewer selected: one refusing must not keep
     the rest out of open-data.
     """
@@ -288,10 +288,10 @@ async def promote_batch_to_reviewed(
             items=[
                 OpenDataCommitItem(
                     file_path=reviewed_file_path(jurisdiction_ocdid),
-                    request_id=request_id,
+                    changeset_id=changeset_id,
                     jurisdiction_ocdid=jurisdiction_ocdid,
                 )
-                for request_id, jurisdiction_ocdid in sorted(published.items())
+                for changeset_id, jurisdiction_ocdid in sorted(published.items())
             ],
             commit_message=f"Publish {len(published)} jurisdictions ({batch_id})",
         )

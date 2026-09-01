@@ -14,8 +14,8 @@ describe("parseSaveError", () => {
   });
 
   it("handles a framework (FastAPI) validation error shape", () => {
-    const body = { detail: [{ loc: ["body", "request_id"], msg: "Field required" }] };
-    expect(parseSaveError(body, 422)).toBe("request_id: Field required");
+    const body = { detail: [{ loc: ["body", "changeset_id"], msg: "Field required" }] };
+    expect(parseSaveError(body, 422)).toBe("changeset_id: Field required");
   });
 
   it("uses our {error} body when there is no validation detail", () => {

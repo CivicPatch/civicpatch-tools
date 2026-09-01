@@ -34,7 +34,7 @@ async def test_create_user_reported_issue_inserts_pending_row_and_returns_id():
     cur = _make_cursor(("issue-id-123",))
     with patch("database.issues.get_pool", AsyncMock(return_value=_make_pool(cur))):
         issue_id = await create_user_reported_issue(
-            request_id="req-1",
+            changeset_id="req-1",
             title="Review flag: Oakland",
             body="Something looks wrong.",
             github_issue_url="https://github.com/org/open-data/issues/9",

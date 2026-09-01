@@ -40,7 +40,7 @@ async def pass_entry(review_session_id: str, entry_number: int) -> None:
             )
 
 
-async def save_entries_for_request(request_id: str) -> None:
+async def save_entries_for_request(changeset_id: str) -> None:
     """Mark the claimed entry holding this request as saved. A no-op if it is already saved."""
     pool = await get_pool()
     async with pool.connection() as conn:
@@ -51,11 +51,11 @@ async def save_entries_for_request(request_id: str) -> None:
                 SET status = 'saved'
                 WHERE %s = ANY(request_ids) AND status = 'claimed'
                 """,
-                (request_id,),
+                (changeset_id,),
             )
 
 
-async def resolve_entries_for_request(request_id: str) -> None:
+async def resolve_entries_for_request(changeset_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         async with conn.cursor() as cur:
@@ -65,7 +65,7 @@ async def resolve_entries_for_request(request_id: str) -> None:
                 SET status = 'resolved', resolved_at = NOW()
                 WHERE %s = ANY(request_ids) AND status != 'resolved'
                 """,
-                (request_id,),
+                (changeset_id,),
             )
 
 

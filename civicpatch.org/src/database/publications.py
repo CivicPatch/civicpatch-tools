@@ -26,18 +26,18 @@ from shared.utils.statuses import DismissalReason
 logger = logging.getLogger(__name__)
 
 
-async def record_open_data_url(request_id: str, url: str) -> None:
+async def record_open_data_url(changeset_id: str, url: str) -> None:
     """Where this request's data landed in open-data. Written after the commit, not with the
     publish, because the write is queued and retried — the publish is already a fact by then."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "UPDATE changesets SET open_data_url = %s WHERE id = %s", (url, request_id)
+            "UPDATE changesets SET open_data_url = %s WHERE id = %s", (url, changeset_id)
         )
 
 
 async def dismiss_request(
-    request_id: str,
+    changeset_id: str,
     reason: DismissalReason,
     resolved_by_user_id: str | None = None,
 ) -> None:
@@ -66,14 +66,14 @@ async def dismiss_request(
              WHERE id = %s AND published_at IS NULL
             RETURNING jurisdiction_ocdid
             """,
-            (resolved_by_user_id, request_id),
+            (resolved_by_user_id, changeset_id),
         )
         row = await cur.fetchone()
         # Only when the UPDATE matched: a request already published is left alone above, and
         # must not gain a dismissal in its history either.
         if row is not None:
             await record_dismissal(
-                cur, request_id, row[0], resolved_by_user_id, reason
+                cur, changeset_id, row[0], resolved_by_user_id, reason
             )
 
 
@@ -88,7 +88,7 @@ class SupersededRoster(ValueError):
 
 
 async def _refuse_if_superseded(
-    cur, request_id: str, jurisdiction_ocdid: str, last_seen_at
+    cur, changeset_id: str, jurisdiction_ocdid: str, last_seen_at
 ) -> None:
     """Refuse a roster older than one already published — a reviewer working an old card did not
     go and look at the source again."""
@@ -103,18 +103,18 @@ async def _refuse_if_superseded(
         ORDER BY r.sourced_at DESC
         LIMIT 1
         """,
-        (jurisdiction_ocdid, request_id, last_seen_at),
+        (jurisdiction_ocdid, changeset_id, last_seen_at),
     )
     newer = await cur.fetchone()
     if newer:
         raise SupersededRoster(
-            f"Refusing to publish {request_id}: request {newer[0]} already published a "
+            f"Refusing to publish {changeset_id}: request {newer[0]} already published a "
             f"newer roster for {jurisdiction_ocdid} ({newer[1]} > {last_seen_at})."
         )
 
 
 async def _record_publish(
-    cur, request_id: str, jurisdiction_ocdid: str, resolved_by_user_id: str | None
+    cur, changeset_id: str, jurisdiction_ocdid: str, resolved_by_user_id: str | None
 ) -> None:
     """Stamp the jurisdiction as scraped and the request as published.
 
@@ -127,7 +127,7 @@ async def _record_publish(
         FROM changesets r
         WHERE r.id = %s AND j.jurisdiction_ocdid = %s
         """,
-        (request_id, jurisdiction_ocdid),
+        (changeset_id, jurisdiction_ocdid),
     )
     await cur.execute(
         """
@@ -136,7 +136,7 @@ async def _record_publish(
                resolved_by_user_id = COALESCE(%s, resolved_by_user_id)
          WHERE id = %s
         """,
-        (resolved_by_user_id, request_id),
+        (resolved_by_user_id, changeset_id),
     )
 
 
@@ -190,7 +190,7 @@ async def _accept_published(cur, rows: list[dict], resolved_by_user_id: str | No
 
 
 async def publish_request(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     people: list[dict],
     resolved_by_user_id: str | None = None,
@@ -208,8 +208,8 @@ async def publish_request(
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        last_seen_at = await get_sourced_at(cur, request_id)
-        await _refuse_if_superseded(cur, request_id, jurisdiction_ocdid, last_seen_at)
+        last_seen_at = await get_sourced_at(cur, changeset_id)
+        await _refuse_if_superseded(cur, changeset_id, jurisdiction_ocdid, last_seen_at)
 
         stated = await assertions.stated_values(cur, EntityType.PERSON, incoming_ids)
         rows = person_upsert_params(
@@ -223,10 +223,10 @@ async def publish_request(
 
         await _accept_published(cur, rows, resolved_by_user_id)
 
-        await _record_publish(cur, request_id, jurisdiction_ocdid, resolved_by_user_id)
+        await _record_publish(cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id)
         if derived:
             await _bind_memberships(
-                cur, request_id, jurisdiction_ocdid, derived, last_seen_at
+                cur, changeset_id, jurisdiction_ocdid, derived, last_seen_at
             )
         # Outside the guard: who is no longer on the roster is answered by the roster.
         await memberships.close_absent(
@@ -235,11 +235,11 @@ async def publish_request(
 
         # Same transaction, so a published roster and the cards it obsoletes cannot disagree.
         stale = await changesets_db.dismiss_superseded_by(
-            cur, request_id, jurisdiction_ocdid, last_seen_at
+            cur, changeset_id, jurisdiction_ocdid, last_seen_at
         )
         if stale:
             logger.info(
-                f"[{request_id}] Superseded {len(stale)} stale card(s) for "
+                f"[{changeset_id}] Superseded {len(stale)} stale card(s) for "
                 f"{jurisdiction_ocdid}: {stale}"
             )
 

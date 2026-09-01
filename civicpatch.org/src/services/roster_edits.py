@@ -27,7 +27,7 @@ from database.source_records import insert_source_records
 from schemas.common import Identity
 from services.publish import promote_images, promote_to_reviewed, publish_people
 from services.roster import proposed_roster, scraped_roster
-from shared.utils.id_utils import make_request_id
+from shared.utils.id_utils import make_changeset_id
 
 logger = logging.getLogger(__name__)
 
@@ -45,22 +45,22 @@ class EmptyEdit(Exception):
 
 
 async def save(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     data: List[PersonPatch],
     user: Identity,
 ) -> List[dict]:
     """Record the reviewer's edits as assertions against the scrape's own answer."""
     if not user.user_id:
-        raise AnonymousEdit(request_id)
+        raise AnonymousEdit(changeset_id)
 
-    scraped = await scraped_roster(request_id, jurisdiction_ocdid)
+    scraped = await scraped_roster(changeset_id, jurisdiction_ocdid)
     if not scraped:
-        raise MissingRoster(request_id)
+        raise MissingRoster(changeset_id)
 
     patched = patch_people(scraped, data)
     labels = await _seat_labels(_additions(scraped, patched))
-    await _record_edits(request_id, jurisdiction_ocdid, scraped, patched, labels, user.user_id)
+    await _record_edits(changeset_id, jurisdiction_ocdid, scraped, patched, labels, user.user_id)
     return patched
 
 
@@ -80,11 +80,11 @@ async def edit_published(
     # supersedor and would sweep every pending card for the jurisdiction.
     labels = await _seat_labels(_additions(base, patched))
 
-    request_id = make_request_id()
-    await register_people_edit_request(request_id, jurisdiction_ocdid, user.user_id)
-    await _record_edits(request_id, jurisdiction_ocdid, base, patched, labels, user.user_id)
-    await publish(request_id, jurisdiction_ocdid, patched, user.user_id)
-    return request_id, patched
+    changeset_id = make_changeset_id()
+    await register_people_edit_request(changeset_id, jurisdiction_ocdid, user.user_id)
+    await _record_edits(changeset_id, jurisdiction_ocdid, base, patched, labels, user.user_id)
+    await publish(changeset_id, jurisdiction_ocdid, patched, user.user_id)
+    return changeset_id, patched
 
 
 async def _chosen_post_labels(people: list[dict]) -> dict[str, str]:
@@ -134,7 +134,7 @@ async def _seat_labels(new_people: List[dict]) -> dict[str, str]:
 
 
 async def _record_edits(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     base: List[dict],
     patched: List[dict],
@@ -152,7 +152,7 @@ async def _record_edits(
         for person in _additions(base, patched)
     }
     await insert_source_records(
-        request_id,
+        changeset_id,
         jurisdiction_ocdid,
         {person_id: rows for person_id, rows in added.items() if rows},
     )
@@ -166,12 +166,12 @@ async def _record_edits(
     ]
     await assertions.create_all(claims, user_id)
     await change_logs.record_manual_edits(
-        request_id, jurisdiction_ocdid, user_id, base, patched
+        changeset_id, jurisdiction_ocdid, user_id, base, patched
     )
 
 
 async def publish_to_database(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     edited: List[dict] | None,
     resolved_by_user_id: str | None,
@@ -186,19 +186,19 @@ async def publish_to_database(
     if roster is None:
         # `proposed_roster`, not `scraped_roster`: publishing without editing still has to
         # carry what a human stated on an earlier visit.
-        roster = await proposed_roster(request_id, jurisdiction_ocdid)
+        roster = await proposed_roster(changeset_id, jurisdiction_ocdid)
     # Publishing an empty roster retires every person in the jurisdiction. That was unreachable
     # while the review pool required an open PR; the request is the only record now.
     if not roster:
-        raise MissingRoster(request_id)
+        raise MissingRoster(changeset_id)
     # Photos promote with the data: publishing is what moves them off the artifacts bucket.
     await publish_people(
-        request_id, jurisdiction_ocdid, promote_images(roster), resolved_by_user_id
+        changeset_id, jurisdiction_ocdid, promote_images(roster), resolved_by_user_id
     )
 
 
 async def publish(
-    request_id: str,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     edited: List[dict] | None,
     resolved_by_user_id: str | None,
@@ -206,8 +206,8 @@ async def publish(
     """Make this scrape's roster live. `edited` is the reviewer's patched result; when they
     published without editing, the submitted roster stands."""
     await publish_to_database(
-        request_id, jurisdiction_ocdid, edited, resolved_by_user_id
+        changeset_id, jurisdiction_ocdid, edited, resolved_by_user_id
     )
     # The scrape leaves the unreviewed path for the canonical one. Queued, so a slow or failed
     # GitHub write cannot affect a publish that has already committed.
-    await promote_to_reviewed(request_id, jurisdiction_ocdid)
+    await promote_to_reviewed(changeset_id, jurisdiction_ocdid)

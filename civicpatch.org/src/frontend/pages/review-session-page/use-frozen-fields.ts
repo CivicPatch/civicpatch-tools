@@ -19,12 +19,12 @@ import {
 // same frame, then persist. nextFrozen returns the same reference when nothing
 // changed, so the effect's dependency is stable and it cannot loop.
 export function useFrozenFields(
-  requestId: string | null,
+  changesetId: string | null,
   cards: CardFields[],
 ): FrozenFields {
   const [state, setState] = useState<FrozenState>(INITIAL_FROZEN_STATE);
 
-  const next = nextFrozen(state, requestId, cards);
+  const next = nextFrozen(state, changesetId, cards);
 
   useEffect(() => {
     if (next !== state) setState(next);

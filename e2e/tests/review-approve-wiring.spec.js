@@ -48,7 +48,7 @@ test.describe("Approve", () => {
     await page.locator(".review-page__approve-btn").click();
 
     await expect.poll(() => approveBody).not.toBeNull();
-    expect(approveBody.request_id).toBe(FIRST_CARD_REQUEST_ID);
+    expect(approveBody.changeset_id).toBe(FIRST_CARD_REQUEST_ID);
     expect(approveBody.jurisdiction_ocdid).toBeTruthy();
   });
 

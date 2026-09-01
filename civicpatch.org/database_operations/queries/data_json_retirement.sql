@@ -24,11 +24,11 @@
 -- the segmentation fix alone would correct.
 SELECT
     (SELECT count(*) FROM requests WHERE data_json IS NOT NULL)          AS requests_with_roster,
-    (SELECT count(DISTINCT request_id) FROM source_records)              AS requests_with_records,
+    (SELECT count(DISTINCT changeset_id) FROM source_records)              AS requests_with_records,
     (SELECT count(*) FROM requests r
       WHERE r.data_json IS NOT NULL
         AND NOT EXISTS (SELECT 1 FROM source_records s
-                        WHERE s.request_id = r.id))                      AS roster_only,
+                        WHERE s.changeset_id = r.id))                      AS roster_only,
     (SELECT count(*) FROM source_records
       WHERE jsonb_typeof(raw) = 'array')                                 AS sighting_shape,
     (SELECT count(*) FROM source_records

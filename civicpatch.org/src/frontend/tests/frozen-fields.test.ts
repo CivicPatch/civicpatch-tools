@@ -156,7 +156,7 @@ describe("nextFrozen", () => {
     const seeded = nextFrozen(INITIAL_FROZEN_STATE, CARD_A, [card("p1", surviving("name", "diff"))]);
     const loading = nextFrozen(seeded, CARD_B, []);
     expect(frozenFieldKeys(loading.frozen, "p1")).toEqual([]);
-    expect(loading.requestId).toBe(CARD_B);
+    expect(loading.changesetId).toBe(CARD_B);
   });
 });
 

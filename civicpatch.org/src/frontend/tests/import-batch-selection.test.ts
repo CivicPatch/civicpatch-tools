@@ -10,7 +10,7 @@ import {
 const town = (ocdid: string, review_status: string) => ({
   jurisdiction_ocdid: ocdid,
   name: ocdid,
-  request_id: `req-${ocdid}`,
+  changeset_id: `req-${ocdid}`,
   review_status,
   people: [],
 });

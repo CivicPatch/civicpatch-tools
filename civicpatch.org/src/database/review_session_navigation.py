@@ -70,7 +70,7 @@ async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list
     """
     await cur.execute(
         f"""
-        SELECT r.id::text AS request_id,
+        SELECT r.id::text AS changeset_id,
                r.jurisdiction_ocdid AS jurisdiction_ocdid
         FROM changesets r
         WHERE {AVAILABLE_FOR_REVIEW}
@@ -96,7 +96,7 @@ async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list
 
 
 async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number: int, state_code: str):
-    """Re-navigate to an existing entry at any status. Returns (request_id, jurisdiction_ocdid, has_next) or None."""
+    """Re-navigate to an existing entry at any status. Returns (changeset_id, jurisdiction_ocdid, has_next) or None."""
     await cur.execute(
         """
         SELECT id, request_ids, jurisdiction_ocdid
@@ -116,7 +116,7 @@ async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number:
     if not existing:
         return None
 
-    request_id = existing.request_ids[0]  # type: ignore[union-attr]
+    changeset_id = existing.request_ids[0]  # type: ignore[union-attr]
     jurisdiction_ocdid = existing.jurisdiction_ocdid  # type: ignore[union-attr]
 
     await cur.execute(
@@ -132,11 +132,11 @@ async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number:
         peek = await _allocate_next_review(cur, state_code, in_progress, limit=1)
         has_next = len(peek) > 0
 
-    return request_id, jurisdiction_ocdid, has_next
+    return changeset_id, jurisdiction_ocdid, has_next
 
 
 async def _allocate_next_entry(cur, review_session_id: str, entry_number: int, session_row):
-    """Allocate the next available card at the frontier. Returns (request_id, jurisdiction_ocdid, has_next) or a done dict."""
+    """Allocate the next available card at the frontier. Returns (changeset_id, jurisdiction_ocdid, has_next) or a done dict."""
     await cur.execute(
         """
         SELECT COUNT(*) FILTER (
@@ -165,9 +165,9 @@ async def _allocate_next_entry(cur, review_session_id: str, entry_number: int, s
             (review_session_id, request_ids, jurisdiction_ocdid, status, entry_number)
         VALUES (%s, %s, %s, 'claimed', %s)
         """,
-        (review_session_id, [next_card.request_id], next_card.jurisdiction_ocdid, entry_number),  # type: ignore[union-attr]
+        (review_session_id, [next_card.changeset_id], next_card.jurisdiction_ocdid, entry_number),  # type: ignore[union-attr]
     )
-    return next_card.request_id, next_card.jurisdiction_ocdid, len(rows) > 1  # type: ignore[union-attr]
+    return next_card.changeset_id, next_card.jurisdiction_ocdid, len(rows) > 1  # type: ignore[union-attr]
 
 
 async def navigate_to_entry(
@@ -194,7 +194,7 @@ async def navigate_to_entry(
             if isinstance(result, dict):
                 return result
 
-            request_id, jurisdiction_ocdid, has_next = result
+            changeset_id, jurisdiction_ocdid, has_next = result
 
             await cur.execute(
                 """
@@ -219,7 +219,7 @@ async def navigate_to_entry(
             counts = await cur.fetchone()
 
             # Live count of PRs still reviewable in this state (open, not parked for merge).
-            # request_id is the unit, so COUNT(*), not distinct jurisdictions. Published PRs
+            # changeset_id is the unit, so COUNT(*), not distinct jurisdictions. Published PRs
             # are already excluded by AVAILABLE_FOR_REVIEW. The authoritative progress total.
             await cur.execute(
                 f"""
@@ -242,7 +242,7 @@ async def navigate_to_entry(
     has_next = has_next and entry_number < total
 
     return {
-        "request_id": request_id,
+        "changeset_id": changeset_id,
         "jurisdiction_ocdid": jurisdiction_ocdid,
         "entry_number": entry_number,
         "resolved_count": resolved_count,

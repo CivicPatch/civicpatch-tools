@@ -10,7 +10,7 @@ from routers.webhooks.github import (
 )
 
 VALID_BRANCH = "job/wa/local/place_seattle/2025-09-25-1a2b"
-REQUEST_ID = "2025-09-25-1a2b"
+CHANGESET_ID = "2025-09-25-1a2b"
 JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
 MERGED_AT = "2025-09-26T12:00:00Z"
 ISSUE_ID = "d1af4053-1234-5678-9abc-def012345678"

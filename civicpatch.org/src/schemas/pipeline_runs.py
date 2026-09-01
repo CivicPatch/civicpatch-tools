@@ -23,7 +23,7 @@ class CreatePipelineRunRequest(BaseModel):
 
 
 class CreatePipelineRunResponse(BaseModel):
-    request_id: str
+    changeset_id: str
     status: str
 
 
@@ -37,13 +37,13 @@ class BatchPipelineRunRequest(BaseModel):
 # ── POST /api/v1/pipeline_runs/register (internal) ───────────────────────────
 
 class RegisterPipelineRunRequest(BaseModel):
-    request_id: str
+    changeset_id: str
     jurisdiction_ocdid: str
     name: Optional[str] = None
     url: Optional[str] = None
 
 
-# ── PATCH /api/v1/pipeline_runs/{request_id}/status ──────────────────────────
+# ── PATCH /api/v1/pipeline_runs/{changeset_id}/status ──────────────────────────
 
 class UpdatePipelineRunStatusRequest(BaseModel):
     status: str
@@ -54,17 +54,17 @@ class UpdatePipelineRunStatusRequest(BaseModel):
 
 
 class UpdatePipelineRunStatusResponse(BaseModel):
-    request_id: str
+    changeset_id: str
     status: str
     progress: Optional[int] = None
 
 
-# ── POST /api/v1/pipeline_runs/{request_id}/submit (internal) ────────────────
+# ── POST /api/v1/pipeline_runs/{changeset_id}/submit (internal) ────────────────
 
 class HandleSubmitPipelineRunArtifactsRequest(BaseModel):
     zip_path: str
     temp_dir: str
-    request_id: str
+    changeset_id: str
     jurisdiction_ocdid: str
     server_detail: ServerDetail
     pipeline_run_status: Optional[str] = None
@@ -73,7 +73,7 @@ class HandleSubmitPipelineRunArtifactsRequest(BaseModel):
 
 class SubmitPipelineRunArtifactsResponse(BaseModel):
     status: str
-    request_id: str
+    changeset_id: str
     jurisdiction_ocdid: str
 
 
@@ -83,12 +83,12 @@ class FlagPipelineIssueRequest(BaseModel):
     is_flagged: bool
 
 
-# ── GET /api/v1/pipeline_runs/{request_id} ───────────────────────────────────
+# ── GET /api/v1/pipeline_runs/{changeset_id} ───────────────────────────────────
 
-# ── GET /api/v1/pipeline_runs/{request_id}/status ────────────────────────────
+# ── GET /api/v1/pipeline_runs/{changeset_id}/status ────────────────────────────
 
 class GetPipelineRunStatusResponse(BaseModel):
-    request_id: str
+    changeset_id: str
     status: str
     progress: int
 
@@ -96,7 +96,7 @@ class GetPipelineRunStatusResponse(BaseModel):
 # ── POST /api/v1/requests/register (internal) ────────────────────────────────
 
 class CreateRegisterRequest(BaseModel):
-    request_id: str
+    changeset_id: str
     arguments: dict
 
 

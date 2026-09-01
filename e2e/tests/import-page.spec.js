@@ -75,7 +75,7 @@ const reviewBody = (people) => ({
     {
       jurisdiction_ocdid: READY,
       name: "E2E Ready",
-      request_id: "00000000-0000-0000-dddd-000000000001",
+      changeset_id: "00000000-0000-0000-dddd-000000000001",
       review_status: "pending",
       people,
     },

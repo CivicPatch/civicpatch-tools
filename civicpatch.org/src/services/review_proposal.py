@@ -32,7 +32,7 @@ from shared.utils.review_utils import ReviewInputs, build_review_summary
 from shared.utils.taxonomy import build_taxonomy
 
 
-async def review_summary_for_request(request_id: str) -> dict:
+async def review_summary_for_request(changeset_id: str) -> dict:
     """What a reviewer needs to look at, computed now rather than read back.
 
     The baseline is the roster we publish, not the scrape's own research step — that lived
@@ -44,13 +44,13 @@ async def review_summary_for_request(request_id: str) -> dict:
     them for a different reason — `build_review_summary` compares two rosters, and which seat
     someone lands in is not on a roster, it is the derivation's answer.
     """
-    jurisdiction_ocdid = await changesets_db.get_request_jurisdiction(request_id)
+    jurisdiction_ocdid = await changesets_db.get_request_jurisdiction(changeset_id)
     if not jurisdiction_ocdid:
         return {}
 
     published, proposed, roles = await asyncio.gather(
         people_db.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
-        proposed_roster(request_id, jurisdiction_ocdid),
+        proposed_roster(changeset_id, jurisdiction_ocdid),
         get_roles(),
     )
     summary = build_review_summary(
@@ -64,8 +64,8 @@ async def review_summary_for_request(request_id: str) -> dict:
     summary["issues"] = [issue.model_dump() for issue in summary["issues"]]
     posts = await _unverified_post_issues(jurisdiction_ocdid)
     changes = (
-        await proposals_for_requests([request_id], {request_id: proposed})
-    ).get(request_id, [])
+        await proposals_for_requests([changeset_id], {changeset_id: proposed})
+    ).get(changeset_id, [])
     return append_post_issues(summary, [*posts, *moved_person_issues(changes)])
 
 
@@ -101,12 +101,12 @@ async def proposals_for_requests(
         post_ids = await posts_db.ids_by_identity(cur, jurisdictions)
 
     proposals: dict[str, list[ProposedChange]] = {}
-    for request_id, ocdid in ocdids.items():
+    for changeset_id, ocdid in ocdids.items():
         people = [
             Person(**{**person, "jurisdiction_ocdid": ocdid})
-            for person in rosters.get(request_id, [])
+            for person in rosters.get(changeset_id, [])
         ]
-        proposals[request_id] = [
+        proposals[changeset_id] = [
             change.model_copy(
                 update={
                     "post_id": post_ids.get(

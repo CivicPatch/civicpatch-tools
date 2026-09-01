@@ -18,13 +18,13 @@ import "./review-card-list/index.js";
 const API_URL = config.apiUrl;
 
 type PrItem = {
-  request_id: string;
+  changeset_id: string;
   pr?: { number: number };
   jurisdiction?: { name?: string; ocdid?: string };
 };
 
 type PrActionDetail = {
-  request_id: string;
+  changeset_id: string;
   jurisdiction_ocdid: string;
 };
 
@@ -114,15 +114,15 @@ function QueuePage() {
   }, [stateCode, activePipelineRunsPage, activePipelineRunsPerPage]);
 
   const handleApprove = (event: CustomEvent<PrActionDetail>) => {
-    const { request_id, jurisdiction_ocdid } = event.detail;
-    const pr = pullRequests.find((p) => p.request_id === request_id);
-    trackApprove(request_id, jurisdiction_ocdid, null, pr?.jurisdiction?.name ?? request_id);
+    const { changeset_id, jurisdiction_ocdid } = event.detail;
+    const pr = pullRequests.find((p) => p.changeset_id === changeset_id);
+    trackApprove(changeset_id, jurisdiction_ocdid, null, pr?.jurisdiction?.name ?? changeset_id);
   };
 
   const handleReject = (event: CustomEvent<PrActionDetail>) => {
-    const { request_id } = event.detail;
-    const pr = pullRequests.find((p) => p.request_id === request_id);
-    trackReject(request_id, pr?.jurisdiction?.name ?? request_id);
+    const { changeset_id } = event.detail;
+    const pr = pullRequests.find((p) => p.changeset_id === changeset_id);
+    trackReject(changeset_id, pr?.jurisdiction?.name ?? changeset_id);
   };
 
   const handleViewChange = (newView: string) => {
@@ -133,8 +133,8 @@ function QueuePage() {
     setViewMode(newView);
   };
 
-  const handleCancel = (requestId: string) => {
-    setActivePipelineRuns((prev) => prev.filter((j) => j.request_id !== requestId));
+  const handleCancel = (changesetId: string) => {
+    setActivePipelineRuns((prev) => prev.filter((j) => j.changeset_id !== changesetId));
   };
 
   const handleActivePipelineRunsPerPageChange = (e: Event) => {

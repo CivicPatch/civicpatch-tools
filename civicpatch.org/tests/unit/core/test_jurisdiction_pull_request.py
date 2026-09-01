@@ -13,7 +13,7 @@ from services.jurisdiction_pull_request import (
 )
 from lib.github.pull_requests import PrAuthor
 
-REQUEST_ID = "2026-07-31-abcd"
+CHANGESET_ID = "2026-07-31-abcd"
 JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
 AUTHOR = PrAuthor(name="Test User", email="test@example.com")
 REPO_URL = "https://api.github.com/repos/openstates/jurisdictions"
@@ -256,14 +256,14 @@ async def test_commit_jurisdiction_patch_commits_and_syncs_the_row():
             new_callable=AsyncMock,
         ) as mock_register,
     ):
-        commit_url, _url, request_id = await commit_jurisdiction_patch(
+        commit_url, _url, changeset_id = await commit_jurisdiction_patch(
             jurisdiction_ocdid=JURISDICTION_OCDID,
             fields={"url": "https://new.example.com"},
             user_id="user-1",
         )
 
     assert commit_url == COMMIT_URL
-    assert mock_register.await_args.kwargs["request_id"] == request_id
+    assert mock_register.await_args.kwargs["changeset_id"] == changeset_id
 
     call_kwargs = mock_commit.call_args.kwargs
     assert call_kwargs["file_path"] == "data_source/tx/local/jurisdictions.yml"
@@ -420,7 +420,7 @@ async def test_merge_jurisdiction_pr_merges_when_clean():
             new_callable=AsyncMock,
         ) as mock_sync,
     ):
-        await merge_jurisdiction_pr("42", "approver@example.com", REQUEST_ID)
+        await merge_jurisdiction_pr("42", "approver@example.com", CHANGESET_ID)
 
     # open-data: that is where open_jurisdiction_patch_pr opened it.
     mock_merge.assert_awaited_once_with("42", approved_by="approver@example.com")
@@ -452,7 +452,7 @@ async def test_merge_jurisdiction_pr_skips_when_not_clean():
             new_callable=AsyncMock,
         ) as mock_sync,
     ):
-        await merge_jurisdiction_pr("42", "approver@example.com", REQUEST_ID)
+        await merge_jurisdiction_pr("42", "approver@example.com", CHANGESET_ID)
 
     mock_merge.assert_not_called()
     # Nothing merged, so there is nothing new to project into the DB.
