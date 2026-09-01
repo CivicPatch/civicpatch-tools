@@ -114,10 +114,6 @@ def test_rejecting_a_scrape_dismisses_it(client):
             return_value="user-id-123",
         ),
         patch(
-            "services.change_logs.record_close",
-            new_callable=AsyncMock,
-        ),
-        patch(
             "database.review_session_entries.resolve_entries_for_request",
             new_callable=AsyncMock,
         ) as mock_resolve,

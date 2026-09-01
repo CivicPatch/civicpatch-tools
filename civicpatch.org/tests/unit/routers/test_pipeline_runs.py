@@ -1,4 +1,5 @@
 import pytest
+from shared.utils.statuses import DismissalReason
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
@@ -236,7 +237,9 @@ def test_cancel_settles_the_review_as_well_as_the_run():
     assert response.status_code == 200
     mock_cancel.assert_awaited_once_with(TEST_OCDID)
     assert mock_status.await_args.kwargs["status"] == "CANCELLED"
-    mock_dismiss.assert_awaited_once_with(TEST_REQUEST_ID, resolved_by_user_id="user-1")
+    mock_dismiss.assert_awaited_once_with(
+        TEST_REQUEST_ID, DismissalReason.CANCELLED, resolved_by_user_id="user-1"
+    )
 
 
 @pytest.mark.unit
@@ -279,8 +282,9 @@ async def test_a_run_that_ended_without_a_roster_settles_its_request(status):
     ):
         await pipeline_runs_router.finalize_pipeline_run(TEST_REQUEST_ID, status, TEST_OCDID)
 
-    # No user id: a machine giving up, not a person declining.
-    dismiss.assert_awaited_once_with(TEST_REQUEST_ID)
+    # No user id: a machine giving up, not a person declining. The reason is passed rather
+    # than inferred later, because `status` is mutable and a guess could drift.
+    dismiss.assert_awaited_once_with(TEST_REQUEST_ID, DismissalReason.ERRORED)
 
 
 @pytest.mark.unit

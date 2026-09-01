@@ -14,6 +14,7 @@ Isolation: everything hangs off one sentinel jurisdiction, removed before and af
 import uuid
 
 import pytest
+from shared.utils.statuses import DismissalReason
 import pytest_asyncio
 from psycopg.errors import NotNullViolation
 
@@ -277,7 +278,7 @@ async def test_republishing_keeps_the_first_publish_time(sentinel_request):
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_dismissing_stamps_the_request(sentinel_request):
-    await dismiss_request(sentinel_request)
+    await dismiss_request(sentinel_request, DismissalReason.ERRORED)
 
     published_at, dismissed_at, _ = await _request_state(sentinel_request)
     assert published_at is None
@@ -291,7 +292,7 @@ async def test_a_published_request_cannot_be_dismissed(sentinel_request):
     already happened, and there is no undoing it by closing a card."""
     await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
 
-    await dismiss_request(sentinel_request)
+    await dismiss_request(sentinel_request, DismissalReason.ERRORED)
 
     published_at, dismissed_at, _ = await _request_state(sentinel_request)
     assert published_at is not None
@@ -335,7 +336,7 @@ async def test_publish_does_not_blank_an_existing_resolver(sentinel_request):
 async def test_a_machine_dismissal_records_no_user(sentinel_request):
     """A cancelled run dismisses its own request, and `resolved_by_user_id IS NULL` is what
     tells that apart from a person deciding not to publish."""
-    await dismiss_request(sentinel_request)
+    await dismiss_request(sentinel_request, DismissalReason.ERRORED)
 
     _, dismissed_at, resolved_by = await _request_state(sentinel_request)
     assert dismissed_at is not None
@@ -349,7 +350,7 @@ async def test_dismissing_never_touches_a_published_request(sentinel_request):
     Publishing has to win: a late CANCELLED must not retire a roster that already went live."""
     await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
 
-    await dismiss_request(sentinel_request)
+    await dismiss_request(sentinel_request, DismissalReason.ERRORED)
 
     published_at, dismissed_at, _ = await _request_state(sentinel_request)
     assert published_at is not None

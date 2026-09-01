@@ -30,6 +30,7 @@ from lib.temporal.types import (
 )
 from services.roster import proposed_roster
 from shared.schemas import Person, RoleConfig
+from shared.utils.statuses import DismissalReason
 from shared.utils.taxonomy import build_taxonomy
 from shared.utils.yaml_utils import yaml_dump
 
@@ -132,11 +133,10 @@ async def dismiss_people(
     request_id: str, resolved_by_user_id: str | None = None
 ) -> None:
     """Mark a scrape reviewed-and-not-published. Leaves the roster untouched."""
-    await dismiss_request(request_id, resolved_by_user_id)
+    # `dismiss_request` writes the close_review log itself now, with the reason — so every
+    # dismissal has one, not just the reviewer's. That is what retires `record_close`.
+    await dismiss_request(request_id, DismissalReason.REJECTED, resolved_by_user_id)
     logger.info(f"[{request_id}] Dismissed without publishing")
-    # ChangeLogType.CLOSE_REVIEW keeps its name: change_logs rows FK to change_log_types, so
-    # the stored value cannot be renamed without orphaning history.
-    await change_logs.record_close(request_id, resolved_by_user_id)
 
 
 def unreviewed_file_path(jurisdiction_ocdid: str) -> str:

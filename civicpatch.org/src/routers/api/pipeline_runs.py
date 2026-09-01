@@ -57,6 +57,7 @@ from schemas.pipeline_runs import (
 from services import people_collector
 from shared.utils.statuses import (
     ChangesetKind,
+    DismissalReason,
     TERMINAL_PIPELINE_RUN_STATUSES,
     PipelineRunStatus,
 )
@@ -122,7 +123,7 @@ async def finalize_pipeline_run(
     way.
     """
     if status in ENDED_WITHOUT_A_ROSTER:
-        await dismiss_request(request_id)
+        await dismiss_request(request_id, DismissalReason.ERRORED)
 
     if jurisdiction_ocdid:
         await supersede_prior_jurisdiction_issues(jurisdiction_ocdid, request_id)
@@ -458,7 +459,9 @@ def get_router(api_key_header):
         # be published, which is what dismissal means — and without this the request sits at
         # "pending" forever, since nothing will ever review a run that did not finish.
         user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
-        await dismiss_request(request_id, resolved_by_user_id=user_id)
+        await dismiss_request(
+            request_id, DismissalReason.CANCELLED, resolved_by_user_id=user_id
+        )
         return {"request_id": request_id, "status": PipelineRunStatus.CANCELLED}
 
     @router.get(

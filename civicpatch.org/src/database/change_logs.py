@@ -3,13 +3,14 @@ import json
 from core.change_logs import summarize_change_log
 from database.database import get_pool
 from schemas.change_logs import (
+    DismissalPayload,
     AssertionChangePayload,
     JurisdictionChangePayload,
     MembershipChangePayload,
     PersonChangePayload,
     PostChangePayload,
 )
-from shared.utils.statuses import ChangeLogType
+from shared.utils.statuses import ChangeLogType, DismissalReason
 
 
 async def get_change_logs_for_roles(
@@ -92,6 +93,7 @@ async def record_change(
     changes: PostChangePayload
     | MembershipChangePayload
     | AssertionChangePayload
+    | DismissalPayload
     | None = None,
     request_id: str | None = None,
 ) -> None:
@@ -116,4 +118,30 @@ async def record_change(
             user_id,
             request_id,
         ),
+    )
+
+
+async def record_dismissal(
+    cur,
+    changeset_id: str,
+    jurisdiction_ocdid: str | None,
+    user_id: str | None,
+    reason: DismissalReason,
+) -> None:
+    """The history entry for a changeset leaving the review pool.
+
+    Every dismissal writes one, including the four nobody asked for. `changesets` is current
+    state and gets overwritten; this is the record of what happened, and it stores the reason
+    rather than leaving it to be derived — `status` and `resolved_by_user_id` are both mutable,
+    so a derivation could give a past event a meaning it never had.
+
+    `user_id` is NULL for the machine reasons, which is the honest answer: nobody decided.
+    """
+    await record_change(
+        cur,
+        ChangeLogType.CLOSE_REVIEW,
+        user_id,
+        jurisdiction_ocdid,
+        DismissalPayload(reason=reason),
+        request_id=changeset_id,
     )

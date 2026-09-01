@@ -105,6 +105,14 @@ class ChangesetKind(StrEnum):
     JURISDICTION_EDIT = "jurisdiction_edit"
 
 
+class DismissalReason(StrEnum):
+    REJECTED = "rejected"  # a reviewer read the roster and said no
+    CANCELLED = "cancelled"  # somebody stopped the run before it produced one
+    ERRORED = "errored"  # the run ended without a roster; nobody decided
+    SUPERSEDED = "superseded"  # a newer roster for this jurisdiction won
+    UNCHANGED = "unchanged"  # the scrape asserted nothing that needed review
+
+
 class ChangeLogType(StrEnum):
     MERGE_REVIEW = "merge_review"
     CLOSE_REVIEW = "close_review"

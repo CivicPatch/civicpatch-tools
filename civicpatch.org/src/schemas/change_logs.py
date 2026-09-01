@@ -4,7 +4,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from shared.utils.statuses import ChangeLogType
+from shared.utils.statuses import ChangeLogType, DismissalReason
 
 
 class FieldChange(BaseModel):
@@ -22,6 +22,16 @@ class PersonChangePayload(BaseModel):
 class PersonChange(BaseModel):
     type: ChangeLogType
     payload: PersonChangePayload
+
+
+class DismissalPayload(BaseModel):
+    """Why a changeset was dismissed, recorded on its `close_review` log.
+
+    Stored rather than derived on read: `status` and `resolved_by_user_id` are both mutable, so
+    reconstructing this later could give a past event a different meaning than it had.
+    """
+
+    reason: DismissalReason
 
 
 class PostChangePayload(BaseModel):
