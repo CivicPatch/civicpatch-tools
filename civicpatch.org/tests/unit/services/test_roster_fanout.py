@@ -32,7 +32,7 @@ async def test_roster_reads_are_capped_however_many_requests():
 
     with (
         patch(
-            "services.roster.requests_db.jurisdictions_for_requests",
+            "services.roster.changesets_db.jurisdictions_for_requests",
             new_callable=AsyncMock,
             return_value=ocdids,
         ),
@@ -49,7 +49,7 @@ async def test_roster_reads_are_capped_however_many_requests():
 @pytest.mark.asyncio
 async def test_no_requests_reads_nothing():
     with patch(
-        "services.roster.requests_db.jurisdictions_for_requests",
+        "services.roster.changesets_db.jurisdictions_for_requests",
         new_callable=AsyncMock,
     ) as lookup:
         assert await roster.proposed_rosters([]) == {}

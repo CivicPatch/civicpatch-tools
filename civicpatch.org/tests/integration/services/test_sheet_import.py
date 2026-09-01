@@ -19,7 +19,7 @@ import pytest_asyncio
 
 from core.entry_rows import ImportStatus, parse_rows
 from lib.csv import parse_csv
-from database import request_batches
+from database import changeset_batches
 from database.database import get_pool
 from services.batch_review import batch_review, publish_selected
 from services.publish import reviewed_file_path
@@ -120,8 +120,8 @@ async def user_id():
 @pytest_asyncio.fixture
 async def batch_id(user_id):
     """`changesets.batch_id` is a real foreign key, so a literal string will not do."""
-    return await request_batches.start(
-        request_batches.BatchKind.SHEET_IMPORT,
+    return await changeset_batches.start(
+        changeset_batches.BatchKind.SHEET_IMPORT,
         f"sheet:{_OCDID}",
         user_id,
         {"spreadsheet_id": "test"},
@@ -446,11 +446,11 @@ async def test_the_running_import_is_findable_without_being_remembered(
 ):
     """Whoever opens the page finds the import under way — there is one spreadsheet and one
     lock, so it is a fact about the system, not about the browser that started it."""
-    found = await request_batches.latest(request_batches.BatchKind.SHEET_IMPORT)
+    found = await changeset_batches.latest(changeset_batches.BatchKind.SHEET_IMPORT)
 
     assert found is not None
     assert found["id"] == batch_id
-    assert found["status"] == request_batches.BatchStatus.RUNNING
+    assert found["status"] == changeset_batches.BatchStatus.RUNNING
 
 
 @pytest.mark.integration
@@ -468,8 +468,8 @@ async def test_publishing_dismisses_the_cards_it_makes_pointless(
     )
 
     # A second import of the same locality, which is what a re-run produces.
-    second = await request_batches.start(
-        request_batches.BatchKind.SHEET_IMPORT,
+    second = await changeset_batches.start(
+        changeset_batches.BatchKind.SHEET_IMPORT,
         f"sheet:{_OCDID}:again",
         user_id,
         {"spreadsheet_id": "test"},
@@ -496,9 +496,9 @@ async def test_one_sheet_cannot_have_two_imports_at_once(user_id, batch_id):
     Two runs over one sheet would each raise a review card per locality, which is how a single
     import turns into duplicate cards nobody can tell apart.
     """
-    with pytest.raises(request_batches.BatchAlreadyRunning):
-        await request_batches.start(
-            request_batches.BatchKind.SHEET_IMPORT,
+    with pytest.raises(changeset_batches.BatchAlreadyRunning):
+        await changeset_batches.start(
+            changeset_batches.BatchKind.SHEET_IMPORT,
             f"sheet:{_OCDID}",
             user_id,
             {"spreadsheet_id": "test"},
@@ -510,10 +510,10 @@ async def test_one_sheet_cannot_have_two_imports_at_once(user_id, batch_id):
 async def test_the_lock_lifts_when_the_batch_finishes(user_id, batch_id):
     """The index is partial on `finished_at IS NULL`, and `run_import` stamps it on success and
     failure alike — so the sheet frees itself for the next run either way."""
-    await request_batches.finish(batch_id, request_batches.BatchStatus.SUCCEEDED)
+    await changeset_batches.finish(batch_id, changeset_batches.BatchStatus.SUCCEEDED)
 
-    again = await request_batches.start(
-        request_batches.BatchKind.SHEET_IMPORT,
+    again = await changeset_batches.start(
+        changeset_batches.BatchKind.SHEET_IMPORT,
         f"sheet:{_OCDID}",
         user_id,
         {"spreadsheet_id": "test"},

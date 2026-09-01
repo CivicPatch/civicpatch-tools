@@ -22,7 +22,7 @@ from core.people_roster import reviewer_source_records
 from database import assertions, posts
 from database.database import get_pool
 from database.people import get_roster
-from database.requests import register_people_edit_request
+from database.changesets import register_people_edit_request
 from database.source_records import insert_source_records
 from schemas.common import Identity
 from services.publish import promote_images, promote_to_reviewed, publish_people

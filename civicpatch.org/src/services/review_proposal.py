@@ -19,7 +19,7 @@ from database import assertions
 from database import memberships as memberships_db
 from database import posts as posts_db
 from database import people as people_db
-from database import requests as requests_db
+from database import changesets as changesets_db
 from database.database import get_pool
 from schemas.assertions import EntityType
 from database.roles import get_roles
@@ -44,7 +44,7 @@ async def review_summary_for_request(request_id: str) -> dict:
     them for a different reason — `build_review_summary` compares two rosters, and which seat
     someone lands in is not on a roster, it is the derivation's answer.
     """
-    jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
+    jurisdiction_ocdid = await changesets_db.get_request_jurisdiction(request_id)
     if not jurisdiction_ocdid:
         return {}
 
@@ -85,7 +85,7 @@ async def proposals_for_requests(
     `rosters` is for a caller that already derived them — deriving a roster is the expensive
     half, and the summary reads the same one to diff against what we publish.
     """
-    ocdids = await requests_db.jurisdictions_for_requests(request_ids)
+    ocdids = await changesets_db.jurisdictions_for_requests(request_ids)
     if not ocdids:
         return {}
     if rosters is None:

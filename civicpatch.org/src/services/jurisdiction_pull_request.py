@@ -12,7 +12,7 @@ from services.open_data_sync import sync_jurisdictions_by_ocdids
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 import database.jurisdictions as jurisdictions_db
-import database.requests as requests_db
+import database.changesets as changesets_db
 import core.jurisdiction_patch as jurisdiction_patch
 import services.change_logs as change_logs
 
@@ -171,7 +171,7 @@ async def commit_jurisdiction_patch(
 
     # Published on commit: there is no review step between the edit and the file, so the
     # request is born resolved rather than waiting for a merge to tell us.
-    await requests_db.register_jurisdiction_edit_request(
+    await changesets_db.register_jurisdiction_edit_request(
         request_id=request_id,
         jurisdiction_ocdid=jurisdiction_ocdid,
         arguments_json=patch,
@@ -225,7 +225,7 @@ async def merge_jurisdiction_pr(
     # write: this path merged the PR, so it already knows. A failure here is not a merge
     # failure — the merge stands and the hourly od_sync is the backstop.
     try:
-        jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
+        jurisdiction_ocdid = await changesets_db.get_request_jurisdiction(request_id)
         if jurisdiction_ocdid:
             await sync_jurisdictions_by_ocdids([jurisdiction_ocdid])
     except Exception:

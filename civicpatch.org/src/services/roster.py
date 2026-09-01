@@ -4,7 +4,7 @@ import logging
 from core.people_edits import with_stated_values
 from core.people_roster import roster_from_sightings
 from database import assertions
-from database import requests as requests_db
+from database import changesets as changesets_db
 from database.database import get_pool
 from database.people import get_people_by_ids
 from database.roles import get_roles
@@ -65,7 +65,7 @@ async def proposed_rosters(request_ids: list[str]) -> dict[str, list[dict]]:
     """
     if not request_ids:
         return {}
-    ocdids = await requests_db.jurisdictions_for_requests(request_ids)
+    ocdids = await changesets_db.jurisdictions_for_requests(request_ids)
     limit = asyncio.Semaphore(_ROSTER_CONCURRENCY)
 
     async def one(request_id: str, ocdid: str) -> list[dict]:

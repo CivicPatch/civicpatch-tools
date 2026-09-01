@@ -6,7 +6,7 @@ from shared.utils.statuses import (
     ChangesetKind,
 )
 from database.database import get_pool, to_iso
-from database.requests import AVAILABLE_FOR_REVIEW, REVIEW_STATUS, WORK_IN_FLIGHT
+from database.changesets import AVAILABLE_FOR_REVIEW, REVIEW_STATUS, WORK_IN_FLIGHT
 from database.review_queue import issue_count, issue_priority
 
 

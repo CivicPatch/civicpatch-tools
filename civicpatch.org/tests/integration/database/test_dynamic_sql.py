@@ -15,7 +15,7 @@ import database.jurisdictions as db_jurisdictions
 import database.pipeline_runs as db_jobs
 import database.people as db_people
 import database.pull_requests as db_pull_requests
-import database.requests as db_requests
+import database.changesets as db_requests
 import database.issues as db_issues
 import database.summary as db_summary
 import database.users as db_users
@@ -364,7 +364,7 @@ async def test_get_people_by_state_not_found():
 
 
 # ---------------------------------------------------------------------------
-# database.requests — requests / pull requests
+# database.changesets — requests / pull requests
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio

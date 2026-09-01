@@ -12,7 +12,7 @@ from core.jurisdiction_search import (
 )
 from database.database import get_pool, to_iso
 from database.people import PERSON_JSON
-from database.requests import AVAILABLE_FOR_REVIEW, REVIEW_STATUS, RUN_IN_FLIGHT
+from database.changesets import AVAILABLE_FOR_REVIEW, REVIEW_STATUS, RUN_IN_FLIGHT
 from psycopg import sql
 from schemas.common import (
     Jurisdiction,

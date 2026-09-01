@@ -12,7 +12,7 @@ import uuid
 import pytest
 import pytest_asyncio
 from database.database import get_pool
-from database.requests import DISMISSED_UNCHANGED, dismiss_as_unchanged
+from database.changesets import DISMISSED_UNCHANGED, dismiss_as_unchanged
 from database.review_sessions import create_or_get_review_session, get_active_review_session
 from database.review_sessions import end_review_session
 from database.publications import publish_request

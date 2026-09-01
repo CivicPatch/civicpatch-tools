@@ -2,7 +2,7 @@ import logging
 import re
 from datetime import date
 import database.pipeline_runs
-import database.requests
+import database.changesets
 import lib.csv as csv_service
 import services.people_csv_export as requests_export_service
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -32,7 +32,7 @@ def get_router(api_key_header):
         print(
             f"Registering request: {request.request_id} by user {user.provider_user_id} from provider {user.provider}"
         )
-        _response = await database.requests.register_request_with_pipeline_run(
+        _response = await database.changesets.register_request_with_pipeline_run(
             requested_by_user_id=user.user_id,
             request_id=request.request_id,
             kind=ChangesetKind.SCRAPE,

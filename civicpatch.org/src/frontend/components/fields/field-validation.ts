@@ -13,6 +13,7 @@ import {
   isMulti,
   normalizeMultiValue,
   normalizeScalar,
+  POST_FIELD,
   type DiffRecord,
   type FieldSpec,
 } from "./field-schema.js";
@@ -143,21 +144,27 @@ export function rowError(
   return null;
 }
 
-// The single client-side error for a field's value on `record`, or null. Order:
-// required → date format → term ordering (end_date only) → value format.
-// A post derives from the labels, so it is only asked for when there are none — an addition.
-// Unanswered, they would publish into the `unmatched` seat.
-function isPostlessAddition(record: DiffRecord, field: FieldSpec): boolean {
-  if (field.key !== "post_id") return false;
+// A post is answered by a pick, or by labels that name a role. Asking on `role_id` rather than
+// on whether there are labels at all catches both cases at once: somebody added by hand has no
+// labels, and a scraped label that parses to nothing names no role either. Both publish into
+// the `unmatched` post, which is a vocabulary gap rather than an answer — the picker already
+// refuses to offer it.
+function isPostUnanswered(record: DiffRecord, field: FieldSpec): boolean {
+  if (field.key !== POST_FIELD) return false;
   if (normalizeScalar(diffValue(record, field)) !== "") return false;
+  // `labels` is how a roster record is recognised — every one carries the key, empty or not.
+  // Without it there is no derivation to have an opinion about.
   const labels = getFieldValue(record, "labels");
-  return Array.isArray(labels) && labels.length === 0;
+  if (!Array.isArray(labels)) return false;
+  return !getFieldValue(record, "role_id");
 }
 
+// The single client-side error for a field's value on `record`, or null. Order:
+// required → date format → term ordering (end_date only) → value format.
 export function fieldError(field: FieldSpec, record: DiffRecord): string | null {
   if (!record) return null;
   if (isRequiredFieldEmpty(record, field)) return "Required";
-  if (isPostlessAddition(record, field)) return "Choose a post";
+  if (isPostUnanswered(record, field)) return "Choose a post";
   if (isMulti(field)) {
     const values = (diffValue(record, field) as string[]) ?? [];
     for (let index = 0; index < values.length; index++) {

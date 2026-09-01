@@ -4,7 +4,7 @@ from core.change_logs import field_changes
 from core.jurisdiction_patch import JurisdictionPatch
 from core.people_diff import diff_people
 from database.change_logs import create_change_log
-from database.requests import get_request_jurisdiction
+from database.changesets import get_request_jurisdiction
 from schemas.change_logs import JurisdictionChangePayload
 from shared.utils.statuses import ChangeLogType
 

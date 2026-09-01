@@ -11,7 +11,7 @@ async def test_a_request_we_do_not_hold_yields_an_empty_summary():
     """The summary is computed from the jurisdiction's rosters now, so an unknown request has
     nothing to compute against — and must not 500 the card looking."""
     with patch(
-        "services.review_proposal.requests_db.get_request_jurisdiction",
+        "services.review_proposal.changesets_db.get_request_jurisdiction",
         new_callable=AsyncMock,
         return_value=None,
     ):
@@ -33,7 +33,7 @@ def _person(name: str, office: str = "Mayor") -> dict:
 def _summary_for(published: list[dict], proposed: list[dict]):
     return patch.multiple(
         "services.review_proposal",
-        requests_db=AsyncMock(get_request_jurisdiction=AsyncMock(return_value=OCDID)),
+        changesets_db=AsyncMock(get_request_jurisdiction=AsyncMock(return_value=OCDID)),
         people_db=AsyncMock(
             get_roster=AsyncMock(return_value=published)
         ),

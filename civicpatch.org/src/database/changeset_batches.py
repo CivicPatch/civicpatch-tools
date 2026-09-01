@@ -1,4 +1,4 @@
-"""Database queries for `request_batches` — one run that produced many requests.
+"""Database queries for `changeset_batches` — one run that produced many requests.
 
 A batch records the fan-out, not the outcome: `finished_at` means the requests exist, and what
 happens to each afterwards is `requests`' business. Its items *are* its requests, so there is no
@@ -9,7 +9,7 @@ import json
 from enum import StrEnum
 
 from database.database import get_pool
-from database.requests import REVIEW_STATUS
+from database.changesets import REVIEW_STATUS
 from psycopg.errors import UniqueViolation
 
 

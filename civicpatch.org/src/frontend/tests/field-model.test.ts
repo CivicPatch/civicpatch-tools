@@ -804,19 +804,26 @@ describe("fieldError — phones", () => {
 });
 
 
-describe("fieldError — a post for somebody added by hand", () => {
+describe("fieldError — a post nobody has answered", () => {
   const post = { key: "post_id", label: "Post", type: "text" } as const;
 
-  // The reachable half: an addition has no labels, so nothing derives a post for them and
-  // publishing would drop them into the `unmatched` seat.
   it("asks for a post when there are no labels to derive one from", () =>
     expect(fieldError(post, { post_id: null, labels: [] })).toBe("Choose a post"));
+
+  // Was believed unreachable — "a scraped person always derives to a post". They derive to the
+  // `unmatched` post, which is not an answer: 29 of those exist, holding 43 people.
+  it("asks when the labels named no role, however many labels there are", () =>
+    expect(
+      fieldError(post, { post_id: null, labels: ["Deputy Vice Chair"], role_id: null }),
+    ).toBe("Choose a post"));
 
   it("is satisfied once one is picked", () =>
     expect(fieldError(post, { post_id: "post-1", labels: [] })).toBeNull());
 
-  // The unreachable half, and why this is not just `required: true`: a scraped person always
-  // derives to a post, so asking them to confirm one would be a field that can never be wrong.
-  it("does not ask when the labels can derive one", () =>
-    expect(fieldError(post, { post_id: null, labels: ["Mayor"] })).toBeNull());
+  // Why this is not just `required: true`: a label that names a real role has already answered,
+  // and asking the reviewer to confirm it would be a field that can never be wrong.
+  it("does not ask when the labels named a role", () =>
+    expect(
+      fieldError(post, { post_id: null, labels: ["Mayor"], role_id: "Mayor" }),
+    ).toBeNull());
 });

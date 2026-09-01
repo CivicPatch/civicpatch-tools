@@ -21,7 +21,7 @@ from core.post_derivation import DerivedMember
 from database import divisions, memberships, organizations, posts
 from core.people_edits import PersonPatch
 from database.database import get_pool
-from database.requests import DISMISSED_SUPERSEDED, supersede_stacked_requests
+from database.changesets import DISMISSED_SUPERSEDED, supersede_stacked_requests
 from schemas.assertions import EntityType
 from schemas.common import Identity, UserRole
 
