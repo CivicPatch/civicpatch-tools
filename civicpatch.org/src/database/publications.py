@@ -16,10 +16,12 @@ from core.post_derivation import DerivedPost
 from core.people_edits import values_to_accept, with_stated_values
 from database import assertions, divisions, memberships, organizations, posts
 import database.requests as requests_db
+from database.change_logs import record_dismissal
 from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
 from database.pipeline_runs import get_sourced_at
 from schemas.assertions import Assertion, AssertionKind, EntityType
+from shared.utils.statuses import DismissalReason
 
 logger = logging.getLogger(__name__)
 
@@ -35,12 +37,18 @@ async def record_open_data_url(request_id: str, url: str) -> None:
 
 
 async def dismiss_request(
-    request_id: str, resolved_by_user_id: str | None = None
+    request_id: str,
+    reason: DismissalReason,
+    resolved_by_user_id: str | None = None,
 ) -> None:
-    """This scrape will not go live — a reviewer said so, or the run was cancelled.
+    """This scrape will not go live — a reviewer said so, the run was cancelled, or it failed.
 
     The counterpart to publishing, and the other way a request leaves the review queue. Not a
     failure: a dismissed scrape keeps its evidence, it just never published.
+
+    `reason` is required because the caller is the only thing that knows it. `status` and
+    `resolved_by_user_id` can be read to guess, but both are mutable — so a guess made later
+    could give a past event a meaning it never had.
 
     `resolved_by_user_id` is NULL when the machine gave up rather than a person deciding, and
     `COALESCE` means a later human resolution is never overwritten by a machine one.
@@ -55,12 +63,20 @@ async def dismiss_request(
                SET dismissed_at = COALESCE(dismissed_at, now()),
                    resolved_by_user_id = COALESCE(%s, resolved_by_user_id)
              WHERE id = %s AND published_at IS NULL
+            RETURNING jurisdiction_ocdid
             """,
             (resolved_by_user_id, request_id),
         )
+        row = await cur.fetchone()
         dropped = await posts.delete_unclaimed(cur, request_id)
         if dropped:
             logger.info(f"[{request_id}] Dropped {dropped} post(s) nobody claimed")
+        # Only when the UPDATE matched: a request already published is left alone above, and
+        # must not gain a dismissal in its history either.
+        if row is not None:
+            await record_dismissal(
+                cur, request_id, row[0], resolved_by_user_id, reason
+            )
 
 
 class SupersededRoster(ValueError):

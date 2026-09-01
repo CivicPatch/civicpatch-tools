@@ -13,6 +13,7 @@ import json
 import uuid
 
 import pytest
+from shared.utils.statuses import DismissalReason
 import pytest_asyncio
 
 from core.post_derivation import ChosenPost, DerivedMember
@@ -1003,7 +1004,7 @@ async def _mint_via(request_id: str, role_id: str) -> str:
 async def _dismiss(request_id: str) -> None:
     from database.publications import dismiss_request
 
-    await dismiss_request(request_id)
+    await dismiss_request(request_id, DismissalReason.ERRORED)
 
 
 async def _post_exists(post_id: str) -> bool:

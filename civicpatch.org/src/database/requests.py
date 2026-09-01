@@ -1,8 +1,11 @@
 import json
+import logging
 from collections.abc import Mapping
 from datetime import timedelta
 from typing import Optional
 
+from database import posts
+from database.change_logs import record_dismissal
 from database.database import get_pool
 from database.review_sessions import (
     SESSION_IDLE_TIMEOUT_MINUTES,
@@ -10,12 +13,15 @@ from database.review_sessions import (
 )
 from shared.utils.statuses import (
     TERMINAL_PIPELINE_RUN_STATUSES,
+    ChangesetKind,
+    DismissalReason,
     PipelineIssueStatus,
     PipelineIssueType,
     PipelineRunStatus,
     RequestReviewStatus,
-    ChangesetKind,
 )
+
+logger = logging.getLogger(__name__)
 
 # Derived from the two timestamps, never stored; a CHECK forbids both being set.
 # Requires the requests table aliased `r`.
@@ -177,7 +183,6 @@ async def register_foreign_request(
         )
 
 
-
 async def register_people_edit_request(
     request_id: str,
     jurisdiction_ocdid: str,
@@ -307,8 +312,6 @@ async def jurisdictions_for_requests(request_ids: list[str]) -> dict[str, str]:
         return {request_id: ocdid for request_id, ocdid in await cur.fetchall()}
 
 
-
-
 async def get_issue_request_details(request_ids: list[str]) -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -335,6 +338,20 @@ async def get_issue_request_details(request_ids: list[str]) -> list[dict]:
     ]
 
 
+async def _settle_dismissal(
+    cur,
+    changeset_id: str,
+    jurisdiction_ocdid: str | None,
+    reason: DismissalReason,
+    user_id: str | None = None,
+) -> None:
+
+    dropped = await posts.delete_unclaimed(cur, changeset_id)
+    if dropped:
+        logger.info(f"[{changeset_id}] Dropped {dropped} post(s) nobody claimed")
+    await record_dismissal(cur, changeset_id, jurisdiction_ocdid, user_id, reason)
+
+
 async def dismiss_as_unchanged(cur, request_id: str) -> bool:
     """Retire a scrape that asserted nothing new. Returns whether it was still open.
 
@@ -346,10 +363,15 @@ async def dismiss_as_unchanged(cur, request_id: str) -> bool:
         UPDATE changesets
            SET dismissed_at = now(), dismissed_reason = '{DISMISSED_UNCHANGED}'
          WHERE id::text = %s AND published_at IS NULL AND dismissed_at IS NULL
+        RETURNING jurisdiction_ocdid
         """,
         (request_id,),
     )
-    return cur.rowcount > 0
+    row = await cur.fetchone()
+    if row is None:
+        return False
+    await _settle_dismissal(cur, request_id, row[0], DismissalReason.UNCHANGED)
+    return True
 
 
 async def dismiss_superseded_by(
@@ -382,7 +404,13 @@ async def dismiss_superseded_by(
             timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES),
         ),
     )
-    return [row[0] for row in await cur.fetchall()]
+    dismissed = [row[0] for row in await cur.fetchall()]
+    # Every jurisdiction here is the one being published into, by construction of the WHERE.
+    for changeset_id in dismissed:
+        await _settle_dismissal(
+            cur, changeset_id, jurisdiction_ocdid, DismissalReason.SUPERSEDED
+        )
+    return dismissed
 
 
 async def supersede_stacked_requests() -> list[str]:
@@ -429,8 +457,14 @@ async def supersede_stacked_requests() -> list[str]:
                        AND newer.sourced_at > older.sourced_at
                  )
              )
-            RETURNING id::text
+            RETURNING id::text, jurisdiction_ocdid
             """,
             (timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES),),
         )
-        return [row[0] for row in await cur.fetchall()]
+        # The sweep spans jurisdictions, so each row carries its own.
+        dismissed = await cur.fetchall()
+        for changeset_id, jurisdiction_ocdid in dismissed:
+            await _settle_dismissal(
+                cur, changeset_id, jurisdiction_ocdid, DismissalReason.SUPERSEDED
+            )
+        return [row[0] for row in dismissed]
