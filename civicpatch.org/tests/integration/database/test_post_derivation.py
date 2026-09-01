@@ -831,15 +831,23 @@ def _derived(role_id: str, division_ocdid: str):
     )
 
 
+async def _mint(derived_posts_list, changeset_id: str) -> None:
+    """Create seats the way publishing does. Ingest no longer mints — it only projects."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await posts.create_all(cur, _OCDID, derived_posts_list, changeset_id)
+        await conn.commit()
+
+
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_minting_a_post_is_logged_against_the_scrape_that_caused_it():
-    """"This scrape invented a seat" is the event a reviewer needs told about, and it is
-    answered from the log rather than a column on `posts` — creation happens once and never
+    """"Publishing this roster created a seat" is the event a reviewer needs told about, and it
+    is answered from the log rather than a column on `posts` — creation happens once and never
     changes, so it is an event, not a property of the row."""
     request_id = await _seed_request()
 
-    await posts.find_or_create_all(_OCDID, [_derived("mayor", _BASE)], request_id)
+    await _mint([_derived("mayor", _BASE)], request_id)
 
     logs = await _add_post_logs(request_id)
     assert len(logs) == 1
@@ -855,10 +863,10 @@ async def test_matching_an_existing_post_logs_nothing():
     """Only a mint is news. A second scrape seeing the same seat has invented nothing, and
     logging it would make every re-scrape look like a change."""
     first = await _seed_request()
-    await posts.find_or_create_all(_OCDID, [_derived("mayor", _BASE)], first)
+    await _mint([_derived("mayor", _BASE)], first)
 
     second = await _seed_request()
-    await posts.find_or_create_all(_OCDID, [_derived("mayor", _BASE)], second)
+    await _mint([_derived("mayor", _BASE)], second)
 
     assert len(await _add_post_logs(first)) == 1
     assert await _add_post_logs(second) == []
@@ -868,14 +876,10 @@ async def test_matching_an_existing_post_logs_nothing():
 @pytest.mark.integration
 async def test_only_the_new_seat_is_logged_when_a_scrape_mixes_both():
     request_id = await _seed_request()
-    await posts.find_or_create_all(_OCDID, [_derived("mayor", _BASE)], request_id)
+    await _mint([_derived("mayor", _BASE)], request_id)
 
     later = await _seed_request()
-    await posts.find_or_create_all(
-        _OCDID,
-        [_derived("mayor", _BASE), _derived("council-member", _WARD_3)],
-        later,
-    )
+    await _mint([_derived("mayor", _BASE), _derived("council-member", _WARD_3)], later)
 
     logs = await _add_post_logs(later)
     assert [log["changes"]["role_id"] for log in logs] == ["council-member"]
@@ -984,128 +988,6 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         closed_at, last_seen_at = await cur.fetchone()
     assert closed_at is None, "an unreviewed scrape closed a published membership"
     assert last_seen_at == _T0, "an unreviewed scrape moved a published last_seen_at"
-
-
-# --- dropping the seats a dismissed scrape invented ------------------------------
-
-
-async def _mint_via(request_id: str, role_id: str) -> str:
-    """Mint the way ingest does, so the `add_post` log `delete_unclaimed` reads exists."""
-    await posts.find_or_create_all(_OCDID, [_derived(role_id, _BASE)], request_id)
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT id::text FROM posts WHERE jurisdiction_ocdid = %s AND role_id = %s",
-            (_OCDID, role_id),
-        )
-        return (await cur.fetchone())[0]
-
-
-async def _dismiss(request_id: str) -> None:
-    from database.publications import dismiss_request
-
-    await dismiss_request(request_id, DismissalReason.ERRORED)
-
-
-async def _post_exists(post_id: str) -> bool:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("SELECT 1 FROM posts WHERE id::text = %s", (post_id,))
-        return await cur.fetchone() is not None
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_dismissing_a_scrape_drops_the_seats_it_invented():
-    """Dismissed, nobody is asked about the seat again — it would sit unverified for good.
-    The `Board` label was the case: 44 occurrences of nothing."""
-    request_id = await _seed_request()
-    post_id = await _mint_via(request_id, "mayor")
-
-    await _dismiss(request_id)
-
-    assert await _post_exists(post_id) is False
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_held_seat_survives_dismissal():
-    """A membership makes the post history, closed ones included."""
-    request_id = await _seed_request()
-    post_id = await _mint_via(request_id, "mayor")
-    person_id = await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await memberships.upsert(
-            cur, DerivedMember(person_id=person_id), post_id, org, _T0
-        )
-        await conn.commit()
-
-    await _dismiss(request_id)
-
-    assert await _post_exists(post_id) is True
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_vouched_seat_survives_dismissal():
-    """An assertion is a person saying the seat is real, and this runs without a person.
-    Where it differs from `delete_if_unheld`, which deletes assertions instead."""
-    request_id = await _seed_request()
-    post_id = await _mint_via(request_id, "mayor")
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "INSERT INTO users (email, provider, provider_user_id, role) "
-            "VALUES (%s, 'email', %s, 'admins') RETURNING id::text",
-            (_CURATOR, _CURATOR),
-        )
-        user_id = (await cur.fetchone())[0]
-        await cur.execute(
-            "INSERT INTO assertions "
-            "(entity_type, entity_id, field_path, kind, value, asserted_by) "
-            "VALUES ('post', %s, '_headcount', 'accept', %s, %s)",
-            (post_id, json.dumps(5), user_id),
-        )
-        await conn.commit()
-
-    await _dismiss(request_id)
-
-    assert await _post_exists(post_id) is True
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_seat_a_later_scrape_still_sees_comes_straight_back():
-    """Why this needs no "did anything else see it" check: `find_or_create` re-mints a seat
-    that is still real."""
-    first = await _seed_request()
-    post_id = await _mint_via(first, "mayor")
-    await _dismiss(first)
-    assert await _post_exists(post_id) is False
-
-    later = await _seed_request()
-    remade = await _mint_via(later, "mayor")
-
-    assert await _post_exists(remade) is True
-    assert remade != post_id  # a new row, not a resurrection
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_dropping_leaves_another_scrapes_seats_alone():
-    """Scoped to what *this* request minted. A dismissal must not tidy up a neighbour."""
-    mine = await _seed_request()
-    theirs = await _seed_request()
-    mine_post = await _mint_via(mine, "mayor")
-    theirs_post = await _mint_via(theirs, "clerk")
-
-    await _dismiss(mine)
-
-    assert await _post_exists(mine_post) is False
-    assert await _post_exists(theirs_post) is True
 
 
 @pytest.mark.asyncio

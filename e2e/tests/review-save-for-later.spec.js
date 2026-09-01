@@ -29,7 +29,10 @@ async function openFirstCardAndEdit(page) {
   // Save only appears once there is something to save.
   await expect(page.locator(".review-page__save-btn")).toHaveCount(0);
 
-  await editField(page, "Jane Smith", "Office", "Deputy Mayor");
+  // Any edit will do — this is about the save wiring, not the field. Other names because it is
+  // plain text a reviewer really does correct: the seat is picked from a select now, so there is
+  // no office text to type into.
+  await editField(page, "Jane Smith", "Other names", "Janey Smith");
 
   await expect(page.locator(".review-page__save-btn")).toBeVisible();
 }
@@ -54,7 +57,7 @@ test.describe("Save updates", () => {
     await expect.poll(() => savedBody).not.toBeNull();
     expect(savedBody.request_id).toBe("00000000-0000-0000-eeee-000000000001");
     // The edit must actually reach the server — this is the payload the button wires up.
-    expect(JSON.stringify(savedBody.data)).toContain("Deputy Mayor");
+    expect(JSON.stringify(savedBody.data)).toContain("Janey Smith");
   });
 
   test("a saved card is marked saved and the reviewer moves on", async ({

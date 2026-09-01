@@ -24,7 +24,7 @@ import { type PersonEditorProps } from "./person-editor.js";
 // Mirrors `UNMATCHED_ROLE_ID` in core/post_derivation.py — the seeded role a label
 // resolving to nothing falls back to.
 const UNMATCHED_ROLE_ID = "unmatched";
-import type { Post } from "../posts-list/posts-model.js";
+import { heldPost, type DerivedPost, type Post } from "../posts-list/posts-model.js";
 
 export interface EditorContext {
   frozen: FrozenFields;
@@ -57,21 +57,24 @@ export interface EditorContext {
 }
 
 
-/** The seat this person is in — the proposal, else the one held membership (the same two
- * `postsFor` reads). Only when exactly one: two seats is no single answer. Shown, never saved. */
-function derivedPostIdFor(
+/** The post this person is in — the proposal, else the one held membership (the same two
+ * `postsFor` reads). Only when exactly one: two posts is no single answer. Shown, never saved.
+ *
+ * Carries the label as well as the id, because a proposal names a post that may have no row:
+ * ingest stopped minting posts, so `post_id` is null until someone publishes. An id alone left
+ * the picker with nothing to show and the derivation's answer disappeared. */
+function derivedPostFor(
   card: PersonCard,
   proposals: Map<string, ProposedChange[]>,
-): string | null {
+): DerivedPost | null {
   const proposed = proposals.get(card.personId) ?? [];
   if (proposed.length) {
     if (proposed.length > 1) return null;
     // `unmatched` is a vocabulary gap, not an answer.
     if (proposed[0].role_id === UNMATCHED_ROLE_ID) return null;
-    return proposed[0].post_id ?? null;
+    return { post_id: proposed[0].post_id ?? null, label: proposed[0].post_label };
   }
-  const held = personOf(card)?.memberships ?? [];
-  return held.length === 1 ? (held[0].post_id ?? null) : null;
+  return heldPost(personOf(card)?.memberships);
 }
 
 
@@ -87,7 +90,7 @@ export function personEditorPropsFor(card: PersonCard, ctx: EditorContext): Pers
     isReadOnly: ctx.isReadOnly,
     jurisdictionOcdid: ctx.jurisdictionOcdid,
     subtitle: postsFor(card, ctx.proposals),
-    derivedPostId: derivedPostIdFor(card, ctx.proposals),
+    derivedPost: derivedPostFor(card, ctx.proposals),
     accepts: acceptsByField(ctx.assertions[card.personId] ?? []),
     posts: ctx.posts,
     isDirty: ctx.dirtyIds.has(card.personId),

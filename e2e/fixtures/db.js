@@ -106,7 +106,7 @@ function scalePerson(index, overrides = {}) {
       division_ocdid: `${SCALE_DIVISION_BASE}/ward:${index}`,
     },
     emails: [`ward${index}@scale.gov`],
-    phones: [`(555) 020-01${n}`],
+    phones: [`(201) 555-01${n}`],
     urls: [`https://scale.gov/ward/${index}`],
     other_names: [],
     source_urls: ["https://scale.gov/council"],
@@ -144,9 +144,9 @@ function buildScaleProposed() {
               },
             }
           : {}),
-        ...(changed && i % 3 === 1
-          ? { emails: [`ward${i}@scale.gov`, `c${i}@scale.gov`] }
-          : {}),
+        // A changed email, not an added one: a sighting carries a single contact, so a second
+        // address is a shape this fixture cannot propose.
+        ...(changed && i % 3 === 1 ? { emails: [`c${i}@scale.gov`] } : {}),
         ...(changed && i % 3 === 2 ? { end_date: "2029", phones: [] } : {}),
       }),
     );
@@ -254,12 +254,22 @@ const stateOcdid = (code) => `ocd-jurisdiction/country:us/state:${code}/governme
  * The fixtures describe people as the old `data_json` did — name, office, contact lists. A
  * sighting is flatter and singular, which is what `source_records` stores.
  */
+// A sighting carries label text, and the roster derives the division by parsing it — a raw
+// `division_ocdid` on the sighting is discarded. So a ward seat has to be spelled out, or the
+// seat derives to the jurisdiction's own division while `seatPerson` seated them in a ward,
+// and every carried person reads as moved.
+function sightingLabel(office) {
+  if (!office?.name) return "";
+  const ward = office.division_ocdid?.match(/\/ward:(.+)$/)?.[1];
+  return ward ? `${office.name} Ward ${ward}` : office.name;
+}
+
 function asSightings(proposed) {
   return proposed.map(function (person) {
     return {
       person_id: person.id,
       name: person.name,
-      label: person.office?.name ?? "",
+      label: sightingLabel(person.office),
       email: person.emails?.[0] ?? null,
       phone: person.phones?.[0] ?? null,
       url: person.urls?.[0] ?? null,
@@ -280,14 +290,19 @@ function asSightings(proposed) {
  */
 async function seedReviewCard(
   client,
-  { requestId, ocdid, people = [], publishedAt = null },
+  { requestId, ocdid, people = [], publishedAt = null, ageSeconds = 0 },
 ) {
   await client.query(
+    // `ageSeconds` makes the queue order intentional rather than an accident of insertion
+    // time. The queue sorts `created_at DESC`, and cards seeded in one run otherwise share a
+    // timestamp to the microsecond — so which card a session opened first was arbitrary.
+    // Age 0 is the newest, and therefore the first card a review session offers.
     `INSERT INTO changesets (id, kind, jurisdiction_ocdid, arguments_json,
                            status, progress, sourced_at, created_at, published_at)
-     VALUES ($1, 'scrape', $2, '{}', 'success', 100, NOW(), NOW(), $3)
+     VALUES ($1, 'scrape', $2, '{}', 'success', 100, NOW(),
+             NOW() - ($4 * INTERVAL '1 second'), $3)
      ON CONFLICT (id) DO NOTHING`,
-    [requestId, ocdid, publishedAt],
+    [requestId, ocdid, publishedAt, ageSeconds],
   );
   // Re-seeding must not double the sightings: source_records has an auto id, so there is
   // nothing to ON CONFLICT on.
@@ -372,11 +387,21 @@ async function seatPerson(client, ocdid, person) {
     [ocdid, organizationId, roleId, division],
   );
 
+  // Term dates live on the membership, not on `people` — `PERSON_START_DATE` reads
+  // `memberships.start_date`. Seeding them only on the person left every existing record with
+  // null terms, so every proposed person differed on Term start / Term end and nothing folded.
   await client.query(
-    `INSERT INTO memberships (post_id, organization_id, person_id, first_seen_at, last_seen_at)
-     VALUES ($1, $2, $3, NOW(), NOW())
+    `INSERT INTO memberships (post_id, organization_id, person_id, start_date, end_date,
+                              first_seen_at, last_seen_at)
+     VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
      ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL DO NOTHING`,
-    [post[0].id, organizationId, personUuid(person.id)],
+    [
+      post[0].id,
+      organizationId,
+      personUuid(person.id),
+      person.start_date ?? null,
+      person.end_date ?? null,
+    ],
   );
 }
 
@@ -521,6 +546,8 @@ export async function seedE2eFixtures() {
       await seedReviewCard(client, {
         requestId: reqId,
         ocdid: jOcdid,
+        // City 1 newest, so it is the first card — which is what the review specs assert.
+        ageSeconds: prNum,
         people: [
           {
             person_id: personIdFor(reqId),
@@ -568,7 +595,7 @@ export async function seedE2eFixtures() {
         name: "Maria González",
         office: { name: "Mayor", division_ocdid: RECONCILE_DIVISION },
         emails: ["maria@nh.gov"],
-        phones: ["(555) 010-0101"],
+        phones: ["(201) 555-0102"],
         urls: [],
         other_names: [],
         source_urls: ["https://example.gov/roster"],
@@ -605,7 +632,10 @@ export async function seedE2eFixtures() {
         other_names: [],
         source_urls: ["https://example.gov/roster"],
         start_date: "2021",
-        end_date: "2025",
+        // A new term end, so one scalar field actually moves. The seat moved too, but the seat
+        // is a picked post: it has no old value on the record to annotate, so it can carry an
+        // issue and not a `was`. Term end is what keeps the `was` / Restore claims testable.
+        end_date: "2029",
         image: "https://nh.gov/maria.jpg",
       },
       {
@@ -646,7 +676,7 @@ export async function seedE2eFixtures() {
           message:
             "Role 'council president' is marked as unique but found in multiple officials: Councillor 09 Scale, Councillor 21 Scale",
           person_ids: ["scale-p09", "scale-p21"],
-          field: "office.name",
+          field: "post_id",
         },
         {
           code: "new_official",
@@ -752,7 +782,7 @@ export async function seedE2eFixtures() {
       },
     ];
     // new_official → row-level marker (Carol); duplicate_unique_role → field-level
-    // marker under Office (Alice + Bob); absent_official → list-level (no card marker).
+    // marker under Post (Alice + Bob); absent_official → list-level (no card marker).
     const markersReview = {
       issues: [
         {
@@ -766,7 +796,7 @@ export async function seedE2eFixtures() {
           message:
             "Role 'mayor' is marked as unique but found in multiple officials: Alice Mayor, Bob Council",
           person_ids: ["markers-alice", "markers-bob"],
-          field: "office.name",
+          field: "post_id",
         },
         {
           code: "absent_official",
@@ -816,7 +846,7 @@ export async function seedE2eFixtures() {
           name: "Jane Published",
           label: "Council Member",
           email: "jane@ri.gov",
-          phone: "(555) 040-0001",
+          phone: "(201) 555-0103",
           image: "https://ri.gov/jane.jpg",
           start_date: "2022",
         },

@@ -9,7 +9,8 @@ dismisses the roster it proposed, and the post it minted stays unanswered.
 """
 
 from core.membership_label import derive_post_label
-from shared.schemas import Issue, IssueCode
+from core.membership_proposal import Disposition, ProposedChange
+from shared.schemas import POST_FIELD, Issue, IssueCode
 
 
 def _post_name(post: dict) -> str:
@@ -24,6 +25,25 @@ def unverified_post_issues(posts: list[dict]) -> list[Issue]:
             person_ids=[],
         )
         for post in posts
+    ]
+
+
+def moved_person_issues(changes: list[ProposedChange]) -> list[Issue]:
+    """A move between posts, which no field diff can see.
+
+    `post_id` on a person is the reviewer's pick and is null on both sides until they make one,
+    so someone becoming Council President compares equal on every field. Anchoring to `post_id`
+    is what puts the Post row on their card at all.
+    """
+    return [
+        Issue(
+            code=IssueCode.MOVED_PERSON,
+            message=f"Moved to {change.post_label}",
+            person_ids=[change.person_id],
+            field=POST_FIELD,
+        )
+        for change in changes
+        if change.disposition is Disposition.MOVED
     ]
 
 

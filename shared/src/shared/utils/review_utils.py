@@ -3,7 +3,7 @@ from collections import defaultdict
 from typing import Dict, List, Protocol, Set
 
 from pydantic import BaseModel
-from shared.schemas import Issue, IssueCode
+from shared.schemas import POST_FIELD, Issue, IssueCode
 
 from . import name_utils
 
@@ -88,16 +88,15 @@ def _build_row(
     }
 
 
-def _get_labels(person) -> list[str]:
-    """What the source called this person, one entry per sighting.
+def _get_role(person) -> str:
+    """The role the labels parsed to, which is the only thing comparable to a role name.
 
-    Read off `labels` rather than split back out of `office.name`. Every roster reaching
-    these checks is rendered, and a rendered roster carries both — the string is the list
-    joined, so splitting it is a round trip that can only lose.
+    Not `labels`: those are the source's own words, and a scraped label carries its division
+    ("Council President Ward 9"), so matching them against role names finds nothing.
     """
     if isinstance(person, dict):
-        return person.get("labels") or []
-    return getattr(person, "labels", None) or []
+        return person.get("role_id") or ""
+    return getattr(person, "role_id", None) or ""
 
 
 def _get_division_ocdid(person) -> str:
@@ -164,18 +163,17 @@ def _check_duplicate_unique_roles(people, unique_roles: List[str]) -> List[Issue
     unique_roles_set = {r.lower() for r in unique_roles}
     role_to_holders = defaultdict(list)  # role -> [(id, name), ...]
     for person in people:
-        tokens = [label.lower().strip() for label in _get_labels(person) if label.strip()]
-        for token in tokens:
-            if token in unique_roles_set:
-                role_to_holders[token].append(
-                    (_get_person_id(person), name_utils.get_person_name(person))
-                )
+        role = _get_role(person).lower().strip()
+        if role in unique_roles_set:
+            role_to_holders[role].append(
+                (_get_person_id(person), name_utils.get_person_name(person))
+            )
     return [
         Issue(
             code=IssueCode.DUPLICATE_UNIQUE_ROLE,
             message=f"Role '{role}' is marked as unique but found in multiple officials: {', '.join(name for _, name in holders)}",
             person_ids=[pid for pid, _ in holders if pid],
-            field="office.name",
+            field=POST_FIELD,
         )
         for role, holders in role_to_holders.items()
         if len(holders) > 1

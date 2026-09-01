@@ -208,6 +208,25 @@ export function divisionSelection(division_ocdid: string | null | undefined): {
     : { designation: AT_LARGE_DIVISION, value: "" };
 }
 
+/** The post the derivation chose for one person. `post_id` is null when no row holds it yet —
+ * publishing mints it, so the picker offers it by label and says what accepting it does. */
+export interface DerivedPost {
+  post_id: string | null;
+  label: string;
+}
+
+/** The post a person actually holds, which is a memberships question — `post_id` on a record is
+ * the reviewer's pick and is null until they make one, so it cannot answer this.
+ *
+ * Only when they hold exactly one: two is no single answer, the same rule the picker follows. */
+export function heldPost(
+  memberships: { post_id: string; post_label: string }[] | null | undefined,
+): DerivedPost | null {
+  const held = memberships ?? [];
+  if (held.length !== 1 || !held[0].post_id) return null;
+  return { post_id: held[0].post_id, label: held[0].post_label };
+}
+
 export interface PostOption {
   post_id: string;
   role_id: string;

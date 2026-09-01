@@ -208,8 +208,11 @@ async def test_every_sighting_gets_an_identity(user_id, batch_id):
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_a_label_mints_the_post_it_implies(user_id, batch_id):
-    """The sheet carries no post id, so this is the only way a seat comes into being — and it
-    is what makes the 194 MA jurisdictions with no posts importable at all."""
+    """The sheet carries no post id, so the label is the only thing that can imply a seat — and
+    projecting it is what makes the 194 MA jurisdictions with no posts importable at all.
+
+    Projected, not created: an import proposes seats like any other changeset, and publishing is
+    what mints them. So the count is reported and the table stays empty."""
     rows = await _parsed(("Ana Reyes", "Select Board Chair"))
 
     [result] = await import_rows(rows, user_id, batch_id)
@@ -219,8 +222,8 @@ async def test_a_label_mints_the_post_it_implies(user_id, batch_id):
         await _scalar(
             "SELECT count(*) FROM posts WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
-        >= 1
-    )
+        == 0
+    ), "ingest minted a seat; only publishing should"
 
 
 @pytest.mark.integration

@@ -9,7 +9,7 @@ import {
 
 // `diff: false` is what makes a field context — always visible, never a change.
 const field = (key: string, isContext = false) =>
-  ({ key, label: key, diff: isContext ? false : undefined }) as SurvivingField["field"];
+  ({ key, label: key, context: isContext || undefined }) as SurvivingField["field"];
 
 const surviving = (
   key: string,

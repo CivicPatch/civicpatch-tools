@@ -27,17 +27,28 @@ export interface FieldSpec {
   type: FieldType;
   required?: boolean; // must be non-empty; flagged when empty
   diff?: boolean; // default true; false = shown per-side but not compared
+  context?: boolean; // default false; true = always visible, never a reason to review
 }
 
-// A field that is never compared is context, not a change: always visible (it is
-// the evidence), never a reason to review (there is no change in it).
-export const isContextField = (field: FieldSpec) => field.diff === false;
+// Two separate questions, and they were one flag until a photo needed to answer them
+// differently. `diff: false` says "do not compare this" — a photo moving is not a change a
+// reviewer decides about. `context: true` says "always show this" — source urls are the
+// evidence, so they are visible whether or not anything moved. Source urls want both; a photo
+// wants only the first, or every row would list "Photo" as a surviving field.
+export const isContextField = (field: FieldSpec) => field.context === true;
+
+// Mirrors `POST_FIELD` in shared/schemas.py — the key an issue about a person's post anchors
+// to, and the one field whose two sides are not both read off the record.
+export const POST_FIELD = "post_id";
 
 // Aligned to the Official data model. Jurisdiction is constant across a review,
 // so it is not a per-row field.
 export const FIELD_SCHEMA: FieldSpec[] = [
   // Order follows the mockup: photo, identity, office, term, contacts, sources.
-  { key: "image", label: "Photo", type: "image" },
+  // Not compared (`diff: false`): a photo moving — a new crop, a CDN rehost, the same
+  // face from a different url — is not something a reviewer needs to decide about, and
+  // making it one opened a card for every person whose image url merely changed.
+  { key: "image", label: "Photo", type: "image", diff: false },
   { key: "name", label: "Name", type: "text", required: true },
   { key: "other_names", label: "Other names", type: "multi" },
   // `key` is the storage path and stays `office.*` until the proposed roster stops being
@@ -56,7 +67,7 @@ export const FIELD_SCHEMA: FieldSpec[] = [
   { key: "urls", label: "Links", type: "multi" },
   // Required: a published record with no source is unverifiable. Never compared
   // (`diff: false`) — it is the evidence, not a change.
-  { key: "source_urls", label: "Source urls", type: "multi", required: true, diff: false },
+  { key: "source_urls", label: "Source urls", type: "multi", required: true, diff: false, context: true },
 ];
 
 export function getFieldValue(person: DiffRecord, key: string): unknown {

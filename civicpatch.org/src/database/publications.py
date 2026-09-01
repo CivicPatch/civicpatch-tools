@@ -14,7 +14,7 @@ import logging
 
 from core.post_derivation import DerivedPost
 from core.people_edits import values_to_accept, with_stated_values
-from database import assertions, divisions, memberships, organizations, posts
+from database import assertions, memberships, organizations, posts
 import database.requests as requests_db
 from database.change_logs import record_dismissal
 from database.database import get_pool
@@ -53,7 +53,8 @@ async def dismiss_request(
     `resolved_by_user_id` is NULL when the machine gave up rather than a person deciding, and
     `COALESCE` means a later human resolution is never overwritten by a machine one.
 
-    Drops the seats it invented on the way out — evidence stays, unclaimed posts do not.
+    Nothing to clean up on the way out: a scrape only *proposes* seats, and posts are created
+    at publish. A dismissed changeset never minted one.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -68,9 +69,6 @@ async def dismiss_request(
             (resolved_by_user_id, request_id),
         )
         row = await cur.fetchone()
-        dropped = await posts.delete_unclaimed(cur, request_id)
-        if dropped:
-            logger.info(f"[{request_id}] Dropped {dropped} post(s) nobody claimed")
         # Only when the UPDATE matched: a request already published is left alone above, and
         # must not gain a dismissal in its history either.
         if row is not None:
@@ -144,6 +142,7 @@ async def _record_publish(
 
 async def _bind_memberships(
     cur,
+    changeset_id: str,
     jurisdiction_ocdid: str,
     derived: list[DerivedPost],
     last_seen_at,
@@ -154,18 +153,18 @@ async def _bind_memberships(
     Closing absentees is outside — it depends on the roster, not on `derived`.
     """
     organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
+    # Seats are created here, not at ingest: a scrape only proposes them, and publishing is what
+    # accepts. `create_all` logs each mint against this changeset.
+    post_ids = await posts.create_all(cur, jurisdiction_ocdid, derived, changeset_id)
     for post in derived:
-        await divisions.find_or_create(cur, post.division_ocdid, jurisdiction_ocdid)
-        post_id = await posts.find_or_create(
-            cur,
-            jurisdiction_ocdid,
-            organization_id,
-            post.role_id,
-            post.division_ocdid,
-            headcount=post.headcount,
-        )
         for member in post.members:
-            await memberships.upsert(cur, member, post_id, organization_id, last_seen_at)
+            await memberships.upsert(
+                cur,
+                member,
+                post_ids[(post.role_id, post.division_ocdid)],
+                organization_id,
+                last_seen_at,
+            )
 
 
 async def _accept_published(cur, rows: list[dict], resolved_by_user_id: str | None) -> None:
@@ -226,7 +225,9 @@ async def publish_request(
 
         await _record_publish(cur, request_id, jurisdiction_ocdid, resolved_by_user_id)
         if derived:
-            await _bind_memberships(cur, jurisdiction_ocdid, derived, last_seen_at)
+            await _bind_memberships(
+                cur, request_id, jurisdiction_ocdid, derived, last_seen_at
+            )
         # Outside the guard: who is no longer on the roster is answered by the roster.
         await memberships.close_absent(
             cur, jurisdiction_ocdid, incoming_ids, last_seen_at

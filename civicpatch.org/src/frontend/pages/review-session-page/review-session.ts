@@ -121,6 +121,8 @@ function ReviewSession(host: ReviewSessionHost) {
     // A ticked issue is done, so it stops marking its card — otherwise the tick
     // would have no effect where the reviewer was actually looking (§8.2).
     issues: unresolvedIssues(allIssues, issueChecks),
+    // The seat is not a field, so the diff cannot see a move on its own.
+    proposals: proposalsByPersonId(changes ?? []),
   });
   const frozen = useFrozenFields(requestId, cardFields(cards));
 
@@ -333,6 +335,7 @@ function ReviewSession(host: ReviewSessionHost) {
             .dirtyIds=${dirtyIds}
             .isReadOnly=${is_read_only}
             .jurisdictionOcdid=${jurisdictionOcdid}
+            .posts=${posts}
             .changes=${changes}
             .assertions=${assertions}
             .onPersonSave=${handlePersonSave}

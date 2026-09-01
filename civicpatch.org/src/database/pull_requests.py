@@ -57,7 +57,10 @@ async def list_open_pull_requests(
             FROM changesets r
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             {}
-            ORDER BY {priority} DESC, r.created_at DESC
+            -- `r.id` breaks ties so paging is stable: without a total order a row can appear
+            -- on two pages or none. Same reason `_SEARCH_ORDER` ends on jurisdiction_ocdid —
+            -- and cards created in one batch share a `created_at` to the microsecond.
+            ORDER BY {priority} DESC, r.created_at DESC, r.id
             LIMIT %s OFFSET %s
             """).format(where, status=sql.SQL(REVIEW_STATUS),
                         count=sql.SQL(issue_count("r.jurisdiction_ocdid")),

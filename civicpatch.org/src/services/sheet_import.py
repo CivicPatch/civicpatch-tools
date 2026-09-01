@@ -150,12 +150,12 @@ async def _derive_posts(
     roles: list[Role],
     taxonomy: Taxonomy,
 ) -> tuple[int, str | None]:
-    """Reported rather than swallowed: a card without posts still shows its people, so this is
+    """How many seats this import projects. Nothing is written — publishing creates them.
+
+    Reported rather than swallowed: a card without posts still shows its people, so this is
     a `partial`, not a `failed`."""
     try:
-        derived = await roster_ingest.derive_and_store_posts(
-            request_id, jurisdiction_ocdid, roster, roles, taxonomy
-        )
+        derived = await roster_ingest.derive_posts(roster, roles, taxonomy)
         return len(derived), None
     except Exception as e:
         logger.error(

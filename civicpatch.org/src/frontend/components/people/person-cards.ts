@@ -6,6 +6,7 @@ import {
   FIELD_SCHEMA,
   fieldError,
   isContextField,
+  POST_FIELD,
   recordsDiffer,
   survivingFields,
   type DiffRecord,
@@ -102,7 +103,7 @@ export interface ProposedChange {
   label: string | null;
   // Rendered by `core.membership_label`, because a proposed post may not exist yet.
   post_label: string;
-  // The seat's row when it exists; null for a post this scrape would mint.
+  // The post's row when it exists; null for one this scrape would mint.
   post_id: string | null;
 }
 
@@ -121,7 +122,25 @@ export interface BuildCardsInput {
   removedIds: Set<string>;
   restoredIds: Set<string>;
   issues: Issue[];
+  // Which post each person would land in. Needed because the post is not a field: `post_id` on
+  // a person is the reviewer's *pick*, null on both sides until they make one, so a field diff
+  // cannot see a move. Without this, somebody becoming Council President reads `unchanged` and
+  // folds out of the review entirely.
+  proposals?: Map<string, ProposedChange[]>;
 }
+
+// A post that is not simply staying put. `propose` works in dispositions, and anything but
+// UNCHANGED is a change a reviewer should see.
+// What `survivingFields` cannot work out for itself — see its `changedFields`.
+const POST_CHANGED: ReadonlySet<string> = new Set([POST_FIELD]);
+
+const postMoved = (
+  personId: string,
+  proposals?: Map<string, ProposedChange[]>,
+): boolean =>
+  (proposals?.get(personId) ?? []).some(
+    (change) => change.disposition !== "unchanged",
+  );
 
 function statusFor(
   type: string,
@@ -143,6 +162,7 @@ export function buildPersonCards({
   removedIds,
   restoredIds,
   issues,
+  proposals,
 }: BuildCardsInput): PersonCard[] {
   const olds = Array.isArray(existing) ? existing : [];
   const news = Array.isArray(currentPeople) ? currentPeople : [];
@@ -166,7 +186,12 @@ export function buildPersonCards({
   return ordered.map((entry) => {
     const personId = entry.person?.id;
     const cardIssues = issuesByPersonId.get(personId) ?? [];
-    const status = statusFor(entry.type, personId, removedIds, restoredIds);
+    const moved = postMoved(personId, proposals);
+    let status = statusFor(entry.type, personId, removedIds, restoredIds);
+    // A move is a change even when every field matches.
+    if (status === PersonStatus.UNCHANGED && moved) {
+      status = PersonStatus.CHANGED;
+    }
     // Only the scrape dropping someone leaves no new-side record; a reviewer removal is a
     // decision about a row that is still in the list.
     const newRecord = status === PersonStatus.REMOVED ? null : entry.person;
@@ -175,7 +200,12 @@ export function buildPersonCards({
       status,
       oldRecord: entry.from,
       newRecord,
-      surviving: survivingFields(entry.from, newRecord, cardIssues),
+      surviving: survivingFields(
+        entry.from,
+        newRecord,
+        cardIssues,
+        moved ? POST_CHANGED : undefined,
+      ),
       issues: cardIssues,
     };
   });

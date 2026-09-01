@@ -85,11 +85,14 @@ def test_build_row_data_only():
 
 # ── Structured issues: build_review_summary + the _check_* → Issue functions ──
 
-def _official(name, person_id="", office_name=None, division_ocdid=None, labels=None):
-    """A rendered roster row: `labels` verbatim, `office.name` the display join of them.
+def _official(
+    name, person_id="", office_name=None, division_ocdid=None, labels=None, role_id=None
+):
+    """A rendered roster row: `labels` verbatim, `role_id` what they parsed to, `office.name`
+    the display join of them.
 
-    Both, because that is what `_render` produces — the checks read `labels`, and keeping
-    `office` here means a fixture cannot quietly stop resembling the real thing.
+    All three, because that is what `_render` produces — keeping them here means a fixture
+    cannot quietly stop resembling the real thing.
     """
     office = {}
     if office_name is not None:
@@ -98,7 +101,15 @@ def _official(name, person_id="", office_name=None, division_ocdid=None, labels=
         office["division_ocdid"] = division_ocdid
     if labels is None:
         labels = [office_name] if office_name else []
-    return {"name": name, "id": person_id, "office": office, "labels": labels}
+    return {
+        "name": name,
+        "id": person_id,
+        "office": office,
+        "labels": labels,
+        # A bare label parses to itself; a label carrying a division does not, which is the
+        # case `role_id` exists to keep straight.
+        "role_id": office_name if role_id is None else role_id,
+    }
 
 
 def test_check_absent_officials_is_list_level():
@@ -143,7 +154,34 @@ def test_check_duplicate_unique_roles_anchors_to_holders():
     issues = _check_duplicate_unique_roles(people, ["Mayor"])
     assert len(issues) == 1
     assert issues[0].code == IssueCode.DUPLICATE_UNIQUE_ROLE
-    assert issues[0].field == "office.name"
+    assert issues[0].field == "post_id"
+    assert set(issues[0].person_ids) == {"a1", "b1"}
+
+
+def test_check_duplicate_unique_roles_reads_the_parsed_role_not_the_source_label():
+    """Two presidents in different wards are still two presidents.
+
+    The source's own words carry the division, so matching `labels` against role names found
+    nothing — the check only ever fired on a label that happened to be bare.
+    """
+    people = [
+        _official(
+            "A",
+            person_id="a1",
+            office_name="Council President",
+            labels=["Council President Ward 1"],
+            role_id="Council President",
+        ),
+        _official(
+            "B",
+            person_id="b1",
+            office_name="Council President",
+            labels=["Council President Ward 2"],
+            role_id="Council President",
+        ),
+    ]
+    issues = _check_duplicate_unique_roles(people, ["Council President"])
+    assert len(issues) == 1
     assert set(issues[0].person_ids) == {"a1", "b1"}
 
 

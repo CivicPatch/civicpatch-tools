@@ -22,6 +22,7 @@ _ISSUE_WEIGHT = {
     IssueCode.TOO_FEW_PEOPLE: 10,        # the roster is incomplete; publishing retires people
     IssueCode.DUPLICATE_UNIQUE_ROLE: 8,  # two mayors is a contradiction, not a judgement call
     IssueCode.ABSENT_OFFICIAL: 5,        # someone we hold is gone
+    IssueCode.MOVED_PERSON: 4,           # someone we hold is in a different seat
     IssueCode.NEW_OFFICIAL: 3,           # someone arrived
     # Below NEW_OFFICIAL: a person found in a post we have never seen raises both, which is one
     # event seen twice. Counted from `posts`, never stored, so its CASE arm never matches — the

@@ -40,6 +40,9 @@ def _summary_for(published: list[dict], proposed: list[dict]):
         proposed_roster=AsyncMock(return_value=proposed),
         get_roles=AsyncMock(return_value=[]),
         _unverified_post_issues=AsyncMock(return_value=[]),
+        # Seat moves come from the derivation, not from comparing two rosters, so the summary
+        # reads them separately — the same seam as post issues above.
+        proposals_for_requests=AsyncMock(return_value={}),
     )
 
 
