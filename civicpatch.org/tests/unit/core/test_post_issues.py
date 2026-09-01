@@ -1,7 +1,12 @@
 import pytest
 
-from core.post_issues import append_post_issues, unverified_post_issues
-from shared.schemas import IssueCode
+from core.membership_proposal import Disposition, ProposedChange
+from core.post_issues import (
+    append_post_issues,
+    moved_person_issues,
+    unverified_post_issues,
+)
+from shared.schemas import POST_FIELD, IssueCode
 
 _BASE = "ocd-division/country:us/state:wa/place:buckley"
 
@@ -34,6 +39,39 @@ def test_a_post_covering_the_whole_jurisdiction_names_no_division():
 @pytest.mark.unit
 def test_nothing_unverified_asks_nothing():
     assert unverified_post_issues([]) == []
+
+
+def _change(disposition: Disposition, **overrides) -> ProposedChange:
+    return ProposedChange(
+        person_id="p1",
+        disposition=disposition,
+        role_id="council-president",
+        role_label="Council President",
+        division_ocdid=f"{_BASE}/ward:9",
+        post_label="Council President, Ward 9",
+        **overrides,
+    )
+
+
+@pytest.mark.unit
+def test_a_seat_move_is_raised_against_the_person_and_anchored_to_the_post_field():
+    """The anchor is what puts the Post row on the card at all: `post_id` is the reviewer's
+    pick and is null on both sides until they make one, so a field diff sees nothing."""
+    issues = moved_person_issues([_change(Disposition.MOVED)])
+    assert [issue.code for issue in issues] == [IssueCode.MOVED_PERSON]
+    assert issues[0].person_ids == ["p1"]
+    assert issues[0].field == POST_FIELD
+    assert issues[0].message == "Moved to Council President, Ward 9"
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "disposition", [Disposition.UNCHANGED, Disposition.NEW, Disposition.ABSENT]
+)
+def test_only_a_move_raises_one(disposition: Disposition):
+    """Arrivals and departures are already `new_official` and `absent_official`; raising this
+    for them too would report one event twice."""
+    assert moved_person_issues([_change(disposition)]) == []
 
 
 @pytest.mark.unit

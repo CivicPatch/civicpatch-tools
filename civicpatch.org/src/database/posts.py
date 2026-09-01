@@ -181,35 +181,6 @@ async def delete_if_unheld(cur, post_id: str) -> bool:
     return cur.rowcount > 0
 
 
-async def delete_unclaimed(cur, request_id: str) -> int:
-    """Remove the seats one scrape invented that nothing has since claimed. Returns how many.
-
-    Unlike `delete_if_unheld`, an assertion *saves* a post here: nobody asked for this.
-    A seat still real comes back — posts are `find_or_create`.
-    """
-    await cur.execute(
-        """
-        DELETE FROM posts
-        WHERE id IN (
-            SELECT (change_logs.changes ->> 'post_id')::uuid
-            FROM change_logs
-            WHERE change_logs.type = 'add_post'
-              AND change_logs.changeset_id = %s
-              AND change_logs.changes ? 'post_id'
-        )
-          AND NOT EXISTS (
-              SELECT 1 FROM memberships WHERE memberships.post_id = posts.id
-          )
-          AND NOT EXISTS (
-              SELECT 1 FROM assertions
-              WHERE assertions.entity_type = 'post' AND assertions.entity_id = posts.id
-          )
-        """,
-        (request_id,),
-    )
-    return cur.rowcount
-
-
 async def _holder_count(cur, post_id: str) -> int:
     await cur.execute(
         "SELECT count(*) FROM memberships WHERE memberships.post_id = %s", (post_id,)
@@ -431,25 +402,35 @@ async def list_by_organization(jurisdiction_ocdid: str) -> list[dict]:
     return group_by_organization(organization_rows, post_rows)
 
 
-async def find_or_create_all(
-    jurisdiction_ocdid: str, derived: list[DerivedPost], request_id: str
-) -> None:
-    """A whole scrape's worth of `find_or_create`, in one transaction."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
-        for post in derived:
-            await divisions.find_or_create(cur, post.division_ocdid, jurisdiction_ocdid)
-            minted = await create_if_absent(
-                cur,
-                jurisdiction_ocdid,
-                organization_id,
-                post.role_id,
-                post.division_ocdid,
-                headcount=post.headcount,
-            )
-            if not minted:
-                continue
+async def create_all(
+    cur,
+    jurisdiction_ocdid: str,
+    derived: list[DerivedPost],
+    changeset_id: str,
+) -> dict[tuple[str, str], str]:
+    """Create every seat this accepted roster implies, and say which id each identity got.
+
+    Runs inside the publish transaction, on a cursor: seats exist because a roster carrying
+    them was published, so minting them and binding the memberships are one atomic fact. Ingest
+    used to call this — it minted seats for a proposal nobody had accepted, which is what made
+    a reaper necessary on dismissal.
+
+    A mint is still logged. "This roster created a seat" is the event a reviewer needs told
+    about, and now that it only happens on publish it is a fact rather than a guess.
+    """
+    organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
+    ids: dict[tuple[str, str], str] = {}
+    for post in derived:
+        await divisions.find_or_create(cur, post.division_ocdid, jurisdiction_ocdid)
+        minted = await create_if_absent(
+            cur,
+            jurisdiction_ocdid,
+            organization_id,
+            post.role_id,
+            post.division_ocdid,
+            headcount=post.headcount,
+        )
+        if minted:
             await record_change(
                 cur,
                 ChangeLogType.ADD_POST,
@@ -461,9 +442,17 @@ async def find_or_create_all(
                     division_ocdid=post.division_ocdid,
                     label=None,
                 ),
-                request_id=request_id,
+                request_id=changeset_id,
             )
-        await conn.commit()
+        ids[(post.role_id, post.division_ocdid)] = minted or await find_or_create(
+            cur,
+            jurisdiction_ocdid,
+            organization_id,
+            post.role_id,
+            post.division_ocdid,
+            headcount=post.headcount,
+        )
+    return ids
 
 
 async def create(

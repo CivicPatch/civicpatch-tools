@@ -8,7 +8,7 @@
 import { html, nothing } from "lit-html";
 import { ref } from "lit-html/directives/ref.js";
 import "./field-controls.css";
-import type { Post } from "../posts-list/posts-model.js";
+import type { DerivedPost, Post } from "../posts-list/posts-model.js";
 import {
   PERSON_LINK_TARGET,
   SOURCE_LINK_TARGET,
@@ -189,13 +189,17 @@ export function renderPostNewSide(
   newRecord: PresentRecord,
   save: Save,
   posts: Post[],
-  derivedPostId: string | null,
+  derivedPost: DerivedPost | null,
   focusRef: FocusRef | null,
 ) {
   const picked = (diffValue(newRecord, field) as string | null) ?? "";
-  // The derivation's seat when nobody has picked — shown, never saved, so a parser fix can
+  // The derivation's post when nobody has picked — shown, never saved, so a parser fix can
   // still move them. Empty only for a hand-added person, who has no labels to derive from.
-  const current = picked || (derivedPostId ?? "");
+  const current = picked || (derivedPost?.post_id ?? "");
+  // A post the derivation named that no row holds yet: publishing mints it. Offered by label,
+  // valued empty because there is no id to carry — and saving nothing is already what "leave
+  // it as derived" means, so picking it back is the same decision as never having picked.
+  const projected = derivedPost && !derivedPost.post_id ? derivedPost : null;
   return html`
     <select
       ${attachFocus(focusRef)}
@@ -203,9 +207,13 @@ export function renderPostNewSide(
       aria-label=${field.label}
       @change=${(e: Event) => save({ post_id: inputValue(e) || null })}
     >
-      ${current
-        ? nothing
-        : html`<option value="" selected disabled>Choose a post</option>`}
+      ${projected
+        ? html`<option value="" .selected=${!picked}>
+            ${projected.label} — new post
+          </option>`
+        : current
+          ? nothing
+          : html`<option value="" selected disabled>Choose a post</option>`}
       ${posts.map(
         (post) =>
           html`<option value=${post.id} .selected=${post.id === current}>

@@ -138,23 +138,19 @@ async def _dismiss_if_nothing_to_review(
         logger.info(f"[{request_id}] Dismissed: nothing to review")
 
 
-async def _find_or_create_posts(
+async def _derive_posts(
     request_id: str,
-    jurisdiction_ocdid: str,
     records: list[dict],
     roles: list[Role],
     taxonomy: Taxonomy,
 ) -> list:
-    """Derive the posts this scrape implies and write them, so review has real posts to
-    point a person at.
+    """The seats this scrape implies, projected — nothing is written. Publishing creates them.
 
     Never fatal: a scrape whose people are stored must not error over its own bookkeeping, and
     posts are re-derivable from the sightings.
     """
     try:
-        derived = await roster_ingest.derive_and_store_posts(
-            request_id, jurisdiction_ocdid, records, roles, taxonomy
-        )
+        derived = await roster_ingest.derive_posts(records, roles, taxonomy)
         logger.info(f"[{request_id}] Derived {len(derived)} post(s)")
         return derived
     except Exception as e:
@@ -213,9 +209,7 @@ async def _ingest_roster(
         request.jurisdiction_ocdid,
         records_with_images(records_by_person, source_urls, served),
     )
-    derived = await _find_or_create_posts(
-        request.request_id, request.jurisdiction_ocdid, updated_data, roles, taxonomy
-    )
+    derived = await _derive_posts(request.request_id, updated_data, roles, taxonomy)
     await _apply_scrape_changes(request.request_id, request.jurisdiction_ocdid, derived)
     await _record_resolved_url(
         request.request_id, request.jurisdiction_ocdid, workflow_context

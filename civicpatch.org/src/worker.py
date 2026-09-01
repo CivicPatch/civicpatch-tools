@@ -49,9 +49,13 @@ def _is_duplicate_schedule_error(e: RPCError) -> bool:
 async def _ensure_schedule(
     client: Client, schedule_id: str, schedule: Schedule
 ) -> bool:
-    """Reconcile a schedule so the live one always matches this code: create it if absent,
-    otherwise update its spec in place. This makes the code the source of truth — changing a
-    cron here propagates on the next worker start instead of being silently ignored.
+    """Idempotent create-or-update for one schedule: create it if absent, otherwise update its
+    spec in place, so calling this repeatedly converges on `schedule` rather than erroring.
+
+    Callers below pass schedules declared in this file, so for those the declaration is what
+    propagates on the next worker start. That is a property of those call sites, not of this
+    function — a caller reading desired state from anywhere else works the same way.
+
     Returns True only when newly created, so the caller can trigger an immediate first run."""
     try:
         await client.create_schedule(schedule_id, schedule)

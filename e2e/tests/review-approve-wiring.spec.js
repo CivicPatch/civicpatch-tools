@@ -18,7 +18,9 @@ import { test, expect } from "../fixtures/index.js";
 import { editField } from "./helpers/review-card.js";
 
 const APPROVE_ENDPOINT = "**/api/v1/reviews/*/publish";
-const REJECT_ENDPOINT = "**/api/v1/reviews/*\\?request_id=*";
+// The id is a path segment, not a query parameter — `*` does not cross a slash, so this
+// matches `/reviews/{id}` without also catching `/reviews/{id}/save`.
+const REJECT_ENDPOINT = "**/api/v1/reviews/*";
 
 const FIRST_CARD_REQUEST_ID = "00000000-0000-0000-eeee-000000000001";
 
@@ -65,15 +67,17 @@ test.describe("Approve", () => {
 
     await openFirstCard(page);
 
-    await editField(page, "Jane Smith", "Office", "Deputy Mayor");
+    // Any edit will do — this is about what approve sends, not the field. The seat is picked
+    // from a select now, so there is no office text to type into.
+    await editField(page, "Jane Smith", "Other names", "Janey Smith");
 
-    // A dirty card approves under a different label — and must send the patch.
+    // A dirty card approves under different wording — and must send the patch.
     const approveBtn = page.locator(".review-page__approve-btn");
     await expect(approveBtn).toHaveText(/Save and approve/);
     await approveBtn.click();
 
     await expect.poll(() => approveBody).not.toBeNull();
-    expect(JSON.stringify(approveBody.data)).toContain("Deputy Mayor");
+    expect(JSON.stringify(approveBody.data)).toContain("Janey Smith");
   });
 
   test("an approved card is credited as resolved and the reviewer moves on", async ({
@@ -134,7 +138,7 @@ test.describe("Reject", () => {
     await page.getByRole("button", { name: "Reject" }).click();
 
     await expect.poll(() => rejectUrl).not.toBeNull();
-    expect(rejectUrl).toContain(`request_id=${FIRST_CARD_REQUEST_ID}`);
+    expect(rejectUrl).toContain(`/reviews/${FIRST_CARD_REQUEST_ID}`);
 
     // Rejecting is a completed review action, so it advances like approving.
     await expect(page.locator(".review-page__progress")).toContainText("2");

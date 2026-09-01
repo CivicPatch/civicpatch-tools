@@ -45,19 +45,31 @@ test.describe("Review overview", () => {
     await expect(rowFor(page, "Councillor 03 Scale")).toHaveCount(0);
   });
 
-  test("seat order is kept, so a fold sits between the cards around it", async ({
+  test("roster rank order is kept, so a fold sits between the cards around it", async ({
     authenticatedPage: page,
   }) => {
     await openOverview(page);
 
-    // W1 folds, W2 changed, W3 and W4 fold, W5 changed. Reading the list top to
-    // bottom must give that back — this is the whole point of dropping the groups.
-    const names = await page
-      .locator(".review-row__name, .review-fold__name")
-      .allTextContents();
-    const seats = names.slice(0, 5).map((n) => n.trim());
+    const names = (
+      await page.locator(".review-row__name, .review-fold__name").allTextContents()
+    ).map((n) => n.trim());
 
-    expect(seats).toEqual([
+    // `sort_people` ranks by role before division, so the five the scrape promoted to
+    // Council President head the list — a promotion moves someone, and the review shows
+    // them where the roster will.
+    expect(names.slice(0, 5)).toEqual([
+      "Councillor 09 Scale",
+      "Councillor 18 Scale",
+      "Councillor 21 Scale",
+      "Councillor 30 Scale",
+      "Councillor 33 Scale",
+    ]);
+
+    // Then the council members, in ward order: W1 folds, W2 changed, W3 and W4 fold,
+    // W5 changed. Reading that run top to bottom must give it back — this is the whole
+    // point of dropping the groups.
+    const start = names.indexOf("Councillor 01 Scale");
+    expect(names.slice(start, start + 5)).toEqual([
       "Councillor 01 Scale",
       "Councillor 02 Scale",
       "Councillor 03 Scale",
@@ -103,12 +115,12 @@ test.describe("Review overview", () => {
   }) => {
     await openOverview(page);
 
-    // Councillor 09 carries duplicate_unique_role, anchored to office.name. The
+    // Councillor 09 carries duplicate_unique_role, anchored to post_id. The
     // issue colours the field it is anchored to, ahead of that field's own diff
     // state — and the card says so once more in its own chip.
     const row = rowFor(page, "Councillor 09 Scale");
-    const office = row.locator(".review-row__field").filter({ hasText: "Office" });
-    await expect(office).toHaveClass(/review-row__field--issue/);
+    const seat = row.locator(".review-row__field").filter({ hasText: "Post" });
+    await expect(seat).toHaveClass(/review-row__field--issue/);
     await expect(row.locator(".review-row__attn")).toContainText("Has an issue");
   });
 
@@ -182,6 +194,9 @@ test.describe("Review overview", () => {
     // it. A locator click would hang here — playwright waits for the tag itself to
     // receive the pointer, and the card is deliberately on top — so this clicks the
     // point, the way a reviewer does.
+    // Scrolled first: `boundingBox` reports viewport coordinates and does not scroll, so on a
+    // roster this long the click would land on whatever happens to be at that point instead.
+    await row.scrollIntoViewIfNeeded();
     const tag = await row
       .locator(".review-row__field", { hasText: "Term end" })
       .boundingBox();

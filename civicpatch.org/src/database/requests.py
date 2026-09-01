@@ -4,7 +4,6 @@ from collections.abc import Mapping
 from datetime import timedelta
 from typing import Optional
 
-from database import posts
 from database.change_logs import record_dismissal
 from database.database import get_pool
 from database.review_sessions import (
@@ -147,39 +146,6 @@ async def register_request_with_pipeline_run_if_not_exists(
             WHERE id = %s AND status IS NULL
             """,
             (PipelineRunStatus.PENDING, 0, request_id),
-        )
-
-
-async def register_foreign_request(
-    request_id: str,
-    jurisdiction_ocdid: str,
-    pr_url: Optional[str],
-    provider: str,
-):
-    """
-    Create a request + pull_request record for a PR that has no backing job worker.
-    The request_id is "foreign" — derived from the git branch name, not our job pipeline.
-    Used by the GitHub webhook handler and hourly PR sync.
-    """
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
-            """
-            INSERT INTO changesets (id, kind, jurisdiction_ocdid, created_at)
-            VALUES (%s, 'scrape', %s, CURRENT_TIMESTAMP)
-            """,
-            (request_id, jurisdiction_ocdid),
-        )
-
-        # No pipeline ran — the id comes off a git branch. SUCCESS because the work is done
-        # elsewhere.
-        await conn.execute(
-            """
-            UPDATE changesets SET status = %s, progress = 100,
-                                sourced_at = CURRENT_TIMESTAMP
-            WHERE id = %s
-            """,
-            (PipelineRunStatus.SUCCESS, request_id),
         )
 
 
@@ -338,20 +304,6 @@ async def get_issue_request_details(request_ids: list[str]) -> list[dict]:
     ]
 
 
-async def _settle_dismissal(
-    cur,
-    changeset_id: str,
-    jurisdiction_ocdid: str | None,
-    reason: DismissalReason,
-    user_id: str | None = None,
-) -> None:
-
-    dropped = await posts.delete_unclaimed(cur, changeset_id)
-    if dropped:
-        logger.info(f"[{changeset_id}] Dropped {dropped} post(s) nobody claimed")
-    await record_dismissal(cur, changeset_id, jurisdiction_ocdid, user_id, reason)
-
-
 async def dismiss_as_unchanged(cur, request_id: str) -> bool:
     """Retire a scrape that asserted nothing new. Returns whether it was still open.
 
@@ -370,7 +322,7 @@ async def dismiss_as_unchanged(cur, request_id: str) -> bool:
     row = await cur.fetchone()
     if row is None:
         return False
-    await _settle_dismissal(cur, request_id, row[0], DismissalReason.UNCHANGED)
+    await record_dismissal(cur, request_id, row[0], None, DismissalReason.UNCHANGED)
     return True
 
 
@@ -407,8 +359,8 @@ async def dismiss_superseded_by(
     dismissed = [row[0] for row in await cur.fetchall()]
     # Every jurisdiction here is the one being published into, by construction of the WHERE.
     for changeset_id in dismissed:
-        await _settle_dismissal(
-            cur, changeset_id, jurisdiction_ocdid, DismissalReason.SUPERSEDED
+        await record_dismissal(
+            cur, changeset_id, jurisdiction_ocdid, None, DismissalReason.SUPERSEDED
         )
     return dismissed
 
@@ -464,7 +416,7 @@ async def supersede_stacked_requests() -> list[str]:
         # The sweep spans jurisdictions, so each row carries its own.
         dismissed = await cur.fetchall()
         for changeset_id, jurisdiction_ocdid in dismissed:
-            await _settle_dismissal(
-                cur, changeset_id, jurisdiction_ocdid, DismissalReason.SUPERSEDED
+            await record_dismissal(
+                cur, changeset_id, jurisdiction_ocdid, None, DismissalReason.SUPERSEDED
             )
         return [row[0] for row in dismissed]

@@ -35,9 +35,12 @@ test.describe("Review reconcile diff (populated)", () => {
     const maria = editorFor(page, "Maria González");
     await expect(maria).toHaveClass(/person-editor--changed/);
 
-    // Office changed, an email was added, a phone was cleared. Nothing else
+    // The seat moved, the term end moved, a phone was cleared. Nothing else
     // moved, so nothing else is on screen — which the old view could not do,
     // since it rendered all eleven fields regardless.
+    //
+    // Not Email: a sighting carries one contact, so "an email was added" is a shape this
+    // fixture cannot propose, and asserting it only ever passed by accident.
     //
     // The fourth row is Source urls, and it is not a change: `diff: false` makes
     // it a context field, always visible as the evidence behind the other three
@@ -51,17 +54,34 @@ test.describe("Review reconcile diff (populated)", () => {
     // now carries one. Naming the rows rather than counting them is what tells
     // those two cases apart.
     await expect(maria.locator(".person-editor__label")).toHaveText([
-      "Office *",
-      "Email",
+      "Post",
+      "Term end",
       "Phone",
+      // `with_fallback_url` gives a person with no url one on the proposed side, so Links reads
+      // as added. A real difference between the two sides, not an artefact of the fixture.
+      "Links",
       "Source urls *",
     ]);
 
-    // The office control carries the new value; the old one is a trailing
-    // annotation rather than a second column.
-    const office = fieldIn(maria, "Office");
-    await expect(office.locator("input")).toHaveValue("Council Member");
-    await expect(office.locator(".person-editor__was")).toContainText("was Mayor");
+    // The post is picked, not typed, so it reads differently from every other field: the
+    // selected option is the post the derivation chose, and it says that post does not exist
+    // yet.
+    const post = fieldIn(maria, "Post");
+    await expect(post.locator("select option:checked")).toHaveText(
+      /Council Member — new post/,
+    );
+
+    // `was` comes from the post she holds, not from `post_id` on the record — that is the
+    // reviewer's pick and is null until they make one, so reading it left the move unnamed.
+    await expect(post.locator(".person-editor__was")).toContainText("was Mayor");
+    await expect(post.locator(".person-editor__issue")).toContainText(
+      "Moved to Council Member",
+    );
+
+    // A scalar that did move carries the old value as a trailing annotation rather than a
+    // second column.
+    const term = fieldIn(maria, "Term end");
+    await expect(term.locator(".person-editor__was")).toContainText("was 2025");
 
     // Added-only and removed-only people each get their own editor.
     await expect(editorFor(page, "Tom Treasurer")).toHaveClass(/person-editor--added/);
@@ -86,24 +106,24 @@ test.describe("Review reconcile diff (populated)", () => {
   test("editing recomputes the card live", async ({ authenticatedPage: page }) => {
     await openCard(page);
     const maria = editorFor(page, "Maria González");
-    const office = fieldIn(maria, "Office");
+    const term = fieldIn(maria, "Term end");
 
-    // Setting Office back to its old value clears the change: the `was`
+    // Setting Term end back to its old value clears the change: the `was`
     // annotation has nothing left to say and goes away. The row itself stays —
     // fields never leave a card once shown (§2.1).
-    await office.locator("input").fill("Mayor");
-    await expect(office.locator(".person-editor__was")).toHaveCount(0);
-    await expect(maria.locator(".person-editor__field")).toHaveCount(4);
+    await term.locator("input").first().fill("2025");
+    await expect(term.locator(".person-editor__was")).toHaveCount(0);
+    await expect(maria.locator(".person-editor__field")).toHaveCount(5);
   });
 
   test("Restore puts the old value back", async ({ authenticatedPage: page }) => {
     await openCard(page);
-    const office = fieldIn(editorFor(page, "Maria González"), "Office");
+    const term = fieldIn(editorFor(page, "Maria González"), "Term end");
 
     // Replaces the old copy-arrow: same claim — one click moves the old value
     // into the control — in the shape the editor uses.
-    await office.locator(".person-editor__restore").click();
-    await expect(office.locator("input")).toHaveValue("Mayor");
+    await term.locator(".person-editor__restore").click();
+    await expect(term.locator("input").first()).toHaveValue("2025");
   });
 
   test("dates are edited through Year / Month / Day, which cannot be malformed", async ({

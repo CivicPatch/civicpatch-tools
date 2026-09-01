@@ -138,45 +138,56 @@ const change = (over = {}) =>
     ...over,
   }) as never;
 
-const derivedPostIdOf = (changes: unknown[]) =>
+const derivedPostOf = (changes: unknown[]) =>
   personEditorPropsFor(card(), context({ proposals: proposalsByPersonId(changes as never) }))
-    .derivedPostId;
+    .derivedPost;
 
-describe("personEditorPropsFor — derivedPostId", () => {
+describe("personEditorPropsFor — derivedPost", () => {
   it("offers the seat the derivation chose, so the Post field is not left saying 'derived'", () =>
-    expect(derivedPostIdOf([change()])).toBe("post-5"));
+    expect(derivedPostOf([change()])).toEqual({
+      post_id: "post-5",
+      label: "Council Member, District 5",
+    }));
 
-  it("offers nothing when the scrape would mint the post, since there is no row to select", () =>
-    expect(derivedPostIdOf([change({ post_id: null })])).toBe(null));
+  // Ingest stopped minting posts, so this is the ordinary case for a promotion rather than an
+  // edge one: the seat exists only as a proposal until somebody publishes.
+  it("offers the seat by label when the scrape would mint the post, since there is no row yet", () =>
+    expect(derivedPostOf([change({ post_id: null })])).toEqual({
+      post_id: null,
+      label: "Council Member, District 5",
+    }));
 
   it("offers nothing when nobody is proposed onto a seat", () =>
-    expect(derivedPostIdOf([])).toBe(null));
+    expect(derivedPostOf([])).toBe(null));
 
   // `unmatched` is a vocabulary gap, not an answer.
   it("offers nothing when the derivation could not name the role", () =>
-    expect(derivedPostIdOf([change({ role_id: "unmatched" })])).toBe(null));
+    expect(derivedPostOf([change({ role_id: "unmatched" })])).toBe(null));
 
   // Two seats is no single answer; picking either would show a decision nobody made.
   it("offers nothing when the person is proposed onto two seats", () =>
     expect(
-      derivedPostIdOf([
+      derivedPostOf([
         change(),
         change({ role_id: "mayor", post_id: "post-mayor" }),
       ]),
     ).toBe(null));
 });
 
-describe("personEditorPropsFor — derivedPostId from a held membership", () => {
+describe("personEditorPropsFor — derivedPost from a held membership", () => {
   // The jurisdiction page passes no proposals: its people are published, so the seat comes
   // from the membership they hold. Without this the Post field there could never answer.
   const withMemberships = (memberships: unknown[]) =>
     personEditorPropsFor(
       card({ newRecord: { id: "p1", name: "A", memberships } }),
       context(),
-    ).derivedPostId;
+    ).derivedPost;
 
   it("offers the seat a published person holds", () =>
-    expect(withMemberships([{ post_id: "post-held" }])).toBe("post-held"));
+    expect(withMemberships([{ post_id: "post-held", post_label: "Mayor" }])).toEqual({
+      post_id: "post-held",
+      label: "Mayor",
+    }));
 
   it("offers nothing when they hold two seats", () =>
     expect(withMemberships([{ post_id: "a" }, { post_id: "b" }])).toBe(null));
@@ -189,6 +200,6 @@ describe("personEditorPropsFor — derivedPostId from a held membership", () => 
       personEditorPropsFor(
         card({ newRecord: { id: "p1", name: "A", memberships: [{ post_id: "old" }] } }),
         context({ proposals: proposalsByPersonId([change()]) }),
-      ).derivedPostId,
-    ).toBe("post-5"));
+      ).derivedPost,
+    ).toEqual({ post_id: "post-5", label: "Council Member, District 5" }));
 });

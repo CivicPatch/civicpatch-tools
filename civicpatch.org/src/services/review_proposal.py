@@ -10,7 +10,11 @@ import asyncio
 
 from core.membership_proposal import ExistingMembership, ProposedChange, propose
 from core.post_derivation import SourcedPerson, derived_posts
-from core.post_issues import append_post_issues, unverified_post_issues
+from core.post_issues import (
+    append_post_issues,
+    moved_person_issues,
+    unverified_post_issues,
+)
 from database import assertions
 from database import memberships as memberships_db
 from database import posts as posts_db
@@ -36,7 +40,9 @@ async def review_summary_for_request(request_id: str) -> dict:
     sides are already read for the card, so this costs nothing the page was not paying.
 
     Post issues are appended rather than computed with the rest: a post nobody has vouched for
-    belongs to the jurisdiction, so it outlives the scrape that minted it.
+    belongs to the jurisdiction, so it outlives the scrape that minted it. A seat move joins
+    them for a different reason — `build_review_summary` compares two rosters, and which seat
+    someone lands in is not on a roster, it is the derivation's answer.
     """
     jurisdiction_ocdid = await requests_db.get_request_jurisdiction(request_id)
     if not jurisdiction_ocdid:
@@ -57,7 +63,10 @@ async def review_summary_for_request(request_id: str) -> dict:
     )
     summary["issues"] = [issue.model_dump() for issue in summary["issues"]]
     posts = await _unverified_post_issues(jurisdiction_ocdid)
-    return append_post_issues(summary, posts)
+    changes = (
+        await proposals_for_requests([request_id], {request_id: proposed})
+    ).get(request_id, [])
+    return append_post_issues(summary, [*posts, *moved_person_issues(changes)])
 
 
 async def _unverified_post_issues(jurisdiction_ocdid: str) -> list[Issue]:
@@ -69,12 +78,18 @@ async def _unverified_post_issues(jurisdiction_ocdid: str) -> list[Issue]:
 
 async def proposals_for_requests(
     request_ids: list[str],
+    rosters: dict[str, list[dict]] | None = None,
 ) -> dict[str, list[ProposedChange]]:
-    """One taxonomy build and one membership read per jurisdiction, whatever the page size."""
+    """One taxonomy build and one membership read per jurisdiction, whatever the page size.
+
+    `rosters` is for a caller that already derived them — deriving a roster is the expensive
+    half, and the summary reads the same one to diff against what we publish.
+    """
     ocdids = await requests_db.jurisdictions_for_requests(request_ids)
     if not ocdids:
         return {}
-    rosters = await proposed_rosters(request_ids)
+    if rosters is None:
+        rosters = await proposed_rosters(request_ids)
 
     roles = await get_roles()
     taxonomy = build_taxonomy(RoleConfig(roles=roles))

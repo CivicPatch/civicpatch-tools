@@ -15,6 +15,7 @@ import {
   isDate,
   isImage,
   isMulti,
+  POST_FIELD,
   rowError,
   type DiffRecord,
   type FieldReason,
@@ -39,7 +40,12 @@ import {
   type Save,
 } from "../fields/field-controls.js";
 import { multiValueDiff } from "../fields/field-model.js";
-import { postLabelFor, type Post } from "../posts-list/posts-model.js";
+import {
+  heldPost,
+  postLabelFor,
+  type DerivedPost,
+  type Post,
+} from "../posts-list/posts-model.js";
 
 export const DASH = "—";
 
@@ -48,7 +54,7 @@ export const DASH = "—";
 // back — the field diffs on presence only.
 const PHOTO_KEY = "image";
 
-const POST_KEY = "post_id";
+
 
 // A field that renders several controls has to hang its label on the set — the
 // label is "Term start", but no one input is that; they are its year and month.
@@ -94,8 +100,8 @@ export interface EditorFieldProps {
   // Every post in the jurisdiction. Empty until the read lands; the control still shows the
   // record's own value.
   posts: Post[];
-  // The derivation's seat, shown as the Post field's value when nobody has picked one.
-  derivedPostId: string | null;
+  // The derivation's post, shown as the Post field's value when nobody has picked one.
+  derivedPost: DerivedPost | null;
   // Non-null on the one field the view opened on, so the control it belongs to
   // can take focus. The editor picks the row; the control picks the element.
   focusRef: FocusRef | null;
@@ -112,7 +118,7 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
     isReadOnly,
     jurisdictionOcdid,
     posts,
-    derivedPostId,
+    derivedPost,
     focusRef,
   } = props;
 
@@ -121,7 +127,7 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
   // the image URL, which is not what a reader wants to see.
   if (isReadOnly) {
     // A post is stored by id, so the generic scalar path would print a UUID.
-    if (field.key === POST_KEY) {
+    if (field.key === POST_FIELD) {
       return html`<span class="person-editor__readonly"
         >${postLabelFor(diffValue(record, field), posts)}</span
       >`;
@@ -147,8 +153,8 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
       >${displayScalar(field, record) || DASH}</span
     >`;
   }
-  if (field.key === POST_KEY)
-    return renderPostNewSide(field, record, save, posts, derivedPostId, focusRef);
+  if (field.key === POST_FIELD)
+    return renderPostNewSide(field, record, save, posts, derivedPost, focusRef);
   if (isImage(field)) return renderPhotoNewSide(record, save, isReadOnly);
   if (isMulti(field)) {
     // Derived every render from (current, old) rather than stamped when a row is
@@ -197,8 +203,9 @@ function renderWas(props: EditorFieldProps) {
   // Same reason as the read-only branch: "was a3f2c1…" tells a reviewer nothing.
   const oldText = !oldRecord
     ? ""
-    : field.key === POST_KEY
-      ? postLabelFor(diffValue(oldRecord, field), props.posts)
+    : field.key === POST_FIELD
+      ? postLabelFor(diffValue(oldRecord, field), props.posts) ||
+        (heldPost(oldRecord.memberships)?.label ?? "")
       : displayScalar(field, oldRecord);
   if (!oldText.trim()) return nothing;
 

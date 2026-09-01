@@ -14,7 +14,6 @@ import logging
 
 from core.people_roster import identified, records_by_person, roster_from_rows
 from core.post_derivation import DerivedPost, SourcedPerson, derived_posts
-from database import posts as posts_db
 from database.people import get_person_models
 from services.publish import chosen_posts
 from shared.utils.name_utils import person_list_to_identities
@@ -65,14 +64,17 @@ async def reconcile_roster(
     return identified_roster, records_by_person(identified_roster, records_by_name)
 
 
-async def derive_and_store_posts(
-    request_id: str,
-    jurisdiction_ocdid: str,
+async def derive_posts(
     roster: list[dict],
     roles: list[Role],
     taxonomy: Taxonomy,
 ) -> list[DerivedPost]:
-    """Mint the seats this roster's labels imply.
+    """The seats this roster's labels imply — *projected*, not written.
+
+    A scrape proposes seats; publishing creates them (`publications._bind_memberships`). Nothing
+    is persisted here, so a changeset that is dismissed leaves nothing behind and there is no
+    reaper. `ProposedChange` has always worked this way — it carries the identity and attaches a
+    `post_id` only "when it already exists as a row".
 
     Raises: both callers want the failure but do different things with it, so the policy stays
     with them. `chosen_posts` is empty at ingest and returns without a query, but a re-submit of
@@ -80,6 +82,4 @@ async def derive_and_store_posts(
     """
     people = [Person(**person) for person in roster]
     sourced = [SourcedPerson.from_person(person) for person in people]
-    derived = derived_posts(sourced, taxonomy, roles, await chosen_posts(people))
-    await posts_db.find_or_create_all(jurisdiction_ocdid, derived, request_id)
-    return derived
+    return derived_posts(sourced, taxonomy, roles, await chosen_posts(people))
