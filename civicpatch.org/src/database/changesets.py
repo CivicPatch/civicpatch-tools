@@ -54,7 +54,7 @@ AVAILABLE_FOR_REVIEW = (
     "AND NOT EXISTS ("
     "SELECT 1 FROM issues i "
     f"WHERE i.issue_type = '{PipelineIssueType.USER_REPORTED.value}' "
-    "AND r.id::text = ANY(i.request_ids) "
+    "AND r.id::text = ANY(i.changeset_ids) "
     f"AND i.status NOT IN ('{PipelineIssueStatus.RESOLVED.value}', '{PipelineIssueStatus.SUPERSEDED.value}')"
     ")"
 )
@@ -81,7 +81,7 @@ SWEEPABLE = (
 HELD_BY_REVIEWER = (
     "EXISTS ("
     "SELECT 1 FROM review_session_entries e "
-    "WHERE r.id::text = ANY(e.request_ids) "
+    "WHERE r.id::text = ANY(e.changeset_ids) "
     f"AND (e.status IN ('{ReviewSessionEntryStatus.SAVED}', '{ReviewSessionEntryStatus.RESOLVED}') "
     f"OR (e.status = '{ReviewSessionEntryStatus.CLAIMED}' AND e.created_at >= NOW() - %s))"
     ")"
@@ -93,7 +93,7 @@ async def register_request_with_pipeline_run(
     kind: str,
     arguments_json: dict,
     jurisdiction_ocdid: Optional[str] = None,
-    requested_by_user_id: Optional[str] = None,
+    created_by_user_id: Optional[str] = None,
     status: PipelineRunStatus = PipelineRunStatus.PENDING,
     progress: int = 0,
 ):
@@ -101,7 +101,7 @@ async def register_request_with_pipeline_run(
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO changesets (id, kind, jurisdiction_ocdid, arguments_json, requested_by_user_id, created_at)
+            INSERT INTO changesets (id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id, created_at)
             VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
             """,
             (
@@ -109,7 +109,7 @@ async def register_request_with_pipeline_run(
                 kind,
                 jurisdiction_ocdid,
                 json.dumps(arguments_json),
-                requested_by_user_id,
+                created_by_user_id,
             ),
         )
 
@@ -152,7 +152,7 @@ async def register_request_with_pipeline_run_if_not_exists(
 async def register_people_edit_request(
     changeset_id: str,
     jurisdiction_ocdid: str,
-    requested_by_user_id: str,
+    created_by_user_id: str,
 ):
     """A maintainer's hand edit of a live roster. `PEOPLE_EDIT` with a null `status`: nothing ran.
 
@@ -167,7 +167,7 @@ async def register_people_edit_request(
         await conn.execute(
             """
             INSERT INTO changesets (
-                id, kind, jurisdiction_ocdid, arguments_json, requested_by_user_id,
+                id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id,
                 published_at, resolved_by_user_id, created_at, sourced_at
             )
             VALUES (%s, %s, %s, '{}'::jsonb, %s, now(), %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
@@ -176,8 +176,8 @@ async def register_people_edit_request(
                 changeset_id,
                 ChangesetKind.PEOPLE_EDIT,
                 jurisdiction_ocdid,
-                requested_by_user_id,
-                requested_by_user_id,
+                created_by_user_id,
+                created_by_user_id,
             ),
         )
 
@@ -185,7 +185,7 @@ async def register_people_edit_request(
 async def register_sheet_import_request(
     changeset_id: str,
     jurisdiction_ocdid: str,
-    requested_by_user_id: str,
+    created_by_user_id: str,
     batch_id: str,
 ) -> None:
     """One jurisdiction's worth of a curated-sheet import. `PEOPLE` with a null `status`:
@@ -208,7 +208,7 @@ async def register_sheet_import_request(
         await conn.execute(
             """
             INSERT INTO changesets (
-                id, kind, jurisdiction_ocdid, requested_by_user_id, batch_id,
+                id, kind, jurisdiction_ocdid, created_by_user_id, batch_id,
                 created_at, sourced_at
             )
             VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
@@ -217,7 +217,7 @@ async def register_sheet_import_request(
                 changeset_id,
                 ChangesetKind.SHEET_IMPORT,
                 jurisdiction_ocdid,
-                requested_by_user_id,
+                created_by_user_id,
                 batch_id,
             ),
         )
@@ -228,7 +228,7 @@ async def register_jurisdiction_edit_request(
     jurisdiction_ocdid: str,
     arguments_json: Mapping[str, object],
     open_data_url: str,
-    requested_by_user_id: Optional[str] = None,
+    created_by_user_id: Optional[str] = None,
 ):
     """A hand-edited jurisdiction field. Born published: the edit is already committed."""
     pool = await get_pool()
@@ -236,7 +236,7 @@ async def register_jurisdiction_edit_request(
         await conn.execute(
             """
             INSERT INTO changesets (
-                id, kind, jurisdiction_ocdid, arguments_json, requested_by_user_id,
+                id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id,
                 open_data_url, published_at, resolved_by_user_id, created_at
             )
             VALUES (%s, %s, %s, %s, %s, %s, now(), %s, CURRENT_TIMESTAMP)
@@ -246,9 +246,9 @@ async def register_jurisdiction_edit_request(
                 ChangesetKind.JURISDICTION_EDIT,
                 jurisdiction_ocdid,
                 json.dumps(arguments_json),
-                requested_by_user_id,
+                created_by_user_id,
                 open_data_url,
-                requested_by_user_id,
+                created_by_user_id,
             ),
         )
 
@@ -264,21 +264,21 @@ async def get_request_jurisdiction(changeset_id: str) -> str | None:
     return row[0] if row else None
 
 
-async def jurisdictions_for_requests(request_ids: list[str]) -> dict[str, str]:
+async def jurisdictions_for_requests(changeset_ids: list[str]) -> dict[str, str]:
     """Which jurisdiction each request is about. The roster itself is derived from that
     request's sightings, so this is all a caller needs to ask for one."""
-    if not request_ids:
+    if not changeset_ids:
         return {}
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT id::text, jurisdiction_ocdid FROM changesets WHERE id::text = ANY(%s)",
-            (request_ids,),
+            (changeset_ids,),
         )
         return {changeset_id: ocdid for changeset_id, ocdid in await cur.fetchall()}
 
 
-async def get_issue_request_details(request_ids: list[str]) -> list[dict]:
+async def get_issue_request_details(changeset_ids: list[str]) -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -290,7 +290,7 @@ async def get_issue_request_details(request_ids: list[str]) -> list[dict]:
             WHERE r.id::text = ANY(%s)
             ORDER BY r.created_at
             """,
-            (request_ids,),
+            (changeset_ids,),
         )
         rows = await cur.fetchall()
     return [

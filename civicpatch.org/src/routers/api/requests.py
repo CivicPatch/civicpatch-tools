@@ -33,7 +33,7 @@ def get_router(api_key_header):
             f"Registering request: {request.changeset_id} by user {user.provider_user_id} from provider {user.provider}"
         )
         _response = await database.changesets.register_request_with_pipeline_run(
-            requested_by_user_id=user.user_id,
+            created_by_user_id=user.user_id,
             changeset_id=request.changeset_id,
             kind=ChangesetKind.SCRAPE,
             arguments_json=request.arguments,

@@ -17,7 +17,7 @@
 import { test, expect } from "../fixtures/index.js";
 
 const ISSUES_ENDPOINT = "**/api/v1/reviews/*/issues";
-const FIRST_CARD_REQUEST_ID = "00000000-0000-0000-eeee-000000000001";
+const FIRST_CARD_CHANGESET_ID = "00000000-0000-0000-eeee-000000000001";
 
 function filedIssue(number) {
   return {
@@ -75,7 +75,7 @@ test.describe("Report issue", () => {
     await expect.poll(() => postBody).not.toBeNull();
     expect(postBody.description).toBe("Council member listed twice");
     // The issue must be filed against the card being reviewed, not another one.
-    expect(postUrl).toContain(FIRST_CARD_REQUEST_ID);
+    expect(postUrl).toContain(FIRST_CARD_CHANGESET_ID);
   });
 
   test("a filed issue closes the modal and is listed on the card", async ({

@@ -66,7 +66,7 @@ async def _insert_entry(session_id: uuid.UUID, entry_number: int, status: str):
         await conn.execute(
             """
             INSERT INTO review_session_entries
-                (review_session_id, request_ids, jurisdiction_ocdid, status, entry_number)
+                (review_session_id, changeset_ids, jurisdiction_ocdid, status, entry_number)
             VALUES (%s, %s, %s, %s, %s)
             ON CONFLICT DO NOTHING
             """,
@@ -375,7 +375,7 @@ async def test_concurrent_sessions_cannot_claim_same_jurisdiction(test_user):
                 await conn.execute(
                     """
                     INSERT INTO review_session_entries
-                        (review_session_id, request_ids, jurisdiction_ocdid, status, entry_number)
+                        (review_session_id, changeset_ids, jurisdiction_ocdid, status, entry_number)
                     VALUES (%s, %s, %s, 'claimed', 1)
                     """,
                     (session_b, ["00000000-0000-0000-cccc-000000000099"], ocdid),
@@ -461,7 +461,7 @@ async def test_reported_pr_leaves_pool_until_issue_resolved():
     finally:
         pool = await get_pool()
         async with pool.connection() as conn:
-            await conn.execute("DELETE FROM issues WHERE %s = ANY(request_ids)", (changeset_id,))
+            await conn.execute("DELETE FROM issues WHERE %s = ANY(changeset_ids)", (changeset_id,))
         await _cleanup_open_pr(changeset_id, ocdid)
 
 

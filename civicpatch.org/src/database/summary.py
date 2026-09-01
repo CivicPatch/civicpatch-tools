@@ -22,7 +22,7 @@ _ISSUES_SUBQUERIES_STATE = """
        AND EXISTS (
            SELECT 1 FROM changesets r2
            JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r2.jurisdiction_ocdid
-           WHERE r2.id::text = ANY(pi2.request_ids) AND jur.state = %s
+           WHERE r2.id::text = ANY(pi2.changeset_ids) AND jur.state = %s
        ))
 """
 

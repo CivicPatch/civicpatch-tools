@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
-from database.pull_requests import get_pull_request_data_by_request_id
+from database.pull_requests import get_pull_request_data_by_changeset_id
 from shared.utils.statuses import ChangesetKind
 
 
@@ -28,7 +28,7 @@ def _make_pool(cursor):
 async def test_returns_none_when_not_found():
     cur = _make_cursor(None)
     with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_pull_request_data_by_request_id("req-missing")
+        result = await get_pull_request_data_by_changeset_id("req-missing")
     assert result is None
 
 
@@ -49,7 +49,7 @@ async def test_returns_row_for_a_pending_review():
     )
     cur = _make_cursor(row)
     with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_pull_request_data_by_request_id("req-abc")
+        result = await get_pull_request_data_by_changeset_id("req-abc")
 
     assert result is not None
     assert result["changeset_id"] == "req-abc"
@@ -71,7 +71,7 @@ async def test_returns_row_for_a_published_review():
     )
     cur = _make_cursor(row)
     with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_pull_request_data_by_request_id("req-xyz")
+        result = await get_pull_request_data_by_changeset_id("req-xyz")
 
     assert result is not None
     assert result["pr"]["status"] == "published"
@@ -86,7 +86,7 @@ async def test_lookup_is_scoped_to_people_requests():
     resolve as a review card with an empty roster and a Publish button."""
     cur = _make_cursor(None)
     with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        await get_pull_request_data_by_request_id("req-abc")
+        await get_pull_request_data_by_changeset_id("req-abc")
 
     sql, params = cur.execute.await_args.args
     # Deny-list, not allow-list: kind defaults to 'scrape' and legacy rows

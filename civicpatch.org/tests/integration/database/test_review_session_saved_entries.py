@@ -110,7 +110,7 @@ async def _insert_entry(session_id: str, entry_number: int, status: str, changes
         await conn.execute(
             """
             INSERT INTO review_session_entries
-                (review_session_id, request_ids, jurisdiction_ocdid, status, entry_number)
+                (review_session_id, changeset_ids, jurisdiction_ocdid, status, entry_number)
             VALUES (%s, %s, %s, %s, %s)
             """,
             (session_id, [changeset_id], ocdid, status, entry_number),

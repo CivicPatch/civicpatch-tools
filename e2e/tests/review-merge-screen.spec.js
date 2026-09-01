@@ -3,13 +3,13 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
-import { RECONCILE_REQUEST_ID } from "../fixtures/db.js";
+import { RECONCILE_CHANGESET_ID } from "../fixtures/db.js";
 import { editorFor } from "./helpers/review-card.js";
 
 test("merge is a screen in one modal, not a second dialog", async ({
   authenticatedPage: page,
 }) => {
-  await page.goto(`/review/session?changeset_id=${RECONCILE_REQUEST_ID}&view=detail`);
+  await page.goto(`/review/session?changeset_id=${RECONCILE_CHANGESET_ID}&view=detail`);
   await expect(page.locator("person-editor-list")).toBeVisible();
 
   const tom = editorFor(page, "Tom Treasurer");

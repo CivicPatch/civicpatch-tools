@@ -8,9 +8,9 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
-import { SCALE_REQUEST_ID } from "../fixtures/db.js";
+import { SCALE_CHANGESET_ID } from "../fixtures/db.js";
 
-const openOverview = async (page, changesetId = SCALE_REQUEST_ID) => {
+const openOverview = async (page, changesetId = SCALE_CHANGESET_ID) => {
   await page.goto(`/review/session?changeset_id=${changesetId}&view=overview`);
   await expect(page.locator("review-overview")).toBeVisible();
 };

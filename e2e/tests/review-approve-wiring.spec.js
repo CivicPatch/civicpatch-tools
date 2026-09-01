@@ -22,7 +22,7 @@ const APPROVE_ENDPOINT = "**/api/v1/reviews/*/publish";
 // matches `/reviews/{id}` without also catching `/reviews/{id}/save`.
 const REJECT_ENDPOINT = "**/api/v1/reviews/*";
 
-const FIRST_CARD_REQUEST_ID = "00000000-0000-0000-eeee-000000000001";
+const FIRST_CARD_CHANGESET_ID = "00000000-0000-0000-eeee-000000000001";
 
 async function openFirstCard(page) {
   await page.goto("/review");
@@ -48,7 +48,7 @@ test.describe("Approve", () => {
     await page.locator(".review-page__approve-btn").click();
 
     await expect.poll(() => approveBody).not.toBeNull();
-    expect(approveBody.changeset_id).toBe(FIRST_CARD_REQUEST_ID);
+    expect(approveBody.changeset_id).toBe(FIRST_CARD_CHANGESET_ID);
     expect(approveBody.jurisdiction_ocdid).toBeTruthy();
   });
 
@@ -138,7 +138,7 @@ test.describe("Reject", () => {
     await page.getByRole("button", { name: "Reject" }).click();
 
     await expect.poll(() => rejectUrl).not.toBeNull();
-    expect(rejectUrl).toContain(`/reviews/${FIRST_CARD_REQUEST_ID}`);
+    expect(rejectUrl).toContain(`/reviews/${FIRST_CARD_CHANGESET_ID}`);
 
     // Rejecting is a completed review action, so it advances like approving.
     await expect(page.locator(".review-page__progress")).toContainText("2");

@@ -18,7 +18,7 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
-import { RECONCILE_REQUEST_ID } from "../fixtures/db.js";
+import { RECONCILE_CHANGESET_ID } from "../fixtures/db.js";
 import { openDetail, openOverview, editorFor, rowFor } from "./helpers/review-card.js";
 
 const APPROVE_ENDPOINT = "**/api/v1/reviews/*/publish";
@@ -45,7 +45,7 @@ async function stubMerge(page) {
 }
 
 async function openReconcileCard(page) {
-  await page.goto(`/review/session?changeset_id=${RECONCILE_REQUEST_ID}`);
+  await page.goto(`/review/session?changeset_id=${RECONCILE_CHANGESET_ID}`);
   await openDetail(page);
 }
 

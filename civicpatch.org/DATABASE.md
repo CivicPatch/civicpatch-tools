@@ -40,7 +40,7 @@ erDiagram
         uuid            id                  PK
         text            kind                "CHECK scrape|sheet_import|people_edit|jurisdiction_edit; CHECK (kind=scrape) = (status IS NOT NULL)"
         text_null       jurisdiction_ocdid  FK  "idx"
-        uuid_null       requested_by_user_id FK
+        uuid_null       created_by_user_id FK
         jsonb           arguments_json
         timestamptz_null published_at       "set when a reviewer approves; this is the publish state"
         timestamptz_null dismissed_at       "set when a reviewer rejects. check: not both set"
@@ -85,7 +85,7 @@ erDiagram
         uuid            id          PK
         text            issue_type      "idx"
         text            issue_key       "unique: (issue_type, issue_key)"
-        text_array      request_ids
+        text_array      changeset_ids
         jsonb           data
         text            status          "idx, check: pending|pr_opened|resolved|superseded"
         text_null       pull_request_url
@@ -108,7 +108,7 @@ erDiagram
     review_session_entries {
         uuid            id                  PK
         uuid            review_session_id   FK  "idx: (review_session_id, status, created_at DESC)"
-        text_array      request_ids
+        text_array      changeset_ids
         text            jurisdiction_ocdid      "idx: unique WHERE status = 'claimed'"
         text            status
         int_null        entry_number
@@ -263,9 +263,9 @@ erDiagram
     source_records ||--o| source_record_identities : "source_record_id"
     jurisdictions ||--o{ changesets : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
-    changesets }o--o{ issues : "request_ids"
+    changesets }o--o{ issues : "changeset_ids"
     users ||--o{ review_sessions : "user_id"
-    users ||--o{ changesets : "requested_by_user_id"
+    users ||--o{ changesets : "created_by_user_id"
     users ||--o{ api_keys : "user_id (ON DELETE CASCADE)"
     users ||--o| api_usage_limits : "user_id (ON DELETE CASCADE)"
     change_log_types ||--o{ change_logs : "type"
@@ -278,7 +278,7 @@ erDiagram
 **Notes:**
 - `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
 - `pipeline_runs` was folded into `requests` in migration 147: `changeset_id` was UNIQUE NOT NULL and every request had exactly one run, so the two tables were a vertical partition of one entity that 21 queries had to join. `pull_requests` went the same way in 141 — nothing opens a pull request for a scrape any more, and every column it held either lived on `requests` already or died with the merge queue.
-- **`requests` became `changesets` in migration 152**, with `request_batches` → `changeset_batches`, `source_records.changeset_id` → `changeset_id`, and `change_logs.changeset_id` → `changeset_id`. Pure rename, including every index and constraint name — a rename that leaves `requests_pkey` on `changesets` puts the old vocabulary back into the schema in a dozen places. The table grew from "a job someone asked for" and that fits only the oldest of its four producers: nobody *requests* a sheet import, and both hand-edit kinds are born published. What all four are is a bundle of proposed changes to one jurisdiction, by one producer, at one time, awaiting a decision. `submissions` was rejected as past tense — it misnames the whole dispatched-and-running phase of a scrape, which exists at `status = PENDING, progress = 0` before it has any `source_records`, exactly the state an OSM changeset models as open-and-empty. **Two columns keep the old word deliberately**: `issues.request_ids` and `review_session_entries.request_ids` are different columns that 152 did not touch.
+- **`requests` became `changesets` in migration 152**, with `request_batches` → `changeset_batches`, `source_records.request_id` → `changeset_id`, and `change_logs.request_id` → `changeset_id`. Pure rename, including every index and constraint name — a rename that leaves `requests_pkey` on `changesets` puts the old vocabulary back into the schema in a dozen places. The table grew from "a job someone asked for" and that fits only the oldest of its four producers: nobody *requests* a sheet import, and both hand-edit kinds are born published. What all four are is a bundle of proposed changes to one jurisdiction, by one producer, at one time, awaiting a decision. `submissions` was rejected as past tense — it misnames the whole dispatched-and-running phase of a scrape, which exists at `status = PENDING, progress = 0` before it has any `source_records`, exactly the state an OSM changeset models as open-and-empty. **Migration 156 finished the job**: `issues.request_ids` and `review_session_entries.request_ids` — plural arrays 152 did not touch — became `changeset_ids`, and `requested_by_user_id` became `created_by_user_id`, matching its neighbour `resolved_by_user_id` and `changeset_batches.started_by_user_id`. It stays nullable, and the null is load-bearing: a changeset with no user was machine-triggered. `issues.pull_request_url` keeps its name — it is a genuine GitHub pull request.
 - **`request_type` became `kind` in migration 153**, and started saying *which producer made this changeset* rather than which domain object it was about. Every row used to read `people`, leaving three producers told apart by a conjunction of `status IS NULL` and `batch_id IS NOT NULL` — neither of which is about provenance. Two CHECKs now hold what nothing enforced: the four-value vocabulary, and `(kind = 'scrape') = (status IS NOT NULL)`, which makes the nullable pipeline columns a *consequence* of the kind instead of the only way to guess it. **The default was dropped deliberately** — a writer that does not say which producer it is should fail, not quietly become a scrape. `changeset_batches.kind` lost its `state_` prefix in the same migration so both columns share one vocabulary, which is what lets the backfill read the batch's own answer rather than infer from `batch_id IS NOT NULL` — a rule that holds only while state scrapes create no batch rows. `jurisdiction_edit` is a kind here only until those edits move to their own table; see the ▶ Next entry in `.scratch/TODO.md`.
 - `people` has no FK to `changesets` — it is written by the publish transaction, not by a merge
 - `state_configs` was **dropped in migration 150**, along with `sync_log` (superseded by `synced_files` and untouched since migration 003) and `logs` (0 rows, no reader; application logs go to Grafana). 103 had dropped `state_configs.min_scraped_at` when freshness became a computed rolling window and kept the shell as the home for the next per-state setting; two months on it held none, had no reader, and `jurisdictions.state` already answered which states exist. Bringing it back is one statement if a per-state setting ever arrives.

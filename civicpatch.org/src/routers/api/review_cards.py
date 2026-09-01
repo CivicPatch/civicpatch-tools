@@ -176,13 +176,13 @@ def get_router(api_key_header):
                 if pr.get("jurisdiction")
             }
         )
-        request_ids = list({pr["changeset_id"] for pr in paged_pull_requests})
+        changeset_ids = list({pr["changeset_id"] for pr in paged_pull_requests})
         published, rosters, proposals = await asyncio.gather(
             database.people.get_people_by_jurisdictions(jurisdiction_ocdids, view=view),
-            services_roster.proposed_rosters(request_ids),
+            services_roster.proposed_rosters(changeset_ids),
             # What each scrape would actually change. `existing` and `proposed` are two rosters
             # a reader has to diff by eye; this is the diff.
-            proposals_for_requests(request_ids),
+            proposals_for_requests(changeset_ids),
         )
 
         results = []
@@ -228,11 +228,11 @@ def get_router(api_key_header):
 
     # -- One card by deep link, the shape a review session navigates ---
     @router.get("/by-request/{changeset_id}")
-    async def get_pull_request_by_request_id_endpoint(
+    async def get_pull_request_by_changeset_id_endpoint(
         changeset_id: str,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        result = await pull_requests_db.get_pull_request_data_by_request_id(changeset_id)
+        result = await pull_requests_db.get_pull_request_data_by_changeset_id(changeset_id)
         if not result:
             raise HTTPException(status_code=404, detail="Pull request not found")
 

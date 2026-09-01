@@ -19,7 +19,7 @@ const isTerminalStatus = (status: string | null | undefined) =>
   status === REVIEW_STATUS.PUBLISHED || status === REVIEW_STATUS.DISMISSED;
 
 const belongsToSession = (active: any, changesetId: string | null) =>
-  changesetId != null && (active?.session_request_ids ?? []).includes(changesetId);
+  changesetId != null && (active?.session_changeset_ids ?? []).includes(changesetId);
 
 // The injected boundary: everything the action functions touch that isn't pure.
 // The hook fills this with the real api/DOM; tests pass fakes.
@@ -72,9 +72,9 @@ async function loadFirstEntry(data: any, session: SessionMeta | null, resolvedEn
   e.setRequestIdParam(entry.changeset_id ?? null);
 }
 
-// `session_request_ids` is ordered by entry number, so position n is entry n + 1.
+// `session_changeset_ids` is ordered by entry number, so position n is entry n + 1.
 const entryNumberOf = (active: any, changesetId: string | null): number | null => {
-  const at = (active?.session_request_ids ?? []).indexOf(changesetId);
+  const at = (active?.session_changeset_ids ?? []).indexOf(changesetId);
   return at < 0 ? null : at + 1;
 };
 

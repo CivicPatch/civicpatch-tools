@@ -38,7 +38,7 @@ def _client_as(identity: Identity) -> TestClient:
     app.include_router(review_actions_router.get_router(None), prefix="/pull_requests")
     return TestClient(app)
 
-TEST_REQUEST_ID = "test-request-id-123"
+TEST_CHANGESET_ID = "test-request-id-123"
 TEST_PR_NUMBER = "42"
 TEST_OCDID = "ocd-jurisdiction/country:us/state:ca/place:oakland/city"
 
@@ -99,7 +99,7 @@ def test_get_pull_request_review_returns_the_summary(client):
         new_callable=AsyncMock,
         return_value={"issues": [{"code": "unverified_post"}]},
     ):
-        response = client.get(f"/pull_requests/{TEST_REQUEST_ID}/review")
+        response = client.get(f"/pull_requests/{TEST_CHANGESET_ID}/review")
 
     assert response.status_code == 200
     assert response.json()["data"]["issues"] == [{"code": "unverified_post"}]
@@ -123,16 +123,16 @@ def test_rejecting_a_scrape_dismisses_it(client):
         ) as mock_dismiss,
     ):
         response = client.delete(
-            f"/pull_requests/{TEST_REQUEST_ID}",
-            params={"changeset_id": TEST_REQUEST_ID},
+            f"/pull_requests/{TEST_CHANGESET_ID}",
+            params={"changeset_id": TEST_CHANGESET_ID},
         )
 
     assert response.status_code == 200
     assert response.json()["status"] == "success"
-    mock_resolve.assert_awaited_once_with(TEST_REQUEST_ID)
+    mock_resolve.assert_awaited_once_with(TEST_CHANGESET_ID)
     # Closing is the reviewer deciding not to publish, and that decision is now recorded
     # on the request rather than inferred from the PR's GitHub status.
-    mock_dismiss.assert_awaited_once_with(TEST_REQUEST_ID, "user-id-123")
+    mock_dismiss.assert_awaited_once_with(TEST_CHANGESET_ID, "user-id-123")
 
 
 @pytest.mark.unit
@@ -147,8 +147,8 @@ def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[]),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/publish",
-            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
+            f"/pull_requests/{TEST_CHANGESET_ID}/publish",
+            json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID},
         )
 
     assert response.status_code == 409
@@ -166,9 +166,9 @@ def test_save_refuses_when_the_scrape_recorded_no_roster(client):
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/save",
+            f"/pull_requests/{TEST_CHANGESET_ID}/save",
             json={
-                "changeset_id": TEST_REQUEST_ID,
+                "changeset_id": TEST_CHANGESET_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
                 "data": [{"id": "p1", "fields": {"phones": ["9168085300"]}}],
             },
@@ -190,14 +190,14 @@ def test_publish_returns_200_and_queues_no_merge(client):
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/publish",
-            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
+            f"/pull_requests/{TEST_CHANGESET_ID}/publish",
+            json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID},
         )
 
     assert response.status_code == 200
     assert response.json()["status"] == "published"
-    mock_resolve.assert_awaited_once_with(TEST_REQUEST_ID)
-    mock_publish.assert_awaited_once_with(TEST_REQUEST_ID, TEST_OCDID, [BASE_PERSON], "user-id-123")
+    mock_resolve.assert_awaited_once_with(TEST_CHANGESET_ID)
+    mock_publish.assert_awaited_once_with(TEST_CHANGESET_ID, TEST_OCDID, [BASE_PERSON], "user-id-123")
 
 
 # An Official-valid person in the scrape's stored roster, in on-disk field order. A patch
@@ -227,9 +227,9 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
         patch("services.roster_edits.promote_to_reviewed", new_callable=AsyncMock),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/publish",
+            f"/pull_requests/{TEST_CHANGESET_ID}/publish",
             json={
-                "changeset_id": TEST_REQUEST_ID,
+                "changeset_id": TEST_CHANGESET_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
                 "data": [{"id": "p1", "fields": {"phones": ["9168085300"]}}],
             },
@@ -254,9 +254,9 @@ def test_save_and_merge_rejects_invalid_field(client):
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/publish",
+            f"/pull_requests/{TEST_CHANGESET_ID}/publish",
             json={
-                "changeset_id": TEST_REQUEST_ID,
+                "changeset_id": TEST_CHANGESET_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
                 "data": [{"id": "p1", "fields": {"phones": ["not-a-phone"]}}],
             },
@@ -287,8 +287,8 @@ def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock) as mock_resolve,
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/save",
-            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
+            f"/pull_requests/{TEST_CHANGESET_ID}/save",
+            json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
         )
 
     assert response.status_code == 200
@@ -296,7 +296,7 @@ def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
     # Two claims from one edited field: the new number accepted, the old one rejected.
     assert len(mock_update.await_args.args[0]) == 2
     mock_change_logs.assert_awaited_once()
-    mock_save.assert_awaited_once_with(TEST_REQUEST_ID)
+    mock_save.assert_awaited_once_with(TEST_CHANGESET_ID)
 
     mock_resolve.assert_not_awaited()
 
@@ -314,9 +314,9 @@ def test_reformatting_a_number_the_scrape_already_found_claims_nothing(client):
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/save",
+            f"/pull_requests/{TEST_CHANGESET_ID}/save",
             json={
-                "changeset_id": TEST_REQUEST_ID,
+                "changeset_id": TEST_CHANGESET_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
                 "data": [{"id": "p1", "fields": {"phones": ["9168085300"]}}],
             },
@@ -337,8 +337,8 @@ def test_save_records_the_edited_field_canonicalized(client):
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/save",
-            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
+            f"/pull_requests/{TEST_CHANGESET_ID}/save",
+            json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
         )
 
     assert response.status_code == 200
@@ -389,8 +389,8 @@ def test_a_person_added_by_hand_becomes_evidence_and_claims(client):
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/save",
-            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": [added]},
+            f"/pull_requests/{TEST_CHANGESET_ID}/save",
+            json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID, "data": [added]},
         )
 
     assert response.status_code == 200
@@ -416,9 +416,9 @@ def test_save_rejects_invalid_field_without_marking_the_entry(client):
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/save",
+            f"/pull_requests/{TEST_CHANGESET_ID}/save",
             json={
-                "changeset_id": TEST_REQUEST_ID,
+                "changeset_id": TEST_CHANGESET_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
                 "data": [{"id": "p1", "fields": {"phones": ["not-a-phone"]}}],
             },
@@ -448,8 +448,8 @@ def test_save_returns_500_and_does_not_mark_the_entry_when_the_write_fails():
         patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
     ):
         response = failing_client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/save",
-            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
+            f"/pull_requests/{TEST_CHANGESET_ID}/save",
+            json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
         )
 
     assert response.status_code == 500
@@ -459,8 +459,8 @@ def test_save_returns_500_and_does_not_mark_the_entry_when_the_write_fails():
 @pytest.mark.unit
 def test_save_requires_data(client):
     response = client.post(
-        f"/pull_requests/{TEST_REQUEST_ID}/save",
-        json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
+        f"/pull_requests/{TEST_CHANGESET_ID}/save",
+        json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID},
     )
     assert response.status_code == 422
 
@@ -468,7 +468,7 @@ def test_save_requires_data(client):
 # ── get_pull_request_by_number tests ──────────────────────────────────────
 
 OPEN_PR_DB_RESULT = {
-    "changeset_id": TEST_REQUEST_ID,
+    "changeset_id": TEST_CHANGESET_ID,
     "jurisdiction_ocdid": TEST_OCDID,
     "jurisdiction_name": "Oakland",
     "jurisdiction_website_url": "https://oaklandca.gov",
@@ -484,7 +484,7 @@ MERGED_PR_DB_RESULT = {
 @pytest.mark.unit
 def test_get_by_request_404_when_not_found(client):
     with patch(
-        "database.pull_requests.get_pull_request_data_by_request_id",
+        "database.pull_requests.get_pull_request_data_by_changeset_id",
         new_callable=AsyncMock,
         return_value=None,
     ):
@@ -497,7 +497,7 @@ def test_get_by_request_404_when_not_found(client):
 def test_get_by_request_200_for_open_pr(client):
     with (
         patch(
-            "database.pull_requests.get_pull_request_data_by_request_id",
+            "database.pull_requests.get_pull_request_data_by_changeset_id",
             new_callable=AsyncMock,
             return_value=OPEN_PR_DB_RESULT,
         ),
@@ -524,11 +524,11 @@ def test_get_by_request_200_for_open_pr(client):
             return_value={},
         ),
     ):
-        response = client.get(f"/pull_requests/by-request/{TEST_REQUEST_ID}")
+        response = client.get(f"/pull_requests/by-request/{TEST_CHANGESET_ID}")
 
     assert response.status_code == 200
     data = response.json()["data"]
-    assert data["changeset_id"] == TEST_REQUEST_ID
+    assert data["changeset_id"] == TEST_CHANGESET_ID
     assert data["pr"]["status"] == "open"
     assert data["has_next"] is False
     assert data["has_prev"] is False
@@ -540,7 +540,7 @@ def test_get_by_request_200_for_open_pr(client):
 def test_get_by_request_200_for_merged_pr(client):
     with (
         patch(
-            "database.pull_requests.get_pull_request_data_by_request_id",
+            "database.pull_requests.get_pull_request_data_by_changeset_id",
             new_callable=AsyncMock,
             return_value=MERGED_PR_DB_RESULT,
         ),
@@ -566,7 +566,7 @@ def test_get_by_request_200_for_merged_pr(client):
             return_value={},
         ),
     ):
-        response = client.get(f"/pull_requests/by-request/{TEST_REQUEST_ID}")
+        response = client.get(f"/pull_requests/by-request/{TEST_CHANGESET_ID}")
 
     assert response.status_code == 200
     data = response.json()["data"]
@@ -595,7 +595,7 @@ def run(coro):
 @pytest.mark.parametrize(
     "method,url",
     [
-        ("delete", f"/pull_requests/{TEST_PR_NUMBER}?changeset_id={TEST_REQUEST_ID}"),
+        ("delete", f"/pull_requests/{TEST_PR_NUMBER}?changeset_id={TEST_CHANGESET_ID}"),
     ],
 )
 def test_pull_request_writes_reject_default_role(method, url):
@@ -620,8 +620,8 @@ def test_publish_allows_default_role():
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/publish",
-            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
+            f"/pull_requests/{TEST_CHANGESET_ID}/publish",
+            json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID},
         )
 
     assert response.status_code == 200
@@ -638,7 +638,7 @@ def test_report_review_issue_allows_default_role():
         return_value={"id": "issue-1", "github_issue_url": "https://github.com/org/open-data/issues/9", "github_issue_number": 9},
     ) as mock_report:
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/issues",
+            f"/pull_requests/{TEST_CHANGESET_ID}/issues",
             json={"description": "Something looks wrong."},
         )
 
@@ -655,7 +655,7 @@ def test_report_review_issue_404_when_review_not_found(client):
         side_effect=review_actions_router.review_issue_report_service.ReviewNotFoundError("no review"),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/issues",
+            f"/pull_requests/{TEST_CHANGESET_ID}/issues",
             json={"description": "Something looks wrong."},
         )
 
@@ -670,7 +670,7 @@ def test_report_review_issue_502_when_github_fails(client):
         side_effect=review_actions_router.review_issue_report_service.GithubIssueCreationError("GitHub is down"),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/issues",
+            f"/pull_requests/{TEST_CHANGESET_ID}/issues",
             json={"description": "Something looks wrong."},
         )
 
@@ -680,7 +680,7 @@ def test_report_review_issue_502_when_github_fails(client):
 @pytest.mark.unit
 def test_report_review_issue_422_on_empty_description(client):
     response = client.post(
-        f"/pull_requests/{TEST_REQUEST_ID}/issues",
+        f"/pull_requests/{TEST_CHANGESET_ID}/issues",
         json={"description": ""},
     )
 
@@ -699,7 +699,7 @@ def test_report_review_issue_401_when_user_id_missing():
     )
     client = _client_as(identity)
     response = client.post(
-        f"/pull_requests/{TEST_REQUEST_ID}/issues",
+        f"/pull_requests/{TEST_CHANGESET_ID}/issues",
         json={"description": "Something looks wrong."},
     )
 
@@ -713,7 +713,7 @@ def test_get_reported_issues_returns_data(client):
         new_callable=AsyncMock,
         return_value=[{"id": "issue-1", "github_issue_url": "https://github.com/org/open-data/issues/9", "github_issue_number": 9, "status": "pending"}],
     ):
-        response = client.get(f"/pull_requests/{TEST_REQUEST_ID}/issues")
+        response = client.get(f"/pull_requests/{TEST_CHANGESET_ID}/issues")
 
     assert response.status_code == 200
     assert response.json()["data"][0]["github_issue_number"] == 9
@@ -729,7 +729,7 @@ def test_get_reported_issues_allows_default_role():
         new_callable=AsyncMock,
         return_value=[],
     ):
-        response = client.get(f"/pull_requests/{TEST_REQUEST_ID}/issues")
+        response = client.get(f"/pull_requests/{TEST_CHANGESET_ID}/issues")
 
     assert response.status_code == 200
 
@@ -750,8 +750,8 @@ def test_publishing_a_superseded_roster_is_a_409_not_a_500(client):
         ),
     ):
         response = client.post(
-            f"/pull_requests/{TEST_REQUEST_ID}/publish",
-            json={"changeset_id": TEST_REQUEST_ID, "jurisdiction_ocdid": TEST_OCDID},
+            f"/pull_requests/{TEST_CHANGESET_ID}/publish",
+            json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID},
         )
 
     assert response.status_code == 409

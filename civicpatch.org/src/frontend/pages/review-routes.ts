@@ -6,7 +6,7 @@ export const STATE_PARAM = "state";
 
 // Which card is open. The only thing the url says: whether a session is running, and where
 // it left off, are the session's own business.
-export const REQUEST_ID_PARAM = "changeset_id";
+export const CHANGESET_ID_PARAM = "changeset_id";
 
 // Which of the review card's three views is open. `view`, not `tab` — the
 // jurisdiction page already uses `?tab=` to mean something else, and the
@@ -53,5 +53,5 @@ export const sessionUrl = (stateCode: string) => `${REVIEW_SESSION_PATH}?${STATE
 
 // One card, no session. What the jurisdiction page's Review button links to.
 export const reviewSessionUrl = (stateCode: string, changesetId: string) =>
-  `${sessionUrl(stateCode)}&${REQUEST_ID_PARAM}=${encodeURIComponent(changesetId)}`;
+  `${sessionUrl(stateCode)}&${CHANGESET_ID_PARAM}=${encodeURIComponent(changesetId)}`;
 

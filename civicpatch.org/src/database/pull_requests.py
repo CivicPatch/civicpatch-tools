@@ -117,7 +117,7 @@ async def get_pull_request_for_review(changeset_id: str) -> Optional[dict]:
 
 
 
-async def get_pull_request_data_by_request_id(changeset_id: str) -> Optional[dict]:
+async def get_pull_request_data_by_changeset_id(changeset_id: str) -> Optional[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(

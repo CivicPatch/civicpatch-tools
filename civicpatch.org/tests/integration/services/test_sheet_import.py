@@ -96,7 +96,7 @@ async def _cleanup():
 
 @pytest_asyncio.fixture
 async def user_id():
-    """`requests.requested_by_user_id` is a real foreign key — an import is always somebody's."""
+    """`requests.created_by_user_id` is a real foreign key — an import is always somebody's."""
     await _cleanup()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

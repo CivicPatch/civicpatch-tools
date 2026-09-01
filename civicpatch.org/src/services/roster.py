@@ -57,15 +57,15 @@ async def scraped_roster(changeset_id: str, jurisdiction_ocdid: str) -> list[dic
 _ROSTER_CONCURRENCY = 4
 
 
-async def proposed_rosters(request_ids: list[str]) -> dict[str, list[dict]]:
+async def proposed_rosters(changeset_ids: list[str]) -> dict[str, list[dict]]:
     """One roster per request, for a page of review cards.
 
     Derived per request rather than in one query: a roster is Python over that scrape's own
     sightings, so there is nothing to batch.
     """
-    if not request_ids:
+    if not changeset_ids:
         return {}
-    ocdids = await changesets_db.jurisdictions_for_requests(request_ids)
+    ocdids = await changesets_db.jurisdictions_for_requests(changeset_ids)
     limit = asyncio.Semaphore(_ROSTER_CONCURRENCY)
 
     async def one(changeset_id: str, ocdid: str) -> list[dict]:
