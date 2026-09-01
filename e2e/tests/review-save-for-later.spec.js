@@ -24,7 +24,7 @@ const SAVE_ENDPOINT = "**/api/v1/reviews/*/save";
 async function openFirstCardAndEdit(page) {
   await page.goto("/review");
   await page.locator(".review-page__start-btn").click();
-  await expect(page.getByText("E2E Test City")).toBeVisible();
+  await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 
   // Save only appears once there is something to save.
   await expect(page.locator(".review-page__save-btn")).toHaveCount(0);

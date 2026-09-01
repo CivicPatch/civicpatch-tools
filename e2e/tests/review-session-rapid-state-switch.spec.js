@@ -19,7 +19,7 @@ test.describe("Review session — rapid state switch", () => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
     await expect(page).toHaveURL(/\/review\/session/);
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
     await page.locator(".review-page__next-btn").click();
     await expect(page.locator(".review-page__progress")).toContainText("2");
 
@@ -43,7 +43,7 @@ test.describe("Review session — rapid state switch", () => {
     // Resume NJ — back at card 2 with NJ content, never TX.
     await page.locator(".review-page__start-btn").click();
     await expect(page.locator(".review-page__progress")).toContainText("2");
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
     await expect(page.getByText("E2E TX City")).not.toBeVisible();
   });
 });

@@ -567,7 +567,7 @@ async def get_jurisdiction_history(
                     "pipeline_run_progress": row[4],
                     "open_data_url": row[5],
                     "review_status": row[6],
-                    "request_type": row[7],
+                    "kind": row[7],
                     # When a *person* published it, not when the machine finished. The header
                     # used the run's created_at, so it dated the scrape rather than the
                     # decision.

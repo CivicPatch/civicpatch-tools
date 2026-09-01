@@ -22,7 +22,7 @@ test.describe("Review progress dots", () => {
   }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 
     const dots = page.locator(".review-page__dot");
     await expect(dots).toHaveCount(SEEDED_NJ_CARDS);
@@ -38,7 +38,7 @@ test.describe("Review progress dots", () => {
   }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 
     await page.locator(".review-page__next-btn").click();
     await expect(page.locator(".review-page__progress")).toContainText("2");
@@ -58,7 +58,7 @@ test.describe("Review progress dots", () => {
   }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 
     await page.locator(".review-page__next-btn").click();
     await expect(page.locator(".review-page__progress")).toContainText("2");

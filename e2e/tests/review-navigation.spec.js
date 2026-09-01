@@ -26,7 +26,7 @@ test.describe("Review navigation", () => {
 
     // After starting, the review session navigates to the first card.
     // The jurisdiction name should appear once the card loads.
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
   });
 
   test("reviewer sees proposed people on first card", async ({
@@ -34,7 +34,7 @@ test.describe("Review navigation", () => {
   }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 
     // The seeded proposed person should appear in the diff panel
     await expect(page.locator("review-overview").getByText("Jane Smith").first()).toBeVisible();
@@ -43,7 +43,7 @@ test.describe("Review navigation", () => {
   test("next advances to second card", async ({ authenticatedPage: page }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 
     await page.locator(".review-page__next-btn").click();
 
@@ -53,13 +53,13 @@ test.describe("Review navigation", () => {
   test("back returns to previous card after next", async ({ authenticatedPage: page }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 
     await page.locator(".review-page__next-btn").click();
     await expect(page.locator(".review-page__progress")).toContainText("2");
 
     await page.locator(".review-page__back-btn").click();
     await expect(page.locator(".review-page__progress")).toContainText("1");
-    await expect(page.getByText("E2E Test City")).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
   });
 });

@@ -20,7 +20,7 @@ const NARROW_VIEWPORT = { width: 375, height: 800 };
 async function openFirstCard(page) {
   await page.goto("/review");
   await page.locator(".review-page__start-btn").click();
-  await expect(page.getByText("E2E Test City")).toBeVisible();
+  await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
 }
 
 const positionOf = (page, selector) =>
