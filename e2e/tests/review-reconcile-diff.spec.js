@@ -17,11 +17,11 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
-import { RECONCILE_REQUEST_ID } from "../fixtures/db.js";
+import { RECONCILE_CHANGESET_ID } from "../fixtures/db.js";
 import { openDetail, editorFor, fieldIn } from "./helpers/review-card.js";
 
 const openCard = async (page) => {
-  await page.goto(`/review/session?changeset_id=${RECONCILE_REQUEST_ID}`);
+  await page.goto(`/review/session?changeset_id=${RECONCILE_CHANGESET_ID}`);
   await openDetail(page);
 };
 

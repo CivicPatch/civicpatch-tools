@@ -42,20 +42,20 @@ async def _cleanup_stale_entries(cur, exclude_session_id: str) -> None:
     )
 
 
-async def _session_in_progress_request_ids(cur, review_session_id: str) -> list[str]:
-    """request_ids currently claimed (in progress) in this session."""
+async def _session_in_progress_changeset_ids(cur, review_session_id: str) -> list[str]:
+    """changeset_ids currently claimed (in progress) in this session."""
     await cur.execute(
-        "SELECT DISTINCT unnest(request_ids) FROM review_session_entries WHERE review_session_id = %s AND status = 'claimed'",
+        "SELECT DISTINCT unnest(changeset_ids) FROM review_session_entries WHERE review_session_id = %s AND status = 'claimed'",
         (review_session_id,),
     )
     return [r[0] for r in await cur.fetchall()]
 
 
-async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list, limit: int = 1):
+async def _allocate_next_review(cur, state_code: str, excluded_changeset_ids: list, limit: int = 1):
     """
     Returns the next available open review(s) for this session.
 
-    Excludes request_ids currently claimed (in progress) in this session so an in-flight
+    Excludes changeset_ids currently claimed (in progress) in this session so an in-flight
     card isn't re-offered, and excludes jurisdictions already claimed by any other
     session so two reviewers don't race for the same top-ranked candidate (the
     ordering below is deterministic, so without this they'd otherwise pick the same
@@ -88,7 +88,7 @@ async def _allocate_next_review(cur, state_code: str, excluded_request_ids: list
         """,
         (
             f"ocd-jurisdiction/country:us/state:{state_code}/%",
-            excluded_request_ids,
+            excluded_changeset_ids,
             limit,
         ),
     )
@@ -99,7 +99,7 @@ async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number:
     """Re-navigate to an existing entry at any status. Returns (changeset_id, jurisdiction_ocdid, has_next) or None."""
     await cur.execute(
         """
-        SELECT id, request_ids, jurisdiction_ocdid
+        SELECT id, changeset_ids, jurisdiction_ocdid
         FROM review_session_entries
         WHERE review_session_id = %s
           AND entry_number = %s
@@ -116,7 +116,7 @@ async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number:
     if not existing:
         return None
 
-    changeset_id = existing.request_ids[0]  # type: ignore[union-attr]
+    changeset_id = existing.changeset_ids[0]  # type: ignore[union-attr]
     jurisdiction_ocdid = existing.jurisdiction_ocdid  # type: ignore[union-attr]
 
     await cur.execute(
@@ -128,7 +128,7 @@ async def _navigate_to_existing_entry(cur, review_session_id: str, entry_number:
     )
     has_next = (await cur.fetchone()) is not None
     if not has_next:
-        in_progress = await _session_in_progress_request_ids(cur, review_session_id)
+        in_progress = await _session_in_progress_changeset_ids(cur, review_session_id)
         peek = await _allocate_next_review(cur, state_code, in_progress, limit=1)
         has_next = len(peek) > 0
 
@@ -153,7 +153,7 @@ async def _allocate_next_entry(cur, review_session_id: str, entry_number: int, s
         return {"done": AdvanceDoneReason.GOAL_REACHED}
 
     # Exclude any card currently claimed in this session so an in-flight one isn't re-offered.
-    in_progress = await _session_in_progress_request_ids(cur, review_session_id)
+    in_progress = await _session_in_progress_changeset_ids(cur, review_session_id)
     rows = await _allocate_next_review(cur, session_row.state_code, in_progress, limit=2)  # type: ignore[union-attr]
     if not rows:
         return {"done": AdvanceDoneReason.NO_MORE_CARDS}
@@ -162,7 +162,7 @@ async def _allocate_next_entry(cur, review_session_id: str, entry_number: int, s
     await cur.execute(
         """
         INSERT INTO review_session_entries
-            (review_session_id, request_ids, jurisdiction_ocdid, status, entry_number)
+            (review_session_id, changeset_ids, jurisdiction_ocdid, status, entry_number)
         VALUES (%s, %s, %s, 'claimed', %s)
         """,
         (review_session_id, [next_card.changeset_id], next_card.jurisdiction_ocdid, entry_number),  # type: ignore[union-attr]

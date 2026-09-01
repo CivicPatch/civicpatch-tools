@@ -9,7 +9,7 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
-import { BASELINE_REQUEST_ID } from "../fixtures/db.js";
+import { BASELINE_CHANGESET_ID } from "../fixtures/db.js";
 
 test.describe("Review baseline mode (first capture)", () => {
   test("baseline review shows the banner and suppresses the diff panel", async ({
@@ -17,7 +17,7 @@ test.describe("Review baseline mode (first capture)", () => {
   }) => {
     // Deep-link straight to the baseline card by changeset_id (state-agnostic —
     // boot() resolves it via the by-request endpoint, which carries `mode`).
-    await page.goto(`/review/session?changeset_id=${BASELINE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${BASELINE_CHANGESET_ID}`);
 
     const banner = page.locator(".review-page__baseline-banner");
     await expect(banner).toBeVisible();

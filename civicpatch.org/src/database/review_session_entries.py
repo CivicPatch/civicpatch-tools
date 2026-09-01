@@ -49,7 +49,7 @@ async def save_entries_for_request(changeset_id: str) -> None:
                 """
                 UPDATE review_session_entries
                 SET status = 'saved'
-                WHERE %s = ANY(request_ids) AND status = 'claimed'
+                WHERE %s = ANY(changeset_ids) AND status = 'claimed'
                 """,
                 (changeset_id,),
             )
@@ -63,7 +63,7 @@ async def resolve_entries_for_request(changeset_id: str) -> None:
                 """
                 UPDATE review_session_entries
                 SET status = 'resolved', resolved_at = NOW()
-                WHERE %s = ANY(request_ids) AND status != 'resolved'
+                WHERE %s = ANY(changeset_ids) AND status != 'resolved'
                 """,
                 (changeset_id,),
             )

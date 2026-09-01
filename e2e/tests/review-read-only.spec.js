@@ -13,7 +13,7 @@
 
 import { test, expect } from "../fixtures/index.js";
 import {
-  READ_ONLY_REQUEST_ID,
+  READ_ONLY_CHANGESET_ID,
   READ_ONLY_PR_URL,
   READ_ONLY_WEBSITE_URL,
 } from "../fixtures/db.js";
@@ -22,7 +22,7 @@ test.describe("Review card — read only", () => {
   test("a merged card shows its status and hides the actions that would change it", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?changeset_id=${READ_ONLY_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${READ_ONLY_CHANGESET_ID}`);
 
     const banner = page.locator(".review-page__status-banner");
     await expect(banner).toBeVisible();
@@ -38,7 +38,7 @@ test.describe("Review card — read only", () => {
   test("a merged card links out to the pull request and the jurisdiction", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?changeset_id=${READ_ONLY_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${READ_ONLY_CHANGESET_ID}`);
 
     const jurisdictionLink = page.locator(".review-page__jurisdiction");
     await expect(jurisdictionLink).toContainText("E2E Read Only City");
@@ -57,7 +57,7 @@ test.describe("Review card — read only", () => {
 
 test.describe("Review card — read only across the views", () => {
   const openReadOnly = async (page) => {
-    await page.goto(`/review/session?changeset_id=${READ_ONLY_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${READ_ONLY_CHANGESET_ID}`);
     await expect(page.locator("review-overview")).toBeVisible();
   };
 

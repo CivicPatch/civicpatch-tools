@@ -9,7 +9,7 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
-import { SCALE_REQUEST_ID, RECONCILE_REQUEST_ID } from "../fixtures/db.js";
+import { SCALE_CHANGESET_ID, RECONCILE_CHANGESET_ID } from "../fixtures/db.js";
 
 const openEditor = async (page, changesetId) => {
   await page.goto(`/review/session?changeset_id=${changesetId}&view=detail`);
@@ -28,18 +28,18 @@ test.describe("Review editor (Detail v2)", () => {
     // Previously this asserted that the default still rendered people-diff,
     // which described the interim state while both existed. §1.1 makes Overview
     // the default and people-diff is gone.
-    await page.goto(`/review/session?changeset_id=${RECONCILE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${RECONCILE_CHANGESET_ID}`);
     await expect(page.locator("review-overview")).toBeVisible();
     await expect(page.locator("person-editor-list")).toHaveCount(0);
 
-    await openEditor(page, RECONCILE_REQUEST_ID);
+    await openEditor(page, RECONCILE_CHANGESET_ID);
     await expect(page.locator("review-overview")).toHaveCount(0);
   });
 
   test("switching view writes ?view=, and a reload lands back there", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?changeset_id=${RECONCILE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${RECONCILE_CHANGESET_ID}`);
     await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
     await expect(page).toHaveURL(/view=detail/);
 
@@ -50,7 +50,7 @@ test.describe("Review editor (Detail v2)", () => {
   test("a person with nothing to review is one line, not a card", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_REQUEST_ID);
+    await openEditor(page, SCALE_CHANGESET_ID);
 
     // Councillor 03 is one of the 25 the scrape returned identically.
     const editor = editorFor(page, "Councillor 03 Scale");
@@ -66,7 +66,7 @@ test.describe("Review editor (Detail v2)", () => {
   test("a changed person shows only what moved, plus its evidence", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_REQUEST_ID);
+    await openEditor(page, SCALE_CHANGESET_ID);
 
     // The fixture rotates change shapes by index; 13 is the one that only
     // gained an email. (02 changes its term end AND clears its phone — two
@@ -86,7 +86,7 @@ test.describe("Review editor (Detail v2)", () => {
   test("the expander reveals the rest and puts them back", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_REQUEST_ID);
+    await openEditor(page, SCALE_CHANGESET_ID);
 
     // 02 changed its term end and cleared its phone, so two rows survive and
     // the other nine hide.
@@ -105,7 +105,7 @@ test.describe("Review editor (Detail v2)", () => {
   test("a person the scrape dropped is one decision, not eleven fields", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_REQUEST_ID);
+    await openEditor(page, SCALE_CHANGESET_ID);
 
     const editor = editorFor(page, "Councillor 36 Scale");
     await expect(editor).toHaveClass(/person-editor--removed/);
@@ -144,7 +144,7 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
   test("marks the value the scrape added, and leaves the kept one unmarked", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_REQUEST_ID);
+    await openEditor(page, SCALE_CHANGESET_ID);
     const field = emailField(page);
 
     // One list, not two columns: both addresses are editable rows.
@@ -159,7 +159,7 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
   test("a value the scrape lost reads as dropped and comes back one at a time", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_REQUEST_ID);
+    await openEditor(page, SCALE_CHANGESET_ID);
     // Councillor 02 had its phone cleared, so that value is dropped, not gone.
     const phone = page
       .locator(".person-editor")
@@ -185,7 +185,7 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
   test("provenance is derived, so retyping a dropped value clears its chip", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_REQUEST_ID);
+    await openEditor(page, SCALE_CHANGESET_ID);
     const phone = page
       .locator(".person-editor")
       .filter({ has: page.locator(".person-editor__name", { hasText: "Councillor 02 Scale" }) })

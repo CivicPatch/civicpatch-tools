@@ -12,12 +12,12 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
-import { DUPLICATE_REQUEST_ID, SCALE_REQUEST_ID } from "../fixtures/db.js";
+import { DUPLICATE_CHANGESET_ID, SCALE_CHANGESET_ID } from "../fixtures/db.js";
 import { openDetail } from "./helpers/review-card.js";
 
 test.describe("Duplicate person ids", () => {
   test("says so, and names the id", async ({ authenticatedPage: page }) => {
-    await page.goto(`/review/session?changeset_id=${DUPLICATE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${DUPLICATE_CHANGESET_ID}`);
 
     const banner = page.locator(".review-page__duplicate-banner");
     await expect(banner).toBeVisible();
@@ -28,7 +28,7 @@ test.describe("Duplicate person ids", () => {
   test("only one of the pair is rendered — which is the harm being reported", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?changeset_id=${DUPLICATE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${DUPLICATE_CHANGESET_ID}`);
     await openDetail(page);
 
     // Three proposed people, two sharing an id, so two editors.
@@ -44,7 +44,7 @@ test.describe("Duplicate person ids", () => {
   test("stays quiet on a card whose ids are all unique", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?changeset_id=${SCALE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
     await expect(page.locator("review-overview")).toBeVisible();
     await expect(page.locator(".review-page__duplicate-banner")).toHaveCount(0);
   });

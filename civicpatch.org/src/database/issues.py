@@ -35,7 +35,7 @@ async def get_pending_issue_ocdids() -> set[str]:
             """
             SELECT DISTINCT r.jurisdiction_ocdid
             FROM issues pi
-            JOIN changesets r ON r.id::text = ANY(pi.request_ids)
+            JOIN changesets r ON r.id::text = ANY(pi.changeset_ids)
             WHERE pi.status IN (%s, %s)
               AND r.jurisdiction_ocdid IS NOT NULL
             """,
@@ -52,7 +52,7 @@ async def get_pending_issue_ocdids_by_state(state_code: str) -> set[str]:
             """
             SELECT DISTINCT r.jurisdiction_ocdid
             FROM issues pi
-            JOIN changesets r ON r.id::text = ANY(pi.request_ids)
+            JOIN changesets r ON r.id::text = ANY(pi.changeset_ids)
             WHERE pi.status IN (%s, %s)
               AND r.jurisdiction_ocdid LIKE %s
             """,
@@ -113,7 +113,7 @@ async def reopen_issue(issue_id: str) -> None:
         )
 
 
-async def supersede_prior_jurisdiction_issues(jurisdiction_ocdid: str, current_request_id: str) -> None:
+async def supersede_prior_jurisdiction_issues(jurisdiction_ocdid: str, current_changeset_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
@@ -121,17 +121,17 @@ async def supersede_prior_jurisdiction_issues(jurisdiction_ocdid: str, current_r
             UPDATE issues
             SET status = %s, resolved_at = NOW()
             WHERE status = %s
-              AND NOT (%s = ANY(request_ids))
+              AND NOT (%s = ANY(changeset_ids))
               AND EXISTS (
                 SELECT 1 FROM changesets r
-                WHERE r.id::text = ANY(issues.request_ids)
+                WHERE r.id::text = ANY(issues.changeset_ids)
                   AND r.jurisdiction_ocdid = %s
               )
             """,
             (
                 PipelineIssueStatus.SUPERSEDED,
                 PipelineIssueStatus.PENDING,
-                current_request_id,
+                current_changeset_id,
                 jurisdiction_ocdid,
             ),
         )
@@ -155,12 +155,12 @@ async def upsert_issue(changeset_id: str, issue_type: str, issues: list[dict]) -
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.executemany(
             """
-            INSERT INTO issues (issue_type, issue_key, request_ids, data, status)
+            INSERT INTO issues (issue_type, issue_key, changeset_ids, data, status)
             VALUES (%s, %s, %s, %s, %s)
             ON CONFLICT (issue_type, issue_key) DO UPDATE SET
-              request_ids = (
+              changeset_ids = (
                 SELECT array_agg(DISTINCT r)
-                FROM unnest(issues.request_ids || EXCLUDED.request_ids) r
+                FROM unnest(issues.changeset_ids || EXCLUDED.changeset_ids) r
               ),
               data = CASE
                 WHEN issues.issue_type = 'unrecognized_role' THEN
@@ -207,7 +207,7 @@ async def create_user_reported_issue(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO issues (issue_type, issue_key, request_ids, data, status)
+            INSERT INTO issues (issue_type, issue_key, changeset_ids, data, status)
             VALUES (%s, %s, %s, %s, %s)
             RETURNING id::text
             """,
@@ -233,7 +233,7 @@ async def get_user_reported_issues_for_request(changeset_id: str) -> list[dict]:
             """
             SELECT id::text, data, status, created_at
             FROM issues
-            WHERE issue_type = %s AND %s = ANY(request_ids)
+            WHERE issue_type = %s AND %s = ANY(changeset_ids)
             ORDER BY created_at DESC
             """,
             (PipelineIssueType.USER_REPORTED, changeset_id),
@@ -279,7 +279,7 @@ async def get_issues_page(
         params.extend(issue_types)
     if state_code:
         conditions.append(sql.SQL(
-            "EXISTS (SELECT 1 FROM changesets r WHERE r.id::text = ANY(ri.request_ids) AND r.jurisdiction_ocdid LIKE %s)"
+            "EXISTS (SELECT 1 FROM changesets r WHERE r.id::text = ANY(ri.changeset_ids) AND r.jurisdiction_ocdid LIKE %s)"
         ))
         params.append(f"%state:{state_code.lower()}%")
     where_clause = sql.SQL("WHERE ") + sql.SQL(" AND ").join(conditions)
@@ -294,10 +294,10 @@ async def get_issues_page(
                        array_agg(DISTINCT r.jurisdiction_ocdid)
                            FILTER (WHERE r.jurisdiction_ocdid IS NOT NULL) AS ocdids
                 FROM issues ri
-                LEFT JOIN changesets r ON r.id::text = ANY(ri.request_ids)
+                LEFT JOIN changesets r ON r.id::text = ANY(ri.changeset_ids)
                 GROUP BY ri.id
             )
-            SELECT ri.id::text, ri.issue_type, ri.issue_key, ri.request_ids,
+            SELECT ri.id::text, ri.issue_type, ri.issue_key, ri.changeset_ids,
                    ri.data, ri.status, ri.resolved_at, ri.created_at,
                    COALESCE(ij.ocdids, ARRAY[]::text[]) AS raw_jurisdiction_ocdids,
                    COUNT(*) OVER() AS total_count,
@@ -325,7 +325,7 @@ async def get_issues_page(
             "id": r[0],
             "issue_type": r[1],
             "issue_key": r[2],
-            "request_ids": r[3],
+            "changeset_ids": r[3],
             "data": r[4],
             "status": r[5],
             "resolved_at": r[6].isoformat() if r[6] else None,
@@ -345,7 +345,7 @@ async def get_issue_counts(state_code: str | None = None) -> dict[str, int]:
     state_filter = sql.SQL("")
     if state_code:
         state_filter = sql.SQL(
-            "AND EXISTS (SELECT 1 FROM changesets r WHERE r.id::text = ANY(pi.request_ids) AND r.jurisdiction_ocdid LIKE %s)"
+            "AND EXISTS (SELECT 1 FROM changesets r WHERE r.id::text = ANY(pi.changeset_ids) AND r.jurisdiction_ocdid LIKE %s)"
         )
         params.append(f"%state:{state_code.lower()}%")
     query = sql.SQL("""
@@ -378,7 +378,7 @@ async def get_issue_by_id(issue_id: str) -> dict | None:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT id::text, issue_type, issue_key, request_ids, data, status, resolved_at, created_at
+            SELECT id::text, issue_type, issue_key, changeset_ids, data, status, resolved_at, created_at
             FROM issues WHERE id = %s
             """,
             (issue_id,),
@@ -390,7 +390,7 @@ async def get_issue_by_id(issue_id: str) -> dict | None:
         "id": row[0],
         "issue_type": row[1],
         "issue_key": row[2],
-        "request_ids": row[3],
+        "changeset_ids": row[3],
         "data": row[4],
         "status": row[5],
         "resolved_at": row[6].isoformat() if row[6] else None,

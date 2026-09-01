@@ -42,11 +42,11 @@ async def get_active_review_session(user_id: str, state_code: str) -> dict[str, 
                        -- Ordered, so position n is entry number n + 1: that is how a caller
                        -- turns "open this request" into "go to this entry".
                        ARRAY(
-                           SELECT rse2.request_ids[1]
+                           SELECT rse2.changeset_ids[1]
                            FROM review_session_entries rse2
                            WHERE rse2.review_session_id = rs.id
                            ORDER BY rse2.entry_number
-                       ) AS session_request_ids
+                       ) AS session_changeset_ids
                 FROM review_sessions rs
                 LEFT JOIN review_session_entries rse ON rse.review_session_id = rs.id
                 WHERE rs.user_id = %s
@@ -72,7 +72,7 @@ async def get_active_review_session(user_id: str, state_code: str) -> dict[str, 
         "daily_goal": row.daily_goal,  # type: ignore[union-attr]
         "current_entry_number": row.current_entry_number,  # type: ignore[union-attr]
         "resolved_entry_numbers": row.resolved_entry_numbers or [],  # type: ignore[union-attr]
-        "session_request_ids": row.session_request_ids or [],  # type: ignore[union-attr]
+        "session_changeset_ids": row.session_changeset_ids or [],  # type: ignore[union-attr]
     }
 
 

@@ -11,8 +11,8 @@ JURIS_B = "ocd-jurisdiction/country:us/state:tx/place:b"
 
 
 def _entry_row(jurisdiction_ocdid):
-    Row = namedtuple("Row", ["id", "request_ids", "jurisdiction_ocdid"])
-    return Row(id=1, request_ids=["req-1"], jurisdiction_ocdid=jurisdiction_ocdid)
+    Row = namedtuple("Row", ["id", "changeset_ids", "jurisdiction_ocdid"])
+    return Row(id=1, changeset_ids=["req-1"], jurisdiction_ocdid=jurisdiction_ocdid)
 
 
 def _cursor(fetchone=(), fetchall=()):
@@ -47,7 +47,7 @@ async def test_has_next_false_when_only_in_progress_jurisdictions_remain():
 @pytest.mark.asyncio
 @pytest.mark.unit
 async def test_has_next_peek_excludes_in_progress():
-    # The peek's exclusion list is the session's in-progress (claimed) request_ids.
+    # The peek's exclusion list is the session's in-progress (claimed) changeset_ids.
     # Resolved/published PRs are already filtered out by AVAILABLE_FOR_REVIEW upstream.
     cur = _cursor(
         fetchone=[_entry_row(JURIS_B), None],

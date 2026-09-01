@@ -302,7 +302,7 @@ async def test_commit_jurisdiction_patch_writes_nothing_when_unchanged():
             new_callable=AsyncMock,
         ) as mock_record,
     ):
-        commit_url, error, _request_id = await commit_jurisdiction_patch(
+        commit_url, error, _changeset_id = await commit_jurisdiction_patch(
             jurisdiction_ocdid=JURISDICTION_OCDID,
             fields={"url": "https://old.example.com"},
             user_id="user-1",
@@ -333,7 +333,7 @@ async def test_commit_jurisdiction_patch_jurisdiction_not_in_the_file():
             new_callable=AsyncMock,
         ) as mock_commit,
     ):
-        commit_url, error, _request_id = await commit_jurisdiction_patch(
+        commit_url, error, _changeset_id = await commit_jurisdiction_patch(
             jurisdiction_ocdid=JURISDICTION_OCDID,
             fields={"url": "https://new.example.com"},
             user_id="user-1",
@@ -352,7 +352,7 @@ async def test_commit_jurisdiction_patch_fetch_fails():
         new_callable=AsyncMock,
         return_value=None,
     ):
-        commit_url, error, _request_id = await commit_jurisdiction_patch(
+        commit_url, error, _changeset_id = await commit_jurisdiction_patch(
             jurisdiction_ocdid=JURISDICTION_OCDID,
             fields={"url": "https://new.example.com"},
             user_id="user-1",
@@ -383,7 +383,7 @@ async def test_commit_jurisdiction_patch_does_not_sync_the_row_when_the_commit_f
             new_callable=AsyncMock,
         ) as mock_patch_entry,
     ):
-        commit_url, error, _request_id = await commit_jurisdiction_patch(
+        commit_url, error, _changeset_id = await commit_jurisdiction_patch(
             jurisdiction_ocdid=JURISDICTION_OCDID,
             fields={"url": "https://new.example.com"},
             user_id="user-1",

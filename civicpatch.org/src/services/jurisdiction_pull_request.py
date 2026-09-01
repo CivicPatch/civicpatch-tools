@@ -176,7 +176,7 @@ async def commit_jurisdiction_patch(
         jurisdiction_ocdid=jurisdiction_ocdid,
         arguments_json=patch,
         open_data_url=commit_url,
-        requested_by_user_id=user_id,
+        created_by_user_id=user_id,
     )
 
     # The change log records the url specifically, so it only fires when url moved.

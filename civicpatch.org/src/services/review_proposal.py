@@ -77,7 +77,7 @@ async def _unverified_post_issues(jurisdiction_ocdid: str) -> list[Issue]:
 
 
 async def proposals_for_requests(
-    request_ids: list[str],
+    changeset_ids: list[str],
     rosters: dict[str, list[dict]] | None = None,
 ) -> dict[str, list[ProposedChange]]:
     """One taxonomy build and one membership read per jurisdiction, whatever the page size.
@@ -85,11 +85,11 @@ async def proposals_for_requests(
     `rosters` is for a caller that already derived them — deriving a roster is the expensive
     half, and the summary reads the same one to diff against what we publish.
     """
-    ocdids = await changesets_db.jurisdictions_for_requests(request_ids)
+    ocdids = await changesets_db.jurisdictions_for_requests(changeset_ids)
     if not ocdids:
         return {}
     if rosters is None:
-        rosters = await proposed_rosters(request_ids)
+        rosters = await proposed_rosters(changeset_ids)
 
     roles = await get_roles()
     taxonomy = build_taxonomy(RoleConfig(roles=roles))

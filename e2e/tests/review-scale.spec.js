@@ -13,7 +13,7 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
-import { SCALE_REQUEST_ID } from "../fixtures/db.js";
+import { SCALE_CHANGESET_ID } from "../fixtures/db.js";
 import { openDetail, editorFor } from "./helpers/review-card.js";
 
 // The scrape promotes these five to Council President — a role marked unique, so each one is a
@@ -30,7 +30,7 @@ test.describe("Review card at scale", () => {
   test("seeds the composition the layout work needs", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?changeset_id=${SCALE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
     await openDetail(page);
 
     // 35 carried over + 5 added, and the 3 the scrape dropped still get a person editor.
@@ -48,7 +48,7 @@ test.describe("Review card at scale", () => {
   test("carries anchored and person-level issues at density", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?changeset_id=${SCALE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
     await openDetail(page);
 
     // A field-anchored issue on every holder of a role marked unique — the case the collapse
@@ -71,7 +71,7 @@ test.describe("Review card at scale", () => {
   test("offers the projected post, and says it does not exist yet", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?changeset_id=${SCALE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
     await openDetail(page);
 
     // Ingest mints no posts, so a promotion names a post no row holds. The picker has to offer

@@ -240,7 +240,7 @@ def get_router(api_key_header):
                     "source_urls": request.source_urls,
                 },
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
-                requested_by_user_id=user.user_id,
+                created_by_user_id=user.user_id,
             )
             await temporal_service.start_people_collector_workflow(
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
@@ -291,7 +291,7 @@ def get_router(api_key_header):
                     "source_urls": None,
                 },
                 jurisdiction_ocdid=candidate.id,
-                requested_by_user_id=user.user_id,
+                created_by_user_id=user.user_id,
             )
             items.append(
                 {
@@ -628,7 +628,7 @@ def get_router(api_key_header):
         if issue is None:
             raise HTTPException(status_code=404)
 
-        raw = await get_issue_request_details(issue["request_ids"])
+        raw = await get_issue_request_details(issue["changeset_ids"])
         issue_type = issue["issue_type"]
         issue_key = issue["issue_key"]
 

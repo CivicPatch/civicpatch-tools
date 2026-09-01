@@ -195,7 +195,7 @@ def total_cost_by_request(changeset_id, jurisdiction_ocdid: str) -> dict[str, De
         grouped_llm_costs[key]['output_cost'] += item['output_cost']
         grouped_llm_costs[key]['total_cost'] += item['total_cost']
 
-    # Build the total_cost_by_request_id array with dynamic LLM columns
+    # Build the total_cost_by_changeset_id array with dynamic LLM columns
     total_cost_row = {
         "timestamp": get_timestamp(),
         "changeset_id": changeset_id,

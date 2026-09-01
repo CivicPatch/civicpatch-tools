@@ -8,10 +8,10 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
-import { SCALE_REQUEST_ID, RECONCILE_REQUEST_ID } from "../fixtures/db.js";
+import { SCALE_CHANGESET_ID, RECONCILE_CHANGESET_ID } from "../fixtures/db.js";
 import { openDetail, editorFor, fieldIn } from "./helpers/review-card.js";
 
-const openPreview = async (page, changesetId = SCALE_REQUEST_ID) => {
+const openPreview = async (page, changesetId = SCALE_CHANGESET_ID) => {
   await page.goto(`/review/session?changeset_id=${changesetId}&view=preview`);
   await expect(page.locator("review-preview")).toBeVisible();
 };
@@ -28,7 +28,7 @@ test.describe("Review preview", () => {
   });
 
   test("drops someone the reviewer removed, live", async ({ authenticatedPage: page }) => {
-    await page.goto(`/review/session?changeset_id=${SCALE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
     await openDetail(page);
     await editorFor(page, "Councillor 02 Scale").locator(".person-editor__delete").click();
 
@@ -49,7 +49,7 @@ test.describe("Review preview", () => {
   });
 
   test("sorts by seat, at-large first", async ({ authenticatedPage: page }) => {
-    await openPreview(page, RECONCILE_REQUEST_ID);
+    await openPreview(page, RECONCILE_CHANGESET_ID);
     // The reconcile fixture has no divisions at all, so everyone is at-large and
     // the order is stable rather than arbitrary.
     await expect(page.locator(".review-preview .review-row")).toHaveCount(2);
@@ -60,7 +60,7 @@ test.describe("Publish gating", () => {
   test("a blocking error disables Publish and says what to fix", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?changeset_id=${SCALE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
     await openDetail(page);
 
     // Clear a required field on someone being published.
@@ -79,7 +79,7 @@ test.describe("Publish gating", () => {
   test("the banner and the button agree, because one function drives both", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?changeset_id=${SCALE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
     await openDetail(page);
     const editor = editorFor(page, "Councillor 02 Scale");
     await editor.locator(".person-editor__expander").click();
@@ -93,7 +93,7 @@ test.describe("Publish gating", () => {
   test("a blocker on someone being dropped does not gate publishing", async ({
     authenticatedPage: page,
   }) => {
-    await page.goto(`/review/session?changeset_id=${SCALE_REQUEST_ID}`);
+    await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
     await openDetail(page);
     // Name, because it is the only required scalar: clearing one row of Source urls leaves an
     // empty string rather than an empty list, and the Post field is a picker that cannot be

@@ -17,7 +17,7 @@ const TEST_USER_PROVIDER = "github";
 const TEST_USER_PROVIDER_ID = "test-user-e2e";
 export const TEST_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:nj/place:e2e_test/government";
-export const TEST_REQUEST_ID = "00000000-0000-0000-eeee-000000000001";
+export const TEST_CHANGESET_ID = "00000000-0000-0000-eeee-000000000001";
 // person_id is a uuid since migration 144 — the old "e2e-jane" style fails at the insert now.
 export const JANE_PERSON_ID = "00000000-0000-0000-aaaa-000000000001";
 
@@ -53,12 +53,12 @@ const TEST_PR_ID = "00000000-0000-0000-eeee-000000000002";
 
 export const TEST_JURISDICTION_OCDID_2 =
   "ocd-jurisdiction/country:us/state:nj/place:e2e_test_2/government";
-export const TEST_REQUEST_ID_2 = "00000000-0000-0000-eeee-000000000003";
+export const TEST_CHANGESET_ID_2 = "00000000-0000-0000-eeee-000000000003";
 const TEST_PR_ID_2 = "00000000-0000-0000-eeee-000000000004";
 
 export const TEST_JURISDICTION_OCDID_3 =
   "ocd-jurisdiction/country:us/state:nj/place:e2e_test_3/government";
-export const TEST_REQUEST_ID_3 = "00000000-0000-0000-eeee-000000000005";
+export const TEST_CHANGESET_ID_3 = "00000000-0000-0000-eeee-000000000005";
 const TEST_PR_ID_3 = "00000000-0000-0000-eeee-000000000006";
 
 // Baseline fixture — a first-capture jurisdiction (scraped_at left NULL) so the
@@ -67,7 +67,7 @@ const TEST_PR_ID_3 = "00000000-0000-0000-eeee-000000000006";
 // card doesn't pollute the nj review queue the state-switching specs count on.
 export const BASELINE_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:vt/place:e2e_baseline/government";
-export const BASELINE_REQUEST_ID = "00000000-0000-0000-eeee-000000000007";
+export const BASELINE_CHANGESET_ID = "00000000-0000-0000-eeee-000000000007";
 const BASELINE_PR_ID = "00000000-0000-0000-eeee-000000000008";
 const BASELINE_PR_NUMBER = 4;
 
@@ -76,7 +76,7 @@ const BASELINE_PR_NUMBER = 4;
 // states. Own state (vt2 → "nh") and deep-linked by changeset_id, like baseline.
 export const RECONCILE_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:nh/place:e2e_reconcile/government";
-export const RECONCILE_REQUEST_ID = "00000000-0000-0000-eeee-000000000009";
+export const RECONCILE_CHANGESET_ID = "00000000-0000-0000-eeee-000000000009";
 const RECONCILE_PR_ID = "00000000-0000-0000-eeee-00000000000a";
 const RECONCILE_PR_NUMBER = 5;
 
@@ -87,7 +87,7 @@ const RECONCILE_PR_NUMBER = 5;
 // (ma) so this large open card stays out of every other spec's review queue.
 export const SCALE_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:ma/place:e2e_scale/government";
-export const SCALE_REQUEST_ID = "00000000-0000-0000-eeee-00000000000f";
+export const SCALE_CHANGESET_ID = "00000000-0000-0000-eeee-00000000000f";
 const SCALE_PR_ID = "00000000-0000-0000-eeee-000000000010";
 const SCALE_PR_NUMBER = 8;
 
@@ -175,7 +175,7 @@ function buildScaleProposed() {
 // resolves both entries of a merged pair to the survivor. Own state (nm).
 export const DUPLICATE_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:nm/place:e2e_duplicate/government";
-export const DUPLICATE_REQUEST_ID = "00000000-0000-0000-eeee-000000000016";
+export const DUPLICATE_CHANGESET_ID = "00000000-0000-0000-eeee-000000000016";
 const DUPLICATE_PR_ID = "00000000-0000-0000-eeee-000000000017";
 const DUPLICATE_PR_NUMBER = 16;
 
@@ -183,7 +183,7 @@ const DUPLICATE_PR_NUMBER = 16;
 // assert TX content (not just the absence of NJ content).
 export const TX_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:tx/place:e2e_tx/government";
-export const TX_REQUEST_ID = "00000000-0000-0000-eeee-000000000010";
+export const TX_CHANGESET_ID = "00000000-0000-0000-eeee-000000000010";
 const TX_PR_ID = "00000000-0000-0000-eeee-000000000011";
 
 // Issue-markers fixture — reconcile mode (scraped_at set), no existing people so
@@ -192,7 +192,7 @@ const TX_PR_ID = "00000000-0000-0000-eeee-000000000011";
 // per-card markers. Own state (me) and deep-linked by changeset_id, like the others.
 export const MARKERS_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:me/place:e2e_markers/government";
-export const MARKERS_REQUEST_ID = "00000000-0000-0000-eeee-000000000012";
+export const MARKERS_CHANGESET_ID = "00000000-0000-0000-eeee-000000000012";
 const MARKERS_PR_ID = "00000000-0000-0000-eeee-000000000013";
 const MARKERS_PR_NUMBER = 12;
 
@@ -205,7 +205,7 @@ const MARKERS_PR_NUMBER = 12;
 // review pool, so it is only reachable by link, which is how reviewers reach it too.
 export const READ_ONLY_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:ri/place:e2e_read_only/government";
-export const READ_ONLY_REQUEST_ID = "00000000-0000-0000-eeee-000000000014";
+export const READ_ONLY_CHANGESET_ID = "00000000-0000-0000-eeee-000000000014";
 export const READ_ONLY_PR_URL =
   "https://github.com/civicpatch/open-data/pull/14";
 export const READ_ONLY_WEBSITE_URL = "https://e2e-readonly.example.gov";
@@ -492,7 +492,7 @@ export async function seedE2eFixtures() {
     );
 
     await seedReviewCard(client, {
-      changesetId: TEST_REQUEST_ID,
+      changesetId: TEST_CHANGESET_ID,
       ocdid: TEST_JURISDICTION_OCDID,
       people: [
         {
@@ -508,7 +508,7 @@ export async function seedE2eFixtures() {
       [
         TEST_JURISDICTION_OCDID_2,
         "E2E Test City 2",
-        TEST_REQUEST_ID_2,
+        TEST_CHANGESET_ID_2,
         TEST_PR_ID_2,
         2,
         "nj",
@@ -517,7 +517,7 @@ export async function seedE2eFixtures() {
       [
         TEST_JURISDICTION_OCDID_3,
         "E2E Test City 3",
-        TEST_REQUEST_ID_3,
+        TEST_CHANGESET_ID_3,
         TEST_PR_ID_3,
         3,
         "nj",
@@ -526,7 +526,7 @@ export async function seedE2eFixtures() {
       [
         TX_JURISDICTION_OCDID,
         "E2E TX City",
-        TX_REQUEST_ID,
+        TX_CHANGESET_ID,
         TX_PR_ID,
         10,
         "tx",
@@ -567,11 +567,11 @@ export async function seedE2eFixtures() {
       [BASELINE_JURISDICTION_OCDID],
     );
     await seedReviewCard(client, {
-      changesetId: BASELINE_REQUEST_ID,
+      changesetId: BASELINE_CHANGESET_ID,
       ocdid: BASELINE_JURISDICTION_OCDID,
       people: [
         {
-          person_id: personIdFor(BASELINE_REQUEST_ID),
+          person_id: personIdFor(BASELINE_CHANGESET_ID),
           name: "Jane Baseline",
           label: "Council Member",
         },
@@ -650,7 +650,7 @@ export async function seedE2eFixtures() {
       },
     ];
     await seedReviewCard(client, {
-      changesetId: RECONCILE_REQUEST_ID,
+      changesetId: RECONCILE_CHANGESET_ID,
       ocdid: RECONCILE_JURISDICTION_OCDID,
       people: asSightings(reconcileProposed),
     });
@@ -668,7 +668,7 @@ export async function seedE2eFixtures() {
       await seedPerson(client, SCALE_JURISDICTION_OCDID, person);
     }
     await seedReviewCard(client, {
-      changesetId: SCALE_REQUEST_ID,
+      changesetId: SCALE_CHANGESET_ID,
       ocdid: SCALE_JURISDICTION_OCDID,
       people: asSightings(buildScaleProposed()),
     });
@@ -716,7 +716,7 @@ export async function seedE2eFixtures() {
       },
     ];
     await seedReviewCard(client, {
-      changesetId: DUPLICATE_REQUEST_ID,
+      changesetId: DUPLICATE_CHANGESET_ID,
       ocdid: DUPLICATE_JURISDICTION_OCDID,
       people: asSightings(duplicateProposed),
     });
@@ -763,7 +763,7 @@ export async function seedE2eFixtures() {
       },
     ];
     await seedReviewCard(client, {
-      changesetId: MARKERS_REQUEST_ID,
+      changesetId: MARKERS_CHANGESET_ID,
       ocdid: MARKERS_JURISDICTION_OCDID,
       people: asSightings(markersProposed),
     });
@@ -785,7 +785,7 @@ export async function seedE2eFixtures() {
       ],
     );
     await seedReviewCard(client, {
-      changesetId: READ_ONLY_REQUEST_ID,
+      changesetId: READ_ONLY_CHANGESET_ID,
       ocdid: READ_ONLY_JURISDICTION_OCDID,
       publishedAt: new Date().toISOString(),
       people: [
@@ -837,19 +837,19 @@ export async function seedE2eFixtures() {
     // Pico overrides — without this row the visual baseline cannot see it.
     //
     // `jurisdictions` on the API response is derived from the request's
-    // jurisdiction_ocdid, so pointing at TEST_REQUEST_ID is what makes the
+    // jurisdiction_ocdid, so pointing at TEST_CHANGESET_ID is what makes the
     // button appear at all (issue-row.js renders it only when the issue is
     // unrecognized_role AND carries jurisdictions).
     await client.query(
-      `INSERT INTO issues (issue_type, issue_key, request_ids, data, status)
+      `INSERT INTO issues (issue_type, issue_key, changeset_ids, data, status)
        VALUES ('unrecognized_role', $1, ARRAY[$2], $3, 'pending')
        ON CONFLICT (issue_type, issue_key) DO UPDATE
-         SET request_ids = EXCLUDED.request_ids,
+         SET changeset_ids = EXCLUDED.changeset_ids,
              data = EXCLUDED.data,
              status = EXCLUDED.status`,
       [
         UNRECOGNIZED_ROLE_KEY,
-        TEST_REQUEST_ID,
+        TEST_CHANGESET_ID,
         JSON.stringify({ person_names: ["Jane Smith"] }),
       ],
     );
@@ -888,16 +888,16 @@ export async function teardownE2eFixtures() {
     await clearRoster(client, RECONCILE_JURISDICTION_OCDID);
     await clearRoster(client, SCALE_JURISDICTION_OCDID);
     for (const [prId, reqId, jOcdid] of [
-      [TEST_PR_ID, TEST_REQUEST_ID, TEST_JURISDICTION_OCDID],
-      [TEST_PR_ID_2, TEST_REQUEST_ID_2, TEST_JURISDICTION_OCDID_2],
-      [TEST_PR_ID_3, TEST_REQUEST_ID_3, TEST_JURISDICTION_OCDID_3],
-      [BASELINE_PR_ID, BASELINE_REQUEST_ID, BASELINE_JURISDICTION_OCDID],
-      [RECONCILE_PR_ID, RECONCILE_REQUEST_ID, RECONCILE_JURISDICTION_OCDID],
-      [SCALE_PR_ID, SCALE_REQUEST_ID, SCALE_JURISDICTION_OCDID],
-      [DUPLICATE_PR_ID, DUPLICATE_REQUEST_ID, DUPLICATE_JURISDICTION_OCDID],
-      [TX_PR_ID, TX_REQUEST_ID, TX_JURISDICTION_OCDID],
-      [MARKERS_PR_ID, MARKERS_REQUEST_ID, MARKERS_JURISDICTION_OCDID],
-      [READ_ONLY_PR_ID, READ_ONLY_REQUEST_ID, READ_ONLY_JURISDICTION_OCDID],
+      [TEST_PR_ID, TEST_CHANGESET_ID, TEST_JURISDICTION_OCDID],
+      [TEST_PR_ID_2, TEST_CHANGESET_ID_2, TEST_JURISDICTION_OCDID_2],
+      [TEST_PR_ID_3, TEST_CHANGESET_ID_3, TEST_JURISDICTION_OCDID_3],
+      [BASELINE_PR_ID, BASELINE_CHANGESET_ID, BASELINE_JURISDICTION_OCDID],
+      [RECONCILE_PR_ID, RECONCILE_CHANGESET_ID, RECONCILE_JURISDICTION_OCDID],
+      [SCALE_PR_ID, SCALE_CHANGESET_ID, SCALE_JURISDICTION_OCDID],
+      [DUPLICATE_PR_ID, DUPLICATE_CHANGESET_ID, DUPLICATE_JURISDICTION_OCDID],
+      [TX_PR_ID, TX_CHANGESET_ID, TX_JURISDICTION_OCDID],
+      [MARKERS_PR_ID, MARKERS_CHANGESET_ID, MARKERS_JURISDICTION_OCDID],
+      [READ_ONLY_PR_ID, READ_ONLY_CHANGESET_ID, READ_ONLY_JURISDICTION_OCDID],
     ]) {
       // source_records cascades from changesets; identities cascade from source_records.
       await client.query(`DELETE FROM changesets WHERE id = $1`, [reqId]);

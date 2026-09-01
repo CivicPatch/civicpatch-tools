@@ -138,7 +138,7 @@ async def _hold(changeset_id: str, status: str, ocdid: str = _OCDID) -> None:
         await cur.execute(
             """
             INSERT INTO review_session_entries
-                (review_session_id, jurisdiction_ocdid, status, request_ids)
+                (review_session_id, jurisdiction_ocdid, status, changeset_ids)
             VALUES (%s, %s, %s, ARRAY[%s])
             """,
             (session_id, ocdid, status, changeset_id),

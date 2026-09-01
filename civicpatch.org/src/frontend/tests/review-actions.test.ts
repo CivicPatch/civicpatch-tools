@@ -59,7 +59,7 @@ function activeSession(overrides = {}) {
     daily_goal: 10,
     current_entry_number: 2,
     resolved_entry_numbers: [1],
-    session_request_ids: ["req-1"],
+    session_changeset_ids: ["req-1"],
     ...overrides,
   };
 }
@@ -105,7 +105,7 @@ describe("boot", () => {
   it("opens a card the session holds inside that session, at that card", async () => {
     const api = fakeApi({
       fetchActiveReviewSession: vi.fn(async () => ({
-        data: activeSession({ session_request_ids: ["req-1", "req-7"] }),
+        data: activeSession({ session_changeset_ids: ["req-1", "req-7"] }),
       })),
       navigateToEntry: vi.fn(async () => ({
         data: cardData({ changeset_id: "req-7", entry_number: 2 }),
@@ -114,7 +114,7 @@ describe("boot", () => {
     const e = fakeEffects(api);
     await boot(STATE, "req-7", e);
 
-    // Entry 2, because `session_request_ids` is ordered by entry number — parked at 1.
+    // Entry 2, because `session_changeset_ids` is ordered by entry number — parked at 1.
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 2);
     expect(lastAction(e).payload.current_entry.changeset_id).toBe("req-7");
     expect(lastAction(e).payload.session).toEqual({ id: "s1", daily_goal: 10 });

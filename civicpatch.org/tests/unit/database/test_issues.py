@@ -45,10 +45,10 @@ async def test_create_user_reported_issue_inserts_pending_row_and_returns_id():
     assert issue_id == "issue-id-123"
     cur.execute.assert_awaited_once()
     _, params = cur.execute.call_args[0]
-    issue_type, issue_key, request_ids, data, status = params
+    issue_type, issue_key, changeset_ids, data, status = params
     assert issue_type == PipelineIssueType.USER_REPORTED
     assert isinstance(issue_key, str) and issue_key
-    assert request_ids == ["req-1"]
+    assert changeset_ids == ["req-1"]
     assert status == PipelineIssueStatus.PENDING
     assert json.loads(data) == {
         "title": "Review flag: Oakland",

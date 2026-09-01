@@ -16,7 +16,7 @@ MOCK_IDENTITY = Identity(
     email="test@civicpatch.org",
 )
 
-TEST_REQUEST_ID = "test-request-id-123"
+TEST_CHANGESET_ID = "test-request-id-123"
 
 
 @pytest.fixture
@@ -28,7 +28,7 @@ def client():
 
 
 @pytest.mark.unit
-def test_create_job_returns_request_id(client):
+def test_create_job_returns_changeset_id(client):
     with patch(
         "routers.api.pipeline_runs.has_open_pr_for_jurisdiction",
         new_callable=AsyncMock,
@@ -96,7 +96,7 @@ def test_get_pipeline_run_status_returns_status(client):
         new_callable=AsyncMock,
         return_value={"status": "running", "progress": 42},
     ):
-        response = client.get(f"/pipeline_runs/{TEST_REQUEST_ID}/status")
+        response = client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/status")
 
     assert response.status_code == 200
     data = response.json()
@@ -111,7 +111,7 @@ def test_get_pipeline_run_status_returns_404_when_not_found(client):
         new_callable=AsyncMock,
         return_value=None,
     ):
-        response = client.get(f"/pipeline_runs/{TEST_REQUEST_ID}/status")
+        response = client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/status")
 
     assert response.status_code == 404
 
@@ -120,14 +120,14 @@ def test_get_pipeline_run_status_returns_404_when_not_found(client):
 def test_patch_job_status_returns_updated_status(client):
     with patch("routers.api.pipeline_runs.apply_pipeline_run_status", new_callable=AsyncMock):
         response = client.patch(
-            f"/pipeline_runs/{TEST_REQUEST_ID}/status",
+            f"/pipeline_runs/{TEST_CHANGESET_ID}/status",
             json={"status": "complete", "progress": 100},
         )
 
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "complete"
-    assert data["changeset_id"] == TEST_REQUEST_ID
+    assert data["changeset_id"] == TEST_CHANGESET_ID
 
 
 @pytest.mark.unit
@@ -137,9 +137,9 @@ async def test_apply_pipeline_run_status_publishes_when_jurisdiction_provided():
         patch("routers.api.pipeline_runs.update_pipeline_run_status", new_callable=AsyncMock) as mock_update,
         patch("routers.api.pipeline_runs.pubsub_service.publish", new_callable=AsyncMock) as mock_publish,
     ):
-        await apply_pipeline_run_status(TEST_REQUEST_ID, "running", 50, "ocd-division/country:us/state:ca/place:oakland")
+        await apply_pipeline_run_status(TEST_CHANGESET_ID, "running", 50, "ocd-division/country:us/state:ca/place:oakland")
 
-        mock_update.assert_awaited_once_with(changeset_id=TEST_REQUEST_ID, status="running", progress=50)
+        mock_update.assert_awaited_once_with(changeset_id=TEST_CHANGESET_ID, status="running", progress=50)
         mock_publish.assert_awaited_once()
 
 
@@ -152,7 +152,7 @@ async def test_apply_pipeline_run_status_skips_publish_when_no_jurisdiction():
         patch("database.database.get_pool", new_callable=AsyncMock),
         patch("routers.api.pipeline_runs.pubsub_service.publish", new_callable=AsyncMock) as mock_publish,
     ):
-        await apply_pipeline_run_status(TEST_REQUEST_ID, "running", 50, None)
+        await apply_pipeline_run_status(TEST_CHANGESET_ID, "running", 50, None)
 
         mock_publish.assert_not_awaited()
 
@@ -163,7 +163,7 @@ def test_get_context_upload_url_returns_url(client):
         "routers.api.pipeline_runs.storage_service.get_presigned_put_url",
         return_value="https://storage.example.com/presigned-put",
     ):
-        response = client.get(f"/pipeline_runs/{TEST_REQUEST_ID}/context/upload-url")
+        response = client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/context/upload-url")
 
     assert response.status_code == 200
     assert response.json()["url"] == "https://storage.example.com/presigned-put"
@@ -175,19 +175,19 @@ def test_get_context_download_url_returns_url(client):
         "routers.api.pipeline_runs.storage_service.get_presigned_url_cached",
         return_value="https://storage.example.com/presigned-get",
     ):
-        response = client.get(f"/pipeline_runs/{TEST_REQUEST_ID}/context/download-url")
+        response = client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/context/download-url")
 
     assert response.status_code == 200
     assert response.json()["url"] == "https://storage.example.com/presigned-get"
 
 
 @pytest.mark.unit
-def test_delete_context_returns_request_id(client):
+def test_delete_context_returns_changeset_id(client):
     with patch("routers.api.pipeline_runs.storage_service.delete_object"):
-        response = client.delete(f"/pipeline_runs/{TEST_REQUEST_ID}/context")
+        response = client.delete(f"/pipeline_runs/{TEST_CHANGESET_ID}/context")
 
     assert response.status_code == 200
-    assert response.json()["changeset_id"] == TEST_REQUEST_ID
+    assert response.json()["changeset_id"] == TEST_CHANGESET_ID
 
 
 @pytest.mark.unit
@@ -232,13 +232,13 @@ def test_cancel_settles_the_review_as_well_as_the_run():
 
     get_run, cancel_wf, update_status, get_user, dismiss = _cancel_mocks()
     with get_run, cancel_wf as mock_cancel, update_status as mock_status, get_user, dismiss as mock_dismiss:
-        response = client.post(f"/pipeline_runs/{TEST_REQUEST_ID}/cancel")
+        response = client.post(f"/pipeline_runs/{TEST_CHANGESET_ID}/cancel")
 
     assert response.status_code == 200
     mock_cancel.assert_awaited_once_with(TEST_OCDID)
     assert mock_status.await_args.kwargs["status"] == "CANCELLED"
     mock_dismiss.assert_awaited_once_with(
-        TEST_REQUEST_ID, DismissalReason.CANCELLED, resolved_by_user_id="user-1"
+        TEST_CHANGESET_ID, DismissalReason.CANCELLED, resolved_by_user_id="user-1"
     )
 
 
@@ -260,7 +260,7 @@ def test_cancel_does_not_dismiss_when_the_workflow_refuses_to_stop():
         get_user,
         dismiss as mock_dismiss,
     ):
-        response = client.post(f"/pipeline_runs/{TEST_REQUEST_ID}/cancel")
+        response = client.post(f"/pipeline_runs/{TEST_CHANGESET_ID}/cancel")
 
     assert response.status_code == 500
     mock_dismiss.assert_not_awaited()
@@ -280,11 +280,11 @@ async def test_a_run_that_ended_without_a_roster_settles_its_request(status):
             new_callable=AsyncMock,
         ),
     ):
-        await pipeline_runs_router.finalize_pipeline_run(TEST_REQUEST_ID, status, TEST_OCDID)
+        await pipeline_runs_router.finalize_pipeline_run(TEST_CHANGESET_ID, status, TEST_OCDID)
 
     # No user id: a machine giving up, not a person declining. The reason is passed rather
     # than inferred later, because `status` is mutable and a guess could drift.
-    dismiss.assert_awaited_once_with(TEST_REQUEST_ID, DismissalReason.ERRORED)
+    dismiss.assert_awaited_once_with(TEST_CHANGESET_ID, DismissalReason.ERRORED)
 
 
 @pytest.mark.unit
@@ -300,6 +300,6 @@ async def test_a_run_that_produced_something_is_left_for_review(status):
             new_callable=AsyncMock,
         ),
     ):
-        await pipeline_runs_router.finalize_pipeline_run(TEST_REQUEST_ID, status, TEST_OCDID)
+        await pipeline_runs_router.finalize_pipeline_run(TEST_CHANGESET_ID, status, TEST_OCDID)
 
     dismiss.assert_not_awaited()
