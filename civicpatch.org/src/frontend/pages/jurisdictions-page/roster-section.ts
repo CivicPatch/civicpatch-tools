@@ -7,7 +7,10 @@
 import { html, nothing } from "lit-html";
 import "../../components/person-image.js";
 import "../../components/people/person-row.css";
-import { renderPersonRow } from "../../components/people/person-row.js";
+import {
+  renderPersonGrid,
+  type PersonRowProps,
+} from "../../components/people/person-row.js";
 import {
   renderValues,
   sourceMapFor,
@@ -16,7 +19,7 @@ import {
 import { type PersonCard } from "../../components/people/person-cards.js";
 import { postsHeld } from "../../components/posts-list/posts-model.js";
 
-export interface OfficialsCardsProps {
+export interface RosterCardsProps {
   cards: PersonCard[];
   isLoading: boolean;
   blockedReason: string | null;
@@ -24,11 +27,11 @@ export interface OfficialsCardsProps {
   onOpenPerson: ((personId: string) => void) | null;
 }
 
-function renderCard(
+function rowFor(
   card: PersonCard,
   sources: SourceMap,
   onOpenPerson: ((personId: string) => void) | null,
-) {
+): PersonRowProps {
   const record = card.newRecord;
   // Post label, then membership label. Not `office.name` plus a division badge: that read
   // "Council Member District 5 - Councilmember District 5, [D5]" — two spellings of one office
@@ -36,7 +39,7 @@ function renderCard(
   const office = postsHeld(record?.memberships ?? []);
   const name = record?.name || "(unnamed)";
 
-  return renderPersonRow({
+  return {
     record,
     name,
     subtitle: office,
@@ -44,10 +47,10 @@ function renderCard(
     modifier: card.status,
     onOpen: onOpenPerson ? () => onOpenPerson(card.personId) : null,
     meta: renderValues(record, sources),
-  });
+  };
 }
 
-export function renderOfficialsCards(props: OfficialsCardsProps) {
+export function renderRosterCards(props: RosterCardsProps) {
   const { cards, isLoading, blockedReason, actions, onOpenPerson } = props;
   const sources = sourceMapFor(cards.map((card) => card.newRecord));
 
@@ -76,11 +79,11 @@ export function renderOfficialsCards(props: OfficialsCardsProps) {
       ${isLoading
         ? nothing
         : cards.length
-          ? html`<div class="review-preview__grid">
-              ${cards.map((card) => renderCard(card, sources, onOpenPerson))}
-            </div>`
+          ? renderPersonGrid(
+              cards.map((card) => rowFor(card, sources, onOpenPerson)),
+            )
           : html`<p class="jurisdiction-section__meta">
-              No officials published for this jurisdiction yet.
+              No people published for this jurisdiction yet.
             </p>`}
     </section>
   `;

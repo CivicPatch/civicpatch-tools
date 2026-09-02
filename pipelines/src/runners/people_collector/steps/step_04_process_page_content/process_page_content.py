@@ -9,7 +9,7 @@ from runners.people_collector.schemas import (
     Link,
     LinkFrontier,
     LinkStatus,
-    PersonRecord,
+    PersonSourceRecord,
     PeopleArrayLLMResponseSchema,
     PeopleByName,
     PeopleCollectorContext,
@@ -75,13 +75,13 @@ async def _process_with_llm_in_chunks(
     prompt: str,
     seed: Optional[int],
     logger,
-) -> List[PersonRecord]:
+) -> List[PersonSourceRecord]:
     chunks = _split_content_into_chunks(
         content, open_router_llm.max_content_chars(prompt)
     )
     if len(chunks) > 1:
         logger.info(f"Content split into {len(chunks)} chunks for LLM: open_router")
-    all_found: List[PersonRecord] = []
+    all_found: List[PersonSourceRecord] = []
     for chunk in chunks:
         found = await process_with_llm(
             source_url,
@@ -336,7 +336,7 @@ async def process_with_llm(
     content: str,
     prompt: str,
     seed: Optional[int] = None,
-) -> List[PersonRecord]:
+) -> List[PersonSourceRecord]:
     response = await open_router_llm.run_prompt(
         changeset_id,
         jurisdiction_ocdid,
@@ -355,7 +355,7 @@ async def process_with_llm(
         p["source_url"] = source_url
         if p["url"]:
             p["url"] = url_utils.format_url(p["url"])
-        processed_people.append(PersonRecord.model_validate(p))
+        processed_people.append(PersonSourceRecord.model_validate(p))
 
     return processed_people
 

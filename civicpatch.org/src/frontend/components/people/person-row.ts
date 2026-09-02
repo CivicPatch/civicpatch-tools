@@ -68,3 +68,15 @@ export function renderPersonRow({
     </div>
   `;
 }
+
+/** The rows, in the container that lays them out.
+ *
+ * Callers used to assemble this themselves and a comment asked them to keep the pieces in
+ * step — the grid class, the source map `renderValues` reads. Both callers already reduce
+ * their own shape to `PersonRowProps`, so this takes it from there and the footgun is gone.
+ */
+export function renderPersonGrid(rows: PersonRowProps[]) {
+  return html`
+    <div class="review-preview__grid">${rows.map(renderPersonRow)}</div>
+  `;
+}

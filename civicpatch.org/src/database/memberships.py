@@ -16,7 +16,7 @@ gone, not when they went.
 from datetime import date, datetime, timezone
 
 from core.membership_label import derive_post_label
-from core.post_derivation import DerivedMember
+from core.post_derivation import DerivedMembership
 from database import assertions, posts
 from database.change_logs import record_change
 from database.database import get_pool
@@ -66,17 +66,17 @@ async def _set_membership_roles(cur, membership_id: str, role_ids: list[str]) ->
 
 async def upsert(
     cur,
-    member: DerivedMember,
+    member: DerivedMembership,
     post_id: str,
     organization_id: str,
     last_seen_at,
 ) -> str:
     """Seat one person, closing whatever else they held in this organization.
 
-    Takes the `DerivedMember` whole: five of the old twelve parameters were its fields,
+    Takes the `DerivedMembership` whole: five of the old twelve parameters were its fields,
     unpacked at the only caller and passed back one at a time.
 
-    `start_date` / `end_date` come off the record, via `DerivedMember`. They used to be
+    `start_date` / `end_date` come off the record, via `DerivedMembership`. They used to be
     parameters nobody passed, so the source's term dates reached `people` and never the
     membership that is the tenure.
     """
@@ -382,7 +382,7 @@ async def assign(
                     # A human assigning a seat states only who and where — the label follows
                     # below, and the source's term dates are not theirs to invent.
                     cur,
-                    DerivedMember(person_id=person_id),
+                    DerivedMembership(person_id=person_id),
                     post_id,
                     organization_id,
                     last_seen_at,

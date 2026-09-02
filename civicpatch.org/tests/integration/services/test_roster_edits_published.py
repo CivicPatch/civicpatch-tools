@@ -17,11 +17,13 @@ from unittest.mock import AsyncMock, patch
 
 import services.roster_edits as roster_edits
 from core.people_edits import PeopleValidationError
-from core.post_derivation import DerivedMember
+from core.post_derivation import DerivedMembership
 from database import divisions, memberships, organizations, posts
 from core.people_edits import PersonPatch
 from database.database import get_pool
 from database.changesets import DISMISSED_SUPERSEDED, supersede_stacked_requests
+from database.source_records import insert_source_records
+from services.roster import proposed_roster
 from schemas.assertions import EntityType
 from schemas.common import Identity, UserRole
 
@@ -39,6 +41,9 @@ async def _wipe():
             (_OCDID,),
         )
         await cur.execute("DELETE FROM posts WHERE jurisdiction_ocdid = %s", (_OCDID,))
+        # Changesets first: `changesets.organization_id` is a FK since 158, so an
+        # organization cannot go while a changeset still names it.
+        await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute(
             "DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
@@ -54,7 +59,6 @@ async def _wipe():
             "DELETE FROM source_records WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_OCDID,))
-        await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM users WHERE email = %s", (_EMAIL,))
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OCDID,)
@@ -90,7 +94,7 @@ async def _seed() -> tuple[str, Identity]:
             (_OCDID,),
         )
         await cur.execute(
-            # `source_urls` and `updated_at` are required by `RosterPerson`, which every
+            # `source_urls` and `updated_at` are required by `OpenStatesRecord`, which every
             # edit is validated against — a person without them fails before any field does.
             "INSERT INTO people "
             "  (id, jurisdiction_ocdid, name, phones, source_urls, updated_at, "
@@ -107,7 +111,7 @@ async def _seed() -> tuple[str, Identity]:
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         await memberships.upsert(
             cur,
-            DerivedMember(person_id=person_id, source_labels=["Mayor"]),
+            DerivedMembership(person_id=person_id, source_labels=["Mayor"]),
             post_id,
             org,
             datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc),
@@ -328,7 +332,7 @@ async def test_leaving_somebody_out_retires_them():
         seat = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
         await memberships.upsert(
             cur,
-            DerivedMember(person_id=other_id, source_labels=["Clerk"]),
+            DerivedMembership(person_id=other_id, source_labels=["Clerk"]),
             seat,
             org,
             datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc),
@@ -429,3 +433,78 @@ async def test_a_hand_edit_supersedes_a_pending_scrape():
         )
         row = await cur.fetchone()
     assert row is not None and row[0] == DISMISSED_SUPERSEDED
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_post_pick_survives_a_save_and_comes_back_scoped_to_its_organization():
+    """A pick is a decision, and it has to outlive the save that recorded it.
+
+    It did not: `post_id` was absent from `EDITABLE_FIELDS`, so `stated_from_edit` wrote no
+    assertion and `with_stated_values` reapplied nothing. A reviewer could pick a post, save for
+    later, come back, and publish into whatever the labels derived — their answer discarded
+    without a word. Nothing covered `roster_edits.save` at all, which is how it survived.
+
+    Picks are stored per post rather than per person, because a person holds one per
+    organization. This seeds two bodies and asserts the roster reads back only the one the
+    changeset is about, still as a single value: the reviewer is choosing one membership.
+    """
+    # The seeded person, not a fresh uuid: the wipe reaches assertions through `people`, so a
+    # person who was never inserted leaves rows that block the user delete in teardown.
+    person_id, user = await _seed()
+    changeset_id = str(uuid.uuid4())
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        council = await organizations.find_or_create(cur, _OCDID, "Council")
+        school_board = await organizations.find_or_create(cur, _OCDID, "School Board")
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        council_seat = await posts.find_or_create(cur, _OCDID, council, "clerk", _BASE)
+        board_seat = await posts.find_or_create(cur, _OCDID, school_board, "clerk", _BASE)
+        await conn.commit()
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        # Seeded directly: 153's CHECK ties `kind = 'scrape'` to a non-null status, so the
+        # two-statement register helper cannot build one in a single insert.
+        await cur.execute(
+            "INSERT INTO changesets "
+            "  (id, kind, jurisdiction_ocdid, arguments_json, status, progress, "
+            "   sourced_at, organization_id) "
+            "VALUES (%s, 'scrape', %s, '{}', 'success', 100, now(), %s)",
+            (changeset_id, _OCDID, council),
+        )
+        await conn.commit()
+    await insert_source_records(
+        changeset_id,
+        _OCDID,
+        {
+            person_id: [
+                {
+                    "name": "Bo Nguyen",
+                    "label": "Clerk",
+                    "source_url": "https://editville.gov/clerk",
+                }
+            ]
+        },
+    )
+
+    for seat in (council_seat, board_seat):
+        await roster_edits.save(
+            changeset_id,
+            _OCDID,
+            [PersonPatch(id=person_id, fields={"post_id": seat})],
+            user,
+        )
+
+    # Both picks are kept — one per body, neither overwriting the other.
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT value #>> '{}' FROM assertions "
+            "WHERE entity_id = %s AND field_path = 'post_id' AND kind = 'accept'",
+            (person_id,),
+        )
+        assert {row[0] for row in await cur.fetchall()} == {council_seat, board_seat}
+
+    # The roster shows the one this changeset is about, as a single value.
+    roster = await proposed_roster(changeset_id, _OCDID)
+    assert [person["post_id"] for person in roster] == [council_seat]

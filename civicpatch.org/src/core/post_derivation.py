@@ -19,7 +19,7 @@ from core.people_roles import DerivedRoles, derive_roles
 UNMATCHED_ROLE_ID = "unmatched"
 
 
-class DerivedMember(BaseModel):
+class DerivedMembership(BaseModel):
     """One person a scrape found on a post, and what their label carried besides the role."""
 
     person_id: str
@@ -54,7 +54,7 @@ class DerivedPost(BaseModel):
     # Only applied when the post is minted. A later scrape finding a different number must
     # not overwrite a figure somebody typed.
     headcount: int
-    members: list[DerivedMember]
+    members: list[DerivedMembership]
 
 
 class SourcedPerson(BaseModel):
@@ -79,11 +79,9 @@ class SourcedPerson(BaseModel):
             person_id=record.id,
             jurisdiction_ocdid=record.jurisdiction_ocdid,
             labels=record.labels,
-            # Out of `model_extra`: the roster document carries the term, and `Person` does
-            # not declare it — a term belongs to the tenure, not the human.
-            start_date=(record.model_extra or {}).get("start_date"),
-            end_date=(record.model_extra or {}).get("end_date"),
-            division_ocdid=(record.model_extra or {}).get("division_ocdid"),
+            start_date=record.start_date,
+            end_date=record.end_date,
+            division_ocdid=record.division_ocdid,
         )
 
 
@@ -134,9 +132,9 @@ def _member(
     parsed: DerivedRoles,
     ids_by_label: dict[str, str],
     post_role_id: str,
-) -> "DerivedMember":
+) -> "DerivedMembership":
     """One person, and everything their label carried beyond the post's own role."""
-    return DerivedMember(
+    return DerivedMembership(
         person_id=record.person_id,
         designations=parsed.other_designations,
         unmatched_text=_unresolved_text(parsed),
@@ -175,7 +173,7 @@ def derived_posts(
         label = parsed.role
         return (ids_by_label.get(label) if label else None) or UNMATCHED_ROLE_ID
 
-    grouped: dict[tuple[str, str], list[DerivedMember]] = {}
+    grouped: dict[tuple[str, str], list[DerivedMembership]] = {}
 
     for record in records:
         parsed = derive_roles(

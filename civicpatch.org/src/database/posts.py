@@ -339,18 +339,24 @@ async def list_page_for_state(
 
 
 async def ids_by_identity(
-    cur, jurisdiction_ocdids: list[str]
+    cur, organization_ids: list[str]
 ) -> dict[tuple[str, str, str], str]:
-    """`(jurisdiction, role_id, division_ocdid) -> post id`. Reverse of `identities_by_id`,
-    so `propose` can stay pure and unaware of ids."""
-    if not jurisdiction_ocdids:
+    """`(organization, role_id, division_ocdid) -> post id`. Reverse of `identities_by_id`, so
+    `propose` can stay pure and unaware of ids.
+
+    Keyed on the organization because that is what `posts_identity_uq` is keyed on. Keyed on the
+    jurisdiction it was unambiguous only while a jurisdiction had one body: two bodies with the
+    same role and division would collapse onto one key and the dict would keep whichever came
+    last.
+    """
+    if not organization_ids:
         return {}
     await cur.execute(
         """
-        SELECT jurisdiction_ocdid, role_id, division_ocdid, id::text
-        FROM posts WHERE jurisdiction_ocdid = ANY(%s)
+        SELECT organization_id::text, role_id, division_ocdid, id::text
+        FROM posts WHERE organization_id::text = ANY(%s)
         """,
-        (jurisdiction_ocdids,),
+        (organization_ids,),
     )
     return {(row[0], row[1], row[2]): row[3] for row in await cur.fetchall()}
 
@@ -405,20 +411,11 @@ async def list_by_organization(jurisdiction_ocdid: str) -> list[dict]:
 async def create_all(
     cur,
     jurisdiction_ocdid: str,
+    organization_id: str,
     derived: list[DerivedPost],
     changeset_id: str,
 ) -> dict[tuple[str, str], str]:
-    """Create every seat this accepted roster implies, and say which id each identity got.
 
-    Runs inside the publish transaction, on a cursor: seats exist because a roster carrying
-    them was published, so minting them and binding the memberships are one atomic fact. Ingest
-    used to call this — it minted seats for a proposal nobody had accepted, which is what made
-    a reaper necessary on dismissal.
-
-    A mint is still logged. "This roster created a seat" is the event a reviewer needs told
-    about, and now that it only happens on publish it is a fact rather than a guess.
-    """
-    organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
     ids: dict[tuple[str, str], str] = {}
     for post in derived:
         await divisions.find_or_create(cur, post.division_ocdid, jurisdiction_ocdid)
@@ -578,3 +575,20 @@ async def delete(post_id: str, user_id: str | None = None) -> bool:
             ),
         )
         return True
+
+
+async def ids_in_organization(
+    cur, post_ids: list[str], organization_id: str
+) -> set[str]:
+    """Which of these posts belong to that body.
+
+    A person can hold one post per organization, so a reviewer's accepted posts may span
+    several — this is what picks out the one the review in front of them is about.
+    """
+    if not post_ids or not organization_id:
+        return set()
+    await cur.execute(
+        "SELECT id::text FROM posts WHERE organization_id::text = %s AND id::text = ANY(%s)",
+        (organization_id, post_ids),
+    )
+    return {row[0] for row in await cur.fetchall()}

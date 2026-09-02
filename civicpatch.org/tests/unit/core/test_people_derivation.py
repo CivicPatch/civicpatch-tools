@@ -13,7 +13,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from core.people_derivation import derived_people
-from shared.schemas import Person, PersonRecord, Role, RoleConfig
+from shared.schemas import Person, PersonSourceRecord, Role, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 
 pytestmark = pytest.mark.unit
@@ -47,7 +47,7 @@ def make_llm_person(
     url=None,
     source_url=None,
 ):
-    return PersonRecord(
+    return PersonSourceRecord(
         name=name,
         label=label,
         phone=phone,
@@ -60,7 +60,7 @@ def make_llm_person(
     )
 
 
-def _make_llm_person(**kwargs) -> PersonRecord:
+def _make_llm_person(**kwargs) -> PersonSourceRecord:
     defaults = {
         "name": "",
         "label": "",
@@ -73,7 +73,7 @@ def _make_llm_person(**kwargs) -> PersonRecord:
         "source_url": None,
     }
     defaults.update(kwargs)
-    return PersonRecord(**defaults)
+    return PersonSourceRecord(**defaults)
 
 
 PORT_ISABEL = "ocd-jurisdiction/country:us/state:tx/place:port_isabel/government"

@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 import pytest
 import pytest_asyncio
 
-from core.post_derivation import DerivedMember
+from core.post_derivation import DerivedMembership
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 
@@ -70,7 +70,7 @@ async def _seed_member(
     )
     return await memberships.upsert(
         cur,
-        DerivedMember(
+        DerivedMembership(
             person_id=person_id,
             unmatched_text=unmatched,
             source_labels=source_labels or [],

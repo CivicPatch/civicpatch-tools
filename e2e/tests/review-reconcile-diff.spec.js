@@ -72,11 +72,12 @@ test.describe("Review reconcile diff (populated)", () => {
       /Council Member — new post/,
     );
 
-    // `was` comes from the post she holds, not from `post_id` on the record — that is the
-    // reviewer's pick and is null until they make one, so reading it left the move unnamed.
-    await expect(post.locator(".person-editor__was")).toContainText("was Mayor");
+    // Both ends of the move, in the issue rather than a `was` annotation. The Post row has no
+    // diff to show — `post_id` is the reviewer's pick and is null on both sides until they make
+    // one — so the issue is what surfaces the row and what says where she came from.
+    await expect(post.locator(".person-editor__was")).toHaveCount(0);
     await expect(post.locator(".person-editor__issue")).toContainText(
-      "Moved to Council Member",
+      "Moved from Mayor to Council Member",
     );
 
     // A scalar that did move carries the old value as a trailing annotation rather than a

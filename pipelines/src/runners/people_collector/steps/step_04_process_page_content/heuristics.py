@@ -1,16 +1,16 @@
 import re
 from typing import List
 
-from runners.people_collector.schemas import PersonRecord
+from runners.people_collector.schemas import PersonSourceRecord
 from shared.utils import email_utils, name_utils, phone_utils, url_utils
 
 
 def check_page_heuristics(
-    logger, source_url: str, input_text: str, records_found: List[PersonRecord]
+    logger, source_url: str, input_text: str, records_found: List[PersonSourceRecord]
 ) -> bool:
     """
     Per-page heuristics check for a single LLM's results.
-    Returns True if every non-empty field (email, phone, url, role) in each PersonRecord
+    Returns True if every non-empty field (email, phone, url, role) in each PersonSourceRecord
     is present in the input_text.
     """
     input_text_lower = input_text.lower()

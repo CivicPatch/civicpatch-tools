@@ -165,21 +165,18 @@ async def test_the_roster_is_the_same_document_after_the_rows_are_rewritten():
     assert before == after
 
 
-async def test_the_office_of_a_dual_role_person_is_decided_by_the_tiebreak():
-    """`PERSON_OFFICE` takes `LIMIT 1` over two rows sharing a `first_seen_at`, so the tiebreak
-    picks a *value*, not an order — which office renders at all.
+async def test_both_seats_of_a_dual_role_person_read_in_post_id_order():
+    """`PERSON_MEMBERSHIPS` sorts on role then division then post id, and this person's two
+    seats tie on the first two — so the id is what decides, and it must be a total order.
 
     Asserted against the rule rather than by comparing two reads: perturbing a subquery means
-    moving heap tuples, and whether that actually reorders depends on what ran before. The rule
-    is that the lower post id wins, whichever order the two were written in.
+    moving heap tuples, and whether that actually reorders depends on what ran before.
     """
     seats = await _seed()
-    lowest = min(seats)
 
     zed = next(p for p in await _roster() if p["name"] == _DUAL_ROLE)
 
     assert len(zed["memberships"]) == 2
-    assert zed["office"]["name"] == seats[lowest]
     assert [m["post_id"] for m in zed["memberships"]] == sorted(seats)
 
 

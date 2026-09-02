@@ -131,9 +131,6 @@ export interface BuildCardsInput {
 
 // A post that is not simply staying put. `propose` works in dispositions, and anything but
 // UNCHANGED is a change a reviewer should see.
-// What `survivingFields` cannot work out for itself — see its `changedFields`.
-const POST_CHANGED: ReadonlySet<string> = new Set([POST_FIELD]);
-
 const postMoved = (
   personId: string,
   proposals?: Map<string, ProposedChange[]>,
@@ -200,12 +197,7 @@ export function buildPersonCards({
       status,
       oldRecord: entry.from,
       newRecord,
-      surviving: survivingFields(
-        entry.from,
-        newRecord,
-        cardIssues,
-        moved ? POST_CHANGED : undefined,
-      ),
+      surviving: survivingFields(entry.from, newRecord, cardIssues),
       issues: cardIssues,
     };
   });

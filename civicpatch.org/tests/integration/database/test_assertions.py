@@ -6,6 +6,7 @@ Python: the CHECKs, `UNIQUE NULLS NOT DISTINCT`, and `DISTINCT ON` picking the l
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
 
+import re
 import uuid
 from datetime import datetime, timezone
 
@@ -13,7 +14,8 @@ import pytest
 import pytest_asyncio
 from psycopg.errors import CheckViolation, ForeignKeyViolation, NotNullViolation
 
-from core.post_derivation import DerivedMember
+from core.people_edits import LIST_FIELDS
+from core.post_derivation import DerivedMembership
 from database import assertions, divisions, memberships, organizations, posts
 from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType, Source
@@ -90,7 +92,7 @@ async def _seed() -> tuple[str, str]:
         other = await posts.find_or_create(
             cur, _OCDID, organization_id, "assessor", _BASE
         )
-        await memberships.upsert(cur, DerivedMember(person_id=seated), other, organization_id, _SEEN_AT)
+        await memberships.upsert(cur, DerivedMembership(person_id=seated), other, organization_id, _SEEN_AT)
         await conn.commit()
     return user_id, post_id
 
@@ -420,7 +422,47 @@ async def test_a_post_someone_holds_cannot_be_deleted():
             (person_id := str(uuid.uuid4()), _OCDID, "Holder"),
         )
         await memberships.upsert(
-            cur, DerivedMember(person_id=person_id), post_id, organization_id, datetime.now(timezone.utc)
+            cur, DerivedMembership(person_id=person_id), post_id, organization_id, datetime.now(timezone.utc)
         )
         assert await posts.delete_if_unheld(cur, post_id) is False
         await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_partial_indexes_agree_with_list_fields():
+    """`LIST_FIELDS` and the two partial indexes must name exactly the same fields.
+
+    They are written in three places — the Python set, the index predicates a migration created,
+    and the `ON CONFLICT` clauses in `database/assertions.py` (derived from the set). Postgres
+    matches a conflict predicate against an index's, so a mismatch does not degrade, it raises:
+    either "no unique or exclusion constraint matching the ON CONFLICT specification" from the
+    file that never mentions the field, or a duplicate-key violation on the second write.
+
+    Adding a list field therefore needs a migration, not just an edit to the set. That is what
+    this asserts — against the live index, because the migration file is history and the database
+    is the thing Python has to agree with.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT indexname, indexdef FROM pg_indexes
+            WHERE tablename = 'assertions'
+              AND indexname IN (
+                  'assertions_one_accept_per_scalar_field', 'assertions_one_row_per_value'
+              )
+            """
+        )
+        definitions = {name: definition for name, definition in await cur.fetchall()}
+
+    assert len(definitions) == 2, f"expected both partial indexes, got {definitions.keys()}"
+
+    for name, definition in definitions.items():
+        named = set(re.findall(r"'([a-z_]+)'::text", definition))
+        # The predicates also name the `kind` they filter on; only field names are compared.
+        named -= {"accept", "reject"}
+        assert named == set(LIST_FIELDS), (
+            f"{name} names {sorted(named)}, LIST_FIELDS is {sorted(LIST_FIELDS)} — "
+            "adding a list field needs a migration on both indexes"
+        )

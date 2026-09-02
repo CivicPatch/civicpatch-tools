@@ -17,12 +17,12 @@ from shared.utils.review_utils import (
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def _person(name="Test Person", division_ocdid=None, office_name=None):
-    office = {}
+    person = {"name": name}
     if division_ocdid is not None:
-        office["division_ocdid"] = division_ocdid
+        person["division_ocdid"] = division_ocdid
     if office_name is not None:
-        office["name"] = office_name
-    return {"name": name, "office": office}
+        person["label"] = office_name
+    return person
 
 
 def _rp(name):
@@ -88,28 +88,27 @@ def test_build_row_data_only():
 def _official(
     name, person_id="", office_name=None, division_ocdid=None, labels=None, role_id=None
 ):
-    """A rendered roster row: `labels` verbatim, `role_id` what they parsed to, `office.name`
-    the display join of them.
+    """A rendered roster row: `labels` verbatim, `role_id` what they parsed to, `label` the
+    display join of them, `division_ocdid` alongside rather than nested.
 
-    All three, because that is what `_render` produces — keeping them here means a fixture
+    All of them, because that is what `_render` produces — keeping them here means a fixture
     cannot quietly stop resembling the real thing.
     """
-    office = {}
-    if office_name is not None:
-        office["name"] = office_name
-    if division_ocdid is not None:
-        office["division_ocdid"] = division_ocdid
     if labels is None:
         labels = [office_name] if office_name else []
-    return {
+    person = {
         "name": name,
         "id": person_id,
-        "office": office,
         "labels": labels,
         # A bare label parses to itself; a label carrying a division does not, which is the
         # case `role_id` exists to keep straight.
         "role_id": office_name if role_id is None else role_id,
     }
+    if office_name is not None:
+        person["label"] = office_name
+    if division_ocdid is not None:
+        person["division_ocdid"] = division_ocdid
+    return person
 
 
 def test_check_absent_people_is_list_level():
@@ -212,16 +211,16 @@ def test_build_review_summary_returns_structured_issues():
 
 def test_build_review_summary_normalizes_model_objects():
     """Was `..._normalizes_official_objects`, built on `Official`, which no longer exists.
-    Same claim on `RosterPerson`: a model, not a dict, must not raise.
+    Same claim on `OpenStatesRecord`: a model, not a dict, must not raise.
 
     ⚠️ The shim this pins is arguably dead. Its comment says "the pipeline passes Official
     objects" — the pipeline has not called `build_review_summary` since the review summary
     moved to cp.org ingest, and the sole caller passes dicts from `get_people` and
     `proposed_roster`. Kept for now because removing it is a behaviour decision, not fallout.
     """
-    from shared.schemas import RosterPerson
+    from shared.schemas import OpenStatesRecord
 
-    person = RosterPerson(
+    person = OpenStatesRecord(
         name="Jane",
         label="Mayor",
         labels=["Mayor"],

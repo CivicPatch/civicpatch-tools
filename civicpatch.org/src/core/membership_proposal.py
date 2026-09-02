@@ -50,6 +50,10 @@ class ProposedChange(BaseModel):
     post_id: str | None = None
     # Where they were, for a move or a disappearance.
     from_post_id: str | None = None
+    # Where they were, named. Derived here rather than looked up: the held membership already
+    # carries the role label and division, and the reviewer needs both ends of a move in one
+    # sentence — the card no longer annotates the Post field with a `was`.
+    from_post_label: str = ""
     is_tracked: bool = True
 
 
@@ -95,6 +99,11 @@ def propose(
                     from_post_id=held.post_id
                     if held and disposition is Disposition.MOVED
                     else None,
+                    from_post_label=derive_post_label(
+                        held.role_label, held.division_ocdid
+                    )
+                    if held and disposition is Disposition.MOVED
+                    else "",
                 )
             )
 

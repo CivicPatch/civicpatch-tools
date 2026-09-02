@@ -98,9 +98,9 @@ def test_no_cases_yields_nothing():
 
 
 def _record(name, label, **fields):
-    from runners.people_collector.schemas import ExtractedPerson
+    from runners.people_collector.schemas import ExtractedPersonRecord
 
-    return ExtractedPerson(name=name, label=label, **fields)
+    return ExtractedPersonRecord(name=name, label=label, **fields)
 
 
 def _dispositions(actual, expected):

@@ -31,16 +31,6 @@ PERSON_END_DATE = """(
 )"""
 
 
-PERSON_OFFICE = """(
-    SELECT jsonb_build_object(
-        'name', array_to_string(memberships.source_labels, ' - '),
-        'division_ocdid', posts.division_ocdid)
-    FROM memberships JOIN posts ON posts.id = memberships.post_id
-    WHERE memberships.person_id = people.id
-    ORDER BY (memberships.closed_at IS NULL) DESC, memberships.first_seen_at DESC, posts.id
-    LIMIT 1
-)"""
-
 # Plural because the schema allows it: the unique index is one *open* membership per
 # organization. Open only — the history is the memberships read with `?as_of`.
 PERSON_MEMBERSHIPS = """COALESCE((
@@ -50,7 +40,11 @@ PERSON_MEMBERSHIPS = """COALESCE((
         'role_label', roles.label,
         'division_ocdid', posts.division_ocdid,
         'label', memberships.label,
-        'source_labels', to_jsonb(memberships.source_labels)
+        'source_labels', to_jsonb(memberships.source_labels),
+        'designations', to_jsonb(memberships.designations),
+        'unmatched_text', to_jsonb(memberships.unmatched_text),
+        'start_date', memberships.start_date,
+        'end_date', memberships.end_date
     ) ORDER BY posts.role_id, posts.division_ocdid, posts.id)
     FROM memberships
     JOIN posts ON posts.id = memberships.post_id
@@ -95,7 +89,6 @@ PERSON_JSON = f"""jsonb_build_object(
     'updated_at', to_char(people.updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS') || '+00:00',
     'labels', {PERSON_LABELS},
     'division_ocdid', {PERSON_DIVISION},
-    'office', {PERSON_OFFICE},
     'memberships', {PERSON_MEMBERSHIPS}
 )"""
 
@@ -107,7 +100,6 @@ _PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "name": ("'name'", "people.name"),
     "labels": ("'labels'", PERSON_LABELS),
     "division_ocdid": ("'division_ocdid'", PERSON_DIVISION),
-    "office": ("'office'", PERSON_OFFICE),
     "source_urls": ("'source_urls'", "to_jsonb(people.source_urls)"),
     "phones": ("'phones'", "to_jsonb(people.phones)"),
     "emails": ("'emails'", "to_jsonb(people.emails)"),
@@ -117,13 +109,12 @@ _PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "image": ("'image'", "people.image"),
 }
 
-_QUICK_FIELDS = frozenset({"id", "name", "labels", "office", "source_urls"})
+_QUICK_FIELDS = frozenset({"id", "name", "labels", "source_urls"})
 _DETAIL_FIELDS = frozenset(
     {
         "id",
         "name",
         "labels",
-        "office",
         "source_urls",
         "phones",
         "emails",

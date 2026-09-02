@@ -17,7 +17,7 @@
 
 /* Only the officials scroll — the search bar and the metadata stay put. min-height:0
    because a grid item will not shrink below its content, and overflow never engages. */
-.jurisdiction-modal__officials {
+.jurisdiction-modal__roster {
   min-height: 0;
   max-height: min(55vh, 32rem);
   overflow-y: auto;

@@ -152,10 +152,16 @@ async def _bind_memberships(
     A membership is a binding: who holds a seat is only true once the scrape is accepted.
     Closing absentees is outside — it depends on the roster, not on `derived`.
     """
-    organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
+    # The changeset's own organization, not "the jurisdiction's one" — a review is about one
+    # body, and `posts_identity_uq` scopes a post's identity to it.
+    organization_id = await organizations.find_or_create_for_changeset(
+        cur, changeset_id, jurisdiction_ocdid
+    )
     # Seats are created here, not at ingest: a scrape only proposes them, and publishing is what
     # accepts. `create_all` logs each mint against this changeset.
-    post_ids = await posts.create_all(cur, jurisdiction_ocdid, derived, changeset_id)
+    post_ids = await posts.create_all(
+        cur, jurisdiction_ocdid, organization_id, derived, changeset_id
+    )
     for post in derived:
         for member in post.members:
             await memberships.upsert(

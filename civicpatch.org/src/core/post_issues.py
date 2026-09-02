@@ -8,9 +8,12 @@ A post outlives the scrape that minted it, which is the whole point: superseding
 dismisses the roster it proposed, and the post it minted stays unanswered.
 """
 
+from collections.abc import Mapping
+
+from shared.schemas import POST_FIELD, Issue, IssueCode
+
 from core.membership_label import derive_post_label
 from core.membership_proposal import Disposition, ProposedChange
-from shared.schemas import POST_FIELD, Issue, IssueCode
 
 
 def _post_name(post: dict) -> str:
@@ -28,22 +31,50 @@ def unverified_post_issues(posts: list[dict]) -> list[Issue]:
     ]
 
 
-def moved_person_issues(changes: list[ProposedChange]) -> list[Issue]:
-    """A move between posts, which no field diff can see.
+def moved_person_issues(
+    changes: list[ProposedChange], picked: Mapping[str, str]
+) -> list[Issue]:
 
-    `post_id` on a person is the reviewer's pick and is null on both sides until they make one,
-    so someone becoming Council President compares equal on every field. Anchoring to `post_id`
-    is what puts the Post row on their card at all.
-    """
     return [
         Issue(
             code=IssueCode.MOVED_PERSON,
-            message=f"Moved to {change.post_label}",
+            message=(
+                f"Moved from {change.from_post_label} to {change.post_label}"
+                if change.from_post_label
+                else f"Moved to {change.post_label}"
+            ),
             person_ids=[change.person_id],
             field=POST_FIELD,
         )
         for change in changes
-        if change.disposition is Disposition.MOVED
+        if change.disposition is Disposition.MOVED and change.person_id not in picked
+    ]
+
+
+def disputed_post_issues(
+    changes: list[ProposedChange], picked: Mapping[str, str]
+) -> list[Issue]:
+    """A pick the derivation no longer agrees with.
+
+    An accepted post outlives the scrape that prompted it — that is the point of recording a
+    human's answer. But it also means a parser fix can no longer move that person, so a
+    disagreement has to be said out loud rather than silently resolved either way.
+
+    A pick names an existing post, so if the derivation reached the same identity
+    `ids_by_identity` would have returned the same id. Anything else is a real difference,
+    including a derived identity that has no post row yet.
+    """
+    return [
+        Issue(
+            code=IssueCode.DISPUTED_POST,
+            message=f"Picked a different post — this scrape says {change.post_label}",
+            person_ids=[change.person_id],
+            field=POST_FIELD,
+        )
+        for change in changes
+        if change.disposition is not Disposition.ABSENT
+        and (pick := picked.get(change.person_id))
+        and pick != change.post_id
     ]
 
 

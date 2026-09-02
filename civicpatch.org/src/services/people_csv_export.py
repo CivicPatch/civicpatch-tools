@@ -15,8 +15,8 @@ PEOPLE_CSV_FIELDNAMES = [
     "id",
     "name",
     "other_names",
-    "office_name",
-    "office_division_ocdid",
+    "post_label",
+    "division_ocdid",
     "phones",
     "emails",
     "urls",
@@ -31,20 +31,25 @@ def _joined(values: list | None) -> str:
     return _LIST_SEPARATOR.join(values or [])
 
 
+def _post_labels(person: dict) -> list[str]:
+    return [
+        membership["post_label"] for membership in person.get("memberships") or []
+    ]
+
+
 def person_row(person: dict) -> dict:
     """One person as a spreadsheet row.
 
     Every text cell goes through `sanitize` — a name that begins `=` is a formula to Excel,
     and this export is opened in a spreadsheet by definition.
     """
-    office = person.get("office") or {}
     return {
         "jurisdiction_ocdid": person.get("jurisdiction_ocdid", ""),
         "id": person.get("id", ""),
         "name": csv_service.sanitize(person.get("name") or ""),
         "other_names": csv_service.sanitize(_joined(person.get("other_names"))),
-        "office_name": csv_service.sanitize(office.get("name") or ""),
-        "office_division_ocdid": csv_service.sanitize(office.get("division_ocdid") or ""),
+        "post_label": csv_service.sanitize(_joined(_post_labels(person))),
+        "division_ocdid": csv_service.sanitize(person.get("division_ocdid") or ""),
         "phones": csv_service.sanitize(_joined(person.get("phones"))),
         "emails": csv_service.sanitize(_joined(person.get("emails"))),
         "urls": csv_service.sanitize(_joined(person.get("urls"))),

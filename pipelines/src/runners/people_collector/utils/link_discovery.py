@@ -6,7 +6,7 @@ from runners.people_collector.schemas import (
     Link,
     LinkFrontier,
     LinkStatus,
-    PersonRecord,
+    PersonSourceRecord,
     PeopleByName,
 )
 from shared.utils import config_utils, name_utils, url_utils
@@ -243,7 +243,7 @@ def mark_link_as_terminating_status(
 
 
 def has_role_and_contact_info(
-    taxonomy: Taxonomy, records: List[PersonRecord]
+    taxonomy: Taxonomy, records: List[PersonSourceRecord]
 ) -> bool:
     # Parse rather than resolve the whole string: a raw label like "Council Member - Place 3"
     # resolves to nothing, which would drop every page in a district-based jurisdiction.

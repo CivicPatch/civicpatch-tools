@@ -278,6 +278,26 @@ async def jurisdictions_for_requests(changeset_ids: list[str]) -> dict[str, str]
         return {changeset_id: ocdid for changeset_id, ocdid in await cur.fetchall()}
 
 
+async def organizations_for_changesets(changeset_ids: list[str]) -> dict[str, str]:
+    """Which organization each changeset is about, for the ones that name it.
+
+    A changeset with none is a jurisdiction that has never published, so it has no posts either
+    and the caller's lookup would find nothing regardless — hence absent rather than null.
+    """
+    if not changeset_ids:
+        return {}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT id::text, organization_id::text FROM changesets
+            WHERE id::text = ANY(%s) AND organization_id IS NOT NULL
+            """,
+            (changeset_ids,),
+        )
+        return {changeset_id: org for changeset_id, org in await cur.fetchall()}
+
+
 async def get_issue_request_details(changeset_ids: list[str]) -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

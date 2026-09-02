@@ -19,28 +19,18 @@ import {
   type PersonCard,
   type ProposedChange,
 } from "../people/person-cards.js";
-import { personEditorPropsFor } from "./editor-props.js";
+import {
+  personEditorPropsFor,
+  type EditorContextBase,
+} from "./editor-props.js";
 
 interface PersonEditorListProps {
-  cards: PersonCard[];
-  frozen: FrozenFields;
+  // One object, not ~20 restated properties — see `EditorContextBase`. `cards` rides along
+  // in it, because the page decides who is on the roster.
+  editorContext: EditorContextBase;
   // Expansion is per card, so it resets when the reviewer moves on. §21.4 also
   // wants it invalidated by identity-changing actions — that lands with merge.
   changesetId: string | null;
-  dirtyIds: Set<string>;
-  isReadOnly: boolean;
-  jurisdictionOcdid: string | null | undefined;
-  posts: Post[];
-  changes?: ProposedChange[];
-  assertions?: Record<string, PersonAssertion[]>;
-  onPersonSave: (id: string, updates: Record<string, unknown>) => void;
-  onRemovePerson: (id: string) => void;
-  onUnremovePerson: (id: string) => void;
-  onRestorePerson: (person: any) => void;
-  onResetPerson: (id: string) => void;
-  mergeOpenId: string | null;
-  onToggleMerge: (personId: string) => void;
-  onPickPartner: (anchorId: string, partnerId: string) => void;
   onAdd?: () => void;
 }
 
@@ -50,25 +40,11 @@ const NO_EXPANSION = {
 };
 
 function PersonEditorList({
-  cards,
-  frozen,
+  editorContext,
   changesetId,
-  dirtyIds,
-  isReadOnly,
-  jurisdictionOcdid,
-  posts,
-  changes,
-  assertions,
-  onPersonSave,
-  onRemovePerson,
-  onUnremovePerson,
-  onRestorePerson,
-  onResetPerson,
-  mergeOpenId,
-  onToggleMerge,
-  onPickPartner,
   onAdd,
 }: PersonEditorListProps) {
+  const cards = editorContext.cards;
   const [expansion, setExpansion] = useState(NO_EXPANSION);
 
   // Advancing to the next card is a new card load, and this element is not
@@ -90,35 +66,18 @@ function PersonEditorList({
     </div>`;
   }
 
-  const proposals = proposalsByPersonId(changes ?? []);
-
   return html`
     <div class="person-editor-list">
       ${cards.map((card) =>
         renderPersonEditor(
           personEditorPropsFor(card, {
-            frozen,
-            dirtyIds,
-            isReadOnly,
-            jurisdictionOcdid,
-            posts,
-            proposals,
-            assertions: assertions ?? {},
+            ...editorContext,
             isExpanded: (id: string) => expandedIds.has(id),
             onToggleExpand: toggleExpand,
-            onPersonSave,
-            onRemovePerson,
-            onUnremovePerson,
-            onRestorePerson,
-            onResetPerson,
-            cards,
-            mergeOpenId,
-            onToggleMerge,
-            onPickPartner,
           }),
         ),
       )}
-      ${!isReadOnly && onAdd
+      ${!editorContext.isReadOnly && onAdd
         ? html`<button class="person-editor person-editor--ghost" @click=${onAdd}>
             <span class="person-editor__ghost-mark">+</span>
             <span class="person-editor__ghost-label">Add a person</span>

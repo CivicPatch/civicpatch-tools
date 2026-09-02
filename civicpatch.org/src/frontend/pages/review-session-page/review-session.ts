@@ -23,17 +23,43 @@ import {
 } from "../../components/review/issue-checks.js";
 import { useFrozenFields } from "./use-frozen-fields.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
-import { blockingErrors, buildPersonCards, cardFields, duplicateIdsFor, needsReview, proposalsByPersonId } from "../../components/people/person-cards.js";
-import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
-import { parseReviewView, ReviewView, VIEW_PARAM, type ReviewViewKey } from "../review-routes.js";
+import {
+  blockingErrors,
+  buildPersonCards,
+  cardFields,
+  duplicateIdsFor,
+  needsReview,
+  proposalsByPersonId,
+  type PersonCard,
+} from "../../components/people/person-cards.js";
+import {
+  personEditorPropsFor,
+  type EditorContextBase,
+} from "../../components/person-editor/editor-props.js";
+import {
+  parseReviewView,
+  ReviewView,
+  VIEW_PARAM,
+  type ReviewViewKey,
+} from "../review-routes.js";
 import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
 import type { ProposedChange } from "../../components/people/person-cards.js";
 import type { PersonAssertion } from "../../components/person-editor/field-provenance.js";
 
 type CurrentEntry = {
   changeset_id: string;
-  jurisdiction: { ocdid: string | null; name: string | null; path?: string | null; website_url?: string | null };
-  pr: { url: string | null; status: string | null; reviewState: string | null; number?: number | null };
+  jurisdiction: {
+    ocdid: string | null;
+    name: string | null;
+    path?: string | null;
+    website_url?: string | null;
+  };
+  pr: {
+    url: string | null;
+    status: string | null;
+    reviewState: string | null;
+    number?: number | null;
+  };
   mode: ReviewModeValue;
   pr_people: { existing: any[]; proposed: any[] };
   changes?: ProposedChange[];
@@ -44,8 +70,7 @@ type CurrentEntry = {
   has_next: boolean;
 };
 
-// Everything else the card needs is derived from `currentEntry`; these are the
-// things only the page can know.
+// Everything else is derived from `currentEntry`; these are what only the page knows.
 type ReviewSessionHost = HTMLElement & {
   progress: Progress;
   hasSession: boolean;
@@ -55,10 +80,40 @@ type ReviewSessionHost = HTMLElement & {
   isRejecting: boolean;
 };
 
+/** The cards alike enough to page between: same review state, in roster order.
+ *
+ * Roster order so Prev / Next matches the list the modal was opened from, and same state
+ * because stepping from someone with fields to review into someone with none is a dead end.
+ * `needsReview` is the rule the views themselves split on.
+ */
+const peersOf = (
+  openCard: PersonCard | undefined,
+  cards: PersonCard[],
+): PersonCard[] =>
+  openCard
+    ? cards.filter((card) => needsReview(card) === needsReview(openCard))
+    : [];
+
 function ReviewSession(host: ReviewSessionHost) {
-  const { progress, hasSession, currentEntry, error, canReject, isRejecting } = host;
-  const { jurisdiction, pr, mode, pr_people, changes, assertions, review_data, source_content_urls, is_read_only, has_next } = currentEntry ?? {} as Partial<CurrentEntry>;
-  const { ocdid: jurisdictionOcdid, name: jurisdictionName, website_url: jurisdictionWebsiteUrl } = jurisdiction ?? {};
+  const { progress, hasSession, currentEntry, error, canReject, isRejecting } =
+    host;
+  const {
+    jurisdiction,
+    pr,
+    mode,
+    pr_people,
+    changes,
+    assertions,
+    review_data,
+    source_content_urls,
+    is_read_only,
+    has_next,
+  } = currentEntry ?? ({} as Partial<CurrentEntry>);
+  const {
+    ocdid: jurisdictionOcdid,
+    name: jurisdictionName,
+    website_url: jurisdictionWebsiteUrl,
+  } = jurisdiction ?? {};
   const posts = useJurisdictionPosts(jurisdictionOcdid);
   const { url: publishedUrl, status: reviewStatus = null } = pr ?? {};
   const isBaseline = mode === ReviewMode.BASELINE;
@@ -80,25 +135,25 @@ function ReviewSession(host: ReviewSessionHost) {
   } = useReviewPeople(currentEntry);
 
   const [debugOpen, setDebugOpen] = useState(false);
-  const hasSourceContent = Boolean(source_content_urls && source_content_urls.length > 0);
+  const hasSourceContent = Boolean(
+    source_content_urls && source_content_urls.length > 0,
+  );
 
   const changesetId = currentEntry?.changeset_id ?? null;
 
-  // Which view is open. Held as state, not read from the URL each render: replaceState does not
-  // re-render, and the tab bar (§17 steps 6–7) needs the same handle. The URL is
-  // written alongside so a refresh lands where the reviewer was (§1.1), and the
-  // initial value comes from it so a shared link opens the right view.
+  // State, not read from the URL each render — `replaceState` does not re-render. Written
+  // alongside so a refresh or a shared link lands on the right view.
   const [view, setView] = useState(
-    parseReviewView(new URLSearchParams(window.location.search).get(VIEW_PARAM)),
+    parseReviewView(
+      new URLSearchParams(window.location.search).get(VIEW_PARAM),
+    ),
   );
   const showView = (next: ReviewViewKey) => {
     setView(next);
     updateParams({ [VIEW_PARAM]: next });
   };
 
-  // Ticks are personal progress in this browser, so they persist client-side.
-  // Unlike the app's other stored values there is one key per card, so they age
-  // out rather than accumulating forever.
+  // Personal progress, so client-side — one key per card, which is why it needs a TTL.
   const allIssues = review_data?.issues ?? [];
   const [issueChecks, setIssueChecks] = useLocalStorage(
     issueChecksKey(changesetId ?? "none"),
@@ -108,9 +163,7 @@ function ReviewSession(host: ReviewSessionHost) {
   const handleToggleIssue = (issue: any) =>
     setIssueChecks(toggleCheck(issueChecks, issue));
 
-  // The drawer is transient — the trigger lives outside it, so the page holds
-  // the one boolean. Deliberately not persisted: landing on a card with a scrim
-  // already up would be worse than reopening it.
+  // Not persisted: landing on a card with a scrim already up is worse than reopening it.
   const [checklistOpen, setChecklistOpen] = useState(false);
 
   const cards = buildPersonCards({
@@ -118,45 +171,32 @@ function ReviewSession(host: ReviewSessionHost) {
     currentPeople: currentPeople ?? [],
     removedIds,
     restoredIds,
-    // A ticked issue is done, so it stops marking its card — otherwise the tick
-    // would have no effect where the reviewer was actually looking (§8.2).
+    // A tick has to clear the card's marker, or it does nothing where the reviewer is looking.
     issues: unresolvedIssues(allIssues, issueChecks),
-    // The seat is not a field, so the diff cannot see a move on its own.
+    // A post is not a field, so the diff cannot see a move on its own.
     proposals: proposalsByPersonId(changes ?? []),
   });
   const frozen = useFrozenFields(changesetId, cardFields(cards));
 
-  // Two scraped people resolving to one id collapse into a single diff entry —
-  // last wins — so one of them is on screen nowhere. Everything downstream is
-  // keyed by person id, so keeping both is not an option; saying so is (§21.8).
+  // Two people on one id collapse to a single entry, so one is on screen nowhere. Everything
+  // downstream is keyed by person id, so keeping both is not an option; reporting it is.
   const duplicateIds = duplicateIdsFor({
     existing: pr_people?.existing ?? [],
     currentPeople: currentPeople ?? [],
   });
 
-  // Publish is gated by the same function that fills Preview's banner — one
-  // rule, two consumers, so the button and the banner can never disagree about
-  // whether the card is publishable (§9).
+  // Same function fills Preview's banner, so the button and the banner cannot disagree.
   const blockers = blockingErrors(cards);
 
-  // The modal walks the roster in the order the views render it, so stepping
-  // through people matches the list you opened the modal from. groupCards sorts
-  // by status and would step you through a different sequence than the one on
-  // screen (§3, §6).
-  //
-  // It still walks only people in the same state as the one you opened —
-  // stepping from someone with fields to review into someone with none is a
-  // dead end, and needsReview is the same rule the views split on.
-  const [openPerson, setOpenPerson] = useState<{ id: string; field: string | null } | null>(null);
-  // The modal collapses unchanged fields exactly as Detail does. It has its own
-  // set rather than sharing Detail's: expanding someone in the modal is a
-  // different intent from expanding them in the list, and sharing would make one
-  // silently change the other.
+  const [openPerson, setOpenPerson] = useState<{
+    id: string;
+    field: string | null;
+  } | null>(null);
+  // Its own set, not Detail's: expanding in the modal is a different intent from expanding in
+  // the list, and sharing would make one silently change the other.
   const [modalExpanded, setModalExpanded] = useState<Set<string>>(new Set());
   const openCard = cards.find((c) => c.personId === openPerson?.id);
-  const walkSet = !openCard
-    ? []
-    : cards.filter((card) => needsReview(card) === needsReview(openCard));
+  const modalCards = peersOf(openCard, cards);
 
   const handleOpenPerson = (personId: string, fieldKey: string | null) =>
     setOpenPerson({ id: personId, field: fieldKey });
@@ -165,13 +205,7 @@ function ReviewSession(host: ReviewSessionHost) {
   // definition — it is the person editor mounted with one person, not a second one.
   const editorFor = (card: (typeof cards)[number]) =>
     personEditorPropsFor(card, {
-      frozen,
-      dirtyIds,
-      isReadOnly: !!is_read_only,
-      jurisdictionOcdid,
-      posts,
-      proposals: proposalsByPersonId(changes ?? []),
-      assertions: assertions ?? {},
+      ...editorContext,
       isExpanded: (id: string) => modalExpanded.has(id),
       onToggleExpand: () => {
         const next = new Set(modalExpanded);
@@ -180,62 +214,66 @@ function ReviewSession(host: ReviewSessionHost) {
           : next.add(card.personId);
         setModalExpanded(next);
       },
-      onPersonSave: handlePersonSave,
-      onRemovePerson: handleRemovePerson,
-      onUnremovePerson: handleUnremove,
-      onRestorePerson: handleRestore,
-      onResetPerson: handleResetPerson,
-      cards,
-      mergeOpenId,
-      onToggleMerge: handleToggleMerge,
-      onPickPartner: handlePickPartner,
     });
 
+  const handlePersonSave = (id: string, updates: Record<string, unknown>) =>
+    updatePerson(id, updates);
 
-  const handlePersonSave = (id: string, updates: Record<string, unknown>) => updatePerson(id, updates);
+  // Merge step 1 — picking who the same person is — renders inline on the editor, so only its
+  // open/closed state lives here.
+  const [candidatesOpenFor, setCandidatesOpenFor] = useState<string | null>(null);
+  const handleToggleCandidates = (personId: string) =>
+    setCandidatesOpenFor((current) => (current === personId ? null : personId));
 
-  // One person, two records. The policy is merge-model's; usePeopleState owns
-  // only what happens to the rows. Link reaches this with the defaults
-  // untouched, and the picker will reach it with an edited plan.
-  // Step 1 of a merge: which record is the same person? The anchor is the row
-  // the reviewer invoked it from; the picker computes the survivor.
-  // Step 1 lives inline on the editor, so only its open/closed state is held here.
-  const [mergeOpenId, setMergeOpenId] = useState<string | null>(null);
-  const handleToggleMerge = (personId: string) =>
-    setMergeOpenId((current) => (current === personId ? null : personId));
-
-  // Step 2 is the modal's other screen, not a second dialog. Picking a partner from
-  // Detail opens the anchor's modal on it, so merge always has a person behind it
-  // and "back" always has somewhere to go.
-  const [mergePair, setMergePair] = useState<{ anchorId: string; partnerId: string } | null>(null);
+  // Step 2 is the modal's other screen, not a second dialog — so merge always has a person
+  // behind it and "back" always has somewhere to go.
+  const [pendingMerge, setPendingMerge] = useState<{
+    anchorId: string;
+    partnerId: string;
+  } | null>(null);
   const handlePickPartner = (anchorId: string, partnerId: string) => {
-    setMergeOpenId(null);
-    setMergePair({ anchorId, partnerId });
+    setCandidatesOpenFor(null);
+    setPendingMerge({ anchorId, partnerId });
     setOpenPerson({ id: anchorId, field: null });
   };
-  const closeMergePicker = () => setMergePair(null);
+  const clearPendingMerge = () => setPendingMerge(null);
 
-  // The picker owns the policy — it holds the plan the reviewer edited — so this
-  // only carries the result through to the list.
+  // The picker owns the policy; this only carries its result through.
   const handleMergePeople = (
     survivorId: string,
     absorbedId: string,
     merged: Record<string, unknown>,
   ) => {
-    setMergePair(null);
+    setPendingMerge(null);
     mergePeople(survivorId, absorbedId, merged);
   };
-  // A new person is empty, so land the reviewer in the editor rather than on a card
-  // with nothing on it.
   const handleAddPerson = async () => {
     const personId = await handleAdd();
     setOpenPerson({ id: personId, field: null });
   };
 
   const handleResetPerson = (id: string) => handleReset(id);
-  // handleRemove takes a list — the jurisdiction table deletes in bulk; the
-  // review card only ever drops the card in front of you.
+  // `handleRemove` takes a list because the jurisdiction table deletes in bulk.
   const handleRemovePerson = (id: string) => handleRemove([id]);
+
+  const editorContext: EditorContextBase = {
+    frozen,
+    dirtyIds,
+    isReadOnly: !!is_read_only,
+    jurisdictionOcdid,
+    posts,
+    proposals: proposalsByPersonId(changes ?? []),
+    assertions: assertions ?? {},
+    onPersonSave: handlePersonSave,
+    onRemovePerson: handleRemovePerson,
+    onUnremovePerson: handleUnremove,
+    onRestorePerson: handleRestore,
+    onResetPerson: handleResetPerson,
+    cards,
+    candidatesOpenFor,
+    onToggleCandidates: handleToggleCandidates,
+    onPickPartner: handlePickPartner,
+  };
 
   return html`
     <main class="review-page">
@@ -262,12 +300,19 @@ function ReviewSession(host: ReviewSessionHost) {
            what publishing this card will do, so it has to be read before the
            card is. -->
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
-      ${is_read_only ? html`<div class="review-page__status-banner review-page__status-banner--${reviewStatus}">${reviewStatus}</div>` : ""}
+      ${is_read_only
+        ? html`<div
+            class="review-page__status-banner review-page__status-banner--${reviewStatus}"
+          >
+            ${reviewStatus}
+          </div>`
+        : ""}
       ${duplicateIds.length
         ? html`<div class="review-page__duplicate-banner">
             <strong>
-              ${duplicateIds.length} record${duplicateIds.length === 1 ? "" : "s"}
-              share an id with another on this card.
+              ${duplicateIds.length}
+              record${duplicateIds.length === 1 ? "" : "s"} share an id with
+              another on this card.
             </strong>
             Only one of each pair is shown, and publishing will send only that
             one. Ids: ${duplicateIds.join(", ")}.
@@ -275,26 +320,59 @@ function ReviewSession(host: ReviewSessionHost) {
         : nothing}
       ${isBaseline
         ? html`<div class="review-page__baseline-banner">
-            <strong>First capture for ${jurisdictionName ?? "this jurisdiction"}.</strong>
-            Nothing to compare against yet — publishing creates these records for
-            the first time.
+            <strong
+              >First capture for
+              ${jurisdictionName ?? "this jurisdiction"}.</strong
+            >
+            Nothing to compare against yet — publishing creates these records
+            for the first time.
           </div>`
         : ""}
       <div class="review-page__info-row">
         <div class="review-page__pr-meta">
           ${jurisdictionName
-            ? html`<a class="review-page__jurisdiction" href="/${jurisdiction?.path}" target="_blank" rel="noopener">
-                ${jurisdictionName} <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            ? html`<a
+                class="review-page__jurisdiction"
+                href="/${jurisdiction?.path}"
+                target="_blank"
+                rel="noopener"
+              >
+                ${jurisdictionName}
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
               </a>`
             : ""}
           ${jurisdictionWebsiteUrl
-            ? html`<a class="review-page__jurisdiction-website" href=${jurisdictionWebsiteUrl} target="_blank" rel="noopener">
-                ${jurisdictionWebsiteUrl} <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            ? html`<a
+                class="review-page__jurisdiction-website"
+                href=${jurisdictionWebsiteUrl}
+                target="_blank"
+                rel="noopener"
+              >
+                ${jurisdictionWebsiteUrl}
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
               </a>`
             : ""}
-          ${publishedUrl ? html`<a class="btn btn-sm" href=${publishedUrl} target="_blank" rel="noopener">View published data <i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ""}
-          ${hasSourceContent ? html`<button class="btn btn-sm secondary" @click=${() => setDebugOpen(true)}>Debug</button>` : ""}
-          <report-issue-button .changesetId=${changesetId}></report-issue-button>
+          ${publishedUrl
+            ? html`<a
+                class="btn btn-sm"
+                href=${publishedUrl}
+                target="_blank"
+                rel="noopener"
+                >View published data
+                <i class="fa-solid fa-arrow-up-right-from-square"></i
+              ></a>`
+            : ""}
+          ${hasSourceContent
+            ? html`<button
+                class="btn btn-sm secondary"
+                @click=${() => setDebugOpen(true)}
+              >
+                Debug
+              </button>`
+            : ""}
+          <report-issue-button
+            .changesetId=${changesetId}
+          ></report-issue-button>
         </div>
       </div>
       <div class="review-page__views" role="tablist" aria-label="Review views">
@@ -303,14 +381,17 @@ function ReviewSession(host: ReviewSessionHost) {
           [ReviewView.DETAIL, "Detail"],
           [ReviewView.PREVIEW, "Preview"],
         ].map(
-          ([key, label]) => html`<button
-            class="review-page__view-tab ${view === key ? "review-page__view-tab--on" : ""}"
-            role="tab"
-            aria-selected=${view === key}
-            @click=${() => showView(key as ReviewViewKey)}
-          >
-            ${label}
-          </button>`,
+          ([key, label]) =>
+            html`<button
+              class="review-page__view-tab ${view === key
+                ? "review-page__view-tab--on"
+                : ""}"
+              role="tab"
+              aria-selected=${view === key}
+              @click=${() => showView(key as ReviewViewKey)}
+            >
+              ${label}
+            </button>`,
         )}
       </div>
       ${view === ReviewView.PREVIEW
@@ -321,33 +402,18 @@ function ReviewSession(host: ReviewSessionHost) {
             .onOpenPerson=${handleOpenPerson}
           ></review-preview>`
         : view !== ReviewView.DETAIL
-        ? html`<review-overview
-            .cards=${cards}
-            .changes=${changes}
-            .isReadOnly=${is_read_only}
-            .onOpenPerson=${handleOpenPerson}
-            .onAdd=${handleAddPerson}
-          ></review-overview>`
-        : html`<person-editor-list
-            .cards=${cards}
-            .frozen=${frozen}
-            .changesetId=${changesetId}
-            .dirtyIds=${dirtyIds}
-            .isReadOnly=${is_read_only}
-            .jurisdictionOcdid=${jurisdictionOcdid}
-            .posts=${posts}
-            .changes=${changes}
-            .assertions=${assertions}
-            .onPersonSave=${handlePersonSave}
-            .onRemovePerson=${handleRemovePerson}
-            .onUnremovePerson=${handleUnremove}
-            .onRestorePerson=${handleRestore}
-            .onResetPerson=${handleResetPerson}
-            .mergeOpenId=${mergeOpenId}
-            .onToggleMerge=${handleToggleMerge}
-            .onPickPartner=${handlePickPartner}
-            .onAdd=${handleAddPerson}
-          ></person-editor-list>`}
+          ? html`<review-overview
+              .cards=${cards}
+              .changes=${changes}
+              .isReadOnly=${is_read_only}
+              .onOpenPerson=${handleOpenPerson}
+              .onAdd=${handleAddPerson}
+            ></review-overview>`
+          : html`<person-editor-list
+              .editorContext=${editorContext}
+              .changesetId=${changesetId}
+              .onAdd=${handleAddPerson}
+            ></person-editor-list>`}
       <review-sidebar
         .issues=${allIssues}
         .checks=${issueChecks}
@@ -359,16 +425,16 @@ function ReviewSession(host: ReviewSessionHost) {
       ></review-sidebar>
       <review-modal
         .changes=${changes}
-        .cards=${walkSet}
+        .cards=${modalCards}
         .openPersonId=${openPerson?.id ?? null}
         .focusFieldKey=${openPerson?.field ?? null}
         .editor=${editorFor}
         .isReadOnly=${!!is_read_only}
         .onClose=${() => setOpenPerson(null)}
-        .mergePartner=${mergePair
-          ? (cards.find((c) => c.personId === mergePair.partnerId) ?? null)
+        .mergePartner=${pendingMerge
+          ? (cards.find((c) => c.personId === pendingMerge.partnerId) ?? null)
           : null}
-        .onMergeBack=${closeMergePicker}
+        .onMergeBack=${clearPendingMerge}
         .onMerge=${handleMergePeople}
       ></review-modal>
       ${debugOpen

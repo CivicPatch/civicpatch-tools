@@ -1,6 +1,6 @@
 import os
 from typing import List
-from shared.schemas import PersonRecord
+from shared.schemas import PersonSourceRecord
 from runners.people_collector.schemas import (
   PipelineStatus,
   PeopleCollectorContext
@@ -22,7 +22,7 @@ async def save_output(context: PeopleCollectorContext):
   save_data_to_file(process_step.all_records(), data_file_path)
 
 
-def save_data_to_file(records: List[PersonRecord], file_path: str):
+def save_data_to_file(records: List[PersonSourceRecord], file_path: str):
     """One row per sighting, labels verbatim, each stamped with the page it came from.
 
     Not a roster: several rows can describe one person, and which ones do is cp.org's to

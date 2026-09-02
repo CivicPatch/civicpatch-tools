@@ -33,8 +33,8 @@ const context = (over = {}) =>
     onRestorePerson: () => {},
     onResetPerson: () => {},
     cards: [],
-    mergeOpenId: null,
-    onToggleMerge: () => {},
+    candidatesOpenFor: null,
+    onToggleCandidates: () => {},
     onPickPartner: () => {},
     ...over,
   }) as never;
