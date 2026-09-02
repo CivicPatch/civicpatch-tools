@@ -84,7 +84,6 @@ async def commit_open_data_activity(request: OpenDataCommitRequest) -> None:
         changeset_id=request.changeset_id,
         jurisdiction_ocdid=request.jurisdiction_ocdid,
         commit_message=request.commit_message,
-        source=request.source,
     )
     if not written:
         raise RuntimeError(f"open-data write rejected for {request.file_path}")

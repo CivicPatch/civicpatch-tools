@@ -45,10 +45,18 @@ class PostChangePayload(BaseModel):
     fields: list[FieldChange] = []
 
 
+# The seat a membership points at, named once: written in `database.memberships` and read back
+# in `core.change_logs` to tell a move from a first assignment.
+MEMBERSHIP_POST_FIELD = "post_id"
+
+
 class MembershipChangePayload(BaseModel):
     """`person_name`, `role_id` and `label` are carried because ids do not render — the same
-    reason person events carry `person_name`. `moved_from` is the post vacated, absent on a
-    first assignment."""
+    reason person events carry `person_name`.
+
+    `fields` records what moved, as on every other payload: `post_id` for a move, `label` for a
+    rename. A first assignment is the one whose `post_id` change has no `before`.
+    """
 
     membership_id: str
     person_id: str
@@ -56,7 +64,7 @@ class MembershipChangePayload(BaseModel):
     post_id: str
     role_id: str
     label: str | None = None
-    moved_from: str | None = None
+    fields: list[FieldChange] = []
 
 
 class AssertionChangePayload(BaseModel):
@@ -75,6 +83,24 @@ class JurisdictionChangePayload(BaseModel):
     jurisdiction_ocdid: str
     jurisdiction_name: str
     fields: list[FieldChange]
+
+
+class RosterChange(BaseModel):
+    """One roster change under a changeset's timeline entry.
+
+    Two parts and no more: `name` is what the change is about, `fields` is what moved. The
+    per-type payloads name that subject differently — `person_name` on person and membership
+    events, `label` (falling back to `role_id`) on post ones — and resolving it here is what
+    lets a reader treat every change alike.
+
+    A membership move is a `post` field change like any other, rather than its own key: the
+    verb is already in `type`, so a second signal for it only invites the two to disagree.
+    """
+
+    type: ChangeLogType
+    created_at: datetime
+    name: str
+    fields: list[FieldChange] = []
 
 
 class ChangeLogBucket(StrEnum):

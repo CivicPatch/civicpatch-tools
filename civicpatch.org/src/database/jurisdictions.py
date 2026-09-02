@@ -10,6 +10,7 @@ from core.jurisdiction_search import (
     build_parent_ocdids,
     build_search_text,
 )
+from core.change_logs import roster_change
 from database.database import get_pool, to_iso
 from database.people import PERSON_JSON
 from database.changesets import AVAILABLE_FOR_REVIEW, REVIEW_STATUS, RUN_IN_FLIGHT
@@ -21,6 +22,7 @@ from schemas.common import (
 )
 from schemas.jurisdictions import JurisdictionSearchResult
 from shared.schemas import Person
+from shared.utils.statuses import ChangeLogType, RequestReviewStatus
 
 logger = logging.getLogger(__name__)
 
@@ -528,6 +530,24 @@ async def get_jurisdictions_by_ocdids(ocdids: list[str]) -> list[dict]:
         ]
 
 
+# A dismissal whose `close_review` log carries no reason. Rendered as-is rather than guessed at
+# from `status`: 32 dev rows have no reason and 7 say `discarded`, which is not in the enum.
+UNKNOWN_OUTCOME = "unknown"
+
+# What counts as a change to the roster. Review lifecycle (`merge_review`, `close_review`) and
+# role taxonomy are deliberately out: they say what happened to the *review*, not to the people.
+ROSTER_CHANGE_TYPES = [
+    ChangeLogType.ADD_PERSON,
+    ChangeLogType.EDIT_PERSON,
+    ChangeLogType.DELETE_PERSON,
+    ChangeLogType.ADD_POST,
+    ChangeLogType.EDIT_POST,
+    ChangeLogType.DELETE_POST,
+    ChangeLogType.ASSIGN_MEMBERSHIP,
+    ChangeLogType.ASSERT_FIELD,
+]
+
+
 async def get_jurisdiction_history(
     jurisdiction_ocdid,
 ) -> List[PeoplePipelineRunHistory]:
@@ -535,6 +555,38 @@ async def get_jurisdiction_history(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
+            WITH roster_changes AS (
+                SELECT cl.changeset_id,
+                       -- The payload is passed through whole; `core.change_logs.roster_change`
+                       -- turns each per-type shape into a RosterChange.
+                       jsonb_agg(jsonb_build_object(
+                           'type', cl.type,
+                           'created_at', cl.created_at,
+                           'changes', cl.changes
+                       ) ORDER BY cl.created_at) AS changes
+                FROM change_logs cl
+                WHERE cl.type = ANY(%s)
+                  -- Scoped through this jurisdiction's changesets rather than
+                  -- `cl.jurisdiction_ocdid`, which some writers leave null.
+                  AND cl.changeset_id IN (
+                      SELECT id::text FROM changesets WHERE jurisdiction_ocdid = %s
+                  )
+                GROUP BY cl.changeset_id
+            ),
+            -- The same join read a second time, for the outcome rather than the changes.
+            -- `changesets.dismissed_reason` is not used: it is a legacy column, null on every
+            -- human dismissal. The latest close wins — a card can be closed more than once.
+            close_reasons AS (
+                SELECT DISTINCT ON (cl.changeset_id)
+                       cl.changeset_id,
+                       cl.changes->>'reason' AS reason
+                FROM change_logs cl
+                WHERE cl.type = %s
+                  AND cl.changeset_id IN (
+                      SELECT id::text FROM changesets WHERE jurisdiction_ocdid = %s
+                  )
+                ORDER BY cl.changeset_id, cl.created_at DESC
+            )
             SELECT r.id::text,
                    r.created_at,
                    r.sourced_at,
@@ -542,15 +594,40 @@ async def get_jurisdiction_history(
                    r.kind,
                    r.published_at,
                    {RUN_IN_FLIGHT} AS is_running,
-                   {AVAILABLE_FOR_REVIEW} AS awaiting_review
+                   {AVAILABLE_FOR_REVIEW} AS awaiting_review,
+                   CASE
+                       WHEN r.published_at IS NOT NULL THEN '{RequestReviewStatus.PUBLISHED.value}'
+                       WHEN r.dismissed_at IS NOT NULL
+                           THEN COALESCE(cr.reason, '{UNKNOWN_OUTCOME}')
+                       ELSE '{RequestReviewStatus.PENDING.value}'
+                   END AS outcome,
+                   -- `display_name`, never `email`: the jurisdiction page is public.
+                   resolver.display_name AS resolved_by,
+                   -- Resolved, but by no user: a supersede sweep or an auto-publish. Without
+                   # this a system publish is indistinguishable from a person with no display
+                   -- name, and the page would credit one to the other.
+                   ((r.published_at IS NOT NULL OR r.dismissed_at IS NOT NULL)
+                    AND r.resolved_by_user_id IS NULL) AS resolved_by_system,
+                   COALESCE(rc.changes, '[]'::jsonb) AS changes
             FROM changesets r
+            LEFT JOIN close_reasons cr ON cr.changeset_id = r.id::text
+            LEFT JOIN users resolver ON resolver.id = r.resolved_by_user_id
+            -- `change_logs.changeset_id` is text and `changesets.id` is uuid: cast the uuid,
+            -- or migration 155's index on the column goes unused.
+            LEFT JOIN roster_changes rc ON rc.changeset_id = r.id::text
             WHERE r.jurisdiction_ocdid = %s
             ORDER BY r.created_at DESC;
             """,
             # No kind filter. It used to read `= ANY(['people','jurisdiction_manual_edit'])`,
             # which was every value the column could hold — a no-op wearing the shape of a
             # filter. The timeline wants everything that happened to this jurisdiction.
-            (jurisdiction_ocdid,),
+            (
+                ROSTER_CHANGE_TYPES,
+                jurisdiction_ocdid,
+                ChangeLogType.CLOSE_REVIEW,
+                jurisdiction_ocdid,
+                jurisdiction_ocdid,
+            ),
         )
         rows = await cur.fetchall()
         history = []
@@ -579,8 +656,22 @@ async def get_jurisdiction_history(
                     # from the moment a request exists, so a scrape still running read as
                     # awaiting review and offered a button for a roster it had not produced.
                     "awaiting_review": row[10],
+                    # Told, not inferred: `published`, or the reason the close_review log
+                    # recorded, or `unknown` when a dismissal left none.
+                    "outcome": row[11],
+                    # None unless a person resolved it, and None when they have no display
+                    # name — the page is public, so there is no email fallback.
+                    "resolved_by": row[12],
+                    # The third state: nobody to name because nobody did it by hand.
+                    "resolved_by_system": row[13],
                     "jurisdiction_ocdid": jurisdiction_ocdid,
                     "branch_name": branch_name,
+                    "changes": [
+                        roster_change(
+                            log["type"], log["created_at"], log["changes"] or {}
+                        )
+                        for log in row[13]
+                    ],
                 }
             )
     return history

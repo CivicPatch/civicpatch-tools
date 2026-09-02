@@ -98,7 +98,7 @@ async def _chosen_post_labels(people: list[dict]) -> dict[str, str]:
     async with pool.connection() as conn, conn.cursor() as cur:
         found = await posts.get_many(cur, post_ids)
     return {
-        person_id: found[post_id]["label"] if post_id in found else ""
+        person_id: found[post_id].label if post_id in found else ""
         for person_id, post_id in wanted.items()
         if post_id
     }

@@ -1,13 +1,13 @@
 import pytest
 from pydantic import ValidationError
 
-from shared.schemas import Issue, IssueCode, JurisdictionLevel, OpenStatesRecord
+from shared.schemas import Issue, IssueCode, JurisdictionLevel, SubmittedPersonRecord
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 
 
 def make_official(**overrides):
     """Was `Official`, which required `office` — the labels joined into one string.
-    `OpenStatesRecord` carries `label` and `labels` instead; the validators under test are the
+    `SubmittedPersonRecord` carries `label` and `labels` instead; the validators under test are the
     same ones, which is the reason the model survived the rename at all."""
     base = dict(
         name="Jane Smith",
@@ -18,7 +18,7 @@ def make_official(**overrides):
         updated_at="2025-06-27T19:43:55+00:00",
     )
     base.update(overrides)
-    return OpenStatesRecord(**base)
+    return SubmittedPersonRecord(**base)
 
 
 class TestPhoneValidation:

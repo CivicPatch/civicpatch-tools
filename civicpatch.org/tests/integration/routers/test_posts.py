@@ -236,7 +236,7 @@ async def test_the_identity_triple_is_not_patchable(client):
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        assert (await posts.get(cur, post_id))["role_id"] == "mayor"
+        assert (await posts.get(cur, post_id)).role_id == "mayor"
 
 
 @pytest.mark.asyncio

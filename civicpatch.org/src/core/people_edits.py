@@ -1,6 +1,6 @@
 from pydantic import BaseModel, ValidationError
 from schemas.assertions import Assertion, AssertionKind, EntityType
-from shared.schemas import OpenStatesRecord
+from shared.schemas import SubmittedPersonRecord
 from shared.utils.person_fields import order_person_fields
 
 # Every field a reviewer can edit on a person, which is exactly what the change log diffs: a
@@ -135,7 +135,7 @@ def apply_people_patch(base: list[dict], edits: list[PersonPatch]) -> list[dict]
     return result
 
 
-# Validate each patched person through `OpenStatesRecord` (which also canonicalizes phones and drops
+# Validate each patched person through `SubmittedPersonRecord` (which also canonicalizes phones and drops
 # blank urls), then write the normalized values back — but only for the fields the user
 # actually edited (`edit.fields`), so untouched fields keep their exact base representation.
 # Raises `PeopleValidationError` (failures keyed by person id) if any person is invalid.
@@ -185,7 +185,7 @@ def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> lis
     failures = []
     for entry, edit in zip(patched, edits):
         try:
-            normalized = OpenStatesRecord.model_validate(entry).model_dump()
+            normalized = SubmittedPersonRecord.model_validate(entry).model_dump()
         except ValidationError as exc:
             failures.extend(_person_errors(edit, entry, _field_errors(exc)))
             people.append(entry)

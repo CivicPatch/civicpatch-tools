@@ -110,6 +110,44 @@ def test_a_date_the_column_cannot_hold_is_an_error(value):
 
 
 @pytest.mark.unit
+@pytest.mark.parametrize(
+    "column,value",
+    [
+        ("phone", "not-a-number"),
+        ("email", "missing-the-at-sign"),
+        ("url", "example.gov"),
+        ("url", "http://localhost"),
+    ],
+)
+def test_contact_columns_are_checked_here_not_further_down(column, value):
+    """The same rules `SubmittedPersonRecord` applies, run at the row so a volunteer sees the bad
+    cell in their sheet. Before this the three passed through unchecked."""
+    _, errors = parse_rows([_row(**{column: value})], _SHEET)
+    assert _flags(errors) == {(2, column)}
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "column,value",
+    [
+        ("phone", "206-684-4000"),
+        ("email", "clerk@example.gov"),
+        ("url", "https://example.gov/council"),
+    ],
+)
+def test_a_contact_column_that_is_fine_is_left_alone(column, value):
+    _, errors = parse_rows([_row(**{column: value})], _SHEET)
+    assert errors == []
+
+
+@pytest.mark.unit
+def test_an_empty_contact_column_is_not_an_error():
+    """All three are optional — absent is not the same as wrong."""
+    _, errors = parse_rows([_row(phone="", email="", url="")], _SHEET)
+    assert errors == []
+
+
+@pytest.mark.unit
 def test_one_bad_row_does_not_cost_the_others_their_turn():
     rows, errors = parse_rows([_row(), _row(name=""), _row(name="Bo Chen")], _SHEET)
     assert [row.line for row in rows] == [2, 4]

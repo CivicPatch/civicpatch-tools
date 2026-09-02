@@ -16,20 +16,18 @@ import lib.storage as storage_service
 import services.change_logs as change_logs
 import shared.utils.id_utils
 from core.images import artifacts_key, promoted_key, promoted_url
-from core.post_derivation import ChosenPost, DerivedPost, derived_posts
+from core.post_derivation import ChosenPost, DerivedPost, RosterEntry, derived_posts
 from database import posts as posts_db
 from database.database import get_pool
 from database.people import get_roster
 from database.publications import dismiss_request, publish_request, record_change_url
 from database.roles import get_roles
 from lib.temporal.types import (
-    CommitSource,
     OpenDataBatchCommitRequest,
     OpenDataCommitItem,
     OpenDataCommitRequest,
 )
-from services.roster import proposed_roster
-from shared.schemas import OpenStatesRecord, RoleConfig
+from shared.schemas import OpenStatesPersonRecord, RoleConfig
 from shared.utils.statuses import DismissalReason
 from shared.utils.taxonomy import build_taxonomy
 from shared.utils.yaml_utils import yaml_dump
@@ -75,7 +73,7 @@ def _promote_person_image(person: dict, friendly_host: str) -> dict:
     return {**person, "cdn_image": promoted_url(friendly_host, dest_key)}
 
 
-def picks_in(roster: list[OpenStatesRecord]) -> dict[str, str]:
+def picks_in(roster: list[RosterEntry]) -> dict[str, str]:
     """The post each person was picked for, by person id."""
     return {record.id: record.post_id for record in roster if record.id and record.post_id}
 
@@ -107,7 +105,7 @@ async def chosen_posts(picks: dict[str, str]) -> dict[str, ChosenPost]:
 async def _get_derived_posts(people: list[dict]) -> list[DerivedPost]:
     roles = await get_roles()
     taxonomy = build_taxonomy(RoleConfig(roles=roles))
-    roster = [OpenStatesRecord(**person) for person in people]
+    roster = [RosterEntry(**person) for person in people]
     return derived_posts(roster, taxonomy, roles, await chosen_posts(picks_in(roster)))
 
 
@@ -142,6 +140,15 @@ async def dismiss_people(
     logger.info(f"[{changeset_id}] Dismissed without publishing")
 
 
+def open_data_records(roster: list[dict]) -> list[dict]:
+    """The roster as open-data receives it, through the model that declares that shape.
+
+    The round trip is the point: a key the projection grows and the model does not declare is
+    dropped here rather than appearing in the published file unannounced.
+    """
+    return [OpenStatesPersonRecord(**person).model_dump() for person in roster]
+
+
 def unreviewed_file_path(jurisdiction_ocdid: str) -> str:
     folder = shared.utils.id_utils.unreviewed_folder(
         shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
@@ -149,24 +156,11 @@ def unreviewed_file_path(jurisdiction_ocdid: str) -> str:
     return f"data/{folder}.yml"
 
 
-async def _render(
-    source: CommitSource, changeset_id: str | None, jurisdiction_ocdid: str
-) -> list[dict]:
-    if source is CommitSource.ROSTER:
-        return await get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
-
-    # Only a scrape render needs the request: it is the proposal's only address.
-    if changeset_id is None:
-        raise ValueError(f"a scrape render needs a request ({jurisdiction_ocdid})")
-    return await proposed_roster(changeset_id, jurisdiction_ocdid) or []
-
-
 async def commit_rendered_file(
     file_path: str,
     changeset_id: str | None,
     jurisdiction_ocdid: str,
     commit_message: str,
-    source: CommitSource = CommitSource.SCRAPE,
 ) -> str | None:
     """Render a file out of the database and write it to open-data.
 
@@ -174,11 +168,11 @@ async def commit_rendered_file(
     content: git holds a projection of the database, and a write that lands late should carry
     what is true when it lands, not what was true when it was queued.
     """
-    roster = await _render(source, changeset_id, jurisdiction_ocdid)
+    roster = await get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
     commit_url = await github_service.upsert_github_file(
         branch_name=github_service.DEFAULT_BRANCH,
         file_path=file_path,
-        content_str=yaml_dump(roster),
+        content_str=yaml_dump(open_data_records(roster)),
         commit_message=commit_message,
     )
     if commit_url and changeset_id:
@@ -197,10 +191,8 @@ async def commit_rendered_files(
     """
     contents = {}
     for item in items:
-        roster = await _render(
-            CommitSource.ROSTER, item.changeset_id, item.jurisdiction_ocdid
-        )
-        contents[item.file_path] = yaml_dump(roster)
+        roster = await get_roster(jurisdiction_ocdid=item.jurisdiction_ocdid)
+        contents[item.file_path] = yaml_dump(open_data_records(roster))
 
     commit_url = await git_data.commit_github_files(
         branch_name=github_service.DEFAULT_BRANCH,
@@ -237,7 +229,6 @@ async def promote_to_reviewed(changeset_id: str, jurisdiction_ocdid: str) -> Non
             changeset_id=changeset_id,
             jurisdiction_ocdid=jurisdiction_ocdid,
             commit_message=f"Publish {jurisdiction_ocdid} ({changeset_id})",
-            source=CommitSource.ROSTER,
             delete_path=unreviewed_file_path(jurisdiction_ocdid),
             delete_message=f"Promote {jurisdiction_ocdid} out of unreviewed ({changeset_id})",
         )
@@ -265,7 +256,6 @@ async def commit_roster(jurisdiction_ocdid: str, commit_message: str) -> None:
             changeset_id=None,
             jurisdiction_ocdid=jurisdiction_ocdid,
             commit_message=commit_message,
-            source=CommitSource.ROSTER,
         )
     )
 

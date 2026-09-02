@@ -21,7 +21,12 @@ from database import assertions, posts
 from database.change_logs import record_change
 from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType
-from schemas.change_logs import MembershipChangePayload
+from schemas.posts import AssignmentResult
+from schemas.change_logs import (
+    MEMBERSHIP_POST_FIELD,
+    FieldChange,
+    MembershipChangePayload,
+)
 from shared.utils.statuses import ChangeLogType
 
 # The field a human can own, named once: it is compared in SQL below and asserted in Python.
@@ -360,7 +365,7 @@ async def _person_name(cur, person_id: str) -> str:
 
 async def assign(
     person_id: str, post_id: str, label: str | None, user_id: str | None = None
-) -> dict:
+) -> AssignmentResult:
     last_seen_at = datetime.now(timezone.utc)
 
     pool = await get_pool()
@@ -369,42 +374,50 @@ async def assign(
         if post is None:
             raise UnknownPost(post_id)
 
-        organization_id = post["organization_id"]
+        organization_id = post.organization_id
         current = await open_for_person(cur, person_id, organization_id)
 
         if current and current["post_id"] == post_id:
             if (current["label"] or None) == (label or None):
                 raise NothingToAssign(post_id)
-            result = {"membership_id": current["id"], "moved_from": None}
+            membership_id = current["id"]
+            change = FieldChange(
+                field=LABEL_FIELD, before=current["label"], after=label
+            )
         else:
-            result = {
-                "membership_id": await upsert(
-                    # A human assigning a seat states only who and where — the label follows
-                    # below, and the source's term dates are not theirs to invent.
-                    cur,
-                    DerivedMembership(person_id=person_id),
-                    post_id,
-                    organization_id,
-                    last_seen_at,
-                ),
-                "moved_from": current["post_id"] if current else None,
-            }
+            moved_from = current["post_id"] if current else None
+            membership_id = await upsert(
+                # A human assigning a seat states only who and where — the label follows
+                # below, and the source's term dates are not theirs to invent.
+                cur,
+                DerivedMembership(person_id=person_id),
+                post_id,
+                organization_id,
+                last_seen_at,
+            )
+            change = FieldChange(
+                field=MEMBERSHIP_POST_FIELD, before=moved_from, after=post_id
+            )
 
-        await set_label(cur, result["membership_id"], label, user_id)
+        await set_label(cur, membership_id, label, user_id)
 
         await record_change(
             cur,
             ChangeLogType.ASSIGN_MEMBERSHIP,
             user_id,
-            post["jurisdiction_ocdid"],
+            post.jurisdiction_ocdid,
             MembershipChangePayload(
-                membership_id=result["membership_id"],
+                membership_id=membership_id,
                 person_id=person_id,
                 person_name=await _person_name(cur, person_id),
                 post_id=post_id,
-                role_id=post["role_id"],
-                label=label or post["label"],
-                moved_from=result["moved_from"],
+                role_id=post.role_id,
+                label=label or post.label,
+                fields=[change],
             ),
         )
-        return result
+        return AssignmentResult(
+            membership_id=membership_id,
+            jurisdiction_ocdid=post.jurisdiction_ocdid,
+            change=change,
+        )

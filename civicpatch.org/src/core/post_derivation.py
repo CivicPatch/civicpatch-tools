@@ -9,7 +9,7 @@ per-person and belongs on the membership, so it never appears here.
 """
 
 from pydantic import BaseModel
-from shared.schemas import OpenStatesRecord, Role
+from shared.schemas import Role
 from shared.utils.taxonomy import Taxonomy
 
 from core.membership_label import proposed_membership_label
@@ -17,6 +17,25 @@ from core.people_roles import DerivedRoles, derive_roles
 
 # A label resolving to no role still gets a post, so nobody is postless. Seeded by 118.
 UNMATCHED_ROLE_ID = "unmatched"
+
+
+class RosterEntry(BaseModel):
+    """One roster row, reduced to what deriving posts actually needs.
+
+    Deliberately narrow. The roster carries a person's whole record; the derivation reads their
+    labels and their term, and the seat a reviewer picked — so those are what it asks for. A
+    wider type here would say the other fields matter, and a reader would have to check.
+
+    `post_id` is not read by `derived_posts`: `publish.picks_in` takes it off the same list to
+    build `chosen_posts`, which is how a human's answer reaches the derivation.
+    """
+
+    id: str = ""
+    jurisdiction_ocdid: str
+    labels: list[str] = []
+    start_date: str | None = None
+    end_date: str | None = None
+    post_id: str | None = None
 
 
 class DerivedMembership(BaseModel):
@@ -95,7 +114,7 @@ def _unresolved_text(parsed: DerivedRoles) -> list[str]:
 
 
 def _member(
-    record: OpenStatesRecord,
+    record: RosterEntry,
     parsed: DerivedRoles,
     ids_by_label: dict[str, str],
     post_role_id: str,
@@ -121,7 +140,7 @@ class ChosenPost(BaseModel):
 
 
 def derived_posts(
-    records: list[OpenStatesRecord],
+    records: list[RosterEntry],
     taxonomy: Taxonomy,
     roles: list[Role],
     chosen_posts: dict[str, ChosenPost] | None = None,

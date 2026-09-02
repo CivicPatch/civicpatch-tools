@@ -1032,7 +1032,7 @@ async def test_a_pick_is_keyed_on_the_person_not_the_post():
     """`chosen_posts` used to key on `post_id`, which meant the pick had to ride on the record
     the derivation reads. Keyed on the person, the derivation's input can be purely what the
     source said."""
-    from shared.schemas import OpenStatesRecord
+    from core.post_derivation import RosterEntry
     from services.publish import chosen_posts, picks_in
 
     await _seed_person()
@@ -1044,12 +1044,9 @@ async def test_a_pick_is_keyed_on_the_person_not_the_post():
         await conn.commit()
 
     roster = [
-        OpenStatesRecord(
+        RosterEntry(
             id="p1",
-            name="Ann",
             jurisdiction_ocdid=_OCDID,
-            source_urls=["https://example.gov"],
-            updated_at="2026-01-01T00:00:00+00:00",
             post_id=post_id,
         )
     ]
@@ -1063,16 +1060,13 @@ async def test_a_pick_is_keyed_on_the_person_not_the_post():
 @pytest.mark.integration
 async def test_a_pick_at_a_post_that_is_gone_is_simply_absent():
     """Not an error and not a lost person: the derivation falls back to the label."""
-    from shared.schemas import OpenStatesRecord
+    from core.post_derivation import RosterEntry
     from services.publish import chosen_posts, picks_in
 
     roster = [
-        OpenStatesRecord(
+        RosterEntry(
             id="p1",
-            name="Ann",
             jurisdiction_ocdid=_OCDID,
-            source_urls=["https://example.gov"],
-            updated_at="2026-01-01T00:00:00+00:00",
             post_id="00000000-0000-4000-8000-00000000dead",
         )
     ]

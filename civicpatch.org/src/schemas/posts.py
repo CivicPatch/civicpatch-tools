@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from schemas.change_logs import FieldChange
+
 
 class CreatePostRequest(BaseModel):
     """A post a person is asserting exists.
@@ -54,3 +56,20 @@ class AssignMembershipRequest(BaseModel):
     person_id: str
     post_id: str
     label: str | None = None
+
+
+class AssignmentResult(BaseModel):
+    """What an assignment did.
+
+    One `change`, because an assignment does one thing to the seat: `post_id` when they move,
+    `label` when they stay and it is renamed. A first assignment is the one whose `post_id`
+    change has no `before`, which is what lets a caller say "moved from X" rather than
+    "assigned".
+
+    `jurisdiction_ocdid` is carried because mirroring the roster into open-data needs it and
+    only `assign` has it — it comes off the post, which its caller never loads.
+    """
+
+    membership_id: str
+    jurisdiction_ocdid: str
+    change: FieldChange

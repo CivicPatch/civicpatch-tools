@@ -9,7 +9,7 @@ Nothing is written. A post can be proposed; a membership is only true once accep
 import asyncio
 
 from core.membership_proposal import ExistingMembership, ProposedChange, propose
-from core.post_derivation import derived_posts
+from core.post_derivation import RosterEntry, derived_posts
 from core.post_issues import (
     append_post_issues,
     disputed_post_issues,
@@ -26,7 +26,7 @@ from database.roles import get_roles
 from schemas.assertions import EntityType
 from services.publish import chosen_posts, picks_in
 from services.roster import proposed_roster, proposed_rosters
-from shared.schemas import POST_FIELD, Issue, OpenStatesRecord, Person, RoleConfig
+from shared.schemas import POST_FIELD, Issue, Person, RoleConfig
 from shared.utils.config_utils import get_unique_roles
 from shared.utils.name_utils import person_list_to_identities
 from shared.utils.review_utils import ReviewInputs, build_review_summary
@@ -115,7 +115,7 @@ async def proposals_for_requests(
     proposals: dict[str, list[ProposedChange]] = {}
     for changeset_id, ocdid in ocdids.items():
         people = [
-            OpenStatesRecord(**{**person, "jurisdiction_ocdid": ocdid})
+            RosterEntry(**{**person, "jurisdiction_ocdid": ocdid})
             for person in rosters.get(changeset_id, [])
         ]
         proposals[changeset_id] = [

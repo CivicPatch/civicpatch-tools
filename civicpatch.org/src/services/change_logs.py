@@ -81,4 +81,4 @@ async def _post_labels(people: list[dict]) -> dict[str, str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         found = await posts.get_many(cur, post_ids)
-    return {post_id: row["label"] for post_id, row in found.items() if row.get("label")}
+    return {post_id: row.label for post_id, row in found.items() if row.label}
