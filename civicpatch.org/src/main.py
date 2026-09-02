@@ -40,8 +40,8 @@ from fastapi import (
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from fastapi.security import APIKeyHeader
-from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from frontend.static import HashedAssetStaticFiles
 from frontend.vite import vite_asset, vite_css
 from lib.auth import get_optional_user, get_ws_user, require_route_access
 from lib.middleware import require_display_name
@@ -97,7 +97,9 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
+app.mount(
+    "/frontend", HashedAssetStaticFiles(directory="src/frontend"), name="frontend"
+)
 
 templates = Jinja2Templates(directory="src/frontend/templates")
 

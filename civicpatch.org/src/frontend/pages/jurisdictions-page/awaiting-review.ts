@@ -130,7 +130,7 @@ function renderRow(entry: HistoryEntry, ocdid: string, isSignedIn: boolean) {
               rel="noopener noreferrer"
               title="View on GitHub"
             >
-              <i class="fa-brands fa-github"></i>
+              <i class="icon-github"></i>
             </a>`
           : nothing}
       </span>
