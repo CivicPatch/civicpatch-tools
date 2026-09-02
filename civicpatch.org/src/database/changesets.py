@@ -227,7 +227,7 @@ async def register_jurisdiction_edit_request(
     changeset_id: str,
     jurisdiction_ocdid: str,
     arguments_json: Mapping[str, object],
-    open_data_url: str,
+    change_url: str,
     created_by_user_id: Optional[str] = None,
 ):
     """A hand-edited jurisdiction field. Born published: the edit is already committed."""
@@ -237,7 +237,7 @@ async def register_jurisdiction_edit_request(
             """
             INSERT INTO changesets (
                 id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id,
-                open_data_url, published_at, resolved_by_user_id, created_at
+                change_url, published_at, resolved_by_user_id, created_at
             )
             VALUES (%s, %s, %s, %s, %s, %s, now(), %s, CURRENT_TIMESTAMP)
             """,
@@ -247,7 +247,7 @@ async def register_jurisdiction_edit_request(
                 jurisdiction_ocdid,
                 json.dumps(arguments_json),
                 created_by_user_id,
-                open_data_url,
+                change_url,
                 created_by_user_id,
             ),
         )

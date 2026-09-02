@@ -175,7 +175,7 @@ async def commit_jurisdiction_patch(
         changeset_id=changeset_id,
         jurisdiction_ocdid=jurisdiction_ocdid,
         arguments_json=patch,
-        open_data_url=commit_url,
+        change_url=commit_url,
         created_by_user_id=user_id,
     )
 

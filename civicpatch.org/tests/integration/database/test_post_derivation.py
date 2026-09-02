@@ -19,7 +19,7 @@ import pytest_asyncio
 from core.post_derivation import ChosenPost, DerivedMember
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
-from database.review_queue import issue_count, issue_priority
+from database.review_priority import issue_count, issue_priority
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
 _BASE = "ocd-division/country:us/state:zz/place:testville"

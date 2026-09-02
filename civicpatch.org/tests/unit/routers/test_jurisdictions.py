@@ -77,7 +77,7 @@ def test_patch_jurisdiction_data_commits_for_maintainer(client):
         response = client.patch("/jurisdictions/data", json=PATCH_BODY)
 
     assert response.status_code == 200
-    assert response.json()["data"]["open_data_url"] == COMMIT_URL
+    assert response.json()["data"]["change_url"] == COMMIT_URL
 
 
 # The Website field is patched into the jurisdictions repo, so it never passes through

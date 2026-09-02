@@ -4,7 +4,7 @@ from typing import Optional
 
 import database.jurisdictions as jurisdictions_db
 import database.people as database_people
-import database.pull_requests as pull_requests_db
+import database.review_pool as review_pool_db
 import database.review_session_entries as review_session_entries_db
 import database.review_session_navigation as review_session_navigation_db
 import database.review_session_stats as review_session_stats_db
@@ -123,7 +123,7 @@ async def _navigate_response(session_id: str, entry_number: int):
     jurisdiction_ocdid = result["jurisdiction_ocdid"]
 
     pr_meta, existing, proposed, scraped_at = await asyncio.gather(
-        pull_requests_db.get_pull_request_for_review(changeset_id),
+        review_pool_db.get_changeset_for_review(changeset_id),
         database_people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
         proposed_roster(changeset_id, jurisdiction_ocdid),
         jurisdictions_db.get_scraped_at(jurisdiction_ocdid),

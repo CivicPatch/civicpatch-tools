@@ -57,8 +57,8 @@ describe("baselineColumnLabel", () => {
 });
 
 describe("sourceRowClass", () => {
-  // The same two conditions build_review_summary calls ABSENT_OFFICIAL and
-  // NEW_OFFICIAL, so the tint has to agree with the checklist beside it.
+  // The same two conditions build_review_summary calls ABSENT_PERSON and
+  // NEW_PERSON, so the tint has to agree with the checklist beside it.
   it("tints a name the baseline had and this scrape lost as dropped", () => {
     expect(sourceRowClass(row({ in_research: true, in_data: false })))
       .toBe("people-by-source__row--dropped");

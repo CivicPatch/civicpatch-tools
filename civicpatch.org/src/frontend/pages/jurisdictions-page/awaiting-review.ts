@@ -24,7 +24,7 @@ export interface HistoryEntry {
   changeset_id: string;
   created_at: string;
   kind?: string | null;
-  open_data_url?: string | null;
+  change_url?: string | null;
   review_status?: string | null;
   // When a person published it. `created_at` above is the machine's clock — the two differ by
   // however long a card sat in the queue.
@@ -79,7 +79,7 @@ export function jurisdictionEditBlockedReason(open: HistoryEntry[]): string | nu
   if (open.length > 1) {
     return `${open.length} edits did not auto-merge. Resolve or close them before editing again.`;
   }
-  const number = pullRequestNumber(open[0].open_data_url);
+  const number = pullRequestNumber(open[0].change_url);
   const subject = number ? `Edit #${number}` : "An edit";
   return `${subject} did not auto-merge. Resolve or close it before editing again.`;
 }
@@ -92,7 +92,7 @@ export function editingBlockedReason(open: HistoryEntry[]): string | null {
   if (open.length > 1) {
     return `${open.length} pull requests are awaiting review. Publish or close them before editing directly.`;
   }
-  const number = pullRequestNumber(open[0].open_data_url);
+  const number = pullRequestNumber(open[0].change_url);
   const subject = number ? `Pull request #${number}` : "A pull request";
   return `${subject} is awaiting review. Publish or close it before editing directly.`;
 }
@@ -100,7 +100,7 @@ export function editingBlockedReason(open: HistoryEntry[]): string | null {
 function renderRow(entry: HistoryEntry, ocdid: string, isSignedIn: boolean) {
   const state = jurisdictionOcdidToState(ocdid);
   const manualEdit = isManualEdit(entry);
-  const number = pullRequestNumber(entry.open_data_url);
+  const number = pullRequestNumber(entry.change_url);
 
   return html`
     <div class="pr-row">
@@ -123,9 +123,9 @@ function renderRow(entry: HistoryEntry, ocdid: string, isSignedIn: boolean) {
             : html`<a class="btn-primary" href=${LOGIN_PATH}>
                 <i class="fa-solid fa-right-to-bracket"></i> Sign in to review
               </a>`}
-        ${entry.open_data_url
+        ${entry.change_url
           ? html`<a
-              href=${entry.open_data_url}
+              href=${entry.change_url}
               target="_blank"
               rel="noopener noreferrer"
               title="View on GitHub"

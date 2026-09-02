@@ -14,7 +14,7 @@ import pytest
 import database.jurisdictions as db_jurisdictions
 import database.pipeline_runs as db_jobs
 import database.people as db_people
-import database.pull_requests as db_pull_requests
+import database.review_pool as db_pull_requests
 import database.changesets as db_requests
 import database.issues as db_issues
 import database.summary as db_summary
@@ -121,13 +121,13 @@ async def test_get_people_by_jurisdictions_builds_each_projection(view):
 
 
 # ---------------------------------------------------------------------------
-# database.pull_requests — dynamic WHERE clause
+# database.review_pool — dynamic WHERE clause
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_list_open_pull_requests_no_filter():
-    rows, total, with_issues = await db_pull_requests.list_open_pull_requests()
+async def test_list_open_changesets_no_filter():
+    rows, total, with_issues = await db_pull_requests.list_open_changesets()
     assert isinstance(rows, list)
     assert isinstance(total, int)
     assert isinstance(with_issues, int)
@@ -135,18 +135,18 @@ async def test_list_open_pull_requests_no_filter():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_list_open_pull_requests_by_state():
+async def test_list_open_changesets_by_state():
     """Exercises the state_code LIKE branch."""
-    rows, total, with_issues = await db_pull_requests.list_open_pull_requests(state_code="ca")
+    rows, total, with_issues = await db_pull_requests.list_open_changesets(state_code="ca")
     assert isinstance(rows, list)
     assert isinstance(total, int)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_list_open_pull_requests_by_jurisdiction():
+async def test_list_open_changesets_by_jurisdiction():
     """Exercises the jurisdiction_ocdid = %s branch (takes priority over state_code)."""
-    rows, total, with_issues = await db_pull_requests.list_open_pull_requests(
+    rows, total, with_issues = await db_pull_requests.list_open_changesets(
         jurisdiction_ocdid="ocd-jurisdiction/country:us/state:ca/place:oakland/government"
     )
     assert isinstance(rows, list)

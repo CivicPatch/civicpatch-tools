@@ -553,7 +553,7 @@ describe("rowError — duplicates and blanks", () => {
 
 describe("indexIssuesByPersonId", () => {
   const extra: Issue = {
-    code: "new_official",
+    code: "new_person",
     message: "Extra official: Jane",
     person_ids: ["p2"],
   };
@@ -576,7 +576,7 @@ describe("indexIssuesByPersonId", () => {
 
   it("omits list-level issues (no person_ids)", () => {
     const missing: Issue = {
-      code: "absent_official",
+      code: "absent_person",
       message: "Dropped official: Bob",
       person_ids: [],
     };
@@ -692,7 +692,7 @@ describe("survivingFields", () => {
   });
 
   it("ignores a person-level issue that anchors to no field", () => {
-    const issue: Issue = { code: "new_official", message: "…" };
+    const issue: Issue = { code: "new_person", message: "…" };
     expect(keys(survivingFields(whole, { ...whole }, [issue]))).toEqual(["source_urls"]);
   });
 

@@ -56,8 +56,8 @@ async def test_somebody_we_publish_and_this_scrape_missed_is_absent():
         summary = await review_summary_for_request("req-1")
 
     codes = {issue["code"] for issue in summary["issues"]}
-    assert "absent_official" in codes
-    assert "new_official" in codes
+    assert "absent_person" in codes
+    assert "new_person" in codes
 
 
 @pytest.mark.unit
@@ -68,8 +68,8 @@ async def test_a_jurisdiction_we_have_never_published_raises_nothing_about_absen
         summary = await review_summary_for_request("req-1")
 
     codes = {issue["code"] for issue in summary["issues"]}
-    assert "absent_official" not in codes
-    assert "new_official" in codes
+    assert "absent_person" not in codes
+    assert "new_person" in codes
 
 
 @pytest.mark.unit

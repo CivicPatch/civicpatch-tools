@@ -1,5 +1,5 @@
 import database.issues as issues_db
-import database.pull_requests as pull_requests_db
+import database.review_pool as review_pool_db
 import lib.github.api as github_service
 
 # TODO: replace with a real SITE_URL env var once one exists.
@@ -15,7 +15,7 @@ class GithubIssueCreationError(Exception):
 
 
 async def report_review_issue(changeset_id: str, description: str, user_id: str, reported_by: str) -> dict:
-    review = await pull_requests_db.get_pull_request_for_review(changeset_id)
+    review = await review_pool_db.get_changeset_for_review(changeset_id)
     if review is None:
         raise ReviewNotFoundError(f"No pull request found for changeset_id {changeset_id}")
 

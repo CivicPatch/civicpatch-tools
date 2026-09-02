@@ -27,7 +27,7 @@ def _patch(rows, open_pr=None):
             new_callable=AsyncMock, return_value=rows,
         ),
         patch(
-            "services.coverage.pull_requests_db.get_open_pr_ocdids_by_state",
+            "services.coverage.review_pool_db.open_ocdids_by_state",
             new_callable=AsyncMock, return_value=open_pr or set(),
         ),
     )
@@ -90,7 +90,7 @@ async def test_get_state_coverage_scopes_pipeline_and_issue_lookups_by_state():
             new_callable=AsyncMock, return_value=sets,
         ),
         patch(
-            "services.coverage.pull_requests_db.get_open_pr_ocdids_by_state",
+            "services.coverage.review_pool_db.open_ocdids_by_state",
             new_callable=AsyncMock, return_value=set(),
         ) as to_review_mock,
         patch(

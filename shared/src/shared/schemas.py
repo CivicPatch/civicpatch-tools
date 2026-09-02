@@ -263,9 +263,8 @@ class IssueCode(str, Enum):
     # Named for what was observed, not for what it means: the scrape did not find someone we
     # expected, or found someone we did not. Whether that is a departure or an arrival is the
     # reviewer's call, so the code must not make it for them.
-    # `_OFFICIAL` is the old noun. Do not extend it — the word is person.
-    ABSENT_OFFICIAL = "absent_official"
-    NEW_OFFICIAL = "new_official"
+    ABSENT_PERSON = "absent_person"
+    NEW_PERSON = "new_person"
     MOVED_PERSON = "moved_person"
     TOO_FEW_PEOPLE = "too_few_people"
     DUPLICATE_UNIQUE_ROLE = "duplicate_unique_role"
@@ -283,7 +282,7 @@ POST_FIELD = "post_id"
 class Issue(BaseModel):
     code: IssueCode
     message: str
-    # people this issue lands on; empty for list-level issues (absent_official,
+    # people this issue lands on; empty for list-level issues (absent_person,
     # division_numbering_gap, too_few_people). `field` anchors it to a cell, e.g.
     # "post_id" — absent for whole-row / list-level issues.
     person_ids: List[str] = []

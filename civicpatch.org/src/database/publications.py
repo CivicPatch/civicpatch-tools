@@ -26,13 +26,13 @@ from shared.utils.statuses import DismissalReason
 logger = logging.getLogger(__name__)
 
 
-async def record_open_data_url(changeset_id: str, url: str) -> None:
+async def record_change_url(changeset_id: str, url: str) -> None:
     """Where this request's data landed in open-data. Written after the commit, not with the
     publish, because the write is queued and retried — the publish is already a fact by then."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "UPDATE changesets SET open_data_url = %s WHERE id = %s", (url, changeset_id)
+            "UPDATE changesets SET change_url = %s WHERE id = %s", (url, changeset_id)
         )
 
 

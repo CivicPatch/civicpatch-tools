@@ -150,7 +150,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
         pipeline_run_progress: 0,
         created_at: now,
         updated_at: now,
-        open_data_url: null,
+        change_url: null,
         review_status: null,
         branch_name: null,
         jurisdiction_ocdid,

@@ -55,7 +55,7 @@ def client():
 @pytest.mark.unit
 def test_list_pull_requests_returns_data(client):
     with patch(
-        "database.pull_requests.list_open_pull_requests",
+        "database.review_pool.list_open_changesets",
         new_callable=AsyncMock,
         return_value=([], 0, 0),
     ):
@@ -72,7 +72,7 @@ def test_list_pull_requests_returns_data(client):
 def test_get_pull_requests_with_data_returns_paginated(client):
     with (
         patch(
-            "database.pull_requests.list_open_pull_requests",
+            "database.review_pool.list_open_changesets",
             new_callable=AsyncMock,
             return_value=([], 0, 0),
         ),
@@ -484,7 +484,7 @@ MERGED_PR_DB_RESULT = {
 @pytest.mark.unit
 def test_get_by_request_404_when_not_found(client):
     with patch(
-        "database.pull_requests.get_pull_request_data_by_changeset_id",
+        "database.review_pool.get_changeset_data",
         new_callable=AsyncMock,
         return_value=None,
     ):
@@ -497,7 +497,7 @@ def test_get_by_request_404_when_not_found(client):
 def test_get_by_request_200_for_open_pr(client):
     with (
         patch(
-            "database.pull_requests.get_pull_request_data_by_changeset_id",
+            "database.review_pool.get_changeset_data",
             new_callable=AsyncMock,
             return_value=OPEN_PR_DB_RESULT,
         ),
@@ -540,7 +540,7 @@ def test_get_by_request_200_for_open_pr(client):
 def test_get_by_request_200_for_merged_pr(client):
     with (
         patch(
-            "database.pull_requests.get_pull_request_data_by_changeset_id",
+            "database.review_pool.get_changeset_data",
             new_callable=AsyncMock,
             return_value=MERGED_PR_DB_RESULT,
         ),

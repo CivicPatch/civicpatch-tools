@@ -1,6 +1,6 @@
 import pytest
 
-from database.review_queue import _ISSUE_WEIGHT, issue_count, issue_priority
+from database.review_priority import _ISSUE_WEIGHT, issue_count, issue_priority
 from shared.schemas import IssueCode
 
 

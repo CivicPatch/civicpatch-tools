@@ -25,7 +25,7 @@ REVIEW_WITHOUT_PR_URL = {
 def _patches(review=REVIEW, github_result=(9, "https://github.com/org/open-data/issues/9"), issue_id="issue-1"):
     return (
         patch(
-            "services.review_issue_report.pull_requests_db.get_pull_request_for_review",
+            "services.review_issue_report.review_pool_db.get_changeset_for_review",
             new_callable=AsyncMock, return_value=review,
         ),
         patch(
@@ -84,7 +84,7 @@ async def test_report_review_issue_omits_pr_line_when_no_pr_url():
 @pytest.mark.asyncio
 async def test_report_review_issue_raises_when_review_not_found():
     with patch(
-        "services.review_issue_report.pull_requests_db.get_pull_request_for_review",
+        "services.review_issue_report.review_pool_db.get_changeset_for_review",
         new_callable=AsyncMock, return_value=None,
     ):
         with pytest.raises(ReviewNotFoundError):

@@ -28,7 +28,7 @@ async def get_pipeline_run(changeset_id: str):
         await cur.execute(
             """
             SELECT r.status, r.progress, r.arguments_json,
-                   r.created_at, r.sourced_at, r.open_data_url
+                   r.created_at, r.sourced_at, r.change_url
             FROM changesets r
             WHERE r.id = %s;
             """,

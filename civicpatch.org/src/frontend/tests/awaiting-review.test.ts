@@ -13,7 +13,7 @@ import {
 const entry = (overrides: Partial<HistoryEntry> = {}): HistoryEntry => ({
   changeset_id: "req-1",
   created_at: "2026-07-12T00:00:00Z",
-  open_data_url: "https://github.com/CivicPatch/open-data/pull/4821",
+  change_url: "https://github.com/CivicPatch/open-data/pull/4821",
   review_status: "pending",
   kind: CHANGESET_KIND.SCRAPE,
   ...overrides,
@@ -66,7 +66,7 @@ describe("editingBlockedReason", () => {
   });
 
   it("falls back to an unnumbered phrasing when history has no PR url", () => {
-    expect(editingBlockedReason([entry({ open_data_url: null })])).toBe(
+    expect(editingBlockedReason([entry({ change_url: null })])).toBe(
       "A pull request is awaiting review. Publish or close it before editing directly.",
     );
   });
