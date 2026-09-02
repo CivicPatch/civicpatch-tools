@@ -10,7 +10,7 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from typing import Dict, List, Tuple
 
-from shared.schemas import Person, PersonSourceRecord
+from shared.schemas import DerivedPerson, PersonSourceRecord
 from shared.utils import email_utils, name_utils, phone_utils, url_utils
 from shared.utils.label_parser import parse_label
 from shared.utils.log_protocol import Log
@@ -160,7 +160,7 @@ def merge_records_to_person(
     records: List[PersonSourceRecord],
     jurisdiction_ocdid: str,
     taxonomy: Taxonomy,
-) -> Person:
+) -> DerivedPerson:
     records = [normalize_record(log, r) for r in records]
 
     image = merge_field([r.image for r in records if r.image is not None])
@@ -176,7 +176,7 @@ def merge_records_to_person(
         }
     )
 
-    person = Person(
+    person = DerivedPerson(
         name=canonical_name,
         other_names=other_names,
         labels=merged_labels,
@@ -200,7 +200,7 @@ def derived_people(
     taxonomy: Taxonomy,
     jurisdiction_ocdid: str,
     log: Log,
-) -> List[Tuple[Person, List[PersonSourceRecord]]]:
+) -> List[Tuple[DerivedPerson, List[PersonSourceRecord]]]:
     """Group a scrape's sightings into people, each with the records behind it.
 
     Everyone seen comes back: scope lives on the post, as `posts._is_tracked`, not on whether

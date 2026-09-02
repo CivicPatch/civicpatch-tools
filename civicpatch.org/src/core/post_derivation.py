@@ -9,7 +9,7 @@ per-person and belongs on the membership, so it never appears here.
 """
 
 from pydantic import BaseModel
-from shared.schemas import Person, Role
+from shared.schemas import OpenStatesRecord, Role
 from shared.utils.taxonomy import Taxonomy
 
 from core.membership_label import proposed_membership_label
@@ -57,39 +57,6 @@ class DerivedPost(BaseModel):
     members: list[DerivedMembership]
 
 
-class SourcedPerson(BaseModel):
-    """One person as the source described them. Only ever the source — a human's answers
-    travel in `chosen`, so this is a projection of the evidence and nothing else.
-    """
-
-    person_id: str
-    jurisdiction_ocdid: str
-    labels: list[str] = []
-    # The source's claim about the tenure — the membership's, not the person's.
-    start_date: str | None = None
-    end_date: str | None = None
-    # A human's, when they set one; it outranks anything re-derived from the label. The last
-    # non-source field here, and it leaves when the editor stops offering it.
-    division_ocdid: str | None = None
-
-    @classmethod
-    def from_person(cls, record: Person) -> "SourcedPerson":
-        """A bridge, until every caller reads `source_records` directly."""
-        return cls(
-            person_id=record.id,
-            jurisdiction_ocdid=record.jurisdiction_ocdid,
-            labels=record.labels,
-            start_date=record.start_date,
-            end_date=record.end_date,
-            division_ocdid=record.division_ocdid,
-        )
-
-
-def _division(record: SourcedPerson, parsed: DerivedRoles) -> str:
-    """A human's division wins over the one re-derived from the label."""
-    return (record.division_ocdid or "").strip() or parsed.division_ocdid
-
-
 def _demoted_role_ids(
     parsed: DerivedRoles, ids_by_label: dict[str, str], post_role_id: str
 ) -> list[str]:
@@ -128,14 +95,14 @@ def _unresolved_text(parsed: DerivedRoles) -> list[str]:
 
 
 def _member(
-    record: SourcedPerson,
+    record: OpenStatesRecord,
     parsed: DerivedRoles,
     ids_by_label: dict[str, str],
     post_role_id: str,
 ) -> "DerivedMembership":
     """One person, and everything their label carried beyond the post's own role."""
     return DerivedMembership(
-        person_id=record.person_id,
+        person_id=record.id,
         designations=parsed.other_designations,
         unmatched_text=_unresolved_text(parsed),
         source_labels=parsed.labels,
@@ -154,10 +121,10 @@ class ChosenPost(BaseModel):
 
 
 def derived_posts(
-    records: list[SourcedPerson],
+    records: list[OpenStatesRecord],
     taxonomy: Taxonomy,
     roles: list[Role],
-    chosen: dict[str, ChosenPost] | None = None,
+    chosen_posts: dict[str, ChosenPost] | None = None,
 ) -> list[DerivedPost]:
     """One entry per distinct (role, division) this scrape produced.
 
@@ -167,7 +134,7 @@ def derived_posts(
     says where someone serves, not what the source called them.
     """
     ids_by_label = {role.label: role.id for role in roles}
-    chosen = chosen or {}
+    chosen_posts = chosen_posts or {}
 
     def role_id_for(parsed: DerivedRoles) -> str:
         label = parsed.role
@@ -181,11 +148,11 @@ def derived_posts(
             record.jurisdiction_ocdid,
             taxonomy,
         )
-        picked = chosen.get(record.person_id)
+        picked = chosen_posts.get(record.id)
         key = (
             (picked.role_id, picked.division_ocdid)
             if picked
-            else (role_id_for(parsed), _division(record, parsed))
+            else (role_id_for(parsed), parsed.division_ocdid)
         )
         grouped.setdefault(key, []).append(
             _member(record, parsed, ids_by_label, key[0])

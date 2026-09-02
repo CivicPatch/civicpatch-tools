@@ -446,7 +446,7 @@ async def test_publish_writes_memberships_for_the_roster():
 
     roster = await get_person_models(_OCDID)
     assert len(roster) == 1
-    assert roster[0].division_ocdid == _BASE
+    assert roster[0].memberships[0].division_ocdid == _BASE
 
     # Plural, because the schema allows a person one open membership *per organization* and a
     # jurisdiction can have several bodies. Carried inline so a consumer needs one read, not a
@@ -1032,8 +1032,8 @@ async def test_a_pick_is_keyed_on_the_person_not_the_post():
     """`chosen_posts` used to key on `post_id`, which meant the pick had to ride on the record
     the derivation reads. Keyed on the person, the derivation's input can be purely what the
     source said."""
-    from shared.schemas import Person
-    from services.publish import chosen_posts
+    from shared.schemas import OpenStatesRecord
+    from services.publish import chosen_posts, picks_in
 
     await _seed_person()
     pool = await get_pool()
@@ -1043,9 +1043,18 @@ async def test_a_pick_is_keyed_on_the_person_not_the_post():
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         await conn.commit()
 
-    roster = [Person(id="p1", name="Ann", jurisdiction_ocdid=_OCDID, post_id=post_id)]
+    roster = [
+        OpenStatesRecord(
+            id="p1",
+            name="Ann",
+            jurisdiction_ocdid=_OCDID,
+            source_urls=["https://example.gov"],
+            updated_at="2026-01-01T00:00:00+00:00",
+            post_id=post_id,
+        )
+    ]
 
-    assert await chosen_posts(roster) == {
+    assert await chosen_posts(picks_in(roster)) == {
         "p1": ChosenPost(role_id="mayor", division_ocdid=_BASE)
     }
 
@@ -1054,19 +1063,21 @@ async def test_a_pick_is_keyed_on_the_person_not_the_post():
 @pytest.mark.integration
 async def test_a_pick_at_a_post_that_is_gone_is_simply_absent():
     """Not an error and not a lost person: the derivation falls back to the label."""
-    from shared.schemas import Person
-    from services.publish import chosen_posts
+    from shared.schemas import OpenStatesRecord
+    from services.publish import chosen_posts, picks_in
 
     roster = [
-        Person(
+        OpenStatesRecord(
             id="p1",
             name="Ann",
             jurisdiction_ocdid=_OCDID,
+            source_urls=["https://example.gov"],
+            updated_at="2026-01-01T00:00:00+00:00",
             post_id="00000000-0000-4000-8000-00000000dead",
         )
     ]
 
-    assert await chosen_posts(roster) == {}
+    assert await chosen_posts(picks_in(roster)) == {}
 
 
 @pytest.mark.asyncio

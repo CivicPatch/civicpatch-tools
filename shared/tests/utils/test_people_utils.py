@@ -3,7 +3,7 @@
 Moved from the pipeline with the function on 2026-08-21.
 """
 
-from shared.schemas import Person
+from shared.schemas import DerivedPerson
 from shared.utils.people_utils import sort_people
 from shared.utils.taxonomy import Taxonomy
 
@@ -22,8 +22,8 @@ _SORT_TAXONOMY = Taxonomy(
 )
 
 
-def _person(name: str, labels: list[str]) -> Person:
-    return Person(
+def _person(name: str, labels: list[str]) -> DerivedPerson:
+    return DerivedPerson(
         name=name,
         labels=labels,
         updated_at="2024-01-01",

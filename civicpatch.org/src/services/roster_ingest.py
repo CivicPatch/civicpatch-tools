@@ -13,11 +13,11 @@ sheet has no analogue.
 import logging
 
 from core.people_roster import identified, records_by_person, roster_from_rows
-from core.post_derivation import DerivedPost, SourcedPerson, derived_posts
+from core.post_derivation import DerivedPost, derived_posts
 from database.people import get_person_models
-from services.publish import chosen_posts
+from services.publish import chosen_posts, picks_in
 from shared.utils.name_utils import person_list_to_identities
-from shared.schemas import Person, Role
+from shared.schemas import OpenStatesRecord, Role
 from shared.utils.person_id_utils import resolve_people_ids
 from shared.utils.taxonomy import Taxonomy
 
@@ -80,6 +80,5 @@ async def derive_posts(
     with them. `chosen_posts` is empty at ingest and returns without a query, but a re-submit of
     an edited roster must not undo a reviewer's pick.
     """
-    people = [Person(**person) for person in roster]
-    sourced = [SourcedPerson.from_person(person) for person in people]
-    return derived_posts(sourced, taxonomy, roles, await chosen_posts(people))
+    records = [OpenStatesRecord(**person) for person in roster]
+    return derived_posts(records, taxonomy, roles, await chosen_posts(picks_in(records)))

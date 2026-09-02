@@ -10,16 +10,10 @@ import {
 import { divisionOf, postsHeld } from "../posts-list/posts-model.js";
 import type { PersonMembership } from "../edit-people/person-edit-utils.js";
 
-interface Office {
-    name: string;
-    division_ocdid: string;
-}
-
 interface Person {
   memberships?: PersonMembership[];
     id: string;
     name: string;
-    office?: Office;
     emails?: string[];
     phones?: string[];
     urls?: string[];

@@ -22,7 +22,7 @@ export const isImage = (field: FieldSpec) => field.type === "image";
 export const isDate = (field: FieldSpec) => field.type === "date";
 
 export interface FieldSpec {
-  key: string; // dotted path into a person record, e.g. "office.name"
+  key: string; // the field on a person record
   label: string;
   type: FieldType;
   required?: boolean; // must be non-empty; flagged when empty
@@ -44,15 +44,13 @@ export const POST_FIELD = "post_id";
 // Aligned to the Official data model. Jurisdiction is constant across a review,
 // so it is not a per-row field.
 export const FIELD_SCHEMA: FieldSpec[] = [
-  // Order follows the mockup: photo, identity, office, term, contacts, sources.
+  // Order follows the mockup: photo, identity, post, term, contacts, sources.
   // Not compared (`diff: false`): a photo moving — a new crop, a CDN rehost, the same
   // face from a different url — is not something a reviewer needs to decide about, and
   // making it one opened a card for every person whose image url merely changed.
   { key: "image", label: "Photo", type: "image", diff: false },
   { key: "name", label: "Name", type: "text", required: true },
   { key: "other_names", label: "Other names", type: "multi" },
-  // `key` is the storage path and stays `office.*` until the proposed roster stops being
-  // Official-shaped; the label is what a person reads, and posts are what we call these.
   // A post is picked, not typed. Not `required: true` — the pipeline never sets `post_id`;
   // `fieldError` asks only when nothing can derive one.
   //
