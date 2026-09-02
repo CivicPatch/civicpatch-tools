@@ -169,8 +169,12 @@
   background: var(--pico-muted-background);
 }
 
+/* An outline, not a background: the status tints above are backgrounds, so setting one
+   here erased the person's status and made "current" indistinguishable from :hover.
+   Inset offset so it reads as a ring inside the row without shifting the list. */
 .review-modal .review-modal__person--on {
-  background: var(--pico-muted-background);
+  outline: 2px solid var(--pico-primary);
+  outline-offset: -2px;
   color: var(--civ-text);
   font-weight: 600;
 }
@@ -250,13 +254,24 @@
   z-index: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  margin: -0.75rem -0.75rem 0.5rem;
+  /* No bottom margin: the editor's own header used to follow it, and the gap between the
+     two was the only thing separating them. There is one strip now. */
+  margin: -0.75rem -0.75rem 0;
   padding: 0.5rem 0.75rem;
   background: var(--pico-card-background-color);
   border-bottom: 1px solid var(--pico-muted-border-color);
   font-weight: 600;
+}
+
+.review-modal__who {
+  font-weight: 600;
+}
+
+/* Pushes the nav to the far end, so the summary and actions sit beside the name. */
+.review-modal__head .editor-summary {
+  margin-right: auto;
 }
 
 .review-modal__nav {

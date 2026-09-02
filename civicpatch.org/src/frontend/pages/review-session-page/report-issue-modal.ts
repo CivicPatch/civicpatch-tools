@@ -1,6 +1,7 @@
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import "../../components/basic/modal.js";
+import { hostDispatch } from "../../utils/host-dispatch.js";
 
 type ReportIssueModalHost = HTMLElement & {
   submitting?: boolean;
@@ -12,19 +13,16 @@ function ReportIssueModal(host: ReportIssueModalHost) {
   const error = host.error ?? null;
   const [description, setDescription] = useState("");
 
-  const dispatch = (name: string, detail?: unknown) =>
-    host.dispatchEvent(new CustomEvent(name, { detail, bubbles: true, composed: true }));
-
   const handleCancel = () => {
     if (submitting) return;
-    dispatch("modal-close");
+    hostDispatch(host, "modal-close");
   };
 
   const handleSubmit = (ev: Event) => {
     ev.preventDefault();
     const trimmed = description.trim();
     if (!trimmed || submitting) return;
-    dispatch("report-issue-confirmed", { description: trimmed });
+    hostDispatch(host, "report-issue-confirmed", { description: trimmed });
   };
 
   const content = html`

@@ -30,15 +30,14 @@ const PAGES = [
   { name: "login", path: "/login" },
   { name: "queue", path: "/queue" },
   { name: "review-landing", path: "/review?state=nj" },
-  { name: "review-overview", path: `/review/session?changeset_id=${SCALE_CHANGESET_ID}&view=overview` },
-  { name: "review-detail", path: `/review/session?changeset_id=${SCALE_CHANGESET_ID}&view=detail` },
-  { name: "review-preview", path: `/review/session?changeset_id=${SCALE_CHANGESET_ID}&view=preview` },
-  { name: "review-read-only", path: `/review/session?changeset_id=${READ_ONLY_CHANGESET_ID}&view=detail` },
+  // One page since the view tabs went: the roster, then Preview as a section under it.
+  { name: "review-session", path: `/review/session?changeset_id=${SCALE_CHANGESET_ID}` },
+  { name: "review-read-only", path: `/review/session?changeset_id=${READ_ONLY_CHANGESET_ID}` },
   // The person-edit modal. Like the config editor it only exists after a click,
   // and several UX changes target it — without this capture they are unverifiable.
   {
     name: "review-modal",
-    path: `/review/session?changeset_id=${SCALE_CHANGESET_ID}&view=overview`,
+    path: `/review/session?changeset_id=${SCALE_CHANGESET_ID}`,
     open: async (page) => {
       await page.locator(".review-row__open").first().click();
       await page.locator("dialog[open]").waitFor();

@@ -62,6 +62,7 @@ export interface PersonEditorProps {
   posts: Post[];
   // The derivation's post, shown when nobody has picked one. Never saved.
   derivedPost: DerivedPost | null;
+  onAddPost: () => void;
   // Clear-on-edit: once the reviewer touches a card its markers are presumed
   // addressed and drop away. §2.2 refines this to per-field (the *anchored* field
   // being edited); that lands with the checklist in §17 step 8, when ticking
@@ -116,29 +117,22 @@ function renderIdentity(props: PersonEditorProps) {
   `;
 }
 
-// The state header: a thin strip across the whole card, tinted with the state
-// colour. It replaces the coloured left bar — a bar disappears the moment the
-// card is taller than the viewport, and a full-width band does not.
+// How much work this card holds, and what can be done to it as a whole. Rendered into the
+// modal's own header rather than here: the editor has one mount now, and two stacked headers
+// read as two separate things with a gap between them.
 //
-// The person-level controls live here rather than under the photo: they act on
-// the whole card, and the identity column is about who this is.
-function renderHead(props: PersonEditorProps) {
+// The person-level controls live here rather than under the photo: they act on the whole
+// card, and the identity column is about who this is.
+//
+// The summary replaces the status label rather than joining it: "changed" next to "2 fields
+// changed" is the same fact twice, and only one of them tells you how much work the card holds.
+export function renderPersonSummary(props: PersonEditorProps) {
   const { status, surviving, issues, isDirty, isReadOnly } = props;
-  const departing = DEPARTING.has(status);
-
-  // The summary replaces the status label rather than joining it: "changed" next
-  // to "2 fields changed" is the same fact twice, and only one of them tells you
-  // how much work the card holds.
   return html`
-    <div class="person-editor__head">
-      <div class="person-editor__head-main">
-        <span class="editor-summary"
-          >${editorSummary({ status, surviving, issues, isDirty })}</span
-        >
-        ${isReadOnly ? nothing : renderActions(props, departing)}
-      </div>
-      ${renderMergeCandidates(props)}
-    </div>
+    <span class="editor-summary"
+      >${editorSummary({ status, surviving, issues, isDirty })}</span
+    >
+    ${isReadOnly ? nothing : renderActions(props, DEPARTING.has(status))}
   `;
 }
 
@@ -228,6 +222,7 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
     jurisdictionOcdid,
     posts,
     derivedPost,
+    onAddPost,
     onSave,
   } = props;
   const survivingByKey = new Map(surviving.map((s) => [s.field.key, s]));
@@ -255,6 +250,7 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
       jurisdictionOcdid,
       posts,
       derivedPost,
+      onAddPost,
       focusRef: focus && field.key === focusKey ? focus.attach : null,
     });
   });
@@ -309,7 +305,7 @@ export function renderPersonEditor(props: PersonEditorProps) {
 
   return html`
     <div class="person-editor person-editor--${status}">
-      ${renderHead(props)} ${renderIdentity(props)}
+      ${renderMergeCandidates(props)} ${renderIdentity(props)}
       <div class="person-editor__fields">
         ${renderRowIssues(props)}
         ${departing

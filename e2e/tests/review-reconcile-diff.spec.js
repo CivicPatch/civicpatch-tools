@@ -18,18 +18,18 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { RECONCILE_CHANGESET_ID } from "../fixtures/db.js";
-import { openDetail, editorFor, fieldIn } from "./helpers/review-card.js";
+import { openEditorFor, editorFor, fieldIn } from "./helpers/review-card.js";
 
-const openCard = async (page) => {
+const openCard = async (page, name) => {
   await page.goto(`/review/session?changeset_id=${RECONCILE_CHANGESET_ID}`);
-  await openDetail(page);
+  if (name) await openEditorFor(page, name);
 };
 
 test.describe("Review reconcile diff (populated)", () => {
   test("shows each person's state, and only the fields that moved", async ({
     authenticatedPage: page,
   }) => {
-    await openCard(page);
+    await openCard(page, "Maria González");
 
     // Maria pairs as CHANGED — guards the existing<->new id pairing.
     const maria = editorFor(page, "Maria González");
@@ -93,7 +93,7 @@ test.describe("Review reconcile diff (populated)", () => {
   test("a person the scrape dropped is one decision, not a column of dashes", async ({
     authenticatedPage: page,
   }) => {
-    await openCard(page);
+    await openCard(page, "Bob Clerk");
 
     // The old view rendered their every field as `old (struck) → "—"`. §5 says
     // the card is one decision, so the fields collapse behind an expander.
@@ -106,7 +106,7 @@ test.describe("Review reconcile diff (populated)", () => {
   });
 
   test("editing recomputes the card live", async ({ authenticatedPage: page }) => {
-    await openCard(page);
+    await openCard(page, "Maria González");
     const maria = editorFor(page, "Maria González");
     const term = fieldIn(maria, "Term end");
 
@@ -119,7 +119,7 @@ test.describe("Review reconcile diff (populated)", () => {
   });
 
   test("Restore puts the old value back", async ({ authenticatedPage: page }) => {
-    await openCard(page);
+    await openCard(page, "Maria González");
     const term = fieldIn(editorFor(page, "Maria González"), "Term end");
 
     // Replaces the old copy-arrow: same claim — one click moves the old value
@@ -131,7 +131,7 @@ test.describe("Review reconcile diff (populated)", () => {
   test("dates are edited through Year / Month / Day, which cannot be malformed", async ({
     authenticatedPage: page,
   }) => {
-    await openCard(page);
+    await openCard(page, "Maria González");
     const maria = editorFor(page, "Maria González");
 
     // Term start is "2021" on both sides, so the collapse rule hides it — the
@@ -162,7 +162,7 @@ test.describe("Review reconcile diff (populated)", () => {
   test("merges an added person into the record the scrape didn't find", async ({
     authenticatedPage: page,
   }) => {
-    await openCard(page);
+    await openCard(page, "Tom Treasurer");
 
     await expect(editorFor(page, "Tom Treasurer")).toHaveClass(/person-editor--added/);
     await expect(editorFor(page, "Bob Clerk")).toHaveClass(/person-editor--removed/);

@@ -23,6 +23,8 @@ import { personEditorPropsFor } from "../../components/person-editor/editor-prop
 import { EMPTY_FROZEN } from "../review-session-page/frozen-fields.js";
 import { renderRosterCards } from "./roster-section.js";
 import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
+import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
+import "../../components/posts-list/post-add.js";
 
 interface RosterEditorProps {
   people: any[];
@@ -55,7 +57,10 @@ function RosterEditor({
   blockedReason,
   onPublished,
 }: RosterEditorProps) {
-  const posts = useJurisdictionPosts(jurisdictionOcdid);
+  const { posts, reload: reloadPosts } = useJurisdictionPosts(jurisdictionOcdid);
+  const roles = useJurisdictionRoles();
+  // Which person asked for a post, so the one it creates can be picked for them.
+  const [addingPostFor, setAddingPostFor] = useState<string | null>(null);
   const published = people ?? [];
   const state = usePeopleState({ people: published });
   const {
@@ -149,6 +154,7 @@ function RosterEditor({
         setCollapsedIds(next);
       },
       onPersonSave: handlePersonSave,
+      onAddPost: setAddingPostFor,
       // handleRemove takes a list; passing an id raw spreads it into characters.
       onRemovePerson: (id: string) => handleRemove([id]),
       onUnremovePerson: handleUnremove,
@@ -184,7 +190,24 @@ function RosterEditor({
       `
     : nothing;
 
+  // The post the form just made becomes this person's pick — the reviewer opened it to
+  // answer the Post field, so leaving them to find it in a reloaded select is half the job.
+  const handlePostAdded = (e: CustomEvent) => {
+    const postId = e.detail?.post_id;
+    if (addingPostFor && postId) handlePersonSave(addingPostFor, { post_id: postId });
+    setAddingPostFor(null);
+    reloadPosts();
+  };
+
   return html`
+    ${addingPostFor
+      ? html`<civ-post-add
+          .jurisdictionOcdid=${jurisdictionOcdid ?? ""}
+          .roles=${roles}
+          @added=${handlePostAdded}
+          @cancel=${() => setAddingPostFor(null)}
+        ></civ-post-add>`
+      : ""}
     ${renderRosterCards({
       cards,
       isLoading,

@@ -22,14 +22,14 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { MARKERS_CHANGESET_ID } from "../fixtures/db.js";
-import { openDetail, editorFor, editField } from "./helpers/review-card.js";
+import { openEditorFor, showPerson, editorFor, editField } from "./helpers/review-card.js";
 
 test.describe("Review issue markers", () => {
   test("anchors person-scoped issues to their cards; list-level stays off the diff", async ({
     authenticatedPage: page,
   }) => {
     await page.goto(`/review/session?changeset_id=${MARKERS_CHANGESET_ID}`);
-    await openDetail(page);
+    await openEditorFor(page, "Carol Extra");
 
     // Row-level: new_person (no field) → marker on Carol's card, above the fields.
     await expect(
@@ -42,6 +42,7 @@ test.describe("Review issue markers", () => {
     // row of each named holder, and that row is only on screen because the issue
     // anchors to it.
     for (const name of ["Alice Mayor", "Bob Council"]) {
+      await showPerson(page, name);
       const seat = editorFor(page, name)
         .locator(".person-editor__field")
         .filter({ hasText: "Post" });
@@ -63,7 +64,7 @@ test.describe("Review issue markers", () => {
     authenticatedPage: page,
   }) => {
     await page.goto(`/review/session?changeset_id=${MARKERS_CHANGESET_ID}`);
-    await openDetail(page);
+    await openEditorFor(page, "Carol Extra");
 
     const carol = editorFor(page, "Carol Extra");
     await expect(carol.locator(".person-editor__issue")).toHaveCount(1);

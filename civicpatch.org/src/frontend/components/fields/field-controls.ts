@@ -182,6 +182,11 @@ export function renderDateNewSide(
   `;
 }
 
+// Not a post id, so it can never collide with one: picking it opens the add form instead of
+// saving. The select is the only place to offer this — a reviewer who knows the post does not
+// exist has nowhere else to say so.
+export const ADD_POST_OPTION = "add-post";
+
 // Picked, never typed: the written value is `post_id`, the decision itself. `labels` stay as
 // the source said them — a pick says where someone serves, not what the page called them.
 export function renderPostNewSide(
@@ -191,6 +196,7 @@ export function renderPostNewSide(
   posts: Post[],
   derivedPost: DerivedPost | null,
   focusRef: FocusRef | null,
+  onAddPost: () => void,
 ) {
   const picked = (diffValue(newRecord, field) as string | null) ?? "";
   // The derivation's post when nobody has picked — shown, never saved, so a parser fix can
@@ -205,7 +211,17 @@ export function renderPostNewSide(
       ${attachFocus(focusRef)}
       class="field-control__office"
       aria-label=${field.label}
-      @change=${(e: Event) => save({ post_id: inputValue(e) || null })}
+      @change=${(e: Event) => {
+        const chosen = inputValue(e);
+        if (chosen === ADD_POST_OPTION) {
+          // Put the select back where it was: the form may be cancelled, and a select left
+          // reading "Add a post…" would say the person holds one.
+          (e.target as HTMLSelectElement).value = current;
+          onAddPost();
+          return;
+        }
+        save({ post_id: chosen || null });
+      }}
     >
       ${projected
         ? html`<option value="" .selected=${!picked}>
@@ -220,6 +236,7 @@ export function renderPostNewSide(
             ${post.label}
           </option>`,
       )}
+      <option value=${ADD_POST_OPTION}>Add a post</option>
     </select>
   `;
 }

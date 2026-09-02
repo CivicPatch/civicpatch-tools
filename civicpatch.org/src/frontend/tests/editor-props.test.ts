@@ -36,6 +36,7 @@ const context = (over = {}) =>
     candidatesOpenFor: null,
     onToggleCandidates: () => {},
     onPickPartner: () => {},
+    onAddPost: () => {},
     ...over,
   }) as never;
 
@@ -202,4 +203,19 @@ describe("personEditorPropsFor — derivedPost from a held membership", () => {
         context({ proposals: proposalsByPersonId([change()]) }),
       ).derivedPost,
     ).toEqual({ post_id: "post-5", label: "Council Member, District 5" }));
+});
+
+
+describe("personEditorPropsFor — onAddPost", () => {
+  it("binds the person, because the field control has no id to pass back", () => {
+    const asked: string[] = [];
+    const props = personEditorPropsFor(
+      card({ personId: "p7" }),
+      context({ onAddPost: (id: string) => asked.push(id) }),
+    );
+
+    props.onAddPost();
+
+    expect(asked).toEqual(["p7"]);
+  });
 });

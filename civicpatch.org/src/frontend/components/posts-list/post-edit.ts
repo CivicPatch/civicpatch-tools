@@ -6,6 +6,7 @@ import { component, useState } from "haunted";
 import { updatePost } from "../../api.js";
 import { divisionName, divisionKey } from "./posts-model.js";
 import type { PostRow } from "./posts-model.js";
+import { hostDispatch } from "../../utils/host-dispatch.js";
 
 type PostEditHost = HTMLElement & {
   post?: PostRow;
@@ -25,10 +26,7 @@ function PostEdit(host: PostEditHost) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const emit = (name: string) =>
-    host.dispatchEvent(new CustomEvent(name, { bubbles: true, composed: true }));
-
-  const handleCancel = () => emit(CANCEL_EVENT);
+  const handleCancel = () => hostDispatch(host, CANCEL_EVENT);
 
   const handleHeadcountInput = (e: Event) =>
     setHeadcount(inputValue(e));
@@ -44,7 +42,7 @@ function PostEdit(host: PostEditHost) {
         headcount: Number(headcount),
         isTracked,
       });
-      emit(SAVED_EVENT);
+      hostDispatch(host, SAVED_EVENT);
     } catch (cause) {
       setError(String(cause));
       setSaving(false);

@@ -15,7 +15,7 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { MARKERS_CHANGESET_ID, READ_ONLY_CHANGESET_ID } from "../fixtures/db.js";
-import { openDetail, editorFor } from "./helpers/review-card.js";
+import { openEditorFor, showPerson, editorFor } from "./helpers/review-card.js";
 
 const items = (page) => page.locator(".review-sidebar__item");
 const trigger = (page) => page.locator(".review-sidebar__trigger");
@@ -85,7 +85,7 @@ test.describe("Issue checklist", () => {
   }) => {
     await openMarkers(page);
     // Detail first: once the drawer is open its scrim covers the view tabs.
-    await openDetail(page);
+    await openEditorFor(page, "Carol Extra");
 
     const carol = editorFor(page, "Carol Extra");
     await expect(carol.locator(".person-editor__issue--row")).toHaveCount(1);
@@ -105,21 +105,28 @@ test.describe("Issue checklist", () => {
     authenticatedPage: page,
   }) => {
     await openMarkers(page);
-    await openDetail(page);
 
-    // duplicate_unique_role carries one message across Alice and Bob, so keying
-    // by content means one tick correctly resolves both anchors. Scoped by the
-    // message — Carol's row-level marker carries the same base class.
+    // duplicate_unique_role carries one message across Alice and Bob, so keying by content
+    // means one tick correctly resolves both anchors. Only one editor is on screen at a time
+    // now, so the claim is made by checking each holder in turn through the modal's own list.
     const shared = page
       .locator(".person-editor__issue")
       .filter({ hasText: "marked as unique" });
-    await expect(shared).toHaveCount(2);
+    await openEditorFor(page, "Alice Mayor");
+    await expect(shared).toHaveCount(1);
+    await showPerson(page, "Bob Council");
+    await expect(shared).toHaveCount(1);
+    await page.keyboard.press("Escape");
 
     await openDrawer(page);
     await items(page)
       .filter({ hasText: "marked as unique" })
       .locator("input")
       .check();
+
+    await openEditorFor(page, "Alice Mayor");
+    await expect(shared).toHaveCount(0);
+    await showPerson(page, "Bob Council");
     await expect(shared).toHaveCount(0);
   });
 
@@ -159,9 +166,6 @@ test.describe("Issue checklist", () => {
     authenticatedPage: page,
   }) => {
     await openMarkers(page);
-    await page
-      .locator(".review-page__view-tab", { hasText: "Preview" })
-      .click();
 
     await expect(trigger(page)).toBeVisible();
     await expect(count(page)).toContainText("0/3");

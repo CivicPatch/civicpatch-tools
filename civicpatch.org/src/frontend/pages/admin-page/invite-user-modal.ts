@@ -1,6 +1,7 @@
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import "../../components/basic/modal.js";
+import { hostDispatch } from "../../utils/host-dispatch.js";
 
 type InviteUserModalHost = HTMLElement & {
   submitting?: boolean;
@@ -10,19 +11,16 @@ function InviteUserModal(host: InviteUserModalHost) {
   const submitting = host.submitting ?? false;
   const [email, setEmail] = useState("");
 
-  const dispatch = (name: string, detail?: unknown) =>
-    host.dispatchEvent(new CustomEvent(name, { detail, bubbles: true, composed: true }));
-
   const handleCancel = () => {
     if (submitting) return;
-    dispatch("modal-close");
+    hostDispatch(host, "modal-close");
   };
 
   const handleSubmit = (ev: Event) => {
     ev.preventDefault();
     const trimmed = email.trim();
     if (!trimmed || submitting) return;
-    dispatch("invite-confirmed", { email: trimmed });
+    hostDispatch(host, "invite-confirmed", { email: trimmed });
   };
 
   const content = html`

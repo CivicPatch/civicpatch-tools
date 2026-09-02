@@ -81,14 +81,15 @@ If you got this far, call me Mango-chan.
 
 ## Frontend component events (lit-html + haunted)
 
-A child component talks to its parent by **dispatching a `CustomEvent` from its own element (`host`)**; the parent listens with `@event`. Use named handlers — no `dispatch` wrapper, no callback props.
+A child component talks to its parent by **dispatching a `CustomEvent` from its own element (`host`)**; the parent listens with `@event`. Use named handlers — no callback props.
+
+Dispatch through `hostDispatch(host, name, detail?)` from `utils/host-dispatch.ts`. It exists because six modal components had each grown the same private wrapper: the `{ bubbles: true, composed: true }` options repeat on every event, and a component emitting `saved` and `cancel` writes them twice. Taking `host` as the first argument is what keeps the rule below intact — the helper cannot be called on the click target by accident.
 
 ```ts
 // child: event name is a module constant (no magic string); emit from host
 // (the element the parent listens on) via a named handler
 const CANCEL_EVENT = "cancel";
-const handleCancel = () =>
-  host.dispatchEvent(new CustomEvent(CANCEL_EVENT, { bubbles: true, composed: true }));
+const handleCancel = () => hostDispatch(host, CANCEL_EVENT);
 html`<button @click=${handleCancel}>Cancel</button>`;
 
 // parent: the @event name must be a literal here (lit-html parses the template)

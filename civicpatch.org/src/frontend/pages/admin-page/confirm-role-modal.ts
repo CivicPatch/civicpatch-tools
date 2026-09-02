@@ -2,6 +2,7 @@ import { html } from "lit-html";
 import { component } from "haunted";
 import { getRoleMeta, roleRank } from "./roles-meta.js";
 import "../../components/basic/modal.js";
+import { hostDispatch } from "../../utils/host-dispatch.js";
 
 export type ConfirmRoleContext = {
   userId: string;
@@ -22,11 +23,8 @@ function ConfirmRoleModal(host: ConfirmRoleModalHost) {
   const ctx = host.context;
   if (!ctx) return html``;
 
-  const dispatch = (name: string, detail?: unknown) =>
-    host.dispatchEvent(new CustomEvent(name, { detail, bubbles: true, composed: true }));
-
-  const handleCancel = () => dispatch("modal-close");
-  const handleConfirm = () => dispatch("role-confirmed", { ...ctx });
+  const handleCancel = () => hostDispatch(host, "modal-close");
+  const handleConfirm = () => hostDispatch(host, "role-confirmed", { ...ctx });
 
   const isPromote = roleRank(ctx.toRole) > roleRank(ctx.fromRole);
   // The target role's meta drives the copy when promoting (powers gained).

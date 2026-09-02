@@ -1,5 +1,5 @@
 /**
- * Overview (2026-07-30 spec) — triage a whole card at a glance, at ?view=overview.
+ * Overview (2026-07-30 spec) — triage a whole card at a glance.
  *
  * One roster in seat order: status is carried by the card, so position is free.
  * The collapse rule decides what a card says and `status` decides how it looks —
@@ -11,18 +11,18 @@ import { test, expect } from "../fixtures/index.js";
 import { SCALE_CHANGESET_ID } from "../fixtures/db.js";
 
 const openOverview = async (page, changesetId = SCALE_CHANGESET_ID) => {
-  await page.goto(`/review/session?changeset_id=${changesetId}&view=overview`);
+  await page.goto(`/review/session?changeset_id=${changesetId}`);
   await expect(page.locator("review-overview")).toBeVisible();
 };
 
 const rowFor = (page, name) =>
   page
-    .locator(".review-row")
+    .locator("review-overview .review-row")
     .filter({ has: page.locator(".review-row__name", { hasText: name }) });
 
 const foldFor = (page, name) =>
   page
-    .locator(".review-fold")
+    .locator("review-overview .review-fold")
     .filter({ has: page.locator(".review-fold__name", { hasText: name }) });
 
 test.describe("Review overview", () => {
@@ -36,8 +36,8 @@ test.describe("Review overview", () => {
     // This replaced a two-group assertion (counts "18"/"25", 25 faces in a strip).
     // The groups are gone: grouping moved people to express status, and now the
     // card expresses it, so seat order survives instead.
-    await expect(page.locator(".review-row:not(.review-row--ghost)")).toHaveCount(18);
-    await expect(page.locator(".review-fold")).toHaveCount(25);
+    await expect(page.locator("review-overview .review-row:not(.review-row--ghost)")).toHaveCount(18);
+    await expect(page.locator("review-overview .review-fold")).toHaveCount(25);
 
     // An untouched person is still present and still theirs to open — folded, not
     // dropped from the list.
@@ -209,9 +209,9 @@ test.describe("Review overview", () => {
     authenticatedPage: page,
   }) => {
     await openOverview(page);
-    const before = await page.locator(".review-row:not(.review-row--ghost)").count();
+    const before = await page.locator("review-overview .review-row:not(.review-row--ghost)").count();
 
-    await page.locator(".review-row--ghost").click();
+    await page.locator("review-overview .review-row--ghost").click();
 
     // A new person is empty, so the reviewer is put where they can fill them in
     // rather than left looking at a blank card. This needs the modal to open as
@@ -225,17 +225,9 @@ test.describe("Review overview", () => {
     // affordance stood. Not *last* overall, though — departing people have no slot
     // and trail everything (see buildReviewCards), so the new person is the last of
     // the people still on the roster.
-    await expect(page.locator(".review-row:not(.review-row--ghost)")).toHaveCount(before + 1);
+    await expect(page.locator("review-overview .review-row:not(.review-row--ghost)")).toHaveCount(before + 1);
     const staying =
       ".review-row:not(.review-row--ghost):not(.review-row--removed):not(.review-row--deleted)";
     await expect(page.locator(`${staying} .review-row__name`).last()).toHaveText("(unnamed)");
-  });
-
-  test("switching view writes ?view= so a refresh lands back there", async ({
-    authenticatedPage: page,
-  }) => {
-    await openOverview(page);
-    await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
-    await expect(page).toHaveURL(/view=detail/);
   });
 });
