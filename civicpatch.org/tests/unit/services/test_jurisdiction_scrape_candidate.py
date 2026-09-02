@@ -19,7 +19,7 @@ def _patch(stale, open_pr=None, active_job=None, pending_issue=None):
             new_callable=AsyncMock, return_value=stale,
         ),
         patch(
-            "services.jurisdiction_scrape_candidate.pull_requests_db.get_open_pr_ocdids_by_state",
+            "services.jurisdiction_scrape_candidate.review_pool_db.open_ocdids_by_state",
             new_callable=AsyncMock, return_value=open_pr or set(),
         ),
         patch(

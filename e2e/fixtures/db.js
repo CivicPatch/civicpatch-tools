@@ -289,22 +289,22 @@ function asSightings(proposed) {
  */
 async function seedReviewCard(
   client,
-  { changesetId, ocdid, people = [], publishedAt = null, ageSeconds = 0, openDataUrl = null },
+  { changesetId, ocdid, people = [], publishedAt = null, ageSeconds = 0, changeUrl = null },
 ) {
   await client.query(
     // `ageSeconds` makes the queue order intentional rather than an accident of insertion
     // time. The queue sorts `created_at DESC`, and cards seeded in one run otherwise share a
     // timestamp to the microsecond — so which card a session opened first was arbitrary.
     // Age 0 is the newest, and therefore the first card a review session offers.
-    // `open_data_url` is where the change landed. It used to live on `pull_requests`, which
+    // `change_url` is where the change landed. It used to live on `pull_requests`, which
     // migration 141 dropped — so a published card had no url to link to and the review page
     // simply rendered no link.
     `INSERT INTO changesets (id, kind, jurisdiction_ocdid, arguments_json,
-                           status, progress, sourced_at, created_at, published_at, open_data_url)
+                           status, progress, sourced_at, created_at, published_at, change_url)
      VALUES ($1, 'scrape', $2, '{}', 'success', 100, NOW(),
              NOW() - ($4 * INTERVAL '1 second'), $3, $5)
      ON CONFLICT (id) DO NOTHING`,
-    [changesetId, ocdid, publishedAt, ageSeconds, openDataUrl],
+    [changesetId, ocdid, publishedAt, ageSeconds, changeUrl],
   );
   // Re-seeding must not double the sightings: source_records has an auto id, so there is
   // nothing to ON CONFLICT on.
@@ -686,7 +686,7 @@ export async function seedE2eFixtures() {
     // Alice, Bob and Dave are already published here; the scrape finds Alice, Bob and Carol.
     // That is what makes each issue kind reachable: Carol is new, Dave is absent, and Alice and
     // Bob both hold "Mayor" — the duplicated unique role. Seeding only the proposed side made
-    // all three read as new_official and produced no absent_official at all.
+    // all three read as new_person and produced no absent_person at all.
     const markersPublished = [
       {
         id: "markers-alice",
@@ -781,7 +781,7 @@ export async function seedE2eFixtures() {
       changesetId: READ_ONLY_CHANGESET_ID,
       ocdid: READ_ONLY_JURISDICTION_OCDID,
       publishedAt: new Date().toISOString(),
-      openDataUrl: READ_ONLY_PR_URL,
+      changeUrl: READ_ONLY_PR_URL,
       people: [
         {
           person_id: "e2e-jane-published",

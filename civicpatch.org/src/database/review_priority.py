@@ -1,4 +1,6 @@
-"""How the review queue weighs and counts a card.
+"""What a card is worth, for ordering the review pool.
+
+The other half of `review_pool`: that one decides membership, this one decides order.
 
 ⚠️ **Only the post issues reach the ordering today.** The five roster checks are computed at
 read from the published and proposed rosters — neither of which SQL can derive — so they show
@@ -6,8 +8,8 @@ on the card but cannot sort the pool. `.scratch/2026-08-25-retire-review-json.md
 them in `roster_issues` and restores the full score; until then the queue orders on unverified
 posts, then recency.
 
-Not in `requests.py`: the score reads `posts` too, and importing posts there closes a cycle
-(`requests` → `posts` → `change_logs` → `requests`).
+Not in `changesets.py`: the score reads `posts` too, and importing posts there closes a cycle
+(`changesets` → `posts` → `change_logs` → `changesets`).
 """
 
 from typing import LiteralString, cast
@@ -21,10 +23,10 @@ from shared.schemas import IssueCode
 _ISSUE_WEIGHT = {
     IssueCode.TOO_FEW_PEOPLE: 10,        # the roster is incomplete; publishing retires people
     IssueCode.DUPLICATE_UNIQUE_ROLE: 8,  # two mayors is a contradiction, not a judgement call
-    IssueCode.ABSENT_OFFICIAL: 5,        # someone we hold is gone
+    IssueCode.ABSENT_PERSON: 5,        # someone we hold is gone
     IssueCode.MOVED_PERSON: 4,           # someone we hold is in a different seat
-    IssueCode.NEW_OFFICIAL: 3,           # someone arrived
-    # Below NEW_OFFICIAL: a person found in a post we have never seen raises both, which is one
+    IssueCode.NEW_PERSON: 3,           # someone arrived
+    # Below NEW_PERSON: a person found in a post we have never seen raises both, which is one
     # event seen twice. Counted from `posts`, never stored, so its CASE arm never matches — the
     # entry is here so one table holds every weight.
     IssueCode.UNVERIFIED_POST: 2,

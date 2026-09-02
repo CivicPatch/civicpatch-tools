@@ -13,7 +13,7 @@ import database.issues
 import database.jurisdictions as jurisdictions_db
 import database.people
 import database.pipeline_runs
-import database.pull_requests as pull_requests_db
+import database.review_pool as review_pool_db
 import database.users
 import services.roster_edits as roster_edits
 import shared.utils.data_path_utils
@@ -111,7 +111,7 @@ def get_router(api_key_header):
         jurisdiction_ocdid: str,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        pull_requests, _, _ = await pull_requests_db.list_open_pull_requests(
+        pull_requests, _, _ = await review_pool_db.list_open_changesets(
             jurisdiction_ocdid=jurisdiction_ocdid
         )
         return {"data": pull_requests}
@@ -161,7 +161,7 @@ def get_router(api_key_header):
             paged_pull_requests,
             total,
             with_issues,
-        ) = await pull_requests_db.list_open_pull_requests(
+        ) = await review_pool_db.list_open_changesets(
             state_code=state_code,
             jurisdiction_ocdid=jurisdiction_ocdid,
             page=page,
@@ -232,7 +232,7 @@ def get_router(api_key_header):
         changeset_id: str,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        result = await pull_requests_db.get_pull_request_data_by_changeset_id(changeset_id)
+        result = await review_pool_db.get_changeset_data(changeset_id)
         if not result:
             raise HTTPException(status_code=404, detail="Pull request not found")
 

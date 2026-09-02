@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
-from database.pull_requests import get_pull_request_data_by_changeset_id
+from database.review_pool import get_changeset_data
 from shared.utils.statuses import ChangesetKind
 
 
@@ -27,8 +27,8 @@ def _make_pool(cursor):
 @pytest.mark.unit
 async def test_returns_none_when_not_found():
     cur = _make_cursor(None)
-    with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_pull_request_data_by_changeset_id("req-missing")
+    with patch("database.review_pool.get_pool", AsyncMock(return_value=_make_pool(cur))):
+        result = await get_changeset_data("req-missing")
     assert result is None
 
 
@@ -41,15 +41,15 @@ async def test_returns_row_for_a_pending_review():
     from the request's sightings rather than stored beside it."""
     row = (
         "req-abc",          # id
-        None,               # open_data_url — nothing published yet
+        None,               # change_url — nothing published yet
         "pending",          # derived review status
         "ocd-jurisdiction/country:us/state:tx/place:austin/government",  # jurisdiction_ocdid
         "Austin",           # jurisdiction_name
         "https://austintexas.gov",  # jurisdiction_website_url
     )
     cur = _make_cursor(row)
-    with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_pull_request_data_by_changeset_id("req-abc")
+    with patch("database.review_pool.get_pool", AsyncMock(return_value=_make_pool(cur))):
+        result = await get_changeset_data("req-abc")
 
     assert result is not None
     assert result["changeset_id"] == "req-abc"
@@ -70,8 +70,8 @@ async def test_returns_row_for_a_published_review():
         None,
     )
     cur = _make_cursor(row)
-    with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_pull_request_data_by_changeset_id("req-xyz")
+    with patch("database.review_pool.get_pool", AsyncMock(return_value=_make_pool(cur))):
+        result = await get_changeset_data("req-xyz")
 
     assert result is not None
     assert result["pr"]["status"] == "published"
@@ -85,8 +85,8 @@ async def test_lookup_is_scoped_to_people_requests():
     *ask for*. Without the scope, deeplinking a jurisdiction edit's changeset_id would
     resolve as a review card with an empty roster and a Publish button."""
     cur = _make_cursor(None)
-    with patch("database.pull_requests.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        await get_pull_request_data_by_changeset_id("req-abc")
+    with patch("database.review_pool.get_pool", AsyncMock(return_value=_make_pool(cur))):
+        await get_changeset_data("req-abc")
 
     sql, params = cur.execute.await_args.args
     # Deny-list, not allow-list: kind defaults to 'scrape' and legacy rows

@@ -20,7 +20,7 @@ from core.post_derivation import ChosenPost, DerivedPost, SourcedPerson, derived
 from database import posts as posts_db
 from database.database import get_pool
 from database.people import get_roster
-from database.publications import dismiss_request, publish_request, record_open_data_url
+from database.publications import dismiss_request, publish_request, record_change_url
 from database.roles import get_roles
 from lib.temporal.types import (
     CommitSource,
@@ -179,7 +179,7 @@ async def commit_rendered_file(
         commit_message=commit_message,
     )
     if commit_url and changeset_id:
-        await record_open_data_url(changeset_id, commit_url)
+        await record_change_url(changeset_id, commit_url)
     return commit_url
 
 
@@ -207,7 +207,7 @@ async def commit_rendered_files(
     if not commit_url:
         return None
     for item in items:
-        await record_open_data_url(item.changeset_id, commit_url)
+        await record_change_url(item.changeset_id, commit_url)
     return commit_url
 
 

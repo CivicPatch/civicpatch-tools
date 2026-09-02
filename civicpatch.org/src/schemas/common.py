@@ -139,4 +139,4 @@ class PeoplePipelineRunHistory(BaseModel):
     updated_at: float
     status: str
     progress: int
-    open_data_url: Optional[str]
+    change_url: Optional[str]

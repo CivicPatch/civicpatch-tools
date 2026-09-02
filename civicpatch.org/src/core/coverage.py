@@ -29,7 +29,7 @@ class StateCoverage(BaseModel):
     # breakdown's sum-to-scrapeable invariant. A jurisdiction can be both
     # blocked AND need review; this field answers "how many need review" without
     # that exclusivity, matching services.coverage.get_municipality_list's
-    # `needs_review` (same get_open_pr_ocdids_by_state signal, unfiltered).
+    # `needs_review` (same open_ocdids_by_state signal, unfiltered).
     needs_review_count: int
 
     @computed_field

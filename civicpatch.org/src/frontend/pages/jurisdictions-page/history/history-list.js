@@ -192,8 +192,8 @@ function HistoryList({ history, pipelineRunStatus, canCancel, onCancel, isSigned
                       ></civ-status-badge>
                       ${item.review_status ? html`
                         <span class="status-arrow">→</span>
-                        ${item.open_data_url ? html`
-                          <a href="${item.open_data_url}" target="_blank" rel="noopener" style="text-decoration: none;">
+                        ${item.change_url ? html`
+                          <a href="${item.change_url}" target="_blank" rel="noopener" style="text-decoration: none;">
                             <civ-status-badge
                               label="${item.review_status}"
                               bg="${statusBadgeProps(item.review_status).bg}"

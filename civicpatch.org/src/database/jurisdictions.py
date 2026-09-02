@@ -538,7 +538,7 @@ async def get_jurisdiction_history(
             SELECT r.id::text,
                    r.created_at,
                    r.sourced_at,
-                   r.status, r.progress, r.open_data_url, {REVIEW_STATUS},
+                   r.status, r.progress, r.change_url, {REVIEW_STATUS},
                    r.kind,
                    r.published_at,
                    {RUN_IN_FLIGHT} AS is_running,
@@ -565,7 +565,7 @@ async def get_jurisdiction_history(
                     "updated_at": to_iso(row[2]),
                     "pipeline_run_status": row[3],
                     "pipeline_run_progress": row[4],
-                    "open_data_url": row[5],
+                    "change_url": row[5],
                     "review_status": row[6],
                     "kind": row[7],
                     # When a *person* published it, not when the machine finished. The header

@@ -10,7 +10,7 @@ import {
 import { type Issue } from "../components/fields/field-model.js";
 
 const issue = (over: Partial<Issue> = {}): Issue => ({
-  code: "new_official",
+  code: "new_person",
   message: "Extra official: Carol Extra",
   ...over,
 });

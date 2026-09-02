@@ -1,3 +1,10 @@
+"""Which changesets are available for review, and the reads the review pool needs.
+
+Named for the pool rather than for `pull_requests`, the table it used to query and which
+migration 141 dropped. `review_priority` is the other half: this decides membership,
+`AVAILABLE_FOR_REVIEW`, and that one decides ordering.
+"""
+
 from typing import List, Optional
 
 from psycopg import sql
@@ -7,11 +14,11 @@ from shared.utils.statuses import (
 )
 from database.database import get_pool, to_iso
 from database.changesets import AVAILABLE_FOR_REVIEW, REVIEW_STATUS, WORK_IN_FLIGHT
-from database.review_queue import issue_count, issue_priority
+from database.review_priority import issue_count, issue_priority
 
 
 
-async def list_open_pull_requests(
+async def list_open_changesets(
     state_code: Optional[str] = None,
     jurisdiction_ocdid: Optional[str] = None,
     page: int = 1,
@@ -49,7 +56,7 @@ async def list_open_pull_requests(
 
         await cur.execute(
             sql.SQL("""
-            SELECT r.id::text, r.open_data_url, {status},
+            SELECT r.id::text, r.change_url, {status},
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    r.created_at,
@@ -82,12 +89,12 @@ async def list_open_pull_requests(
     return results, total, with_issues
 
 
-async def get_pull_request_for_review(changeset_id: str) -> Optional[dict]:
+async def get_changeset_for_review(changeset_id: str) -> Optional[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT r.open_data_url, {REVIEW_STATUS},
+            SELECT r.change_url, {REVIEW_STATUS},
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    jur.data->>'url' AS jurisdiction_website_url
@@ -117,12 +124,12 @@ async def get_pull_request_for_review(changeset_id: str) -> Optional[dict]:
 
 
 
-async def get_pull_request_data_by_changeset_id(changeset_id: str) -> Optional[dict]:
+async def get_changeset_data(changeset_id: str) -> Optional[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT r.id::text, r.open_data_url, {REVIEW_STATUS},
+            SELECT r.id::text, r.change_url, {REVIEW_STATUS},
                    r.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    jur.data->>'url' AS jurisdiction_website_url
@@ -147,11 +154,11 @@ async def get_pull_request_data_by_changeset_id(changeset_id: str) -> Optional[d
 # These two answer "is there already work in flight for this jurisdiction?" — they gate
 # starting a duplicate scrape, choosing the next scrape candidate, and the coverage figure.
 # They asked GitHub because an open pull request used to BE that state. Nothing opens one now,
-# so the question is a plain test on the request: submitted, and neither published nor
-# dismissed. Left on pull_requests they would answer "nothing in flight" for every scrape.
+# so the question is a plain test on the changeset: submitted, and neither published nor
+# dismissed. Left on the old table they would answer "nothing in flight" for every scrape.
 
 
-async def get_open_pr_ocdids_by_state(state_code: str) -> set[str]:
+async def open_ocdids_by_state(state_code: str) -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -167,7 +174,7 @@ async def get_open_pr_ocdids_by_state(state_code: str) -> set[str]:
     return {row[0] for row in rows}
 
 
-async def has_open_pr_for_jurisdiction(jurisdiction_ocdid: str) -> bool:
+async def has_open_changeset(jurisdiction_ocdid: str) -> bool:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(

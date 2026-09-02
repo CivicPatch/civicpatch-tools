@@ -205,7 +205,7 @@ def get_router() -> APIRouter:
             no_op = url_or_error in set(jurisdiction_pr_service.EditRejection)
             return JSONResponse({"error": url_or_error}, status_code=400 if no_op else 500)
         # No background merge: the commit already landed, so the response is the outcome.
-        return {"data": {"open_data_url": commit_url}}
+        return {"data": {"change_url": commit_url}}
 
     @router.get("/search")
     async def search_jurisdictions_endpoint(

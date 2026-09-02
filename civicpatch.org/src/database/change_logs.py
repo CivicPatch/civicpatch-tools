@@ -36,7 +36,7 @@ async def get_change_logs_for_roles(
                    cl.changes, cl.created_at,
                    COALESCE(u.display_name, 'Anonymous') AS author_name, u.role AS author_role,
                    COALESCE(j.data->>'name', cl.jurisdiction_ocdid) AS jurisdiction_name,
-                   r.open_data_url AS pull_request_url
+                   r.change_url AS pull_request_url
             FROM change_logs cl
             JOIN users u ON u.id = cl.user_id
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = cl.jurisdiction_ocdid

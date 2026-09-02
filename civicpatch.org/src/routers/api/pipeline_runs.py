@@ -29,8 +29,8 @@ from database.pipeline_runs import (
     get_pipeline_run_status,
     update_pipeline_run_status,
 )
-from database.pull_requests import (
-    has_open_pr_for_jurisdiction,
+from database.review_pool import (
+    has_open_changeset,
 )
 from database.changesets import (
     get_issue_request_details,
@@ -220,7 +220,7 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
-        if await has_open_pr_for_jurisdiction(request.jurisdiction_ocdid):
+        if await has_open_changeset(request.jurisdiction_ocdid):
             return JSONResponse(
                 content=ErrorResponse(
                     error="A scrape for this jurisdiction is already in flight"

@@ -16,7 +16,7 @@ from database.changesets import DISMISSED_UNCHANGED, dismiss_as_unchanged
 from database.review_sessions import create_or_get_review_session, get_active_review_session
 from database.review_sessions import end_review_session
 from database.publications import publish_request
-from database.pull_requests import list_open_pull_requests
+from database.review_pool import list_open_changesets
 from database.issues import create_user_reported_issue, resolve_issue
 from database.review_session_navigation import navigate_to_entry
 
@@ -424,12 +424,12 @@ async def test_publishing_removes_the_card_from_the_pool_for_good():
     """
     changeset_id, ocdid = await _seed_open_pr("x")
     try:
-        before, _, _ = await list_open_pull_requests(state_code="zz")
+        before, _, _ = await list_open_changesets(state_code="zz")
         assert changeset_id in [r["changeset_id"] for r in before], "unpublished scrape starts in the pool"
 
         await publish_request(changeset_id, ocdid, [])
 
-        after, _, _ = await list_open_pull_requests(state_code="zz")
+        after, _, _ = await list_open_changesets(state_code="zz")
         assert changeset_id not in [r["changeset_id"] for r in after], "published scrape must leave the pool"
     finally:
         await _cleanup_open_pr(changeset_id, ocdid)
@@ -446,17 +446,17 @@ async def test_reported_pr_leaves_pool_until_issue_resolved():
     """
     changeset_id, ocdid = await _seed_open_pr("reported")
     try:
-        before, _, _ = await list_open_pull_requests(state_code="zz")
+        before, _, _ = await list_open_changesets(state_code="zz")
         assert changeset_id in [r["changeset_id"] for r in before], "open PR should start in the pool"
 
         issue_id = await create_user_reported_issue(
             changeset_id, "title", "body", "https://github.com/x/y/issues/1", 1, str(uuid.uuid4())
         )
-        reported, _, _ = await list_open_pull_requests(state_code="zz")
+        reported, _, _ = await list_open_changesets(state_code="zz")
         assert changeset_id not in [r["changeset_id"] for r in reported], "reported PR must leave the pool"
 
         await resolve_issue(issue_id)
-        after, _, _ = await list_open_pull_requests(state_code="zz")
+        after, _, _ = await list_open_changesets(state_code="zz")
         assert changeset_id in [r["changeset_id"] for r in after], "PR returns to the pool once the issue is resolved"
     finally:
         pool = await get_pool()
@@ -558,7 +558,7 @@ async def test_a_scrape_with_no_roster_never_reaches_the_pool():
             "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,)
         )
 
-    rows, _, _ = await list_open_pull_requests(jurisdiction_ocdid=ocdid)
+    rows, _, _ = await list_open_changesets(jurisdiction_ocdid=ocdid)
     assert changeset_id not in [r["changeset_id"] for r in rows]
 
 
@@ -594,14 +594,14 @@ async def test_a_scrape_that_changed_nothing_leaves_the_pool_saying_why():
         )
         await conn.commit()
 
-    rows, _, _ = await list_open_pull_requests(jurisdiction_ocdid=ocdid)
+    rows, _, _ = await list_open_changesets(jurisdiction_ocdid=ocdid)
     assert changeset_id in [r["changeset_id"] for r in rows]
 
     async with pool.connection() as conn, conn.cursor() as cur:
         assert await dismiss_as_unchanged(cur, changeset_id) is True
         await conn.commit()
 
-    rows, _, _ = await list_open_pull_requests(jurisdiction_ocdid=ocdid)
+    rows, _, _ = await list_open_changesets(jurisdiction_ocdid=ocdid)
     assert changeset_id not in [r["changeset_id"] for r in rows]
 
     async with pool.connection() as conn, conn.cursor() as cur:

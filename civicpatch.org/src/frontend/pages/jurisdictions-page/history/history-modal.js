@@ -29,8 +29,8 @@ function HistoryModal({ open, item, onClose }) {
           <p><strong>Job status:</strong> ${item.pipeline_run_status}</p>
           <p><strong>Progress:</strong> ${item.pipeline_run_progress ?? "?"}%</p>
           <p><strong>Time to scrape:</strong> ${getDurationString(item.created_at, item.updated_at)}</p>
-          ${item.open_data_url ? html`
-            <p><strong>Published to:</strong> <a href="${item.open_data_url}" target="_blank" rel="noopener">${item.open_data_url}</a></p>
+          ${item.change_url ? html`
+            <p><strong>Published to:</strong> <a href="${item.change_url}" target="_blank" rel="noopener">${item.change_url}</a></p>
             <p><strong>Review status:</strong> ${item.review_status}</p>
           ` : null}
           <p><strong>URLs scraped:</strong></p>

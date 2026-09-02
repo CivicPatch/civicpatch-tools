@@ -69,7 +69,7 @@ def test_a_seat_move_is_raised_against_the_person_and_anchored_to_the_post_field
     "disposition", [Disposition.UNCHANGED, Disposition.NEW, Disposition.ABSENT]
 )
 def test_only_a_move_raises_one(disposition: Disposition):
-    """Arrivals and departures are already `new_official` and `absent_official`; raising this
+    """Arrivals and departures are already `new_person` and `absent_person`; raising this
     for them too would report one event twice."""
     assert moved_person_issues([_change(disposition)]) == []
 
