@@ -10,14 +10,14 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from typing import Dict, List, Tuple
 
-from shared.schemas import Person, PersonRecord
+from shared.schemas import Person, PersonSourceRecord
 from shared.utils import email_utils, name_utils, phone_utils, url_utils
 from shared.utils.label_parser import parse_label
 from shared.utils.log_protocol import Log
 from shared.utils.taxonomy import Taxonomy
 
 
-def term_dates(records: List[PersonRecord]) -> tuple[str, str]:
+def term_dates(records: List[PersonSourceRecord]) -> tuple[str, str]:
     """The term the sources agree on. Not on `Person`: a term belongs to the tenure, so it
     goes to the membership, and the roster document carries it in transit."""
     return (
@@ -26,7 +26,7 @@ def term_dates(records: List[PersonRecord]) -> tuple[str, str]:
     )
 
 
-def merge_labels(records: List[PersonRecord], taxonomy: Taxonomy) -> List[str]:
+def merge_labels(records: List[PersonSourceRecord], taxonomy: Taxonomy) -> List[str]:
     """One label per distinct statement, not per distinct spelling.
 
     Deduped on the parse: "Councilmember Position 8" and "Council Member Position 8" are one
@@ -59,7 +59,7 @@ def merge_field_to_list(values: List[str]) -> List[str]:
     return sorted({value for value in values if value})
 
 
-def normalize_record(log: Log, record: PersonRecord) -> PersonRecord:
+def normalize_record(log: Log, record: PersonSourceRecord) -> PersonSourceRecord:
     normalized_phone = (
         phone_utils.normalize_phone_number(record.phone) if record.phone else None
     )
@@ -73,7 +73,7 @@ def normalize_record(log: Log, record: PersonRecord) -> PersonRecord:
             record.url = url_utils.format_url(normalized_email)
         normalized_email = None
 
-    return PersonRecord(
+    return PersonSourceRecord(
         name=record.name,
         # Verbatim: normalizing here is what 2.2 removed — cp.org parses.
         label=record.label,
@@ -88,9 +88,9 @@ def normalize_record(log: Log, record: PersonRecord) -> PersonRecord:
 
 
 def merge_weak_tie_groups(
-    groups: Dict[str, List[PersonRecord]],
+    groups: Dict[str, List[PersonSourceRecord]],
     taxonomy: Taxonomy,
-) -> Dict[str, List[PersonRecord]]:
+) -> Dict[str, List[PersonSourceRecord]]:
     """Fold a last-name-only group into a full-name one sharing that surname and an office."""
 
     def is_last_name_only(name: str) -> bool:
@@ -100,7 +100,7 @@ def merge_weak_tie_groups(
         parsed = name_utils.parse_name(name)
         return parsed.last.lower() if parsed.last else name.split()[-1].lower()
 
-    def office_keys(records: List[PersonRecord]) -> set:
+    def office_keys(records: List[PersonSourceRecord]) -> set:
         """(role, division, designations) per record. Parsed, not compared raw, so two
         spellings of one office still match; the parse is discarded after the merge."""
         result = set()
@@ -111,7 +111,7 @@ def merge_weak_tie_groups(
         return result
 
     weak_keys = [k for k in groups if is_last_name_only(k)]
-    result: Dict[str, List[PersonRecord]] = dict(groups)
+    result: Dict[str, List[PersonSourceRecord]] = dict(groups)
 
     for wk in weak_keys:
         if wk not in result:
@@ -133,12 +133,12 @@ def merge_weak_tie_groups(
     return result
 
 
-def get_source_urls(person_records: List[PersonRecord]) -> List[str]:
+def get_source_urls(person_records: List[PersonSourceRecord]) -> List[str]:
     """Every page the person was seen on — a sighting exists because that page named them."""
     return sorted({record.source_url for record in person_records if record.source_url})
 
 
-def canonical_name(published_name: str, records: List[PersonRecord]) -> str:
+def canonical_name(published_name: str, records: List[PersonSourceRecord]) -> str:
     """Which of a person's spellings becomes their name.
 
     A name we already know them by wins outright: that is a human's answer, and a scrape must
@@ -157,7 +157,7 @@ def canonical_name(published_name: str, records: List[PersonRecord]) -> str:
 def merge_records_to_person(
     log: Log,
     canonical_name: str,
-    records: List[PersonRecord],
+    records: List[PersonSourceRecord],
     jurisdiction_ocdid: str,
     taxonomy: Taxonomy,
 ) -> Person:
@@ -195,12 +195,12 @@ def merge_records_to_person(
 
 
 def derived_people(
-    records: List[PersonRecord],
+    records: List[PersonSourceRecord],
     identities: Dict[str, List[str]],
     taxonomy: Taxonomy,
     jurisdiction_ocdid: str,
     log: Log,
-) -> List[Tuple[Person, List[PersonRecord]]]:
+) -> List[Tuple[Person, List[PersonSourceRecord]]]:
     """Group a scrape's sightings into people, each with the records behind it.
 
     Everyone seen comes back: scope lives on the post, as `posts._is_tracked`, not on whether
@@ -210,7 +210,7 @@ def derived_people(
         [{"name": r.name} for r in records], identities
     )
 
-    groups: Dict[str, List[PersonRecord]] = defaultdict(list)
+    groups: Dict[str, List[PersonSourceRecord]] = defaultdict(list)
     for record in records:
         groups[canonical_map.get(record.name, record.name)].append(record)
 

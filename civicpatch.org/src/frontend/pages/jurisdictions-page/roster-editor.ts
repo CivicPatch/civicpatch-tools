@@ -21,10 +21,10 @@ import { emptyPerson } from "../../components/edit-people/people-editing.js";
 import { blockingErrors, buildPersonCards, type PersonCard } from "../../components/people/person-cards.js";
 import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
 import { EMPTY_FROZEN } from "../review-session-page/frozen-fields.js";
-import { renderOfficialsCards } from "./officials-section.js";
+import { renderRosterCards } from "./roster-section.js";
 import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
 
-interface OfficialsEditorProps {
+interface RosterEditorProps {
   people: any[];
   jurisdictionOcdid: string;
   canEdit: boolean;
@@ -47,14 +47,14 @@ function publishLabel(blockerCount: number, stage: PublishStage): string {
   return "Publish changes";
 }
 
-function OfficialsEditor({
+function RosterEditor({
   people,
   jurisdictionOcdid,
   canEdit,
   isLoading,
   blockedReason,
   onPublished,
-}: OfficialsEditorProps) {
+}: RosterEditorProps) {
   const posts = useJurisdictionPosts(jurisdictionOcdid);
   const published = people ?? [];
   const state = usePeopleState({ people: published });
@@ -158,8 +158,8 @@ function OfficialsEditor({
       // and an empty list is how that is said — better than rendering a control
       // whose handler does nothing.
       cards: [],
-      mergeOpenId: null,
-      onToggleMerge: () => {},
+      candidatesOpenFor: null,
+      onToggleCandidates: () => {},
       onPickPartner: () => {},
     });
 
@@ -185,7 +185,7 @@ function OfficialsEditor({
     : nothing;
 
   return html`
-    ${renderOfficialsCards({
+    ${renderRosterCards({
       cards,
       isLoading,
       blockedReason,
@@ -209,6 +209,6 @@ function OfficialsEditor({
 }
 
 customElements.define(
-  "civ-officials-editor",
-  component(OfficialsEditor as any, { useShadowDOM: false }),
+  "civ-roster-editor",
+  component(RosterEditor as any, { useShadowDOM: false }),
 );

@@ -3,14 +3,14 @@
 `people_derivation` decides who the people are; this decides how they are presented — sorted,
 identified, and rendered. `post_derivation` reads what comes out.
 
-A submit carries `PersonRecord`s, one per sighting.
+A submit carries `PersonSourceRecord`s, one per sighting.
 
 Pure: rows and a taxonomy in, a roster out.
 """
 
 from collections import defaultdict
 
-from shared.schemas import Person, PersonRecord
+from shared.schemas import Person, PersonSourceRecord
 from shared.utils.log_protocol import Log
 from shared.utils.people_utils import sort_people
 from shared.utils.person_fields import order_person_fields
@@ -51,7 +51,7 @@ def roster_from_rows(
         return [], {}
 
     derived = derived_people(
-        [PersonRecord(**row) for row in rows],
+        [PersonSourceRecord(**row) for row in rows],
         identities,
         taxonomy,
         jurisdiction_ocdid,
@@ -99,8 +99,8 @@ def _person_from_sightings(
     jurisdiction_ocdid: str,
     taxonomy: Taxonomy,
     log: Log,
-) -> tuple[Person, list[PersonRecord]]:
-    records = [PersonRecord(**row) for row in rows]
+) -> tuple[Person, list[PersonSourceRecord]]:
+    records = [PersonSourceRecord(**row) for row in rows]
     person = merge_records_to_person(
         log,
         canonical_name(published.name if published else "", records),
@@ -140,11 +140,11 @@ def _aliases_carried_forward(person: Person, published: Person | None) -> list[s
     )
 
 
-def reviewer_source_records(person: dict, label: str) -> list[PersonRecord]:
+def reviewer_source_records(person: dict, label: str) -> list[PersonSourceRecord]:
     if not person.get("name"):
         return []
     return [
-        PersonRecord(name=person["name"], label=label, source_url=source_url)
+        PersonSourceRecord(name=person["name"], label=label, source_url=source_url)
         for source_url in dict.fromkeys(person.get("source_urls") or [])
         if source_url
     ]
@@ -189,7 +189,7 @@ def with_fallback_url(person: Person) -> Person:
     return person.model_copy(update={"urls": [person.source_urls[0]]})
 
 
-def _rendered(person: Person, records: list[PersonRecord], taxonomy: Taxonomy) -> dict:
+def _rendered(person: Person, records: list[PersonSourceRecord], taxonomy: Taxonomy) -> dict:
     """The term comes off the records, not the person: it belongs to the tenure."""
     derived = derive_roles(person.labels, person.jurisdiction_ocdid, taxonomy)
     start_date, end_date = term_dates(records)
@@ -226,7 +226,7 @@ def _rendered(person: Person, records: list[PersonRecord], taxonomy: Taxonomy) -
 
 
 def _render(
-    people: list[tuple[Person, list[PersonRecord]]], taxonomy: Taxonomy
+    people: list[tuple[Person, list[PersonSourceRecord]]], taxonomy: Taxonomy
 ) -> list[dict]:
     """Sorted first, because the roster is rendered to a file a human reads and reviews.
 

@@ -7,14 +7,14 @@ from runners.people_collector.steps.step_05_cleanup.cleanup import (
     cleanup_cache,
     cleanup_images,
 )
-from shared.schemas import PersonRecord
+from shared.schemas import PersonSourceRecord
 from shared.utils import url_utils
 
 pytestmark = pytest.mark.unit
 
 
 def _record(label="Mayor", image=None, source_url="https://zz.gov/council", url=None):
-    return PersonRecord(
+    return PersonSourceRecord(
         name="Ann Lee", label=label, image=image, source_url=source_url, url=url
     )
 

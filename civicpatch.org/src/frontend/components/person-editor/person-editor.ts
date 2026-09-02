@@ -80,8 +80,8 @@ export interface PersonEditorProps {
   // Step 1 of a merge happens in place: the button opens a strip of the other
   // people on this card, so nothing stacks on top of whatever you are already in.
   mergeCandidates: PersonCard[];
-  isMergeOpen: boolean;
-  onToggleMerge: () => void;
+  isCandidateListOpen: boolean;
+  onToggleCandidates: () => void;
   onPickPartner: (partnerId: string) => void;
   // The field to open with the caret in, if any. Null everywhere the editor is a
   // list — only the modal opens on a field.
@@ -146,7 +146,7 @@ function renderHead(props: PersonEditorProps) {
 // other people on this card, in place, so nothing stacks on top of whatever the
 // reviewer is already in.
 function renderMergeCandidates(props: PersonEditorProps) {
-  if (props.isReadOnly || !props.isMergeOpen || !props.mergeCandidates.length) return nothing;
+  if (props.isReadOnly || !props.isCandidateListOpen || !props.mergeCandidates.length) return nothing;
   return html`
     <div class="person-editor__merge-with">
       <span class="person-editor__merge-lede">Which record is the same person?</span>
@@ -180,8 +180,8 @@ function renderActions(props: PersonEditorProps, departing: boolean) {
     ${props.mergeCandidates.length
       ? html`<button
           class="person-editor__merge"
-          aria-expanded=${props.isMergeOpen}
-          @click=${props.onToggleMerge}
+          aria-expanded=${props.isCandidateListOpen}
+          @click=${props.onToggleCandidates}
         >
           Merge with…
         </button>`

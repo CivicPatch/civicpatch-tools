@@ -5,7 +5,10 @@
 // one-person list, not a second one (§6). Extracted here so neither has to
 // reproduce the other's rules.
 
-import { visibleFields, type FrozenFields } from "../../pages/review-session-page/frozen-fields.js";
+import {
+  visibleFields,
+  type FrozenFields,
+} from "../../pages/review-session-page/frozen-fields.js";
 import { type Save } from "../fields/field-controls.js";
 import {
   postsFor,
@@ -15,16 +18,22 @@ import {
   type ProposedChange,
 } from "../people/person-cards.js";
 import { canMerge, mergeCandidates } from "../review/merge-model.js";
-import {
-  acceptsByField,
-  type PersonAssertion,
-} from "./field-provenance.js";
+import { acceptsByField, type PersonAssertion } from "./field-provenance.js";
 import { type PersonEditorProps } from "./person-editor.js";
 
 // Mirrors `UNMATCHED_ROLE_ID` in core/post_derivation.py — the seeded role a label
 // resolving to nothing falls back to.
 const UNMATCHED_ROLE_ID = "unmatched";
-import { heldPost, type DerivedPost, type Post } from "../posts-list/posts-model.js";
+import {
+  heldPost,
+  type DerivedPost,
+  type Post,
+} from "../posts-list/posts-model.js";
+
+export type EditorContextBase = Omit<
+  EditorContext,
+  "isExpanded" | "onToggleExpand"
+>;
 
 export interface EditorContext {
   frozen: FrozenFields;
@@ -51,11 +60,10 @@ export interface EditorContext {
   // Step 1 of a merge, in place on the editor: which person's strip is open, and
   // what to do when one of its candidates is picked.
   cards: PersonCard[];
-  mergeOpenId: string | null;
-  onToggleMerge: (personId: string) => void;
+  candidatesOpenFor: string | null;
+  onToggleCandidates: (personId: string) => void;
   onPickPartner: (anchorId: string, partnerId: string) => void;
 }
-
 
 /** The post this person is in — the proposal, else the one held membership (the same two
  * `postsFor` reads). Only when exactly one: two posts is no single answer. Shown, never saved.
@@ -72,13 +80,18 @@ function derivedPostFor(
     if (proposed.length > 1) return null;
     // `unmatched` is a vocabulary gap, not an answer.
     if (proposed[0].role_id === UNMATCHED_ROLE_ID) return null;
-    return { post_id: proposed[0].post_id ?? null, label: proposed[0].post_label };
+    return {
+      post_id: proposed[0].post_id ?? null,
+      label: proposed[0].post_label,
+    };
   }
   return heldPost(personOf(card)?.memberships);
 }
 
-
-export function personEditorPropsFor(card: PersonCard, ctx: EditorContext): PersonEditorProps {
+export function personEditorPropsFor(
+  card: PersonCard,
+  ctx: EditorContext,
+): PersonEditorProps {
   const save: Save = (updates) => ctx.onPersonSave(card.personId, updates);
   return {
     status: card.status,
@@ -110,8 +123,9 @@ export function personEditorPropsFor(card: PersonCard, ctx: EditorContext): Pers
     // Only the modal opens on a field; it sets this over the props it is handed.
     focusField: null,
     mergeCandidates: canMerge(card) ? mergeCandidates(card, ctx.cards) : [],
-    isMergeOpen: ctx.mergeOpenId === card.personId,
-    onToggleMerge: () => ctx.onToggleMerge(card.personId),
-    onPickPartner: (partnerId: string) => ctx.onPickPartner(card.personId, partnerId),
+    isCandidateListOpen: ctx.candidatesOpenFor === card.personId,
+    onToggleCandidates: () => ctx.onToggleCandidates(card.personId),
+    onPickPartner: (partnerId: string) =>
+      ctx.onPickPartner(card.personId, partnerId),
   };
 }

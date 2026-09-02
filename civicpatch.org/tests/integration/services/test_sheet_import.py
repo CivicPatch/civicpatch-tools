@@ -61,14 +61,16 @@ async def _cleanup():
         await cur.execute(
             "DELETE FROM posts WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
         )
+        # Changesets first: `changesets.organization_id` is a FK since 158, so an
+        # organization cannot go while a changeset still names it.
+        await cur.execute(
+            "DELETE FROM changesets WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
+        )
         await cur.execute(
             "DELETE FROM organizations WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
         )
         await cur.execute(
             "DELETE FROM divisions WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
-        )
-        await cur.execute(
-            "DELETE FROM changesets WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
         )
         await cur.execute(
             "DELETE FROM people WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)

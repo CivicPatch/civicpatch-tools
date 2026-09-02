@@ -11,7 +11,10 @@ import { html, nothing } from "lit-html";
 import { component } from "haunted";
 import "../person-image.js";
 import "./review-preview.css";
-import { renderPersonRow } from "../people/person-row.js";
+import {
+  renderPersonGrid,
+  type PersonRowProps,
+} from "../people/person-row.js";
 import { renderValues, sourceMapFor, type SourceMap } from "./preview-values.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import {
@@ -35,15 +38,15 @@ interface ReviewPreviewProps {
 
 // Not clickable: this is the published record, so the values are plain selectable
 // text you can copy field by field. Nothing here opens an editor.
-function renderCard(
+function rowFor(
   card: PersonCard,
   sources: SourceMap,
   proposals: Map<string, ProposedChange[]>,
-) {
+): PersonRowProps {
   const record = card.newRecord;
   const posts = postsFor(card, proposals);
 
-  return renderPersonRow({
+  return {
     record,
     name: record?.name || "(unnamed)",
     subtitle: posts,
@@ -52,7 +55,7 @@ function renderCard(
     // the one cue, and only ever a background.
     modifier: card.status,
     meta: renderValues(record, sources),
-  });
+  };
 }
 
 function ReviewPreview(props: ReviewPreviewProps) {
@@ -95,9 +98,9 @@ function ReviewPreview(props: ReviewPreviewProps) {
         : nothing}
 
       ${ordered.length
-        ? html`<div class="review-preview__grid">
-            ${ordered.map((card) => renderCard(card, sources, proposals))}
-          </div>`
+        ? renderPersonGrid(
+            ordered.map((card) => rowFor(card, sources, proposals)),
+          )
         : html`<p class="review-preview__empty">
             This card would publish an empty roster.
           </p>`}

@@ -10,7 +10,7 @@ from core.people_roster import (
     reviewer_source_records,
     with_fallback_url,
 )
-from shared.schemas import Person, PersonRecord, Role, RoleConfig, RoleStatus
+from shared.schemas import Person, PersonSourceRecord, Role, RoleConfig, RoleStatus
 from shared.utils.taxonomy import build_taxonomy
 
 # Pure — rows and a taxonomy in, a roster out. The ingest that calls this lives in
@@ -377,12 +377,12 @@ def test_an_added_person_becomes_one_record_per_page():
     }
 
     assert reviewer_source_records(added, "Council Member, District 5") == [
-        PersonRecord(
+        PersonSourceRecord(
             name="Ann Lee",
             label="Council Member, District 5",
             source_url="https://alpha.gov/council",
         ),
-        PersonRecord(
+        PersonSourceRecord(
             name="Ann Lee",
             label="Council Member, District 5",
             source_url="https://alpha.gov/directory",

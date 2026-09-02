@@ -11,7 +11,7 @@ import "../people/person-row.css";
 import "../person-editor/person-editor.css";
 import { dateStringToFriendly } from "../../utils/date-utils.js";
 import "../review-preview/review-preview.css";
-import { renderPersonRow } from "../people/person-row.js";
+import { renderPersonGrid } from "../people/person-row.js";
 import {
   renderValues,
   sourceMapFor,
@@ -22,32 +22,23 @@ import type { PersonMembership } from "../edit-people/person-edit-utils.js";
 
 const CLOSE_EVENT = "close-jurisdiction";
 
-interface Official {
+interface RosterPerson {
   name?: string;
   memberships?: PersonMembership[];
 }
 
-// Mirrors renderOfficialsCards on the jurisdiction page: same row renderer, same
-// source map, same .review-preview__grid container. The rows are laid out by that
-// container, and sourceMapFor builds the source links renderValues reads — using the
-// renderer without both leaves rows unstyled and sourceless.
-const renderOfficials = (people: Official[]) => {
+const renderRoster = (people: RosterPerson[]) => {
   const sources = sourceMapFor(people as never[]);
-  return html`
-    <div class="review-preview__grid">
-      ${people.map((person) => {
-        // Post label, then membership label. `office.name` joined every source label with
-        // " - " and a division badge repeated the district, so one post read three times.
-        const office = postsHeld(person.memberships ?? []);
-        return renderPersonRow({
-          record: person as never,
-          name: person.name || "(unnamed)",
-          subtitle: office,
-          meta: renderValues(person as never, sources),
-        });
-      })}
-    </div>
-  `;
+  return renderPersonGrid(
+    people.map((person) => ({
+      record: person as never,
+      name: person.name || "(unnamed)",
+      // Post label, then membership label. `office.name` joined every source label with " - "
+      // and a division badge repeated the district, so one post read three times.
+      subtitle: postsHeld(person.memberships ?? []),
+      meta: renderValues(person as never, sources),
+    })),
+  );
 };
 
 interface JurisdictionData {
@@ -104,7 +95,7 @@ function JurisdictionModal(
 ) {
   // null means "not loaded yet". A separate loading flag needs both variables kept in
   // step, and any path that forgets one leaves the modal stuck on its spinner.
-  const [people, setPeople] = useState<Official[] | null>(null);
+  const [people, setPeople] = useState<RosterPerson[] | null>(null);
   const [details, setDetails] = useState<{
     data: JurisdictionData;
     scraped_at: string | null;
@@ -160,15 +151,15 @@ function JurisdictionModal(
       <civ-jurisdiction-search></civ-jurisdiction-search>
 
       <div class="jurisdiction-modal__body">
-        <!-- Officials take the wider column: they are what the reader came for, and
+        <!-- People take the wider column: they are what the reader came for, and
              they are the only part whose length varies. -->
-        <div class="jurisdiction-modal__officials" tabindex="0">
+        <div class="jurisdiction-modal__roster" tabindex="0">
           ${people === null
-            ? html`<p class="jurisdiction-modal__status">Loading officials…</p>`
+            ? html`<p class="jurisdiction-modal__status">Loading people…</p>`
             : people.length
-              ? renderOfficials(people)
+              ? renderRoster(people)
               : html`<p class="jurisdiction-modal__status" role="alert">
-                  No officials recorded for this jurisdiction yet.
+                  No people recorded for this jurisdiction yet.
                 </p>`}
         </div>
 

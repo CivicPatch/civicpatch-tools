@@ -15,7 +15,7 @@ import "./scrape-modal/name-config-form.js";
 
 import { triggerPipelineRun, fetchJurisdictionHistory, patchJurisdictionData } from "../../api.js";
 import { renderJurisdictionHeader } from "./jurisdiction-header.js";
-import "./officials-editor.js";
+import "./roster-editor.js";
 import {
   publishedAt,
   pendingReviews,
@@ -210,14 +210,14 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
 
       ${renderPendingReviews(awaitingReview, jurisdiction_ocdid, isSignedIn)}
 
-      <civ-officials-editor
+      <civ-roster-editor
         .people=${people}
         .jurisdictionOcdid=${jurisdiction_ocdid}
         .canEdit=${!!permissions.can_edit_jurisdiction_data && !peopleBlockers.length}
         .isLoading=${peopleLoading}
         .blockedReason=${editingBlockedReason(peopleBlockers)}
         .onPublished=${() => window.location.reload()}
-      ></civ-officials-editor>
+      ></civ-roster-editor>
 
       <section class="jurisdiction-section">
         <h2>Posts</h2>

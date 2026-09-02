@@ -9,33 +9,37 @@ from pydantic import BaseModel, ConfigDict, field_validator
 from shared.utils.phone_utils import normalize_phone_number
 
 
-class RosterPerson(BaseModel):
-    """A person as a rendered roster holds them, and as a reviewer may submit them.
+class PersonBase(BaseModel):
+    """`people` columns, minus `source_urls` and `updated_at` — the subclasses disagree on
+    whether those are required, and pyright rejects narrowing them in a subclass."""
 
-    Was `Official`, which carried `office: Office` — the labels joined into one string with
-    the division lifted out. `label` is the derivation's single answer and `labels` the
-    verbatim evidence behind it, so nothing has to un-join anything.
-
-    The validators are the reason this is a model at all: they canonicalise a phone number a
-    reviewer typed by hand and reject a date in a shape the files cannot hold.
-    """
-
+    id: str = ""
     name: str
     other_names: List[str] = []
-    label: str = ""
-    labels: List[str] = []
-    division_ocdid: Optional[str] = None
     phones: List[str] = []
     emails: List[str] = []
     urls: List[str] = []
+    image: Optional[str] = None
+    cdn_image: Optional[str] = None
+    jurisdiction_ocdid: str
+
+
+class OpenStatesRecord(PersonBase):
+    """The record we publish to open-data, and the shape a reviewer submits.
+
+    Field-for-field what `people_roster._rendered` emits. Flat because open-data reads it that
+    way; our own model is Popolo, which is what the tables are.
+    """
+
+    label: str = ""
+    labels: List[str] = []
+    division_ocdid: Optional[str] = None
     start_date: Optional[str] = None
     end_date: Optional[str] = None
-    image: Optional[str] = None
-    jurisdiction_ocdid: str
-    cdn_image: Optional[str] = None
+    role_id: Optional[str] = None
+    unmatched_text: List[str] = []
     source_urls: List[str]
     updated_at: str
-    id: str = ""
 
     @field_validator("start_date")
     @classmethod
@@ -138,7 +142,7 @@ class RosterPerson(BaseModel):
 LOCAL_IMAGE_PREFIX = "local://"
 
 
-class ExtractedPerson(BaseModel):
+class ExtractedPersonRecord(BaseModel):
     """One person as a page yielded them, before anyone says where the page was.
 
     Deliberately holds nothing the extractor could not have read off the page. It is passed
@@ -161,7 +165,7 @@ class ExtractedPerson(BaseModel):
     image: Optional[str] = None
 
 
-class PersonRecord(ExtractedPerson):
+class PersonSourceRecord(ExtractedPersonRecord):
     """One sighting, stamped with the page it came from.
 
     The unit that crosses the pipeline/cp.org boundary. Several may describe one person —
@@ -175,29 +179,52 @@ class PersonRecord(ExtractedPerson):
     source_url: str
 
 
-class Person(BaseModel):
-    model_config = ConfigDict(extra="allow")
+class Membership(BaseModel):
+    """An open seat, as `PERSON_MEMBERSHIPS` projects it. Narrower than the frontend's
+    `Membership`, which the posts-list page needs for `decompose`."""
 
-    id: str = ""
-    name: str
-    other_names: List[str] = []
-    # Raw labels, one per office, verbatim from the page. Decomposition into role +
-    # division + unmatched happens in cp.org, not here.
-    labels: List[str] = []
-    phones: List[str] = []
-    emails: List[str] = []
-    urls: List[str] = []
-    image: Optional[str] = None
-    jurisdiction_ocdid: str
-    cdn_image: Optional[str] = None
+    # memberships
+    post_id: str
+    label: Optional[str] = None
+    source_labels: List[str] = []
+    designations: List[str] = []
+    unmatched_text: List[str] = []
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+
+    # posts, and roles, through the join
+    role_id: str
+    division_ocdid: str
+    role_label: str
+
+    # composed by `database.people.labelled` — no column holds it
+    post_label: str = ""
+
+
+class Person(PersonBase):
+    """A person as the derivation works with them, and as `GET /people` serialises them.
+
+    `GET /people` returns this model directly, so a key `PERSON_JSON` projects but this does
+    not declare is dropped from the response rather than rejected.
+    """
+
+    # people
     source_urls: List[str] = []
     updated_at: Optional[str] = None
-    # The post a human picked for this person, when one did. Never set by the pipeline: a
-    # scrape reports labels and nothing else, and which post those mean is a decision.
-    #
-    # `labels` stays exactly as the source said it. A pick overrides which *post* the person
-    # lands on, and the membership follows from that post — it does not rewrite the evidence,
-    # which is what editing `labels` would have done.
+
+    # the seats
+    memberships: List[Membership] = []
+
+    # No column. Flattened off the seat because the published record is flat, and duplicated by
+    # `memberships` above on every path except that one.
+    labels: List[str] = []
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+    division_ocdid: Optional[str] = None
+
+    # No column, and not a seat yet: the post a human picked. Never set by the pipeline, which
+    # reports labels and nothing else — which post those mean is a decision. It does not touch
+    # `labels`, so the evidence stays as the source wrote it.
     post_id: Optional[str] = None
 
 
@@ -266,6 +293,10 @@ class IssueCode(str, Enum):
     ABSENT_PERSON = "absent_person"
     NEW_PERSON = "new_person"
     MOVED_PERSON = "moved_person"
+    # A reviewer picked a post and the scrape now derives a different one. Observed, not
+    # interpreted: whether the pick is still right or the parser has learned something is
+    # exactly what the reviewer is being asked.
+    DISPUTED_POST = "disputed_post"
     TOO_FEW_PEOPLE = "too_few_people"
     DUPLICATE_UNIQUE_ROLE = "duplicate_unique_role"
     DIVISION_NUMBERING_GAP = "division_numbering_gap"

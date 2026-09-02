@@ -101,9 +101,8 @@ def _get_role(person) -> str:
 
 def _get_division_ocdid(person) -> str:
     if isinstance(person, dict):
-        return (person.get("office") or {}).get("division_ocdid") or ""
-    office = getattr(person, "office", None)
-    return (office.division_ocdid or "") if office else ""
+        return person.get("division_ocdid") or ""
+    return getattr(person, "division_ocdid", None) or ""
 
 
 def _parse_division_entries(people) -> List[tuple]:

@@ -1,13 +1,12 @@
 from pydantic import BaseModel, ValidationError
 from schemas.assertions import Assertion, AssertionKind, EntityType
-from shared.schemas import RosterPerson
+from shared.schemas import OpenStatesRecord
 from shared.utils.person_fields import order_person_fields
 
 # Every field a reviewer can edit on a person, which is exactly what the change log diffs: a
 # field missing here is a field whose edit goes unrecorded.
 #
-# Not `post_id`: where somebody serves is a membership, and its id is a uuid the activity feed
-# would print raw. Not `cdn_image`: publish writes it from `image`.
+# Not `cdn_image`: publish writes it from `image`.
 EDITABLE_FIELDS = (
     "name",
     "other_names",
@@ -18,17 +17,41 @@ EDITABLE_FIELDS = (
     "image",
     "start_date",
     "end_date",
+    "post_id",
 )
 
 # Of those, the ones holding several values: a list field is a set, so `phones` carries many
 # accepts where `name` carries one. Mirrors the two partial unique indexes in 137.
-LIST_FIELDS = frozenset({"other_names", "phones", "emails", "urls", "source_urls"})
+#
+# `post_id` is here despite the reviewer picking one, because a person can hold one post per
+# organization and a scalar assertion is unique per `(person, field)` — a second body's pick
+# would overwrite the first. A post names its own organization, so the list is self-scoping,
+# and one-per-organization stays enforced by `memberships_one_open_per_organization`.
+LIST_FIELDS = frozenset(
+    {"other_names", "phones", "emails", "urls", "source_urls", "post_id"}
+)
 # Derived from the sightings now, so editing it states nothing about the world.
 NOT_STATED = frozenset({"source_urls"})
 
 # A date left blank means "unknown" or "still serving", never "that date is wrong". Editing one
 # still states something, so this suppresses the reject only — not the field.
-NOT_REJECTABLE = frozenset({"start_date", "end_date"})
+# `post_id` joins them for a different reason: a pick is an answer, never a correction. The
+# scrape proposes labels, not posts, so there is no proposed post for a reviewer to reject.
+NOT_REJECTABLE = frozenset({"start_date", "end_date", "post_id"})
+
+# Stored as a list, held as one value. A person accumulates one accepted post per organization,
+# but a record carries the single post the review in front of them is about — so the two list
+# readers below wrap it rather than iterating it. Without this a uuid iterates into one
+# assertion per character, which is what a bare `for item in value` does to a string.
+SCALAR_ON_THE_RECORD = frozenset({"post_id"})
+
+
+def _values_of(field: str, value: object) -> list:
+    if field in SCALAR_ON_THE_RECORD:
+        return [value] if value not in (None, "") else []
+    # Anything that is not a sequence yields nothing rather than iterating: a bare string under
+    # a list field would otherwise come apart into characters.
+    return list(value) if isinstance(value, (list, tuple, set)) else []
 
 
 def with_stated_values(person: dict, stated: dict) -> dict:
@@ -48,7 +71,9 @@ def with_stated_values(person: dict, stated: dict) -> dict:
 
         if field in LIST_FIELDS:
             kept = [
-                value for value in (person.get(field) or []) if value not in rejected
+                value
+                for value in _values_of(field, person.get(field))
+                if value not in rejected
             ]
             published[field] = kept + [
                 value
@@ -72,7 +97,7 @@ def values_to_accept(person: dict) -> list[tuple[str, object]]:
     for field in EDITABLE_FIELDS:
         value = person.get(field)
         if field in LIST_FIELDS:
-            accepted.extend((field, item) for item in (value or []) if item)
+            accepted.extend((field, item) for item in _values_of(field, value) if item)
         elif value is not None and value != "":
             accepted.append((field, value))
     return accepted
@@ -110,7 +135,7 @@ def apply_people_patch(base: list[dict], edits: list[PersonPatch]) -> list[dict]
     return result
 
 
-# Validate each patched person through `RosterPerson` (which also canonicalizes phones and drops
+# Validate each patched person through `OpenStatesRecord` (which also canonicalizes phones and drops
 # blank urls), then write the normalized values back — but only for the fields the user
 # actually edited (`edit.fields`), so untouched fields keep their exact base representation.
 # Raises `PeopleValidationError` (failures keyed by person id) if any person is invalid.
@@ -160,7 +185,7 @@ def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> lis
     failures = []
     for entry, edit in zip(patched, edits):
         try:
-            normalized = RosterPerson.model_validate(entry).model_dump()
+            normalized = OpenStatesRecord.model_validate(entry).model_dump()
         except ValidationError as exc:
             failures.extend(_person_errors(edit, entry, _field_errors(exc)))
             people.append(entry)
@@ -212,7 +237,7 @@ def stated_from_edit(person_id: str, scraped: dict, edited: dict) -> list[Assert
         rejectable = field not in NOT_REJECTABLE
 
         if field in LIST_FIELDS:
-            was, now = set(was or []), set(now or [])
+            was, now = set(_values_of(field, was)), set(_values_of(field, now))
             claims.extend(
                 stated(field, AssertionKind.ACCEPT, v) for v in sorted(now - was)
             )

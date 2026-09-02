@@ -14,13 +14,20 @@ from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType
 
 # Must match the two partial indexes in 137 exactly; a mismatch is an unhandled unique violation.
-_REPLACES_THE_FIELD = """(entity_type, entity_id, field_path)
-    WHERE kind = 'accept'
-      AND field_path NOT IN ('other_names', 'phones', 'emails', 'urls', 'source_urls')"""
+# Built from `LIST_FIELDS`, not restated: postgres matches an `ON CONFLICT ... WHERE` predicate
+# against an index's, so this and the partial indexes have to agree exactly. Written out here
+# once, adding a list field raised "there is no unique or exclusion constraint matching the ON
+# CONFLICT specification" — from the one place that never mentions the field. Interpolation is
+# safe because the names are a module constant, never input.
+_LIST_FIELDS_SQL = ", ".join(f"'{field}'" for field in sorted(LIST_FIELDS))
 
-_REPLACES_THE_VALUE = """(entity_type, entity_id, field_path, value)
+_REPLACES_THE_FIELD = f"""(entity_type, entity_id, field_path)
+    WHERE kind = 'accept'
+      AND field_path NOT IN ({_LIST_FIELDS_SQL})"""
+
+_REPLACES_THE_VALUE = f"""(entity_type, entity_id, field_path, value)
     WHERE kind = 'reject'
-       OR field_path IN ('other_names', 'phones', 'emails', 'urls', 'source_urls')"""
+       OR field_path IN ({_LIST_FIELDS_SQL})"""
 
 
 def _keyed_by_value(assertion: Assertion) -> bool:

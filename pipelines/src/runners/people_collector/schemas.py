@@ -8,8 +8,8 @@ from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import
     NavigationFailureReason,
 )
 from shared.schemas import (
-    ExtractedPerson,
-    PersonRecord,
+    ExtractedPersonRecord,
+    PersonSourceRecord,
     PipelineRunConfig,
     RoleConfig,
 )
@@ -191,7 +191,7 @@ class LinkFrontier(BaseModel):
 
 
 class PeopleArrayLLMResponseSchema(BaseModel):
-    people: List[ExtractedPerson]
+    people: List[ExtractedPersonRecord]
     # thought: str
 
 
@@ -203,7 +203,7 @@ class RelevantPageResponseSchema(BaseModel):
 OtherNamesByCanonicalName: TypeAlias = Dict[
     str, List[str]
 ]  # Canonical name to other names found while scraping
-PeopleByName: TypeAlias = Dict[str, List[PersonRecord]]
+PeopleByName: TypeAlias = Dict[str, List[PersonSourceRecord]]
 
 PipelineStatus = PipelineRunStatus
 
@@ -211,7 +211,7 @@ PipelineStatus = PipelineRunStatus
 class ResearchedPerson(BaseModel):
     """A name research turned up, and the office it named them under.
 
-    `label` is verbatim, the same contract `ExtractedPerson.label` holds: one string as the
+    `label` is verbatim, the same contract `ExtractedPersonRecord.label` holds: one string as the
     source writes it, undecomposed.
 
     Nothing parses it here. On a jurisdiction cp.org has already published, posts *are* the
@@ -252,7 +252,7 @@ class ProcessPageContentStep(BaseModel):
     # Grouped by the name the page gave, because extraction fills it one page at a time.
     records: PeopleByName
 
-    def all_records(self) -> List[PersonRecord]:
+    def all_records(self) -> List[PersonSourceRecord]:
         return [record for group in self.records.values() for record in group]
 
     progress: ProgressState = ProgressState(

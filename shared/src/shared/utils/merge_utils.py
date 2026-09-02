@@ -9,12 +9,12 @@ from typing import Dict, List, TypeAlias
 
 from Levenshtein import distance as levenshtein_distance
 from nameparser import HumanName
-from shared.schemas import Person, PersonRecord
+from shared.schemas import Person, PersonSourceRecord
 from shared.utils.log_protocol import Log
 from shared.utils.taxonomy import Taxonomy, normalize_designations, resolve_role
 
 OtherNamesByCanonicalName: TypeAlias = Dict[str, List[str]]
-PeopleByName: TypeAlias = Dict[str, List[PersonRecord]]
+PeopleByName: TypeAlias = Dict[str, List[PersonSourceRecord]]
 
 
 NAME_SIMILARITY_THRESHOLD = 4
@@ -185,7 +185,7 @@ def find_indexed_name(
 
 
 def append_to_people_by_name(
-    people_by_name: PeopleByName, indexed_name: str, people_list: List[PersonRecord]
+    people_by_name: PeopleByName, indexed_name: str, people_list: List[PersonSourceRecord]
 ) -> PeopleByName:
     """
     Return an updated people_by_name with the new people appended.
@@ -200,8 +200,8 @@ def append_to_people_by_name(
 def group_people_by_name(
     known_mappings: Dict[str, List[str]],
     people_by_name: PeopleByName,
-    people_to_link: List[PersonRecord],
-) -> Dict[str, List[PersonRecord]]:
+    people_to_link: List[PersonSourceRecord],
+) -> Dict[str, List[PersonSourceRecord]]:
     """
     Group people by name, preserving known mappings and adding new people to the appropriate groups.
     """
@@ -277,8 +277,8 @@ def office_keys(labels: set[str], taxonomy: Taxonomy) -> set[str]:
 
 def is_weakly_tied(
     identity_names: Dict[str, List[str]],
-    record1: PersonRecord | Person,
-    record2: PersonRecord | Person,
+    record1: PersonSourceRecord | Person,
+    record2: PersonSourceRecord | Person,
     taxonomy: Taxonomy,
     logger: Log,
 ) -> bool:

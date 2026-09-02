@@ -4,7 +4,7 @@ import shutil
 from typing import List
 
 from runners.people_collector.schemas import PeopleCollectorContext, PipelineStatus
-from shared.schemas import LOCAL_IMAGE_PREFIX, PersonRecord
+from shared.schemas import LOCAL_IMAGE_PREFIX, PersonSourceRecord
 from shared.utils import url_utils
 from shared.utils.data_path_utils import get_data_source_path_for_jurisdiction_ocdid
 from utils import log_utils
@@ -33,7 +33,7 @@ def cleanup(context: PeopleCollectorContext):
         cleanup_images(logger, images_dir, records)
 
 
-def cleanup_cache(cache_dir: str, records: List[PersonRecord]):
+def cleanup_cache(cache_dir: str, records: List[PersonSourceRecord]):
     urls = {record.source_url for record in records if record.source_url}
     urls.update(record.url for record in records if record.url)
     folders_to_keep = {url_utils.format_url_to_folder(url) for url in urls}
@@ -44,13 +44,13 @@ def cleanup_cache(cache_dir: str, records: List[PersonRecord]):
             shutil.rmtree(folder_path)
 
 
-def local_image_name(record: PersonRecord) -> str | None:
+def local_image_name(record: PersonSourceRecord) -> str | None:
     if not record.image or not record.image.startswith(LOCAL_IMAGE_PREFIX):
         return None
     return record.image.removeprefix(LOCAL_IMAGE_PREFIX)
 
 
-def cleanup_images(logger, images_dir: str, records: List[PersonRecord]):
+def cleanup_images(logger, images_dir: str, records: List[PersonSourceRecord]):
     """Drop unreferenced files and the map entries that named them."""
     names = set()
     for record in records:

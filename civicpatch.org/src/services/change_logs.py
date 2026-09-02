@@ -3,9 +3,12 @@ import logging
 from core.change_logs import field_changes
 from core.jurisdiction_patch import JurisdictionPatch
 from core.people_diff import diff_people
+from database import posts
 from database.change_logs import create_change_log
 from database.changesets import get_request_jurisdiction
+from database.database import get_pool
 from schemas.change_logs import JurisdictionChangePayload
+from shared.schemas import POST_FIELD
 from shared.utils.statuses import ChangeLogType
 
 logger = logging.getLogger(__name__)
@@ -30,7 +33,8 @@ async def record_manual_edits(
     # The diff is the reviewer's manual edits: the PR's contents before this publish
     # versus the content just written to GitHub. Best-effort, like the event records above.
     try:
-        for change in diff_people(before, after):
+        labels = await _post_labels(before + after)
+        for change in diff_people(before, after, labels):
             await create_change_log(change.type, user_id, jurisdiction_ocdid, changeset_id, change.payload)
     except Exception:
         logger.exception("Failed to record manual edits for request %s", changeset_id)
@@ -58,3 +62,23 @@ async def record_jurisdiction_edit(
         )
     except Exception:
         logger.exception("Failed to record jurisdiction edit for %s", jurisdiction_ocdid)
+
+
+async def _post_labels(people: list[dict]) -> dict[str, str]:
+    """`post_id` → the post's label, for the feed.
+
+    Resolved at write time rather than read time: the log is append-only, so it should say what
+    the change meant when it was made — a post renamed later does not rewrite history. Without
+    it the feed prints the uuid, which is what kept `post_id` out of `EDITABLE_FIELDS`.
+    """
+    post_ids = [
+        post_id
+        for post_id in {person.get(POST_FIELD) for person in people}
+        if isinstance(post_id, str)
+    ]
+    if not post_ids:
+        return {}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        found = await posts.get_many(cur, post_ids)
+    return {post_id: row["label"] for post_id, row in found.items() if row.get("label")}

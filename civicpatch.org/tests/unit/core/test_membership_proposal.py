@@ -7,7 +7,7 @@ from core.membership_proposal import (
     propose,
     surfaces_for_review,
 )
-from core.post_derivation import DerivedMember, DerivedPost
+from core.post_derivation import DerivedMembership, DerivedPost
 
 # Pure — a scrape's derivation and what we already hold, in; the difference, out. No taxonomy
 # and no database, because the diff is only about which seat a person is on.
@@ -25,7 +25,7 @@ def _post(role_id, division_ocdid, *person_ids, label=None):
         division_ocdid=division_ocdid,
         headcount=len(person_ids),
         members=[
-            DerivedMember(person_id=person_id, label=label) for person_id in person_ids
+            DerivedMembership(person_id=person_id, label=label) for person_id in person_ids
         ],
     )
 

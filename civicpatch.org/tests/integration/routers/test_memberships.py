@@ -14,7 +14,7 @@ import pytest_asyncio
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from core.post_derivation import DerivedMember
+from core.post_derivation import DerivedMembership
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 from lib.auth import get_optional_user
@@ -174,7 +174,7 @@ async def test_unmatched_text_reaches_the_wire_with_its_counts(client):
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await memberships.upsert(
             cur,
-            DerivedMember(person_id=person_id, unmatched_text=["Zz Route Liaison"]),
+            DerivedMembership(person_id=person_id, unmatched_text=["Zz Route Liaison"]),
             mayor,
             organization_id,
             _SEEN_AT,
@@ -291,7 +291,7 @@ async def test_the_person_axis_read_carries_the_whole_parse(client):
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await memberships.upsert(
             cur,
-            DerivedMember(
+            DerivedMembership(
                 person_id=person_id,
                 source_labels=["Mayor Position 8 (Zz Route Liaison)"],
                 designations=["Position 8"],

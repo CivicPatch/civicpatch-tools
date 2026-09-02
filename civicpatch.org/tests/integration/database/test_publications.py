@@ -21,7 +21,7 @@ from psycopg.errors import NotNullViolation
 from database import assertions
 from database import people as people_db
 from database.database import get_pool
-from core.post_derivation import DerivedMember, DerivedPost
+from core.post_derivation import DerivedMembership, DerivedPost
 from database.publications import dismiss_request, publish_request
 from schemas.assertions import Assertion, AssertionKind, EntityType
 
@@ -47,12 +47,16 @@ async def _cleanup():
             "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s",
             (_SENTINEL_OCDID,),
         )
+        # Changesets first: `changesets.organization_id` is a FK since 158, so an organization
+        # cannot go while a changeset still names it.
+        await cur.execute(
+            "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
+        )
         for table in ("posts", "divisions", "organizations"):
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
             )
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,))
-        await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,))
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
         )
@@ -110,7 +114,7 @@ def _seats(people: list[dict]) -> list[DerivedPost]:
             division_ocdid=_SENTINEL_DIVISION,
             headcount=len(people),
             members=[
-                DerivedMember(person_id=str(person["id"]), source_labels=["Council Member"])
+                DerivedMembership(person_id=str(person["id"]), source_labels=["Council Member"])
                 for person in people
             ],
         )

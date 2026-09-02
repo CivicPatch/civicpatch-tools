@@ -2,6 +2,7 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { fetchChangeLogs } from "../../api.js";
 import { Pagination } from "../../components/pagination/index.js";
+import { FIELD_SCHEMA } from "../../components/fields/field-schema.js";
 import "./activity-page.css";
 
 const PER_PAGE = 20;
@@ -20,6 +21,11 @@ function formatValue(value) {
   return String(value);
 }
 
+// The editor's own label, so the feed says "Post" where the editor said "Post". Falls back to
+// the key for anything the schema does not name — a field can be logged without being editable.
+const fieldLabel = (key: string) =>
+  FIELD_SCHEMA.find((field) => field.key === key)?.label ?? key;
+
 // Person edits get a field-level diff expander; everything else relies on the
 // server-rendered `summary` string.
 function renderChange(entry) {
@@ -29,7 +35,7 @@ function renderChange(entry) {
         <ul class="activity-page__fields">
           ${entry.changes.fields.map(
             (f) => html`<li>
-              <span class="activity-page__field-name">${f.field}</span>:
+              <span class="activity-page__field-name">${fieldLabel(f.field)}</span>:
               <span class="activity-page__before">${formatValue(f.before)}</span> →
               <span class="activity-page__after">${formatValue(f.after)}</span>
             </li>`,

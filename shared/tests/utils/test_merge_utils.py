@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import MagicMock
 
-from shared.schemas import PersonRecord, Role, RoleConfig, RoleStatus
+from shared.schemas import PersonSourceRecord, Role, RoleConfig, RoleStatus
 from shared.utils.merge_utils import (
     append_to_people_by_name,
     are_names_similar,
@@ -48,7 +48,7 @@ def test_normalize_name():
 def test_append_to_people_by_name():
     people_by_name = {
         "John Doe": [
-            PersonRecord(
+            PersonSourceRecord(
                 name="John Doe",
                 label="",
                 phone_number=None,
@@ -61,7 +61,7 @@ def test_append_to_people_by_name():
         ]
     }
     new_people = [
-        PersonRecord(
+        PersonSourceRecord(
             name="Johnny Doe",
             label="",
             phone_number=None,
@@ -93,7 +93,7 @@ def test_group_people_by_name_basic():
     known_mappings = {}
     people_by_name = {}
     people_to_link = [
-        PersonRecord(
+        PersonSourceRecord(
             name="John Doe",
             label="Mayor",
             phone_number=None,
@@ -103,7 +103,7 @@ def test_group_people_by_name_basic():
             end_date=None,
             source_url="test",
         ),
-        PersonRecord(
+        PersonSourceRecord(
             name="Jane Smith",
             label="Council",
             phone_number=None,
@@ -127,7 +127,7 @@ def test_group_people_by_name_with_known_mappings():
     known_mappings = {"John Doe": ["J. Doe", "Johnny"]}
     people_by_name = {}
     people_to_link = [
-        PersonRecord(
+        PersonSourceRecord(
             name="J. Doe",
             label="Mayor",
             phone_number=None,
@@ -137,7 +137,7 @@ def test_group_people_by_name_with_known_mappings():
             end_date=None,
             source_url="test",
         ),
-        PersonRecord(
+        PersonSourceRecord(
             name="Johnny",
             label="Council",
             phone_number=None,
@@ -161,7 +161,7 @@ def test_group_people_by_name_with_existing_people():
     known_mappings = {}
     people_by_name = {
         "John Doe": [
-            PersonRecord(
+            PersonSourceRecord(
                 name="John Doe",
                 label="Existing",
                 phone_number=None,
@@ -174,7 +174,7 @@ def test_group_people_by_name_with_existing_people():
         ]
     }
     people_to_link = [
-        PersonRecord(
+        PersonSourceRecord(
             name="John Doe",
             label="Mayor",
             phone_number=None,
@@ -198,7 +198,7 @@ def test_group_people_by_name_similarity_matching():
     known_mappings = {}
     people_by_name = {
         "John Doe": [
-            PersonRecord(
+            PersonSourceRecord(
                 name="John Doe",
                 label="Existing",
                 phone_number=None,
@@ -211,7 +211,7 @@ def test_group_people_by_name_similarity_matching():
         ]
     }
     people_to_link = [
-        PersonRecord(
+        PersonSourceRecord(
             name="Jon Doe",
             label="Mayor",
             phone_number=None,
@@ -238,7 +238,7 @@ def test_group_people_by_name_deduplication():
     known_mappings = {"John Doe": ["Johnny"]}
     people_by_name = {}
     people_to_link = [
-        PersonRecord(
+        PersonSourceRecord(
             name="John Doe",
             label="Mayor",
             phone_number=None,
@@ -248,7 +248,7 @@ def test_group_people_by_name_deduplication():
             end_date=None,
             source_url="test",
         ),
-        PersonRecord(
+        PersonSourceRecord(
             name="Johnny",
             label="Council",
             phone_number=None,
@@ -258,7 +258,7 @@ def test_group_people_by_name_deduplication():
             end_date=None,
             source_url="test",
         ),
-        PersonRecord(
+        PersonSourceRecord(
             name="John Doe",
             label="Deputy",
             phone_number=None,
@@ -294,7 +294,7 @@ def test_group_people_by_name_complex_scenario():
     known_mappings = {"John Smith": ["J. Smith"]}
     people_by_name = {
         "Jane Doe": [
-            PersonRecord(
+            PersonSourceRecord(
                 name="Jane Doe",
                 label="Existing",
                 phone_number=None,
@@ -307,7 +307,7 @@ def test_group_people_by_name_complex_scenario():
         ]
     }
     people_to_link = [
-        PersonRecord(
+        PersonSourceRecord(
             name="John Smith",
             label="Mayor",
             phone_number=None,
@@ -317,7 +317,7 @@ def test_group_people_by_name_complex_scenario():
             end_date=None,
             source_url="test",
         ),
-        PersonRecord(
+        PersonSourceRecord(
             name="J. Smith",
             label="Council",
             phone_number=None,
@@ -327,7 +327,7 @@ def test_group_people_by_name_complex_scenario():
             end_date=None,
             source_url="test",
         ),
-        PersonRecord(
+        PersonSourceRecord(
             name="Jane Doe",
             label="Deputy",
             phone_number=None,
@@ -337,7 +337,7 @@ def test_group_people_by_name_complex_scenario():
             end_date=None,
             source_url="test",
         ),
-        PersonRecord(
+        PersonSourceRecord(
             name="Bob Johnson",
             label="Clerk",
             phone_number=None,
@@ -487,14 +487,14 @@ def test_is_not_weakly_tied_different_roles_and_emails():
 def test_is_weakly_tied_same_identity():
     """Test is_weakly_tied when both records have the same identity."""
     identity_names = {"John Doe": ["John Doe", "Johnny", "J. Doe"]}
-    record1 = PersonRecord(
+    record1 = PersonSourceRecord(
         name="Johnny",
         label="",
         email=None,
         url=None,
         source_url="test",
     )
-    record2 = PersonRecord(
+    record2 = PersonSourceRecord(
         name="J. Doe",
         label="",
         email=None,
@@ -507,14 +507,14 @@ def test_is_weakly_tied_same_identity():
 def test_is_weakly_tied_different_identity():
     """Test is_weakly_tied when both records have different identities."""
     identity_names = {"John Doe": ["Johnny"], "Jane Smith": ["J. Smith"]}
-    record1 = PersonRecord(
+    record1 = PersonSourceRecord(
         name="Johnny",
         label="",
         email=None,
         url=None,
         source_url="test",
     )
-    record2 = PersonRecord(
+    record2 = PersonSourceRecord(
         name="J. Smith",
         label="",
         email=None,
@@ -527,14 +527,14 @@ def test_is_weakly_tied_different_identity():
 def test_is_weakly_tied_name_overlap():
     """Test is_weakly_tied when names overlap."""
     identity_names = {}
-    record1 = PersonRecord(
+    record1 = PersonSourceRecord(
         name="John Doe",
         label="",
         email=None,
         url=None,
         source_url="test",
     )
-    record2 = PersonRecord(
+    record2 = PersonSourceRecord(
         name="Jon Doe",
         label="",
         email=None,
@@ -547,14 +547,14 @@ def test_is_weakly_tied_name_overlap():
 def test_is_weakly_tied_matching_designations():
     """Test is_weakly_tied when designations match."""
     identity_names = {}
-    record1 = PersonRecord(
+    record1 = PersonSourceRecord(
         name="John Doe",
         label="Mayor",
         email=None,
         url=None,
         source_url="test",
     )
-    record2 = PersonRecord(
+    record2 = PersonSourceRecord(
         name="Jon Doe",
         label="Mayor",
         email=None,
@@ -567,14 +567,14 @@ def test_is_weakly_tied_matching_designations():
 def test_is_weakly_tied_email_overlap():
     """Test is_weakly_tied when emails overlap."""
     identity_names = {}
-    record1 = PersonRecord(
+    record1 = PersonSourceRecord(
         name="John Doe",
         label="",
         email="john@example.com",
         url=None,
         source_url="test",
     )
-    record2 = PersonRecord(
+    record2 = PersonSourceRecord(
         name="Jon Doe",
         label="",
         email="john@example.com",
@@ -586,14 +586,14 @@ def test_is_weakly_tied_email_overlap():
 
 def test_is_weakly_tied_url_overlap():
     """Test is_weakly_tied when URLs overlap."""
-    record1 = PersonRecord(
+    record1 = PersonSourceRecord(
         name="Abigail Doe",
         label="",
         email=None,
         url="http://example.com",
         source_url="test",
     )
-    record2 = PersonRecord(
+    record2 = PersonSourceRecord(
         name="Abby Doe",
         label="",
         email=None,
@@ -606,14 +606,14 @@ def test_is_weakly_tied_url_overlap():
 def test_is_weakly_tied_no_overlap():
     """Test is_weakly_tied when there is no overlap."""
     identity_names = {}
-    record1 = PersonRecord(
+    record1 = PersonSourceRecord(
         name="John Doe",
         label="Mayor",
         email=None,
         url="http://example.com",
         source_url="test",
     )
-    record2 = PersonRecord(
+    record2 = PersonSourceRecord(
         name="Jane Smith",
         label="Council",
         email=None,

@@ -54,7 +54,6 @@ def test_both_sides_of_the_card_carry_the_same_keys():
         "id": "p1",
         "name": "Jane Doe",
         "labels": ["Mayor"],
-        "office": {"name": "Mayor"},
         "source_urls": ["https://x.gov"],
         "phones": ["(555) 0001"],
         "cdn_image": "https://cdn/x.png",
@@ -62,7 +61,7 @@ def test_both_sides_of_the_card_carry_the_same_keys():
     }
 
     assert set(db_people.projected(derived, "quick")) == {
-        "id", "name", "labels", "office", "source_urls"
+        "id", "name", "labels", "source_urls"
     }
     # Fields the view does not ask for are dropped, including ones only the derived side has.
     assert "phones" not in db_people.projected(derived, "quick")

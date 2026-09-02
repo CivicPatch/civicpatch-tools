@@ -168,8 +168,6 @@ export interface SurvivingField {
   error: string | null;
 }
 
-const NO_FIELDS: ReadonlySet<string> = new Set();
-
 // What a card shows before expanding. The error clause is not redundant: a
 // required field empty on BOTH sides reads `same` and still blocks publish.
 //
@@ -178,12 +176,6 @@ export function survivingFields(
   oldRecord: DiffRecord,
   newRecord: DiffRecord,
   issues: Issue[] = [],
-  // Fields the caller has already decided are changed. Only `post_id` so far, and the reason
-  // is that the records cannot answer for it: the column holds the reviewer's *pick* and is
-  // null on both sides until they make one, so the comparison here reads `same` however far
-  // the person moved. Which post they hold is a memberships question and which one they would
-  // land in is the derivation's — neither is on these two records.
-  changedFields: ReadonlySet<string> = NO_FIELDS,
 ): SurvivingField[] {
   const anchoredFields = new Set(
     issues.map((issue) => issue.field).filter(Boolean) as string[],
@@ -191,9 +183,7 @@ export function survivingFields(
 
   const surviving: SurvivingField[] = [];
   for (const field of FIELD_SCHEMA) {
-    const state = changedFields.has(field.key)
-      ? "changed"
-      : fieldState(field, oldRecord, newRecord);
+    const state = fieldState(field, oldRecord, newRecord);
     const error = fieldError(field, newRecord);
     const reason: FieldReason | null = error
       ? "error"

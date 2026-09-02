@@ -15,7 +15,8 @@ def _person(**overrides) -> dict:
         "jurisdiction_ocdid": "ocd-division/country:us/state:wa/place:buckley",
         "id": "abc",
         "name": "Jane Doe",
-        "office": {"name": "Mayor", "division_ocdid": "ocd-division/x"},
+        "memberships": [{"post_label": "Mayor"}],
+        "division_ocdid": "ocd-division/x",
         "phones": ["555-0100"],
         "emails": ["jane@example.gov"],
         **overrides,
@@ -37,13 +38,22 @@ def test_missing_values_become_empty_strings():
     row = person_row({"id": "abc"})
     assert row["name"] == ""
     assert row["phones"] == ""
-    assert row["office_name"] == ""
+    assert row["post_label"] == ""
 
 
-def test_office_is_flattened_out_of_the_nested_dict():
+def test_the_seat_columns_come_off_the_membership():
     row = person_row(_person())
-    assert row["office_name"] == "Mayor"
-    assert row["office_division_ocdid"] == "ocd-division/x"
+    assert row["post_label"] == "Mayor"
+    assert row["division_ocdid"] == "ocd-division/x"
+
+
+def test_every_open_seat_is_listed():
+    """`office.name` took one membership and joined its source labels, so a person holding two
+    posts showed one of them."""
+    row = person_row(
+        _person(memberships=[{"post_label": "Mayor"}, {"post_label": "Council Member"}])
+    )
+    assert row["post_label"] == "Mayor | Council Member"
 
 
 @pytest.mark.parametrize("dangerous", ["=cmd|'/c calc'!A1", "+1-555-0100", "-2", "@SUM(A1)"])

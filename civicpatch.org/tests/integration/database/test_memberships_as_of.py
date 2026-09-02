@@ -183,11 +183,16 @@ async def test_a_membership_carries_the_interval_it_was_selected_on():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_retired_person_still_reads_as_the_post_they_last_held():
-    """`office` falls back to the last closed membership, so leaving does not blank the card.
+    """`division_ocdid` falls back to the last closed membership, so leaving does not blank
+    the card.
 
-    The fallback it replaced read `people.data->'office'`, which was the last reader of that
-    column. Both people are asserted, because the fallback must not outrank an open membership:
-    order it wrong and everyone reads as whatever they held longest ago.
+    The only field that still does: `PERSON_LABELS` and `PERSON_MEMBERSHIPS` are both
+    `closed_at IS NULL`, so a retired person reads as no labels and no seats. `PERSON_DIVISION`
+    — with `PERSON_START_DATE` and `PERSON_END_DATE`, which share its ordering — is what keeps
+    them from vanishing entirely.
+
+    Both people are asserted, because the fallback must not outrank an open membership: order
+    it wrong and everyone reads as whatever they held longest ago.
     """
     await _seed_succession()
 
@@ -195,16 +200,16 @@ async def test_a_retired_person_still_reads_as_the_post_they_last_held():
         person["name"]: person
         # `get_people`, not `get_roster`: the retired half of a succession holds no open
         # membership, so the roster read excludes them by definition now — and the claim here
-        # is about the `office` fallback, not about who is seated.
+        # is about the fallback, not about who is seated.
         for person in await people.get_people(jurisdiction_ocdid=_OCDID)
     }
 
-    assert roster["Outgoing"]["office"]["name"] == _LABEL
-    assert roster["Outgoing"]["office"]["division_ocdid"] == _BASE
-    # Present tense: they hold nothing now, which is exactly why `office` needed the fallback.
+    assert roster["Outgoing"]["division_ocdid"] == _BASE
+    # Present tense: they hold nothing now, which is exactly why the fallback is needed.
     assert roster["Outgoing"]["memberships"] == []
+    assert roster["Outgoing"]["labels"] == []
 
-    assert roster["Incoming"]["office"]["name"] == _LABEL
+    assert roster["Incoming"]["division_ocdid"] == _BASE
     assert len(roster["Incoming"]["memberships"]) == 1
 
 

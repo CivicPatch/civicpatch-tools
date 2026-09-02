@@ -16,7 +16,7 @@ from core.people_derivation import (
     merge_weak_tie_groups,
     normalize_record,
 )
-from shared.schemas import PersonRecord, Role, RoleConfig
+from shared.schemas import PersonSourceRecord, Role, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 
 pytestmark = pytest.mark.unit
@@ -38,7 +38,7 @@ TAXONOMY = build_taxonomy(ROLE_CONFIG)
 
 
 def make_llm_person(name, label="", phone=None, email=None, url=None, source_url=None):
-    return PersonRecord(
+    return PersonSourceRecord(
         name=name,
         label=label,
         phone=phone,
@@ -51,7 +51,7 @@ def make_llm_person(name, label="", phone=None, email=None, url=None, source_url
     )
 
 
-def _normalize(record: PersonRecord) -> PersonRecord:
+def _normalize(record: PersonSourceRecord) -> PersonSourceRecord:
     return normalize_record(MagicMock(), record)
 
 
@@ -124,7 +124,7 @@ def test_merge_labels_skips_empty():
 
 
 def test_normalize_record_strips_whitespace_from_email():
-    record = PersonRecord(
+    record = PersonSourceRecord(
         name="John Doe",
         label="mayor",
         phone=None,
@@ -136,7 +136,7 @@ def test_normalize_record_strips_whitespace_from_email():
 
 
 def test_normalize_record_strips_internal_whitespace_from_email():
-    record = PersonRecord(
+    record = PersonSourceRecord(
         name="John Doe",
         label="mayor",
         phone=None,
@@ -148,7 +148,7 @@ def test_normalize_record_strips_internal_whitespace_from_email():
 
 
 def test_normalize_record_moves_url_from_email_to_url_when_url_empty():
-    record = PersonRecord(
+    record = PersonSourceRecord(
         name="John Doe",
         label="mayor",
         phone=None,
@@ -162,7 +162,7 @@ def test_normalize_record_moves_url_from_email_to_url_when_url_empty():
 
 
 def test_normalize_record_clears_url_from_email_when_url_already_set():
-    record = PersonRecord(
+    record = PersonSourceRecord(
         name="John Doe",
         label="mayor",
         phone=None,
@@ -181,7 +181,7 @@ def test_normalize_record_drops_a_compound_phone_rather_than_picking_one():
     It now asserts None. Choosing between two numbers the page gave us is a guess, and the
     heuristics guard rejects the extraction upstream anyway — so a record reaching here with
     two numbers is a bug to surface, not one to paper over."""
-    record = PersonRecord(
+    record = PersonSourceRecord(
         name="Alice Boroughman",
         label="mayor",
         phone="856-358-2509 or 856-358-4010 Ext. 112",
@@ -229,7 +229,7 @@ def test_get_source_urls_credits_every_page_the_person_was_seen_on():
     """r3 repeats what r1 already said. It used to be dropped for that — but the drop was
     "whichever record came first", and read order is not ingest order. Measured on dev, it
     also cost 19 of 60 people their own bio page, beaten to a label by a listing page."""
-    r1 = PersonRecord(
+    r1 = PersonSourceRecord(
         name="Robert Kubert",
         label="Mayor - Ward 1",
         phone=None,
@@ -240,7 +240,7 @@ def test_get_source_urls_credits_every_page_the_person_was_seen_on():
         image=None,
         source_url="https://www.bayonnenj.org/r1",
     )
-    r2 = PersonRecord(
+    r2 = PersonSourceRecord(
         name="Robert Kubert",
         label="Council Member - Ward 2",
         phone="555-0002",
@@ -251,7 +251,7 @@ def test_get_source_urls_credits_every_page_the_person_was_seen_on():
         image=None,
         source_url="https://www.bayonnenj.org/r2",
     )
-    r3 = PersonRecord(
+    r3 = PersonSourceRecord(
         name="Robert Kubert",
         label="Mayor - Ward 1",
         phone=None,
