@@ -557,8 +557,6 @@ async def get_jurisdiction_history(
             f"""
             WITH roster_changes AS (
                 SELECT cl.changeset_id,
-                       -- The payload is passed through whole; `core.change_logs.roster_change`
-                       -- turns each per-type shape into a RosterChange.
                        jsonb_agg(jsonb_build_object(
                            'type', cl.type,
                            'created_at', cl.created_at,
@@ -566,16 +564,11 @@ async def get_jurisdiction_history(
                        ) ORDER BY cl.created_at) AS changes
                 FROM change_logs cl
                 WHERE cl.type = ANY(%s)
-                  -- Scoped through this jurisdiction's changesets rather than
-                  -- `cl.jurisdiction_ocdid`, which some writers leave null.
                   AND cl.changeset_id IN (
                       SELECT id::text FROM changesets WHERE jurisdiction_ocdid = %s
                   )
                 GROUP BY cl.changeset_id
             ),
-            -- The same join read a second time, for the outcome rather than the changes.
-            -- `changesets.dismissed_reason` is not used: it is a legacy column, null on every
-            -- human dismissal. The latest close wins — a card can be closed more than once.
             close_reasons AS (
                 SELECT DISTINCT ON (cl.changeset_id)
                        cl.changeset_id,
@@ -601,17 +594,11 @@ async def get_jurisdiction_history(
                            THEN COALESCE(cr.reason, '{UNKNOWN_OUTCOME}')
                        ELSE '{RequestReviewStatus.PENDING.value}'
                    END AS outcome,
-                   -- `display_name`, never `email`: the jurisdiction page is public.
-                   -- Null only while a changeset is unresolved. Since 160 a supersede sweep or
-                   -- an auto-publish is attributed to the system user, so "resolved by nobody"
-                   -- is no longer a state this can be in.
                    resolver.display_name AS resolved_by,
                    COALESCE(rc.changes, '[]'::jsonb) AS changes
             FROM changesets r
             LEFT JOIN close_reasons cr ON cr.changeset_id = r.id::text
             LEFT JOIN users resolver ON resolver.id = r.resolved_by_user_id
-            -- `change_logs.changeset_id` is text and `changesets.id` is uuid: cast the uuid,
-            -- or migration 155's index on the column goes unused.
             LEFT JOIN roster_changes rc ON rc.changeset_id = r.id::text
             WHERE r.jurisdiction_ocdid = %s
             ORDER BY r.created_at DESC;
@@ -654,12 +641,7 @@ async def get_jurisdiction_history(
                     # from the moment a request exists, so a scrape still running read as
                     # awaiting review and offered a button for a roster it had not produced.
                     "awaiting_review": row[10],
-                    # Told, not inferred: `published`, or the reason the close_review log
-                    # recorded, or `unknown` when a dismissal left none.
                     "outcome": row[11],
-                    # None unless a person resolved it, and None when they have no display
-                    # name — the page is public, so there is no email fallback.
-                    # `CivicPatch` when the system resolved it; None only while pending.
                     "resolved_by": row[12],
                     "jurisdiction_ocdid": jurisdiction_ocdid,
                     "branch_name": branch_name,

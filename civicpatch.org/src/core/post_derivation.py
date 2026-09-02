@@ -20,15 +20,7 @@ UNMATCHED_ROLE_ID = "unmatched"
 
 
 class RosterEntry(BaseModel):
-    """One roster row, reduced to what deriving posts actually needs.
-
-    Deliberately narrow. The roster carries a person's whole record; the derivation reads their
-    labels and their term, and the seat a reviewer picked — so those are what it asks for. A
-    wider type here would say the other fields matter, and a reader would have to check.
-
-    `post_id` is not read by `derived_posts`: `publish.picks_in` takes it off the same list to
-    build `chosen_posts`, which is how a human's answer reaches the derivation.
-    """
+    """A roster row, narrowed to what `derived_posts` reads. `post_id` is for `picks_in`."""
 
     id: str = ""
     jurisdiction_ocdid: str

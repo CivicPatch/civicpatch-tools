@@ -561,6 +561,8 @@ async def test_a_scrape_with_no_roster_never_reaches_the_pool():
     rows, _, _ = await list_open_changesets(jurisdiction_ocdid=ocdid)
     assert changeset_id not in [r["changeset_id"] for r in rows]
 
+    await _cleanup_open_pr(changeset_id, ocdid)
+
 
 @pytest.mark.integration
 @pytest.mark.asyncio
@@ -609,6 +611,8 @@ async def test_a_scrape_that_changed_nothing_leaves_the_pool_saying_why():
             "SELECT dismissed_reason FROM changesets WHERE id::text = %s", (changeset_id,)
         )
         assert (await cur.fetchone())[0] == DISMISSED_UNCHANGED
+
+    await _cleanup_open_pr(changeset_id, ocdid)
 
 
 @pytest.mark.integration

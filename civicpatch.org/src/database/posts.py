@@ -4,6 +4,7 @@ from shared.schemas import Post
 from core.post_grouping import group_by_organization
 from database import assertions, divisions, organizations
 from database.change_logs import record_change
+from database.changesets import live_roster_changeset
 from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType
 from schemas.change_logs import FieldChange, PostChangePayload
@@ -492,6 +493,8 @@ async def create(
                     division_ocdid=division_ocdid,
                     label=minted.label if minted else None,
                 ),
+                # A seat somebody added by hand belongs to the roster they added it to.
+                changeset_id=await live_roster_changeset(cur, jurisdiction_ocdid),
             )
         return post_id
 
@@ -541,6 +544,7 @@ async def update(
                     if was != now
                 ],
             ),
+            changeset_id=await live_roster_changeset(cur, before.jurisdiction_ocdid),
         )
         return True
 

@@ -253,6 +253,21 @@ async def register_jurisdiction_edit_request(
         )
 
 
+async def live_roster_changeset(cur, jurisdiction_ocdid: str) -> str | None:
+    """The changeset whose publish produced the live roster — not the one in flight."""
+    await cur.execute(
+        """
+        SELECT id::text FROM changesets
+        WHERE jurisdiction_ocdid = %s AND published_at IS NOT NULL
+        ORDER BY published_at DESC
+        LIMIT 1
+        """,
+        (jurisdiction_ocdid,),
+    )
+    row = await cur.fetchone()
+    return row[0] if row else None
+
+
 async def get_request_jurisdiction(changeset_id: str) -> str | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
