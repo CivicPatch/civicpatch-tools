@@ -13,7 +13,9 @@ import pytest_asyncio
 
 from database import jurisdictions as db_jurisdictions
 from database.database import get_pool
-from shared.utils.statuses import ChangeLogType
+from database.publications import dismiss_request
+from database.users import SYSTEM_USER_ID
+from shared.utils.statuses import ChangeLogType, DismissalReason
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_history/government"
 _USER_EMAIL = "zz-history-reviewer@example.test"
@@ -28,7 +30,11 @@ async def _wipe():
         await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
-        await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
+        # This row only — `state = 'zz'` is shared with every other sentinel suite, and
+        # deleting theirs takes their organizations' foreign keys down with it.
+        await cur.execute(
+            "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
         await cur.execute("DELETE FROM users WHERE email = %s", (_USER_EMAIL,))
 
 
@@ -67,10 +73,10 @@ async def _log(changeset_id: str, type_: ChangeLogType, changes: dict) -> None:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO change_logs (type, jurisdiction_ocdid, changeset_id, changes)
-            VALUES (%s, %s, %s, %s::jsonb)
+            INSERT INTO change_logs (type, jurisdiction_ocdid, changeset_id, changes, user_id)
+            VALUES (%s, %s, %s, %s::jsonb, %s)
             """,
-            (type_, _OCDID, changeset_id, json.dumps(changes)),
+            (type_, _OCDID, changeset_id, json.dumps(changes), SYSTEM_USER_ID),
         )
 
 
@@ -103,7 +109,7 @@ async def _seed_user() -> str:
         await cur.execute(
             """
             INSERT INTO users (email, provider, provider_user_id, display_name, role)
-            VALUES (%s, 'test', %s, 'Ada Reviewer', 'maintainer')
+            VALUES (%s, 'test', %s, 'Ada Reviewer', 'maintainers')
             RETURNING id::text
             """,
             (_USER_EMAIL, _USER_EMAIL),
@@ -236,6 +242,20 @@ async def test_nobody_is_named_when_nobody_resolved_it():
     changeset_id = await _seed_changeset()
 
     assert (await _entry_for(changeset_id))["resolved_by"] is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_dismissal_nobody_asked_for_is_credited_to_the_system():
+    """A supersede sweep is an actor. Before 160 this left `resolved_by_user_id` null, which
+    read the same as a person whose display name is unset."""
+    changeset_id = await _seed_changeset()
+
+    await dismiss_request(changeset_id, DismissalReason.SUPERSEDED, None)
+
+    entry = await _entry_for(changeset_id)
+    assert entry["resolved_by"] == "CivicPatch"
+    assert entry["outcome"] == "superseded"
 
 
 @pytest.mark.asyncio

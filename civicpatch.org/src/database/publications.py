@@ -19,6 +19,7 @@ import database.changesets as changesets_db
 from database.change_logs import record_dismissal
 from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
+from database.users import SYSTEM_USER_ID
 from database.pipeline_runs import get_sourced_at
 from schemas.assertions import Assertion, AssertionKind, EntityType
 from shared.utils.statuses import DismissalReason
@@ -62,11 +63,13 @@ async def dismiss_request(
             """
             UPDATE changesets
                SET dismissed_at = COALESCE(dismissed_at, now()),
-                   resolved_by_user_id = COALESCE(%s, resolved_by_user_id)
+                   -- Explicit user, else whoever already resolved it, else the system: a
+                   -- sweep dismissing a card is an actor, not an absence.
+                   resolved_by_user_id = COALESCE(%s, resolved_by_user_id, %s)
              WHERE id = %s AND published_at IS NULL
             RETURNING jurisdiction_ocdid
             """,
-            (resolved_by_user_id, changeset_id),
+            (resolved_by_user_id, SYSTEM_USER_ID, changeset_id),
         )
         row = await cur.fetchone()
         # Only when the UPDATE matched: a request already published is left alone above, and
@@ -133,10 +136,12 @@ async def _record_publish(
         """
         UPDATE changesets
            SET published_at = COALESCE(published_at, now()),
-               resolved_by_user_id = COALESCE(%s, resolved_by_user_id)
+               -- Same chain as the dismissal: an auto-publish is the system publishing, not
+               -- a publish with nobody behind it.
+               resolved_by_user_id = COALESCE(%s, resolved_by_user_id, %s)
          WHERE id = %s
         """,
-        (resolved_by_user_id, changeset_id),
+        (resolved_by_user_id, SYSTEM_USER_ID, changeset_id),
     )
 
 

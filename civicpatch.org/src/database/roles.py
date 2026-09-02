@@ -22,6 +22,7 @@ from core.role_taxonomy import (
     slugify_label,
 )
 from database.database import get_pool
+from database.users import SYSTEM_USER_ID
 from schemas.roles import RoleInput
 from shared.schemas import Role, RoleAliasStatus, RoleStatus
 
@@ -92,7 +93,7 @@ async def _emit_change_log(
 ):
     await cur.execute(
         "INSERT INTO change_logs (type, jurisdiction_ocdid, changes, user_id) VALUES (%s, NULL, %s, %s)",
-        (log_type, json.dumps(payload), user_id),
+        (log_type, json.dumps(payload), user_id or SYSTEM_USER_ID),
     )
 
 

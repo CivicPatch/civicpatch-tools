@@ -2,6 +2,7 @@ import json
 
 from core.change_logs import summarize_change_log
 from database.database import get_pool
+from database.users import SYSTEM_USER_ID
 from schemas.change_logs import (
     DismissalPayload,
     AssertionChangePayload,
@@ -81,7 +82,7 @@ async def create_change_log(
             INSERT INTO change_logs (type, jurisdiction_ocdid, changeset_id, changes, user_id)
             VALUES (%s, %s, %s, %s, %s)
             """,
-            (change_type, jurisdiction_ocdid, changeset_id, payload, user_id),
+            (change_type, jurisdiction_ocdid, changeset_id, payload, user_id or SYSTEM_USER_ID),
         )
 
 
@@ -115,7 +116,7 @@ async def record_change(
             change_type,
             jurisdiction_ocdid,
             json.dumps(changes.model_dump()) if changes else None,
-            user_id,
+            user_id or SYSTEM_USER_ID,
             changeset_id,
         ),
     )
