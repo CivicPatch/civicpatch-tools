@@ -112,7 +112,7 @@ test.describe("Import from the sheet", () => {
     );
 
     await page.goto("/imports");
-    await page.getByRole("button", { name: "Import", exact: true }).click();
+    await page.locator(".import-action").click();
 
     const summary = page.locator(".import-summary");
     await expect(
@@ -156,7 +156,7 @@ test.describe("Import from the sheet", () => {
     );
 
     await page.goto("/imports");
-    await page.getByRole("button", { name: "Import", exact: true }).click();
+    await page.locator(".import-action").click();
 
     await expect(page.getByText("Importing…")).toBeVisible();
     // Arrives on its own — the poll used to die before the first batch existed, leaving this

@@ -46,8 +46,10 @@ test.describe("Issue checklist", () => {
     // new_official (person), duplicate_unique_role (person + field) and
     // absent_official — the last has no person_ids, so it appears ONLY here.
     await expect(items(page)).toHaveCount(3);
+    // The live wording. An earlier version quoted a fixture object nothing has read since the
+    // summary stopped being frozen at ingest, so "Dropped official" never reached a page.
     await expect(page.locator(".review-sidebar")).toContainText(
-      "Dropped official",
+      "Not found in this scrape",
     );
     await expect(count(page)).toContainText("0/3");
   });
@@ -67,7 +69,7 @@ test.describe("Issue checklist", () => {
   }) => {
     await openMarkers(page);
     await openDrawer(page);
-    const first = items(page).filter({ hasText: "Extra official" });
+    const first = items(page).filter({ hasText: "New official found" });
     await first.locator("input").check();
     await expect(first).toHaveClass(/review-sidebar__item--done/);
     await expect(count(page)).toContainText("1/3");
@@ -90,7 +92,7 @@ test.describe("Issue checklist", () => {
 
     await openDrawer(page);
     await items(page)
-      .filter({ hasText: "Extra official" })
+      .filter({ hasText: "New official found" })
       .locator("input")
       .check();
 
@@ -211,8 +213,9 @@ test.describe("Issue checklist", () => {
     await expect(page.locator(".review-sidebar__note")).toContainText(
       "No previous scrape",
     );
+    // The column is named for the origin source the summary carries, not a generic "Research".
     await expect(page.locator(".people-by-source thead")).toContainText(
-      "Research",
+      "Google Gemini",
     );
     await expect(page.locator(".people-by-source thead")).toContainText(
       "This scrape",

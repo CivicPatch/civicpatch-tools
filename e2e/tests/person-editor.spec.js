@@ -60,7 +60,7 @@ test.describe("Review editor (Detail v2)", () => {
     // Their fields are still reachable — the roster reads complete without
     // spending a card on someone who has nothing to say.
     await editor.locator(".person-editor__expander").click();
-    await expect(editor.locator(".person-editor__field")).toHaveCount(11);
+    await expect(editor.locator(".person-editor__field")).toHaveCount(10);
   });
 
   test("a changed person shows only what moved, plus its evidence", async ({
@@ -93,10 +93,10 @@ test.describe("Review editor (Detail v2)", () => {
     // Three rows: the two that moved, plus the always-visible Source urls.
     const editor = editorFor(page, "Councillor 02 Scale");
     await expect(editor.locator(".person-editor__field")).toHaveCount(3);
-    await expect(editor.locator(".person-editor__expander")).toContainText("8 unchanged fields");
+    await expect(editor.locator(".person-editor__expander")).toContainText("7 unchanged fields");
 
     await editor.locator(".person-editor__expander").click();
-    await expect(editor.locator(".person-editor__field")).toHaveCount(11);
+    await expect(editor.locator(".person-editor__field")).toHaveCount(10);
 
     await editor.locator(".person-editor__expander").click();
     await expect(editor.locator(".person-editor__field")).toHaveCount(3);
@@ -198,7 +198,7 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
     // provenance were stamped when a row was made, the dropped row would linger
     // beside its own value. Typing into the trailing empty row is the add — there
     // is no button.
-    await phone.locator("input.field-control__input--draft").fill("(555) 020-0102");
+    await phone.locator("input.field-control__input--draft").fill("(201) 555-0102");
     await expect(droppedRow(phone)).toHaveCount(0);
   });
 });

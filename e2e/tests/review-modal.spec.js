@@ -65,7 +65,7 @@ test.describe("Review modal", () => {
     await expect(fields).toHaveCount(3);
 
     await showAllFields(page);
-    await expect(fields).toHaveCount(11);
+    await expect(fields).toHaveCount(10);
   });
 
   test("Prev / Next move through the set in the order the roster is listed", async ({
@@ -75,16 +75,21 @@ test.describe("Review modal", () => {
     // The walk order is the roster's own, so stepping through the modal matches
     // the list you opened it from rather than a status-sorted sequence. The
     // overview is still mounted behind the modal, so it can be read here.
-    const rosterNames = await page.locator(".review-row__name").allTextContents();
-    await expect(page.locator(".review-modal__pos")).toContainText("1 of 18");
+    const rosterNames = (
+      await page.locator(".review-row__name").allTextContents()
+    ).map((n) => n.trim());
+    // Derived, not hardcoded: the roster sorts by role rank before division, so who is first
+    // depends on who the scrape promoted. The claim is that the walk follows that order.
+    const at = rosterNames.indexOf("Councillor 02 Scale") + 1;
+    await expect(page.locator(".review-modal__pos")).toContainText(`${at} of 18`);
 
     await page.locator('.review-modal__nav-btn[title*="Next"]').click();
-    await expect(page.locator(".review-modal__pos")).toContainText("2 of 18");
-    await expect(page.locator(".review-modal__person--on")).toContainText(rosterNames[1]);
+    await expect(page.locator(".review-modal__pos")).toContainText(`${at + 1} of 18`);
+    await expect(page.locator(".review-modal__person--on")).toContainText(rosterNames[at]);
 
     await page.locator('.review-modal__nav-btn[title*="Previous"]').click();
-    await expect(page.locator(".review-modal__pos")).toContainText("1 of 18");
-    await expect(page.locator(".review-modal__person--on")).toContainText(rosterNames[0]);
+    await expect(page.locator(".review-modal__pos")).toContainText(`${at} of 18`);
+    await expect(page.locator(".review-modal__person--on")).toContainText(rosterNames[at - 1]);
   });
 
   test("edits apply live and survive closing — Done keeps, it does not commit", async ({

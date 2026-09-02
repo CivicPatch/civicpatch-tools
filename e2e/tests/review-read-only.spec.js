@@ -19,15 +19,17 @@ import {
 } from "../fixtures/db.js";
 
 test.describe("Review card — read only", () => {
-  test("a merged card shows its status and hides the actions that would change it", async ({
+  test("a published card shows its status and hides the actions that would change it", async ({
     authenticatedPage: page,
   }) => {
     await page.goto(`/review/session?changeset_id=${READ_ONLY_CHANGESET_ID}`);
 
     const banner = page.locator(".review-page__status-banner");
     await expect(banner).toBeVisible();
-    await expect(banner).toHaveClass(/review-page__status-banner--merged/);
-    await expect(banner).toContainText("merged");
+    // The banner is `--${reviewStatus}`, and a changeset's terminal state is published — the
+    // vocabulary moved off the PR when the review stopped being one.
+    await expect(banner).toHaveClass(/review-page__status-banner--published/);
+    await expect(banner).toContainText("published");
 
     // Nothing here can be published, saved or closed again.
     await expect(page.locator(".review-page__approve-btn")).toHaveCount(0);
@@ -35,7 +37,7 @@ test.describe("Review card — read only", () => {
     await expect(page.getByRole("button", { name: "Reject" })).toHaveCount(0);
   });
 
-  test("a merged card links out to the pull request and the jurisdiction", async ({
+  test("a published card links out to the published data and the jurisdiction", async ({
     authenticatedPage: page,
   }) => {
     await page.goto(`/review/session?changeset_id=${READ_ONLY_CHANGESET_ID}`);
@@ -48,10 +50,11 @@ test.describe("Review card — read only", () => {
       READ_ONLY_WEBSITE_URL,
     );
 
-    await expect(page.getByRole("link", { name: /View PR/ })).toHaveAttribute(
-      "href",
-      READ_ONLY_PR_URL,
-    );
+    // "View published data", not "View PR": the url is where the change landed, which is a
+    // commit or a pull request depending on the path it took.
+    await expect(
+      page.getByRole("link", { name: /View published data/ }),
+    ).toHaveAttribute("href", READ_ONLY_PR_URL);
   });
 });
 

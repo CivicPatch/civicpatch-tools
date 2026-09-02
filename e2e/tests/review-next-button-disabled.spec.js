@@ -18,7 +18,9 @@ test.describe("Review session — Next button disabled", () => {
 
     // Start the session and confirm the lone TX card loaded
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E TX City")).toBeVisible();
+    // The jurisdiction link specifically: the name also appears in the row, the issue list and
+    // the source table, so a bare text match is ambiguous now the checklist renders.
+    await expect(page.locator(".review-page__jurisdiction")).toContainText("E2E TX City");
 
     // With only one PR in the pool, `has_next` from the navigate response is
     // false and the Next button must be rendered with the disabled attribute.
