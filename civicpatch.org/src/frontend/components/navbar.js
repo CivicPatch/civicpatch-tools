@@ -25,7 +25,11 @@ import "./navbar.css";
 // Imported here because all 12 Vite entries pull the navbar in, and vite_css()
 // links the emitted stylesheet in <head> — so the fonts are hashed, cached, and
 // have no third party in the render path.
-import "@fortawesome/fontawesome-free/css/all.min.css";
+// The subsets, not all.min.css: that also ships the brands and v4-compat faces,
+// and brands alone is a 115KB font for the single GitHub mark, now .icon-github.
+import "@fortawesome/fontawesome-free/css/fontawesome.min.css";
+import "@fortawesome/fontawesome-free/css/solid.min.css";
+import "@fortawesome/fontawesome-free/css/regular.min.css";
 
 const API_URL = config.apiUrl;
 

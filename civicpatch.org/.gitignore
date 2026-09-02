@@ -4,4 +4,6 @@
 src/civicpatch/*
 src/frontend/.vite/
 src/frontend/build/
+# Subsetted webfonts + stylesheet, emitted by src/frontend/scripts/build-icons.mjs
+src/frontend/generated/
 git_data/*

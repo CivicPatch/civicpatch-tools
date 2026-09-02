@@ -14,6 +14,7 @@ export default defineConfig(({ command }) => ({
         queue: "./assets/queue.js",
         issues: "./assets/issues.js",
         jurisdiction: "./assets/jurisdiction.js",
+        "jurisdiction-history": "./assets/jurisdiction-history.ts",
         login: "./assets/login.ts",
         admin: "./assets/admin.ts",
         activity: "./assets/activity.ts",

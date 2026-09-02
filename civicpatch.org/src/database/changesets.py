@@ -5,11 +5,12 @@ from datetime import timedelta
 from typing import Optional
 
 from database.change_logs import record_dismissal
-from database.database import get_pool
+from database.database import get_pool, to_iso
 from database.review_sessions import (
     SESSION_IDLE_TIMEOUT_MINUTES,
     ReviewSessionEntryStatus,
 )
+from schemas.common import InFlightChangeset, JurisdictionInFlight
 from shared.utils.statuses import (
     TERMINAL_PIPELINE_RUN_STATUSES,
     ChangesetKind,
@@ -266,6 +267,70 @@ async def live_roster_changeset(cur, jurisdiction_ocdid: str) -> str | None:
     )
     row = await cur.fetchone()
     return row[0] if row else None
+
+
+async def get_in_flight(jurisdiction_ocdid: str) -> JurisdictionInFlight:
+    """What this jurisdiction is still waiting on, without reading its whole history.
+
+    The page used to fetch every changeset and derive this from the array. It only ever needed
+    the unresolved ones plus two scalars, and a jurisdiction's history grows without bound.
+
+    Both flags are computed once in `flags` and filtered on by name — `AVAILABLE_FOR_REVIEW` is
+    an EXISTS subquery, so spelling it out in both the SELECT list and the WHERE would evaluate
+    it twice per row.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            WITH flags AS (
+                SELECT r.id, r.created_at, r.kind, r.change_url, r.status, r.progress,
+                       {RUN_IN_FLIGHT} AS is_running,
+                       {AVAILABLE_FOR_REVIEW} AS awaiting_review
+                FROM changesets r
+                WHERE r.jurisdiction_ocdid = %s
+                  AND r.published_at IS NULL
+                  AND r.dismissed_at IS NULL
+            )
+            SELECT id::text, created_at, kind, change_url, status, progress,
+                   is_running, awaiting_review
+            FROM flags
+            WHERE is_running OR awaiting_review
+            ORDER BY created_at DESC
+            """,
+            (jurisdiction_ocdid,),
+        )
+        in_flight = [
+            InFlightChangeset(
+                changeset_id=row[0],
+                created_at=to_iso(row[1]),
+                kind=row[2],
+                change_url=row[3],
+                pipeline_run_status=row[4],
+                pipeline_run_progress=row[5],
+                is_running=row[6],
+                awaiting_review=row[7],
+            )
+            for row in await cur.fetchall()
+        ]
+
+        # `max(published_at)`, not the newest row's: a changeset published today may have been
+        # scraped before one published last week.
+        await cur.execute(
+            """
+            SELECT max(published_at), count(*)
+            FROM changesets WHERE jurisdiction_ocdid = %s
+            """,
+            (jurisdiction_ocdid,),
+        )
+        totals = await cur.fetchone()
+        last_published_at, total = totals if totals else (None, 0)
+
+    return JurisdictionInFlight(
+        in_flight=in_flight,
+        last_published_at=to_iso(last_published_at),
+        total_changesets=total,
+    )
 
 
 async def get_request_jurisdiction(changeset_id: str) -> str | None:
