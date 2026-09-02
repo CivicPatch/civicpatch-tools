@@ -2,7 +2,8 @@ import './map.css';
 import { component, useEffect, useRef, useState } from 'haunted';
 import { html } from 'lit-html';
 import { ref } from 'lit-html/directives/ref.js';
-import maplibregl from 'maplibre-gl';
+import type * as maplibregl from 'maplibre-gl';
+import { loadMapEngine, type MapEngine } from './map-engine.js';
 import { fetchStateCoverageSummary } from '../../api.js';
 import { getNeedsReviewCount } from '../../utils/coverage-utils.js';
 import {
@@ -38,8 +39,13 @@ function BrowseMap(this: HTMLElement, {
   coverageSummary = {},
   height = '25rem',
 }: BrowseMapProps) {
+  const containerRef = useRef<HTMLElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
+  const engineRef = useRef<MapEngine | null>(null);
   const prevSelectedOcdidRef = useRef<string | null>(null);
+  // The map exists only once the maplibre chunk has arrived, so the effects that load
+  // sources are gated on this rather than running against a null map and never retrying.
+  const [mapReady, setMapReady] = useState(false);
   const [level, setLevel] = useState<DrillLevel>('national');
   // levelRef keeps the click handler in sync — handleClick is registered once
   // and would otherwise capture a stale closure value of `level`.
@@ -81,18 +87,8 @@ function BrowseMap(this: HTMLElement, {
     }
   };
 
-  const setupContainer = (el: Element | undefined) => {
-    if (!el || mapRef.current) return;
-    mapRef.current = createMap(el as HTMLElement);
-    mapRef.current.addControl(new maplibregl.NavigationControl(), 'bottom-right');
-    mapRef.current.on('load', () => mapRef.current?.resize());
-    mapRef.current.on('click', handleClick);
-    mapRef.current.on('mousemove', 'states', handleStateHover);
-    mapRef.current.on('mouseleave', 'states', handleStateLeave);
-    mapRef.current.getCanvas().addEventListener('webglcontextrestored', reapplyFeatureState);
-    // The map is otherwise trapped in this closure; expose it on the element
-    // for debugging and for e2e assertions about layers/feature-state.
-    (el as any)._map = mapRef.current;
+  const setContainer = (el: Element | undefined) => {
+    containerRef.current = (el as HTMLElement) ?? null;
   };
 
   const handleClick = (e: maplibregl.MapMouseEvent) => {
@@ -185,7 +181,7 @@ function BrowseMap(this: HTMLElement, {
     if (!code) return;
     map.getCanvas().style.cursor = 'pointer';
     if (!hoverPopupRef.current) {
-      hoverPopupRef.current = new maplibregl.Popup({
+      hoverPopupRef.current = new engineRef.current.Popup({
         closeButton: false,
         closeOnClick: false,
         offset: 8,
@@ -215,6 +211,39 @@ function BrowseMap(this: HTMLElement, {
     hoverPopupRef.current?.remove();
   };
 
+  // maplibre arrives as its own chunk, so the map is built here rather than during the
+  // render commit: an effect can be cancelled if the element goes before the chunk lands.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    let map: maplibregl.Map | null = null;
+    let disposed = false;
+
+    loadMapEngine().then((engine) => {
+      if (disposed) return;
+      engineRef.current = engine;
+      map = createMap(engine, el);
+      map.addControl(new engine.NavigationControl(), 'bottom-right');
+      map.on('load', () => map?.resize());
+      map.on('click', handleClick);
+      map.on('mousemove', 'states', handleStateHover);
+      map.on('mouseleave', 'states', handleStateLeave);
+      map.getCanvas().addEventListener('webglcontextrestored', reapplyFeatureState);
+      // The map is otherwise trapped in this closure; expose it on the element
+      // for debugging and for e2e assertions about layers/feature-state.
+      (el as any)._map = map;
+      mapRef.current = map;
+      setMapReady(true);
+    });
+
+    return () => {
+      disposed = true;
+      hoverPopupRef.current?.remove();
+      map?.remove();
+      mapRef.current = null;
+    };
+  }, []);
+
   // Load national source when no state selected
   useEffect(() => {
     const map = mapRef.current;
@@ -234,7 +263,7 @@ function BrowseMap(this: HTMLElement, {
     };
     whenStyleReady(map, load);
     return () => map.off('sourcedata', onSourceData);
-  }, []);
+  }, [mapReady]);
 
   // Load state source when state changes; reset to national when state is cleared
   useEffect(() => {
@@ -265,7 +294,7 @@ function BrowseMap(this: HTMLElement, {
     };
     whenStyleReady(map, load);
     return () => map.off('sourcedata', onSourceData);
-  }, [state]);
+  }, [mapReady, state]);
 
   // Re-apply local status when localStatus changes; wait for style if needed.
   useEffect(() => {
@@ -335,18 +364,10 @@ function BrowseMap(this: HTMLElement, {
     }));
   };
 
-  // Cleanup
-  useEffect(() => {
-    return () => {
-      hoverPopupRef.current?.remove();
-      mapRef.current?.remove();
-      mapRef.current = null;
-    };
-  }, []);
-
   return html`
     <div class="map-container" style="height:${height}">
-      <div class="map-inner" style="height:100%" ${ref(setupContainer)}></div>
+      <div class="map-inner" style="height:100%" ${ref(setContainer)}></div>
+      ${mapReady ? '' : html`<div class="map-loading">Loading map…</div>`}
       ${level !== 'national' ? html`<button class="map-reset-btn" title="Reset to national view" @click=${handleReset}>↩ Reset</button>` : ''}
       <div class="map-legend" aria-label="Map legend">
         <span class="map-legend__item"><span class="map-legend__swatch map-legend__swatch--fresh"></span>Fresh</span>

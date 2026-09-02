@@ -60,6 +60,20 @@
   font-size: var(--text-sm, 0.875rem);
 }
 
+/* Fills the already-sized .map-container while the maplibre chunk downloads, so the
+   map fades in rather than pushing the page down. */
+.map-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--civ-surface);
+  color: var(--pico-muted-color);
+  font-size: var(--text-sm, 0.875rem);
+}
+
 .map-legend {
   position: absolute;
   bottom: 0.5rem;
