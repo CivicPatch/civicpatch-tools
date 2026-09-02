@@ -41,8 +41,8 @@ function progressPanel(batch: ImportProgress | null) {
       <p class="import-hint">
         ${batch
           ? `Started ${new Date(batch.started_at).toLocaleTimeString()}. `
-          : ""}Each locality becomes an ordinary review card. Nothing is
-        published yet.
+          : ""}Each
+        locality becomes an ordinary review card. Nothing is published yet.
       </p>
     </section>
   `;
@@ -156,7 +156,8 @@ function ImportPage() {
 
   // Tracked and not known-finished. Keyed off the id, not the progress, so the moment an
   // import starts the page shows it rather than flashing back to the Check panel.
-  const running = batchId !== null && (batch === null || !isFinished(batch.status));
+  const running =
+    batchId !== null && (batch === null || !isFinished(batch.status));
 
   const handleStart = async () => {
     setBusy(true);
@@ -223,7 +224,6 @@ function ImportPage() {
 
       ${error ? html`<p class="import-error">${error}</p>` : null}
       ${resultsPanel(results)}
-
       ${tab === HISTORY_TAB
         ? html`<section class="import-panel">
             <h2 class="import-panel__title">Past imports</h2>
@@ -234,28 +234,32 @@ function ImportPage() {
             ></import-history>
           </section>`
         : html`${running
-        ? progressPanel(batch)
-        : html`
-            <section class="import-panel">
-              <h2 class="import-panel__title">Import from the sheet</h2>
-              ${sheetUrl
-                ? html`<p class="import-hint">
-                    <a href=${sheetUrl} target="_blank" rel="noreferrer"
-                      >Open the sheet</a
-                    >
-                  </p>`
-                : null}
-              <button
-                type="button"
-                class="import-action"
-                ?disabled=${busy}
-                @click=${handleStart}
-              >
-                ${busy ? "Importing…" : "Import"}
-              </button>
-              <import-preview .preview=${preview}></import-preview>
-            </section>
-          `}`}
+            ? progressPanel(batch)
+            : html`
+                <section class="import-panel">
+                  <h2 class="import-panel__title">Import from the sheet</h2>
+                  ${sheetUrl
+                    ? html`<p class="import-hint">
+                        <a href=${sheetUrl} target="_blank" rel="noreferrer"
+                          >Open the sheet</a
+                        >
+                      </p>`
+                    : null}
+                  <button
+                    type="button"
+                    class="import-action"
+                    ?disabled=${busy}
+                    @click=${handleStart}
+                  >
+                    ${busy ? "Importing…" : "Import"}
+                  </button>
+                </section>
+              `}`}
+      ${preview
+        ? html`<section class="import-panel">
+            <import-preview .preview=${preview}></import-preview>
+          </section>`
+        : null}
       ${tab === HISTORY_TAB && review
         ? html`<section class="import-panel">
             <batch-review
@@ -269,7 +273,10 @@ function ImportPage() {
   `;
 }
 
-customElements.define("import-page", component(ImportPage, {
-  useShadowDOM: false,
-}));
+customElements.define(
+  "import-page",
+  component(ImportPage, {
+    useShadowDOM: false,
+  }),
+);
 export default ImportPage;

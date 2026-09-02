@@ -18,7 +18,7 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
-import { RECONCILE_CHANGESET_ID } from "../fixtures/db.js";
+import { personUuid, RECONCILE_CHANGESET_ID } from "../fixtures/db.js";
 import { openDetail, openOverview, editorFor, rowFor } from "./helpers/review-card.js";
 
 const APPROVE_ENDPOINT = "**/api/v1/reviews/*/publish";
@@ -81,7 +81,8 @@ test.describe("Delete a person", () => {
 
     await expect.poll(() => merge.body).not.toBeNull();
     // Tom survives; Maria's absence is the deletion.
-    expect(publishedIds(merge.body)).toEqual(["recon-tom"]);
+    // Ids are uuids since migration 144; the fixture hashes its slug, so name it the same way.
+    expect(publishedIds(merge.body)).toEqual([personUuid("recon-tom")]);
   });
 
   test("Undo restores a deleted person, and publishing carries them again", async ({
@@ -176,6 +177,6 @@ test.describe("Delete a person", () => {
 
     await page.locator(".review-page__approve-btn").click();
     await expect.poll(() => merge.body).not.toBeNull();
-    expect(publishedIds(merge.body)).not.toContain("recon-tom");
+    expect(publishedIds(merge.body)).not.toContain(personUuid("recon-tom"));
   });
 });

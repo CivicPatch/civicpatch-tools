@@ -13,7 +13,7 @@ test.describe("Review session — state switching", () => {
     // Start a review session in NJ (seeded by the fixture)
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText(/E2E Test City/)).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toContainText(/E2E Test City/);
 
     // Leave the review page. "/" is a global route (no state selector) — use
     // another state-scoped page instead.
@@ -25,21 +25,25 @@ test.describe("Review session — state switching", () => {
     // Return to /review — must show TX idle landing, NOT the resumed NJ session
     await page.goto("/review");
     await expect(page.locator(".review-page__start-btn")).toBeVisible();
-    await expect(page.getByText(/E2E Test City/)).not.toBeVisible();
+    await expect(
+      page.locator(".review-page__jurisdiction").filter({ hasText: /E2E Test City/ }),
+    ).toHaveCount(0);
     await expect(page.locator(".review-page__end-btn")).not.toBeVisible();
 
     // Start a fresh TX session — positive assertion that we land on the TX
     // jurisdiction (not bleeding NJ content into a TX-scoped session)
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText("E2E TX City")).toBeVisible();
-    await expect(page.getByText(/E2E Test City/)).not.toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toContainText("E2E TX City");
+    await expect(
+      page.locator(".review-page__jurisdiction").filter({ hasText: /E2E Test City/ }),
+    ).toHaveCount(0);
   });
 
   test("switching back to the original state resumes its session and stays in that state when navigating onward", async ({ authenticatedPage: page }) => {
     // Start NJ session and advance to card 2 so resume position is non-trivial
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.getByText(/E2E Test City/)).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toContainText(/E2E Test City/);
     await page.locator(".review-page__next-btn").click();
     await expect(page.locator(".review-page__progress")).toContainText("2");
 
@@ -57,12 +61,12 @@ test.describe("Review session — state switching", () => {
     await page.locator(".review-page__start-btn").click();
     await expect(page.locator(".review-page__progress")).toContainText("2");
     // Card is one of the seeded NJ jurisdictions (all start with "E2E Test City")
-    await expect(page.getByText(/E2E Test City/)).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toContainText(/E2E Test City/);
 
     // Click next from the resumed position — the following card is also NJ,
     // proving the session has not silently leaked into the TX namespace.
     await page.locator(".review-page__next-btn").click();
     await expect(page.locator(".review-page__progress")).toContainText("3");
-    await expect(page.getByText(/E2E Test City/)).toBeVisible();
+    await expect(page.locator(".review-page__jurisdiction")).toContainText(/E2E Test City/);
   });
 });

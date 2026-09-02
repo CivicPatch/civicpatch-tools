@@ -34,7 +34,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
  * longer be inserted. Hashing keeps the fixtures readable and stable: the same slug always
  * yields the same id, which is what lets two sightings deliberately share a person.
  */
-function personUuid(slug) {
+export function personUuid(slug) {
   if (UUID.test(slug)) return slug;
   const hex = crypto.createHash("md5").update(slug).digest("hex");
   return [
@@ -144,9 +144,10 @@ function buildScaleProposed() {
               },
             }
           : {}),
-        // A changed email, not an added one: a sighting carries a single contact, so a second
-        // address is a shape this fixture cannot propose.
-        ...(changed && i % 3 === 1 ? { emails: [`c${i}@scale.gov`] } : {}),
+        // An added email — two sightings of one person, which `asSightings` emits.
+        ...(changed && i % 3 === 1
+          ? { emails: [`ward${i}@scale.gov`, `c${i}@scale.gov`] }
+          : {}),
         ...(changed && i % 3 === 2 ? { end_date: "2029", phones: [] } : {}),
       }),
     );
@@ -169,15 +170,6 @@ function buildScaleProposed() {
   });
   return [...carried, ...added];
 }
-
-// Duplicate-id fixture (§21.8) — two proposed people resolving to one id, which
-// is what merge manufactures: matching consults aliases, so the next scrape
-// resolves both entries of a merged pair to the survivor. Own state (nm).
-export const DUPLICATE_JURISDICTION_OCDID =
-  "ocd-jurisdiction/country:us/state:nm/place:e2e_duplicate/government";
-export const DUPLICATE_CHANGESET_ID = "00000000-0000-0000-eeee-000000000016";
-const DUPLICATE_PR_ID = "00000000-0000-0000-eeee-000000000017";
-const DUPLICATE_PR_NUMBER = 16;
 
 // TX fixture — minimal data so cross-state isolation tests can positively
 // assert TX content (not just the absence of NJ content).
@@ -264,19 +256,26 @@ function sightingLabel(office) {
   return ward ? `${office.name} Ward ${ward}` : office.name;
 }
 
+// One sighting per email: a sighting is one appearance on one page and carries one contact, so
+// somebody listed with two addresses was seen twice. `roster_from_sightings` groups by person and
+// merges them — which is the only way a fixture can propose an *added* value, and the
+// multi-value provenance tests depend on it.
 function asSightings(proposed) {
-  return proposed.map(function (person) {
-    return {
-      person_id: person.id,
-      name: person.name,
-      label: sightingLabel(person.office),
-      email: person.emails?.[0] ?? null,
-      phone: person.phones?.[0] ?? null,
-      url: person.urls?.[0] ?? null,
-      image: person.image ?? null,
-      start_date: person.start_date ?? null,
-      end_date: person.end_date ?? null,
-    };
+  return proposed.flatMap(function (person) {
+    const emails = person.emails?.length ? person.emails : [null];
+    return emails.map(function (email) {
+      return {
+        person_id: person.id,
+        name: person.name,
+        label: sightingLabel(person.office),
+        email,
+        phone: person.phones?.[0] ?? null,
+        url: person.urls?.[0] ?? null,
+        image: person.image ?? null,
+        start_date: person.start_date ?? null,
+        end_date: person.end_date ?? null,
+      };
+    });
   });
 }
 
@@ -290,19 +289,22 @@ function asSightings(proposed) {
  */
 async function seedReviewCard(
   client,
-  { changesetId, ocdid, people = [], publishedAt = null, ageSeconds = 0 },
+  { changesetId, ocdid, people = [], publishedAt = null, ageSeconds = 0, openDataUrl = null },
 ) {
   await client.query(
     // `ageSeconds` makes the queue order intentional rather than an accident of insertion
     // time. The queue sorts `created_at DESC`, and cards seeded in one run otherwise share a
     // timestamp to the microsecond — so which card a session opened first was arbitrary.
     // Age 0 is the newest, and therefore the first card a review session offers.
+    // `open_data_url` is where the change landed. It used to live on `pull_requests`, which
+    // migration 141 dropped — so a published card had no url to link to and the review page
+    // simply rendered no link.
     `INSERT INTO changesets (id, kind, jurisdiction_ocdid, arguments_json,
-                           status, progress, sourced_at, created_at, published_at)
+                           status, progress, sourced_at, created_at, published_at, open_data_url)
      VALUES ($1, 'scrape', $2, '{}', 'success', 100, NOW(),
-             NOW() - ($4 * INTERVAL '1 second'), $3)
+             NOW() - ($4 * INTERVAL '1 second'), $3, $5)
      ON CONFLICT (id) DO NOTHING`,
-    [changesetId, ocdid, publishedAt, ageSeconds],
+    [changesetId, ocdid, publishedAt, ageSeconds, openDataUrl],
   );
   // Re-seeding must not double the sightings: source_records has an auto id, so there is
   // nothing to ON CONFLICT on.
@@ -673,54 +675,6 @@ export async function seedE2eFixtures() {
       people: asSightings(buildScaleProposed()),
     });
 
-    // Duplicate-id card — two proposed people share `dup-shared`.
-    await client.query(
-      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-       VALUES ($1, 'nm', 'active', '{"name":"E2E Duplicate City","geoid":"3500001"}', NOW())
-       ON CONFLICT (jurisdiction_ocdid)
-       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
-      [DUPLICATE_JURISDICTION_OCDID],
-    );
-    const duplicateDivision =
-      "ocd-division/country:us/state:nm/place:e2e_duplicate";
-    const duplicateProposed = [
-      {
-        id: "dup-shared",
-        name: "Pat Duplicate",
-        office: { name: "Mayor", division_ocdid: duplicateDivision },
-        emails: [],
-        phones: [],
-        urls: [],
-        other_names: [],
-        source_urls: ["https://example.gov/roster"],
-      },
-      {
-        id: "dup-shared",
-        name: "Pat Duplicate the Second",
-        office: { name: "Clerk", division_ocdid: duplicateDivision },
-        emails: [],
-        phones: [],
-        urls: [],
-        other_names: [],
-        source_urls: ["https://example.gov/roster"],
-      },
-      {
-        id: "dup-unique",
-        name: "Sam Single",
-        office: { name: "Treasurer", division_ocdid: duplicateDivision },
-        emails: [],
-        phones: [],
-        urls: [],
-        other_names: [],
-        source_urls: ["https://example.gov/roster"],
-      },
-    ];
-    await seedReviewCard(client, {
-      changesetId: DUPLICATE_CHANGESET_ID,
-      ocdid: DUPLICATE_JURISDICTION_OCDID,
-      people: asSightings(duplicateProposed),
-    });
-
     // Issue-markers card — reconcile mode, all proposed render as added cards.
     await client.query(
       `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
@@ -729,7 +683,46 @@ export async function seedE2eFixtures() {
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
       [MARKERS_JURISDICTION_OCDID],
     );
-    // Alice & Bob both hold "Mayor" (the duplicated unique role); Carol is the extra.
+    // Alice, Bob and Dave are already published here; the scrape finds Alice, Bob and Carol.
+    // That is what makes each issue kind reachable: Carol is new, Dave is absent, and Alice and
+    // Bob both hold "Mayor" — the duplicated unique role. Seeding only the proposed side made
+    // all three read as new_official and produced no absent_official at all.
+    const markersPublished = [
+      {
+        id: "markers-alice",
+        name: "Alice Mayor",
+        office: { name: "Mayor", division_ocdid: MARKERS_DIVISION },
+        emails: [],
+        phones: [],
+        urls: [],
+        other_names: [],
+        source_urls: ["https://example.gov/roster"],
+      },
+      {
+        id: "markers-bob",
+        name: "Bob Council",
+        office: { name: "Mayor", division_ocdid: MARKERS_DIVISION },
+        emails: [],
+        phones: [],
+        urls: [],
+        other_names: [],
+        source_urls: ["https://example.gov/roster"],
+      },
+      {
+        id: "markers-dave",
+        name: "Dave Absent",
+        office: { name: "Clerk", division_ocdid: MARKERS_DIVISION },
+        emails: [],
+        phones: [],
+        urls: [],
+        other_names: [],
+        source_urls: ["https://example.gov/roster"],
+      },
+    ];
+    await clearRoster(client, MARKERS_JURISDICTION_OCDID);
+    for (const person of markersPublished) {
+      await seedPerson(client, MARKERS_JURISDICTION_OCDID, person);
+    }
     const markersProposed = [
       {
         id: "markers-alice",
@@ -788,6 +781,7 @@ export async function seedE2eFixtures() {
       changesetId: READ_ONLY_CHANGESET_ID,
       ocdid: READ_ONLY_JURISDICTION_OCDID,
       publishedAt: new Date().toISOString(),
+      openDataUrl: READ_ONLY_PR_URL,
       people: [
         {
           person_id: "e2e-jane-published",
@@ -894,7 +888,6 @@ export async function teardownE2eFixtures() {
       [BASELINE_PR_ID, BASELINE_CHANGESET_ID, BASELINE_JURISDICTION_OCDID],
       [RECONCILE_PR_ID, RECONCILE_CHANGESET_ID, RECONCILE_JURISDICTION_OCDID],
       [SCALE_PR_ID, SCALE_CHANGESET_ID, SCALE_JURISDICTION_OCDID],
-      [DUPLICATE_PR_ID, DUPLICATE_CHANGESET_ID, DUPLICATE_JURISDICTION_OCDID],
       [TX_PR_ID, TX_CHANGESET_ID, TX_JURISDICTION_OCDID],
       [MARKERS_PR_ID, MARKERS_CHANGESET_ID, MARKERS_JURISDICTION_OCDID],
       [READ_ONLY_PR_ID, READ_ONLY_CHANGESET_ID, READ_ONLY_JURISDICTION_OCDID],

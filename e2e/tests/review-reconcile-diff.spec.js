@@ -39,8 +39,8 @@ test.describe("Review reconcile diff (populated)", () => {
     // moved, so nothing else is on screen — which the old view could not do,
     // since it rendered all eleven fields regardless.
     //
-    // Not Email: a sighting carries one contact, so "an email was added" is a shape this
-    // fixture cannot propose, and asserting it only ever passed by accident.
+    // Email is back: `asSightings` emits one sighting per address, so "an email was added" is
+    // expressible again. It was briefly not, and this list briefly said so.
     //
     // The fourth row is Source urls, and it is not a change: `diff: false` makes
     // it a context field, always visible as the evidence behind the other three
@@ -56,6 +56,7 @@ test.describe("Review reconcile diff (populated)", () => {
     await expect(maria.locator(".person-editor__label")).toHaveText([
       "Post",
       "Term end",
+      "Email",
       "Phone",
       // `with_fallback_url` gives a person with no url one on the proposed side, so Links reads
       // as added. A real difference between the two sides, not an artefact of the fixture.
@@ -113,7 +114,7 @@ test.describe("Review reconcile diff (populated)", () => {
     // fields never leave a card once shown (§2.1).
     await term.locator("input").first().fill("2025");
     await expect(term.locator(".person-editor__was")).toHaveCount(0);
-    await expect(maria.locator(".person-editor__field")).toHaveCount(5);
+    await expect(maria.locator(".person-editor__field")).toHaveCount(6);
   });
 
   test("Restore puts the old value back", async ({ authenticatedPage: page }) => {
