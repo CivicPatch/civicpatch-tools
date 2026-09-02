@@ -211,16 +211,16 @@ def test_build_review_summary_returns_structured_issues():
 
 def test_build_review_summary_normalizes_model_objects():
     """Was `..._normalizes_official_objects`, built on `Official`, which no longer exists.
-    Same claim on `OpenStatesRecord`: a model, not a dict, must not raise.
+    Same claim on `SubmittedPersonRecord`: a model, not a dict, must not raise.
 
     ⚠️ The shim this pins is arguably dead. Its comment says "the pipeline passes Official
     objects" — the pipeline has not called `build_review_summary` since the review summary
     moved to cp.org ingest, and the sole caller passes dicts from `get_people` and
     `proposed_roster`. Kept for now because removing it is a behaviour decision, not fallout.
     """
-    from shared.schemas import OpenStatesRecord
+    from shared.schemas import SubmittedPersonRecord
 
-    person = OpenStatesRecord(
+    person = SubmittedPersonRecord(
         name="Jane",
         label="Mayor",
         labels=["Mayor"],

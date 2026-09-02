@@ -1,5 +1,6 @@
 from core.membership_label import derive_post_label
 from core.post_derivation import DerivedPost
+from shared.schemas import Post
 from core.post_grouping import group_by_organization
 from database import assertions, divisions, organizations
 from database.change_logs import record_change
@@ -202,7 +203,7 @@ async def _refuse_if_held(cur, post_id: str) -> None:
         raise PostHasMembers((await _holder_count(cur, post_id)))
 
 
-async def get_many(cur, post_ids: list[str]) -> dict[str, dict]:
+async def get_many(cur, post_ids: list[str]) -> dict[str, Post]:
     """Posts by id. An id with no post is absent rather than None."""
     if not post_ids:
         return {}
@@ -217,11 +218,11 @@ async def get_many(cur, post_ids: list[str]) -> dict[str, dict]:
         (post_ids,),
     )
     columns = [column.name for column in cur.description or []]
-    found = [_with_label(dict(zip(columns, row))) for row in await cur.fetchall()]
-    return {post["id"]: post for post in found}
+    found = [Post(**_with_label(dict(zip(columns, row)))) for row in await cur.fetchall()]
+    return {post.id: post for post in found}
 
 
-async def get(cur, post_id: str) -> dict | None:
+async def get(cur, post_id: str) -> Post | None:
     """One post by id, or None. `assign` takes the organization from here, never from the
     caller, so a request cannot name a mismatched pair."""
     return (await get_many(cur, [post_id])).get(post_id)
@@ -489,7 +490,7 @@ async def create(
                     post_id=post_id,
                     role_id=role_id,
                     division_ocdid=division_ocdid,
-                    label=minted["label"] if minted else None,
+                    label=minted.label if minted else None,
                 ),
             )
         return post_id
@@ -523,20 +524,21 @@ async def update(
             cur,
             ChangeLogType.EDIT_POST,
             user_id,
-            before["jurisdiction_ocdid"],
+            before.jurisdiction_ocdid,
             PostChangePayload(
                 post_id=post_id,
-                role_id=before["role_id"],
-                division_ocdid=before["division_ocdid"],
+                role_id=before.role_id,
+                division_ocdid=before.division_ocdid,
                 # Derived, and unchanged by this edit: it names the seat for a reader.
-                label=before["label"],
+                label=before.label,
+                # Underscored names, because these are the wire's, not the model's.
                 fields=[
-                    FieldChange(field=field, before=before[field], after=after)
-                    for field, after in (
-                        ("_headcount", headcount),
-                        ("_is_tracked", is_tracked),
+                    FieldChange(field=field, before=was, after=now)
+                    for field, was, now in (
+                        ("_headcount", before.headcount, headcount),
+                        ("_is_tracked", before.is_tracked, is_tracked),
                     )
-                    if before[field] != after
+                    if was != now
                 ],
             ),
         )
@@ -566,12 +568,12 @@ async def delete(post_id: str, user_id: str | None = None) -> bool:
             cur,
             ChangeLogType.DELETE_POST,
             user_id,
-            before["jurisdiction_ocdid"],
+            before.jurisdiction_ocdid,
             PostChangePayload(
                 post_id=post_id,
-                role_id=before["role_id"],
-                division_ocdid=before["division_ocdid"],
-                label=before["label"],
+                role_id=before.role_id,
+                division_ocdid=before.division_ocdid,
+                label=before.label,
             ),
         )
         return True

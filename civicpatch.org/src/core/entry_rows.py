@@ -16,6 +16,9 @@ from datetime import date, timedelta
 from enum import StrEnum
 
 from pydantic import BaseModel
+from shared.utils.email_utils import is_valid_email
+from shared.utils.phone_utils import normalize_phone_number
+from shared.utils.url_utils import is_web_url
 
 JURISDICTION = "jurisdiction_ocdid"
 
@@ -157,6 +160,16 @@ def _row_errors(row: dict, line: int) -> list[RowError]:
         for column in ("start_date", "end_date")
         if (value := _date(row.get(column))) and not _DATE.match(value)
     )
+    # The same checks `SubmittedPersonRecord` applies, run here so a bad cell is a rejected row
+    # the volunteer sees in the sheet rather than a record that fails further down.
+    for column, ok, expected in (
+        ("phone", lambda v: normalize_phone_number(v) is not None, "not a phone number"),
+        ("email", is_valid_email, "not an email address"),
+        ("url", is_web_url, "not an http(s) url with a domain"),
+    ):
+        value = _clean(row.get(column))
+        if value and not ok(value):
+            errors.append(_error(row, line, column, f"{expected}: {value!r}"))
     return errors
 
 

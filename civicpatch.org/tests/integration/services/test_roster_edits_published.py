@@ -94,7 +94,7 @@ async def _seed() -> tuple[str, Identity]:
             (_OCDID,),
         )
         await cur.execute(
-            # `source_urls` and `updated_at` are required by `OpenStatesRecord`, which every
+            # `source_urls` and `updated_at` are required by `SubmittedPersonRecord`, which every
             # edit is validated against — a person without them fails before any field does.
             "INSERT INTO people "
             "  (id, jurisdiction_ocdid, name, phones, source_urls, updated_at, "

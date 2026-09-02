@@ -8,6 +8,7 @@ Isolation: sentinel state 'zz', cleaned before and after each test.
 """
 
 import uuid
+from unittest.mock import AsyncMock, patch
 
 import pytest
 import pytest_asyncio
@@ -26,6 +27,16 @@ _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_mroute/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_mroute"
 _WARD_3 = f"{_BASE}/ward:3"
 _SEEN_AT = "2026-06-15T00:00:00Z"
+
+
+@pytest.fixture(autouse=True)
+def mirror():
+    """Assigning schedules an open-data mirror, which needs Temporal. Patched here because
+    these are route tests: the scheduling is the contract, the commit is `publish`'s."""
+    with patch.object(
+        memberships_router, "commit_roster", new_callable=AsyncMock
+    ) as mirror:
+        yield mirror
 
 
 def _fake_admin() -> Identity:
@@ -121,22 +132,50 @@ async def test_seating_someone_reports_no_move(client):
 
     assert response.status_code == 200, response.text
     body = response.json()["data"]
-    assert body["moved_from"] is None
+    assert body["change"]["before"] is None
     assert body["membership_id"]
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_move_names_the_seat_it_came_from(client):
-    """`moved_from` is what lets the UI say "moved from X" rather than "assigned". A move
-    leaves a closed row behind, and the curator has to know it did."""
+    """The `post_id` change's `before` is what lets the UI say "moved from X" rather than
+    "assigned". A move leaves a closed row behind, and the curator has to know it did."""
     person_id, mayor, ward = await _seed()
     client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
 
     moved = client.put(_PREFIX, json={"person_id": person_id, "post_id": ward})
 
     assert moved.status_code == 200, moved.text
-    assert moved.json()["data"]["moved_from"] == mayor
+    assert moved.json()["data"]["change"]["before"] == mayor
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_assigning_mirrors_the_roster_into_open_data(client, mirror):
+    """This edit mints no changeset, so nothing else mirrors it. Without it the seat moves in
+    the database and the published files drift until the next real publish."""
+    person_id, mayor, _ = await _seed()
+
+    client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
+
+    mirror.assert_awaited_once()
+    assert mirror.await_args.args[0] == _OCDID
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_refused_assignment_mirrors_nothing(client, mirror):
+    """409 means the seat did not move, so there is nothing to publish — mirroring anyway
+    would commit an unchanged roster and put a no-op in open-data's history."""
+    person_id, mayor, _ = await _seed()
+    client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
+    mirror.reset_mock()
+
+    repeated = client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
+
+    assert repeated.status_code == 409, repeated.text
+    mirror.assert_not_awaited()
 
 
 @pytest.mark.asyncio
@@ -206,8 +245,8 @@ async def _change_logs() -> list[dict]:
 @pytest.mark.integration
 async def test_an_assignment_and_a_move_are_one_type_told_apart_by_the_payload(client):
     """Splitting them into two types would put the distinction in a place the feed has to
-    special-case. `moved_from` carries it, and it is also the fact worth reading — a move left
-    a closed row behind."""
+    special-case. The `post_id` change carries it, and its `before` is the fact worth reading —
+    a move left a closed row behind."""
     person_id, mayor, ward = await _seed()
 
     client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
@@ -216,8 +255,8 @@ async def test_an_assignment_and_a_move_are_one_type_told_apart_by_the_payload(c
     logs = await _change_logs()
 
     assert [log["type"] for log in logs] == ["assign_membership"] * 2
-    assert logs[0]["moved_from"] is None
-    assert logs[1]["moved_from"] == mayor
+    assert logs[0]["fields"] == [{"field": "post_id", "before": None, "after": mayor}]
+    assert logs[1]["fields"] == [{"field": "post_id", "before": mayor, "after": ward}]
     assert logs[0]["person_name"] == "Route Test"
 
 

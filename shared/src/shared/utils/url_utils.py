@@ -18,6 +18,19 @@ def is_valid_url(url: str):
         return False
 
 
+def is_web_url(url: str) -> bool:
+    """An http(s) URL with a dotted host — what a person's `urls` and `source_urls` must be.
+
+    Stricter than `is_valid_url`, which accepts any netloc and so passes `http://localhost`.
+    Also case-sensitive on the scheme, unlike `is_valid_url`: both are the rule `schemas` has
+    always applied, kept exactly so extracting it changed no validation.
+    """
+    if not url.startswith(("http://", "https://")):
+        return False
+    parsed = urlparse(url)
+    return bool(parsed.netloc) and "." in parsed.netloc
+
+
 def format_url(url: str):
     """
     Formats a URL into a canonical form for storage:

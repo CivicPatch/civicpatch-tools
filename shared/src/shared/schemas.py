@@ -3,10 +3,11 @@ from datetime import datetime, timezone
 from decimal import Decimal
 from enum import Enum, StrEnum
 from typing import List, Optional
-from urllib.parse import urlparse
 
-from pydantic import BaseModel, ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+from shared.utils.email_utils import is_valid_email
 from shared.utils.phone_utils import normalize_phone_number
+from shared.utils.url_utils import is_web_url
 
 
 class PersonBase(BaseModel):
@@ -24,11 +25,17 @@ class PersonBase(BaseModel):
     jurisdiction_ocdid: str
 
 
-class OpenStatesRecord(PersonBase):
-    """The record we publish to open-data, and the shape a reviewer submits.
+class SubmittedPersonRecord(PersonBase):
+    """One person record a human submitted, validated and normalised on the way in.
 
-    Field-for-field what `people_roster._rendered` emits. Flat because open-data reads it that
-    way; our own model is Popolo, which is what the tables are.
+    Its one caller is `people_edits.validate_and_normalize`. A model rather than a set of
+    checks because the validators below also *rewrite* — phones to canonical form, blank urls
+    dropped — and because a field either declares its rule here or has none, which a procedure
+    of separate calls cannot promise.
+
+    Not the shape anything reads: the derivation asks for `RosterEntry`, the published artifact
+    is `OpenStatesPersonRecord`, and the tables are `Person` / `Post` / `Membership`. `post_id`
+    is a reviewer's pick and goes no further than the roster document.
     """
 
     label: str = ""
@@ -82,9 +89,8 @@ class OpenStatesRecord(PersonBase):
     @field_validator("emails")
     @classmethod
     def validate_emails(cls, v):
-        email_pattern = r"^[^@]+@[^@]+$"
         for email in v:
-            if not re.match(email_pattern, email):
+            if not is_valid_email(email):
                 raise ValueError(
                     f"Email must be in format 'anything@anything', got: '{email}'"
                 )
@@ -101,8 +107,7 @@ class OpenStatesRecord(PersonBase):
                 raise ValueError(
                     f"Website must start with 'http://' or 'https://', got: '{url}'"
                 )
-            parsed = urlparse(url)
-            if not parsed.netloc or "." not in parsed.netloc:
+            if not is_web_url(url):
                 raise ValueError(
                     f"Website must be a valid URL with a domain, got: '{url}'"
                 )
@@ -132,8 +137,7 @@ class OpenStatesRecord(PersonBase):
                 raise ValueError(
                     f"Source URL must start with 'http://' or 'https://', got: '{url}'"
                 )
-            parsed = urlparse(url)
-            if not parsed.netloc or "." not in parsed.netloc:
+            if not is_web_url(url):
                 raise ValueError(
                     f"Source URL must be a valid URL with a domain, got: '{url}'"
                 )
@@ -179,6 +183,31 @@ class PersonSourceRecord(ExtractedPersonRecord):
     """
 
     source_url: str
+
+
+class Post(BaseModel):
+    """A seat: the `posts` row, plus the label composed on read.
+
+    `label` is not a column — since 148 it is derived from the role and the division, so
+    nobody can type one.
+
+    `headcount` and `is_tracked` are underscored on the wire only: no civic standard defines
+    either, so a consumer dropping every `_*` key is left with a conforming record.
+
+    No `_is_verified`: that is computed per query from memberships and assertions, and says
+    who vouched for the seat rather than what the seat is.
+    """
+
+    model_config = ConfigDict(populate_by_name=True)
+
+    id: str
+    jurisdiction_ocdid: str
+    organization_id: str
+    role_id: str
+    division_ocdid: str
+    label: str
+    headcount: int = Field(default=1, alias="_headcount")
+    is_tracked: bool = Field(default=True, alias="_is_tracked")
 
 
 class Membership(BaseModel):
@@ -227,6 +256,46 @@ class Person(PersonBase):
     source_urls: List[str] = []
     updated_at: Optional[str] = None
     memberships: List[Membership] = []
+
+
+class OpenStatesMembership(BaseModel):
+    """One seat as open-data receives it — exactly the ten keys `PERSON_MEMBERSHIPS` projects.
+
+    Not `Membership`, which also carries `post_label`: that is composed on read, and dumping
+    through it would add a null key to every membership in every published file.
+    """
+
+    post_id: str
+    role_id: str
+    role_label: Optional[str] = None
+    division_ocdid: Optional[str] = None
+    label: Optional[str] = None
+    source_labels: List[str] = []
+    designations: List[str] = []
+    unmatched_text: List[str] = []
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+
+
+class OpenStatesPersonRecord(PersonBase):
+    """One person as written to open-data — the only artifact we publish.
+
+    The sixteen keys of `PERSON_JSON`, which is what the roster read selects and what the
+    commit activity dumps. Declared here so the published shape is stated in one place rather
+    than being whatever a projection happens to select.
+
+    Output only, and by construction: it is built at the point of writing the file, from rows
+    the database already holds. No `post_id` — a reviewer's pick is not part of the record —
+    and no validators, because this describes what we emit, not what we accept.
+    """
+
+    source_urls: List[str] = []
+    updated_at: Optional[str] = None
+    labels: List[str] = []
+    division_ocdid: Optional[str] = None
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+    memberships: List[OpenStatesMembership] = []
 
 
 class JobConfig(BaseModel):

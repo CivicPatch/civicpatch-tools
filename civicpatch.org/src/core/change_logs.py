@@ -2,8 +2,10 @@
 (type, changes) pair into a human-readable summary string for the activity feed."""
 
 from collections.abc import Mapping
+from datetime import datetime
 
-from schemas.change_logs import FieldChange
+from schemas.change_logs import MEMBERSHIP_POST_FIELD, FieldChange, RosterChange
+from shared.utils.statuses import ChangeLogType
 
 
 def field_changes(
@@ -18,6 +20,48 @@ def field_changes(
         for field in before
         if before[field] != after[field]
     ]
+
+
+def _moved_seat(changes: Mapping) -> bool:
+    """Whether an assignment vacated a seat. A first assignment has no `before`."""
+    return any(
+        field.get("field") == MEMBERSHIP_POST_FIELD and field.get("before")
+        for field in changes.get("fields") or []
+    )
+
+
+def _post_name(changes: Mapping) -> str:
+    """What a reader recognises a seat by. Same fallback as the summary formatter below."""
+    return changes.get("label") or changes.get("role_id") or "post"
+
+
+def _subject(type_: ChangeLogType, changes: Mapping) -> str:
+    if type_ == ChangeLogType.ASSERT_FIELD:
+        # Only ids are in the payload. Resolving a real name needs a join, keyed on
+        # `entity_type` — open question F in the jurisdiction-history plan.
+        return changes.get("entity_type") or "record"
+    return changes.get("person_name") or _post_name(changes)
+
+
+def roster_change(
+    type_: ChangeLogType, created_at: datetime, changes: Mapping
+) -> RosterChange:
+    """One `change_logs` row as a timeline entry.
+
+    The payload families name their subject differently and record movement differently, so
+    this is the single place that knows which shape is which.
+    """
+    if type_ == ChangeLogType.ASSERT_FIELD:
+        fields = [FieldChange(field=changes["field_path"], after=changes.get("value"))]
+    else:
+        fields = [FieldChange(**field) for field in changes.get("fields") or []]
+
+    return RosterChange(
+        type=type_,
+        created_at=created_at,
+        name=_subject(type_, changes),
+        fields=fields,
+    )
 
 
 def _alias_summary(payload: dict) -> str:
@@ -83,7 +127,7 @@ def summarize_change_log(type_: str, changes: dict | None) -> str:
     if type_ == "assign_membership":
         who = c.get("person_name") or "someone"
         # A move is the fact worth reading: it means a closed row was left behind.
-        if c.get("moved_from"):
+        if _moved_seat(c):
             return f"Moved {who} to '{post}'"
         return f"Assigned {who} to '{post}'"
 

@@ -7,7 +7,8 @@ is covered by tests/integration/database/test_post_derivation.py.
 import pytest
 
 from core.post_derivation import UNMATCHED_ROLE_ID, ChosenPost, derived_posts
-from shared.schemas import OpenStatesRecord, Role, RoleConfig, RoleStatus
+from core.post_derivation import RosterEntry
+from shared.schemas import Role, RoleConfig, RoleStatus
 from shared.utils.taxonomy import build_taxonomy
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
@@ -39,12 +40,9 @@ def _person(person_id, office_name):
     The fixtures pass one " - " string because it is compact to write; it is split here, so the
     join being retired happens once in a helper rather than on every record.
     """
-    return OpenStatesRecord(
+    return RosterEntry(
         id=person_id,
-        name=person_id,
         jurisdiction_ocdid=_OCDID,
-        source_urls=["https://example.gov"],
-        updated_at="2026-01-01T00:00:00+00:00",
         labels=[part.strip() for part in office_name.split(" - ") if part.strip()],
     )
 

@@ -72,11 +72,12 @@ async def test_assigning_an_unseated_person_reports_no_move():
 
     result = await memberships.assign(person_id, post_id, "Mayor of Testville")
 
-    assert result["moved_from"] is None
+    assert result.change.field == "post_id"
+    assert result.change.before is None
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT label FROM memberships WHERE id::text = %s", (result["membership_id"],)
+            "SELECT label FROM memberships WHERE id::text = %s", (result.membership_id,)
         )
         assert (await cur.fetchone())[0] == "Mayor of Testville"
 
@@ -84,14 +85,15 @@ async def test_assigning_an_unseated_person_reports_no_move():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_moving_closes_the_old_seat_and_reports_where_from():
-    """`moved_from` is what lets the UI say "moved from X" rather than "assigned" — a move
-    leaves history behind and the curator should know it did."""
+    """The `post_id` change's `before` is what lets the UI say "moved from X" rather than
+    "assigned" — a move leaves history behind and the curator should know it did."""
     person_id, first, second = await _seed()
     await memberships.assign(person_id, first, None)
 
     result = await memberships.assign(person_id, second, None)
 
-    assert result["moved_from"] == first
+    assert result.change.before == first
+    assert result.change.after == second
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -122,7 +124,9 @@ async def test_reassigning_to_the_same_seat_only_sets_the_label():
 
     result = await memberships.assign(person_id, post_id, "Renamed")
 
-    assert result == {"membership_id": first, "moved_from": None}
+    # Same seat, so the change is the label rather than the post.
+    assert result.membership_id == first
+    assert (result.change.field, result.change.after) == ("label", "Renamed")
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT label, designations FROM memberships WHERE id::text = %s", (first,)
@@ -163,7 +167,7 @@ async def test_clearing_the_label_on_the_same_seat_is_a_real_change():
 
     result = await memberships.assign(person_id, post_id, None)
 
-    assert result["moved_from"] is None
+    assert (result.change.field, result.change.after) == ("label", None)
 
 
 @pytest.mark.asyncio

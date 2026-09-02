@@ -1,17 +1,4 @@
 from dataclasses import dataclass
-from enum import StrEnum
-
-
-class CommitSource(StrEnum):
-    """Which database table the file's content is rendered from.
-
-    The two open-data paths mean different things, so they render from different places:
-    the unreviewed copy is the scrape exactly as submitted, while the reviewed copy is the
-    jurisdiction's live roster — which may include people from earlier scrapes.
-    """
-
-    SCRAPE = "scrape"    # one scrape's proposal, derived from its sightings
-    ROSTER = "roster"    # people WHERE status='active' — what is currently live
 
 
 @dataclass
@@ -27,7 +14,6 @@ class OpenDataCommitRequest:
     changeset_id: str | None
     jurisdiction_ocdid: str
     commit_message: str
-    source: CommitSource = CommitSource.SCRAPE
     # Removed once the write above succeeds — promotion is a move, and deleting first would
     # lose the data if the write then failed.
     delete_path: str | None = None
@@ -48,8 +34,7 @@ class OpenDataBatchCommitRequest:
     """Every jurisdiction a bulk publish made live, as one commit.
 
     A file at a time would leave forty commits for one reviewer action, which is not what
-    happened — they published once. `source` is absent because a batch is always a publish, so
-    it always renders from the live roster.
+    happened — they published once.
     """
 
     batch_id: str
