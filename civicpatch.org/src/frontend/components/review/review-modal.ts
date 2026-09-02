@@ -21,7 +21,11 @@ import {
 } from "./merge-model.js";
 import "./review-modal.css";
 import "../person-editor/person-editor.css";
-import { renderPersonEditor, type PersonEditorProps } from "../person-editor/person-editor.js";
+import {
+  renderPersonEditor,
+  renderPersonSummary,
+  type PersonEditorProps,
+} from "../person-editor/person-editor.js";
 import {
   postsFor,
   personOf,
@@ -130,7 +134,10 @@ function ReviewModal(props: ReviewModalProps) {
   // coerces — a template arrived as "[object Object]".
   const head = html`
     <div class="review-modal__head">
-      <span>${name}</span>
+      <span class="review-modal__who">${name}</span>
+      <!-- The editor's own header used to sit directly under this one: two strips, two
+           backgrounds, and a gap between them saying nothing. One strip now. -->
+      ${renderPersonSummary({ ...editorProps, onReset: null })}
       <span class="review-modal__nav">
         <button
           class="review-modal__nav-btn"

@@ -9,10 +9,10 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { SCALE_CHANGESET_ID, RECONCILE_CHANGESET_ID } from "../fixtures/db.js";
-import { openDetail, editorFor, fieldIn } from "./helpers/review-card.js";
+import { openEditorFor, editorFor, actionsFor, fieldIn } from "./helpers/review-card.js";
 
 const openPreview = async (page, changesetId = SCALE_CHANGESET_ID) => {
-  await page.goto(`/review/session?changeset_id=${changesetId}&view=preview`);
+  await page.goto(`/review/session?changeset_id=${changesetId}`);
   await expect(page.locator("review-preview")).toBeVisible();
 };
 
@@ -29,10 +29,9 @@ test.describe("Review preview", () => {
 
   test("drops someone the reviewer removed, live", async ({ authenticatedPage: page }) => {
     await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
-    await openDetail(page);
-    await editorFor(page, "Councillor 02 Scale").locator(".person-editor__delete").click();
+    await openEditorFor(page, "Councillor 02 Scale");
+    await actionsFor(page, "Councillor 02 Scale").locator(".person-editor__delete").click();
 
-    await page.locator(".review-page__view-tab", { hasText: "Preview" }).click();
     await expect(page.locator(".review-preview .review-row")).toHaveCount(39);
     await expect(page.locator(".review-preview__bar")).toContainText("4 dropped");
   });
@@ -61,7 +60,7 @@ test.describe("Publish gating", () => {
     authenticatedPage: page,
   }) => {
     await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
-    await openDetail(page);
+    await openEditorFor(page, "Councillor 02 Scale");
 
     // Clear a required field on someone being published.
     const editor = editorFor(page, "Councillor 02 Scale");
@@ -80,12 +79,11 @@ test.describe("Publish gating", () => {
     authenticatedPage: page,
   }) => {
     await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
-    await openDetail(page);
+    await openEditorFor(page, "Councillor 02 Scale");
     const editor = editorFor(page, "Councillor 02 Scale");
     await editor.locator(".person-editor__expander").click();
     await fieldIn(editor, "Name").first().locator("input").fill("");
 
-    await page.locator(".review-page__view-tab", { hasText: "Preview" }).click();
     await expect(page.locator(".review-preview__blockers")).toContainText("Name: Required");
     await expect(page.locator(".review-page__approve-btn")).toBeDisabled();
   });
@@ -94,7 +92,7 @@ test.describe("Publish gating", () => {
     authenticatedPage: page,
   }) => {
     await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
-    await openDetail(page);
+    await openEditorFor(page, "Councillor 02 Scale");
     // Name, because it is the only required scalar: clearing one row of Source urls leaves an
     // empty string rather than an empty list, and the Post field is a picker that cannot be
     // emptied into an error while the derivation still names a post.
@@ -105,7 +103,7 @@ test.describe("Publish gating", () => {
 
     // The card is findable by the fallback the editor renders once the name is gone, which is
     // what lets the name be the blocker here at all.
-    await editorFor(page, "(unnamed)").locator(".person-editor__delete").click();
+    await actionsFor(page, "(unnamed)").locator(".person-editor__delete").click();
     await expect(page.locator(".review-page__approve-btn")).toBeEnabled();
   });
 });

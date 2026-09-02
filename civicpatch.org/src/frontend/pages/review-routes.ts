@@ -8,34 +8,6 @@ export const STATE_PARAM = "state";
 // it left off, are the session's own business.
 export const CHANGESET_ID_PARAM = "changeset_id";
 
-// Which of the review card's three views is open. `view`, not `tab` — the
-// jurisdiction page already uses `?tab=` to mean something else, and the
-// two would read as the same thing in a URL or a log line.
-export const VIEW_PARAM = "view";
-
-export const ReviewView = Object.freeze({
-  OVERVIEW: "overview",
-  DETAIL: "detail",
-  PREVIEW: "preview",
-});
-
-export type ReviewViewKey = (typeof ReviewView)[keyof typeof ReviewView];
-
-const VIEW_KEYS: ReviewViewKey[] = [
-  ReviewView.OVERVIEW,
-  ReviewView.DETAIL,
-  ReviewView.PREVIEW,
-];
-
-// A URL is user-editable and outlives any release, so an unrecognised, removed
-// or absent view falls back to Overview — the entry point for every card (§1)
-// — rather than rendering nothing.
-export function parseReviewView(value: string | null | undefined): ReviewViewKey {
-  return VIEW_KEYS.includes(value as ReviewViewKey)
-    ? (value as ReviewViewKey)
-    : ReviewView.OVERVIEW;
-}
-
 // The jurisdiction page is public; the review session is not. A signed-out visitor following
 // a review link is bounced to the front page with no explanation, so the link offers sign-in
 // instead. No return-to param: /login does not support one, and promising a bounce-back it

@@ -622,43 +622,32 @@ dialog[open]:has(.report-issue-modal__form) {
     border-radius: var(--pico-border-radius);
 }
 
-/* View tabs (§1.1). Which view is open also lives in ?view=, so a refresh lands
-   where the reviewer was and a link carries the view with it. */
+/* Publishing preview (§7). A section under the roster rather than a tab: what will be
+   written is the consequence of what changed, and behind a tab nobody looked. */
 
-.review-page__views {
-  display: flex;
-  gap: 0.25rem;
-  border-bottom: 1px solid var(--pico-muted-border-color);
+.review-page__publishing {
   max-width: var(--page-width);
   width: 100%;
   margin-inline: auto;
+  margin-top: 2.5rem;
+  padding: 1.5rem 1rem 1.25rem;
+  border-top: 3px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  background: var(--pico-card-sectioning-background-color);
 }
 
-.review-page__view-tab {
-  appearance: none;
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  padding: 0.4rem 0.75rem;
-  font: inherit;
+/* Sits on the section's top rule, so the break reads as one thing rather than a
+   line and a heading that happen to be near each other. */
+.review-page__section-title {
+  margin: -1.9rem 0 0.9rem;
+  padding-right: 0.6rem;
+  display: inline-block;
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--pico-muted-color);
-  cursor: pointer;
-  width: auto;
-}
-
-.review-page__view-tab:hover {
-  color: var(--civ-text);
-}
-
-/* Named, not read from --pico-color: styles.css overrides that variable to the
-   inverse on every bare button, so the selected tab was rendering white on
-   white — the tab was there, just invisible. */
-.review-page__view-tab--on {
-  color: var(--civ-text);
-  border-bottom-color: var(--civ-text);
+  background: var(--pico-background-color);
 }
 
 /* Two people resolving to one id (§21.8). Loud, because the consequence is
@@ -678,8 +667,7 @@ dialog[open]:has(.report-issue-modal__form) {
 /* Keyboard focus has to be visible on the page's primary actions — several of
    these are styled buttons whose default outline was suppressed. */
 .review-page__start-btn:focus-visible,
-.review-page__gear-btn:focus-visible,
-.review-page__view-tab:focus-visible {
+.review-page__gear-btn:focus-visible {
   outline: var(--pico-outline-width) solid var(--pico-primary-focus);
   outline-offset: 2px;
 }

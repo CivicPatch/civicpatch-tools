@@ -1,6 +1,5 @@
 import { html, nothing } from "lit-html";
 import { component, useState } from "haunted";
-import "../../components/person-editor/person-editor-list.js";
 import "../../components/review-overview/review-overview.js";
 import "../../components/review-preview/review-preview.js";
 import "../../components/review/review-modal.js";
@@ -37,12 +36,10 @@ import {
   type EditorContextBase,
 } from "../../components/person-editor/editor-props.js";
 import {
-  parseReviewView,
-  ReviewView,
-  VIEW_PARAM,
-  type ReviewViewKey,
 } from "../review-routes.js";
 import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
+import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
+import "../../components/posts-list/post-add.js";
 import type { ProposedChange } from "../../components/people/person-cards.js";
 import type { PersonAssertion } from "../../components/person-editor/field-provenance.js";
 
@@ -114,7 +111,10 @@ function ReviewSession(host: ReviewSessionHost) {
     name: jurisdictionName,
     website_url: jurisdictionWebsiteUrl,
   } = jurisdiction ?? {};
-  const posts = useJurisdictionPosts(jurisdictionOcdid);
+  const { posts, reload: reloadPosts } = useJurisdictionPosts(jurisdictionOcdid);
+  const roles = useJurisdictionRoles();
+  // Which person asked for a post, so the one it creates can be picked for them.
+  const [addingPostFor, setAddingPostFor] = useState<string | null>(null);
   const { url: publishedUrl, status: reviewStatus = null } = pr ?? {};
   const isBaseline = mode === ReviewMode.BASELINE;
 
@@ -140,18 +140,6 @@ function ReviewSession(host: ReviewSessionHost) {
   );
 
   const changesetId = currentEntry?.changeset_id ?? null;
-
-  // State, not read from the URL each render — `replaceState` does not re-render. Written
-  // alongside so a refresh or a shared link lands on the right view.
-  const [view, setView] = useState(
-    parseReviewView(
-      new URLSearchParams(window.location.search).get(VIEW_PARAM),
-    ),
-  );
-  const showView = (next: ReviewViewKey) => {
-    setView(next);
-    updateParams({ [VIEW_PARAM]: next });
-  };
 
   // Personal progress, so client-side — one key per card, which is why it needs a TTL.
   const allIssues = review_data?.issues ?? [];
@@ -273,10 +261,28 @@ function ReviewSession(host: ReviewSessionHost) {
     candidatesOpenFor,
     onToggleCandidates: handleToggleCandidates,
     onPickPartner: handlePickPartner,
+    onAddPost: setAddingPostFor,
+  };
+
+  // The post the form just made becomes this person's pick — the reviewer opened it to
+  // answer the Post field, so leaving them to find it in a reloaded select is half the job.
+  const handlePostAdded = (e: CustomEvent) => {
+    const postId = e.detail?.post_id;
+    if (addingPostFor && postId) handlePersonSave(addingPostFor, { post_id: postId });
+    setAddingPostFor(null);
+    reloadPosts();
   };
 
   return html`
     <main class="review-page">
+      ${addingPostFor
+        ? html`<civ-post-add
+            .jurisdictionOcdid=${jurisdictionOcdid ?? ""}
+            .roles=${roles}
+            @added=${handlePostAdded}
+            @cancel=${() => setAddingPostFor(null)}
+          ></civ-post-add>`
+        : ""}
       <div class="review-page__header">
         <review-session-controls
           .progress=${progress}
@@ -375,45 +381,25 @@ function ReviewSession(host: ReviewSessionHost) {
           ></report-issue-button>
         </div>
       </div>
-      <div class="review-page__views" role="tablist" aria-label="Review views">
-        ${[
-          [ReviewView.OVERVIEW, "Overview"],
-          [ReviewView.DETAIL, "Detail"],
-          [ReviewView.PREVIEW, "Preview"],
-        ].map(
-          ([key, label]) =>
-            html`<button
-              class="review-page__view-tab ${view === key
-                ? "review-page__view-tab--on"
-                : ""}"
-              role="tab"
-              aria-selected=${view === key}
-              @click=${() => showView(key as ReviewViewKey)}
-            >
-              ${label}
-            </button>`,
-        )}
-      </div>
-      ${view === ReviewView.PREVIEW
-        ? html`<review-preview
-            .changes=${changes}
-            .cards=${cards}
-            .jurisdictionOcdid=${jurisdictionOcdid}
-            .onOpenPerson=${handleOpenPerson}
-          ></review-preview>`
-        : view !== ReviewView.DETAIL
-          ? html`<review-overview
-              .cards=${cards}
-              .changes=${changes}
-              .isReadOnly=${is_read_only}
-              .onOpenPerson=${handleOpenPerson}
-              .onAdd=${handleAddPerson}
-            ></review-overview>`
-          : html`<person-editor-list
-              .editorContext=${editorContext}
-              .changesetId=${changesetId}
-              .onAdd=${handleAddPerson}
-            ></person-editor-list>`}
+      <review-overview
+        .cards=${cards}
+        .changes=${changes}
+        .isReadOnly=${is_read_only}
+        .onOpenPerson=${handleOpenPerson}
+        .onAdd=${handleAddPerson}
+      ></review-overview>
+      <!-- Not a tab: what will be published is the same question as what changed, and a
+           reviewer had to remember to go and look. It reads after the roster because it is
+           the consequence of it. -->
+      <section class="review-page__publishing" aria-label="Preview">
+        <h2 class="review-page__section-title">Preview</h2>
+        <review-preview
+          .changes=${changes}
+          .cards=${cards}
+          .jurisdictionOcdid=${jurisdictionOcdid}
+          .onOpenPerson=${handleOpenPerson}
+        ></review-preview>
+      </section>
       <review-sidebar
         .issues=${allIssues}
         .checks=${issueChecks}

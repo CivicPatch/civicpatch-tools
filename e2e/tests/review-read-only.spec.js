@@ -17,6 +17,7 @@ import {
   READ_ONLY_PR_URL,
   READ_ONLY_WEBSITE_URL,
 } from "../fixtures/db.js";
+import { openEditorFor } from "./helpers/review-card.js";
 
 test.describe("Review card — read only", () => {
   test("a published card shows its status and hides the actions that would change it", async ({
@@ -64,15 +65,11 @@ test.describe("Review card — read only across the views", () => {
     await expect(page.locator("review-overview")).toBeVisible();
   };
 
-  test("all three views stay available — the card is a historical record", async ({
+  test("the roster and what it published both stay readable — it is a historical record", async ({
     authenticatedPage: page,
   }) => {
     await openReadOnly(page);
-    await expect(page.locator(".review-page__view-tab")).toHaveCount(3);
-
-    await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
-    await expect(page.locator("person-editor-list")).toBeVisible();
-    await page.locator(".review-page__view-tab", { hasText: "Preview" }).click();
+    await expect(page.locator("review-overview")).toBeVisible();
     await expect(page.locator("review-preview")).toBeVisible();
   });
 
@@ -80,7 +77,7 @@ test.describe("Review card — read only across the views", () => {
     authenticatedPage: page,
   }) => {
     await openReadOnly(page);
-    await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
+    await openEditorFor(page, "Jane Published");
 
     const editor = page.locator(".person-editor").filter({ hasText: "Jane Published" });
     await editor.locator(".person-editor__expander").click();
@@ -100,9 +97,9 @@ test.describe("Review card — read only across the views", () => {
   }) => {
     await openReadOnly(page);
     // Overview: no way to add someone to a published card.
-    await expect(page.locator(".review-row--ghost")).toHaveCount(0);
+    await expect(page.locator("review-overview .review-row--ghost")).toHaveCount(0);
 
-    await page.locator(".review-page__view-tab", { hasText: "Detail" }).click();
+    await openEditorFor(page, "Jane Published");
     for (const control of [
       ".person-editor__delete",
       ".person-editor__reset",

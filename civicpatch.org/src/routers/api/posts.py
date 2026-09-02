@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 
 from database import posts
 from lib.auth import require_route_access
-from schemas.common import Identity, RouteCategory, UserRole
+from schemas.common import Identity, RouteCategory
 from schemas.posts import CreatePostRequest, UpdatePostRequest
 
 
@@ -50,35 +50,6 @@ def get_router() -> APIRouter:
             return JSONResponse({"error": "No such post."}, status_code=404)
         return {"data": {"ok": True}}
 
-    @router.delete("/{post_id}")
-    async def delete_post_endpoint(
-        post_id: str,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
-        ),
-    ):
-        """Remove a post nobody has ever held — what is deletable is exactly what no person
-        has endorsed.
-
-        Members are never deleted along with it. A membership is somebody's history, and the
-        only way past this is to move them to another post first.
-        """
-        try:
-            deleted = await posts.delete(post_id, user.user_id)
-        except posts.PostHasMembers as exc:
-            people = "person holds" if exc.holders == 1 else "people hold"
-            return JSONResponse(
-                {
-                    "error": f"{exc.holders} {people} this post, so deleting it would erase "
-                    f"their history. Move them to another post first."
-                },
-                status_code=409,
-            )
-        if not deleted:
-            return JSONResponse({"error": "No such post."}, status_code=404)
-        return {"data": {"ok": True}}
-
-    # Declared before `/{jurisdiction_ocdid:path}` or the path parameter swallows it.
     @router.get("/bulk")
     async def bulk_posts_endpoint(
         state: str,

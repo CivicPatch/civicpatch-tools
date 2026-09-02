@@ -53,6 +53,8 @@ export interface EditorContext {
   isExpanded: (personId: string) => boolean;
   onToggleExpand: (personId: string) => void;
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
+  // The page opens the add-post form and, once it saves, picks the result for this person.
+  onAddPost: (personId: string) => void;
   onRemovePerson: (id: string) => void;
   onUnremovePerson: (id: string) => void;
   onRestorePerson: (person: any) => void;
@@ -106,6 +108,7 @@ export function personEditorPropsFor(
     derivedPost: derivedPostFor(card, ctx.proposals),
     accepts: acceptsByField(ctx.assertions[card.personId] ?? []),
     posts: ctx.posts,
+    onAddPost: () => ctx.onAddPost(card.personId),
     isDirty: ctx.dirtyIds.has(card.personId),
     isExpanded: ctx.isExpanded(card.personId),
     onToggleExpand: () => ctx.onToggleExpand(card.personId),

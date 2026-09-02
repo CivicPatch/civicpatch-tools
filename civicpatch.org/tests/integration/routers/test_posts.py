@@ -156,9 +156,9 @@ async def test_creating_the_same_seat_twice_is_a_conflict(client):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_patch_and_delete_reach_a_post_not_the_jurisdiction_route(client):
+async def test_patch_reaches_a_post_not_the_jurisdiction_route(client):
     """`/{post_id}` and `/{jurisdiction_ocdid:path}` share a prefix. A path converter matches
-    greedily, so if these ever land on the wrong handler it happens silently — a 200 from the
+    greedily, so if this ever lands on the wrong handler it happens silently — a 200 from the
     wrong route looks exactly like success."""
     post_id = _create(client).json()["data"]["id"]
 
@@ -170,9 +170,6 @@ async def test_patch_and_delete_reach_a_post_not_the_jurisdiction_route(client):
     assert listed["label"] == "Mayor"
     assert listed["_headcount"] == 2
 
-    assert client.delete(f"{_PREFIX}/{post_id}").status_code == 200
-    assert client.get(f"{_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"] == []
-
 
 @pytest.mark.asyncio
 @pytest.mark.integration
@@ -180,19 +177,6 @@ async def test_patching_a_post_that_is_not_there_is_404(client):
     missing = client.patch(f"{_PREFIX}/{uuid.uuid4()}", json={"_headcount": 1, "_is_tracked": True})
 
     assert missing.status_code == 404, missing.text
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_seat_someone_has_held_cannot_be_deleted(client):
-    """History, including closed memberships. The FK would refuse anyway — this is what makes
-    it a 409 the caller can act on rather than a 500."""
-    post_id = _create(client).json()["data"]["id"]
-    await _seat_someone(post_id)
-
-    refused = client.delete(f"{_PREFIX}/{post_id}")
-
-    assert refused.status_code == 409, refused.text
 
 
 @pytest.mark.asyncio
@@ -258,19 +242,18 @@ async def test_the_identity_triple_is_not_patchable(client):
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_every_write_leaves_a_trace(client):
-    """Who created a seat and who removed it. `roles.py`, `people.py` and `pull_requests.py`
+    """Who created a seat and who edited it. `roles.py`, `people.py` and `pull_requests.py`
     all log; posts did not, so a curator's edits were unattributable."""
     post_id = _create(client).json()["data"]["id"]
     client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 2, "_is_tracked": True})
-    client.delete(f"{_PREFIX}/{post_id}")
 
     logs = await _change_logs()
 
-    assert [log["type"] for log in logs] == ["add_post", "edit_post", "delete_post"]
+    assert [log["type"] for log in logs] == ["add_post", "edit_post"]
     assert all(log["post_id"] == post_id for log in logs)
     assert {f["field"] for f in logs[1]["fields"]} == {"_headcount"}
     # The log names the seat with its composed label — nobody can type one since 148.
-    assert logs[2]["label"] == "Mayor"
+    assert logs[1]["label"] == "Mayor"
 
 
 @pytest.mark.asyncio

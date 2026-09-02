@@ -166,23 +166,25 @@
   color: var(--pico-muted-color);
 }
 
+/* No top margin: these sit in the modal head now, which centres its row. */
 .person-editor__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
-  margin-top: 0.15rem;
 }
 
-/* Scoped under .person-editor deliberately: styles.css styles bare buttons via
+/* Scoped under the modal head deliberately: styles.css styles bare buttons via
    `button:not(.btn-ghost):not(.secondary):not(…)`, and that chain of :not()s
    outspecifies a single class — it was painting these #fafafa on a white card,
-   so Restore rendered as an empty box. */
-.person-editor .person-editor__delete,
-.person-editor .person-editor__reset,
-.person-editor .person-editor__merge,
-.person-editor .person-editor__restore-person {
-  padding: 0.15rem 0.5rem;
-  font-size: var(--text-sm);
+   so Restore rendered as an empty box.
+   `--pico-del-color` rather than `--editor-cleared`: the head sits outside
+   `.person-editor-list`, so the editor's tokens are not in scope there. */
+.review-modal__head .person-editor__delete,
+.review-modal__head .person-editor__reset,
+.review-modal__head .person-editor__merge,
+.review-modal__head .person-editor__restore-person {
+  padding: 0.05rem 0.4rem;
+  font-size: var(--text-xs);
   border: 1px solid var(--pico-muted-border-color);
   border-radius: var(--pico-border-radius);
   background: none;
@@ -191,14 +193,14 @@
   width: auto;
 }
 
-.person-editor .person-editor__delete:hover {
-  border-color: var(--editor-cleared);
-  color: var(--editor-cleared);
+.review-modal__head .person-editor__delete:hover {
+  border-color: var(--pico-del-color);
+  color: var(--pico-del-color);
 }
 
-.person-editor .person-editor__restore-person {
-  border-color: var(--editor-cleared);
-  color: var(--editor-cleared);
+.review-modal__head .person-editor__restore-person {
+  border-color: var(--pico-del-color);
+  color: var(--pico-del-color);
 }
 
 /* See review-modal.css: --pico-color is overridden to the inverse on every bare

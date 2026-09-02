@@ -105,6 +105,8 @@ export interface EditorFieldProps {
   // Non-null on the one field the view opened on, so the control it belongs to
   // can take focus. The editor picks the row; the control picks the element.
   focusRef: FocusRef | null;
+  // Opens the add-post form. The page owns the modal; this only asks for it.
+  onAddPost: () => void;
   provenance: string | null;
 }
 
@@ -120,6 +122,7 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
     posts,
     derivedPost,
     focusRef,
+    onAddPost,
   } = props;
 
   // Read-only renders every field as its value, never a disabled input (§10) —
@@ -154,7 +157,9 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
     >`;
   }
   if (field.key === POST_FIELD)
-    return renderPostNewSide(field, record, save, posts, derivedPost, focusRef);
+    return renderPostNewSide(
+      field, record, save, posts, derivedPost, focusRef, onAddPost,
+    );
   if (isImage(field)) return renderPhotoNewSide(record, save, isReadOnly);
   if (isMulti(field)) {
     // Derived every render from (current, old) rather than stamped when a row is

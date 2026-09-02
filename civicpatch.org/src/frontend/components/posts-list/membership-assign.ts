@@ -14,6 +14,7 @@ import {
   UNNAMED_HOLDER,
 } from "./posts-model.js";
 import type { AddableDivision, PostOption, RoleOption } from "./posts-model.js";
+import { hostDispatch } from "../../utils/host-dispatch.js";
 
 type MembershipAssignHost = HTMLElement & {
   personId?: string;
@@ -47,10 +48,7 @@ function MembershipAssign(host: MembershipAssignHost) {
   const [error, setError] = useState<string | null>(null);
 
   const roles = [...(host.roles ?? [])].sort(byLabel);
-  const emit = (name: string) =>
-    host.dispatchEvent(new CustomEvent(name, { bubbles: true, composed: true }));
-
-  const handleCancel = () => emit(CANCEL_EVENT);
+  const handleCancel = () => hostDispatch(host, CANCEL_EVENT);
   const handleRole = (e: Event) => setRoleId(inputValue(e));
   const handleDesignation = (e: Event) =>
     setDesignation(inputValue(e) as AddableDivision);
@@ -91,7 +89,7 @@ function MembershipAssign(host: MembershipAssignHost) {
           _headcount: 1,
         })).data.id;
       await assignMembership(host.personId, postId, office.trim() || null);
-      emit(SAVED_EVENT);
+      hostDispatch(host, SAVED_EVENT);
     } catch (cause) {
       setError(String(cause).replace(/^Error:\s*/, ""));
       setSaving(false);

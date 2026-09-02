@@ -13,6 +13,7 @@ import {
   isDivisionValue,
 } from "./posts-model.js";
 import type { AddableDivision, RoleOption } from "./posts-model.js";
+import { hostDispatch } from "../../utils/host-dispatch.js";
 
 type PostAddHost = HTMLElement & {
   jurisdictionOcdid?: string;
@@ -40,10 +41,7 @@ function PostAdd(host: PostAddHost) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const emit = (name: string) =>
-    host.dispatchEvent(new CustomEvent(name, { bubbles: true, composed: true }));
-
-  const handleCancel = () => emit(CANCEL_EVENT);
+  const handleCancel = () => hostDispatch(host, CANCEL_EVENT);
   const handleRole = (e: Event) => setRoleId(inputValue(e));
   const handleDesignation = (e: Event) =>
     setDesignation(inputValue(e) as AddableDivision);
@@ -77,13 +75,19 @@ function PostAdd(host: PostAddHost) {
     setSaving(true);
     setError(null);
     try {
-      await createPost(host.jurisdictionOcdid, {
+      const division_ocdid = buildDivisionOcdid(host.jurisdictionOcdid, designation, value);
+      const created = await createPost(host.jurisdictionOcdid, {
         role_id: roleId,
-        division_ocdid: buildDivisionOcdid(host.jurisdictionOcdid, designation, value),
+        division_ocdid,
         label: labelValue.trim() || null,
         _headcount: Number(headcount),
       });
-      emit(ADDED_EVENT);
+      hostDispatch(host, ADDED_EVENT, {
+        post_id: created?.data?.id,
+        role_id: roleId,
+        division_ocdid,
+        label: labelValue.trim() || null,
+      });
     } catch (cause) {
       // 409 included: the triple is already taken, and the answer is to raise that post's
       // headcount rather than make a second one.
