@@ -13,6 +13,7 @@ import pytest_asyncio
 
 from database import jurisdictions as db_jurisdictions
 from database.database import get_pool
+from database.changesets import live_roster_changeset
 from database.publications import dismiss_request
 from database.users import SYSTEM_USER_ID
 from shared.utils.statuses import ChangeLogType, DismissalReason
@@ -267,6 +268,41 @@ async def test_the_latest_close_wins():
     await _log(changeset_id, ChangeLogType.CLOSE_REVIEW, {"reason": "rejected"})
 
     assert (await _entry_for(changeset_id))["outcome"] == "rejected"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_nothing_is_live_before_the_first_publish():
+    await _seed_changeset()
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        assert await live_roster_changeset(cur, _OCDID) is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_pending_scrape_is_never_the_live_roster():
+    """The trap the name guards: an edit filed under an unaccepted scrape."""
+    published = await _seed_changeset()
+    await _publish(published)
+    await _seed_changeset()
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        assert await live_roster_changeset(cur, _OCDID) == published
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_newest_publish_is_the_live_roster():
+    await _publish(await _seed_changeset())
+    newest = await _seed_changeset()
+    await _publish(newest)
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        assert await live_roster_changeset(cur, _OCDID) == newest
 
 
 @pytest.mark.asyncio

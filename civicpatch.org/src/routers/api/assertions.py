@@ -3,7 +3,9 @@ from fastapi.responses import JSONResponse
 
 from database import assertions
 from database.change_logs import record_change
+from database.changesets import live_roster_changeset
 from database.database import get_pool
+from database.entity_jurisdiction import jurisdiction_for
 from lib.auth import require_route_access
 from schemas.assertions import Assertion
 from schemas.change_logs import AssertionChangePayload
@@ -39,12 +41,21 @@ def get_router() -> APIRouter:
         pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
             assertion_id = await assertions.upsert(cur, body, user.user_id)
+            jurisdiction_ocdid = await jurisdiction_for(
+                cur, body.entity_type, body.entity_id
+            )
             # Logged in the same transaction, because an assertion is current state: setting a
             # field again overwrites it, and this is what keeps the superseded value.
             await record_change(
                 cur,
                 ChangeLogType.ASSERT_FIELD,
                 user.user_id,
+                jurisdiction_ocdid,
+                changeset_id=(
+                    await live_roster_changeset(cur, jurisdiction_ocdid)
+                    if jurisdiction_ocdid
+                    else None
+                ),
                 changes=AssertionChangePayload(
                     entity_type=body.entity_type.value,
                     entity_id=body.entity_id,

@@ -19,6 +19,7 @@ from core.membership_label import derive_post_label
 from core.post_derivation import DerivedMembership
 from database import assertions, posts
 from database.change_logs import record_change
+from database.changesets import live_roster_changeset
 from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType
 from schemas.posts import AssignmentResult
@@ -415,6 +416,8 @@ async def assign(
                 label=label or post.label,
                 fields=[change],
             ),
+            # So the edit lands on the live roster's timeline entry rather than nowhere.
+            changeset_id=await live_roster_changeset(cur, post.jurisdiction_ocdid),
         )
         return AssignmentResult(
             membership_id=membership_id,

@@ -26,17 +26,7 @@ class PersonBase(BaseModel):
 
 
 class SubmittedPersonRecord(PersonBase):
-    """One person record a human submitted, validated and normalised on the way in.
-
-    Its one caller is `people_edits.validate_and_normalize`. A model rather than a set of
-    checks because the validators below also *rewrite* — phones to canonical form, blank urls
-    dropped — and because a field either declares its rule here or has none, which a procedure
-    of separate calls cannot promise.
-
-    Not the shape anything reads: the derivation asks for `RosterEntry`, the published artifact
-    is `OpenStatesPersonRecord`, and the tables are `Person` / `Post` / `Membership`. `post_id`
-    is a reviewer's pick and goes no further than the roster document.
-    """
+    """One person record a human submitted. The validators below normalise as well as check."""
 
     label: str = ""
     labels: List[str] = []
@@ -186,17 +176,7 @@ class PersonSourceRecord(ExtractedPersonRecord):
 
 
 class Post(BaseModel):
-    """A seat: the `posts` row, plus the label composed on read.
-
-    `label` is not a column — since 148 it is derived from the role and the division, so
-    nobody can type one.
-
-    `headcount` and `is_tracked` are underscored on the wire only: no civic standard defines
-    either, so a consumer dropping every `_*` key is left with a conforming record.
-
-    No `_is_verified`: that is computed per query from memberships and assertions, and says
-    who vouched for the seat rather than what the seat is.
-    """
+    """The `posts` row, plus the label composed on read. No `_is_verified` — that is per-query."""
 
     model_config = ConfigDict(populate_by_name=True)
 
@@ -259,11 +239,8 @@ class Person(PersonBase):
 
 
 class OpenStatesMembership(BaseModel):
-    """One seat as open-data receives it — exactly the ten keys `PERSON_MEMBERSHIPS` projects.
-
-    Not `Membership`, which also carries `post_label`: that is composed on read, and dumping
-    through it would add a null key to every membership in every published file.
-    """
+    """Exactly the keys `PERSON_MEMBERSHIPS` projects. Not `Membership`: its `post_label` would
+    add a null key to every membership in every published file."""
 
     post_id: str
     role_id: str
@@ -278,16 +255,8 @@ class OpenStatesMembership(BaseModel):
 
 
 class OpenStatesPersonRecord(PersonBase):
-    """One person as written to open-data — the only artifact we publish.
-
-    The sixteen keys of `PERSON_JSON`, which is what the roster read selects and what the
-    commit activity dumps. Declared here so the published shape is stated in one place rather
-    than being whatever a projection happens to select.
-
-    Output only, and by construction: it is built at the point of writing the file, from rows
-    the database already holds. No `post_id` — a reviewer's pick is not part of the record —
-    and no validators, because this describes what we emit, not what we accept.
-    """
+    """One person as written to open-data. The keys of `PERSON_JSON`; a key it does not declare
+    is dropped from the published file."""
 
     source_urls: List[str] = []
     updated_at: Optional[str] = None

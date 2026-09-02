@@ -58,6 +58,13 @@ async def _wipe():
             (_EMAIL,),
         )
         await cur.execute("DELETE FROM users WHERE email = %s", (_EMAIL,))
+        # Before organizations and jurisdictions: both are FKs from changesets.
+        await cur.execute(
+            "DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        await cur.execute(
+            "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
         for table in ("posts", "divisions", "organizations"):
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_OCDID,)
@@ -201,6 +208,75 @@ async def test_an_unattributable_assertion_is_refused(client):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute("SELECT count(*) FROM assertions WHERE entity_id::text = %s", (post_id,))
         assert (await cur.fetchone())[0] == 0
+
+
+async def _published_changeset() -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json, "
+            "published_at) VALUES ('scrape', 'SUCCESS', %s, '{}'::jsonb, now()) "
+            "RETURNING id::text",
+            (_OCDID,),
+        )
+        changeset_id = (await cur.fetchone())[0]
+        await conn.commit()
+    return changeset_id
+
+
+async def _assert_field_log(entity_id: str) -> tuple:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT jurisdiction_ocdid, changeset_id FROM change_logs "
+            "WHERE type = 'assert_field' AND changes->>'entity_id' = %s",
+            (entity_id,),
+        )
+        return await cur.fetchone()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_assertion_names_its_jurisdiction_and_the_live_roster(client):
+    """Without both, an assertion reaches no jurisdiction's timeline. The jurisdiction is
+    resolved from `entity_type` — assuming person breaks on the first post assertion."""
+    post_id = await _seed()
+    changeset_id = await _published_changeset()
+
+    response = client.post(
+        _PREFIX,
+        json={
+            "entity_type": "post",
+            "entity_id": post_id,
+            "field_path": "_headcount",
+            "value": 5,
+            "kind": "accept",
+        },
+    )
+    assert response.status_code == 200, response.text
+
+    assert await _assert_field_log(post_id) == (_OCDID, changeset_id)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_assertion_before_any_publish_still_names_its_jurisdiction(client):
+    """No live roster to join yet — the jurisdiction is still known, so the log is not orphaned
+    on both counts."""
+    post_id = await _seed()
+
+    client.post(
+        _PREFIX,
+        json={
+            "entity_type": "post",
+            "entity_id": post_id,
+            "field_path": "_headcount",
+            "value": 5,
+            "kind": "accept",
+        },
+    )
+
+    assert await _assert_field_log(post_id) == (_OCDID, None)
 
 
 @pytest.mark.asyncio

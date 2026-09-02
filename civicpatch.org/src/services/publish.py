@@ -141,11 +141,7 @@ async def dismiss_people(
 
 
 def open_data_records(roster: list[dict]) -> list[dict]:
-    """The roster as open-data receives it, through the model that declares that shape.
-
-    The round trip is the point: a key the projection grows and the model does not declare is
-    dropped here rather than appearing in the published file unannounced.
-    """
+    """The roster as open-data receives it. A key the model does not declare is dropped here."""
     return [OpenStatesPersonRecord(**person).model_dump() for person in roster]
 
 
