@@ -11,7 +11,7 @@ The reverse (`official_to_person`) went earlier, for the same reason.
 
 from typing import List
 
-from shared.schemas import Person
+from shared.schemas import DerivedPerson
 from shared.utils.label_parser import ParsedLabel, parse_label
 from shared.utils.taxonomy import Taxonomy, designation_sort_key, role_sort_key
 
@@ -25,8 +25,8 @@ def _sortable_designations(parsed: ParsedLabel) -> List[str]:
     ]
 
 
-def sort_people(people: List[Person], taxonomy: Taxonomy) -> list[Person]:
-    def person_sort_key(person: Person):
+def sort_people(people: List[DerivedPerson], taxonomy: Taxonomy) -> list[DerivedPerson]:
+    def person_sort_key(person: DerivedPerson):
         parsed = [parse_label(label, taxonomy) for label in person.labels]
         return (
             min(

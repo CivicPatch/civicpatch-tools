@@ -16,7 +16,7 @@ import lib.storage as storage_service
 import services.change_logs as change_logs
 import shared.utils.id_utils
 from core.images import artifacts_key, promoted_key, promoted_url
-from core.post_derivation import ChosenPost, DerivedPost, SourcedPerson, derived_posts
+from core.post_derivation import ChosenPost, DerivedPost, derived_posts
 from database import posts as posts_db
 from database.database import get_pool
 from database.people import get_roster
@@ -29,7 +29,7 @@ from lib.temporal.types import (
     OpenDataCommitRequest,
 )
 from services.roster import proposed_roster
-from shared.schemas import Person, RoleConfig
+from shared.schemas import OpenStatesRecord, RoleConfig
 from shared.utils.statuses import DismissalReason
 from shared.utils.taxonomy import build_taxonomy
 from shared.utils.yaml_utils import yaml_dump
@@ -75,7 +75,12 @@ def _promote_person_image(person: dict, friendly_host: str) -> dict:
     return {**person, "cdn_image": promoted_url(friendly_host, dest_key)}
 
 
-async def chosen_posts(roster: list[Person]) -> dict[str, ChosenPost]:
+def picks_in(roster: list[OpenStatesRecord]) -> dict[str, str]:
+    """The post each person was picked for, by person id."""
+    return {record.id: record.post_id for record in roster if record.id and record.post_id}
+
+
+async def chosen_posts(picks: dict[str, str]) -> dict[str, ChosenPost]:
     """The seat a reviewer picked, **by person id**.
 
     Keyed on the person so the derivation's input can be purely what the source said: a pick is
@@ -84,18 +89,17 @@ async def chosen_posts(roster: list[Person]) -> dict[str, ChosenPost]:
     A pick naming a post that no longer exists is simply absent, and the derivation falls back
     to the labels rather than losing the person.
     """
-    by_person = {p.id: p.post_id for p in roster if p.post_id}
-    if not by_person:
+    if not picks:
         return {}
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await posts_db.identities_by_id(cur, list(set(by_person.values())))
+        rows = await posts_db.identities_by_id(cur, list(set(picks.values())))
     return {
         person_id: ChosenPost(
             role_id=rows[post_id]["role_id"],
             division_ocdid=rows[post_id]["division_ocdid"],
         )
-        for person_id, post_id in by_person.items()
+        for person_id, post_id in picks.items()
         if post_id in rows
     }
 
@@ -103,9 +107,8 @@ async def chosen_posts(roster: list[Person]) -> dict[str, ChosenPost]:
 async def _get_derived_posts(people: list[dict]) -> list[DerivedPost]:
     roles = await get_roles()
     taxonomy = build_taxonomy(RoleConfig(roles=roles))
-    roster = [Person(**person) for person in people]
-    sourced = [SourcedPerson.from_person(person) for person in roster]
-    return derived_posts(sourced, taxonomy, roles, await chosen_posts(roster))
+    roster = [OpenStatesRecord(**person) for person in people]
+    return derived_posts(roster, taxonomy, roles, await chosen_posts(picks_in(roster)))
 
 
 async def publish_people(

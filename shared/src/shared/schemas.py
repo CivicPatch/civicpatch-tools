@@ -40,6 +40,8 @@ class OpenStatesRecord(PersonBase):
     unmatched_text: List[str] = []
     source_urls: List[str]
     updated_at: str
+    # A reviewer's pick. Never set by the pipeline, which reports labels and nothing else.
+    post_id: Optional[str] = None
 
     @field_validator("start_date")
     @classmethod
@@ -180,7 +182,7 @@ class PersonSourceRecord(ExtractedPersonRecord):
 
 
 class Membership(BaseModel):
-    """An open seat, as `PERSON_MEMBERSHIPS` projects it. Narrower than the frontend's
+    """One open membership, as `PERSON_MEMBERSHIPS` projects it. Narrower than the frontend's
     `Membership`, which the posts-list page needs for `decompose`."""
 
     # memberships
@@ -201,31 +203,30 @@ class Membership(BaseModel):
     post_label: str = ""
 
 
+class DerivedPerson(PersonBase):
+    """One person's sightings combined — what `people_derivation` produces.
+
+    Not a people row: nothing is written yet, and no post has been derived, so it carries the
+    raw `labels` and no membership.
+    """
+
+    source_urls: List[str] = []
+    updated_at: Optional[str] = None
+    # Verbatim, one per office. Decomposition into role + division + unmatched happens later,
+    # in `derive_roles`.
+    labels: List[str] = []
+
+
 class Person(PersonBase):
-    """A person as the derivation works with them, and as `GET /people` serialises them.
+    """The people row and its open memberships.
 
     `GET /people` returns this model directly, so a key `PERSON_JSON` projects but this does
     not declare is dropped from the response rather than rejected.
     """
 
-    # people
     source_urls: List[str] = []
     updated_at: Optional[str] = None
-
-    # the seats
     memberships: List[Membership] = []
-
-    # No column. Flattened off the seat because the published record is flat, and duplicated by
-    # `memberships` above on every path except that one.
-    labels: List[str] = []
-    start_date: Optional[str] = None
-    end_date: Optional[str] = None
-    division_ocdid: Optional[str] = None
-
-    # No column, and not a seat yet: the post a human picked. Never set by the pipeline, which
-    # reports labels and nothing else — which post those mean is a decision. It does not touch
-    # `labels`, so the evidence stays as the source wrote it.
-    post_id: Optional[str] = None
 
 
 class JobConfig(BaseModel):

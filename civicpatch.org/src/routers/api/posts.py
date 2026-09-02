@@ -17,9 +17,10 @@ def get_router() -> APIRouter:
     async def create_post_endpoint(
         jurisdiction_ocdid: str,
         body: CreatePostRequest,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
-        ),
+        # Any signed-in user: a reviewer who knows somebody sits in District 4 cannot say so
+        # unless that post exists, and the post select offers only what already does. Their
+        # changes land in the quarantine bucket like every other default-role write.
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         """Create a post. 409 if the triple is taken — silently returning the existing id
         would make "created" and "already there" indistinguishable."""
@@ -41,9 +42,7 @@ def get_router() -> APIRouter:
     async def update_post_endpoint(
         post_id: str,
         body: UpdatePostRequest,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
-        ),
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         if not await posts.update(
             post_id, body.headcount, body.is_tracked, user.user_id

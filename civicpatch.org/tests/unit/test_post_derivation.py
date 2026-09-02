@@ -6,8 +6,8 @@ is covered by tests/integration/database/test_post_derivation.py.
 
 import pytest
 
-from core.post_derivation import SourcedPerson, UNMATCHED_ROLE_ID, ChosenPost, derived_posts
-from shared.schemas import Person, Role, RoleConfig, RoleStatus
+from core.post_derivation import UNMATCHED_ROLE_ID, ChosenPost, derived_posts
+from shared.schemas import OpenStatesRecord, Role, RoleConfig, RoleStatus
 from shared.utils.taxonomy import build_taxonomy
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
@@ -33,17 +33,19 @@ _ROLES = [
 _TAXONOMY = build_taxonomy(RoleConfig(roles=_ROLES))
 
 
-def _person(person_id, office_name, division_ocdid=None):
-    """A `SourcedPerson` — the derivation's input, which is labels and a human's answers.
+def _person(person_id, office_name):
+    """A roster row. A human's answers arrive separately, in `chosen_posts`.
 
     The fixtures pass one " - " string because it is compact to write; it is split here, so the
     join being retired happens once in a helper rather than on every record.
     """
-    return SourcedPerson(
-        person_id=person_id,
+    return OpenStatesRecord(
+        id=person_id,
+        name=person_id,
         jurisdiction_ocdid=_OCDID,
+        source_urls=["https://example.gov"],
+        updated_at="2026-01-01T00:00:00+00:00",
         labels=[part.strip() for part in office_name.split(" - ") if part.strip()],
-        division_ocdid=division_ocdid,
     )
 
 
@@ -114,20 +116,33 @@ def test_at_large_with_no_value_is_swallowed_and_does_not_reach_the_residue():
 
 
 @pytest.mark.unit
-def test_the_records_own_division_beats_the_one_parsed_from_its_label():
-    """Measured over the corpus: 2,824 published people carry a ward or district in
-    `division_ocdid` (then nested under `office`) against 57 whose label mentions one. Re-deriving from the label
-    alone collapsed every ward seat in a town onto one at-large post."""
+def test_a_pick_keeps_ward_seats_from_collapsing_onto_one_at_large_post():
+    """The same guarantee through the other channel: two bare "Council Member" labels, kept
+    apart by the picks rather than by the record's own division."""
     derived = derived_posts(
-        [
-            _person("a", "Council Member", division_ocdid=f"{_BASE}/ward:1"),
-            _person("b", "Council Member", division_ocdid=f"{_BASE}/ward:2"),
-        ],
+        [_person("a", "Council Member"), _person("b", "Council Member")],
         _TAXONOMY,
         _ROLES,
+        {
+            "a": ChosenPost(role_id="council-member", division_ocdid=f"{_BASE}/ward:1"),
+            "b": ChosenPost(role_id="council-member", division_ocdid=f"{_BASE}/ward:2"),
+        },
     )
     assert len(derived) == 2
     assert {post.division_ocdid for post in derived} == {f"{_BASE}/ward:1", f"{_BASE}/ward:2"}
+
+
+@pytest.mark.unit
+def test_without_a_pick_a_bare_label_derives_one_at_large_post():
+    """The other half of the claim above: unpicked, the two collapse. Correct — the source
+    said nothing about wards — and the reason a pick is the only way to tell them apart."""
+    derived = derived_posts(
+        [_person("a", "Council Member"), _person("b", "Council Member")],
+        _TAXONOMY,
+        _ROLES,
+    )
+    assert len(derived) == 1
+    assert derived[0].division_ocdid == _BASE
 
 
 @pytest.mark.unit
@@ -149,12 +164,13 @@ _WARD_5 = f"{_BASE}/council_district:5"
 @pytest.mark.unit
 def test_a_jurisdiction_wide_role_at_an_electoral_division_still_mints_its_own_post():
     derived = derived_posts(
-        [
-            _person("a", "Mayor", _WARD_3),
-            _person("b", "Council Member", _WARD_5),
-        ],
+        [_person("a", "Mayor"), _person("b", "Council Member")],
         _TAXONOMY,
         _ROLES,
+        {
+            "a": ChosenPost(role_id="mayor", division_ocdid=_WARD_3),
+            "b": ChosenPost(role_id="council-member", division_ocdid=_WARD_5),
+        },
     )
     by_role = _by_role(derived)
 
@@ -221,9 +237,9 @@ def test_a_single_role_demotes_nothing():
 
 
 @pytest.mark.unit
-def test_an_unknown_second_role_is_not_demoted():
-    """`memberships.role_id` is a foreign key, so a role with no id has nowhere to go — it
-    stays in `unmatched_text`, where triage can act on it."""
+def test_a_second_role_the_taxonomy_does_not_know_is_not_demoted():
+    """`membership_roles.role_id` is a foreign key, so a role with no id has nowhere to go —
+    it stays in `unmatched_text`, where triage can act on it."""
     derived = derived_posts(
         [_person("p1", "Council Member - Harbormaster")], _TAXONOMY, _ROLES
     )
@@ -244,7 +260,6 @@ def test_the_member_label_says_what_the_post_label_cannot():
     member = derived[0].members[0]
     assert derived[0].role_id == "mayor"
     assert member.label == "Of Public Safety"
-    assert member.role_ids == ["commissioner"]
 
 
 @pytest.mark.unit
@@ -304,9 +319,7 @@ def test_a_chosen_post_does_not_rewrite_what_the_source_said():
 
     assert member.source_labels == ["Council Member", "Place 6"]
     # "Place 6" is a designation, so it stays on the membership; `council-member` is a role
-    # the pick demoted, so it rides in `role_ids` rather than being erased.
     assert member.label == "Place 6"
-    assert "council-member" in member.role_ids
 
 
 @pytest.mark.unit
