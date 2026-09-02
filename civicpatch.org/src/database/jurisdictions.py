@@ -602,12 +602,10 @@ async def get_jurisdiction_history(
                        ELSE '{RequestReviewStatus.PENDING.value}'
                    END AS outcome,
                    -- `display_name`, never `email`: the jurisdiction page is public.
+                   -- Null only while a changeset is unresolved. Since 160 a supersede sweep or
+                   -- an auto-publish is attributed to the system user, so "resolved by nobody"
+                   -- is no longer a state this can be in.
                    resolver.display_name AS resolved_by,
-                   -- Resolved, but by no user: a supersede sweep or an auto-publish. Without
-                   # this a system publish is indistinguishable from a person with no display
-                   -- name, and the page would credit one to the other.
-                   ((r.published_at IS NOT NULL OR r.dismissed_at IS NOT NULL)
-                    AND r.resolved_by_user_id IS NULL) AS resolved_by_system,
                    COALESCE(rc.changes, '[]'::jsonb) AS changes
             FROM changesets r
             LEFT JOIN close_reasons cr ON cr.changeset_id = r.id::text
@@ -661,9 +659,8 @@ async def get_jurisdiction_history(
                     "outcome": row[11],
                     # None unless a person resolved it, and None when they have no display
                     # name — the page is public, so there is no email fallback.
+                    # `CivicPatch` when the system resolved it; None only while pending.
                     "resolved_by": row[12],
-                    # The third state: nobody to name because nobody did it by hand.
-                    "resolved_by_system": row[13],
                     "jurisdiction_ocdid": jurisdiction_ocdid,
                     "branch_name": branch_name,
                     "changes": [

@@ -16,6 +16,7 @@ those rows, wipes role change_logs, and restores the seeded rows' priorities
 import pytest
 import pytest_asyncio
 
+from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from core.role_taxonomy import slugify_label
 from database.roles import (
@@ -136,13 +137,14 @@ async def test_new_role_id_is_the_slug_of_its_label():
 @pytest.mark.integration
 async def test_add_emits_one_event_with_aliases_in_payload():
     """A single add_role event carries the term + its aliases in one payload;
-    no separate per-alias events. user_id NULL for system actions."""
+    no separate per-alias events. A taxonomy change nobody signed is the system's, and since
+    160 it is attributed to the system user rather than left null."""
     await upsert_roles([_entry("Mayor", ["zz mayor"])], None)
 
     rows = await _change_log_types()
     assert len(rows) == 1, "expected one event per term, not one per alias"
     assert rows[0][0] == "add_role"
-    assert rows[0][1] is None  # user_id NULL for system
+    assert str(rows[0][1]) == SYSTEM_USER_ID
 
 
 @pytest.mark.asyncio

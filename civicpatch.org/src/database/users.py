@@ -2,6 +2,11 @@ import secrets
 from typing import cast
 
 from database.database import get_pool
+
+# The actor for anything no person did — a supersede sweep, an auto-publish, a backfill.
+# Seeded by migration 160. Nothing can log in as it: `upsert_user` is the auth path's only
+# writer and always passes provider 'supabase', so 'system' is unreachable there.
+SYSTEM_USER_ID = "00000000-0000-4000-8000-000000000001"
 from environment import get_env_vars
 import lib.hash as hash_utils
 

@@ -18,6 +18,7 @@ import pytest_asyncio
 
 from core.post_derivation import ChosenPost, DerivedMembership
 from database import divisions, memberships, organizations, posts
+from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from database.review_priority import issue_count, issue_priority
 
@@ -856,9 +857,9 @@ async def test_minting_a_post_is_logged_against_the_scrape_that_caused_it():
     logs = await _add_post_logs(changeset_id)
     assert len(logs) == 1
     assert logs[0]["changes"]["role_id"] == "mayor"
-    # No user: nobody asserted this. A null user beside a request is what says "a scrape did
-    # it" — the distinction the old code threw away by logging nothing at all.
-    assert logs[0]["user_id"] is None
+    # The system, not a person: nobody asserted this, a scrape did it. Since 160 that is said
+    # by naming the system user rather than by leaving the column null.
+    assert str(logs[0]["user_id"]) == SYSTEM_USER_ID
 
 
 @pytest.mark.asyncio

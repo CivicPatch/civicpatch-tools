@@ -20,6 +20,7 @@ from psycopg.errors import NotNullViolation
 
 from database import assertions
 from database import people as people_db
+from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from core.post_derivation import DerivedMembership, DerivedPost
 from database.publications import dismiss_request, publish_request
@@ -337,14 +338,15 @@ async def test_publish_does_not_blank_an_existing_resolver(sentinel_request):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_machine_dismissal_records_no_user(sentinel_request):
-    """A cancelled run dismisses its own request, and `resolved_by_user_id IS NULL` is what
-    tells that apart from a person deciding not to publish."""
+async def test_a_machine_dismissal_is_credited_to_the_system(sentinel_request):
+    """A cancelled run dismisses its own request. Since 160 that is attributed to the system
+    user rather than left null: the thing that tells it apart from a person deciding not to
+    publish is *who*, not *whether*."""
     await dismiss_request(sentinel_request, DismissalReason.ERRORED)
 
     _, dismissed_at, resolved_by = await _request_state(sentinel_request)
     assert dismissed_at is not None
-    assert resolved_by is None
+    assert str(resolved_by) == SYSTEM_USER_ID
 
 
 @pytest.mark.integration
