@@ -10,15 +10,12 @@ Spec: `.scratch/2026-08-25-sheet-import-shape.md`.
 import asyncio
 import logging
 import uuid
-from collections import Counter
 from datetime import datetime, timezone
 
 from core.entry_rows import (
-    JURISDICTION,
     ImportRow,
     ImportStatus,
     already_handled,
-    jurisdiction_columns,
     parse_rows,
     roster_columns,
     rows_by_jurisdiction,
@@ -227,7 +224,11 @@ async def run_import(
 
 
 async def write_back(results: list[JurisdictionResult]) -> None:
-    """Stamp each row and each town with what happened to it.
+    """Stamp each roster row with what happened to it.
+
+    The roster tab only. `Live[Jurisdictions]` is the sheet sync's to own — two writers on one
+    tab raced, and with every state listed a per-town report described 9,464 rows to say
+    something about twenty.
 
     Never fatal: the data is already ingested and the review cards already raised, so a Sheets
     outage must not turn a successful import into a failed one. It does leave the volunteer
@@ -237,13 +238,10 @@ async def write_back(results: list[JurisdictionResult]) -> None:
         spreadsheet_id = entry_sheet.spreadsheet_id()
         stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M")
 
-        # Re-read rather than reusing the parse: the tabs are the addressing, so a row inserted
+        # Re-read rather than reusing the parse: the tab is the addressing, so a row inserted
         # since we read would otherwise shift every value onto the wrong line.
-        roster, worklist = await asyncio.gather(
-            asyncio.to_thread(sheets.read_tab, spreadsheet_id, entry_sheet.ROSTER_TAB),
-            asyncio.to_thread(
-                sheets.read_tab, spreadsheet_id, entry_sheet.LIVE_JURISDICTIONS_TAB
-            ),
+        roster = await asyncio.to_thread(
+            sheets.read_tab, spreadsheet_id, entry_sheet.ROSTER_TAB
         )
         parsed, errors = parse_rows(roster, "")
 
@@ -258,20 +256,6 @@ async def write_back(results: list[JurisdictionResult]) -> None:
             spreadsheet_id,
             entry_sheet.ROSTER_TAB,
             roster_columns(parsed, errors, len(roster), imported, stamp),
-        )
-        await asyncio.to_thread(
-            sheets.write_columns,
-            spreadsheet_id,
-            entry_sheet.LIVE_JURISDICTIONS_TAB,
-            jurisdiction_columns(
-                [row.get(JURISDICTION, "") for row in worklist],
-                Counter(row.jurisdiction_ocdid for row in parsed),
-                {
-                    ocdid: (result.status.value, result.error)
-                    for ocdid, result in by_ocdid.items()
-                },
-                stamp,
-            ),
         )
     except Exception as e:
         logger.error(f"Failed to write results back to the sheet: {e}", exc_info=True)

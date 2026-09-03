@@ -11,9 +11,11 @@ from temporalio.service import RPCError, RPCStatusCode
 from core.temporal_workflow_state import TemporalWorkflowState, summarize
 from lib.temporal.types import OpenDataBatchCommitRequest, OpenDataCommitRequest
 from lib.temporal.workflows import (
+    JurisdictionsSheetSyncWorkflow,
     OdSyncTargetedWorkflow,
     OpenDataBatchCommitWorkflow,
     OpenDataCommitWorkflow,
+    RosterSheetSyncWorkflow,
     ScheduleId,
     TASK_QUEUE,
 )
@@ -114,6 +116,36 @@ async def start_targeted_od_sync(jurisdiction_ocdids: list[str]) -> str:
     return handle.id
 
 
+
+
+async def enqueue_roster_sheet_sync(state: str) -> None:
+    """Ask for one state's sheet tabs to be rewritten.
+
+    Signal-with-start, not `USE_EXISTING`. A request arriving while the workflow runs must not
+    be dropped — between the activity's read and the workflow closing, a drop is a lost update
+    that only the next publish in that state would repair. Signalling instead earns another
+    pass; see `RosterSheetSyncWorkflow`.
+    """
+    client = await _get_client()
+    await client.start_workflow(
+        RosterSheetSyncWorkflow.run,
+        state,
+        id=f"roster-sheet-sync:{state}",
+        task_queue=TASK_QUEUE,
+        start_signal="mark_dirty",
+    )
+
+
+async def enqueue_jurisdictions_sheet_sync() -> None:
+    """Refresh the dropdown source. One at a time — the id carries no argument because the tab
+    covers every state, so a second request while one runs is genuinely the same work."""
+    client = await _get_client()
+    await client.start_workflow(
+        JurisdictionsSheetSyncWorkflow.run,
+        id="jurisdictions-sheet-sync",
+        task_queue=TASK_QUEUE,
+        id_conflict_policy=WorkflowIDConflictPolicy.USE_EXISTING,
+    )
 
 
 async def enqueue_open_data_commit(request: OpenDataCommitRequest) -> None:

@@ -44,9 +44,10 @@ def get_router() -> APIRouter:
         body: UpdatePostRequest,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        if not await posts.update(
+        jurisdiction_ocdid = await posts.update(
             post_id, body.headcount, body.is_tracked, user.user_id
-        ):
+        )
+        if jurisdiction_ocdid is None:
             return JSONResponse({"error": "No such post."}, status_code=404)
         return {"data": {"ok": True}}
 

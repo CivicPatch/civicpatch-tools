@@ -105,6 +105,7 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
         ),
     ):
+        # The change log this writes is what the sheet sweep reads; nothing here calls out.
         await database.delete_person(person_id)
         return {"data": None}
 

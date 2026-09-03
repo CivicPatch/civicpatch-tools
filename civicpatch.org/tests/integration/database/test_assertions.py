@@ -187,7 +187,8 @@ async def test_looking_again_refreshes_rather_than_accumulating():
     post_id = await posts.create(_OCDID, "treasurer", _BASE, 1, user_id)
 
     for _ in range(3):
-        assert await posts.update(post_id, 1, True, user_id) is True
+        # `update` returns the jurisdiction its caller mirrors, so success is "not None".
+        assert await posts.update(post_id, 1, True, user_id) is not None
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

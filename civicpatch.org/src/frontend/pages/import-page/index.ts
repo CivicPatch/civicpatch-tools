@@ -139,9 +139,9 @@ function ImportPage() {
         const reviewBody = await fetchBatchReview(batchId);
         if (stopped) return;
         setReview(reviewBody.data);
-        // Finished, so it is a past import now: the review lives beside the run that produced
-        // it rather than under the button that starts the next one.
-        setTab(HISTORY_TAB);
+        // Deliberately no tab change. Moving somebody off the tab they are reading — the one
+        // holding the rejected rows they just asked about — to reveal a panel we could simply
+        // render in place is a jump that reads as a bug.
       } catch (e) {
         if (!stopped) setError(String(e));
       }
@@ -260,7 +260,7 @@ function ImportPage() {
             <import-preview .preview=${preview}></import-preview>
           </section>`
         : null}
-      ${tab === HISTORY_TAB && review
+      ${review
         ? html`<section class="import-panel">
             <batch-review
               .review=${review}

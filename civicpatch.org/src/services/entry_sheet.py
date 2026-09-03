@@ -1,8 +1,4 @@
-"""The data-entry spreadsheet: which one it is, and what its tabs are called.
-
-Direction-neutral on purpose: the sheet is read *and* written. The importer reads the two entry
-tabs; the write-back stamps `status`/`error` onto their rows and refreshes the reference tabs.
-Both need to agree on which sheet and which tabs, and neither owns that.
+"""The data-entry spreadsheet: which one it is, and what the volunteer's tab is called.
 
 Here rather than in `lib.sheets` because this is a domain fact — that module knows how to talk
 to Sheets, not what we keep there.
@@ -13,13 +9,8 @@ import environment
 # Volunteer-owned.
 ROSTER_TAB = "Entry[Roster]"
 
-# App-owned: reference, so a curator can match existing wording rather than invent near-misses.
-LIVE_PEOPLE_TAB = "Live[People]"
-LIVE_POSTS_TAB = "Live[Posts]"
-
-# App-written, except `ready` — which is the worklist gate, so this tab is read as well as
-# written. It is also the roster dropdown's source, so an ocdid is never hand-typed.
-LIVE_JURISDICTIONS_TAB = "Live[Jurisdictions]"
+# The app-owned tabs are `services.roster_sheet`'s: it names them per state and is their only
+# writer. Nothing here reads them.
 
 
 class SheetNotConfigured(Exception):
@@ -30,6 +21,15 @@ def spreadsheet_url() -> str:
     """Where a volunteer goes to look at or fix the rows. One place builds it, so the link on
     the import page and the `source_url` stamped onto every sighting cannot disagree."""
     return f"https://docs.google.com/spreadsheets/d/{spreadsheet_id()}"
+
+
+def is_configured() -> bool:
+    """Whether there is a sheet to write to at all.
+
+    Checked before enqueueing, not inside the workflow: an unconfigured deploy would otherwise
+    pile up a permanently-failing workflow per sweep.
+    """
+    return bool(environment.get_env_vars().get("ENTRY_SPREADSHEET_ID"))
 
 
 def spreadsheet_id() -> str:

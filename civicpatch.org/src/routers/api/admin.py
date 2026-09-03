@@ -3,11 +3,13 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
 from supabase import AsyncClient
 
+import database.jurisdictions as jurisdictions_db
 import database.users as users_db
 import lib.auth_session as auth_session
 import lib.cache as cache_service
 import lib.supabase_auth as supabase_auth_service
 import lib.temporal.client as temporal_client
+from services import entry_sheet
 from schemas.common import (
     Identity,
     InviteUserRequest,
@@ -18,6 +20,7 @@ from schemas.common import (
     UserWithRole,
 )
 from schemas.open_data import OdSyncRequestSchema
+from schemas.sheets import SheetSyncRequestSchema
 from lib.auth import require_route_access
 
 
@@ -34,6 +37,64 @@ def get_router() -> APIRouter:
         else:
             await temporal_client.trigger_full_od_sync()
 
+        return {"status": "running"}
+
+    def _require_sheet() -> None:
+        """503 rather than a cheerful 200 followed by a workflow that dies.
+
+        A manual trigger on an unconfigured deploy should say so at the call, not leave the
+        caller reading a traceback in the worker's logs. Missing *credentials* are a different
+        failure and surface in Temporal — `SheetsNotConfigured` is non-retryable, so it fails
+        fast instead of retrying for days.
+        """
+        if not entry_sheet.is_configured():
+            raise HTTPException(
+                status_code=503, detail="ENTRY_SPREADSHEET_ID is not set."
+            )
+
+    # Two siblings, so neither the namespace nor one of the kinds is implied. `/sheet_sync`
+    # alone would mean "rosters" while its neighbour had to name itself, which is the sort of
+    # asymmetry that makes a reader guess.
+    @router.post("/sheet_sync/rosters", include_in_schema=False)
+    async def sheet_sync_rosters_endpoint(
+        request: SheetSyncRequestSchema,
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
+    ):
+        """Re-sync one state's people and posts tabs now, or every state when none is named.
+
+        Both tabs together, never separately: they are one state's data written by one workflow,
+        and separate routes would let them drift apart.
+
+        The manual path and the automatic one are the same code — this enqueues the workflow a
+        publish enqueues, so a hand-run cannot behave differently from the real thing. Nothing
+        here reaches Google in CI, which makes this the only way to exercise the sheet at all.
+        """
+        _require_sheet()
+        # Named state, or every state we hold. Enqueued directly rather than by triggering the
+        # sweep schedule: that reads the change log, so triggering it would only re-sync what
+        # already changed — which is not what "no state given" is asking for.
+        states = (
+            [request.state.lower()]
+            if request.state
+            else [row["code"] for row in await jurisdictions_db.get_states_with_names()]
+        )
+        for state in states:
+            await temporal_client.enqueue_roster_sheet_sync(state)
+
+        return {"status": "running", "states": len(states)}
+
+    @router.post("/sheet_sync/jurisdictions", include_in_schema=False)
+    async def sheet_sync_jurisdictions_endpoint(
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
+    ):
+        """Refresh the roster tab's dropdown source — one flat tab covering every state, so it
+        takes no argument and has its own trigger (od_sync, not a publish)."""
+        _require_sheet()
+        await temporal_client.enqueue_jurisdictions_sheet_sync()
         return {"status": "running"}
 
     @router.post("/clear_dashboard_cache", include_in_schema=False)
