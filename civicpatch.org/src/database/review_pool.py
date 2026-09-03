@@ -8,7 +8,6 @@ migration 141 dropped. `review_priority` is the other half: this decides members
 from typing import List, Optional
 
 from psycopg import sql
-import shared.utils.id_utils
 from shared.utils.statuses import (
     ChangesetKind,
 )
@@ -81,7 +80,7 @@ async def list_open_changesets(
             "changeset_id": r[0],
             "created_at": to_iso(r[5]),
             "issue_count": r[6],
-            "jurisdiction": {"ocdid": r[3], "name": r[4], "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(r[3])},
+            "jurisdiction": {"ocdid": r[3], "name": r[4], "path": r[3]},
             "pr": {"url": r[1], "status": r[2]},
         }
         for r in rows
@@ -112,7 +111,7 @@ async def get_changeset_for_review(changeset_id: str) -> Optional[dict]:
             "jurisdiction": {
                 "ocdid": row[2],
                 "name": row[3],
-                "path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(row[2]),
+                "path": row[2],
                 "website_url": row[4],
             },
             # `number` no longer identifies anything — publishing is keyed on the request.

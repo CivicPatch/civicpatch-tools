@@ -1,0 +1,149 @@
+/* One state's section: badges in the summary, and the localities behind each figure.
+   Width tokens come from `.cs-page` in changeset-summaries.css. */
+
+.cs-sections__h2 {
+  font-size: var(--text-md);
+  font-weight: 700;
+  margin: 2.5rem 0 0.5rem;
+}
+
+.cs-section {
+  margin: 0;
+  border-bottom: 1px solid var(--civ-border);
+}
+
+.cs-section:last-child {
+  border-bottom: none;
+}
+
+/* Flex, and no icon of its own — `details summary::after` in elements.css already draws the
+   chevron and floats it right. */
+.cs-section__summary {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.6rem 0.2rem;
+  line-height: 1.5;
+}
+
+.cs-section__summary:hover {
+  background: var(--civ-surface-2);
+}
+
+.cs-section__state {
+  flex: 0 0 var(--cs-state-w);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.cs-section__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: baseline;
+}
+
+.cs-section__body {
+  padding: 0.25rem 0.2rem 1.25rem calc(var(--cs-state-w) + 0.9rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Buckets */
+
+.cs-bucket__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--civ-text-muted);
+  margin: 0 0 0.4rem;
+}
+
+.cs-bucket__n {
+  font-weight: 700;
+  color: var(--civ-text);
+}
+
+.cs-bucket__more {
+  width: auto;
+  margin-top: 0.4rem;
+  margin: 0;
+  padding: 0.1rem 0.5rem;
+  border: 1px dashed var(--civ-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--civ-text-muted);
+  font-size: var(--text-xs);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.cs-bucket__more:hover {
+  color: var(--civ-text);
+  border-color: var(--civ-border-strong);
+}
+
+/* Modal list */
+
+.cs-bucket__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-bucket__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.4rem 0.2rem;
+  border-bottom: 1px solid var(--civ-border);
+  font-size: var(--text-sm);
+  color: var(--civ-text);
+  text-decoration: none;
+}
+
+.cs-bucket__item:hover {
+  background: var(--civ-surface-2);
+}
+
+.cs-bucket__note {
+  color: var(--civ-text-muted);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
+/* Scrape control — the one action this page carries. Maintainer-gated, and inert while the
+   state already has a run going. */
+
+.cs-scrape {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--civ-border);
+}
+
+.cs-scrape__btn {
+  width: auto;
+  margin: 0;
+}
+
+.cs-scrape__note,
+.cs-scrape__busy {
+  font-size: var(--text-xs);
+  color: var(--civ-text-muted);
+}
+
+/* Why the button is off, distinguished from the schedule line beside it. */
+.cs-scrape__busy {
+  color: var(--civ-text);
+}
+
+.cs-scrape__error {
+  font-size: var(--text-xs);
+  color: var(--pico-del-color);
+}

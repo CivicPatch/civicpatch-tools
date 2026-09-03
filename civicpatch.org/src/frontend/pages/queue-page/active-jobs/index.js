@@ -4,6 +4,7 @@ import { component, useState } from "haunted";
 import { durationBetween } from "../../../utils/date-utils.js";
 import { Pagination } from "../../../components/pagination/index.js";
 import { cancelPipelineRun } from "../../../api.js";
+import { jurisdictionOcdidToPath } from "../../../components/ocdid-utils.js";
 
 function ActiveJobs({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange, onPerPageChange, onCancel, canCancel }) {
   const [cancellingIds, setCancellingIds] = useState(new Set());
@@ -45,7 +46,7 @@ function ActiveJobs({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange
           ${jobs.map(job => html`
             <tr>
               <td>
-                <a class="pipeline-run-name" href="/${job.jurisdiction_path}">
+                <a class="pipeline-run-name" href="/${jurisdictionOcdidToPath(job.jurisdiction_path)}">
                   ${job.jurisdiction_name || job.jurisdiction_ocdid}
                 </a>
               </td>

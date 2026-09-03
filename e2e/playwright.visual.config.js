@@ -36,9 +36,16 @@ export default defineConfig({
     timeout: 15_000,
     toHaveScreenshot: {
       // Anti-aliasing differs by a pixel or two between runs on the same box.
-      // Strict enough to catch a colour or spacing change, loose enough not to
-      // cry wolf — tighten if it proves noisy in the other direction.
-      maxDiffPixelRatio: 0.001,
+      //
+      // An absolute budget, not a ratio. The noise scales with how much *text* is
+      // on screen; a ratio scales with page area, and these captures run 900px to
+      // 4755px tall. The same 2973 differing pixels was 0.0023 on /login and
+      // 0.0004 on review-modal — so a ratio judged the short pages five times
+      // harder for being short, and /login failed while nothing was wrong with it.
+      //
+      // 4000 is the observed floor (~3000) plus headroom. It is a few words of
+      // text, so a real copy or colour change still trips it.
+      maxDiffPixels: 4000,
       animations: "disabled",
     },
   },

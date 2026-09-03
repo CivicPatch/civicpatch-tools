@@ -93,7 +93,7 @@ export function renderJurisdictionHeader(props: JurisdictionHeaderProps) {
         <span class="jurisdiction-status jurisdiction-status--${status.modifier}">
           <span class="jurisdiction-status__dot"></span>
           ${status.label}${publishedAt
-            ? html` — ${dateStringToFriendly(publishedAt)}`
+            ? html`, ${dateStringToFriendly(publishedAt)}`
             : nothing}
         </span>
         ${isRunInProgress
@@ -102,7 +102,7 @@ export function renderJurisdictionHeader(props: JurisdictionHeaderProps) {
               href="${historyHref}#${IN_PROGRESS_ANCHOR}"
             >
               <span class="jurisdiction-status__dot"></span>
-              Scrape running →
+              Scrape running <i class="fa-solid fa-arrow-right"></i>
             </a>`
           : nothing}
       </div>

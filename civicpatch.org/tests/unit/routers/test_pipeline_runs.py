@@ -303,3 +303,62 @@ async def test_a_run_that_produced_something_is_left_for_review(status):
         await pipeline_runs_router.finalize_pipeline_run(TEST_CHANGESET_ID, status, TEST_OCDID)
 
     dismiss.assert_not_awaited()
+
+
+# ── POST /batch — one durable workflow per state ─────────────────────────────
+# It used to select candidates and register a changeset each *before* starting Temporal, which
+# left orphans whenever the caller died in between and could not be driven by a Schedule.
+
+
+@pytest.mark.unit
+def test_batch_starts_a_workflow_and_does_not_pick_candidates(client):
+    """The workflow finds its own work. If the route still resolved candidates, a scheduled
+    scrape — which can only pass a state — would have no way to reach the same path."""
+    with patch(
+        "routers.api.pipeline_runs.temporal_service.start_state_scrape_workflow",
+        new_callable=AsyncMock,
+        return_value="state-scrape-wa",
+    ) as start, patch(
+        "routers.api.pipeline_runs.candidate_service.claim_scrape_candidates",
+        new_callable=AsyncMock,
+    ) as claim:
+        response = client.post("/pipeline_runs/batch", json={"state": "wa"})
+
+    assert response.status_code == 200
+    assert response.json()["data"]["workflow_id"] == "state-scrape-wa"
+    claim.assert_not_awaited()
+    # No count: "scrape this state" means every jurisdiction due, and the workflow decides how
+    # many that is. The concurrency window is the API's to supply — a workflow cannot read it
+    # itself without breaking replay.
+    start.assert_awaited_once()
+    assert start.await_args.args[:2] == ("wa", None)
+
+
+@pytest.mark.unit
+def test_claim_registers_and_returns_the_work(client):
+    """Synchronous, unlike `/register`: the workflow must know the changesets exist before it
+    dispatches anything at them."""
+    items = [{"jurisdiction_ocdid": "ocd/x", "changeset_id": "c1", "name": "X", "url": "u"}]
+    with patch(
+        "routers.api.pipeline_runs.candidate_service.claim_scrape_candidates",
+        new_callable=AsyncMock,
+        return_value=items,
+    ):
+        response = client.post(
+            "/pipeline_runs/batch/claim", json={"state": "wa", "num_jurisdictions": 1}
+        )
+
+    assert response.status_code == 200
+    assert response.json()["data"]["jurisdictions"] == items
+
+
+@pytest.mark.unit
+def test_claim_404s_for_an_unknown_state(client):
+    with patch(
+        "routers.api.pipeline_runs.candidate_service.claim_scrape_candidates",
+        new_callable=AsyncMock,
+        side_effect=ValueError("No such state: zz"),
+    ):
+        response = client.post("/pipeline_runs/batch/claim", json={"state": "zz"})
+
+    assert response.status_code == 404

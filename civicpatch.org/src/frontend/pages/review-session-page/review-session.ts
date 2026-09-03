@@ -42,6 +42,7 @@ import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
 import "../../components/posts-list/post-add.js";
 import type { ProposedChange } from "../../components/people/person-cards.js";
 import type { PersonAssertion } from "../../components/person-editor/field-provenance.js";
+import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 
 type CurrentEntry = {
   changeset_id: string;
@@ -234,6 +235,10 @@ function ReviewSession(host: ReviewSessionHost) {
   ) => {
     setPendingMerge(null);
     mergePeople(survivorId, absorbedId, merged);
+    // Follow the survivor: the absorbed id is gone, so leaving it open renders no card
+    // and the modal vanishes — dropping the reviewer to the roster just as the merged
+    // record needs checking.
+    setOpenPerson({ id: survivorId, field: null });
   };
   const handleAddPerson = async () => {
     const personId = await handleAdd();
@@ -339,7 +344,7 @@ function ReviewSession(host: ReviewSessionHost) {
           ${jurisdictionName
             ? html`<a
                 class="review-page__jurisdiction"
-                href="/${jurisdiction?.path}"
+                href="/${jurisdictionOcdidToPath(jurisdiction?.path)}"
                 target="_blank"
                 rel="noopener"
               >

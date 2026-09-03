@@ -22,7 +22,13 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { MARKERS_CHANGESET_ID } from "../fixtures/db.js";
-import { openEditorFor, showPerson, editorFor, editField } from "./helpers/review-card.js";
+import {
+  editField,
+  editorFor,
+  openEditorFor,
+  openOverview,
+  showPerson,
+} from "./helpers/review-card.js";
 
 test.describe("Review issue markers", () => {
   test("anchors person-scoped issues to their cards; list-level stays off the diff", async ({
@@ -69,11 +75,19 @@ test.describe("Review issue markers", () => {
     const carol = editorFor(page, "Carol Extra");
     await expect(carol.locator(".person-editor__issue")).toHaveCount(1);
 
+    // Back to the roster before editing: `editField` opens the modal itself, and its click on
+    // her Overview row cannot land while the modal it is trying to open is already covering it.
+    await openOverview(page);
+
     // Any edit that leaves her name alone, so the locator stays valid → card goes dirty → its
     // marker is presumed addressed and clears. Other names rather than the seat: the seat is a
     // select now, and this is about dirtiness, not about what was edited. Through `editField`
     // because her issue anchors to no field, so nothing of hers is on screen until expanded.
     await editField(page, "Carol Extra", "Other names", "Caroline Extra");
+
+    // Reopened, because the assertion has to see her card: `toHaveCount(0)` against a closed
+    // modal passes for the wrong reason — nothing matches when nothing is on screen.
+    await openEditorFor(page, "Carol Extra");
     await expect(carol.locator(".person-editor__issue")).toHaveCount(0);
   });
 });

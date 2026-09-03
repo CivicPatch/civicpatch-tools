@@ -27,8 +27,16 @@ sys.path.insert(0, "/app/src")
 
 from database.database import get_pool  # noqa: E402
 
+# SPENT. This script has already run, and it cannot run again: it says `UPDATE requests`, and
+# 152 renamed that table to `changesets`.
+#
+# `discarded` is not in `DismissalReason` and never was — it was declared here, which is how
+# rows reached production holding a reason no reader recognised. 161 normalised them and added
+# a CHECK, so this value is now unstorable. Resurrecting this script means picking a reason
+# from the enum, not reviving this constant.
+#
 # Distinct from `superseded` (a newer scrape replaced it, unread) and `unchanged` (the roster
-# matched what we already hold). This one is "nobody read it and nobody will".
+# matched what we already hold). This one was "nobody read it and nobody will".
 DISCARDED = "discarded"
 
 _POOL = """

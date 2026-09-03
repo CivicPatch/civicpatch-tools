@@ -14,10 +14,7 @@ const APPROVE_EVENT = "publish";
 const SAVE_EVENT = "save";
 const REJECT_EVENT = "reject";
 
-// The one thing the labels cannot say. An update and an addition are both claims about the
-// world — a human is a source, so adding somebody records a sighting like a scrape would.
 // Removing is the exception: it changes who is on the roster, which approving decides.
-const SAVE_SCOPE = "Updates and additions are kept. Removing someone takes effect only when you approve.";
 const END_SESSION_EVENT = "end-session";
 
 export interface Blocker {
@@ -66,7 +63,6 @@ function ReviewSessionActions(host: ReviewSessionActionsHost) {
       ${isReadOnly ? "" : html`
       ${dirty ? html`
       <button class="btn-sm review-page__save-btn" @click=${handleSave}>Save updates</button>
-      <span class="review-page__actions-rule" title=${SAVE_SCOPE}>${SAVE_SCOPE}</span>
       ` : ""}
       <button
         class="btn-sm review-page__approve-btn btn-gradient"

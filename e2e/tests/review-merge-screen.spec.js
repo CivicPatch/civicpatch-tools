@@ -4,7 +4,7 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { RECONCILE_CHANGESET_ID } from "../fixtures/db.js";
-import { openEditorFor, editorFor } from "./helpers/review-card.js";
+import { actionsFor, openEditorFor, editorFor } from "./helpers/review-card.js";
 
 test("merge is a screen in one modal, not a second dialog", async ({
   authenticatedPage: page,
@@ -13,8 +13,14 @@ test("merge is a screen in one modal, not a second dialog", async ({
   await openEditorFor(page, "Tom Treasurer");
 
   const tom = editorFor(page, "Tom Treasurer");
-  await tom.locator(".person-editor__merge").click();
-  await tom.locator(".person-editor__merge-faces .review-face", { hasText: "Bob Clerk" }).click();
+  await actionsFor(page, "Tom Treasurer")
+    .locator(".person-editor__merge")
+    .click();
+  await tom
+    .locator(".person-editor__merge-faces .review-face", {
+      hasText: "Bob Clerk",
+    })
+    .click();
 
   await expect(page.locator("merge-picker")).toBeVisible();
   // The whole point: one dialog, never two stacked.
@@ -32,6 +38,8 @@ test("merge is a screen in one modal, not a second dialog", async ({
   await page.locator(".merge-picker__back").click();
   await expect(page.locator("merge-picker")).toHaveCount(0);
   await expect(page.locator("dialog[open]")).toHaveCount(1);
-  await expect(page.locator(".review-modal__head")).toContainText("Tom Treasurer");
+  await expect(page.locator(".review-modal__head")).toContainText(
+    "Tom Treasurer",
+  );
   await expect(page.locator(".review-modal__foot")).toContainText("Done");
 });

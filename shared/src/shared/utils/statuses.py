@@ -105,6 +105,11 @@ class ChangesetKind(StrEnum):
     JURISDICTION_EDIT = "jurisdiction_edit"
 
 
+# Kinds that went and read a source. A publish that read one may say "still listed"; a hand
+# edit may not, and "ok / failed" is a collection attempt's vocabulary, not an edit's.
+SOURCE_READING_KINDS = (ChangesetKind.SCRAPE, ChangesetKind.SHEET_IMPORT)
+
+
 class DismissalReason(StrEnum):
     REJECTED = "rejected"  # a reviewer read the roster and said no
     CANCELLED = "cancelled"  # somebody stopped the run before it produced one

@@ -1,0 +1,84 @@
+/* One roster change, in its two forms: a compact badge for a collapsed summary line, and a
+   full row for an expanded list. Both take their colour from the same tone rules below, which
+   is why they live together rather than beside whichever page renders them. */
+
+/* Badge — the compact form */
+
+.change-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.32rem;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--civ-border);
+  border-radius: 999px;
+  background: var(--civ-surface);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.change-badge__sigil {
+  font-family: var(--pico-font-family-monospace, monospace);
+  font-weight: 700;
+}
+
+.change-badge__who {
+  color: var(--civ-text);
+  font-weight: 600;
+}
+
+.change-badge__role {
+  color: var(--civ-text-muted);
+}
+
+/* Row — the full form, and the list that stacks them */
+
+.change-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: var(--text-sm);
+}
+
+.change-row {
+  display: grid;
+  grid-template-columns: 1rem minmax(9rem, max-content) 1fr;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+
+.change-row__sigil {
+  font-family: var(--pico-font-family-monospace, monospace);
+  font-weight: 700;
+}
+
+.change-row__who {
+  font-weight: 600;
+}
+
+.change-row__detail {
+  color: var(--civ-text-muted);
+  overflow-wrap: anywhere;
+}
+
+/* Tone — the sigil carries the verb, so it is the only thing that takes colour. */
+
+.change-badge--add .change-badge__sigil,
+.change-row--add .change-row__sigil {
+  color: rgb(var(--tone-green));
+}
+
+.change-badge--edit .change-badge__sigil,
+.change-row--edit .change-row__sigil {
+  color: var(--civ-text-muted);
+}
+
+.change-badge--remove .change-badge__sigil,
+.change-row--remove .change-row__sigil {
+  color: rgb(var(--tone-red));
+}
+
+.change-badge--move .change-badge__sigil,
+.change-row--move .change-row__sigil {
+  color: rgb(var(--tone-blue));
+}

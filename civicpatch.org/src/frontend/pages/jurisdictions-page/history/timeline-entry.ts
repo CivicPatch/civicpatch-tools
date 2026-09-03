@@ -13,10 +13,15 @@ import {
 } from "../../../utils/date-utils.js";
 import { jurisdictionOcdidToState } from "../../../components/ocdid-utils.js";
 import { LOGIN_PATH, reviewSessionUrl } from "../../review-routes.js";
+import {
+  renderChangeBadge,
+  renderChangeRow,
+  type RosterChange,
+} from "../../../components/roster-change/index.js";
 
-// Mirrors MEMBERSHIP_POST_FIELD in schemas/change_logs.py. An assignment whose `post_id`
-// change carries a `before` vacated a seat; one without it is a first assignment.
-const MEMBERSHIP_POST_FIELD = "post_id";
+// Re-exported: `timeline.ts` and the history page type their entries from here, and a roster
+// change is part of that shape.
+export type { FieldChange, RosterChange } from "../../../components/roster-change/index.js";
 
 // Backend outcomes: `published`, `pending`, a DismissalReason, or `unknown`.
 const PENDING_OUTCOME = "pending";
@@ -24,22 +29,6 @@ const SUPERSEDED_OUTCOME = "superseded";
 
 // Collapsed rows stay one line tall; the rest are behind the disclosure.
 const SHOWN_BADGES = 3;
-
-export interface FieldChange {
-  field: string;
-  before?: unknown;
-  after?: unknown;
-}
-
-export interface RosterChange {
-  type: string;
-  created_at: string;
-  name: string;
-  // The seat a membership names. Only assignments carry one — everything else is fully
-  // described by its name plus the fields that moved.
-  detail: string | null;
-  fields: FieldChange[];
-}
 
 export interface TimelineEntry {
   changeset_id: string;
@@ -81,97 +70,8 @@ const QUIET_NOTE: Record<string, string> = {
   unknown: "Dismissed with no recorded reason.",
 };
 
-const ADDED = { tone: "add", sigil: "+" };
-const EDITED = { tone: "edit", sigil: "~" };
-const REMOVED = { tone: "remove", sigil: "−" };
-const MOVED = { tone: "move", sigil: "→" };
-
-// `assign_membership` is absent: it is the one type whose verb depends on its fields.
-const MARK_BY_TYPE: Record<string, { tone: string; sigil: string }> = {
-  add_person: ADDED,
-  edit_person: EDITED,
-  delete_person: REMOVED,
-  add_post: ADDED,
-  edit_post: EDITED,
-  delete_post: REMOVED,
-  assert_field: EDITED,
-  edit_jurisdiction: EDITED,
-};
-
-// What the change was about when it carries no field diff — `add_post` says "post", not "".
-const NOUN_BY_TYPE: Record<string, string> = {
-  add_person: "person",
-  delete_person: "person",
-  add_post: "post",
-  delete_post: "post",
-  assign_membership: "seat",
-};
-
-const movedSeat = (change: RosterChange): boolean =>
-  change.fields.some(
-    (f) => f.field === MEMBERSHIP_POST_FIELD && f.before != null,
-  );
-
-const markFor = (change: RosterChange) => {
-  if (change.type === "assign_membership")
-    return movedSeat(change) ? MOVED : ADDED;
-  return MARK_BY_TYPE[change.type] ?? EDITED;
-};
-
-// The seat wins when there is one: "Ada Lovelace → Council D3" beats "Ada Lovelace → post_id".
-// Otherwise one field names itself and several are counted — naming five makes the row
-// unscannable, which is the thing the collapsed line exists to avoid.
-const describeChange = (change: RosterChange): string => {
-  if (change.detail) return change.detail;
-  if (!change.fields.length) return NOUN_BY_TYPE[change.type] ?? "";
-  if (change.fields.length === 1) return change.fields[0].field;
-  return `${change.fields.length} fields`;
-};
-
-const renderBadge = (change: RosterChange) => {
-  const mark = markFor(change);
-  return html`
-    <span class="change-badge change-badge--${mark.tone}">
-      <span class="change-badge__sigil">${mark.sigil}</span>
-      <span class="change-badge__who">${change.name}</span>
-      <span class="change-badge__role">${describeChange(change)}</span>
-    </span>
-  `;
-};
-
-const renderChangeRow = (change: RosterChange) => {
-  const mark = markFor(change);
-  return html`
-    <div class="tl-change tl-change--${mark.tone}">
-      <span class="tl-change__sigil">${mark.sigil}</span>
-      <span class="tl-change__who">${change.name}</span>
-      <span class="tl-change__detail">
-        ${change.fields.length
-          ? change.fields.map(
-              (field) => html`<span class="tl-change__field">
-                ${field.field}: ${renderValue(field.before)} →
-                ${renderValue(field.after)}
-              </span>`,
-            )
-          : describeChange(change)}
-      </span>
-    </div>
-  `;
-};
-
 const quietNote = (outcome: string) =>
   QUIET_NOTE[outcome] ?? "No roster changes.";
-
-// "mayso-1@… → mayso-2@…" — what the badge cannot say.
-//
-// An empty array is a cleared value and has to read as one: joining it gives "", so the row
-// rendered "emails: wtollett@… →" with nothing after the arrow, which looks truncated rather
-// than deliberate. Empty and absent both show the dash.
-const renderValue = (value: unknown): string => {
-  if (Array.isArray(value)) return value.length ? value.join(", ") : "—";
-  if (value == null || value === "") return "—";
-  return String(value);
-};
 
 function renderSummaryChanges(entry: TimelineEntry) {
   if (!entry.changes.length) {
@@ -179,7 +79,7 @@ function renderSummaryChanges(entry: TimelineEntry) {
   }
   const hidden = entry.changes.length - SHOWN_BADGES;
   return html`
-    ${entry.changes.slice(0, SHOWN_BADGES).map(renderBadge)}
+    ${entry.changes.slice(0, SHOWN_BADGES).map(renderChangeBadge)}
     ${hidden > 0
       ? html`<span class="runs-more">+${hidden} more</span>`
       : nothing}
@@ -189,7 +89,7 @@ function renderSummaryChanges(entry: TimelineEntry) {
 function renderChangeList(entry: TimelineEntry) {
   const hidden = entry.changes.slice(SHOWN_BADGES);
   if (!hidden.length) return nothing;
-  return html`<div class="tl-changelist">${hidden.map(renderChangeRow)}</div>`;
+  return html`<div class="change-list">${hidden.map(renderChangeRow)}</div>`;
 }
 
 function renderActions(
@@ -206,7 +106,9 @@ function renderActions(
     <div class="tl-actions">
       ${isPending
         ? html`<a class="btn-primary" href=${reviewHref}>
-            ${isSignedIn ? "Review →" : "Sign in to review"}
+            ${isSignedIn
+              ? html`Review <i class="fa-solid fa-arrow-right"></i>`
+              : "Sign in to review"}
           </a>`
         : nothing}
       ${entry.change_url

@@ -7,13 +7,27 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from database.jurisdictions import get_jurisdiction
-from shared.utils.id_utils import folder_to_jurisdiction_ocdid
+from shared.utils.id_utils import OCDID_PREFIX, folder_to_jurisdiction_ocdid
+
 from schemas.common import Identity, UserRole, has_at_least
 from lib.auth import get_optional_user
 from lib.blog import get_all_posts, get_post
 
 _is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 
+
+
+
+def _path_to_jurisdiction_ocdid(path: str) -> str:
+    """A jurisdiction page's URL is its ocdid. The old `{state}/local/{place}` folder form still
+    resolves, so links published before the switch keep working.
+
+    Checked by prefix rather than by letting the folder parser fail: it reads segments 0 and 2
+    and only rejects `len < 3`, so relying on it to reject is relying on luck.
+    """
+    if path.startswith(f"{OCDID_PREFIX}/"):
+        return path
+    return folder_to_jurisdiction_ocdid(path)
 
 def _build_user_dict(identity: Optional[Identity]) -> dict:
     if not identity:
@@ -114,7 +128,14 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/issues.html", {"request": request, "user": user})
 
+    # `/activity` is a section, not a page: the change log and the cross-state changeset
+    # summary are two views of "what has been happening". The bare path redirects rather than
+    # 404ing, because it was the change log's own URL until this split.
     @router.get("/activity", response_class=HTMLResponse, include_in_schema=False)
+    async def activity_index(request: Request):
+        return RedirectResponse("/activity/changelogs", status_code=303)
+
+    @router.get("/activity/changelogs", response_class=HTMLResponse, include_in_schema=False)
     async def activity_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
         if not user["authenticated"] or not user["permissions"]["can_view_activity_page"]:
@@ -134,6 +155,15 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         if not user["authenticated"] or not user["permissions"]["can_write_config"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/imports.html", {"request": request, "user": user})
+
+    @router.get("/activity/changesets", response_class=HTMLResponse, include_in_schema=False)
+    async def changesets_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
+        # Same gate as the change log beside it — the section is one thing. The scrape control
+        # this page carries is gated separately, on `can_scrape`.
+        user = _build_user_dict(identity)
+        if not user["authenticated"] or not user["permissions"]["can_view_activity_page"]:
+            return RedirectResponse("/", status_code=303)
+        return templates.TemplateResponse("pages/changesets.html", {"request": request, "user": user})
 
     @router.get("/admin", response_class=HTMLResponse, include_in_schema=False)
     async def admin_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
@@ -193,7 +223,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         # render the jurisdiction page instead of 404ing. Ordering is the only thing between
         # this route and a silently wrong page.
         try:
-            jurisdiction_ocdid = folder_to_jurisdiction_ocdid(path)
+            jurisdiction_ocdid = _path_to_jurisdiction_ocdid(path)
         except ValueError:
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
         jurisdiction = await get_jurisdiction(jurisdiction_ocdid)
@@ -217,7 +247,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         identity: Optional[Identity] = Depends(get_optional_user),
     ):
         try:
-            jurisdiction_ocdid = folder_to_jurisdiction_ocdid(path)
+            jurisdiction_ocdid = _path_to_jurisdiction_ocdid(path)
         except ValueError:
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
         jurisdiction = await get_jurisdiction(jurisdiction_ocdid)

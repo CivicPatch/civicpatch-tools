@@ -6,12 +6,14 @@ from activities.pipeline_run_status_activity import (
     poll_pipeline_run_status,
     update_pipeline_run_status,
 )
+from activities.state_scrape_activity import claim_scrape_candidates
 from temporalio.client import Client
 from temporalio.worker import Worker
 from workflows.people_collector import (
     TASK_QUEUE,
     BatchPeopleCollectorWorkflow,
     PeopleCollectorWorkflow,
+    StateScrapeWorkflow,
 )
 
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
@@ -39,13 +41,14 @@ async def main() -> None:
     async with Worker(
         client,
         task_queue=TASK_QUEUE,
-        workflows=[PeopleCollectorWorkflow, BatchPeopleCollectorWorkflow],
+        workflows=[PeopleCollectorWorkflow, BatchPeopleCollectorWorkflow, StateScrapeWorkflow],
         activities=[
             trigger_github_action,
             trigger_local,
             cancel_local_run,
             poll_pipeline_run_status,
             update_pipeline_run_status,
+            claim_scrape_candidates,
         ],
     ):
         print(f"Worker started on task queue: {TASK_QUEUE}")

@@ -22,6 +22,7 @@ export default defineConfig(({ command }) => ({
         settings: "./assets/settings.ts",
         municipalities: "./assets/municipalities.ts",
         imports: "./assets/imports.ts",
+        changesets: "./assets/changesets.ts",
       },
     },
   },

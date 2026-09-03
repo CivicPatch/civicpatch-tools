@@ -26,6 +26,12 @@ REQUIRED_ENV_VARS = [
 
 OPTIONAL_ENV_VARS = [
     "APP_ENVIRONMENT",
+    # How many pipeline runs may be in flight at once. A state scrape takes every jurisdiction
+    # that is due — 1,293 for Michigan — and dispatches a run for each, so they go a slice at a
+    # time. Named for the run, not the scrape: the limit is on the pipeline, whatever kind of
+    # changeset asked for it. Passed to the workflow as an argument, never read inside it —
+    # Temporal replays a workflow, so a value that changed between runs would diverge.
+    "PIPELINE_RUN_CONCURRENCY",
     # Optional - needed for GitHub webhook verification
     "GITHUB_WEBHOOK_SECRET",
     # Optional - needed for the blog-sync webhook (HMAC verification)
@@ -67,6 +73,7 @@ def get_env_vars():
         env[var] = value
     _optional_defaults = {
         "FRIENDLY_STORAGE_HOST": "https://cdn.civicpatch.org",
+        "PIPELINE_RUN_CONCURRENCY": "25",
     }
     for var in OPTIONAL_ENV_VARS:
         value = os.getenv(var, _optional_defaults.get(var))

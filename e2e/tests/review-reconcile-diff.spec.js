@@ -18,7 +18,13 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { RECONCILE_CHANGESET_ID } from "../fixtures/db.js";
-import { openEditorFor, editorFor, fieldIn } from "./helpers/review-card.js";
+import {
+  actionsFor,
+  editorFor,
+  fieldIn,
+  openEditorFor,
+  showPerson,
+} from "./helpers/review-card.js";
 
 const openCard = async (page, name) => {
   await page.goto(`/review/session?changeset_id=${RECONCILE_CHANGESET_ID}`);
@@ -85,9 +91,17 @@ test.describe("Review reconcile diff (populated)", () => {
     const term = fieldIn(maria, "Term end");
     await expect(term.locator(".person-editor__was")).toContainText("was 2025");
 
-    // Added-only and removed-only people each get their own editor.
-    await expect(editorFor(page, "Tom Treasurer")).toHaveClass(/person-editor--added/);
-    await expect(editorFor(page, "Bob Clerk")).toHaveClass(/person-editor--removed/);
+    // Added-only and removed-only people each get their own editor. Switched into rather
+    // than asserted alongside Maria's: since the heads merged the modal shows one person at
+    // a time, so two editors are never on screen together.
+    await showPerson(page, "Tom Treasurer");
+    await expect(editorFor(page, "Tom Treasurer")).toHaveClass(
+      /person-editor--added/,
+    );
+    await showPerson(page, "Bob Clerk");
+    await expect(editorFor(page, "Bob Clerk")).toHaveClass(
+      /person-editor--removed/,
+    );
   });
 
   test("a person the scrape dropped is one decision, not a column of dashes", async ({
@@ -102,10 +116,14 @@ test.describe("Review reconcile diff (populated)", () => {
       "Not found in this scrape",
     );
     await expect(bob.locator(".person-editor__field")).toHaveCount(0);
-    await expect(bob.locator(".person-editor__restore-person")).toBeVisible();
+    await expect(
+      actionsFor(page, "Bob Clerk").locator(".person-editor__restore-person"),
+    ).toBeVisible();
   });
 
-  test("editing recomputes the card live", async ({ authenticatedPage: page }) => {
+  test("editing recomputes the card live", async ({
+    authenticatedPage: page,
+  }) => {
     await openCard(page, "Maria González");
     const maria = editorFor(page, "Maria González");
     const term = fieldIn(maria, "Term end");
@@ -118,7 +136,9 @@ test.describe("Review reconcile diff (populated)", () => {
     await expect(maria.locator(".person-editor__field")).toHaveCount(6);
   });
 
-  test("Restore puts the old value back", async ({ authenticatedPage: page }) => {
+  test("Restore puts the old value back", async ({
+    authenticatedPage: page,
+  }) => {
     await openCard(page, "Maria González");
     const term = fieldIn(editorFor(page, "Maria González"), "Term end");
 
@@ -139,7 +159,9 @@ test.describe("Review reconcile diff (populated)", () => {
     await maria.locator(".person-editor__expander").click();
     const termStart = fieldIn(maria, "Term start").first();
 
-    await expect(termStart.locator(".field-control__date-year")).toHaveValue("2021");
+    await expect(termStart.locator(".field-control__date-year")).toHaveValue(
+      "2021",
+    );
     // Each select is named for the field it belongs to, not the part alone — a
     // card holds several dates, and a bare "Month" would not say whose.
     const month = termStart.locator('select[aria-label="Term start month"]');
@@ -149,7 +171,9 @@ test.describe("Review reconcile diff (populated)", () => {
 
     // Picking a month round-trips to "2021-03" and the field starts saying so.
     await month.selectOption("03");
-    await expect(termStart.locator(".person-editor__was")).toContainText("was 2021");
+    await expect(termStart.locator(".person-editor__was")).toContainText(
+      "was 2021",
+    );
     await expect(day).toBeEnabled();
 
     // Clearing the month drops back to the bare year, and takes any day with it.
@@ -164,15 +188,26 @@ test.describe("Review reconcile diff (populated)", () => {
   }) => {
     await openCard(page, "Tom Treasurer");
 
-    await expect(editorFor(page, "Tom Treasurer")).toHaveClass(/person-editor--added/);
-    await expect(editorFor(page, "Bob Clerk")).toHaveClass(/person-editor--removed/);
+    await showPerson(page, "Tom Treasurer");
+    await expect(editorFor(page, "Tom Treasurer")).toHaveClass(
+      /person-editor--added/,
+    );
+    await showPerson(page, "Bob Clerk");
+    await expect(editorFor(page, "Bob Clerk")).toHaveClass(
+      /person-editor--removed/,
+    );
+    await showPerson(page, "Tom Treasurer");
 
     // Step 1 is in place on the editor: the button opens the other people on this
     // card, and picking one opens the picker on that pair.
     const tom = editorFor(page, "Tom Treasurer");
-    await tom.locator(".person-editor__merge").click();
+    await actionsFor(page, "Tom Treasurer")
+      .locator(".person-editor__merge")
+      .click();
     await tom
-      .locator(".person-editor__merge-faces .review-face", { hasText: "Bob Clerk" })
+      .locator(".person-editor__merge-faces .review-face", {
+        hasText: "Bob Clerk",
+      })
       .click();
 
     // Bob survives, because his is the id the database already has — the commit
@@ -180,7 +215,9 @@ test.describe("Review reconcile diff (populated)", () => {
     // The commit button lives in the dialog footer now, not inside merge-picker —
     // inline actions scrolled out of reach on a long field list.
     await page
-      .locator(".review-modal__foot button", { hasText: "Merge into Bob Clerk" })
+      .locator(".review-modal__foot button", {
+        hasText: "Merge into Bob Clerk",
+      })
       .click();
 
     // Bob's own editor is gone; the pair is a single CHANGED person.
@@ -190,9 +227,9 @@ test.describe("Review reconcile diff (populated)", () => {
 
     // The old name is folded into other_names so the next scrape matches, and
     // the name field now says what it was.
-    await expect(fieldIn(linked, "Name").locator(".person-editor__was")).toContainText(
-      "was Bob Clerk",
-    );
+    await expect(
+      fieldIn(linked, "Name").locator(".person-editor__was"),
+    ).toContainText("was Bob Clerk");
     await expect(
       fieldIn(linked, "Other names").locator("input").first(),
     ).toHaveValue("Bob Clerk");

@@ -84,20 +84,25 @@ test.describe("Issue checklist", () => {
     authenticatedPage: page,
   }) => {
     await openMarkers(page);
-    // Detail first: once the drawer is open its scrim covers the view tabs.
     await openEditorFor(page, "Carol Extra");
 
     const carol = editorFor(page, "Carol Extra");
     await expect(carol.locator(".person-editor__issue--row")).toHaveCount(1);
 
+    // The card and the drawer can no longer be on screen together: the editor is a
+    // `showModal()` dialog, so it sits in the top layer and makes the drawer behind it
+    // inert. One at a time, each closed before the other opens.
+    await page.keyboard.press("Escape");
     await openDrawer(page);
     await items(page)
       .filter({ hasText: "New person found" })
       .locator("input")
       .check();
+    await closeDrawer(page);
 
-    // The tick has to take effect where the reviewer was looking, not only in
-    // the list they ticked it from (§8.2).
+    // The tick has to reach the card the issue anchors to, not only the list it was
+    // ticked from (§8.2).
+    await openEditorFor(page, "Carol Extra");
     await expect(carol.locator(".person-editor__issue--row")).toHaveCount(0);
   });
 
@@ -123,6 +128,7 @@ test.describe("Issue checklist", () => {
       .filter({ hasText: "marked as unique" })
       .locator("input")
       .check();
+    await closeDrawer(page);
 
     await openEditorFor(page, "Alice Mayor");
     await expect(shared).toHaveCount(0);

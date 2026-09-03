@@ -99,11 +99,11 @@ function renderRow(entry: InFlightEntry, ocdid: string, isSignedIn: boolean) {
     <div class="pr-row">
       <div class="pr-row__main">
         <span class="pr-row__title">
-          ${number ? `#${number} — ` : ""}${manualEdit ? "Website edit" : "Scrape"} of
+          ${number ? `#${number}: ` : ""}${manualEdit ? "Website edit" : "Scrape"} of
           ${dateStringToFriendly(entry.created_at)}
         </span>
         <span class="pr-row__sub">
-          ${manualEdit ? "Did not auto-merge — needs attention" : "Awaiting review"}
+          ${manualEdit ? "Did not auto-merge, needs attention" : "Awaiting review"}
         </span>
       </div>
       <span class="pr-row__actions">

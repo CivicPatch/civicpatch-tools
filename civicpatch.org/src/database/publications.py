@@ -22,7 +22,7 @@ from database.people import PERSON_UPSERT, person_upsert_params
 from database.users import SYSTEM_USER_ID
 from database.pipeline_runs import get_sourced_at
 from schemas.assertions import Assertion, AssertionKind, EntityType
-from shared.utils.statuses import ChangesetKind, DismissalReason
+from shared.utils.statuses import SOURCE_READING_KINDS, DismissalReason
 
 logger = logging.getLogger(__name__)
 
@@ -55,6 +55,9 @@ async def dismiss_request(
     `resolved_by_user_id` can be read to guess, but both are mutable — so a guess made later
     could give a past event a meaning it never had.
 
+    It lands in both `dismissed_reason` and the `close_review` log: the column is state, which
+    readers ask for; the log is the event, who dismissed it and when.
+
     `resolved_by_user_id` is NULL when the machine gave up rather than a person deciding, and
     `COALESCE` means a later human resolution is never overwritten by a machine one.
 
@@ -67,13 +70,15 @@ async def dismiss_request(
             """
             UPDATE changesets
                SET dismissed_at = COALESCE(dismissed_at, now()),
+                   -- The first reason stands, like the first timestamp.
+                   dismissed_reason = COALESCE(dismissed_reason, %s),
                    -- Explicit user, else whoever already resolved it, else the system: a
                    -- sweep dismissing a card is an actor, not an absence.
                    resolved_by_user_id = COALESCE(%s, resolved_by_user_id, %s)
              WHERE id = %s AND published_at IS NULL
             RETURNING jurisdiction_ocdid
             """,
-            (resolved_by_user_id, SYSTEM_USER_ID, changeset_id),
+            (reason, resolved_by_user_id, SYSTEM_USER_ID, changeset_id),
         )
         row = await cur.fetchone()
         # Only when the UPDATE matched: a request already published is left alone above, and
@@ -149,18 +154,12 @@ async def _record_publish(
     )
 
 
-# A publish that read a source may say "still listed"; a hand edit may not. Sheet import
-# counts — `register_sheet_import_request` is explicit that its `sourced_at` is "when the
-# curator read the source rather than when any machine did".
-_SOURCE_READING_KINDS = (ChangesetKind.SCRAPE, ChangesetKind.SHEET_IMPORT)
-
-
 async def _read_a_source(cur, changeset_id: str) -> bool:
     await cur.execute(
         "SELECT kind FROM changesets WHERE id::text = %s", (changeset_id,)
     )
     row = await cur.fetchone()
-    return bool(row) and row[0] in _SOURCE_READING_KINDS
+    return bool(row) and row[0] in SOURCE_READING_KINDS
 
 
 async def _bind_memberships(

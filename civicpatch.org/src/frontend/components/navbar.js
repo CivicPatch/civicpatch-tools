@@ -91,7 +91,19 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
       ? html`<a href="/review" class="${active("/review")}">Reviews</a>`
       : ""}
     ${user.permissions?.can_view_activity_page
-      ? html`<a href="/activity" class="${active("/activity")}">Activity</a>`
+      ? html`<details class="nav-dropdown">
+          <summary class="nav-link nav-dropdown-trigger">
+            Activity <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
+          </summary>
+          <div class="nav-dropdown__menu">
+            <a href="/activity/changelogs" class="${active("/activity/changelogs")}"
+              >Change log</a
+            >
+            <a href="/activity/changesets" class="${active("/activity/changesets")}"
+              >Changesets</a
+            >
+          </div>
+        </details>`
       : ""}
     ${user.permissions?.can_view_queue_page
       ? html`<details class="nav-dropdown">

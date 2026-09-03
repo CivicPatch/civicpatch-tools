@@ -51,33 +51,36 @@ export const jurisdictionOcdidToFriendly = jurisdiction_ocdid => {
   return toTitleCaseMap(placeValue) || jurisdiction_ocdid;
 };
 
+// Every jurisdiction ocdid starts with this. Mirrors OCDID_PREFIX in shared/utils/id_utils.py.
+export const OCDID_PREFIX = "ocd-jurisdiction";
+
+/** An ocdid's segments, or null when the string is not one.
+ *
+ * One place, for the same reason `parseDivision` is one place: the readers below disagree
+ * about what to pull out, not about what a jurisdiction ocdid looks like, and each was
+ * re-deriving "is this even one" on its way past.
+ *
+ * Five segments is the shortest real ocdid — prefix / country / state / place / government.
+ */
+const jurisdictionSegments = (jurisdiction_ocdid) => {
+  if (!jurisdiction_ocdid?.startsWith(`${OCDID_PREFIX}/`)) return null;
+  const parts = jurisdiction_ocdid.split("/");
+  return parts.length < 5 ? null : parts;
+};
+
 // The two-letter state code an ocdid belongs to, e.g. "me". Callers building a
 // review-session url need this on its own, without the rest of the path.
-export const jurisdictionOcdidToState = jurisdiction_ocdid => {
-  if (!jurisdiction_ocdid) return "";
-  return jurisdiction_ocdid.split("/")[2]?.split(":")[1] ?? "";
-};
+export const jurisdictionOcdidToState = jurisdiction_ocdid =>
+  jurisdictionSegments(jurisdiction_ocdid)?.[2]?.split(":")[1] ?? "";
 
-// Inverse of backend folder_to_jurisdiction_ocdid (shared/utils/id_utils.py).
-// Assumes /government output_type → "local" (only other entry in data.yml
-// is "meetings", which doesn't reach the homepage flow).
-export const jurisdictionOcdidToPath = jurisdiction_ocdid => {
-  if (!jurisdiction_ocdid) return "";
-  const parts = jurisdiction_ocdid.split("/");
-  if (parts.length < 5) return "";
-
-  const state = jurisdictionOcdidToState(jurisdiction_ocdid);
-  if (!state) return "";
-
-  const middle = parts.slice(3, -1);
-  if (middle.length === 0) return "";
-
-  const segments = [];
-  for (const seg of middle) {
-    const [label, name] = seg.split(":");
-    if (!label || !name) return "";
-    segments.push(label === "county" ? `county_${name}` : `${label}_${name}`);
-  }
-
-  return `${state}/local/${segments.join("__")}`;
-};
+// A jurisdiction page's URL is its ocdid. `encodeURI`, not `encodeURIComponent`: the slashes
+// and colons are legal in a path and stay readable, and only what must be escaped is — two
+// place names carry an "ñ".
+//
+// This used to reimplement `jurisdiction_ocdid_to_folder` in JavaScript, one of two encoders
+// that had to agree across languages. Using the identifier as the URL deletes that problem.
+export const jurisdictionOcdidToPath = jurisdiction_ocdid =>
+  // Validated, not just encoded. The folder encoder this replaced returned "" for anything
+  // malformed, and callers rely on that to render nothing rather than a broken link —
+  // `encodeURI` alone would happily hand back "garbage".
+  jurisdictionSegments(jurisdiction_ocdid) ? encodeURI(jurisdiction_ocdid) : "";

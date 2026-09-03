@@ -20,7 +20,8 @@ const THEMES = ["light", "dark"];
 
 // useLocalStorage wraps values; the theme is stored with no expiry, so the
 // navbar reads it back as a plain string on first paint.
-const themeEntry = (theme) => JSON.stringify({ __value: theme, __expiresAt: null });
+const themeEntry = (theme) =>
+  JSON.stringify({ __value: theme, __expiresAt: null });
 
 // Every page a reviewer or maintainer can land on. Blog and login are included
 // because styles.css spends 511 lines on them — they are the most Pico-exposed
@@ -31,8 +32,14 @@ const PAGES = [
   { name: "queue", path: "/queue" },
   { name: "review-landing", path: "/review?state=nj" },
   // One page since the view tabs went: the roster, then Preview as a section under it.
-  { name: "review-session", path: `/review/session?changeset_id=${SCALE_CHANGESET_ID}` },
-  { name: "review-read-only", path: `/review/session?changeset_id=${READ_ONLY_CHANGESET_ID}` },
+  {
+    name: "review-session",
+    path: `/review/session?changeset_id=${SCALE_CHANGESET_ID}`,
+  },
+  {
+    name: "review-read-only",
+    path: `/review/session?changeset_id=${READ_ONLY_CHANGESET_ID}`,
+  },
   // The person-edit modal. Like the config editor it only exists after a click,
   // and several UX changes target it — without this capture they are unverifiable.
   {
@@ -60,14 +67,25 @@ const PAGES = [
       await page.locator("dialog[open]").waitFor();
     },
   },
-  { name: "activity", path: "/activity" },
+  { name: "activity", path: "/activity/changelogs" },
+  // Maintainer, so the capture includes the scrape control the page carries; a default-role
+  // reader sees the same page without it.
+  {
+    name: "changesets",
+    path: "/activity/changesets",
+    role: "maintainer",
+  },
   { name: "settings", path: "/settings" },
   { name: "roles", path: "/roles", role: "maintainer" },
   { name: "municipalities", path: "/nj/local" },
   // The jurisdiction detail page is the catch-all route, reached by folder form.
   // It is the largest surface the baseline was missing, and the only place
   // edit-people renders.
-  { name: "jurisdiction", path: "/nj/local/place_e2e_test", role: "maintainer" },
+  {
+    name: "jurisdiction",
+    path: "/nj/local/place_e2e_test",
+    role: "maintainer",
+  },
   { name: "blog-list", path: "/blog" },
   // Interaction states, which no page capture reaches on its own. Forced rather
   // than driven through a real submit — the point is to put the CSS states on
@@ -79,7 +97,9 @@ const PAGES = [
     open: async (page) => {
       await page.locator(".email-login__form input").first().waitFor();
       await page.evaluate(() => {
-        for (const el of document.querySelectorAll(".email-login__form input, .email-login__form button")) {
+        for (const el of document.querySelectorAll(
+          ".email-login__form input, .email-login__form button",
+        )) {
           el.disabled = true;
         }
       });
@@ -142,7 +162,10 @@ async function waitForDomQuiet(page, quietMs = 400, timeoutMs = 15_000) {
 // icons never arrived.
 async function waitForIconFont(page) {
   await page.waitForFunction(
-    () => [...document.fonts].some((f) => /Font Awesome/i.test(f.family) && f.status === "loaded"),
+    () =>
+      [...document.fonts].some(
+        (f) => /Font Awesome/i.test(f.family) && f.status === "loaded",
+      ),
     undefined,
     { timeout: 20_000 },
   );
@@ -186,7 +209,8 @@ async function capture(page, { name, path, theme, open }) {
   });
 }
 
-const forRole = (role) => PAGES.filter((p) => (p.role ?? "contributor") === role);
+const forRole = (role) =>
+  PAGES.filter((p) => (p.role ?? "contributor") === role);
 
 for (const theme of THEMES) {
   test.describe(`visual — ${theme}`, () => {

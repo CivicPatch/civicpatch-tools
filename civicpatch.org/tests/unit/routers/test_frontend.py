@@ -241,3 +241,66 @@ def test_history_page_404s_for_a_jurisdiction_that_does_not_exist(permissions_cl
     with patch("routers.frontend.get_jurisdiction", new_callable=AsyncMock, return_value=None):
         response = client.get("/wa/local/place_nowhere/history")
     assert response.status_code == 404
+
+
+# ── /activity is a section, not a page ────────────────────────────────────────
+# The change log and the cross-state changeset summary are two views of "what has been
+# happening". The bare path was the change log's own URL until the split, so it redirects.
+
+
+def _maintainer() -> Identity:
+    return Identity(
+        type="session",
+        provider="github",
+        provider_user_id="m1",
+        email="m@x.com",
+        role=UserRole.MAINTAINERS,
+        user_id="user-m1",
+    )
+
+
+@pytest.mark.unit
+def test_activity_redirects_to_the_change_log(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = _maintainer
+    client = TestClient(permissions_client, follow_redirects=False)
+    response = client.get("/activity")
+
+    assert response.status_code == 303
+    assert response.headers["location"] == "/activity/changelogs"
+
+
+@pytest.mark.unit
+def test_the_changesets_page_renders_for_a_maintainer(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = _maintainer
+    client = TestClient(permissions_client)
+    response = client.get("/activity/changesets")
+
+    assert response.status_code == 200
+    assert "civ-changeset-summaries" in response.text
+
+
+@pytest.mark.unit
+def test_the_changesets_page_is_open_to_any_signed_in_user(permissions_client):
+    """Same gate as the change log beside it — the section is one thing."""
+    permissions_client.dependency_overrides[get_optional_user] = lambda: Identity(
+        type="session",
+        provider="github",
+        provider_user_id="d1",
+        email="d@x.com",
+        role=UserRole.DEFAULT,
+        user_id="user-d1",
+    )
+    client = TestClient(permissions_client)
+    response = client.get("/activity/changesets")
+
+    assert response.status_code == 200
+
+
+@pytest.mark.unit
+def test_the_changesets_page_is_closed_to_signed_out_visitors(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = lambda: None
+    client = TestClient(permissions_client, follow_redirects=False)
+    response = client.get("/activity/changesets")
+
+    assert response.status_code == 303
+    assert response.headers["location"] == "/"

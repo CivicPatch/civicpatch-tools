@@ -14,6 +14,7 @@ import routers.api.leaderboard as api_leaderboard_router
 import routers.api.assertions as api_assertions_router
 import routers.api.memberships as api_memberships_router
 import routers.api.people as api_people_router
+import routers.api.changeset_summaries as api_changeset_summaries_router
 import routers.api.imports as api_imports_router
 import routers.api.posts as api_posts_router
 import routers.api.pipeline_runs as api_pipeline_runs_router
@@ -204,6 +205,14 @@ app.include_router(
     api_imports_router.get_router(),
     prefix="/api/internal/imports",
     tags=["imports"],
+)
+
+# Changeset activity across every state: the per-state rows, the calendar bands, and the
+# localities behind each bucket. MAINTAINERS and up; the router carries its own dependency.
+app.include_router(
+    api_changeset_summaries_router.get_router(),
+    prefix="/api/internal/changeset_summaries",
+    tags=["changeset_summaries"],
 )
 
 # Allow you to create your api keys

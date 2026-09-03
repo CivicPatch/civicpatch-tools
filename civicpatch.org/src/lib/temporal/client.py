@@ -18,6 +18,7 @@ from lib.temporal.workflows import (
     TASK_QUEUE,
 )
 from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
+from environment import get_env_vars
 
 _client: Client | None = None
 
@@ -64,14 +65,32 @@ async def start_people_collector_workflow(
     return handle.id
 
 
-async def start_batch_people_collector_workflow(state: str, items: list[dict]) -> str:
+def _pipeline_run_concurrency() -> int:
+    """How many pipeline runs may be in flight at once. Read here rather than in the workflow,
+    which Temporal replays — a value that changed between runs would diverge."""
+    return int(get_env_vars()["PIPELINE_RUN_CONCURRENCY"])
+
+
+async def start_state_scrape_workflow(
+    state: str,
+    num_jurisdictions: int | None = None,
+    created_by_user_id: str | None = None,
+) -> str:
+    """One durable workflow per state. It finds its own candidates.
+
+    The id carries no random suffix, which is the point: the previous
+    `batch-people-collector-{state}-{uuid}` was unique on every call, so
+    `TERMINATE_EXISTING` never fired and two clicks ran two overlapping batches over the same
+    candidate pool. Keyed on the state alone, `FAIL` makes a second start an error the caller
+    sees rather than a silent duplicate.
+    """
     client = await _get_client()
     handle = await client.start_workflow(
-        "BatchPeopleCollectorWorkflow",
-        args=[items],
-        id=f"batch-people-collector-{state}-{uuid.uuid4().hex[:8]}",
+        "StateScrapeWorkflow",
+        args=[state, num_jurisdictions, created_by_user_id, _pipeline_run_concurrency()],
+        id=f"state-scrape-{state}",
         task_queue=PEOPLE_COLLECTOR_TASK_QUEUE,
-        id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
+        id_conflict_policy=WorkflowIDConflictPolicy.FAIL,
     )
     return handle.id
 

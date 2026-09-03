@@ -1,5 +1,6 @@
 import { html } from "lit-html";
 import { formatIssueType, formatDate, getIssueDetail } from "./utils.js";
+import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 
 export function IssueRow(issue, { onDetails, onDismiss, onConfig, onFlag }) {
   return html`
@@ -14,7 +15,7 @@ export function IssueRow(issue, { onDetails, onDismiss, onConfig, onFlag }) {
         ${issue.jurisdictions && issue.jurisdictions.length === 1
           ? html`
             <span class="issues-page__state-badge">${issue.jurisdictions[0].state.toUpperCase()}</span>
-            <a href="/${issue.jurisdictions[0].path}" target="_blank" rel="noopener noreferrer">${issue.jurisdictions[0].name}</a>
+            <a href="/${jurisdictionOcdidToPath(issue.jurisdictions[0].path)}" target="_blank" rel="noopener noreferrer">${issue.jurisdictions[0].name}</a>
           `
           : (issue.states || []).map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span>`)
         }

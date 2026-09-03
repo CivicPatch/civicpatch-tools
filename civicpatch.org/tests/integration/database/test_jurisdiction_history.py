@@ -93,17 +93,28 @@ async def _publish(changeset_id: str, user_id: str | None = None) -> None:
         )
 
 
-async def _dismiss(changeset_id: str, reason: str | None) -> None:
-    """Dismissed, and logged the way `dismiss_request` logs it. `reason=None` is the shape 32
-    dev rows are already in — a dismissal whose log carries no reason."""
+async def _dismiss(changeset_id: str, reason: DismissalReason) -> None:
+    """Through `dismiss_request`, the real write path.
+
+    It used to hand-roll the UPDATE and write the reason only to the `close_review` log, which
+    is what let it keep passing after migration 161 moved the reason onto the changeset — a
+    fixture that copies a write path drifts the moment that path changes.
+    """
+    await dismiss_request(changeset_id, reason)
+
+
+async def _dismiss_without_a_reason(changeset_id: str) -> None:
+    """A shape `dismiss_request` cannot produce: dismissed before any reason was recorded.
+
+    Raw on purpose. 19 dev rows are in it, and the reader has to keep answering for them, so
+    something has to seed it. Nothing writes it any more — see 161.
+    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "UPDATE changesets SET dismissed_at = now() WHERE id::text = %s",
             (changeset_id,),
         )
-    if reason is not None:
-        await _log(changeset_id, ChangeLogType.CLOSE_REVIEW, {"reason": reason})
 
 
 async def _seed_user() -> str:
@@ -238,11 +249,15 @@ async def test_publishing_is_its_own_outcome_and_names_who_did_it():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_dismissal_reports_the_reason_its_log_recorded():
-    """From the `close_review` log, never `changesets.dismissed_reason` — that column is
-    legacy and null on every human dismissal."""
+async def test_a_dismissal_reports_the_reason_it_recorded():
+    """Off `changesets.dismissed_reason`, which every dismissal path writes.
+
+    It used to be read from the `close_review` log, which only `dismiss_request` wrote — so the
+    sweeps' dismissals had no reason any reader could see, and 249 of 381 resolved changesets
+    rendered "unknown" while the column said superseded or unchanged. Migration 161.
+    """
     changeset_id = await _seed_changeset()
-    await _dismiss(changeset_id, "superseded")
+    await _dismiss(changeset_id, DismissalReason.SUPERSEDED)
 
     assert (await _entry_for(changeset_id)).outcome == "superseded"
 
@@ -250,31 +265,28 @@ async def test_a_dismissal_reports_the_reason_its_log_recorded():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_dismissal_with_no_recorded_reason_reads_as_unknown():
-    """32 dev rows are in exactly this shape. Guessing one from `status` would put a reason in
-    the reader's hands that nobody actually recorded."""
+    """19 dev rows are in exactly this shape — dismissed before any reason was stored, and
+    scattered across eight dates rather than one operation. Guessing one from `status` would
+    put a reason in the reader's hands that nobody recorded.
+
+    Closed to new rows: all four producers write a reason, so this set only shrinks.
+    """
     changeset_id = await _seed_changeset()
-    await _dismiss(changeset_id, None)
+    await _dismiss_without_a_reason(changeset_id)
 
     assert (await _entry_for(changeset_id)).outcome == "unknown"
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_nobody_is_named_when_nobody_resolved_it():
-    """Previously seeded a *pending* changeset, which no longer reaches history at all. A
-    dismissal with no `resolved_by_user_id` makes the same point and is a real shape: the
-    sweeps predating migration 160 left the column null."""
-    changeset_id = await _seed_changeset()
-    await _dismiss(changeset_id, "superseded")
-
-    assert (await _entry_for(changeset_id)).resolved_by is None
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_a_dismissal_nobody_asked_for_is_credited_to_the_system():
     """A supersede sweep is an actor. Before 160 this left `resolved_by_user_id` null, which
-    read the same as a person whose display name is unset."""
+    read the same as a person whose display name is unset.
+
+    This replaced `test_nobody_is_named_when_nobody_resolved_it`, which asserted the opposite —
+    that such a dismissal reports no resolver. That shape is unreachable: `dismiss_request`
+    COALESCEs to the system user, and 0 of 381 resolved changesets on dev have a null resolver.
+    """
     changeset_id = await _seed_changeset()
 
     await dismiss_request(changeset_id, DismissalReason.SUPERSEDED, None)
@@ -286,13 +298,19 @@ async def test_a_dismissal_nobody_asked_for_is_credited_to_the_system():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_the_latest_close_wins():
-    """A card can be closed more than once — superseded, then rejected on a second pass."""
-    changeset_id = await _seed_changeset()
-    await _dismiss(changeset_id, "superseded")
-    await _log(changeset_id, ChangeLogType.CLOSE_REVIEW, {"reason": "rejected"})
+async def test_the_first_dismissal_reason_stands():
+    """A second close cannot rewrite why the first one happened.
 
-    assert (await _entry_for(changeset_id)).outcome == "rejected"
+    This inverts `test_the_latest_close_wins`, which asserted that a later `close_review` log
+    overrode the earlier reason. It could, while the log was the source. Now the reason sits
+    beside `dismissed_at` and both are COALESCEd on write: a dismissal is one event, so it
+    cannot have the time of the first and the reason of the second.
+    """
+    changeset_id = await _seed_changeset()
+    await _dismiss(changeset_id, DismissalReason.SUPERSEDED)
+    await _dismiss(changeset_id, DismissalReason.REJECTED)
+
+    assert (await _entry_for(changeset_id)).outcome == "superseded"
 
 
 @pytest.mark.asyncio

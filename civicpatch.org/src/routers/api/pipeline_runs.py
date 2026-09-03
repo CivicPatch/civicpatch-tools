@@ -80,16 +80,12 @@ PAUSED_CONTEXT_BUCKET = buckets.ARTIFACTS
 def _build_request_row(r: dict) -> dict:
     args = r.get("arguments_json") or {}
     url = args.get("url")
-    folder = (
-        shared.utils.id_utils.jurisdiction_ocdid_to_folder(r["jurisdiction_ocdid"])
-        if r.get("jurisdiction_ocdid")
-        else None
-    )
     return {
         "changeset_id": r.get("changeset_id"),
         "jurisdiction_ocdid": r.get("jurisdiction_ocdid"),
         "jurisdiction_name": r.get("jurisdiction_name"),
-        "jurisdiction_path": folder,
+        # The page's URL is its ocdid; the frontend encodes it.
+        "jurisdiction_path": r.get("jurisdiction_ocdid"),
         "url": url,
         "source_urls": [url] if url else [],
     }
@@ -263,7 +259,7 @@ def get_router(api_key_header):
         )
 
     @router.post(
-        "/batch", summary="Register and start a batch pipeline run for a state"
+        "/batch", summary="Start this state's scrape as one durable workflow"
     )
     async def create_batch_pipeline_runs_endpoint(
         request: BatchPipelineRunRequest,
@@ -271,41 +267,36 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
+        """Starts the workflow and returns; it picks its own candidates.
+
+        This used to select candidates and register a changeset per jurisdiction *before*
+        starting Temporal. Two reasons it does not any more:
+
+        - a crash between the writes and the start left orphaned pending changesets that
+          nothing would ever complete;
+        - a Temporal Schedule can only pass fixed arguments, so a scheduled scrape can hand
+          the workflow a state and nothing else. The manual path now ends where a scheduled
+          one will.
+        """
+        workflow_id = await temporal_service.start_state_scrape_workflow(
+            request.state, request.num_jurisdictions, user.user_id
+        )
+        return {"data": {"workflow_id": workflow_id, "state": request.state}}
+
+    @router.post("/batch/claim", include_in_schema=False)
+    async def claim_scrape_candidates_endpoint(
+        request: BatchPipelineRunRequest,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        """What the workflow calls to find its work. Synchronous, unlike `/register`: the
+        workflow must know the changesets exist before it dispatches anything at them."""
         try:
-            candidates = await candidate_service.get_scrape_candidates(
-                request.state, request.num_jurisdictions
+            items = await candidate_service.claim_scrape_candidates(
+                request.state, request.num_jurisdictions, request.created_by_user_id
             )
         except ValueError as e:
             raise HTTPException(status_code=404, detail=str(e))
-
-        items = []
-        for candidate in candidates:
-            changeset_id = shared.utils.id_utils.make_changeset_id()
-            await register_request_with_pipeline_run(
-                changeset_id=changeset_id,
-                kind=ChangesetKind.SCRAPE,
-                arguments_json={
-                    "jurisdiction_ocdid": candidate.id,
-                    "name": candidate.name,
-                    "url": candidate.url,
-                    "source_urls": None,
-                },
-                jurisdiction_ocdid=candidate.id,
-                created_by_user_id=user.user_id,
-            )
-            items.append(
-                {
-                    "jurisdiction_ocdid": candidate.id,
-                    "changeset_id": changeset_id,
-                    "name": candidate.name,
-                    "url": candidate.url,
-                }
-            )
-
-        await temporal_service.start_batch_people_collector_workflow(
-            request.state, items
-        )
-        return {"jurisdictions": items}
+        return {"data": {"jurisdictions": items}}
 
     @router.post("/register", include_in_schema=False)
     async def register_pipeline_run_endpoint(
@@ -515,11 +506,7 @@ def get_router(api_key_header):
             state_code=state_code, page=page, per_page=per_page
         )
         for run in pipeline_runs:
-            run["jurisdiction_path"] = (
-                shared.utils.id_utils.jurisdiction_ocdid_to_folder(
-                    run["jurisdiction_ocdid"]
-                )
-            )
+            run["jurisdiction_path"] = run["jurisdiction_ocdid"]
         return {
             "data": pipeline_runs,
             "total": total,

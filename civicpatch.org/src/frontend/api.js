@@ -826,3 +826,40 @@ export const revokeApiKey = async (apiKeyId) =>
 
 export const deleteApiKey = async (apiKeyId) =>
   apiKeysRequest(`/${apiKeyId}`, "DELETE");
+
+// ── Changeset summaries (maintainers) ──────────────────────────────────────
+
+const SUMMARIES_URL = `${API_URL}/api/internal/changeset_summaries`;
+
+const summariesRequest = async (path) => {
+  const res = await fetch(`${SUMMARIES_URL}${path}`, { credentials: "include" });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.detail || `HTTP ${res.status}`);
+  return body.data;
+};
+
+export const fetchStateRollup = async (windowDays) =>
+  summariesRequest(`/rollup?window_days=${windowDays}`);
+
+export const fetchStateCalendar = async (windowDays) =>
+  summariesRequest(`/calendar?window_days=${windowDays}`);
+
+export const fetchStateBucket = async (state, bucket, limit, offset, windowDays) =>
+  summariesRequest(
+    `/buckets/${encodeURIComponent(state)}/${encodeURIComponent(bucket)}` +
+      `?limit=${limit}&offset=${offset}&window_days=${windowDays}`,
+  );
+
+// Starting a state-wide scrape. Maintainer-gated server side; the page gates the control too.
+// `numJurisdictions` omitted means every jurisdiction due — which is what the button offers.
+export const startStateScrape = async (state, numJurisdictions = null) => {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/batch`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ state, num_jurisdictions: numJurisdictions }),
+  });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.detail || `HTTP ${res.status}`);
+  return body;
+};

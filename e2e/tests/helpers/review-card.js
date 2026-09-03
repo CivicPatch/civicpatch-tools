@@ -98,4 +98,10 @@ export async function editField(page, name, label, value) {
   const expander = editor.locator(".person-editor__expander");
   if (await fieldIn(editor, label).count() === 0) await expander.click();
   await fieldIn(editor, label).first().locator("input").first().fill(value);
+
+  // Back to the roster before returning. Editing happens in a modal now, and a modal left
+  // open swallows every click meant for the page under it — Save and Approve live there, so
+  // a caller that edits and then presses one would wait out its timeout on an element
+  // Playwright correctly reports as "visible, enabled and stable".
+  await openOverview(page);
 }

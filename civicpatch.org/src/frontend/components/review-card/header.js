@@ -11,6 +11,7 @@ const REJECT_EVENT = "reject";
 import { fetchReview, fetchPullRequestData } from "../../api.js";
 import "../badge/badge.js";
 import "../review-panel/review-panel.js";
+import { jurisdictionOcdidToPath } from "../ocdid-utils.js";
 
 const renderStats = ({ added, removed, changed }) => {
   if (!added && !removed && !changed) return "";
@@ -100,7 +101,7 @@ const PullRequestCardHeader = ({ entry, state, stats, createdAt }) => {
 
   return html` <div class="review-card__header">
     <div class="header-item-left">
-      <a class="review-card__jurisdiction-link" href="/${entry?.jurisdiction?.path}" target="_blank" rel="noopener">
+      <a class="review-card__jurisdiction-link" href="/${jurisdictionOcdidToPath(entry?.jurisdiction?.path)}" target="_blank" rel="noopener">
         ${entry?.jurisdiction?.name || jurisdictionOcdidToFriendly(entry?.jurisdiction?.ocdid)}
       </a>
       ${entry?.pr?.url ? html`
