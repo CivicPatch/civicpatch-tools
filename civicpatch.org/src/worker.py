@@ -42,6 +42,15 @@ from temporalio.worker import Worker
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
 
+WORKFLOWS = [
+    OdSyncWorkflow,
+    OdSyncTargetedWorkflow,
+    OpenDataCommitWorkflow,
+    OpenDataBatchCommitWorkflow,
+    PipelineRunCleanupWorkflow,
+    ReviewSessionCleanupWorkflow,
+]
+
 
 def _is_duplicate_schedule_error(e: RPCError) -> bool:
     return e.status == RPCStatusCode.ALREADY_EXISTS or "duplicate key" in str(e)
@@ -90,6 +99,32 @@ async def _retire_undeclared_schedules(client: Client, declared: set[str]) -> No
             continue
         logger.info("Retiring schedule no longer declared: %s", existing.id)
         await client.get_schedule_handle(existing.id).delete()
+
+
+async def _terminate_undeclared_workflows(client: Client, declared: set[str]) -> None:
+    """Terminate running executions whose workflow class this worker no longer registers.
+
+    Retiring a schedule stops new firings but leaves executions it already started open, failing
+    every workflow task with `NotFoundError: Workflow class ... is not registered`. `pr-sync` sat
+    that way for a week across 1139 attempts.
+
+    Terminate rather than cancel: cancellation is delivered to the workflow for its own code to
+    act on, and that code is precisely what no longer exists. Scoped to this worker's task queue
+    because the pipelines worker shares the namespace and registers a different set.
+    """
+    async for execution in client.list_workflows(
+        f"ExecutionStatus='Running' AND TaskQueue='{TASK_QUEUE}'"
+    ):
+        if execution.workflow_type in declared:
+            continue
+        logger.info(
+            "Terminating %s: workflow class %s is no longer registered",
+            execution.id,
+            execution.workflow_type,
+        )
+        await client.get_workflow_handle(
+            execution.id, run_id=execution.run_id
+        ).terminate(reason="workflow class no longer registered on this worker")
 
 
 async def _register_schedules(client: Client) -> None:
@@ -154,17 +189,13 @@ async def main() -> None:
 
     client = await Client.connect(TEMPORAL_HOST, namespace=TEMPORAL_NAMESPACE)
     await _register_schedules(client)
+    await _terminate_undeclared_workflows(
+        client, {workflow.__name__ for workflow in WORKFLOWS}
+    )
     async with Worker(
         client,
         task_queue=TASK_QUEUE,
-        workflows=[
-                    OdSyncWorkflow,
-            OdSyncTargetedWorkflow,
-            OpenDataCommitWorkflow,
-            OpenDataBatchCommitWorkflow,
-            PipelineRunCleanupWorkflow,
-                    ReviewSessionCleanupWorkflow,
-        ],
+        workflows=WORKFLOWS,
         activities=[
                     od_sync_activity,
             od_sync_targeted_activity,
