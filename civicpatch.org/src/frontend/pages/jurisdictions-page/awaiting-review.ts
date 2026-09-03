@@ -8,7 +8,6 @@ import { html, nothing } from "lit-html";
 import { dateStringToFriendly } from "../../utils/date-utils.js";
 import { jurisdictionOcdidToState } from "../../components/ocdid-utils.js";
 import { LOGIN_PATH, reviewSessionUrl } from "../review-routes.js";
-import { REVIEW_STATUS } from "../../components/review-status.js";
 
 // Mirrors shared/utils/statuses.py ChangesetKind — which producer made the changeset.
 // Only SCRAPE has a pipeline run behind it. JURISDICTION_EDIT is here only while those edits
@@ -20,21 +19,25 @@ export const CHANGESET_KIND = Object.freeze({
   JURISDICTION_EDIT: "jurisdiction_edit",
 });
 
-export interface HistoryEntry {
+// What `/jurisdictions/in-flight` returns: a changeset still running, or still awaiting a
+// decision. Was `HistoryEntry`, back when the page derived all of this from the full history.
+export interface InFlightEntry {
   changeset_id: string;
   created_at: string;
   kind?: string | null;
   change_url?: string | null;
-  review_status?: string | null;
-  // When a person published it. `created_at` above is the machine's clock — the two differ by
-  // however long a card sat in the queue.
-  published_at?: string | null;
+  pipeline_run_status?: string | null;
+  pipeline_run_progress?: number | null;
   // Derived server-side. The page used to answer this itself by testing the raw pipeline
   // status against a terminal set it kept its own copy of, so the two could drift.
   is_running?: boolean;
   // `AVAILABLE_FOR_REVIEW`, the review pool's own predicate, answered in the same query.
   awaiting_review?: boolean;
 }
+
+// `publishedAt` lived here, scanning the whole history for the newest published entry. The page
+// no longer fetches the whole history — `last_published_at` comes from `/jurisdictions/in-flight`
+// as `max(published_at)`, which is the same answer without the array.
 
 /** Scrapes the review pool actually holds.
  *
@@ -43,29 +46,19 @@ export interface HistoryEntry {
  * definition, and it drifted — `pending` is true from the moment a request exists, so a scrape
  * still running read as awaiting review and offered a button for a roster it had not produced.
  */
-/** When this jurisdiction's data was last published, or null if it never was.
- *
- * Asked of the review. It used to match the most recent SUCCESS run, so a scrape a reviewer
- * *dismissed* still read as published — and it returned the run's `created_at`, dating the
- * scrape rather than the decision.
- */
-export const publishedAt = (history: HistoryEntry[]): string | null =>
-  history.find((entry) => entry.review_status === "published")?.published_at ?? null;
-
-
-export const pendingReviews = (history: HistoryEntry[]): HistoryEntry[] =>
+export const pendingReviews = (history: InFlightEntry[]): InFlightEntry[] =>
   history.filter((entry) => entry.awaiting_review);
 
-const isManualEdit = (entry: HistoryEntry) =>
+const isManualEdit = (entry: InFlightEntry) =>
   entry.kind === CHANGESET_KIND.JURISDICTION_EDIT;
 
 // The two kinds edit different files, so they block independently: an open scrape
 // must not lock the website field, and an open website edit must not lock the
 // roster. Each only blocks a second edit to the file it already has in flight.
-export const peopleEditBlockers = (open: HistoryEntry[]): HistoryEntry[] =>
+export const peopleEditBlockers = (open: InFlightEntry[]): InFlightEntry[] =>
   open.filter((entry) => !isManualEdit(entry));
 
-export const jurisdictionEditBlockers = (open: HistoryEntry[]): HistoryEntry[] =>
+export const jurisdictionEditBlockers = (open: InFlightEntry[]): InFlightEntry[] =>
   open.filter(isManualEdit);
 
 // GitHub numbers the PR, but history only carries its url.
@@ -74,7 +67,7 @@ const pullRequestNumber = (url?: string | null) => url?.split("/").pop() ?? "";
 // Jurisdiction edits auto-merge, so one still sitting open means the merge failed.
 // Editing again would branch from main — which lacks the stuck edit — and publishing
 // that would silently drop it. So the block is about not losing the pending change.
-export function jurisdictionEditBlockedReason(open: HistoryEntry[]): string | null {
+export function jurisdictionEditBlockedReason(open: InFlightEntry[]): string | null {
   if (!open.length) return null;
   if (open.length > 1) {
     return `${open.length} edits did not auto-merge. Resolve or close them before editing again.`;
@@ -87,7 +80,7 @@ export function jurisdictionEditBlockedReason(open: HistoryEntry[]): string | nu
 // Editing while a scrape PR is open would open a second PR against the same file — a
 // merge conflict by construction. The list above is the way out, so the reason
 // names the PR rather than just saying "disabled".
-export function editingBlockedReason(open: HistoryEntry[]): string | null {
+export function editingBlockedReason(open: InFlightEntry[]): string | null {
   if (!open.length) return null;
   if (open.length > 1) {
     return `${open.length} pull requests are awaiting review. Publish or close them before editing directly.`;
@@ -97,7 +90,7 @@ export function editingBlockedReason(open: HistoryEntry[]): string | null {
   return `${subject} is awaiting review. Publish or close it before editing directly.`;
 }
 
-function renderRow(entry: HistoryEntry, ocdid: string, isSignedIn: boolean) {
+function renderRow(entry: InFlightEntry, ocdid: string, isSignedIn: boolean) {
   const state = jurisdictionOcdidToState(ocdid);
   const manualEdit = isManualEdit(entry);
   const number = pullRequestNumber(entry.change_url);
@@ -130,7 +123,7 @@ function renderRow(entry: HistoryEntry, ocdid: string, isSignedIn: boolean) {
               rel="noopener noreferrer"
               title="View on GitHub"
             >
-              <i class="icon-github"></i>
+              <i class="fa-brands fa-github"></i>
             </a>`
           : nothing}
       </span>
@@ -140,7 +133,7 @@ function renderRow(entry: HistoryEntry, ocdid: string, isSignedIn: boolean) {
 
 // No cap: the guards allow at most one open scrape and one stuck jurisdiction edit,
 // so this list is structurally short.
-export function renderPendingReviews(entries: HistoryEntry[], ocdid: string, isSignedIn: boolean) {
+export function renderPendingReviews(entries: InFlightEntry[], ocdid: string, isSignedIn: boolean) {
   if (!entries.length) return nothing;
 
   return html`

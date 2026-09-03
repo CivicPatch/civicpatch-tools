@@ -27,6 +27,7 @@ export const SOLID = [
   "circle-check",
   "circle-exclamation",
   "circle-info",
+  "clock-rotate-left",
   "cookie",
   "envelope",
   "flag",

@@ -88,18 +88,23 @@ class JurisdictionChangePayload(BaseModel):
 class RosterChange(BaseModel):
     """One roster change under a changeset's timeline entry.
 
-    Two parts and no more: `name` is what the change is about, `fields` is what moved. The
-    per-type payloads name that subject differently — `person_name` on person and membership
-    events, `label` (falling back to `role_id`) on post ones — and resolving it here is what
-    lets a reader treat every change alike.
+    `name` is what the change is about, `fields` is what moved. The per-type payloads name that
+    subject differently — `person_name` on person and membership events, `label` (falling back
+    to `role_id`) on post ones — and resolving it here is what lets a reader treat every change
+    alike.
 
     A membership move is a `post` field change like any other, rather than its own key: the
     verb is already in `type`, so a second signal for it only invites the two to disagree.
+
+    `detail` is the seat a membership names. Without it the only renderable thing left for an
+    assignment is the field name `post_id` or a raw uuid, because a membership's subject is the
+    person and the post's label would otherwise be dropped on the way out.
     """
 
     type: ChangeLogType
     created_at: datetime
     name: str
+    detail: str | None = None
     fields: list[FieldChange] = []
 
 

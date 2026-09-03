@@ -32,7 +32,11 @@ def test_one_person_returns_one_row():
     assert len(rows) == 1
     assert rows[0]["id"] == "22aa-1"
     assert rows[0]["jurisdiction_ocdid"] == "ocd-jurisdiction/country:us/state:tx/place:austin/government"
-    assert rows[0]["updated_at"] == "2026-03-21T03:08:06+00:00"
+    # `updated_at` is not a parameter any more: `PERSON_UPSERT` stamps `now()` itself, so a
+    # caller cannot write back the stale value the roster was read with. It used to assert the
+    # dict's value survived the round trip, which is the behaviour that made a hand edit leave
+    # "updated" meaning "last derived".
+    assert "updated_at" not in rows[0]
 
 
 @pytest.mark.unit

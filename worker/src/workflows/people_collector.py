@@ -34,18 +34,18 @@ class PeopleCollectorWorkflow:
     async def run(
         self,
         jurisdiction_ocdid: str,
-        request_id: str,
+        changeset_id: str,
         dispatch_mode: str = "remote",
         url: Optional[str] = None,
         source_urls: Optional[list[str]] = None,
     ) -> str:
         await workflow.execute_activity(
             update_pipeline_run_status,
-            args=[request_id, PipelineRunStatus.RUNNING],
+            args=[changeset_id, PipelineRunStatus.RUNNING],
             start_to_close_timeout=timedelta(seconds=30),
         )
         try:
-            conclusion = await self._dispatch_and_poll(dispatch_mode, jurisdiction_ocdid, request_id, url, source_urls)
+            conclusion = await self._dispatch_and_poll(dispatch_mode, jurisdiction_ocdid, changeset_id, url, source_urls)
         except asyncio.CancelledError:
             # The scrape outlives this workflow unless it is told otherwise: cancelling here
             # only stops the poller. Shielded because the workflow is already cancelling, so an
@@ -54,18 +54,18 @@ class PeopleCollectorWorkflow:
                 await asyncio.shield(
                     workflow.execute_activity(
                         cancel_local_run,
-                        args=[request_id],
+                        args=[changeset_id],
                         start_to_close_timeout=timedelta(seconds=30),
                     )
                 )
             raise
-        return await self._handle_conclusion(conclusion, dispatch_mode, jurisdiction_ocdid, request_id, url, source_urls)
+        return await self._handle_conclusion(conclusion, dispatch_mode, jurisdiction_ocdid, changeset_id, url, source_urls)
 
     async def _dispatch_and_poll(
         self,
         dispatch_mode: str,
         jurisdiction_ocdid: str,
-        request_id: str,
+        changeset_id: str,
         url: Optional[str] = None,
         source_urls: Optional[list[str]] = None,
     ) -> str:
@@ -76,14 +76,14 @@ class PeopleCollectorWorkflow:
         # fourteen runs queued for one scrape. A failure here should surface, not multiply.
         await workflow.execute_activity(
             trigger,
-            args=[jurisdiction_ocdid, request_id, url, source_urls],
+            args=[jurisdiction_ocdid, changeset_id, url, source_urls],
             start_to_close_timeout=timedelta(minutes=5),
             heartbeat_timeout=timedelta(seconds=30),
             retry_policy=RetryPolicy(maximum_attempts=1),
         )
         return await workflow.execute_activity(
             poll_pipeline_run_status,
-            args=[request_id],
+            args=[changeset_id],
             start_to_close_timeout=timedelta(minutes=35),
             heartbeat_timeout=timedelta(seconds=60),
         )
@@ -93,29 +93,29 @@ class PeopleCollectorWorkflow:
         conclusion: str,
         dispatch_mode: str,
         jurisdiction_ocdid: str,
-        request_id: str,
+        changeset_id: str,
         url: Optional[str] = None,
         source_urls: Optional[list[str]] = None,
     ) -> str:
         if conclusion == RunConclusion.SUCCESS:
             await workflow.execute_activity(
                 update_pipeline_run_status,
-                args=[request_id, PipelineRunStatus.SUCCESS],
+                args=[changeset_id, PipelineRunStatus.SUCCESS],
                 start_to_close_timeout=timedelta(seconds=30),
             )
             return conclusion
 
         # Job stays ERROR in DB. Temporal waits silently for human_approval signal.
         # Frontend approval UI and PAUSED DB state to be added later.
-        workflow.logger.info(f"Job {request_id} failed — waiting for human_approval signal")
+        workflow.logger.info(f"Job {changeset_id} failed — waiting for human_approval signal")
         await workflow.wait_condition(lambda: self._approved)
         workflow.logger.info("Received human_approval — restarting job")
 
-        restart_conclusion = await self._dispatch_and_poll(dispatch_mode, jurisdiction_ocdid, request_id, url, source_urls)
+        restart_conclusion = await self._dispatch_and_poll(dispatch_mode, jurisdiction_ocdid, changeset_id, url, source_urls)
         final_status = PipelineRunStatus.SUCCESS if restart_conclusion == RunConclusion.SUCCESS else PipelineRunStatus.ERROR
         await workflow.execute_activity(
             update_pipeline_run_status,
-            args=[request_id, final_status],
+            args=[changeset_id, final_status],
             start_to_close_timeout=timedelta(seconds=30),
         )
         return restart_conclusion
@@ -129,7 +129,7 @@ class BatchPeopleCollectorWorkflow:
         for item in items:
             handle = await workflow.start_child_workflow(
                 PeopleCollectorWorkflow.run,
-                args=[item["jurisdiction_ocdid"], item["request_id"]],
+                args=[item["jurisdiction_ocdid"], item["changeset_id"]],
                 id=_workflow_id(item["jurisdiction_ocdid"]),
                 id_reuse_policy=WorkflowIDReusePolicy.TERMINATE_IF_RUNNING,
             )

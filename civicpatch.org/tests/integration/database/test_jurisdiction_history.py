@@ -31,6 +31,8 @@ async def _wipe():
         await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
+        # Assertion badges resolve their subject against `people`, so those tests seed one.
+        await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_OCDID,))
         # This row only — `state = 'zz'` is shared with every other sentinel suite, and
         # deleting theirs takes their organizations' foreign keys down with it.
         await cur.execute(
@@ -118,21 +120,33 @@ async def _seed_user() -> str:
         return (await cur.fetchone())[0]
 
 
-async def _entry_for(changeset_id: str) -> dict:
-    history = await db_jurisdictions.get_jurisdiction_history(_OCDID)
-    return next(e for e in history if e["changeset_id"] == changeset_id)
+async def _seed_resolved() -> str:
+    """History holds only resolved changesets, so a test that wants to read one back has to
+    resolve it first. Publishing is the cheap way; the dismissal tests seed pending and dismiss
+    instead, because `changesets_publish_state_check` forbids a row being both."""
+    changeset_id = await _seed_changeset()
+    await _publish(changeset_id)
+    return changeset_id
+
+
+async def _entry_for(changeset_id: str):
+    _, history = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    return next(e for e in history if e.changeset_id == changeset_id)
 
 
 async def _changes_for(changeset_id: str):
-    history = await db_jurisdictions.get_jurisdiction_history(_OCDID)
-    entry = next(e for e in history if e["changeset_id"] == changeset_id)
-    return entry["changes"]
+    _, history = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    entry = next(e for e in history if e.changeset_id == changeset_id)
+    return entry.changes
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_roster_changes_are_grouped_under_their_changeset():
-    changeset_id = await _seed_changeset()
+    """Every roster type in one list, badged together. Person edits belong here because a hand
+    edit mints its own changeset — they are that changeset's own work, not a pile accumulating
+    on somebody else's row."""
+    changeset_id = await _seed_resolved()
     await _log(
         changeset_id,
         ChangeLogType.ADD_PERSON,
@@ -160,7 +174,7 @@ async def test_roster_changes_are_grouped_under_their_changeset():
 async def test_review_lifecycle_is_not_a_roster_change():
     """`merge_review` and `close_review` say what happened to the review, not to the people.
     They share the changeset, so only the type filter keeps them out."""
-    changeset_id = await _seed_changeset()
+    changeset_id = await _seed_resolved()
     await _log(changeset_id, ChangeLogType.MERGE_REVIEW, {})
     await _log(changeset_id, ChangeLogType.CLOSE_REVIEW, {"reason": "no_longer_valid"})
 
@@ -172,7 +186,7 @@ async def test_review_lifecycle_is_not_a_roster_change():
 async def test_a_seat_change_reads_as_a_post_field_change():
     """A move and a first assignment are one type; the `post_id` change's `before` tells them
     apart, and it is what the timeline renders."""
-    changeset_id = await _seed_changeset()
+    changeset_id = await _seed_resolved()
     await _log(
         changeset_id,
         ChangeLogType.ASSIGN_MEMBERSHIP,
@@ -196,10 +210,17 @@ async def test_a_seat_change_reads_as_a_post_field_change():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_pending_changeset_has_no_outcome_yet():
+async def test_a_pending_changeset_is_not_in_the_history_at_all():
+    """Was `test_a_pending_changeset_has_no_outcome_yet`, asserting `outcome == "pending"`.
+    History is what happened, and a changeset nobody has decided has not happened yet — it
+    belongs to `get_in_flight`, and the page shows it in its own section. So the claim moves
+    from "it has no outcome" to "it is not here"."""
     changeset_id = await _seed_changeset()
 
-    assert (await _entry_for(changeset_id))["outcome"] == "pending"
+    _, history = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+
+    assert [entry.changeset_id for entry in history] == []
+    assert changeset_id is not None
 
 
 @pytest.mark.asyncio
@@ -211,8 +232,8 @@ async def test_publishing_is_its_own_outcome_and_names_who_did_it():
 
     entry = await _entry_for(changeset_id)
 
-    assert entry["outcome"] == "published"
-    assert entry["resolved_by"] == "Ada Reviewer"
+    assert entry.outcome == "published"
+    assert entry.resolved_by == "Ada Reviewer"
 
 
 @pytest.mark.asyncio
@@ -223,7 +244,7 @@ async def test_a_dismissal_reports_the_reason_its_log_recorded():
     changeset_id = await _seed_changeset()
     await _dismiss(changeset_id, "superseded")
 
-    assert (await _entry_for(changeset_id))["outcome"] == "superseded"
+    assert (await _entry_for(changeset_id)).outcome == "superseded"
 
 
 @pytest.mark.asyncio
@@ -234,15 +255,19 @@ async def test_a_dismissal_with_no_recorded_reason_reads_as_unknown():
     changeset_id = await _seed_changeset()
     await _dismiss(changeset_id, None)
 
-    assert (await _entry_for(changeset_id))["outcome"] == "unknown"
+    assert (await _entry_for(changeset_id)).outcome == "unknown"
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_nobody_is_named_when_nobody_resolved_it():
+    """Previously seeded a *pending* changeset, which no longer reaches history at all. A
+    dismissal with no `resolved_by_user_id` makes the same point and is a real shape: the
+    sweeps predating migration 160 left the column null."""
     changeset_id = await _seed_changeset()
+    await _dismiss(changeset_id, "superseded")
 
-    assert (await _entry_for(changeset_id))["resolved_by"] is None
+    assert (await _entry_for(changeset_id)).resolved_by is None
 
 
 @pytest.mark.asyncio
@@ -255,8 +280,8 @@ async def test_a_dismissal_nobody_asked_for_is_credited_to_the_system():
     await dismiss_request(changeset_id, DismissalReason.SUPERSEDED, None)
 
     entry = await _entry_for(changeset_id)
-    assert entry["resolved_by"] == "CivicPatch"
-    assert entry["outcome"] == "superseded"
+    assert entry.resolved_by == "CivicPatch"
+    assert entry.outcome == "superseded"
 
 
 @pytest.mark.asyncio
@@ -267,7 +292,7 @@ async def test_the_latest_close_wins():
     await _dismiss(changeset_id, "superseded")
     await _log(changeset_id, ChangeLogType.CLOSE_REVIEW, {"reason": "rejected"})
 
-    assert (await _entry_for(changeset_id))["outcome"] == "rejected"
+    assert (await _entry_for(changeset_id)).outcome == "rejected"
 
 
 @pytest.mark.asyncio
@@ -309,6 +334,113 @@ async def test_the_newest_publish_is_the_live_roster():
 @pytest.mark.integration
 async def test_a_changeset_with_nothing_logged_carries_an_empty_list():
     """The join is a LEFT JOIN: a changeset that produced no roster change is still an entry."""
-    changeset_id = await _seed_changeset()
+    changeset_id = await _seed_resolved()
 
     assert await _changes_for(changeset_id) == []
+
+
+# ── Assertion subjects: the one badge whose name is not in its payload ──
+
+
+async def _seed_person(name: str) -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO people (jurisdiction_ocdid, name) VALUES (%s, %s) RETURNING id::text",
+            (_OCDID, name),
+        )
+        return (await cur.fetchone())[0]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_assertion_badge_names_the_person_it_is_about():
+    """`AssertionChangePayload` stores only `entity_type` and `entity_id`, so this name is
+    resolved on read. Without it the badge reads "person", which says nothing."""
+    changeset_id = await _seed_resolved()
+    person_id = await _seed_person("Ada Lovelace")
+    await _log(
+        changeset_id,
+        ChangeLogType.ASSERT_FIELD,
+        {
+            "entity_type": "person",
+            "entity_id": person_id,
+            "field_path": "email",
+            "kind": "accept",
+            "value": "ada@example.test",
+        },
+    )
+
+    changes = await _changes_for(changeset_id)
+
+    assert [change.name for change in changes] == ["Ada Lovelace"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_assertion_about_a_deleted_person_falls_back_to_its_type():
+    """The entity is gone but the assertion still happened, so the row stays — it just cannot
+    name a subject. A uuid would be worse than the bare type."""
+    changeset_id = await _seed_resolved()
+    await _log(
+        changeset_id,
+        ChangeLogType.ASSERT_FIELD,
+        {
+            "entity_type": "person",
+            "entity_id": "00000000-0000-4000-8000-0000000000ff",
+            "field_path": "email",
+            "kind": "accept",
+        },
+    )
+
+    changes = await _changes_for(changeset_id)
+
+    assert [change.name for change in changes] == ["person"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_repeated_assertions_on_one_person_resolve_the_name_once():
+    """Accepting four fields writes four rows naming the same person, so the lookup is deduped
+    before it runs rather than once per row."""
+    changeset_id = await _seed_resolved()
+    person_id = await _seed_person("Ada Lovelace")
+    for field in ("email", "phone", "url"):
+        await _log(
+            changeset_id,
+            ChangeLogType.ASSERT_FIELD,
+            {
+                "entity_type": "person",
+                "entity_id": person_id,
+                "field_path": field,
+                "kind": "accept",
+            },
+        )
+
+    changes = await _changes_for(changeset_id)
+
+    assert [change.name for change in changes] == ["Ada Lovelace"] * 3
+    assert sorted(change.fields[0].field for change in changes) == ["email", "phone", "url"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_details_edit_shows_what_it_changed():
+    """A `jurisdiction_edit` changeset is in this list by design (decision D), so its log has to
+    be too — otherwise the row reads "No roster changes" while the log holds the field diff.
+    The subject is the place; there is no person or seat to name."""
+    changeset_id = await _seed_resolved()
+    await _log(
+        changeset_id,
+        ChangeLogType.EDIT_JURISDICTION,
+        {
+            "jurisdiction_ocdid": _OCDID,
+            "jurisdiction_name": "Crystal town",
+            "fields": [{"field": "url", "before": "", "after": "https://example.test"}],
+        },
+    )
+
+    changes = await _changes_for(changeset_id)
+
+    assert [change.name for change in changes] == ["Crystal town"]
+    assert [field.field for field in changes[0].fields] == ["url"]

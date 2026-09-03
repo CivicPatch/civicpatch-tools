@@ -181,6 +181,35 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             "pages/municipalities.html", {"request": request, "user": user, "state": state}
         )
 
+    @router.get("/{path:path}/history", response_class=HTMLResponse, include_in_schema=False)
+    async def jurisdiction_history_page(
+        request: Request,
+        path: str,
+        identity: Optional[Identity] = Depends(get_optional_user),
+    ):
+        # Registered ahead of the /{path:path} catch-all, and this one is not optional.
+        # `folder_to_jurisdiction_ocdid` only checks `len < 3` — it reads segments 0 and 2 and
+        # ignores the rest — so "wa/local/place_seattle/history" parses happily there and would
+        # render the jurisdiction page instead of 404ing. Ordering is the only thing between
+        # this route and a silently wrong page.
+        try:
+            jurisdiction_ocdid = folder_to_jurisdiction_ocdid(path)
+        except ValueError:
+            raise HTTPException(status_code=404, detail="Jurisdiction not found")
+        jurisdiction = await get_jurisdiction(jurisdiction_ocdid)
+        if not jurisdiction:
+            raise HTTPException(status_code=404, detail="Jurisdiction not found")
+        user = _build_user_dict(identity)
+        return templates.TemplateResponse(
+            "pages/jurisdiction-history.html",
+            {
+                "request": request,
+                "jurisdiction_ocdid": jurisdiction_ocdid,
+                "jurisdiction_name": jurisdiction.get("data", {}).get("name", ""),
+                "user": user,
+            },
+        )
+
     @router.get("/{path:path}", response_class=HTMLResponse, include_in_schema=False)
     async def jurisdiction_page(
         request: Request,

@@ -38,13 +38,19 @@ PERSON_MEMBERSHIPS = """COALESCE((
         'post_id', posts.id::text,
         'role_id', posts.role_id,
         'role_label', roles.label,
+        -- Ranking only; never published. Lower wins, as `core.people_roles` has it.
+        'priority', roles.priority,
+        'jurisdiction_ocdid', posts.jurisdiction_ocdid,
         'division_ocdid', posts.division_ocdid,
         'label', memberships.label,
         'source_labels', to_jsonb(memberships.source_labels),
         'designations', to_jsonb(memberships.designations),
         'unmatched_text', to_jsonb(memberships.unmatched_text),
         'start_date', memberships.start_date,
-        'end_date', memberships.end_date
+        'end_date', memberships.end_date,
+        -- When this seat was first and last observed. Both NOT NULL.
+        'first_seen_at', memberships.first_seen_at,
+        'last_seen_at', memberships.last_seen_at
     ) ORDER BY posts.role_id, posts.division_ocdid, posts.id)
     FROM memberships
     JOIN posts ON posts.id = memberships.post_id
@@ -386,13 +392,20 @@ _LIST_COLUMNS = frozenset({"other_names", "phones", "emails", "urls", "source_ur
 
 # One statement, so the writers cannot quietly stop agreeing. No `status`: whether somebody is
 # on the roster is `IS_ON_THE_ROSTER`, asked of memberships.
+# `updated_at` is stamped here, not carried by the caller, so no writer can put a stale value
+# back. The WHERE is why it stays meaningful: `DO UPDATE` fires on every conflict whether or not
+# anything differs, so without it a republish of an unchanged roster would move every person's
+# `updated_at` and diff the published file for nothing.
 PERSON_UPSERT = f"""
     INSERT INTO people (id, jurisdiction_ocdid, updated_at, {", ".join(_PERSON_COLUMNS)})
-    VALUES (%(id)s, %(jurisdiction_ocdid)s, %(updated_at)s,
+    VALUES (%(id)s, %(jurisdiction_ocdid)s, now(),
             {", ".join(f"%({column})s" for column in _PERSON_COLUMNS)})
     ON CONFLICT (id) DO UPDATE
-       SET updated_at = EXCLUDED.updated_at,
+       SET updated_at = now(),
            {", ".join(f"{column} = EXCLUDED.{column}" for column in _PERSON_COLUMNS)}
+     WHERE ({", ".join(f"people.{column}" for column in _PERSON_COLUMNS)})
+        IS DISTINCT FROM
+           ({", ".join(f"EXCLUDED.{column}" for column in _PERSON_COLUMNS)})
 """
 
 
@@ -406,7 +419,6 @@ def person_upsert_params(people: list[dict]) -> list[dict]:
         {
             "id": person.get("id"),
             "jurisdiction_ocdid": person.get("jurisdiction_ocdid"),
-            "updated_at": person.get("updated_at"),
             **{
                 column: (person.get(column) or [])
                 if column in _LIST_COLUMNS

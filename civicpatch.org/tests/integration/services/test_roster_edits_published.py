@@ -93,6 +93,18 @@ async def _seed() -> tuple[str, Identity]:
             "VALUES (%s, 'zz', 'local', 'active')",
             (_OCDID,),
         )
+        # The changeset that published them. `people` rows only exist because
+        # `publish_request` wrote them, so a fixture with a published person and no published
+        # changeset is a state production cannot reach — and a hand edit now files under it
+        # rather than minting one of its own.
+        await cur.execute(
+            # `changesets_scrape_has_a_run` — a scrape is exactly a row with a status.
+            "INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json, "
+            "                        sourced_at, published_at, created_at) "
+            "VALUES ('scrape', 'SUCCESS', %s, '{}'::jsonb, %s, now(), now()) "
+            "ON CONFLICT DO NOTHING",
+            (_OCDID, datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc)),
+        )
         await cur.execute(
             # `source_urls` and `updated_at` are required by `SubmittedPersonRecord`, which every
             # edit is validated against — a person without them fails before any field does.
@@ -180,9 +192,16 @@ async def test_the_edit_reaches_the_people_row_not_only_the_file():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_the_request_is_born_published_and_never_enters_the_review_pool():
-    """It carries `source_records` for anyone added, so a pending one would satisfy
-    AVAILABLE_FOR_REVIEW and flash into the queue between the two writes."""
+async def test_the_edit_mints_a_changeset_born_published():
+    """A hand edit is a bundle of changes to one jurisdiction, by one producer, at one time —
+    a changeset. It needs to be one for its own timeline row, its own open-data commit url, its
+    own author, and to supersede an older pending scrape.
+
+    Born published, and it has to be: it writes `source_records` for anyone added, so a pending
+    one would satisfy AVAILABLE_FOR_REVIEW and flash into the queue between the two writes.
+
+    What it must *not* do is advance `last_seen_at` — that is `publish_request`'s rule, asserted
+    separately below."""
     person_id, user = await _seed()
 
     changeset_id, _ = await roster_edits.edit_published(
@@ -192,13 +211,11 @@ async def test_the_request_is_born_published_and_never_enters_the_review_pool():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT published_at IS NOT NULL, status IS NULL, sourced_at IS NOT NULL "
+            "SELECT kind, published_at IS NOT NULL, status IS NULL, sourced_at IS NOT NULL "
             "FROM changesets WHERE id::text = %s",
             (changeset_id,),
         )
-        row = await cur.fetchone()
-    assert row == (True, True, True)
-
+        assert await cur.fetchone() == ("people_edit", True, True, True)
 
 @pytest.mark.asyncio
 @pytest.mark.integration
@@ -383,7 +400,37 @@ async def test_a_refused_edit_leaves_no_request_behind():
             "SELECT count(*) FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         row = await cur.fetchone()
-    assert row is not None and row[0] == 0, "a refused edit registered a request"
+    # One: the seeded scrape that published this roster. The guarantee used to need enforcing
+    # because a refused edit could leave its own half-built changeset behind; now no edit ever
+    # makes one, so there is nothing to leave.
+    assert row is not None and row[0] == 1, "a refused edit registered a request"
+
+
+async def _seed_second_person() -> str:
+    """Somebody on the same roster that the edit does not touch."""
+    person_id = str(uuid.uuid4())
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO people "
+            "  (id, jurisdiction_ocdid, name, phones, source_urls, updated_at, "
+            "   other_names, emails, urls) "
+            "VALUES (%s, %s, 'Bo Nguyen', ARRAY[]::text[], "
+            "        ARRAY['https://editville.gov/clerk'], now(), "
+            "        ARRAY[]::text[], ARRAY[]::text[], ARRAY[]::text[])",
+            (person_id, _OCDID),
+        )
+        org = await organizations.find_or_create(cur, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        await memberships.upsert(
+            cur,
+            DerivedMembership(person_id=person_id, source_labels=["Clerk"]),
+            post_id,
+            org,
+            datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc),
+        )
+        await conn.commit()
+    return person_id
 
 
 async def _pending_scrape(sourced_at: datetime.datetime) -> str:
@@ -413,7 +460,10 @@ async def _pending_scrape(sourced_at: datetime.datetime) -> str:
 async def test_a_hand_edit_supersedes_a_pending_scrape():
     """Deliberate: the edit is the newest word on the roster. Publishing the older scrape over
     it would retire anyone the edit added, and `_refuse_if_superseded` would refuse it anyway —
-    so publishing dismisses it rather than leaving a card nobody can publish."""
+    so publishing dismisses it rather than leaving a card nobody can publish.
+
+    This is what the edit's `sourced_at = now()` buys, and why it keeps it even though the same
+    column must not date a seat."""
     person_id, user = await _seed()
     scrape = await _pending_scrape(
         datetime.datetime(2026, 6, 1, tzinfo=datetime.timezone.utc)
@@ -423,8 +473,7 @@ async def test_a_hand_edit_supersedes_a_pending_scrape():
         _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
     )
 
-    # In the publish's own transaction, so there is nothing left for the sweep to find. The
-    # sweep still has its own cases — two pending scrapes with no publish between them.
+    # In the publish's own transaction, so there is nothing left for the sweep to find.
     assert await supersede_stacked_requests() == []
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -433,7 +482,6 @@ async def test_a_hand_edit_supersedes_a_pending_scrape():
         )
         row = await cur.fetchone()
     assert row is not None and row[0] == DISMISSED_SUPERSEDED
-
 
 @pytest.mark.asyncio
 @pytest.mark.integration
@@ -508,3 +556,71 @@ async def test_a_post_pick_survives_a_save_and_comes_back_scoped_to_its_organiza
     # The roster shows the one this changeset is about, as a single value.
     roster = await proposed_roster(changeset_id, _OCDID)
     assert [person["post_id"] for person in roster] == [council_seat]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_hand_edit_does_not_advance_last_seen_at():
+    """The whole reason a hand edit's changeset is treated differently. `sourced_at` on a
+    `people_edit` is now(), so publishing one would otherwise claim the source still lists
+    everyone it touched — `DATABASE.md` has `last_seen_at` as "advanced on every publish that
+    still seats them", and a hand edit read nothing."""
+    person_id, user = await _seed()
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT last_seen_at FROM memberships "
+            " WHERE person_id = %s AND closed_at IS NULL",
+            (person_id,),
+        )
+        before = (await cur.fetchone())[0]
+
+    await roster_edits.edit_published(
+        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    )
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT last_seen_at FROM memberships "
+            " WHERE person_id = %s AND closed_at IS NULL",
+            (person_id,),
+        )
+        after = (await cur.fetchone())[0]
+
+    assert after == before, "a hand edit advanced last_seen_at"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_only_the_edited_person_gets_a_new_updated_at():
+    """`PERSON_UPSERT` writes the whole roster on every publish, so without the `DO UPDATE`'s
+    `WHERE … IS DISTINCT FROM …` every person would get a fresh `updated_at` whenever anyone
+    was touched — and the published file would diff for people nobody changed.
+
+    Postgres evaluates that predicate per conflicting row, so this needs no bookkeeping; the
+    test exists so the WHERE is not removed as redundant."""
+    edited_id, user = await _seed()
+    untouched_id = await _seed_second_person()
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text, updated_at FROM people WHERE jurisdiction_ocdid = %s",
+            (_OCDID,),
+        )
+        before = {row[0]: row[1] for row in await cur.fetchall()}
+
+    await roster_edits.edit_published(
+        _OCDID, [PersonPatch(id=edited_id, fields={"name": "Ada M. Chen"})], user
+    )
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text, updated_at FROM people WHERE jurisdiction_ocdid = %s",
+            (_OCDID,),
+        )
+        after = {row[0]: row[1] for row in await cur.fetchall()}
+
+    assert after[edited_id] > before[edited_id], "the edited person kept a stale updated_at"
+    assert after[untouched_id] == before[untouched_id], "an untouched person was restamped"

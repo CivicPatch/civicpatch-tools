@@ -3,6 +3,7 @@ import logging
 import os
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 from database.database import get_pool
 from lib.temporal.workflows import (
@@ -71,6 +72,26 @@ async def _ensure_schedule(
     return False
 
 
+async def _retire_undeclared_schedules(client: Client, declared: set[str]) -> None:
+    """Delete schedules this worker no longer declares.
+
+    `_ensure_schedule` converges what is declared; nothing removed what stopped being. A
+    Temporal schedule is server state that outlives the code, so deleting a workflow class left
+    its schedule firing forever — the worker then rejected every firing with
+    `NotFoundError: Workflow class ... is not registered`, and looked dead while doing it.
+    That is exactly what `pr-sync` did.
+
+    This worker is the only thing that creates schedules in this namespace, so anything else
+    here is a leftover. Logged rather than silent: deleting server state on startup should say
+    what it deleted.
+    """
+    async for existing in await client.list_schedules():
+        if existing.id in declared:
+            continue
+        logger.info("Retiring schedule no longer declared: %s", existing.id)
+        await client.get_schedule_handle(existing.id).delete()
+
+
 async def _register_schedules(client: Client) -> None:
     created = await _ensure_schedule(
         client,
@@ -114,6 +135,17 @@ async def _register_schedules(client: Client) -> None:
             spec=ScheduleSpec(cron_expressions=["*/10 * * * *"]),
             policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
         ),
+    )
+
+    # The three above are the whole set. Anything else on the server is from a version that
+    # declared more than this one does.
+    await _retire_undeclared_schedules(
+        client,
+        {
+            ScheduleId.OD_SYNC,
+            ScheduleId.PIPELINE_RUN_CLEANUP,
+            ScheduleId.REVIEW_SESSION_CLEANUP,
+        },
     )
 
 

@@ -166,35 +166,50 @@ def test_get_jurisdictions_by_ocdids_returns_data(client):
 
 
 @pytest.mark.unit
-def test_get_jurisdiction_history_returns_data(client):
+def test_get_jurisdiction_history_returns_a_paged_envelope(client):
+    """`total_items` / `page` / `total_pages` / `data` — the same shape `/change-logs` and the
+    pipeline-run listings return, so a caller learns one envelope rather than three."""
     with patch(
         "database.jurisdictions.get_jurisdiction_history",
         new_callable=AsyncMock,
-        return_value=[{"changeset_id": "req-1", "status": "complete"}],
+        return_value=(60, [{"changeset_id": "req-1", "status": "complete"}]),
     ):
         response = client.get(
             "/jurisdictions/history",
-            params={"jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland"},
+            params={
+                "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland",
+                "page": 2,
+                "per_page": 25,
+            },
         )
 
     assert response.status_code == 200
-    data = response.json()
-    assert "data" in data
+    body = response.json()
+    assert body["total_items"] == 60
+    assert body["page"] == 2
+    assert body["total_pages"] == 3
+    assert body["data"] == [{"changeset_id": "req-1", "status": "complete"}]
 
 
 @pytest.mark.unit
-def test_get_jurisdiction_history_returns_404_when_none(client):
+def test_a_jurisdiction_with_no_history_is_an_empty_page_not_a_404(client):
+    """Replaces `test_get_jurisdiction_history_returns_404_when_none`, which mocked the query
+    to return None to reach a branch it could not produce — it answers a list, empty for an
+    unknown jurisdiction, which `test_get_jurisdiction_history_not_found` asserts directly.
+    An empty collection is a 200 with nothing in it."""
     with patch(
         "database.jurisdictions.get_jurisdiction_history",
         new_callable=AsyncMock,
-        return_value=None,
+        return_value=(0, []),
     ):
         response = client.get(
             "/jurisdictions/history",
             params={"jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:unknown"},
         )
 
-    assert response.status_code == 404
+    assert response.status_code == 200
+    assert response.json()["data"] == []
+    assert response.json()["total_pages"] == 1
 
 
 @pytest.mark.unit

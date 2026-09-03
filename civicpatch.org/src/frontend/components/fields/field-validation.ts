@@ -152,6 +152,10 @@ export function rowError(
 function isPostUnanswered(record: DiffRecord, field: FieldSpec): boolean {
   if (field.key !== POST_FIELD) return false;
   if (normalizeScalar(diffValue(record, field)) !== "") return false;
+  // A seated person has already answered: the published roster carries their post as a
+  // membership, never as `post_id`, so asking again blocks publish for the whole roster.
+  const memberships = getFieldValue(record, "memberships");
+  if (Array.isArray(memberships) && memberships.length) return false;
   // `labels` is how a roster record is recognised — every one carries the key, empty or not.
   // Without it there is no derivation to have an opinion about.
   const labels = getFieldValue(record, "labels");

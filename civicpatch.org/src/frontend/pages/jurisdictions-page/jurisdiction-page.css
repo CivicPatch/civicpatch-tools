@@ -91,9 +91,23 @@
   color: var(--pico-muted-color);
 }
 
-.jurisdiction-status--scraped {
-  background: var(--pico-ins-background);
-  color: var(--pico-ins-color);
+/* Four states, same three signal colours the timeline uses: muted is nothing to do here,
+   green is healthy, yellow wants attention, red is a gap. The base rule above is muted, so
+   `--untracked` needs no override. */
+
+.jurisdiction-status--fresh {
+  background: rgba(var(--tone-green), 0.18);
+  color: rgb(var(--tone-green));
+}
+
+.jurisdiction-status--stale {
+  background: rgba(var(--tone-yellow), 0.2);
+  color: rgb(var(--tone-yellow));
+}
+
+.jurisdiction-status--empty {
+  background: rgba(var(--tone-red), 0.15);
+  color: rgb(var(--tone-red));
 }
 
 .jurisdiction-status__dot {
@@ -102,6 +116,16 @@
   border-radius: 50%;
   background: currentColor;
   flex-shrink: 0;
+}
+
+/* A scrape is running: a link to the history page's In progress section rather than the
+   progress bar itself, so cancelling lives in one place and this page has no live state to
+   tear down mid-click. Wears the status pill's shape because it sits beside it. */
+
+.jurisdiction-status--running {
+  background: rgba(var(--tone-blue), 0.15);
+  color: rgb(var(--tone-blue));
+  text-decoration: none;
 }
 
 /* ── Data-quality callout ─────────────────────────────────────────────────── */
@@ -231,43 +255,6 @@
   gap: 0.6rem;
   margin-left: auto;
   white-space: nowrap;
-}
-
-/* ── Collapsible panels ───────────────────────────────────────────────────── */
-
-.jurisdiction-panel {
-  border: 1px solid var(--civ-border);
-  border-radius: var(--pico-border-radius);
-  background: var(--civ-surface);
-  margin-bottom: 0.75rem;
-}
-
-.jurisdiction-panel > summary {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.75rem 1rem;
-  cursor: pointer;
-  font-size: var(--text-md);
-  font-weight: 600;
-  color: var(--civ-text);
-}
-
-.jurisdiction-panel__meta {
-  margin-left: auto;
-  font-size: var(--text-sm);
-  font-weight: 400;
-  color: var(--civ-text-muted);
-}
-
-.jurisdiction-panel__body {
-  padding: 1rem;
-  border-top: 1px solid var(--civ-border);
-  /* Two stacked sections — the run in progress, then the archive. Without a gap the
-     in-progress footer (Cancel, the Temporal line) sits flush against the Past heading. */
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
 }
 
 /* ── Details fields — editor idiom ──────────────────────────────────────────── */

@@ -21,6 +21,7 @@ from database import assertions, posts
 from database.change_logs import record_change
 from database.changesets import live_roster_changeset
 from database.database import get_pool
+from database.pipeline_runs import get_sourced_at
 from schemas.assertions import Assertion, AssertionKind, EntityType
 from schemas.posts import AssignmentResult
 from schemas.change_logs import (
@@ -76,11 +77,18 @@ async def upsert(
     post_id: str,
     organization_id: str,
     last_seen_at,
+    *,
+    advances_last_seen: bool = True,
 ) -> str:
     """Seat one person, closing whatever else they held in this organization.
 
     Takes the `DerivedMembership` whole: five of the old twelve parameters were its fields,
     unpacked at the only caller and passed back one at a time.
+
+    `advances_last_seen` is False when the publish read no source — a hand edit. A flag rather
+    than a second function because it toggles one clause of one statement; splitting would mean
+    two copies of this SQL, which is the drift the single statement exists to prevent. A new
+    seat is still dated from `last_seen_at`; only the advance on an existing one is suppressed.
 
     `start_date` / `end_date` come off the record, via `DerivedMembership`. They used to be
     parameters nobody passed, so the source's term dates reached `people` and never the
@@ -104,7 +112,12 @@ async def upsert(
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
         DO UPDATE SET
-            last_seen_at = GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at),
+            -- Only a publish that read a source may advance this. A hand edit still dates a
+            -- *new* seat (the INSERT above), but must not claim the source still lists an
+            -- existing one.
+            last_seen_at = CASE WHEN %s
+                THEN GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at)
+                ELSE memberships.last_seen_at END,
             designations = EXCLUDED.designations,
             unmatched_text = EXCLUDED.unmatched_text,
             source_labels = EXCLUDED.source_labels,
@@ -126,6 +139,7 @@ async def upsert(
             last_seen_at,
             last_seen_at,
             member.label,
+            advances_last_seen,
         ),
     )
     membership_id = (await cur.fetchone())[0]
@@ -367,13 +381,22 @@ async def _person_name(cur, person_id: str) -> str:
 async def assign(
     person_id: str, post_id: str, label: str | None, user_id: str | None = None
 ) -> AssignmentResult:
-    last_seen_at = datetime.now(timezone.utc)
-
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         post = await posts.get(cur, post_id)
         if post is None:
             raise UnknownPost(post_id)
+
+        # Same changeset, same date. The seat is dated by the changeset this edit is filed
+        # under — the live roster's — so a hand edit cannot advance `last_seen_at`: `upsert`
+        # takes GREATEST, and that date is already the seat's. Nobody read a source here.
+        changeset_id = await live_roster_changeset(cur, post.jurisdiction_ocdid)
+        seen_at = (
+            await get_sourced_at(cur, changeset_id)
+            if changeset_id
+            # Nothing published here yet, so there is no changeset to date from.
+            else datetime.now(timezone.utc)
+        )
 
         organization_id = post.organization_id
         current = await open_for_person(cur, person_id, organization_id)
@@ -394,7 +417,7 @@ async def assign(
                 DerivedMembership(person_id=person_id),
                 post_id,
                 organization_id,
-                last_seen_at,
+                seen_at,
             )
             change = FieldChange(
                 field=MEMBERSHIP_POST_FIELD, before=moved_from, after=post_id
@@ -417,7 +440,7 @@ async def assign(
                 fields=[change],
             ),
             # So the edit lands on the live roster's timeline entry rather than nowhere.
-            changeset_id=await live_roster_changeset(cur, post.jurisdiction_ocdid),
+            changeset_id=changeset_id,
         )
         return AssignmentResult(
             membership_id=membership_id,

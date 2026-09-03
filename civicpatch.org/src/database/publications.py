@@ -22,14 +22,18 @@ from database.people import PERSON_UPSERT, person_upsert_params
 from database.users import SYSTEM_USER_ID
 from database.pipeline_runs import get_sourced_at
 from schemas.assertions import Assertion, AssertionKind, EntityType
-from shared.utils.statuses import DismissalReason
+from shared.utils.statuses import ChangesetKind, DismissalReason
 
 logger = logging.getLogger(__name__)
 
 
 async def record_change_url(changeset_id: str, url: str) -> None:
     """Where this request's data landed in open-data. Written after the commit, not with the
-    publish, because the write is queued and retried — the publish is already a fact by then."""
+    publish, because the write is queued and retried — the publish is already a fact by then.
+
+    One url per changeset, and a hand edit mints its own — so each edit keeps the commit it
+    landed in without anything per-log.
+    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -145,12 +149,27 @@ async def _record_publish(
     )
 
 
+# A publish that read a source may say "still listed"; a hand edit may not. Sheet import
+# counts — `register_sheet_import_request` is explicit that its `sourced_at` is "when the
+# curator read the source rather than when any machine did".
+_SOURCE_READING_KINDS = (ChangesetKind.SCRAPE, ChangesetKind.SHEET_IMPORT)
+
+
+async def _read_a_source(cur, changeset_id: str) -> bool:
+    await cur.execute(
+        "SELECT kind FROM changesets WHERE id::text = %s", (changeset_id,)
+    )
+    row = await cur.fetchone()
+    return bool(row) and row[0] in _SOURCE_READING_KINDS
+
+
 async def _bind_memberships(
     cur,
     changeset_id: str,
     jurisdiction_ocdid: str,
     derived: list[DerivedPost],
     last_seen_at,
+    advances_last_seen: bool,
 ) -> None:
     """Put this roster's people in their posts.
 
@@ -175,6 +194,7 @@ async def _bind_memberships(
                 post_ids[(post.role_id, post.division_ocdid)],
                 organization_id,
                 last_seen_at,
+                advances_last_seen=advances_last_seen,
             )
 
 
@@ -220,6 +240,10 @@ async def publish_request(
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         last_seen_at = await get_sourced_at(cur, changeset_id)
+        # `sourced_at` orders superseding whatever the kind — a hand edit really is the newest
+        # word. Whether it *dates a seat* is a different question, and only a source reading
+        # answers it.
+        advances_last_seen = await _read_a_source(cur, changeset_id)
         await _refuse_if_superseded(cur, changeset_id, jurisdiction_ocdid, last_seen_at)
 
         stated = await assertions.stated_values(cur, EntityType.PERSON, incoming_ids)
@@ -237,7 +261,12 @@ async def publish_request(
         await _record_publish(cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id)
         if derived:
             await _bind_memberships(
-                cur, changeset_id, jurisdiction_ocdid, derived, last_seen_at
+                cur,
+                changeset_id,
+                jurisdiction_ocdid,
+                derived,
+                last_seen_at,
+                advances_last_seen,
             )
         # Outside the guard: who is no longer on the roster is answered by the roster.
         await memberships.close_absent(

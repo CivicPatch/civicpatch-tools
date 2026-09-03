@@ -820,6 +820,17 @@ describe("fieldError — a post nobody has answered", () => {
   it("is satisfied once one is picked", () =>
     expect(fieldError(post, { post_id: "post-1", labels: [] })).toBeNull());
 
+  // The published roster's own shape: no `post_id`, no `role_id`, the seat only in
+  // `memberships`. Asking here blocked publishing on every jurisdiction page.
+  it("does not ask someone already seated", () =>
+    expect(
+      fieldError(post, {
+        post_id: null,
+        labels: ["Council Member"],
+        memberships: [{ post_id: "post-1", post_label: "Council Member" }],
+      } as any),
+    ).toBeNull());
+
   // Why this is not just `required: true`: a label that names a real role has already answered,
   // and asking the reviewer to confirm it would be a field that can never be wrong.
   it("does not ask when the labels named a role", () =>

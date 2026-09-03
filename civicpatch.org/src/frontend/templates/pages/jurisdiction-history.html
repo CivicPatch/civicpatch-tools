@@ -1,0 +1,11 @@
+{% extends "layouts/base.html" %}
+{% block scripts %}<script type="module" src="{{ vite_asset('assets/jurisdiction-history.ts') }}"></script>{% endblock %}
+{% block styles %}{% for href in vite_css('assets/jurisdiction-history.ts') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %} {% block title %}History{% endblock %}
+{% block content %}
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
+
+<civ-jurisdiction-history
+    jurisdiction_ocdid="{{ jurisdiction_ocdid }}"
+    jurisdiction_name="{{ jurisdiction_name }}"
+></civ-jurisdiction-history>
+{% endblock %}

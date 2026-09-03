@@ -100,10 +100,15 @@ async def register_request_with_pipeline_run(
 ):
     pool = await get_pool()
     async with pool.connection() as conn:
+        # One statement: `changesets_scrape_has_a_run` rejects a scrape row whose status is
+        # still null, so the run cannot be filled in by a follow-up update.
         await conn.execute(
             """
-            INSERT INTO changesets (id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id, created_at)
-            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
+            INSERT INTO changesets (
+                id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id,
+                status, progress, created_at, sourced_at
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
             (
                 changeset_id,
@@ -111,16 +116,9 @@ async def register_request_with_pipeline_run(
                 jurisdiction_ocdid,
                 json.dumps(arguments_json),
                 created_by_user_id,
+                status,
+                progress,
             ),
-        )
-
-        await conn.execute(
-            """
-            UPDATE changesets SET status = %s, progress = %s,
-                                sourced_at = CURRENT_TIMESTAMP
-            WHERE id = %s
-            """,
-            (status, progress, changeset_id),
         )
 
 
@@ -132,21 +130,25 @@ async def register_request_with_pipeline_run_if_not_exists(
 ):
     pool = await get_pool()
     async with pool.connection() as conn:
+        # `DO NOTHING` keeps what an existing row already says, which is what the old
+        # `status IS NULL` guard on the update was for.
         await conn.execute(
             """
-            INSERT INTO changesets (id, kind, jurisdiction_ocdid, arguments_json, created_at)
-            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP)
+            INSERT INTO changesets (
+                id, kind, jurisdiction_ocdid, arguments_json, status, progress,
+                created_at, sourced_at
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             ON CONFLICT (id) DO NOTHING
             """,
-            (changeset_id, kind, jurisdiction_ocdid, json.dumps(arguments_json)),
-        )
-        await conn.execute(
-            """
-            UPDATE changesets SET status = %s, progress = %s,
-                                sourced_at = CURRENT_TIMESTAMP
-            WHERE id = %s AND status IS NULL
-            """,
-            (PipelineRunStatus.PENDING, 0, changeset_id),
+            (
+                changeset_id,
+                kind,
+                jurisdiction_ocdid,
+                json.dumps(arguments_json),
+                PipelineRunStatus.PENDING,
+                0,
+            ),
         )
 
 
@@ -162,6 +164,8 @@ async def register_people_edit_request(
 
     `sourced_at` is now(): the edit is the newest word on the roster and supersedes any older
     pending scrape, which could not be published over it without retiring what the edit added.
+    It does **not** date the seats — `publish_request` only advances `last_seen_at` for a
+    changeset that read a source, and a hand edit read nothing.
     """
     pool = await get_pool()
     async with pool.connection() as conn:
@@ -192,10 +196,10 @@ async def register_sheet_import_request(
     """One jurisdiction's worth of a curated-sheet import. `PEOPLE` with a null `status`:
     nothing ran, the same as a hand edit.
 
-    **Unpublished, unlike `register_people_edit_request`.** A hand edit is one person acting on
-    a roster they are already looking at, so it is born published; an import proposes a whole
-    roster a curator typed elsewhere, and that belongs in the review queue like any other
-    proposal. Writing its sightings is what puts it there — `AVAILABLE_FOR_REVIEW` is
+    **Unpublished, unlike a hand edit.** A hand edit is one person acting on a roster they are
+    already looking at, so it mints no changeset at all — it republishes the live one. An import
+    proposes a whole roster a curator typed elsewhere, and that belongs in the review queue like
+    any other proposal. Writing its sightings is what puts it there — `AVAILABLE_FOR_REVIEW` is
     `EXISTS (source_records for this request)`.
 
     `sourced_at` is now(): a curated sheet is the newest word on the roster, and it is when the
@@ -284,7 +288,8 @@ async def get_in_flight(jurisdiction_ocdid: str) -> JurisdictionInFlight:
         await cur.execute(
             f"""
             WITH flags AS (
-                SELECT r.id, r.created_at, r.kind, r.change_url, r.status, r.progress,
+                SELECT r.id, r.created_at, r.sourced_at, r.kind, r.change_url,
+                       r.status, r.progress,
                        {RUN_IN_FLIGHT} AS is_running,
                        {AVAILABLE_FOR_REVIEW} AS awaiting_review
                 FROM changesets r
@@ -292,7 +297,7 @@ async def get_in_flight(jurisdiction_ocdid: str) -> JurisdictionInFlight:
                   AND r.published_at IS NULL
                   AND r.dismissed_at IS NULL
             )
-            SELECT id::text, created_at, kind, change_url, status, progress,
+            SELECT id::text, created_at, sourced_at, kind, change_url, status, progress,
                    is_running, awaiting_review
             FROM flags
             WHERE is_running OR awaiting_review
@@ -304,12 +309,13 @@ async def get_in_flight(jurisdiction_ocdid: str) -> JurisdictionInFlight:
             InFlightChangeset(
                 changeset_id=row[0],
                 created_at=to_iso(row[1]),
-                kind=row[2],
-                change_url=row[3],
-                pipeline_run_status=row[4],
-                pipeline_run_progress=row[5],
-                is_running=row[6],
-                awaiting_review=row[7],
+                updated_at=to_iso(row[2]),
+                kind=row[3],
+                change_url=row[4],
+                pipeline_run_status=row[5],
+                pipeline_run_progress=row[6],
+                is_running=row[7],
+                awaiting_review=row[8],
             )
             for row in await cur.fetchall()
         ]
@@ -331,6 +337,13 @@ async def get_in_flight(jurisdiction_ocdid: str) -> JurisdictionInFlight:
         last_published_at=to_iso(last_published_at),
         total_changesets=total,
     )
+
+
+async def live_roster_changeset_for(jurisdiction_ocdid: str) -> str | None:
+    """`live_roster_changeset` for a caller that holds no cursor."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        return await live_roster_changeset(cur, jurisdiction_ocdid)
 
 
 async def get_request_jurisdiction(changeset_id: str) -> str | None:

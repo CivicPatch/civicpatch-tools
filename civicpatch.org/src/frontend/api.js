@@ -285,9 +285,20 @@ export const deleteRole = async (roleId) => {
   return res.json();
 };
 
-export const fetchJurisdictionHistory = async (jurisdictionOcdid) => {
-  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
+export const fetchJurisdictionHistory = async (jurisdictionOcdid, page = 1, perPage = 25) => {
+  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid, page, per_page: perPage });
   const res = await fetch(`/api/v1/jurisdictions/history?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+// What the jurisdiction is still waiting on, plus the two scalars a page needs about its
+// whole history. Replaces fetching every changeset to derive four things from the array.
+export const fetchJurisdictionInFlight = async (jurisdictionOcdid) => {
+  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
+  const res = await fetch(`/api/v1/jurisdictions/in-flight?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

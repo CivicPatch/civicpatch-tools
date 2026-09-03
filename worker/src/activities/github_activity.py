@@ -45,7 +45,7 @@ async def _get_installation_token() -> str:
 @activity.defn
 async def trigger_github_action(
     jurisdiction_ocdid: str,
-    request_id: str,
+    changeset_id: str,
     url: Optional[str] = None,
     source_urls: Optional[list[str]] = None,
 ) -> None:
@@ -53,7 +53,10 @@ async def trigger_github_action(
     discards the return — so the wait was only a barrier before `poll_pipeline_run_status`,
     which reaches the same place by watching `requests.status`."""
     token = await _get_installation_token()
-    inputs: dict = {"jurisdiction_ocdid": jurisdiction_ocdid, "request_id": request_id}
+    # Two-repo contract: these keys are `data_scrape.yml`'s declared inputs in
+    # CivicPatch/server. `workflow_dispatch` validates against the workflow on that repo's
+    # default branch, so the rename there has to merge before this does.
+    inputs: dict = {"jurisdiction_ocdid": jurisdiction_ocdid, "changeset_id": changeset_id}
     if url:
         inputs["url"] = url
     if source_urls:
@@ -72,12 +75,12 @@ async def trigger_github_action(
 @activity.defn
 async def trigger_local(
     jurisdiction_ocdid: str,
-    request_id: str,
+    changeset_id: str,
     url: Optional[str] = None,
     source_urls: Optional[list[str]] = None,
 ) -> None:
     payload = {
-        "request_id": request_id,
+        "changeset_id": changeset_id,
         "jurisdiction_ocdid": jurisdiction_ocdid,
         "url": url,
         "source_urls": source_urls,
@@ -85,11 +88,11 @@ async def trigger_local(
     async with httpx.AsyncClient() as client:
         resp = await client.post(f"{_CIVICPATCH_LOCAL_URL}/pipeline_runs", json=payload, timeout=30)
         resp.raise_for_status()
-    activity.logger.info(f"Local job triggered: {request_id}")
+    activity.logger.info(f"Local job triggered: {changeset_id}")
 
 
 @activity.defn
-async def cancel_local_run(request_id: str) -> None:
+async def cancel_local_run(changeset_id: str) -> None:
     """Stop a scrape running on the local pipelines server.
 
     Cancelling the workflow stops the poller watching the scrape, not the scrape: it carries on
@@ -103,9 +106,9 @@ async def cancel_local_run(request_id: str) -> None:
     try:
         async with httpx.AsyncClient() as client:
             resp = await client.post(
-                f"{_CIVICPATCH_LOCAL_URL}/pipeline_runs/{request_id}/cancel", timeout=15
+                f"{_CIVICPATCH_LOCAL_URL}/pipeline_runs/{changeset_id}/cancel", timeout=15
             )
             resp.raise_for_status()
-        activity.logger.info(f"Cancelled local scrape: {request_id}")
+        activity.logger.info(f"Cancelled local scrape: {changeset_id}")
     except Exception as e:
-        activity.logger.warning(f"Could not cancel local scrape {request_id}: {e}")
+        activity.logger.warning(f"Could not cancel local scrape {changeset_id}: {e}")

@@ -79,7 +79,7 @@ erDiagram
         text_array      source_urls         "134"
         text_null       image               "134"
         text_null       cdn_image           "134"
-        timestamptz_null updated_at         "from the record's own updated_at — data, not a publish time" 
+        timestamptz_null updated_at         "ours, not the source's: PERSON_UPSERT stamps now() on insert and on any real change; its DO UPDATE has a WHERE so an unchanged republish does not move it" 
     }
 
     issues {
@@ -222,8 +222,8 @@ erDiagram
         text_null       label               "the source's words for what the post label cannot say — seeded on INSERT, then human-owned. Absent from upsert()'s ON CONFLICT SET, which is its whole protection. NULL = the post says it all"
         text_null       start_date          "144: text, not date — sources give partial dates and Popolo allows them (3,513 of 4,547 on dev are partial). From the source; we do not infer it"
         text_null       end_date            "144: text, as start_date. From the source — NOT set when someone stops appearing"
-        timestamptz     first_seen_at       "when the SOURCE said it, not when the row was written"
-        timestamptz     last_seen_at        "advanced on every scrape that still lists them"
+        timestamptz     first_seen_at       "the changeset's sourced_at when the seat first appeared"
+        timestamptz     last_seen_at        "the changeset's sourced_at, advanced by GREATEST on every publish that still seats them"
         timestamptz_null closed_at          "set when a scrape stops listing them; NULL = currently open"
         timestamptz     created_at          "default: now()"
     }
