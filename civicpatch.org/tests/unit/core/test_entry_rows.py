@@ -5,7 +5,6 @@ from core.entry_rows import (
     RowError,
     Sighting,
     already_handled,
-    jurisdiction_columns,
     parse_rows,
     roster_columns,
     rows_by_jurisdiction,
@@ -244,39 +243,7 @@ def test_every_row_gets_a_value_so_stale_errors_clear():
     assert columns["error"] == ["", ""]
     assert len(columns["status"]) == 2
     assert columns["last_import_at"] == [_STAMP, _STAMP]
-
-
-@pytest.mark.unit
-def test_columns_are_as_long_as_the_tab():
-    """They are written as whole ranges, so a short column would leave the tail untouched."""
-    columns = roster_columns([_parsed_row(2)], [], 5, {_SHERBORN}, _STAMP)
-    assert all(len(values) == 5 for values in columns.values())
-
-
 # --- jurisdictions tab ---
-
-
-@pytest.mark.unit
-def test_outcomes_land_on_the_town_they_belong_to():
-    """Keyed by ocdid, not position: the volunteer may have re-sorted their tab between runs."""
-    columns = jurisdiction_columns(
-        [_CONCORD, _SHERBORN],
-        {_SHERBORN: 5, _CONCORD: 9},
-        {_SHERBORN: ("imported", None), _CONCORD: ("failed", "no such jurisdiction")},
-        _STAMP,
-    )
-    assert columns["status"] == ["failed", "imported"]
-    assert columns["rows"] == [9, 5]
-    assert columns["error"] == ["no such jurisdiction", ""]
-
-
-@pytest.mark.unit
-def test_a_town_the_run_never_reached_is_left_blank():
-    columns = jurisdiction_columns([_SHERBORN], {}, {}, _STAMP)
-    assert columns["status"] == [""]
-    assert columns["rows"] == [0]
-
-
 # --- what Sheets does to a date ---
 
 
@@ -365,3 +332,67 @@ def test_one_row_wanting_attention_brings_the_whole_roster():
     rows = _parsed(_row(status="imported"), _row(name="Bo", status=""))
     assert not already_handled(rows)
     assert len(rows) == 2
+
+
+@pytest.mark.unit
+def test_blank_rows_are_grid_not_errors():
+    """Sheets returns every line in the used range. A tab with four entries and 140 spare lines
+    was reporting 420 `required` errors and blocking both jurisdictions on rows nobody typed."""
+    blank = {column: "" for column in _row()}
+    parsed, errors = parse_rows([_row(), blank, blank, blank], _SHEET)
+
+    assert len(parsed) == 1
+    assert errors == []
+
+
+@pytest.mark.unit
+def test_a_half_filled_row_is_still_an_error():
+    """The distinction that matters: somebody picked a jurisdiction and stopped. That is a row
+    they meant to write, and telling them about it is the point."""
+    started = {column: "" for column in _row()}
+    started["jurisdiction_ocdid"] = _SHERBORN
+
+    _, errors = parse_rows([started], _SHEET)
+
+    assert {column for _, column in _flags(errors)} == {"name", "label"}
+
+
+@pytest.mark.unit
+def test_line_numbers_survive_skipped_blanks():
+    """Blank rows still occupy a line, so a row after one must keep the gutter number the
+    volunteer sees."""
+    blank = {column: "" for column in _row()}
+    parsed, _ = parse_rows([blank, blank, _row()], _SHEET)
+
+    assert [row.line for row in parsed] == [4]
+
+
+@pytest.mark.unit
+def test_a_stamped_but_untyped_row_is_still_blank():
+    """The bug this actually was. The write-back stamped `last_import_at` down the used range,
+    so every spare line carried a timestamp — and a blankness check over all values then read
+    143 empty lines as occupied and rejected each three times."""
+    stamped = {column: "" for column in _row()}
+    stamped["last_import_at"] = "2026-09-03 22:41"
+
+    parsed, errors = parse_rows([_row(), stamped], _SHEET)
+
+    assert len(parsed) == 1
+    assert errors == []
+
+
+@pytest.mark.unit
+def test_spare_lines_are_not_stamped():
+    """The other half: stop creating the condition. A line the parse produced nothing for gets
+    no timestamp, so it stays a line nobody wrote."""
+    columns = roster_columns([], [], 3, set(), _STAMP)
+
+    assert columns["last_import_at"] == ["", "", ""]
+
+
+@pytest.mark.unit
+def test_rows_the_run_saw_are_still_stamped():
+    parsed, errors = parse_rows([_row()], _SHEET)
+    columns = roster_columns(parsed, errors, 1, {_SHERBORN}, _STAMP)
+
+    assert columns["last_import_at"] == [_STAMP]

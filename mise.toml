@@ -15,6 +15,12 @@ _.file = ["../pipelines.env", "../civicpatch.org.env"]
 # by docker-compose / .env. Production uses $PROD_SERVICE_API_KEY (from secrets).
 SERVICE_API_KEY = "service-api-key"
 
+# The data-entry spreadsheet. Same default as civicpatch.org/docker-compose.yml:44, so the
+# stack and the smoke script agree on which sheet without either being told twice.
+# Not a secret: access is Drive sharing, not knowing the string.
+# https://docs.google.com/spreadsheets/d/16tGgkC40p3OGp7kRNlkqsA4V86Y5JdbEPQLK5cBkuIc
+ENTRY_SPREADSHEET_ID = "16tGgkC40p3OGp7kRNlkqsA4V86Y5JdbEPQLK5cBkuIc"
+
 
 [tasks.setup]
 run = "mise install && pre-commit install && pre-commit install --hook-type pre-push && uv sync --all-packages"
@@ -23,6 +29,25 @@ description = "Install all workspace dependencies"
 ###################################################
 ## 🚀✨ Syncs                                ✨🚀 ##
 ###################################################
+
+[tasks.sheet_sync]
+description = "Re-sync one state's sheet tabs now, or every state with no argument"
+# Literal ''' string, not """: TOML processes escapes in basic strings, so \" there reaches
+# the shell as a bare quote and curl gets three concatenated fragments instead of JSON.
+run = '''
+    curl -X POST "http://localhost:8000/api/admin/sheet_sync/rosters" \
+      -H "Content-Type: application/json" \
+      -H "Authorization: $SERVICE_API_KEY" \
+      -d "{\"state\": \"${state:-}\"}"
+'''
+
+[tasks.sheet_sync_jurisdictions]
+description = "Refresh the sheet's all-states jurisdiction dropdown source"
+run = """
+    curl -X POST "http://localhost:8000/api/admin/sheet_sync/jurisdictions" \
+      -H "Content-Type: application/json" \
+      -H "Authorization: $SERVICE_API_KEY"
+"""
 
 [tasks.pr_sync]
 run = """

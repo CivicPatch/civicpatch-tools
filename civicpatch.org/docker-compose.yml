@@ -146,6 +146,12 @@ services:
       STORAGE_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY_ID:-NO_KEY_PROVIDED}
       STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY:-NO_KEY_PROVIDED}
       FRIENDLY_STORAGE_HOST: ${FRIENDLY_STORAGE_HOST:-https://cdn.civicpatch.org}
+      # The worker is what writes the sheet — the sync activities run here, not in the API.
+      # Defaults must match the civicpatch-org service above or the two disagree about which
+      # spreadsheet they are talking about.
+      GOOGLE_SHEETS_PRIVATE_KEY_BASE64: ${GOOGLE_SHEETS_PRIVATE_KEY_BASE64:-NO_KEY_PROVIDED}
+      GOOGLE_SHEETS_CLIENT_EMAIL: ${GOOGLE_SHEETS_CLIENT_EMAIL:-NO_KEY_PROVIDED}
+      ENTRY_SPREADSHEET_ID: ${ENTRY_SPREADSHEET_ID:-16tGgkC40p3OGp7kRNlkqsA4V86Y5JdbEPQLK5cBkuIc}
       TEMPORAL_HOST: temporal:7233
       TEMPORAL_NAMESPACE: default
       DB_POOL_MIN_SIZE: 1

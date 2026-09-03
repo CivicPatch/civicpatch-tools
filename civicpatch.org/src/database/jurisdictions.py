@@ -2,8 +2,9 @@ import datetime
 import json
 import logging
 import math
+import uuid
 from collections.abc import Mapping, Sequence
-from typing import Any, List
+from typing import Any, AsyncGenerator, List
 
 from core.jurisdiction_search import (
     build_parent_ocdids,
@@ -497,6 +498,51 @@ async def search_jurisdictions(
     except Exception:
         logger.exception("Database error in get_jurisdictions")
         return 0, []
+
+
+_ACTIVE_AT_LEVELS = """
+    FROM jurisdictions
+    WHERE status = 'active' AND level = ANY(%(levels)s)
+"""
+
+
+async def count_active(levels: list[str]) -> int:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(f"SELECT count(*) {_ACTIVE_AT_LEVELS}", {"levels": levels})
+        row = await cur.fetchone()
+    return row[0] if row else 0
+
+
+async def stream_active(
+    levels: list[str], chunk_size: int
+) -> AsyncGenerator[list[dict], None]:
+    """Every active jurisdiction at the given levels, in chunks, ordered by ocdid.
+
+    Which levels is the caller's decision, not this function's — the entry sheet offers local
+    and county governments, and nothing here should have an opinion about that.
+
+    Server-side cursor, matching `memberships.stream_for_state`: nine thousand rows today and
+    perhaps forty thousand at national coverage.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor(name=f"jurisdictions_{uuid.uuid4().hex}") as cur:
+            await cur.execute(
+                """
+                SELECT jurisdiction_ocdid,
+                       data->>'name'       AS name,
+                       data->>'url'        AS url,
+                       data->>'population' AS population,
+                       level
+                """
+                + _ACTIVE_AT_LEVELS
+                + " ORDER BY jurisdiction_ocdid",
+                {"levels": levels},
+            )
+            while rows := await cur.fetchmany(chunk_size):
+                columns = [column.name for column in cur.description or []]
+                yield [dict(zip(columns, row)) for row in rows]
 
 
 async def get_jurisdictions_by_ocdids(ocdids: list[str]) -> list[dict]:

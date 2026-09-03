@@ -1,5 +1,6 @@
 import logging
-from typing import Any, List, LiteralString
+import uuid
+from typing import Any, AsyncGenerator, List, LiteralString
 
 from core.membership_label import derive_post_label
 from database.database import get_pool
@@ -369,13 +370,83 @@ async def get_people_page(
     ]
 
 
-async def delete_person(person_id: str) -> None:
+# Matches `memberships.STATE_CHUNK_SIZE`; the sheet writes in the same blocks.
+PEOPLE_CHUNK_SIZE = 2000
+
+_PEOPLE_IN_STATE = """
+    FROM people
+    WHERE jurisdiction_ocdid LIKE %(prefix)s
+"""
+
+_PEOPLE_SHEET_ROWS = """
+            SELECT jurisdiction_ocdid,
+                   id::text     AS person_id,
+                   name         AS person_name,
+                   other_names  AS person_other_names,
+                   emails       AS person_emails,
+                   phones       AS person_phones,
+                   urls         AS person_urls,
+                   image        AS person_image,
+                   cdn_image    AS person_cdn_image,
+                   source_urls  AS person_source_urls,
+                   updated_at   AS person_updated_at
+"""
+
+
+def _state_prefix(state: str) -> str:
+    return f"ocd-jurisdiction/country:us/state:{state.lower()}%"
+
+
+async def count_for_state(state: str) -> int:
+    """How many rows `stream_for_state` will yield — `ensure_tab` sizes the grid from it."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "DELETE FROM people WHERE id = %s",
+            f"SELECT count(*) {_PEOPLE_IN_STATE}", {"prefix": _state_prefix(state)}
+        )
+        row = await cur.fetchone()
+    return row[0] if row else 0
+
+
+async def stream_for_state(
+    state: str, chunk_size: int = PEOPLE_CHUNK_SIZE
+) -> AsyncGenerator[list[dict], None]:
+    """Every person in a state, one row each, in chunks.
+
+    Person-grained on purpose: this feeds the tab a curator scans for a near-miss *name*, and a
+    person repeated once per seat is noise there. Who holds what is the memberships tab.
+
+    Everyone we hold, including anyone with no membership at all — they are exactly the person
+    about to be re-added under a slightly different spelling.
+
+    Aliases are a contract with `core.sheet.people_rows.HEADERS`.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor(name=f"people_sheet_{uuid.uuid4().hex}") as cur:
+            await cur.execute(
+                _PEOPLE_SHEET_ROWS + _PEOPLE_IN_STATE + " ORDER BY name, id",
+                {"prefix": _state_prefix(state)},
+            )
+            while rows := await cur.fetchmany(chunk_size):
+                columns = [column.name for column in cur.description or []]
+                yield [dict(zip(columns, row)) for row in rows]
+
+
+async def delete_person(person_id: str) -> str | None:
+    """Returns the jurisdiction they were in, or None when there was no such person.
+
+    Returned rather than discarded because the caller mirrors the removal outward, and once
+    the row is gone there is nothing left to ask.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "DELETE FROM people WHERE id = %s RETURNING jurisdiction_ocdid",
             (person_id,),
         )
+        row = await cur.fetchone()
+    return row[0] if row else None
 
 
 _PERSON_COLUMNS = (

@@ -210,6 +210,93 @@ print(json.dumps(resp.json(), indent=2))
 EOF
 """
 
+[tasks.test-openrouter-grounded]
+description = "Probe the grounded (web-search) Gemini path through OpenRouter — the step-0 probe"
+run = """
+uv run python3 - <<'EOF'
+# Step 0 of 2026-09-02-plan-openrouter-only-and-llm-call-costs.md.
+#
+# Sends ONE grounded request with the body the port will use, and answers the three
+# questions the plan cannot answer from documentation:
+#   (a) does Google AI Studio pass `data_collection: "deny"`, given allow_fallbacks=false?
+#   (b) does Gemini 3.x bill reasoning tokens here (decides whether a max_tokens cap is safe)?
+#   (c) is `usage.cost` actually present and non-zero?
+#
+# Costs real money: roughly $0.014 of web search plus a fraction of a cent of tokens.
+import json, os, requests
+import services.google_gemini.prompts as prompts
+
+api_key = os.environ.get("OPEN_ROUTER_TOKEN")
+if not api_key:
+    raise SystemExit("OPEN_ROUTER_TOKEN is not set")
+
+MODEL = os.environ.get("PROBE_MODEL", "google/gemini-2.5-flash")
+
+# The real prompt, not a synthetic one — the probe exists to test what production sends.
+prompt = prompts.find_jurisdiction_url_prompt(
+    "ocd-jurisdiction/country:us/state:wa/place:buckley/government", "Buckley city"
+)
+
+payload = {
+    "model": MODEL,
+    # A USER turn, not a system message. OpenRouter maps `system` to Gemini's
+    # systemInstruction, and the live grounded path puts the prompt in `contents`.
+    "messages": [{"role": "user", "content": prompt}],
+    "temperature": 0,
+    # No top_p and no max_tokens: the live Gemini path sends neither.
+    "plugins": [{"id": "web", "engine": "native"}],
+    "usage": {"include": True},
+    "provider": {
+        "order": ["Google AI Studio"],
+        "allow_fallbacks": False,
+        "data_collection": "deny",
+    },
+}
+
+resp = requests.post(
+    "https://openrouter.ai/api/v1/chat/completions",
+    headers={
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://civicpatch.org",
+        "X-Title": "CivicPatch",
+    },
+    data=json.dumps(payload),
+    timeout=180,
+)
+
+print("=== STATUS ===")
+print(resp.status_code)
+print("=== BODY ===")
+body = resp.json()
+print(json.dumps(body, indent=2)[:6000])
+
+print()
+print("=== THE THREE ANSWERS ===")
+if resp.status_code == 404:
+    print("(a) data_collection=deny  -> FAILED: 404, no endpoint survives the policy filter")
+elif resp.ok:
+    print(f"(a) data_collection=deny  -> OK, routed to {body.get('provider')!r}")
+else:
+    print(f"(a) data_collection=deny  -> inconclusive, HTTP {resp.status_code}")
+
+usage = body.get("usage") or {}
+details = usage.get("completion_tokens_details") or {}
+print(f"(b) reasoning_tokens      -> {details.get('reasoning_tokens')!r} "
+      f"(completion_tokens={usage.get('completion_tokens')!r})")
+print(f"(c) usage.cost            -> {usage.get('cost')!r} "
+      f"(cost_details={usage.get('cost_details')!r})")
+print(f"    routed model          -> {body.get('model')!r}")
+print(f"    generation id         -> {body.get('id')!r}")
+
+choices = body.get("choices") or []
+if choices:
+    print()
+    print("=== ANSWER TEXT ===")
+    print((choices[0].get("message") or {}).get("content"))
+EOF
+"""
+
 [tasks.test-pipeline-run-cicd]
 run = """
 docker compose -f docker-compose.github-actions.yml run --rm pipelines-cicd uv run \

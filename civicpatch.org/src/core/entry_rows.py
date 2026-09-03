@@ -131,6 +131,11 @@ def parse_rows(
 
     for offset, row in enumerate(rows):
         line = offset + 2
+        # A row with nothing in it is grid, not a row somebody wrote. Sheets returns every line
+        # in the used range, so a tab with 4 entries and 140 spare lines otherwise reports 420
+        # "required" errors and blocks the import on rows nobody typed.
+        if _is_blank(row):
+            continue
         row_errors = _row_errors(row, line)
         if row_errors:
             errors.extend(row_errors)
@@ -138,6 +143,20 @@ def parse_rows(
             parsed.append(_import_row(row, line, source_url))
 
     return parsed, errors + _duplicate_errors(parsed)
+
+
+# What a volunteer fills in. `STATUS_COLUMNS` are ours and deliberately excluded below.
+_VOLUNTEER_COLUMNS = _REQUIRED + _OPTIONAL
+
+
+def _is_blank(row: dict) -> bool:
+    """Whether the volunteer typed anything on this line.
+
+    App-owned columns do not count. The write-back used to stamp `last_import_at` down the whole
+    used range, so a spare line can carry a timestamp and still be a line nobody wrote — judging
+    on every value would call it occupied and reject it three times over.
+    """
+    return not any(_clean(row.get(column)) for column in _VOLUNTEER_COLUMNS)
 
 
 def _error(row: dict, line: int, column: str | None, message: str) -> RowError:
@@ -254,8 +273,13 @@ def roster_columns(
     jurisdiction_by_line = {row.line: row.jurisdiction_ocdid for row in rows}
     blocked = {error.jurisdiction_ocdid for error in errors}
 
-    status, message = [], []
+    # A line the parse produced nothing for is a spare line. Stamping it writes app data into
+    # a row nobody used, and the next run then reads that row as occupied.
+    written = set(previous) | set(error_by_line)
+
+    status, message, stamps = [], [], []
     for line in range(2, row_count + 2):
+        stamps.append(stamp if line in written else "")
         error = error_by_line.get(line)
         jurisdiction = jurisdiction_by_line.get(line) or (
             error.jurisdiction_ocdid if error else ""
@@ -279,30 +303,5 @@ def roster_columns(
     return {
         "status": status,
         "error": message,
-        "last_import_at": [stamp] * len(status),
-    }
-
-
-def jurisdiction_columns(
-    ocdids: list[str],
-    counts: dict[str, int],
-    results: dict[str, tuple[str, str | None]],
-    stamp: str,
-) -> dict[str, list]:
-    """`rows`, `status`, `error` and `last_import_at` for the worklist tab, in its own order.
-
-    Keyed by the ocdid the volunteer picked rather than by position, so re-sorting their tab
-    between runs cannot write Sherborn's outcome onto Concord's row.
-    """
-    status, message = [], []
-    for ocdid in ocdids:
-        outcome, error = results.get(ocdid, ("", None))
-        status.append(outcome)
-        message.append(error or "")
-
-    return {
-        "rows": [counts.get(ocdid, 0) for ocdid in ocdids],
-        "status": status,
-        "error": message,
-        "last_import_at": [stamp] * len(ocdids),
+        "last_import_at": stamps,
     }

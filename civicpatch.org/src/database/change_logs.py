@@ -146,3 +146,31 @@ async def record_dismissal(
         DismissalPayload(reason=reason),
         changeset_id=changeset_id,
     )
+
+
+async def states_changed_since(minutes: int) -> list[str]:
+    """Which states have had a jurisdiction-scoped change in the last `minutes`.
+
+    The feed the outward mirrors run on. Complete because `record_change` writes on the cursor
+    it mutates with — watching the tables instead would miss deletes, which is what a mirror
+    most needs to see.
+
+    A lookback window rather than a stored cursor, so no migration.
+
+    Rows with no jurisdiction are the global ones — role edits, which rename something every
+    state derives a label from. Deliberately not chased: the next change in a state carries the
+    new wording anyway, so a rename reaches the sheet as those states are next touched.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT DISTINCT substring(jurisdiction_ocdid from 'state:([a-z]{2})') AS state
+            FROM change_logs
+            WHERE created_at > now() - make_interval(mins => %s)
+              AND jurisdiction_ocdid IS NOT NULL
+            """,
+            (minutes,),
+        )
+        rows = await cur.fetchall()
+    return sorted(row[0] for row in rows if row[0])

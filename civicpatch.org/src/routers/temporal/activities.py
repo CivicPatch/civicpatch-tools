@@ -1,9 +1,12 @@
+import database.change_logs as change_logs_db
 import database.pipeline_runs as pipeline_runs_db
 import database.changesets as changesets_db
 import database.review_session_entries as review_session_entries_db
 import lib.github.api as github_service
 import services.open_data_sync as data_sync
 import services.publish as publish_service
+import services.roster_sheet as roster_sheet
+from services import entry_sheet
 from database.issues import upsert_issue
 from lib.temporal.types import OpenDataBatchCommitRequest, OpenDataCommitRequest
 from shared.utils.statuses import PipelineIssueType
@@ -20,6 +23,14 @@ _STALE_RUN_ISSUE_DETAIL = {"error": "pipeline run timed out and was expired"}
 @activity.defn
 async def od_sync_activity() -> None:
     await data_sync.sync_all()
+    # Its own workflow, not an activity here: this schedule is SKIP-overlap, so a Sheets write
+    # retrying forever would block every later sync.
+    #
+    # avoid circular import: the client imports the workflows module, which imports this one
+    import lib.temporal.client as temporal_client
+
+    if entry_sheet.is_configured():
+        await temporal_client.enqueue_jurisdictions_sheet_sync()
 
 
 @activity.defn
@@ -107,3 +118,43 @@ async def supersede_stacked_requests_activity() -> None:
         activity.logger.info(
             "Superseded %d stacked request(s): %s", len(dismissed), dismissed
         )
+
+
+@activity.defn
+async def sync_roster_sheet_activity(state: str) -> None:
+    """Rewrite one state's people and posts tabs. Retry-safe: replaced whole, not patched."""
+    people, seats, posts = await roster_sheet.sync_state(state)
+    activity.logger.info(
+        "Sheet sync %s: %d people, %d memberships, %d posts", state, people, seats, posts
+    )
+
+
+@activity.defn
+async def sync_jurisdictions_sheet_activity() -> None:
+    """Rewrite the all-states dropdown source."""
+    written = await roster_sheet.sync_jurisdictions()
+    activity.logger.info("Sheet sync jurisdictions: %d rows", written)
+
+
+# Wider than the 5-minute cadence: a redundant re-sync is a no-op, a missed one is a stale tab.
+_SWEEP_LOOKBACK_MINUTES = 15
+
+
+@activity.defn
+async def sweep_roster_sheets_activity() -> None:
+    """Sync every state that changed recently. The sheet's only route in during normal running.
+
+    Derived, not dispatched — nothing calls out to the sheet, so a new write path cannot forget
+    it without also breaking the jurisdiction history page.
+
+    """
+    # avoid circular import: the client imports the workflows module, which imports this one
+    import lib.temporal.client as temporal_client
+
+    if not entry_sheet.is_configured():
+        return
+    states = await change_logs_db.states_changed_since(_SWEEP_LOOKBACK_MINUTES)
+    for state in states:
+        await temporal_client.enqueue_roster_sheet_sync(state)
+    if states:
+        activity.logger.info("Swept %s into sheet syncs", ", ".join(states))

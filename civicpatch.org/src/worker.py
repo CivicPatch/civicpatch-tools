@@ -10,8 +10,11 @@ from lib.temporal.workflows import (
     TASK_QUEUE,
     OdSyncTargetedWorkflow,
     OdSyncWorkflow,
+    JurisdictionsSheetSyncWorkflow,
     OpenDataBatchCommitWorkflow,
     OpenDataCommitWorkflow,
+    RosterSheetSweepWorkflow,
+    RosterSheetSyncWorkflow,
     PipelineRunCleanupWorkflow,
     ReviewSessionCleanupWorkflow,
     ScheduleId,
@@ -25,6 +28,9 @@ from routers.temporal.activities import (
     od_sync_activity,
     od_sync_targeted_activity,
     supersede_stacked_requests_activity,
+    sweep_roster_sheets_activity,
+    sync_jurisdictions_sheet_activity,
+    sync_roster_sheet_activity,
 )
 from temporalio.client import (
     Client,
@@ -49,6 +55,9 @@ WORKFLOWS = [
     OpenDataBatchCommitWorkflow,
     PipelineRunCleanupWorkflow,
     ReviewSessionCleanupWorkflow,
+    RosterSheetSyncWorkflow,
+    JurisdictionsSheetSyncWorkflow,
+    RosterSheetSweepWorkflow,
 ]
 
 
@@ -172,7 +181,25 @@ async def _register_schedules(client: Client) -> None:
         ),
     )
 
-    # The three above are the whole set. Anything else on the server is from a version that
+    await _ensure_schedule(
+        client,
+        ScheduleId.ROSTER_SHEET_SWEEP,
+        Schedule(
+            action=ScheduleActionStartWorkflow(
+                RosterSheetSweepWorkflow.run,
+                id=WorkflowInstanceId.ROSTER_SHEET_SWEEP,
+                task_queue=TASK_QUEUE,
+            ),
+            # Every five minutes, against a fifteen-minute lookback. This is the sheet's
+            # only route in during normal running, so the gap between a publish and the tab
+            # is this plus the debounce.
+            spec=ScheduleSpec(cron_expressions=["*/5 * * * *"]),
+            policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
+        ),
+    )
+
+
+    # The four above are the whole set. Anything else on the server is from a version that
     # declared more than this one does.
     await _retire_undeclared_schedules(
         client,
@@ -180,6 +207,7 @@ async def _register_schedules(client: Client) -> None:
             ScheduleId.OD_SYNC,
             ScheduleId.PIPELINE_RUN_CLEANUP,
             ScheduleId.REVIEW_SESSION_CLEANUP,
+            ScheduleId.ROSTER_SHEET_SWEEP,
         },
     )
 
@@ -204,6 +232,9 @@ async def main() -> None:
                     commit_open_data_activity,
             commit_open_data_batch_activity,
             supersede_stacked_requests_activity,
+            sync_roster_sheet_activity,
+            sync_jurisdictions_sheet_activity,
+            sweep_roster_sheets_activity,
         ],
     ):
         print(f"Worker started on task queue: {TASK_QUEUE}")

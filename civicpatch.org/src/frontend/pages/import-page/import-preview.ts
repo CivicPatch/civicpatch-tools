@@ -1,19 +1,38 @@
 import { html } from "lit-html";
 import { component } from "haunted";
 import { type ImportPreview, type RowError } from "./import-types.js";
+import {
+  jurisdictionOcdidToFriendly,
+  jurisdictionOcdidToPath,
+} from "../../components/ocdid-utils.js";
 
-// What the import found, once it has run. The ocdids themselves are not listed: unreadable in
-// bulk, and every rejected one is already named against its own row below.
+// What the import found, once it has run. Localities read as their town name and link to the
+// jurisdiction, so a rejected row is one click from the page that explains it — the raw ocdid
+// is unreadable in bulk and tells you nothing you can act on.
 
 type ImportPreviewHost = HTMLElement & {
   preview: ImportPreview | null;
 };
 
+/** A town name linking to its jurisdiction, or nothing when the row named no jurisdiction —
+ * which is what a row missing its `jurisdiction_ocdid` looks like. */
+function locality(jurisdiction_ocdid: string) {
+  const path = jurisdictionOcdidToPath(jurisdiction_ocdid);
+  if (!path) return html`<td></td>`;
+  return html`
+    <td>
+      <a href="/${path}" title=${jurisdiction_ocdid}
+        >${jurisdictionOcdidToFriendly(jurisdiction_ocdid)}</a
+      >
+    </td>
+  `;
+}
+
 function errorRow(error: RowError) {
   return html`
     <tr>
       <td class="import-errors__line">${error.line}</td>
-      <td class="import-cell--ocdid">${error.jurisdiction_ocdid}</td>
+      ${locality(error.jurisdiction_ocdid)}
       <td>${error.column ?? "-"}</td>
       <td>${error.message}</td>
     </tr>
@@ -33,7 +52,18 @@ function ImportPreviewPanel(host: ImportPreviewHost) {
         </tr>
         <tr>
           <th>jurisdictions found</th>
-          <td>${preview.jurisdictions_ready.length}</td>
+          <td>
+            ${preview.jurisdictions_ready.length}
+            ${preview.jurisdictions_ready.length
+              ? html`&mdash;
+                  ${preview.jurisdictions_ready.map(
+                    (ocdid, index) => html`${index ? ", " : ""}
+                      <a href="/${jurisdictionOcdidToPath(ocdid)}" title=${ocdid}
+                        >${jurisdictionOcdidToFriendly(ocdid)}</a
+                      >`,
+                  )}`
+              : null}
+          </td>
         </tr>
         ${preview.jurisdictions_blocked.length
           ? html`<tr>

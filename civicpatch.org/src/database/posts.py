@@ -504,8 +504,12 @@ async def update(
     headcount: int,
     is_tracked: bool,
     user_id: str | None = None,
-) -> bool:
-    """Set the human-owned fields, logging what actually moved.
+) -> str | None:
+    """Set the human-owned fields, logging what actually moved. Returns the jurisdiction, or
+    None when there is no such post.
+
+    The jurisdiction rather than a bare bool because the caller has to mirror the change
+    outward and cannot ask afterwards — it is already read here for the change log.
 
     Read before write so the log can carry before/after. A no-op edit still logs — somebody
     looked at this post and confirmed it, which is worth as much as a change.
@@ -514,7 +518,7 @@ async def update(
     async with pool.connection() as conn, conn.cursor() as cur:
         before = await get(cur, post_id)
         if before is None:
-            return False
+            return None
 
         await update_human_fields(cur, post_id, headcount, is_tracked)
         await _accept_fields(
@@ -546,7 +550,7 @@ async def update(
             ),
             changeset_id=await live_roster_changeset(cur, before.jurisdiction_ocdid),
         )
-        return True
+        return before.jurisdiction_ocdid
 
 
 async def delete(post_id: str, user_id: str | None = None) -> bool:
