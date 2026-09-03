@@ -8,6 +8,7 @@ Isolation: sentinel state 'zz', cleaned before and after each test.
 """
 
 import uuid
+from datetime import datetime, timezone
 from unittest.mock import AsyncMock, patch
 
 import pytest
@@ -360,3 +361,35 @@ async def test_the_person_axis_reads_without_signing_in(anonymous_client):
     assert read.json()["data"]["memberships"] == []
 
     assert anonymous_client.get(f"{_PREFIX}/unmatched").status_code == 403
+
+
+# ── Seat timestamps ─────────────────────────────────────────────────────
+# `last_seen_at` is the changeset's `sourced_at`: a scrape's run date, `now()` for a hand edit
+# or a sheet import. Every registrar stamps it at creation, so nothing downstream branches on
+# kind — and `assign`, which mints no changeset, uses the same `now()` a hand edit would get.
+
+
+async def _seat_seen_at(person_id: str):
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT first_seen_at, last_seen_at FROM memberships "
+            "WHERE person_id = %s AND closed_at IS NULL",
+            (person_id,),
+        )
+        return await cur.fetchone()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_manual_seat_is_dated_when_the_human_seated_them(client):
+    person_id, mayor, _ = await _seed()
+    before = datetime.now(timezone.utc)
+
+    assert client.put(
+        _PREFIX, json={"person_id": person_id, "post_id": mayor}
+    ).status_code == 200
+
+    first_seen_at, last_seen_at = await _seat_seen_at(person_id)
+    assert first_seen_at >= before
+    assert last_seen_at >= before

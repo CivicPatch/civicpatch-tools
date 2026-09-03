@@ -36,10 +36,14 @@ def _post_name(changes: Mapping) -> str:
 
 
 def _subject(type_: ChangeLogType, changes: Mapping) -> str:
+    if type_ == ChangeLogType.EDIT_JURISDICTION:
+        # The place itself is the subject — there is no person or seat to name.
+        return changes.get("jurisdiction_name") or "jurisdiction"
     if type_ == ChangeLogType.ASSERT_FIELD:
-        # Only ids are in the payload. Resolving a real name needs a join, keyed on
-        # `entity_type` — open question F in the jurisdiction-history plan.
-        return changes.get("entity_type") or "record"
+        # An assertion payload stores only ids, so the reader resolves `entity_name` and puts
+        # it here on the way out. The type is the fallback when the entity is gone — better a
+        # bare "person" than a uuid nobody can read.
+        return changes.get("entity_name") or changes.get("entity_type") or "record"
     return changes.get("person_name") or _post_name(changes)
 
 
@@ -60,6 +64,13 @@ def roster_change(
         type=type_,
         created_at=created_at,
         name=_subject(type_, changes),
+        # Only a membership has a second subject worth naming: its seat. Everything else is
+        # already fully described by `name` plus the fields that moved.
+        detail=(
+            _post_name(changes)
+            if type_ == ChangeLogType.ASSIGN_MEMBERSHIP
+            else None
+        ),
         fields=fields,
     )
 

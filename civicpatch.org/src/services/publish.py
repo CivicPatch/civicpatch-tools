@@ -16,6 +16,7 @@ import lib.storage as storage_service
 import services.change_logs as change_logs
 import shared.utils.id_utils
 from core.images import artifacts_key, promoted_key, promoted_url
+from core.membership_label import derive_post_label
 from core.post_derivation import ChosenPost, DerivedPost, RosterEntry, derived_posts
 from database import posts as posts_db
 from database.database import get_pool
@@ -27,9 +28,10 @@ from lib.temporal.types import (
     OpenDataCommitItem,
     OpenDataCommitRequest,
 )
-from shared.schemas import OpenStatesPersonRecord, RoleConfig
+from shared.schemas import DerivedPerson, OpenStatesPersonRecord, RoleConfig
+from shared.utils.people_utils import person_sort_key
 from shared.utils.statuses import DismissalReason
-from shared.utils.taxonomy import build_taxonomy
+from shared.utils.taxonomy import Taxonomy, build_taxonomy
 from shared.utils.yaml_utils import yaml_dump
 
 logger = logging.getLogger(__name__)
@@ -102,6 +104,10 @@ async def chosen_posts(picks: dict[str, str]) -> dict[str, ChosenPost]:
     }
 
 
+async def _taxonomy() -> Taxonomy:
+    return build_taxonomy(RoleConfig(roles=await get_roles()))
+
+
 async def _get_derived_posts(people: list[dict]) -> list[DerivedPost]:
     roles = await get_roles()
     taxonomy = build_taxonomy(RoleConfig(roles=roles))
@@ -140,9 +146,97 @@ async def dismiss_people(
     logger.info(f"[{changeset_id}] Dismissed without publishing")
 
 
-def open_data_records(roster: list[dict]) -> list[dict]:
-    """The roster as open-data receives it. A key the model does not declare is dropped here."""
-    return [OpenStatesPersonRecord(**person).model_dump() for person in roster]
+# Every list whose order carries no meaning. Sorted at this boundary so the same values always
+# render the same way: `core.people_edits` builds these as `kept + accepted` — stored array order
+# then assertion order — so accepting a value a reviewer already had could reorder the list and
+# diff a file that did not change.
+_UNORDERED_LISTS = ("other_names", "phones", "emails", "urls", "source_urls")
+
+# An unranked role sorts last, matching `core.people_roles`.
+_UNRANKED = 1_000_000
+
+
+def _role_rank(role: dict) -> tuple:
+    """Order of a person's own seats. Priority first — a mayor leads a council member — then
+    stable tiebreaks. Not `person_sort_key`, which orders people against each other."""
+    priority = role.get("priority")
+    return (
+        _UNRANKED if priority is None else priority,
+        role.get("role_id") or "",
+        role.get("division_ocdid") or "",
+        role.get("name") or "",
+    )
+
+# Needed to build the record, absent from the published one. `jurisdiction_ocdid` lives on
+# `PersonBase` because every other consumer of that model wants it — but in the published file
+# it belongs to each role, so a person with seats in two places is describable.
+_PERSON_ONLY_KEYS = {"jurisdiction_ocdid"}
+
+
+def _as_published(person: dict) -> dict:
+    """The projection's key names translated to the published ones.
+
+    Only `memberships` → `roles` differs today. Explicit, because Pydantic would otherwise
+    ignore the unknown key and leave `roles` empty — publishing every person with no seats and
+    no error."""
+    seats = person.get("memberships")
+    if seats is None:
+        return person
+    roles = [
+        {
+            **seat,
+            # The seat's own name, not the bare role: "Council Member, District 5".
+            "name": derive_post_label(
+                seat.get("role_label") or "", seat.get("division_ocdid") or ""
+            ),
+        }
+        for seat in seats
+    ]
+    # Sorted here rather than inherited from `PERSON_MEMBERSHIPS`'s ORDER BY, for the same
+    # reason the records are: a query is free to change its mind, a published file is a diff.
+    roles.sort(key=_role_rank)
+
+    published = {k: v for k, v in person.items() if k != "memberships"}
+    for field in _UNORDERED_LISTS:
+        values = published.get(field)
+        if values:
+            published[field] = sorted(values)
+    return {**published, "roles": roles}
+
+
+def open_data_records(roster: list[dict], taxonomy: Taxonomy) -> list[dict]:
+    """The roster as open-data receives it. A key the model does not declare is dropped here.
+
+    **Sorted here, not upstream.** Every caller happens to pass a `get_roster` result, which
+    orders by name — but that is a query's business, and a file in git is a diff. If the order
+    is only inherited, then changing an ORDER BY anywhere rewrites every published file for no
+    reason anybody could see from the change. This is the boundary that owns the output, so it
+    is the boundary that sorts.
+
+    `id` breaks the tie: two people can share a name, and without a total order they could swap
+    places between commits and show up as a diff.
+
+    Field order within each record is `OpenStatesPersonRecord`'s declaration order — Pydantic
+    dumps in that order and ruamel preserves it. `test_open_data_records` pins it, because
+    reordering the model would otherwise churn the whole corpus silently.
+    """
+    # `person_sort_key`, not a rule of our own: this is the same order the roster read uses,
+    # so the published file and the page a reviewer approved agree about who comes first.
+    # Built from `labels`, which the projection still carries even though the published record
+    # no longer does. `id` breaks a remaining tie so the order is total.
+    ordered = sorted(
+        roster,
+        key=lambda person: (
+            person_sort_key(DerivedPerson(**person), taxonomy),
+            person.get("id") or "",
+        ),
+    )
+    return [
+        OpenStatesPersonRecord(**_as_published(person)).model_dump(
+            exclude=_PERSON_ONLY_KEYS
+        )
+        for person in ordered
+    ]
 
 
 def unreviewed_file_path(jurisdiction_ocdid: str) -> str:
@@ -165,10 +259,11 @@ async def commit_rendered_file(
     what is true when it lands, not what was true when it was queued.
     """
     roster = await get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
+    taxonomy = await _taxonomy()
     commit_url = await github_service.upsert_github_file(
         branch_name=github_service.DEFAULT_BRANCH,
         file_path=file_path,
-        content_str=yaml_dump(open_data_records(roster)),
+        content_str=yaml_dump(open_data_records(roster, taxonomy)),
         commit_message=commit_message,
     )
     if commit_url and changeset_id:
@@ -186,9 +281,10 @@ async def commit_rendered_files(
     url, because that is genuinely where each of them landed.
     """
     contents = {}
+    taxonomy = await _taxonomy()
     for item in items:
         roster = await get_roster(jurisdiction_ocdid=item.jurisdiction_ocdid)
-        contents[item.file_path] = yaml_dump(open_data_records(roster))
+        contents[item.file_path] = yaml_dump(open_data_records(roster, taxonomy))
 
     commit_url = await git_data.commit_github_files(
         branch_name=github_service.DEFAULT_BRANCH,

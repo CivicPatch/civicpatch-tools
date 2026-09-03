@@ -6,6 +6,7 @@ from pydantic import BaseModel, field_validator
 
 import services.jurisdiction_pull_request as jurisdiction_pr_service
 import services.jurisdiction_scrape_candidate as candidate_service
+import database.changesets as changesets
 import database.jurisdictions as database
 import lib.cache as cache_service
 from lib.auth import require_route_access
@@ -283,21 +284,32 @@ def get_router() -> APIRouter:
         )
         return response
 
+    # The house pagination shape: `page` + `per_page` in, `{total_items, page, total_pages,
+    # data}` out — 9 of 12 paged endpoints take these params and 5 return this envelope.
+    # `offset` stays inside the database layer, where the window is what the query wants.
     @router.get("/history")
     async def get_jurisdiction_history_endpoint(
+        jurisdiction_ocdid: str = Query(..., description="The OCD ID of the jurisdiction"),
+        page: int = Query(1, ge=1),
+        per_page: int = Query(database.DEFAULT_HISTORY_LIMIT, ge=1, le=100),
+    ):
+        total, history = await database.get_jurisdiction_history(
+            jurisdiction_ocdid, limit=per_page, offset=(page - 1) * per_page
+        )
+        return {
+            "total_items": total,
+            "page": page,
+            "total_pages": max(1, (total + per_page - 1) // per_page),
+            "data": history,
+        }
+
+    # Public, like the history it summarises: the jurisdiction page is public and each action
+    # gates itself. This is the whole-history fetch that page used to do, narrowed to the rows
+    # it actually derives from.
+    @router.get("/in-flight")
+    async def get_jurisdiction_in_flight_endpoint(
         jurisdiction_ocdid: str = Query(..., description="The OCD ID of the jurisdiction")
     ):
-        database_history = await database.get_jurisdiction_history(jurisdiction_ocdid)
-
-        # Query github for matching pull requests and add to top of history
-        # TBD: does this need a cache?
-        #pull_request_history = github_service.get_pull_request_history(jurisdiction_ocdid)
-        #history = database_history + pull_request_history
-        history = database_history
-
-        if history is None:
-            raise HTTPException(status_code=404, detail="Jurisdiction not found")
-
-        return {"data": history}
+        return {"data": await changesets.get_in_flight(jurisdiction_ocdid)}
 
     return router

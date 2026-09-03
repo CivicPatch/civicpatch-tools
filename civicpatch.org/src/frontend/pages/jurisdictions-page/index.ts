@@ -5,26 +5,25 @@ import { useWebSocket } from "../../hooks/use-websocket.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { usePeople } from "../../hooks/usePeople.js";
 import { buildIdentitiesMap } from "../../utils/people.js";
-import { dateStringToFriendly } from "../../utils/date-utils.js";
+import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
+import { historyUrl } from "./history/history-routes.js";
+
 import "./jurisdiction-page.css";
-import "./history/history-list.js";
 import "./jurisdiction-details.js";
-import "./history/scrape-in-progress.ts";
 import "./scrape-modal/scrape-modal.js";
 import "./scrape-modal/name-config-form.js";
 
-import { triggerPipelineRun, fetchJurisdictionHistory, patchJurisdictionData } from "../../api.js";
+import { triggerPipelineRun, fetchJurisdictionInFlight, patchJurisdictionData } from "../../api.js";
 import { renderJurisdictionHeader } from "./jurisdiction-header.js";
 import "./roster-editor.js";
 import {
-  publishedAt,
   pendingReviews,
   peopleEditBlockers,
   jurisdictionEditBlockers,
   renderPendingReviews,
   editingBlockedReason,
   jurisdictionEditBlockedReason,
-  type HistoryEntry,
+  type InFlightEntry,
 } from "./awaiting-review.js";
 
 interface JurisdictionPageProps {
@@ -104,30 +103,34 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
   const isSignedIn = !!user?.authenticated;
   const { people, isLoading: peopleLoading } = usePeople(jurisdiction_ocdid);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
-  const [history, setHistory] = useState<{ data: HistoryEntry[] } | null>(null);
+  // Only what is still in flight, plus two scalars. This used to fetch every changeset the
+  // jurisdiction has ever had in order to derive four things from the array.
+  const [inFlight, setInFlight] = useState<InFlightEntry[]>([]);
+  const [publishedAtDate, setPublishedAtDate] = useState<string | null>(null);
   const [isTriggering, setIsTriggering] = useState(false);
   const [scrapeError, setScrapeError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!jurisdiction_ocdid) return;
-    fetchJurisdictionHistory(jurisdiction_ocdid)
-      .then(setHistory)
-      .catch(() => setHistory(null));
+    fetchJurisdictionInFlight(jurisdiction_ocdid)
+      .then((body: any) => {
+        setInFlight(body.data?.in_flight ?? []);
+        setPublishedAtDate(body.data?.last_published_at ?? null);
+      })
+      .catch(() => setInFlight([]));
   }, [jurisdiction_ocdid]);
 
   const wsTopic = jurisdiction_ocdid ? `pipeline_run_status:${jurisdiction_ocdid}` : null;
-  const { data: pipelineRunStatus, isConnected, error: sseError } = useWebSocket(wsTopic, {
+  const { data: pipelineRunStatus } = useWebSocket(wsTopic, {
     autoConnect: !!wsTopic,
   });
 
   const jurisdictionData = jurisdiction_data ? JSON.parse(jurisdiction_data) : null;
   const identities = buildIdentitiesMap(people);
-  const entries: HistoryEntry[] = history?.data ?? [];
-  // Split rather than decorate: a scrape in flight is a different thing from one that has
-  // run, and the archive row for it would carry a meaningless percentage bar.
-  const liveEntry = entries.find((entry) => entry.is_running);
-  const pastEntries = entries.filter((e: any) => e !== liveEntry);
-  const awaitingReview = pendingReviews(entries);
+  // Split rather than decorate: a scrape in flight is a different thing from one waiting on a
+  // reviewer, and only the first has a progress bar to show.
+  const liveEntry = inFlight.find((entry) => entry.is_running);
+  const awaitingReview = pendingReviews(inFlight);
   // Blocked independently: each kind only locks the file it already has in flight.
   const peopleBlockers = peopleEditBlockers(awaitingReview);
   const jurisdictionBlockers = jurisdictionEditBlockers(awaitingReview);
@@ -151,11 +154,10 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
         created_at: now,
         updated_at: now,
         change_url: null,
-        review_status: null,
         branch_name: null,
         jurisdiction_ocdid,
       };
-      setHistory((prev: any) => ({ ...prev, data: [newEntry, ...(prev?.data ?? [])] }));
+      setInFlight((prev: InFlightEntry[]) => [newEntry, ...prev]);
     } catch (err: any) {
       setScrapeError(err.message);
     } finally {
@@ -168,26 +170,10 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
     return result.data;
   };
 
-  const handleCancelRun = (changesetId: string) => {
-    setHistory((prev: any) => ({
-      ...prev,
-      data: prev.data.map((j: any) =>
-        j.changeset_id === changesetId ? { ...j, pipeline_run_status: "CANCELLED" } : j,
-      ),
-    }));
-  };
-
-  const publishedAtDate = publishedAt(entries);
-
-  // null until the reader touches it, then it is theirs. Binding ?open straight to the run
-  // state made cancelling slam the panel shut: the run goes terminal and lit closes it.
-  const [userOpenedScrapes, setScrapesPanelOpen] = useState<boolean | null>(null);
-
-  // Both sources answer it themselves now — the socket payload and the history row carry
+  // Both sources answer it themselves now — the socket payload and the in-flight row carry
   // `is_running`, so this no longer has to know which statuses are terminal.
   const isRunInProgress = pipelineRunStatus?.is_running ?? !!liveEntry;
-
-  const scrapesPanelOpen = userOpenedScrapes ?? !!isRunInProgress;
+  const historyHref = historyUrl(jurisdictionOcdidToPath(jurisdiction_ocdid));
 
   const canStartScrape =
     permissions.can_scrape;
@@ -198,7 +184,9 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
         name: jurisdictionData?.data?.name,
         ocdid: jurisdiction_ocdid,
         isScraped: people?.length > 0,
+        hasUrl: !!jurisdictionData?.data?.url,
         publishedAt: publishedAtDate,
+        historyHref,
         canStartScrape,
         isScrapeBlocked: peopleBlockers.length > 0,
         isRunInProgress: !!isRunInProgress || isTriggering,
@@ -233,40 +221,6 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
         handleJurisdictionSave,
         jurisdictionEditBlockedReason(jurisdictionBlockers),
       )}
-
-      <details
-        class="jurisdiction-panel"
-        ?open=${scrapesPanelOpen}
-        @toggle=${(e: Event) => setScrapesPanelOpen((e.target as HTMLDetailsElement).open)}
-      >
-        <summary>
-          Scrapes
-          <span class="jurisdiction-panel__meta">
-            ${entries.length} ${entries.length === 1 ? "run" : "runs"}
-            ${publishedAtDate ? `— last ${dateStringToFriendly(publishedAtDate)}` : ""}
-          </span>
-        </summary>
-        <div class="jurisdiction-panel__body">
-          ${liveEntry
-            ? html`<civ-scrape-in-progress
-                .scrape=${liveEntry}
-                .canCancel=${permissions.can_cancel_pipeline_run}
-                .canViewTemporalWorkflowState=${permissions.can_view_temporal_workflow_state}
-                .onCancel=${handleCancelRun}
-                .temporalUrl=${null}
-              ></civ-scrape-in-progress>`
-            : null}
-          <civ-history-list
-            .history=${{ data: pastEntries }}
-            .pipelineRunStatus=${pipelineRunStatus}
-            .isConnected=${isConnected}
-            .sseError=${sseError}
-            .canCancel=${permissions.can_cancel_pipeline_run}
-            .isSignedIn=${isSignedIn}
-            .onCancel=${handleCancelRun}
-          ></civ-history-list>
-        </div>
-      </details>
 
       ${jurisdictionData
         ? html`<civ-scrape-modal

@@ -1,6 +1,9 @@
+from datetime import datetime, timezone
+
 import pytest
 
-from core.change_logs import summarize_change_log
+from core.change_logs import roster_change, summarize_change_log
+from shared.utils.statuses import ChangeLogType
 
 
 pytestmark = pytest.mark.unit
@@ -121,3 +124,67 @@ def test_reorder_lists_moved_roles_when_present():
 def test_reorder_truncates_many_moved_roles():
     payload = {"moved": ["a", "b", "c", "d", "e"]}
     assert summarize_change_log("reorder_roles", payload) == "Reordered roles: moved a, b, c (+2 more)"
+
+
+# ── Roster changes: the timeline entry's shape ──────────────────────────
+
+
+def _change(type_, changes):
+    return roster_change(type_, datetime(2026, 9, 2, tzinfo=timezone.utc), changes)
+
+
+def test_a_membership_names_the_seat_it_assigns():
+    """Without `detail` the only renderable thing left is the field name `post_id`, because a
+    membership's subject is the person and the post's label would be dropped on the way out."""
+    change = _change(
+        ChangeLogType.ASSIGN_MEMBERSHIP,
+        {"person_name": "Ada Lovelace", "label": "Council D3", "role_id": "council_member"},
+    )
+
+    assert change.name == "Ada Lovelace"
+    assert change.detail == "Council D3"
+
+
+def test_a_seat_with_no_label_falls_back_to_its_role():
+    change = _change(
+        ChangeLogType.ASSIGN_MEMBERSHIP,
+        {"person_name": "Ada Lovelace", "role_id": "council_member"},
+    )
+
+    assert change.detail == "council_member"
+
+
+def test_only_memberships_carry_a_seat():
+    """Every other type is fully described by its name plus the fields that moved, so a second
+    subject would just be a duplicate to keep in sync."""
+    change = _change(
+        ChangeLogType.EDIT_PERSON,
+        {"person_name": "Ada Lovelace", "fields": [{"field": "email"}]},
+    )
+
+    assert change.detail is None
+
+
+def test_an_assertion_prefers_the_resolved_name():
+    """`entity_name` is attached by the reader — the stored payload has only ids."""
+    change = _change(
+        ChangeLogType.ASSERT_FIELD,
+        {
+            "entity_type": "person",
+            "entity_id": "abc",
+            "entity_name": "Ada Lovelace",
+            "field_path": "email",
+        },
+    )
+
+    assert change.name == "Ada Lovelace"
+
+
+def test_an_assertion_falls_back_to_its_type_when_the_entity_is_gone():
+    """Better a bare "person" than a uuid nobody can read."""
+    change = _change(
+        ChangeLogType.ASSERT_FIELD,
+        {"entity_type": "person", "entity_id": "abc", "field_path": "email"},
+    )
+
+    assert change.name == "person"

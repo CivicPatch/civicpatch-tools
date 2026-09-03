@@ -2,8 +2,8 @@ import datetime
 import json
 import logging
 import math
-from collections.abc import Mapping
-from typing import List
+from collections.abc import Mapping, Sequence
+from typing import Any, List
 
 import shared.utils.id_utils
 from core.jurisdiction_search import (
@@ -12,17 +12,17 @@ from core.jurisdiction_search import (
 )
 from core.change_logs import roster_change
 from database.database import get_pool, to_iso
+from database.entity_jurisdiction import name_for
 from database.people import PERSON_JSON
-from database.changesets import AVAILABLE_FOR_REVIEW, REVIEW_STATUS, RUN_IN_FLIGHT
 from psycopg import sql
+from psycopg.rows import dict_row
 from schemas.common import (
     Jurisdiction,
-    PeoplePipelineRunHistory,
     StateJurisdictionSets,
 )
-from schemas.jurisdictions import JurisdictionSearchResult
+from schemas.jurisdictions import JurisdictionHistoryEntry, JurisdictionSearchResult
 from shared.schemas import Person
-from shared.utils.statuses import ChangeLogType, RequestReviewStatus
+from shared.utils.statuses import ChangeLogType
 
 logger = logging.getLogger(__name__)
 
@@ -533,10 +533,37 @@ async def get_jurisdictions_by_ocdids(ocdids: list[str]) -> list[dict]:
 # A dismissal whose `close_review` log carries no reason. Rendered as-is rather than guessed at
 # from `status`: 32 dev rows have no reason and 7 say `discarded`, which is not in the enum.
 UNKNOWN_OUTCOME = "unknown"
+PUBLISHED_OUTCOME = "published"
 
-# What counts as a change to the roster. Review lifecycle (`merge_review`, `close_review`) and
-# role taxonomy are deliberately out: they say what happened to the *review*, not to the people.
+# History is what happened. A changeset nobody has decided yet has not happened — it is
+# `/jurisdictions/in-flight`'s business, and the page shows it in its own section. Requires
+# the changesets table aliased `r`.
+RESOLVED = "(r.published_at IS NOT NULL OR r.dismissed_at IS NOT NULL)"
+
+# What an assertion points at: (entity_type, entity_id). The pair is the key because
+# `entity_id` alone is ambiguous — the CHECK permits person, post and membership.
+EntityKey = tuple[str, str]
+
+# What this jurisdiction's history shows a changeset having done.
+#
+# Review lifecycle stays out: `merge_review` and `close_review` describe what happened to the
+# *review*, and both are already said by the outcome pill — including them would repeat every
+# row's own status back at it, and they are 95 of the 97 excluded rows.
+#
+# Role taxonomy stays out for a different reason: roles are global, so an `edit_role` is not
+# something that happened to *this* place.
+#
+# `edit_jurisdiction` IS included: a details edit is a change to this jurisdiction, its payload
+# carries the same `fields` diff every other type does, and without it a `jurisdiction_edit`
+# changeset renders as "No roster changes" while its log holds exactly what changed.
+# What counts as a change to the roster. Review lifecycle (`merge_review`, `close_review`) is
+# out — it says what happened to the *review*, which the outcome pill already shows — and so is
+# role taxonomy, which is global rather than this place's.
+#
+# Person edits are in, badged like everything else: a hand edit mints its own changeset, so its
+# edits are that changeset's own work rather than a pile accumulating on somebody else's row.
 ROSTER_CHANGE_TYPES = [
+    ChangeLogType.EDIT_JURISDICTION,
     ChangeLogType.ADD_PERSON,
     ChangeLogType.EDIT_PERSON,
     ChangeLogType.DELETE_PERSON,
@@ -548,11 +575,78 @@ ROSTER_CHANGE_TYPES = [
 ]
 
 
+async def _assertion_subject_names(conn, rows: Sequence[Any]) -> dict[EntityKey, str]:
+    """Names for the assertion payloads in these rows.
+
+    `assert_field` is the one badge whose subject is not already in its payload — person and
+    post events carry their own name, an assertion carries only `entity_type` and `entity_id`.
+
+    Deduped before looking anything up: accepting four fields on one person writes four rows
+    naming the same person.
+    """
+    wanted: set[EntityKey] = set()
+    for row in rows:
+        for log in row["changes"]:
+            if log["type"] != ChangeLogType.ASSERT_FIELD:
+                continue
+            changes = log["changes"] or {}
+            if changes.get("entity_type") and changes.get("entity_id"):
+                wanted.add((changes["entity_type"], changes["entity_id"]))
+
+    if not wanted:
+        return {}
+
+    # Its own cursor: `entity_jurisdiction` reads `row[0]`, and the caller's cursor yields
+    # dicts. Shared elsewhere with tuple cursors, so the helper is not the thing to change.
+    names: dict[EntityKey, str] = {}
+    async with conn.cursor() as lookup:
+        for entity_type, entity_id in wanted:
+            name = await name_for(lookup, entity_type, entity_id)
+            if name:
+                names[(entity_type, entity_id)] = name
+    return names
+
+
+def _named(
+    changes: Mapping[str, Any], entity_names: Mapping[EntityKey, str]
+) -> Mapping[str, Any]:
+    """An assertion payload with its subject's name attached, if the entity still exists.
+
+    A copy, not a mutation — `changes` is the row psycopg handed back, and the resolved name is
+    this reader's addition rather than something stored.
+    """
+    entity_type = changes.get("entity_type")
+    entity_id = changes.get("entity_id")
+    if not entity_type or not entity_id:
+        return changes
+    name = entity_names.get((entity_type, entity_id))
+    if not name:
+        return changes
+    return {**changes, "entity_name": name}
+
+
+# A jurisdiction scraped weekly for a few years, plus imports and hand edits, runs to the
+# hundreds. Dev's max is 24, which is why an earlier pass concluded no pager was needed — but
+# dev holds 400 changesets in total, so it is the wrong place to measure this.
+DEFAULT_HISTORY_LIMIT = 25
+
+
 async def get_jurisdiction_history(
     jurisdiction_ocdid,
-) -> List[PeoplePipelineRunHistory]:
+    limit: int = DEFAULT_HISTORY_LIMIT,
+    offset: int = 0,
+) -> tuple[int, List[JurisdictionHistoryEntry]]:
+    """`(total, page)`, matching `get_change_logs_for_roles` — the caller needs the count to
+    render a pager, and taking it here keeps it on the same connection as the page."""
     pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
+    async with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
+        await cur.execute(
+            f"SELECT count(*) AS total FROM changesets r WHERE r.jurisdiction_ocdid = %s AND {RESOLVED}",
+            (jurisdiction_ocdid,),
+        )
+        count_row = await cur.fetchone()
+        total = count_row["total"] if count_row else 0
+
         await cur.execute(
             f"""
             WITH roster_changes AS (
@@ -580,19 +674,15 @@ async def get_jurisdiction_history(
                   )
                 ORDER BY cl.changeset_id, cl.created_at DESC
             )
-            SELECT r.id::text,
+            SELECT r.id::text AS changeset_id,
                    r.created_at,
                    r.sourced_at,
-                   r.status, r.progress, r.change_url, {REVIEW_STATUS},
+                   r.status, r.progress, r.change_url,
                    r.kind,
                    r.published_at,
-                   {RUN_IN_FLIGHT} AS is_running,
-                   {AVAILABLE_FOR_REVIEW} AS awaiting_review,
                    CASE
-                       WHEN r.published_at IS NOT NULL THEN '{RequestReviewStatus.PUBLISHED.value}'
-                       WHEN r.dismissed_at IS NOT NULL
-                           THEN COALESCE(cr.reason, '{UNKNOWN_OUTCOME}')
-                       ELSE '{RequestReviewStatus.PENDING.value}'
+                       WHEN r.published_at IS NOT NULL THEN '{PUBLISHED_OUTCOME}'
+                       ELSE COALESCE(cr.reason, '{UNKNOWN_OUTCOME}')
                    END AS outcome,
                    resolver.display_name AS resolved_by,
                    COALESCE(rc.changes, '[]'::jsonb) AS changes
@@ -600,60 +690,56 @@ async def get_jurisdiction_history(
             LEFT JOIN close_reasons cr ON cr.changeset_id = r.id::text
             LEFT JOIN users resolver ON resolver.id = r.resolved_by_user_id
             LEFT JOIN roster_changes rc ON rc.changeset_id = r.id::text
-            WHERE r.jurisdiction_ocdid = %s
-            ORDER BY r.created_at DESC;
+            WHERE r.jurisdiction_ocdid = %s AND {RESOLVED}
+            ORDER BY r.created_at DESC
+            LIMIT %s OFFSET %s;
             """,
             # No kind filter. It used to read `= ANY(['people','jurisdiction_manual_edit'])`,
             # which was every value the column could hold — a no-op wearing the shape of a
             # filter. The timeline wants everything that happened to this jurisdiction.
+            #
+            # Nor a resolved-only filter: in-flight rows belong here too. The history page
+            # highlights them in its own section, but this is the complete record, and
+            # `test_pipeline_run_status` reads `is_running` straight off it.
             (
                 ROSTER_CHANGE_TYPES,
                 jurisdiction_ocdid,
                 ChangeLogType.CLOSE_REVIEW,
                 jurisdiction_ocdid,
                 jurisdiction_ocdid,
+                limit,
+                offset,
             ),
         )
         rows = await cur.fetchall()
-        history = []
-        for row in rows:
-            branch_name = shared.utils.id_utils.make_job_branch(
-                jurisdiction_ocdid, row[0]
+        entity_names = await _assertion_subject_names(conn, rows)
+        history = [
+            JurisdictionHistoryEntry(
+                changeset_id=row["changeset_id"],
+                created_at=to_iso(row["created_at"]),
+                # `sourced_at`: when the source was read, which a duration measures against.
+                updated_at=to_iso(row["sourced_at"]),
+                pipeline_run_status=row["status"],
+                pipeline_run_progress=row["progress"],
+                change_url=row["change_url"],
+                kind=row["kind"],
+                # When a *person* published it, not when the machine finished. The header
+                # used the run's created_at, so it dated the scrape rather than the decision.
+                published_at=to_iso(row["published_at"]),
+                outcome=row["outcome"],
+                resolved_by=row["resolved_by"],
+                changes=[
+                    roster_change(
+                        log["type"],
+                        log["created_at"],
+                        _named(log["changes"] or {}, entity_names),
+                    )
+                    for log in row["changes"]
+                ],
             )
-            history.append(
-                {
-                    "changeset_id": row[0],
-                    "created_at": to_iso(row[1]),
-                    "updated_at": to_iso(row[2]),
-                    "pipeline_run_status": row[3],
-                    "pipeline_run_progress": row[4],
-                    "change_url": row[5],
-                    "review_status": row[6],
-                    "kind": row[7],
-                    # When a *person* published it, not when the machine finished. The header
-                    # used the run's created_at, so it dated the scrape rather than the
-                    # decision.
-                    "published_at": to_iso(row[8]),
-                    # Told, not inferred: the page used to test the raw status against a
-                    # terminal set it kept its own copy of.
-                    "is_running": row[9],
-                    # The pool's own definition, not a second one. `review_status` is `pending`
-                    # from the moment a request exists, so a scrape still running read as
-                    # awaiting review and offered a button for a roster it had not produced.
-                    "awaiting_review": row[10],
-                    "outcome": row[11],
-                    "resolved_by": row[12],
-                    "jurisdiction_ocdid": jurisdiction_ocdid,
-                    "branch_name": branch_name,
-                    "changes": [
-                        roster_change(
-                            log["type"], log["created_at"], log["changes"] or {}
-                        )
-                        for log in row[13]
-                    ],
-                }
-            )
-    return history
+            for row in rows
+        ]
+    return total, history
 
 
 async def update_jurisdiction(jurisdiction_ocdid, state, data: dict):

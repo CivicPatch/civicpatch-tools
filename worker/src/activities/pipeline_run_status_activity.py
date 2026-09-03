@@ -17,37 +17,37 @@ _TERMINAL_STATUSES = {PipelineRunStatus.SUCCESS, PipelineRunStatus.ERROR, Pipeli
 
 
 @activity.defn
-async def update_pipeline_run_status(request_id: str, status: str, progress: Optional[int] = None) -> None:
+async def update_pipeline_run_status(changeset_id: str, status: str, progress: Optional[int] = None) -> None:
     async with httpx.AsyncClient(headers=_HEADERS, timeout=15) as client:
         resp = await client.patch(
-            f"{API_URL}/api/v1/pipeline_runs/{request_id}/status",
+            f"{API_URL}/api/v1/pipeline_runs/{changeset_id}/status",
             json={"status": status, "progress": progress},
         )
         resp.raise_for_status()
 
 
 @activity.defn
-async def poll_pipeline_run_status(request_id: str) -> str:
+async def poll_pipeline_run_status(changeset_id: str) -> str:
     while True:
-        activity.heartbeat(f"polling pipeline run {request_id}")
+        activity.heartbeat(f"polling pipeline run {changeset_id}")
         status = None
         try:
             async with httpx.AsyncClient(headers=_HEADERS, timeout=15) as client:
-                resp = await client.get(f"{API_URL}/api/v1/pipeline_runs/{request_id}/status")
+                resp = await client.get(f"{API_URL}/api/v1/pipeline_runs/{changeset_id}/status")
                 resp.raise_for_status()
             status = resp.json()["status"]
         except httpx.HTTPStatusError as e:
             if e.response.status_code < 500:
                 raise RuntimeError(f"poll_pipeline_run_status request failed: {type(e).__name__}: {e}") from None
-            activity.logger.warning(f"Pipeline run {request_id}: server error {e.response.status_code}, will retry")
+            activity.logger.warning(f"Pipeline run {changeset_id}: server error {e.response.status_code}, will retry")
         except httpx.HTTPError as e:
-            activity.logger.warning(f"Pipeline run {request_id}: transient error ({type(e).__name__}), will retry")
+            activity.logger.warning(f"Pipeline run {changeset_id}: transient error ({type(e).__name__}), will retry")
         if status is not None:
-            activity.logger.info(f"Pipeline run {request_id}: status={status}")
+            activity.logger.info(f"Pipeline run {changeset_id}: status={status}")
             if status in _TERMINAL_STATUSES:
                 return RunConclusion.SUCCESS if status == PipelineRunStatus.SUCCESS else RunConclusion.FAILURE
         try:
             await asyncio.sleep(15)
         except asyncio.CancelledError:
             raise
-        activity.heartbeat(f"polling pipeline run {request_id}")
+        activity.heartbeat(f"polling pipeline run {changeset_id}")

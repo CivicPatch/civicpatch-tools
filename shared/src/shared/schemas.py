@@ -238,20 +238,33 @@ class Person(PersonBase):
     memberships: List[Membership] = []
 
 
-class OpenStatesMembership(BaseModel):
-    """Exactly the keys `PERSON_MEMBERSHIPS` projects. Not `Membership`: its `post_label` would
-    add a null key to every membership in every published file."""
+class OpenStatesRole(BaseModel):
+    """One seat a person holds, as published — schema v2.
 
-    post_id: str
-    role_id: str
-    role_label: Optional[str] = None
+    A deliberate subset of what `PERSON_MEMBERSHIPS` projects. `post_id` and the raw source
+    wording (`label`, `source_labels`, `designations`, `unmatched_text`) stay out: they are how
+    *we* track a seat, not what the seat is. `role_id` stays in — it is the stable slug a
+    consumer matches on.
+
+    The dates live here rather than on the person. A person holds each seat for its own term,
+    so one pair of dates per person could only ever describe one of them — which is the same
+    reason `jurisdiction_ocdid` moved down here."""
+
+    # The seat's own name — `derive_post_label(role_label, division_ocdid)`, so "Council
+    # Member, District 5" rather than the bare role. Composed at the publish boundary, because
+    # it is composed on read everywhere else too and is not a column.
+    name: Optional[str] = None
+    # The canonical slug ("mayor"). What a consumer matches on; `name` is what they display.
+    role_id: Optional[str] = None
+    # Carried per role rather than on the person: the role is what belongs to a place, and a
+    # self-describing entry survives being read on its own.
+    jurisdiction_ocdid: Optional[str] = None
     division_ocdid: Optional[str] = None
-    label: Optional[str] = None
-    source_labels: List[str] = []
-    designations: List[str] = []
-    unmatched_text: List[str] = []
     start_date: Optional[str] = None
     end_date: Optional[str] = None
+    # When this seat was first and last observed in a scrape — the roster's as-of timeline.
+    first_seen_at: Optional[str] = None
+    last_seen_at: Optional[str] = None
 
 
 class OpenStatesPersonRecord(PersonBase):
@@ -260,11 +273,13 @@ class OpenStatesPersonRecord(PersonBase):
 
     source_urls: List[str] = []
     updated_at: Optional[str] = None
-    labels: List[str] = []
-    division_ocdid: Optional[str] = None
-    start_date: Optional[str] = None
-    end_date: Optional[str] = None
-    memberships: List[OpenStatesMembership] = []
+    # `roles`, not `memberships`: the published file describes what someone *is*, and
+    # "membership" is the database's word for the row that records it.
+    #
+    # `labels`, `label`, `start_date` and `end_date` used to sit at this level too. The first
+    # two are per-seat wording that `roles[].role_label` and `roles[].source_labels` already
+    # carry; the dates are per-term, and one pair per person could only describe one seat.
+    roles: List[OpenStatesRole] = []
 
 
 class JobConfig(BaseModel):

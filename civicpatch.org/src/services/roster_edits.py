@@ -3,9 +3,14 @@
 An edit is an assertion: the scrape's own answer stays in `source_records`, and what a human
 said sits beside it. Nothing here overwrites what was scraped.
 
-Adding somebody is a sighting, not an assertion — a human is a source. That is what lets a
-manual addition survive: a roster is derived from sightings, so a person without one is gone
-by the next read.
+Adding somebody is a sighting, not an assertion — a human is a source, and a roster is derived
+from sightings.
+
+That sighting is filed under the live roster's changeset, not a future scrape's, so it does NOT
+make the addition survive the next scrape: `_roster` reads one changeset's sightings, and a
+scrape that does not list the person retires them. Accepted — their field values live on as
+assertions, their seat does not. An edit to an *existing* person does survive, because
+`publish_request` re-applies `stated_values` over whatever the scrape says.
 """
 
 import logging
@@ -80,6 +85,10 @@ async def edit_published(
     # supersedor and would sweep every pending card for the jurisdiction.
     labels = await _seat_labels(_additions(base, patched))
 
+    # Its own changeset: the edit is a bundle of changes to one jurisdiction, by one producer,
+    # at one time, and it needs to be one — for its own row on the timeline, its own open-data
+    # commit url, its own author, and to supersede any older pending scrape. What it must not do
+    # is advance `last_seen_at`, and that is `publish_request`'s rule, not this one's.
     changeset_id = make_changeset_id()
     await register_people_edit_request(changeset_id, jurisdiction_ocdid, user.user_id)
     await _record_edits(changeset_id, jurisdiction_ocdid, base, patched, labels, user.user_id)

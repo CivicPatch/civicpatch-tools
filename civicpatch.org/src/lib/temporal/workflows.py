@@ -8,14 +8,12 @@ from lib.temporal.types import OpenDataBatchCommitRequest, OpenDataCommitRequest
 
 
 class ScheduleId(StrEnum):
-    PR_SYNC = "pr-sync"
     OD_SYNC = "od-sync"
     PIPELINE_RUN_CLEANUP = "pipeline-run-cleanup"
     REVIEW_SESSION_CLEANUP = "review-session-cleanup"
 
 
 class WorkflowInstanceId(StrEnum):
-    PR_SYNC = "pr-sync-workflow"
     OD_SYNC = "od-sync-workflow"
     PIPELINE_RUN_CLEANUP = "pipeline-run-cleanup-workflow"
     REVIEW_SESSION_CLEANUP = "review-session-cleanup-workflow"

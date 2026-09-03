@@ -25,27 +25,35 @@ def _sortable_designations(parsed: ParsedLabel) -> List[str]:
     ]
 
 
-def sort_people(people: List[DerivedPerson], taxonomy: Taxonomy) -> list[DerivedPerson]:
-    def person_sort_key(person: DerivedPerson):
-        parsed = [parse_label(label, taxonomy) for label in person.labels]
-        return (
-            min(
-                (role_sort_key(p.role or "", taxonomy) for p in parsed),
-                default=role_sort_key("", taxonomy),
-            ),
-            min(
-                (
-                    designation_sort_key(d, taxonomy)
-                    for p in parsed
-                    for d in _sortable_designations(p)
-                ),
-                default=designation_sort_key("", taxonomy),
-            ),
-            # Eight council members share a sort key. Without this the roster's order is
-            # whatever order the records arrived in, which the read cannot reproduce.
-            person.name,
-        )
+def person_sort_key(person: DerivedPerson, taxonomy: Taxonomy):
+    """How a roster reads top to bottom: most senior role first, then the division or seat
+    designation, then name.
 
-    return sorted(people, key=person_sort_key)
+    Exposed separately from `sort_people` so a caller holding a different shape — the publish
+    boundary holds `PERSON_JSON` dicts, not `DerivedPerson` — can order by the same rule
+    instead of writing a second one that drifts.
+    """
+    parsed = [parse_label(label, taxonomy) for label in person.labels]
+    return (
+        min(
+            (role_sort_key(p.role or "", taxonomy) for p in parsed),
+            default=role_sort_key("", taxonomy),
+        ),
+        min(
+            (
+                designation_sort_key(d, taxonomy)
+                for p in parsed
+                for d in _sortable_designations(p)
+            ),
+            default=designation_sort_key("", taxonomy),
+        ),
+        # Eight council members share a sort key. Without this the roster's order is
+        # whatever order the records arrived in, which the read cannot reproduce.
+        person.name,
+    )
+
+
+def sort_people(people: List[DerivedPerson], taxonomy: Taxonomy) -> list[DerivedPerson]:
+    return sorted(people, key=lambda person: person_sort_key(person, taxonomy))
 
 

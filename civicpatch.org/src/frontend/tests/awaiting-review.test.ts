@@ -1,16 +1,15 @@
 import { describe, it, expect } from "vitest";
 import {
   pendingReviews,
-  publishedAt,
   peopleEditBlockers,
   jurisdictionEditBlockers,
   editingBlockedReason,
   jurisdictionEditBlockedReason,
   CHANGESET_KIND,
-  type HistoryEntry,
+  type InFlightEntry,
 } from "../pages/jurisdictions-page/awaiting-review.ts";
 
-const entry = (overrides: Partial<HistoryEntry> = {}): HistoryEntry => ({
+const entry = (overrides: Partial<InFlightEntry> = {}): InFlightEntry => ({
   changeset_id: "req-1",
   created_at: "2026-07-12T00:00:00Z",
   change_url: "https://github.com/CivicPatch/open-data/pull/4821",
@@ -127,35 +126,3 @@ describe("jurisdictionEditBlockedReason", () => {
   });
 });
 
-
-describe("publishedAt", () => {
-  it("dates the decision, not the scrape", () => {
-    // The header renders this as "Published {date}". `created_at` is when the machine
-    // started; a card can sit in the queue for weeks between the two.
-    expect(
-      publishedAt([
-        entry({
-          review_status: "published",
-          created_at: "2026-07-01T00:00:00Z",
-          published_at: "2026-07-21T00:00:00Z",
-        }),
-      ]),
-    ).toBe("2026-07-21T00:00:00Z");
-  });
-
-  it("does not count a scrape a reviewer dismissed", () => {
-    // The bug this replaced: it matched the most recent SUCCESS *run*, so a rejected scrape
-    // still made the header claim the data was published.
-    expect(
-      publishedAt([
-        entry({ review_status: "dismissed", published_at: null }),
-        entry({ review_status: "published", published_at: "2026-06-01T00:00:00Z" }),
-      ]),
-    ).toBe("2026-06-01T00:00:00Z");
-  });
-
-  it("is null when nothing here has ever been published", () => {
-    expect(publishedAt([entry({ review_status: "pending" })])).toBeNull();
-    expect(publishedAt([])).toBeNull();
-  });
-});

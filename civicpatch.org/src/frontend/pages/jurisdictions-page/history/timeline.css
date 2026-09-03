@@ -1,0 +1,242 @@
+/* One jurisdiction's timeline: an entry per changeset, its outcome, and what it did to the
+   roster. Lifted from .scratch/2026-09-01-mockup-jurisdiction-history.html. */
+
+/* On the jurisdiction page this heading sits inside a flex `__head` row, so the shared rule
+   gives it no margin. Here it is a bare heading directly above its section's content, so it
+   has to make its own space. Scoped to the direct-child shape so the other page is untouched. */
+
+.jurisdiction-section > .jurisdiction-section__title {
+  margin-bottom: 0.85rem;
+}
+
+/* Entries */
+
+.tl-entry {
+  margin: 0;
+  border-bottom: 1px solid var(--civ-border);
+}
+
+.tl-entry:last-child {
+  border-bottom: none;
+}
+
+/* elements.css already draws the chevron via `details summary::after` and floats it right.
+   Inside a flex summary it becomes the last flex item, which is where it belongs — do not
+   add an icon of your own. */
+.tl-entry__summary {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.55rem 0.2rem;
+  line-height: 1.5;
+}
+
+.tl-entry__summary:hover {
+  background: var(--civ-surface-2);
+}
+
+/* Fixed widths so the columns line up into lanes a reader can scan down without reading any
+   individual row. */
+.tl-entry__when {
+  flex: 0 0 4.75rem;
+  font-size: var(--text-sm);
+  color: var(--civ-text-muted);
+  white-space: nowrap;
+}
+
+/* A muted word in its own lane, so kind is scannable without competing with the outcome pill.
+   Imports are 76% of all changesets, so a mixed list is the normal case, not the exception. */
+.tl-entry__kind {
+  flex: 0 0 4rem;
+  font-size: var(--text-xs);
+  color: var(--civ-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.tl-entry__pill {
+  flex: 0 0 8.5rem;
+}
+
+.tl-entry__changes {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  align-items: baseline;
+}
+
+/* A demoted entry: it ran, but it is not the valid review for this jurisdiction. Shown rather
+   than hidden — hiding it makes the page lie about what ran. Decision 3. */
+.tl-entry--superseded .tl-entry__summary {
+  opacity: 0.55;
+}
+
+.tl-entry__body {
+  padding: 0.25rem 0.2rem 1rem 5.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Expanded change list */
+
+.tl-changelist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: var(--text-sm);
+}
+
+.tl-change {
+  display: grid;
+  grid-template-columns: 1rem minmax(9rem, max-content) 1fr;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+
+.tl-change__sigil {
+  font-family: var(--pico-font-family-monospace, monospace);
+  font-weight: 700;
+}
+
+.tl-change__who {
+  font-weight: 600;
+}
+
+.tl-change__detail {
+  color: var(--civ-text-muted);
+  overflow-wrap: anywhere;
+}
+
+.tl-quiet {
+  font-size: var(--text-sm);
+  color: var(--civ-text-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.tl-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  font-size: var(--text-sm);
+}
+
+/* The ids an admin needs when debugging — everything civ-history-modal showed, minus the
+   second surface it needed to show them. */
+.tl-ids {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--civ-border);
+  font-family: var(--pico-font-family-monospace, monospace);
+  font-size: 0.68rem;
+  color: var(--civ-text-muted);
+}
+
+.tl-empty {
+  font-size: var(--text-sm);
+  color: var(--civ-text-muted);
+  margin: 0;
+}
+
+/* Outcome pills — three signal colours only: grey nothing happened, green worked,
+   red is a problem. `unchanged` is green: a re-confirmed roster is a healthy outcome. */
+
+.runs-pill {
+  display: inline-block;
+  padding: 0.05rem 0.5rem;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
+.runs-pill--published,
+.runs-pill--unchanged {
+  background: rgba(var(--tone-green), 0.18);
+  color: rgb(var(--tone-green));
+}
+
+.runs-pill--pending {
+  background: rgba(var(--tone-yellow), 0.2);
+  color: rgb(var(--tone-yellow));
+}
+
+.runs-pill--rejected,
+.runs-pill--errored,
+.runs-pill--unknown {
+  background: rgba(var(--tone-red), 0.15);
+  color: rgb(var(--tone-red));
+}
+
+.runs-pill--superseded,
+.runs-pill--cancelled {
+  background: rgba(var(--tone-line-strong), 0.25);
+  color: var(--civ-text-muted);
+}
+
+.runs-pill--running {
+  background: rgba(var(--tone-blue), 0.15);
+  color: rgb(var(--tone-blue));
+}
+
+/* Change badges — the collapsed summary's compact form of the same rows. */
+
+.change-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.32rem;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--civ-border);
+  border-radius: 999px;
+  background: var(--civ-surface);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.change-badge__sigil {
+  font-family: var(--pico-font-family-monospace, monospace);
+  font-weight: 700;
+}
+
+.change-badge__who {
+  color: var(--civ-text);
+  font-weight: 600;
+}
+
+.change-badge__role {
+  color: var(--civ-text-muted);
+}
+
+/* The sigil carries the verb, so it is the only thing that takes colour. */
+
+.change-badge--add .change-badge__sigil,
+.tl-change--add .tl-change__sigil {
+  color: rgb(var(--tone-green));
+}
+
+.change-badge--edit .change-badge__sigil,
+.tl-change--edit .tl-change__sigil {
+  color: var(--civ-text-muted);
+}
+
+.change-badge--remove .change-badge__sigil,
+.tl-change--remove .tl-change__sigil {
+  color: rgb(var(--tone-red));
+}
+
+.change-badge--move .change-badge__sigil,
+.tl-change--move .tl-change__sigil {
+  color: rgb(var(--tone-blue));
+}
+
+.runs-more {
+  color: var(--civ-text-muted);
+  font-size: var(--text-xs);
+  padding-left: 0.15rem;
+}

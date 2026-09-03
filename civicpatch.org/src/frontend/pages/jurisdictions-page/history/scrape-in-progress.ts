@@ -1,5 +1,5 @@
 import { component, useState, useEffect } from "haunted";
-import { html } from "lit-html";
+import { html, nothing } from "lit-html";
 import { dateStringToFriendly, durationBetween } from "../../../utils/date-utils.js";
 import { fetchTemporalWorkflowState } from "../../../api.js";
 import "../../../components/status-badge.js";
@@ -27,6 +27,9 @@ type ScrapeInProgressProps = {
   canCancel: boolean;
   canViewTemporalWorkflowState: boolean;
   onCancel: (changesetId: string) => void;
+  // Asked, but not yet stopped. Cancelling signals Temporal; the run ends when it ends, so
+  // the component stays put and says so rather than vanishing on the click.
+  cancelRequested: boolean;
   temporalUrl: string | null;
 };
 
@@ -42,9 +45,8 @@ const describeTemporalWorkflow = (state: TemporalWorkflowState): string => {
   return parts.join(" — ");
 };
 
-function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onCancel, temporalUrl }: ScrapeInProgressProps) {
+function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onCancel, temporalUrl, cancelRequested }: ScrapeInProgressProps) {
   const [temporal, setTemporal] = useState<TemporalWorkflowState | null>(null);
-  const [cancelling, setCancelling] = useState(false);
 
   useEffect(() => {
     // Admin-only, so non-admins never poll: the server would reject it anyway, and a
@@ -81,10 +83,7 @@ function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onC
 
   if (!scrape) return html``;
 
-  const handleCancel = () => {
-    setCancelling(true);
-    onCancel(scrape.changeset_id);
-  };
+  const handleCancel = () => onCancel(scrape.changeset_id);
 
   return html`
     <style>
@@ -92,16 +91,6 @@ function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onC
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-      }
-      .sip-title {
-        margin: 0;
-        font-size: 0.7rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.07em;
-        color: var(--pico-muted-color);
-        padding-bottom: 0.4rem;
-        border-bottom: 1px solid var(--pico-muted-border-color);
       }
       .sip-head {
         display: flex;
@@ -141,9 +130,10 @@ function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onC
     </style>
 
     <div class="sip-section">
-      <h4 class="sip-title">In progress</h4>
-
       <div class="sip-head">
+        ${cancelRequested
+          ? html`<span class="runs-pill runs-pill--cancelled">Cancel requested</span>`
+          : nothing}
         <civ-status-badge
           label="${scrape.pipeline_run_status}"
           bg="var(--pico-info-background)"
@@ -159,8 +149,12 @@ function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onC
 
       <div class="sip-foot">
         ${canCancel
-          ? html`<button class="sip-cancel" ?disabled=${cancelling} @click=${handleCancel}>
-              ${cancelling ? "Cancelling…" : "Cancel"}
+          ? html`<button
+              class="sip-cancel"
+              ?disabled=${cancelRequested}
+              @click=${handleCancel}
+            >
+              ${cancelRequested ? "Cancel requested…" : "Cancel"}
             </button>`
           : null}
         ${temporal ? html`<span class="sip-temporal">${describeTemporalWorkflow(temporal)}</span>` : null}

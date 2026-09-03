@@ -133,10 +133,34 @@ class VerifyOtpRequest(BaseModel):
     code: str
 
 
-class PeoplePipelineRunHistory(BaseModel):
+class InFlightChangeset(BaseModel):
+    """A changeset this jurisdiction is still waiting on — running, or awaiting a decision.
+
+    Two lanes, disjoint by construction: `AVAILABLE_FOR_REVIEW` requires source records, which a
+    scrape has not written while it is still running. Only the running lane has a pipeline run —
+    `changesets_scrape_has_a_run` makes status NULL for every import and edit.
+    """
+
     changeset_id: str
-    created_at: float
-    updated_at: float
-    status: str
-    progress: int
+    created_at: Optional[str]
+    # `sourced_at` — when the source was read. What a run's elapsed time is measured against.
+    updated_at: Optional[str]
+    kind: Optional[str]
     change_url: Optional[str]
+    pipeline_run_status: Optional[str]
+    pipeline_run_progress: Optional[int]
+    is_running: bool
+    awaiting_review: bool
+
+
+class JurisdictionInFlight(BaseModel):
+    """What the jurisdiction page needs without reading the whole history.
+
+    `last_published_at` is the publish's own timestamp, never `jurisdictions.scraped_at` — that
+    column is the run's `created_at` and is written only for scrapes, so it dates the machine
+    rather than the decision and ignores imports and edits entirely.
+    """
+
+    in_flight: list[InFlightChangeset]
+    last_published_at: Optional[str]
+    total_changesets: int
