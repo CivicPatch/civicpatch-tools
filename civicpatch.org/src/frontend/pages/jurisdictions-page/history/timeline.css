@@ -80,35 +80,8 @@
   gap: 0.75rem;
 }
 
-/* Expanded change list */
-
-.tl-changelist {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  font-size: var(--text-sm);
-}
-
-.tl-change {
-  display: grid;
-  grid-template-columns: 1rem minmax(9rem, max-content) 1fr;
-  gap: 0.6rem;
-  align-items: baseline;
-}
-
-.tl-change__sigil {
-  font-family: var(--pico-font-family-monospace, monospace);
-  font-weight: 700;
-}
-
-.tl-change__who {
-  font-weight: 600;
-}
-
-.tl-change__detail {
-  color: var(--civ-text-muted);
-  overflow-wrap: anywhere;
-}
+/* The expanded change list itself is `.change-list` / `.change-row`, in
+   components/roster-change/ — shared with any page that shows what a changeset did. */
 
 .tl-quiet {
   font-size: var(--text-sm);
@@ -184,56 +157,8 @@
   color: rgb(var(--tone-blue));
 }
 
-/* Change badges — the collapsed summary's compact form of the same rows. */
-
-.change-badge {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.32rem;
-  padding: 0.1rem 0.5rem;
-  border: 1px solid var(--civ-border);
-  border-radius: 999px;
-  background: var(--civ-surface);
-  font-size: var(--text-xs);
-  line-height: 1.6;
-  white-space: nowrap;
-}
-
-.change-badge__sigil {
-  font-family: var(--pico-font-family-monospace, monospace);
-  font-weight: 700;
-}
-
-.change-badge__who {
-  color: var(--civ-text);
-  font-weight: 600;
-}
-
-.change-badge__role {
-  color: var(--civ-text-muted);
-}
-
-/* The sigil carries the verb, so it is the only thing that takes colour. */
-
-.change-badge--add .change-badge__sigil,
-.tl-change--add .tl-change__sigil {
-  color: rgb(var(--tone-green));
-}
-
-.change-badge--edit .change-badge__sigil,
-.tl-change--edit .tl-change__sigil {
-  color: var(--civ-text-muted);
-}
-
-.change-badge--remove .change-badge__sigil,
-.tl-change--remove .tl-change__sigil {
-  color: rgb(var(--tone-red));
-}
-
-.change-badge--move .change-badge__sigil,
-.tl-change--move .tl-change__sigil {
-  color: rgb(var(--tone-blue));
-}
+/* Change badges live in components/roster-change/ — the collapsed summary's compact form of
+   the same rows, and coloured by the same tone rules. */
 
 .runs-more {
   color: var(--civ-text-muted);

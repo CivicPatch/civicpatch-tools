@@ -5,7 +5,6 @@ import math
 from collections.abc import Mapping, Sequence
 from typing import Any, List
 
-import shared.utils.id_utils
 from core.jurisdiction_search import (
     build_parent_ocdids,
     build_search_text,
@@ -488,9 +487,7 @@ async def search_jurisdictions(
                 jurisdictions.append(
                     {
                         "jurisdiction_ocdid": row[0],
-                        "jurisdiction_path": shared.utils.id_utils.jurisdiction_ocdid_to_folder(
-                            row[0]
-                        ),
+                        "jurisdiction_path": row[0],
                         **row[1],
                     }
                 )
@@ -523,15 +520,14 @@ async def get_jurisdictions_by_ocdids(ocdids: list[str]) -> list[dict]:
             {
                 "ocdid": row[0],
                 "name": row[1],
-                "slug": shared.utils.id_utils.jurisdiction_ocdid_to_folder(row[0]),
+                "slug": row[0],
                 "url": row[2],
             }
             for row in rows
         ]
 
 
-# A dismissal whose `close_review` log carries no reason. Rendered as-is rather than guessed at
-# from `status`: 32 dev rows have no reason and 7 say `discarded`, which is not in the enum.
+# A dismissal that recorded no reason. Not guessed at from `status` — 27 dev rows have none.
 UNKNOWN_OUTCOME = "unknown"
 PUBLISHED_OUTCOME = "published"
 
@@ -662,17 +658,6 @@ async def get_jurisdiction_history(
                       SELECT id::text FROM changesets WHERE jurisdiction_ocdid = %s
                   )
                 GROUP BY cl.changeset_id
-            ),
-            close_reasons AS (
-                SELECT DISTINCT ON (cl.changeset_id)
-                       cl.changeset_id,
-                       cl.changes->>'reason' AS reason
-                FROM change_logs cl
-                WHERE cl.type = %s
-                  AND cl.changeset_id IN (
-                      SELECT id::text FROM changesets WHERE jurisdiction_ocdid = %s
-                  )
-                ORDER BY cl.changeset_id, cl.created_at DESC
             )
             SELECT r.id::text AS changeset_id,
                    r.created_at,
@@ -680,14 +665,14 @@ async def get_jurisdiction_history(
                    r.status, r.progress, r.change_url,
                    r.kind,
                    r.published_at,
+                   -- 161's CHECK keeps this inside `DismissalReason`, so no guard here.
                    CASE
                        WHEN r.published_at IS NOT NULL THEN '{PUBLISHED_OUTCOME}'
-                       ELSE COALESCE(cr.reason, '{UNKNOWN_OUTCOME}')
+                       ELSE COALESCE(r.dismissed_reason, '{UNKNOWN_OUTCOME}')
                    END AS outcome,
                    resolver.display_name AS resolved_by,
                    COALESCE(rc.changes, '[]'::jsonb) AS changes
             FROM changesets r
-            LEFT JOIN close_reasons cr ON cr.changeset_id = r.id::text
             LEFT JOIN users resolver ON resolver.id = r.resolved_by_user_id
             LEFT JOIN roster_changes rc ON rc.changeset_id = r.id::text
             WHERE r.jurisdiction_ocdid = %s AND {RESOLVED}
@@ -703,8 +688,6 @@ async def get_jurisdiction_history(
             # `test_pipeline_run_status` reads `is_running` straight off it.
             (
                 ROSTER_CHANGE_TYPES,
-                jurisdiction_ocdid,
-                ChangeLogType.CLOSE_REVIEW,
                 jurisdiction_ocdid,
                 jurisdiction_ocdid,
                 limit,

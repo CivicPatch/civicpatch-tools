@@ -2,6 +2,7 @@ import { html } from 'lit-html';
 import { component, useState, useEffect } from 'haunted';
 import { fetchJurisdictionsByOcdids } from '../../api.js';
 import { Pagination } from '../pagination/index.js';
+import { jurisdictionOcdidToPath } from "../ocdid-utils.js";
 
 const PAGE_SIZE = 25;
 
@@ -31,7 +32,7 @@ function LocalityGaps({ stats, state }) {
         ${pageOcdids.map(ocdid => {
           const j = nameMap[ocdid];
           return j
-            ? html`<li><a href="/${j.slug}">${j.name}</a></li>`
+            ? html`<li><a href="/${jurisdictionOcdidToPath(j.slug)}">${j.name}</a></li>`
             : html`<li>${ocdid}</li>`;
         })}
       </ul>

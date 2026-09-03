@@ -32,6 +32,11 @@ def make_changeset_id():
     return str(uuid.uuid4())
 
 
+# Every jurisdiction ocdid starts with this, and a jurisdiction page's URL is its ocdid — so
+# this is also how a route tells one from the older `{state}/local/{place}` folder form.
+OCDID_PREFIX = "ocd-jurisdiction"
+
+
 def parse_jurisdiction_ocdid(jurisdiction_ocdid: str) -> JurisdictionId:
     """
     Parses a jurisdiction ID. Supported shapes (all end in jurisdiction_type,
@@ -148,7 +153,7 @@ def folder_to_jurisdiction_ocdid(folder: str) -> str:
     state = segments[0]
     # segments[1] is DATA_SEGMENT — not needed to reconstruct ocdid
     place_segment = segments[2]
-    ocdid = f"ocd-jurisdiction/country:us/state:{state}/"
+    ocdid = f"{OCDID_PREFIX}/country:us/state:{state}/"
 
     if "__" in place_segment:
         county_part, place_part = place_segment.split("__", 1)

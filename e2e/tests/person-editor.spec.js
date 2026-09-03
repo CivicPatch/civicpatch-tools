@@ -10,7 +10,7 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { SCALE_CHANGESET_ID } from "../fixtures/db.js";
-import { openEditorFor } from "./helpers/review-card.js";
+import { actionsFor, openEditorFor } from "./helpers/review-card.js";
 
 // The editor lives in the modal now — there are no view tabs, and a person is opened from
 // their row on the roster.
@@ -72,7 +72,9 @@ test.describe("Review person editor", () => {
     // Three rows: the two that moved, plus the always-visible Source urls.
     const editor = editorFor(page, "Councillor 02 Scale");
     await expect(editor.locator(".person-editor__field")).toHaveCount(3);
-    await expect(editor.locator(".person-editor__expander")).toContainText("7 unchanged fields");
+    await expect(editor.locator(".person-editor__expander")).toContainText(
+      "7 unchanged fields",
+    );
 
     await editor.locator(".person-editor__expander").click();
     await expect(editor.locator(".person-editor__field")).toHaveCount(10);
@@ -93,7 +95,11 @@ test.describe("Review person editor", () => {
     );
     // Their details are available, but not spent by default.
     await expect(editor.locator(".person-editor__field")).toHaveCount(0);
-    await expect(editor.locator(".person-editor__restore-person")).toBeVisible();
+    await expect(
+      actionsFor(page, "Councillor 36 Scale").locator(
+        ".person-editor__restore-person",
+      ),
+    ).toBeVisible();
   });
 });
 
@@ -106,17 +112,25 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
   // a value is added — so counting inputs without excluding it counts a value
   // that is not there.
   const valueInputs = (field) =>
-    field.locator("input.field-control__input:not(.field-control__input--draft)");
+    field.locator(
+      "input.field-control__input:not(.field-control__input--draft)",
+    );
 
   // The row for a value the scrape stopped listing: shown struck through, with a
   // Put back action instead of an input.
   const droppedRow = (field) =>
-    field.locator(".field-control__multi-row:has(.field-control__input--cleared)");
+    field.locator(
+      ".field-control__multi-row:has(.field-control__input--cleared)",
+    );
 
   const emailField = (page) =>
     page
       .locator(".person-editor")
-      .filter({ has: page.locator(".person-editor__name", { hasText: "Councillor 13 Scale" }) })
+      .filter({
+        has: page.locator(".person-editor__name", {
+          hasText: "Councillor 13 Scale",
+        }),
+      })
       .locator(".person-editor__field")
       .filter({ hasText: "Email" });
 
@@ -142,7 +156,11 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
     // Councillor 02 had its phone cleared, so that value is dropped, not gone.
     const phone = page
       .locator(".person-editor")
-      .filter({ has: page.locator(".person-editor__name", { hasText: "Councillor 02 Scale" }) })
+      .filter({
+        has: page.locator(".person-editor__name", {
+          hasText: "Councillor 02 Scale",
+        }),
+      })
       .locator(".person-editor__field")
       .filter({ hasText: "Phone" });
 
@@ -167,7 +185,11 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
     await openEditor(page, SCALE_CHANGESET_ID, "Councillor 02 Scale");
     const phone = page
       .locator(".person-editor")
-      .filter({ has: page.locator(".person-editor__name", { hasText: "Councillor 02 Scale" }) })
+      .filter({
+        has: page.locator(".person-editor__name", {
+          hasText: "Councillor 02 Scale",
+        }),
+      })
       .locator(".person-editor__field")
       .filter({ hasText: "Phone" });
 
@@ -177,7 +199,9 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
     // provenance were stamped when a row was made, the dropped row would linger
     // beside its own value. Typing into the trailing empty row is the add — there
     // is no button.
-    await phone.locator("input.field-control__input--draft").fill("(201) 555-0102");
+    await phone
+      .locator("input.field-control__input--draft")
+      .fill("(201) 555-0102");
     await expect(droppedRow(phone)).toHaveCount(0);
   });
 });

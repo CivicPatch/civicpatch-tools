@@ -150,14 +150,19 @@ def test_pull_request_url_null_when_no_pr(client):
 
 
 @pytest.mark.unit
-def test_jurisdiction_path_derived_from_ocdid(client):
-    from shared.utils.id_utils import jurisdiction_ocdid_to_folder
+def test_jurisdiction_path_is_the_ocdid(client):
+    """A jurisdiction page's URL is its ocdid.
 
+    This asserted `jurisdiction_ocdid_to_folder(ocdid)`, which was true while the URL was the
+    `{state}/local/{place}` folder form. That encoding is now only the open-data repo's
+    directory layout — deriving a URL from it meant two encoders, one Python and one
+    JavaScript, that had to agree.
+    """
     with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
         response = client.get("/change_logs", params={"bucket": "activity"})
 
     entry = response.json()["data"][0]
-    assert entry["jurisdiction_path"] == jurisdiction_ocdid_to_folder(ROW["jurisdiction_ocdid"])
+    assert entry["jurisdiction_path"] == ROW["jurisdiction_ocdid"]
 
 
 @pytest.mark.unit

@@ -4,6 +4,7 @@ import { fetchChangeLogs } from "../../api.js";
 import { Pagination } from "../../components/pagination/index.js";
 import { FIELD_SCHEMA } from "../../components/fields/field-schema.js";
 import "./activity-page.css";
+import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 
 const PER_PAGE = 20;
 
@@ -53,7 +54,7 @@ function renderRow(entry) {
       <td><span class="activity-page__type">${formatType(entry.type)}</span></td>
       <td>${entry.author_name} <span class="activity-page__muted">(${entry.author_role})</span></td>
       <td>${entry.jurisdiction_path
-        ? html`<a href="/${entry.jurisdiction_path}" target="_blank" rel="noopener">${entry.jurisdiction_name}</a>`
+        ? html`<a href="/${jurisdictionOcdidToPath(entry.jurisdiction_path)}" target="_blank" rel="noopener">${entry.jurisdiction_name}</a>`
         : (entry.jurisdiction_name ?? "—")}</td>
       <td>
         <div class="activity-page__summary">${entry.summary}</div>

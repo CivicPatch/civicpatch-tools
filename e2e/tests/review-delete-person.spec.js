@@ -25,10 +25,10 @@ import {
   editorFor,
   actionsFor,
   rowFor,
+  showPerson,
 } from "./helpers/review-card.js";
 
 const APPROVE_ENDPOINT = "**/api/v1/reviews/*/publish";
-
 
 async function stubMerge(page) {
   await page.route(APPROVE_ENDPOINT, (route) =>
@@ -55,12 +55,9 @@ async function openReconcileCard(page, name) {
   if (name) await openEditorFor(page, name);
 }
 
-const personCard = editorFor;
-// Delete / Undo / Merge with… render in the modal head, not in the card.
-const personActions = actionsFor;
+// `actionsFor`, not `editorFor`: Delete / Undo / Merge with… render in the modal head.
 
-const publishedIds = (body) =>
-  (body.data ?? []).map((entry) => entry.id);
+const publishedIds = (body) => (body.data ?? []).map((entry) => entry.id);
 
 test.describe("Delete a person", () => {
   test("a deleted existing person is dropped from the published payload", async ({
@@ -71,19 +68,26 @@ test.describe("Delete a person", () => {
 
     // Maria pairs as CHANGED, so she has a Delete button; Bob is REMOVED
     // (no new-side record) and must not offer one.
-    const maria = personCard(page, "Maria González");
-    const mariaActions = personActions(page, "Maria González");
+    const maria = editorFor(page, "Maria González");
+    const mariaActions = actionsFor(page, "Maria González");
     await expect(maria).toHaveClass(/person-editor--changed/);
-    await expect(personActions(page, "Bob Clerk").locator(".person-editor__delete")).toHaveCount(0);
+    await expect(
+      actionsFor(page, "Bob Clerk").locator(".person-editor__delete"),
+    ).toHaveCount(0);
 
     await mariaActions.locator(".person-editor__delete").click();
 
     // The card stays in place as a departing ghost, and Delete gives way to Undo.
     await expect(maria).toHaveClass(/person-editor--deleted/);
-    await expect(mariaActions.locator(".person-editor__restore-person")).toBeVisible();
+    await expect(
+      mariaActions.locator(".person-editor__restore-person"),
+    ).toBeVisible();
     await expect(mariaActions.locator(".person-editor__delete")).toHaveCount(0);
 
-    // Deleting is an edit, so the card publishes under the dirty label.
+    // Deleting is an edit, so the card publishes under the dirty label. Approve is a
+    // page control and the editor is a modal over it, so close it first — as a reviewer
+    // does, and as Playwright requires: the dialog swallows the click otherwise.
+    await openOverview(page);
     const approveBtn = page.locator(".review-page__approve-btn");
     await expect(approveBtn).toHaveText(/Save and approve/);
     await approveBtn.click();
@@ -100,8 +104,8 @@ test.describe("Delete a person", () => {
     const merge = await stubMerge(page);
     await openReconcileCard(page, "Maria González");
 
-    const maria = personCard(page, "Maria González");
-    const mariaActions = personActions(page, "Maria González");
+    const maria = editorFor(page, "Maria González");
+    const mariaActions = actionsFor(page, "Maria González");
     await mariaActions.locator(".person-editor__delete").click();
     await expect(maria).toHaveClass(/person-editor--deleted/);
 
@@ -113,6 +117,7 @@ test.describe("Delete a person", () => {
     // publishing sends no people at all and the button drops the dirty label.
     // That is a stronger check than Maria reappearing in a payload — it proves
     // the deletion left no residue anywhere in the state.
+    await openOverview(page);
     const approveBtn = page.locator(".review-page__approve-btn");
     await expect(approveBtn).not.toHaveText(/Save and approve/);
     await approveBtn.click();
@@ -127,17 +132,23 @@ test.describe("Delete a person", () => {
     authenticatedPage: page,
   }) => {
     await openReconcileCard(page, "Maria González");
-    await personActions(page, "Maria González").locator(".person-editor__delete").click();
+    await actionsFor(page, "Maria González")
+      .locator(".person-editor__delete")
+      .click();
 
     // The editor has no filter chips — the collapse rule replaced them — so the
     // classification is asserted where it is now visible: her card reads as a
     // departure, and Overview files her under To review rather than in the
     // Unchanged face strip. Before deletions were folded into the diff she stayed
     // classified by her fields and landed in the faded group.
-    await expect(personCard(page, "Maria González")).toHaveClass(/person-editor--deleted/);
+    await expect(editorFor(page, "Maria González")).toHaveClass(
+      /person-editor--deleted/,
+    );
 
     await openOverview(page);
-    await expect(rowFor(page, "Maria González")).toHaveClass(/review-row--deleted/);
+    await expect(rowFor(page, "Maria González")).toHaveClass(
+      /review-row--deleted/,
+    );
     await expect(
       page.locator(".review-overview__strip").getByText("Maria González"),
     ).toHaveCount(0);
@@ -151,8 +162,10 @@ test.describe("Delete a person", () => {
     // "Are these two the same person" is a question about any pair, so everyone
     // else on the card starts out a candidate — not just the ones the scrape
     // failed to find.
-    const tom = personCard(page, "Tom Treasurer");
-    await personActions(page, "Tom Treasurer").locator(".person-editor__merge").click();
+    const tom = editorFor(page, "Tom Treasurer");
+    await actionsFor(page, "Tom Treasurer")
+      .locator(".person-editor__merge")
+      .click();
     // The faces did not move with the buttons — they render inside the card.
     const faces = tom.locator(".person-editor__merge-faces .review-face");
     const faceFor = (name) => faces.filter({ hasText: name });
@@ -161,7 +174,14 @@ test.describe("Delete a person", () => {
     await expect(faceFor("Maria González")).toHaveCount(1);
     await expect(faceFor("Bob Clerk")).toHaveCount(1);
 
-    await personActions(page, "Maria González").locator(".person-editor__delete").click();
+    // Removing her means being on her screen: the modal holds one person, and
+    // `candidatesOpenFor` is page state keyed by person, so Tom's faces are still
+    // open when we come back to him.
+    await showPerson(page, "Maria González");
+    await actionsFor(page, "Maria González")
+      .locator(".person-editor__delete")
+      .click();
+    await showPerson(page, "Tom Treasurer");
 
     // "Drop this person" and "keep parts of this person" are contradictory
     // answers to the same question, so removing her withdraws her from the pool.
@@ -177,16 +197,19 @@ test.describe("Delete a person", () => {
     const merge = await stubMerge(page);
     await openReconcileCard(page, "Tom Treasurer");
 
-    const tom = personCard(page, "Tom Treasurer");
-    const tomActions = personActions(page, "Tom Treasurer");
+    const tom = editorFor(page, "Tom Treasurer");
+    const tomActions = actionsFor(page, "Tom Treasurer");
     await expect(tom).toHaveClass(/person-editor--added/);
     await tomActions.locator(".person-editor__delete").click();
 
     // Added-then-deleted is a net no-op in the payload, but the row is still in
     // the list and the removal is undoable, so the card stays as a ghost.
     await expect(tom).toHaveClass(/person-editor--deleted/);
-    await expect(tomActions.locator(".person-editor__restore-person")).toBeVisible();
+    await expect(
+      tomActions.locator(".person-editor__restore-person"),
+    ).toBeVisible();
 
+    await openOverview(page);
     await page.locator(".review-page__approve-btn").click();
     await expect.poll(() => merge.body).not.toBeNull();
     expect(publishedIds(merge.body)).not.toContain(personUuid("recon-tom"));

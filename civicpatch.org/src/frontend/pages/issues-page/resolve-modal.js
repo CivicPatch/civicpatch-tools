@@ -5,6 +5,7 @@ import { fetchIssueDetails, resolveReviewIssue } from "../../api.js";
 import { formatIssueType } from "./utils.js";
 import "../../components/basic/modal.js";
 import "../../components/civ-tab-bar/civ-tab-bar.js";
+import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 
 const SOURCE_CONTEXT_LIMIT = 5;
 
@@ -190,7 +191,7 @@ function ResolveModal(host) {
                 <div class="issues-page__modal-source-header">
                   <span class="issues-page__modal-source-name">${d.jurisdiction_name}</span>
                   ${d.jurisdiction_path ? html`
-                    <a class="issues-page__modal-source-link" href="/${d.jurisdiction_path}" target="_blank" rel="noopener noreferrer">view page →</a>
+                    <a class="issues-page__modal-source-link" href="/${jurisdictionOcdidToPath(d.jurisdiction_path)}" target="_blank" rel="noopener noreferrer">view page →</a>
                   ` : null}
                 </div>
                 ${urls.map((u) => html`<a class="issues-page__modal-source-url" href=${u} target="_blank" rel="noopener noreferrer">${u}</a>`)}

@@ -298,6 +298,12 @@ npx playwright test --config=playwright.visual.config.js --update-snapshots=all
 dir = "e2e"
 env = { BASE_URL = "http://localhost:8100", E2E_DB_URL = "postgres://e2e:e2e_password@localhost:8101/e2e_db", E2E_REDIS_HOST = "localhost", E2E_REDIS_PORT = "8102" }
 
+[tasks.e2e-spec]
+description = "Run one e2e spec headless against an already-running stack: mise run e2e-spec -- tests/foo.spec.js"
+run = "npx playwright test --reporter=line"
+dir = "e2e"
+env = { BASE_URL = "http://localhost:8100", E2E_DB_URL = "postgres://e2e:e2e_password@localhost:8101/e2e_db", E2E_REDIS_HOST = "localhost", E2E_REDIS_PORT = "8102" }
+
 [tasks.e2e-ci]
 description = "Run Playwright e2e tests headless in a fully isolated Docker stack (for CI)"
 run = """

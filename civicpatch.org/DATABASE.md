@@ -45,6 +45,7 @@ erDiagram
         jsonb           arguments_json
         timestamptz_null published_at       "set when a reviewer approves; this is the publish state"
         timestamptz_null dismissed_at       "set when a reviewer rejects. check: not both set"
+        text_null       dismissed_reason    "161: why, CHECK DismissalReason or NULL. Written by every dismissal path. The close_review log records the event; this is the state, and it is what readers ask"
         uuid_null       resolved_by_user_id FK  "whoever published or dismissed it; NULL means not resolved yet"
         text_null       change_url          "where the change landed: a commit URL going forward, a PR URL on backfilled rows"
         text_null       status              "147: was pipeline_runs.status. null when no pipeline ran"

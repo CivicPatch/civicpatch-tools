@@ -59,7 +59,9 @@ function renderAwaiting(entry: InFlightEntry, ocdid: string, isSignedIn: boolean
       </div>
       <span class="pr-row__actions">
         <a class="btn-primary" href=${href}>
-          ${isSignedIn ? "Review →" : "Sign in to review"}
+          ${isSignedIn
+              ? html`Review <i class="fa-solid fa-arrow-right"></i>`
+              : "Sign in to review"}
         </a>
       </span>
     </div>
@@ -141,7 +143,7 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
         <div class="jurisdiction-page__heading">
           <h1 class="jurisdiction-page__h1">History</h1>
           <span class="jurisdiction-page__published">
-            ${jurisdictionName} — ${totalChangesets}
+            ${jurisdictionName}, ${totalChangesets}
             ${totalChangesets === 1 ? "changeset" : "changesets"}
           </span>
         </div>

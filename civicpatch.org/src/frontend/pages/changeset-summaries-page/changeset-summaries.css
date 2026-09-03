@@ -1,0 +1,335 @@
+/* Changeset activity across every state. One row per state: what is waiting on a reviewer, a
+   strip of what ran each day, and what came of it. */
+
+/* Shared by the rows and the scale above them, so the scale cannot drift out of alignment. */
+.cs-page {
+  --cs-state-w: 3rem;
+  --cs-figure-w: 5.5rem;
+  --cs-gap: 1rem;
+
+  width: 100%;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 2rem 1.5rem 5rem;
+}
+
+/* Header */
+
+.cs-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.cs-head__h1 {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+/* Ledger — the fleet totals, so a reader knows the scale before reading any row. */
+
+.cs-ledger {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.cs-ledger__figure {
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-ledger__n {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.cs-ledger__label {
+  font-size: var(--text-xs);
+  color: var(--civ-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cs-rule {
+  border: none;
+  border-top: 1px solid var(--civ-border);
+  margin: 1.25rem 0 1rem;
+}
+
+/* Sort chips */
+
+.cs-chips {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.cs-chips__label {
+  font-size: var(--text-xs);
+  color: var(--civ-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 0.25rem;
+}
+
+.cs-chips__chip {
+  width: auto;
+  margin: 0;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--civ-border);
+  border-radius: 999px;
+  background: transparent;
+  font-size: var(--text-xs);
+  font-family: inherit;
+  color: var(--civ-text);
+  cursor: pointer;
+}
+
+.cs-chips__chip--active {
+  background: var(--civ-text);
+  border-color: var(--civ-text);
+  color: var(--civ-bg);
+}
+
+/* Rows */
+
+.cs-row {
+  display: flex;
+  align-items: center;
+  gap: var(--cs-gap);
+  padding: 0.5rem 0.2rem;
+  border-bottom: 1px solid var(--civ-border);
+}
+
+.cs-row:last-child {
+  border-bottom: none;
+}
+
+.cs-row__state {
+  flex: 0 0 var(--cs-state-w);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Fixed widths so the figures line up into columns a reader can scan down. */
+.cs-figure {
+  flex: 0 0 var(--cs-figure-w);
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-size: var(--text-sm);
+}
+
+.cs-figure__n {
+  font-weight: 700;
+}
+
+.cs-figure__label {
+  color: var(--civ-text-muted);
+  font-size: var(--text-xs);
+}
+
+/* Red is the whole signal: a queue with something past a week in it. */
+.cs-figure--alert .cs-figure__n {
+  color: rgb(var(--tone-red));
+}
+
+.cs-figure--quiet .cs-figure__n {
+  color: var(--civ-text-muted);
+  font-weight: 400;
+}
+
+/* Calendar — one column per day, banded by what became of that day's runs. */
+
+.cs-cal {
+  flex: 1 1 auto;
+  display: flex;
+  gap: 2px;
+  align-items: stretch;
+  height: 1.9rem;
+}
+
+.cs-cal__cell {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-radius: 2px;
+  min-width: 3px;
+  /* A <button>, so pico paints it as a primary control — background, border and
+     primary-inverse text. All three are wrong here, and the last one is what the popover
+     inherits. */
+  background: none;
+  border: none;
+  color: var(--civ-text);
+  padding: 0;
+  margin: 0;
+  cursor: default;
+  position: relative;
+}
+
+/* Grey means one thing only: nothing ran. Every outcome of a run that happened gets a hue. */
+/* A colour, not `opacity`: opacity applies to the whole subtree, so it faded the popover
+   rendered inside the cell along with the cell itself. */
+.cs-cal__cell--idle {
+  background: var(--civ-border);
+}
+
+.cs-cal__seg--ok,
+.cs-cal__seg--review,
+.cs-cal__seg--failed {
+  border-radius: 1px;
+}
+
+.cs-cal__seg--ok {
+  background: var(--pico-ins-color);
+}
+
+.cs-cal__seg--review {
+  background: var(--civ-accent);
+}
+
+.cs-cal__seg--failed {
+  background: var(--pico-del-color);
+}
+
+/* Scale — a date every 7 columns, so a band can be placed in time without counting cells.
+   Mirrors the row's leading and trailing widths rather than floating above them. */
+
+.cs-scale {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--cs-gap);
+  padding: 0 0.2rem;
+}
+
+/* state + gap + the one leading figure. The scale row's own gap covers the last one. */
+.cs-scale__lead {
+  flex: 0 0 calc(var(--cs-state-w) + var(--cs-figure-w) + var(--cs-gap));
+}
+
+.cs-scale__tail {
+  flex: 0 0 calc(var(--cs-figure-w) * 3 + var(--cs-gap) * 2);
+}
+
+.cs-scale__track {
+  flex: 1 1 auto;
+  display: flex;
+  gap: 2px;
+}
+
+/* Each mark spans the week it labels, so the label sits at that week's first column and never
+   overflows the cell the way a per-day label would. */
+.cs-scale__mark {
+  font-size: var(--text-xs);
+  color: var(--civ-text-muted);
+  white-space: nowrap;
+  border-left: 1px solid var(--civ-border);
+  padding-left: 0.25rem;
+  line-height: 1.4;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Day popover — the counts a cell's bands encode, in words. No fetch: the calendar response
+   already carries them. Shown on hover and on focus, so it is reachable by keyboard. */
+
+.cs-cal {
+  position: relative;
+}
+
+.cs-pop {
+  position: absolute;
+  bottom: calc(100% + 0.35rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: none;
+  width: max-content;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--civ-border);
+  border-radius: var(--pico-border-radius);
+  background: var(--civ-surface);
+  color: var(--civ-text);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 25%);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  text-align: left;
+  pointer-events: none;
+}
+
+.cs-cal__cell:hover .cs-pop,
+.cs-cal__cell:focus-visible .cs-pop {
+  display: block;
+}
+
+.cs-pop__head {
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.cs-pop__line {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.cs-pop__swatch {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 2px;
+  flex: 0 0 auto;
+}
+
+.cs-pop__n {
+  font-weight: 600;
+}
+
+.cs-pop__quiet {
+  color: var(--civ-text-muted);
+}
+
+/* Legend */
+
+.cs-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  align-items: center;
+  font-size: var(--text-xs);
+  color: var(--civ-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.cs-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cs-legend__swatch {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.cs-empty {
+  font-size: var(--text-sm);
+  color: var(--civ-text-muted);
+}
+
+.cs-pop__kinds {
+  display: block;
+  margin-top: 0.35rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--civ-border);
+}

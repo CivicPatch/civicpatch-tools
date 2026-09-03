@@ -20,8 +20,21 @@ describe('jurisdictionOcdidToPath', () => {
     expect(jurisdictionOcdidToPath('ocd-jurisdiction/country:us')).toBe('');
   });
 
-  it.each(fixtures)('matches shared fixture: $ocdid -> $path', ({ ocdid, path }) => {
-    expect(jurisdictionOcdidToPath(ocdid)).toBe(path);
+  // Was: `toBe(path)` against the shared folder fixture, which this and
+  // pipelines/tests/unit/utils/test_id_utils.py both read to keep two encoders in agreement.
+  // A jurisdiction page's URL is now its ocdid, so JS has no folder encoder left to agree
+  // about — the fixture still guards the Python one, which open-data's directory layout needs.
+  it.each(fixtures)('a page url is the ocdid itself: $ocdid', ({ ocdid }) => {
+    expect(jurisdictionOcdidToPath(ocdid)).toBe(encodeURI(ocdid));
+    expect(decodeURI(jurisdictionOcdidToPath(ocdid))).toBe(ocdid);
+  });
+
+  it('keeps slashes and colons literal, and escapes only what must be', () => {
+    const withAccent =
+      'ocd-jurisdiction/country:us/state:ca/place:la_ca\u00f1ada_flintridge/government';
+    expect(jurisdictionOcdidToPath(withAccent)).toBe(
+      'ocd-jurisdiction/country:us/state:ca/place:la_ca%C3%B1ada_flintridge/government',
+    );
   });
 });
 
@@ -45,8 +58,9 @@ describe('jurisdictionOcdidToState', () => {
     ).toBe('me');
   });
 
-  // The path builder derives its state the same way, so the two must never
-  // disagree about which state an ocdid belongs to.
+  // Both readers go through the same segment parse, so they cannot disagree about what
+  // counts as an ocdid. The path builder no longer derives a state at all — a page url is
+  // the ocdid itself.
   it.each(fixtures)('agrees with the path builder: $ocdid', ({ ocdid, path }) => {
     expect(jurisdictionOcdidToState(ocdid)).toBe(path.split('/')[0]);
   });

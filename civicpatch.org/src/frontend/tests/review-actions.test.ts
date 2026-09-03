@@ -230,7 +230,7 @@ describe("standalone deeplink (no session)", () => {
       path: null,
     },
   };
-  const jurisdictionPage = "/me/local/county_cumberland__place_windham";
+  const jurisdictionPage = "/ocd-jurisdiction/country:us/state:me/county:cumberland/place:windham/government";
 
   it("publishes, then returns to the jurisdiction page instead of advancing", async () => {
     const api = fakeApi();

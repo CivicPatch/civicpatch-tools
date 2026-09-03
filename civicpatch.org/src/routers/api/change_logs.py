@@ -6,7 +6,6 @@ import database.change_logs as database
 from lib.auth import get_optional_user
 from schemas.change_logs import ChangeLogBucket, ChangeLogEntry
 from schemas.common import Identity, UserRole, has_at_least
-from shared.utils.id_utils import jurisdiction_ocdid_to_folder
 
 # The activity bucket is visible to any logged-in user (route mount enforces
 # AUTHENTICATED). The quarantine bucket — which surfaces unreviewed content
@@ -19,14 +18,9 @@ _BUCKET_ROLES = {
 
 def _safe_path(jurisdiction_ocdid: str | None) -> str | None:
     """Folder path for the activity feed's jurisdiction link. Returns None for
-    NULL ocdids, state/county-level scopes, and any malformed/legacy ocdids
-    rather than 500'ing the whole feed."""
-    if not jurisdiction_ocdid:
-        return None
-    try:
-        return jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    except ValueError:
-        return None
+    NULL ocdids rather than 500'ing the whole feed. The page's URL is its ocdid, so there is
+    nothing left to convert or fail on."""
+    return jurisdiction_ocdid or None
 
 
 def get_router() -> APIRouter:

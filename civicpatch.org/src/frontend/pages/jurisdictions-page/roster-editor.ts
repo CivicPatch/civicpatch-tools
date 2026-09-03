@@ -108,7 +108,7 @@ function RosterEditor({
   // already on screen; this is what stops the button.
   const blockers = blockingErrors(cards);
   const blockerTitle = blockers
-    .map((blocker) => `${blocker.name} — ${blocker.fieldLabel}: ${blocker.message}`)
+    .map((blocker) => `${blocker.name}, ${blocker.fieldLabel}: ${blocker.message}`)
     .join("\n");
 
   const handlePersonSave = (id: string, updates: Record<string, unknown>) =>

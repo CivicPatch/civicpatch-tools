@@ -42,7 +42,7 @@ const describeTemporalWorkflow = (state: TemporalWorkflowState): string => {
     parts[0] += `, next in ${state.next_retry_seconds}s`;
   }
   if (state.last_failure) parts.push(state.last_failure);
-  return parts.join(" — ");
+  return parts.join(", ");
 };
 
 function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onCancel, temporalUrl, cancelRequested }: ScrapeInProgressProps) {
@@ -140,8 +140,8 @@ function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onC
           color="var(--pico-info-color)"
         ></civ-status-badge>
         <span class="sip-timing">
-          started ${dateStringToFriendly(scrape.created_at)} —
-          running ${durationBetween(scrape.created_at, scrape.updated_at)}
+          started ${dateStringToFriendly(scrape.created_at)}, running
+          ${durationBetween(scrape.created_at, scrape.updated_at)}
         </span>
       </div>
 

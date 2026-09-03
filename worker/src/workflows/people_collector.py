@@ -8,6 +8,7 @@ from temporalio.common import RetryPolicy, WorkflowIDReusePolicy
 with workflow.unsafe.imports_passed_through():
     from activities.github_activity import cancel_local_run, trigger_github_action, trigger_local
     from activities.pipeline_run_status_activity import update_pipeline_run_status, poll_pipeline_run_status
+    from activities.state_scrape_activity import claim_scrape_candidates
     from constants import RunConclusion
     from shared.utils.statuses import PipelineRunStatus
 
@@ -121,12 +122,52 @@ class PeopleCollectorWorkflow:
         return restart_conclusion
 
 
+# Fallback only. The real value arrives as a workflow argument, from PIPELINE_RUN_CONCURRENCY
+# on the API side — read there rather than here because Temporal replays a workflow, so a value
+# that changed between runs would diverge.
+DEFAULT_PIPELINE_RUN_CONCURRENCY = 25
+
+
 @workflow.defn
-class BatchPeopleCollectorWorkflow:
+class StateScrapeWorkflow:
+    """A state's scrape, start to finish, as one durable thing.
+
+    It asks the API for its own candidates rather than being handed a list. A Temporal Schedule
+    can only pass fixed arguments, so a scheduled scrape can give it a state and nothing else —
+    and resolving candidates before starting left orphaned changesets whenever the caller died
+    between registering them and starting the run.
+    """
+
     @workflow.run
-    async def run(self, items: list[dict]) -> None:
+    async def run(
+        self,
+        state: str,
+        num_jurisdictions: Optional[int] = None,
+        created_by_user_id: Optional[str] = None,
+        concurrency: int = DEFAULT_PIPELINE_RUN_CONCURRENCY,
+    ) -> int:
+        items = await workflow.execute_activity(
+            claim_scrape_candidates,
+            args=[state, num_jurisdictions, created_by_user_id],
+            start_to_close_timeout=timedelta(minutes=2),
+            retry_policy=RetryPolicy(maximum_attempts=3),
+        )
+        if not items:
+            return 0
+        await _dispatch(items, max(1, concurrency))
+        return len(items)
+
+
+async def _dispatch(items: list[dict], concurrency: int) -> None:
+    """A slice at a time, not all at once: a state scrape takes every jurisdiction due — 1,293
+    for Michigan — and each one dispatches its own pipeline run.
+
+    Sliced rather than semaphored because a workflow must be deterministic on replay, and a
+    fixed slice obviously is.
+    """
+    for start in range(0, len(items), concurrency):
         handles = []
-        for item in items:
+        for item in items[start : start + concurrency]:
             handle = await workflow.start_child_workflow(
                 PeopleCollectorWorkflow.run,
                 args=[item["jurisdiction_ocdid"], item["changeset_id"]],
@@ -135,3 +176,12 @@ class BatchPeopleCollectorWorkflow:
             )
             handles.append(handle)
         await asyncio.gather(*handles)
+
+
+# Kept for the workflows already running against it when StateScrapeWorkflow landed; nothing
+# starts one any more.
+@workflow.defn
+class BatchPeopleCollectorWorkflow:
+    @workflow.run
+    async def run(self, items: list[dict]) -> None:
+        await _dispatch(items, DEFAULT_PIPELINE_RUN_CONCURRENCY)

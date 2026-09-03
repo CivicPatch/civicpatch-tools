@@ -31,7 +31,12 @@ class CreatePipelineRunResponse(BaseModel):
 
 class BatchPipelineRunRequest(BaseModel):
     state: str
-    num_jurisdictions: int = 10
+    # None means every eligible jurisdiction — which is what "scrape this state" means. A
+    # number is a ceiling, kept for callers that want a smaller bite.
+    num_jurisdictions: Optional[int] = None
+    # Who asked. Carried through the workflow so the changesets it registers are attributed to
+    # the person who pressed the button, not to the system.
+    created_by_user_id: Optional[str] = None
 
 
 # ── POST /api/v1/pipeline_runs/register (internal) ───────────────────────────

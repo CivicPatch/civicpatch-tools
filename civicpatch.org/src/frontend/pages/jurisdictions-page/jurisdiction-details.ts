@@ -124,7 +124,7 @@ function JurisdictionDetails({ data, canEdit, onSave }: JurisdictionDetailsProps
       ? html`<a class="person-editor__readonly" href=${data.url} target=${SOURCE_LINK_TARGET}
           >${data.url}</a
         >`
-      : html`<span class="person-editor__readonly">—</span>`;
+      : html`<span class="person-editor__readonly">(none)</span>`;
 
   const terms = (data.term ?? []).map((t: any) => [
     ["Duration", t.duration ? `${t.duration} years` : null],
