@@ -96,14 +96,6 @@ async def start_state_scrape_workflow(
     return handle.id
 
 
-async def trigger_full_od_sync() -> None:
-    """Run a full open-data sync now by triggering the existing OD_SYNC schedule, so manual
-    and cron syncs share one durable path. The schedule's overlap policy + the singleton
-    workflow id keep it from running concurrently with an in-flight sync."""
-    client = await _get_client()
-    await client.get_schedule_handle(ScheduleId.OD_SYNC).trigger()
-
-
 async def start_targeted_od_sync(jurisdiction_ocdids: list[str]) -> str:
     client = await _get_client()
     handle = await client.start_workflow(

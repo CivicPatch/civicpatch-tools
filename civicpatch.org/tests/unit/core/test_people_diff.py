@@ -111,3 +111,37 @@ def test_distinct_people_still_add_and_delete():
     # Different content must NOT be cancelled as a re-link.
     result = diff_people([_person("a", name="Alice")], [_person("b", name="Bob")])
     assert {c.type for c in result} == {ChangeLogType.ADD_PERSON, ChangeLogType.DELETE_PERSON}
+
+
+@pytest.mark.unit
+def test_a_move_between_seats_names_the_one_they_left():
+    """The two sides arrive shaped differently: `after` comes from the editor and carries a flat
+    `post_id`, `before` comes from `get_roster` where the seat is `memberships[].post_id`. Until
+    this was handled every post change logged `∅ → Mayor`, so a move read as an appointment from
+    nothing — which is what the Seattle timeline showed for a councillor becoming mayor."""
+    before = [
+        {
+            "id": "p1",
+            "name": "Alexis Mercedes Rinck",
+            "memberships": [{"post_id": "council-uuid"}],
+        }
+    ]
+    after = [{"id": "p1", "name": "Alexis Mercedes Rinck", "post_id": "mayor-uuid"}]
+    labels = {"council-uuid": "Council Member", "mayor-uuid": "Mayor"}
+
+    fields = diff_people(before, after, labels)[0].payload.fields
+    moved = next(f for f in fields if f.field == "post_id")
+
+    assert (moved.before, moved.after) == ("Council Member", "Mayor")
+
+
+@pytest.mark.unit
+def test_someone_who_held_nothing_still_reads_as_nothing():
+    """The `∅ →` rendering is right when it is true — a person with no seat taking one."""
+    before = [{"id": "p1", "name": "New Person", "memberships": []}]
+    after = [{"id": "p1", "name": "New Person", "post_id": "mayor-uuid"}]
+
+    fields = diff_people(before, after, {"mayor-uuid": "Mayor"})[0].payload.fields
+    moved = next(f for f in fields if f.field == "post_id")
+
+    assert (moved.before, moved.after) == (None, "Mayor")
