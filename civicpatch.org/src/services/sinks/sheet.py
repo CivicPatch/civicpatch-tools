@@ -94,12 +94,22 @@ async def _replace_rows(
 
     Threaded because `googleapiclient` is synchronous and would block the event loop.
     """
+    # The spreadsheet is part of the destination, not just the tab. The hash is of the rows
+    # about to be written, so the same rows hash the same whichever file they go to — keying on
+    # the tab name alone made a *different* spreadsheet look already-written, and it stayed
+    # empty with nothing to say so. Happened 2026-09-04 on a sheet swap.
+    #
+    # Deliberately not done for the parquet and open-data sinks. Same shape, but a bucket and a
+    # git repo are provisioned once and do not move, where a spreadsheet gets copied and swapped
+    # by hand. One real failure is not a reason to guard two imagined ones.
+    spreadsheet_id = entry_sheet.spreadsheet_id()
+    target = f"{spreadsheet_id}/{tab}"
+
     content_hash = await _content_hash(headers, chunks)
-    if (await output_hashes_db.get_hashes([tab])).get(tab) == content_hash:
+    if (await output_hashes_db.get_hashes([target])).get(target) == content_hash:
         logger.info(f"{tab}: unchanged, left alone")
         return None
 
-    spreadsheet_id = entry_sheet.spreadsheet_id()
     grid_rows = await asyncio.to_thread(
         sheets.ensure_tab, spreadsheet_id, tab, total + 1, widths_for(headers)
     )
@@ -120,7 +130,7 @@ async def _replace_rows(
 
     # Only after every chunk landed: recording earlier would leave a half-written tab marked
     # current, and the retry would skip it.
-    await output_hashes_db.record_hashes({tab: content_hash})
+    await output_hashes_db.record_hashes({target: content_hash})
     written = row - _FIRST_DATA_ROW
     logger.info(f"{tab}: {written} rows written (counted {total})")
     return written
