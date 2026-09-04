@@ -1,12 +1,11 @@
 from datetime import date
 
 from database import memberships
-from fastapi import APIRouter, BackgroundTasks, Depends, Query
+from fastapi import APIRouter, Depends, Query
 from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory, UserRole
 from schemas.posts import AssignMembershipRequest
-from services.publish import commit_roster
 
 
 def get_router() -> APIRouter:
@@ -15,7 +14,6 @@ def get_router() -> APIRouter:
     @router.put("")
     async def assign_membership_endpoint(
         body: AssignMembershipRequest,
-        background_tasks: BackgroundTasks,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
@@ -31,15 +29,8 @@ def get_router() -> APIRouter:
                 {"error": "They already hold that post under that label."},
                 status_code=409,
             )
-        # This edit mints no changeset, so nothing else will mirror it: without this the
-        # database moves the seat and open-data drifts until the next real publish.
-        # Backgrounded because the row is already committed — a Temporal outage must not
-        # turn a successful assignment into a 500.
-        background_tasks.add_task(
-            commit_roster,
-            result.jurisdiction_ocdid,
-            f"Assign membership in {result.jurisdiction_ocdid}",
-        )
+        # No mirror call: `assign` writes a change log on its own cursor and the sweep reads
+        # it, so open-data hears about this without the endpoint knowing open-data exists.
         return {"data": result}
 
     @router.get("/unmatched")

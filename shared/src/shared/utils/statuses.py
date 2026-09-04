@@ -119,7 +119,7 @@ class DismissalReason(StrEnum):
 
 
 class ChangeLogType(StrEnum):
-    MERGE_REVIEW = "merge_review"
+    PUBLISH_REVIEW = "publish_review"
     CLOSE_REVIEW = "close_review"
     ADD_PERSON = "add_person"
     EDIT_PERSON = "edit_person"

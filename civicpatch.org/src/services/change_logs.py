@@ -5,22 +5,12 @@ from core.jurisdiction_patch import JurisdictionPatch
 from core.people_diff import diff_people
 from database import posts
 from database.change_logs import create_change_log
-from database.changesets import get_request_jurisdiction
 from database.database import get_pool
 from schemas.change_logs import JurisdictionChangePayload
 from shared.schemas import POST_FIELD
 from shared.utils.statuses import ChangeLogType
 
 logger = logging.getLogger(__name__)
-
-
-async def record_publish(changeset_id: str, user_id: str | None) -> None:
-    # Best-effort: the publish already succeeded, so a logging failure must not surface as one.
-    try:
-        jurisdiction_ocdid = await get_request_jurisdiction(changeset_id)
-        await create_change_log(ChangeLogType.MERGE_REVIEW, user_id, jurisdiction_ocdid, changeset_id)
-    except Exception:
-        logger.exception("Failed to record merge_review change log for request %s", changeset_id)
 
 
 async def record_manual_edits(

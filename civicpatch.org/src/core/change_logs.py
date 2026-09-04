@@ -125,8 +125,8 @@ def summarize_change_log(type_: str, changes: dict | None) -> str:
     if type_ == "edit_jurisdiction":
         return "Edited jurisdiction"
 
-    if type_ in ("merge_review", "close_review"):
-        return "Merged review" if type_ == "merge_review" else "Closed review"
+    if type_ in ("publish_review", "close_review"):
+        return "Published review" if type_ == "publish_review" else "Closed review"
 
     if type_ == "reorder_roles":
         return _reorder_summary(c)

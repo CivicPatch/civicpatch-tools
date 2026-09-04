@@ -49,7 +49,6 @@ async def find_jurisdiction_url(context: PeopleCollectorContext) -> FindJurisdic
         context.changeset_id,
         context.data.jurisdiction_ocdid,
         prompt,
-        with_search=True,
         model_fallbacks=FIND_JURISDICTION_URL_MODEL_FALLBACKS,
     )
     discovered_url = (response or {}).get("url")

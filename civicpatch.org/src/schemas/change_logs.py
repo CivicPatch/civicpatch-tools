@@ -129,3 +129,14 @@ class ChangeLogEntry(BaseModel):
     author_role: str | None
     created_at: datetime
     summary: str
+
+
+class ChangedJurisdiction(BaseModel):
+    """One jurisdiction the feed says changed, and what kinds of change reached it.
+
+    The types are carried so the open-data commit can name what it is mirroring — a sweep
+    knows the jurisdiction changed but, without them, nothing about how.
+    """
+
+    jurisdiction_ocdid: str
+    change_types: list[str]

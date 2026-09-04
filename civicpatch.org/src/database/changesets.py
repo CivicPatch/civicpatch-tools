@@ -4,8 +4,10 @@ from collections.abc import Mapping
 from datetime import timedelta
 from typing import Optional
 
+from core.changeset_lifecycle import ChangesetState, DISMISSAL_REASONS
 from database.change_logs import record_dismissal
 from database.database import get_pool, to_iso
+from database.users import SYSTEM_USER_ID
 from database.review_sessions import (
     SESSION_IDLE_TIMEOUT_MINUTES,
     ReviewSessionEntryStatus,
@@ -417,26 +419,87 @@ async def get_issue_request_details(changeset_ids: list[str]) -> list[dict]:
     ]
 
 
-async def dismiss_as_unchanged(cur, changeset_id: str) -> bool:
-    """Retire a scrape that asserted nothing new. Returns whether it was still open.
+# Which rows are in which state, in SQL. The Python side of this is
+# `core.changeset_lifecycle`; this is the same fact where the UPDATE can use it.
+_STATE_SQL: dict[ChangesetState, str] = {
+    ChangesetState.READY: (
+        f"(status IS NULL OR status IN ('{PipelineRunStatus.SUCCESS.value}', "
+        f"'{PipelineRunStatus.RESOLVED.value}'))"
+    ),
+    ChangesetState.FAILED: (
+        f"status IN ('{PipelineRunStatus.ERROR.value}', "
+        f"'{PipelineRunStatus.CANCELLED.value}')"
+    ),
+}
 
-    Guarded in the statement rather than by checking first: a reviewer may be publishing this
-    very request, and losing that race must not overwrite their decision.
+
+def _states_allowing(reason: DismissalReason) -> str:
+    """The states this reason may leave, as a WHERE fragment.
+
+    Derived from the lifecycle rather than written out again, so a reason moving between states
+    cannot leave the SQL saying something else. Dev holds a `CANCELLED` run dismissed as
+    `rejected` and an `ERROR` run dismissed as `cancelled`, which is what nothing checking this
+    looks like.
     """
+    allowed = [
+        _STATE_SQL[state]
+        for state, reasons in DISMISSAL_REASONS.items()
+        if reason in reasons
+    ]
+    return " OR ".join(allowed) if allowed else "false"
+
+
+async def mark_dismissed(
+    cur,
+    changeset_ids: list[str],
+    reason: DismissalReason,
+    resolved_by_user_id: str | None = None,
+) -> list[tuple[str, str]]:
+    """The one writer for a dismissal. Returns the (id, jurisdiction) pairs that transitioned.
+
+    Four functions used to do this — `dismiss_request`, `dismiss_as_unchanged`,
+    `dismiss_superseded_by`, `supersede_stacked_requests` — each with its own copy of the
+    UPDATE, its own guard, and its own `record_dismissal` call. They differ only in *which*
+    rows they select, which stays with them; the marking is here.
+
+    Guarded in the statement, not by reading first: a reviewer may be publishing this very
+    changeset, and losing that race must not overwrite their decision. `dismissed_at IS NULL`
+    makes DISMISSED terminal — a second dismissal is a no-op rather than a re-labelling, which
+    is what the COALESCE here used to buy.
+
+    `resolved_by_user_id`: explicit user, else whoever already resolved it, else the system.
+    A sweep dismissing a card is an actor, not an absence — which is the rule migration 160
+    established, and which the supersede sweeps were the last paths not to follow.
+    """
+    if not changeset_ids:
+        return []
     await cur.execute(
         f"""
         UPDATE changesets
-           SET dismissed_at = now(), dismissed_reason = '{DISMISSED_UNCHANGED}'
-         WHERE id::text = %s AND published_at IS NULL AND dismissed_at IS NULL
-        RETURNING jurisdiction_ocdid
+           SET dismissed_at = now(),
+               dismissed_reason = %s,
+               resolved_by_user_id = COALESCE(%s, resolved_by_user_id, %s)
+         WHERE id::text = ANY(%s)
+           AND published_at IS NULL
+           AND dismissed_at IS NULL
+           AND ({_states_allowing(reason)})
+        RETURNING id::text, jurisdiction_ocdid
         """,
-        (changeset_id,),
+        (reason, resolved_by_user_id, SYSTEM_USER_ID, changeset_ids),
     )
-    row = await cur.fetchone()
-    if row is None:
-        return False
-    await record_dismissal(cur, changeset_id, row[0], None, DismissalReason.UNCHANGED)
-    return True
+    dismissed = await cur.fetchall()
+    for changeset_id, jurisdiction_ocdid in dismissed:
+        await record_dismissal(
+            cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id, reason
+        )
+    return [(row[0], row[1]) for row in dismissed]
+
+
+async def dismiss_as_unchanged(cur, changeset_id: str) -> bool:
+    """Retire a scrape that asserted nothing new. Returns whether it was still open."""
+    return bool(
+        await mark_dismissed(cur, [changeset_id], DismissalReason.UNCHANGED)
+    )
 
 
 async def dismiss_superseded_by(
@@ -448,19 +511,17 @@ async def dismiss_superseded_by(
     all. The sweep still runs — it catches two *pending* scrapes, which have no publish to hang
     off, and re-checks holds as they expire.
     """
+    # Selection here, marking in `mark_dismissed`. Splitting them is safe inside this
+    # transaction because that UPDATE re-checks the same guards, so a row a reviewer takes
+    # between the two statements is skipped rather than overwritten.
     await cur.execute(
         f"""
-        UPDATE changesets
-           SET dismissed_at = now(), dismissed_reason = '{DISMISSED_SUPERSEDED}'
-         WHERE id IN (
-             SELECT r.id FROM changesets r
-             WHERE r.jurisdiction_ocdid = %s
-               AND r.id::text <> %s
-               AND r.sourced_at IS NOT NULL
-               AND r.sourced_at < %s
-               AND {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
-         )
-        RETURNING id::text
+        SELECT r.id::text FROM changesets r
+         WHERE r.jurisdiction_ocdid = %s
+           AND r.id::text <> %s
+           AND r.sourced_at IS NOT NULL
+           AND r.sourced_at < %s
+           AND {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
         """,
         (
             jurisdiction_ocdid,
@@ -469,13 +530,9 @@ async def dismiss_superseded_by(
             timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES),
         ),
     )
-    dismissed = [row[0] for row in await cur.fetchall()]
-    # Every jurisdiction here is the one being published into, by construction of the WHERE.
-    for changeset_id in dismissed:
-        await record_dismissal(
-            cur, changeset_id, jurisdiction_ocdid, None, DismissalReason.SUPERSEDED
-        )
-    return dismissed
+    stale = [row[0] for row in await cur.fetchall()]
+    dismissed = await mark_dismissed(cur, stale, DismissalReason.SUPERSEDED)
+    return [row[0] for row in dismissed]
 
 
 async def supersede_stacked_requests() -> list[str]:
@@ -511,25 +568,17 @@ async def supersede_stacked_requests() -> list[str]:
                 FROM changesets r
                 WHERE r.published_at IS NOT NULL AND r.sourced_at IS NOT NULL
             )
-            UPDATE changesets
-               SET dismissed_at = now(), dismissed_reason = '{DISMISSED_SUPERSEDED}'
-             WHERE id IN (
-                 SELECT older.id
-                 FROM candidates older
-                 WHERE EXISTS (
-                     SELECT 1 FROM supersedors newer
-                     WHERE newer.jurisdiction_ocdid = older.jurisdiction_ocdid
-                       AND newer.sourced_at > older.sourced_at
-                 )
+            SELECT older.id::text
+              FROM candidates older
+             WHERE EXISTS (
+                 SELECT 1 FROM supersedors newer
+                 WHERE newer.jurisdiction_ocdid = older.jurisdiction_ocdid
+                   AND newer.sourced_at > older.sourced_at
              )
-            RETURNING id::text, jurisdiction_ocdid
             """,
             (timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES),),
         )
-        # The sweep spans jurisdictions, so each row carries its own.
-        dismissed = await cur.fetchall()
-        for changeset_id, jurisdiction_ocdid in dismissed:
-            await record_dismissal(
-                cur, changeset_id, jurisdiction_ocdid, None, DismissalReason.SUPERSEDED
-            )
+        stale = [row[0] for row in await cur.fetchall()]
+        dismissed = await mark_dismissed(cur, stale, DismissalReason.SUPERSEDED)
+        await conn.commit()
         return [row[0] for row in dismissed]

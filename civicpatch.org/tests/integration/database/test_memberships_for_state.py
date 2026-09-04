@@ -269,3 +269,45 @@ async def test_a_global_change_names_no_state():
         await conn.commit()
 
     assert None not in await change_logs.states_changed_since(60)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_dismissal_does_not_put_its_state_on_the_feed():
+    """A dismissal ends a review without moving a row — 245 of the 294 so far were superseded,
+    where a newer scrape won and the roster is exactly what it was. Syncing there is a whole-tab
+    rewrite and an open-data commit for nothing."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO change_logs (type, jurisdiction_ocdid) VALUES ('close_review', %s)",
+            (_ZX,),
+        )
+        await conn.commit()
+
+    assert "zx" not in await change_logs.states_changed_since(60)
+    assert _ZX not in [
+        row.jurisdiction_ocdid
+        for row in await change_logs.jurisdictions_changed_since(60)
+    ]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_jurisdiction_feed_names_what_changed():
+    """Open-data's grain is one file per jurisdiction, so its sweep needs the ocdid rather than
+    the state — and the types, so the commit can say what it is mirroring."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO change_logs (type, jurisdiction_ocdid) "
+            "VALUES ('add_post', %s), ('edit_person', %s)",
+            (_ZX, _ZX),
+        )
+        await conn.commit()
+
+    changed = await change_logs.jurisdictions_changed_since(60)
+
+    mine = [row for row in changed if row.jurisdiction_ocdid == _ZX]
+    assert len(mine) == 1
+    assert mine[0].change_types == ["add_post", "edit_person"]

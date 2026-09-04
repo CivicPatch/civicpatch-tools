@@ -61,7 +61,6 @@ async def run_eval(case):
         changeset_id="run-eval",
         jurisdiction_ocdid=jurisdiction_ocdid,
         prompt=prompt,
-        with_search=True,
         model_fallbacks=FIND_JURISDICTION_URL_MODEL_FALLBACKS,
     )
     actual = {"url": (response or {}).get("url")}

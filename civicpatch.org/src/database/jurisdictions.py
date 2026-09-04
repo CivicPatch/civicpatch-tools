@@ -588,7 +588,7 @@ EntityKey = tuple[str, str]
 
 # What this jurisdiction's history shows a changeset having done.
 #
-# Review lifecycle stays out: `merge_review` and `close_review` describe what happened to the
+# Review lifecycle stays out: `publish_review` and `close_review` describe what happened to the
 # *review*, and both are already said by the outcome pill — including them would repeat every
 # row's own status back at it, and they are 95 of the 97 excluded rows.
 #
@@ -598,7 +598,7 @@ EntityKey = tuple[str, str]
 # `edit_jurisdiction` IS included: a details edit is a change to this jurisdiction, its payload
 # carries the same `fields` diff every other type does, and without it a `jurisdiction_edit`
 # changeset renders as "No roster changes" while its log holds exactly what changed.
-# What counts as a change to the roster. Review lifecycle (`merge_review`, `close_review`) is
+# What counts as a change to the roster. Review lifecycle (`publish_review`, `close_review`) is
 # out — it says what happened to the *review*, which the outcome pill already shows — and so is
 # role taxonomy, which is global rather than this place's.
 #

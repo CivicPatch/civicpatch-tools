@@ -9,7 +9,6 @@ Isolation: sentinel state 'zz', cleaned before and after each test.
 
 import uuid
 from datetime import datetime, timezone
-from unittest.mock import AsyncMock, patch
 
 import pytest
 import pytest_asyncio
@@ -17,7 +16,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from core.post_derivation import DerivedMembership
-from database import divisions, memberships, organizations, posts
+from database import change_logs, divisions, memberships, organizations, posts
 from database.database import get_pool
 from lib.auth import get_optional_user
 from routers.api import memberships as memberships_router
@@ -28,16 +27,6 @@ _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_mroute/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_mroute"
 _WARD_3 = f"{_BASE}/ward:3"
 _SEEN_AT = "2026-06-15T00:00:00Z"
-
-
-@pytest.fixture(autouse=True)
-def mirror():
-    """Assigning schedules an open-data mirror, which needs Temporal. Patched here because
-    these are route tests: the scheduling is the contract, the commit is `publish`'s."""
-    with patch.object(
-        memberships_router, "commit_roster", new_callable=AsyncMock
-    ) as mirror:
-        yield mirror
 
 
 def _fake_admin() -> Identity:
@@ -153,30 +142,31 @@ async def test_a_move_names_the_seat_it_came_from(client):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_assigning_mirrors_the_roster_into_open_data(client, mirror):
-    """This edit mints no changeset, so nothing else mirrors it. Without it the seat moves in
-    the database and the published files drift until the next real publish."""
+async def test_assigning_puts_the_jurisdiction_on_the_sync_feed(client):
+    """How this edit reaches open-data and the sheet. The route calls neither: `assign` writes
+    a change log on its own cursor and `SyncSweepWorkflow` reads it, so a seat that moved in
+    the database cannot leave the published files behind."""
     person_id, mayor, _ = await _seed()
 
     client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
 
-    mirror.assert_awaited_once()
-    assert mirror.await_args.args[0] == _OCDID
+    changed = await change_logs.jurisdictions_changed_since(15)
+    assert _OCDID in [row.jurisdiction_ocdid for row in changed]
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_refused_assignment_mirrors_nothing(client, mirror):
-    """409 means the seat did not move, so there is nothing to publish — mirroring anyway
-    would commit an unchanged roster and put a no-op in open-data's history."""
+async def test_a_refused_assignment_logs_nothing(client):
+    """409 means the seat did not move, so nothing should reach the feed — a log would put an
+    unchanged roster into open-data's history as a no-op commit."""
     person_id, mayor, _ = await _seed()
     client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
-    mirror.reset_mock()
+    before = await _change_logs()
 
     repeated = client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
 
     assert repeated.status_code == 409, repeated.text
-    mirror.assert_not_awaited()
+    assert await _change_logs() == before
 
 
 @pytest.mark.asyncio

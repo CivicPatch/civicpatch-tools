@@ -11,7 +11,7 @@ class ScheduleId(StrEnum):
     OD_SYNC = "od-sync"
     PIPELINE_RUN_CLEANUP = "pipeline-run-cleanup"
     REVIEW_SESSION_CLEANUP = "review-session-cleanup"
-    ROSTER_SHEET_SWEEP = "roster-sheet-sweep"
+    SYNC_SWEEP = "sync-sweep"
 
 
 class WorkflowInstanceId(StrEnum):
@@ -19,7 +19,7 @@ class WorkflowInstanceId(StrEnum):
     PIPELINE_RUN_CLEANUP = "pipeline-run-cleanup-workflow"
     REVIEW_SESSION_CLEANUP = "review-session-cleanup-workflow"
     REPO_MERGE_QUEUE = "repo-merge-queue"
-    ROSTER_SHEET_SWEEP = "roster-sheet-sweep-workflow"
+    SYNC_SWEEP = "sync-sweep-workflow"
 
 
 with workflow.unsafe.imports_passed_through():
@@ -31,6 +31,7 @@ with workflow.unsafe.imports_passed_through():
         od_sync_activity,
         od_sync_targeted_activity,
         supersede_stacked_requests_activity,
+        sweep_open_data_activity,
         sweep_roster_sheets_activity,
         sync_jurisdictions_sheet_activity,
         sync_roster_sheet_activity,
@@ -155,13 +156,24 @@ class JurisdictionsSheetSyncWorkflow:
 
 
 @workflow.defn
-class RosterSheetSweepWorkflow:
-    """Sync whatever changed recently. The sheet's only route in during normal running."""
+class SyncSweepWorkflow:
+    """Sync whatever changed recently to both outward sinks — the sheet and open-data.
+
+    One sweep, not two: both read the same `change_logs` window, so a second schedule would
+    ask the same question of the same rows five minutes out of step.
+
+    Sequential rather than concurrent because a permanent failure in one costs nothing — the
+    lookback is wider than the cadence, so the next run sees the same changes again.
+    """
 
     @workflow.run
     async def run(self) -> None:
         await workflow.execute_activity(
             sweep_roster_sheets_activity,
+            start_to_close_timeout=timedelta(minutes=5),
+        )
+        await workflow.execute_activity(
+            sweep_open_data_activity,
             start_to_close_timeout=timedelta(minutes=5),
         )
 

@@ -36,7 +36,7 @@ def test_person_missing_name_falls_back():
 
 
 def test_review_events():
-    assert summarize_change_log("merge_review", None) == "Merged review"
+    assert summarize_change_log("publish_review", None) == "Published review"
     assert summarize_change_log("close_review", None) == "Closed review"
 
 
