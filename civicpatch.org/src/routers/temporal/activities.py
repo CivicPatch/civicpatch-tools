@@ -4,10 +4,9 @@ import database.jurisdictions as jurisdictions_db
 import database.memberships as memberships_db
 import database.pipeline_runs as pipeline_runs_db
 import database.review_session_entries as review_session_entries_db
-import services.sinks.parquet as parquet_sink
 import services.open_data_sync as data_sync
-import services.publish as publish_service
 import services.sinks.open_data as open_data_sink
+import services.sinks.parquet as parquet_sink
 import services.sinks.sheet as sheet_sink
 from database.issues import upsert_issue
 from lib.temporal.types import (
@@ -96,42 +95,30 @@ _BACKSTOP_BATCH_ID = "backstop"
 
 
 @activity.defn
-async def backstop_open_data_activity() -> None:
-    """Re-render every jurisdiction that has a roster, one batch per state.
+async def backstop_open_data_activity(state: str) -> None:
 
-    Both mirrors only ever see what `change_logs` reports. A write path that skips the feed, or
-    an activity that fails non-retryably, leaves a file stale with nothing to notice — this is
-    the only thing that does. It is affordable because of the content gate: a state where
-    nothing drifted renders, hashes, matches and makes no API call at all.
-
-    Per state rather than one batch. A single batch naming every jurisdiction would be a Temporal
-    payload of thousands of items, and one state's failure would take every other state with it.
-    """
-    # avoid circular import: the client imports the workflows module, which imports this one
-    import lib.temporal.client as temporal_client
-
-    for state in await jurisdictions_db.get_states_with_names():
-        code = state["code"]
-        ocdids = await memberships_db.jurisdictions_with_rosters(code)
-        if not ocdids:
-            continue
-        await temporal_client.enqueue_open_data_batch_commit(
-            OpenDataBatchCommitRequest(
-                batch_id=f"{_BACKSTOP_BATCH_ID}:{code}",
+    ocdids = await memberships_db.jurisdictions_with_rosters(state)
+    if not ocdids:
+        return
+    committed = await open_data_sink.commit_rendered_files(
+        [
+            OpenDataCommitItem(
+                file_path=open_data_sink.reviewed_file_path(ocdid),
                 # No changeset ids: nothing here is a changeset landing, so there is no
                 # `change_url` to stamp. A backstop corrects drift; it does not publish.
-                items=[
-                    OpenDataCommitItem(
-                        file_path=open_data_sink.reviewed_file_path(ocdid),
-                        changeset_ids=[],
-                        jurisdiction_ocdid=ocdid,
-                    )
-                    for ocdid in ocdids
-                ],
-                commit_message=f"Backstop {code.upper()}",
+                changeset_ids=[],
+                jurisdiction_ocdid=ocdid,
             )
-        )
-    activity.logger.info("Backstop: queued open-data for every state with a roster")
+            for ocdid in ocdids
+        ],
+        f"Backstop {state.upper()}",
+    )
+    activity.logger.info(
+        "Backstop %s: %d jurisdiction(s) checked, %s",
+        state,
+        len(ocdids),
+        "nothing to commit" if committed is None else committed,
+    )
 
 
 @activity.defn
@@ -190,9 +177,7 @@ async def sync_roster_sheet_activity(state: str) -> None:
 async def sync_jurisdictions_sheet_activity() -> None:
     """Rewrite the all-states dropdown source."""
     written = await sheet_sink.sync_jurisdictions()
-    activity.logger.info(
-        "Sheet sync jurisdictions: %s", sheet_sink.describe(written)
-    )
+    activity.logger.info("Sheet sync jurisdictions: %s", sheet_sink.describe(written))
 
 
 # Wider than the 5-minute cadence: a redundant re-sync is a no-op, a missed one is a stale tab.

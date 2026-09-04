@@ -101,8 +101,12 @@ _SHEET_SYNC_MAX_PASSES = 50
 
 # Retried forever, like the open-data commits. Safe: the activity replaces the tab from current
 # truth rather than replaying.
+#
+# Starts at a minute because that is Sheets' quota window: over budget, the wait that helps is a
+# known number, and ramping up to it just spends attempts discovering it. Still doubling, so a
+# failure that is not the quota backs off.
 _SHEET_RETRY = RetryPolicy(
-    initial_interval=timedelta(seconds=5),
+    initial_interval=timedelta(seconds=60),
     backoff_coefficient=2.0,
     maximum_interval=timedelta(minutes=10),
     maximum_attempts=0,
@@ -142,6 +146,7 @@ class RosterSheetSyncWorkflow:
                 start_to_close_timeout=timedelta(minutes=15),
                 retry_policy=_SHEET_RETRY,
             )
+
         workflow.continue_as_new(state)
 
 
@@ -223,10 +228,16 @@ class SweepEverythingWorkflow:
                 start_to_close_timeout=timedelta(minutes=15),
                 retry_policy=_SHEET_RETRY,
             )
-        await workflow.execute_activity(
-            backstop_open_data_activity,
-            start_to_close_timeout=timedelta(minutes=15),
-        )
+
+            # Same state, straight after its tabs. Sequential for the same reason: thirteen
+            # states used to race one branch ref, and every lost fast-forward re-rendered and
+            # re-uploaded a multi-megabyte tree. Still one commit per state.
+            await workflow.execute_activity(
+                backstop_open_data_activity,
+                state,
+                start_to_close_timeout=timedelta(minutes=15),
+                retry_policy=RetryPolicy(maximum_attempts=3),
+            )
         # Bounded, unlike the mirrors. Retrying forever would leave this workflow open and the
         # schedule's SKIP policy would then suppress tomorrow's backstop entirely — the mirrors
         # would quietly stop being checked because a dump nobody is waiting on could not write.

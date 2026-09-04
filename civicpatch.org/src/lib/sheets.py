@@ -166,7 +166,7 @@ def _grid_requests(sheet: dict, rows: int, columns: int) -> list:
 
 
 def _column_width_requests(sheet_id: int, widths: list[int]) -> list:
-    """One request per column, re-sent every run. Idempotent, and it rides along in a
+    """One request per column, sent with the tab that was just created — it rides along in a
     batchUpdate that already exists, so it costs no extra round trip."""
     return [
         {
@@ -266,16 +266,22 @@ def ensure_tab(
         )
         properties = created["replies"][0]["addSheet"]["properties"]
         sheet = {"properties": properties, "protectedRanges": []}
+        sheet_id = properties["sheetId"]
+        appearance = [
+            _text_format_request(sheet_id),
+            _freeze_header_request(sheet_id),
+        ] + _column_width_requests(sheet_id, widths)
+    else:
+        # Set once, on the tab we created. Re-asserting it nightly was a write request per tab
+        # that changed nothing — and these tabs are app-owned, so nobody's edits are being
+        # tidied up by it.
+        appearance = []
 
     _batch_update(
         service,
         spreadsheet_id,
         _grid_requests(sheet, rows, column_count)
-        + [
-            _text_format_request(sheet["properties"]["sheetId"]),
-            _freeze_header_request(sheet["properties"]["sheetId"]),
-        ]
-        + _column_width_requests(sheet["properties"]["sheetId"], widths)
+        + appearance
         + _protection_requests(sheet, tab),
     )
     # `_grid_requests` grows but never shrinks, so this is the same max it applied.
