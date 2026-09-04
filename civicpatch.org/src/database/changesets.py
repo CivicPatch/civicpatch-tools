@@ -108,7 +108,7 @@ async def register_request_with_pipeline_run(
             """
             INSERT INTO changesets (
                 id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id,
-                status, progress, created_at, sourced_at
+                status, progress, created_at, updated_at
             )
             VALUES (%s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
@@ -138,7 +138,7 @@ async def register_request_with_pipeline_run_if_not_exists(
             """
             INSERT INTO changesets (
                 id, kind, jurisdiction_ocdid, arguments_json, status, progress,
-                created_at, sourced_at
+                created_at, updated_at
             )
             VALUES (%s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             ON CONFLICT (id) DO NOTHING
@@ -164,7 +164,7 @@ async def register_people_edit_request(
     Born published, and it has to be — the edit writes sightings for anyone added, and those
     would put a pending request straight into the review pool.
 
-    `sourced_at` is now(): the edit is the newest word on the roster and supersedes any older
+    `updated_at` is now(): the edit is the newest word on the roster and supersedes any older
     pending scrape, which could not be published over it without retiring what the edit added.
     It does **not** date the seats — `publish_request` only advances `last_seen_at` for a
     changeset that read a source, and a hand edit read nothing.
@@ -175,7 +175,7 @@ async def register_people_edit_request(
             """
             INSERT INTO changesets (
                 id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id,
-                published_at, resolved_by_user_id, created_at, sourced_at
+                published_at, resolved_by_user_id, created_at, updated_at
             )
             VALUES (%s, %s, %s, '{}'::jsonb, %s, now(), %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
@@ -204,7 +204,7 @@ async def register_sheet_import_request(
     any other proposal. Writing its sightings is what puts it there — `AVAILABLE_FOR_REVIEW` is
     `EXISTS (source_records for this request)`.
 
-    `sourced_at` is now(): a curated sheet is the newest word on the roster, and it is when the
+    `updated_at` is now(): a curated sheet is the newest word on the roster, and it is when the
     curator read the source rather than when any machine did.
 
     `batch_id` says which run made it — so a card can name the import, and the bulk review
@@ -216,7 +216,7 @@ async def register_sheet_import_request(
             """
             INSERT INTO changesets (
                 id, kind, jurisdiction_ocdid, created_by_user_id, batch_id,
-                created_at, sourced_at
+                created_at, updated_at
             )
             VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
@@ -290,7 +290,7 @@ async def get_in_flight(jurisdiction_ocdid: str) -> JurisdictionInFlight:
         await cur.execute(
             f"""
             WITH flags AS (
-                SELECT r.id, r.created_at, r.sourced_at, r.kind, r.change_url,
+                SELECT r.id, r.created_at, r.updated_at, r.kind, r.change_url,
                        r.status, r.progress,
                        {RUN_IN_FLIGHT} AS is_running,
                        {AVAILABLE_FOR_REVIEW} AS awaiting_review
@@ -299,7 +299,7 @@ async def get_in_flight(jurisdiction_ocdid: str) -> JurisdictionInFlight:
                   AND r.published_at IS NULL
                   AND r.dismissed_at IS NULL
             )
-            SELECT id::text, created_at, sourced_at, kind, change_url, status, progress,
+            SELECT id::text, created_at, updated_at, kind, change_url, status, progress,
                    is_running, awaiting_review
             FROM flags
             WHERE is_running OR awaiting_review
@@ -503,7 +503,7 @@ async def dismiss_as_unchanged(cur, changeset_id: str) -> bool:
 
 
 async def dismiss_superseded_by(
-    cur, changeset_id: str, jurisdiction_ocdid: str, sourced_at
+    cur, changeset_id: str, jurisdiction_ocdid: str, updated_at
 ) -> list[str]:
     """Dismiss the cards this publish just made pointless, in the publishing transaction.
 
@@ -519,14 +519,14 @@ async def dismiss_superseded_by(
         SELECT r.id::text FROM changesets r
          WHERE r.jurisdiction_ocdid = %s
            AND r.id::text <> %s
-           AND r.sourced_at IS NOT NULL
-           AND r.sourced_at < %s
+           AND r.updated_at IS NOT NULL
+           AND r.updated_at < %s
            AND {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
         """,
         (
             jurisdiction_ocdid,
             changeset_id,
-            sourced_at,
+            updated_at,
             timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES),
         ),
     )
@@ -540,19 +540,19 @@ async def supersede_stacked_requests() -> list[str]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            -- Ordered by `sourced_at`: which scrape read the source more recently, never
+            -- Ordered by `updated_at`: which scrape read the source more recently, never
             -- which row was touched more recently. A reviewer editing an old roster did not go
             -- and look again. Work in progress is protected by the held-card exclusion
             -- instead, which is time-boxed on purpose.
             --
-            -- `sourced_at IS NOT NULL`, so a request with no run cannot supersede or be
+            -- `updated_at IS NOT NULL`, so a request with no run cannot supersede or be
             -- superseded. That is jurisdiction edits (already excluded by `SWEEPABLE`) and,
             -- once it exists, anything typed in rather than scraped.
             WITH candidates AS (
-                SELECT r.id, r.jurisdiction_ocdid, r.sourced_at
+                SELECT r.id, r.jurisdiction_ocdid, r.updated_at
                 FROM changesets r
                 WHERE {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
-                  AND r.sourced_at IS NOT NULL
+                  AND r.updated_at IS NOT NULL
             ),
             -- What can supersede, which is not the same set as what can BE superseded: a
             -- published request is no longer a candidate, so comparing candidates only to each
@@ -562,18 +562,18 @@ async def supersede_stacked_requests() -> list[str]:
             -- and it must. A reviewer holding the newest card shields the whole jurisdiction
             -- for the pass — sweep the older ones and their rejecting it strands the lot.
             supersedors AS (
-                SELECT jurisdiction_ocdid, sourced_at FROM candidates
+                SELECT jurisdiction_ocdid, updated_at FROM candidates
                 UNION ALL
-                SELECT r.jurisdiction_ocdid, r.sourced_at
+                SELECT r.jurisdiction_ocdid, r.updated_at
                 FROM changesets r
-                WHERE r.published_at IS NOT NULL AND r.sourced_at IS NOT NULL
+                WHERE r.published_at IS NOT NULL AND r.updated_at IS NOT NULL
             )
             SELECT older.id::text
               FROM candidates older
              WHERE EXISTS (
                  SELECT 1 FROM supersedors newer
                  WHERE newer.jurisdiction_ocdid = older.jurisdiction_ocdid
-                   AND newer.sourced_at > older.sourced_at
+                   AND newer.updated_at > older.updated_at
              )
             """,
             (timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES),),

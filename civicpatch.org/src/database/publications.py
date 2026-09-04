@@ -20,7 +20,7 @@ from database.change_logs import record_change
 from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
 from database.users import SYSTEM_USER_ID
-from database.pipeline_runs import get_sourced_at
+from database.pipeline_runs import get_updated_at
 from schemas.assertions import Assertion, AssertionKind, EntityType
 from shared.utils.statuses import (
     SOURCE_READING_KINDS,
@@ -94,13 +94,13 @@ async def _refuse_if_superseded(
     go and look at the source again."""
     await cur.execute(
         """
-        SELECT r.id::text, r.sourced_at
+        SELECT r.id::text, r.updated_at
         FROM changesets r
         WHERE r.jurisdiction_ocdid = %s
           AND r.published_at IS NOT NULL
           AND r.id::text <> %s
-          AND r.sourced_at > %s
-        ORDER BY r.sourced_at DESC
+          AND r.updated_at > %s
+        ORDER BY r.updated_at DESC
         LIMIT 1
         """,
         (jurisdiction_ocdid, changeset_id, last_seen_at),
@@ -238,8 +238,8 @@ async def publish_request(
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        last_seen_at = await get_sourced_at(cur, changeset_id)
-        # `sourced_at` orders superseding whatever the kind — a hand edit really is the newest
+        last_seen_at = await get_updated_at(cur, changeset_id)
+        # `updated_at` orders superseding whatever the kind — a hand edit really is the newest
         # word. Whether it *dates a seat* is a different question, and only a source reading
         # answers it.
         advances_last_seen = await _read_a_source(cur, changeset_id)

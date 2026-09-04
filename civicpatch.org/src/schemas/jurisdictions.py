@@ -57,8 +57,8 @@ class JurisdictionHistoryEntry(BaseModel):
     the coarse three-way answer that `outcome` supersedes. So did `branch_name` and
     `jurisdiction_ocdid` — nothing read either, and the first cost a `make_job_branch` per row.
 
-    `updated_at` is `sourced_at` — when the source was read, which is what a duration is
-    measured against. `created_at` is when the changeset was made.
+    `updated_at` is when the changeset's content last moved — for a scrape, its last report,
+    which is what a duration is measured against. `created_at` is when the changeset was made.
     """
 
     changeset_id: str

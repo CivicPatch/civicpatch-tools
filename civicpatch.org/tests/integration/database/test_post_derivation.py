@@ -361,11 +361,11 @@ async def test_publish_writes_memberships_for_the_roster():
             """,
             (changeset_id := str(uuid.uuid4()), _OCDID),
         )
-        # Publish reads `sourced_at` as the observation's clock, so this is where `_T0` goes.
+        # Publish reads `updated_at` as the observation's clock, so this is where `_T0` goes.
         await cur.execute(
             """
             UPDATE changesets SET status = 'SUCCESS', progress = 100,
-                                created_at = %s, sourced_at = %s
+                                created_at = %s, updated_at = %s
             WHERE id = %s
             """,
             (_T0, _T0, changeset_id),
@@ -964,7 +964,7 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         # against the very behaviour it exists to forbid.
         await cur.execute(
             "UPDATE changesets SET status = 'SUCCESS', progress = 100, "
-            "created_at = %s, sourced_at = %s WHERE id = %s",
+            "created_at = %s, updated_at = %s WHERE id = %s",
             (_T1, _T1, changeset_id),
         )
         await conn.commit()

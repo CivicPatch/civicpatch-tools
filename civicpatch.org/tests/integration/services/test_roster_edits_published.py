@@ -100,7 +100,7 @@ async def _seed() -> tuple[str, Identity]:
         await cur.execute(
             # `changesets_scrape_has_a_run` — a scrape is exactly a row with a status.
             "INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json, "
-            "                        sourced_at, published_at, created_at) "
+            "                        updated_at, published_at, created_at) "
             "VALUES ('scrape', 'SUCCESS', %s, '{}'::jsonb, %s, now(), now()) "
             "ON CONFLICT DO NOTHING",
             (_OCDID, datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc)),
@@ -211,7 +211,7 @@ async def test_the_edit_mints_a_changeset_born_published():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT kind, published_at IS NOT NULL, status IS NULL, sourced_at IS NOT NULL "
+            "SELECT kind, published_at IS NOT NULL, status IS NULL, updated_at IS NOT NULL "
             "FROM changesets WHERE id::text = %s",
             (changeset_id,),
         )
@@ -433,15 +433,15 @@ async def _seed_second_person() -> str:
     return person_id
 
 
-async def _pending_scrape(sourced_at: datetime.datetime) -> str:
+async def _pending_scrape(updated_at: datetime.datetime) -> str:
     """A scrape awaiting review: a request with a run behind it and one sighting."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "INSERT INTO changesets (kind, jurisdiction_ocdid, arguments_json, status, "
-            "                      progress, created_at, sourced_at) "
+            "                      progress, created_at, updated_at) "
             "VALUES ('scrape', %s, '{}'::jsonb, 'SUCCESS', 100, %s, %s) RETURNING id::text",
-            (_OCDID, sourced_at, sourced_at),
+            (_OCDID, updated_at, updated_at),
         )
         row = await cur.fetchone()
         assert row is not None
@@ -462,7 +462,7 @@ async def test_a_hand_edit_supersedes_a_pending_scrape():
     it would retire anyone the edit added, and `_refuse_if_superseded` would refuse it anyway —
     so publishing dismisses it rather than leaving a card nobody can publish.
 
-    This is what the edit's `sourced_at = now()` buys, and why it keeps it even though the same
+    This is what the edit's `updated_at = now()` buys, and why it keeps it even though the same
     column must not date a seat."""
     person_id, user = await _seed()
     scrape = await _pending_scrape(
@@ -517,7 +517,7 @@ async def test_a_post_pick_survives_a_save_and_comes_back_scoped_to_its_organiza
         await cur.execute(
             "INSERT INTO changesets "
             "  (id, kind, jurisdiction_ocdid, arguments_json, status, progress, "
-            "   sourced_at, organization_id) "
+            "   updated_at, organization_id) "
             "VALUES (%s, 'scrape', %s, '{}', 'success', 100, now(), %s)",
             (changeset_id, _OCDID, council),
         )
@@ -561,7 +561,7 @@ async def test_a_post_pick_survives_a_save_and_comes_back_scoped_to_its_organiza
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_hand_edit_does_not_advance_last_seen_at():
-    """The whole reason a hand edit's changeset is treated differently. `sourced_at` on a
+    """The whole reason a hand edit's changeset is treated differently. `updated_at` on a
     `people_edit` is now(), so publishing one would otherwise claim the source still lists
     everyone it touched — `DATABASE.md` has `last_seen_at` as "advanced on every publish that
     still seats them", and a hand edit read nothing."""

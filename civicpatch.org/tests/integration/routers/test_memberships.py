@@ -354,7 +354,7 @@ async def test_the_person_axis_reads_without_signing_in(anonymous_client):
 
 
 # ── Seat timestamps ─────────────────────────────────────────────────────
-# `last_seen_at` is the changeset's `sourced_at`: a scrape's run date, `now()` for a hand edit
+# `last_seen_at` is the changeset's `updated_at`: a scrape's run date, `now()` for a hand edit
 # or a sheet import. Every registrar stamps it at creation, so nothing downstream branches on
 # kind — and `assign`, which mints no changeset, uses the same `now()` a hand edit would get.
 

@@ -86,7 +86,7 @@ async def sentinel_request():
         changeset_id = (await cur.fetchone())[0]
         await cur.execute(
             "UPDATE changesets SET status = 'SUCCESS', "
-            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,)
+            "updated_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,)
         )
         await conn.commit()
     yield changeset_id

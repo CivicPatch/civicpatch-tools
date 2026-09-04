@@ -23,7 +23,7 @@ from database import assertions, posts
 from database.change_logs import record_change
 from database.changesets import live_roster_changeset
 from database.database import get_pool
-from database.pipeline_runs import get_sourced_at
+from database.pipeline_runs import get_updated_at
 from schemas.assertions import Assertion, AssertionKind, EntityType
 from schemas.posts import AssignmentResult
 from schemas.change_logs import (
@@ -520,7 +520,7 @@ async def assign(
         # takes GREATEST, and that date is already the seat's. Nobody read a source here.
         changeset_id = await live_roster_changeset(cur, post.jurisdiction_ocdid)
         seen_at = (
-            await get_sourced_at(cur, changeset_id)
+            await get_updated_at(cur, changeset_id)
             if changeset_id
             # Nothing published here yet, so there is no changeset to date from.
             else datetime.now(timezone.utc)

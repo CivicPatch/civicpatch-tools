@@ -707,7 +707,7 @@ async def get_jurisdiction_history(
             )
             SELECT r.id::text AS changeset_id,
                    r.created_at,
-                   r.sourced_at,
+                   r.updated_at,
                    r.status, r.progress, r.change_url,
                    r.kind,
                    r.published_at,
@@ -746,8 +746,8 @@ async def get_jurisdiction_history(
             JurisdictionHistoryEntry(
                 changeset_id=row["changeset_id"],
                 created_at=to_iso(row["created_at"]),
-                # `sourced_at`: when the source was read, which a duration measures against.
-                updated_at=to_iso(row["sourced_at"]),
+                # `updated_at`: when the source was read, which a duration measures against.
+                updated_at=to_iso(row["updated_at"]),
                 pipeline_run_status=row["status"],
                 pipeline_run_progress=row["progress"],
                 change_url=row["change_url"],

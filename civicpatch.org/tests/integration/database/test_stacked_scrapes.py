@@ -69,20 +69,20 @@ async def _jurisdiction(ocdid: str = _OCDID, status: str = "active") -> None:
         await conn.commit()
 
 
-async def _request(sourced_at: str, ocdid: str = _OCDID) -> str:
-    """A pending request whose scrape read the source at `sourced_at`.
+async def _request(updated_at: str, ocdid: str = _OCDID) -> str:
+    """A pending request whose scrape read the source at `updated_at`.
 
-    `created_at` is left to now() for every row, so only `sourced_at` can order them.
+    `created_at` is left to now() for every row, so only `updated_at` can order them.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json, sourced_at)
+            INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json, updated_at)
             VALUES ('scrape', 'SUCCESS', %s, '{}'::jsonb, %s::timestamptz)
             RETURNING id::text
             """,
-            (ocdid, sourced_at),
+            (ocdid, updated_at),
         )
         changeset_id = (await cur.fetchone())[0]
         # One sighting, because `AVAILABLE_FOR_REVIEW` is now "this scrape saw somebody".
@@ -96,10 +96,10 @@ async def _request(sourced_at: str, ocdid: str = _OCDID) -> str:
         await cur.execute(
             """
             UPDATE changesets SET status = 'SUCCESS', progress = 100,
-                                created_at = %s::timestamptz, sourced_at = %s::timestamptz
+                                created_at = %s::timestamptz, updated_at = %s::timestamptz
             WHERE id = %s
             """,
-            (sourced_at, sourced_at, changeset_id),
+            (updated_at, updated_at, changeset_id),
         )
         await conn.commit()
     return changeset_id
@@ -147,10 +147,10 @@ async def _hold(changeset_id: str, status: str, ocdid: str = _OCDID) -> None:
         await conn.commit()
 
 
-async def _published_request(sourced_at: str, ocdid: str = _OCDID) -> str:
+async def _published_request(updated_at: str, ocdid: str = _OCDID) -> str:
     """A request that already went live. No longer a review candidate, but still the newest
     thing anyone said about this jurisdiction."""
-    changeset_id = await _request(sourced_at, ocdid)
+    changeset_id = await _request(updated_at, ocdid)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -195,7 +195,7 @@ async def test_ordering_comes_from_the_roster_not_created_at():
 @pytest.mark.integration
 async def test_giving_up_on_a_run_does_not_restamp_the_source_clock():
     """Ordering asks which scrape read the source more recently, so only reading the source may
-    move `sourced_at`. Expiring a run is the one writer that touches a request without reading
+    move `updated_at`. Expiring a run is the one writer that touches a request without reading
     anything — restamp there and a March roster nobody looked at outranks the July scrape.
 
     This replaces a test that bumped `requests.updated_at` directly. That column went in 147,
@@ -218,12 +218,12 @@ async def test_giving_up_on_a_run_does_not_restamp_the_source_clock():
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT status, sourced_at::text FROM changesets WHERE id::text = %s",
+            "SELECT status, updated_at::text FROM changesets WHERE id::text = %s",
             (abandoned,),
         )
-        status, sourced_at = await cur.fetchone()
+        status, updated_at = await cur.fetchone()
     assert status == "ERROR"
-    assert sourced_at.startswith("2026-03-01")
+    assert updated_at.startswith("2026-03-01")
 
 
 @pytest.mark.asyncio
