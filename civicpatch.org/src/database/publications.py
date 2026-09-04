@@ -12,15 +12,15 @@ This is the seam 2.5 extends: `posts` and `memberships` are derived at publish a
 
 import logging
 
-from core.post_derivation import DerivedPost
-from core.people_edits import values_to_accept, with_stated_values
-from database import assertions, memberships, organizations, posts
 import database.changesets as changesets_db
+from core.people_edits import values_to_accept, with_stated_values
+from core.post_derivation import DerivedPost
+from database import assertions, memberships, organizations, posts
 from database.change_logs import record_change
 from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
-from database.users import SYSTEM_USER_ID
 from database.pipeline_runs import get_updated_at
+from database.users import SYSTEM_USER_ID
 from schemas.assertions import Assertion, AssertionKind, EntityType
 from shared.utils.statuses import (
     SOURCE_READING_KINDS,
@@ -59,7 +59,7 @@ async def dismiss_request(
     `resolved_by_user_id` can be read to guess, but both are mutable — so a guess made later
     could give a past event a meaning it never had.
 
-    It lands in both `dismissed_reason` and the `close_review` log: the column is state, which
+    It lands in both `dismissed_reason` and the `dismiss_review` log: the column is state, which
     readers ask for; the log is the event, who dismissed it and when.
 
     Nothing to clean up on the way out: a scrape only *proposes* seats, and posts are created
@@ -113,19 +113,34 @@ async def _refuse_if_superseded(
         )
 
 
+class UnpublishableChangeset(ValueError):
+    """This changeset is not in a state that may publish.
+
+    Its own type, like `SupersededRoster`: an expected refusal rather than a fault, so the API
+    can say which it was.
+    """
+
+
+async def _refuse_if_not_publishable(cur, changeset_id: str) -> None:
+    await cur.execute(
+        f"""
+        SELECT status, dismissed_at FROM changesets
+        WHERE id::text = %s
+          AND published_at IS NULL
+          AND (dismissed_at IS NOT NULL OR NOT {changesets_db.STATE_READY_SQL})
+        """,
+        (changeset_id,),
+    )
+    row = await cur.fetchone()
+    if row:
+        raise UnpublishableChangeset(
+            f"Refusing to publish {changeset_id}: status={row[0]}, dismissed_at={row[1]}."
+        )
+
+
 async def _record_publish(
     cur, changeset_id: str, jurisdiction_ocdid: str, resolved_by_user_id: str | None
 ) -> None:
-    """Stamp the jurisdiction as scraped, the request as published, and log that it happened.
-
-    The FROM-join is a no-op when the request has no pipeline run, so `scraped_at` is never
-    blanked; the COALESCE keeps the first publish's timestamp if one is replayed.
-
-    The log is here rather than at the caller so recording a publish is one act. It is what the
-    outward sinks read to learn a roster changed, and 88 of 117 published changesets logged
-    nothing else — a scrape that re-confirms a roster mints no post and edits nobody, it only
-    advances `last_seen_at`, which both the sheet and open-data render.
-    """
     await cur.execute(
         """
         UPDATE jurisdictions j SET scraped_at = r.created_at
@@ -197,7 +212,9 @@ async def _bind_memberships(
             )
 
 
-async def _accept_published(cur, rows: list[dict], resolved_by_user_id: str | None) -> None:
+async def _accept_published(
+    cur, rows: list[dict], resolved_by_user_id: str | None
+) -> None:
     """Accept every value in the roster on the publisher's behalf.
 
     Nothing without a user: an unattended publish read nothing and judged nothing.
@@ -226,14 +243,6 @@ async def publish_request(
     resolved_by_user_id: str | None = None,
     derived: list[DerivedPost] | None = None,
 ) -> int:
-    """Project one scrape's roster onto `people`, stamp it published, and bind the memberships.
-
-    One transaction, so "published" and "what was published" cannot disagree; raises rather than
-    swallowing. `last_seen_at` comes from the run, not from now — a scrape sat on for three
-    weeks still read the source when it ran.
-
-    Assertions apply here rather than at ingest, so the scrape stays what the source said.
-    """
     incoming_ids = [str(person["id"]) for person in people]
 
     pool = await get_pool()
@@ -244,6 +253,7 @@ async def publish_request(
         # answers it.
         advances_last_seen = await _read_a_source(cur, changeset_id)
         await _refuse_if_superseded(cur, changeset_id, jurisdiction_ocdid, last_seen_at)
+        await _refuse_if_not_publishable(cur, changeset_id)
 
         stated = await assertions.stated_values(cur, EntityType.PERSON, incoming_ids)
         rows = person_upsert_params(
@@ -257,7 +267,9 @@ async def publish_request(
 
         await _accept_published(cur, rows, resolved_by_user_id)
 
-        await _record_publish(cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id)
+        await _record_publish(
+            cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id
+        )
         if derived:
             await _bind_memberships(
                 cur,

@@ -14,22 +14,22 @@ pytestmark = pytest.mark.unit
 
 def test_add_person_uses_person_name():
     assert (
-        summarize_change_log("add_person", {"person_name": "Jane Doe", "fields": []})
+        summarize_change_log("add_person", {"subject": "Jane Doe", "fields": []})
         == "Added Jane Doe"
     )
 
 
 def test_edit_person_pluralizes_fields_correctly():
-    assert summarize_change_log("edit_person", {"person_name": "J", "fields": [{}]}) == "Edited J (1 field)"
-    assert summarize_change_log("edit_person", {"person_name": "J", "fields": [{}, {}]}) == "Edited J (2 fields)"
+    assert summarize_change_log("edit_person", {"subject": "J", "fields": [{}]}) == "Edited J (1 field)"
+    assert summarize_change_log("edit_person", {"subject": "J", "fields": [{}, {}]}) == "Edited J (2 fields)"
 
 
 def test_delete_person_omits_field_count_when_none():
-    assert summarize_change_log("delete_person", {"person_name": "J", "fields": []}) == "Deleted J"
+    assert summarize_change_log("delete_person", {"subject": "J", "fields": []}) == "Deleted J"
 
 
 def test_person_missing_name_falls_back():
-    assert summarize_change_log("add_person", {}) == "Added person"
+    assert summarize_change_log("add_person", {}) == "Added record"
 
 
 # ── Review events ───────────────────────────────────────────────────────
@@ -37,7 +37,7 @@ def test_person_missing_name_falls_back():
 
 def test_review_events():
     assert summarize_change_log("publish_review", None) == "Published review"
-    assert summarize_change_log("close_review", None) == "Closed review"
+    assert summarize_change_log("dismiss_review", None) == "Dismissed review"
 
 
 # ── Role taxonomy ───────────────────────────────────────────────────────
@@ -86,7 +86,9 @@ def test_unknown_type_returns_type_string():
 
 
 def test_none_changes_doesnt_crash():
-    assert summarize_change_log("edit_jurisdiction", None) == "Edited jurisdiction"
+    """A dismissal stores no payload at all — its reason is on `changesets.dismissed_reason`."""
+    assert summarize_change_log("edit_jurisdiction", None) == "Edited record"
+    assert summarize_change_log("dismiss_review", None) == "Dismissed review"
 
 
 # ── Reorder events ──────────────────────────────────────────────────────
@@ -138,7 +140,7 @@ def test_a_membership_names_the_seat_it_assigns():
     membership's subject is the person and the post's label would be dropped on the way out."""
     change = _change(
         ChangeLogType.ASSIGN_MEMBERSHIP,
-        {"person_name": "Ada Lovelace", "label": "Council D3", "role_id": "council_member"},
+        {"subject": "Ada Lovelace", "detail": "Council D3"},
     )
 
     assert change.name == "Ada Lovelace"
@@ -146,9 +148,11 @@ def test_a_membership_names_the_seat_it_assigns():
 
 
 def test_a_seat_with_no_label_falls_back_to_its_role():
+    """`database.memberships.assign` resolves the fallback when it writes — the label if the
+    seat has one, the role slug otherwise — so the reader gets a name either way."""
     change = _change(
         ChangeLogType.ASSIGN_MEMBERSHIP,
-        {"person_name": "Ada Lovelace", "role_id": "council_member"},
+        {"subject": "Ada Lovelace", "detail": "council_member"},
     )
 
     assert change.detail == "council_member"
@@ -159,32 +163,36 @@ def test_only_memberships_carry_a_seat():
     subject would just be a duplicate to keep in sync."""
     change = _change(
         ChangeLogType.EDIT_PERSON,
-        {"person_name": "Ada Lovelace", "fields": [{"field": "email"}]},
+        {"subject": "Ada Lovelace", "fields": [{"field": "email"}]},
     )
 
     assert change.detail is None
 
 
-def test_an_assertion_prefers_the_resolved_name():
-    """`entity_name` is attached by the reader — the stored payload has only ids."""
+def test_an_assertion_carries_the_name_it_was_made_against():
+    """Resolved when the assertion is written, not looked up on every read. The history used to
+    query a name per row because the payload held only ids — and that could not answer at all
+    once the entity had been deleted."""
     change = _change(
         ChangeLogType.ASSERT_FIELD,
         {
             "entity_type": "person",
             "entity_id": "abc",
-            "entity_name": "Ada Lovelace",
-            "field_path": "email",
+            "subject": "Ada Lovelace",
+            "fields": [{"field": "email", "after": "a@b.c"}],
         },
     )
 
     assert change.name == "Ada Lovelace"
+    assert [f.field for f in change.fields] == ["email"]
 
 
-def test_an_assertion_falls_back_to_its_type_when_the_entity_is_gone():
-    """Better a bare "person" than a uuid nobody can read."""
+def test_an_assertion_with_no_resolvable_name_falls_back_to_its_type():
+    """`POST /assertions` writes the type when the lookup finds nothing — better a bare
+    "person" than a uuid nobody can read."""
     change = _change(
         ChangeLogType.ASSERT_FIELD,
-        {"entity_type": "person", "entity_id": "abc", "field_path": "email"},
+        {"entity_type": "person", "entity_id": "abc", "subject": "person"},
     )
 
     assert change.name == "person"

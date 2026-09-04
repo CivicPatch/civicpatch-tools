@@ -141,7 +141,6 @@ def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
     recorded one would resolve to [] and retire every person in the jurisdiction."""
     with (
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
-        patch("services.roster_edits.promote_to_reviewed", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[]),
@@ -185,7 +184,6 @@ def test_publish_returns_200_and_queues_no_merge(client):
     with (
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock) as mock_resolve,
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
-        patch("services.roster_edits.promote_to_reviewed", new_callable=AsyncMock),
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
@@ -224,7 +222,6 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
-        patch("services.roster_edits.promote_to_reviewed", new_callable=AsyncMock),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/publish",
@@ -615,7 +612,6 @@ def test_publish_allows_default_role():
     with (
         patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
         patch("services.roster_edits.publish_people", new_callable=AsyncMock),
-        patch("services.roster_edits.promote_to_reviewed", new_callable=AsyncMock),
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):

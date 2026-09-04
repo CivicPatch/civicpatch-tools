@@ -25,7 +25,6 @@ from database.roles import get_roles
 from lib.temporal.types import (
     OpenDataBatchCommitRequest,
     OpenDataCommitItem,
-    OpenDataCommitRequest,
 )
 from shared.schemas import DerivedPerson, OpenStatesPersonRecord, RoleConfig
 from shared.utils.people_utils import person_sort_key
@@ -136,7 +135,7 @@ async def dismiss_people(
     changeset_id: str, resolved_by_user_id: str | None = None
 ) -> None:
     """Mark a scrape reviewed-and-not-published. Leaves the roster untouched."""
-    # `dismiss_request` writes the close_review log itself now, with the reason — so every
+    # `dismiss_request` writes the dismiss_review log itself now, with the reason — so every
     # dismissal has one, not just the reviewer's. That is what retires `record_close`.
     await dismiss_request(changeset_id, DismissalReason.REJECTED, resolved_by_user_id)
     logger.info(f"[{changeset_id}] Dismissed without publishing")
@@ -235,46 +234,14 @@ def open_data_records(roster: list[dict], taxonomy: Taxonomy) -> list[dict]:
     ]
 
 
-def unreviewed_file_path(jurisdiction_ocdid: str) -> str:
-    folder = shared.utils.id_utils.unreviewed_folder(
-        shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    )
-    return f"data/{folder}.yml"
-
-
-async def commit_rendered_file(
-    file_path: str,
-    changeset_id: str | None,
-    jurisdiction_ocdid: str,
-    commit_message: str,
-) -> str | None:
-    """Render a file out of the database and write it to open-data.
-
-    The rendering happens here rather than at the caller so every retry produces current
-    content: git holds a projection of the database, and a write that lands late should carry
-    what is true when it lands, not what was true when it was queued.
-    """
-    roster = await get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
-    taxonomy = await _taxonomy()
-    commit_url = await github_service.upsert_github_file(
-        branch_name=github_service.DEFAULT_BRANCH,
-        file_path=file_path,
-        content_str=yaml_dump(open_data_records(roster, taxonomy)),
-        commit_message=commit_message,
-    )
-    if commit_url and changeset_id:
-        await record_change_url(changeset_id, commit_url)
-    return commit_url
-
-
 async def commit_rendered_files(
     items: list[OpenDataCommitItem], commit_message: str
 ) -> str | None:
     """Render every jurisdiction out of the database and write them as one commit.
 
-    Same contract as `commit_rendered_file` one file at a time: rendering happens per attempt,
-    so a retry carries what is true when it lands. Every request is stamped with the one commit
-    url, because that is genuinely where each of them landed.
+    Rendering happens per attempt, so a retry carries what is true when it lands. Every
+    changeset covered is stamped with the one commit url, because that is genuinely where
+    each of them landed.
     """
     contents = {}
     taxonomy = await _taxonomy()
@@ -290,63 +257,14 @@ async def commit_rendered_files(
     if not commit_url:
         return None
     for item in items:
-        await record_change_url(item.changeset_id, commit_url)
+        for changeset_id in item.changeset_ids:
+            await record_change_url(changeset_id, commit_url)
     return commit_url
 
 
 def reviewed_file_path(jurisdiction_ocdid: str) -> str:
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
     return f"data/{folder}.yml"
-
-
-async def promote_to_reviewed(changeset_id: str, jurisdiction_ocdid: str) -> None:
-    """Move a published jurisdiction from the unreviewed path to the canonical one.
-
-    Queued rather than immediate, like every other open-data write: publishing is already a
-    fact in the database by the time this runs. The reviewed file renders from `people`, not
-    from this scrape — the canonical file is the jurisdiction's live roster, which can include
-    people an earlier scrape published.
-    """
-    # avoid circular import: lib.temporal.workflows imports the activities module, which
-    # imports this one, so importing the client at module scope closes the loop
-    import lib.temporal.client as temporal_client
-
-    await temporal_client.enqueue_open_data_commit(
-        OpenDataCommitRequest(
-            file_path=reviewed_file_path(jurisdiction_ocdid),
-            changeset_id=changeset_id,
-            jurisdiction_ocdid=jurisdiction_ocdid,
-            commit_message=f"Publish {jurisdiction_ocdid} ({changeset_id})",
-            delete_path=unreviewed_file_path(jurisdiction_ocdid),
-            delete_message=f"Promote {jurisdiction_ocdid} out of unreviewed ({changeset_id})",
-        )
-    )
-
-
-async def commit_roster(jurisdiction_ocdid: str, commit_message: str) -> None:
-    """Queue an open-data write for a jurisdiction's live roster.
-
-    Called only by `sweep_open_data_activity` now — no write path calls it, which is what stops
-    a new endpoint drifting out of open-data the way `DELETE /people` and the two post routes
-    did. No changeset id: the sweep is reacting to a change log, not publishing a review.
-    """
-    # avoid circular import: lib.temporal.workflows imports the activities module, which
-    # imports this one, so importing the client at module scope closes the loop
-    import lib.temporal.client as temporal_client
-
-    # Writing an empty file over a real one is the one case where stale beats stomped.
-    if not await get_roster(jurisdiction_ocdid=jurisdiction_ocdid):
-        logger.warning(f"No seated roster for {jurisdiction_ocdid}; not mirroring")
-        return
-
-    await temporal_client.enqueue_open_data_commit(
-        OpenDataCommitRequest(
-            file_path=reviewed_file_path(jurisdiction_ocdid),
-            changeset_id=None,
-            jurisdiction_ocdid=jurisdiction_ocdid,
-            commit_message=commit_message,
-        )
-    )
 
 
 async def promote_batch_to_reviewed(
@@ -370,7 +288,7 @@ async def promote_batch_to_reviewed(
             items=[
                 OpenDataCommitItem(
                     file_path=reviewed_file_path(jurisdiction_ocdid),
-                    changeset_id=changeset_id,
+                    changeset_ids=[changeset_id],
                     jurisdiction_ocdid=jurisdiction_ocdid,
                 )
                 for changeset_id, jurisdiction_ocdid in sorted(published.items())

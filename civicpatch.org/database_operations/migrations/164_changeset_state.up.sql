@@ -35,6 +35,8 @@ ALTER TABLE changesets ADD COLUMN IF NOT EXISTS state text
         END
     ) STORED;
 
-CREATE INDEX IF NOT EXISTS changesets_state_idx ON changesets (state);
+-- No index. Every predicate that will read this is already served by another one, and the
+-- table is 414 rows — an index here would be maintained on every write for a planner that has
+-- no reason to choose it. Add one when a query is measured to want it.
 
 COMMIT;

@@ -250,10 +250,10 @@ async def test_every_write_leaves_a_trace(client):
     logs = await _change_logs()
 
     assert [log["type"] for log in logs] == ["add_post", "edit_post"]
-    assert all(log["post_id"] == post_id for log in logs)
+    assert all(log["entity_id"] == post_id for log in logs)
     assert {f["field"] for f in logs[1]["fields"]} == {"_headcount"}
     # The log names the seat with its composed label — nobody can type one since 148.
-    assert logs[1]["label"] == "Mayor"
+    assert logs[1]["subject"] == "Mayor"
 
 
 @pytest.mark.asyncio

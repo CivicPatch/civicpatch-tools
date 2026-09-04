@@ -3,8 +3,8 @@ import json
 import logging
 import math
 import uuid
-from collections.abc import Mapping, Sequence
-from typing import Any, AsyncGenerator, List
+from collections.abc import Mapping
+from typing import AsyncGenerator, List
 
 from core.jurisdiction_search import (
     build_parent_ocdids,
@@ -12,7 +12,6 @@ from core.jurisdiction_search import (
 )
 from core.change_logs import roster_change
 from database.database import get_pool, to_iso
-from database.entity_jurisdiction import name_for
 from database.people import PERSON_JSON
 from psycopg import sql
 from psycopg.rows import dict_row
@@ -582,13 +581,9 @@ PUBLISHED_OUTCOME = "published"
 # the changesets table aliased `r`.
 RESOLVED = "(r.published_at IS NOT NULL OR r.dismissed_at IS NOT NULL)"
 
-# What an assertion points at: (entity_type, entity_id). The pair is the key because
-# `entity_id` alone is ambiguous — the CHECK permits person, post and membership.
-EntityKey = tuple[str, str]
-
 # What this jurisdiction's history shows a changeset having done.
 #
-# Review lifecycle stays out: `publish_review` and `close_review` describe what happened to the
+# Review lifecycle stays out: `publish_review` and `dismiss_review` describe what happened to the
 # *review*, and both are already said by the outcome pill — including them would repeat every
 # row's own status back at it, and they are 95 of the 97 excluded rows.
 #
@@ -598,7 +593,7 @@ EntityKey = tuple[str, str]
 # `edit_jurisdiction` IS included: a details edit is a change to this jurisdiction, its payload
 # carries the same `fields` diff every other type does, and without it a `jurisdiction_edit`
 # changeset renders as "No roster changes" while its log holds exactly what changed.
-# What counts as a change to the roster. Review lifecycle (`publish_review`, `close_review`) is
+# What counts as a change to the roster. Review lifecycle (`publish_review`, `dismiss_review`) is
 # out — it says what happened to the *review*, which the outcome pill already shows — and so is
 # role taxonomy, which is global rather than this place's.
 #
@@ -616,55 +611,6 @@ ROSTER_CHANGE_TYPES = [
     ChangeLogType.ASSERT_FIELD,
 ]
 
-
-async def _assertion_subject_names(conn, rows: Sequence[Any]) -> dict[EntityKey, str]:
-    """Names for the assertion payloads in these rows.
-
-    `assert_field` is the one badge whose subject is not already in its payload — person and
-    post events carry their own name, an assertion carries only `entity_type` and `entity_id`.
-
-    Deduped before looking anything up: accepting four fields on one person writes four rows
-    naming the same person.
-    """
-    wanted: set[EntityKey] = set()
-    for row in rows:
-        for log in row["changes"]:
-            if log["type"] != ChangeLogType.ASSERT_FIELD:
-                continue
-            changes = log["changes"] or {}
-            if changes.get("entity_type") and changes.get("entity_id"):
-                wanted.add((changes["entity_type"], changes["entity_id"]))
-
-    if not wanted:
-        return {}
-
-    # Its own cursor: `entity_jurisdiction` reads `row[0]`, and the caller's cursor yields
-    # dicts. Shared elsewhere with tuple cursors, so the helper is not the thing to change.
-    names: dict[EntityKey, str] = {}
-    async with conn.cursor() as lookup:
-        for entity_type, entity_id in wanted:
-            name = await name_for(lookup, entity_type, entity_id)
-            if name:
-                names[(entity_type, entity_id)] = name
-    return names
-
-
-def _named(
-    changes: Mapping[str, Any], entity_names: Mapping[EntityKey, str]
-) -> Mapping[str, Any]:
-    """An assertion payload with its subject's name attached, if the entity still exists.
-
-    A copy, not a mutation — `changes` is the row psycopg handed back, and the resolved name is
-    this reader's addition rather than something stored.
-    """
-    entity_type = changes.get("entity_type")
-    entity_id = changes.get("entity_id")
-    if not entity_type or not entity_id:
-        return changes
-    name = entity_names.get((entity_type, entity_id))
-    if not name:
-        return changes
-    return {**changes, "entity_name": name}
 
 
 # A jurisdiction scraped weekly for a few years, plus imports and hand edits, runs to the
@@ -741,7 +687,6 @@ async def get_jurisdiction_history(
             ),
         )
         rows = await cur.fetchall()
-        entity_names = await _assertion_subject_names(conn, rows)
         history = [
             JurisdictionHistoryEntry(
                 changeset_id=row["changeset_id"],
@@ -759,9 +704,7 @@ async def get_jurisdiction_history(
                 resolved_by=row["resolved_by"],
                 changes=[
                     roster_change(
-                        log["type"],
-                        log["created_at"],
-                        _named(log["changes"] or {}, entity_names),
+                        log["type"], log["created_at"], log["changes"] or {}
                     )
                     for log in row["changes"]
                 ],

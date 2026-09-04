@@ -16,6 +16,8 @@ class EntityType(StrEnum):
     POST = "post"
     MEMBERSHIP = "membership"
     PERSON = "person"
+    JURISDICTION = "jurisdiction"
+    ORGANIZATION = "organization"
 
 
 class AssertionKind(StrEnum):

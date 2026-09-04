@@ -25,12 +25,12 @@ from core.people_edits import (
 )
 from core.people_roster import reviewer_source_records
 from database import assertions, posts
+from database.changesets import register_people_edit_request
 from database.database import get_pool
 from database.people import get_roster
-from database.changesets import register_people_edit_request
 from database.source_records import insert_source_records
 from schemas.common import Identity
-from services.publish import promote_images, promote_to_reviewed, publish_people
+from services.publish import promote_images, publish_people
 from services.roster import proposed_roster, scraped_roster
 from shared.utils.id_utils import make_changeset_id
 
@@ -65,7 +65,9 @@ async def save(
 
     patched = patch_people(scraped, data)
     labels = await _seat_labels(_additions(scraped, patched))
-    await _record_edits(changeset_id, jurisdiction_ocdid, scraped, patched, labels, user.user_id)
+    await _record_edits(
+        changeset_id, jurisdiction_ocdid, scraped, patched, labels, user.user_id
+    )
     return patched
 
 
@@ -91,7 +93,9 @@ async def edit_published(
     # is advance `last_seen_at`, and that is `publish_request`'s rule, not this one's.
     changeset_id = make_changeset_id()
     await register_people_edit_request(changeset_id, jurisdiction_ocdid, user.user_id)
-    await _record_edits(changeset_id, jurisdiction_ocdid, base, patched, labels, user.user_id)
+    await _record_edits(
+        changeset_id, jurisdiction_ocdid, base, patched, labels, user.user_id
+    )
     await publish(changeset_id, jurisdiction_ocdid, patched, user.user_id)
     return changeset_id, patched
 
@@ -212,11 +216,6 @@ async def publish(
     edited: List[dict] | None,
     resolved_by_user_id: str | None,
 ) -> None:
-    """Make this scrape's roster live. `edited` is the reviewer's patched result; when they
-    published without editing, the submitted roster stands."""
     await publish_to_database(
         changeset_id, jurisdiction_ocdid, edited, resolved_by_user_id
     )
-    # The scrape leaves the unreviewed path for the canonical one. Queued, so a slow or failed
-    # GitHub write cannot affect a publish that has already committed.
-    await promote_to_reviewed(changeset_id, jurisdiction_ocdid)

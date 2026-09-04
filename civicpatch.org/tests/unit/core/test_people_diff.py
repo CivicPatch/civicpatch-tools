@@ -66,7 +66,7 @@ def test_fields_a_reviewer_can_edit_are_diffed(field, before, after):
 def test_new_id_emits_add_person_with_null_from():
     result = diff_people([], [_person("1", name="New Person")])
     assert result[0].type == ChangeLogType.ADD_PERSON
-    assert result[0].payload.person_name == "New Person"
+    assert result[0].payload.subject == "New Person"
     name_field = next(f for f in result[0].payload.fields if f.field == "name")
     assert (name_field.before, name_field.after) == (None, "New Person")
 

@@ -280,7 +280,7 @@ async def test_a_dismissal_does_not_put_its_state_on_the_feed():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO change_logs (type, jurisdiction_ocdid) VALUES ('close_review', %s)",
+            "INSERT INTO change_logs (type, jurisdiction_ocdid) VALUES ('dismiss_review', %s)",
             (_ZX,),
         )
         await conn.commit()

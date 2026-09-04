@@ -4,9 +4,9 @@ The Contents API that `api.upsert_github_file` uses writes one blob per commit, 
 forty jurisdictions leaves forty commits. This builds a tree instead: five calls regardless of
 how many files, and one commit at the end.
 
-Write-only. Deleting through a tree needs the base tree read back to know a path exists, and
-nothing needs it — the one delete in the codebase removes an unreviewed file that is no longer
-written.
+Write-only, and now the only writer: nothing in the codebase deletes from open-data. The
+delete this used to point at removed an unreviewed file that had not been written for many
+migrations, and it went with `promote_to_reviewed`.
 """
 
 import logging

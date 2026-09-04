@@ -12,7 +12,6 @@ from lib.temporal.workflows import (
     OdSyncWorkflow,
     JurisdictionsSheetSyncWorkflow,
     OpenDataBatchCommitWorkflow,
-    OpenDataCommitWorkflow,
     SyncSweepWorkflow,
     RosterSheetSyncWorkflow,
     PipelineRunCleanupWorkflow,
@@ -22,7 +21,6 @@ from lib.temporal.workflows import (
 )
 from routers.temporal.activities import (
     cleanup_stale_review_entries_activity,
-    commit_open_data_activity,
     commit_open_data_batch_activity,
     expire_stale_pipeline_runs_activity,
     od_sync_activity,
@@ -52,7 +50,6 @@ TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
 WORKFLOWS = [
     OdSyncWorkflow,
     OdSyncTargetedWorkflow,
-    OpenDataCommitWorkflow,
     OpenDataBatchCommitWorkflow,
     PipelineRunCleanupWorkflow,
     ReviewSessionCleanupWorkflow,
@@ -230,8 +227,7 @@ async def main() -> None:
             od_sync_targeted_activity,
             expire_stale_pipeline_runs_activity,
             cleanup_stale_review_entries_activity,
-                    commit_open_data_activity,
-            commit_open_data_batch_activity,
+                            commit_open_data_batch_activity,
             supersede_stacked_requests_activity,
             sync_roster_sheet_activity,
             sync_jurisdictions_sheet_activity,

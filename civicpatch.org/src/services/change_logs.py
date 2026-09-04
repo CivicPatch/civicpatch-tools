@@ -6,7 +6,8 @@ from core.people_diff import diff_people
 from database import posts
 from database.change_logs import create_change_log
 from database.database import get_pool
-from schemas.change_logs import JurisdictionChangePayload
+from schemas.assertions import EntityType
+from schemas.change_logs import Change
 from shared.schemas import POST_FIELD
 from shared.utils.statuses import ChangeLogType
 
@@ -42,9 +43,10 @@ async def record_jurisdiction_edit(
     every other field used to go unrecorded because only `url` was passed."""
     # Best-effort: the PR is already open, so a logging failure must not surface as one.
     try:
-        payload = JurisdictionChangePayload(
-            jurisdiction_ocdid=jurisdiction_ocdid,
-            jurisdiction_name=jurisdiction_name,
+        payload = Change(
+            entity_type=EntityType.JURISDICTION,
+            entity_id=jurisdiction_ocdid,
+            subject=jurisdiction_name,
             fields=field_changes(before, after),
         )
         await create_change_log(

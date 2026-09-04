@@ -3,15 +3,7 @@ import json
 from core.change_logs import summarize_change_log
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
-from schemas.change_logs import (
-    ChangedJurisdiction,
-    DismissalPayload,
-    AssertionChangePayload,
-    JurisdictionChangePayload,
-    MembershipChangePayload,
-    PersonChangePayload,
-    PostChangePayload,
-)
+from schemas.change_logs import Change, ChangedJurisdiction
 from shared.utils.statuses import ChangeLogType, DismissalReason
 
 
@@ -73,7 +65,7 @@ async def create_change_log(
     user_id: str | None,
     jurisdiction_ocdid: str | None = None,
     changeset_id: str | None = None,
-    changes: PersonChangePayload | JurisdictionChangePayload | None = None,
+    changes: Change | None = None,
 ) -> None:
     payload = json.dumps(changes.model_dump()) if changes else None
     pool = await get_pool()
@@ -92,13 +84,7 @@ async def record_change(
     change_type: ChangeLogType,
     user_id: str | None,
     jurisdiction_ocdid: str | None = None,
-    changes: PersonChangePayload
-    | PostChangePayload
-    | MembershipChangePayload
-    | AssertionChangePayload
-    | JurisdictionChangePayload
-    | DismissalPayload
-    | None = None,
+    changes: Change | None = None,
     changeset_id: str | None = None,
 ) -> None:
     """Write a change log on an existing cursor, so it commits with what it describes.
@@ -140,13 +126,16 @@ async def record_dismissal(
     so a derivation could give a past event a meaning it never had.
 
     `user_id` is NULL for the machine reasons, which is the honest answer: nobody decided.
+
+    No payload: `reason` is a parameter here only so callers keep passing it to the column.
+    `changesets.dismissed_reason` is where it lands and where every reader asks — the log used
+    to carry a second copy for nobody.
     """
     await record_change(
         cur,
-        ChangeLogType.CLOSE_REVIEW,
+        ChangeLogType.DISMISS_REVIEW,
         user_id,
         jurisdiction_ocdid,
-        DismissalPayload(reason=reason),
         changeset_id=changeset_id,
     )
 
@@ -158,14 +147,16 @@ async def jurisdictions_changed_since(minutes: int) -> list[ChangedJurisdiction]
     one file per jurisdiction, so it needs the ocdid and not the state.
 
     Global rows carry no jurisdiction and name no file, so they are excluded here for the same
-    reason they are there. `close_review` too: a dismissal ends a review without touching a row,
+    reason they are there. `dismiss_review` too: a dismissal ends a review without touching a row,
     and 245 of the 294 so far were superseded — a newer scrape won, so the roster is unchanged.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT jurisdiction_ocdid, array_agg(DISTINCT type) AS types
+            SELECT jurisdiction_ocdid,
+                   array_agg(DISTINCT type) AS types,
+                   array_remove(array_agg(DISTINCT changeset_id), NULL) AS changeset_ids
             FROM change_logs
             WHERE created_at > now() - make_interval(mins => %s)
               AND jurisdiction_ocdid IS NOT NULL
@@ -173,12 +164,16 @@ async def jurisdictions_changed_since(minutes: int) -> list[ChangedJurisdiction]
             GROUP BY jurisdiction_ocdid
             ORDER BY jurisdiction_ocdid
             """,
-            (minutes, ChangeLogType.CLOSE_REVIEW),
+            (minutes, ChangeLogType.DISMISS_REVIEW),
         )
         rows = await cur.fetchall()
     return [
-        ChangedJurisdiction(jurisdiction_ocdid=ocdid, change_types=sorted(types))
-        for ocdid, types in rows
+        ChangedJurisdiction(
+            jurisdiction_ocdid=ocdid,
+            change_types=sorted(types),
+            changeset_ids=sorted(changeset_ids),
+        )
+        for ocdid, types, changeset_ids in rows
     ]
 
 
@@ -195,7 +190,7 @@ async def states_changed_since(minutes: int) -> list[str]:
     state derives a label from. Deliberately not chased: the next change in a state carries the
     new wording anyway, so a rename reaches the sheet as those states are next touched.
 
-    `close_review` is skipped for a different reason — a dismissal moves no row at all.
+    `dismiss_review` is skipped for a different reason — a dismissal moves no row at all.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -207,7 +202,7 @@ async def states_changed_since(minutes: int) -> list[str]:
               AND jurisdiction_ocdid IS NOT NULL
               AND type <> %s
             """,
-            (minutes, ChangeLogType.CLOSE_REVIEW),
+            (minutes, ChangeLogType.DISMISS_REVIEW),
         )
         rows = await cur.fetchall()
     return sorted(row[0] for row in rows if row[0])

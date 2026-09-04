@@ -59,8 +59,6 @@ _ROLE_KEYS = {
     "division_ocdid",
     "start_date",
     "end_date",
-    "first_seen_at",
-    "last_seen_at",
 }
 
 
@@ -227,8 +225,6 @@ def test_a_roles_field_order_is_pinned_too():
         "division_ocdid",
         "start_date",
         "end_date",
-        "first_seen_at",
-        "last_seen_at",
     ]
 
 

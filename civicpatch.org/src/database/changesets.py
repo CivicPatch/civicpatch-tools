@@ -34,26 +34,34 @@ REVIEW_STATUS = (
     f"ELSE '{RequestReviewStatus.PENDING.value}' END"
 )
 
-# "This jurisdiction already has work in flight" — the scrape-candidate gate. Aliased `r`.
-# Errored and cancelled runs leave both timestamps NULL, so they must not count.
+# "This jurisdiction already has work in flight" — the scrape-candidate gate, and what the
+# coverage page counts as needing review. Aliased `r`.
+#
+# Unresolved is the whole test now. It used to also require a non-terminal run, because a dead
+# run was marked `ERROR` and left undismissed, so without that clause it would have blocked its
+# jurisdiction forever. `expire_stale_pipeline_runs` dismisses it now, so it falls out here on
+# its own.
+#
+# Dropping `status IS NOT NULL` widens this to changesets with no run at all, which in
+# practice means an unreviewed sheet import — a `people_edit` is born published and so is never
+# unresolved. That is what all three readers want: do not scrape over an import awaiting
+# review, do not start a second run, and it genuinely does need review.
 WORK_IN_FLIGHT = (
     "r.published_at IS NULL AND r.dismissed_at IS NULL "
-    f"AND r.kind != '{ChangesetKind.JURISDICTION_EDIT.value}' "
-    f"AND r.status NOT IN ('{PipelineRunStatus.ERROR.value}', "
-    f"'{PipelineRunStatus.CANCELLED.value}', '{PipelineRunStatus.RESOLVED.value}') "
-    "AND r.status IS NOT NULL"
+    f"AND r.kind != '{ChangesetKind.JURISDICTION_EDIT.value}'"
 )
 
 # Why a request left the pool. `dismissed_at` says only that it did.
+# Duplicates `DismissalReason`; kept only because the SQL fragments below splice it.
 DISMISSED_SUPERSEDED = "superseded"
-DISMISSED_UNCHANGED = "unchanged"
 
 # "A scrape still awaiting human review". Requires the requests table aliased `r`.
 #
 AVAILABLE_FOR_REVIEW = (
     "EXISTS (SELECT 1 FROM source_records sr WHERE sr.changeset_id = r.id) "
-    "AND r.published_at IS NULL AND r.dismissed_at IS NULL "
-    f"AND r.kind != '{ChangesetKind.JURISDICTION_EDIT.value}' "
+    # Composed, not restated: this used to spell out the same three clauses, so widening
+    # `WORK_IN_FLIGHT` left the two saying different things about the same question.
+    f"AND {WORK_IN_FLIGHT} "
     "AND NOT EXISTS ("
     "SELECT 1 FROM issues i "
     f"WHERE i.issue_type = '{PipelineIssueType.USER_REPORTED.value}' "
@@ -421,11 +429,16 @@ async def get_issue_request_details(changeset_ids: list[str]) -> list[dict]:
 
 # Which rows are in which state, in SQL. The Python side of this is
 # `core.changeset_lifecycle`; this is the same fact where the UPDATE can use it.
+# "This changeset's run, if it had one, finished with a roster." One definition, because both
+# halves of the lifecycle guard need it: a dismissal reason may only leave certain states, and
+# `publications._refuse_if_not_publishable` asks the same question from the other side.
+STATE_READY_SQL = (
+    f"(status IS NULL OR status IN ('{PipelineRunStatus.SUCCESS.value}', "
+    f"'{PipelineRunStatus.RESOLVED.value}'))"
+)
+
 _STATE_SQL: dict[ChangesetState, str] = {
-    ChangesetState.READY: (
-        f"(status IS NULL OR status IN ('{PipelineRunStatus.SUCCESS.value}', "
-        f"'{PipelineRunStatus.RESOLVED.value}'))"
-    ),
+    ChangesetState.READY: STATE_READY_SQL,
     ChangesetState.FAILED: (
         f"status IN ('{PipelineRunStatus.ERROR.value}', "
         f"'{PipelineRunStatus.CANCELLED.value}')"
@@ -460,7 +473,8 @@ async def mark_dismissed(
     Four functions used to do this — `dismiss_request`, `dismiss_as_unchanged`,
     `dismiss_superseded_by`, `supersede_stacked_requests` — each with its own copy of the
     UPDATE, its own guard, and its own `record_dismissal` call. They differ only in *which*
-    rows they select, which stays with them; the marking is here.
+    rows they select, which stays with them; the marking is here. (`dismiss_as_unchanged`
+    has since gone entirely: a re-confirmed roster publishes rather than being dismissed.)
 
     Guarded in the statement, not by reading first: a reviewer may be publishing this very
     changeset, and losing that race must not overwrite their decision. `dismissed_at IS NULL`
@@ -493,13 +507,6 @@ async def mark_dismissed(
             cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id, reason
         )
     return [(row[0], row[1]) for row in dismissed]
-
-
-async def dismiss_as_unchanged(cur, changeset_id: str) -> bool:
-    """Retire a scrape that asserted nothing new. Returns whether it was still open."""
-    return bool(
-        await mark_dismissed(cur, [changeset_id], DismissalReason.UNCHANGED)
-    )
 
 
 async def dismiss_superseded_by(

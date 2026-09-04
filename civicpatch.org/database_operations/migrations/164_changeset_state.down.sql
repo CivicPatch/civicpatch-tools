@@ -3,7 +3,6 @@
 
 BEGIN;
 
-DROP INDEX IF EXISTS changesets_state_idx;
 ALTER TABLE changesets DROP COLUMN IF EXISTS state;
 
 COMMIT;

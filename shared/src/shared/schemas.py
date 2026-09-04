@@ -239,17 +239,6 @@ class Person(PersonBase):
 
 
 class OpenStatesRole(BaseModel):
-    """One seat a person holds, as published — schema v2.
-
-    A deliberate subset of what `PERSON_MEMBERSHIPS` projects. `post_id` and the raw source
-    wording (`label`, `source_labels`, `designations`, `unmatched_text`) stay out: they are how
-    *we* track a seat, not what the seat is. `role_id` stays in — it is the stable slug a
-    consumer matches on.
-
-    The dates live here rather than on the person. A person holds each seat for its own term,
-    so one pair of dates per person could only ever describe one of them — which is the same
-    reason `jurisdiction_ocdid` moved down here."""
-
     # The seat's own name — `derive_post_label(role_label, division_ocdid)`, so "Council
     # Member, District 5" rather than the bare role. Composed at the publish boundary, because
     # it is composed on read everywhere else too and is not a column.
@@ -262,9 +251,6 @@ class OpenStatesRole(BaseModel):
     division_ocdid: Optional[str] = None
     start_date: Optional[str] = None
     end_date: Optional[str] = None
-    # When this seat was first and last observed in a scrape — the roster's as-of timeline.
-    first_seen_at: Optional[str] = None
-    last_seen_at: Optional[str] = None
 
 
 class OpenStatesPersonRecord(PersonBase):
@@ -339,24 +325,13 @@ class PipelineRunConfig(BaseModel):
 
 
 class IssueCode(str, Enum):
-    # A reviewer-facing data-quality issue. Each value is emitted by the
-    # `_check_*` named after it in review_utils (build_review_summary).
-    # Named for what was observed, not for what it means: the scrape did not find someone we
-    # expected, or found someone we did not. Whether that is a departure or an arrival is the
-    # reviewer's call, so the code must not make it for them.
     ABSENT_PERSON = "absent_person"
     NEW_PERSON = "new_person"
     MOVED_PERSON = "moved_person"
-    # A reviewer picked a post and the scrape now derives a different one. Observed, not
-    # interpreted: whether the pick is still right or the parser has learned something is
-    # exactly what the reviewer is being asked.
     DISPUTED_POST = "disputed_post"
     TOO_FEW_PEOPLE = "too_few_people"
     DUPLICATE_UNIQUE_ROLE = "duplicate_unique_role"
     DIVISION_NUMBERING_GAP = "division_numbering_gap"
-    # The exception to the comment above: computed from stored posts at read time, not by a
-    # `_check_*` here, because it is about an office rather than about a person and every
-    # check in this module counts people.
     UNVERIFIED_POST = "unverified_post"
 
 
@@ -367,9 +342,6 @@ POST_FIELD = "post_id"
 class Issue(BaseModel):
     code: IssueCode
     message: str
-    # people this issue lands on; empty for list-level issues (absent_person,
-    # division_numbering_gap, too_few_people). `field` anchors it to a cell, e.g.
-    # "post_id" — absent for whole-row / list-level issues.
     person_ids: List[str] = []
     field: Optional[str] = None
 
@@ -377,11 +349,7 @@ class Issue(BaseModel):
 class RoleStatus(str, Enum):
     ACTIVE = "active"
     CANDIDATE = "candidate"
-    # "this label is not a role" — an exclusion the matcher must still see in
-    # order to knowingly drop the label. Not the same as inactive.
     EXCLUDED = "excluded"
-    # what removal sets. Not matched at all; the row survives so seat history
-    # does.
     INACTIVE = "inactive"
 
 

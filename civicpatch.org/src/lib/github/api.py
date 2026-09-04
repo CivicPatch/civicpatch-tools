@@ -13,7 +13,6 @@ from shared.utils.yaml_utils import yaml_load
 import lib.cache as cache_service
 from lib.github.auth import _get_github_config, get_default_headers
 
-
 timeout = httpx.Timeout(60.0)
 
 _RATE_LIMIT_THRESHOLD = 50  # sleep proactively when remaining drops below this
@@ -179,6 +178,12 @@ async def get_all_open_prs_raw(per_page: int = 100) -> List[Dict]:
     return results
 
 
+def _matches(existing: dict, encoded: str) -> bool:
+    if existing.get("encoding") != "base64":
+        return False
+    return "".join(existing.get("content", "").split()) == encoded
+
+
 async def upsert_github_file(
     branch_name: str,
     file_path: str,
@@ -206,7 +211,10 @@ async def upsert_github_file(
             "branch": branch_name,
         }
         if get_resp.status_code == 200:
-            payload["sha"] = get_resp.json()["sha"]
+            existing = get_resp.json()
+            payload["sha"] = existing["sha"]
+            if _matches(existing, encoded):
+                return existing.get("html_url")
         if author:
             payload["author"] = author
         put_resp = await client.put(
@@ -222,45 +230,15 @@ async def upsert_github_file(
         return None
 
 
-async def delete_github_file(
-    branch_name: str, file_path: str, commit_message: str
-) -> bool:
-    """Remove a file. True if it is gone, including when it was already absent — a promotion
-    that retries must not fail because the first attempt already deleted the source.
-    """
-    _, _, _, target_repo = _get_github_config()
-    auth_headers = await get_default_headers()
-    contents_url = f"{target_repo}/contents/{file_path}?ref={branch_name}"
-    async with httpx.AsyncClient(timeout=timeout) as client:
-        get_resp = await client.get(contents_url, headers=auth_headers)
-        if get_resp.status_code == 404:
-            return True
-        if get_resp.status_code != 200:
-            logger.error(f"delete_github_file could not read {file_path}: {get_resp.status_code}")
-            return False
-        del_resp = await client.request(
-            "DELETE",
-            f"{target_repo}/contents/{file_path}",
-            json={
-                "message": commit_message,
-                "sha": get_resp.json()["sha"],
-                "branch": branch_name,
-            },
-            headers={**auth_headers, "Accept": "application/vnd.github+json"},
-        )
-        if del_resp.status_code == 200:
-            return True
-        logger.error(f"delete_github_file failed ({del_resp.status_code}): {del_resp.text}")
-        return False
-
-
 async def get_pull_request_context(
     changeset_id: str, jurisdiction_ocdid: str
 ) -> dict | None:
     """Fetch and parse pipeline_run_context.json from a specific PR branch."""
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
     file_path = f"data_source/{folder}/pipeline_run_context.json"
-    branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, changeset_id)
+    branch_name = shared.utils.id_utils.make_job_branch(
+        jurisdiction_ocdid, changeset_id
+    )
     content = await get_github_file_contents(file_path, ref=branch_name)
     if content is None:
         return None
@@ -277,7 +255,9 @@ async def get_pull_request_file_yaml(
     changeset_id: str, jurisdiction_ocdid: str, file_path: str
 ) -> list | dict | None:
     """Fetch and parse a YAML file from a specific branch."""
-    branch_name = shared.utils.id_utils.make_job_branch(jurisdiction_ocdid, changeset_id)
+    branch_name = shared.utils.id_utils.make_job_branch(
+        jurisdiction_ocdid, changeset_id
+    )
     content = await get_github_file_contents(file_path, ref=branch_name)
     if content is None:
         return None

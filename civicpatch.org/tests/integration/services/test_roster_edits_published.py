@@ -13,7 +13,6 @@ import uuid
 
 import pytest
 import pytest_asyncio
-from unittest.mock import AsyncMock, patch
 
 import services.roster_edits as roster_edits
 from core.people_edits import PeopleValidationError
@@ -71,16 +70,6 @@ async def clean():
     await _wipe()
     yield
     await _wipe()
-
-
-@pytest.fixture(autouse=True)
-def no_temporal():
-    """`publish` queues the open-data commit on Temporal, which is not running for tests. The
-    database writes this file asserts all happen before that call."""
-    with patch(
-        "services.roster_edits.promote_to_reviewed", new_callable=AsyncMock
-    ) as queued:
-        yield queued
 
 
 async def _seed() -> tuple[str, Identity]:
