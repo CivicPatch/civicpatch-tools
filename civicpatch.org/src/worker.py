@@ -13,7 +13,7 @@ from lib.temporal.workflows import (
     JurisdictionsSheetSyncWorkflow,
     OpenDataBatchCommitWorkflow,
     OpenDataCommitWorkflow,
-    RosterSheetSweepWorkflow,
+    SyncSweepWorkflow,
     RosterSheetSyncWorkflow,
     PipelineRunCleanupWorkflow,
     ReviewSessionCleanupWorkflow,
@@ -28,6 +28,7 @@ from routers.temporal.activities import (
     od_sync_activity,
     od_sync_targeted_activity,
     supersede_stacked_requests_activity,
+    sweep_open_data_activity,
     sweep_roster_sheets_activity,
     sync_jurisdictions_sheet_activity,
     sync_roster_sheet_activity,
@@ -57,7 +58,7 @@ WORKFLOWS = [
     ReviewSessionCleanupWorkflow,
     RosterSheetSyncWorkflow,
     JurisdictionsSheetSyncWorkflow,
-    RosterSheetSweepWorkflow,
+    SyncSweepWorkflow,
 ]
 
 
@@ -183,14 +184,14 @@ async def _register_schedules(client: Client) -> None:
 
     await _ensure_schedule(
         client,
-        ScheduleId.ROSTER_SHEET_SWEEP,
+        ScheduleId.SYNC_SWEEP,
         Schedule(
             action=ScheduleActionStartWorkflow(
-                RosterSheetSweepWorkflow.run,
-                id=WorkflowInstanceId.ROSTER_SHEET_SWEEP,
+                SyncSweepWorkflow.run,
+                id=WorkflowInstanceId.SYNC_SWEEP,
                 task_queue=TASK_QUEUE,
             ),
-            # Every five minutes, against a fifteen-minute lookback. This is the sheet's
+            # Every five minutes, against a fifteen-minute lookback. This is both mirrors'
             # only route in during normal running, so the gap between a publish and the tab
             # is this plus the debounce.
             spec=ScheduleSpec(cron_expressions=["*/5 * * * *"]),
@@ -207,7 +208,7 @@ async def _register_schedules(client: Client) -> None:
             ScheduleId.OD_SYNC,
             ScheduleId.PIPELINE_RUN_CLEANUP,
             ScheduleId.REVIEW_SESSION_CLEANUP,
-            ScheduleId.ROSTER_SHEET_SWEEP,
+            ScheduleId.SYNC_SWEEP,
         },
     )
 
@@ -234,6 +235,7 @@ async def main() -> None:
             supersede_stacked_requests_activity,
             sync_roster_sheet_activity,
             sync_jurisdictions_sheet_activity,
+            sweep_open_data_activity,
             sweep_roster_sheets_activity,
         ],
     ):

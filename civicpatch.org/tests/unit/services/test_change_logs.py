@@ -10,9 +10,6 @@ JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/governm
 USER_ID = "user-123"
 
 
-# ── record_publish (event-only) ───────────────────
-
-@pytest.mark.unit
 # ── record_manual_edits (the publish-time diff) ──────────────────────────────
 
 @pytest.mark.unit

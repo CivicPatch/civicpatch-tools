@@ -16,13 +16,17 @@ from core.post_derivation import DerivedPost
 from core.people_edits import values_to_accept, with_stated_values
 from database import assertions, memberships, organizations, posts
 import database.changesets as changesets_db
-from database.change_logs import record_dismissal
+from database.change_logs import record_change
 from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
 from database.users import SYSTEM_USER_ID
 from database.pipeline_runs import get_sourced_at
 from schemas.assertions import Assertion, AssertionKind, EntityType
-from shared.utils.statuses import SOURCE_READING_KINDS, DismissalReason
+from shared.utils.statuses import (
+    SOURCE_READING_KINDS,
+    ChangeLogType,
+    DismissalReason,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -58,35 +62,19 @@ async def dismiss_request(
     It lands in both `dismissed_reason` and the `close_review` log: the column is state, which
     readers ask for; the log is the event, who dismissed it and when.
 
-    `resolved_by_user_id` is NULL when the machine gave up rather than a person deciding, and
-    `COALESCE` means a later human resolution is never overwritten by a machine one.
-
     Nothing to clean up on the way out: a scrape only *proposes* seats, and posts are created
     at publish. A dismissed changeset never minted one.
+
+    The marking itself is `changesets.mark_dismissed`, which is also where the check lives that
+    this reason may leave this changeset's state — a run that produced no roster cannot be
+    *rejected* by a person.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            UPDATE changesets
-               SET dismissed_at = COALESCE(dismissed_at, now()),
-                   -- The first reason stands, like the first timestamp.
-                   dismissed_reason = COALESCE(dismissed_reason, %s),
-                   -- Explicit user, else whoever already resolved it, else the system: a
-                   -- sweep dismissing a card is an actor, not an absence.
-                   resolved_by_user_id = COALESCE(%s, resolved_by_user_id, %s)
-             WHERE id = %s AND published_at IS NULL
-            RETURNING jurisdiction_ocdid
-            """,
-            (reason, resolved_by_user_id, SYSTEM_USER_ID, changeset_id),
+        await changesets_db.mark_dismissed(
+            cur, [changeset_id], reason, resolved_by_user_id
         )
-        row = await cur.fetchone()
-        # Only when the UPDATE matched: a request already published is left alone above, and
-        # must not gain a dismissal in its history either.
-        if row is not None:
-            await record_dismissal(
-                cur, changeset_id, row[0], resolved_by_user_id, reason
-            )
+        await conn.commit()
 
 
 class SupersededRoster(ValueError):
@@ -128,10 +116,15 @@ async def _refuse_if_superseded(
 async def _record_publish(
     cur, changeset_id: str, jurisdiction_ocdid: str, resolved_by_user_id: str | None
 ) -> None:
-    """Stamp the jurisdiction as scraped and the request as published.
+    """Stamp the jurisdiction as scraped, the request as published, and log that it happened.
 
     The FROM-join is a no-op when the request has no pipeline run, so `scraped_at` is never
     blanked; the COALESCE keeps the first publish's timestamp if one is replayed.
+
+    The log is here rather than at the caller so recording a publish is one act. It is what the
+    outward sinks read to learn a roster changed, and 88 of 117 published changesets logged
+    nothing else — a scrape that re-confirms a roster mints no post and edits nobody, it only
+    advances `last_seen_at`, which both the sheet and open-data render.
     """
     await cur.execute(
         """
@@ -151,6 +144,13 @@ async def _record_publish(
          WHERE id = %s
         """,
         (resolved_by_user_id, SYSTEM_USER_ID, changeset_id),
+    )
+    await record_change(
+        cur,
+        ChangeLogType.PUBLISH_REVIEW,
+        resolved_by_user_id,
+        jurisdiction_ocdid,
+        changeset_id=changeset_id,
     )
 
 

@@ -14,7 +14,7 @@ Isolation: everything hangs off one sentinel jurisdiction, removed before and af
 import uuid
 
 import pytest
-from shared.utils.statuses import DismissalReason
+from shared.utils.statuses import ChangeLogType, DismissalReason
 import pytest_asyncio
 from psycopg.errors import NotNullViolation
 
@@ -61,6 +61,9 @@ async def _cleanup():
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
         )
+        await cur.execute(
+            "DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
+        )
         await conn.commit()
 
 
@@ -82,12 +85,29 @@ async def sentinel_request():
         )
         changeset_id = (await cur.fetchone())[0]
         await cur.execute(
-            "UPDATE changesets SET status = 'done', "
+            "UPDATE changesets SET status = 'SUCCESS', "
             "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,)
         )
         await conn.commit()
     yield changeset_id
     await _cleanup()
+
+
+@pytest_asyncio.fixture
+async def failed_request(sentinel_request):
+    """The same request, with a run that ended without a roster.
+
+    Its own fixture because dismissal now checks that the reason may leave the changeset's
+    state: `errored` and `cancelled` are what a failed run gets, and `rejected` is a person
+    reading a roster — which a failed run never produced.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE changesets SET status = 'ERROR' WHERE id = %s", (sentinel_request,)
+        )
+        await conn.commit()
+    return sentinel_request
 
 
 def _person(name: str) -> dict:
@@ -234,6 +254,8 @@ async def test_a_failed_publish_writes_nothing(sentinel_request):
         sentinel_request, _SENTINEL_OCDID, [ann], derived=_seats([ann])
     )
 
+    logged = await _publish_logs()
+
     broken = _person("Cass")
     broken["id"] = None  # people.id is NOT NULL
     with pytest.raises(NotNullViolation):
@@ -241,6 +263,38 @@ async def test_a_failed_publish_writes_nothing(sentinel_request):
 
     # Bob was in the same executemany as the rejected row, so he must not have landed.
     assert await _people_by_status() == {"active": ["Ann"]}
+    # Nor did a log. The outward mirrors read `change_logs` to learn a roster changed, so a
+    # log for a publish that did not happen would sync a jurisdiction to a state the database
+    # never held.
+    assert await _publish_logs() == logged
+
+
+async def _publish_logs() -> list[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT type FROM change_logs WHERE jurisdiction_ocdid = %s ORDER BY created_at",
+            (_SENTINEL_OCDID,),
+        )
+        return [row[0] for row in await cur.fetchall()]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_publish_logs_that_the_roster_changed(sentinel_request):
+    """The feed every outward mirror runs on. Written on the publish cursor rather than
+    best-effort afterwards, so it cannot be lost while the publish stands."""
+    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+
+    assert await _publish_logs() == [ChangeLogType.PUBLISH_REVIEW.value]
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT changeset_id FROM change_logs WHERE jurisdiction_ocdid = %s",
+            (_SENTINEL_OCDID,),
+        )
+        assert (await cur.fetchone())[0] == sentinel_request
 
 
 # ── request publish state (migration 115) ────────────────────────────────────
@@ -282,10 +336,10 @@ async def test_republishing_keeps_the_first_publish_time(sentinel_request):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_dismissing_stamps_the_request(sentinel_request):
-    await dismiss_request(sentinel_request, DismissalReason.ERRORED)
+async def test_dismissing_stamps_the_request(failed_request):
+    await dismiss_request(failed_request, DismissalReason.ERRORED)
 
-    published_at, dismissed_at, _ = await _request_state(sentinel_request)
+    published_at, dismissed_at, _ = await _request_state(failed_request)
     assert published_at is None
     assert dismissed_at is not None
 
@@ -338,13 +392,13 @@ async def test_publish_does_not_blank_an_existing_resolver(sentinel_request):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_machine_dismissal_is_credited_to_the_system(sentinel_request):
+async def test_a_machine_dismissal_is_credited_to_the_system(failed_request):
     """A cancelled run dismisses its own request. Since 160 that is attributed to the system
     user rather than left null: the thing that tells it apart from a person deciding not to
     publish is *who*, not *whether*."""
-    await dismiss_request(sentinel_request, DismissalReason.ERRORED)
+    await dismiss_request(failed_request, DismissalReason.ERRORED)
 
-    _, dismissed_at, resolved_by = await _request_state(sentinel_request)
+    _, dismissed_at, resolved_by = await _request_state(failed_request)
     assert dismissed_at is not None
     assert str(resolved_by) == SYSTEM_USER_ID
 

@@ -114,7 +114,7 @@ async def finalize_pipeline_run(
     rather than written as "not SUCCESS", so a status added later has to be considered instead
     of silently inheriting dismissal.
 
-    No user id: a machine giving up is exactly what `resolved_by_user_id IS NULL` distinguishes
+    No user id: `mark_dismissed` credits the system, which is what tells a machine giving up
     from a person declining. A retry is a new run and a new request; this one is over either
     way.
     """

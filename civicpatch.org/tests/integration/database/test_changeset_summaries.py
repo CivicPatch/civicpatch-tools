@@ -177,12 +177,12 @@ async def test_the_queue_is_not_windowed():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_review_lifecycle_is_not_a_roster_edit():
-    """`merge_review` and `close_review` say what happened to the *review*, which the outcome
+    """`publish_review` and `close_review` say what happened to the *review*, which the outcome
     already reports. Counting them inflated roster edits by ~72% on dev."""
     changeset_id = await _changeset(published=True)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        for type_ in (ChangeLogType.ADD_PERSON, ChangeLogType.MERGE_REVIEW):
+        for type_ in (ChangeLogType.ADD_PERSON, ChangeLogType.PUBLISH_REVIEW):
             await cur.execute(
                 """
                 INSERT INTO change_logs (type, jurisdiction_ocdid, changeset_id, changes)

@@ -4,6 +4,7 @@ from core.change_logs import summarize_change_log
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
 from schemas.change_logs import (
+    ChangedJurisdiction,
     DismissalPayload,
     AssertionChangePayload,
     JurisdictionChangePayload,
@@ -91,9 +92,11 @@ async def record_change(
     change_type: ChangeLogType,
     user_id: str | None,
     jurisdiction_ocdid: str | None = None,
-    changes: PostChangePayload
+    changes: PersonChangePayload
+    | PostChangePayload
     | MembershipChangePayload
     | AssertionChangePayload
+    | JurisdictionChangePayload
     | DismissalPayload
     | None = None,
     changeset_id: str | None = None,
@@ -148,6 +151,37 @@ async def record_dismissal(
     )
 
 
+async def jurisdictions_changed_since(minutes: int) -> list[ChangedJurisdiction]:
+    """Which jurisdictions have changed in the last `minutes`, and how.
+
+    `states_changed_since` for the sink whose unit is a file rather than a tab: open-data holds
+    one file per jurisdiction, so it needs the ocdid and not the state.
+
+    Global rows carry no jurisdiction and name no file, so they are excluded here for the same
+    reason they are there. `close_review` too: a dismissal ends a review without touching a row,
+    and 245 of the 294 so far were superseded — a newer scrape won, so the roster is unchanged.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT jurisdiction_ocdid, array_agg(DISTINCT type) AS types
+            FROM change_logs
+            WHERE created_at > now() - make_interval(mins => %s)
+              AND jurisdiction_ocdid IS NOT NULL
+              AND type <> %s
+            GROUP BY jurisdiction_ocdid
+            ORDER BY jurisdiction_ocdid
+            """,
+            (minutes, ChangeLogType.CLOSE_REVIEW),
+        )
+        rows = await cur.fetchall()
+    return [
+        ChangedJurisdiction(jurisdiction_ocdid=ocdid, change_types=sorted(types))
+        for ocdid, types in rows
+    ]
+
+
 async def states_changed_since(minutes: int) -> list[str]:
     """Which states have had a jurisdiction-scoped change in the last `minutes`.
 
@@ -160,6 +194,8 @@ async def states_changed_since(minutes: int) -> list[str]:
     Rows with no jurisdiction are the global ones — role edits, which rename something every
     state derives a label from. Deliberately not chased: the next change in a state carries the
     new wording anyway, so a rename reaches the sheet as those states are next touched.
+
+    `close_review` is skipped for a different reason — a dismissal moves no row at all.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -169,8 +205,9 @@ async def states_changed_since(minutes: int) -> list[str]:
             FROM change_logs
             WHERE created_at > now() - make_interval(mins => %s)
               AND jurisdiction_ocdid IS NOT NULL
+              AND type <> %s
             """,
-            (minutes,),
+            (minutes, ChangeLogType.CLOSE_REVIEW),
         )
         rows = await cur.fetchall()
     return sorted(row[0] for row in rows if row[0])

@@ -3,7 +3,10 @@ import uuid
 from typing import Any, AsyncGenerator, List, LiteralString
 
 from core.membership_label import derive_post_label
+from database.change_logs import record_change
 from database.database import get_pool
+from schemas.change_logs import PersonChangePayload
+from shared.utils.statuses import ChangeLogType
 from psycopg import sql
 from shared.schemas import Person
 
@@ -433,20 +436,37 @@ async def stream_for_state(
                 yield [dict(zip(columns, row)) for row in rows]
 
 
-async def delete_person(person_id: str) -> str | None:
+async def delete_person(person_id: str, user_id: str | None = None) -> str | None:
     """Returns the jurisdiction they were in, or None when there was no such person.
 
     Returned rather than discarded because the caller mirrors the removal outward, and once
     the row is gone there is nothing left to ask.
+
+    Records a change log in the same transaction. It used to record none: `DELETE_PERSON`
+    logs came only from `people_diff`, the reviewer's edit path, so a deletion through this
+    route left no trace in the feed and no outward mirror could see it.
+
+    `RETURNING name` too, because after the delete there is nobody left to name in the log.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "DELETE FROM people WHERE id = %s RETURNING jurisdiction_ocdid",
+            "DELETE FROM people WHERE id = %s RETURNING jurisdiction_ocdid, name",
             (person_id,),
         )
         row = await cur.fetchone()
-    return row[0] if row else None
+        if row is None:
+            return None
+        jurisdiction_ocdid, name = row
+
+        await record_change(
+            cur,
+            ChangeLogType.DELETE_PERSON,
+            user_id,
+            jurisdiction_ocdid,
+            PersonChangePayload(person_id=person_id, person_name=name, fields=[]),
+        )
+    return jurisdiction_ocdid
 
 
 _PERSON_COLUMNS = (

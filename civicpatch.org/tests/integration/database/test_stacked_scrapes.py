@@ -11,6 +11,7 @@ import pytest
 import pytest_asyncio
 
 from database.database import get_pool
+from database.users import SYSTEM_USER_ID
 from database.pipeline_runs import expire_stale_pipeline_runs
 from database.publications import publish_request
 from database.changesets import supersede_stacked_requests
@@ -172,7 +173,9 @@ async def test_an_older_card_is_superseded_and_the_newest_survives():
 
     old_dismissed, resolved_by = await _dismissed_at(old)
     assert old_dismissed is not None
-    assert resolved_by is None  # NULL marks a system sweep, not a person's decision
+    # The system, not NULL: migration 160 made a machine resolution an actor rather than
+    # an absence, and the supersede sweeps were the last paths still leaving it empty.
+    assert str(resolved_by) == SYSTEM_USER_ID
     assert (await _dismissed_at(new))[0] is None
 
 

@@ -150,9 +150,9 @@ def get_router(api_key_header):
         await review_session_entries_db.save_entries_for_request(request.changeset_id)
         return {"status": "saved"}
 
-    # -- Approve: make this roster the published one ---
+    # -- Publish: make this roster the live one ---
     @router.post("/{changeset_id}/publish", include_in_schema=False)
-    async def save_and_merge_endpoint(
+    async def publish_review_endpoint(
         changeset_id: str,
         request: SaveAndMergeRequest,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),

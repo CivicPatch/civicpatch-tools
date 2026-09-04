@@ -1,9 +1,14 @@
+"""Gemini with Google Search grounding — the one thing OpenRouter cannot route.
+
+No Gemini model on OpenRouter supports native web search (probed 2026-09-03: all 7 endpoints
+fail its "Filter by Native Web Search Support"), and Exa is a different search engine. So these
+calls stay on Google's REST API while everything else goes through `services/open_router`.
+"""
+
 import json
 import time
 
 import requests
-from google import genai  # type: ignore[attr-defined]
-from google.genai import types
 from pipelines_environment import get_env_vars
 from utils import cost_utils
 from utils.log_utils import get_pipeline_run_logger
@@ -27,15 +32,12 @@ FIND_JURISDICTION_URL_MODEL_FALLBACKS = [
 # Note: CANNOT get flash-lite to extract dates
 
 
-async def run_prompt(
-    changeset_id,
-    jurisdiction_ocdid: str,
-    prompt,
-    response_schema=None,
-    content="",
-    with_search=False,
-    model_fallbacks=None,
-):
+async def run_prompt(changeset_id, jurisdiction_ocdid, prompt, model_fallbacks=None):
+    """Ask Gemini a grounded question. Returns parsed JSON, not a validated model.
+
+    Tool calls and structured output do not work together on Gemini, so the answer comes back as
+    fenced free text and `parse_raw_response` reads it.
+    """
     logger = get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info("Running Gemini prompt")
     logger.debug(f"Prompt: \n{prompt}")
@@ -44,28 +46,9 @@ async def run_prompt(
         raise ValueError("GOOGLE_GEMINI_TOKEN is not set in environment variables.")
 
     def execute(model):
-        if with_search:
-            response, input_tokens_num, output_tokens_num = make_request_with_search(
-                logger, model, api_key, prompt
-            )
-        else:
-            client = genai.Client(api_key=api_key)
-            config = types.GenerateContentConfig(
-                response_mime_type="application/json",
-                response_schema=response_schema,
-                temperature=0,
-                system_instruction=prompt,
-            )
-            completion = client.models.generate_content(
-                model=model,
-                contents=content or ".",
-                config=config,
-            )
-            assert response_schema is not None
-            response = response_schema.model_validate_json(completion.text)
-            input_tokens_num = completion.usage_metadata.prompt_token_count
-            output_tokens_num = completion.usage_metadata.candidates_token_count
-
+        response, input_tokens_num, output_tokens_num = make_request_with_search(
+            logger, model, api_key, prompt
+        )
         cost_utils.add_llm_cost(
             logger,
             changeset_id,
@@ -74,9 +57,8 @@ async def run_prompt(
             model,
             input_tokens_num,
             output_tokens_num,
-            with_search=with_search,
+            with_search=True,
         )
-
         return response
 
     for model in model_fallbacks or MODEL_FALLBACKS:
@@ -88,8 +70,9 @@ async def run_prompt(
                 f"gemini {model} LLM call took {end_time - start_time:.2f} seconds"
             )
             return result
-        except Exception:
-            continue
+        except Exception as e:
+            # Logged, not swallowed: a bad key and a bad model look identical otherwise.
+            logger.warning(f"gemini {model} failed, trying the next fallback: {e}")
 
     raise RuntimeError("All Gemini model fallbacks failed.")
 

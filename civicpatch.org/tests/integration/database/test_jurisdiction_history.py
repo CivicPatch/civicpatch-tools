@@ -183,10 +183,10 @@ async def test_roster_changes_are_grouped_under_their_changeset():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_review_lifecycle_is_not_a_roster_change():
-    """`merge_review` and `close_review` say what happened to the review, not to the people.
+    """`publish_review` and `close_review` say what happened to the review, not to the people.
     They share the changeset, so only the type filter keeps them out."""
     changeset_id = await _seed_resolved()
-    await _log(changeset_id, ChangeLogType.MERGE_REVIEW, {})
+    await _log(changeset_id, ChangeLogType.PUBLISH_REVIEW, {})
     await _log(changeset_id, ChangeLogType.CLOSE_REVIEW, {"reason": "no_longer_valid"})
 
     assert await _changes_for(changeset_id) == []

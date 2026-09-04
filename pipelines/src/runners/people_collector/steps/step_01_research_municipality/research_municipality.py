@@ -18,7 +18,6 @@ from runners.people_collector.schemas import (
     PeopleCollectorContext,
     PipelineStatus,
     ResearchedPerson,
-    ResearchMunicipalityLLMSchema,
     ResearchMunicipalityStep,
 )
 from shared.schemas import Person, RoleConfig
@@ -169,8 +168,6 @@ async def _request_roster(
         context.changeset_id,
         context.data.jurisdiction_ocdid,
         prompt,
-        response_schema=ResearchMunicipalityLLMSchema,
-        with_search=True,
     )
 
     if not response:

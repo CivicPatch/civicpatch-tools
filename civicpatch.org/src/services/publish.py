@@ -13,7 +13,6 @@ import lib.buckets as buckets
 import lib.github.api as github_service
 import lib.github.git_data as git_data
 import lib.storage as storage_service
-import services.change_logs as change_logs
 import shared.utils.id_utils
 from core.images import artifacts_key, promoted_key, promoted_url
 from core.membership_label import derive_post_label
@@ -130,9 +129,6 @@ async def publish_people(
         derived=await _get_derived_posts(people),
     )
     logger.info(f"[{changeset_id}] Published {written} people for {jurisdiction_ocdid}")
-    # Audited here rather than at the caller: publishing is this function, and the previous
-    # home for this was the merge worker, which is going away.
-    await change_logs.record_publish(changeset_id, resolved_by_user_id)
     return written
 
 
@@ -328,10 +324,11 @@ async def promote_to_reviewed(changeset_id: str, jurisdiction_ocdid: str) -> Non
 
 
 async def commit_roster(jurisdiction_ocdid: str, commit_message: str) -> None:
-    """Mirror a jurisdiction's live roster into open-data after an edit that is not a publish.
+    """Queue an open-data write for a jurisdiction's live roster.
 
-    No request id: these edits have no request row, and minting one would make the edit
-    supersede the jurisdiction's pending scrape cards.
+    Called only by `sweep_open_data_activity` now — no write path calls it, which is what stops
+    a new endpoint drifting out of open-data the way `DELETE /people` and the two post routes
+    did. No changeset id: the sweep is reacting to a change log, not publishing a review.
     """
     # avoid circular import: lib.temporal.workflows imports the activities module, which
     # imports this one, so importing the client at module scope closes the loop

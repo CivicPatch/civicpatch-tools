@@ -141,6 +141,28 @@ _SWEEP_LOOKBACK_MINUTES = 15
 
 
 @activity.defn
+async def sweep_open_data_activity() -> None:
+    """Commit every jurisdiction that changed recently.
+
+    The same feed the sheet runs on, read at open-data's grain: one file per jurisdiction
+    rather than one tab per state. Derived, not dispatched — a write path that never heard of
+    open-data still reaches it, which is what `DELETE /people` and the two post routes needed.
+
+    Repeated sweeps of the same jurisdiction coalesce: `enqueue_open_data_commit` keys on the
+    file path and the commit re-renders from the database, so a second enqueue is a no-op.
+    """
+    changed = await change_logs_db.jurisdictions_changed_since(_SWEEP_LOOKBACK_MINUTES)
+    for jurisdiction in changed:
+        await publish_service.commit_roster(
+            jurisdiction.jurisdiction_ocdid,
+            f"Update {jurisdiction.jurisdiction_ocdid} "
+            f"({', '.join(jurisdiction.change_types)})",
+        )
+    if changed:
+        activity.logger.info("Swept %d jurisdiction(s) into open-data", len(changed))
+
+
+@activity.defn
 async def sweep_roster_sheets_activity() -> None:
     """Sync every state that changed recently. The sheet's only route in during normal running.
 

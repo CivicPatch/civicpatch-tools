@@ -101,12 +101,13 @@ def get_router() -> APIRouter:
     @router.delete("/{person_id}")
     async def delete_person_endpoint(
         person_id: str,
-        _: Identity = Depends(
+        user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
         ),
     ):
-        # The change log this writes is what the sheet sweep reads; nothing here calls out.
-        await database.delete_person(person_id)
+        # The changeset and change log this writes are what the outward mirrors read; nothing
+        # here calls out to them.
+        await database.delete_person(person_id, user.user_id)
         return {"data": None}
 
     @router.get("/directory")
