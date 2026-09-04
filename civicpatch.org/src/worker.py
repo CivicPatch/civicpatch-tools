@@ -28,7 +28,7 @@ from routers.temporal.activities import (
     od_sync_targeted_activity,
     supersede_stacked_requests_activity,
     backstop_open_data_activity,
-    backstop_roster_sheets_activity,
+    list_states_activity,
     sync_roster_parquet_activity,
     sweep_open_data_activity,
     sweep_roster_sheets_activity,
@@ -245,7 +245,7 @@ ACTIVITIES = [
     sweep_open_data_activity,
     sweep_roster_sheets_activity,
     backstop_open_data_activity,
-    backstop_roster_sheets_activity,
+    list_states_activity,
     sync_roster_parquet_activity,
 ]
 

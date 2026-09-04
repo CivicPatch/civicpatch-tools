@@ -27,9 +27,9 @@ class WorkflowInstanceId(StrEnum):
 with workflow.unsafe.imports_passed_through():
     from routers.temporal.activities import (
         backstop_open_data_activity,
-        backstop_roster_sheets_activity,
         sync_roster_parquet_activity,
         cleanup_stale_review_entries_activity,
+        list_states_activity,
         commit_open_data_batch_activity,
         expire_stale_pipeline_runs_activity,
         od_sync_activity,
@@ -205,10 +205,24 @@ class SweepEverythingWorkflow:
 
     @workflow.run
     async def run(self) -> None:
-        await workflow.execute_activity(
-            backstop_roster_sheets_activity,
-            start_to_close_timeout=timedelta(minutes=15),
-        )
+        # One state at a time, not fifteen at once. Google Sheets allows 60 write requests a
+        # minute for the whole service account, and a full pass is ~192 — fanned out they all
+        # 429, back off, and the unlucky ones exhaust their activity timeout without having been
+        # slow. Sequential cannot exceed the quota and takes about four minutes, which a nightly
+        # backstop has.
+        #
+        # Still one activity per state, so each keeps its own timeout and retry: a state that
+        # genuinely fails does not take the other fourteen with it.
+        for state in await workflow.execute_activity(
+            list_states_activity,
+            start_to_close_timeout=timedelta(minutes=1),
+        ):
+            await workflow.execute_activity(
+                sync_roster_sheet_activity,
+                state,
+                start_to_close_timeout=timedelta(minutes=15),
+                retry_policy=_SHEET_RETRY,
+            )
         await workflow.execute_activity(
             backstop_open_data_activity,
             start_to_close_timeout=timedelta(minutes=15),
