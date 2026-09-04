@@ -31,6 +31,9 @@ _PRODUCES_SOMETHING = {"SUCCESS", "RESOLVED"}
 async def _cleanup():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "DELETE FROM pipeline_runs WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
         await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OCDID,)
@@ -53,16 +56,20 @@ async def _a_run_in_flight() -> str:
         )
         await cur.execute(
             """
-            INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json)
-            VALUES ('scrape', 'SUCCESS', %s, '{}'::jsonb) RETURNING id::text
+            INSERT INTO changesets (kind, jurisdiction_ocdid)
+            VALUES ('scrape', %s) RETURNING id::text
             """,
             (_OCDID,),
         )
         changeset_id = (await cur.fetchone())[0]
+        # The run is the attempt; the changeset is what it proposed. Sharing an id mirrors what
+        # migration 169 backfilled, so these tests exercise the same rows production has.
         await cur.execute(
-            "UPDATE changesets SET status = 'RUNNING', "
-            "updated_at = CURRENT_TIMESTAMP WHERE id = %s",
-            (changeset_id,),
+            """
+            INSERT INTO pipeline_runs (id, jurisdiction_ocdid, status, changeset_id)
+            VALUES (%s, %s, 'RUNNING', %s)
+            """,
+            (changeset_id, _OCDID, changeset_id),
         )
         await conn.commit()
     return changeset_id
@@ -147,9 +154,19 @@ async def _set_run(changeset_id: str, status: str, age_hours: int) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "UPDATE changesets SET status = %s, "
+            # `finished_at` alongside a terminal status, because that is the only pairing the
+            # app writes — `update_pipeline_run_status` sets them together, and the expiry sweep
+            # asks `finished_at IS NULL` rather than matching a list of terminal names.
+            "UPDATE pipeline_runs SET status = %s, "
+            "finished_at = CASE WHEN %s = ANY(%s) THEN NOW() ELSE NULL END, "
             "updated_at = NOW() - make_interval(hours => %s) WHERE id = %s",
-            (status, age_hours, changeset_id),
+            (
+                status,
+                status,
+                [s.value for s in TERMINAL_PIPELINE_RUN_STATUSES],
+                age_hours,
+                changeset_id,
+            ),
         )
         await conn.commit()
 
@@ -158,7 +175,7 @@ async def _status(changeset_id: str) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT status FROM changesets WHERE id = %s", (changeset_id,)
+            "SELECT status FROM pipeline_runs WHERE id = %s", (changeset_id,)
         )
         return (await cur.fetchone())[0]
 
@@ -234,7 +251,7 @@ async def test_a_cancelled_run_reads_as_cancelled_from_its_dismissal():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "UPDATE changesets SET status = 'SCRAPE_PAGE', dismissed_at = now(), "
+            "UPDATE changesets SET dismissed_at = now(), "
             "dismissed_reason = 'cancelled' WHERE id = %s",
             (changeset_id,),
         )

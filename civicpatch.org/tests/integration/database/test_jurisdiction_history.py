@@ -62,8 +62,8 @@ async def _seed_changeset() -> str:
         )
         await cur.execute(
             """
-            INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json)
-            VALUES ('scrape', 'SUCCESS', %s, '{}'::jsonb)
+            INSERT INTO changesets (kind, jurisdiction_ocdid)
+            VALUES ('scrape', %s)
             RETURNING id::text
             """,
             (_OCDID,),

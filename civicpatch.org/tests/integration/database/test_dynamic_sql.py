@@ -61,7 +61,7 @@ async def test_update_pipeline_run_status_nonexistent_request_is_noop():
     matches zero rows. Exercises the dynamic SET clause builder.
     """
     await db_jobs.update_pipeline_run_status(
-        changeset_id="00000000-0000-0000-0000-000000000000",
+        run_id="00000000-0000-0000-0000-000000000000",
         status="pending",
         progress=0,
     )
@@ -72,7 +72,7 @@ async def test_update_pipeline_run_status_nonexistent_request_is_noop():
 async def test_update_pipeline_run_status_only_progress():
     """Exercises the branch where status is None (only progress in SET clause)."""
     await db_jobs.update_pipeline_run_status(
-        changeset_id="00000000-0000-0000-0000-000000000000",
+        run_id="00000000-0000-0000-0000-000000000000",
         progress=42,
     )
 

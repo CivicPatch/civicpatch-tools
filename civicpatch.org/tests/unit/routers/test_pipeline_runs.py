@@ -34,7 +34,7 @@ def test_create_job_returns_changeset_id(client):
         new_callable=AsyncMock,
         return_value=False,
     ), patch(
-        "routers.api.pipeline_runs.register_request_with_pipeline_run",
+        "routers.api.pipeline_runs.register_run",
         new_callable=AsyncMock,
     ), patch(
         "routers.api.pipeline_runs.temporal_service.start_people_collector_workflow",
@@ -59,7 +59,7 @@ def test_create_job_returns_500_on_temporal_error(client):
         new_callable=AsyncMock,
         return_value=False,
     ), patch(
-        "routers.api.pipeline_runs.register_request_with_pipeline_run",
+        "routers.api.pipeline_runs.register_run",
         new_callable=AsyncMock,
     ), patch(
         "routers.api.pipeline_runs.temporal_service.start_people_collector_workflow",
@@ -139,7 +139,7 @@ async def test_apply_pipeline_run_status_publishes_when_jurisdiction_provided():
     ):
         await apply_pipeline_run_status(TEST_CHANGESET_ID, "running", 50, "ocd-division/country:us/state:ca/place:oakland")
 
-        mock_update.assert_awaited_once_with(changeset_id=TEST_CHANGESET_ID, status="running", progress=50)
+        mock_update.assert_awaited_once_with(run_id=TEST_CHANGESET_ID, status="running", progress=50)
         mock_publish.assert_awaited_once()
 
 

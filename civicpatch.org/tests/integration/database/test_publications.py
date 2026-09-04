@@ -55,6 +55,10 @@ async def _cleanup():
         # Changesets first: `changesets.organization_id` is a FK since 158, so an organization
         # cannot go while a changeset still names it.
         await cur.execute(
+            "DELETE FROM pipeline_runs WHERE jurisdiction_ocdid = %s",
+            (_SENTINEL_OCDID,),
+        )
+        await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
         )
         for table in ("posts", "divisions", "organizations"):
@@ -82,36 +86,19 @@ async def sentinel_request():
         )
         await cur.execute(
             """
-            INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json)
-            VALUES ('scrape', 'SUCCESS', %s, '{}'::jsonb) RETURNING id::text
+            INSERT INTO changesets (kind, jurisdiction_ocdid)
+            VALUES ('scrape', %s) RETURNING id::text
             """,
             (_SENTINEL_OCDID,),
         )
         changeset_id = (await cur.fetchone())[0]
         await cur.execute(
-            "UPDATE changesets SET status = 'SUCCESS', "
+            "UPDATE changesets SET "
             "updated_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,)
         )
         await conn.commit()
     yield changeset_id
     await _cleanup()
-
-
-@pytest_asyncio.fixture
-async def failed_request(sentinel_request):
-    """The same request, with a run that ended without a roster.
-
-    Its own fixture because dismissal now checks that the reason may leave the changeset's
-    state: `errored` and `cancelled` are what a failed run gets, and `rejected` is a person
-    reading a roster — which a failed run never produced.
-    """
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "UPDATE changesets SET status = 'ERROR' WHERE id = %s", (sentinel_request,)
-        )
-        await conn.commit()
-    return sentinel_request
 
 
 def _person(name: str) -> dict:
@@ -339,21 +326,6 @@ async def test_republishing_keeps_the_first_publish_time(sentinel_request):
 
 
 @pytest.mark.integration
-@pytest.mark.asyncio
-async def test_a_run_that_produced_no_roster_cannot_be_published(failed_request):
-    """`core.changeset_lifecycle` gives `FAILED` no outgoing publish — a run that ended without
-    a roster has nothing to publish. Nothing enforced it: `AVAILABLE_FOR_REVIEW` keeps a dead
-    run out of the review queue, but a direct call would write over a live roster.
-
-    Refused rather than skipped. A silent no-op would leave the people written and the changeset
-    unmarked, so it would sit in the pool having already gone live.
-    """
-    with pytest.raises(UnpublishableChangeset):
-        await publish_request(failed_request, _SENTINEL_OCDID, [_person("Ann")])
-
-    assert await _people_by_status() == {}
-
-
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_a_dismissed_changeset_cannot_be_published(sentinel_request):
@@ -367,10 +339,10 @@ async def test_a_dismissed_changeset_cannot_be_published(sentinel_request):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_dismissing_stamps_the_request(failed_request):
-    await dismiss_request(failed_request, DismissalReason.ERRORED)
+async def test_dismissing_stamps_the_request(sentinel_request):
+    await dismiss_request(sentinel_request, DismissalReason.ERRORED)
 
-    published_at, dismissed_at, _ = await _request_state(failed_request)
+    published_at, dismissed_at, _ = await _request_state(sentinel_request)
     assert published_at is None
     assert dismissed_at is not None
 
@@ -423,13 +395,13 @@ async def test_publish_does_not_blank_an_existing_resolver(sentinel_request):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_machine_dismissal_is_credited_to_the_system(failed_request):
+async def test_a_machine_dismissal_is_credited_to_the_system(sentinel_request):
     """A cancelled run dismisses its own request. Since 160 that is attributed to the system
     user rather than left null: the thing that tells it apart from a person deciding not to
     publish is *who*, not *whether*."""
-    await dismiss_request(failed_request, DismissalReason.ERRORED)
+    await dismiss_request(sentinel_request, DismissalReason.ERRORED)
 
-    _, dismissed_at, resolved_by = await _request_state(failed_request)
+    _, dismissed_at, resolved_by = await _request_state(sentinel_request)
     assert dismissed_at is not None
     assert str(resolved_by) == SYSTEM_USER_ID
 

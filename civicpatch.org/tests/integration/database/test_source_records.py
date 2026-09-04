@@ -53,8 +53,8 @@ async def sentinel_request():
         )
         await cur.execute(
             """
-            INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json)
-            VALUES ('scrape', 'SUCCESS', %s, '{}'::jsonb) RETURNING id::text
+            INSERT INTO changesets (kind, jurisdiction_ocdid)
+            VALUES ('scrape', %s) RETURNING id::text
             """,
             (_SENTINEL_OCDID,),
         )

@@ -21,7 +21,6 @@ from shared.utils.statuses import (
     SOURCE_READING_KINDS,
     ChangesetKind,
     DismissalReason,
-    PipelineRunStatus,
 )
 
 logger = logging.getLogger(__name__)
@@ -45,10 +44,11 @@ CONFIRMED = "r.published_at IS NOT NULL"
 # "to review" and would skew one band permanently.
 COLLECTED = "r.kind = ANY(%(collection_kinds)s)"
 
+# Only the dismissal reason. A failed *run* no longer has a changeset to count, so this counts
+# failed proposals; failed attempts belong to the scrape-results page, which reads runs.
 FAILED = (
-    f"(r.dismissed_reason IN ('{DismissalReason.REJECTED.value}', "
-    f"'{DismissalReason.ERRORED.value}', '{DismissalReason.CANCELLED.value}') "
-    f"OR r.status = '{PipelineRunStatus.ERROR.value}')"
+    f"r.dismissed_reason IN ('{DismissalReason.REJECTED.value}', "
+    f"'{DismissalReason.ERRORED.value}', '{DismissalReason.CANCELLED.value}')"
 )
 
 # Each side aggregates to one row per state before joining — measured, ~114 ms at 571k
@@ -91,7 +91,6 @@ flows AS (
            )::int AS rejected,
            count(*) FILTER (
                WHERE r.dismissed_reason = '{DismissalReason.ERRORED.value}'
-                  OR r.status = '{PipelineRunStatus.ERROR.value}'
            )::int AS errored,
            max(r.created_at) AS last_run_at
     FROM changesets r

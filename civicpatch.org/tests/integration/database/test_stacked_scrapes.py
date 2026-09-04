@@ -41,6 +41,10 @@ async def _wipe():
             "DELETE FROM people WHERE jurisdiction_ocdid IN (%s, %s)", (_OCDID, _OTHER)
         )
         await cur.execute(
+            "DELETE FROM pipeline_runs WHERE jurisdiction_ocdid IN (%s, %s)",
+            (_OCDID, _OTHER),
+        )
+        await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid IN (%s, %s)", (_OCDID, _OTHER)
         )
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
@@ -78,13 +82,22 @@ async def _request(updated_at: str, ocdid: str = _OCDID) -> str:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json, updated_at)
-            VALUES ('scrape', 'SUCCESS', %s, '{}'::jsonb, %s::timestamptz)
+            INSERT INTO changesets (kind, jurisdiction_ocdid, updated_at)
+            VALUES ('scrape', %s, %s::timestamptz)
             RETURNING id::text
             """,
             (ocdid, updated_at),
         )
         changeset_id = (await cur.fetchone())[0]
+        # The scrape's run. `updated_at` is the clock the expiry sweep reads.
+        await cur.execute(
+            """
+            INSERT INTO pipeline_runs
+                (id, jurisdiction_ocdid, status, finished_at, updated_at, changeset_id)
+            VALUES (%s, %s, 'SUCCESS', now(), %s::timestamptz, %s)
+            """,
+            (changeset_id, ocdid, updated_at, changeset_id),
+        )
         # One sighting, because `AVAILABLE_FOR_REVIEW` is now "this scrape saw somebody".
         await cur.execute(
             """
@@ -95,8 +108,8 @@ async def _request(updated_at: str, ocdid: str = _OCDID) -> str:
         )
         await cur.execute(
             """
-            UPDATE changesets SET status = 'SUCCESS', progress = 100,
-                                created_at = %s::timestamptz, updated_at = %s::timestamptz
+            UPDATE changesets SET created_at = %s::timestamptz,
+                                  updated_at = %s::timestamptz
             WHERE id = %s
             """,
             (updated_at, updated_at, changeset_id),
@@ -208,9 +221,12 @@ async def test_giving_up_on_a_run_does_not_restamp_the_source_clock():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        # The fixture stamps SUCCESS, which is terminal. A run only expires while in flight.
+        # The fixture stamps SUCCESS, which is terminal. A run only expires while in flight,
+        # which `finished_at IS NULL` is what says now.
         await cur.execute(
-            "UPDATE changesets SET status = 'PENDING' WHERE id::text = %s", (abandoned,)
+            "UPDATE pipeline_runs SET status = 'PENDING', finished_at = NULL "
+            "WHERE id::text = %s",
+            (abandoned,),
         )
         await conn.commit()
 
@@ -218,8 +234,10 @@ async def test_giving_up_on_a_run_does_not_restamp_the_source_clock():
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT status, updated_at::text, dismissed_reason, state "
-            "FROM changesets WHERE id::text = %s",
+            # The run carries the status; the changeset carries the clock and the dismissal.
+            "SELECT run.status, c.updated_at::text, c.dismissed_reason, c.state "
+            "FROM changesets c JOIN pipeline_runs run ON run.changeset_id = c.id "
+            "WHERE c.id::text = %s",
             (abandoned,),
         )
         status, updated_at, dismissed_reason, state = await cur.fetchone()
