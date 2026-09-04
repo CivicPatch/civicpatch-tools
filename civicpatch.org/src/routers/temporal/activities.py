@@ -135,19 +135,18 @@ async def backstop_open_data_activity() -> None:
 
 
 @activity.defn
-async def backstop_roster_sheets_activity() -> None:
-    """Re-sync every state's tabs, whether or not `change_logs` mentioned them.
+async def list_states_activity() -> list[str]:
+    """Every state we hold, for the backstop to walk one at a time.
 
-    Same reasoning as the open-data backstop, and the same reason it is cheap now: an unchanged
-    tab costs one streamed hash pass and no Sheets request.
+    A list, not a fan-out. This used to enqueue a sync workflow per state, and all fifteen then
+    raced the same Google Sheets quota — 60 write requests a minute for the whole service
+    account, against ~192 requests fired at once. The losers sat in 429 backoff until their
+    activity timed out: Colorado, 2,177 rows and twelve requests, died at fifteen minutes
+    because it was starved rather than slow.
+
+    Sequencing belongs to the caller, which is why this only reports.
     """
-    # avoid circular import: the client imports the workflows module, which imports this one
-    import lib.temporal.client as temporal_client
-
-    states = [row["code"] for row in await jurisdictions_db.get_states_with_names()]
-    for state in states:
-        await temporal_client.enqueue_roster_sheet_sync(state)
-    activity.logger.info("Backstop: queued sheet sync for %d state(s)", len(states))
+    return [row["code"] for row in await jurisdictions_db.get_states_with_names()]
 
 
 @activity.defn
