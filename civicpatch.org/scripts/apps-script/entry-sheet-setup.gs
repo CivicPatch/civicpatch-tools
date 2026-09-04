@@ -16,8 +16,31 @@
  * (_REQUIRED, _OPTIONAL, STATUS_COLUMNS). Case-insensitive, order-free, spelling exact.
  */
 
-// Not a secret — access is Drive sharing, not knowing this string.
-const ENTRY_SPREADSHEET_ID = "16tGgkC40p3OGp7kRNlkqsA4V86Y5JdbEPQLK5cBkuIc";
+// Which spreadsheet to set up. Read from a Script Property, never hardcoded here.
+//
+// Standalone by design (see README), so there is no active spreadsheet to infer — and this file
+// cannot read the repo's copies either, because Apps Script runs inside Google with no view of
+// `mise.toml` or `docker-compose.yml`. Hardcoding it made a third copy that had to be changed in
+// lockstep with those two; miss it and the script cheerfully sets up tabs on the *old*
+// spreadsheet while the stack reads the new one, both looking fine in isolation.
+//
+// A Script Property is Apps Script's env var: set per deployment, invisible to git, and it makes
+// running against the wrong sheet an explicit act rather than a stale constant.
+function entrySpreadsheetId() {
+  const id = PropertiesService.getScriptProperties().getProperty("ENTRY_SPREADSHEET_ID");
+  if (!id) {
+    throw new Error(
+      "ENTRY_SPREADSHEET_ID is not set.\n\n" +
+        "Apps Script → Project Settings → Script properties → Add script property\n" +
+        "  Property: ENTRY_SPREADSHEET_ID\n" +
+        "  Value:    the id from the spreadsheet URL, " +
+        "https://docs.google.com/spreadsheets/d/<THIS PART>/edit\n\n" +
+        "It must match ENTRY_SPREADSHEET_ID in the backend's environment, or this script will " +
+        "set up a spreadsheet the app never reads."
+    );
+  }
+  return id;
+}
 
 const ROSTER_TAB = "Entry[Roster]";
 
@@ -45,7 +68,7 @@ const HEADER_BACKGROUND = "#f3f3f3";
 const APP_OWNED_BACKGROUND = "#e8eaed";
 
 function setUpEntrySheet() {
-  const spreadsheet = SpreadsheetApp.openById(ENTRY_SPREADSHEET_ID);
+  const spreadsheet = SpreadsheetApp.openById(entrySpreadsheetId());
   const roster = buildTab(spreadsheet, ROSTER_TAB, ROSTER_HEADERS);
   const jurisdictions = buildTab(spreadsheet, LIVE_JURISDICTIONS_TAB, [
     JURISDICTION_COLUMN,
@@ -74,7 +97,7 @@ const LIVE_PREFIX = "Live[";
  * `Entry[Roster]` is never deleted — that is volunteer typing, and nothing here can give it back.
  */
 function resetLiveTabs() {
-  const spreadsheet = SpreadsheetApp.openById(ENTRY_SPREADSHEET_ID);
+  const spreadsheet = SpreadsheetApp.openById(entrySpreadsheetId());
   const removed = [];
   spreadsheet.getSheets().forEach(function (sheet) {
     const name = sheet.getName();

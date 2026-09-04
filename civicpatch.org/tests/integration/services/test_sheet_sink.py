@@ -151,9 +151,23 @@ async def _wipe():
         )
         # The gate outlives the data it fingerprints, so a leftover row would make the next
         # test's first sync look like a repeat and skip the writes it is asserting.
+        #
+        # Matched by suffix, not equality: a target is `{spreadsheet_id}/{tab}`, so the tab name
+        # alone stopped matching when the spreadsheet became part of it — which showed up only
+        # on the *second* run, the first having had nothing to leave behind.
         await cur.execute(
-            "DELETE FROM output_hashes WHERE target = ANY(%s)",
-            ([_PEOPLE_TAB, _MEMBERSHIPS_TAB, _POSTS_TAB, roster_sheet.JURISDICTIONS_TAB],),
+            "DELETE FROM output_hashes WHERE target LIKE ANY(%s)",
+            (
+                [
+                    f"%/{tab}"
+                    for tab in (
+                        _PEOPLE_TAB,
+                        _MEMBERSHIPS_TAB,
+                        _POSTS_TAB,
+                        roster_sheet.JURISDICTIONS_TAB,
+                    )
+                ],
+            ),
         )
         await conn.commit()
 
@@ -205,11 +219,16 @@ async def _seed(count: int):
         await conn.commit()
 
 
-async def _sync(state: str, chunk_size: int, recorder: _Recorder | None = None) -> _Recorder:
+async def _sync(
+    state: str,
+    chunk_size: int,
+    recorder: _Recorder | None = None,
+    spreadsheet_id: str = "test-sheet",
+) -> _Recorder:
     recorder = recorder or _Recorder()
     with (
         patch("lib.sheets.get_service", return_value=recorder),
-        patch("services.entry_sheet.spreadsheet_id", return_value="test-sheet"),
+        patch("services.entry_sheet.spreadsheet_id", return_value=spreadsheet_id),
     ):
         await roster_sheet.sync_state(state, chunk_size=chunk_size)
     return recorder
@@ -511,3 +530,24 @@ async def test_a_failed_write_records_no_hash_so_the_retry_still_fires():
 
     # Nothing recorded, so an ordinary retry writes.
     assert (await _sync("zz", chunk_size=2)).updates
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_pointing_at_a_different_spreadsheet_writes_it():
+    """Switching ENTRY_SPREADSHEET_ID must not be skipped as "already written".
+
+    The hash is of the rows about to be written, rendered from the database — not of what the
+    sheet holds. So the same rows hash the same whichever file they are going to, and keying the
+    gate on the tab name alone made the second spreadsheet look already-current. It stays empty,
+    and nothing says so.
+
+    This is not a prod-vs-dev concern; it is one stack repointed, which happened on 2026-09-04.
+    """
+    await _seed(2)
+
+    first = await _sync("zz", chunk_size=2)
+    second = await _sync("zz", chunk_size=2, spreadsheet_id="a-different-spreadsheet")
+
+    assert first.updates, "the first sheet must be written"
+    assert second.updates, "so must a different sheet holding the same rows"

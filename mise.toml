@@ -15,11 +15,13 @@ _.file = ["../pipelines.env", "../civicpatch.org.env"]
 # by docker-compose / .env. Production uses $PROD_SERVICE_API_KEY (from secrets).
 SERVICE_API_KEY = "service-api-key"
 
-# The data-entry spreadsheet. Same default as civicpatch.org/docker-compose.yml:44, so the
-# stack and the smoke script agree on which sheet without either being told twice.
+# The data-entry spreadsheet. Same default as civicpatch.org/docker-compose.yml:44 and 154, and
+# as scripts/apps-script/entry-sheet-setup.gs — three copies, because Apps Script runs inside
+# Google and cannot read either of the others. Change the dev sheet in all three or the script
+# will set up a spreadsheet the stack never reads.
 # Not a secret: access is Drive sharing, not knowing the string.
-# https://docs.google.com/spreadsheets/d/16tGgkC40p3OGp7kRNlkqsA4V86Y5JdbEPQLK5cBkuIc
-ENTRY_SPREADSHEET_ID = "16tGgkC40p3OGp7kRNlkqsA4V86Y5JdbEPQLK5cBkuIc"
+# https://docs.google.com/spreadsheets/d/11xjGyzgOJAZX2bT5Ed61gHdXS8_atLuomzOKHxv2xr4
+ENTRY_SPREADSHEET_ID = "11xjGyzgOJAZX2bT5Ed61gHdXS8_atLuomzOKHxv2xr4"
 
 
 [tasks.setup]

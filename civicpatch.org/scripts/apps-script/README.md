@@ -37,13 +37,21 @@ spreadsheet by id and is invisible to them.
 
 1. [script.google.com](https://script.google.com) → **New project**, named `civicpatch entry sheet`
 2. Paste `entry-sheet-setup.gs` in
-3. Set `ENTRY_SPREADSHEET_ID` at the top of the file to your spreadsheet
+3. **Project Settings → Script properties** → add `ENTRY_SPREADSHEET_ID`, the id from the
+   spreadsheet URL (`https://docs.google.com/spreadsheets/d/<THIS PART>/edit`). The script
+   refuses to run without it rather than guessing.
 4. Run `setUpEntrySheet`, approving the authorization prompt on first run
-5. Share the spreadsheet with the backend's service account as an **Editor**
-6. `POST /api/admin/sheet_sync/jurisdictions` to fill the dropdown, then
-   `POST /api/admin/sheet_sync/rosters` to fill the state tabs
+5. Share the spreadsheet with the backend's service account as an **Editor** — it writes the
+   `Live[...]` tabs, so read access is not enough
+6. In Temporal, trigger the **`sweep-everything`** schedule. That fills every state's tabs and
+   the dropdown in one run
 
-**No script properties and no API key.** Nothing here reads civicpatch.
+**`ENTRY_SPREADSHEET_ID` must match the backend's.** The script is standalone, so it cannot read
+the repo — set it in the property above *and* in `mise.toml` / `civicpatch.org/docker-compose.yml`.
+Point them at different spreadsheets and each half works perfectly on a file the other never
+touches, which looks like nothing being wrong at all.
+
+**No API key.** Nothing here reads civicpatch.
 
 Re-run `setUpEntrySheet` after any change to the roster column contract. It creates what is
 missing and rewrites headers; it never deletes a tab, column or row.
