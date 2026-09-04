@@ -124,7 +124,7 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
         )
         await cur.execute(
             "UPDATE changesets SET status = 'SUCCESS', "
-            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s",
+            "updated_at = CURRENT_TIMESTAMP WHERE id = %s",
             (changeset_id,),
         )
     return changeset_id, ocdid
@@ -555,7 +555,7 @@ async def test_a_scrape_with_no_roster_never_reaches_the_pool():
         changeset_id = (await cur.fetchone())[0]
         await cur.execute(
             "UPDATE changesets SET status = 'SUCCESS', "
-            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,)
+            "updated_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,)
         )
 
     rows, _, _ = await list_open_changesets(jurisdiction_ocdid=ocdid)
@@ -591,7 +591,7 @@ async def test_a_scrape_that_changed_nothing_leaves_the_pool_saying_why():
         )
         await cur.execute(
             "UPDATE changesets SET status = 'SUCCESS', "
-            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s",
+            "updated_at = CURRENT_TIMESTAMP WHERE id = %s",
             (changeset_id,),
         )
         await conn.commit()

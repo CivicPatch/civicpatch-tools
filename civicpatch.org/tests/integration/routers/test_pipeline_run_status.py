@@ -61,7 +61,7 @@ async def _a_run_in_flight() -> str:
         changeset_id = (await cur.fetchone())[0]
         await cur.execute(
             "UPDATE changesets SET status = 'RUNNING', "
-            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s",
+            "updated_at = CURRENT_TIMESTAMP WHERE id = %s",
             (changeset_id,),
         )
         await conn.commit()
@@ -148,7 +148,7 @@ async def _set_run(changeset_id: str, status: str, age_hours: int) -> None:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "UPDATE changesets SET status = %s, "
-            "sourced_at = NOW() - make_interval(hours => %s) WHERE id = %s",
+            "updated_at = NOW() - make_interval(hours => %s) WHERE id = %s",
             (status, age_hours, changeset_id),
         )
         await conn.commit()

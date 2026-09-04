@@ -86,7 +86,7 @@ async def _changeset(
         await cur.execute(
             """
             INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json,
-                                    created_at, sourced_at, published_at, dismissed_at,
+                                    created_at, updated_at, published_at, dismissed_at,
                                     dismissed_reason)
             VALUES (%s, %s, %s, '{}'::jsonb,
                     now() - make_interval(days => %s), now() - make_interval(days => %s),
@@ -158,7 +158,7 @@ async def test_the_queue_counts_one_changeset_per_jurisdiction():
 
     row = await _row()
     assert row.to_review == 1
-    # The newest by `sourced_at` is the valid one, so the age is its, not the loser's.
+    # The newest by `updated_at` is the valid one, so the age is its, not the loser's.
     assert row.oldest_days == 2
 
 

@@ -143,7 +143,7 @@ class InFlightChangeset(BaseModel):
 
     changeset_id: str
     created_at: Optional[str]
-    # `sourced_at` — when the source was read. What a run's elapsed time is measured against.
+    # `updated_at` — when the source was read. What a run's elapsed time is measured against.
     updated_at: Optional[str]
     kind: Optional[str]
     change_url: Optional[str]

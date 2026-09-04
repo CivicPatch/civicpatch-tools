@@ -6,14 +6,14 @@ from psycopg import sql
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
 
 
-async def get_sourced_at(cur, changeset_id: str) -> datetime:
+async def get_updated_at(cur, changeset_id: str) -> datetime:
     """When the run last read the source.
 
     Stamped by the pipeline's own report, not at ingest, which can be hours later on a retry or
     a replayed artifact.
     """
     await cur.execute(
-        "SELECT sourced_at FROM changesets WHERE id::text = %s",
+        "SELECT updated_at FROM changesets WHERE id::text = %s",
         (changeset_id,),
     )
     row = await cur.fetchone()
@@ -28,7 +28,7 @@ async def get_pipeline_run(changeset_id: str):
         await cur.execute(
             """
             SELECT r.status, r.progress, r.arguments_json,
-                   r.created_at, r.sourced_at, r.change_url
+                   r.created_at, r.updated_at, r.change_url
             FROM changesets r
             WHERE r.id = %s;
             """,
@@ -89,7 +89,7 @@ async def get_active_pipeline_runs(
     offset = (page - 1) * per_page
     async with pool.connection() as conn, conn.cursor() as cur:
         query = """
-            SELECT r.id::text, r.status, r.progress, r.created_at, r.sourced_at,
+            SELECT r.id::text, r.status, r.progress, r.created_at, r.updated_at,
                    r.jurisdiction_ocdid, jur.state, jur.data->>'name',
                    COUNT(*) OVER() AS total_count
             FROM changesets r
@@ -102,7 +102,7 @@ async def get_active_pipeline_runs(
         if state_code:
             query += " AND jur.state = %s"
             params.append(state_code.lower())
-        query += " ORDER BY r.sourced_at DESC LIMIT %s OFFSET %s"
+        query += " ORDER BY r.updated_at DESC LIMIT %s OFFSET %s"
         params.extend([per_page, offset])
         await cur.execute(query, params)
         rows = await cur.fetchall()
@@ -153,7 +153,7 @@ async def update_pipeline_run_status(
         params.append(status)
 
     # Every report re-stamps it: this is what dates `last_seen_at` on every membership.
-    set_clauses.append("sourced_at = CURRENT_TIMESTAMP")
+    set_clauses.append("updated_at = CURRENT_TIMESTAMP")
 
     if not set_clauses:
         return
@@ -180,7 +180,7 @@ RUN_NOT_TERMINAL = (
 
 
 async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
-    """`sourced_at` is deliberately left alone: giving up on a run is not reading the source,
+    """`updated_at` is deliberately left alone: giving up on a run is not reading the source,
     and restamping it would make a stale request outrank a newer scrape in the sweep."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -189,7 +189,7 @@ async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
             UPDATE changesets
             SET status = 'ERROR'
             WHERE {RUN_NOT_TERMINAL}
-            AND sourced_at < NOW() - %s::interval
+            AND updated_at < NOW() - %s::interval
             RETURNING id::text
             """,
             (older_than,),

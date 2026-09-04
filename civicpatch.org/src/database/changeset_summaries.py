@@ -63,10 +63,10 @@ STATE_ROLLUP_SQL = f"""
 -- `DISTINCT ON` because the supersede sweep leaves transient duplicates.
 WITH valid_queue AS (
     SELECT DISTINCT ON (r.jurisdiction_ocdid)
-           r.jurisdiction_ocdid, r.sourced_at
+           r.jurisdiction_ocdid, r.updated_at
     FROM changesets r
     WHERE {AVAILABLE_FOR_REVIEW}
-    ORDER BY r.jurisdiction_ocdid, r.sourced_at DESC
+    ORDER BY r.jurisdiction_ocdid, r.updated_at DESC
 ),
 -- Unwindowed on purpose: a run started before the window is still running, and this gates the
 -- scrape button. Missing one would offer a second batch on top of a live one.
@@ -80,7 +80,7 @@ running AS (
 queue AS (
     SELECT j.state,
            count(*)::int                                    AS to_review,
-           max(date_part('day', now() - q.sourced_at))::int AS oldest_days
+           max(date_part('day', now() - q.updated_at))::int AS oldest_days
     FROM valid_queue q
     JOIN jurisdictions j USING (jurisdiction_ocdid)
     GROUP BY j.state
@@ -150,7 +150,7 @@ async def get_state_rollup(
         return [StateRollup(**row) for row in await cur.fetchall()]
 
 
-# One row per state per day. `created_at` in UTC — `sourced_at` would drop runs that never
+# One row per state per day. `created_at` in UTC — `updated_at` would drop runs that never
 # produced a roster. Pending is included here: "still waiting" is one of a day's outcomes.
 # Quiet days send no row; the strip fills its own gaps.
 #
@@ -192,10 +192,10 @@ WITH rows AS (
            r.jurisdiction_ocdid,
            j.data->>'name' AS name,
            CASE WHEN %(bucket)s = '{BUCKET_REVIEW}'
-                THEN date_part('day', now() - r.sourced_at)::int END AS days_waiting,
+                THEN date_part('day', now() - r.updated_at)::int END AS days_waiting,
            CASE WHEN %(bucket)s = '{BUCKET_FAILED}'
                 THEN r.dismissed_reason END AS failure_reason,
-           r.sourced_at,
+           r.updated_at,
            r.created_at
     FROM changesets r
     JOIN jurisdictions j USING (jurisdiction_ocdid)
@@ -206,7 +206,7 @@ WITH rows AS (
           WHEN '{BUCKET_OK}'     THEN {CONFIRMED} AND r.created_at >= now() - %(window)s::interval
           ELSE false
           END
-    ORDER BY r.jurisdiction_ocdid, r.sourced_at DESC NULLS LAST, r.created_at DESC
+    ORDER BY r.jurisdiction_ocdid, r.updated_at DESC NULLS LAST, r.created_at DESC
 )
 SELECT jurisdiction_ocdid, name, days_waiting, failure_reason,
        count(*) OVER ()::int AS total
@@ -214,8 +214,8 @@ FROM rows
 -- Longest-waiting first for the queue, most-recent first for the flows. The queue exists to be
 -- drained oldest-end first, and burying the 90-day item on the last page defeats the bucket;
 -- a flow is read newest-first because it is a record of what just happened.
-ORDER BY CASE WHEN %(bucket)s = '{BUCKET_REVIEW}' THEN sourced_at END ASC NULLS LAST,
-         sourced_at DESC NULLS LAST,
+ORDER BY CASE WHEN %(bucket)s = '{BUCKET_REVIEW}' THEN updated_at END ASC NULLS LAST,
+         updated_at DESC NULLS LAST,
          name
 LIMIT %(limit)s OFFSET %(offset)s;
 """

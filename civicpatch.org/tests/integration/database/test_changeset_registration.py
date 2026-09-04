@@ -55,7 +55,7 @@ async def _stored_run():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT kind, status, progress, sourced_at FROM changesets WHERE id = %s",
+            "SELECT kind, status, progress, updated_at FROM changesets WHERE id = %s",
             (_CHANGESET_ID,),
         )
         row = await cur.fetchone()
@@ -73,11 +73,11 @@ async def test_register_scrape_writes_a_run():
         jurisdiction_ocdid=_OCDID,
     )
 
-    kind, status, progress, sourced_at = await _stored_run()
+    kind, status, progress, updated_at = await _stored_run()
     assert kind == ChangesetKind.SCRAPE.value
     assert status == PipelineRunStatus.PENDING.value
     assert progress == 0
-    assert sourced_at is not None
+    assert updated_at is not None
 
 
 @pytest.mark.integration
@@ -107,10 +107,10 @@ async def test_register_if_not_exists_writes_a_run():
         jurisdiction_ocdid=_OCDID,
     )
 
-    kind, status, _, sourced_at = await _stored_run()
+    kind, status, _, updated_at = await _stored_run()
     assert kind == ChangesetKind.SCRAPE.value
     assert status == PipelineRunStatus.PENDING.value
-    assert sourced_at is not None
+    assert updated_at is not None
 
 
 @pytest.mark.integration

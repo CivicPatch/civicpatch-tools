@@ -89,7 +89,7 @@ async def open_pr():
             (changeset_id, ocdid),
         )
         await cur.execute("UPDATE changesets SET status = 'SUCCESS', "
-            "sourced_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,))
+            "updated_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,))
 
     yield changeset_id, ocdid
 
