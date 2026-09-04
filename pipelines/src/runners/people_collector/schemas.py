@@ -223,10 +223,6 @@ class ResearchedPerson(BaseModel):
     label: str = ""
 
 
-class ResearchMunicipalityLLMSchema(BaseModel):
-    people: List[ResearchedPerson]
-
-
 class ResearchMunicipalityStep(BaseModel):
     expected_count: int = 0  # how many officials the pipeline expects to find
     # Who research thinks holds which office, labels verbatim. Only the cold-start path fills

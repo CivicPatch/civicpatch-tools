@@ -35,8 +35,8 @@ FIND_JURISDICTION_URL_MODEL_FALLBACKS = [
 async def run_prompt(changeset_id, jurisdiction_ocdid, prompt, model_fallbacks=None):
     """Ask Gemini a grounded question. Returns parsed JSON, not a validated model.
 
-    Tool calls and structured output do not work together on Gemini, so the answer comes back as
-    fenced free text and `parse_raw_response` reads it.
+    Tool calls and structured output do not work together on gemini-2.5, which both ladders end
+    on, so the answer comes back as fenced free text and `parse_raw_response` reads it.
     """
     logger = get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info("Running Gemini prompt")

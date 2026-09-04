@@ -11,7 +11,8 @@ class ScheduleId(StrEnum):
     OD_SYNC = "od-sync"
     PIPELINE_RUN_CLEANUP = "pipeline-run-cleanup"
     REVIEW_SESSION_CLEANUP = "review-session-cleanup"
-    SYNC_SWEEP = "sync-sweep"
+    SWEEP_CHANGES = "sweep-changes"
+    SWEEP_EVERYTHING = "sweep-everything"
 
 
 class WorkflowInstanceId(StrEnum):
@@ -19,11 +20,15 @@ class WorkflowInstanceId(StrEnum):
     PIPELINE_RUN_CLEANUP = "pipeline-run-cleanup-workflow"
     REVIEW_SESSION_CLEANUP = "review-session-cleanup-workflow"
     REPO_MERGE_QUEUE = "repo-merge-queue"
-    SYNC_SWEEP = "sync-sweep-workflow"
+    SWEEP_CHANGES = "sweep-changes-workflow"
+    SWEEP_EVERYTHING = "sweep-everything-workflow"
 
 
 with workflow.unsafe.imports_passed_through():
     from routers.temporal.activities import (
+        backstop_open_data_activity,
+        backstop_roster_sheets_activity,
+        sync_roster_parquet_activity,
         cleanup_stale_review_entries_activity,
         commit_open_data_batch_activity,
         expire_stale_pipeline_runs_activity,
@@ -155,14 +160,18 @@ class JurisdictionsSheetSyncWorkflow:
 
 
 @workflow.defn
-class SyncSweepWorkflow:
-    """Sync whatever changed recently to both outward sinks — the sheet and open-data.
+class SweepChangesWorkflow:
+    """Every 5 minutes: what `change_logs` saw in the last 15, to both sinks.
 
-    One sweep, not two: both read the same `change_logs` window, so a second schedule would
+    Named for its scope rather than its cadence — the cadence is a cron string that may change,
+    while "only what changed" is the definition. `SweepEverythingWorkflow` is the other half.
+
+    One sweep, not two: both sinks read the same `change_logs` window, so a second schedule would
     ask the same question of the same rows five minutes out of step.
 
     Sequential rather than concurrent because a permanent failure in one costs nothing — the
-    lookback is wider than the cadence, so the next run sees the same changes again.
+    lookback is wider than the cadence, so the next run sees the same changes again. That
+    argument does not carry over to the daily sweep, where the next run is 24 hours away.
     """
 
     @workflow.run
@@ -174,6 +183,43 @@ class SyncSweepWorkflow:
         await workflow.execute_activity(
             sweep_open_data_activity,
             start_to_close_timeout=timedelta(minutes=5),
+        )
+
+
+@workflow.defn
+class SweepEverythingWorkflow:
+    """Once a day: every state and every jurisdiction, whatever `change_logs` said.
+
+    The backstop. `SweepChangesWorkflow` only ever sees what the feed reports, so a write path
+    that skips it or an activity that fails non-retryably leaves a mirror stale forever. Nothing
+    else notices.
+
+    Affordable only because of the content gate — an unchanged state renders, hashes, matches,
+    and makes no API call. Without it this would rewrite every tab and every file nightly.
+
+    Ordered by who is looking. The two mirrors people read come first; anything analytical goes
+    last, so its failure cannot delay them. For the same reason a step added here must have
+    bounded retries: retrying forever would leave this workflow open, and the schedule's
+    `SKIP` overlap policy would then suppress tomorrow's backstop entirely.
+    """
+
+    @workflow.run
+    async def run(self) -> None:
+        await workflow.execute_activity(
+            backstop_roster_sheets_activity,
+            start_to_close_timeout=timedelta(minutes=15),
+        )
+        await workflow.execute_activity(
+            backstop_open_data_activity,
+            start_to_close_timeout=timedelta(minutes=15),
+        )
+        # Bounded, unlike the mirrors. Retrying forever would leave this workflow open and the
+        # schedule's SKIP policy would then suppress tomorrow's backstop entirely — the mirrors
+        # would quietly stop being checked because a dump nobody is waiting on could not write.
+        await workflow.execute_activity(
+            sync_roster_parquet_activity,
+            start_to_close_timeout=timedelta(minutes=30),
+            retry_policy=RetryPolicy(maximum_attempts=3),
         )
 
 

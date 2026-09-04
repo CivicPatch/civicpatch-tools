@@ -18,7 +18,7 @@ from unittest.mock import patch
 import pytest
 import pytest_asyncio
 
-from core.sheet import (
+from core.sinks.sheet import (
     jurisdiction_rows,
     membership_rows,
     people_rows,
@@ -26,7 +26,7 @@ from core.sheet import (
 )
 from database import divisions, organizations, posts
 from database.database import get_pool
-from services import roster_sheet
+from services.sinks import sheet as roster_sheet
 
 _ZZ = "ocd-jurisdiction/country:us/state:zz/place:zz_sync/government"
 _ZZ_DIVISION = "ocd-division/country:us/state:zz/place:zz_sync"

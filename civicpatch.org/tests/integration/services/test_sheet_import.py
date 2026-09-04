@@ -22,7 +22,7 @@ from lib.csv import parse_csv
 from database import changeset_batches
 from database.database import get_pool
 from services.batch_review import batch_review, publish_selected
-from services.publish import reviewed_file_path
+from services.sinks.open_data import reviewed_file_path
 from services.sheet_import import import_rows
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_sheet_test/government"

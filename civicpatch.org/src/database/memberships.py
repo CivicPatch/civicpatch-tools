@@ -309,6 +309,29 @@ _STATE_ROWS = """
 """
 
 
+async def jurisdictions_with_rosters(state: str) -> list[str]:
+    """Every jurisdiction in this state that open-data should hold a file for.
+
+    An open membership is the test, because that is what `get_roster` renders. A jurisdiction
+    whose last seat closed keeps its file until something rewrites it — deleting from open-data
+    is a separate decision, and not one a backstop should take.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT DISTINCT p.jurisdiction_ocdid
+            FROM memberships m
+            JOIN posts p ON p.id = m.post_id
+            WHERE p.jurisdiction_ocdid LIKE %(prefix)s
+              AND m.closed_at IS NULL
+            ORDER BY p.jurisdiction_ocdid
+            """,
+            {"prefix": _STATE_PREFIX.format(state=state.lower())},
+        )
+        return [row[0] for row in await cur.fetchall()]
+
+
 async def count_for_state(state: str) -> int:
     """How many rows `stream_for_state` will yield.
 
