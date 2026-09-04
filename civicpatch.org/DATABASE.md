@@ -36,6 +36,12 @@ erDiagram
         timestamptz     synced_at           "default: now()"
     }
 
+    output_hashes {
+        text            target              PK
+        text            content_hash        "sha256 of the rows last written there; `synced_files` pointed outward, so a sweep can tell a change from a rewrite"
+        timestamptz     written_at          "default: now(); set only after the write is confirmed"
+    }
+
     changesets {
         uuid            id                  PK
         text            kind                "CHECK scrape|sheet_import|people_edit|jurisdiction_edit; CHECK (kind=scrape) = (status IS NOT NULL)"

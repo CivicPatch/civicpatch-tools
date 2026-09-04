@@ -46,6 +46,8 @@ class _Recorder:
     """
 
     def __init__(self):
+        # Set to make the first data write raise, standing in for a Sheets outage mid-tab.
+        self.explode_on_update = False
         self.updates: list[dict] = []
         self.clears: list[str] = []
         self.requests: list[dict] = []
@@ -59,6 +61,8 @@ class _Recorder:
         return self
 
     def update(self, **kwargs):
+        if self.explode_on_update and not kwargs["range"].endswith("!A1:J1"):
+            raise RuntimeError("Sheets is down")
         self.updates.append(kwargs)
         return _Result({"updatedCells": len(kwargs["body"]["values"])})
 
@@ -144,6 +148,12 @@ async def _wipe():
             )
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_ZZ,)
+        )
+        # The gate outlives the data it fingerprints, so a leftover row would make the next
+        # test's first sync look like a repeat and skip the writes it is asserting.
+        await cur.execute(
+            "DELETE FROM output_hashes WHERE target = ANY(%s)",
+            ([_PEOPLE_TAB, _MEMBERSHIPS_TAB, _POSTS_TAB, roster_sheet.JURISDICTIONS_TAB],),
         )
         await conn.commit()
 
@@ -447,3 +457,57 @@ async def test_someone_who_never_held_a_seat_is_still_a_person():
 
     assert len(recorder.rows_for(_PEOPLE_TAB)) == 1
     assert recorder.rows_for(_MEMBERSHIPS_TAB) == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_second_sync_of_the_same_roster_writes_nothing():
+    """The sweep runs every 5 minutes against a 15-minute lookback, so it selects the same
+    change three times. Measured before this gate: one email edit to Seattle produced three
+    open-data commits, two of them empty, and three full rewrites of Washington's tabs —
+    about 9,700 rows re-uploaded for one changed cell."""
+    await _seed(3)
+
+    first = await _sync("zz", chunk_size=2)
+    second = await _sync("zz", chunk_size=2)
+
+    assert first.updates, "the first sync must actually write"
+    assert second.updates == []
+    assert second.clears == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_changed_roster_is_written_again():
+    """The gate must not be a one-way door: the point is to skip repeats, not to stop syncing."""
+    await _seed(3)
+    await _sync("zz", chunk_size=2)
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE people SET name = 'Renamed Person' "
+            "WHERE jurisdiction_ocdid = %s AND name = (SELECT min(name) FROM people "
+            "WHERE jurisdiction_ocdid = %s)",
+            (_ZZ, _ZZ),
+        )
+        await conn.commit()
+
+    assert (await _sync("zz", chunk_size=2)).updates
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_failed_write_records_no_hash_so_the_retry_still_fires():
+    """The one that loses data if it is wrong. Recording the hash before the write lands would
+    mark the tab current when it is half-written, and every retry would then skip it — the tab
+    stays wrong until its content changes again, which may be never."""
+    await _seed(3)
+
+    exploding = _Recorder()
+    exploding.explode_on_update = True
+    with pytest.raises(RuntimeError):
+        await _sync("zz", chunk_size=2, recorder=exploding)
+
+    # Nothing recorded, so an ordinary retry writes.
+    assert (await _sync("zz", chunk_size=2)).updates

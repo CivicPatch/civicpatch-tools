@@ -15,8 +15,10 @@ import lib.github.git_data as git_data
 import lib.storage as storage_service
 import shared.utils.id_utils
 from core.images import artifacts_key, promoted_key, promoted_url
+from core.output_hash import hash_text
 from core.membership_label import derive_post_label
 from core.post_derivation import ChosenPost, DerivedPost, RosterEntry, derived_posts
+from database import output_hashes as output_hashes_db
 from database import posts as posts_db
 from database.database import get_pool
 from database.people import get_roster
@@ -234,14 +236,22 @@ def open_data_records(roster: list[dict], taxonomy: Taxonomy) -> list[dict]:
     ]
 
 
+class OpenDataWriteRejected(RuntimeError):
+    """The branch would not take the commit. Distinct from having nothing to commit."""
+
+
 async def commit_rendered_files(
     items: list[OpenDataCommitItem], commit_message: str
 ) -> str | None:
-    """Render every jurisdiction out of the database and write them as one commit.
+    """Render every jurisdiction out of the database and write the changed ones as one commit.
 
-    Rendering happens per attempt, so a retry carries what is true when it lands. Every
-    changeset covered is stamped with the one commit url, because that is genuinely where
-    each of them landed.
+    Rendering happens per attempt, so a retry carries what is true when it lands.
+
+    Returns None when every file already matches what open-data holds, and raises when the
+    write was rejected — two outcomes that both used to be None. The sweep re-selects the same
+    change on three consecutive runs (a 15-minute lookback on a 5-minute cadence), so without
+    the first of those, two of the three commits are empty and the last one takes over
+    `change_url`.
     """
     contents = {}
     taxonomy = await _taxonomy()
@@ -249,14 +259,28 @@ async def commit_rendered_files(
         roster = await get_roster(jurisdiction_ocdid=item.jurisdiction_ocdid)
         contents[item.file_path] = yaml_dump(open_data_records(roster, taxonomy))
 
+    hashes = {path: hash_text(body) for path, body in contents.items()}
+    stored = await output_hashes_db.get_hashes(list(hashes))
+    pending = {
+        path: body for path, body in contents.items() if stored.get(path) != hashes[path]
+    }
+    if not pending:
+        return None
+
     commit_url = await git_data.commit_github_files(
         branch_name=github_service.DEFAULT_BRANCH,
-        contents=contents,
+        contents=pending,
         commit_message=commit_message,
     )
     if not commit_url:
-        return None
+        raise OpenDataWriteRejected(f"open-data refused {len(pending)} file(s)")
+
+    # Only after the ref moved: recording before it would mark a batch written that never
+    # reached the branch, and the retry would then skip it.
+    await output_hashes_db.record_hashes({path: hashes[path] for path in pending})
     for item in items:
+        if item.file_path not in pending:
+            continue
         for changeset_id in item.changeset_ids:
             await record_change_url(changeset_id, commit_url)
     return commit_url
