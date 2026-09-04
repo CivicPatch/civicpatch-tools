@@ -23,7 +23,7 @@ from database import assertions, posts
 from database.change_logs import record_change
 from database.changesets import live_roster_changeset
 from database.database import get_pool
-from database.pipeline_runs import get_updated_at
+from database.changesets import get_updated_at
 from schemas.assertions import Assertion, AssertionKind, EntityType
 from schemas.posts import AssignmentResult
 from schemas.change_logs import (

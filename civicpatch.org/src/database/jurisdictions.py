@@ -654,7 +654,7 @@ async def get_jurisdiction_history(
             SELECT r.id::text AS changeset_id,
                    r.created_at,
                    r.updated_at,
-                   r.status, r.progress, r.change_url,
+                   run.status, run.progress, r.change_url,
                    r.kind,
                    r.published_at,
                    -- 161's CHECK keeps this inside `DismissalReason`, so no guard here.
@@ -665,6 +665,7 @@ async def get_jurisdiction_history(
                    resolver.display_name AS resolved_by,
                    COALESCE(rc.changes, '[]'::jsonb) AS changes
             FROM changesets r
+            LEFT JOIN pipeline_runs run ON run.changeset_id = r.id
             LEFT JOIN users resolver ON resolver.id = r.resolved_by_user_id
             LEFT JOIN roster_changes rc ON rc.changeset_id = r.id::text
             WHERE r.jurisdiction_ocdid = %s AND {RESOLVED}
@@ -817,14 +818,15 @@ async def deactivate_jurisdictions_not_in(
 
 async def stamp_scraped_at(jurisdiction_ocdid: str, changeset_id: str) -> bool:
     # "Last scraped" = when the request was created, stamped when a job PR merges. Guarded on
-    # `status IS NOT NULL` so a request no pipeline ran cannot blank `scraped_at` — an
-    # external merge, or a roster typed in rather than scraped.
+    # Only a changeset a pipeline produced may set `scraped_at` — not an external merge or a
+    # roster typed in rather than scraped. That is now "has a run".
     pool = await get_pool()
     async with pool.connection() as conn:
         result = await conn.execute(
             "UPDATE jurisdictions j SET scraped_at = r.created_at "
             "FROM changesets r "
-            "WHERE r.id = %s AND r.status IS NOT NULL "
+            "WHERE r.id = %s "
+            "AND EXISTS (SELECT 1 FROM pipeline_runs pr WHERE pr.changeset_id = r.id) "
             "AND j.jurisdiction_ocdid = %s",
             (changeset_id, jurisdiction_ocdid),
         )

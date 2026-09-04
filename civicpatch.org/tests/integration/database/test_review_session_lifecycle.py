@@ -113,7 +113,8 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO changesets (kind, status, jurisdiction_ocdid) VALUES ('scrape', 'SUCCESS', %s) RETURNING id::text",
+            "INSERT INTO changesets (kind, jurisdiction_ocdid) "
+            "VALUES ('scrape', %s) RETURNING id::text",
             (ocdid,),
         )
         changeset_id = (await cur.fetchone())[0]
@@ -124,7 +125,7 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
             (changeset_id, ocdid),
         )
         await cur.execute(
-            "UPDATE changesets SET status = 'SUCCESS', "
+            "UPDATE changesets SET "
             "updated_at = CURRENT_TIMESTAMP WHERE id = %s",
             (changeset_id,),
         )
@@ -551,11 +552,12 @@ async def test_a_scrape_with_no_roster_never_reaches_the_pool():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO changesets (kind, status, jurisdiction_ocdid) VALUES ('scrape', 'SUCCESS', %s) RETURNING id::text", (ocdid,)
+            "INSERT INTO changesets (kind, jurisdiction_ocdid) "
+            "VALUES ('scrape', %s) RETURNING id::text", (ocdid,)
         )
         changeset_id = (await cur.fetchone())[0]
         await cur.execute(
-            "UPDATE changesets SET status = 'SUCCESS', "
+            "UPDATE changesets SET "
             "updated_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,)
         )
 
@@ -579,8 +581,8 @@ async def test_a_dismissal_loses_the_race_to_a_reviewer_publishing():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO changesets (kind, status, jurisdiction_ocdid, published_at) "
-            "VALUES ('scrape', 'SUCCESS', %s, now()) RETURNING id::text",
+            "INSERT INTO changesets (kind, jurisdiction_ocdid, published_at) "
+            "VALUES ('scrape', %s, now()) RETURNING id::text",
             (ocdid,),
         )
         changeset_id = (await cur.fetchone())[0]

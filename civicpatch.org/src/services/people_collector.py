@@ -5,6 +5,7 @@ import lib.buckets as buckets
 import lib.pipeline_artifacts as artifacts
 import lib.storage as storage_service
 from core.images import cdn_urls, records_with_images, resolve_images
+from database.changesets import register_scrape_changeset
 from database.issues import upsert_issue
 from database.pipeline_runs import (
     update_pipeline_run_status,
@@ -163,20 +164,23 @@ async def _ingest_roster(
     with open(data_file_path, "w") as f:
         f.write(yaml_dump(updated_data))
 
+    # The run proposed a roster, so now there is something to review. Everything below is about
+    # that proposal and takes its id; `request.changeset_id` is the run's, and stays with the
+    # attempt's evidence.
+    changeset_id = await register_scrape_changeset(request.changeset_id)
+
     await _store_source_records(
-        request.changeset_id,
+        changeset_id,
         request.jurisdiction_ocdid,
         records_with_images(records_by_person, source_urls, served),
     )
-    await _apply_scrape_changes(request.changeset_id, request.jurisdiction_ocdid)
+    await _apply_scrape_changes(changeset_id, request.jurisdiction_ocdid)
     await _record_resolved_url(
-        request.changeset_id, request.jurisdiction_ocdid, workflow_context
+        changeset_id, request.jurisdiction_ocdid, workflow_context
     )
 
     for issue in workflow_context.get("data", {}).get("issues", []):
-        await upsert_issue(
-            request.changeset_id, issue["type"], [issue.get("data") or {}]
-        )
+        await upsert_issue(changeset_id, issue["type"], [issue.get("data") or {}])
 
 
 async def _apply_scrape_changes(changeset_id: str, jurisdiction_ocdid: str) -> None:

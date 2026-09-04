@@ -354,8 +354,8 @@ async def test_publish_writes_memberships_for_the_roster():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO changesets (id, jurisdiction_ocdid, kind, status)
-            VALUES (%s, %s, 'scrape', 'SUCCESS')
+            INSERT INTO changesets (id, jurisdiction_ocdid, kind)
+            VALUES (%s, %s, 'scrape')
             ON CONFLICT (id) DO NOTHING
             """,
             (changeset_id := str(uuid.uuid4()), _OCDID),
@@ -363,8 +363,7 @@ async def test_publish_writes_memberships_for_the_roster():
         # Publish reads `updated_at` as the observation's clock, so this is where `_T0` goes.
         await cur.execute(
             """
-            UPDATE changesets SET status = 'SUCCESS', progress = 100,
-                                created_at = %s, updated_at = %s
+            UPDATE changesets SET created_at = %s, updated_at = %s
             WHERE id = %s
             """,
             (_T0, _T0, changeset_id),
@@ -954,15 +953,15 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         await memberships.upsert(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
         await cur.execute(
-            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, status) "
-            "VALUES (%s, %s, 'scrape', 'SUCCESS')",
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind) "
+            "VALUES (%s, %s, 'scrape')",
             (changeset_id := str(uuid.uuid4()), _OCDID),
         )
         # The run too: `_apply_scrape_changes` swallows its own errors, so without this the
         # old close-at-ingest path would raise on the missing run and this test would pass
         # against the very behaviour it exists to forbid.
         await cur.execute(
-            "UPDATE changesets SET status = 'SUCCESS', progress = 100, "
+            "UPDATE changesets SET "
             "created_at = %s, updated_at = %s WHERE id = %s",
             (_T1, _T1, changeset_id),
         )
@@ -1024,9 +1023,9 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes_and_moves_last_see
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         await cur.execute(
-            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, status, progress, "
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, "
             "                        created_at, updated_at) "
-            "VALUES (%s, %s, 'scrape', 'SUCCESS', 100, %s, %s)",
+            "VALUES (%s, %s, 'scrape', %s, %s)",
             (changeset_id := str(uuid.uuid4()), _OCDID, _T1, _T1),
         )
         for person_id, (role_id, role_label) in zip(people, seats):

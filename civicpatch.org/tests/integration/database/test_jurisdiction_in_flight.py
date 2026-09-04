@@ -12,6 +12,7 @@ import pytest_asyncio
 
 from database.changesets import get_in_flight
 from database.database import get_pool
+from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_in_flight/government"
 
@@ -20,6 +21,9 @@ async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         # source_records cascade with their changeset, so the changesets delete covers them.
+        await cur.execute(
+            "DELETE FROM pipeline_runs WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
         await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
@@ -56,13 +60,33 @@ async def _changeset(kind: str, status: str | None) -> str:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json)
-            VALUES (%s, %s, %s, '{}'::jsonb)
+            INSERT INTO changesets (kind, jurisdiction_ocdid)
+            VALUES (%s, %s)
             RETURNING id::text
             """,
-            (kind, status, _OCDID),
+            (kind, _OCDID),
         )
-        return (await cur.fetchone())[0]
+        changeset_id = (await cur.fetchone())[0]
+        if status is not None:
+            # A status means a run: migration 169 moved it off the changeset, and
+            # `RUN_IN_FLIGHT` now asks whether that run has finished.
+            await cur.execute(
+                """
+                INSERT INTO pipeline_runs
+                    (id, jurisdiction_ocdid, status, finished_at, changeset_id)
+                VALUES (%s, %s, %s,
+                        CASE WHEN %s = ANY(%s) THEN now() END, %s)
+                """,
+                (
+                    changeset_id,
+                    _OCDID,
+                    status,
+                    status,
+                    [s.value for s in TERMINAL_PIPELINE_RUN_STATUSES],
+                    changeset_id,
+                ),
+            )
+        return changeset_id
 
 
 async def _add_sighting(changeset_id: str) -> None:

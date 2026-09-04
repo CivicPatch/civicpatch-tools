@@ -17,9 +17,9 @@ from core.people_edits import values_to_accept, with_stated_values
 from core.post_derivation import DerivedPost
 from database import assertions, memberships, organizations, posts
 from database.change_logs import record_change
+from database.changesets import get_updated_at
 from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
-from database.pipeline_runs import get_updated_at
 from database.users import SYSTEM_USER_ID
 from schemas.assertions import Assertion, AssertionKind, EntityType
 from shared.utils.statuses import (
@@ -123,18 +123,16 @@ class UnpublishableChangeset(ValueError):
 
 async def _refuse_if_not_publishable(cur, changeset_id: str) -> None:
     await cur.execute(
-        f"""
-        SELECT status, dismissed_at FROM changesets
-        WHERE id::text = %s
-          AND published_at IS NULL
-          AND (dismissed_at IS NOT NULL OR NOT {changesets_db.STATE_READY_SQL})
+        """
+        SELECT dismissed_at FROM changesets
+        WHERE id::text = %s AND published_at IS NULL AND dismissed_at IS NOT NULL
         """,
         (changeset_id,),
     )
     row = await cur.fetchone()
     if row:
         raise UnpublishableChangeset(
-            f"Refusing to publish {changeset_id}: status={row[0]}, dismissed_at={row[1]}."
+            f"Refusing to publish {changeset_id}: dismissed_at={row[0]}."
         )
 
 

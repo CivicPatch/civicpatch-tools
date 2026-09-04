@@ -1,20 +1,20 @@
 import json
 import logging
 from collections.abc import Mapping
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Optional
 
-from core.changeset_lifecycle import ChangesetState, DISMISSAL_REASONS
+from core.changeset_lifecycle import DISMISSAL_REASONS, ChangesetState
 from database.change_logs import record_dismissal
 from database.database import get_pool, to_iso
-from database.users import SYSTEM_USER_ID
 from database.review_sessions import (
     SESSION_IDLE_TIMEOUT_MINUTES,
     ReviewSessionEntryStatus,
 )
+from database.users import SYSTEM_USER_ID
+from shared.utils.id_utils import make_changeset_id
 from schemas.common import InFlightChangeset, JurisdictionInFlight
 from shared.utils.statuses import (
-    TERMINAL_PIPELINE_RUN_STATUSES,
     ChangesetKind,
     DismissalReason,
     PipelineIssueStatus,
@@ -34,33 +34,18 @@ REVIEW_STATUS = (
     f"ELSE '{RequestReviewStatus.PENDING.value}' END"
 )
 
-# "This jurisdiction already has work in flight" — the scrape-candidate gate, and what the
-# coverage page counts as needing review. Aliased `r`.
-#
-# Unresolved is the whole test now. It used to also require a non-terminal run, because a dead
-# run was marked `ERROR` and left undismissed, so without that clause it would have blocked its
-# jurisdiction forever. `expire_stale_pipeline_runs` dismisses it now, so it falls out here on
-# its own.
-#
-# Dropping `status IS NOT NULL` widens this to changesets with no run at all, which in
-# practice means an unreviewed sheet import — a `people_edit` is born published and so is never
-# unresolved. That is what all three readers want: do not scrape over an import awaiting
-# review, do not start a second run, and it genuinely does need review.
 WORK_IN_FLIGHT = (
     "r.published_at IS NULL AND r.dismissed_at IS NULL "
     f"AND r.kind != '{ChangesetKind.JURISDICTION_EDIT.value}'"
 )
 
-# Why a request left the pool. `dismissed_at` says only that it did.
 # Duplicates `DismissalReason`; kept only because the SQL fragments below splice it.
 DISMISSED_SUPERSEDED = "superseded"
 
-# "A scrape still awaiting human review". Requires the requests table aliased `r`.
-#
+# A scrape still awaiting human review. Requires `changesets` aliased `r`.
 AVAILABLE_FOR_REVIEW = (
     "EXISTS (SELECT 1 FROM source_records sr WHERE sr.changeset_id = r.id) "
-    # Composed, not restated: this used to spell out the same three clauses, so widening
-    # `WORK_IN_FLIGHT` left the two saying different things about the same question.
+    # Composed, not restated: widening one used to leave the two disagreeing.
     f"AND {WORK_IN_FLIGHT} "
     "AND NOT EXISTS ("
     "SELECT 1 FROM issues i "
@@ -70,12 +55,16 @@ AVAILABLE_FOR_REVIEW = (
     ")"
 )
 
-# Is the scrape still going? Derived here so no caller needs its own copy of the terminal set.
-# `status IS NULL` is a request no pipeline ran — an edit, not something in flight.
+# The run behind a changeset. No run — an import or a hand edit — answers NULL.
 RUN_IN_FLIGHT = (
-    "r.status IS NOT NULL AND r.status != ALL(ARRAY["
-    + ", ".join(f"'{status.value}'" for status in TERMINAL_PIPELINE_RUN_STATUSES)
-    + "])"
+    "EXISTS (SELECT 1 FROM pipeline_runs "
+    "WHERE pipeline_runs.changeset_id = r.id AND pipeline_runs.finished_at IS NULL)"
+)
+RUN_STATUS = (
+    "(SELECT status FROM pipeline_runs WHERE pipeline_runs.changeset_id = r.id)"
+)
+RUN_PROGRESS = (
+    "(SELECT progress FROM pipeline_runs WHERE pipeline_runs.changeset_id = r.id)"
 )
 
 # Request supercede can dismiss.
@@ -99,67 +88,35 @@ HELD_BY_REVIEWER = (
 )
 
 
-async def register_request_with_pipeline_run(
-    changeset_id: str,
-    kind: str,
-    arguments_json: dict,
-    jurisdiction_ocdid: Optional[str] = None,
-    created_by_user_id: Optional[str] = None,
-    status: PipelineRunStatus = PipelineRunStatus.PENDING,
-    progress: int = 0,
-):
+async def register_scrape_changeset(run_id: str) -> str:
+    """Mint the proposal a successful run produced, and link the run to it.
+
+    Only called from ingest, and only on success — a run that proposed nothing has no changeset,
+    which is what makes `changesets.state` a question about a proposal rather than an attempt.
+
+    `created_at` is now(): the roster came into being when the scrape reported it.
+    """
+    changeset_id = make_changeset_id()
     pool = await get_pool()
-    async with pool.connection() as conn:
-        # One statement: `changesets_scrape_has_a_run` rejects a scrape row whose status is
-        # still null, so the run cannot be filled in by a follow-up update.
-        await conn.execute(
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
             """
             INSERT INTO changesets (
-                id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id,
-                status, progress, created_at, updated_at
-            )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-            """,
-            (
-                changeset_id,
-                kind,
-                jurisdiction_ocdid,
-                json.dumps(arguments_json),
-                created_by_user_id,
-                status,
-                progress,
-            ),
-        )
-
-
-async def register_request_with_pipeline_run_if_not_exists(
-    changeset_id: str,
-    kind: str,
-    arguments_json: dict,
-    jurisdiction_ocdid: Optional[str] = None,
-):
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        # `DO NOTHING` keeps what an existing row already says, which is what the old
-        # `status IS NULL` guard on the update was for.
-        await conn.execute(
-            """
-            INSERT INTO changesets (
-                id, kind, jurisdiction_ocdid, arguments_json, status, progress,
+                id, kind, jurisdiction_ocdid, created_by_user_id,
                 created_at, updated_at
             )
-            VALUES (%s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-            ON CONFLICT (id) DO NOTHING
+            SELECT %s, %s, r.jurisdiction_ocdid, r.created_by_user_id,
+                   CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+            FROM pipeline_runs r WHERE r.id = %s
             """,
-            (
-                changeset_id,
-                kind,
-                jurisdiction_ocdid,
-                json.dumps(arguments_json),
-                PipelineRunStatus.PENDING,
-                0,
-            ),
+            (changeset_id, ChangesetKind.SCRAPE, run_id),
         )
+        await cur.execute(
+            "UPDATE pipeline_runs SET changeset_id = %s WHERE id = %s",
+            (changeset_id, run_id),
+        )
+        await conn.commit()
+    return changeset_id
 
 
 async def register_people_edit_request(
@@ -167,25 +124,20 @@ async def register_people_edit_request(
     jurisdiction_ocdid: str,
     created_by_user_id: str,
 ):
-    """A maintainer's hand edit of a live roster. `PEOPLE_EDIT` with a null `status`: nothing ran.
+    """A maintainer's hand edit of a live roster. Nothing ran, so no run.
 
-    Born published, and it has to be — the edit writes sightings for anyone added, and those
-    would put a pending request straight into the review pool.
-
-    `updated_at` is now(): the edit is the newest word on the roster and supersedes any older
-    pending scrape, which could not be published over it without retiring what the edit added.
-    It does **not** date the seats — `publish_request` only advances `last_seen_at` for a
-    changeset that read a source, and a hand edit read nothing.
+    Born published: the edit writes sightings for anyone added, and a pending changeset holding
+    those would land straight in the review pool.
     """
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
             """
             INSERT INTO changesets (
-                id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id,
+                id, kind, jurisdiction_ocdid, created_by_user_id,
                 published_at, resolved_by_user_id, created_at, updated_at
             )
-            VALUES (%s, %s, %s, '{}'::jsonb, %s, now(), %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            VALUES (%s, %s, %s, %s, now(), %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """,
             (
                 changeset_id,
@@ -203,20 +155,10 @@ async def register_sheet_import_request(
     created_by_user_id: str,
     batch_id: str,
 ) -> None:
-    """One jurisdiction's worth of a curated-sheet import. `PEOPLE` with a null `status`:
-    nothing ran, the same as a hand edit.
+    """One jurisdiction's worth of a curated-sheet import. Nothing ran, so no run.
 
-    **Unpublished, unlike a hand edit.** A hand edit is one person acting on a roster they are
-    already looking at, so it mints no changeset at all — it republishes the live one. An import
-    proposes a whole roster a curator typed elsewhere, and that belongs in the review queue like
-    any other proposal. Writing its sightings is what puts it there — `AVAILABLE_FOR_REVIEW` is
-    `EXISTS (source_records for this request)`.
-
-    `updated_at` is now(): a curated sheet is the newest word on the roster, and it is when the
-    curator read the source rather than when any machine did.
-
-    `batch_id` says which run made it — so a card can name the import, and the bulk review
-    screen can ask `requests` for that batch's current state rather than reading a snapshot.
+    Unpublished, unlike a hand edit: an import proposes a whole roster typed elsewhere, so it
+    belongs in the review queue. Writing its sightings is what puts it there.
     """
     pool = await get_pool()
     async with pool.connection() as conn:
@@ -241,7 +183,6 @@ async def register_sheet_import_request(
 async def register_jurisdiction_edit_request(
     changeset_id: str,
     jurisdiction_ocdid: str,
-    arguments_json: Mapping[str, object],
     change_url: str,
     created_by_user_id: Optional[str] = None,
 ):
@@ -251,16 +192,15 @@ async def register_jurisdiction_edit_request(
         await conn.execute(
             """
             INSERT INTO changesets (
-                id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id,
+                id, kind, jurisdiction_ocdid, created_by_user_id,
                 change_url, published_at, resolved_by_user_id, created_at
             )
-            VALUES (%s, %s, %s, %s, %s, %s, now(), %s, CURRENT_TIMESTAMP)
+            VALUES (%s, %s, %s, %s, %s, now(), %s, CURRENT_TIMESTAMP)
             """,
             (
                 changeset_id,
                 ChangesetKind.JURISDICTION_EDIT,
                 jurisdiction_ocdid,
-                json.dumps(arguments_json),
                 created_by_user_id,
                 change_url,
                 created_by_user_id,
@@ -284,22 +224,14 @@ async def live_roster_changeset(cur, jurisdiction_ocdid: str) -> str | None:
 
 
 async def get_in_flight(jurisdiction_ocdid: str) -> JurisdictionInFlight:
-    """What this jurisdiction is still waiting on, without reading its whole history.
-
-    The page used to fetch every changeset and derive this from the array. It only ever needed
-    the unresolved ones plus two scalars, and a jurisdiction's history grows without bound.
-
-    Both flags are computed once in `flags` and filtered on by name — `AVAILABLE_FOR_REVIEW` is
-    an EXISTS subquery, so spelling it out in both the SELECT list and the WHERE would evaluate
-    it twice per row.
-    """
+    """What this jurisdiction is still waiting on, without reading its whole history."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
             WITH flags AS (
                 SELECT r.id, r.created_at, r.updated_at, r.kind, r.change_url,
-                       r.status, r.progress,
+                       {RUN_STATUS} AS status, {RUN_PROGRESS} AS progress,
                        {RUN_IN_FLIGHT} AS is_running,
                        {AVAILABLE_FOR_REVIEW} AS awaiting_review
                 FROM changesets r
@@ -406,9 +338,10 @@ async def get_issue_request_details(changeset_ids: list[str]) -> list[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT r.id::text, r.jurisdiction_ocdid, r.arguments_json,
+            SELECT r.id::text, r.jurisdiction_ocdid, run.arguments_json,
                    COALESCE(j.data->>'name', r.jurisdiction_ocdid) AS jurisdiction_name
             FROM changesets r
+            LEFT JOIN pipeline_runs run ON run.changeset_id = r.id
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE r.id::text = ANY(%s)
             ORDER BY r.created_at
@@ -432,36 +365,6 @@ async def get_issue_request_details(changeset_ids: list[str]) -> list[dict]:
 # "This changeset's run, if it had one, finished with a roster." One definition, because both
 # halves of the lifecycle guard need it: a dismissal reason may only leave certain states, and
 # `publications._refuse_if_not_publishable` asks the same question from the other side.
-STATE_READY_SQL = (
-    f"(status IS NULL OR status IN ('{PipelineRunStatus.SUCCESS.value}', "
-    f"'{PipelineRunStatus.RESOLVED.value}'))"
-)
-
-_STATE_SQL: dict[ChangesetState, str] = {
-    ChangesetState.READY: STATE_READY_SQL,
-    ChangesetState.FAILED: (
-        f"status IN ('{PipelineRunStatus.ERROR.value}', "
-        f"'{PipelineRunStatus.CANCELLED.value}')"
-    ),
-}
-
-
-def _states_allowing(reason: DismissalReason) -> str:
-    """The states this reason may leave, as a WHERE fragment.
-
-    Derived from the lifecycle rather than written out again, so a reason moving between states
-    cannot leave the SQL saying something else. Dev holds a `CANCELLED` run dismissed as
-    `rejected` and an `ERROR` run dismissed as `cancelled`, which is what nothing checking this
-    looks like.
-    """
-    allowed = [
-        _STATE_SQL[state]
-        for state, reasons in DISMISSAL_REASONS.items()
-        if reason in reasons
-    ]
-    return " OR ".join(allowed) if allowed else "false"
-
-
 async def mark_dismissed(
     cur,
     changeset_ids: list[str],
@@ -470,34 +373,24 @@ async def mark_dismissed(
 ) -> list[tuple[str, str]]:
     """The one writer for a dismissal. Returns the (id, jurisdiction) pairs that transitioned.
 
-    Four functions used to do this — `dismiss_request`, `dismiss_as_unchanged`,
-    `dismiss_superseded_by`, `supersede_stacked_requests` — each with its own copy of the
-    UPDATE, its own guard, and its own `record_dismissal` call. They differ only in *which*
-    rows they select, which stays with them; the marking is here. (`dismiss_as_unchanged`
-    has since gone entirely: a re-confirmed roster publishes rather than being dismissed.)
-
     Guarded in the statement, not by reading first: a reviewer may be publishing this very
-    changeset, and losing that race must not overwrite their decision. `dismissed_at IS NULL`
-    makes DISMISSED terminal — a second dismissal is a no-op rather than a re-labelling, which
-    is what the COALESCE here used to buy.
+    changeset, and losing that race must not overwrite their decision.
 
-    `resolved_by_user_id`: explicit user, else whoever already resolved it, else the system.
-    A sweep dismissing a card is an actor, not an absence — which is the rule migration 160
-    established, and which the supersede sweeps were the last paths not to follow.
+    One guard, since a changeset is only minted by a run that succeeded — there is no longer a
+    failed-run changeset to keep a person from mislabelling.
     """
     if not changeset_ids:
         return []
     await cur.execute(
         f"""
-        UPDATE changesets
+        UPDATE changesets r
            SET dismissed_at = now(),
                dismissed_reason = %s,
                resolved_by_user_id = COALESCE(%s, resolved_by_user_id, %s)
-         WHERE id::text = ANY(%s)
-           AND published_at IS NULL
-           AND dismissed_at IS NULL
-           AND ({_states_allowing(reason)})
-        RETURNING id::text, jurisdiction_ocdid
+         WHERE r.id::text = ANY(%s)
+           AND r.published_at IS NULL
+           AND r.dismissed_at IS NULL
+        RETURNING r.id::text, r.jurisdiction_ocdid
         """,
         (reason, resolved_by_user_id, SYSTEM_USER_ID, changeset_ids),
     )
@@ -547,27 +440,12 @@ async def supersede_stacked_requests() -> list[str]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            -- Ordered by `updated_at`: which scrape read the source more recently, never
-            -- which row was touched more recently. A reviewer editing an old roster did not go
-            -- and look again. Work in progress is protected by the held-card exclusion
-            -- instead, which is time-boxed on purpose.
-            --
-            -- `updated_at IS NOT NULL`, so a request with no run cannot supersede or be
-            -- superseded. That is jurisdiction edits (already excluded by `SWEEPABLE`) and,
-            -- once it exists, anything typed in rather than scraped.
             WITH candidates AS (
                 SELECT r.id, r.jurisdiction_ocdid, r.updated_at
                 FROM changesets r
                 WHERE {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
                   AND r.updated_at IS NOT NULL
             ),
-            -- What can supersede, which is not the same set as what can BE superseded: a
-            -- published request is no longer a candidate, so comparing candidates only to each
-            -- other left every draft older than a publish in the pool forever.
-            --
-            -- Built from `candidates`, not re-queried: that inherits the held-card exclusion,
-            -- and it must. A reviewer holding the newest card shields the whole jurisdiction
-            -- for the pass — sweep the older ones and their rejecting it strands the lot.
             supersedors AS (
                 SELECT jurisdiction_ocdid, updated_at FROM candidates
                 UNION ALL
@@ -589,3 +467,16 @@ async def supersede_stacked_requests() -> list[str]:
         dismissed = await mark_dismissed(cur, stale, DismissalReason.SUPERSEDED)
         await conn.commit()
         return [row[0] for row in dismissed]
+
+
+async def get_updated_at(cur, changeset_id: str) -> datetime:
+    """When this changeset's content was last confirmed. Every kind has one; only a scrape
+    has a run."""
+    await cur.execute(
+        "SELECT updated_at FROM changesets WHERE id::text = %s",
+        (changeset_id,),
+    )
+    row = await cur.fetchone()
+    if row is None:
+        raise ValueError(f"No changeset {changeset_id}")
+    return row[0]

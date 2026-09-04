@@ -43,20 +43,18 @@ async def clean_sentinels():
     await _wipe()
 
 
-async def _state_of(kind: str, status: str | None, published: bool, dismissed: bool) -> str:
+async def _state_of(kind: str, published: bool, dismissed: bool) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json,
-                                    published_at, dismissed_at, dismissed_reason)
-            VALUES (%s, %s, %s, '{}'::jsonb,
-                    CASE WHEN %s THEN now() END,
-                    CASE WHEN %s THEN now() END,
+            INSERT INTO changesets
+                (kind, jurisdiction_ocdid, published_at, dismissed_at, dismissed_reason)
+            VALUES (%s, %s, CASE WHEN %s THEN now() END, CASE WHEN %s THEN now() END,
                     CASE WHEN %s THEN 'rejected' END)
             RETURNING state
             """,
-            (kind, status, _OCDID, published, dismissed, dismissed),
+            (kind, _OCDID, published, dismissed, dismissed),
         )
         state = (await cur.fetchone())[0]
         await conn.commit()
@@ -65,54 +63,27 @@ async def _state_of(kind: str, status: str | None, published: bool, dismissed: b
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_scrape_mid_run_is_running():
-    """`status` carries step names as well as outcomes — `SCRAPE_PAGE` is where the run is, not
-    how it ended, so anything non-terminal is progress."""
-    assert await _state_of("scrape", "SCRAPE_PAGE", False, False) == ChangesetState.RUNNING
+async def test_an_unresolved_changeset_is_ready():
+    """Three states, not five. RUNNING and FAILED described a *run*, and a changeset is only
+    minted by one that succeeded — so every unresolved changeset has content to review,
+    whatever produced it."""
+    assert await _state_of("scrape", False, False) == ChangesetState.READY
+    assert await _state_of("sheet_import", False, False) == ChangesetState.READY
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_finished_scrape_is_ready():
-    assert await _state_of("scrape", "SUCCESS", False, False) == ChangesetState.READY
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_run_that_produced_nothing_is_failed():
-    for status in ("ERROR", "CANCELLED"):
-        assert await _state_of("scrape", status, False, False) == ChangesetState.FAILED
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_changeset_with_no_run_is_ready():
-    """An import and a jurisdiction edit have no run to wait for — `changesets_scrape_has_a_run`
-    forces `status IS NULL` for anything that is not a scrape."""
-    assert await _state_of("sheet_import", None, False, False) == ChangesetState.READY
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_publishing_wins_over_the_run():
-    """A changeset that published is published whatever its run says afterwards. Ordering in
-    the CASE is the definition, not an accident of how it was written."""
-    assert await _state_of("scrape", "ERROR", True, False) == ChangesetState.PUBLISHED
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_dismissing_wins_over_the_run():
-    assert await _state_of("scrape", "SUCCESS", False, True) == ChangesetState.DISMISSED
+async def test_publishing_and_dismissing_are_terminal():
+    assert await _state_of("scrape", True, False) == ChangesetState.PUBLISHED
+    assert await _state_of("scrape", False, True) == ChangesetState.DISMISSED
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_the_column_never_says_anything_the_enum_does_not():
-    """Two definitions of one fact, in two languages. A value here that `ChangesetState` does
-    not carry means the Python side cannot reason about rows the database produces."""
+    """The generated column and `ChangesetState` are two copies of one fact."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute("SELECT DISTINCT state FROM changesets")
-        stored = {row[0] for row in await cur.fetchall()}
-    assert stored <= {state.value for state in ChangesetState}
+        seen = {row[0] for row in await cur.fetchall()}
+    assert seen <= {s.value for s in ChangesetState}

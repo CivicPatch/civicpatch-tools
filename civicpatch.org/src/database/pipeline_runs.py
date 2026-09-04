@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta
+import json
+from datetime import timedelta
 from typing import Optional
 
 import database.changesets as changesets_db
@@ -10,39 +11,60 @@ from shared.utils.statuses import (
     TERMINAL_PIPELINE_RUN_STATUSES,
 )
 
-
-async def get_updated_at(cur, changeset_id: str) -> datetime:
-    """When the run last read the source.
-
-    Stamped by the pipeline's own report, not at ingest, which can be hours later on a retry or
-    a replayed artifact.
-    """
-    await cur.execute(
-        "SELECT updated_at FROM changesets WHERE id::text = %s",
-        (changeset_id,),
-    )
-    row = await cur.fetchone()
-    if row is None:
-        raise ValueError(f"No pipeline run for request {changeset_id}")
-    return row[0]
+_TERMINAL = TERMINAL_PIPELINE_RUN_STATUSES
 
 
-async def get_pipeline_run(changeset_id: str):
+async def register_run(
+    run_id: str,
+    jurisdiction_ocdid: str,
+    arguments_json: dict,
+    created_by_user_id: Optional[str] = None,
+    status: PipelineRunStatus = PipelineRunStatus.PENDING,
+    progress: int = 0,
+    if_not_exists: bool = False,
+) -> None:
+    """Start an attempt. No changeset — one is minted at ingest, and only if the run succeeds."""
+    pool = await get_pool()
+    conflict = "ON CONFLICT (id) DO NOTHING" if if_not_exists else ""
+    async with pool.connection() as conn:
+        await conn.execute(
+            sql.SQL(f"""
+            INSERT INTO pipeline_runs (
+                id, jurisdiction_ocdid, arguments_json, created_by_user_id, status, progress
+            )
+            VALUES (%s, %s, %s, %s, %s, %s)
+            {conflict}
+            """),
+            (
+                run_id,
+                jurisdiction_ocdid,
+                json.dumps(arguments_json),
+                created_by_user_id,
+                status,
+                progress,
+            ),
+        )
+
+
+async def get_pipeline_run(run_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        # `change_url` belongs to the proposal, not the attempt, so it is joined rather than
+        # copied — a run that proposed nothing has none.
         await cur.execute(
             """
             SELECT r.status, r.progress, r.arguments_json,
-                   r.created_at, r.updated_at, r.change_url
-            FROM changesets r
+                   r.created_at, r.updated_at, c.change_url
+            FROM pipeline_runs r
+            LEFT JOIN changesets c ON c.id = r.changeset_id
             WHERE r.id = %s;
             """,
-            (changeset_id,),
+            (run_id,),
         )
         row = await cur.fetchone()
         if row:
             return {
-                "changeset_id": changeset_id,
+                "changeset_id": run_id,
                 "status": row[0],
                 "progress": row[1],
                 "arguments_json": row[2],
@@ -57,16 +79,9 @@ async def get_active_pipeline_run_jurisdiction_ocdids() -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
-            SELECT DISTINCT r.jurisdiction_ocdid
-            FROM changesets r
-            WHERE r.status IS NOT NULL AND r.status != ALL(%s)
-            AND r.jurisdiction_ocdid IS NOT NULL
-            """,
-            (list(TERMINAL_PIPELINE_RUN_STATUSES),),
+            "SELECT DISTINCT jurisdiction_ocdid FROM pipeline_runs WHERE finished_at IS NULL"
         )
-        rows = await cur.fetchall()
-        return {row[0] for row in rows}
+        return {row[0] for row in await cur.fetchall()}
 
 
 async def get_active_pipeline_run_jurisdiction_ocdids_by_state(
@@ -76,15 +91,13 @@ async def get_active_pipeline_run_jurisdiction_ocdids_by_state(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT DISTINCT r.jurisdiction_ocdid
-            FROM changesets r
-            WHERE r.status IS NOT NULL AND r.status != ALL(%s)
-            AND r.jurisdiction_ocdid LIKE %s
+            SELECT DISTINCT jurisdiction_ocdid
+            FROM pipeline_runs
+            WHERE finished_at IS NULL AND jurisdiction_ocdid LIKE %s
             """,
-            (list(TERMINAL_PIPELINE_RUN_STATUSES), f"%state:{state_code}%"),
+            (f"%state:{state_code}%",),
         )
-        rows = await cur.fetchall()
-        return {row[0] for row in rows}
+        return {row[0] for row in await cur.fetchall()}
 
 
 async def get_active_pipeline_runs(
@@ -97,13 +110,11 @@ async def get_active_pipeline_runs(
             SELECT r.id::text, r.status, r.progress, r.created_at, r.updated_at,
                    r.jurisdiction_ocdid, jur.state, jur.data->>'name',
                    COUNT(*) OVER() AS total_count
-            FROM changesets r
+            FROM pipeline_runs r
             JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE r.status IS NOT NULL AND r.status != ALL(%s)
-            AND r.jurisdiction_ocdid IS NOT NULL
-            AND r.kind = 'people'
+            WHERE r.finished_at IS NULL
         """
-        params: list = [list(TERMINAL_PIPELINE_RUN_STATUSES)]
+        params: list = []
         if state_code:
             query += " AND jur.state = %s"
             params.append(state_code.lower())
@@ -127,13 +138,13 @@ async def get_active_pipeline_runs(
         ], total
 
 
-async def get_pipeline_run_status(changeset_id: str):
+async def get_pipeline_run_status(run_id: str):
     """Where the run is, and whether it has been stopped.
 
     The pipeline engine polls this every loop and checks one thing: `== CANCELLED`. So the
-    cancellation half is answered from `dismissed_at`, which is durable and set in the same
-    transaction as the dismissal — rather than from `status`, which is a live signal a cache
-    could lose and which the run-status plan removes.
+    cancellation half is answered from the changeset's `dismissed_at`, which is durable and set
+    in the same transaction as the dismissal — rather than from `status`, which is a live signal
+    a cache could lose.
 
     A cancelled run is reported as cancelled whatever its last report said, which is the point:
     the pipeline stopped mattering the moment somebody stopped it.
@@ -142,23 +153,24 @@ async def get_pipeline_run_status(changeset_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT CASE WHEN dismissed_reason = %s
+            SELECT CASE WHEN c.dismissed_reason = %s
                         THEN '{PipelineRunStatus.CANCELLED.value}'
-                        ELSE status END,
-                   progress
-            FROM changesets
-            WHERE id = %s;
+                        ELSE r.status END,
+                   r.progress
+            FROM pipeline_runs r
+            LEFT JOIN changesets c ON c.id = r.changeset_id
+            WHERE r.id = %s;
             """,
-            (DismissalReason.CANCELLED, changeset_id),
+            (DismissalReason.CANCELLED, run_id),
         )
         row = await cur.fetchone()
         if row:
-            return {"changeset_id": changeset_id, "status": row[0], "progress": row[1]}
+            return {"changeset_id": run_id, "status": row[0], "progress": row[1]}
         return None
 
 
 async def update_pipeline_run_status(
-    changeset_id: str, status: str | None = None, progress: Optional[int] = None
+    run_id: str, status: str | None = None, progress: Optional[int] = None
 ):
     pool = await get_pool()
     set_clauses = []
@@ -170,6 +182,12 @@ async def update_pipeline_run_status(
     if status is not None:
         set_clauses.append("status = %s")
         params.append(status)
+        # A terminal report is what ends the run, and `finished_at` is what every reader asks
+        # about instead of matching the status against a list of terminal names.
+        set_clauses.append(
+            "finished_at = CASE WHEN %s = ANY(%s) THEN CURRENT_TIMESTAMP ELSE finished_at END"
+        )
+        params.extend([status, [s.value for s in _TERMINAL]])
 
     # Every report re-stamps it: this is what dates `last_seen_at` on every membership.
     set_clauses.append("updated_at = CURRENT_TIMESTAMP")
@@ -177,13 +195,13 @@ async def update_pipeline_run_status(
     if not set_clauses:
         return
 
-    params.append(changeset_id)
+    params.append(run_id)
     set_clause_str = ", ".join(set_clauses)
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             sql.SQL(f"""
-            UPDATE changesets
+            UPDATE pipeline_runs
             SET {set_clause_str}
             WHERE id = %s;
             """),
@@ -191,21 +209,11 @@ async def update_pipeline_run_status(
         )
 
 
-RUN_NOT_TERMINAL = (
-    "changesets.status IS NOT NULL AND changesets.status != ALL(ARRAY["
-    + ", ".join(f"'{status.value}'" for status in TERMINAL_PIPELINE_RUN_STATUSES)
-    + "])"
-)
-
-
 async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
     """Settle runs that stopped reporting. A dead run sends no failure — it just goes quiet.
 
     Two steps, because that is the lifecycle: the silence is an `errored` event moving the run
-    from `running` to `failed`, and the dismissal follows from there. Marking alone left the
-    changeset formally unresolved forever — harmless only because `WORK_IN_FLIGHT` excludes
-    `ERROR` by hand, which is the sort of compensation that hides a gap rather than closing it.
-
+    from `running` to `failed`, and the dismissal of whatever it proposed follows from there.
     Both in one transaction, so a run cannot be marked failed and left undismissed.
 
     `updated_at` is deliberately left alone: giving up on a run is not reading the source, and
@@ -214,12 +222,12 @@ async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            f"""
-            UPDATE changesets
-            SET status = 'ERROR'
-            WHERE {RUN_NOT_TERMINAL}
+            """
+            UPDATE pipeline_runs
+            SET status = 'ERROR', finished_at = CURRENT_TIMESTAMP
+            WHERE finished_at IS NULL
             AND updated_at < NOW() - %s::interval
-            RETURNING id::text
+            RETURNING COALESCE(changeset_id::text, id::text)
             """,
             (older_than,),
         )
@@ -227,4 +235,3 @@ async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
         await changesets_db.mark_dismissed(cur, expired, DismissalReason.ERRORED)
         await conn.commit()
     return expired
-

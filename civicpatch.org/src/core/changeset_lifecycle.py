@@ -16,19 +16,16 @@ that produced no roster, and an errored run was not cancelled. Both are unreacha
 
 from enum import StrEnum
 
-from shared.utils.statuses import ChangesetKind, DismissalReason, PipelineRunStatus
+from shared.utils.statuses import ChangesetKind, DismissalReason
 
 
 class ChangesetState(StrEnum):
     """Where a changeset is.
 
-    No `minted`: nothing is observably in it. A scrape is born with a status, so it starts
-    `RUNNING`; an import is born `READY`; a `people_edit` is born `PUBLISHED`. Which of those a
-    kind starts in is `initial_state` below, not a state of its own.
+    Three, not five. `RUNNING` and `FAILED` described the *run*, back when one row was both; a
+    changeset is now minted only by a run that succeeded, so it is born with content to review.
     """
 
-    RUNNING = "running"
-    FAILED = "failed"
     READY = "ready"
     PUBLISHED = "published"
     DISMISSED = "dismissed"
@@ -37,10 +34,6 @@ class ChangesetState(StrEnum):
 class ChangesetEvent(StrEnum):
     """What happens to one. Named for the event, not the column it moves."""
 
-    REPORTED = "reported"
-    SUCCEEDED = "succeeded"
-    ERRORED = "errored"
-    CANCELLED = "cancelled"
     PUBLISHED = "published"
     DISMISSED = "dismissed"
 
@@ -50,15 +43,6 @@ TERMINAL = frozenset({ChangesetState.PUBLISHED, ChangesetState.DISMISSED})
 # Keyed by state, like the pipeline's transition map. A pair absent from a state's row is not a
 # transition — `advance` returns None rather than guessing.
 TRANSITIONS: dict[ChangesetState, dict[ChangesetEvent, ChangesetState]] = {
-    ChangesetState.RUNNING: {
-        ChangesetEvent.REPORTED: ChangesetState.RUNNING,
-        ChangesetEvent.SUCCEEDED: ChangesetState.READY,
-        ChangesetEvent.ERRORED: ChangesetState.FAILED,
-        ChangesetEvent.CANCELLED: ChangesetState.FAILED,
-    },
-    ChangesetState.FAILED: {
-        ChangesetEvent.DISMISSED: ChangesetState.DISMISSED,
-    },
     ChangesetState.READY: {
         ChangesetEvent.PUBLISHED: ChangesetState.PUBLISHED,
         ChangesetEvent.DISMISSED: ChangesetState.DISMISSED,
@@ -73,30 +57,25 @@ TRANSITIONS: dict[ChangesetState, dict[ChangesetEvent, ChangesetState]] = {
 DISMISSAL_REASONS: dict[ChangesetState, frozenset[DismissalReason]] = {
     # A human read a roster and said no, or a newer one won. A roster that was re-confirmed
     # publishes instead — it is a decision, not a dismissal.
+    # A human read a roster and said no, or a newer one won; or the sweep gave up on the run
+    # that produced it.
     ChangesetState.READY: frozenset(
-        {DismissalReason.REJECTED, DismissalReason.SUPERSEDED}
-    ),
-    # Nobody decided: the run ended without a roster, or somebody stopped it.
-    ChangesetState.FAILED: frozenset(
-        {DismissalReason.ERRORED, DismissalReason.CANCELLED}
+        {
+            DismissalReason.REJECTED,
+            DismissalReason.SUPERSEDED,
+            DismissalReason.ERRORED,
+            DismissalReason.CANCELLED,
+        }
     ),
 }
 
-# Where a kind begins. Only a scrape has a run to wait for; the others are born past it.
+# Where a kind begins.
 INITIAL_STATE: dict[ChangesetKind, ChangesetState] = {
-    ChangesetKind.SCRAPE: ChangesetState.RUNNING,
+    ChangesetKind.SCRAPE: ChangesetState.READY,
     ChangesetKind.SHEET_IMPORT: ChangesetState.READY,
     ChangesetKind.PEOPLE_EDIT: ChangesetState.PUBLISHED,
     ChangesetKind.JURISDICTION_EDIT: ChangesetState.PUBLISHED,
 }
-
-_TERMINAL_RUN = {
-    PipelineRunStatus.SUCCESS: ChangesetEvent.SUCCEEDED,
-    PipelineRunStatus.ERROR: ChangesetEvent.ERRORED,
-    PipelineRunStatus.CANCELLED: ChangesetEvent.CANCELLED,
-    PipelineRunStatus.RESOLVED: ChangesetEvent.SUCCEEDED,
-}
-
 
 def advance(state: ChangesetState, event: ChangesetEvent) -> ChangesetState | None:
     """The next state, or None when the event does not apply.
@@ -114,12 +93,5 @@ def is_terminal(state: ChangesetState) -> bool:
 def dismissal_is_legal(state: ChangesetState, reason: DismissalReason) -> bool:
     """Whether a dismissal for this reason may leave this state.
 
-    `RUNNING` accepts none: a run still going is cancelled, which is an `ERRORED`/`CANCELLED`
-    event into `FAILED`, and the dismissal follows from there.
     """
     return reason in DISMISSAL_REASONS.get(state, frozenset())
-
-
-def event_for_run(status: PipelineRunStatus) -> ChangesetEvent:
-    """A pipeline report, as an event. Every non-terminal status is progress."""
-    return _TERMINAL_RUN.get(status, ChangesetEvent.REPORTED)

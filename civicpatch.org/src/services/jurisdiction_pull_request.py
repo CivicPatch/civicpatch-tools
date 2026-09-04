@@ -174,7 +174,6 @@ async def commit_jurisdiction_patch(
     await changesets_db.register_jurisdiction_edit_request(
         changeset_id=changeset_id,
         jurisdiction_ocdid=jurisdiction_ocdid,
-        arguments_json=patch,
         change_url=commit_url,
         created_by_user_id=user_id,
     )

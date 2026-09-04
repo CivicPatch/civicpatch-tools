@@ -87,10 +87,9 @@ async def _seed() -> tuple[str, Identity]:
         # changeset is a state production cannot reach — and a hand edit now files under it
         # rather than minting one of its own.
         await cur.execute(
-            # `changesets_scrape_has_a_run` — a scrape is exactly a row with a status.
-            "INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json, "
+            "INSERT INTO changesets (kind, jurisdiction_ocdid, "
             "                        updated_at, published_at, created_at) "
-            "VALUES ('scrape', 'SUCCESS', %s, '{}'::jsonb, %s, now(), now()) "
+            "VALUES ('scrape', %s, %s, now(), now()) "
             "ON CONFLICT DO NOTHING",
             (_OCDID, datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc)),
         )
@@ -200,8 +199,10 @@ async def test_the_edit_mints_a_changeset_born_published():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT kind, published_at IS NOT NULL, status IS NULL, updated_at IS NOT NULL "
-            "FROM changesets WHERE id::text = %s",
+            # No run: a hand edit is not an attempt, so nothing in `pipeline_runs` points here.
+            "SELECT c.kind, c.published_at IS NOT NULL, c.updated_at IS NOT NULL, "
+            "       NOT EXISTS (SELECT 1 FROM pipeline_runs r WHERE r.changeset_id = c.id) "
+            "FROM changesets c WHERE c.id::text = %s",
             (changeset_id,),
         )
         assert await cur.fetchone() == ("people_edit", True, True, True)
@@ -427,9 +428,8 @@ async def _pending_scrape(updated_at: datetime.datetime) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO changesets (kind, jurisdiction_ocdid, arguments_json, status, "
-            "                      progress, created_at, updated_at) "
-            "VALUES ('scrape', %s, '{}'::jsonb, 'SUCCESS', 100, %s, %s) RETURNING id::text",
+            "INSERT INTO changesets (kind, jurisdiction_ocdid, created_at, updated_at) "
+            "VALUES ('scrape', %s, %s, %s) RETURNING id::text",
             (_OCDID, updated_at, updated_at),
         )
         row = await cur.fetchone()
@@ -501,13 +501,10 @@ async def test_a_post_pick_survives_a_save_and_comes_back_scoped_to_its_organiza
         await conn.commit()
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        # Seeded directly: 153's CHECK ties `kind = 'scrape'` to a non-null status, so the
-        # two-statement register helper cannot build one in a single insert.
         await cur.execute(
             "INSERT INTO changesets "
-            "  (id, kind, jurisdiction_ocdid, arguments_json, status, progress, "
-            "   updated_at, organization_id) "
-            "VALUES (%s, 'scrape', %s, '{}', 'success', 100, now(), %s)",
+            "  (id, kind, jurisdiction_ocdid, updated_at, organization_id) "
+            "VALUES (%s, 'scrape', %s, now(), %s)",
             (changeset_id, _OCDID, council),
         )
         await conn.commit()

@@ -3,6 +3,7 @@ import re
 from datetime import date
 import database.pipeline_runs
 import database.changesets
+import database.pipeline_runs as pipeline_runs_db
 import lib.csv as csv_service
 import services.people_csv_export as requests_export_service
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -32,11 +33,11 @@ def get_router(api_key_header):
         print(
             f"Registering request: {request.changeset_id} by user {user.provider_user_id} from provider {user.provider}"
         )
-        _response = await database.changesets.register_request_with_pipeline_run(
-            created_by_user_id=user.user_id,
-            changeset_id=request.changeset_id,
-            kind=ChangesetKind.SCRAPE,
+        await pipeline_runs_db.register_run(
+            run_id=request.changeset_id,
+            jurisdiction_ocdid=request.arguments["jurisdiction_ocdid"],
             arguments_json=request.arguments,
+            created_by_user_id=user.user_id,
         )
         return {"changeset_id": request.changeset_id, "status": "pending"}
 

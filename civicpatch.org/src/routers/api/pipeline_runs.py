@@ -27,6 +27,7 @@ from database.pipeline_runs import (
     get_active_pipeline_runs,
     get_pipeline_run,
     get_pipeline_run_status,
+    register_run,
     update_pipeline_run_status,
 )
 from database.review_pool import (
@@ -34,8 +35,6 @@ from database.review_pool import (
 )
 from database.changesets import (
     get_issue_request_details,
-    register_request_with_pipeline_run,
-    register_request_with_pipeline_run_if_not_exists,
 )
 from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
@@ -143,7 +142,7 @@ async def apply_pipeline_run_status(
     a cancelled run does.
     """
     await update_pipeline_run_status(
-        changeset_id=changeset_id, status=status, progress=progress
+        run_id=changeset_id, status=status, progress=progress
     )
 
     # The reporter does not always know it; the run's own arguments do.
@@ -176,9 +175,9 @@ async def apply_pipeline_run_status(
 
 async def _register_pipeline_run_bg(request: RegisterPipelineRunRequest) -> None:
     try:
-        await register_request_with_pipeline_run_if_not_exists(
-            changeset_id=request.changeset_id,
-            kind=ChangesetKind.SCRAPE,
+        await register_run(
+            run_id=request.changeset_id,
+            if_not_exists=True,
             arguments_json={
                 "jurisdiction_ocdid": request.jurisdiction_ocdid,
                 "name": request.name,
@@ -226,9 +225,8 @@ def get_router(api_key_header):
 
         try:
             changeset_id = shared.utils.id_utils.make_changeset_id()
-            await register_request_with_pipeline_run(
-                changeset_id=changeset_id,
-                kind=ChangesetKind.SCRAPE,
+            await register_run(
+                run_id=changeset_id,
                 arguments_json={
                     "jurisdiction_ocdid": request.jurisdiction_ocdid,
                     "name": request.name,
@@ -444,7 +442,7 @@ def get_router(api_key_header):
                 status_code=500,
             )
         await update_pipeline_run_status(
-            changeset_id=changeset_id, status=PipelineRunStatus.CANCELLED, progress=None
+            run_id=changeset_id, status=PipelineRunStatus.CANCELLED, progress=None
         )
         # Cancelling settles the review too. Stopping a scrape is a person deciding it will not
         # be published, which is what dismissal means — and without this the request sits at

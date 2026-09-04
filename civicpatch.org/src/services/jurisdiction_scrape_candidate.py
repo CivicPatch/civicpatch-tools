@@ -3,9 +3,7 @@ import database.issues as issues_db
 import database.jurisdictions as jurisdictions_db
 import database.pipeline_runs as pipeline_runs_db
 import database.review_pool as review_pool_db
-from database.changesets import register_request_with_pipeline_run
 from schemas.common import Jurisdiction
-from shared.utils.statuses import ChangesetKind
 
 
 async def get_scrape_candidates(
@@ -29,10 +27,13 @@ async def get_scrape_candidates(
 async def claim_scrape_candidates(
     state: str, num_jurisdictions: int | None = None, created_by_user_id: str | None = None
 ) -> list[dict]:
-    """Pick this state's next candidates and register a changeset for each.
+    """Pick this state's next candidates and start a run for each.
 
-    One call because the two halves must not be separated: registering is what takes a
-    jurisdiction out of the candidate pool, so a caller that selected and then registered in two
+    A run, not a changeset: a changeset is a proposal, and nothing has been proposed until the
+    scrape comes back with a roster. `people_collector` mints one at ingest if it does.
+
+    One call because the two halves must not be separated: starting the run is what takes a
+    jurisdiction out of the candidate pool, so a caller that selected and then started in two
     steps could hand the same place to two batches.
 
     Safe to retry. `get_scrape_candidates` excludes jurisdictions with a non-terminal run, so a
@@ -42,23 +43,22 @@ async def claim_scrape_candidates(
     candidates = await get_scrape_candidates(state, num_jurisdictions)
     items = []
     for candidate in candidates:
-        changeset_id = shared.utils.id_utils.make_changeset_id()
-        await register_request_with_pipeline_run(
-            changeset_id=changeset_id,
-            kind=ChangesetKind.SCRAPE,
+        run_id = shared.utils.id_utils.make_changeset_id()
+        await pipeline_runs_db.register_run(
+            run_id=run_id,
+            jurisdiction_ocdid=candidate.id,
             arguments_json={
                 "jurisdiction_ocdid": candidate.id,
                 "name": candidate.name,
                 "url": candidate.url,
                 "source_urls": None,
             },
-            jurisdiction_ocdid=candidate.id,
             created_by_user_id=created_by_user_id,
         )
         items.append(
             {
                 "jurisdiction_ocdid": candidate.id,
-                "changeset_id": changeset_id,
+                "changeset_id": run_id,
                 "name": candidate.name,
                 "url": candidate.url,
             }

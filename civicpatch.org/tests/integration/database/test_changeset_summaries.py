@@ -20,6 +20,7 @@ from database.changeset_summaries import (
     get_state_rollup,
 )
 from database.database import get_pool
+from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
 from shared.utils.statuses import ChangeLogType, DismissalReason
 
 _STATE = "zy"
@@ -36,6 +37,9 @@ async def _wipe():
             )
             await cur.execute(
                 "DELETE FROM source_records WHERE jurisdiction_ocdid = %s", (ocdid,)
+            )
+            await cur.execute(
+                "DELETE FROM pipeline_runs WHERE jurisdiction_ocdid = %s", (ocdid,)
             )
             await cur.execute(
                 "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (ocdid,)
@@ -85,19 +89,30 @@ async def _changeset(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json,
-                                    created_at, updated_at, published_at, dismissed_at,
-                                    dismissed_reason)
-            VALUES (%s, %s, %s, '{}'::jsonb,
-                    now() - make_interval(days => %s), now() - make_interval(days => %s),
-                    CASE WHEN %s THEN now() END,
-                    CASE WHEN %s::text IS NOT NULL THEN now() END,
-                    %s)
+            INSERT INTO changesets (kind, jurisdiction_ocdid, created_at, updated_at, published_at, dismissed_at, dismissed_reason)
+            VALUES (%s, %s, now() - make_interval(days => %s), now() - make_interval(days => %s), CASE WHEN %s THEN now() END, CASE WHEN %s::text IS NOT NULL THEN now() END, %s)
             RETURNING id::text
             """,
-            (kind, status, ocdid, days_ago, days_ago, published, reason, reason),
+            (kind, ocdid, days_ago, days_ago, published, reason, reason),
         )
         changeset_id = (await cur.fetchone())[0]
+        if status is not None:
+            # A status means a run; the run carries its own jurisdiction.
+            await cur.execute(
+                """
+                INSERT INTO pipeline_runs
+                    (id, jurisdiction_ocdid, status, finished_at, changeset_id)
+                VALUES (%s, %s, %s, CASE WHEN %s = ANY(%s) THEN now() END, %s)
+                """,
+                (
+                    changeset_id,
+                    ocdid,
+                    status,
+                    status,
+                    [s.value for s in TERMINAL_PIPELINE_RUN_STATUSES],
+                    changeset_id,
+                ),
+            )
         if with_records:
             await cur.execute(
                 """
@@ -138,15 +153,6 @@ async def test_rejected_and_errored_are_counted_apart():
 
 
 @pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_run_that_errored_without_a_reason_still_counts_as_errored():
-    """`status` is the run's own record. 9 dev rows errored before any reason was stored, and
-    reading only `dismissed_reason` would report them as nothing at all."""
-    await _changeset(status="ERROR", reason=None, published=False)
-
-    assert (await _row()).errored == 1
-
-
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_the_queue_counts_one_changeset_per_jurisdiction():

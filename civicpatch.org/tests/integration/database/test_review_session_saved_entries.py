@@ -78,7 +78,8 @@ async def open_pr():
             (ocdid,),
         )
         await cur.execute(
-            "INSERT INTO changesets (kind, status, jurisdiction_ocdid) VALUES ('scrape', 'SUCCESS', %s) RETURNING id::text",
+            "INSERT INTO changesets (kind, jurisdiction_ocdid) "
+            "VALUES ('scrape', %s) RETURNING id::text",
             (ocdid,),
         )
         changeset_id = (await cur.fetchone())[0]  # type: ignore[index]
@@ -88,7 +89,7 @@ async def open_pr():
             "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
             (changeset_id, ocdid),
         )
-        await cur.execute("UPDATE changesets SET status = 'SUCCESS', "
+        await cur.execute("UPDATE changesets SET "
             "updated_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,))
 
     yield changeset_id, ocdid

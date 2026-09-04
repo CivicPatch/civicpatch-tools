@@ -214,8 +214,9 @@ async def _published_changeset() -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO changesets (kind, status, jurisdiction_ocdid, arguments_json, "
-            "published_at) VALUES ('scrape', 'SUCCESS', %s, '{}'::jsonb, now()) "
+            "INSERT INTO changesets (kind, jurisdiction_ocdid, "
+            "published_at) "
+            "VALUES ('scrape', %s, now())"
             "RETURNING id::text",
             (_OCDID,),
         )
