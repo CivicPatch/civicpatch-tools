@@ -12,7 +12,8 @@ from lib.temporal.workflows import (
     OdSyncWorkflow,
     JurisdictionsSheetSyncWorkflow,
     OpenDataBatchCommitWorkflow,
-    SyncSweepWorkflow,
+    SweepChangesWorkflow,
+    SweepEverythingWorkflow,
     RosterSheetSyncWorkflow,
     PipelineRunCleanupWorkflow,
     ReviewSessionCleanupWorkflow,
@@ -26,6 +27,9 @@ from routers.temporal.activities import (
     od_sync_activity,
     od_sync_targeted_activity,
     supersede_stacked_requests_activity,
+    backstop_open_data_activity,
+    backstop_roster_sheets_activity,
+    sync_roster_parquet_activity,
     sweep_open_data_activity,
     sweep_roster_sheets_activity,
     sync_jurisdictions_sheet_activity,
@@ -55,7 +59,8 @@ WORKFLOWS = [
     ReviewSessionCleanupWorkflow,
     RosterSheetSyncWorkflow,
     JurisdictionsSheetSyncWorkflow,
-    SyncSweepWorkflow,
+    SweepChangesWorkflow,
+    SweepEverythingWorkflow,
 ]
 
 
@@ -181,11 +186,11 @@ async def _register_schedules(client: Client) -> None:
 
     await _ensure_schedule(
         client,
-        ScheduleId.SYNC_SWEEP,
+        ScheduleId.SWEEP_CHANGES,
         Schedule(
             action=ScheduleActionStartWorkflow(
-                SyncSweepWorkflow.run,
-                id=WorkflowInstanceId.SYNC_SWEEP,
+                SweepChangesWorkflow.run,
+                id=WorkflowInstanceId.SWEEP_CHANGES,
                 task_queue=TASK_QUEUE,
             ),
             # Every five minutes, against a fifteen-minute lookback. This is both mirrors'
@@ -197,17 +202,52 @@ async def _register_schedules(client: Client) -> None:
     )
 
 
-    # The four above are the whole set. Anything else on the server is from a version that
-    # declared more than this one does.
+    await _ensure_schedule(
+        client,
+        ScheduleId.SWEEP_EVERYTHING,
+        Schedule(
+            action=ScheduleActionStartWorkflow(
+                SweepEverythingWorkflow.run,
+                id=WorkflowInstanceId.SWEEP_EVERYTHING,
+                task_queue=TASK_QUEUE,
+            ),
+            # 09:00 UTC, which is the quiet end of a US night. Nothing depends on the hour;
+            # what matters is that it is far from the 5-minute sweep's busy periods.
+            spec=ScheduleSpec(cron_expressions=["0 9 * * *"]),
+            policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
+        ),
+    )
+
+    # The five above are the whole set. Anything else on the server is from a version that
+    # declared more than this one does — including a schedule this file renamed, which is why
+    # `sync-sweep` disappears on the first boot after `SWEEP_CHANGES` replaced it.
     await _retire_undeclared_schedules(
         client,
         {
             ScheduleId.OD_SYNC,
             ScheduleId.PIPELINE_RUN_CLEANUP,
             ScheduleId.REVIEW_SESSION_CLEANUP,
-            ScheduleId.SYNC_SWEEP,
+            ScheduleId.SWEEP_CHANGES,
+            ScheduleId.SWEEP_EVERYTHING,
         },
     )
+
+
+ACTIVITIES = [
+    od_sync_activity,
+    od_sync_targeted_activity,
+    expire_stale_pipeline_runs_activity,
+    cleanup_stale_review_entries_activity,
+    commit_open_data_batch_activity,
+    supersede_stacked_requests_activity,
+    sync_roster_sheet_activity,
+    sync_jurisdictions_sheet_activity,
+    sweep_open_data_activity,
+    sweep_roster_sheets_activity,
+    backstop_open_data_activity,
+    backstop_roster_sheets_activity,
+    sync_roster_parquet_activity,
+]
 
 
 async def main() -> None:
@@ -222,18 +262,7 @@ async def main() -> None:
         client,
         task_queue=TASK_QUEUE,
         workflows=WORKFLOWS,
-        activities=[
-                    od_sync_activity,
-            od_sync_targeted_activity,
-            expire_stale_pipeline_runs_activity,
-            cleanup_stale_review_entries_activity,
-                            commit_open_data_batch_activity,
-            supersede_stacked_requests_activity,
-            sync_roster_sheet_activity,
-            sync_jurisdictions_sheet_activity,
-            sweep_open_data_activity,
-            sweep_roster_sheets_activity,
-        ],
+        activities=ACTIVITIES,
     ):
         print(f"Worker started on task queue: {TASK_QUEUE}")
         await asyncio.Event().wait()

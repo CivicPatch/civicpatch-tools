@@ -19,7 +19,7 @@ from schemas.imports import (
     ReviewPerson,
 )
 from services import roster_edits
-from services.publish import promote_batch_to_reviewed
+from services.sinks.open_data import promote_batch_to_reviewed
 from services.roster import proposed_rosters
 from shared.utils.statuses import RequestReviewStatus
 

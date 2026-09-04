@@ -11,7 +11,7 @@ expectation from the thing under test cannot disagree with it.
 
 import pytest
 
-from services.publish import open_data_records as _open_data_records
+from services.sinks.open_data import open_data_records as _open_data_records
 from shared.schemas import RoleConfig, Role
 from shared.utils.taxonomy import build_taxonomy
 

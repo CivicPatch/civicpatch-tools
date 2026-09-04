@@ -144,7 +144,7 @@ async def test_a_move_names_the_seat_it_came_from(client):
 @pytest.mark.integration
 async def test_assigning_puts_the_jurisdiction_on_the_sync_feed(client):
     """How this edit reaches open-data and the sheet. The route calls neither: `assign` writes
-    a change log on its own cursor and `SyncSweepWorkflow` reads it, so a seat that moved in
+    a change log on its own cursor and `SweepChangesWorkflow` reads it, so a seat that moved in
     the database cannot leave the published files behind."""
     person_id, mayor, _ = await _seed()
 

@@ -15,7 +15,7 @@ import logging
 from typing import AsyncGenerator, Callable
 
 from core.output_hash import row_line
-from core.sheet import (
+from core.sinks.sheet import (
     jurisdiction_rows,
     membership_rows,
     people_rows,

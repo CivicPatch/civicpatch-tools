@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 import pytest
 import pytest_asyncio
 
-from core.sheet.people_rows import HEADERS
+from core.sinks.sheet.people_rows import HEADERS
 from database import change_logs, divisions, memberships, organizations, posts
 from database.database import get_pool
 

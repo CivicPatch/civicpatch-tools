@@ -36,11 +36,17 @@ src/
     images.py                ← `local://` refs → urls (ingest); artifacts → cdn key (publish)
     jurisdiction_patch.py, jurisdiction_search.py, coverage.py
     change_logs.py, role_taxonomy.py, temporal_workflow_state.py
-    open_data/               ← tree_diff.py, paths.py
+    output_hash.py           ← the content gate's fingerprint, shared by every sink
+    open_data/               ← tree_diff.py, paths.py — the INBOUND sync, not a sink
+    sinks/                   ← how each outward mirror renders its rows
+      sheet/                 ← people_rows.py, membership_rows.py, post_rows.py, jurisdiction_rows.py
+      parquet.py             ← the declared column schemas
   services/         ← orchestration: coordinates lib/ + database/ + core/ (does the I/O)
-    open_data_sync.py        ← open-data sync
-    pull_request_sync.py     ← PR state sync
-    pull_request_merge.py    ← PR merge background task
+    sinks/                   ← the three outward mirrors; each renders, names its target, writes
+      open_data.py           ← one YAML file per jurisdiction, in git
+      sheet.py               ← Live[...] tabs, per state, for a curator
+      parquet.py             ← partitioned files in R2, for an analyst
+    open_data_sync.py        ← open-data sync (INBOUND: git → database)
     people_csv_export.py     ← requests/people export
     people_collector.py      ← artifact processing pipeline
     jurisdiction_scrape_candidate.py ← scrape candidate selection
@@ -48,8 +54,6 @@ src/
   database/         ← pure SQL queries (one file per domain)
   schemas/          ← Pydantic request/response models
     common.py       ← shared enums + models (Identity, Role, PullRequest, …)
-    jobs.py         ← job-related request/response models
-    requests.py     ← cross-layer request models (HandleSubmitJobArtifactsRequest, …)
   frontend/
     vite.py         ← Jinja template helpers for Vite asset paths
   worker.py         ← Temporal worker entrypoint
@@ -90,12 +94,10 @@ The role → capability mapping is documented in `README.md` under the **Permiss
   is spliced into many queries; if it says `r.published_at`, every caller has to alias that table
   `r` and nothing enforces it — a mismatch is a runtime error, never a typecheck one. Write
   `requests.published_at` and let callers use the table unaliased.
-  The existing fragments in `database/requests.py` (`AVAILABLE_FOR_REVIEW`, `REVIEW_STATUS`,
-  `SWEEPABLE`, `ROSTER_SEEN_AT`, `HELD_BY_REVIEWER`, `WORK_IN_FLIGHT`, `RUN_IN_FLIGHT`) predate
-  this and still require `r`/`j`. Do not add more; they are coupled through shared queries, so
-  unpicking them is one deliberate pass, not an incremental fix. Note `j` already means
-  `jurisdictions` in most of the codebase and `pipeline_runs` in these — which is the ambiguity
-  the rule exists to prevent.
+  The existing fragments in `database/changesets.py` (`AVAILABLE_FOR_REVIEW`, `REVIEW_STATUS`,
+  `SWEEPABLE`, `HELD_BY_REVIEWER`, `WORK_IN_FLIGHT`, `RUN_IN_FLIGHT`) predate this and still
+  require `r`. Do not add more; they are coupled through shared queries, so unpicking them is
+  one deliberate pass, not an incremental fix.
 - **UUID columns**: psycopg returns UUID columns as Python `uuid.UUID` objects. Always cast UUID columns to text in the SQL query (`id::text`, `changeset_id::text`) so callers receive plain strings — never scatter `str()` calls in routers or services. The DB function is the boundary; it owns the type contract.
 
 ## Environment

@@ -8,7 +8,7 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from core.sheet.people_rows import HEADERS, to_row, to_rows
+from core.sinks.sheet.people_rows import HEADERS, to_row, to_rows
 
 _SHERBORN = (
     "ocd-jurisdiction/country:us/state:ma/county:middlesex/place:sherborn/government"

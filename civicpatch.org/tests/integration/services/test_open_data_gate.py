@@ -17,7 +17,7 @@ import pytest_asyncio
 
 from database.database import get_pool
 from lib.temporal.types import OpenDataCommitItem
-from services import publish as publish_service
+from services.sinks import open_data as open_data_sink
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:gate/government"
 _PATH = "data/us/zz/gate.yml"
@@ -53,9 +53,9 @@ async def clean():
 def _commit(roster, returns=_COMMIT):
     """Patch the two boundaries: what we render from, and where it goes."""
     return (
-        patch("services.publish.get_roster", AsyncMock(return_value=roster)),
+        patch("services.sinks.open_data.get_roster", AsyncMock(return_value=roster)),
         patch(
-            "services.publish.git_data.commit_github_files",
+            "services.sinks.open_data.git_data.commit_github_files",
             AsyncMock(return_value=returns),
         ),
     )
@@ -68,8 +68,8 @@ async def test_the_same_roster_is_not_committed_twice():
     because the sweep re-selects the same change over a lookback wider than its cadence."""
     roster_patch, commit_patch = _commit(_ROSTER)
     with roster_patch, commit_patch as fake_commit:
-        assert await publish_service.commit_rendered_files(_items(), "first") == _COMMIT
-        assert await publish_service.commit_rendered_files(_items(), "second") is None
+        assert await open_data_sink.commit_rendered_files(_items(), "first") == _COMMIT
+        assert await open_data_sink.commit_rendered_files(_items(), "second") is None
         assert fake_commit.await_count == 1
 
 
@@ -78,11 +78,11 @@ async def test_the_same_roster_is_not_committed_twice():
 async def test_a_changed_roster_is_committed_again():
     roster_patch, commit_patch = _commit(_ROSTER)
     with roster_patch, commit_patch:
-        await publish_service.commit_rendered_files(_items(), "first")
+        await open_data_sink.commit_rendered_files(_items(), "first")
 
     roster_patch, commit_patch = _commit(_CHANGED)
     with roster_patch, commit_patch as fake_commit:
-        assert await publish_service.commit_rendered_files(_items(), "second") == _COMMIT
+        assert await open_data_sink.commit_rendered_files(_items(), "second") == _COMMIT
         assert fake_commit.await_count == 1
 
 
@@ -93,10 +93,10 @@ async def test_a_rejected_commit_raises_and_records_nothing():
     written when it never reached the branch, and every retry would then skip it."""
     roster_patch, commit_patch = _commit(_ROSTER, returns=None)
     with roster_patch, commit_patch:
-        with pytest.raises(publish_service.OpenDataWriteRejected):
-            await publish_service.commit_rendered_files(_items(), "rejected")
+        with pytest.raises(open_data_sink.OpenDataWriteRejected):
+            await open_data_sink.commit_rendered_files(_items(), "rejected")
 
     roster_patch, commit_patch = _commit(_ROSTER)
     with roster_patch, commit_patch as fake_commit:
-        assert await publish_service.commit_rendered_files(_items(), "retry") == _COMMIT
+        assert await open_data_sink.commit_rendered_files(_items(), "retry") == _COMMIT
         assert fake_commit.await_count == 1

@@ -147,6 +147,16 @@ async def upload_file_to_storage(
         raise IOError(f"Upload failed: {str(e)}")
 
 
+def upload_bytes_to_storage(
+    bucket_name: str, key: str, body: bytes, content_type: str
+) -> None:
+    """Put an object already in memory. Synchronous, like the rest of boto3 here — callers on
+    the event loop wrap it in `asyncio.to_thread`, as the sheet writer does."""
+    get_client().put_object(
+        Bucket=bucket_name, Key=key, Body=body, ContentType=content_type
+    )
+
+
 async def upload_directory(bucket_name: str, source_dir: str, key_prefix: str) -> dict:
     """Every file under `source_dir`, keyed by its path relative to it.
 
