@@ -68,19 +68,21 @@ async def cleanup_stale_review_entries_activity() -> None:
 
 @activity.defn
 async def commit_open_data_batch_activity(request: OpenDataBatchCommitRequest) -> None:
-    """Render every jurisdiction in the batch and write them to open-data as one commit.
+    """Render every jurisdiction in the batch and write the changed ones as one commit.
 
     Raises on failure so Temporal retries, including when another commit won the branch in
     between: the next attempt re-reads the ref and re-renders, so it lands on top rather than
-    over the top.
+    over the top. A batch with nothing left to write is not a failure — the sweep re-selects
+    the same change three times over its lookback, so this is the ordinary outcome twice.
     """
-    written = await publish_service.commit_rendered_files(
+    commit_url = await publish_service.commit_rendered_files(
         request.items, request.commit_message
     )
-    if not written:
-        raise RuntimeError(
-            f"open-data batch write rejected for {request.batch_id} "
-            f"({len(request.items)} jurisdictions)"
+    if commit_url is None:
+        activity.logger.info(
+            "open-data batch %s: %d jurisdiction(s) already current, nothing committed",
+            request.batch_id,
+            len(request.items),
         )
 
 
@@ -98,11 +100,11 @@ async def sync_roster_sheet_activity(state: str) -> None:
     """Rewrite one state's people and posts tabs. Retry-safe: replaced whole, not patched."""
     people, seats, posts = await roster_sheet.sync_state(state)
     activity.logger.info(
-        "Sheet sync %s: %d people, %d memberships, %d posts",
+        "Sheet sync %s: people %s, memberships %s, posts %s",
         state,
-        people,
-        seats,
-        posts,
+        roster_sheet.describe(people),
+        roster_sheet.describe(seats),
+        roster_sheet.describe(posts),
     )
 
 
@@ -110,7 +112,9 @@ async def sync_roster_sheet_activity(state: str) -> None:
 async def sync_jurisdictions_sheet_activity() -> None:
     """Rewrite the all-states dropdown source."""
     written = await roster_sheet.sync_jurisdictions()
-    activity.logger.info("Sheet sync jurisdictions: %d rows", written)
+    activity.logger.info(
+        "Sheet sync jurisdictions: %s", roster_sheet.describe(written)
+    )
 
 
 # Wider than the 5-minute cadence: a redundant re-sync is a no-op, a missed one is a stale tab.

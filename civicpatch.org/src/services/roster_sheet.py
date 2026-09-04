@@ -10,9 +10,11 @@ Spec: `.scratch/2026-09-03-plan-*.md`.
 """
 
 import asyncio
+import hashlib
 import logging
-from typing import AsyncGenerator
+from typing import AsyncGenerator, Callable
 
+from core.output_hash import row_line
 from core.sheet import (
     jurisdiction_rows,
     membership_rows,
@@ -21,6 +23,7 @@ from core.sheet import (
     widths_for,
 )
 from database import jurisdictions as jurisdictions_db
+from database import output_hashes as output_hashes_db
 from database import memberships
 from database import people as people_db
 from database import posts as posts_db
@@ -52,16 +55,50 @@ def posts_tab(state: str) -> str:
     return f"Live[Posts][{state.upper()}]"
 
 
+Chunks = Callable[[], AsyncGenerator[list[list[str]], None]]
+
+
+def describe(written: int | None) -> str:
+    """For logs. `None` is a tab left alone, which is not the same as a tab that legitimately
+    holds nothing — Maine and Delaware have zero memberships."""
+    return "unchanged" if written is None else f"{written} rows"
+
+
+async def _content_hash(headers: list[str], chunks: Chunks) -> str:
+    """Stream the rows once to fingerprint them, holding one line at a time.
+
+    A factory rather than a generator because this consumes one and the write consumes another;
+    a generator is single-use. The second pass costs one more query — 50 ms for Texas, the
+    largest state — against three Sheets requests carrying 3.5 MB, so it pays for itself the
+    moment a tab is unchanged.
+    """
+    digest = hashlib.sha256()
+    digest.update(row_line(headers).encode())
+    async for block in chunks():
+        for row in block:
+            digest.update(row_line(row).encode())
+    return digest.hexdigest()
+
+
 async def _replace_rows(
     tab: str,
     headers: list[str],
     total: int,
-    chunks: AsyncGenerator[list[list[str]], None],
-) -> int:
+    chunks: Chunks,
+) -> int | None:
     """Make a tab hold exactly the header plus these rows, and nothing else.
+
+    Returns None when the tab already holds them — the sweep re-selects the same change three
+    times over its lookback, so two of every three calls have nothing to do, and a state rewrite
+    is ~9,700 rows.
 
     Threaded because `googleapiclient` is synchronous and would block the event loop.
     """
+    content_hash = await _content_hash(headers, chunks)
+    if (await output_hashes_db.get_hashes([tab])).get(tab) == content_hash:
+        logger.info(f"{tab}: unchanged, left alone")
+        return None
+
     spreadsheet_id = entry_sheet.spreadsheet_id()
     grid_rows = await asyncio.to_thread(
         sheets.ensure_tab, spreadsheet_id, tab, total + 1, widths_for(headers)
@@ -69,7 +106,7 @@ async def _replace_rows(
     await asyncio.to_thread(sheets.write_rows, spreadsheet_id, tab, [headers], 1)
 
     row = _FIRST_DATA_ROW
-    async for block in chunks:
+    async for block in chunks():
         await asyncio.to_thread(sheets.write_rows, spreadsheet_id, tab, block, row)
         row += len(block)
 
@@ -81,6 +118,9 @@ async def _replace_rows(
             sheets.clear_rows_from, spreadsheet_id, tab, row, len(headers)
         )
 
+    # Only after every chunk landed: recording earlier would leave a half-written tab marked
+    # current, and the retry would skip it.
+    await output_hashes_db.record_hashes({tab: content_hash})
     written = row - _FIRST_DATA_ROW
     logger.info(f"{tab}: {written} rows written (counted {total})")
     return written
@@ -123,8 +163,8 @@ async def _jurisdiction_chunks(
 
 async def sync_state(
     state: str, chunk_size: int = memberships.STATE_CHUNK_SIZE
-) -> tuple[int, int, int]:
-    """Rewrite one state's three tabs. Returns how many rows each got.
+) -> tuple[int | None, int | None, int | None]:
+    """Rewrite one state's three tabs. Returns how many rows each got, None for one left alone.
 
     Streamed, so peak memory tracks `chunk_size` and not the state — states sync concurrently.
     2,000 rows is ~11 MB held and 44,000 cells a request, balancing that against Sheets' 60
@@ -134,31 +174,31 @@ async def sync_state(
         people_tab(state),
         people_rows.HEADERS,
         await people_db.count_for_state(state),
-        _people_chunks(state, chunk_size),
+        lambda: _people_chunks(state, chunk_size),
     )
     seats = await _replace_rows(
         memberships_tab(state),
         membership_rows.HEADERS,
         await memberships.count_for_state(state),
-        _membership_chunks(state, chunk_size),
+        lambda: _membership_chunks(state, chunk_size),
     )
     total_posts, _ = await posts_db.list_page_for_state(state, 1, 0)
     posts = await _replace_rows(
         posts_tab(state),
         post_rows.HEADERS,
         total_posts,
-        _post_chunks(state, chunk_size),
+        lambda: _post_chunks(state, chunk_size),
     )
     return people, seats, posts
 
 
 async def sync_jurisdictions(
     chunk_size: int = memberships.STATE_CHUNK_SIZE,
-) -> int:
+) -> int | None:
     """The dropdown source: every active jurisdiction, every state, one flat tab."""
     return await _replace_rows(
         JURISDICTIONS_TAB,
         jurisdiction_rows.HEADERS,
         await jurisdictions_db.count_active(ENTRY_LEVELS),
-        _jurisdiction_chunks(chunk_size),
+        lambda: _jurisdiction_chunks(chunk_size),
     )
