@@ -39,14 +39,11 @@ def batch_commit():
 
     Patched at the enqueue rather than at `promote_batch_to_reviewed`, so the part worth
     checking — which jurisdictions made it in, and what file each renders to — still runs for
-    real. Yields the batch enqueue; the single-jurisdiction one is only silenced.
+    real.
     """
-    with (
-        patch("lib.temporal.client.enqueue_open_data_commit", new_callable=AsyncMock),
-        patch(
-            "lib.temporal.client.enqueue_open_data_batch_commit", new_callable=AsyncMock
-        ) as enqueued,
-    ):
+    with patch(
+        "lib.temporal.client.enqueue_open_data_batch_commit", new_callable=AsyncMock
+    ) as enqueued:
         yield enqueued
 
 

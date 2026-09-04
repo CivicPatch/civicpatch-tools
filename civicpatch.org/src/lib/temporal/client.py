@@ -9,12 +9,11 @@ from temporalio.common import WorkflowIDConflictPolicy
 from temporalio.service import RPCError, RPCStatusCode
 
 from core.temporal_workflow_state import TemporalWorkflowState, summarize
-from lib.temporal.types import OpenDataBatchCommitRequest, OpenDataCommitRequest
+from lib.temporal.types import OpenDataBatchCommitRequest
 from lib.temporal.workflows import (
     JurisdictionsSheetSyncWorkflow,
     OdSyncTargetedWorkflow,
     OpenDataBatchCommitWorkflow,
-    OpenDataCommitWorkflow,
     RosterSheetSyncWorkflow,
     ScheduleId,
     TASK_QUEUE,
@@ -148,25 +147,6 @@ async def enqueue_jurisdictions_sheet_sync() -> None:
     )
 
 
-async def enqueue_open_data_commit(request: OpenDataCommitRequest) -> None:
-    """Queue a durable write of one file into open-data.
-
-    The workflow id is the file path, so two writes to the same file serialise while writes to
-    different files run concurrently — the conflict domain of a Contents-API write is one blob,
-    not the branch. USE_EXISTING means a write queued while one is already running for that
-    file is dropped rather than duplicated: the running attempt renders from the database, so
-    it will pick up the newer content anyway.
-    """
-    client = await _get_client()
-    await client.start_workflow(
-        OpenDataCommitWorkflow.run,
-        request,
-        id=f"open-data-commit:{request.file_path}",
-        task_queue=TASK_QUEUE,
-        id_conflict_policy=WorkflowIDConflictPolicy.USE_EXISTING,
-    )
-
-
 async def enqueue_open_data_batch_commit(request: OpenDataBatchCommitRequest) -> None:
     """Queue a durable write of one commit covering every jurisdiction in the request.
 
@@ -176,7 +156,9 @@ async def enqueue_open_data_batch_commit(request: OpenDataBatchCommitRequest) ->
     makes a double-clicked Publish harmless.
     """
     client = await _get_client()
-    selection = ",".join(sorted(item.changeset_id for item in request.items))
+    selection = ",".join(
+        sorted(cid for item in request.items for cid in item.changeset_ids)
+    )
     digest = hashlib.sha256(selection.encode()).hexdigest()[:12]
     await client.start_workflow(
         OpenDataBatchCommitWorkflow.run,

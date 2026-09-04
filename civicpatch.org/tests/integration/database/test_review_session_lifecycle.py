@@ -12,7 +12,8 @@ import uuid
 import pytest
 import pytest_asyncio
 from database.database import get_pool
-from database.changesets import DISMISSED_UNCHANGED, dismiss_as_unchanged
+from database.changesets import mark_dismissed
+from shared.utils.statuses import DismissalReason
 from database.review_sessions import create_or_get_review_session, get_active_review_session
 from database.review_sessions import end_review_session
 from database.publications import publish_request
@@ -566,60 +567,9 @@ async def test_a_scrape_with_no_roster_never_reaches_the_pool():
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_scrape_that_changed_nothing_leaves_the_pool_saying_why():
-    """`dismissed_at` says a request left; it cannot say whether we confirmed the roster or
-    threw it away unread. Weekly scrapes are mostly no-change, so most of this table ends up
-    dismissed — and a history where the word means both answers neither question."""
-    ocdid = "ocd-jurisdiction/country:us/state:zz/place:pool_unchanged/government"
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "INSERT INTO jurisdictions (jurisdiction_ocdid, status) VALUES (%s, 'active') "
-            "ON CONFLICT DO NOTHING",
-            (ocdid,),
-        )
-        await cur.execute(
-            "INSERT INTO changesets (kind, status, jurisdiction_ocdid) VALUES ('scrape', 'SUCCESS', %s) RETURNING id::text",
-            (ocdid,),
-        )
-        changeset_id = (await cur.fetchone())[0]
-        await cur.execute(
-            # The review pool is "this scrape saw somebody" — one sighting is a roster.
-            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
-            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
-            (changeset_id, ocdid),
-        )
-        await cur.execute(
-            "UPDATE changesets SET status = 'SUCCESS', "
-            "updated_at = CURRENT_TIMESTAMP WHERE id = %s",
-            (changeset_id,),
-        )
-        await conn.commit()
-
-    rows, _, _ = await list_open_changesets(jurisdiction_ocdid=ocdid)
-    assert changeset_id in [r["changeset_id"] for r in rows]
-
-    async with pool.connection() as conn, conn.cursor() as cur:
-        assert await dismiss_as_unchanged(cur, changeset_id) is True
-        await conn.commit()
-
-    rows, _, _ = await list_open_changesets(jurisdiction_ocdid=ocdid)
-    assert changeset_id not in [r["changeset_id"] for r in rows]
-
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT dismissed_reason FROM changesets WHERE id::text = %s", (changeset_id,)
-        )
-        assert (await cur.fetchone())[0] == DISMISSED_UNCHANGED
-
-    await _cleanup_open_pr(changeset_id, ocdid)
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_auto_resolve_loses_the_race_to_a_reviewer_publishing():
-    """Guarded in the statement, not by checking first. A reviewer may be publishing this very
-    request, and an ingest arriving mid-publish must not overwrite their decision."""
+async def test_a_dismissal_loses_the_race_to_a_reviewer_publishing():
+    """Guarded in the statement, not by checking first: a reviewer may be publishing this very
+    changeset, and a dismissal arriving mid-publish must not overwrite their decision."""
     ocdid = "ocd-jurisdiction/country:us/state:zz/place:pool_race/government"
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -641,7 +591,7 @@ async def test_auto_resolve_loses_the_race_to_a_reviewer_publishing():
             (changeset_id, ocdid),
         )
 
-        assert await dismiss_as_unchanged(cur, changeset_id) is False
+        assert await mark_dismissed(cur, [changeset_id], DismissalReason.SUPERSEDED) == []
 
         await cur.execute(
             "SELECT dismissed_at, dismissed_reason FROM changesets WHERE id::text = %s",

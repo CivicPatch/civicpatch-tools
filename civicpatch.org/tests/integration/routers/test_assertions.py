@@ -303,7 +303,8 @@ async def test_an_assertion_is_logged_with_its_sources(client):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT changes->>'value', changes->'sources'->0->>'note' FROM change_logs "
+            "SELECT changes->'fields'->0->>'after', "
+            "       changes->'fields'->0->'sources'->0->>'note' FROM change_logs "
             "WHERE type = 'assert_field' AND changes->>'entity_id' = %s "
             "ORDER BY created_at",
             (post_id,),

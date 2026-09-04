@@ -5,10 +5,10 @@ from database import assertions
 from database.change_logs import record_change
 from database.changesets import live_roster_changeset
 from database.database import get_pool
-from database.entity_jurisdiction import jurisdiction_for
+from database.entity_jurisdiction import jurisdiction_for, name_for
 from lib.auth import require_route_access
 from schemas.assertions import Assertion
-from schemas.change_logs import AssertionChangePayload
+from schemas.change_logs import Change, FieldChange
 from schemas.common import Identity, RouteCategory, UserRole
 from shared.utils.statuses import ChangeLogType
 
@@ -56,14 +56,25 @@ def get_router() -> APIRouter:
                     if jurisdiction_ocdid
                     else None
                 ),
-                changes=AssertionChangePayload(
-                    entity_type=body.entity_type.value,
+                changes=Change(
+                    entity_type=body.entity_type,
                     entity_id=body.entity_id,
-                    field_path=body.field_path,
-                    kind=body.kind.value,
-                    value=body.value,
-                    sources=[source.model_dump() for source in body.sources],
-                ),
+                    # Resolved here, once, rather than by every reader on every page load. The
+                    # history used to look this up per row because an assertion payload carried
+                    # only ids — and it is the one name that must be captured now, since the
+                    # entity can be deleted before anybody reads the log.
+                    subject=(
+                        await name_for(cur, body.entity_type, body.entity_id)
+                        or body.entity_type.value
+                    ),
+                    fields=[
+                        FieldChange(
+                            field=body.field_path,
+                            after=body.value,
+                            sources=[source.model_dump() for source in body.sources],
+                        )
+                    ],
+                                ),
             )
             await conn.commit()
         return {"data": {"id": assertion_id}}

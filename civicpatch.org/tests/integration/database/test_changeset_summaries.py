@@ -116,13 +116,13 @@ async def _row():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_published_and_unchanged_both_count_as_confirmed():
-    """A re-confirmed roster is a healthy outcome, not a null one — so `unchanged` is a
-    success, and splitting it out would under-report how much actually worked."""
+async def test_only_a_publish_counts_as_confirmed():
+    """A re-confirmed roster is a healthy outcome, and it reaches here as a publish — that is
+    the whole reason it publishes rather than being dismissed. A dismissal is not a success."""
     await _changeset(published=True)
-    await _changeset(reason=DismissalReason.UNCHANGED)
+    await _changeset(reason=DismissalReason.REJECTED)
 
-    assert (await _row()).confirmed == 2
+    assert (await _row()).confirmed == 1
 
 
 @pytest.mark.asyncio
@@ -177,7 +177,7 @@ async def test_the_queue_is_not_windowed():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_review_lifecycle_is_not_a_roster_edit():
-    """`publish_review` and `close_review` say what happened to the *review*, which the outcome
+    """`publish_review` and `dismiss_review` say what happened to the *review*, which the outcome
     already reports. Counting them inflated roster edits by ~72% on dev."""
     changeset_id = await _changeset(published=True)
     pool = await get_pool()

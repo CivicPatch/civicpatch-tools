@@ -218,11 +218,17 @@ async def test_giving_up_on_a_run_does_not_restamp_the_source_clock():
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT status, updated_at::text FROM changesets WHERE id::text = %s",
+            "SELECT status, updated_at::text, dismissed_reason, state "
+            "FROM changesets WHERE id::text = %s",
             (abandoned,),
         )
-        status, updated_at = await cur.fetchone()
+        status, updated_at, dismissed_reason, state = await cur.fetchone()
     assert status == "ERROR"
+    # Settled, not merely labelled. A dead run left unresolved keeps counting in
+    # `WORK_IN_FLIGHT`, which is what would block its jurisdiction from ever being scraped
+    # again once the status clause compensating for it goes.
+    assert dismissed_reason == "errored"
+    assert state == "dismissed"
     assert updated_at.startswith("2026-03-01")
 
 

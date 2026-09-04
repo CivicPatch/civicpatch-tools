@@ -71,7 +71,7 @@ class JurisdictionHistoryEntry(BaseModel):
     # When a *person* published it, not when the machine finished.
     published_at: str | None
     # The five-way answer: `published`, `pending`, a `DismissalReason`, or `unknown` when a
-    # dismissal recorded no `close_review` log. A plain str rather than an enum — it spans
+    # dismissal recorded no `dismiss_review` log. A plain str rather than an enum — it spans
     # three vocabularies, and restating them here would be a second source of truth.
     outcome: str
     # Display name, absent while pending. `CivicPatch` when a sweep decided rather than a person.

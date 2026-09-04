@@ -7,7 +7,7 @@ from database.change_logs import record_change
 from database.changesets import live_roster_changeset
 from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType
-from schemas.change_logs import FieldChange, PostChangePayload
+from schemas.change_logs import Change, FieldChange
 from shared.utils.statuses import ChangeLogType
 
 
@@ -435,11 +435,11 @@ async def create_all(
                 ChangeLogType.ADD_POST,
                 None,
                 jurisdiction_ocdid,
-                PostChangePayload(
-                    post_id=minted,
-                    role_id=post.role_id,
-                    division_ocdid=post.division_ocdid,
-                    label=None,
+                Change(
+                    entity_type=EntityType.POST,
+                    entity_id=minted,
+                    # Derived posts carry no label; the role slug is what names them.
+                    subject=post.role_id,
                 ),
                 changeset_id=changeset_id,
             )
@@ -487,11 +487,10 @@ async def create(
                 ChangeLogType.ADD_POST,
                 user_id,
                 jurisdiction_ocdid,
-                PostChangePayload(
-                    post_id=post_id,
-                    role_id=role_id,
-                    division_ocdid=division_ocdid,
-                    label=minted.label if minted else None,
+                Change(
+                    entity_type=EntityType.POST,
+                    entity_id=post_id,
+                    subject=(minted.label if minted else None) or role_id,
                 ),
                 # A seat somebody added by hand belongs to the roster they added it to.
                 changeset_id=await live_roster_changeset(cur, jurisdiction_ocdid),
@@ -532,12 +531,11 @@ async def update(
             ChangeLogType.EDIT_POST,
             user_id,
             before.jurisdiction_ocdid,
-            PostChangePayload(
-                post_id=post_id,
-                role_id=before.role_id,
-                division_ocdid=before.division_ocdid,
+            Change(
+                entity_type=EntityType.POST,
+                entity_id=post_id,
                 # Derived, and unchanged by this edit: it names the seat for a reader.
-                label=before.label,
+                subject=before.label or before.role_id,
                 # Underscored names, because these are the wire's, not the model's.
                 fields=[
                     FieldChange(field=field, before=was, after=now)
@@ -577,11 +575,10 @@ async def delete(post_id: str, user_id: str | None = None) -> bool:
             ChangeLogType.DELETE_POST,
             user_id,
             before.jurisdiction_ocdid,
-            PostChangePayload(
-                post_id=post_id,
-                role_id=before.role_id,
-                division_ocdid=before.division_ocdid,
-                label=before.label,
+            Change(
+                entity_type=EntityType.POST,
+                entity_id=post_id,
+                subject=before.label or before.role_id,
             ),
         )
         return True

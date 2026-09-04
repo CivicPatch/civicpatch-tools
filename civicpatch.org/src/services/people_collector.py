@@ -5,16 +5,6 @@ import lib.buckets as buckets
 import lib.pipeline_artifacts as artifacts
 import lib.storage as storage_service
 from core.images import cdn_urls, records_with_images, resolve_images
-from core.membership_proposal import (
-    ExistingMembership,
-    ProposedChange,
-    nothing_to_review,
-    propose,
-)
-from core.post_derivation import DerivedPost
-from database import memberships as memberships_db
-from database import changesets as changesets_db
-from database.database import get_pool
 from database.issues import upsert_issue
 from database.pipeline_runs import (
     update_pipeline_run_status,
@@ -25,9 +15,10 @@ from schemas.pipeline_runs import (
     HandleSubmitPipelineRunArtifactsRequest,
     SubmitPipelineRunArtifactsResponse,
 )
-from services import pipeline_costs, roster_ingest
+from services import pipeline_costs, roster_edits, roster_ingest
 from services.jurisdiction_url import record_resolved_url, resolved_url
-from shared.schemas import Person, Role, RoleConfig
+from services.review_proposal import review_summary_for_request
+from shared.schemas import RoleConfig
 from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 from shared.utils.yaml_utils import yaml_dump, yaml_load
@@ -114,48 +105,16 @@ async def _store_source_records(
         )
 
 
-async def _get_proposed_changes(
-    cur, jurisdiction_ocdid: str, derived: list[DerivedPost]
-) -> list[ProposedChange]:
-    """What this scrape would change about who holds what. Read once, used by both steps below."""
-    held = (await memberships_db.open_by_jurisdiction(cur, [jurisdiction_ocdid]))[
-        jurisdiction_ocdid
-    ]
-    return propose(derived, [ExistingMembership(**row) for row in held])
-
-
-async def _dismiss_if_nothing_to_review(
-    cur, changeset_id: str, changes: list[ProposedChange]
+async def _publish_if_nothing_to_review(
+    changeset_id: str, jurisdiction_ocdid: str
 ) -> None:
-    """Retire a scrape nothing needs to be asked about.
-
-    Guarded in its own statement, so losing a race to a reviewer publishing leaves their
-    decision alone.
-    """
-    if not nothing_to_review(changes):
+    summary = await review_summary_for_request(changeset_id)
+    if summary.get("issues"):
         return
-    if await changesets_db.dismiss_as_unchanged(cur, changeset_id):
-        logger.info(f"[{changeset_id}] Dismissed: nothing to review")
-
-
-async def _derive_posts(
-    changeset_id: str,
-    records: list[dict],
-    roles: list[Role],
-    taxonomy: Taxonomy,
-) -> list:
-    """The seats this scrape implies, projected — nothing is written. Publishing creates them.
-
-    Never fatal: a scrape whose people are stored must not error over its own bookkeeping, and
-    posts are re-derivable from the sightings.
-    """
-    try:
-        derived = await roster_ingest.derive_posts(records, roles, taxonomy)
-        logger.info(f"[{changeset_id}] Derived {len(derived)} post(s)")
-        return derived
-    except Exception as e:
-        logger.error(f"[{changeset_id}] Failed to derive posts: {e}", exc_info=True)
-        return []
+    await roster_edits.publish_to_database(
+        changeset_id, jurisdiction_ocdid, None, resolved_by_user_id=None
+    )
+    logger.info(f"[{changeset_id}] Published: nothing for a reviewer to look at")
 
 
 async def _record_resolved_url(
@@ -189,10 +148,10 @@ async def _ingest_roster(
     with open(data_file_path, "r") as f:
         data = yaml_load(f.read())
 
-    # Read once and threaded down: every step below classifies against it, and a roles edit
-    # landing mid-submit would otherwise leave them disagreeing about the same scrape.
-    roles = await get_roles()
-    taxonomy = build_taxonomy(RoleConfig(roles=roles))
+    # Reconciliation classifies each sighting's label against this. Post derivation used to
+    # read it here too and no longer does — `review_summary_for_request` builds its own, at the
+    # point it needs one.
+    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
 
     roster, records_by_person = await _reconcile_roster(
         request.jurisdiction_ocdid, data, workflow_context, taxonomy
@@ -209,38 +168,34 @@ async def _ingest_roster(
         request.jurisdiction_ocdid,
         records_with_images(records_by_person, source_urls, served),
     )
-    derived = await _derive_posts(request.changeset_id, updated_data, roles, taxonomy)
-    await _apply_scrape_changes(request.changeset_id, request.jurisdiction_ocdid, derived)
+    await _apply_scrape_changes(request.changeset_id, request.jurisdiction_ocdid)
     await _record_resolved_url(
         request.changeset_id, request.jurisdiction_ocdid, workflow_context
     )
 
-
     for issue in workflow_context.get("data", {}).get("issues", []):
-        await upsert_issue(request.changeset_id, issue["type"], [issue.get("data") or {}])
+        await upsert_issue(
+            request.changeset_id, issue["type"], [issue.get("data") or {}]
+        )
 
 
-async def _apply_scrape_changes(
-    changeset_id: str, jurisdiction_ocdid: str, derived: list[DerivedPost]
-) -> None:
-    """Retire the scrape if it proposes nothing anyone needs to look at.
+async def _apply_scrape_changes(changeset_id: str, jurisdiction_ocdid: str) -> None:
+    """Settle the scrape if the reviewer would find nothing in it.
 
     All that is left of this at ingest. `advance_last_seen_at` and `close_absent` used to run
     here too, mutating *published* memberships on the strength of an *unreviewed* scrape. They
     were defended as observations — "the source stopped listing D" is true whether or not D
     left office — which holds for a good scrape and not for a bad one, and nothing here can
-    tell which. `publish_request` already does both, so this was a duplicate that ran too
-    early.
+    tell which. The reviewer's own issue list can, which is what gates the publish below.
 
-    Never fatal, like the other derived writes: a scrape whose people are stored must not error
-    over its own bookkeeping.
+    It derives no posts of its own any more: `review_summary_for_request` derives what it needs
+    from the proposed roster, at the point it is needed.
+
+    Never fatal: a scrape whose people are stored must not error over its own bookkeeping. A
+    failure leaves the changeset unresolved, which is the safe default — it awaits review.
     """
     try:
-        pool = await get_pool()
-        async with pool.connection() as conn, conn.cursor() as cur:
-            changes = await _get_proposed_changes(cur, jurisdiction_ocdid, derived)
-            await _dismiss_if_nothing_to_review(cur, changeset_id, changes)
-            await conn.commit()
+        await _publish_if_nothing_to_review(changeset_id, jurisdiction_ocdid)
     except Exception as e:
         logger.error(
             f"[{changeset_id}] Failed to apply the scrape's changes: {e}", exc_info=True
@@ -250,7 +205,9 @@ async def _apply_scrape_changes(
 async def _record_pipeline_error(changeset_id: str, workflow_context: dict) -> None:
     context_data = workflow_context.get("data", {})
     error_step = context_data.get("error_step") or PipelineIssueType.PIPELINE_ERROR
-    await upsert_issue(changeset_id, error_step, [context_data.get("error_detail") or {}])
+    await upsert_issue(
+        changeset_id, error_step, [context_data.get("error_detail") or {}]
+    )
 
 
 async def _handle_submit_pipeline_run_artifacts(

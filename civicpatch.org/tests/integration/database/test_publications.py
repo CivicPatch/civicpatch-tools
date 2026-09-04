@@ -23,7 +23,11 @@ from database import people as people_db
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from core.post_derivation import DerivedMembership, DerivedPost
-from database.publications import dismiss_request, publish_request
+from database.publications import (
+    UnpublishableChangeset,
+    dismiss_request,
+    publish_request,
+)
 from schemas.assertions import Assertion, AssertionKind, EntityType
 
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_publish/government"
@@ -332,6 +336,33 @@ async def test_republishing_keeps_the_first_publish_time(sentinel_request):
 
     again, _, _ = await _request_state(sentinel_request)
     assert again == first
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_run_that_produced_no_roster_cannot_be_published(failed_request):
+    """`core.changeset_lifecycle` gives `FAILED` no outgoing publish — a run that ended without
+    a roster has nothing to publish. Nothing enforced it: `AVAILABLE_FOR_REVIEW` keeps a dead
+    run out of the review queue, but a direct call would write over a live roster.
+
+    Refused rather than skipped. A silent no-op would leave the people written and the changeset
+    unmarked, so it would sit in the pool having already gone live.
+    """
+    with pytest.raises(UnpublishableChangeset):
+        await publish_request(failed_request, _SENTINEL_OCDID, [_person("Ann")])
+
+    assert await _people_by_status() == {}
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_dismissed_changeset_cannot_be_published(sentinel_request):
+    """`DISMISSED` is terminal. A reviewer publishing a card another sweep just superseded must
+    not resurrect it."""
+    await dismiss_request(sentinel_request, DismissalReason.REJECTED)
+
+    with pytest.raises(UnpublishableChangeset):
+        await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
 
 
 @pytest.mark.integration

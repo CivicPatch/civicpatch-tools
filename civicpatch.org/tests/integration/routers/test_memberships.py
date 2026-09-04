@@ -246,9 +246,15 @@ async def test_an_assignment_and_a_move_are_one_type_told_apart_by_the_payload(c
     logs = await _change_logs()
 
     assert [log["type"] for log in logs] == ["assign_membership"] * 2
-    assert logs[0]["fields"] == [{"field": "post_id", "before": None, "after": mayor}]
-    assert logs[1]["fields"] == [{"field": "post_id", "before": mayor, "after": ward}]
-    assert logs[0]["person_name"] == "Route Test"
+    # `sources` is empty on everything but an assertion — "phoned the clerk" is a field-level
+    # justification, so it lives beside the value it justifies.
+    assert logs[0]["fields"] == [
+        {"field": "post_id", "before": None, "after": mayor, "sources": []}
+    ]
+    assert logs[1]["fields"] == [
+        {"field": "post_id", "before": mayor, "after": ward, "sources": []}
+    ]
+    assert logs[0]["subject"] == "Route Test"
 
 
 @pytest.mark.asyncio

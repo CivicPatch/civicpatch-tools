@@ -3,46 +3,18 @@ from enum import StrEnum
 from typing import Any
 
 from pydantic import BaseModel
-
-from shared.utils.statuses import ChangeLogType, DismissalReason
+from schemas.assertions import EntityType
+from shared.utils.statuses import ChangeLogType
 
 
 class FieldChange(BaseModel):
     field: str
     before: Any | None = None
     after: Any | None = None
-
-
-class PersonChangePayload(BaseModel):
-    person_id: str
-    person_name: str
-    fields: list[FieldChange]
-
-
-class PersonChange(BaseModel):
-    type: ChangeLogType
-    payload: PersonChangePayload
-
-
-class DismissalPayload(BaseModel):
-    """Why a changeset was dismissed, recorded on its `close_review` log.
-
-    Stored rather than derived on read: `status` and `resolved_by_user_id` are both mutable, so
-    reconstructing this later could give a past event a different meaning than it had.
-    """
-
-    reason: DismissalReason
-
-
-class PostChangePayload(BaseModel):
-    """`change_logs` has no `post_id` column, so the anchor rides in the payload — the same
-    way person events carry `person_name`. `label` is what a reader recognises a post by."""
-
-    post_id: str
-    role_id: str
-    division_ocdid: str
-    label: str | None = None
-    fields: list[FieldChange] = []
+    # Why somebody said so — "phoned the clerk, there really are five trustees". Only an
+    # assertion carries one, and this is the single place it is recorded: `assertions` is
+    # current state and gets overwritten, so the log is what keeps a superseded justification.
+    sources: list[dict] = []
 
 
 # The seat a membership points at, named once: written in `database.memberships` and read back
@@ -50,39 +22,19 @@ class PostChangePayload(BaseModel):
 MEMBERSHIP_POST_FIELD = "post_id"
 
 
-class MembershipChangePayload(BaseModel):
-    """`person_name`, `role_id` and `label` are carried because ids do not render — the same
-    reason person events carry `person_name`.
-
-    `fields` records what moved, as on every other payload: `post_id` for a move, `label` for a
-    rename. A first assignment is the one whose `post_id` change has no `before`.
-    """
-
-    membership_id: str
-    person_id: str
-    person_name: str
-    post_id: str
-    role_id: str
-    label: str | None = None
+class Change(BaseModel):
+    entity_type: EntityType
+    entity_id: str
+    subject: str
+    detail: str | None = None
     fields: list[FieldChange] = []
 
 
-class AssertionChangePayload(BaseModel):
-    """Assertions are current state and can be overwritten, so the log is what keeps the
-    superseded value. `sources` rides along because it is the only record of why."""
+class PersonChange(BaseModel):
+    """A typed change `people_diff` produces: which kind of event, and what it says."""
 
-    entity_type: str
-    entity_id: str
-    field_path: str
-    kind: str
-    value: Any = None
-    sources: list[dict] = []
-
-
-class JurisdictionChangePayload(BaseModel):
-    jurisdiction_ocdid: str
-    jurisdiction_name: str
-    fields: list[FieldChange]
+    type: ChangeLogType
+    payload: Change
 
 
 class RosterChange(BaseModel):
@@ -132,11 +84,17 @@ class ChangeLogEntry(BaseModel):
 
 
 class ChangedJurisdiction(BaseModel):
-    """One jurisdiction the feed says changed, and what kinds of change reached it.
+    """One jurisdiction the feed says changed, what kinds of change reached it, and which
+    changesets they belonged to.
 
-    The types are carried so the open-data commit can name what it is mirroring — a sweep
-    knows the jurisdiction changed but, without them, nothing about how.
+    The types are carried so the open-data commit can name what it is mirroring — a sweep knows
+    the jurisdiction changed but, without them, nothing about how.
+
+    `changeset_ids` is what lets the sweep stamp `change_url`, which `promote_to_reviewed` used
+    to do by holding the id itself. Plural because one commit legitimately covers several
+    changesets' worth of change — the one-id-per-commit shape could not say that.
     """
 
     jurisdiction_ocdid: str
     change_types: list[str]
+    changeset_ids: list[str] = []

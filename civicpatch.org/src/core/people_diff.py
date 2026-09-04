@@ -4,7 +4,8 @@ from typing import Any
 from core.change_logs import field_changes
 from core.people_edits import EDITABLE_FIELDS
 from shared.schemas import POST_FIELD
-from schemas.change_logs import FieldChange, PersonChange, PersonChangePayload
+from schemas.assertions import EntityType
+from schemas.change_logs import Change, FieldChange, PersonChange
 from shared.utils.statuses import ChangeLogType
 
 
@@ -100,5 +101,10 @@ def _edited(person: dict, fields: list[FieldChange]) -> PersonChange:
     return PersonChange(type=ChangeLogType.EDIT_PERSON, payload=_payload(person, fields))
 
 
-def _payload(person: dict, fields: list[FieldChange]) -> PersonChangePayload:
-    return PersonChangePayload(person_id=person["id"], person_name=person.get("name") or "", fields=fields)
+def _payload(person: dict, fields: list[FieldChange]) -> Change:
+    return Change(
+        entity_type=EntityType.PERSON,
+        entity_id=person["id"],
+        subject=person.get("name") or "",
+        fields=fields,
+    )

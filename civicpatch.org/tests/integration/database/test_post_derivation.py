@@ -13,7 +13,6 @@ import json
 import uuid
 
 import pytest
-from shared.utils.statuses import DismissalReason
 import pytest_asyncio
 
 from core.post_derivation import ChosenPost, DerivedMembership
@@ -856,7 +855,7 @@ async def test_minting_a_post_is_logged_against_the_scrape_that_caused_it():
 
     logs = await _add_post_logs(changeset_id)
     assert len(logs) == 1
-    assert logs[0]["changes"]["role_id"] == "mayor"
+    assert logs[0]["changes"]["subject"] == "mayor"
     # The system, not a person: nobody asserted this, a scrape did it. Since 160 that is said
     # by naming the system user rather than by leaving the column null.
     assert str(logs[0]["user_id"]) == SYSTEM_USER_ID
@@ -887,7 +886,7 @@ async def test_only_the_new_seat_is_logged_when_a_scrape_mixes_both():
     await _mint([_derived("mayor", _BASE), _derived("council-member", _WARD_3)], later)
 
     logs = await _add_post_logs(later)
-    assert [log["changes"]["role_id"] for log in logs] == ["council-member"]
+    assert [log["changes"]["subject"] for log in logs] == ["council-member"]
 
 
 @pytest.mark.asyncio
@@ -944,7 +943,7 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
     existing tests for those two call the DB functions themselves, so they stayed green when
     ingest stopped calling them at all.
     """
-    from core.post_derivation import DerivedMembership, DerivedPost
+    from core.post_derivation import DerivedMembership
     from services.people_collector import _apply_scrape_changes
 
     person_id = await _seed_person()
@@ -969,21 +968,26 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         )
         await conn.commit()
 
-    # A scrape naming somebody else entirely: the seated person is absent from it.
+    # A scrape naming somebody else entirely: the seated person is absent from it. Expressed
+    # as a sighting rather than a derived post, because `_apply_scrape_changes` now reads the
+    # scrape back through `proposed_roster` instead of being handed a derivation.
     other_id = await _seed_person()
-    await _apply_scrape_changes(
-        changeset_id,
-        _OCDID,
-        [
-            DerivedPost(
-                role_id="clerk",
-                role_label="Clerk",
-                division_ocdid=_BASE,
-                headcount=1,
-                members=[DerivedMembership(person_id=other_id, source_labels=["Clerk"])],
-            )
-        ],
-    )
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO source_records "
+            "  (changeset_id, jurisdiction_ocdid, name, label, source_url) "
+            "VALUES (%s, %s, 'Someone Else', 'Clerk', 'https://zz.gov/clerk') RETURNING id",
+            (changeset_id, _OCDID),
+        )
+        await cur.execute(
+            "INSERT INTO source_record_identities (source_record_id, person_id) "
+            "VALUES (%s, %s)",
+            ((await cur.fetchone())[0], other_id),
+        )
+        await conn.commit()
+
+    await _apply_scrape_changes(changeset_id, _OCDID)
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -993,6 +997,77 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         closed_at, last_seen_at = await cur.fetchone()
     assert closed_at is None, "an unreviewed scrape closed a published membership"
     assert last_seen_at == _T0, "an unreviewed scrape moved a published last_seen_at"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_scrape_that_re_confirms_the_roster_publishes_and_moves_last_seen_at():
+    """The complement of the test above, and the thing that was silently broken.
+
+    A scrape proposing nothing new used to be dismissed as `unchanged`, so `publish_request`
+    never ran and `last_seen_at` never moved — leaving it frozen at the last scrape that
+    *changed* something. Ellensburg read 2025-06-22 after a 2026-09 scrape saw all fourteen of
+    its people on the page.
+
+    Re-confirmation is the one case where "we still see them" is the only thing the scrape has
+    to say, and it was the one case that recorded nothing.
+    """
+    from core.post_derivation import DerivedMembership
+    from services.people_collector import _apply_scrape_changes
+
+    # Three, because `MIN_EXPECTED_PEOPLE` is 3: a one-person roster is itself a review issue,
+    # and the gate would rightly refuse it.
+    seats = [("mayor", "Mayor"), ("clerk", "Clerk"), ("treasurer", "Treasurer")]
+    people = [await _seed_person() for _ in seats]
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        await cur.execute(
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, status, progress, "
+            "                        created_at, updated_at) "
+            "VALUES (%s, %s, 'scrape', 'SUCCESS', 100, %s, %s)",
+            (changeset_id := str(uuid.uuid4()), _OCDID, _T1, _T1),
+        )
+        for person_id, (role_id, role_label) in zip(people, seats):
+            post_id = await posts.find_or_create(cur, _OCDID, org, role_id, _BASE)
+            await memberships.upsert(
+                cur, DerivedMembership(person_id=person_id), post_id, org, _T0
+            )
+            # The sighting, resolved to the seated person. Publishing renders its roster from
+            # these, so without them `proposed_roster` is empty and the publish refuses.
+            await cur.execute(
+                "INSERT INTO source_records "
+                "  (changeset_id, jurisdiction_ocdid, name, label, source_url) "
+                "VALUES (%s, %s, %s, %s, 'https://zz.gov/roster') RETURNING id",
+                (changeset_id, _OCDID, f"Seed {role_label}", role_label),
+            )
+            await cur.execute(
+                "INSERT INTO source_record_identities (source_record_id, person_id) "
+                "VALUES (%s, %s)",
+                ((await cur.fetchone())[0], person_id),
+            )
+        await conn.commit()
+
+    # The same people in the same seats, so the reviewer's card would raise nothing.
+    await _apply_scrape_changes(changeset_id, _OCDID)
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT published_at IS NOT NULL, dismissed_at IS NOT NULL "
+            "FROM changesets WHERE id::text = %s",
+            (changeset_id,),
+        )
+        published, dismissed = await cur.fetchone()
+        await cur.execute(
+            "SELECT min(last_seen_at) FROM memberships WHERE person_id = ANY(%s)",
+            (people,),
+        )
+        last_seen_at = (await cur.fetchone())[0]
+
+    assert published, "a re-confirmed roster should publish, not sit unresolved"
+    assert not dismissed, "it should no longer be dismissed as unchanged"
+    assert last_seen_at > _T0, "publishing is what advances last_seen_at"
 
 
 @pytest.mark.asyncio

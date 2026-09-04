@@ -36,11 +36,7 @@ BUCKET_FAILED = "failed"
 BUCKET_OK = "ok"
 
 # Defined once so the rollup, calendar and bucket cannot disagree. All need `changesets` as `r`.
-# `unchanged` is confirmed — a re-confirmed roster is a healthy outcome.
-CONFIRMED = (
-    "(r.published_at IS NOT NULL "
-    f"OR r.dismissed_reason = '{DismissalReason.UNCHANGED.value}')"
-)
+CONFIRMED = "r.published_at IS NOT NULL"
 
 # `status` too: a run that errored before recording a reason still errored.
 # Only collection attempts get an outcome. A hand edit has no run to fail — 8 dev `people_edit`

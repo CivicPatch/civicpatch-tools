@@ -71,13 +71,10 @@ TRANSITIONS: dict[ChangesetState, dict[ChangesetEvent, ChangesetState]] = {
 # does not constrain: `changesets_dismissed_reason_valid` checks the vocabulary but not whether
 # the reason fits the run, which is how `CANCELLED`/`rejected` got written.
 DISMISSAL_REASONS: dict[ChangesetState, frozenset[DismissalReason]] = {
-    # A human read a roster and said no, a newer one won, or there was nothing to ask about.
+    # A human read a roster and said no, or a newer one won. A roster that was re-confirmed
+    # publishes instead — it is a decision, not a dismissal.
     ChangesetState.READY: frozenset(
-        {
-            DismissalReason.REJECTED,
-            DismissalReason.SUPERSEDED,
-            DismissalReason.UNCHANGED,
-        }
+        {DismissalReason.REJECTED, DismissalReason.SUPERSEDED}
     ),
     # Nobody decided: the run ended without a roster, or somebody stopped it.
     ChangesetState.FAILED: frozenset(

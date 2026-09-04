@@ -67,16 +67,11 @@ def test_an_errored_run_cannot_be_dismissed_as_cancelled_by_a_human():
     """The other contradictory row: `ERROR` dismissed as `cancelled`. Both are machine reasons
     so both are legal from FAILED — what is not legal is a *reviewer* reason there."""
     assert not dismissal_is_legal(ChangesetState.FAILED, DismissalReason.SUPERSEDED)
-    assert not dismissal_is_legal(ChangesetState.FAILED, DismissalReason.UNCHANGED)
 
 
 @pytest.mark.unit
 def test_a_reviewable_changeset_takes_only_reviewer_reasons():
-    for reason in (
-        DismissalReason.REJECTED,
-        DismissalReason.SUPERSEDED,
-        DismissalReason.UNCHANGED,
-    ):
+    for reason in (DismissalReason.REJECTED, DismissalReason.SUPERSEDED):
         assert dismissal_is_legal(ChangesetState.READY, reason)
     assert not dismissal_is_legal(ChangesetState.READY, DismissalReason.ERRORED)
 

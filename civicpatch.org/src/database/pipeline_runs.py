@@ -1,9 +1,14 @@
 from datetime import datetime, timedelta
 from typing import Optional
 
+import database.changesets as changesets_db
 from database.database import get_pool, to_iso
 from psycopg import sql
-from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
+from shared.utils.statuses import (
+    DismissalReason,
+    PipelineRunStatus,
+    TERMINAL_PIPELINE_RUN_STATUSES,
+)
 
 
 async def get_updated_at(cur, changeset_id: str) -> datetime:
@@ -123,14 +128,28 @@ async def get_active_pipeline_runs(
 
 
 async def get_pipeline_run_status(changeset_id: str):
+    """Where the run is, and whether it has been stopped.
+
+    The pipeline engine polls this every loop and checks one thing: `== CANCELLED`. So the
+    cancellation half is answered from `dismissed_at`, which is durable and set in the same
+    transaction as the dismissal — rather than from `status`, which is a live signal a cache
+    could lose and which the run-status plan removes.
+
+    A cancelled run is reported as cancelled whatever its last report said, which is the point:
+    the pipeline stopped mattering the moment somebody stopped it.
+    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
-            SELECT status, progress FROM changesets
+            f"""
+            SELECT CASE WHEN dismissed_reason = %s
+                        THEN '{PipelineRunStatus.CANCELLED.value}'
+                        ELSE status END,
+                   progress
+            FROM changesets
             WHERE id = %s;
             """,
-            (changeset_id,),
+            (DismissalReason.CANCELLED, changeset_id),
         )
         row = await cur.fetchone()
         if row:
@@ -180,8 +199,18 @@ RUN_NOT_TERMINAL = (
 
 
 async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
-    """`updated_at` is deliberately left alone: giving up on a run is not reading the source,
-    and restamping it would make a stale request outrank a newer scrape in the sweep."""
+    """Settle runs that stopped reporting. A dead run sends no failure — it just goes quiet.
+
+    Two steps, because that is the lifecycle: the silence is an `errored` event moving the run
+    from `running` to `failed`, and the dismissal follows from there. Marking alone left the
+    changeset formally unresolved forever — harmless only because `WORK_IN_FLIGHT` excludes
+    `ERROR` by hand, which is the sort of compensation that hides a gap rather than closing it.
+
+    Both in one transaction, so a run cannot be marked failed and left undismissed.
+
+    `updated_at` is deliberately left alone: giving up on a run is not reading the source, and
+    restamping it would make a stale request outrank a newer scrape in the sweep.
+    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -194,6 +223,8 @@ async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
             """,
             (older_than,),
         )
-        rows = await cur.fetchall()
-    return [row[0] for row in rows]
+        expired = [row[0] for row in await cur.fetchall()]
+        await changesets_db.mark_dismissed(cur, expired, DismissalReason.ERRORED)
+        await conn.commit()
+    return expired
 

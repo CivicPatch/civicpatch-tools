@@ -213,3 +213,33 @@ async def test_a_run_still_reporting_is_left_alone():
 
     assert changeset_id not in await expire_stale_pipeline_runs(timedelta(hours=6))
     assert await _status(changeset_id) == "SCRAPE_PAGE"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_cancelled_run_reads_as_cancelled_from_its_dismissal():
+    """The pipeline engine polls this every loop and checks one thing: `== CANCELLED`.
+
+    It is answered from `dismissed_reason` rather than `status` so that it survives the column:
+    a dismissal is written in a transaction, where the live status is a signal a cache could
+    lose, and the run-status plan removes `status` entirely.
+
+    The row here is built by hand because production writes *both* — `cancel` sets the status to
+    `CANCELLED` and then dismisses — so today the two always agree and this branch never fires.
+    That is the point: it is the shape that has to keep working when only one of them is left.
+    """
+    from database.pipeline_runs import get_pipeline_run_status
+
+    changeset_id = await _a_run_in_flight()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE changesets SET status = 'SCRAPE_PAGE', dismissed_at = now(), "
+            "dismissed_reason = 'cancelled' WHERE id = %s",
+            (changeset_id,),
+        )
+        await conn.commit()
+
+    reported = await get_pipeline_run_status(changeset_id)
+
+    assert reported["status"] == "CANCELLED"

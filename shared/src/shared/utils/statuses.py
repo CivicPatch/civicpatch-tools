@@ -115,12 +115,11 @@ class DismissalReason(StrEnum):
     CANCELLED = "cancelled"  # somebody stopped the run before it produced one
     ERRORED = "errored"  # the run ended without a roster; nobody decided
     SUPERSEDED = "superseded"  # a newer roster for this jurisdiction won
-    UNCHANGED = "unchanged"  # the scrape asserted nothing that needed review
 
 
 class ChangeLogType(StrEnum):
     PUBLISH_REVIEW = "publish_review"
-    CLOSE_REVIEW = "close_review"
+    DISMISS_REVIEW = "dismiss_review"
     ADD_PERSON = "add_person"
     EDIT_PERSON = "edit_person"
     DELETE_PERSON = "delete_person"

@@ -96,7 +96,7 @@ async def _publish(changeset_id: str, user_id: str | None = None) -> None:
 async def _dismiss(changeset_id: str, reason: DismissalReason) -> None:
     """Through `dismiss_request`, the real write path.
 
-    It used to hand-roll the UPDATE and write the reason only to the `close_review` log, which
+    It used to hand-roll the UPDATE and write the reason only to the `dismiss_review` log, which
     is what let it keep passing after migration 161 moved the reason onto the changeset — a
     fixture that copies a write path drifts the moment that path changes.
     """
@@ -161,14 +161,15 @@ async def test_roster_changes_are_grouped_under_their_changeset():
     await _log(
         changeset_id,
         ChangeLogType.ADD_PERSON,
-        {"person_id": "p1", "person_name": "Ann Lee", "fields": []},
+        {"entity_type": "person", "entity_id": "p1", "subject": "Ann Lee", "fields": []},
     )
     await _log(
         changeset_id,
         ChangeLogType.EDIT_PERSON,
         {
-            "person_id": "p1",
-            "person_name": "Ann Lee",
+            "entity_type": "person",
+            "entity_id": "p1",
+            "subject": "Ann Lee",
             "fields": [{"field": "name", "before": "A. Lee", "after": "Ann Lee"}],
         },
     )
@@ -183,11 +184,11 @@ async def test_roster_changes_are_grouped_under_their_changeset():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_review_lifecycle_is_not_a_roster_change():
-    """`publish_review` and `close_review` say what happened to the review, not to the people.
+    """`publish_review` and `dismiss_review` say what happened to the review, not to the people.
     They share the changeset, so only the type filter keeps them out."""
     changeset_id = await _seed_resolved()
     await _log(changeset_id, ChangeLogType.PUBLISH_REVIEW, {})
-    await _log(changeset_id, ChangeLogType.CLOSE_REVIEW, {"reason": "no_longer_valid"})
+    await _log(changeset_id, ChangeLogType.DISMISS_REVIEW, {"reason": "no_longer_valid"})
 
     assert await _changes_for(changeset_id) == []
 
@@ -202,11 +203,10 @@ async def test_a_seat_change_reads_as_a_post_field_change():
         changeset_id,
         ChangeLogType.ASSIGN_MEMBERSHIP,
         {
-            "membership_id": "m1",
-            "person_id": "p1",
-            "person_name": "Ann Lee",
-            "post_id": "post-b",
-            "role_id": "council-member",
+            "entity_type": "membership",
+            "entity_id": "m1",
+            "subject": "Ann Lee",
+            "detail": "council-member",
             "fields": [{"field": "post_id", "before": "post-a", "after": "post-b"}],
         },
     )
@@ -252,7 +252,7 @@ async def test_publishing_is_its_own_outcome_and_names_who_did_it():
 async def test_a_dismissal_reports_the_reason_it_recorded():
     """Off `changesets.dismissed_reason`, which every dismissal path writes.
 
-    It used to be read from the `close_review` log, which only `dismiss_request` wrote — so the
+    It used to be read from the `dismiss_review` log, which only `dismiss_request` wrote — so the
     sweeps' dismissals had no reason any reader could see, and 249 of 381 resolved changesets
     rendered "unknown" while the column said superseded or unchanged. Migration 161.
     """
@@ -301,7 +301,7 @@ async def test_a_dismissal_nobody_asked_for_is_credited_to_the_system():
 async def test_the_first_dismissal_reason_stands():
     """A second close cannot rewrite why the first one happened.
 
-    This inverts `test_the_latest_close_wins`, which asserted that a later `close_review` log
+    This inverts `test_the_latest_close_wins`, which asserted that a later `dismiss_review` log
     overrode the earlier reason. It could, while the log was the source. Now the reason sits
     beside `dismissed_at` and both are COALESCEd on write: a dismissal is one event, so it
     cannot have the time of the first and the reason of the second.
@@ -372,77 +372,6 @@ async def _seed_person(name: str) -> str:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_an_assertion_badge_names_the_person_it_is_about():
-    """`AssertionChangePayload` stores only `entity_type` and `entity_id`, so this name is
-    resolved on read. Without it the badge reads "person", which says nothing."""
-    changeset_id = await _seed_resolved()
-    person_id = await _seed_person("Ada Lovelace")
-    await _log(
-        changeset_id,
-        ChangeLogType.ASSERT_FIELD,
-        {
-            "entity_type": "person",
-            "entity_id": person_id,
-            "field_path": "email",
-            "kind": "accept",
-            "value": "ada@example.test",
-        },
-    )
-
-    changes = await _changes_for(changeset_id)
-
-    assert [change.name for change in changes] == ["Ada Lovelace"]
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_an_assertion_about_a_deleted_person_falls_back_to_its_type():
-    """The entity is gone but the assertion still happened, so the row stays — it just cannot
-    name a subject. A uuid would be worse than the bare type."""
-    changeset_id = await _seed_resolved()
-    await _log(
-        changeset_id,
-        ChangeLogType.ASSERT_FIELD,
-        {
-            "entity_type": "person",
-            "entity_id": "00000000-0000-4000-8000-0000000000ff",
-            "field_path": "email",
-            "kind": "accept",
-        },
-    )
-
-    changes = await _changes_for(changeset_id)
-
-    assert [change.name for change in changes] == ["person"]
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_repeated_assertions_on_one_person_resolve_the_name_once():
-    """Accepting four fields writes four rows naming the same person, so the lookup is deduped
-    before it runs rather than once per row."""
-    changeset_id = await _seed_resolved()
-    person_id = await _seed_person("Ada Lovelace")
-    for field in ("email", "phone", "url"):
-        await _log(
-            changeset_id,
-            ChangeLogType.ASSERT_FIELD,
-            {
-                "entity_type": "person",
-                "entity_id": person_id,
-                "field_path": field,
-                "kind": "accept",
-            },
-        )
-
-    changes = await _changes_for(changeset_id)
-
-    assert [change.name for change in changes] == ["Ada Lovelace"] * 3
-    assert sorted(change.fields[0].field for change in changes) == ["email", "phone", "url"]
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_a_details_edit_shows_what_it_changed():
     """A `jurisdiction_edit` changeset is in this list by design (decision D), so its log has to
     be too — otherwise the row reads "No roster changes" while the log holds the field diff.
@@ -452,8 +381,9 @@ async def test_a_details_edit_shows_what_it_changed():
         changeset_id,
         ChangeLogType.EDIT_JURISDICTION,
         {
-            "jurisdiction_ocdid": _OCDID,
-            "jurisdiction_name": "Crystal town",
+            "entity_type": "jurisdiction",
+            "entity_id": _OCDID,
+            "subject": "Crystal town",
             "fields": [{"field": "url", "before": "", "after": "https://example.test"}],
         },
     )

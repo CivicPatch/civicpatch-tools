@@ -1,14 +1,16 @@
 import database.change_logs as change_logs_db
-import database.pipeline_runs as pipeline_runs_db
 import database.changesets as changesets_db
+import database.pipeline_runs as pipeline_runs_db
 import database.review_session_entries as review_session_entries_db
-import lib.github.api as github_service
 import services.open_data_sync as data_sync
 import services.publish as publish_service
 import services.roster_sheet as roster_sheet
-from services import entry_sheet
 from database.issues import upsert_issue
-from lib.temporal.types import OpenDataBatchCommitRequest, OpenDataCommitRequest
+from lib.temporal.types import (
+    OpenDataBatchCommitRequest,
+    OpenDataCommitItem,
+)
+from services import entry_sheet
 from shared.utils.statuses import PipelineIssueType
 from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
 from temporalio import activity
@@ -83,35 +85,6 @@ async def commit_open_data_batch_activity(request: OpenDataBatchCommitRequest) -
 
 
 @activity.defn
-async def commit_open_data_activity(request: OpenDataCommitRequest) -> None:
-    """Render this request's file from the database and write it to open-data.
-
-    Raises on failure so Temporal retries. Safe to run repeatedly: the content comes from the
-    database, not from the workflow's arguments, so a second attempt writes whatever is true
-    now rather than replaying a stale render.
-    """
-    written = await publish_service.commit_rendered_file(
-        file_path=request.file_path,
-        changeset_id=request.changeset_id,
-        jurisdiction_ocdid=request.jurisdiction_ocdid,
-        commit_message=request.commit_message,
-    )
-    if not written:
-        raise RuntimeError(f"open-data write rejected for {request.file_path}")
-
-    # Only after the write landed: a promotion that deleted first would lose the data if the
-    # write then failed. Deleting an already-absent file succeeds, so a retry is harmless.
-    if request.delete_path:
-        removed = await github_service.delete_github_file(
-            branch_name=github_service.DEFAULT_BRANCH,
-            file_path=request.delete_path,
-            commit_message=request.delete_message or f"Remove {request.delete_path}",
-        )
-        if not removed:
-            raise RuntimeError(f"open-data delete rejected for {request.delete_path}")
-
-
-@activity.defn
 async def supersede_stacked_requests_activity() -> None:
     dismissed = await changesets_db.supersede_stacked_requests()
     if dismissed:
@@ -125,7 +98,11 @@ async def sync_roster_sheet_activity(state: str) -> None:
     """Rewrite one state's people and posts tabs. Retry-safe: replaced whole, not patched."""
     people, seats, posts = await roster_sheet.sync_state(state)
     activity.logger.info(
-        "Sheet sync %s: %d people, %d memberships, %d posts", state, people, seats, posts
+        "Sheet sync %s: %d people, %d memberships, %d posts",
+        state,
+        people,
+        seats,
+        posts,
     )
 
 
@@ -139,27 +116,46 @@ async def sync_jurisdictions_sheet_activity() -> None:
 # Wider than the 5-minute cadence: a redundant re-sync is a no-op, a missed one is a stale tab.
 _SWEEP_LOOKBACK_MINUTES = 15
 
+# Not a reviewer's batch. The workflow id is this plus a digest of what was selected, so
+# two sweeps covering the same changesets dedupe and a different selection does not.
+_SWEEP_BATCH_ID = "sweep"
+
 
 @activity.defn
 async def sweep_open_data_activity() -> None:
-    """Commit every jurisdiction that changed recently.
+    """Commit every jurisdiction that changed recently, as **one** commit.
 
     The same feed the sheet runs on, read at open-data's grain: one file per jurisdiction
     rather than one tab per state. Derived, not dispatched — a write path that never heard of
     open-data still reaches it, which is what `DELETE /people` and the two post routes needed.
 
-    Repeated sweeps of the same jurisdiction coalesce: `enqueue_open_data_commit` keys on the
-    file path and the commit re-renders from the database, so a second enqueue is a no-op.
+    Repeated sweeps coalesce on their own: the batch workflow's id carries a digest of the
+    changesets covered, so the same selection arriving again is `USE_EXISTING`. That is what
+    absorbs the lookback window being wider than the cadence.
     """
+    # avoid circular import: the client imports the workflows module, which imports this one
+    import lib.temporal.client as temporal_client
+
     changed = await change_logs_db.jurisdictions_changed_since(_SWEEP_LOOKBACK_MINUTES)
-    for jurisdiction in changed:
-        await publish_service.commit_roster(
-            jurisdiction.jurisdiction_ocdid,
-            f"Update {jurisdiction.jurisdiction_ocdid} "
-            f"({', '.join(jurisdiction.change_types)})",
+    if not changed:
+        return
+    await temporal_client.enqueue_open_data_batch_commit(
+        OpenDataBatchCommitRequest(
+            batch_id=_SWEEP_BATCH_ID,
+            items=[
+                OpenDataCommitItem(
+                    file_path=publish_service.reviewed_file_path(
+                        jurisdiction.jurisdiction_ocdid
+                    ),
+                    changeset_ids=jurisdiction.changeset_ids,
+                    jurisdiction_ocdid=jurisdiction.jurisdiction_ocdid,
+                )
+                for jurisdiction in changed
+            ],
+            commit_message=f"Update {len(changed)} jurisdiction(s)",
         )
-    if changed:
-        activity.logger.info("Swept %d jurisdiction(s) into open-data", len(changed))
+    )
+    activity.logger.info("Swept %d jurisdiction(s) into open-data", len(changed))
 
 
 @activity.defn

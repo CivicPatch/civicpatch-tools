@@ -28,8 +28,8 @@ from schemas.assertions import Assertion, AssertionKind, EntityType
 from schemas.posts import AssignmentResult
 from schemas.change_logs import (
     MEMBERSHIP_POST_FIELD,
+    Change,
     FieldChange,
-    MembershipChangePayload,
 )
 from shared.utils.statuses import ChangeLogType
 
@@ -558,13 +558,12 @@ async def assign(
             ChangeLogType.ASSIGN_MEMBERSHIP,
             user_id,
             post.jurisdiction_ocdid,
-            MembershipChangePayload(
-                membership_id=membership_id,
-                person_id=person_id,
-                person_name=await _person_name(cur, person_id),
-                post_id=post_id,
-                role_id=post.role_id,
-                label=label or post.label,
+            Change(
+                entity_type=EntityType.MEMBERSHIP,
+                entity_id=membership_id,
+                subject=await _person_name(cur, person_id),
+                # The seat, which an assignment is read as much by as by who took it.
+                detail=label or post.label,
                 fields=[change],
             ),
             # So the edit lands on the live roster's timeline entry rather than nowhere.

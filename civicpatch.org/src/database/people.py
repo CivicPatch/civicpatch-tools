@@ -5,7 +5,8 @@ from typing import Any, AsyncGenerator, List, LiteralString
 from core.membership_label import derive_post_label
 from database.change_logs import record_change
 from database.database import get_pool
-from schemas.change_logs import PersonChangePayload
+from schemas.assertions import EntityType
+from schemas.change_logs import Change
 from shared.utils.statuses import ChangeLogType
 from psycopg import sql
 from shared.schemas import Person
@@ -464,7 +465,7 @@ async def delete_person(person_id: str, user_id: str | None = None) -> str | Non
             ChangeLogType.DELETE_PERSON,
             user_id,
             jurisdiction_ocdid,
-            PersonChangePayload(person_id=person_id, person_name=name, fields=[]),
+            Change(entity_type=EntityType.PERSON, entity_id=person_id, subject=name),
         )
     return jurisdiction_ocdid
 

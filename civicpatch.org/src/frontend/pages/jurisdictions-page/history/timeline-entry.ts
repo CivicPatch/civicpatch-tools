@@ -52,7 +52,6 @@ const KIND_LABEL: Record<string, string> = {
 const OUTCOME_LABEL: Record<string, string> = {
   published: "Published",
   pending: "Awaiting review",
-  unchanged: "Unchanged",
   rejected: "Rejected",
   errored: "Errored",
   cancelled: "Cancelled",
@@ -63,7 +62,9 @@ const OUTCOME_LABEL: Record<string, string> = {
 // Per-outcome, because "nothing changed" and "nothing was produced" are opposite results that
 // a single line would flatten into the same sentence.
 const QUIET_NOTE: Record<string, string> = {
-  unchanged: "The roster was re-confirmed. Nothing to review.",
+  // A scrape that re-confirms the roster publishes, moving nothing — the most common scrape
+  // outcome, which without this read "No roster changes."
+  published: "The roster was re-confirmed. Nothing to review.",
   errored: "The scrape failed before producing a roster.",
   cancelled: "Stopped before it produced a roster.",
   rejected: "Rejected without recorded roster changes.",

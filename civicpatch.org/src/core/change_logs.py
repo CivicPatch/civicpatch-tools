@@ -30,48 +30,21 @@ def _moved_seat(changes: Mapping) -> bool:
     )
 
 
-def _post_name(changes: Mapping) -> str:
-    """What a reader recognises a seat by. Same fallback as the summary formatter below."""
-    return changes.get("label") or changes.get("role_id") or "post"
-
-
-def _subject(type_: ChangeLogType, changes: Mapping) -> str:
-    if type_ == ChangeLogType.EDIT_JURISDICTION:
-        # The place itself is the subject — there is no person or seat to name.
-        return changes.get("jurisdiction_name") or "jurisdiction"
-    if type_ == ChangeLogType.ASSERT_FIELD:
-        # An assertion payload stores only ids, so the reader resolves `entity_name` and puts
-        # it here on the way out. The type is the fallback when the entity is gone — better a
-        # bare "person" than a uuid nobody can read.
-        return changes.get("entity_name") or changes.get("entity_type") or "record"
-    return changes.get("person_name") or _post_name(changes)
-
-
 def roster_change(
     type_: ChangeLogType, created_at: datetime, changes: Mapping
 ) -> RosterChange:
     """One `change_logs` row as a timeline entry.
 
-    The payload families name their subject differently and record movement differently, so
-    this is the single place that knows which shape is which.
+    Every entity payload carries its own subject now, so this no longer has to know which shape
+    it is holding. It used to dispatch on `type_` to decide whether the name lived in
+    `person_name`, `label`, `role_id` or `jurisdiction_name`.
     """
-    if type_ == ChangeLogType.ASSERT_FIELD:
-        fields = [FieldChange(field=changes["field_path"], after=changes.get("value"))]
-    else:
-        fields = [FieldChange(**field) for field in changes.get("fields") or []]
-
     return RosterChange(
         type=type_,
         created_at=created_at,
-        name=_subject(type_, changes),
-        # Only a membership has a second subject worth naming: its seat. Everything else is
-        # already fully described by `name` plus the fields that moved.
-        detail=(
-            _post_name(changes)
-            if type_ == ChangeLogType.ASSIGN_MEMBERSHIP
-            else None
-        ),
-        fields=fields,
+        name=changes.get("subject") or "record",
+        detail=changes.get("detail"),
+        fields=[FieldChange(**field) for field in changes.get("fields") or []],
     )
 
 
@@ -109,44 +82,47 @@ def _reorder_summary(payload: dict) -> str:
     return f"Reordered roles: '{primary}' moved {where}"
 
 
+# What each entity verb reads as. The payload no longer differs by type, so this is the only
+# thing left that does — and it is a word, not a shape.
+_VERBS: dict[str, str] = {
+    "add_person": "Added",
+    "edit_person": "Edited",
+    "delete_person": "Deleted",
+    "add_post": "Added post",
+    "edit_post": "Edited post",
+    "delete_post": "Removed post",
+    "edit_jurisdiction": "Edited",
+    "assert_field": "Asserted on",
+}
+
+
 def summarize_change_log(type_: str, changes: dict | None) -> str:
     """Pure: render a one-line summary for an activity-feed row.
     Unknown types fall back to the raw type — never raises."""
     c = changes or {}
 
-    # ── Person events ───────────────────────────────────────────────────
-    if type_ in ("add_person", "edit_person", "delete_person"):
-        verb = {"add_person": "Added", "edit_person": "Edited", "delete_person": "Deleted"}[type_]
-        name = c.get("person_name") or "person"
-        fields = c.get("fields") or []
-        field_part = f" ({len(fields)} field{'s' if len(fields) != 1 else ''})" if fields else ""
-        return f"{verb} {name}{field_part}"
-
-    if type_ == "edit_jurisdiction":
-        return "Edited jurisdiction"
-
-    if type_ in ("publish_review", "close_review"):
-        return "Published review" if type_ == "publish_review" else "Closed review"
+    if type_ in ("publish_review", "dismiss_review"):
+        return "Published review" if type_ == "publish_review" else "Dismissed review"
 
     if type_ == "reorder_roles":
         return _reorder_summary(c)
 
-    # ── Post events ─────────────────────────────────────────────────────
-    # The label is what a person named the post; the role id is all there is without one.
-    post = c.get("label") or c.get("role_id") or "post"
-
+    # ── Entity events ───────────────────────────────────────────────────
+    # One shape, so one renderer. This used to be six branches, each pulling the subject out of
+    # a different key and counting or naming fields differently.
     if type_ == "assign_membership":
-        who = c.get("person_name") or "someone"
+        who = c.get("subject") or "someone"
+        seat = c.get("detail") or "post"
         # A move is the fact worth reading: it means a closed row was left behind.
-        if _moved_seat(c):
-            return f"Moved {who} to '{post}'"
-        return f"Assigned {who} to '{post}'"
+        return f"{'Moved' if _moved_seat(c) else 'Assigned'} {who} to '{seat}'"
 
-    if type_ in ("add_post", "edit_post", "delete_post"):
-        verb = {"add_post": "Added", "edit_post": "Edited", "delete_post": "Removed"}[type_]
+    if verb := _VERBS.get(type_):
+        name = c.get("subject") or "record"
         fields = c.get("fields") or []
-        field_part = f" ({', '.join(f['field'] for f in fields)})" if fields else ""
-        return f"{verb} post '{post}'{field_part}"
+        field_part = (
+            f" ({len(fields)} field{'s' if len(fields) != 1 else ''})" if fields else ""
+        )
+        return f"{verb} {name}{field_part}"
 
     # ── Role taxonomy events ────────────────────────────────────────────
     role = c.get("role", "?")
