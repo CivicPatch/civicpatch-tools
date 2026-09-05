@@ -11,7 +11,11 @@ from core.jurisdiction_search import (
     build_search_text,
 )
 from core.change_logs import roster_change
-from database.changeset_predicates import RESOLVED
+from database.changeset_predicates import (
+    LAST_COLLECTED_AT,
+    LAST_COLLECTED_JOIN,
+    RESOLVED,
+)
 from database.database import get_pool, to_iso
 from database.people import PERSON_JSON
 from psycopg import sql
@@ -225,13 +229,14 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
         async with pool.connection() as conn, conn.cursor() as cur:
             if with_geom:
                 await cur.execute(
-                    """
+                    f"""
                     SELECT
                         j.data,
                         ST_X(ST_Centroid(g.geom)) AS lon,
                         ST_Y(ST_Centroid(g.geom)) AS lat,
-                        j.scraped_at
+                        {LAST_COLLECTED_AT}
                     FROM jurisdictions j
+                    {LAST_COLLECTED_JOIN}
                     LEFT JOIN geo g ON j.data->>'geoid' = g.geoid
                     WHERE j.jurisdiction_ocdid = %s AND j.status = 'active'
                     LIMIT 1;
@@ -241,7 +246,7 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
                 row = await cur.fetchone()
                 if not row:
                     return None
-                data, lon, lat, scraped_at = row[0], row[1], row[2], row[3]
+                data, lon, lat, collected_at = row[0], row[1], row[2], row[3]
                 center = (
                     {"lat": float(lat), "lng": float(lon)}
                     if lon is not None and lat is not None
@@ -250,13 +255,14 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
                 return {
                     "data": data,
                     "geo_center": center,
-                    "scraped_at": to_iso(scraped_at),
+                    "last_collected_at": to_iso(collected_at),
                 }
             else:
                 await cur.execute(
-                    """
-                    SELECT data, scraped_at FROM jurisdictions
-                    WHERE jurisdiction_ocdid = %s AND status = 'active'
+                    f"""
+                    SELECT j.data, {LAST_COLLECTED_AT} FROM jurisdictions j
+                    {LAST_COLLECTED_JOIN}
+                    WHERE j.jurisdiction_ocdid = %s AND j.status = 'active'
                     LIMIT 1;
                     """,
                     (jurisdiction_ocdid,),
@@ -264,9 +270,9 @@ async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
                 row = await cur.fetchone()
                 if not row:
                     return None
-                # scraped_at is DB metadata, not an open-data field, so it rides beside
-                # `data` rather than being folded into it.
-                return {"data": row[0], "scraped_at": to_iso(row[1])}
+                # Derived, not an open-data field, so it rides beside `data` rather than
+                # being folded into it.
+                return {"data": row[0], "last_collected_at": to_iso(row[1])}
     except Exception:
         logger.exception("Error in get_jurisdiction")
         return None
@@ -816,32 +822,30 @@ async def deactivate_jurisdictions_not_in(
         )
 
 
-async def stamp_scraped_at(jurisdiction_ocdid: str, changeset_id: str) -> bool:
-    # "Last scraped" = when the request was created, stamped when a job PR merges. Guarded on
-    # Only a changeset a pipeline produced may set `scraped_at` — not an external merge or a
-    # roster typed in rather than scraped. That is now "has a run".
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        result = await conn.execute(
-            "UPDATE jurisdictions j SET scraped_at = changesets.created_at "
-            "FROM changesets "
-            "WHERE changesets.id = %s "
-            "AND EXISTS (SELECT 1 FROM pipeline_runs pr WHERE pr.changeset_id = changesets.id) "
-            "AND j.jurisdiction_ocdid = %s",
-            (changeset_id, jurisdiction_ocdid),
-        )
-    return result.rowcount > 0
+async def has_ever_collected(jurisdiction_ocdid: str) -> bool:
+    """Whether a source has ever been read for this jurisdiction and published.
 
+    `ReviewMode.for_scrape` is the only consumer and only ever asked "is this the first one" —
+    it took a timestamp and compared it to None. A boolean says that.
 
-async def get_scraped_at(jurisdiction_ocdid: str) -> datetime.datetime | None:
+    Replaces `get_scraped_at`; `stamp_scraped_at` went with it. That writer had no callers,
+    while the live one in `_record_publish` stamped on *every* publish, so ten hand edits had
+    dated a "scrape" for jurisdictions where nothing was scraped.
+    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT scraped_at FROM jurisdictions WHERE jurisdiction_ocdid = %s LIMIT 1;",
+            f"""
+            SELECT EXISTS (
+                SELECT 1 FROM jurisdictions j
+                {LAST_COLLECTED_JOIN}
+                WHERE j.jurisdiction_ocdid = %s AND {LAST_COLLECTED_AT} IS NOT NULL
+            )
+            """,
             (jurisdiction_ocdid,),
         )
         row = await cur.fetchone()
-        return row[0] if row else None
+        return bool(row and row[0])
 
 
 async def get_stale_jurisdictions(state: str) -> list[Jurisdiction]:
@@ -853,11 +857,17 @@ async def get_stale_jurisdictions(state: str) -> list[Jurisdiction]:
             f"""
             SELECT j.jurisdiction_ocdid, j.data->>'name', j.data->>'url'
             FROM jurisdictions j
+            {LAST_COLLECTED_JOIN}
             WHERE j.state = %s
               AND j.status = 'active'
               AND NULLIF(j.data->>'url', '') IS NOT NULL
-              AND (j.scraped_at IS NULL OR j.scraped_at < {FRESH_SINCE_SQL})
-            ORDER BY j.scraped_at ASC NULLS FIRST
+              AND ({LAST_COLLECTED_AT} IS NULL OR {LAST_COLLECTED_AT} < {FRESH_SINCE_SQL})
+            -- `jurisdiction_ocdid` breaks the tie, because nearly every row is tied: 6,738 of
+            -- 6,778 stale jurisdictions have never been collected. Without a total order
+            -- Postgres returns them however it likes and a LIMIT can re-offer the same places
+            -- on every drain while never reaching others — the lesson `review_pool` already
+            -- carries: "without a total order a row can appear on two pages or none".
+            ORDER BY {LAST_COLLECTED_AT} ASC NULLS FIRST, j.jurisdiction_ocdid
             """,
             (state,),
         )
@@ -876,13 +886,14 @@ async def get_state_jurisdiction_sets(state: str) -> StateJurisdictionSets:
             SELECT
                 j.jurisdiction_ocdid,
                 NULLIF(j.data->>'url', '') IS NOT NULL AS has_url,
-                (j.scraped_at IS NOT NULL AND j.scraped_at >= {FRESH_SINCE_SQL})
-                    AS is_fresh,
+                ({LAST_COLLECTED_AT} IS NOT NULL
+                 AND {LAST_COLLECTED_AT} >= {FRESH_SINCE_SQL})            AS is_fresh,
                 EXISTS (
                     SELECT 1 FROM people
                     WHERE jurisdiction_ocdid = j.jurisdiction_ocdid AND status = 'active'
                 ) AS has_people
             FROM jurisdictions j
+            {LAST_COLLECTED_JOIN}
             WHERE j.state = %s AND j.status = 'active'
             """,
             (state,),

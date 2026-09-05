@@ -77,7 +77,7 @@ async def _cleanup():
 
 @pytest_asyncio.fixture
 async def sentinel_request():
-    """A jurisdiction, a request, and the pipeline run `scraped_at` is stamped from."""
+    """A jurisdiction, a changeset, and the run behind it."""
     await _cleanup()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -215,25 +215,6 @@ async def test_an_empty_roster_does_not_retire_everyone(sentinel_request):
 
     assert await publish_request(sentinel_request, _SENTINEL_OCDID, []) == 0
     assert await _people_by_status() == {"active": ["Ann"]}
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_publish_stamps_scraped_at_from_the_pipeline_run(sentinel_request):
-    """Moved out of publish_side_effects — it is now atomic with the people write."""
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT j.scraped_at = pr.created_at
-            FROM jurisdictions j, changesets pr
-            WHERE j.jurisdiction_ocdid = %s AND pr.id = %s
-            """,
-            (_SENTINEL_OCDID, sentinel_request),
-        )
-        assert (await cur.fetchone())[0] is True
 
 
 @pytest.mark.integration

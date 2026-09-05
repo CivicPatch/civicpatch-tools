@@ -7,7 +7,7 @@ export interface Municipality {
   name: string;
   status: string;
   officials_count: number;
-  last_verified_at: string | null;
+  last_collected_at: string | null;
   needs_review: boolean;
 }
 
@@ -17,7 +17,7 @@ export interface MunicipalityFilter {
   needsReviewOnly: boolean;
 }
 
-export type SortKey = 'name' | 'status' | 'officials' | 'last_verified';
+export type SortKey = 'name' | 'status' | 'officials' | 'last_collected';
 export type SortDir = 'asc' | 'desc';
 
 export interface MunicipalitySort {
@@ -53,7 +53,7 @@ export function sortMunicipalities(
       if (key === 'name') return m.name;
       if (key === 'status') return m.status;
       if (key === 'officials') return m.officials_count;
-      return m.last_verified_at ?? '';
+      return m.last_collected_at ?? '';
     };
     return compareValues(valueFor(a), valueFor(b)) * factor;
   });

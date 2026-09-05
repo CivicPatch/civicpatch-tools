@@ -734,7 +734,7 @@ export const searchJurisdictions = async (query, { page = 1, limit = 10, state, 
   return res.json();
 };
 
-// One jurisdiction's open-data fields plus its scraped_at freshness stamp.
+// One jurisdiction's open-data fields plus when a source was last collected for it.
 export const fetchJurisdiction = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
   const res = await fetch(`${API_URL}/api/v1/jurisdictions?${params}`, {

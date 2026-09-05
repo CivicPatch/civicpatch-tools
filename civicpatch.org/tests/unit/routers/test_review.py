@@ -509,7 +509,7 @@ def test_get_by_request_200_for_open_pr(client):
             return_value=[{"name": "Jane Doe"}],
         ),
         patch(
-            "database.jurisdictions.get_scraped_at",
+            "database.jurisdictions.has_ever_collected",
             new_callable=AsyncMock,
             return_value=None,
         ),
@@ -552,7 +552,7 @@ def test_get_by_request_200_for_merged_pr(client):
             return_value=[{"name": "Jane Doe"}],
         ),
         patch(
-            "database.jurisdictions.get_scraped_at",
+            "database.jurisdictions.has_ever_collected",
             new_callable=AsyncMock,
             return_value=datetime.datetime(2026, 1, 1, tzinfo=datetime.timezone.utc),
         ),

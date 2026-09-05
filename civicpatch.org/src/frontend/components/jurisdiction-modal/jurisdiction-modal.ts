@@ -98,7 +98,7 @@ function JurisdictionModal(
   const [people, setPeople] = useState<RosterPerson[] | null>(null);
   const [details, setDetails] = useState<{
     data: JurisdictionData;
-    scraped_at: string | null;
+    last_collected_at: string | null;
   } | null>(null);
 
   useEffect(() => {
@@ -167,7 +167,7 @@ function JurisdictionModal(
           ${where
             ? html`<p class="jurisdiction-modal__where">${where}</p>`
             : ""}
-          ${details ? renderDetails(details.data, details.scraped_at) : ""}
+          ${details ? renderDetails(details.data, details.last_collected_at) : ""}
         </aside>
       </div>
     </div>

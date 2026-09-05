@@ -1,8 +1,8 @@
 """The publish transaction: everything that becomes true when a scrape goes live.
 
-One connection, one transaction. `people` and `jurisdictions.scraped_at` used to be written by
-separate paths after the merge — `people` by reading the merged file back out of open-data
-(`open_data_sync.sync_people`), `scraped_at` by a second call beside it. Publishing from the
+One connection, one transaction. `people` used to be written by a separate path after the
+merge, by reading the merged file back out of open-data (`open_data_sync.sync_people`).
+Publishing from the
 database instead makes them one atomic fact, and removes the read-back that made GitHub the
 authority for what is live.
 
@@ -140,14 +140,11 @@ async def _refuse_if_not_publishable(cur, changeset_id: str) -> None:
 async def _record_publish(
     cur, changeset_id: str, jurisdiction_ocdid: str, resolved_by_user_id: str | None
 ) -> None:
-    await cur.execute(
-        """
-        UPDATE jurisdictions j SET scraped_at = changesets.created_at
-        FROM changesets
-        WHERE changesets.id = %s AND j.jurisdiction_ocdid = %s
-        """,
-        (changeset_id, jurisdiction_ocdid),
-    )
+    # No `jurisdictions.scraped_at` stamp any more. It was written here on *every* publish
+    # with no filter, so ten hand edits had dated a "scrape" for jurisdictions where nothing
+    # was scraped — while `advances_last_seen`, computed a few lines up, was already asking
+    # exactly that question for `memberships.last_seen_at`. Freshness derives now, from
+    # published collection changesets: `LAST_COLLECTED_JOIN`.
     await cur.execute(
         """
         UPDATE changesets

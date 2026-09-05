@@ -19,8 +19,8 @@ class ReviewMode(str, Enum):
     RECONCILE = "reconcile"    # subsequent scrape; old<->new pairing is meaningful
 
     @classmethod
-    def for_scrape(cls, scraped_at: datetime | None) -> "ReviewMode":
-        return cls.BASELINE if scraped_at is None else cls.RECONCILE
+    def for_scrape(cls, has_ever_collected: bool) -> "ReviewMode":
+        return cls.RECONCILE if has_ever_collected else cls.BASELINE
 
 
 class UserRole(str, Enum):

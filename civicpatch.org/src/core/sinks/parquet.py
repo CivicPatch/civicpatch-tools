@@ -97,7 +97,6 @@ SCHEMAS: dict[str, pa.Schema] = {
             ("status", pa.string()),
             ("name", pa.string()),
             ("parent_ocdids", _STRINGS),
-            ("scraped_at", _TIMESTAMP),
             ("updated_at", _TIMESTAMP),
         ]
     ),

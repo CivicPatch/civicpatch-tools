@@ -243,14 +243,6 @@ async def test_get_jurisdiction_history_not_found():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_stamp_scraped_at_no_run_is_noop():
-    # Exercises the pipeline_runs join; no matching run/jurisdiction → no rows updated.
-    result = await db_jurisdictions.stamp_scraped_at(_FAKE_OCDID, _FAKE_UUID)
-    assert result is False
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_get_stale_jurisdictions():
     # Exercises the rolling-freshness/url/status predicates.
     result = await db_jurisdictions.get_stale_jurisdictions("zz")

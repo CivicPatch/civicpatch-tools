@@ -8,10 +8,10 @@ import {
 } from '../pages/municipalities-page/municipalities-filter.js';
 
 const MUNICIPALITIES = [
-  { jurisdiction_ocdid: 'a', name: 'Bellevue', status: 'fresh', officials_count: 5, last_verified_at: '2026-04-01T00:00:00Z', needs_review: false },
-  { jurisdiction_ocdid: 'b', name: 'Aurora', status: 'stale', officials_count: 2, last_verified_at: '2026-01-01T00:00:00Z', needs_review: true },
-  { jurisdiction_ocdid: 'c', name: 'Cascade', status: 'gap', officials_count: 0, last_verified_at: null, needs_review: false },
-  { jurisdiction_ocdid: 'd', name: 'Denver', status: 'untracked', officials_count: 0, last_verified_at: null, needs_review: false },
+  { jurisdiction_ocdid: 'a', name: 'Bellevue', status: 'fresh', officials_count: 5, last_collected_at: '2026-04-01T00:00:00Z', needs_review: false },
+  { jurisdiction_ocdid: 'b', name: 'Aurora', status: 'stale', officials_count: 2, last_collected_at: '2026-01-01T00:00:00Z', needs_review: true },
+  { jurisdiction_ocdid: 'c', name: 'Cascade', status: 'gap', officials_count: 0, last_collected_at: null, needs_review: false },
+  { jurisdiction_ocdid: 'd', name: 'Denver', status: 'untracked', officials_count: 0, last_collected_at: null, needs_review: false },
 ];
 
 describe('filterMunicipalities', () => {
@@ -84,8 +84,8 @@ describe('sortMunicipalities', () => {
     expect(result.map((m) => m.officials_count)).toEqual([0, 0, 2, 5]);
   });
 
-  it('sorts by last_verified_at, nulls first ascending', () => {
-    const result = sortMunicipalities(MUNICIPALITIES, { key: 'last_verified', dir: 'asc' });
+  it('sorts by last_collected_at, nulls first ascending', () => {
+    const result = sortMunicipalities(MUNICIPALITIES, { key: 'last_collected', dir: 'asc' });
     expect(result.map((m) => m.name)).toEqual(['Cascade', 'Denver', 'Aurora', 'Bellevue']);
   });
 

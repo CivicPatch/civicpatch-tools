@@ -8,6 +8,7 @@ Run with: mise run tcp-integration
 Isolation: sentinel state 'zz' + ocdid prefix, cleaned before/after.
 """
 
+from tests.integration import factories
 import datetime
 import json
 import uuid
@@ -39,6 +40,13 @@ async def _wipe():
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid LIKE 'zz-%'"
             )
+        # `collect_and_publish` mints a run and a changeset per fresh fixture, and
+        # `fk_changesets_jurisdiction_ocdid` is ON DELETE RESTRICT — without these the
+        # jurisdiction delete below raises and the teardown silently leaves rows behind.
+        for _table in ("changesets", "pipeline_runs"):
+            await cur.execute(
+                f"DELETE FROM {_table} WHERE jurisdiction_ocdid LIKE 'zz%'"
+            )
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
         await conn.commit()
 
@@ -50,17 +58,17 @@ async def clean_sentinels():
     await _wipe()
 
 
-async def _insert(ocdid, *, scraped_at, people):
+async def _insert(ocdid, *, collected_at, people):
     data = json.dumps({"url": "https://x", "parent_ocdids": [_COUNTY]})
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             INSERT INTO jurisdictions
-                (jurisdiction_ocdid, state, level, data, updated_at, status, scraped_at)
-            VALUES (%s, 'zz', 'local', %s, now(), 'active', %s)
+                (jurisdiction_ocdid, state, level, data, updated_at, status)
+            VALUES (%s, 'zz', 'local', %s, now(), 'active')
             """,
-            (ocdid, data, scraped_at),
+            (ocdid, data),
         )
         if people:
             # Seated, not merely present: "has people" is an open membership now, so a person
@@ -91,13 +99,18 @@ async def _insert(ocdid, *, scraped_at, people):
             )
         await conn.commit()
 
+    # Freshness is derived from published collection changesets now, not from a column a
+    # fixture can set. `collected_at=None` means never collected, which is a real state.
+    if collected_at is not None:
+        await factories.collect_and_publish(ocdid, collected_at)
+
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_fresh_sits_alongside_scraped_and_total():
-    await _insert("zz-fresh", scraped_at=_FRESH_SCRAPE, people=True)
-    await _insert("zz-stale", scraped_at=_STALE_SCRAPE, people=True)
-    await _insert("zz-nopeople", scraped_at=_FRESH_SCRAPE, people=False)
+    await _insert("zz-fresh", collected_at=_FRESH_SCRAPE, people=True)
+    await _insert("zz-stale", collected_at=_STALE_SCRAPE, people=True)
+    await _insert("zz-nopeople", collected_at=_FRESH_SCRAPE, people=False)
 
     coverage = await get_maps_coverage()
 

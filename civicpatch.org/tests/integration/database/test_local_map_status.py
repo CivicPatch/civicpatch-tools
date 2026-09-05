@@ -9,6 +9,7 @@ Run with: mise run tcp-integration
 Isolation: sentinel state 'zz' + ocdid prefix 'zz-'; cleaned before/after each test.
 """
 
+from tests.integration import factories
 import datetime
 import json
 import uuid
@@ -38,6 +39,13 @@ async def _wipe():
             await cur.execute(
                 f"DELETE FROM {_t} WHERE jurisdiction_ocdid LIKE 'zz%'"
             )
+        # `collect_and_publish` mints a run and a changeset per fresh fixture, and
+        # `fk_changesets_jurisdiction_ocdid` is ON DELETE RESTRICT — without these the
+        # jurisdiction delete below raises and the teardown silently leaves rows behind.
+        for _table in ("changesets", "pipeline_runs"):
+            await cur.execute(
+                f"DELETE FROM {_table} WHERE jurisdiction_ocdid LIKE 'zz%'"
+            )
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid LIKE 'zz-%'")
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
         await conn.commit()
@@ -50,21 +58,24 @@ async def clean_sentinels():
     await _wipe()
 
 
-async def _insert_jurisdiction(ocdid, *, url=None, scraped_at=None):
+async def _insert_jurisdiction(ocdid, *, url=None, collected_at=None):
     data = json.dumps({"url": url} if url else {})
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             INSERT INTO jurisdictions
-                (jurisdiction_ocdid, state, level, data, updated_at, status, scraped_at)
-            VALUES (%s, 'zz', 'local', %s, now(), 'active', %s)
+                (jurisdiction_ocdid, state, level, data, updated_at, status)
+            VALUES (%s, 'zz', 'local', %s, now(), 'active')
             """,
-            (ocdid, data, scraped_at),
+            (ocdid, data),
         )
         await conn.commit()
 
-
+    # Freshness is derived from published collection changesets now, not from a column a
+    # fixture can set. `collected_at=None` means never collected, which is a real state.
+    if collected_at is not None:
+        await factories.collect_and_publish(ocdid, collected_at)
 async def _add_person(ocdid):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -104,7 +115,7 @@ async def _add_person(ocdid):
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_has_people_scraped_within_window_is_fresh():
-    await _insert_jurisdiction("zz-fresh", url="https://f", scraped_at=_FRESH_SCRAPE)
+    await _insert_jurisdiction("zz-fresh", url="https://f", collected_at=_FRESH_SCRAPE)
     await _add_person("zz-fresh")
 
     status = await get_local_status_for_state("zz")
@@ -115,7 +126,7 @@ async def test_has_people_scraped_within_window_is_fresh():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_has_people_scraped_before_window_is_stale():
-    await _insert_jurisdiction("zz-stale", url="https://s", scraped_at=_STALE_SCRAPE)
+    await _insert_jurisdiction("zz-stale", url="https://s", collected_at=_STALE_SCRAPE)
     await _add_person("zz-stale")
 
     status = await get_local_status_for_state("zz")
@@ -126,7 +137,7 @@ async def test_has_people_scraped_before_window_is_stale():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_no_people_with_url_is_gap():
-    await _insert_jurisdiction("zz-gap", url="https://g", scraped_at=_FRESH_SCRAPE)
+    await _insert_jurisdiction("zz-gap", url="https://g", collected_at=_FRESH_SCRAPE)
 
     status = await get_local_status_for_state("zz")
 
@@ -137,7 +148,7 @@ async def test_no_people_with_url_is_gap():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_no_people_no_url_is_untracked():
-    await _insert_jurisdiction("zz-untracked", url=None, scraped_at=None)
+    await _insert_jurisdiction("zz-untracked", url=None, collected_at=None)
 
     status = await get_local_status_for_state("zz")
 
