@@ -64,6 +64,11 @@ def page_dispositions(actual: dict, expected: dict) -> dict[str, list[Dispositio
     }
 
 
+def _eval_run_id(provider_name: str) -> str:
+    """One id per provider: costs key on the run, and every provider here shares an ocdid."""
+    return f"run-eval-{provider_name}"
+
+
 async def run_eval(model_client, case, ocdid="ocd-jurisdiction/country:us/state:tx/place:example/government"):
     """
     Runs the evaluation for a single test case.
@@ -79,7 +84,7 @@ async def run_eval(model_client, case, ocdid="ocd-jurisdiction/country:us/state:
     prompt = make_prompt(page_url, jurisdiction_name, known_roles)
     extra_kwargs = model_client.get("extra_kwargs", {})
     response = await run_prompt(
-        "run-eval",
+        _eval_run_id(model_client["name"]),
         ocdid,
         prompt,
         prompt_name="relevant_page",
@@ -175,14 +180,14 @@ def _score_case(model_client, case, case_scores, actual_output):
     return failed
 
 
-def _write_report(model_client, failed_cases, eval_ocdid, elapsed_seconds, dispositions=(), case_ids=()):
-    llm_costs = cost_utils.get_cost_tracker(eval_ocdid)["llm_costs"]
+def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), case_ids=()):
+    llm_costs = cost_utils.get_cost_tracker(_eval_run_id(model_client["name"]))["llm_costs"]
     cost_summary = {
         "model": llm_costs[0]["model"] if llm_costs else None,
         "elapsed_seconds": elapsed_seconds,
         "total_input_tokens": sum(c["input_tokens"] for c in llm_costs),
         "total_output_tokens": sum(c["output_tokens"] for c in llm_costs),
-        "total_cost_usd": float(sum(c["total_cost"] for c in llm_costs)),
+        "total_cost_usd": float(cost_utils.sum_cost(llm_costs)),
     }
     merged: dict[str, list] = {}
     for page in dispositions:
@@ -260,7 +265,7 @@ async def test_provider_comparison(load_eval_cases):
             print(f"PROVIDER FAILED: {provider_client['name']}: {result!r}", flush=True)
             continue
         client, failed_cases, ocdid, elapsed_seconds, dispositions = result
-        cost_summary = _write_report(client, failed_cases, ocdid, elapsed_seconds, dispositions,
+        cost_summary = _write_report(client, failed_cases, elapsed_seconds, dispositions,
                                      [c['id'] for c in load_eval_cases])
         all_failed.extend(failed_cases)
         comparison[client["name"]] = {

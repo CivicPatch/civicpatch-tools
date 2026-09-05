@@ -179,9 +179,16 @@ async def sync_roster_sheet_activity(state: str) -> None:
 
 @activity.defn
 async def sync_jurisdictions_sheet_activity() -> None:
-    """Rewrite the all-states dropdown source."""
+    """Rewrite the all-states dropdown source, then put the tab bar back in order.
+
+    The bar is spreadsheet-wide like this tab is, and re-imposing it costs one read when it is
+    already right — so it rides along here rather than earning an activity of its own.
+    """
     written = await sheet_sink.sync_jurisdictions()
     activity.logger.info("Sheet sync jurisdictions: %s", sheet_sink.describe(written))
+
+    moved = await sheet_sink.order_tabs()
+    activity.logger.info("Sheet tab order: %d tab(s) moved", moved)
 
 
 # Wider than the 5-minute cadence: a redundant re-sync is a no-op, a missed one is a stale tab.

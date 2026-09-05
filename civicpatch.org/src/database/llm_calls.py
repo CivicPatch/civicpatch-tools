@@ -42,7 +42,12 @@ _COLUMNS = (
 
 
 async def record_calls(pipeline_run_id: str, calls: list[dict]) -> int:
-    """Returns how many rows landed, so the caller can log a count it did not assume."""
+    """Returns how many rows landed — not how many were offered.
+
+    Submit is an HTTP endpoint, so a scraper that retries after a timeout the server actually
+    completed re-sends the same calls. They conflict on `(pipeline_run_id, generation_id)` and
+    are skipped, which is why the caller logs this count rather than assuming one.
+    """
     # Grounded Google calls state no cost — grounding is sold on a quota, so a per-call figure
     # is not even well defined. They stay in `costs.json` for the token counts and out of here,
     # rather than being written as a zero that would read as free.
@@ -53,7 +58,9 @@ async def record_calls(pipeline_run_id: str, calls: list[dict]) -> int:
     # Composed rather than f-strung: the column list is built at runtime, so an f-string is a
     # `str` and psycopg only accepts a `LiteralString`. `sql.Identifier` also quotes the names.
     names = ("pipeline_run_id", *_COLUMNS)
-    statement = sql.SQL("INSERT INTO llm_calls ({columns}) VALUES ({placeholders})").format(
+    statement = sql.SQL(
+        "INSERT INTO llm_calls ({columns}) VALUES ({placeholders}) ON CONFLICT DO NOTHING"
+    ).format(
         columns=sql.SQL(", ").join(sql.Identifier(name) for name in names),
         placeholders=sql.SQL(", ").join(sql.Placeholder() * len(names)),
     )
@@ -64,5 +71,6 @@ async def record_calls(pipeline_run_id: str, calls: list[dict]) -> int:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.executemany(statement, rows)
+        recorded = cur.rowcount
         await conn.commit()
-    return len(rows)
+    return recorded

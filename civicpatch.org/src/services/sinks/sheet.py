@@ -55,6 +55,18 @@ def posts_tab(state: str) -> str:
     return f"Live[Posts][{state.upper()}]"
 
 
+def ordered_tabs(states: list[str]) -> list[str]:
+    """The whole tab bar: entry, jurisdictions, then each state's three tabs together.
+
+    State first because that is how the sheet is worked — one state at a time, all three grains
+    side by side. Entry leads because it is the tab a volunteer actually opens.
+    """
+    tabs = [entry_sheet.ROSTER_TAB, JURISDICTIONS_TAB]
+    for state in sorted(states):
+        tabs += [people_tab(state), memberships_tab(state), posts_tab(state)]
+    return tabs
+
+
 Chunks = Callable[[], AsyncGenerator[list[list[str]], None]]
 
 
@@ -211,4 +223,15 @@ async def sync_jurisdictions(
         jurisdiction_rows.HEADERS,
         await jurisdictions_db.count_active(ENTRY_LEVELS),
         lambda: _jurisdiction_chunks(chunk_size),
+    )
+
+
+async def order_tabs() -> int:
+    """Put the tab bar back where it belongs. Returns how many tabs had to move.
+
+    A state whose tabs do not exist yet is simply not placed, and falls in on a later run.
+    """
+    states = [row["code"] for row in await jurisdictions_db.get_states_with_names()]
+    return await asyncio.to_thread(
+        sheets.reorder_tabs, entry_sheet.spreadsheet_id(), ordered_tabs(states)
     )

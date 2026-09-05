@@ -2,27 +2,30 @@ import json
 import uuid
 from typing import Any
 
-from psycopg import sql
-
 import shared.utils.id_utils
 from database.database import get_pool
+from psycopg import sql
 from shared.utils.statuses import PipelineIssueStatus, PipelineIssueType
 
 
-def _build_jurisdictions(ocdids: list[str] | None, name_by_ocdid: dict[str, str] | None = None) -> list[dict]:
+def _build_jurisdictions(
+    ocdids: list[str] | None, name_by_ocdid: dict[str, str] | None = None
+) -> list[dict]:
     result = []
-    for ocdid in (ocdids or []):
+    for ocdid in ocdids or []:
         try:
             folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(ocdid)
             parts = folder.split("/")
-            result.append({
-                "jurisdiction_ocdid": ocdid,
-                "folder": folder,
-                "path": folder,
-                "name": (name_by_ocdid or {}).get(ocdid) or ocdid,
-                "state": parts[0] if parts else "",
-                "locality": parts[2] if len(parts) > 2 else "",
-            })
+            result.append(
+                {
+                    "jurisdiction_ocdid": ocdid,
+                    "folder": folder,
+                    "path": folder,
+                    "name": (name_by_ocdid or {}).get(ocdid) or ocdid,
+                    "state": parts[0] if parts else "",
+                    "locality": parts[2] if len(parts) > 2 else "",
+                }
+            )
         except Exception:
             pass
     return result
@@ -56,7 +59,11 @@ async def get_pending_issue_ocdids_by_state(state_code: str) -> set[str]:
             WHERE pi.status IN (%s, %s)
               AND r.jurisdiction_ocdid LIKE %s
             """,
-            (PipelineIssueStatus.PENDING, PipelineIssueStatus.PR_OPENED, f"%state:{state_code}%"),
+            (
+                PipelineIssueStatus.PENDING,
+                PipelineIssueStatus.PR_OPENED,
+                f"%state:{state_code}%",
+            ),
         )
         rows = await cur.fetchall()
     return {row[0] for row in rows}
@@ -68,15 +75,6 @@ async def resolve_issue(issue_id: str) -> None:
         await conn.execute(
             "UPDATE issues SET status = %s, resolved_at = NOW() WHERE id = %s",
             (PipelineIssueStatus.RESOLVED, issue_id),
-        )
-
-
-async def open_issue_pull_request(issue_id: str, pull_request_url: str) -> None:
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
-            "UPDATE issues SET status = %s, pull_request_url = %s WHERE id = %s",
-            (PipelineIssueStatus.PR_OPENED, pull_request_url, issue_id),
         )
 
 
@@ -113,7 +111,9 @@ async def reopen_issue(issue_id: str) -> None:
         )
 
 
-async def supersede_prior_jurisdiction_issues(jurisdiction_ocdid: str, current_changeset_id: str) -> None:
+async def supersede_prior_jurisdiction_issues(
+    jurisdiction_ocdid: str, current_changeset_id: str
+) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
@@ -149,7 +149,9 @@ async def upsert_issue(changeset_id: str, issue_type: str, issues: list[dict]) -
         else:
             issue_key = changeset_id
             data = json.dumps(issue)
-        rows.append((issue_type, issue_key, [changeset_id], data, PipelineIssueStatus.PENDING))
+        rows.append(
+            (issue_type, issue_key, [changeset_id], data, PipelineIssueStatus.PENDING)
+        )
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -196,13 +198,15 @@ async def create_user_reported_issue(
     github_issue_number: int,
     reported_by_user_id: str,
 ) -> str:
-    data = json.dumps({
-        "title": title,
-        "body": body,
-        "github_issue_url": github_issue_url,
-        "github_issue_number": github_issue_number,
-        "reported_by_user_id": reported_by_user_id,
-    })
+    data = json.dumps(
+        {
+            "title": title,
+            "body": body,
+            "github_issue_url": github_issue_url,
+            "github_issue_number": github_issue_number,
+            "reported_by_user_id": reported_by_user_id,
+        }
+    )
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -278,9 +282,11 @@ async def get_issues_page(
         )
         params.extend(issue_types)
     if state_code:
-        conditions.append(sql.SQL(
-            "EXISTS (SELECT 1 FROM changesets r WHERE r.id::text = ANY(ri.changeset_ids) AND r.jurisdiction_ocdid LIKE %s)"
-        ))
+        conditions.append(
+            sql.SQL(
+                "EXISTS (SELECT 1 FROM changesets r WHERE r.id::text = ANY(ri.changeset_ids) AND r.jurisdiction_ocdid LIKE %s)"
+            )
+        )
         params.append(f"%state:{state_code.lower()}%")
     where_clause = sql.SQL("WHERE ") + sql.SQL(" AND ").join(conditions)
     order_clause = sql.SQL("DESC") if sort_desc else sql.SQL("ASC")
@@ -321,20 +327,22 @@ async def get_issues_page(
     result = []
     for r in rows:
         jurisdictions = _build_jurisdictions(r[8], name_by_ocdid=r[11])
-        result.append({
-            "id": r[0],
-            "issue_type": r[1],
-            "issue_key": r[2],
-            "changeset_ids": r[3],
-            "data": r[4],
-            "status": r[5],
-            "resolved_at": r[6].isoformat() if r[6] else None,
-            "created_at": r[7].isoformat() if r[7] else None,
-            "pull_request_url": r[10],
-            "is_flagged": r[12],
-            "states": sorted({j["state"] for j in jurisdictions if j["state"]}),
-            "jurisdictions": jurisdictions,
-        })
+        result.append(
+            {
+                "id": r[0],
+                "issue_type": r[1],
+                "issue_key": r[2],
+                "changeset_ids": r[3],
+                "data": r[4],
+                "status": r[5],
+                "resolved_at": r[6].isoformat() if r[6] else None,
+                "created_at": r[7].isoformat() if r[7] else None,
+                "pull_request_url": r[10],
+                "is_flagged": r[12],
+                "states": sorted({j["state"] for j in jurisdictions if j["state"]}),
+                "jurisdictions": jurisdictions,
+            }
+        )
     return result, total
 
 

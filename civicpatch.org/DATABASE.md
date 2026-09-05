@@ -75,7 +75,7 @@ erDiagram
     llm_calls {
         uuid            id                  PK
         uuid            pipeline_run_id     FK  "idx. ON DELETE CASCADE — a call outlives nothing"
-what we could do instead is        text            prompt_name         "which prompt, not which step — steps get renamed and split, and this is the key the evals use"
+        text            prompt_name         "which prompt, not which step — steps get renamed and split, and this is the key the evals use"
         text_null       source_url          "what it read; with chunk_* these DESCRIBE a call, they do not identify it. The cache folder is format_url_to_folder(source_url), so it is derived, not stored"
         smallint_null   chunk_index
         smallint_null   chunk_count
@@ -85,7 +85,7 @@ what we could do instead is        text            prompt_name         "which pr
         text            model               "the slug we asked for"
         text            routed_model        "the versioned slug served"
         text            upstream_provider   "AtlasCloud, DigitalOcean"
-        text_null       generation_id       "OpenRouter id, key to /api/v1/generation"
+        text_null       generation_id       "OpenRouter id, key to /api/v1/generation. idx: UNIQUE (pipeline_run_id, generation_id) WHERE generation_id IS NOT NULL — a resubmitted artifact re-sends the same calls, and a plain INSERT double-counted spend"
         int             input_tokens
         int             output_tokens
         int             cached_input_tokens
