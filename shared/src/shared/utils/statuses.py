@@ -85,19 +85,6 @@ class PipelineIssueType(StrEnum):
 RUN_LEVEL_ISSUE_TYPES = frozenset(PipelineRunErrorType) | {PipelineIssueType.PIPELINE_ERROR}
 
 
-class RequestReviewStatus(StrEnum):
-    """Where a request sits in the review lifecycle, derived from `published_at`/`dismissed_at`.
-
-    Publishing is a database write, so there is no `open`/`merged` distinction to make — a
-    request is awaiting review, published, or dismissed. Derived rather than stored: the two
-    timestamps are the state, and a CHECK already forbids both being set.
-    """
-
-    PENDING = "pending"
-    PUBLISHED = "published"
-    DISMISSED = "dismissed"
-
-
 class ChangesetKind(StrEnum):
     """Which producer made this changeset. The discriminator, mandatory and exact.
 
@@ -116,9 +103,14 @@ class ChangesetKind(StrEnum):
     JURISDICTION_EDIT = "jurisdiction_edit"
 
 
-# Kinds that went and read a source. A publish that read one may say "still listed"; a hand
-# edit may not, and "ok / failed" is a collection attempt's vocabulary, not an edit's.
-SOURCE_READING_KINDS = (ChangesetKind.SCRAPE, ChangesetKind.SHEET_IMPORT)
+# Kinds that collected from a source, rather than stating something by hand. A publish that
+# collected may say "still listed"; a hand edit may not, and "ok / failed" is a collection
+# attempt's vocabulary, not an edit's.
+#
+# `collect` is the system's word for this — `people_collector`, the `people-collector` task
+# queue. This used to be `SOURCE_READING_KINDS` with a second copy named `COLLECTION_KINDS` in
+# `changeset_summaries` and a third, `COLLECTED`, spliced into SQL: three names, one set.
+COLLECTION_KINDS = (ChangesetKind.SCRAPE, ChangesetKind.SHEET_IMPORT)
 
 
 class DismissalReason(StrEnum):

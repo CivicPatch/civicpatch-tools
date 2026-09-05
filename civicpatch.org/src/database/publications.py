@@ -13,6 +13,7 @@ This is the seam 2.5 extends: `posts` and `memberships` are derived at publish a
 import logging
 
 import database.changesets as changesets_db
+import database.dismissals as dismissals_db
 from core.people_edits import values_to_accept, with_stated_values
 from core.post_derivation import DerivedPost
 from database import assertions, memberships, organizations, posts
@@ -23,7 +24,7 @@ from database.people import PERSON_UPSERT, person_upsert_params
 from database.users import SYSTEM_USER_ID
 from schemas.assertions import Assertion, AssertionKind, EntityType
 from shared.utils.statuses import (
-    SOURCE_READING_KINDS,
+    COLLECTION_KINDS,
     ChangeLogType,
     DismissalReason,
 )
@@ -65,13 +66,13 @@ async def dismiss_request(
     Nothing to clean up on the way out: a scrape only *proposes* seats, and posts are created
     at publish. A dismissed changeset never minted one.
 
-    The marking itself is `changesets.mark_dismissed`, which is also where the check lives that
+    The marking itself is `dismissals.mark_dismissed`, which is also where the check lives that
     this reason may leave this changeset's state — a run that produced no roster cannot be
     *rejected* by a person.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await changesets_db.mark_dismissed(
+        await dismissals_db.mark_dismissed(
             cur, [changeset_id], reason, resolved_by_user_id
         )
         await conn.commit()
@@ -167,12 +168,12 @@ async def _record_publish(
     )
 
 
-async def _read_a_source(cur, changeset_id: str) -> bool:
+async def _collected_from_a_source(cur, changeset_id: str) -> bool:
     await cur.execute(
         "SELECT kind FROM changesets WHERE id::text = %s", (changeset_id,)
     )
     row = await cur.fetchone()
-    return bool(row) and row[0] in SOURCE_READING_KINDS
+    return bool(row) and row[0] in COLLECTION_KINDS
 
 
 async def _bind_memberships(
@@ -249,7 +250,7 @@ async def publish_request(
         # `updated_at` orders superseding whatever the kind — a hand edit really is the newest
         # word. Whether it *dates a seat* is a different question, and only a source reading
         # answers it.
-        advances_last_seen = await _read_a_source(cur, changeset_id)
+        advances_last_seen = await _collected_from_a_source(cur, changeset_id)
         await _refuse_if_superseded(cur, changeset_id, jurisdiction_ocdid, last_seen_at)
         await _refuse_if_not_publishable(cur, changeset_id)
 
@@ -283,7 +284,7 @@ async def publish_request(
         )
 
         # Same transaction, so a published roster and the cards it obsoletes cannot disagree.
-        stale = await changesets_db.dismiss_superseded_by(
+        stale = await dismissals_db.dismiss_superseded_by(
             cur, changeset_id, jurisdiction_ocdid, last_seen_at
         )
         if stale:

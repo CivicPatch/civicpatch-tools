@@ -81,12 +81,12 @@ async def _state_of(kind: str, published: bool, dismissed: bool) -> str:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_an_unresolved_changeset_is_ready():
+async def test_an_unresolved_changeset_is_open():
     """Three states, not five. RUNNING and FAILED described a *run*, and a changeset is only
     minted by one that succeeded — so every unresolved changeset has content to review,
     whatever produced it."""
-    assert await _state_of("scrape", False, False) == ChangesetState.READY
-    assert await _state_of("sheet_import", False, False) == ChangesetState.READY
+    assert await _state_of("scrape", False, False) == ChangesetState.OPEN
+    assert await _state_of("sheet_import", False, False) == ChangesetState.OPEN
 
 
 @pytest.mark.asyncio

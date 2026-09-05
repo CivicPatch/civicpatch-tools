@@ -12,7 +12,7 @@ from shared.utils.statuses import (
     ChangesetKind,
 )
 from database.database import get_pool, to_iso
-from database.changesets import AVAILABLE_FOR_REVIEW, REVIEW_STATUS, WORK_IN_FLIGHT
+from database.changeset_predicates import AVAILABLE_FOR_REVIEW, WORK_IN_FLIGHT
 from database.review_priority import issue_count, issue_priority
 
 
@@ -68,7 +68,7 @@ async def list_open_changesets(
             -- and cards created in one batch share a `created_at` to the microsecond.
             ORDER BY {priority} DESC, changesets.created_at DESC, changesets.id
             LIMIT %s OFFSET %s
-            """).format(where, status=sql.SQL(REVIEW_STATUS),
+            """).format(where, status=sql.SQL('changesets.changeset_state'),
                         count=sql.SQL(issue_count("changesets.jurisdiction_ocdid")),
                         priority=sql.SQL(issue_priority("changesets.jurisdiction_ocdid"))),
             params + [per_page, offset],
@@ -93,7 +93,7 @@ async def get_changeset_for_review(changeset_id: str) -> Optional[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT changesets.change_url, {REVIEW_STATUS},
+            SELECT changesets.change_url, changesets.changeset_state,
                    changesets.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    jur.data->>'url' AS jurisdiction_website_url
@@ -128,7 +128,7 @@ async def get_changeset_data(changeset_id: str) -> Optional[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT changesets.id::text, changesets.change_url, {REVIEW_STATUS},
+            SELECT changesets.id::text, changesets.change_url, changesets.changeset_state,
                    changesets.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    jur.data->>'url' AS jurisdiction_website_url

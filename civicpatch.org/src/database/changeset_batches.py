@@ -9,7 +9,6 @@ import json
 from enum import StrEnum
 
 from database.database import get_pool
-from database.changesets import REVIEW_STATUS
 from psycopg.errors import UniqueViolation
 
 
@@ -152,7 +151,7 @@ async def items(batch_id: str) -> list[dict]:
         await cur.execute(
             f"""
             SELECT changesets.id::text AS changeset_id, changesets.jurisdiction_ocdid,
-                   {REVIEW_STATUS} AS review_status,
+                   changesets.changeset_state,
                    j.data->>'name' AS name
             FROM changesets
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = changesets.jurisdiction_ocdid

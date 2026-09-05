@@ -56,7 +56,7 @@ class ReviewJurisdiction(BaseModel):
     jurisdiction_ocdid: str
     name: str
     changeset_id: str
-    review_status: str
+    changeset_state: str
     people: list[ReviewPerson]
 
 

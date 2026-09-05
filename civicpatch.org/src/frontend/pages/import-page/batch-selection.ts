@@ -1,4 +1,4 @@
-import { REVIEW_PENDING, type ReviewJurisdiction } from "./import-types.js";
+import { CHANGESET_OPEN, type ReviewJurisdiction } from "./import-types.js";
 
 // Only pending localities can be selected. A published one is already live, and publishing it
 // again would supersede it for nothing — the API drops it either way, so offering it is a lie.
@@ -6,7 +6,7 @@ export function selectableOcdids(
   jurisdictions: ReviewJurisdiction[],
 ): string[] {
   return jurisdictions
-    .filter((jurisdiction) => jurisdiction.review_status === REVIEW_PENDING)
+    .filter((jurisdiction) => jurisdiction.changeset_state === CHANGESET_OPEN)
     .map((jurisdiction) => jurisdiction.jurisdiction_ocdid);
 }
 

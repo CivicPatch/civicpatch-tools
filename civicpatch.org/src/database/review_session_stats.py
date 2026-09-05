@@ -1,6 +1,6 @@
 from typing import Any
 from database.database import get_pool
-from database.changesets import AVAILABLE_FOR_REVIEW
+from database.changeset_predicates import AVAILABLE_FOR_REVIEW
 from psycopg.rows import namedtuple_row
 from shared.utils.date_utils import STREAK_TIMEZONE
 

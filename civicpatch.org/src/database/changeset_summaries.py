@@ -7,7 +7,7 @@ same way in both: off `changesets.dismissed_reason`, the changeset's own state.
 
 import logging
 
-from database.changesets import AVAILABLE_FOR_REVIEW
+from database.changeset_predicates import AVAILABLE_FOR_REVIEW, PUBLISHED
 from database.database import get_pool
 from database.jurisdictions import ROSTER_CHANGE_TYPES
 from psycopg.rows import dict_row
@@ -19,7 +19,7 @@ from schemas.changeset_summaries import (
 )
 from shared.utils.statuses import (
     RUN_LEVEL_ISSUE_TYPES,
-    SOURCE_READING_KINDS,
+    COLLECTION_KINDS,
     ChangesetKind,
     DismissalReason,
     PipelineRunStatus,
@@ -28,8 +28,6 @@ from shared.utils.statuses import (
 logger = logging.getLogger(__name__)
 
 DEFAULT_WINDOW_DAYS = 30
-
-COLLECTION_KINDS = [k.value for k in SOURCE_READING_KINDS]
 
 # The buckets a state's section breaks into.
 BUCKET_REVIEW = "review"
@@ -40,7 +38,7 @@ BUCKET_PUBLISHED = "published"
 BUCKET_FAILED_RUNS = "failed_runs"
 
 # Defined once so the rollup, calendar and bucket cannot disagree. All need `changesets` as `r`.
-PUBLISHED = "changesets.published_at IS NOT NULL"
+# `PUBLISHED` and the rest come from `database.changesets`, the one definition.
 
 # `status` too: a run that errored before recording a reason still errored.
 # Only collection attempts get an outcome. A hand edit has no run to fail — 8 dev `people_edit`
@@ -51,9 +49,12 @@ COLLECTED = "changesets.kind = ANY(%(collection_kinds)s)"
 
 # Only the dismissal reason. A failed *run* no longer has a changeset to count, so this counts
 # dismissed proposals; failed attempts belong to the scrape-results page, which reads runs.
-DISMISSED = (
-    f"changesets.dismissed_reason IN ('{DismissalReason.REJECTED.value}', "
-    f"'{DismissalReason.ERRORED.value}', '{DismissalReason.CANCELLED.value}')"
+# Not a state test: `superseded` is a dismissal the rollup deliberately does not count as a
+# failure, so this is state-plus-reason. Derived from `DismissalReason` minus the one exclusion,
+# so a new reason is counted by default and only an explicit choice leaves it out.
+_NOT_A_FAILURE = frozenset({DismissalReason.SUPERSEDED})
+DISMISSED = "changesets.dismissed_reason IN ({})".format(
+    ", ".join(f"'{r.value}'" for r in DismissalReason if r not in _NOT_A_FAILURE)
 )
 
 # Each side aggregates to one row per state before joining — measured, ~114 ms at 571k
@@ -164,7 +165,7 @@ async def get_state_rollup(
             {
                 "window": f"{window_days} days",
                 "roster_types": [t.value for t in ROSTER_CHANGE_TYPES],
-                "collection_kinds": COLLECTION_KINDS,
+                "collection_kinds": [k.value for k in COLLECTION_KINDS],
             },
         )
         return [StateRollup(**row) for row in await cur.fetchall()]
@@ -248,7 +249,7 @@ async def get_state_calendar(
     async with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
         await cur.execute(
             STATE_CALENDAR_SQL,
-            {"window": f"{window_days} days", "collection_kinds": COLLECTION_KINDS},
+            {"window": f"{window_days} days", "collection_kinds": [k.value for k in COLLECTION_KINDS]},
         )
         return [CalendarDay(**row) for row in await cur.fetchall()]
 
