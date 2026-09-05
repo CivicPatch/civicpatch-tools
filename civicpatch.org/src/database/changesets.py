@@ -1,92 +1,26 @@
-import json
+"""The `changesets` table: how a proposal is born, and the reads over it.
+
+The SQL vocabulary lives in `changeset_predicates`; the two transitions live in
+`publications` (going live) and `dismissals` (leaving the queue without). This module is the
+table itself — one `register_*` per `ChangesetKind`, and the projections routers ask for.
+"""
+
 import logging
-from collections.abc import Mapping
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Optional
 
-from database.change_logs import record_dismissal
-from core.changeset_lifecycle import states_accepting_dismissal
+from database.changeset_predicates import (
+    AVAILABLE_FOR_REVIEW,
+    RUN_IN_FLIGHT,
+    RUN_PROGRESS,
+    RUN_STATUS,
+)
 from database.database import get_pool, to_iso
-from database.review_sessions import (
-    SESSION_IDLE_TIMEOUT_MINUTES,
-    ReviewSessionEntryStatus,
-)
-from database.users import SYSTEM_USER_ID
-from shared.utils.id_utils import make_id
 from schemas.common import InFlightEntry, InFlightEntryType, JurisdictionInFlight
-from shared.utils.statuses import (
-    ChangesetKind,
-    DismissalReason,
-    PipelineIssueStatus,
-    PipelineIssueType,
-    PipelineRunStatus,
-    RequestReviewStatus,
-)
+from shared.utils.id_utils import make_id
+from shared.utils.statuses import ChangesetKind
 
 logger = logging.getLogger(__name__)
-
-# Derived from the two timestamps, never stored; a CHECK forbids both being set.
-# Unaliased, per CLAUDE.md: a fragment that demands its caller alias a table is a runtime
-# error waiting, never a typecheck one. `r` was the initial of `requests`, pre-migration-152.
-REVIEW_STATUS = (
-    "CASE "
-    f"WHEN changesets.published_at IS NOT NULL THEN '{RequestReviewStatus.PUBLISHED.value}' "
-    f"WHEN changesets.dismissed_at IS NOT NULL THEN '{RequestReviewStatus.DISMISSED.value}' "
-    f"ELSE '{RequestReviewStatus.PENDING.value}' END"
-)
-
-WORK_IN_FLIGHT = (
-    "changesets.published_at IS NULL AND changesets.dismissed_at IS NULL "
-    f"AND changesets.kind != '{ChangesetKind.JURISDICTION_EDIT.value}'"
-)
-
-# Duplicates `DismissalReason`; kept only because the SQL fragments below splice it.
-DISMISSED_SUPERSEDED = "superseded"
-
-# A scrape still awaiting human review. Unaliased; callers use `FROM changesets` bare.
-AVAILABLE_FOR_REVIEW = (
-    "EXISTS (SELECT 1 FROM source_records sr WHERE sr.changeset_id = changesets.id) "
-    # Composed, not restated: widening one used to leave the two disagreeing.
-    f"AND {WORK_IN_FLIGHT} "
-    "AND NOT EXISTS ("
-    "SELECT 1 FROM issues i "
-    f"WHERE i.issue_type = '{PipelineIssueType.USER_REPORTED.value}' "
-    "AND changesets.id::text = ANY(i.changeset_ids) "
-    f"AND i.status NOT IN ('{PipelineIssueStatus.RESOLVED.value}', '{PipelineIssueStatus.SUPERSEDED.value}')"
-    ")"
-)
-
-# The run behind a changeset. No run — an import or a hand edit — answers NULL.
-RUN_IN_FLIGHT = (
-    "EXISTS (SELECT 1 FROM pipeline_runs "
-    "WHERE pipeline_runs.changeset_id = changesets.id AND pipeline_runs.finished_at IS NULL)"
-)
-RUN_STATUS = (
-    "(SELECT status FROM pipeline_runs WHERE pipeline_runs.changeset_id = changesets.id)"
-)
-RUN_PROGRESS = (
-    "(SELECT progress FROM pipeline_runs WHERE pipeline_runs.changeset_id = changesets.id)"
-)
-
-# Request supercede can dismiss.
-# Sweep should not dismiss a card still in the queue.
-SWEEPABLE = (
-    f"{AVAILABLE_FOR_REVIEW} "
-    "AND EXISTS ("
-    "SELECT 1 FROM jurisdictions j "
-    "WHERE j.jurisdiction_ocdid = changesets.jurisdiction_ocdid "
-    "AND j.status = 'active'"
-    ")"
-)
-
-HELD_BY_REVIEWER = (
-    "EXISTS ("
-    "SELECT 1 FROM review_session_entries e "
-    "WHERE changesets.id::text = ANY(e.changeset_ids) "
-    f"AND (e.status IN ('{ReviewSessionEntryStatus.SAVED}', '{ReviewSessionEntryStatus.RESOLVED}') "
-    f"OR (e.status = '{ReviewSessionEntryStatus.CLAIMED}' AND e.created_at >= NOW() - %s))"
-    ")"
-)
 
 
 async def register_scrape_changeset(run_id: str) -> str:
@@ -376,121 +310,6 @@ async def get_issue_request_details(changeset_ids: list[str]) -> list[dict]:
     ]
 
 
-# Which rows are in which state, in SQL. The Python side of this is
-# `core.changeset_lifecycle`; this is the same fact where the UPDATE can use it.
-# "This changeset's run, if it had one, finished with a roster." One definition, because both
-# halves of the lifecycle guard need it: a dismissal reason may only leave certain states, and
-# `publications._refuse_if_not_publishable` asks the same question from the other side.
-async def mark_dismissed(
-    cur,
-    changeset_ids: list[str],
-    reason: DismissalReason,
-    resolved_by_user_id: str | None = None,
-) -> list[tuple[str, str]]:
-    """The one writer for a dismissal. Returns the (id, jurisdiction) pairs that transitioned.
-
-    Guarded in the statement, not by reading first: a reviewer may be publishing this very
-    changeset, and losing that race must not overwrite their decision.
-
-    One guard, since a changeset is only minted by a run that succeeded — there is no longer a
-    failed-run changeset to keep a person from mislabelling.
-    """
-    if not changeset_ids:
-        return []
-    # The machine decides which states this dismissal may leave; the statement applies it.
-    # `changesets.changeset_state` is the generated column, so this is one atomic read-and-write —
-    # first, so nothing can lose the race to a concurrent publish.
-    await cur.execute(
-        """
-        UPDATE changesets
-           SET dismissed_at = now(),
-               dismissed_reason = %s,
-               resolved_by_user_id = COALESCE(%s, resolved_by_user_id, %s)
-         WHERE changesets.id::text = ANY(%s)
-           AND changesets.changeset_state = ANY(%s)
-        RETURNING changesets.id::text, changesets.jurisdiction_ocdid
-        """,
-        (
-            reason,
-            resolved_by_user_id,
-            SYSTEM_USER_ID,
-            changeset_ids,
-            list(states_accepting_dismissal(reason)),
-        ),
-    )
-    dismissed = await cur.fetchall()
-    for changeset_id, jurisdiction_ocdid in dismissed:
-        await record_dismissal(
-            cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id, reason
-        )
-    return [(row[0], row[1]) for row in dismissed]
-
-
-async def dismiss_superseded_by(
-    cur, changeset_id: str, jurisdiction_ocdid: str, updated_at
-) -> list[str]:
-    """Dismiss the cards this publish just made pointless, in the publishing transaction.
-
-    `_refuse_if_superseded` makes a stale card unpublishable; this stops it being offered at
-    all. The sweep still runs — it catches two *pending* scrapes, which have no publish to hang
-    off, and re-checks holds as they expire.
-    """
-    # Selection here, marking in `mark_dismissed`. Splitting them is safe inside this
-    # transaction because that UPDATE re-checks the same guards, so a row a reviewer takes
-    # between the two statements is skipped rather than overwritten.
-    await cur.execute(
-        f"""
-        SELECT changesets.id::text FROM changesets
-         WHERE changesets.jurisdiction_ocdid = %s
-           AND changesets.id::text <> %s
-           AND changesets.updated_at IS NOT NULL
-           AND changesets.updated_at < %s
-           AND {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
-        """,
-        (
-            jurisdiction_ocdid,
-            changeset_id,
-            updated_at,
-            timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES),
-        ),
-    )
-    stale = [row[0] for row in await cur.fetchall()]
-    dismissed = await mark_dismissed(cur, stale, DismissalReason.SUPERSEDED)
-    return [row[0] for row in dismissed]
-
-
-async def supersede_stacked_requests() -> list[str]:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            f"""
-            WITH candidates AS (
-                SELECT changesets.id, changesets.jurisdiction_ocdid, changesets.updated_at
-                FROM changesets
-                WHERE {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
-                  AND changesets.updated_at IS NOT NULL
-            ),
-            supersedors AS (
-                SELECT jurisdiction_ocdid, updated_at FROM candidates
-                UNION ALL
-                SELECT changesets.jurisdiction_ocdid, changesets.updated_at
-                FROM changesets
-                WHERE changesets.published_at IS NOT NULL AND changesets.updated_at IS NOT NULL
-            )
-            SELECT older.id::text
-              FROM candidates older
-             WHERE EXISTS (
-                 SELECT 1 FROM supersedors newer
-                 WHERE newer.jurisdiction_ocdid = older.jurisdiction_ocdid
-                   AND newer.updated_at > older.updated_at
-             )
-            """,
-            (timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES),),
-        )
-        stale = [row[0] for row in await cur.fetchall()]
-        dismissed = await mark_dismissed(cur, stale, DismissalReason.SUPERSEDED)
-        await conn.commit()
-        return [row[0] for row in dismissed]
 
 
 async def get_updated_at(cur, changeset_id: str) -> datetime:

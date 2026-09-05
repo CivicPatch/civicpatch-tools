@@ -1,7 +1,7 @@
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import {
-  REVIEW_PENDING,
+  CHANGESET_OPEN,
   type BatchReview,
   type ReviewJurisdiction,
 } from "./import-types.js";
@@ -85,7 +85,7 @@ function BatchReviewPanel(host: BatchReviewHost) {
 
   const jurisdictionCard = (jurisdiction: ReviewJurisdiction) => {
     const ocdid = jurisdiction.jurisdiction_ocdid;
-    const settled = jurisdiction.review_status !== REVIEW_PENDING;
+    const settled = jurisdiction.changeset_state !== CHANGESET_OPEN;
     return html`
       <section
         class="review-jurisdiction ${settled ? "review-jurisdiction--settled" : ""}"
@@ -114,7 +114,7 @@ function BatchReviewPanel(host: BatchReviewHost) {
           </span>
           ${settled
             ? html`<span class="review-jurisdiction__status"
-                >${jurisdiction.review_status}</span
+                >${jurisdiction.changeset_state}</span
               >`
             : null}
         </header>

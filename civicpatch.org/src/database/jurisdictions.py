@@ -11,6 +11,7 @@ from core.jurisdiction_search import (
     build_search_text,
 )
 from core.change_logs import roster_change
+from database.changeset_predicates import RESOLVED
 from database.database import get_pool, to_iso
 from database.people import PERSON_JSON
 from psycopg import sql
@@ -579,7 +580,7 @@ PUBLISHED_OUTCOME = "published"
 # History is what happened. A changeset nobody has decided yet has not happened — it is
 # `/jurisdictions/in-flight`'s business, and the page shows it in its own section. Requires
 # the changesets table aliased `r`.
-RESOLVED = "(changesets.published_at IS NOT NULL OR changesets.dismissed_at IS NOT NULL)"
+
 
 # What this jurisdiction's history shows a changeset having done.
 #

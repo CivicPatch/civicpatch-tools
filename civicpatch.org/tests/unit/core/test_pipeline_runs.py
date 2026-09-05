@@ -2,7 +2,6 @@
 
 import pytest
 
-from core.changeset_lifecycle import ChangesetState, dismissal_is_legal
 from core.pipeline_runs import ENDED_IN_FAILURE, dismissal_for, is_final
 from shared.utils.statuses import (
     DismissalReason,
@@ -44,9 +43,10 @@ def test_a_run_that_produced_something_is_left_for_review(status):
 @pytest.mark.unit
 @pytest.mark.parametrize("status", sorted(ENDED_IN_FAILURE))
 def test_the_two_lifecycles_agree_on_the_reason(status):
-    """The reason a failed run produces has to be one the changeset may leave `READY` carrying.
-    They are separate machines that meet here, and nothing else checks that they still line
-    up — dev already holds a `CANCELLED` run dismissed as `rejected`, which neither allows."""
-    reason = dismissal_for(status)
-    assert reason is not None
-    assert dismissal_is_legal(ChangesetState.READY, reason)
+    """A failed run is `errored`, never `rejected`: nobody read the roster and declined it.
+
+    This used to assert `dismissal_is_legal(OPEN, reason)`, which could not fail — the
+    changeset machine accepted every reason from its one unresolved state. The claim worth
+    pinning is about the *run's* machine, which is where the pairing actually lives: dev holds
+    a `CANCELLED` run dismissed as `rejected`, and this is what forbids minting another."""
+    assert dismissal_for(status) is DismissalReason.ERRORED

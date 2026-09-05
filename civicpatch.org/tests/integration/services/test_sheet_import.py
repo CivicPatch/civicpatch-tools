@@ -314,7 +314,7 @@ async def test_the_batch_review_shows_the_towns_it_made(user_id, batch_id):
     assert review is not None
     [jurisdiction] = review.jurisdictions
     assert jurisdiction.jurisdiction_ocdid == _OCDID
-    assert jurisdiction.review_status == "pending"
+    assert jurisdiction.changeset_state == "open"
     assert sorted(person.name for person in jurisdiction.people) == [
         "Ana Reyes",
         "Bo Chen",
@@ -331,7 +331,7 @@ async def test_an_unknown_batch_reviews_as_nothing(user_id):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_publishing_a_selection_leaves_the_rest_pending(user_id, batch_id):
+async def test_publishing_a_selection_leaves_the_rest_open(user_id, batch_id):
     """The page is a view, not a queue: publishing some does not make the others disappear."""
     rows = await _parsed(("Ana Reyes", "Select Board Chair"))
     await import_rows(rows, user_id, batch_id)
@@ -342,7 +342,7 @@ async def test_publishing_a_selection_leaves_the_rest_pending(user_id, batch_id)
     review = await batch_review(batch_id)
     assert review is not None
     [jurisdiction] = review.jurisdictions
-    assert jurisdiction.review_status == "published"
+    assert jurisdiction.changeset_state == "published"
 
 
 @pytest.mark.integration
@@ -355,7 +355,7 @@ async def test_a_town_nobody_selected_is_left_alone(user_id, batch_id):
 
     review = await batch_review(batch_id)
     assert review is not None
-    assert review.jurisdictions[0].review_status == "pending"
+    assert review.jurisdictions[0].changeset_state == "open"
 
 
 @pytest.mark.integration

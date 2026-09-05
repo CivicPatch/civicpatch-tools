@@ -14,7 +14,7 @@ from database.database import get_pool
 from database.users import SYSTEM_USER_ID
 from database.pipeline_runs import expire_stale_pipeline_runs
 from database.publications import publish_request
-from database.changesets import supersede_stacked_requests
+from database.dismissals import supersede_stacked_requests
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_stacked/government"

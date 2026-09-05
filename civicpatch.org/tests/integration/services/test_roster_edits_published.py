@@ -20,7 +20,8 @@ from core.post_derivation import DerivedMembership
 from database import divisions, memberships, organizations, posts
 from core.people_edits import PersonPatch
 from database.database import get_pool
-from database.changesets import DISMISSED_SUPERSEDED, supersede_stacked_requests
+from database.changeset_predicates import DISMISSED_SUPERSEDED
+from database.dismissals import supersede_stacked_requests
 from database.source_records import insert_source_records
 from services.roster import proposed_roster
 from schemas.assertions import EntityType

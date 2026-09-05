@@ -12,7 +12,7 @@ import uuid
 import pytest
 import pytest_asyncio
 from database.database import get_pool
-from database.changesets import mark_dismissed
+from database.dismissals import mark_dismissed
 from shared.utils.statuses import DismissalReason
 from database.review_sessions import create_or_get_review_session, get_active_review_session
 from database.review_sessions import end_review_session

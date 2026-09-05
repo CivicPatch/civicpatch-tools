@@ -21,7 +21,7 @@ from schemas.imports import (
 from services import roster_edits
 from services.sinks.open_data import promote_batch_to_reviewed
 from services.roster import proposed_rosters
-from shared.utils.statuses import RequestReviewStatus
+from core.changeset_lifecycle import ChangesetState
 
 logger = logging.getLogger(__name__)
 
@@ -70,7 +70,7 @@ async def batch_review(batch_id: str) -> BatchReview | None:
                 jurisdiction_ocdid=item["jurisdiction_ocdid"],
                 name=item["name"] or item["jurisdiction_ocdid"],
                 changeset_id=item["changeset_id"],
-                review_status=item["review_status"],
+                changeset_state=item["changeset_state"],
                 people=[
                     _person(person)
                     for person in rosters.get(item["changeset_id"], [])
@@ -99,7 +99,7 @@ async def publish_selected(
         item
         for item in items
         if item["jurisdiction_ocdid"] in jurisdiction_ocdids
-        and item["review_status"] == RequestReviewStatus.PENDING
+        and item["changeset_state"] == ChangesetState.OPEN
     ]
 
     results = []

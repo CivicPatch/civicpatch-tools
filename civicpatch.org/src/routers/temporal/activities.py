@@ -1,5 +1,6 @@
 import database.change_logs as change_logs_db
 import database.changesets as changesets_db
+import database.dismissals as dismissals_db
 import database.jurisdictions as jurisdictions_db
 import database.memberships as memberships_db
 import database.pipeline_runs as pipeline_runs_db
@@ -157,7 +158,7 @@ async def sync_roster_parquet_activity() -> None:
 
 @activity.defn
 async def supersede_stacked_requests_activity() -> None:
-    dismissed = await changesets_db.supersede_stacked_requests()
+    dismissed = await dismissals_db.supersede_stacked_requests()
     if dismissed:
         activity.logger.info(
             "Superseded %d stacked request(s): %s", len(dismissed), dismissed

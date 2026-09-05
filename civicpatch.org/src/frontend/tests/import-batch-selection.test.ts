@@ -7,11 +7,11 @@ import {
   toggleSelection,
 } from "../pages/import-page/batch-selection.js";
 
-const town = (ocdid: string, review_status: string) => ({
+const town = (ocdid: string, changeset_state: string) => ({
   jurisdiction_ocdid: ocdid,
   name: ocdid,
   changeset_id: `req-${ocdid}`,
-  review_status,
+  changeset_state,
   people: [],
 });
 

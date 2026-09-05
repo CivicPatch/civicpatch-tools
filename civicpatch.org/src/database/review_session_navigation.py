@@ -2,7 +2,7 @@ from datetime import timedelta
 from typing import Any
 
 from database.database import get_pool
-from database.changesets import AVAILABLE_FOR_REVIEW
+from database.changeset_predicates import AVAILABLE_FOR_REVIEW
 from database.review_priority import issue_priority
 from database.review_sessions import (
     AdvanceDoneReason,

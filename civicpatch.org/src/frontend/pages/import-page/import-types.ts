@@ -6,7 +6,9 @@ export const BATCH_RUNNING = "running";
 export const BATCH_SUCCEEDED = "succeeded";
 export const BATCH_FAILED = "failed";
 
-export const REVIEW_PENDING = "pending";
+// Mirrors `ChangesetState.OPEN`. Not "pending" — `issues.status` means something else by
+// that word, and an open changeset with pending issues is a thing we say often.
+export const CHANGESET_OPEN = "open";
 export const REVIEW_PUBLISHED = "published";
 
 export function isFinished(status: string): boolean {
@@ -57,7 +59,7 @@ export type ReviewJurisdiction = {
   jurisdiction_ocdid: string;
   name: string;
   changeset_id: string;
-  review_status: string;
+  changeset_state: string;
   people: ReviewPerson[];
 };
 

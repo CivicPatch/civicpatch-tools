@@ -3,6 +3,7 @@ from datetime import timedelta
 from typing import Optional
 
 import database.changesets as changesets_db
+import database.dismissals as dismissals_db
 from database.database import get_pool, to_iso
 from psycopg import sql
 from schemas.pipeline_runs import ExpiredRun, JurisdictionPipelineRun
@@ -283,7 +284,7 @@ async def expire_stale_pipeline_runs(older_than: timedelta) -> list[ExpiredRun]:
             for row in await cur.fetchall()
         ]
         # Only the ones that proposed something; a run that died before ingest minted nothing.
-        await changesets_db.mark_dismissed(
+        await dismissals_db.mark_dismissed(
             cur,
             [run.changeset_id for run in expired if run.changeset_id],
             DismissalReason.ERRORED,
