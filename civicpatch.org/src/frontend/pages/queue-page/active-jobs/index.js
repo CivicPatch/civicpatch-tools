@@ -11,17 +11,17 @@ function ActiveJobs({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange
 
   if (!jobs || (jobs.length === 0 && totalPages <= 1)) return null;
 
-  const handleCancel = async (changesetId) => {
-    setCancellingIds(prev => new Set(prev).add(changesetId));
+  const handleCancel = async (pipelineRunId) => {
+    setCancellingIds(prev => new Set(prev).add(pipelineRunId));
     try {
-      await cancelPipelineRun(changesetId);
-      if (onCancel) onCancel(changesetId);
+      await cancelPipelineRun(pipelineRunId);
+      if (onCancel) onCancel(pipelineRunId);
     } catch (_) {
       // noop — leave the row visible so the user can retry
     } finally {
       setCancellingIds(prev => {
         const next = new Set(prev);
-        next.delete(changesetId);
+        next.delete(pipelineRunId);
         return next;
       });
     }
@@ -37,7 +37,7 @@ function ActiveJobs({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange
             <th>State</th>
             <th>Status</th>
             <th>Progress</th>
-            <th>Request ID</th>
+            <th>Run ID</th>
             <th>Duration</th>
             ${canCancel ? html`<th></th>` : null}
           </tr>
@@ -53,15 +53,15 @@ function ActiveJobs({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange
               <td class="pipeline-run-meta">${job.state}</td>
               <td class="pipeline-run-meta">${job.status}</td>
               <td class="pipeline-run-meta">${job.progress ?? 0}%</td>
-              <td class="pipeline-run-meta pipeline-run-mono pipeline-run-changeset-id">${job.changeset_id}</td>
+              <td class="pipeline-run-meta pipeline-run-mono pipeline-run-id">${job.pipeline_run_id}</td>
               <td class="pipeline-run-meta">${durationBetween(job.created_at, job.updated_at)}</td>
               ${canCancel ? html`
                 <td>
                   <button
                     class="pipeline-run-cancel-btn"
-                    ?disabled=${cancellingIds.has(job.changeset_id)}
-                    @click=${() => handleCancel(job.changeset_id)}
-                  >${cancellingIds.has(job.changeset_id) ? "Cancelling…" : "Cancel"}</button>
+                    ?disabled=${cancellingIds.has(job.pipeline_run_id)}
+                    @click=${() => handleCancel(job.pipeline_run_id)}
+                  >${cancellingIds.has(job.pipeline_run_id) ? "Cancelling…" : "Cancel"}</button>
                 </td>
               ` : null}
             </tr>

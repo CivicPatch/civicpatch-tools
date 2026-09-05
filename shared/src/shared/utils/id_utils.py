@@ -28,7 +28,8 @@ def _decode_from_slug(value: str) -> str:
     return value
 
 
-def make_changeset_id():
+def make_id():
+    """A fresh id for whatever is being minted — a changeset, a run, a branch suffix."""
     return str(uuid.uuid4())
 
 

@@ -67,7 +67,7 @@ async def get_people_job_history(jurisdiction_ocdid: str, request: Request) -> d
 
 async def register_pipeline_run(
     client: httpx.AsyncClient,
-    changeset_id: str,
+    pipeline_run_id: str,
     jurisdiction_ocdid: str,
     name: str | None,
     url: str | None,
@@ -76,7 +76,7 @@ async def register_pipeline_run(
     response = await client.post(
         f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/register",
         json={
-            "changeset_id": changeset_id,
+            "pipeline_run_id": pipeline_run_id,
             "jurisdiction_ocdid": jurisdiction_ocdid,
             "name": name,
             "url": url,
@@ -103,7 +103,7 @@ async def get_jurisdiction_info(
 async def update_pipeline_run_status(
     client: httpx.AsyncClient,
     logger,
-    changeset_id: str,
+    pipeline_run_id: str,
     jurisdiction_ocdid: str,
     status: str,
     progress: int,
@@ -121,7 +121,7 @@ async def update_pipeline_run_status(
         }
 
         response = await client.patch(
-            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{changeset_id}/status",
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{pipeline_run_id}/status",
             json=data,
         )
         logger.debug(f"Response: {response.status_code}, {response.text}")
@@ -133,14 +133,14 @@ async def update_pipeline_run_status(
 
 async def submit_job_artifacts(
     client: httpx.AsyncClient,
-    changeset_id: str,
+    pipeline_run_id: str,
     jurisdiction_ocdid: str,
     zip_file_path: str,
     pipeline_run_status: str,
 ):
     env = get_env_vars()
     data = {
-        "changeset_id": changeset_id,
+        "pipeline_run_id": pipeline_run_id,
         "jurisdiction_ocdid": jurisdiction_ocdid,
         "pipeline_run_status": pipeline_run_status,
         "env": env.get("APP_ENVIRONMENT") or "development",
@@ -156,7 +156,7 @@ async def submit_job_artifacts(
             )
         }
         response = await client.post(
-            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{changeset_id}/submit",
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{pipeline_run_id}/submit",
             data=data,
             files=files,
         )
@@ -225,11 +225,11 @@ async def get_posts(
 
 
 async def fetch_pipeline_run_status(
-    client: httpx.AsyncClient, changeset_id: str
+    client: httpx.AsyncClient, pipeline_run_id: str
 ) -> Optional[str]:
     env = get_env_vars()
     resp = await client.get(
-        f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{changeset_id}/status"
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{pipeline_run_id}/status"
     )
     if resp.status_code == 404:
         return None
@@ -238,12 +238,12 @@ async def fetch_pipeline_run_status(
 
 
 async def fetch_pipeline_run_config(
-    client: httpx.AsyncClient, logger, changeset_id: str
+    client: httpx.AsyncClient, logger, pipeline_run_id: str
 ) -> dict:
     async def _fetch():
         env = get_env_vars()
         resp = await client.get(
-            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{changeset_id}/config"
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{pipeline_run_id}/config"
         )
         resp.raise_for_status()
         return resp.json()

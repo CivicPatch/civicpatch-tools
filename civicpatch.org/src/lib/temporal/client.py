@@ -46,7 +46,7 @@ async def _get_client() -> Client:
 
 async def start_people_collector_workflow(
     jurisdiction_ocdid: str,
-    changeset_id: str,
+    pipeline_run_id: str,
     dispatch_mode: str = "remote",
     url: Optional[str] = None,
     source_urls: Optional[list[str]] = None,
@@ -57,7 +57,7 @@ async def start_people_collector_workflow(
     # The frontend is responsible for not calling this endpoint when a job is actively running.
     handle = await client.start_workflow(
         WORKFLOW_CLASS_NAME,
-        args=[jurisdiction_ocdid, changeset_id, dispatch_mode, url, source_urls],
+        args=[jurisdiction_ocdid, pipeline_run_id, dispatch_mode, url, source_urls],
         id=workflow_id,
         task_queue=PEOPLE_COLLECTOR_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,

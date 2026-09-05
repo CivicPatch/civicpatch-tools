@@ -78,7 +78,7 @@ def _require_every_property(schema):
 
 
 async def run_prompt(
-    changeset_id,
+    pipeline_run_id,
     jurisdiction_ocdid: str,
     prompt,
     response_schema=None,
@@ -201,7 +201,7 @@ async def run_prompt(
         usage = body.get("usage", {})
         cost_utils.add_llm_cost(
             logger,
-            changeset_id,
+            pipeline_run_id,
             jurisdiction_ocdid,
             "open_router",
             model,

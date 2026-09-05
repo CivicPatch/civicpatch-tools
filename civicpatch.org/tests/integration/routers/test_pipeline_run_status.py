@@ -81,7 +81,7 @@ async def _apply(run_id: str, status: str) -> None:
         "services.pipeline_runs.pubsub_service.publish", new_callable=AsyncMock
     ):
         await run_lifecycle.apply_pipeline_run_status(
-            changeset_id=run_id, status=status, progress=None, jurisdiction_ocdid=_OCDID
+            pipeline_run_id=run_id, status=status, progress=None, jurisdiction_ocdid=_OCDID
         )
 
 
@@ -206,7 +206,8 @@ async def test_a_run_stuck_on_a_step_is_expired():
 
     expired = await expire_stale_pipeline_runs(timedelta(hours=6))
 
-    assert run_id in expired
+    # It proposed nothing, so the sweep reports the attempt and no changeset to settle.
+    assert [(run.pipeline_run_id, run.changeset_id) for run in expired] == [(run_id, None)]
     assert await _status(run_id) == "ERROR"
 
 
@@ -221,7 +222,8 @@ async def test_a_terminal_run_is_left_alone():
     run_id = await _a_run_in_flight()
     await _set_run(run_id, "SUCCESS", age_hours=48)
 
-    assert run_id not in await expire_stale_pipeline_runs(timedelta(hours=6))
+    expired = await expire_stale_pipeline_runs(timedelta(hours=6))
+    assert run_id not in [run.pipeline_run_id for run in expired]
     assert await _status(run_id) == "SUCCESS"
 
 
@@ -236,7 +238,8 @@ async def test_a_run_still_reporting_is_left_alone():
     run_id = await _a_run_in_flight()
     await _set_run(run_id, "SCRAPE_PAGE", age_hours=1)
 
-    assert run_id not in await expire_stale_pipeline_runs(timedelta(hours=6))
+    expired = await expire_stale_pipeline_runs(timedelta(hours=6))
+    assert run_id not in [run.pipeline_run_id for run in expired]
     assert await _status(run_id) == "SCRAPE_PAGE"
 
 

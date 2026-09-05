@@ -90,7 +90,7 @@ async def open_jurisdiction_edit_pr(
             return None, f"Jurisdiction {jurisdiction_ocdid} not found in {file_path}"
 
     content_str = yaml_dump(entries)
-    branch_name = f"civicpatch/jurisdiction-edit/{id_utils.make_changeset_id()}"
+    branch_name = f"civicpatch/jurisdiction-edit/{id_utils.make_id()}"
 
     return await open_attributed_pr(
         branch_name=branch_name,
@@ -133,7 +133,7 @@ async def commit_jurisdiction_patch(
     """
     state = _extract_state(jurisdiction_ocdid)
     file_path = f"data_source/{state}/{LOCAL_LEVEL}/jurisdictions.yml"
-    changeset_id = id_utils.make_changeset_id()
+    changeset_id = id_utils.make_id()
 
     patch = jurisdiction_patch.build_patch(fields)
     if not patch:

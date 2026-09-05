@@ -13,7 +13,7 @@ from shared.utils.statuses import PipelineRunStatus
 
 def make_request(**kwargs):
     defaults = dict(
-        changeset_id="test-request-id",
+        pipeline_run_id="test-request-id",
         jurisdiction_ocdid="ocd-division/country:us/state:ca/place:oakland",
         server_detail=ServerDetail(user_email="test@civicpatch.org", server_url="civicpatch.org"),
         zip_path="/tmp/test.zip",
@@ -66,9 +66,9 @@ async def test_handle_submit_pipeline_run_artifacts_updates_status_to_error_on_f
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_a_failure_before_ingest_files_no_issue():
-    """It minted no changeset, so there is nothing for the issue to hang off — and a row keyed
-    on the run would join to no jurisdiction. The failed run is what records this one."""
+async def test_a_failure_before_ingest_files_the_issue_against_the_run():
+    """There is no proposal to key on, and the issue still has to reach the issues page — which
+    renders `issue_key` bare when it resolves to no changeset."""
     request = make_request()
     with (
         patch(
@@ -93,7 +93,7 @@ async def test_a_failure_before_ingest_files_no_issue():
         with pytest.raises(Exception, match="died before ingest"):
             await handle_submit_pipeline_run_artifacts(request)
 
-        mock_upsert_issue.assert_not_awaited()
+        assert mock_upsert_issue.await_args.args[0] == "test-request-id"
 
 
 @pytest.mark.unit

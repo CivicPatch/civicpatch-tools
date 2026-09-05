@@ -90,7 +90,7 @@ def _build_request_row(r: dict) -> dict:
 async def _register_pipeline_run_bg(request: RegisterPipelineRunRequest) -> None:
     try:
         await register_run(
-            run_id=request.changeset_id,
+            run_id=request.pipeline_run_id,
             if_not_exists=True,
             arguments_json={
                 "jurisdiction_ocdid": request.jurisdiction_ocdid,
@@ -102,7 +102,7 @@ async def _register_pipeline_run_bg(request: RegisterPipelineRunRequest) -> None
         )
     except Exception:
         logger.exception(
-            f"[{request.changeset_id}] Failed to register pipeline run in background"
+            f"[{request.pipeline_run_id}] Failed to register pipeline run in background"
         )
 
 
@@ -138,9 +138,9 @@ def get_router(api_key_header):
             )
 
         try:
-            changeset_id = shared.utils.id_utils.make_changeset_id()
+            pipeline_run_id = shared.utils.id_utils.make_id()
             await register_run(
-                run_id=changeset_id,
+                run_id=pipeline_run_id,
                 arguments_json={
                     "jurisdiction_ocdid": request.jurisdiction_ocdid,
                     "name": request.name,
@@ -152,7 +152,7 @@ def get_router(api_key_header):
             )
             await temporal_service.start_people_collector_workflow(
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
-                changeset_id=changeset_id,
+                pipeline_run_id=pipeline_run_id,
                 dispatch_mode=DISPATCH_MODE,
                 url=request.url,
                 source_urls=request.source_urls,
@@ -167,7 +167,7 @@ def get_router(api_key_header):
             )
 
         return CreatePipelineRunResponse(
-            changeset_id=changeset_id, status=PipelineRunStatus.PENDING
+            pipeline_run_id=pipeline_run_id, status=PipelineRunStatus.PENDING
         )
 
     @router.post(
@@ -217,15 +217,15 @@ def get_router(api_key_header):
         _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
     ):
         background_tasks.add_task(_register_pipeline_run_bg, request)
-        return {"data": {"changeset_id": request.changeset_id}}
+        return {"data": {"pipeline_run_id": request.pipeline_run_id}}
 
 
-    @router.get("/{changeset_id}/config", include_in_schema=False)
+    @router.get("/{pipeline_run_id}/config", include_in_schema=False)
     async def get_pipeline_run_config_endpoint(
-        changeset_id: str,
+        pipeline_run_id: str,
         _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
     ):
-        pipeline_run = await get_pipeline_run(changeset_id)
+        pipeline_run = await get_pipeline_run(pipeline_run_id)
         if not pipeline_run:
             raise HTTPException(status_code=404, detail="Pipeline run not found")
         args = pipeline_run.get("arguments_json") or {}
@@ -238,13 +238,13 @@ def get_router(api_key_header):
     # ── Pipeline Runs: Status & Progress ──────────────
 
     @router.patch(
-        "/{changeset_id}/status",
+        "/{pipeline_run_id}/status",
         summary="Update pipeline run status and progress",
         description="Update status and/or progress of a specific pipeline run by its request ID.",
         include_in_schema=False,
     )
     async def patch_pipeline_run_status_endpoint(
-        changeset_id: str,
+        pipeline_run_id: str,
         request: UpdatePipelineRunStatusRequest,
         background_tasks: BackgroundTasks,
         user: Identity = Depends(
@@ -253,7 +253,7 @@ def get_router(api_key_header):
     ):
         background_tasks.add_task(
             pipeline_run_service.apply_pipeline_run_status,
-            changeset_id,
+            pipeline_run_id,
             request.status,
             request.progress,
             request.jurisdiction_ocdid,
@@ -262,19 +262,19 @@ def get_router(api_key_header):
         )
 
         return UpdatePipelineRunStatusResponse(
-            changeset_id=changeset_id, status=request.status, progress=request.progress
+            pipeline_run_id=pipeline_run_id, status=request.status, progress=request.progress
         )
 
     # ── Pipeline Runs: Submit & Results ───────────────
 
     @router.post(
-        "/{changeset_id}/submit",
+        "/{pipeline_run_id}/submit",
         summary="Upload zip file containing municipal data",
         description="Accepts a zip file containing municipal data and processes it",
         include_in_schema=False,
     )
     async def submit_people_endpoint(
-        changeset_id: str,
+        pipeline_run_id: str,
         file: UploadFile,
         background_tasks: BackgroundTasks,
         jurisdiction_ocdid: str = Form(...),
@@ -296,12 +296,12 @@ def get_router(api_key_header):
                 status_code=400, detail="Invalid content type for zip file"
             )
 
-        logger.info(f"Processing intake for {changeset_id} - {jurisdiction_ocdid}")
+        logger.info(f"Processing intake for {pipeline_run_id} - {jurisdiction_ocdid}")
 
         file_path, temp_dir = await file_utils.save_upload_to_temp(file)
 
         request_obj = HandleSubmitPipelineRunArtifactsRequest(
-            changeset_id=changeset_id,
+            pipeline_run_id=pipeline_run_id,
             jurisdiction_ocdid=jurisdiction_ocdid,
             server_detail=ServerDetail(user_email="jobs-people@civicpatch.org"),
             zip_path=file_path,
@@ -316,22 +316,22 @@ def get_router(api_key_header):
         )
 
         logger.info(
-            f"[{changeset_id}] Total endpoint time: {time.time() - start_time:.3f}s"
+            f"[{pipeline_run_id}] Total endpoint time: {time.time() - start_time:.3f}s"
         )
-        return {"changeset_id": changeset_id, "status": "processing"}
+        return {"pipeline_run_id": pipeline_run_id, "status": "processing"}
 
     @router.post(
-        "/{changeset_id}/cancel",
+        "/{pipeline_run_id}/cancel",
         summary="Cancel a running pipeline run",
         description="Cancel the Temporal workflow for this pipeline run.",
     )
     async def cancel_pipeline_run_endpoint(
-        changeset_id: str,
+        pipeline_run_id: str,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
         ),
     ):
-        pipeline_run = await get_pipeline_run(changeset_id)
+        pipeline_run = await get_pipeline_run(pipeline_run_id)
         if not pipeline_run:
             return JSONResponse(
                 content=ErrorResponse(error="Pipeline run not found").model_dump(),
@@ -356,19 +356,23 @@ def get_router(api_key_header):
                 status_code=500,
             )
         await update_pipeline_run_status(
-            run_id=changeset_id, status=PipelineRunStatus.CANCELLED, progress=None
+            run_id=pipeline_run_id, status=PipelineRunStatus.CANCELLED, progress=None
         )
-        # Cancelling settles the review too. Stopping a scrape is a person deciding it will not
-        # be published, which is what dismissal means — and without this the request sits at
-        # "pending" forever, since nothing will ever review a run that did not finish.
-        user_id = await database.users.get_user_id_by_provider(user.provider, user.provider_user_id)
-        await dismiss_request(
-            changeset_id, DismissalReason.CANCELLED, resolved_by_user_id=user_id
-        )
-        return {"changeset_id": changeset_id, "status": PipelineRunStatus.CANCELLED}
+        # Cancelling settles the proposal too. Stopping a scrape is a person deciding it will
+        # not be published, which is what dismissal means. A run cancelled before ingest minted
+        # none, so there is nothing to settle.
+        minted = pipeline_run.get("changeset_id")
+        if minted:
+            user_id = await database.users.get_user_id_by_provider(
+                user.provider, user.provider_user_id
+            )
+            await dismiss_request(
+                minted, DismissalReason.CANCELLED, resolved_by_user_id=user_id
+            )
+        return {"pipeline_run_id": pipeline_run_id, "status": PipelineRunStatus.CANCELLED}
 
     @router.get(
-        "/{changeset_id}/temporal-workflow-state",
+        "/{pipeline_run_id}/temporal-workflow-state",
         summary="What a running scrape's workflow is doing",
         description=(
             "Live Temporal state for a scrape still in flight: the pending activity, its "
@@ -377,12 +381,12 @@ def get_router(api_key_header):
         ),
     )
     async def get_temporal_workflow_state_endpoint(
-        changeset_id: str,
+        pipeline_run_id: str,
         _: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
         ),
     ):
-        pipeline_run = await get_pipeline_run(changeset_id)
+        pipeline_run = await get_pipeline_run(pipeline_run_id)
         if not pipeline_run:
             return JSONResponse(
                 content=ErrorResponse(error="Pipeline run not found").model_dump(),
@@ -398,7 +402,7 @@ def get_router(api_key_header):
         except Exception as e:
             # Diagnostics must not take the page down with them: a maintainer looking at a
             # stuck scrape still needs the history that renders beside this.
-            logger.warning(f"Could not describe workflow for {changeset_id}: {e}")
+            logger.warning(f"Could not describe workflow for {pipeline_run_id}: {e}")
             return {"data": None}
         return {"data": asdict(state) if state else None}
 
@@ -597,7 +601,7 @@ def get_router(api_key_header):
         return {"data": rows}
 
     @router.get(
-        "/{changeset_id}/status",
+        "/{pipeline_run_id}/status",
         summary="Get pipeline run status and progress",
         description="Retrieve the progress of a specific pipeline run by its request ID.",
         response_model=GetPipelineRunStatusResponse,
@@ -606,10 +610,10 @@ def get_router(api_key_header):
         },
     )
     async def get_pipeline_run_status_endpoint(
-        changeset_id: str,
+        pipeline_run_id: str,
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        response = await get_pipeline_run_status(changeset_id)
+        response = await get_pipeline_run_status(pipeline_run_id)
         if not response:
             return JSONResponse(
                 content=ErrorResponse(error="Pipeline run not found").model_dump(),
@@ -617,48 +621,48 @@ def get_router(api_key_header):
             )
 
         return GetPipelineRunStatusResponse(
-            changeset_id=changeset_id,
+            pipeline_run_id=pipeline_run_id,
             status=response["status"],
             progress=response["progress"],
         )
 
     @router.get(
-        "/{changeset_id}/context/upload-url",
+        "/{pipeline_run_id}/context/upload-url",
         summary="Get a presigned PUT URL for uploading paused workflow context",
         include_in_schema=False,
     )
     async def get_context_upload_url_endpoint(
-        changeset_id: str,
+        pipeline_run_id: str,
         _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
     ):
-        key = f"{changeset_id}/paused_context.json"
+        key = f"{pipeline_run_id}/paused_context.json"
         url = storage_service.get_presigned_put_url(PAUSED_CONTEXT_BUCKET, key)
         return {"url": url}
 
     @router.get(
-        "/{changeset_id}/context/download-url",
+        "/{pipeline_run_id}/context/download-url",
         summary="Get a presigned GET URL for downloading paused workflow context",
         include_in_schema=False,
     )
     async def get_context_download_url_endpoint(
-        changeset_id: str,
+        pipeline_run_id: str,
         _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
     ):
-        key = f"{changeset_id}/paused_context.json"
+        key = f"{pipeline_run_id}/paused_context.json"
         url = storage_service.get_presigned_url_cached(PAUSED_CONTEXT_BUCKET, key)
         return {"url": url}
 
     @router.delete(
-        "/{changeset_id}/context",
+        "/{pipeline_run_id}/context",
         summary="Delete paused workflow context from storage",
         include_in_schema=False,
     )
     async def delete_context_endpoint(
-        changeset_id: str,
+        pipeline_run_id: str,
         _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
     ):
-        key = f"{changeset_id}/paused_context.json"
+        key = f"{pipeline_run_id}/paused_context.json"
         storage_service.delete_object(PAUSED_CONTEXT_BUCKET, key)
-        return {"changeset_id": changeset_id}
+        return {"pipeline_run_id": pipeline_run_id}
 
     return router

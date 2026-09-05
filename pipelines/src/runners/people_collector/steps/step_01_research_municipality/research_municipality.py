@@ -165,7 +165,7 @@ async def _request_roster(
     )
 
     response = await google_gemini_llm.run_prompt(
-        context.changeset_id,
+        context.pipeline_run_id,
         context.data.jurisdiction_ocdid,
         prompt,
     )

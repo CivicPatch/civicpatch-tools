@@ -54,15 +54,15 @@ async def run_pipeline(
         while ctx.current_state not in terminal_states:
             log_system_usage()
             try:
-                current_status = await civicpatch_api.fetch_pipeline_run_status(api_client, ctx.changeset_id)
+                current_status = await civicpatch_api.fetch_pipeline_run_status(api_client, ctx.pipeline_run_id)
                 if current_status == PipelineRunStatus.CANCELLED:
-                    logger.info(f"Pipeline run {ctx.changeset_id} cancelled — stopping.")
+                    logger.info(f"Pipeline run {ctx.pipeline_run_id} cancelled — stopping.")
                     return ctx
             except Exception as e:
                 logger.warning(f"Failed to check cancellation status (non-fatal): {e}")
             try:
                 await civicpatch_api.update_pipeline_run_status(
-                    api_client, logger, ctx.changeset_id, ctx.data.jurisdiction_ocdid,
+                    api_client, logger, ctx.pipeline_run_id, ctx.data.jurisdiction_ocdid,
                     status=ctx.current_state.value, progress=ctx.progress,
                     error_type=getattr(ctx.data, 'error_step', None),
                     error_detail=getattr(ctx.data, 'error_detail', None),
@@ -88,7 +88,7 @@ async def run_pipeline(
         final_progress = 100 if ctx.current_state == PipelineStatus.SUCCESS else ctx.progress
         try:
             await civicpatch_api.update_pipeline_run_status(
-                api_client, logger, ctx.changeset_id, ctx.data.jurisdiction_ocdid,
+                api_client, logger, ctx.pipeline_run_id, ctx.data.jurisdiction_ocdid,
                 status=ctx.current_state.value, progress=final_progress,
                 error_type=getattr(ctx.data, 'error_step', None),
             )

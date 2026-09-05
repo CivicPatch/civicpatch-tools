@@ -53,9 +53,13 @@ async def expire_stale_pipeline_runs_activity() -> None:
     activity.logger.warning(
         "Expired %d stale pipeline run(s): %s", len(expired), expired
     )
-    for changeset_id in expired:
+    # Keyed on the proposal when there is one, so the issue resolves to a jurisdiction; else on
+    # the run, which the issues page falls back to rendering.
+    for run in expired:
         await upsert_issue(
-            changeset_id, PipelineIssueType.PIPELINE_ERROR, [_STALE_RUN_ISSUE_DETAIL]
+            run.changeset_id or run.pipeline_run_id,
+            PipelineIssueType.PIPELINE_ERROR,
+            [_STALE_RUN_ISSUE_DETAIL],
         )
 
 

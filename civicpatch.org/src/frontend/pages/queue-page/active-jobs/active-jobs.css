@@ -6,5 +6,5 @@
 .pipeline-run-name { color: var(--pico-primary); }
 .pipeline-run-meta { color: var(--pico-muted-color); white-space: nowrap; }
 .pipeline-run-mono { font-family: var(--pico-font-family-monospace); font-size: 0.75rem; }
-.pipeline-run-changeset-id { white-space: normal; word-break: break-all; min-width: 8rem; }
+.pipeline-run-id { white-space: normal; word-break: break-all; min-width: 8rem; }
 .pipeline-run-cancel-btn { font-size: 0.75rem; padding: 0.15rem 0.5rem; cursor: pointer; }
