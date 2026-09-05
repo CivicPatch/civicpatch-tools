@@ -384,3 +384,63 @@ def get_service():
     credentials = get_credentials()
     service = googleapiclient.discovery.build('sheets', 'v4', credentials=credentials)
     return service
+
+def _all_sheets(service, spreadsheet_id: str) -> list[dict]:
+    response = (
+        service.spreadsheets()
+        .get(spreadsheetId=spreadsheet_id, fields="sheets(properties(sheetId,title))")
+        .execute()
+    )
+    return [sheet["properties"] for sheet in response.get("sheets", [])]
+
+
+def _target_order(current: list[str], desired: list[str]) -> list[str]:
+    """`desired` takes the front in that order; anything else trails, keeping its relative order.
+
+    A tab in `desired` that does not exist yet is skipped — states get their tabs on first sync.
+    """
+    head = [tab for tab in desired if tab in current]
+    return head + [tab for tab in current if tab not in set(head)]
+
+
+def _move_requests(
+    current: list[str], target: list[str], sheet_ids: dict[str, int]
+) -> list[dict]:
+    """Settle the bar left to right, so every move is backwards.
+
+    Moving a tab to a *higher* index is off by one in the API — the index is read before the tab
+    is lifted out. Left to right, the tab wanted at `index` is never earlier than `index`, so
+    that case never arises.
+    """
+    order = list(current)
+    requests = []
+    for index, tab in enumerate(target):
+        if order[index] == tab:
+            continue
+        order.remove(tab)
+        order.insert(index, tab)
+        requests.append(
+            {
+                "updateSheetProperties": {
+                    "properties": {"sheetId": sheet_ids[tab], "index": index},
+                    "fields": "index",
+                }
+            }
+        )
+    return requests
+
+
+def reorder_tabs(spreadsheet_id: str, desired: list[str]) -> int:
+    """Make the tab bar start with `desired`, in that order. Returns how many tabs moved.
+
+    Re-imposed on every run rather than set once: nothing in the API stops a volunteer dragging
+    a tab, so putting it back is the only enforcement there is.
+    """
+    service = get_service()
+    properties = _all_sheets(service, spreadsheet_id)
+    current = [sheet["title"] for sheet in properties]
+    sheet_ids = {sheet["title"]: sheet["sheetId"] for sheet in properties}
+
+    requests = _move_requests(current, _target_order(current, desired), sheet_ids)
+    _batch_update(service, spreadsheet_id, requests)
+    return len(requests)

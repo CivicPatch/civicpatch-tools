@@ -11,6 +11,8 @@ import pytest
 
 from lib.sheets import (
     _column_letter,
+    _move_requests,
+    _target_order,
     clear_rows_from,
     ensure_tab,
     quote_tab,
@@ -300,3 +302,57 @@ def test_the_trim_clears_from_the_first_unused_row_down():
     call = service.spreadsheets.return_value.values.return_value.clear.call_args
     # Bounded to the tab's real width. `ZZZ` is column 18,278 and past every grid we make.
     assert call.kwargs["range"] == f"'{STATE_TAB}'!A500:V"
+
+
+@pytest.mark.unit
+def test_the_bar_is_imposed_whatever_order_it_is_found_in():
+    """A volunteer can drag a tab; putting it back is the only enforcement there is."""
+    current = ["Live[Posts][TX]", "Entry[Roster]", "Live[People][TX]"]
+    desired = ["Entry[Roster]", "Live[People][TX]", "Live[Posts][TX]"]
+    assert _target_order(current, desired) == desired
+
+
+@pytest.mark.unit
+def test_a_tab_nobody_named_trails_the_imposed_ones():
+    """A volunteer's own scratch tab is left alone, but never in front of Entry."""
+    current = ["Scratch", "Entry[Roster]", "Live[People][TX]"]
+    desired = ["Entry[Roster]", "Live[People][TX]"]
+    assert _target_order(current, desired) == [
+        "Entry[Roster]",
+        "Live[People][TX]",
+        "Scratch",
+    ]
+
+
+@pytest.mark.unit
+def test_a_tab_that_does_not_exist_yet_is_skipped():
+    """A state gets its tabs on first sync, so `desired` runs ahead of the spreadsheet."""
+    current = ["Entry[Roster]", "Live[People][TX]"]
+    desired = ["Entry[Roster]", "Live[People][AK]", "Live[People][TX]"]
+    assert _target_order(current, desired) == ["Entry[Roster]", "Live[People][TX]"]
+
+
+@pytest.mark.unit
+def test_an_already_ordered_bar_moves_nothing():
+    """Runs nightly — an ordered bar has to cost zero write requests."""
+    tabs = ["Entry[Roster]", "Live[People][TX]", "Live[Posts][TX]"]
+    ids = {tab: index for index, tab in enumerate(tabs)}
+    assert _move_requests(tabs, tabs, ids) == []
+
+
+@pytest.mark.unit
+def test_every_move_is_backwards():
+    """The forward move is the one the API reads off by one, so none may be emitted."""
+    current = ["Live[Posts][TX]", "Entry[Roster]", "Live[People][TX]"]
+    target = ["Entry[Roster]", "Live[People][TX]", "Live[Posts][TX]"]
+    ids = {tab: index for index, tab in enumerate(current)}
+
+    order = list(current)
+    for request in _move_requests(current, target, ids):
+        properties = request["updateSheetProperties"]["properties"]
+        tab = next(t for t, i in ids.items() if i == properties["sheetId"])
+        assert order.index(tab) >= properties["index"]
+        order.remove(tab)
+        order.insert(properties["index"], tab)
+
+    assert order == target

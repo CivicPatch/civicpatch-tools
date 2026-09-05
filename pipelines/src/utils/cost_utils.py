@@ -92,21 +92,26 @@ def record_call(
     )
 
 
-def total_cost(pipeline_run_id: str) -> Decimal:
-    """What this run has spent so far, as its providers stated it.
+def sum_cost(calls: list[dict]) -> Decimal:
+    """What these calls cost, as their providers stated it.
 
-    Sums the in-memory tracker, never `costs.json`: the per-scrape cap reads this mid-run,
-    before that file exists. A call whose provider stated no cost — the grounded Gemini ones —
-    contributes nothing: it is absent, not zero.
+    A call whose provider stated no cost — the grounded Gemini ones — contributes nothing: it
+    is absent, not zero. Takes rows rather than a run id so the eval reports, which hold their
+    own already-read list, sum them the same way the cap does.
     """
     return sum(
-        (
-            call['cost_usd']
-            for call in get_cost_tracker(pipeline_run_id)['llm_costs']
-            if call['cost_usd'] is not None
-        ),
+        (call['cost_usd'] for call in calls if call['cost_usd'] is not None),
         Decimal('0.0'),
     )
+
+
+def total_cost(pipeline_run_id: str) -> Decimal:
+    """What this run has spent so far.
+
+    Sums the in-memory tracker, never `costs.json`: the per-scrape cap reads this mid-run,
+    before that file exists.
+    """
+    return sum_cost(get_cost_tracker(pipeline_run_id)['llm_costs'])
 
 
 def log_costs(pipeline_run_id, jurisdiction_ocdid):

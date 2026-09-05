@@ -18,6 +18,9 @@ pytestmark = [pytest.mark.evals]
 EVAL_CASES_DIR = "tests/prompts/datasets/local/find_jurisdiction_url"
 EVALS_DIR = "tests/prompts/tests/evals/find_jurisdiction_url"
 MODEL_NAME = "gemini"
+# One run for the whole eval: there is no provider comparison here, so every case shares a
+# tally. The report reads it back under this same id.
+_EVAL_RUN_ID = "run-eval"
 
 
 def load_cases_from_dir(base_dir: str) -> list:
@@ -58,7 +61,7 @@ async def run_eval(case):
         stale_url=expected.get("stale_url"),
     )
     response = await gemini_llm.run_prompt(
-        pipeline_run_id="run-eval",
+        pipeline_run_id=_EVAL_RUN_ID,
         jurisdiction_ocdid=jurisdiction_ocdid,
         prompt=prompt,
         prompt_name="find_jurisdiction_url",
@@ -79,16 +82,17 @@ def _sample_prompt() -> str:
     )
 
 
-def _write_report(failed_cases, case_ocdids, elapsed_seconds, total_cases):
-    all_costs = []
-    for ocdid in case_ocdids:
-        all_costs.extend(cost_utils.get_cost_tracker(ocdid)["llm_costs"])
+def _write_report(failed_cases, elapsed_seconds, total_cases):
+    # Every case runs under one id, so the tally is read back under that id and not per
+    # jurisdiction — costs key on the run.
+    all_costs = cost_utils.get_cost_tracker(_EVAL_RUN_ID)["llm_costs"]
     cost_summary = {
         "model": all_costs[0]["model"] if all_costs else None,
         "elapsed_seconds": elapsed_seconds,
         "total_input_tokens": sum(c["input_tokens"] for c in all_costs),
         "total_output_tokens": sum(c["output_tokens"] for c in all_costs),
-        "total_cost_usd": float(sum(c["total_cost"] for c in all_costs)),
+        # Grounded Gemini states no cost, so this is 0.0 here — absent, not measured as free.
+        "total_cost_usd": float(cost_utils.sum_cost(all_costs)),
     }
     os.makedirs(EVALS_DIR, exist_ok=True)
     run = record_run(EVALS_DIR, _sample_prompt())
@@ -149,6 +153,5 @@ async def test_find_jurisdiction_url_eval():
             failed_cases.append({"case_id": case["id"], "failures": failures})
             print(f"Case '{case['id']}' failed: {failures}")
 
-    case_ocdids = [c["expected"]["jurisdiction_ocdid"] for c in _eval_cases]
-    _write_report(failed_cases, case_ocdids, elapsed_seconds, len(_eval_cases))
+    _write_report(failed_cases, elapsed_seconds, len(_eval_cases))
     assert not failed_cases, f"Some cases failed: {failed_cases}"

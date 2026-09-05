@@ -47,6 +47,19 @@ def test_a_call_with_no_stated_cost_is_absent_from_the_total():
     assert cost_utils.total_cost(_RUN) == Decimal("0.01")
 
 
+def test_the_eval_reports_sum_a_held_list_the_way_the_cap_sums_the_tracker():
+    """The eval reports hold their own already-read rows. Summing them by hand skipped the
+    absent-cost rule and read `total_cost`, a field that has not existed since migration 171."""
+    _add(Decimal("0.01"))
+    _add(None, gateway="google")
+    rows = cost_utils.get_cost_tracker(_RUN)["llm_costs"]
+    assert cost_utils.sum_cost(rows) == cost_utils.total_cost(_RUN) == Decimal("0.01")
+
+
+def test_summing_no_rows_is_zero_rather_than_raising():
+    assert cost_utils.sum_cost([]) == Decimal("0.0")
+
+
 def test_a_billed_failure_still_counts_against_the_cap():
     """The point of recording before parsing: the call was paid for either way."""
     _add(Decimal("0.05"), error="ValidationError: bad json")

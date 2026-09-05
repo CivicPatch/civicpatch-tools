@@ -285,11 +285,11 @@ async def test_provider_comparison(load_eval_cases):
             # per-provider comparison, so which provider served is the premise of every
             # number below it. A set rather than [0]: routing is pinned, and this is what
             # would show it if that ever stopped being true.
-            "providers": sorted({c["provider"] for c in llm_costs if c.get("provider")}),
+            "providers": sorted({c["upstream_provider"] for c in llm_costs if c["upstream_provider"]}),
             "elapsed_seconds": result["elapsed_seconds"],
             "total_input_tokens": sum(c["input_tokens"] for c in llm_costs),
             "total_output_tokens": sum(c["output_tokens"] for c in llm_costs),
-            "total_cost_usd": float(sum(c["total_cost"] for c in llm_costs)),
+            "total_cost_usd": float(cost_utils.sum_cost(llm_costs)),
         }
         accuracy_report = as_report(result["accuracy"])
         # A placeholder, not an empty list: `known_roles` is injected per case, and passing

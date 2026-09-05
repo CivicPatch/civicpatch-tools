@@ -79,8 +79,39 @@ async def _clean():
 async def test_a_run_s_calls_are_written():
     run_id = await factories.start_run(_OCDID)
 
-    assert await record_calls(run_id, [_call(), _call(chunk_index=2)]) == 2
+    # Distinct generation ids: two chunks of one page are two OpenRouter generations, and
+    # `llm_calls_generation_uq` would take the second for a resubmission of the first.
+    calls = [_call(), _call(chunk_index=2, generation_id="gen-def")]
+    assert await record_calls(run_id, calls) == 2
     assert [row[4] for row in await _rows(run_id)] == [1, 2]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_resubmitting_an_artifact_does_not_double_count_spend():
+    """Submit is an HTTP endpoint: a scraper that retries after a timeout the server actually
+    completed re-sends the same `costs.json`. Before `llm_calls_generation_uq` every call was
+    written again, and the rows are identical but for `id`, so nothing downstream could tell."""
+    run_id = await factories.start_run(_OCDID)
+    calls = [_call(), _call(chunk_index=2, generation_id="gen-def")]
+    await record_calls(run_id, calls)
+
+    assert await record_calls(run_id, calls) == 0
+    assert len(await _rows(run_id)) == 2
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_call_with_no_generation_id_still_lands():
+    """The index is partial. A gateway that states no id has nothing to dedupe on, and those
+    rows must record rather than collide with each other."""
+    run_id = await factories.start_run(_OCDID)
+
+    written = await record_calls(
+        run_id, [_call(generation_id=None), _call(generation_id=None, chunk_index=2)]
+    )
+
+    assert written == 2
 
 
 @pytest.mark.integration
