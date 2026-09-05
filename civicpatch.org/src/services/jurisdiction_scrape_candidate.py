@@ -43,7 +43,7 @@ async def claim_scrape_candidates(
     candidates = await get_scrape_candidates(state, num_jurisdictions)
     items = []
     for candidate in candidates:
-        run_id = shared.utils.id_utils.make_changeset_id()
+        run_id = shared.utils.id_utils.make_id()
         await pipeline_runs_db.register_run(
             run_id=run_id,
             jurisdiction_ocdid=candidate.id,

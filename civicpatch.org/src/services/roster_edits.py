@@ -32,7 +32,7 @@ from database.source_records import insert_source_records
 from schemas.common import Identity
 from services.publish import promote_images, publish_people
 from services.roster import proposed_roster, scraped_roster
-from shared.utils.id_utils import make_changeset_id
+from shared.utils.id_utils import make_id
 
 logger = logging.getLogger(__name__)
 
@@ -91,7 +91,7 @@ async def edit_published(
     # at one time, and it needs to be one — for its own row on the timeline, its own open-data
     # commit url, its own author, and to supersede any older pending scrape. What it must not do
     # is advance `last_seen_at`, and that is `publish_request`'s rule, not this one's.
-    changeset_id = make_changeset_id()
+    changeset_id = make_id()
     await register_people_edit_request(changeset_id, jurisdiction_ocdid, user.user_id)
     await _record_edits(
         changeset_id, jurisdiction_ocdid, base, patched, labels, user.user_id

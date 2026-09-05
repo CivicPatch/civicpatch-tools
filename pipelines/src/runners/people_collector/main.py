@@ -23,11 +23,11 @@ logger = logging.getLogger(__name__)
 
 
 def initialize_pipeline_run(
-    changeset_id, jurisdiction_ocdid: str, config: PipelineRunConfig
+    pipeline_run_id, jurisdiction_ocdid: str, config: PipelineRunConfig
 ) -> tuple[PeopleCollectorContext, PipelineRunLogger]:
     pipeline_run_logger = log_utils.get_pipeline_run_logger(jurisdiction_ocdid)
     context = PeopleCollectorContext(
-        changeset_id=changeset_id,
+        pipeline_run_id=pipeline_run_id,
         current_state=PipelineStatus.INIT,
         data=PeopleCollectorData(
             jurisdiction_ocdid=jurisdiction_ocdid,
@@ -39,7 +39,7 @@ def initialize_pipeline_run(
 
 
 async def start(
-    changeset_id: str, jurisdiction_ocdid: str, config: PipelineRunConfig
+    pipeline_run_id: str, jurisdiction_ocdid: str, config: PipelineRunConfig
 ) -> PeopleCollectorContext:
     """Entry point for people collector. Logs errors and re-raises."""
     resolved_url = await resolve_redirect(config.url)
@@ -50,7 +50,7 @@ async def start(
         config = config.model_copy(update={"url": resolved_url})
 
     context, pipeline_run_logger = initialize_pipeline_run(
-        changeset_id, jurisdiction_ocdid, config
+        pipeline_run_id, jurisdiction_ocdid, config
     )
     context.data.role_config = await get_role_config(pipeline_run_logger)
     env = get_env_vars()
@@ -77,11 +77,11 @@ async def start(
         raise
 
 
-async def start_threaded(changeset_id, jurisdiction_ocdid, config):
+async def start_threaded(pipeline_run_id, jurisdiction_ocdid, config):
     """For API: Run the start coroutine in a separate thread."""
 
     def run_start():
-        asyncio.run(start(changeset_id, jurisdiction_ocdid, config))
+        asyncio.run(start(pipeline_run_id, jurisdiction_ocdid, config))
 
     await asyncio.to_thread(run_start)
 

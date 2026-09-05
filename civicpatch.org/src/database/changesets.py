@@ -12,7 +12,7 @@ from database.review_sessions import (
     ReviewSessionEntryStatus,
 )
 from database.users import SYSTEM_USER_ID
-from shared.utils.id_utils import make_changeset_id
+from shared.utils.id_utils import make_id
 from schemas.common import InFlightEntry, InFlightEntryType, JurisdictionInFlight
 from shared.utils.statuses import (
     ChangesetKind,
@@ -96,7 +96,7 @@ async def register_scrape_changeset(run_id: str) -> str:
 
     `created_at` is now(): the roster came into being when the scrape reported it.
     """
-    changeset_id = make_changeset_id()
+    changeset_id = make_id()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(

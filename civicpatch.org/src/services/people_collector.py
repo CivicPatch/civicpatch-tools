@@ -40,24 +40,25 @@ async def handle_submit_pipeline_run_artifacts(
         return await _handle_submit_pipeline_run_artifacts(request)
     except Exception as e:
         logger.error(
-            f"[{request.changeset_id}] Artifact submission failed: {e}", exc_info=True
+            f"[{request.pipeline_run_id}] Artifact submission failed: {e}", exc_info=True
         )
         # The same path the pipeline's own reports take; writing the row directly settled
         # nothing and told the open page nothing.
         await pipeline_run_service.apply_pipeline_run_status(
-            request.changeset_id,
+            request.pipeline_run_id,
             PipelineRunStatus.ERROR,
             None,
             request.jurisdiction_ocdid,
         )
-        # Against the changeset: `issues.changeset_ids` is read by joining `changesets`, so a
-        # run id there resolves to nothing. A failure before ingest has none to hang off.
-        pipeline_run = await get_pipeline_run(request.changeset_id)
+        # Keyed on the proposal when there is one, so the issue resolves to a jurisdiction;
+        # else on the run, which the issues page falls back to rendering.
+        pipeline_run = await get_pipeline_run(request.pipeline_run_id)
         changeset_id = pipeline_run.get("changeset_id") if pipeline_run else None
-        if changeset_id:
-            await upsert_issue(
-                changeset_id, PipelineIssueType.PIPELINE_ERROR, [{"error": str(e)}]
-            )
+        await upsert_issue(
+            changeset_id or request.pipeline_run_id,
+            PipelineIssueType.PIPELINE_ERROR,
+            [{"error": str(e)}],
+        )
         raise
 
 
@@ -174,9 +175,9 @@ async def _ingest_roster(
         f.write(yaml_dump(updated_data))
 
     # The run proposed a roster, so now there is something to review. Everything below is about
-    # that proposal and takes its id; `request.changeset_id` is the run's, and stays with the
+    # that proposal and takes its id; `request.pipeline_run_id` is the run's, and stays with the
     # attempt's evidence.
-    changeset_id = await register_scrape_changeset(request.changeset_id)
+    changeset_id = await register_scrape_changeset(request.pipeline_run_id)
 
     await _store_source_records(
         changeset_id,
@@ -215,11 +216,13 @@ async def _apply_scrape_changes(changeset_id: str, jurisdiction_ocdid: str) -> N
         )
 
 
-async def _record_pipeline_error(changeset_id: str, workflow_context: dict) -> None:
+async def _record_pipeline_error(pipeline_run_id: str, workflow_context: dict) -> None:
+    """Keyed on the run: this branch is a scrape that never reached ingest, so it minted no
+    proposal to hang the issue off."""
     context_data = workflow_context.get("data", {})
     error_step = context_data.get("error_step") or PipelineIssueType.PIPELINE_ERROR
     await upsert_issue(
-        changeset_id, error_step, [context_data.get("error_detail") or {}]
+        pipeline_run_id, error_step, [context_data.get("error_detail") or {}]
     )
 
 
@@ -229,17 +232,17 @@ async def _handle_submit_pipeline_run_artifacts(
     dirs = await artifacts.unpack(request.zip_path, request.temp_dir)
 
     filenames_to_urls = await storage_service.upload_directory(
-        PUBLIC_BUCKET, dirs.images, request.changeset_id
+        PUBLIC_BUCKET, dirs.images, request.pipeline_run_id
     )
     await storage_service.upload_directory(
-        PRIVATE_BUCKET, dirs.debug, request.changeset_id
+        PRIVATE_BUCKET, dirs.debug, request.pipeline_run_id
     )
 
     try:
         await pipeline_costs.send_costs(dirs.debug)
     except Exception as e:
         logger.error(
-            f"Failed to send costs for {request.changeset_id}: {e}", exc_info=True
+            f"Failed to send costs for {request.pipeline_run_id}: {e}", exc_info=True
         )
 
     workflow_context = artifacts.read_workflow_context(dirs.debug)
@@ -247,10 +250,10 @@ async def _handle_submit_pipeline_run_artifacts(
     if request.pipeline_run_status == PipelineRunStatus.SUCCESS:
         await _ingest_roster(request, dirs, filenames_to_urls, workflow_context)
     else:
-        await _record_pipeline_error(request.changeset_id, workflow_context)
+        await _record_pipeline_error(request.pipeline_run_id, workflow_context)
 
     return SubmitPipelineRunArtifactsResponse(
         status="uploaded",
-        changeset_id=request.changeset_id,
+        pipeline_run_id=request.pipeline_run_id,
         jurisdiction_ocdid=request.jurisdiction_ocdid,
     )

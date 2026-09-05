@@ -27,7 +27,7 @@ def client():
 
 
 @pytest.mark.unit
-def test_create_job_returns_changeset_id(client):
+def test_create_job_returns_the_run_id(client):
     with patch(
         "routers.api.pipeline_runs.has_open_changeset",
         new_callable=AsyncMock,
@@ -47,7 +47,7 @@ def test_create_job_returns_changeset_id(client):
 
     assert response.status_code == 200
     data = response.json()
-    assert "changeset_id" in data
+    assert "pipeline_run_id" in data
     assert "status" in data
 
 
@@ -129,7 +129,7 @@ def test_patch_job_status_returns_updated_status(client):
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "complete"
-    assert data["changeset_id"] == TEST_CHANGESET_ID
+    assert data["pipeline_run_id"] == TEST_CHANGESET_ID
 
 
 @pytest.mark.unit
@@ -157,12 +157,12 @@ def test_get_context_download_url_returns_url(client):
 
 
 @pytest.mark.unit
-def test_delete_context_returns_changeset_id(client):
+def test_delete_context_returns_the_run_id(client):
     with patch("routers.api.pipeline_runs.storage_service.delete_object"):
         response = client.delete(f"/pipeline_runs/{TEST_CHANGESET_ID}/context")
 
     assert response.status_code == 200
-    assert response.json()["changeset_id"] == TEST_CHANGESET_ID
+    assert response.json()["pipeline_run_id"] == TEST_CHANGESET_ID
 
 
 @pytest.mark.unit
@@ -185,7 +185,17 @@ def test_get_issues_returns_paginated_list(client):
 TEST_OCDID = "ocd-jurisdiction/country:us/state:wa/place:buckley/government"
 
 
-def _cancel_mocks(pipeline_run={"arguments_json": {"jurisdiction_ocdid": TEST_OCDID}}):
+# The run's id is the path parameter; the changeset it minted has its own, and that is what a
+# dismissal has to name.
+TEST_MINTED_CHANGESET_ID = "minted-changeset-id-456"
+
+
+def _cancel_mocks(
+    pipeline_run={
+        "arguments_json": {"jurisdiction_ocdid": TEST_OCDID},
+        "changeset_id": TEST_MINTED_CHANGESET_ID,
+    },
+):
     return (
         patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value=pipeline_run),
         patch("routers.api.pipeline_runs.temporal_service.cancel_workflow", new_callable=AsyncMock),
@@ -193,6 +203,28 @@ def _cancel_mocks(pipeline_run={"arguments_json": {"jurisdiction_ocdid": TEST_OC
         patch("database.users.get_user_id_by_provider", new_callable=AsyncMock, return_value="user-1"),
         patch("routers.api.pipeline_runs.dismiss_request", new_callable=AsyncMock),
     )
+
+
+@pytest.mark.unit
+def test_cancelling_before_ingest_settles_nothing():
+    """It proposed nothing, so there is no changeset to dismiss — the run is simply stopped."""
+    app = FastAPI()
+    app.dependency_overrides[get_optional_user] = lambda: MOCK_IDENTITY
+    app.include_router(pipeline_runs_router.get_router(None), prefix="/pipeline_runs")
+    client = TestClient(app)
+
+    get_run, cancel_wf, update_status, get_user, dismiss = _cancel_mocks(
+        pipeline_run={
+            "arguments_json": {"jurisdiction_ocdid": TEST_OCDID},
+            "changeset_id": None,
+        }
+    )
+    with get_run, cancel_wf, update_status as mock_status, get_user, dismiss as mock_dismiss:
+        response = client.post(f"/pipeline_runs/{TEST_CHANGESET_ID}/cancel")
+
+    assert response.status_code == 200
+    assert mock_status.await_args.kwargs["status"] == "CANCELLED"
+    mock_dismiss.assert_not_awaited()
 
 
 @pytest.mark.unit
@@ -213,7 +245,7 @@ def test_cancel_settles_the_review_as_well_as_the_run():
     mock_cancel.assert_awaited_once_with(TEST_OCDID)
     assert mock_status.await_args.kwargs["status"] == "CANCELLED"
     mock_dismiss.assert_awaited_once_with(
-        TEST_CHANGESET_ID, DismissalReason.CANCELLED, resolved_by_user_id="user-1"
+        TEST_MINTED_CHANGESET_ID, DismissalReason.CANCELLED, resolved_by_user_id="user-1"
     )
 
 

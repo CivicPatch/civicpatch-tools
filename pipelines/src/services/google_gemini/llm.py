@@ -32,7 +32,7 @@ FIND_JURISDICTION_URL_MODEL_FALLBACKS = [
 # Note: CANNOT get flash-lite to extract dates
 
 
-async def run_prompt(changeset_id, jurisdiction_ocdid, prompt, model_fallbacks=None):
+async def run_prompt(pipeline_run_id, jurisdiction_ocdid, prompt, model_fallbacks=None):
     """Ask Gemini a grounded question. Returns parsed JSON, not a validated model.
 
     Tool calls and structured output do not work together on gemini-2.5, which both ladders end
@@ -51,7 +51,7 @@ async def run_prompt(changeset_id, jurisdiction_ocdid, prompt, model_fallbacks=N
         )
         cost_utils.add_llm_cost(
             logger,
-            changeset_id,
+            pipeline_run_id,
             jurisdiction_ocdid,
             "google_gemini",
             model,

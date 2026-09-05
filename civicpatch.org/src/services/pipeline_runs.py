@@ -35,7 +35,7 @@ async def finalize_pipeline_run(
 
 
 async def apply_pipeline_run_status(
-    changeset_id: str,
+    pipeline_run_id: str,
     status: str,
     progress: Optional[int],
     jurisdiction_ocdid: Optional[str],
@@ -47,7 +47,7 @@ async def apply_pipeline_run_status(
     Not "publish", which everywhere else means a roster going live.
     """
     await update_pipeline_run_status(
-        run_id=changeset_id, status=status, progress=progress
+        run_id=pipeline_run_id, status=status, progress=progress
     )
 
     # The run's row knows the jurisdiction and the changeset; a report arrives every loop, so
@@ -55,7 +55,7 @@ async def apply_pipeline_run_status(
     final = is_final(status)
     pipeline_run = None
     if not jurisdiction_ocdid or final:
-        pipeline_run = await get_pipeline_run(changeset_id)
+        pipeline_run = await get_pipeline_run(pipeline_run_id)
 
     if not jurisdiction_ocdid and pipeline_run:
         jurisdiction_ocdid = (pipeline_run.get("arguments_json") or {}).get(
@@ -74,7 +74,7 @@ async def apply_pipeline_run_status(
             f"pipeline_run_status:{jurisdiction_ocdid}",
             json.dumps(
                 {
-                    "changeset_id": changeset_id,
+                    "pipeline_run_id": pipeline_run_id,
                     "status": status,
                     "progress": progress,
                     # Derived here so a live update and a fetched row cannot disagree.

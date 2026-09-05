@@ -23,7 +23,7 @@ class CreatePipelineRunRequest(BaseModel):
 
 
 class CreatePipelineRunResponse(BaseModel):
-    changeset_id: str
+    pipeline_run_id: str
     status: str
 
 
@@ -42,13 +42,13 @@ class BatchPipelineRunRequest(BaseModel):
 # ── POST /api/v1/pipeline_runs/register (internal) ───────────────────────────
 
 class RegisterPipelineRunRequest(BaseModel):
-    changeset_id: str
+    pipeline_run_id: str
     jurisdiction_ocdid: str
     name: Optional[str] = None
     url: Optional[str] = None
 
 
-# ── PATCH /api/v1/pipeline_runs/{changeset_id}/status ──────────────────────────
+# ── PATCH /api/v1/pipeline_runs/{pipeline_run_id}/status ──────────────────────────
 
 class UpdatePipelineRunStatusRequest(BaseModel):
     status: str
@@ -59,17 +59,17 @@ class UpdatePipelineRunStatusRequest(BaseModel):
 
 
 class UpdatePipelineRunStatusResponse(BaseModel):
-    changeset_id: str
+    pipeline_run_id: str
     status: str
     progress: Optional[int] = None
 
 
-# ── POST /api/v1/pipeline_runs/{changeset_id}/submit (internal) ────────────────
+# ── POST /api/v1/pipeline_runs/{pipeline_run_id}/submit (internal) ────────────────
 
 class HandleSubmitPipelineRunArtifactsRequest(BaseModel):
     zip_path: str
     temp_dir: str
-    changeset_id: str
+    pipeline_run_id: str
     jurisdiction_ocdid: str
     server_detail: ServerDetail
     pipeline_run_status: Optional[str] = None
@@ -78,7 +78,7 @@ class HandleSubmitPipelineRunArtifactsRequest(BaseModel):
 
 class SubmitPipelineRunArtifactsResponse(BaseModel):
     status: str
-    changeset_id: str
+    pipeline_run_id: str
     jurisdiction_ocdid: str
 
 
@@ -88,12 +88,12 @@ class FlagPipelineIssueRequest(BaseModel):
     is_flagged: bool
 
 
-# ── GET /api/v1/pipeline_runs/{changeset_id} ───────────────────────────────────
+# ── GET /api/v1/pipeline_runs/{pipeline_run_id} ───────────────────────────────────
 
-# ── GET /api/v1/pipeline_runs/{changeset_id}/status ────────────────────────────
+# ── GET /api/v1/pipeline_runs/{pipeline_run_id}/status ────────────────────────────
 
 class GetPipelineRunStatusResponse(BaseModel):
-    changeset_id: str
+    pipeline_run_id: str
     status: str
     progress: int
 
@@ -109,3 +109,13 @@ class CreateRegisterRequest(BaseModel):
 
 class PostResultRequest(BaseModel):
     pull_request_url: Optional[str] = None
+
+
+# ── The stale-run sweep (not an endpoint) ────────────────────────────────────
+
+class ExpiredRun(BaseModel):
+    """A run the sweep gave up on, and the proposal it had minted — None if it never reached
+    ingest. Two fields rather than one id, because the caller needs to tell them apart."""
+
+    pipeline_run_id: str
+    changeset_id: Optional[str]

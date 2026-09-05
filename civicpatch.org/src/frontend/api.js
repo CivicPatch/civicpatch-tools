@@ -515,8 +515,8 @@ export const fetchTemporalWorkflowState = async (changesetId) => {
   return body.data ?? null;
 };
 
-export const cancelPipelineRun = async (changesetId) => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/${changesetId}/cancel`, {
+export const cancelPipelineRun = async (pipelineRunId) => {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/${pipelineRunId}/cancel`, {
     method: "POST",
     credentials: "include",
     headers: { "X-CSRF-Token": getCsrfCookie() },

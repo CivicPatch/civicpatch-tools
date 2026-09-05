@@ -5,6 +5,7 @@ from typing import Optional
 import database.changesets as changesets_db
 from database.database import get_pool, to_iso
 from psycopg import sql
+from schemas.pipeline_runs import ExpiredRun
 from shared.utils.statuses import (
     DismissalReason,
     PipelineRunStatus,
@@ -127,7 +128,7 @@ async def get_active_pipeline_runs(
         total = rows[0][8] if rows else 0
         return [
             {
-                "changeset_id": row[0],
+                "pipeline_run_id": row[0],
                 "status": row[1],
                 "progress": row[2],
                 "created_at": to_iso(row[3]),
@@ -167,7 +168,7 @@ async def get_pipeline_run_status(run_id: str):
         )
         row = await cur.fetchone()
         if row:
-            return {"changeset_id": run_id, "status": row[0], "progress": row[1]}
+            return {"pipeline_run_id": run_id, "status": row[0], "progress": row[1]}
         return None
 
 
@@ -211,7 +212,7 @@ async def update_pipeline_run_status(
         )
 
 
-async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
+async def expire_stale_pipeline_runs(older_than: timedelta) -> list[ExpiredRun]:
     """Settle runs that stopped reporting. A dead run sends no failure — it just goes quiet.
 
     Two steps, because that is the lifecycle: the silence is an `errored` event moving the run
@@ -229,11 +230,19 @@ async def expire_stale_pipeline_runs(older_than: timedelta) -> list[str]:
             SET status = 'ERROR', finished_at = CURRENT_TIMESTAMP
             WHERE finished_at IS NULL
             AND updated_at < NOW() - %s::interval
-            RETURNING COALESCE(changeset_id::text, id::text)
+            RETURNING id::text, changeset_id::text
             """,
             (older_than,),
         )
-        expired = [row[0] for row in await cur.fetchall()]
-        await changesets_db.mark_dismissed(cur, expired, DismissalReason.ERRORED)
+        expired = [
+            ExpiredRun(pipeline_run_id=row[0], changeset_id=row[1])
+            for row in await cur.fetchall()
+        ]
+        # Only the ones that proposed something; a run that died before ingest minted nothing.
+        await changesets_db.mark_dismissed(
+            cur,
+            [run.changeset_id for run in expired if run.changeset_id],
+            DismissalReason.ERRORED,
+        )
         await conn.commit()
     return expired

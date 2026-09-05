@@ -133,8 +133,10 @@ function QueuePage() {
     setViewMode(newView);
   };
 
-  const handleCancel = (changesetId: string) => {
-    setActivePipelineRuns((prev) => prev.filter((j) => j.changeset_id !== changesetId));
+  const handleCancel = (pipelineRunId: string) => {
+    setActivePipelineRuns((prev) =>
+      prev.filter((j) => j.pipeline_run_id !== pipelineRunId),
+    );
   };
 
   const handleActivePipelineRunsPerPageChange = (e: Event) => {

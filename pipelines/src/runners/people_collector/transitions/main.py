@@ -242,7 +242,7 @@ async def process_page_content_transition(
         next_context.data.frontier, [LinkStatus.PROCESSED_IRRELEVANT, LinkStatus.DONE]
     )
     current_cost = cost_utils.total_cost_by_request(
-        context.changeset_id, context.data.jurisdiction_ocdid
+        context.pipeline_run_id, context.data.jurisdiction_ocdid
     )["total_cost"]
     logger.info(
         describe_progress(
@@ -311,7 +311,7 @@ async def save_output_transition(
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
 ) -> tuple[PeopleCollectorContext, PipelineStatus]:
-    cost_utils.log_costs(context.changeset_id, context.data.jurisdiction_ocdid)
+    cost_utils.log_costs(context.pipeline_run_id, context.data.jurisdiction_ocdid)
     _result = await save_output(context)
     progress = calculate_progress_percentage(context.data, 11)
     return _next_context(

@@ -58,7 +58,7 @@ async def run_eval(case):
         stale_url=expected.get("stale_url"),
     )
     response = await gemini_llm.run_prompt(
-        changeset_id="run-eval",
+        pipeline_run_id="run-eval",
         jurisdiction_ocdid=jurisdiction_ocdid,
         prompt=prompt,
         model_fallbacks=FIND_JURISDICTION_URL_MODEL_FALLBACKS,

@@ -233,7 +233,8 @@ async def test_giving_up_on_a_run_does_not_restamp_the_source_clock():
         )
         await conn.commit()
 
-    assert await expire_stale_pipeline_runs(timedelta(days=1)) == [abandoned]
+    expired = await expire_stale_pipeline_runs(timedelta(days=1))
+    assert [run.changeset_id for run in expired] == [abandoned]
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
