@@ -179,6 +179,9 @@ function ImportPage() {
   // Opening a past batch swaps which one the page is following: the poll effect keys on the
   // id, so setting it is enough to load that batch's review instead of the latest one's.
   const handleOpenBatch = (e: CustomEvent) => {
+    // Already following this one, and the effect keys on the id — so clearing the review here
+    // blanks a panel nothing will refill. The newest history row is usually the tracked batch.
+    if (e.detail.batch_id === batchId) return;
     setReview(null);
     setResults([]);
     setError(null);
