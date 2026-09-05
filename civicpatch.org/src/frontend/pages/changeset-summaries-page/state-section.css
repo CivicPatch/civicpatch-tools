@@ -176,3 +176,21 @@
 .cs-runs__fig--quiet {
   color: var(--civ-text-muted);
 }
+
+/* Opens the bucket, so it carries the affordance without becoming a second button style. */
+.cs-runs__fig--open {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.cs-runs__fig--open:hover,
+.cs-runs__fig--open:focus-visible {
+  color: var(--civ-text);
+  text-decoration-style: solid;
+}

@@ -24,13 +24,6 @@ def _workflow_id(jurisdiction_ocdid: str) -> str:
 
 @workflow.defn
 class PeopleCollectorWorkflow:
-    def __init__(self) -> None:
-        self._approved = False
-
-    @workflow.signal
-    def human_approval(self) -> None:
-        self._approved = True
-
     @workflow.run
     async def run(
         self,
@@ -60,7 +53,7 @@ class PeopleCollectorWorkflow:
                     )
                 )
             raise
-        return await self._handle_conclusion(conclusion, dispatch_mode, jurisdiction_ocdid, pipeline_run_id, url, source_urls)
+        return await self._handle_conclusion(conclusion, pipeline_run_id)
 
     async def _dispatch_and_poll(
         self,
@@ -89,15 +82,7 @@ class PeopleCollectorWorkflow:
             heartbeat_timeout=timedelta(seconds=60),
         )
 
-    async def _handle_conclusion(
-        self,
-        conclusion: str,
-        dispatch_mode: str,
-        jurisdiction_ocdid: str,
-        pipeline_run_id: str,
-        url: Optional[str] = None,
-        source_urls: Optional[list[str]] = None,
-    ) -> str:
+    async def _handle_conclusion(self, conclusion: str, pipeline_run_id: str) -> str:
         if conclusion == RunConclusion.SUCCESS:
             await workflow.execute_activity(
                 update_pipeline_run_status,
@@ -106,20 +91,16 @@ class PeopleCollectorWorkflow:
             )
             return conclusion
 
-        # Job stays ERROR in DB. Temporal waits silently for human_approval signal.
-        # Frontend approval UI and PAUSED DB state to be added later.
-        workflow.logger.info(f"Job {pipeline_run_id} failed — waiting for human_approval signal")
-        await workflow.wait_condition(lambda: self._approved)
-        workflow.logger.info("Received human_approval — restarting job")
-
-        restart_conclusion = await self._dispatch_and_poll(dispatch_mode, jurisdiction_ocdid, pipeline_run_id, url, source_urls)
-        final_status = PipelineRunStatus.SUCCESS if restart_conclusion == RunConclusion.SUCCESS else PipelineRunStatus.ERROR
-        await workflow.execute_activity(
-            update_pipeline_run_status,
-            args=[pipeline_run_id, final_status],
-            start_to_close_timeout=timedelta(seconds=30),
-        )
-        return restart_conclusion
+        # A failed run ends here rather than parking on a `human_approval` signal. Nothing ever
+        # sent that signal — the approval UI it was written for was never built — so every
+        # failure held its workflow open forever, and because `_dispatch` gathers a slice of
+        # children, one of them stalled a whole state scrape.
+        #
+        # Nothing is lost by ending: the pipeline has already PATCHed ERROR, the issue is filed
+        # against the run, and the state page counts it. A retry is a new run with a new id, not
+        # a suspended old one — which is what the restart below did anyway.
+        workflow.logger.info(f"Run {pipeline_run_id} failed")
+        return conclusion
 
 
 # Fallback only. The real value arrives as a workflow argument, from PIPELINE_RUN_CONCURRENCY

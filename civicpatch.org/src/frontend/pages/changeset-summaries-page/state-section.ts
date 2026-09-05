@@ -13,6 +13,7 @@ import { hostDispatch } from "../../utils/host-dispatch.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 import {
   BUCKET_DISMISSED,
+  BUCKET_FAILED_RUNS,
   BUCKET_PUBLISHED,
   BUCKET_REVIEW,
   BUCKET_LABEL,
@@ -44,6 +45,9 @@ const BUCKETS = [
   { key: BUCKET_REVIEW, count: (r: any) => r.to_review },
   { key: BUCKET_DISMISSED, count: (r: any) => r.dismissed },
   { key: BUCKET_PUBLISHED, count: (r: any) => r.published },
+  // Not a proposal like the three above — an attempt that made none. It opens the same way so
+  // the count stops being a dead end: which locality, and why it ended.
+  { key: BUCKET_FAILED_RUNS, count: (r: any) => r.failed_runs },
 ];
 
 // The app's own badge, driven by the pico tone pairs rather than a private set of pills.
@@ -161,9 +165,13 @@ function CivStateSection(host: StateSectionHost) {
         <span class="cs-runs__label">Pipeline runs</span>
         ${row.running ? html`<span class="cs-runs__fig">${row.running} running</span>` : nothing}
         ${row.failed_runs
-          ? html`<span class="cs-runs__fig cs-runs__fig--quiet">
+          ? html`<button
+              type="button"
+              class="cs-runs__fig cs-runs__fig--quiet cs-runs__fig--open"
+              @click=${() => openBucket(BUCKET_FAILED_RUNS)}
+            >
               ${row.failed_runs} failed in ${host.windowDays} days
-            </span>`
+            </button>`
           : nothing}
       </div>
     `;

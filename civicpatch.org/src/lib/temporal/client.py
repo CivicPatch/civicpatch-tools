@@ -161,12 +161,6 @@ async def enqueue_open_data_batch_commit(request: OpenDataBatchCommitRequest) ->
     )
 
 
-async def signal_human_approval(jurisdiction_ocdid: str) -> None:
-    client = await _get_client()
-    handle = client.get_workflow_handle(_workflow_id(jurisdiction_ocdid))
-    await handle.signal("human_approval")
-
-
 async def describe_workflow(jurisdiction_ocdid: str) -> TemporalWorkflowState | None:
     """What this jurisdiction's scrape workflow is doing right now.
 

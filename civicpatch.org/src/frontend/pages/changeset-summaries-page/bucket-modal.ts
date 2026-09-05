@@ -82,11 +82,13 @@ function CivBucketModal(host: BucketModalHost) {
         `;
 
   return html`
-    <civ-modal
-      .title=${`${state.toUpperCase()} — ${BUCKET_LABEL[bucket]}${data ? ` (${data.total})` : ""}`}
-      .content=${content}
-      .modalProps=${{ open: true, onClose: close, closeOnBackdropClick: true }}
-    ></civ-modal>
+    <div class="cs-bucket-modal">
+      <civ-modal
+        .title=${`${state.toUpperCase()} — ${BUCKET_LABEL[bucket]}${data ? ` (${data.total})` : ""}`}
+        .content=${content}
+        .modalProps=${{ open: true, onClose: close, closeOnBackdropClick: true }}
+      ></civ-modal>
+    </div>
   `;
 }
 

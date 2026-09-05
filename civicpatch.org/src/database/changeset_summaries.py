@@ -18,6 +18,7 @@ from schemas.changeset_summaries import (
     StateRollup,
 )
 from shared.utils.statuses import (
+    RUN_LEVEL_ISSUE_TYPES,
     SOURCE_READING_KINDS,
     ChangesetKind,
     DismissalReason,
@@ -34,6 +35,9 @@ COLLECTION_KINDS = [k.value for k in SOURCE_READING_KINDS]
 BUCKET_REVIEW = "review"
 BUCKET_DISMISSED = "dismissed"
 BUCKET_PUBLISHED = "published"
+# Sourced from `pipeline_runs`, not `changesets` — these are the attempts that proposed
+# nothing, so there is no changeset for the other three buckets to have found.
+BUCKET_FAILED_RUNS = "failed_runs"
 
 # Defined once so the rollup, calendar and bucket cannot disagree. All need `changesets` as `r`.
 PUBLISHED = "r.published_at IS NOT NULL"
@@ -249,6 +253,37 @@ async def get_state_calendar(
         return [CalendarDay(**row) for row in await cur.fetchall()]
 
 
+# The failed-run bucket cannot be a fourth branch of STATE_BUCKET_SQL: that reads `changesets`,
+# and the whole point of this population is that it has none. Same output shape, so the bucket
+# component renders it unchanged.
+STATE_FAILED_RUNS_SQL = f"""
+WITH rows AS (
+    SELECT DISTINCT ON (pr.jurisdiction_ocdid)
+           pr.jurisdiction_ocdid,
+           j.data->>'name' AS name,
+           NULL::int AS days_waiting,
+           -- Why it ended, keyed on the run: a run that mints no changeset has its issue
+           -- filed against its own id.
+           i.issue_type AS failure_reason,
+           pr.created_at
+    FROM pipeline_runs pr
+    JOIN jurisdictions j USING (jurisdiction_ocdid)
+    LEFT JOIN issues i ON i.issue_key = pr.id::text AND i.issue_type = ANY(%(issue_types)s)
+    WHERE j.state = %(state)s
+      AND pr.created_at >= now() - %(window)s::interval
+      AND pr.status = '{PipelineRunStatus.ERROR.value}'
+      AND pr.changeset_id IS NULL
+    ORDER BY pr.jurisdiction_ocdid, pr.created_at DESC
+)
+SELECT jurisdiction_ocdid, name, days_waiting, failure_reason,
+       count(*) OVER ()::int AS total
+FROM rows
+-- Newest first: a record of what just happened, like the other flows.
+ORDER BY created_at DESC, name
+LIMIT %(limit)s OFFSET %(offset)s;
+"""
+
+
 async def get_state_bucket(
     state: str,
     bucket: str,
@@ -260,16 +295,19 @@ async def get_state_bucket(
     is correct, the bucket is empty."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
-        await cur.execute(
-            STATE_BUCKET_SQL,
-            {
-                "state": state,
-                "bucket": bucket,
-                "window": f"{window_days} days",
-                "limit": limit,
-                "offset": offset,
-            },
-        )
+        params = {
+            "state": state,
+            "window": f"{window_days} days",
+            "limit": limit,
+            "offset": offset,
+        }
+        if bucket == BUCKET_FAILED_RUNS:
+            await cur.execute(
+                STATE_FAILED_RUNS_SQL,
+                {**params, "issue_types": list(RUN_LEVEL_ISSUE_TYPES)},
+            )
+        else:
+            await cur.execute(STATE_BUCKET_SQL, {**params, "bucket": bucket})
         rows = await cur.fetchall()
     # `total` rides on every row, so it is dropped before the row model sees it.
     fields = ("jurisdiction_ocdid", "name", "days_waiting", "failure_reason")
