@@ -8,6 +8,7 @@ Isolation: sentinel state code 'zz' + ocdid prefix; clean_sentinel_states wipes
 jurisdictions and people for it each test.
 """
 
+from tests.integration import factories
 import datetime
 import json
 import uuid
@@ -37,6 +38,13 @@ async def _wipe_sentinels():
             await cur.execute(
                 f"DELETE FROM {_t} WHERE jurisdiction_ocdid LIKE 'zz%'"
             )
+        # `collect_and_publish` mints a run and a changeset per fresh fixture, and
+        # `fk_changesets_jurisdiction_ocdid` is ON DELETE RESTRICT — without these the
+        # jurisdiction delete below raises and the teardown silently leaves rows behind.
+        for _table in ("changesets", "pipeline_runs"):
+            await cur.execute(
+                f"DELETE FROM {_table} WHERE jurisdiction_ocdid LIKE 'zz%'"
+            )
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid LIKE 'zz-%'")
         await cur.execute(
             "DELETE FROM jurisdictions WHERE state = ANY(%s)", (list(_SENTINEL_STATES),)
@@ -52,7 +60,7 @@ async def clean_sentinel_states():
 
 
 async def _insert_jurisdiction(
-    ocdid, *, state="zz", url=None, scraped_at=None, status="active", people=False
+    ocdid, *, state="zz", url=None, collected_at=None, status="active", people=False
 ):
     data = json.dumps({"url": url} if url else {})
     pool = await get_pool()
@@ -60,10 +68,10 @@ async def _insert_jurisdiction(
         await cur.execute(
             """
             INSERT INTO jurisdictions
-                (jurisdiction_ocdid, state, level, data, updated_at, status, scraped_at)
-            VALUES (%s, %s, 'local', %s, now(), %s, %s)
+                (jurisdiction_ocdid, state, level, data, updated_at, status)
+            VALUES (%s, %s, 'local', %s, now(), %s)
             """,
-            (ocdid, state, data, status, scraped_at),
+            (ocdid, state, data, status),
         )
         if people:
             # Seated: "has people" is an open membership now.
@@ -98,12 +106,17 @@ async def _insert_jurisdiction(
             )
         await conn.commit()
 
+    # Freshness is derived from published collection changesets now, not from a column a
+    # fixture can set. `collected_at=None` means never collected, which is a real state.
+    if collected_at is not None:
+        await factories.collect_and_publish(ocdid, collected_at)
+
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_total_includes_all_current_excludes_inactive():
-    await _insert_jurisdiction("zz-a", url="https://a", scraped_at=_FRESH_SCRAPE)
-    await _insert_jurisdiction("zz-b", url=None, scraped_at=None)
+    await _insert_jurisdiction("zz-a", url="https://a", collected_at=_FRESH_SCRAPE)
+    await _insert_jurisdiction("zz-b", url=None, collected_at=None)
     await _insert_jurisdiction("zz-gone", url="https://gone", status="inactive")
 
     sets = await get_state_jurisdiction_sets("zz")
@@ -129,23 +142,23 @@ async def test_scrapeable_is_url_bearing_subset():
 async def test_done_split_needs_url_people_and_freshness():
     # url + people + fresh → covered_fresh
     await _insert_jurisdiction(
-        "zz-fresh", url="https://f", scraped_at=_FRESH_SCRAPE, people=True
+        "zz-fresh", url="https://f", collected_at=_FRESH_SCRAPE, people=True
     )
     # url + people + old → covered_stale
     await _insert_jurisdiction(
-        "zz-stale", url="https://s", scraped_at=_STALE_SCRAPE, people=True
+        "zz-stale", url="https://s", collected_at=_STALE_SCRAPE, people=True
     )
     # url + people + never stamped → covered_stale (NULL is not fresh)
     await _insert_jurisdiction(
-        "zz-null", url="https://n", scraped_at=None, people=True
+        "zz-null", url="https://n", collected_at=None, people=True
     )
     # url, fresh, but NO people → neither (it's a gap)
     await _insert_jurisdiction(
-        "zz-nopeople", url="https://g", scraped_at=_FRESH_SCRAPE, people=False
+        "zz-nopeople", url="https://g", collected_at=_FRESH_SCRAPE, people=False
     )
     # people + fresh but NO url → not scrapeable → neither
     await _insert_jurisdiction(
-        "zz-nourl", url=None, scraped_at=_FRESH_SCRAPE, people=True
+        "zz-nourl", url=None, collected_at=_FRESH_SCRAPE, people=True
     )
 
     sets = await get_state_jurisdiction_sets("zz")

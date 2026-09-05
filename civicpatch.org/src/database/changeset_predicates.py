@@ -81,3 +81,33 @@ HELD_BY_REVIEWER = (
     f"OR (e.status = '{ReviewSessionEntryStatus.CLAIMED.value}' AND e.created_at >= NOW() - %s))"
     ")"
 )
+
+
+# When a source was last read for a jurisdiction and published — the fact
+# `jurisdictions.scraped_at` was meant to hold and did not: it was stamped on *every* publish,
+# so ten hand edits had dated a "scrape" for jurisdictions where nothing was scraped.
+#
+# `updated_at`, not `created_at`: that is when the content was confirmed, and the key
+# superseding already orders on. Collection kinds only, which is the same rule
+# `publish_request`'s `advances_last_seen` applies to `memberships.last_seen_at` — a hand edit
+# reads no source, so it may not date one.
+#
+# A join, not a correlated subquery: one aggregate scan, and it needs no alias on
+# `jurisdictions`, so a query that already aliases it `j` takes it unchanged. **One per
+# statement** — a query with several `FROM jurisdictions j` clauses gets `DuplicateAlias` if
+# each one adds it.
+#
+# The kinds are spelled out rather than joined from `COLLECTION_KINDS` so this stays a
+# `LiteralString`; `test_last_collected_names_every_collection_kind` binds the two.
+LAST_COLLECTED_JOIN = (
+    "LEFT JOIN ("
+    "SELECT jurisdiction_ocdid, max(updated_at) AS last_collected_at "
+    "FROM changesets "
+    "WHERE published_at IS NOT NULL "
+    f"AND kind IN ('{ChangesetKind.SCRAPE.value}', '{ChangesetKind.SHEET_IMPORT.value}') "
+    "GROUP BY jurisdiction_ocdid"
+    ") collected USING (jurisdiction_ocdid)"
+)
+
+# What the join exposes, so a WHERE clause reads without hunting for the join.
+LAST_COLLECTED_AT = "collected.last_collected_at"

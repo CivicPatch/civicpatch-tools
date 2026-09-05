@@ -119,7 +119,7 @@ def get_router() -> APIRouter:
 
         response = {
             "data": jurisdiction_data["data"],
-            "scraped_at": jurisdiction_data.get("scraped_at"),
+            "last_collected_at": jurisdiction_data.get("last_collected_at"),
         }
 
         if with_geom:

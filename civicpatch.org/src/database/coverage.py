@@ -1,6 +1,7 @@
 from core.coverage import classify_map_status
 from database.people import IS_ON_THE_ROSTER
 from database.database import get_pool
+from database.changeset_predicates import LAST_COLLECTED_AT, LAST_COLLECTED_JOIN
 from database.jurisdictions import FRESH_SINCE_SQL
 
 
@@ -25,7 +26,7 @@ async def get_maps_coverage() -> dict:
     covered_fresh_filter = f"""
         COUNT(*) FILTER (
             WHERE p.jurisdiction_ocdid IS NOT NULL
-              AND j.scraped_at >= {FRESH_SINCE_SQL}
+              AND {LAST_COLLECTED_AT} >= {FRESH_SINCE_SQL}
         )::int AS covered_fresh
     """
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -38,6 +39,7 @@ async def get_maps_coverage() -> dict:
                 COUNT(p.jurisdiction_ocdid)::int AS covered,
                 {covered_fresh_filter}
             FROM jurisdictions j
+            {LAST_COLLECTED_JOIN}
             CROSS JOIN LATERAL jsonb_array_elements_text(j.data -> 'parent_ocdids') AS parent_ocdid
             LEFT JOIN ({has_people_subquery}) p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
             WHERE j.status = 'active'
@@ -56,6 +58,7 @@ async def get_maps_coverage() -> dict:
                 COUNT(p.jurisdiction_ocdid)::int AS covered,
                 {covered_fresh_filter}
             FROM jurisdictions j
+            {LAST_COLLECTED_JOIN}
             LEFT JOIN ({has_people_subquery}) p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
             WHERE j.status = 'active'
             GROUP BY j.state
@@ -101,11 +104,12 @@ async def get_municipality_rows_for_state(state: str) -> list[dict]:
             j.jurisdiction_ocdid,
             j.data->>'name'                                                     AS name,
             COALESCE(pc.people_count, 0)::int                                   AS officials_count,
-            j.scraped_at,
+            {LAST_COLLECTED_AT},
             NULLIF(j.data->>'url', '') IS NOT NULL                              AS has_url,
-            (j.scraped_at IS NOT NULL
-             AND j.scraped_at >= {FRESH_SINCE_SQL})                             AS is_fresh
+            ({LAST_COLLECTED_AT} IS NOT NULL
+             AND {LAST_COLLECTED_AT} >= {FRESH_SINCE_SQL})                      AS is_fresh
         FROM jurisdictions j
+        {LAST_COLLECTED_JOIN}
         LEFT JOIN (
             SELECT jurisdiction_ocdid, COUNT(*)::int AS people_count
             FROM people
@@ -129,16 +133,16 @@ async def get_municipality_rows_for_state(state: str) -> list[dict]:
                 has_people=officials_count > 0, is_fresh=is_fresh, has_url=has_url
             ),
             "officials_count": officials_count,
-            "last_verified_at": scraped_at.isoformat() if scraped_at else None,
+            "last_collected_at": collected_at.isoformat() if collected_at else None,
         }
-        for jurisdiction_ocdid, name, officials_count, scraped_at, has_url, is_fresh in rows
+        for jurisdiction_ocdid, name, officials_count, collected_at, has_url, is_fresh in rows
     ]
 
 
 async def get_local_status_for_state(state: str) -> dict[str, str]:
     """ocdid -> map status for every local jurisdiction in `state`.
 
-    Freshness is `scraped_at` vs the rolling window — the same definition the dashboard
+    Freshness is the last collection vs the rolling window — the same definition the dashboard
     uses for "done", not `people.updated_at` (which manual edits bump). The
     FRESH/STALE/GAP/UNTRACKED call itself lives in core.coverage.
     """
@@ -149,10 +153,11 @@ async def get_local_status_for_state(state: str) -> dict[str, str]:
               SELECT 1 FROM people
               WHERE jurisdiction_ocdid = j.jurisdiction_ocdid AND status = 'active'
           ) AS has_people,
-          (j.scraped_at IS NOT NULL AND j.scraped_at >= {FRESH_SINCE_SQL})
+          ({LAST_COLLECTED_AT} IS NOT NULL AND {LAST_COLLECTED_AT} >= {FRESH_SINCE_SQL})
               AS is_fresh,
           NULLIF(j.data->>'url', '') IS NOT NULL AS has_url
         FROM jurisdictions j
+        {LAST_COLLECTED_JOIN}
         WHERE j.status = 'active'
           AND j.state = %s
     """

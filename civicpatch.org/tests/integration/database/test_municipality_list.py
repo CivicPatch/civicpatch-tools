@@ -1,6 +1,6 @@
 """Integration tests for get_municipality_rows_for_state (municipalities list page, §8).
 
-Real Postgres: name/officials_count/last_verified_at are plain SQL projections, but status
+Real Postgres: name/officials_count/last_collected_at are plain SQL projections, but status
 reuses the same has_people/is_fresh/has_url → classify_map_status path as
 get_local_status_for_state (test_local_map_status.py) — this locks the row shape together
 against real rows rather than re-proving the classification logic itself.
@@ -9,6 +9,7 @@ Run with: mise run tcp-integration
 Isolation: sentinel state 'zz' + ocdid prefix 'zz-'; cleaned before/after each test.
 """
 
+from tests.integration import factories
 import datetime
 import json
 import uuid
@@ -35,6 +36,13 @@ async def _wipe():
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid LIKE 'zz-%'"
             )
+        # `collect_and_publish` mints a run and a changeset per fresh fixture, and
+        # `fk_changesets_jurisdiction_ocdid` is ON DELETE RESTRICT — without these the
+        # jurisdiction delete below raises and the teardown silently leaves rows behind.
+        for _table in ("changesets", "pipeline_runs"):
+            await cur.execute(
+                f"DELETE FROM {_table} WHERE jurisdiction_ocdid LIKE 'zz%'"
+            )
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
         await conn.commit()
 
@@ -46,21 +54,24 @@ async def clean_sentinels():
     await _wipe()
 
 
-async def _insert_jurisdiction(ocdid, *, name, url=None, scraped_at=None):
+async def _insert_jurisdiction(ocdid, *, name, url=None, collected_at=None):
     data = json.dumps({k: v for k, v in {"name": name, "url": url}.items() if v})
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             INSERT INTO jurisdictions
-                (jurisdiction_ocdid, state, level, data, updated_at, status, scraped_at)
-            VALUES (%s, 'zz', 'local', %s, now(), 'active', %s)
+                (jurisdiction_ocdid, state, level, data, updated_at, status)
+            VALUES (%s, 'zz', 'local', %s, now(), 'active')
             """,
-            (ocdid, data, scraped_at),
+            (ocdid, data),
         )
         await conn.commit()
 
-
+    # Freshness is derived from published collection changesets now, not from a column a
+    # fixture can set. `collected_at=None` means never collected, which is a real state.
+    if collected_at is not None:
+        await factories.collect_and_publish(ocdid, collected_at)
 async def _add_people(ocdid, count):
     """Seated, not merely present: an officials count is a count of open memberships now."""
     division = ocdid.replace("ocd-jurisdiction", "ocd-division")
@@ -102,7 +113,7 @@ async def _add_people(ocdid, count):
 @pytest.mark.integration
 async def test_row_shape_for_fresh_municipality():
     await _insert_jurisdiction(
-        "zz-fresh", name="Fresh City", url="https://f", scraped_at=_FRESH_SCRAPE
+        "zz-fresh", name="Fresh City", url="https://f", collected_at=_FRESH_SCRAPE
     )
     await _add_people("zz-fresh", 3)
 
@@ -114,15 +125,15 @@ async def test_row_shape_for_fresh_municipality():
             "name": "Fresh City",
             "status": "fresh",
             "officials_count": 3,
-            "last_verified_at": _FRESH_SCRAPE.isoformat(),
+            "last_collected_at": _FRESH_SCRAPE.isoformat(),
         }
     ]
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_untracked_municipality_has_no_last_verified_at():
-    await _insert_jurisdiction("zz-untracked", name="Untracked Town", url=None, scraped_at=None)
+async def test_untracked_municipality_has_no_last_collected_at():
+    await _insert_jurisdiction("zz-untracked", name="Untracked Town", url=None, collected_at=None)
 
     rows = await get_municipality_rows_for_state("zz")
 
@@ -132,7 +143,7 @@ async def test_untracked_municipality_has_no_last_verified_at():
             "name": "Untracked Town",
             "status": "untracked",
             "officials_count": 0,
-            "last_verified_at": None,
+            "last_collected_at": None,
         }
     ]
 

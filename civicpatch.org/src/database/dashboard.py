@@ -1,5 +1,6 @@
 from database.people import IS_ON_THE_ROSTER
 from database.database import get_pool
+from database.changeset_predicates import LAST_COLLECTED_AT, LAST_COLLECTED_JOIN
 from database.jurisdictions import FRESH_SINCE_SQL
 
 
@@ -34,11 +35,12 @@ async def get_dashboard() -> dict:
                 NULLIF(j.data->>'url', '') IS NOT NULL                            AS has_url,
                 COALESCE(pc.people_count, 0) > 0                                  AS has_people,
                 -- NULL guard: a bare comparison yields NULL, which no FILTER below counts.
-                -- scraped_at is only stamped on job-PR merge, so officials that arrived
+                -- Derived from published collection changesets, so officials that arrived
                 -- via open-data sync alone stay NULL.
-                (j.scraped_at IS NOT NULL
-                 AND j.scraped_at >= {FRESH_SINCE_SQL})                           AS is_fresh
+                ({LAST_COLLECTED_AT} IS NOT NULL
+                 AND {LAST_COLLECTED_AT} >= {FRESH_SINCE_SQL})                    AS is_fresh
             FROM jurisdictions j
+            {LAST_COLLECTED_JOIN}
             LEFT JOIN (
                 SELECT jurisdiction_ocdid, COUNT(*)::int AS people_count
                 FROM people

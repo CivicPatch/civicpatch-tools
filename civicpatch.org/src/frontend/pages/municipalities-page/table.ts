@@ -9,7 +9,7 @@ const SORT_HEADERS: { key: SortKey; label: string; class?: string }[] = [
   { key: 'name', label: 'Municipality' },
   { key: 'status', label: 'Status' },
   { key: 'officials', label: 'Officials', class: 'municipalities-table__officials' },
-  { key: 'last_verified', label: 'Last verified' },
+  { key: 'last_collected', label: 'Last collected' },
 ];
 
 export interface MunicipalitiesTableProps {
@@ -45,7 +45,7 @@ function renderRow(m: Municipality, jurisdictionHref: string) {
         ${m.officials_count > 0 ? m.officials_count : '—'}
       </td>
       <td style=${m.status === 'stale' ? 'color:var(--civ-status-stale)' : ''}>
-        ${m.last_verified_at ? dateStringToFriendly(m.last_verified_at) : '—'}
+        ${m.last_collected_at ? dateStringToFriendly(m.last_collected_at) : '—'}
       </td>
       <td>
         <a href="${jurisdictionHref}">View <i class="fa-solid fa-arrow-right"></i></a>

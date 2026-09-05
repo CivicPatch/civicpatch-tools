@@ -122,11 +122,11 @@ async def _navigate_response(session_id: str, entry_number: int):
     changeset_id = result["changeset_id"]
     jurisdiction_ocdid = result["jurisdiction_ocdid"]
 
-    pr_meta, existing, proposed, scraped_at = await asyncio.gather(
+    pr_meta, existing, proposed, has_ever_collected = await asyncio.gather(
         review_pool_db.get_changeset_for_review(changeset_id),
         database_people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
         proposed_roster(changeset_id, jurisdiction_ocdid),
-        jurisdictions_db.get_scraped_at(jurisdiction_ocdid),
+        jurisdictions_db.has_ever_collected(jurisdiction_ocdid),
     )
 
     # This is the endpoint a review session actually navigates through — `by-request` serves
@@ -150,7 +150,7 @@ async def _navigate_response(session_id: str, entry_number: int):
             "has_next": result.get("has_next", False),
             "jurisdiction": pr_meta["jurisdiction"],
             "pr": pr_meta["pr"],
-            "mode": ReviewMode.for_scrape(scraped_at).value,
+            "mode": ReviewMode.for_scrape(has_ever_collected).value,
             "existing": existing,
             "proposed": proposed,
             "changes": [

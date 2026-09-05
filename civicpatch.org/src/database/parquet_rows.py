@@ -85,7 +85,7 @@ TABLES: dict[str, LiteralString] = {
         -- The one table with a real `state` column; no need to cut it out of the ocdid.
         SELECT state, jurisdiction_ocdid, level, status,
                data->>'name' AS name,
-               parent_ocdids, scraped_at, updated_at
+               parent_ocdids, updated_at
         FROM jurisdictions
         ORDER BY state, jurisdiction_ocdid
     """,

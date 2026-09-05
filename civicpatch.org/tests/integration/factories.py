@@ -91,3 +91,27 @@ async def backdate_changeset(changeset_id: str, days: int) -> None:
             (days, days, changeset_id),
         )
         await conn.commit()
+
+
+async def collect_and_publish(jurisdiction_ocdid: str, collected_at) -> str:
+    """A published collection changeset dated `collected_at` — what makes a jurisdiction fresh.
+
+    Freshness used to be `jurisdictions.scraped_at`, a column a fixture could just set. It is
+    derived now — `max(updated_at)` over published collection changesets — so a fixture has to
+    produce the thing it derives from rather than the cache of it.
+
+    The run and the changeset come from the real writers; only the dates are raw SQL, the same
+    licence `backdate_run` takes. Pass `collected_at=None` for a jurisdiction that has been
+    collected but never published, which is a different fixture from never collected at all.
+    """
+    run_id = await start_run(jurisdiction_ocdid)
+    changeset_id = await complete_run(run_id)
+    if collected_at is None:
+        return changeset_id
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE changesets SET published_at = now(), updated_at = %s WHERE id::text = %s",
+            (collected_at, changeset_id),
+        )
+    return changeset_id

@@ -239,10 +239,10 @@ def get_router(api_key_header):
         changeset_id = result["changeset_id"]
         jurisdiction_ocdid = result["jurisdiction_ocdid"]
 
-        existing, proposed, scraped_at, proposals = await asyncio.gather(
+        existing, proposed, has_ever_collected, proposals = await asyncio.gather(
             database.people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
             proposed_roster(changeset_id, jurisdiction_ocdid),
-            jurisdictions_db.get_scraped_at(jurisdiction_ocdid),
+            jurisdictions_db.has_ever_collected(jurisdiction_ocdid),
             # What this scrape would change about who holds what. The queue listing has carried
             # it since the proposal landed; the review session reads this endpoint instead, and
             # without it a proposed person has no post to name — the post does not exist yet, so
@@ -266,7 +266,7 @@ def get_router(api_key_header):
                     "website_url": result["jurisdiction_website_url"],
                 },
                 "pr": result["pr"],
-                "mode": ReviewMode.for_scrape(scraped_at).value,
+                "mode": ReviewMode.for_scrape(has_ever_collected).value,
                 "existing": existing,
                 "proposed": proposed,
                 "changes": [

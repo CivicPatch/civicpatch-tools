@@ -20,7 +20,7 @@ const DEFAULTS: MunicipalitiesUrlParams = {
 };
 
 const VALID_STATUSES = new Set<string>([STATUS_FILTER_ALL, ...STATUS_ORDER]);
-const VALID_SORT_KEYS = new Set<string>(['name', 'status', 'officials', 'last_verified']);
+const VALID_SORT_KEYS = new Set<string>(['name', 'status', 'officials', 'last_collected']);
 
 export function parseMunicipalitiesParams(search: string): MunicipalitiesUrlParams {
   const params = new URLSearchParams(search);
