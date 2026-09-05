@@ -6,6 +6,7 @@ import {
   type ReviewJurisdiction,
 } from "./import-types.js";
 import { Pagination } from "../../components/pagination/index.js";
+import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 import { renderReviewPerson } from "./review-person.js";
 import {
   pageCount,
@@ -91,15 +92,22 @@ function BatchReviewPanel(host: BatchReviewHost) {
         data-jurisdiction=${ocdid}
       >
         <header class="review-jurisdiction__header">
-          <label class="review-jurisdiction__pick">
+          <div class="review-jurisdiction__pick">
             <input
               type="checkbox"
+              aria-label=${`Select ${jurisdiction.name}`}
               .checked=${selected.includes(ocdid)}
               ?disabled=${settled || host.busy}
               @change=${() => toggle(ocdid)}
             />
-            <span class="review-jurisdiction__name">${jurisdiction.name}</span>
-          </label>
+            <a
+              class="review-jurisdiction__name"
+              href="/${jurisdictionOcdidToPath(ocdid)}"
+              target="_blank"
+              rel="noopener"
+              >${jurisdiction.name}</a
+            >
+          </div>
           <span class="review-jurisdiction__count">
             ${jurisdiction.people.length}
             ${jurisdiction.people.length === 1 ? "person" : "people"}
