@@ -2,13 +2,13 @@ from database.database import get_pool
 from database.changesets import AVAILABLE_FOR_REVIEW
 
 _OPEN_PRS_GLOBAL = f"""
-    (SELECT COUNT(*) FROM changesets r
+    (SELECT COUNT(*) FROM changesets
      WHERE {AVAILABLE_FOR_REVIEW})
 """
 
 _OPEN_PRS_STATE = f"""
-    (SELECT COUNT(*) FROM changesets r
-     JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
+    (SELECT COUNT(*) FROM changesets
+     JOIN jurisdictions jur ON jur.jurisdiction_ocdid = changesets.jurisdiction_ocdid
      WHERE {AVAILABLE_FOR_REVIEW} AND jur.state = %s)
 """
 

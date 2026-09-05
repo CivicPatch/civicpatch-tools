@@ -579,7 +579,7 @@ PUBLISHED_OUTCOME = "published"
 # History is what happened. A changeset nobody has decided yet has not happened — it is
 # `/jurisdictions/in-flight`'s business, and the page shows it in its own section. Requires
 # the changesets table aliased `r`.
-RESOLVED = "(r.published_at IS NOT NULL OR r.dismissed_at IS NOT NULL)"
+RESOLVED = "(changesets.published_at IS NOT NULL OR changesets.dismissed_at IS NOT NULL)"
 
 # What this jurisdiction's history shows a changeset having done.
 #
@@ -629,7 +629,7 @@ async def get_jurisdiction_history(
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
         await cur.execute(
-            f"SELECT count(*) AS total FROM changesets r WHERE r.jurisdiction_ocdid = %s AND {RESOLVED}",
+            f"SELECT count(*) AS total FROM changesets WHERE changesets.jurisdiction_ocdid = %s AND {RESOLVED}",
             (jurisdiction_ocdid,),
         )
         count_row = await cur.fetchone()
@@ -651,25 +651,25 @@ async def get_jurisdiction_history(
                   )
                 GROUP BY cl.changeset_id
             )
-            SELECT r.id::text AS changeset_id,
-                   r.created_at,
-                   r.updated_at,
-                   run.status, run.progress, r.change_url,
-                   r.kind,
-                   r.published_at,
+            SELECT changesets.id::text AS changeset_id,
+                   changesets.created_at,
+                   changesets.updated_at,
+                   run.status, run.progress, changesets.change_url,
+                   changesets.kind,
+                   changesets.published_at,
                    -- 161's CHECK keeps this inside `DismissalReason`, so no guard here.
                    CASE
-                       WHEN r.published_at IS NOT NULL THEN '{PUBLISHED_OUTCOME}'
-                       ELSE COALESCE(r.dismissed_reason, '{UNKNOWN_OUTCOME}')
+                       WHEN changesets.published_at IS NOT NULL THEN '{PUBLISHED_OUTCOME}'
+                       ELSE COALESCE(changesets.dismissed_reason, '{UNKNOWN_OUTCOME}')
                    END AS outcome,
                    resolver.display_name AS resolved_by,
                    COALESCE(rc.changes, '[]'::jsonb) AS changes
-            FROM changesets r
-            LEFT JOIN pipeline_runs run ON run.changeset_id = r.id
-            LEFT JOIN users resolver ON resolver.id = r.resolved_by_user_id
-            LEFT JOIN roster_changes rc ON rc.changeset_id = r.id::text
-            WHERE r.jurisdiction_ocdid = %s AND {RESOLVED}
-            ORDER BY r.created_at DESC
+            FROM changesets
+            LEFT JOIN pipeline_runs run ON run.changeset_id = changesets.id
+            LEFT JOIN users resolver ON resolver.id = changesets.resolved_by_user_id
+            LEFT JOIN roster_changes rc ON rc.changeset_id = changesets.id::text
+            WHERE changesets.jurisdiction_ocdid = %s AND {RESOLVED}
+            ORDER BY changesets.created_at DESC
             LIMIT %s OFFSET %s;
             """,
             # No kind filter. It used to read `= ANY(['people','jurisdiction_manual_edit'])`,
@@ -822,10 +822,10 @@ async def stamp_scraped_at(jurisdiction_ocdid: str, changeset_id: str) -> bool:
     pool = await get_pool()
     async with pool.connection() as conn:
         result = await conn.execute(
-            "UPDATE jurisdictions j SET scraped_at = r.created_at "
-            "FROM changesets r "
-            "WHERE r.id = %s "
-            "AND EXISTS (SELECT 1 FROM pipeline_runs pr WHERE pr.changeset_id = r.id) "
+            "UPDATE jurisdictions j SET scraped_at = changesets.created_at "
+            "FROM changesets "
+            "WHERE changesets.id = %s "
+            "AND EXISTS (SELECT 1 FROM pipeline_runs pr WHERE pr.changeset_id = changesets.id) "
             "AND j.jurisdiction_ocdid = %s",
             (changeset_id, jurisdiction_ocdid),
         )

@@ -62,7 +62,7 @@ def issue_priority(jurisdiction_ocdid: str) -> LiteralString:
     """SQL scoring what a card costs a reviewer, to sort a queue on.
 
     Takes a column expression rather than assuming a table alias, so a caller that writes
-    `FROM changesets r` and one that does not can both use it. Composed from ints and that
+    `FROM changesets` and one that does not can both use it. Composed from ints and that
     expression — no user input reaches it, which is what `sql.SQL`'s LiteralString guard
     cannot see for itself.
     """

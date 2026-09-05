@@ -70,20 +70,20 @@ async def _allocate_next_review(cur, state_code: str, excluded_changeset_ids: li
     """
     await cur.execute(
         f"""
-        SELECT r.id::text AS changeset_id,
-               r.jurisdiction_ocdid AS jurisdiction_ocdid
-        FROM changesets r
+        SELECT changesets.id::text AS changeset_id,
+               changesets.jurisdiction_ocdid AS jurisdiction_ocdid
+        FROM changesets
         WHERE {AVAILABLE_FOR_REVIEW}
-          AND r.jurisdiction_ocdid LIKE %s
-          AND r.id::text != ALL(%s::text[])
+          AND changesets.jurisdiction_ocdid LIKE %s
+          AND changesets.id::text != ALL(%s::text[])
           AND NOT EXISTS (
               SELECT 1 FROM review_session_entries e
-              WHERE e.jurisdiction_ocdid = r.jurisdiction_ocdid
+              WHERE e.jurisdiction_ocdid = changesets.jurisdiction_ocdid
                 AND e.status IN ('claimed', 'saved')
           )
         ORDER BY
-            {issue_priority('r.jurisdiction_ocdid')} DESC,
-            r.created_at DESC
+            {issue_priority('changesets.jurisdiction_ocdid')} DESC,
+            changesets.created_at DESC
         LIMIT %s
         """,
         (
@@ -224,9 +224,9 @@ async def navigate_to_entry(
             await cur.execute(
                 f"""
                 SELECT COUNT(*) AS available
-                FROM changesets r
+                FROM changesets
                 WHERE {AVAILABLE_FOR_REVIEW}
-                  AND r.jurisdiction_ocdid LIKE %s
+                  AND changesets.jurisdiction_ocdid LIKE %s
                 """,
                 (f"ocd-jurisdiction/country:us/state:{session_row.state_code}/%",),  # type: ignore[union-attr]
             )

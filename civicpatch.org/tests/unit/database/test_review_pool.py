@@ -91,5 +91,5 @@ async def test_lookup_is_scoped_to_people_requests():
     sql, params = cur.execute.await_args.args
     # Deny-list, not allow-list: kind defaults to 'scrape' and legacy rows
     # use other values, so excluding by kind is the only safe direction.
-    assert "r.kind != %s" in sql
+    assert "changesets.kind != %s" in sql
     assert params[1] == ChangesetKind.JURISDICTION_EDIT

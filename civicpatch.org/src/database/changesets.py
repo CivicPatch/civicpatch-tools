@@ -26,31 +26,32 @@ from shared.utils.statuses import (
 logger = logging.getLogger(__name__)
 
 # Derived from the two timestamps, never stored; a CHECK forbids both being set.
-# Requires the requests table aliased `r`.
+# Unaliased, per CLAUDE.md: a fragment that demands its caller alias a table is a runtime
+# error waiting, never a typecheck one. `r` was the initial of `requests`, pre-migration-152.
 REVIEW_STATUS = (
     "CASE "
-    f"WHEN r.published_at IS NOT NULL THEN '{RequestReviewStatus.PUBLISHED.value}' "
-    f"WHEN r.dismissed_at IS NOT NULL THEN '{RequestReviewStatus.DISMISSED.value}' "
+    f"WHEN changesets.published_at IS NOT NULL THEN '{RequestReviewStatus.PUBLISHED.value}' "
+    f"WHEN changesets.dismissed_at IS NOT NULL THEN '{RequestReviewStatus.DISMISSED.value}' "
     f"ELSE '{RequestReviewStatus.PENDING.value}' END"
 )
 
 WORK_IN_FLIGHT = (
-    "r.published_at IS NULL AND r.dismissed_at IS NULL "
-    f"AND r.kind != '{ChangesetKind.JURISDICTION_EDIT.value}'"
+    "changesets.published_at IS NULL AND changesets.dismissed_at IS NULL "
+    f"AND changesets.kind != '{ChangesetKind.JURISDICTION_EDIT.value}'"
 )
 
 # Duplicates `DismissalReason`; kept only because the SQL fragments below splice it.
 DISMISSED_SUPERSEDED = "superseded"
 
-# A scrape still awaiting human review. Requires `changesets` aliased `r`.
+# A scrape still awaiting human review. Unaliased; callers use `FROM changesets` bare.
 AVAILABLE_FOR_REVIEW = (
-    "EXISTS (SELECT 1 FROM source_records sr WHERE sr.changeset_id = r.id) "
+    "EXISTS (SELECT 1 FROM source_records sr WHERE sr.changeset_id = changesets.id) "
     # Composed, not restated: widening one used to leave the two disagreeing.
     f"AND {WORK_IN_FLIGHT} "
     "AND NOT EXISTS ("
     "SELECT 1 FROM issues i "
     f"WHERE i.issue_type = '{PipelineIssueType.USER_REPORTED.value}' "
-    "AND r.id::text = ANY(i.changeset_ids) "
+    "AND changesets.id::text = ANY(i.changeset_ids) "
     f"AND i.status NOT IN ('{PipelineIssueStatus.RESOLVED.value}', '{PipelineIssueStatus.SUPERSEDED.value}')"
     ")"
 )
@@ -58,13 +59,13 @@ AVAILABLE_FOR_REVIEW = (
 # The run behind a changeset. No run — an import or a hand edit — answers NULL.
 RUN_IN_FLIGHT = (
     "EXISTS (SELECT 1 FROM pipeline_runs "
-    "WHERE pipeline_runs.changeset_id = r.id AND pipeline_runs.finished_at IS NULL)"
+    "WHERE pipeline_runs.changeset_id = changesets.id AND pipeline_runs.finished_at IS NULL)"
 )
 RUN_STATUS = (
-    "(SELECT status FROM pipeline_runs WHERE pipeline_runs.changeset_id = r.id)"
+    "(SELECT status FROM pipeline_runs WHERE pipeline_runs.changeset_id = changesets.id)"
 )
 RUN_PROGRESS = (
-    "(SELECT progress FROM pipeline_runs WHERE pipeline_runs.changeset_id = r.id)"
+    "(SELECT progress FROM pipeline_runs WHERE pipeline_runs.changeset_id = changesets.id)"
 )
 
 # Request supercede can dismiss.
@@ -73,7 +74,7 @@ SWEEPABLE = (
     f"{AVAILABLE_FOR_REVIEW} "
     "AND EXISTS ("
     "SELECT 1 FROM jurisdictions j "
-    "WHERE j.jurisdiction_ocdid = r.jurisdiction_ocdid "
+    "WHERE j.jurisdiction_ocdid = changesets.jurisdiction_ocdid "
     "AND j.status = 'active'"
     ")"
 )
@@ -81,7 +82,7 @@ SWEEPABLE = (
 HELD_BY_REVIEWER = (
     "EXISTS ("
     "SELECT 1 FROM review_session_entries e "
-    "WHERE r.id::text = ANY(e.changeset_ids) "
+    "WHERE changesets.id::text = ANY(e.changeset_ids) "
     f"AND (e.status IN ('{ReviewSessionEntryStatus.SAVED}', '{ReviewSessionEntryStatus.RESOLVED}') "
     f"OR (e.status = '{ReviewSessionEntryStatus.CLAIMED}' AND e.created_at >= NOW() - %s))"
     ")"
@@ -105,9 +106,9 @@ async def register_scrape_changeset(run_id: str) -> str:
                 id, kind, jurisdiction_ocdid, created_by_user_id,
                 created_at, updated_at
             )
-            SELECT %s, %s, r.jurisdiction_ocdid, r.created_by_user_id,
+            SELECT %s, %s, run.jurisdiction_ocdid, run.created_by_user_id,
                    CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
-            FROM pipeline_runs r WHERE r.id = %s
+            FROM pipeline_runs run WHERE run.id = %s
             """,
             (changeset_id, ChangesetKind.SCRAPE, run_id),
         )
@@ -241,14 +242,14 @@ IN_FLIGHT_SQL = f"""
            created_at, updated_at, kind, change_url, status, progress,
            is_running, awaiting_review
     FROM (
-        SELECT r.id, r.created_at, r.updated_at, r.kind, r.change_url,
+        SELECT changesets.id, changesets.created_at, changesets.updated_at, changesets.kind, changesets.change_url,
                {RUN_STATUS} AS status, {RUN_PROGRESS} AS progress,
                {RUN_IN_FLIGHT} AS is_running,
                {AVAILABLE_FOR_REVIEW} AS awaiting_review
-        FROM changesets r
-        WHERE r.jurisdiction_ocdid = %s
-          AND r.published_at IS NULL
-          AND r.dismissed_at IS NULL
+        FROM changesets
+        WHERE changesets.jurisdiction_ocdid = %s
+          AND changesets.published_at IS NULL
+          AND changesets.dismissed_at IS NULL
     ) flags
     WHERE is_running OR awaiting_review
 
@@ -353,13 +354,13 @@ async def get_issue_request_details(changeset_ids: list[str]) -> list[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT r.id::text, r.jurisdiction_ocdid, run.arguments_json,
-                   COALESCE(j.data->>'name', r.jurisdiction_ocdid) AS jurisdiction_name
-            FROM changesets r
-            LEFT JOIN pipeline_runs run ON run.changeset_id = r.id
-            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE r.id::text = ANY(%s)
-            ORDER BY r.created_at
+            SELECT changesets.id::text, changesets.jurisdiction_ocdid, run.arguments_json,
+                   COALESCE(j.data->>'name', changesets.jurisdiction_ocdid) AS jurisdiction_name
+            FROM changesets
+            LEFT JOIN pipeline_runs run ON run.changeset_id = changesets.id
+            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = changesets.jurisdiction_ocdid
+            WHERE changesets.id::text = ANY(%s)
+            ORDER BY changesets.created_at
             """,
             (changeset_ids,),
         )
@@ -397,17 +398,17 @@ async def mark_dismissed(
     if not changeset_ids:
         return []
     # The machine decides which states this dismissal may leave; the statement applies it.
-    # `r.changeset_state` is the generated column, so this is one atomic read-and-write —
+    # `changesets.changeset_state` is the generated column, so this is one atomic read-and-write —
     # first, so nothing can lose the race to a concurrent publish.
     await cur.execute(
         """
-        UPDATE changesets r
+        UPDATE changesets
            SET dismissed_at = now(),
                dismissed_reason = %s,
                resolved_by_user_id = COALESCE(%s, resolved_by_user_id, %s)
-         WHERE r.id::text = ANY(%s)
-           AND r.changeset_state = ANY(%s)
-        RETURNING r.id::text, r.jurisdiction_ocdid
+         WHERE changesets.id::text = ANY(%s)
+           AND changesets.changeset_state = ANY(%s)
+        RETURNING changesets.id::text, changesets.jurisdiction_ocdid
         """,
         (
             reason,
@@ -439,11 +440,11 @@ async def dismiss_superseded_by(
     # between the two statements is skipped rather than overwritten.
     await cur.execute(
         f"""
-        SELECT r.id::text FROM changesets r
-         WHERE r.jurisdiction_ocdid = %s
-           AND r.id::text <> %s
-           AND r.updated_at IS NOT NULL
-           AND r.updated_at < %s
+        SELECT changesets.id::text FROM changesets
+         WHERE changesets.jurisdiction_ocdid = %s
+           AND changesets.id::text <> %s
+           AND changesets.updated_at IS NOT NULL
+           AND changesets.updated_at < %s
            AND {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
         """,
         (
@@ -464,17 +465,17 @@ async def supersede_stacked_requests() -> list[str]:
         await cur.execute(
             f"""
             WITH candidates AS (
-                SELECT r.id, r.jurisdiction_ocdid, r.updated_at
-                FROM changesets r
+                SELECT changesets.id, changesets.jurisdiction_ocdid, changesets.updated_at
+                FROM changesets
                 WHERE {SWEEPABLE} AND NOT {HELD_BY_REVIEWER}
-                  AND r.updated_at IS NOT NULL
+                  AND changesets.updated_at IS NOT NULL
             ),
             supersedors AS (
                 SELECT jurisdiction_ocdid, updated_at FROM candidates
                 UNION ALL
-                SELECT r.jurisdiction_ocdid, r.updated_at
-                FROM changesets r
-                WHERE r.published_at IS NOT NULL AND r.updated_at IS NOT NULL
+                SELECT changesets.jurisdiction_ocdid, changesets.updated_at
+                FROM changesets
+                WHERE changesets.published_at IS NOT NULL AND changesets.updated_at IS NOT NULL
             )
             SELECT older.id::text
               FROM candidates older
