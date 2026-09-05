@@ -183,17 +183,17 @@ async def _record_edits(
     )
 
 
-async def publish_to_database(
+async def publish(
     changeset_id: str,
     jurisdiction_ocdid: str,
     edited: List[dict] | None,
     resolved_by_user_id: str | None,
 ) -> None:
-    """Make this scrape's roster live, without mirroring it into open-data.
+    """Make this scrape's roster live.
 
-    Separate from `publish` for the sake of bulk publishing, which mirrors every jurisdiction it
-    made live in one commit rather than one each. Anything publishing a single jurisdiction
-    wants `publish` — this on its own leaves open-data behind the database.
+    Nothing here commits: `SweepChangesWorkflow` mirrors to open-data and the sheets from
+    `change_logs`. The old `publish` / `publish_to_database` split named a choice that
+    disappeared when mirroring moved to the sweep, and left the two identical.
     """
     roster = edited
     if roster is None:
@@ -207,15 +207,4 @@ async def publish_to_database(
     # Photos promote with the data: publishing is what moves them off the artifacts bucket.
     await publish_people(
         changeset_id, jurisdiction_ocdid, promote_images(roster), resolved_by_user_id
-    )
-
-
-async def publish(
-    changeset_id: str,
-    jurisdiction_ocdid: str,
-    edited: List[dict] | None,
-    resolved_by_user_id: str | None,
-) -> None:
-    await publish_to_database(
-        changeset_id, jurisdiction_ocdid, edited, resolved_by_user_id
     )

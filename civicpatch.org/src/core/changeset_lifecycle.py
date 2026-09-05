@@ -86,6 +86,24 @@ def advance(state: ChangesetState, event: ChangesetEvent) -> ChangesetState | No
     return TRANSITIONS[state].get(event)
 
 
+def states_accepting_dismissal(reason: DismissalReason) -> tuple[str, ...]:
+    """Which states a dismissal for this reason may leave, as `changesets.state` values.
+
+    The caller guards its UPDATE with this instead of restating the rule in SQL. A hand-written
+    `published_at IS NULL AND dismissed_at IS NULL` is this same fact in a second language, free
+    to disagree with it; generating the guard means the machine decides and the statement stays
+    atomic, so nothing has to read-then-write and lose a race to a concurrent publish.
+
+    A reason legal from no state yields `()`, which matches no row — the safe outcome, and one
+    the caller needs no exception to handle.
+    """
+    return tuple(
+        state.value
+        for state, events in TRANSITIONS.items()
+        if ChangesetEvent.DISMISSED in events and dismissal_is_legal(state, reason)
+    )
+
+
 def is_terminal(state: ChangesetState) -> bool:
     return state in TERMINAL
 

@@ -75,7 +75,6 @@ function ResolveModal(host) {
       const result = await resolveReviewIssue(issue.id);
       dispatch("issue-resolved", {
         issue_id: issue.id,
-        pull_request_url: result?.data?.pull_request_url || null,
         config_path: result?.data?.config_path || null,
       });
     } catch (err) {

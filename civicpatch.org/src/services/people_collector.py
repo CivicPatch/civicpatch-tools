@@ -127,7 +127,7 @@ async def _publish_if_nothing_to_review(
     summary = await review_summary_for_request(changeset_id)
     if summary.get("issues"):
         return
-    await roster_edits.publish_to_database(
+    await roster_edits.publish(
         changeset_id, jurisdiction_ocdid, None, resolved_by_user_id=None
     )
     logger.info(f"[{changeset_id}] Published: nothing for a reviewer to look at")

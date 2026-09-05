@@ -398,45 +398,6 @@ async def test_upsert_issue_unrecognized_role():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_upsert_issue_conflict_preserves_pr_opened():
-    """A new request for an issue already in pr_opened must not reset it to pending."""
-    from shared.utils.statuses import PipelineIssueStatus
-
-    await db_issues.upsert_issue(
-        "test-request-id-1",
-        "unrecognized_role",
-        [{"role": "archduke", "person_name": "Bob"}],
-    )
-
-    # Simulate the issue having a PR opened for it
-    from database.database import get_pool
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "UPDATE issues SET status = %s WHERE issue_type = %s AND issue_key = %s",
-            (PipelineIssueStatus.PR_OPENED, "unrecognized_role", "archduke"),
-        )
-
-    # New request for the same role — must not clobber pr_opened
-    await db_issues.upsert_issue(
-        "test-request-id-2",
-        "unrecognized_role",
-        [{"role": "archduke", "person_name": "Carol"}],
-    )
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT status FROM issues WHERE issue_type = %s AND issue_key = %s",
-            ("unrecognized_role", "archduke"),
-        )
-        row = await cur.fetchone()
-    assert row is not None
-    assert row[0] == PipelineIssueStatus.PR_OPENED
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_get_issue_by_id_not_found():
     result = await db_issues.get_issue_by_id(_FAKE_UUID)
     assert result is None

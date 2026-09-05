@@ -415,7 +415,7 @@ async def test_a_town_that_refused_to_publish_stays_out_of_the_commit(
     await import_rows(rows, user_id, batch_id)
 
     with patch(
-        "services.batch_review.roster_edits.publish_to_database",
+        "services.batch_review.roster_edits.publish",
         new_callable=AsyncMock,
         side_effect=[RuntimeError("supersede guard"), None],
     ):

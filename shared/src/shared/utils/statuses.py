@@ -38,8 +38,6 @@ TERMINAL_PIPELINE_RUN_STATUSES = (
 
 class PipelineIssueStatus(StrEnum):
     PENDING = "pending"
-    # A pull request has been opened to address this issue; awaiting merge
-    PR_OPENED = "pr_opened"
     RESOLVED = "resolved"
     # Automatically set on all pending issues when a newer run for the same jurisdiction reaches a terminal state
     SUPERSEDED = "superseded"

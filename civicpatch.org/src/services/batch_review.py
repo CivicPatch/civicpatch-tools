@@ -106,7 +106,7 @@ async def publish_selected(
     published: dict[str, str] = {}
     for item in wanted:
         try:
-            await roster_edits.publish_to_database(
+            await roster_edits.publish(
                 item["changeset_id"], item["jurisdiction_ocdid"], None, user_id
             )
         except Exception as e:

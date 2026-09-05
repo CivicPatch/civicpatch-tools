@@ -13,12 +13,12 @@ _OPEN_PRS_STATE = f"""
 """
 
 _ISSUES_SUBQUERIES_GLOBAL = """
-    , (SELECT COUNT(*) FROM issues WHERE status IN ('pending', 'pr_opened'))
+    , (SELECT COUNT(*) FROM issues WHERE status = 'pending')
 """
 
 _ISSUES_SUBQUERIES_STATE = """
     , (SELECT COUNT(*) FROM issues pi2
-       WHERE pi2.status IN ('pending', 'pr_opened')
+       WHERE pi2.status = 'pending'
        AND EXISTS (
            SELECT 1 FROM changesets r2
            JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r2.jurisdiction_ocdid

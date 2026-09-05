@@ -1,83 +1,10 @@
 import hashlib
 import hmac
-from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from routers.webhooks.github import (
-    _handle_review_issue_pr_event,
-    _verify_signature,
-)
+from routers.webhooks.github import _verify_signature
 
-VALID_BRANCH = "job/wa/local/place_seattle/2025-09-25-1a2b"
-CHANGESET_ID = "2025-09-25-1a2b"
-JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
-MERGED_AT = "2025-09-26T12:00:00Z"
-ISSUE_ID = "d1af4053-1234-5678-9abc-def012345678"
-RESOLVE_BRANCH = f"resolve/role/{ISSUE_ID}"
-RESOLVE_PR_URL = "https://github.com/CivicPatch/civicpatch-community/pull/42"
-
-
-def _make_payload(action, merged=False, merged_at=None, branch=VALID_BRANCH, pr_url=None):
-    return {
-        "action": action,
-        "pull_request": {
-            "head": {"ref": branch},
-            "html_url": pr_url,
-            "merged": merged,
-            "merged_at": merged_at,
-        },
-    }
-
-
-@pytest.mark.asyncio
-async def test_review_issue_pr_merged_resolves_issue():
-    payload = _make_payload("closed", merged=True, branch=RESOLVE_BRANCH, pr_url=RESOLVE_PR_URL)
-    with (
-        patch(
-            "routers.webhooks.github.issues_db.get_issue_by_pull_request_url",
-            new_callable=AsyncMock,
-            return_value={"id": ISSUE_ID, "status": "pr_opened"},
-        ),
-        patch(
-            "routers.webhooks.github.issues_db.resolve_issue",
-            new_callable=AsyncMock,
-        ) as mock_resolve,
-        patch(
-            "routers.webhooks.github.issues_db.reopen_issue",
-            new_callable=AsyncMock,
-        ) as mock_reopen,
-    ):
-        await _handle_review_issue_pr_event(payload)
-        mock_resolve.assert_called_once_with(ISSUE_ID)
-        mock_reopen.assert_not_called()
-
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-async def test_review_issue_pr_closed_without_merge_reopens_issue():
-    payload = _make_payload("closed", merged=False, branch=RESOLVE_BRANCH, pr_url=RESOLVE_PR_URL)
-    with (
-        patch(
-            "routers.webhooks.github.issues_db.get_issue_by_pull_request_url",
-            new_callable=AsyncMock,
-            return_value={"id": ISSUE_ID, "status": "pr_opened"},
-        ),
-        patch(
-            "routers.webhooks.github.issues_db.resolve_issue",
-            new_callable=AsyncMock,
-        ) as mock_resolve,
-        patch(
-            "routers.webhooks.github.issues_db.reopen_issue",
-            new_callable=AsyncMock,
-        ) as mock_reopen,
-    ):
-        await _handle_review_issue_pr_event(payload)
-        mock_reopen.assert_called_once_with(ISSUE_ID)
-        mock_resolve.assert_not_called()
-
-
-# ── _verify_signature ─────────────────────────────────────────────────────────
 
 def _make_signature(body: bytes, secret: str) -> str:
     return "sha256=" + hmac.new(secret.encode(), body, hashlib.sha256).hexdigest()
