@@ -333,3 +333,18 @@
   padding-top: 0.35rem;
   border-top: 1px solid var(--civ-border);
 }
+
+/* ── Bucket modal ────────────────────────────────────────────────────────────
+ * Sized for what it holds: one locality name and a short note per row. The review
+ * modal's 68rem is for a diff; this only needs the note to clear the name without
+ * the list stretching into a band of whitespace. Pico constrains `dialog`, and
+ * `dialog[open] > article` is width:100%, so both have to be released — the same
+ * pair `.review-modal` and `.merge-picker-host` override. */
+.cs-bucket-modal dialog {
+  max-width: none;
+}
+
+.cs-bucket-modal dialog article {
+  width: min(34rem, calc(100vw - 2rem));
+  max-width: none;
+}
