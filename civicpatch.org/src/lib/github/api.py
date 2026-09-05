@@ -1,14 +1,11 @@
 import asyncio
 import base64
-import json
 import logging
 import time
 from typing import Any, Dict, List, Optional
 
 import httpx
-import shared.utils.id_utils
 from pydantic import BaseModel
-from shared.utils.yaml_utils import yaml_load
 
 import lib.cache as cache_service
 from lib.github.auth import _get_github_config, get_default_headers
@@ -37,56 +34,6 @@ class RepoTree(BaseModel):
 ## TODO: Replace bulk sync calls with graphql
 
 logger = logging.getLogger(__name__)
-
-
-async def trigger_people_job_workflow(
-    changeset_id: str,
-    jurisdiction_ocdid: str,
-    name: str | None = None,
-    url: str | None = None,
-    source_urls: list[str] | None = None,
-):
-    logger.info(
-        f"Triggering people job workflow for changeset_id={changeset_id}, jurisdiction_ocdid={jurisdiction_ocdid}, name={name}, url={url}"
-    )
-    data = {
-        "ref": "main",
-        "inputs": {
-            "changeset_id": changeset_id,
-            "jurisdiction_ocdid": jurisdiction_ocdid,
-        },
-    }
-
-    if name:
-        data["inputs"]["name"] = name
-    if url:
-        data["inputs"]["url"] = url
-    if source_urls:
-        data["inputs"]["source_urls"] = json.dumps(source_urls)
-    default_headers = await get_default_headers()
-
-    headers = {
-        **default_headers,
-        "Accept": "application/vnd.github+json",
-    }
-
-    async with httpx.AsyncClient(timeout=timeout) as client:
-        response = await client.post(
-            "https://api.github.com/repos/CivicPatch/server/actions/workflows/data_scrape.yml/dispatches",
-            headers=headers,
-            json=data,
-        )
-
-    if response.status_code != 204:
-        logger.error(
-            f"Failed to trigger workflow: {response.status_code} - {response.text}"
-        )
-        raise Exception(
-            f"Failed to trigger workflow: {response.status_code} - {response.text}"
-        )
-
-    logger.info("Successfully triggered people job workflow.")
-    return True
 
 
 async def cached_github_get(
@@ -230,69 +177,6 @@ async def upsert_github_file(
         return None
 
 
-async def get_pull_request_context(
-    changeset_id: str, jurisdiction_ocdid: str
-) -> dict | None:
-    """Fetch and parse pipeline_run_context.json from a specific PR branch."""
-    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
-    file_path = f"data_source/{folder}/pipeline_run_context.json"
-    branch_name = shared.utils.id_utils.make_job_branch(
-        jurisdiction_ocdid, changeset_id
-    )
-    content = await get_github_file_contents(file_path, ref=branch_name)
-    if content is None:
-        return None
-    try:
-        return json.loads(content)
-    except Exception as e:
-        logger.error(
-            f"Failed to parse pipeline_run_context.json on branch {branch_name}: {e}"
-        )
-        return None
-
-
-async def get_pull_request_file_yaml(
-    changeset_id: str, jurisdiction_ocdid: str, file_path: str
-) -> list | dict | None:
-    """Fetch and parse a YAML file from a specific branch."""
-    branch_name = shared.utils.id_utils.make_job_branch(
-        jurisdiction_ocdid, changeset_id
-    )
-    content = await get_github_file_contents(file_path, ref=branch_name)
-    if content is None:
-        return None
-    try:
-        return yaml_load(content)
-    except Exception as e:
-        logger.error(
-            f"Failed to parse YAML from {file_path} on branch {branch_name}: {e}"
-        )
-        return None
-
-
-async def get_pull_request(pull_request_number: str) -> dict | None:
-    _, _, _, open_data_repo_url = _get_github_config()
-    url = f"{open_data_repo_url}/pulls/{pull_request_number}"
-    cache_key = f"github:pr:{pull_request_number}"
-    return await cached_github_get(url, cache_key)
-
-
-async def close_pull_request(pull_request_number: str) -> bool:
-    _, _, _, open_data_repo_url = _get_github_config()
-    async with httpx.AsyncClient() as client:
-        default_headers = await get_default_headers()
-        response = await client.patch(
-            f"{open_data_repo_url}/pulls/{pull_request_number}",
-            headers=default_headers,
-            json={"state": "closed"},
-        )
-        if response.status_code != 200:
-            logger.error(
-                f"Failed to close PR {pull_request_number}: {response.status_code} {response.text}"
-            )
-        return response.status_code == 200
-
-
 async def get_pull_request_mergeability(
     pull_request_number: str, wait_for_change_from: str | None = None
 ) -> str | None:
@@ -364,27 +248,6 @@ async def merge_pull_request(
             )
             return github_message
     return github_message
-
-
-async def update_pull_request_branch(pull_request_number: str) -> str | None:
-    """Updates the PR branch to be current with the base branch.
-    Returns None on success, or an error message string on failure."""
-    _, _, _, open_data_repo_url = _get_github_config()
-    async with httpx.AsyncClient() as client:
-        default_headers = await get_default_headers()
-        response = await client.put(
-            f"{open_data_repo_url}/pulls/{pull_request_number}/update-branch",
-            headers=default_headers,
-            json={},
-        )
-        # 202 = accepted (async), 200 = done
-        if response.status_code not in (200, 202):
-            github_message = response.json().get("message", "Unknown error")
-            logger.error(
-                f"Branch update failed ({response.status_code}): {github_message}"
-            )
-            return github_message
-        return None
 
 
 async def create_branch(

@@ -240,7 +240,7 @@ def get_router(api_key_header):
     @router.patch(
         "/{pipeline_run_id}/status",
         summary="Update pipeline run status and progress",
-        description="Update status and/or progress of a specific pipeline run by its request ID.",
+        description="Update status and/or progress of a specific pipeline run by its run ID.",
         include_in_schema=False,
     )
     async def patch_pipeline_run_status_endpoint(
@@ -603,7 +603,7 @@ def get_router(api_key_header):
     @router.get(
         "/{pipeline_run_id}/status",
         summary="Get pipeline run status and progress",
-        description="Retrieve the progress of a specific pipeline run by its request ID.",
+        description="Retrieve the progress of a specific pipeline run by its run ID.",
         response_model=GetPipelineRunStatusResponse,
         responses={
             404: {"model": ErrorResponse, "description": "Pipeline run not found"}

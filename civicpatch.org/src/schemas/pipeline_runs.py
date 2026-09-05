@@ -98,19 +98,6 @@ class GetPipelineRunStatusResponse(BaseModel):
     progress: int
 
 
-# ── POST /api/v1/requests/register (internal) ────────────────────────────────
-
-class CreateRegisterRequest(BaseModel):
-    changeset_id: str
-    arguments: dict
-
-
-# ── POST /api/v1/requests/result (internal) ──────────────────────────────────
-
-class PostResultRequest(BaseModel):
-    pull_request_url: Optional[str] = None
-
-
 # ── The stale-run sweep (not an endpoint) ────────────────────────────────────
 
 class ExpiredRun(BaseModel):
