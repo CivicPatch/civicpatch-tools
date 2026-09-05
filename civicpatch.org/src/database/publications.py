@@ -94,13 +94,13 @@ async def _refuse_if_superseded(
     go and look at the source again."""
     await cur.execute(
         """
-        SELECT r.id::text, r.updated_at
-        FROM changesets r
-        WHERE r.jurisdiction_ocdid = %s
-          AND r.published_at IS NOT NULL
-          AND r.id::text <> %s
-          AND r.updated_at > %s
-        ORDER BY r.updated_at DESC
+        SELECT changesets.id::text, changesets.updated_at
+        FROM changesets
+        WHERE changesets.jurisdiction_ocdid = %s
+          AND changesets.published_at IS NOT NULL
+          AND changesets.id::text <> %s
+          AND changesets.updated_at > %s
+        ORDER BY changesets.updated_at DESC
         LIMIT 1
         """,
         (jurisdiction_ocdid, changeset_id, last_seen_at),
@@ -141,9 +141,9 @@ async def _record_publish(
 ) -> None:
     await cur.execute(
         """
-        UPDATE jurisdictions j SET scraped_at = r.created_at
-        FROM changesets r
-        WHERE r.id = %s AND j.jurisdiction_ocdid = %s
+        UPDATE jurisdictions j SET scraped_at = changesets.created_at
+        FROM changesets
+        WHERE changesets.id = %s AND j.jurisdiction_ocdid = %s
         """,
         (changeset_id, jurisdiction_ocdid),
     )

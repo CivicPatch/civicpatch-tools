@@ -253,11 +253,11 @@ async def get_api_usage_for_user(provider: str, provider_user_id: str):
             """
             SELECT
                 ul.daily_limit,
-                COUNT(r.id) AS usage_count
+                COUNT(changesets.id) AS usage_count
             FROM api_usage_limits ul
             JOIN users u ON u.id = ul.user_id
-            LEFT JOIN changesets r ON r.created_by_user_id = u.id
-                AND r.created_at >= NOW() - INTERVAL '24 hours'
+            LEFT JOIN changesets ON changesets.created_by_user_id = u.id
+                AND changesets.created_at >= NOW() - INTERVAL '24 hours'
             WHERE u.provider = %s AND u.provider_user_id = %s
             GROUP BY ul.daily_limit;
             """,

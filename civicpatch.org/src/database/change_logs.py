@@ -30,11 +30,11 @@ async def get_change_logs_for_roles(
                    cl.changes, cl.created_at,
                    COALESCE(u.display_name, 'Anonymous') AS author_name, u.role AS author_role,
                    COALESCE(j.data->>'name', cl.jurisdiction_ocdid) AS jurisdiction_name,
-                   r.change_url AS pull_request_url
+                   changesets.change_url AS pull_request_url
             FROM change_logs cl
             JOIN users u ON u.id = cl.user_id
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = cl.jurisdiction_ocdid
-            LEFT JOIN changesets r ON r.id::text = cl.changeset_id
+            LEFT JOIN changesets ON changesets.id::text = cl.changeset_id
             WHERE u.role = ANY(%s)
             ORDER BY cl.created_at DESC
             LIMIT %s OFFSET %s

@@ -93,11 +93,14 @@ The role → capability mapping is documented in `README.md` under the **Permiss
 - **Shared SQL predicates must not require a table alias.** A constant like `AVAILABLE_FOR_REVIEW`
   is spliced into many queries; if it says `r.published_at`, every caller has to alias that table
   `r` and nothing enforces it — a mismatch is a runtime error, never a typecheck one. Write
-  `requests.published_at` and let callers use the table unaliased.
-  The existing fragments in `database/changesets.py` (`AVAILABLE_FOR_REVIEW`, `REVIEW_STATUS`,
-  `SWEEPABLE`, `HELD_BY_REVIEWER`, `WORK_IN_FLIGHT`, `RUN_IN_FLIGHT`) predate this and still
-  require `r`. Do not add more; they are coupled through shared queries, so unpicking them is
-  one deliberate pass, not an incremental fix.
+  `changesets.published_at` and let callers use the table unaliased.
+  **The deliberate pass happened 2026-09-05**: `AVAILABLE_FOR_REVIEW`, `REVIEW_STATUS`,
+  `SWEEPABLE`, `HELD_BY_REVIEWER`, `WORK_IN_FLIGHT` and `RUN_IN_FLIGHT` no longer require `r`,
+  and neither do their 36 call sites across 13 files. `r` was the initial of `requests`, the
+  table's name before migration 152. Aliases survive only where a query joins `changesets` to
+  itself (`summary.py`'s `r2`, and the `older`/`newer` CTEs in `supersede_stacked_requests`).
+  Note `roles` and `pipeline_runs` are still aliased `r` in their own modules — untouched, and
+  a reason to keep any future pass file-by-file rather than mechanical.
 - **UUID columns**: psycopg returns UUID columns as Python `uuid.UUID` objects. Always cast UUID columns to text in the SQL query (`id::text`, `changeset_id::text`) so callers receive plain strings — never scatter `str()` calls in routers or services. The DB function is the boundary; it owns the type contract.
 
 ## Environment

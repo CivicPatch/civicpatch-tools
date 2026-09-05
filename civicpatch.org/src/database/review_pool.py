@@ -27,10 +27,10 @@ async def list_open_changesets(
     params: list = []
 
     if jurisdiction_ocdid:
-        conditions.append(sql.SQL("r.jurisdiction_ocdid = %s"))
+        conditions.append(sql.SQL("changesets.jurisdiction_ocdid = %s"))
         params.append(jurisdiction_ocdid)
     elif state_code:
-        conditions.append(sql.SQL("r.jurisdiction_ocdid LIKE %s"))
+        conditions.append(sql.SQL("changesets.jurisdiction_ocdid LIKE %s"))
         params.append(f"%state:{state_code}%")
 
     where = sql.SQL("WHERE {}").format(sql.SQL(" AND ").join(conditions))
@@ -42,11 +42,11 @@ async def list_open_changesets(
             sql.SQL("""
             SELECT COUNT(*),
                    COUNT(*) FILTER (WHERE {count} > 0)
-            FROM changesets r
+            FROM changesets
             {}
             """).format(
                 where,
-                count=sql.SQL(issue_count("r.jurisdiction_ocdid")),
+                count=sql.SQL(issue_count("changesets.jurisdiction_ocdid")),
             ),
             params,
         )
@@ -55,22 +55,22 @@ async def list_open_changesets(
 
         await cur.execute(
             sql.SQL("""
-            SELECT r.id::text, r.change_url, {status},
-                   r.jurisdiction_ocdid,
+            SELECT changesets.id::text, changesets.change_url, {status},
+                   changesets.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
-                   r.created_at,
+                   changesets.created_at,
                    {count} AS issue_count
-            FROM changesets r
-            LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
+            FROM changesets
+            LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = changesets.jurisdiction_ocdid
             {}
-            -- `r.id` breaks ties so paging is stable: without a total order a row can appear
+            -- `changesets.id` breaks ties so paging is stable: without a total order a row can appear
             -- on two pages or none. Same reason `_SEARCH_ORDER` ends on jurisdiction_ocdid —
             -- and cards created in one batch share a `created_at` to the microsecond.
-            ORDER BY {priority} DESC, r.created_at DESC, r.id
+            ORDER BY {priority} DESC, changesets.created_at DESC, changesets.id
             LIMIT %s OFFSET %s
             """).format(where, status=sql.SQL(REVIEW_STATUS),
-                        count=sql.SQL(issue_count("r.jurisdiction_ocdid")),
-                        priority=sql.SQL(issue_priority("r.jurisdiction_ocdid"))),
+                        count=sql.SQL(issue_count("changesets.jurisdiction_ocdid")),
+                        priority=sql.SQL(issue_priority("changesets.jurisdiction_ocdid"))),
             params + [per_page, offset],
         )
         rows = await cur.fetchall()
@@ -93,13 +93,13 @@ async def get_changeset_for_review(changeset_id: str) -> Optional[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT r.change_url, {REVIEW_STATUS},
-                   r.jurisdiction_ocdid,
+            SELECT changesets.change_url, {REVIEW_STATUS},
+                   changesets.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    jur.data->>'url' AS jurisdiction_website_url
-            FROM changesets r
-            LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE r.id = %s AND r.kind != %s
+            FROM changesets
+            LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = changesets.jurisdiction_ocdid
+            WHERE changesets.id = %s AND changesets.kind != %s
             """,
             (changeset_id, ChangesetKind.JURISDICTION_EDIT),
         )
@@ -128,13 +128,13 @@ async def get_changeset_data(changeset_id: str) -> Optional[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT r.id::text, r.change_url, {REVIEW_STATUS},
-                   r.jurisdiction_ocdid,
+            SELECT changesets.id::text, changesets.change_url, {REVIEW_STATUS},
+                   changesets.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
                    jur.data->>'url' AS jurisdiction_website_url
-            FROM changesets r
-            LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE r.id::text = %s AND r.kind != %s
+            FROM changesets
+            LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = changesets.jurisdiction_ocdid
+            WHERE changesets.id::text = %s AND changesets.kind != %s
             """,
             (changeset_id, ChangesetKind.JURISDICTION_EDIT),
         )
@@ -162,10 +162,10 @@ async def open_ocdids_by_state(state_code: str) -> set[str]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT DISTINCT r.jurisdiction_ocdid
-            FROM changesets r
+            SELECT DISTINCT changesets.jurisdiction_ocdid
+            FROM changesets
             WHERE {WORK_IN_FLIGHT}
-              AND r.jurisdiction_ocdid LIKE %s
+              AND changesets.jurisdiction_ocdid LIKE %s
             """,
             (f"%state:{state_code}%",),
         )
@@ -179,9 +179,9 @@ async def has_open_changeset(jurisdiction_ocdid: str) -> bool:
         await cur.execute(
             f"""
             SELECT 1
-            FROM changesets r
+            FROM changesets
             WHERE {WORK_IN_FLIGHT}
-              AND r.jurisdiction_ocdid = %s
+              AND changesets.jurisdiction_ocdid = %s
             LIMIT 1
             """,
             (jurisdiction_ocdid,),

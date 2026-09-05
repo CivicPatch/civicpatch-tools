@@ -40,19 +40,19 @@ BUCKET_PUBLISHED = "published"
 BUCKET_FAILED_RUNS = "failed_runs"
 
 # Defined once so the rollup, calendar and bucket cannot disagree. All need `changesets` as `r`.
-PUBLISHED = "r.published_at IS NOT NULL"
+PUBLISHED = "changesets.published_at IS NOT NULL"
 
 # `status` too: a run that errored before recording a reason still errored.
 # Only collection attempts get an outcome. A hand edit has no run to fail — 8 dev `people_edit`
 # rows, none with a status — so it would land in `ok` and pad the green band with something that
 # never ran. `jurisdiction_edit` is outside `AVAILABLE_FOR_REVIEW` besides, so it could never be
 # "to review" and would skew one band permanently.
-COLLECTED = "r.kind = ANY(%(collection_kinds)s)"
+COLLECTED = "changesets.kind = ANY(%(collection_kinds)s)"
 
 # Only the dismissal reason. A failed *run* no longer has a changeset to count, so this counts
 # dismissed proposals; failed attempts belong to the scrape-results page, which reads runs.
 DISMISSED = (
-    f"r.dismissed_reason IN ('{DismissalReason.REJECTED.value}', "
+    f"changesets.dismissed_reason IN ('{DismissalReason.REJECTED.value}', "
     f"'{DismissalReason.ERRORED.value}', '{DismissalReason.CANCELLED.value}')"
 )
 
@@ -63,11 +63,11 @@ STATE_ROLLUP_SQL = f"""
 -- `AVAILABLE_FOR_REVIEW` verbatim, never a copy — a copy drifts from the pool it mirrors.
 -- `DISTINCT ON` because the supersede sweep leaves transient duplicates.
 WITH valid_queue AS (
-    SELECT DISTINCT ON (r.jurisdiction_ocdid)
-           r.jurisdiction_ocdid, r.updated_at
-    FROM changesets r
+    SELECT DISTINCT ON (changesets.jurisdiction_ocdid)
+           changesets.jurisdiction_ocdid, changesets.updated_at
+    FROM changesets
     WHERE {AVAILABLE_FOR_REVIEW}
-    ORDER BY r.jurisdiction_ocdid, r.updated_at DESC
+    ORDER BY changesets.jurisdiction_ocdid, changesets.updated_at DESC
 ),
 -- THE ATTEMPTS. Read from `pipeline_runs` directly, never through `changesets`: a run mints no
 -- changeset until ingest, so a changeset-rooted join matches only runs that have already
@@ -116,10 +116,10 @@ flows AS (
            -- and the count did not, so the badge promised fewer rows than the bucket showed —
            -- 12 of them in 30 days, measured on dev.
            count(*) FILTER (WHERE {DISMISSED})::int AS dismissed,
-           max(r.created_at) AS last_run_at
-    FROM changesets r
+           max(changesets.created_at) AS last_run_at
+    FROM changesets
     JOIN jurisdictions j USING (jurisdiction_ocdid)
-    WHERE r.created_at >= now() - %(window)s::interval
+    WHERE changesets.created_at >= now() - %(window)s::interval
       AND {COLLECTED}
     GROUP BY j.state
 ),
@@ -179,23 +179,23 @@ async def get_state_rollup(
 # entirely — see COLLECTED.
 STATE_CALENDAR_SQL = f"""
 SELECT j.state,
-       date_trunc('day', r.created_at)::date        AS day,
+       date_trunc('day', changesets.created_at)::date        AS day,
        count(*) FILTER (WHERE {PUBLISHED})::int     AS published,
        count(*) FILTER (
-           WHERE r.published_at IS NULL AND r.dismissed_at IS NULL
+           WHERE changesets.published_at IS NULL AND changesets.dismissed_at IS NULL
        )::int                                       AS to_review,
        count(*) FILTER (WHERE {DISMISSED})::int        AS dismissed,
        count(*) FILTER (
-           WHERE r.kind = '{ChangesetKind.SCRAPE.value}'
+           WHERE changesets.kind = '{ChangesetKind.SCRAPE.value}'
        )::int                                       AS scrapes,
        count(*) FILTER (
-           WHERE r.kind = '{ChangesetKind.SHEET_IMPORT.value}'
+           WHERE changesets.kind = '{ChangesetKind.SHEET_IMPORT.value}'
        )::int                                       AS imports
-FROM changesets r
+FROM changesets
 JOIN jurisdictions j USING (jurisdiction_ocdid)
-WHERE r.created_at >= now() - %(window)s::interval
+WHERE changesets.created_at >= now() - %(window)s::interval
   AND {COLLECTED}
-GROUP BY j.state, date_trunc('day', r.created_at)
+GROUP BY j.state, date_trunc('day', changesets.created_at)
 ORDER BY j.state, day;
 """
 
@@ -208,25 +208,25 @@ ORDER BY j.state, day;
 # unwindowed queue, deduped per jurisdiction; `dismissed` and `published` are windowed flows.
 STATE_BUCKET_SQL = f"""
 WITH rows AS (
-    SELECT DISTINCT ON (r.jurisdiction_ocdid)
-           r.jurisdiction_ocdid,
+    SELECT DISTINCT ON (changesets.jurisdiction_ocdid)
+           changesets.jurisdiction_ocdid,
            j.data->>'name' AS name,
            CASE WHEN %(bucket)s = '{BUCKET_REVIEW}'
-                THEN date_part('day', now() - r.updated_at)::int END AS days_waiting,
+                THEN date_part('day', now() - changesets.updated_at)::int END AS days_waiting,
            CASE WHEN %(bucket)s = '{BUCKET_DISMISSED}'
-                THEN r.dismissed_reason END AS failure_reason,
-           r.updated_at,
-           r.created_at
-    FROM changesets r
+                THEN changesets.dismissed_reason END AS failure_reason,
+           changesets.updated_at,
+           changesets.created_at
+    FROM changesets
     JOIN jurisdictions j USING (jurisdiction_ocdid)
     WHERE j.state = %(state)s
       AND CASE %(bucket)s
           WHEN '{BUCKET_REVIEW}' THEN {AVAILABLE_FOR_REVIEW}
-          WHEN '{BUCKET_DISMISSED}' THEN {DISMISSED} AND r.created_at >= now() - %(window)s::interval
-          WHEN '{BUCKET_PUBLISHED}' THEN {PUBLISHED} AND r.created_at >= now() - %(window)s::interval
+          WHEN '{BUCKET_DISMISSED}' THEN {DISMISSED} AND changesets.created_at >= now() - %(window)s::interval
+          WHEN '{BUCKET_PUBLISHED}' THEN {PUBLISHED} AND changesets.created_at >= now() - %(window)s::interval
           ELSE false
           END
-    ORDER BY r.jurisdiction_ocdid, r.updated_at DESC NULLS LAST, r.created_at DESC
+    ORDER BY changesets.jurisdiction_ocdid, changesets.updated_at DESC NULLS LAST, changesets.created_at DESC
 )
 SELECT jurisdiction_ocdid, name, days_waiting, failure_reason,
        count(*) OVER ()::int AS total

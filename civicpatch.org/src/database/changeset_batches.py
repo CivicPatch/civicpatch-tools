@@ -151,13 +151,13 @@ async def items(batch_id: str) -> list[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT r.id::text AS changeset_id, r.jurisdiction_ocdid,
+            SELECT changesets.id::text AS changeset_id, changesets.jurisdiction_ocdid,
                    {REVIEW_STATUS} AS review_status,
                    j.data->>'name' AS name
-            FROM changesets r
-            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = r.jurisdiction_ocdid
-            WHERE r.batch_id = %s
-            ORDER BY j.data->>'name', r.jurisdiction_ocdid
+            FROM changesets
+            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = changesets.jurisdiction_ocdid
+            WHERE changesets.batch_id = %s
+            ORDER BY j.data->>'name', changesets.jurisdiction_ocdid
             """,
             (batch_id,),
         )

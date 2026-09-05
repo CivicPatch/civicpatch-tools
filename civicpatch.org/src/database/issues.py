@@ -36,11 +36,11 @@ async def get_pending_issue_ocdids() -> set[str]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT DISTINCT r.jurisdiction_ocdid
+            SELECT DISTINCT changesets.jurisdiction_ocdid
             FROM issues pi
-            JOIN changesets r ON r.id::text = ANY(pi.changeset_ids)
+            JOIN changesets ON changesets.id::text = ANY(pi.changeset_ids)
             WHERE pi.status = %s
-              AND r.jurisdiction_ocdid IS NOT NULL
+              AND changesets.jurisdiction_ocdid IS NOT NULL
             """,
             (PipelineIssueStatus.PENDING,),
         )
@@ -53,11 +53,11 @@ async def get_pending_issue_ocdids_by_state(state_code: str) -> set[str]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT DISTINCT r.jurisdiction_ocdid
+            SELECT DISTINCT changesets.jurisdiction_ocdid
             FROM issues pi
-            JOIN changesets r ON r.id::text = ANY(pi.changeset_ids)
+            JOIN changesets ON changesets.id::text = ANY(pi.changeset_ids)
             WHERE pi.status = %s
-              AND r.jurisdiction_ocdid LIKE %s
+              AND changesets.jurisdiction_ocdid LIKE %s
             """,
             (
                 PipelineIssueStatus.PENDING,
@@ -89,9 +89,9 @@ async def supersede_prior_jurisdiction_issues(
             WHERE status = %s
               AND NOT (%s = ANY(changeset_ids))
               AND EXISTS (
-                SELECT 1 FROM changesets r
-                WHERE r.id::text = ANY(issues.changeset_ids)
-                  AND r.jurisdiction_ocdid = %s
+                SELECT 1 FROM changesets
+                WHERE changesets.id::text = ANY(issues.changeset_ids)
+                  AND changesets.jurisdiction_ocdid = %s
               )
             """,
             (
@@ -246,7 +246,7 @@ async def get_issues_page(
     if state_code:
         conditions.append(
             sql.SQL(
-                "EXISTS (SELECT 1 FROM changesets r WHERE r.id::text = ANY(ri.changeset_ids) AND r.jurisdiction_ocdid LIKE %s)"
+                "EXISTS (SELECT 1 FROM changesets WHERE changesets.id::text = ANY(ri.changeset_ids) AND changesets.jurisdiction_ocdid LIKE %s)"
             )
         )
         params.append(f"%state:{state_code.lower()}%")
@@ -259,10 +259,10 @@ async def get_issues_page(
             sql.SQL("""
             WITH issue_jurisdictions AS (
                 SELECT ri.id AS issue_id,
-                       array_agg(DISTINCT r.jurisdiction_ocdid)
-                           FILTER (WHERE r.jurisdiction_ocdid IS NOT NULL) AS ocdids
+                       array_agg(DISTINCT changesets.jurisdiction_ocdid)
+                           FILTER (WHERE changesets.jurisdiction_ocdid IS NOT NULL) AS ocdids
                 FROM issues ri
-                LEFT JOIN changesets r ON r.id::text = ANY(ri.changeset_ids)
+                LEFT JOIN changesets ON changesets.id::text = ANY(ri.changeset_ids)
                 GROUP BY ri.id
             )
             SELECT ri.id::text, ri.issue_type, ri.issue_key, ri.changeset_ids,
@@ -313,7 +313,7 @@ async def get_issue_counts(state_code: str | None = None) -> dict[str, int]:
     state_filter = sql.SQL("")
     if state_code:
         state_filter = sql.SQL(
-            "AND EXISTS (SELECT 1 FROM changesets r WHERE r.id::text = ANY(pi.changeset_ids) AND r.jurisdiction_ocdid LIKE %s)"
+            "AND EXISTS (SELECT 1 FROM changesets WHERE changesets.id::text = ANY(pi.changeset_ids) AND changesets.jurisdiction_ocdid LIKE %s)"
         )
         params.append(f"%state:{state_code.lower()}%")
     query = sql.SQL("""
