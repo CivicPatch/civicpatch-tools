@@ -18,10 +18,10 @@ const town = (ocdid: string, changeset_state: string) => ({
 describe("selectableOcdids", () => {
   it("offers only the towns still awaiting a decision", () => {
     const jurisdictions = [
-      town("sherborn", "pending"),
+      town("sherborn", "open"),
       town("concord", "published"),
       town("lincoln", "dismissed"),
-      town("acton", "pending"),
+      town("acton", "open"),
     ];
 
     expect(selectableOcdids(jurisdictions)).toEqual(["sherborn", "acton"]);

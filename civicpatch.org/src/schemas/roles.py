@@ -35,7 +35,6 @@ class SetRolesRequest(BaseModel):
     roles: List[RoleInput]
     # Set when the write resolves a pipeline issue (an unrecognized role the
     # maintainer is accepting into the taxonomy).
-    issue_id: str | None = None
 
 
 class ReorderRolesRequest(BaseModel):

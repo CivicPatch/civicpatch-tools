@@ -1,7 +1,7 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { KNOWN_ISSUE_TYPES, ISSUE_TYPE } from "../../utils/issue-types.js";
-import { fetchIssueDetails, resolveReviewIssue } from "../../api.js";
+import { fetchIssueDetails } from "../../api.js";
 import { formatIssueType } from "./utils.js";
 import "../../components/basic/modal.js";
 import "../../components/civ-tab-bar/civ-tab-bar.js";
@@ -11,7 +11,6 @@ const SOURCE_CONTEXT_LIMIT = 5;
 
 function getModalTitle(issue, detailsOnly) {
   if (detailsOnly) return formatIssueType(issue.issue_type);
-  if (issue.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE) return `Resolve: "${issue.issue_key}"`;
   if (issue.issue_type === ISSUE_TYPE.PIPELINE_ERROR) return "Pipeline error";
   return formatIssueType(issue.issue_type);
 }
@@ -70,18 +69,6 @@ function ResolveModal(host) {
 
   const handleClose = () => dispatch("modal-close", {});
 
-  const handleSubmit = async () => {
-    try {
-      const result = await resolveReviewIssue(issue.id);
-      dispatch("issue-resolved", {
-        issue_id: issue.id,
-        config_path: result?.data?.config_path || null,
-      });
-    } catch (err) {
-      console.error("Failed to resolve issue:", err);
-    }
-  };
-
   if (!issue) return null;
 
   const issueConfig = KNOWN_ISSUE_TYPES.find((t) => t.value === issue.issue_type);
@@ -109,20 +96,6 @@ function ResolveModal(host) {
       ${data.failure_source ? html`<p><code>${data.failure_source}</code></p>` : null}
     </div>
   ` : null;
-
-  // The state/locality pickers that used to live here are gone with migration
-  // 109: the taxonomy is one flat global list, so resolving has nothing to
-  // target. "Seen in" stays — it is context for the decision, not an input.
-  const unrecognizedRoleForm = (issue.states || []).length
-    ? html`
-      <div class="issues-page__resolve-role-form">
-        <p class="issues-page__modal-meta">
-          Seen in:
-          ${issue.states.map((s) => html`<span class="issues-page__state-badge">${s.toUpperCase()}</span> `)}
-        </p>
-      </div>
-    `
-    : null;
 
   // Domain change info — shown when the issue data carries a URL change
   const domainChangeExtras = data.original_url ? html`
@@ -207,8 +180,6 @@ function ResolveModal(host) {
     </div>
   `;
 
-  const isResolvable = issue.issue_type === ISSUE_TYPE.UNRECOGNIZED_ROLE;
-
   // Sections common to pipeline/domain issues: a URL change, pipeline debug tabs, and the
   // scraped source context. merge_failed deliberately skips the first two — a merge failure
   // is about the PR's state and the failing jurisdiction, not pipeline run artifacts.
@@ -222,8 +193,6 @@ function ResolveModal(host) {
         return html`${pipelineErrorMeta}${sharedSections}`;
       case ISSUE_TYPE.DOMAIN_NAVIGATION_ERROR:
         return html`${domainNavigationMeta}${sharedSections}`;
-      case ISSUE_TYPE.UNRECOGNIZED_ROLE:
-        return html`${unrecognizedRoleForm}${sharedSections}`;
       default:
         return sharedSections;
     }
@@ -235,12 +204,10 @@ function ResolveModal(host) {
     </div>
   `;
 
-  const footer = isResolvable
-    ? html`
-      <button class="btn btn-sm secondary" @click=${handleClose}>Cancel</button>
-      <button class="btn btn-sm" @click=${handleSubmit}>Open PR →</button>
-    `
-    : html`<button class="btn btn-sm secondary" @click=${handleClose}>Close</button>`;
+  // Details only. Resolving lived here for `unrecognized_role`, the one type the modal could
+  // act on; migration 179 drained it, and the page passed `details-only` unconditionally
+  // anyway, so the action was already unreachable.
+  const footer = html`<button class="btn btn-sm secondary" @click=${handleClose}>Close</button>`;
 
   return html`
     <civ-modal

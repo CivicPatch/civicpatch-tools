@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
-import services.pipeline_issue_resolution as pipeline_issue_resolution_service
 import services.role_config as role_config_service
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory, UserRole
@@ -27,11 +26,6 @@ def get_router() -> APIRouter:
         Removal is DELETE /roles/{role_id}.
         """
         try:
-            if body.issue_id:
-                await pipeline_issue_resolution_service.resolve_via_config_db(
-                    body.roles, user_id=user.user_id, issue_id=body.issue_id
-                )
-                return {"data": {"ok": True}}
             await role_config_service.set_roles(body.roles, user_id=user.user_id)
         except RuntimeError as e:
             return JSONResponse({"error": str(e)}, status_code=409)

@@ -2,7 +2,7 @@ import { html } from "lit-html";
 import { formatIssueType, formatDate, getIssueDetail } from "./utils.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 
-export function IssueRow(issue, { onDetails, onDismiss, onConfig, onFlag }) {
+export function IssueRow(issue, { onDetails, onDismiss, onFlag }) {
   return html`
     <tr class=${issue.is_flagged ? "issues-page__issue-row--flagged" : ""}>
       <td>
@@ -32,9 +32,6 @@ export function IssueRow(issue, { onDetails, onDismiss, onConfig, onFlag }) {
       <td>
         <div class="issues-page__issue-actions">
           <button class="civ-action-btn" @click=${() => onDetails(issue)}>Details</button>
-          ${issue.issue_type === "unrecognized_role" && issue.jurisdictions?.length
-            ? html`<button class="civ-action-btn" @click=${() => onConfig(issue.jurisdictions)}>Resolve</button>`
-            : ""}
           ${issue.status === "pending"
             ? html`<button class="civ-action-btn civ-action-btn--danger" @click=${() => onDismiss(issue)}>Dismiss</button>`
             : ""}

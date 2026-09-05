@@ -123,7 +123,7 @@ async def get_pipeline_run(run_id: str):
         return None
 
 
-async def get_active_pipeline_run_jurisdiction_ocdids() -> set[str]:
+async def jurisdiction_ocdids_with_unfinished_runs() -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -132,7 +132,7 @@ async def get_active_pipeline_run_jurisdiction_ocdids() -> set[str]:
         return {row[0] for row in await cur.fetchall()}
 
 
-async def get_active_pipeline_run_jurisdiction_ocdids_by_state(
+async def jurisdiction_ocdids_with_unfinished_runs_in_state(
     state_code: str,
 ) -> set[str]:
     pool = await get_pool()
