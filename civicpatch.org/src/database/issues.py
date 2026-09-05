@@ -39,10 +39,10 @@ async def get_pending_issue_ocdids() -> set[str]:
             SELECT DISTINCT r.jurisdiction_ocdid
             FROM issues pi
             JOIN changesets r ON r.id::text = ANY(pi.changeset_ids)
-            WHERE pi.status IN (%s, %s)
+            WHERE pi.status = %s
               AND r.jurisdiction_ocdid IS NOT NULL
             """,
-            (PipelineIssueStatus.PENDING, PipelineIssueStatus.PR_OPENED),
+            (PipelineIssueStatus.PENDING,),
         )
         rows = await cur.fetchall()
     return {row[0] for row in rows}
@@ -56,12 +56,11 @@ async def get_pending_issue_ocdids_by_state(state_code: str) -> set[str]:
             SELECT DISTINCT r.jurisdiction_ocdid
             FROM issues pi
             JOIN changesets r ON r.id::text = ANY(pi.changeset_ids)
-            WHERE pi.status IN (%s, %s)
+            WHERE pi.status = %s
               AND r.jurisdiction_ocdid LIKE %s
             """,
             (
                 PipelineIssueStatus.PENDING,
-                PipelineIssueStatus.PR_OPENED,
                 f"%state:{state_code}%",
             ),
         )
@@ -75,39 +74,6 @@ async def resolve_issue(issue_id: str) -> None:
         await conn.execute(
             "UPDATE issues SET status = %s, resolved_at = NOW() WHERE id = %s",
             (PipelineIssueStatus.RESOLVED, issue_id),
-        )
-
-
-async def get_issue_by_pull_request_url(pull_request_url: str) -> dict | None:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT id::text, status FROM issues WHERE pull_request_url = %s",
-            (pull_request_url,),
-        )
-        row = await cur.fetchone()
-    if row is None:
-        return None
-    return {"id": row[0], "status": row[1]}
-
-
-async def get_issues_with_open_pr() -> list[dict]:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT id::text, pull_request_url FROM issues WHERE status = %s",
-            (PipelineIssueStatus.PR_OPENED,),
-        )
-        rows = await cur.fetchall()
-    return [{"id": r[0], "pull_request_url": r[1]} for r in rows]
-
-
-async def reopen_issue(issue_id: str) -> None:
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
-            "UPDATE issues SET status = %s, pull_request_url = NULL WHERE id = %s",
-            (PipelineIssueStatus.PENDING, issue_id),
         )
 
 
@@ -177,14 +143,10 @@ async def upsert_issue(changeset_id: str, issue_type: str, issues: list[dict]) -
                   )
                 ELSE issues.data
               END,
-              status = CASE
-                WHEN issues.status IN ('resolved', 'superseded') THEN 'pending'
-                ELSE issues.status
-              END,
-              resolved_at = CASE
-                WHEN issues.status IN ('resolved', 'superseded') THEN NULL
-                ELSE issues.resolved_at
-              END
+              -- Re-reported, so it is open again whatever it was. The CASE this replaces
+              -- had one live branch, `pr_opened`, which migration 174 retired.
+              status = 'pending',
+              resolved_at = NULL
             """,
             rows,
         )
@@ -267,7 +229,7 @@ async def get_issues_page(
     if show_archived:
         active_statuses = [PipelineIssueStatus.RESOLVED, PipelineIssueStatus.SUPERSEDED]
     else:
-        active_statuses = [PipelineIssueStatus.PENDING, PipelineIssueStatus.PR_OPENED]
+        active_statuses = [PipelineIssueStatus.PENDING]
     conditions: list[sql.Composable] = [
         sql.SQL("ri.status IN ({})").format(
             sql.SQL(", ").join(sql.Placeholder() for _ in range(len(active_statuses)))
@@ -307,7 +269,6 @@ async def get_issues_page(
                    ri.data, ri.status, ri.resolved_at, ri.created_at,
                    COALESCE(ij.ocdids, ARRAY[]::text[]) AS raw_jurisdiction_ocdids,
                    COUNT(*) OVER() AS total_count,
-                   ri.pull_request_url,
                    (
                        SELECT jsonb_object_agg(u.ocdid, COALESCE(j.data->>'name', u.ocdid))
                        FROM unnest(COALESCE(ij.ocdids, ARRAY[]::text[])) AS u(ocdid)
@@ -326,7 +287,7 @@ async def get_issues_page(
     total = rows[0][9] if rows else 0
     result = []
     for r in rows:
-        jurisdictions = _build_jurisdictions(r[8], name_by_ocdid=r[11])
+        jurisdictions = _build_jurisdictions(r[8], name_by_ocdid=r[10])
         result.append(
             {
                 "id": r[0],
@@ -337,8 +298,7 @@ async def get_issues_page(
                 "status": r[5],
                 "resolved_at": r[6].isoformat() if r[6] else None,
                 "created_at": r[7].isoformat() if r[7] else None,
-                "pull_request_url": r[10],
-                "is_flagged": r[12],
+                "is_flagged": r[11],
                 "states": sorted({j["state"] for j in jurisdictions if j["state"]}),
                 "jurisdictions": jurisdictions,
             }
@@ -348,7 +308,7 @@ async def get_issues_page(
 
 async def get_issue_counts(state_code: str | None = None) -> dict[str, int]:
     pool = await get_pool()
-    active_statuses = [PipelineIssueStatus.PENDING, PipelineIssueStatus.PR_OPENED]
+    active_statuses = [PipelineIssueStatus.PENDING]
     params: list[Any] = list(active_statuses)
     state_filter = sql.SQL("")
     if state_code:

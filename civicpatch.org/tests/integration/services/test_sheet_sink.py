@@ -30,6 +30,11 @@ from services.sinks import sheet as roster_sheet
 
 _ZZ = "ocd-jurisdiction/country:us/state:zz/place:zz_sync/government"
 _ZZ_DIVISION = "ocd-division/country:us/state:zz/place:zz_sync"
+# A county that sorts *after* a municipality by ocdid — `zy` precedes `zz`, and within one
+# state `county:` already precedes `place:`. Only a cross-state pair can tell level ordering
+# apart from the query's ocdid ordering.
+_ZZ_COUNTY = "ocd-jurisdiction/country:us/state:zz/county:zz_sync/government"
+_ZY_LOCAL = "ocd-jurisdiction/country:us/state:zy/place:zy_sync/government"
 _PEOPLE_TAB = "Live[People][ZZ]"
 _MEMBERSHIPS_TAB = "Live[Memberships][ZZ]"
 _POSTS_TAB = "Live[Posts][ZZ]"
@@ -147,7 +152,8 @@ async def _wipe():
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_ZZ,)
             )
         await cur.execute(
-            "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_ZZ,)
+            "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = ANY(%s)",
+            ([_ZZ, _ZZ_COUNTY, _ZY_LOCAL],),
         )
         # The gate outlives the data it fingerprints, so a leftover row would make the next
         # test's first sync look like a repeat and skip the writes it is asserting.
@@ -389,6 +395,35 @@ async def test_the_jurisdiction_tab_covers_every_state_in_one_flat_tab():
     assert _ZZ in [row[0] for row in recorder.rows_for(tab)]
     # A fresh grid is sized to fit exactly, so there is nothing below to trim.
     assert recorder.clears_for(tab) == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_every_county_is_listed_before_any_municipality():
+    """A volunteer picks the county, then the places inside it, so counties lead the dropdown."""
+    await _seed(1)
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level) "
+            "VALUES (%s, 'zz', 'counties'), (%s, 'zy', 'local')",
+            (_ZZ_COUNTY, _ZY_LOCAL),
+        )
+        await conn.commit()
+
+    recorder = _Recorder()
+    with (
+        patch("lib.sheets.get_service", return_value=recorder),
+        patch("services.entry_sheet.spreadsheet_id", return_value="test-sheet"),
+    ):
+        await roster_sheet.sync_jurisdictions(chunk_size=500)
+
+    level = jurisdiction_rows.HEADERS.index("level")
+    levels = [row[level] for row in recorder.rows_for(roster_sheet.JURISDICTIONS_TAB)]
+    assert levels == sorted(levels, key=roster_sheet.ENTRY_LEVELS.index)
+    # The pair that ocdid ordering alone would have put the other way round.
+    ocdids = [row[0] for row in recorder.rows_for(roster_sheet.JURISDICTIONS_TAB)]
+    assert ocdids.index(_ZZ_COUNTY) < ocdids.index(_ZY_LOCAL)
 
 
 async def _seed_two_stints() -> None:

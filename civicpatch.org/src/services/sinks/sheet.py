@@ -35,8 +35,9 @@ logger = logging.getLogger(__name__)
 # Row 1 is the header.
 _FIRST_DATA_ROW = 2
 
-# What a volunteer may enter a roster for. A domain decision, so not in the query.
-ENTRY_LEVELS = ["local", "counties"]
+# What a volunteer may enter a roster for, in the order the jurisdictions tab lists them.
+# A domain decision, so not in the query.
+ENTRY_LEVELS = ["counties", "local"]
 
 JURISDICTIONS_TAB = "Live[Jurisdictions]"
 
@@ -179,8 +180,11 @@ async def _post_chunks(
 async def _jurisdiction_chunks(
     chunk_size: int,
 ) -> AsyncGenerator[list[list[str]], None]:
-    async for chunk in jurisdictions_db.stream_active(ENTRY_LEVELS, chunk_size):
-        yield jurisdiction_rows.to_rows(chunk)
+    """One stream per level so the tab lists every county before any municipality. Within a
+    level the query's ocdid order stands, which groups them by state."""
+    for level in ENTRY_LEVELS:
+        async for chunk in jurisdictions_db.stream_active([level], chunk_size):
+            yield jurisdiction_rows.to_rows(chunk)
 
 
 async def sync_state(

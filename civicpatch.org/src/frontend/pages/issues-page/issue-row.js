@@ -21,9 +21,7 @@ export function IssueRow(issue, { onDetails, onDismiss, onConfig, onFlag }) {
         }
       </td>
       <td class="issues-page__issue-status">
-        ${issue.status === "pr_opened"
-          ? html`<a class="issues-page__issue-status-link" href=${issue.pull_request_url} target="_blank" rel="noopener noreferrer">PR opened →</a>`
-          : html`<span class="issues-page__issue-status-badge">Pending</span>`}
+        <span class="issues-page__issue-status-badge">Pending</span>
       </td>
       <td class="issues-page__issue-flag">
         <input type="checkbox" .checked=${!!issue.is_flagged} @change=${(e) => onFlag(issue, e.target.checked)} title="Flagged" />

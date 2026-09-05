@@ -4,8 +4,8 @@ from collections.abc import Mapping
 from datetime import datetime, timedelta
 from typing import Optional
 
-from core.changeset_lifecycle import DISMISSAL_REASONS, ChangesetState
 from database.change_logs import record_dismissal
+from core.changeset_lifecycle import states_accepting_dismissal
 from database.database import get_pool, to_iso
 from database.review_sessions import (
     SESSION_IDLE_TIMEOUT_MINUTES,
@@ -92,7 +92,7 @@ async def register_scrape_changeset(run_id: str) -> str:
     """Mint the proposal a successful run produced, and link the run to it.
 
     Only called from ingest, and only on success — a run that proposed nothing has no changeset,
-    which is what makes `changesets.state` a question about a proposal rather than an attempt.
+    which is what makes `changesets.changeset_state` a question about a proposal, not an attempt.
 
     `created_at` is now(): the roster came into being when the scrape reported it.
     """
@@ -396,18 +396,26 @@ async def mark_dismissed(
     """
     if not changeset_ids:
         return []
+    # The machine decides which states this dismissal may leave; the statement applies it.
+    # `r.changeset_state` is the generated column, so this is one atomic read-and-write —
+    # first, so nothing can lose the race to a concurrent publish.
     await cur.execute(
-        f"""
+        """
         UPDATE changesets r
            SET dismissed_at = now(),
                dismissed_reason = %s,
                resolved_by_user_id = COALESCE(%s, resolved_by_user_id, %s)
          WHERE r.id::text = ANY(%s)
-           AND r.published_at IS NULL
-           AND r.dismissed_at IS NULL
+           AND r.changeset_state = ANY(%s)
         RETURNING r.id::text, r.jurisdiction_ocdid
         """,
-        (reason, resolved_by_user_id, SYSTEM_USER_ID, changeset_ids),
+        (
+            reason,
+            resolved_by_user_id,
+            SYSTEM_USER_ID,
+            changeset_ids,
+            list(states_accepting_dismissal(reason)),
+        ),
     )
     dismissed = await cur.fetchall()
     for changeset_id, jurisdiction_ocdid in dismissed:

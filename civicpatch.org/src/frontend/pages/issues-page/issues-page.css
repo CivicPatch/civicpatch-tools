@@ -220,11 +220,6 @@
     color: var(--pico-muted-color);
 }
 
-.issues-page__issue-status-link {
-    font-size: var(--text-sm);
-    white-space: nowrap;
-}
-
 /* ── Flagged row ── */
 
 .issues-page__issue-row--flagged > td {
@@ -419,23 +414,6 @@
     justify-content: flex-end;
     gap: 0.5rem;
     margin-top: 0.25rem;
-}
-
-/* ── PR toast ── */
-
-.issues-page__pr-toast {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    background: var(--pico-card-background-color);
-    border: 1px solid var(--pico-muted-border-color);
-    border-radius: var(--pico-border-radius);
-    padding: 0.75rem 1rem;
-    font-size: var(--text-sm);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    z-index: 1001;
-    max-width: 480px;
-    word-break: break-all;
 }
 
 

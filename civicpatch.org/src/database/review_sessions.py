@@ -1,4 +1,5 @@
 import logging
+from enum import StrEnum
 from typing import Any
 from database.database import get_pool
 from psycopg.rows import namedtuple_row
@@ -7,14 +8,21 @@ logger = logging.getLogger(__name__)
 SESSION_IDLE_TIMEOUT_MINUTES = 30
 
 
-class ReviewSessionEntryStatus(str):
+class ReviewSessionEntryStatus(StrEnum):
+    """Where one card sits in a reviewer's queue.
+
+    `StrEnum`, not a bare `class(str)`: the members were unenumerable, so nothing could check
+    the column against them and the four values lived as literals in 32 places. `StrEnum` keeps
+    f-string splicing working (`__str__` is the value), which `HELD_BY_REVIEWER` relies on.
+    """
+
     CLAIMED = "claimed"
     PASSED = "passed"
     SAVED = "saved"
     RESOLVED = "resolved"
 
 
-class AdvanceDoneReason(str):
+class AdvanceDoneReason(StrEnum):
     GOAL_REACHED = "goal_reached"
     NO_MORE_CARDS = "no_more_cards"
 

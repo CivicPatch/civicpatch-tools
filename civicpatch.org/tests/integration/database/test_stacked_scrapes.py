@@ -239,7 +239,7 @@ async def test_giving_up_on_a_run_does_not_restamp_the_source_clock():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             # The run carries the status; the changeset carries the clock and the dismissal.
-            "SELECT run.status, c.updated_at::text, c.dismissed_reason, c.state "
+            "SELECT run.status, c.updated_at::text, c.dismissed_reason, c.changeset_state "
             "FROM changesets c JOIN pipeline_runs run ON run.changeset_id = c.id "
             "WHERE c.id::text = %s",
             (abandoned,),

@@ -77,7 +77,6 @@ function IssuesPage() {
   const [resolveModal, setResolveModal] = useState(null);
   const [dismissModal, setDismissModal] = useState(null);
   const [configModal, setConfigModal] = useState(null);
-  const [prToast, setPrToast] = useState(null);
 
   const [openSections, setOpenSections] = useLocalStorage(
     STORAGE_KEYS.ISSUES_OPEN_SECTIONS,
@@ -115,16 +114,10 @@ function IssuesPage() {
   const closeDismissModal = () => setDismissModal(null);
 
   const handleIssueResolved = (e) => {
-    const { issue_id, pull_request_url, config_path } = e.detail;
+    const { issue_id } = e.detail;
     setResolveModal(null);
-    if (pull_request_url) {
-      setIssues(issues.map((i) => i.id === issue_id ? { ...i, status: "pr_opened", pull_request_url } : i));
-      setPrToast({ url: pull_request_url, config_path: config_path || null });
-      setTimeout(() => setPrToast(null), 8000);
-    } else {
-      setIssues(issues.filter((i) => i.id !== issue_id));
-      setIssuesTotal((t) => t - 1);
-    }
+    setIssues(issues.filter((i) => i.id !== issue_id));
+    setIssuesTotal((t) => t - 1);
   };
 
   const handleIssueFlag = (issue, is_flagged) => {
@@ -271,12 +264,6 @@ function IssuesPage() {
       ></issues-config-editor>
     ` : null}
 
-    ${prToast ? html`
-      <div class="issues-page__pr-toast">
-        ${prToast.config_path ? html`<code>${prToast.config_path}</code><br>` : null}
-        <a href=${prToast.url} target="_blank" rel="noopener noreferrer">View PR →</a>
-      </div>
-    ` : null}
   `;
 }
 
