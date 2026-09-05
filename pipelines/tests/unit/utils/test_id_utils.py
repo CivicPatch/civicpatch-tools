@@ -4,10 +4,8 @@ from pathlib import Path
 import pytest
 from shared.utils.id_utils import (  # Replace `your_module` with the actual module name
     folder_to_jurisdiction_ocdid,
-    git_branch_to_parts,
     jurisdiction_ocdid_to_folder,
     make_git_branch,
-    make_job_branch,
     parse_jurisdiction_ocdid,
     slug_to_jurisdiction_ocdid,
 )
@@ -108,60 +106,19 @@ def test_jurisdiction_ocdid_to_folder_shared_fixture(case):
 # Tests for make_git_branch
 def test_make_git_branch():
     jurisdiction_ocdid = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
-    changeset_id = "2025-09-25-1a2b"
+    pipeline_run_id = "2025-09-25-1a2b"
     expected = "2025-09-25-1a2b__state_wa__place_seattle__government"
-    assert make_git_branch(jurisdiction_ocdid, changeset_id) == expected
+    assert make_git_branch(jurisdiction_ocdid, pipeline_run_id) == expected
 
 
 def test_make_git_branch_encodes_tilde():
     jurisdiction_ocdid = (
         "ocd-jurisdiction/country:us/state:ca/place:st~helena/government"
     )
-    changeset_id = "2025-09-25-1a2b"
-    branch = make_git_branch(jurisdiction_ocdid, changeset_id)
+    pipeline_run_id = "2025-09-25-1a2b"
+    branch = make_git_branch(jurisdiction_ocdid, pipeline_run_id)
     assert "~" not in branch
     assert "--" in branch
-
-
-def test_git_branch_roundtrips_tilde():
-    # make_git_branch (file naming) encodes tilde; legacy git_branch_to_parts decodes it
-    jurisdiction_ocdid = (
-        "ocd-jurisdiction/country:us/state:ca/place:st~helena/government"
-    )
-    changeset_id = "2025-09-25-1a2b"
-    branch = make_git_branch(
-        jurisdiction_ocdid, changeset_id
-    )  # returns uuid__slug, no job/ prefix
-    parts = git_branch_to_parts(branch)  # legacy path: returns jurisdiction_ocdid
-    assert parts["jurisdiction_ocdid"] == jurisdiction_ocdid
-
-
-# Tests for make_job_branch
-def test_make_job_branch():
-    jurisdiction_ocdid = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
-    changeset_id = "2025-09-25-1a2b"
-    expected = "job/wa/local/place_seattle/2025-09-25-1a2b"
-    assert make_job_branch(jurisdiction_ocdid, changeset_id) == expected
-
-
-def test_git_branch_to_parts_handles_job_prefix():
-    jurisdiction_ocdid = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
-    changeset_id = "2025-09-25-1a2b"
-    branch = make_job_branch(jurisdiction_ocdid, changeset_id)
-    parts = git_branch_to_parts(branch)
-    assert parts["changeset_id"] == changeset_id
-    assert "jurisdiction_ocdid" not in parts
-
-
-def test_git_branch_to_parts_handles_legacy_no_prefix():
-    # Old-format branches (no job/ prefix) must still parse for in-flight PRs
-    branch = "2025-09-25-1a2b__state_wa__place_seattle__government"
-    parts = git_branch_to_parts(branch)
-    assert parts["changeset_id"] == "2025-09-25-1a2b"
-    assert (
-        parts["jurisdiction_ocdid"]
-        == "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
-    )
 
 
 # Tests for slug_to_jurisdiction_ocdid

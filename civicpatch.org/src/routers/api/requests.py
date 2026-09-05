@@ -1,16 +1,11 @@
 import logging
 import re
 from datetime import date
-import database.pipeline_runs
-import database.changesets
-import database.pipeline_runs as pipeline_runs_db
 import lib.csv as csv_service
 import services.people_csv_export as requests_export_service
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from schemas.common import Identity, UserRole, RouteCategory
-from shared.utils.statuses import ChangesetKind
-from schemas.pipeline_runs import CreateRegisterRequest
 from lib.auth import require_route_access
 
 logger = logging.getLogger(__name__)
@@ -19,27 +14,6 @@ logger = logging.getLogger(__name__)
 
 def get_router(api_key_header):
     router = APIRouter()
-
-    @router.post(
-        "/register",
-        summary="Register a new request",
-        description="Register a new request in the system.",
-        include_in_schema=False,
-    )
-    async def register_people_job_endpoint(
-        request: CreateRegisterRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
-    ):
-        print(
-            f"Registering request: {request.changeset_id} by user {user.provider_user_id} from provider {user.provider}"
-        )
-        await pipeline_runs_db.register_run(
-            run_id=request.changeset_id,
-            jurisdiction_ocdid=request.arguments["jurisdiction_ocdid"],
-            arguments_json=request.arguments,
-            created_by_user_id=user.user_id,
-        )
-        return {"changeset_id": request.changeset_id, "status": "pending"}
 
     @router.get(
         "/people-export.csv",

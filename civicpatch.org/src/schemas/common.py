@@ -2,7 +2,6 @@ from datetime import datetime
 from enum import Enum
 from typing import Optional
 
-import shared.utils.id_utils as id_utils
 from pydantic import BaseModel, Field
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
@@ -49,25 +48,6 @@ def role_rank(role: str | None) -> int:
 
 def has_at_least(user_role: str | None, required: UserRole) -> bool:
     return role_rank(user_role) >= role_rank(required.value)
-
-
-class PullRequest(BaseModel):
-    branch_name: str
-    jurisdiction_ocdid: str = ""
-    changeset_id: str = ""
-    url: str
-    pull_request_number: str = ""
-
-    def model_post_init(self, __context):
-        try:
-            if not self.changeset_id and self.branch_name:
-                parts = id_utils.git_branch_to_parts(self.branch_name)
-                self.changeset_id = parts.get("changeset_id", "")
-                self.jurisdiction_ocdid = parts.get("jurisdiction_ocdid", "")
-            if self.url:
-                self.pull_request_number = self.url.split("/")[-1]
-        except Exception:
-            pass
 
 
 class Jurisdiction(BaseModel):

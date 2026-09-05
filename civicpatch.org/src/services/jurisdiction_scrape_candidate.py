@@ -58,7 +58,7 @@ async def claim_scrape_candidates(
         items.append(
             {
                 "jurisdiction_ocdid": candidate.id,
-                "changeset_id": run_id,
+                "pipeline_run_id": run_id,
                 "name": candidate.name,
                 "url": candidate.url,
             }

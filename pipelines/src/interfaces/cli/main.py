@@ -97,6 +97,7 @@ def main():
         "--url", required=False, default=None, help="URL of the city council page"
     )
     run_pipeline_parser.add_argument(
+        # data_scrape.yml in CivicPatch/server invokes this flag by name.
         "--pipeline-run-id", required=False, help="Optional pipeline run ID"
     )
     run_pipeline_parser.add_argument(

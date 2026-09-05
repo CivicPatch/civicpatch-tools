@@ -676,9 +676,8 @@ async def get_jurisdiction_history(
             # which was every value the column could hold — a no-op wearing the shape of a
             # filter. The timeline wants everything that happened to this jurisdiction.
             #
-            # Nor a resolved-only filter: in-flight rows belong here too. The history page
-            # highlights them in its own section, but this is the complete record, and
-            # `test_pipeline_run_status` reads `is_running` straight off it.
+            # Resolved only: history is what happened. In-flight work comes from
+            # `get_in_flight`, so `is_running` is derived in one place.
             (
                 ROSTER_CHANGE_TYPES,
                 jurisdiction_ocdid,

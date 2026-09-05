@@ -21,43 +21,12 @@ def can_scrape_locally() -> bool:
     return bool(env.get("GOOGLE_GEMINI_TOKEN") and env.get("TOGETHER_AI_TOKEN"))
 
 
-# User calls
-async def get_me(request: Request) -> dict:
-    env = get_env_vars()
-    last_exc: httpx.ReadTimeout | None = None
-    for _ in range(3):
-        try:
-            async with httpx.AsyncClient(timeout=10) as client:
-                response = await client.get(
-                    f"{env['CIVICPATCH_ORG_URL']}/api/v1/me",
-                    cookies=_get_cookies(request),
-                )
-                response.raise_for_status()
-                return response.json()
-        except httpx.ReadTimeout as e:
-            last_exc = e
-    raise last_exc or httpx.ReadTimeout("All retries failed")
-
-
 async def get_jurisdiction(jurisdiction_ocdid: str, request: Request) -> dict:
     env = get_env_vars()
     params = {"jurisdiction_ocdid": jurisdiction_ocdid, "with_geom": "true"}
     async with httpx.AsyncClient(timeout=30.0) as client:
         response = await client.get(
             f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions",
-            params=params,
-            cookies=_get_cookies(request),
-        )
-        response.raise_for_status()
-        return response.json()
-
-
-async def get_people_job_history(jurisdiction_ocdid: str, request: Request) -> dict:
-    env = get_env_vars()
-    params = {"jurisdiction_ocdid": jurisdiction_ocdid}
-    async with httpx.AsyncClient(timeout=30.0) as client:
-        response = await client.get(
-            f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/history",
             params=params,
             cookies=_get_cookies(request),
         )
