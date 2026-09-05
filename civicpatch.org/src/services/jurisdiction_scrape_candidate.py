@@ -1,8 +1,8 @@
-import shared.utils.id_utils
 import database.issues as issues_db
 import database.jurisdictions as jurisdictions_db
 import database.pipeline_runs as pipeline_runs_db
 import database.review_pool as review_pool_db
+import shared.utils.id_utils
 from schemas.common import Jurisdiction
 
 
@@ -15,17 +15,23 @@ async def get_scrape_candidates(
     blocked by an open review, a running scrape or a pending issue.
     """
     candidates = await jurisdictions_db.get_stale_jurisdictions(state)
-    open_pr_ocdids = await review_pool_db.open_ocdids_by_state(state)
-    active_job_ocdids = await pipeline_runs_db.get_active_pipeline_run_jurisdiction_ocdids()
-    pending_issue_ocdids = await issues_db.get_pending_issue_ocdids()
+    blocked_by_review = await review_pool_db.jurisdiction_ocdids_with_open_changesets(
+        state
+    )
+    blocked_by_scrape = (
+        await pipeline_runs_db.jurisdiction_ocdids_with_unfinished_runs()
+    )
+    blocked_by_issue = await issues_db.jurisdiction_ocdids_with_pending_issues()
 
-    excluded = open_pr_ocdids | active_job_ocdids | pending_issue_ocdids
+    excluded = blocked_by_review | blocked_by_scrape | blocked_by_issue
     eligible = [j for j in candidates if j.id not in excluded]
     return eligible[:num_jurisdictions] if num_jurisdictions else eligible
 
 
 async def claim_scrape_candidates(
-    state: str, num_jurisdictions: int | None = None, created_by_user_id: str | None = None
+    state: str,
+    num_jurisdictions: int | None = None,
+    created_by_user_id: str | None = None,
 ) -> list[dict]:
     """Pick this state's next candidates and start a run for each.
 

@@ -19,15 +19,15 @@ def _patch(stale, open_pr=None, active_job=None, pending_issue=None):
             new_callable=AsyncMock, return_value=stale,
         ),
         patch(
-            "services.jurisdiction_scrape_candidate.review_pool_db.open_ocdids_by_state",
+            "services.jurisdiction_scrape_candidate.review_pool_db.jurisdiction_ocdids_with_open_changesets",
             new_callable=AsyncMock, return_value=open_pr or set(),
         ),
         patch(
-            "services.jurisdiction_scrape_candidate.pipeline_runs_db.get_active_pipeline_run_jurisdiction_ocdids",
+            "services.jurisdiction_scrape_candidate.pipeline_runs_db.jurisdiction_ocdids_with_unfinished_runs",
             new_callable=AsyncMock, return_value=active_job or set(),
         ),
         patch(
-            "services.jurisdiction_scrape_candidate.issues_db.get_pending_issue_ocdids",
+            "services.jurisdiction_scrape_candidate.issues_db.jurisdiction_ocdids_with_pending_issues",
             new_callable=AsyncMock, return_value=pending_issue or set(),
         ),
     )

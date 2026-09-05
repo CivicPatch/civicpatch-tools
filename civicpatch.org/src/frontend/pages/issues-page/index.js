@@ -76,7 +76,6 @@ function IssuesPage() {
 
   const [resolveModal, setResolveModal] = useState(null);
   const [dismissModal, setDismissModal] = useState(null);
-  const [configModal, setConfigModal] = useState(null);
 
   const [openSections, setOpenSections] = useLocalStorage(
     STORAGE_KEYS.ISSUES_OPEN_SECTIONS,
@@ -112,13 +111,6 @@ function IssuesPage() {
   const openDetailsModal = (issue) => setResolveModal(issue);
   const closeModal = () => setResolveModal(null);
   const closeDismissModal = () => setDismissModal(null);
-
-  const handleIssueResolved = (e) => {
-    const { issue_id } = e.detail;
-    setResolveModal(null);
-    setIssues(issues.filter((i) => i.id !== issue_id));
-    setIssuesTotal((t) => t - 1);
-  };
 
   const handleIssueFlag = (issue, is_flagged) => {
     setIssues(issues.map((i) => i.id === issue.id ? { ...i, is_flagged } : i));
@@ -214,7 +206,6 @@ function IssuesPage() {
                 : issues.map((ev) => IssueRow(ev, {
                     onDetails: openDetailsModal,
                     onDismiss: (issue) => setDismissModal(issue),
-                    onConfig: (jurisdictions) => setConfigModal({ jurisdictions, initialView: "merged" }),
                     onFlag: handleIssueFlag,
                   }))
               }
@@ -244,7 +235,6 @@ function IssuesPage() {
         .issue=${resolveModal}
         ?details-only=${true}
         @modal-close=${closeModal}
-        @issue-resolved=${handleIssueResolved}
       ></issues-resolve-modal>
     ` : null}
 
@@ -254,14 +244,6 @@ function IssuesPage() {
         @modal-close=${closeDismissModal}
         @issue-dismissed=${handleIssueDismissed}
       ></issues-dismiss-modal>
-    ` : null}
-
-    ${configModal ? html`
-      <issues-config-editor
-        .jurisdictions=${configModal.jurisdictions}
-        .initialView=${configModal.initialView}
-        @modal-close=${() => setConfigModal(null)}
-      ></issues-config-editor>
     ` : null}
 
   `;

@@ -3,6 +3,7 @@ import uuid
 from typing import Any
 
 import shared.utils.id_utils
+from database.changeset_predicates import WORK_IN_FLIGHT
 from database.database import get_pool
 from psycopg import sql
 from shared.utils.statuses import PipelineIssueStatus, PipelineIssueType
@@ -31,16 +32,29 @@ def _build_jurisdictions(
     return result
 
 
-async def get_pending_issue_ocdids() -> set[str]:
+# An issue only blocks its jurisdiction while the changeset it hangs off is still open.
+#
+# Without `WORK_IN_FLIGHT` a pending issue on an already published-or-dismissed changeset froze
+# its jurisdiction forever: nothing could re-scrape it, so no new run could finish, so
+# `supersede_prior_jurisdiction_issues` — which only fires from `finalize_pipeline_run` — never
+# cleared the issue. The issue blocked the scrape whose completion would have resolved it.
+# Measured 2026-09-05: all 15 pending issues in dev sat on terminal changesets, freezing 10
+# jurisdictions.
+#
+# Both readers narrow together on purpose. `jurisdiction_ocdids_with_pending_issues` gates scrape candidates
+# and the by-state one feeds the coverage page's `blocked` count, which means "blocked from
+# scraping" — if they disagreed the page would report a block that no longer exists.
+async def jurisdiction_ocdids_with_pending_issues() -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
+            f"""
             SELECT DISTINCT changesets.jurisdiction_ocdid
             FROM issues pi
             JOIN changesets ON changesets.id::text = ANY(pi.changeset_ids)
             WHERE pi.status = %s
               AND changesets.jurisdiction_ocdid IS NOT NULL
+              AND {WORK_IN_FLIGHT}
             """,
             (PipelineIssueStatus.PENDING,),
         )
@@ -48,16 +62,17 @@ async def get_pending_issue_ocdids() -> set[str]:
     return {row[0] for row in rows}
 
 
-async def get_pending_issue_ocdids_by_state(state_code: str) -> set[str]:
+async def jurisdiction_ocdids_with_pending_issues_in_state(state_code: str) -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
+            f"""
             SELECT DISTINCT changesets.jurisdiction_ocdid
             FROM issues pi
             JOIN changesets ON changesets.id::text = ANY(pi.changeset_ids)
             WHERE pi.status = %s
               AND changesets.jurisdiction_ocdid LIKE %s
+              AND {WORK_IN_FLIGHT}
             """,
             (
                 PipelineIssueStatus.PENDING,
@@ -106,18 +121,19 @@ async def supersede_prior_jurisdiction_issues(
 async def upsert_issue(changeset_id: str, issue_type: str, issues: list[dict]) -> None:
     if not issues:
         return
-    rows = []
-    for issue in issues:
-        # TBD remove with the issue type: nothing emits these since 2026-08-16.
-        if issue_type == PipelineIssueType.UNRECOGNIZED_ROLE:
-            issue_key = issue["role"]
-            data = json.dumps({"person_names": [issue.get("person_name", "")]})
-        else:
-            issue_key = changeset_id
-            data = json.dumps(issue)
-        rows.append(
-            (issue_type, issue_key, [changeset_id], data, PipelineIssueStatus.PENDING)
+    # `issue_key` is the subject's own id. `unrecognized_role` was the one type that keyed on
+    # something else — the role — and accumulated changesets; migration 179 drained it, so a
+    # conflict now always means the same subject raising the same issue again.
+    rows = [
+        (
+            issue_type,
+            changeset_id,
+            [changeset_id],
+            json.dumps(issue),
+            PipelineIssueStatus.PENDING,
         )
+        for issue in issues
+    ]
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -130,19 +146,7 @@ async def upsert_issue(changeset_id: str, issue_type: str, issues: list[dict]) -
                 SELECT array_agg(DISTINCT r)
                 FROM unnest(issues.changeset_ids || EXCLUDED.changeset_ids) r
               ),
-              data = CASE
-                WHEN issues.issue_type = 'unrecognized_role' THEN
-                  jsonb_set(
-                    issues.data,
-                    '{person_names}',
-                    (SELECT jsonb_agg(DISTINCT v)
-                     FROM jsonb_array_elements_text(
-                       COALESCE(issues.data->'person_names', '[]'::jsonb) ||
-                       COALESCE(EXCLUDED.data->'person_names', '[]'::jsonb)
-                     ) v)
-                  )
-                ELSE issues.data
-              END,
+              data = issues.data,
               -- Re-reported, so it is open again whatever it was. The CASE this replaces
               -- had one live branch, `pr_opened`, which migration 174 retired.
               status = 'pending',

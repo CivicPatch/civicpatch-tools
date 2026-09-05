@@ -301,14 +301,14 @@ async def test_get_active_pipeline_runs_with_state():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_get_active_pipeline_run_jurisdiction_ocdids():
-    result = await db_jobs.get_active_pipeline_run_jurisdiction_ocdids()
+    result = await db_jobs.jurisdiction_ocdids_with_unfinished_runs()
     assert isinstance(result, set)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_get_active_pipeline_run_jurisdiction_ocdids_by_state():
-    result = await db_jobs.get_active_pipeline_run_jurisdiction_ocdids_by_state("zz")
+    result = await db_jobs.jurisdiction_ocdids_with_unfinished_runs_in_state("zz")
     assert isinstance(result, set)
 
 
@@ -406,7 +406,7 @@ async def test_get_issue_by_id_not_found():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_get_pending_issue_ocdids_by_state():
-    result = await db_issues.get_pending_issue_ocdids_by_state("zz")
+    result = await db_issues.jurisdiction_ocdids_with_pending_issues_in_state("zz")
     assert isinstance(result, set)
 
 

@@ -89,23 +89,6 @@ def test_put_roles_happy_calls_set_roles():
 
 
 @pytest.mark.unit
-def test_put_roles_with_issue_id_routes_to_resolution():
-    body = {"roles": [{"label": "Mayor"}], "issue_id": "issue-1"}
-    with (
-        patch(
-            "services.pipeline_issue_resolution.resolve_via_config_db",
-            new_callable=AsyncMock,
-        ) as mock_resolve,
-        patch("services.role_config.set_roles", new_callable=AsyncMock) as mock_set,
-    ):
-        response = _client(UserRole.MAINTAINERS).put(_PREFIX, json=body)
-
-    assert response.status_code == 200
-    mock_resolve.assert_awaited_once()
-    mock_set.assert_not_awaited()
-
-
-@pytest.mark.unit
 def test_put_roles_runtime_error_is_409():
     with patch(
         "services.role_config.set_roles",

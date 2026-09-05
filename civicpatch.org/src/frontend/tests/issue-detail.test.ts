@@ -23,13 +23,4 @@ describe("getIssueDetail", () => {
     const data = { error: "some pipeline error" };
     expect(getIssueDetail(ISSUE_TYPE.PIPELINE_ERROR, CHANGESET_ID, data)).toBe(CHANGESET_ID);
   });
-
-  it("appends person names for an unrecognized_role issue", () => {
-    const data = { person_names: ["Jane Doe", "John Roe"] };
-    expect(getIssueDetail(ISSUE_TYPE.UNRECOGNIZED_ROLE, "Mayor", data)).toBe("Mayor — Jane Doe, John Roe");
-  });
-
-  it("shows just the role for an unrecognized_role issue with no names", () => {
-    expect(getIssueDetail(ISSUE_TYPE.UNRECOGNIZED_ROLE, "Mayor", { person_names: [] })).toBe("Mayor");
-  });
 });

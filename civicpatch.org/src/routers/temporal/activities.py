@@ -21,7 +21,7 @@ from temporalio import activity
 
 # A run that dies before send_error uploads is expired to ERROR with no issue of its own.
 # Raise the same generic-failure issue the collector raises (PIPELINE_ERROR), so the
-# jurisdiction lands in `blocked` (excluded by get_pending_issue_ocdids) instead of
+# jurisdiction lands in `blocked` (excluded by jurisdiction_ocdids_with_pending_issues) instead of
 # silently re-queuing forever.
 _STALE_RUN_ISSUE_DETAIL = {"error": "pipeline run timed out and was expired"}
 

@@ -157,7 +157,7 @@ async def get_changeset_data(changeset_id: str) -> Optional[dict]:
 # dismissed. Left on the old table they would answer "nothing in flight" for every scrape.
 
 
-async def open_ocdids_by_state(state_code: str) -> set[str]:
+async def jurisdiction_ocdids_with_open_changesets(state_code: str) -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(

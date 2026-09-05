@@ -80,17 +80,6 @@ export const dismissIssue = async (issueId) => {
   return res.json();
 };
 
-export const resolveReviewIssue = async (issueId, body = {}) => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/${issueId}/resolve`, {
-    credentials: "include",
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
 export const fetchPullRequestsWithData = async (stateCode, page = 1, perPage = 10, view = "quick") => {
   const params = new URLSearchParams();
   if (stateCode) params.set("state_code", stateCode);

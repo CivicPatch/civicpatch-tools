@@ -15,10 +15,6 @@ export function formatDate(isoString) {
 
 export function getIssueDetail(issueType, issueKey, data) {
   if (!data) return issueKey || "";
-  if (issueType === ISSUE_TYPE.UNRECOGNIZED_ROLE) {
-    const names = (data.person_names || []).join(", ");
-    return names ? `${issueKey} — ${names}` : issueKey;
-  }
   if (issueType === ISSUE_TYPE.MERGE_FAILED) {
     return data.error || issueKey;
   }
