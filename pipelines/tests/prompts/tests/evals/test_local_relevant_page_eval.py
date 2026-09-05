@@ -82,6 +82,7 @@ async def run_eval(model_client, case, ocdid="ocd-jurisdiction/country:us/state:
         "run-eval",
         ocdid,
         prompt,
+        prompt_name="relevant_page",
         response_schema=RelevantPageResponseSchema,
         content=case_input,
         **extra_kwargs,

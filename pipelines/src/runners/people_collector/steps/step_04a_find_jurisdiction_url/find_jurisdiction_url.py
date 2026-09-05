@@ -32,8 +32,10 @@ async def find_jurisdiction_url(context: PeopleCollectorContext) -> FindJurisdic
                     context.pipeline_run_id,
                     context.data.jurisdiction_ocdid,
                     open_router_prompts.is_official_jurisdiction_url_prompt(),
+                    prompt_name="is_official_jurisdiction_url",
                     response_schema=OfficialJurisdictionUrlResponseSchema,
                     content=content,
+                    source_url=context.data.config.url,
                 )
                 if check.is_official_jurisdiction_url:
                     logger.info("find_jurisdiction_url: root page confirmed official, no URL change needed")
@@ -49,6 +51,7 @@ async def find_jurisdiction_url(context: PeopleCollectorContext) -> FindJurisdic
         context.pipeline_run_id,
         context.data.jurisdiction_ocdid,
         prompt,
+        prompt_name="find_jurisdiction_url",
         model_fallbacks=FIND_JURISDICTION_URL_MODEL_FALLBACKS,
     )
     discovered_url = (response or {}).get("url")

@@ -98,6 +98,28 @@ class GetPipelineRunStatusResponse(BaseModel):
     progress: int
 
 
+# ── GET /api/v1/jurisdictions/{ocdid}/pipeline_runs ──────────────────────────
+
+class JurisdictionPipelineRun(BaseModel):
+    """One attempt on this jurisdiction, whether or not it proposed anything.
+
+    Every other read reaches a run through `changeset_id`, so a run that minted no changeset —
+    the whole population `changeset_summaries` calls "attempts that died proposing nothing" —
+    is unreachable. This is the read that asks by jurisdiction instead.
+    """
+
+    pipeline_run_id: str
+    status: Optional[str]
+    progress: Optional[int]
+    is_running: bool
+    created_at: Optional[str]
+    finished_at: Optional[str]
+    # The proposal it minted, None if it never reached ingest.
+    changeset_id: Optional[str]
+    # Why it ended, for a run that filed one. `no_roster_found` is an outcome, not a fault.
+    issue_type: Optional[str]
+
+
 # ── The stale-run sweep (not an endpoint) ────────────────────────────────────
 
 class ExpiredRun(BaseModel):

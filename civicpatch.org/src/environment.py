@@ -37,7 +37,6 @@ OPTIONAL_ENV_VARS = [
     # Optional - needed for the blog-sync webhook (HMAC verification)
     "BLOG_SYNC_WEBHOOK_SECRET",
     # Optional - needed for scraping
-    "GOOGLE_SHEETS_SPREADSHEET_ID",
     # Optional - the one data-entry sheet, read and written back
     "ENTRY_SPREADSHEET_ID",
     "GOOGLE_SHEETS_PRIVATE_KEY_BASE64",

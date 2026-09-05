@@ -53,6 +53,7 @@ from schemas.pipeline_runs import (
 )
 from services import people_collector
 from shared.utils.statuses import (
+    RUN_LEVEL_ISSUE_TYPES,
     ChangesetKind,
     DismissalReason,
     PipelineRunStatus,
@@ -537,12 +538,7 @@ def get_router(api_key_header):
 
         is_admin = has_at_least(identity.role, UserRole.ADMINS)
 
-        if issue_type in (
-            "pipeline_error",
-            "no_info",
-            "domain_inactive",
-            "domain_navigation_error",
-        ):
+        if issue_type in RUN_LEVEL_ISSUE_TYPES:
             changeset_id = issue["issue_key"]
             base_rows = [
                 _build_request_row(raw[0])

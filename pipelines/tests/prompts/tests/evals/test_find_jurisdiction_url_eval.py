@@ -61,6 +61,7 @@ async def run_eval(case):
         pipeline_run_id="run-eval",
         jurisdiction_ocdid=jurisdiction_ocdid,
         prompt=prompt,
+        prompt_name="find_jurisdiction_url",
         model_fallbacks=FIND_JURISDICTION_URL_MODEL_FALLBACKS,
     )
     actual = {"url": (response or {}).get("url")}

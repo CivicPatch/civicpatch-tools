@@ -66,6 +66,11 @@ _PROGRESS: dict = {}
 _RUN_STARTED_AT = time.time()
 
 
+def _eval_run_id(provider_name: str) -> str:
+    """One id per provider: costs key on the run, and every provider here shares an ocdid."""
+    return f"run-eval-{provider_name}"
+
+
 async def _run_single_case(model_client, case, ocdid):
     run_prompt = model_client["run_prompt"]
     make_prompt = model_client["make_prompt"]
@@ -79,9 +84,10 @@ async def _run_single_case(model_client, case, ocdid):
     prompt = make_prompt(known_roles)
     try:
         response = await run_prompt(
-            "run-eval",
+            _eval_run_id(name),
             ocdid,
             prompt,
+            prompt_name="municipality_officials",
             response_schema=PeopleArrayLLMResponseSchema,
             content=case["input"],
             **extra_kwargs,
@@ -137,9 +143,7 @@ async def run_eval(
     name = model_client["name"]
     _PROGRESS[name] = [0, len(cases)]
     batch_started = time.time()
-    # Costs key on the ocdid, which every provider shares, so without this each report
-    # carries the previous providers' tokens too and cost ranking becomes run order.
-    cost_utils.reset_cost_tracker(ocdid)
+    cost_utils.reset_cost_tracker(_eval_run_id(name))
     _progress(name, f"dispatching {len(cases)} cases concurrently")
 
     results = await asyncio.gather(
@@ -236,7 +240,7 @@ async def _run_provider(client, cases):
         client, cases, ocdid
     )
     elapsed_seconds = round(time.time() - start_time, 2)
-    llm_costs = cost_utils.get_cost_tracker(ocdid)["llm_costs"]
+    llm_costs = cost_utils.get_cost_tracker(_eval_run_id(client["name"]))["llm_costs"]
     return {
         "client": client,
         "report": report,

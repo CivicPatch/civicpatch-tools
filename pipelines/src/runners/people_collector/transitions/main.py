@@ -231,7 +231,14 @@ async def process_page_content_transition(
         frontier, result = await process_page_content(context, page_to_process)
     except Exception as e:
         logger.error(f"process_page_content failed: {e}")
-        return _next_context(context, error_step=str(e)), PipelineStatus.SEND_ERROR
+        # The message goes in the detail, not the step: `error_step` becomes `issues.issue_type`,
+        # and a raw exception string there mints a new issue kind per distinct message —
+        # `OPEN_ROUTER_TOKEN is not set` was one. None lets the server apply `pipeline_error`.
+        return _next_context(
+            context,
+            error_step=None,
+            error_detail={"error": f"{type(e).__name__}: {e}"},
+        ), PipelineStatus.SEND_ERROR
 
     progress = calculate_progress_percentage(context.data, 5)
     next_context = _next_context(
@@ -241,9 +248,7 @@ async def process_page_content_transition(
     links_processed = get_links_with_status(
         next_context.data.frontier, [LinkStatus.PROCESSED_IRRELEVANT, LinkStatus.DONE]
     )
-    current_cost = cost_utils.total_cost_by_request(
-        context.pipeline_run_id, context.data.jurisdiction_ocdid
-    )["total_cost"]
+    current_cost = cost_utils.total_cost(context.pipeline_run_id)
     logger.info(
         describe_progress(
             processed_count=len(links_processed),
@@ -341,6 +346,14 @@ async def send_error_transition(
     context: PeopleCollectorContext,
     api_client: httpx.AsyncClient,
 ) -> tuple[PeopleCollectorContext, PipelineStatus]:
+    # A run that failed still spent money — 24 of 49 dismissed scrapes on dev wrote no
+    # costs.json at all. Before `send_error`, which zips the artifacts this belongs in.
+    # Recoverable on its own: an unreported cost must not cost us the error report.
+    try:
+        cost_utils.log_costs(context.pipeline_run_id, context.data.jurisdiction_ocdid)
+    except Exception as e:
+        logger.error(f"Failed to write costs for a failed run: {e}")
+
     try:
         result = await send_error(context, api_client)
         next_context = _next_context(
@@ -428,7 +441,7 @@ def _collect_pipeline_heuristics(records) -> tuple[str | None, list[dict]]:
     """Only emptiness. An unrecognized role is not an issue here: the raw label crosses the
     boundary in the record, so `parse_label` recovers `unmatched` wherever it is needed."""
     if not records:
-        return PipelineRunErrorType.NO_INFO, []
+        return PipelineRunErrorType.NO_ROSTER_FOUND, []
     return None, []
 
 

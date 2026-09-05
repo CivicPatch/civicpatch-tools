@@ -1,7 +1,6 @@
 services:
   pipelines-cicd:
     environment:
-      - PIPELINE_RUN_COST_LIMIT
 
       - GOOGLE_GEMINI_TOKEN
       - TOGETHER_AI_TOKEN

@@ -125,11 +125,6 @@ run = "docker compose -f docker-compose.development.yml run --rm pipelines uv ru
 # run = "docker compose -f docker-compose.development.yml run --rm pipelines uv run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_entity_extraction.py"
 # run = "docker compose -f docker-compose.development.yml run --rm pipelines uv run pytest -s -vv tests/unit/utils/test_scrape_utils.py"
 # run = "docker compose -f docker-compose.development.yml run --rm pipelines uv run python src/scripts/test.py"
-#run = """
-#docker compose -f docker-compose.development.yml run --rm pipelines uv run \
-#  python src/scripts/send_costs_to_google_sheets.py {{ option(name="jurisdiction-ocdid") }}
-#"""
-#mise scratch --jurisdiction-ocdid "ocd-jurisdiction/country:us/state:nc/place:greensboro/government"
 
 ###############################################
 ## 🚀✨ GITHUB ACTIONS TASKS ✨🚀
