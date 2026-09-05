@@ -10,9 +10,12 @@ Isolation: sentinel state 'zz', cleaned before and after each test.
 import pytest
 import pytest_asyncio
 
-from database.changesets import get_in_flight
+from database.changesets import get_in_flight, register_scrape_changeset
 from database.database import get_pool
-from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
+from database.pipeline_runs import update_pipeline_run_status
+from schemas.common import InFlightEntryType
+from shared.utils.statuses import PipelineRunStatus
+from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_in_flight/government"
 
@@ -40,53 +43,33 @@ async def _clean():
     await _wipe()
 
 
-async def _seed_jurisdiction() -> None:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            INSERT INTO jurisdictions (jurisdiction_ocdid, state, data, updated_at)
-            VALUES (%s, 'zz', '{}'::jsonb, now())
-            ON CONFLICT (jurisdiction_ocdid) DO NOTHING
-            """,
-            (_OCDID,),
-        )
+async def _a_scrape(status: str) -> str:
+    """A scrape's proposal, minted by a run the way ingest does, then reporting `status`.
+
+    Returns the changeset. The run keeps its own id, which is the shape production writes.
+    """
+    await factories.seed_jurisdiction(_OCDID, "zz")
+    run_id = await factories.start_run(_OCDID)
+    changeset_id = await register_scrape_changeset(run_id)
+    await update_pipeline_run_status(run_id, status)
+    return changeset_id
 
 
-async def _changeset(kind: str, status: str | None) -> str:
-    """`changesets_scrape_has_a_run` ties the two: a scrape has a status, nothing else may."""
-    await _seed_jurisdiction()
+async def _an_import() -> str:
+    """A changeset with no run behind it. Nothing mints these — they arrive from a sheet."""
+    await factories.seed_jurisdiction(_OCDID, "zz")
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             INSERT INTO changesets (kind, jurisdiction_ocdid)
-            VALUES (%s, %s)
+            VALUES ('sheet_import', %s)
             RETURNING id::text
             """,
-            (kind, _OCDID),
+            (_OCDID,),
         )
-        changeset_id = (await cur.fetchone())[0]
-        if status is not None:
-            # A status means a run: migration 169 moved it off the changeset, and
-            # `RUN_IN_FLIGHT` now asks whether that run has finished.
-            await cur.execute(
-                """
-                INSERT INTO pipeline_runs
-                    (id, jurisdiction_ocdid, status, finished_at, changeset_id)
-                VALUES (%s, %s, %s,
-                        CASE WHEN %s = ANY(%s) THEN now() END, %s)
-                """,
-                (
-                    changeset_id,
-                    _OCDID,
-                    status,
-                    status,
-                    [s.value for s in TERMINAL_PIPELINE_RUN_STATUSES],
-                    changeset_id,
-                ),
-            )
-        return changeset_id
+        await conn.commit()
+        return (await cur.fetchone())[0]
 
 
 async def _add_sighting(changeset_id: str) -> None:
@@ -117,24 +100,62 @@ async def _publish(changeset_id: str) -> None:
 async def test_a_running_scrape_is_in_flight_but_not_awaiting_review():
     """The lanes are disjoint: a scrape still running has written no sightings yet, so it
     cannot satisfy `AVAILABLE_FOR_REVIEW`."""
-    changeset_id = await _changeset("scrape", "SCRAPE_PAGE")
+    changeset_id = await _a_scrape("SCRAPE_PAGE")
 
     result = await get_in_flight(_OCDID)
 
-    assert [entry.changeset_id for entry in result.in_flight] == [changeset_id]
+    assert [entry.id for entry in result.in_flight] == [changeset_id]
     assert result.in_flight[0].is_running is True
     assert result.in_flight[0].awaiting_review is False
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
+async def test_a_run_that_has_not_reached_ingest_yet_is_still_in_flight():
+    """The case the "In progress" section exists for, and the one the test above cannot reach:
+    it seeds the changeset first. A real run mints none until ingest, so for its whole life
+    before that a changeset-rooted query reports the jurisdiction idle while it is scraping."""
+    await factories.seed_jurisdiction(_OCDID, "zz")
+    run_id = await factories.start_run(
+        _OCDID, status=PipelineRunStatus.SCRAPE_PAGE, progress=40
+    )
+
+    result = await get_in_flight(_OCDID)
+
+    assert [entry.id for entry in result.in_flight] == [run_id]
+    assert result.in_flight[0].entry_type is InFlightEntryType.PIPELINE_RUN
+    assert result.in_flight[0].is_running is True
+    assert result.in_flight[0].awaiting_review is False
+    assert result.in_flight[0].pipeline_run_status == PipelineRunStatus.SCRAPE_PAGE.value
+    assert result.in_flight[0].pipeline_run_progress == 40
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_run_that_has_just_minted_its_changeset_appears_once():
+    """The window between ingest and the terminal status report: the run is unfinished and its
+    changeset already exists, so both lanes would match it. They split on `changeset_id`, which
+    hands it to the changeset lane — still running, but reported by the id a reviewer can use."""
+    await factories.seed_jurisdiction(_OCDID, "zz")
+    run_id = await factories.start_run(_OCDID)
+    changeset_id = await register_scrape_changeset(run_id)
+
+    result = await get_in_flight(_OCDID)
+
+    assert [entry.id for entry in result.in_flight] == [changeset_id]
+    assert result.in_flight[0].entry_type is InFlightEntryType.CHANGESET
+    assert result.in_flight[0].is_running is True
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
 async def test_a_finished_scrape_with_sightings_awaits_review():
-    changeset_id = await _changeset("scrape", "SUCCESS")
+    changeset_id = await _a_scrape("SUCCESS")
     await _add_sighting(changeset_id)
 
     result = await get_in_flight(_OCDID)
 
-    assert [entry.changeset_id for entry in result.in_flight] == [changeset_id]
+    assert [entry.id for entry in result.in_flight] == [changeset_id]
     assert result.in_flight[0].is_running is False
     assert result.in_flight[0].awaiting_review is True
 
@@ -144,12 +165,12 @@ async def test_a_finished_scrape_with_sightings_awaits_review():
 async def test_an_import_awaits_review_with_no_pipeline_run():
     """76% of changesets are imports. They never have a status, so the running lane can never
     hold one — this is the case a name like `PipelineRunChangeset` would have mislabelled."""
-    changeset_id = await _changeset("sheet_import", None)
+    changeset_id = await _an_import()
     await _add_sighting(changeset_id)
 
     result = await get_in_flight(_OCDID)
 
-    assert [entry.changeset_id for entry in result.in_flight] == [changeset_id]
+    assert [entry.id for entry in result.in_flight] == [changeset_id]
     assert result.in_flight[0].is_running is False
     assert result.in_flight[0].awaiting_review is True
     assert result.in_flight[0].pipeline_run_status is None
@@ -160,7 +181,7 @@ async def test_an_import_awaits_review_with_no_pipeline_run():
 async def test_a_finished_scrape_with_no_sightings_is_in_neither_lane():
     """It produced nothing and is not running, so nobody is waiting on it. It still counts
     toward the total — it happened."""
-    await _changeset("scrape", "SUCCESS")
+    await _a_scrape("SUCCESS")
 
     result = await get_in_flight(_OCDID)
 
@@ -171,7 +192,7 @@ async def test_a_finished_scrape_with_no_sightings_is_in_neither_lane():
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_a_resolved_changeset_is_not_in_flight():
-    changeset_id = await _changeset("scrape", "SUCCESS")
+    changeset_id = await _a_scrape("SUCCESS")
     await _add_sighting(changeset_id)
     await _publish(changeset_id)
 
@@ -185,8 +206,8 @@ async def test_a_resolved_changeset_is_not_in_flight():
 async def test_last_published_at_is_the_latest_publish_not_the_latest_row():
     """A changeset published today may have been created before one published last week, so
     this is `max(published_at)` rather than the newest row's."""
-    older = await _changeset("scrape", "SUCCESS")
-    newer = await _changeset("scrape", "SUCCESS")
+    older = await _a_scrape("SUCCESS")
+    newer = await _a_scrape("SUCCESS")
     await _publish(newer)
     await _publish(older)  # published second, so it holds the later timestamp
 
@@ -205,10 +226,10 @@ async def test_last_published_at_is_the_latest_publish_not_the_latest_row():
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_total_counts_every_changeset_not_just_the_unresolved_ones():
-    await _changeset("scrape", "SCRAPE_PAGE")
-    published = await _changeset("scrape", "SUCCESS")
+    await _a_scrape("SCRAPE_PAGE")
+    published = await _a_scrape("SUCCESS")
     await _publish(published)
-    await _changeset("sheet_import", None)
+    await _an_import()
 
     result = await get_in_flight(_OCDID)
 
@@ -220,7 +241,7 @@ async def test_total_counts_every_changeset_not_just_the_unresolved_ones():
 @pytest.mark.asyncio
 async def test_a_jurisdiction_with_no_changesets_answers_emptily():
     """Never scraped is a real state, not an error — the page renders an empty section."""
-    await _seed_jurisdiction()
+    await factories.seed_jurisdiction(_OCDID, "zz")
 
     result = await get_in_flight(_OCDID)
 

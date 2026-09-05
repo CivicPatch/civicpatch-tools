@@ -15,6 +15,7 @@ from database.users import SYSTEM_USER_ID
 from database.pipeline_runs import expire_stale_pipeline_runs
 from database.publications import publish_request
 from database.changesets import supersede_stacked_requests
+from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_stacked/government"
 _OTHER = "ocd-jurisdiction/country:us/state:zz/place:zz_stacked_other/government"
@@ -74,30 +75,16 @@ async def _jurisdiction(ocdid: str = _OCDID, status: str = "active") -> None:
 
 
 async def _request(updated_at: str, ocdid: str = _OCDID) -> str:
-    """A pending request whose scrape read the source at `updated_at`.
+    """A pending proposal whose scrape read the source at `updated_at`.
 
-    `created_at` is left to now() for every row, so only `updated_at` can order them.
+    Driven through the real writers, so the run and the changeset get the different ids
+    production gives them. `created_at` is left to now() for every row, so only `updated_at` can
+    order them.
     """
+    run_id = await factories.start_run(ocdid)
+    changeset_id = await factories.complete_run(run_id)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            INSERT INTO changesets (kind, jurisdiction_ocdid, updated_at)
-            VALUES ('scrape', %s, %s::timestamptz)
-            RETURNING id::text
-            """,
-            (ocdid, updated_at),
-        )
-        changeset_id = (await cur.fetchone())[0]
-        # The scrape's run. `updated_at` is the clock the expiry sweep reads.
-        await cur.execute(
-            """
-            INSERT INTO pipeline_runs
-                (id, jurisdiction_ocdid, status, finished_at, updated_at, changeset_id)
-            VALUES (%s, %s, 'SUCCESS', now(), %s::timestamptz, %s)
-            """,
-            (changeset_id, ocdid, updated_at, changeset_id),
-        )
         # One sighting, because `AVAILABLE_FOR_REVIEW` is now "this scrape saw somebody".
         await cur.execute(
             """
@@ -110,12 +97,28 @@ async def _request(updated_at: str, ocdid: str = _OCDID) -> str:
             """
             UPDATE changesets SET created_at = %s::timestamptz,
                                   updated_at = %s::timestamptz
-            WHERE id = %s
+            WHERE id::text = %s
             """,
             (updated_at, updated_at, changeset_id),
         )
+        # The clock the expiry sweep reads.
+        await cur.execute(
+            "UPDATE pipeline_runs SET updated_at = %s::timestamptz WHERE id::text = %s",
+            (updated_at, run_id),
+        )
         await conn.commit()
     return changeset_id
+
+
+async def _run_for(changeset_id: str) -> str:
+    """The attempt behind a proposal — they have had different ids since migration 169."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text FROM pipeline_runs WHERE changeset_id::text = %s",
+            (changeset_id,),
+        )
+        return (await cur.fetchone())[0]
 
 
 async def _dismissed_at(changeset_id: str):
@@ -226,7 +229,7 @@ async def test_giving_up_on_a_run_does_not_restamp_the_source_clock():
         await cur.execute(
             "UPDATE pipeline_runs SET status = 'PENDING', finished_at = NULL "
             "WHERE id::text = %s",
-            (abandoned,),
+            (await _run_for(abandoned),),
         )
         await conn.commit()
 

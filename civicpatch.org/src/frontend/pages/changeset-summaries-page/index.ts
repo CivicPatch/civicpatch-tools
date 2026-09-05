@@ -26,9 +26,9 @@ export interface StateRollup {
   running: number;
   to_review: number;
   oldest_days: number;
-  confirmed: number;
-  rejected: number;
-  errored: number;
+  published: number;
+  dismissed: number;
+  failed_runs: number;
   roster_edits: number;
   last_run_at: string | null;
 }
@@ -39,18 +39,16 @@ const STALE_DAYS = 7;
 const SORTS: Record<string, (a: StateRollup, b: StateRollup) => number> = {
   queue: (a, b) => b.to_review - a.to_review,
   oldest: (a, b) => b.oldest_days - a.oldest_days,
-  failed: (a, b) => b.rejected + b.errored - (a.rejected + a.errored),
+  dismissed: (a, b) => b.dismissed - a.dismissed,
   name: (a, b) => a.state.localeCompare(b.state),
 };
 
 const CHIPS = [
   { key: "queue", label: "To review" },
   { key: "oldest", label: "Longest waiting" },
-  { key: "failed", label: "Failed" },
+  { key: "dismissed", label: "Dismissed" },
   { key: "name", label: "State" },
 ];
-
-const failedOf = (row: StateRollup) => row.rejected + row.errored;
 
 // The age is no longer its own column, so it rides on the queue figure — which is the only
 // thing it says anything about, and what the red tint is already reacting to.
@@ -78,8 +76,8 @@ function renderRow(row: StateRollup, calendar: Map<string, CalendarDay>, days: s
       <span class="cs-cal">
         ${days.map((date) => renderDay(calendar.get(dayKey(row.state, date)), date, row.state))}
       </span>
-      ${renderFigure(row.confirmed, "ok")}
-      ${renderFigure(failedOf(row), "failed", failedOf(row) ? "cs-figure--alert" : "")}
+      ${renderFigure(row.published, "published")}
+      ${renderFigure(row.dismissed, "dismissed", row.dismissed ? "cs-figure--alert" : "")}
       ${renderFigure(row.roster_edits, "roster edits")}
     </div>
   `;
@@ -89,8 +87,8 @@ function renderLedger(rows: StateRollup[]) {
   const sum = (pick: (r: StateRollup) => number) => rows.reduce((n, r) => n + pick(r), 0);
   const figures = [
     { n: sum((r) => r.to_review), label: "to review" },
-    { n: sum(failedOf), label: "failed" },
-    { n: sum((r) => r.confirmed), label: "ok" },
+    { n: sum((r) => r.dismissed), label: "dismissed" },
+    { n: sum((r) => r.published), label: "published" },
     { n: sum((r) => r.roster_edits), label: "roster edits" },
   ];
   return html`
@@ -160,13 +158,13 @@ function CivChangesetSummaries() {
       <div class="cs-legend">
         <span class="cs-legend__item"><strong>Calendar</strong></span>
         <span class="cs-legend__item">
-          <span class="cs-legend__swatch cs-cal__seg--failed"></span> failed
+          <span class="cs-legend__swatch cs-cal__seg--dismissed"></span> dismissed
         </span>
         <span class="cs-legend__item">
           <span class="cs-legend__swatch cs-cal__seg--review"></span> to review
         </span>
         <span class="cs-legend__item">
-          <span class="cs-legend__swatch cs-cal__seg--ok"></span> ok
+          <span class="cs-legend__swatch cs-cal__seg--published"></span> published
         </span>
         <span class="cs-legend__item">band size is that day's share</span>
         <span class="cs-legend__item">

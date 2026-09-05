@@ -10,7 +10,7 @@ import {
 } from "../pages/jurisdictions-page/awaiting-review.ts";
 
 const entry = (overrides: Partial<InFlightEntry> = {}): InFlightEntry => ({
-  changeset_id: "req-1",
+  id: "req-1",
   created_at: "2026-07-12T00:00:00Z",
   change_url: "https://github.com/CivicPatch/open-data/pull/4821",
   review_status: "pending",
@@ -24,26 +24,26 @@ describe("pendingReviews", () => {
   // reconstructing one from `review_status`, which is what drifted.
   it("keeps what the pool says it holds", () => {
     const history = [
-      entry({ changeset_id: "a", awaiting_review: true }),
-      entry({ changeset_id: "b", review_status: "published", awaiting_review: false }),
-      entry({ changeset_id: "c", review_status: "dismissed", awaiting_review: false }),
+      entry({ id: "a", awaiting_review: true }),
+      entry({ id: "b", review_status: "published", awaiting_review: false }),
+      entry({ id: "c", review_status: "dismissed", awaiting_review: false }),
     ];
-    expect(pendingReviews(history).map((e) => e.changeset_id)).toEqual(["a"]);
+    expect(pendingReviews(history).map((e) => e.id)).toEqual(["a"]);
   });
 
   it("drops a scrape that is still running, though it reads as pending", () => {
     // `pending` is true from the moment a request exists, so deriving from it offered a Review
     // button for a roster the scrape had not produced. The pool excludes it: no `data_json`.
     const history = [
-      entry({ changeset_id: "done", awaiting_review: true }),
+      entry({ id: "done", awaiting_review: true }),
       entry({
-        changeset_id: "running",
+        id: "running",
         review_status: "pending",
         is_running: true,
         awaiting_review: false,
       }),
     ];
-    expect(pendingReviews(history).map((e) => e.changeset_id)).toEqual(["done"]);
+    expect(pendingReviews(history).map((e) => e.id)).toEqual(["done"]);
   });
 
   it("is empty for empty history", () => {
@@ -71,7 +71,7 @@ describe("editingBlockedReason", () => {
   });
 
   it("counts rather than naming when several are open", () => {
-    expect(editingBlockedReason([entry(), entry({ changeset_id: "b" })])).toBe(
+    expect(editingBlockedReason([entry(), entry({ id: "b" })])).toBe(
       "2 pull requests are awaiting review. Publish or close them before editing directly.",
     );
   });
@@ -83,16 +83,16 @@ describe("editingBlockedReason", () => {
 // pending scrape locked the website field it never touches.
 describe("edit blockers", () => {
   const open = [
-    entry({ changeset_id: "scrape" }),
-    entry({ changeset_id: "edit", kind: CHANGESET_KIND.JURISDICTION_EDIT }),
+    entry({ id: "scrape" }),
+    entry({ id: "edit", kind: CHANGESET_KIND.JURISDICTION_EDIT }),
   ];
 
   it("blocks people edits on scrapes only", () => {
-    expect(peopleEditBlockers(open).map((e) => e.changeset_id)).toEqual(["scrape"]);
+    expect(peopleEditBlockers(open).map((e) => e.id)).toEqual(["scrape"]);
   });
 
   it("blocks jurisdiction edits on manual edits only", () => {
-    expect(jurisdictionEditBlockers(open).map((e) => e.changeset_id)).toEqual(["edit"]);
+    expect(jurisdictionEditBlockers(open).map((e) => e.id)).toEqual(["edit"]);
   });
 
   it("treats an unknown type as a people blocker, which is the safe default", () => {
@@ -120,7 +120,7 @@ describe("jurisdictionEditBlockedReason", () => {
   });
 
   it("counts when several are stuck", () => {
-    expect(jurisdictionEditBlockedReason([stuck(), stuck({ changeset_id: "b" })])).toBe(
+    expect(jurisdictionEditBlockedReason([stuck(), stuck({ id: "b" })])).toBe(
       "2 edits did not auto-merge. Resolve or close them before editing again.",
     );
   });

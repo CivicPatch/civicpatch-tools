@@ -178,6 +178,17 @@ export const TX_JURISDICTION_OCDID =
 export const TX_CHANGESET_ID = "00000000-0000-0000-eeee-000000000010";
 const TX_PR_ID = "00000000-0000-0000-eeee-000000000011";
 
+// Attempts, not proposals: an in-flight or failed run has `changeset_id` NULL, so it appears
+// in no changeset-rooted query. nj is busy and has failed once, tx has only failed.
+const NJ_RUN_IN_FLIGHT_ID = "00000000-0000-0000-dddd-000000000001";
+const NJ_RUN_FAILED_ID = "00000000-0000-0000-dddd-000000000002";
+const TX_RUN_FAILED_ID = "00000000-0000-0000-dddd-000000000003";
+const SEEDED_RUN_IDS = [
+  NJ_RUN_IN_FLIGHT_ID,
+  NJ_RUN_FAILED_ID,
+  TX_RUN_FAILED_ID,
+];
+
 // Issue-markers fixture — reconcile mode (scraped_at set), no existing people so
 // every proposed person renders as an "added" card. Its issues carry
 // structured issues that anchor to proposed person ids, exercising the review card's
@@ -299,9 +310,13 @@ async function seedReviewCard(
     // `change_url` is where the change landed. It used to live on `pull_requests`, which
     // migration 141 dropped — so a published card had no url to link to and the review page
     // simply rendered no link.
-    `INSERT INTO changesets (id, kind, jurisdiction_ocdid, arguments_json,
-                           status, progress, sourced_at, created_at, published_at, change_url)
-     VALUES ($1, 'scrape', $2, '{}', 'success', 100, NOW(),
+    // `arguments_json`, `status` and `progress` left `changesets` in migration 170 — they
+    // describe the run, which now has its own table. A changeset exists only because a run
+    // already succeeded, so there is no status to seed here.
+    `INSERT INTO changesets (id, kind, jurisdiction_ocdid,
+                           created_at, updated_at, published_at, change_url)
+     VALUES ($1, 'scrape', $2,
+             NOW() - ($4 * INTERVAL '1 second'),
              NOW() - ($4 * INTERVAL '1 second'), $3, $5)
      ON CONFLICT (id) DO NOTHING`,
     [changesetId, ocdid, publishedAt, ageSeconds, changeUrl],
@@ -454,6 +469,32 @@ async function seedPerson(client, ocdid, person) {
   await seatPerson(client, ocdid, person);
 }
 
+// An attempt still going: no `finished_at`, and no changeset yet. This is what disables a
+// state's scrape button, and what the "already running" figure counts.
+async function seedRunInFlight(client, id, ocdid) {
+  await client.query(
+    `INSERT INTO pipeline_runs (id, jurisdiction_ocdid, status, progress)
+     VALUES ($1, $2, 'SCRAPE_PAGE', 40)
+     ON CONFLICT (id) DO NOTHING`,
+    [id, ocdid],
+  );
+}
+
+// An attempt that died before ingest, so it left no changeset behind to be reviewed or
+// dismissed. Windowed by `created_at`, hence the age.
+async function seedFailedRun(client, id, ocdid, ageSeconds) {
+  await client.query(
+    `INSERT INTO pipeline_runs (id, jurisdiction_ocdid, status, progress,
+                                created_at, updated_at, finished_at)
+     VALUES ($1, $2, 'ERROR', 20,
+             NOW() - ($3 * INTERVAL '1 second'),
+             NOW() - ($3 * INTERVAL '1 second'),
+             NOW() - ($3 * INTERVAL '1 second'))
+     ON CONFLICT (id) DO NOTHING`,
+    [id, ocdid, ageSeconds],
+  );
+}
+
 export async function seedE2eFixtures() {
   const client = makeClient();
   await client.connect();
@@ -559,6 +600,15 @@ export async function seedE2eFixtures() {
         ],
       });
     }
+
+    await seedRunInFlight(client, NJ_RUN_IN_FLIGHT_ID, TEST_JURISDICTION_OCDID);
+    await seedFailedRun(
+      client,
+      NJ_RUN_FAILED_ID,
+      TEST_JURISDICTION_OCDID_2,
+      3600,
+    );
+    await seedFailedRun(client, TX_RUN_FAILED_ID, TX_JURISDICTION_OCDID, 7200);
 
     // Baseline card — scraped_at intentionally omitted (NULL) → BASELINE mode.
     await client.query(
@@ -881,6 +931,11 @@ export async function teardownE2eFixtures() {
     // jurisdiction rows.
     await clearRoster(client, RECONCILE_JURISDICTION_OCDID);
     await clearRoster(client, SCALE_JURISDICTION_OCDID);
+    // No FK from `pipeline_runs` to `jurisdictions`, so these outlive their jurisdiction
+    // unless dropped by hand.
+    await client.query(`DELETE FROM pipeline_runs WHERE id = ANY($1)`, [
+      SEEDED_RUN_IDS,
+    ]);
     for (const [prId, reqId, jOcdid] of [
       [TEST_PR_ID, TEST_CHANGESET_ID, TEST_JURISDICTION_OCDID],
       [TEST_PR_ID_2, TEST_CHANGESET_ID_2, TEST_JURISDICTION_OCDID_2],

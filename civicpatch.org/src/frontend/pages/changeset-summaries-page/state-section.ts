@@ -12,8 +12,8 @@ import "../../components/confirm-modal/confirm-modal.ts";
 import { hostDispatch } from "../../utils/host-dispatch.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 import {
-  BUCKET_FAILED,
-  BUCKET_OK,
+  BUCKET_DISMISSED,
+  BUCKET_PUBLISHED,
   BUCKET_REVIEW,
   BUCKET_LABEL,
   type BucketPage,
@@ -31,10 +31,10 @@ type StateSectionHost = HTMLElement & {
     state: string;
     running: number;
     to_review: number;
-    confirmed: number;
-    rejected: number;
-    errored: number;
+    published: number;
+    dismissed: number;
     roster_edits: number;
+    failed_runs: number;
   };
   windowDays: number;
   canScrape: boolean;
@@ -42,8 +42,8 @@ type StateSectionHost = HTMLElement & {
 
 const BUCKETS = [
   { key: BUCKET_REVIEW, count: (r: any) => r.to_review },
-  { key: BUCKET_FAILED, count: (r: any) => r.rejected + r.errored },
-  { key: BUCKET_OK, count: (r: any) => r.confirmed },
+  { key: BUCKET_DISMISSED, count: (r: any) => r.dismissed },
+  { key: BUCKET_PUBLISHED, count: (r: any) => r.published },
 ];
 
 // The app's own badge, driven by the pico tone pairs rather than a private set of pills.
@@ -150,6 +150,25 @@ function CivStateSection(host: StateSectionHost) {
         ></civ-status-badge>`
       : nothing;
 
+  // Attempts, kept apart from the badges above, which are all proposals. A run is not a
+  // proposal: it mints one only if it reaches ingest, so a failed run is in none of those
+  // counts. Body-only on purpose — this is for seeing activity and debugging, and the
+  // collapsed row is about what needs a reviewer.
+  function renderRuns() {
+    if (!row.running && !row.failed_runs) return nothing;
+    return html`
+      <div class="cs-runs">
+        <span class="cs-runs__label">Pipeline runs</span>
+        ${row.running ? html`<span class="cs-runs__fig">${row.running} running</span>` : nothing}
+        ${row.failed_runs
+          ? html`<span class="cs-runs__fig cs-runs__fig--quiet">
+              ${row.failed_runs} failed in ${host.windowDays} days
+            </span>`
+          : nothing}
+      </div>
+    `;
+  }
+
   // Disabled while this state has a run going: a second batch on top of a live one is the
   // mistake the count exists to prevent.
   function renderScrapeControl() {
@@ -182,8 +201,7 @@ function CivStateSection(host: StateSectionHost) {
     `;
   }
 
-  const failed = row.rejected + row.errored;
-  const nothingRan = !row.to_review && !failed && !row.confirmed;
+  const nothingRan = !row.to_review && !row.dismissed && !row.published;
 
   return html`
     <details class="cs-section" @toggle=${handleToggle}>
@@ -198,14 +216,14 @@ function CivStateSection(host: StateSectionHost) {
               ></civ-status-badge>`
             : html`
                 ${badge(row.to_review, "to review", "review")}
-                ${badge(failed, "failed", "alert")}
-                ${badge(row.confirmed, "ok", "ok")}
+                ${badge(row.dismissed, "dismissed", "alert")}
+                ${badge(row.published, "published", "ok")}
                 ${badge(row.roster_edits, "roster edits", "quiet")}
               `}
         </span>
       </summary>
       <div class="cs-section__body">
-        ${host.canScrape ? renderScrapeControl() : nothing}
+        ${host.canScrape ? renderScrapeControl() : nothing} ${renderRuns()}
         ${nothingRan
           ? html`<p class="cs-empty">Nothing ran in this window.</p>`
           : BUCKETS.map(renderBucket)}

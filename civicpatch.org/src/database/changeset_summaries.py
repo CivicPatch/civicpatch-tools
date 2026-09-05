@@ -7,7 +7,7 @@ same way in both: off `changesets.dismissed_reason`, the changeset's own state.
 
 import logging
 
-from database.changesets import AVAILABLE_FOR_REVIEW, RUN_IN_FLIGHT
+from database.changesets import AVAILABLE_FOR_REVIEW
 from database.database import get_pool
 from database.jurisdictions import ROSTER_CHANGE_TYPES
 from psycopg.rows import dict_row
@@ -21,6 +21,7 @@ from shared.utils.statuses import (
     SOURCE_READING_KINDS,
     ChangesetKind,
     DismissalReason,
+    PipelineRunStatus,
 )
 
 logger = logging.getLogger(__name__)
@@ -31,11 +32,11 @@ COLLECTION_KINDS = [k.value for k in SOURCE_READING_KINDS]
 
 # The buckets a state's section breaks into.
 BUCKET_REVIEW = "review"
-BUCKET_FAILED = "failed"
-BUCKET_OK = "ok"
+BUCKET_DISMISSED = "dismissed"
+BUCKET_PUBLISHED = "published"
 
 # Defined once so the rollup, calendar and bucket cannot disagree. All need `changesets` as `r`.
-CONFIRMED = "r.published_at IS NOT NULL"
+PUBLISHED = "r.published_at IS NOT NULL"
 
 # `status` too: a run that errored before recording a reason still errored.
 # Only collection attempts get an outcome. A hand edit has no run to fail — 8 dev `people_edit`
@@ -45,8 +46,8 @@ CONFIRMED = "r.published_at IS NOT NULL"
 COLLECTED = "r.kind = ANY(%(collection_kinds)s)"
 
 # Only the dismissal reason. A failed *run* no longer has a changeset to count, so this counts
-# failed proposals; failed attempts belong to the scrape-results page, which reads runs.
-FAILED = (
+# dismissed proposals; failed attempts belong to the scrape-results page, which reads runs.
+DISMISSED = (
     f"r.dismissed_reason IN ('{DismissalReason.REJECTED.value}', "
     f"'{DismissalReason.ERRORED.value}', '{DismissalReason.CANCELLED.value}')"
 )
@@ -64,13 +65,33 @@ WITH valid_queue AS (
     WHERE {AVAILABLE_FOR_REVIEW}
     ORDER BY r.jurisdiction_ocdid, r.updated_at DESC
 ),
+-- THE ATTEMPTS. Read from `pipeline_runs` directly, never through `changesets`: a run mints no
+-- changeset until ingest, so a changeset-rooted join matches only runs that have already
+-- finished — which is every run except the ones this is asking about.
 -- Unwindowed on purpose: a run started before the window is still running, and this gates the
 -- scrape button. Missing one would offer a second batch on top of a live one.
 running AS (
     SELECT j.state, count(*)::int AS running
-    FROM changesets r
+    FROM pipeline_runs pr
     JOIN jurisdictions j USING (jurisdiction_ocdid)
-    WHERE {RUN_IN_FLIGHT}
+    WHERE pr.finished_at IS NULL
+    GROUP BY j.state
+),
+-- Windowed, like the other flows. Attempts that died *proposing nothing* — the population that
+-- appears in no changeset column at all.
+--
+-- Both halves of the predicate are load-bearing. `status = 'ERROR'` alone double-counts: every
+-- run minted before mint-at-ingest has a changeset, and measured on dev, 9 of 10 ERROR runs are
+-- already counted as `errored` there. `changeset_id IS NULL` alone catches a run that succeeded
+-- and proposed nothing, which did not fail. Together they are disjoint from every proposal
+-- count, so no failure is reported twice.
+failed_runs AS (
+    SELECT j.state, count(*)::int AS failed_runs
+    FROM pipeline_runs pr
+    JOIN jurisdictions j USING (jurisdiction_ocdid)
+    WHERE pr.created_at >= now() - %(window)s::interval
+      AND pr.status = '{PipelineRunStatus.ERROR.value}'
+      AND pr.changeset_id IS NULL
     GROUP BY j.state
 ),
 queue AS (
@@ -85,13 +106,12 @@ queue AS (
 -- A dismissal with no reason falls through every FILTER, which is the honest answer.
 flows AS (
     SELECT j.state,
-           count(*) FILTER (WHERE {CONFIRMED})::int AS confirmed,
-           count(*) FILTER (
-               WHERE r.dismissed_reason = '{DismissalReason.REJECTED.value}'
-           )::int AS rejected,
-           count(*) FILTER (
-               WHERE r.dismissed_reason = '{DismissalReason.ERRORED.value}'
-           )::int AS errored,
+           count(*) FILTER (WHERE {PUBLISHED})::int AS published,
+           -- `FAILED` verbatim, the same predicate `get_state_bucket` lists by. Counting the
+           -- reasons separately here is what let the two drift: the list included `cancelled`
+           -- and the count did not, so the badge promised fewer rows than the bucket showed —
+           -- 12 of them in 30 days, measured on dev.
+           count(*) FILTER (WHERE {DISMISSED})::int AS dismissed,
            max(r.created_at) AS last_run_at
     FROM changesets r
     JOIN jurisdictions j USING (jurisdiction_ocdid)
@@ -113,14 +133,15 @@ SELECT
     j.state,
     COALESCE(q.to_review, 0)    AS to_review,
     COALESCE(q.oldest_days, 0)  AS oldest_days,
-    COALESCE(f.confirmed, 0)    AS confirmed,
-    COALESCE(f.rejected, 0)     AS rejected,
-    COALESCE(f.errored, 0)      AS errored,
+    COALESCE(f.published, 0)    AS published,
+    COALESCE(f.dismissed, 0)    AS dismissed,
     COALESCE(e.roster_edits, 0) AS roster_edits,
     COALESCE(rn.running, 0)     AS running,
+    COALESCE(fr.failed_runs, 0) AS failed_runs,
     f.last_run_at
 FROM (SELECT DISTINCT state FROM jurisdictions) j
 LEFT JOIN running rn USING (state)
+LEFT JOIN failed_runs fr USING (state)
 LEFT JOIN queue q USING (state)
 LEFT JOIN flows f USING (state)
 LEFT JOIN edits e USING (state)
@@ -150,16 +171,16 @@ async def get_state_rollup(
 # Quiet days send no row; the strip fills its own gaps.
 #
 # Counted by kind as well as by outcome: `sheet_import` is most of what runs, so a day read as
-# "12 ok" without saying a scraper produced none of them would mislead. Hand edits are excluded
+# "12 published" without saying a scraper produced none of them would mislead. Hand edits are excluded
 # entirely — see COLLECTED.
 STATE_CALENDAR_SQL = f"""
 SELECT j.state,
        date_trunc('day', r.created_at)::date        AS day,
-       count(*) FILTER (WHERE {CONFIRMED})::int     AS ok,
+       count(*) FILTER (WHERE {PUBLISHED})::int     AS published,
        count(*) FILTER (
            WHERE r.published_at IS NULL AND r.dismissed_at IS NULL
        )::int                                       AS to_review,
-       count(*) FILTER (WHERE {FAILED})::int        AS failed,
+       count(*) FILTER (WHERE {DISMISSED})::int        AS dismissed,
        count(*) FILTER (
            WHERE r.kind = '{ChangesetKind.SCRAPE.value}'
        )::int                                       AS scrapes,
@@ -177,10 +198,10 @@ ORDER BY j.state, day;
 # The localities behind one bucket, paged.
 #
 # `total` counts localities, not changesets, so it will NOT match the rollup — dev's `wa` is 49
-# confirmed changesets across 29 places. The modal must page against this number, not that one.
+# published changesets across 29 places. The modal must page against this number, not that one.
 #
 # A CASE over three predicates because the buckets do not share a grain: `review` is the
-# unwindowed queue, deduped per jurisdiction; `failed` and `ok` are windowed flows.
+# unwindowed queue, deduped per jurisdiction; `dismissed` and `published` are windowed flows.
 STATE_BUCKET_SQL = f"""
 WITH rows AS (
     SELECT DISTINCT ON (r.jurisdiction_ocdid)
@@ -188,7 +209,7 @@ WITH rows AS (
            j.data->>'name' AS name,
            CASE WHEN %(bucket)s = '{BUCKET_REVIEW}'
                 THEN date_part('day', now() - r.updated_at)::int END AS days_waiting,
-           CASE WHEN %(bucket)s = '{BUCKET_FAILED}'
+           CASE WHEN %(bucket)s = '{BUCKET_DISMISSED}'
                 THEN r.dismissed_reason END AS failure_reason,
            r.updated_at,
            r.created_at
@@ -197,8 +218,8 @@ WITH rows AS (
     WHERE j.state = %(state)s
       AND CASE %(bucket)s
           WHEN '{BUCKET_REVIEW}' THEN {AVAILABLE_FOR_REVIEW}
-          WHEN '{BUCKET_FAILED}' THEN {FAILED} AND r.created_at >= now() - %(window)s::interval
-          WHEN '{BUCKET_OK}'     THEN {CONFIRMED} AND r.created_at >= now() - %(window)s::interval
+          WHEN '{BUCKET_DISMISSED}' THEN {DISMISSED} AND r.created_at >= now() - %(window)s::interval
+          WHEN '{BUCKET_PUBLISHED}' THEN {PUBLISHED} AND r.created_at >= now() - %(window)s::interval
           ELSE false
           END
     ORDER BY r.jurisdiction_ocdid, r.updated_at DESC NULLS LAST, r.created_at DESC

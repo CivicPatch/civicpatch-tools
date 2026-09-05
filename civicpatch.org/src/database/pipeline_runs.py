@@ -54,7 +54,7 @@ async def get_pipeline_run(run_id: str):
         await cur.execute(
             """
             SELECT r.status, r.progress, r.arguments_json,
-                   r.created_at, r.updated_at, c.change_url
+                   r.created_at, r.updated_at, c.change_url, r.changeset_id::text
             FROM pipeline_runs r
             LEFT JOIN changesets c ON c.id = r.changeset_id
             WHERE r.id = %s;
@@ -64,7 +64,9 @@ async def get_pipeline_run(run_id: str):
         row = await cur.fetchone()
         if row:
             return {
-                "changeset_id": run_id,
+                # The changeset this run minted, or None if it never reached ingest. It used to
+                # echo `run_id` back, from before the two had separate ids.
+                "changeset_id": row[6],
                 "status": row[0],
                 "progress": row[1],
                 "arguments_json": row[2],

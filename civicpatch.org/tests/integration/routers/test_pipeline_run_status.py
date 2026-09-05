@@ -1,13 +1,16 @@
 """The invariant that has to survive the requests/pipeline_runs refactor.
 
-`pipeline_runs.changeset_id` is UNIQUE and NOT NULL, so a run and a request are one piece of work
-in two tables. Nothing obliges their two statuses to agree, and that gap is where the phantom
-scrapes came from: a run ended, the request stayed `pending` forever, and the jurisdiction page
+A run is an attempt and a changeset is what it proposed. `pipeline_runs.changeset_id` is
+nullable and only set at ingest, so the two have **different ids** and a run may have no
+changeset at all. Nothing obliges their statuses to agree, and that gap is where the phantom
+scrapes came from: a run ended, the proposal stayed `pending` forever, and the jurisdiction page
 listed it and disabled editing from that same set.
 
 So this pins the rule rather than the implementation: **once a run reaches a state it will not
-leave, its request is no longer pending work.** Written against the real DB so it keeps holding
-as the code underneath moves.
+leave, what it proposed is no longer pending work.** Built through `factories`, which drives the
+real writers — the fixture here used to give the run and the changeset one id, which is the
+shape only migration 169's backfill ever produced, and it hid three separate readers that broke
+on real rows.
 
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
@@ -18,9 +21,10 @@ import pytest
 import pytest_asyncio
 
 from database.database import get_pool
-from database.changesets import get_in_flight
-from routers.api import pipeline_runs as pipeline_runs_router
-from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
+from database.changesets import get_in_flight, register_scrape_changeset, register_scrape_changeset
+from services import pipeline_runs as run_lifecycle
+from shared.utils.statuses import PipelineRunStatus, TERMINAL_PIPELINE_RUN_STATUSES
+from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_runstatus/government"
 
@@ -49,30 +53,15 @@ async def clean_sentinels():
 
 
 async def _a_run_in_flight() -> str:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "INSERT INTO jurisdictions (jurisdiction_ocdid) VALUES (%s)", (_OCDID,)
-        )
-        await cur.execute(
-            """
-            INSERT INTO changesets (kind, jurisdiction_ocdid)
-            VALUES ('scrape', %s) RETURNING id::text
-            """,
-            (_OCDID,),
-        )
-        changeset_id = (await cur.fetchone())[0]
-        # The run is the attempt; the changeset is what it proposed. Sharing an id mirrors what
-        # migration 169 backfilled, so these tests exercise the same rows production has.
-        await cur.execute(
-            """
-            INSERT INTO pipeline_runs (id, jurisdiction_ocdid, status, changeset_id)
-            VALUES (%s, %s, 'RUNNING', %s)
-            """,
-            (changeset_id, _OCDID, changeset_id),
-        )
-        await conn.commit()
-    return changeset_id
+    """An attempt that has not reached ingest, so it has proposed nothing yet."""
+    await factories.seed_jurisdiction(_OCDID, "zz")
+    return await factories.start_run(_OCDID, status=PipelineRunStatus.RUNNING)
+
+
+async def _a_run_with_a_proposal() -> tuple[str, str]:
+    """A run that reached ingest. Two ids, as production gives them."""
+    run_id = await _a_run_in_flight()
+    return run_id, await register_scrape_changeset(run_id)
 
 
 async def _is_still_pending_work(changeset_id: str) -> bool:
@@ -86,13 +75,13 @@ async def _is_still_pending_work(changeset_id: str) -> bool:
         return (await cur.fetchone())[0]
 
 
-async def _apply(changeset_id: str, status: str) -> None:
+async def _apply(run_id: str, status: str) -> None:
     # Redis is a real process boundary; the DB is not, and the DB is what this asserts on.
     with patch(
-        "routers.api.pipeline_runs.pubsub_service.publish", new_callable=AsyncMock
+        "services.pipeline_runs.pubsub_service.publish", new_callable=AsyncMock
     ):
-        await pipeline_runs_router.apply_pipeline_run_status(
-            changeset_id=changeset_id, status=status, progress=None, jurisdiction_ocdid=_OCDID
+        await run_lifecycle.apply_pipeline_run_status(
+            changeset_id=run_id, status=status, progress=None, jurisdiction_ocdid=_OCDID
         )
 
 
@@ -102,9 +91,9 @@ async def _apply(changeset_id: str, status: str) -> None:
 async def test_a_terminal_run_never_leaves_its_request_pending_without_a_reason(status):
     """Every terminal status, not a hand-picked two — a new one added to the enum shows up here
     automatically rather than quietly inheriting whichever branch it falls into."""
-    changeset_id = await _a_run_in_flight()
+    run_id, changeset_id = await _a_run_with_a_proposal()
 
-    await _apply(changeset_id, status)
+    await _apply(run_id, status)
 
     still_pending = await _is_still_pending_work(changeset_id)
     assert still_pending == (status in _PRODUCES_SOMETHING), (
@@ -118,9 +107,9 @@ async def test_a_terminal_run_never_leaves_its_request_pending_without_a_reason(
 async def test_a_run_still_going_settles_nothing():
     """The other half of the rule. Progress is not an outcome, and dismissing on one would
     discard a scrape mid-flight."""
-    changeset_id = await _a_run_in_flight()
+    run_id, changeset_id = await _a_run_with_a_proposal()
 
-    await _apply(changeset_id, "RUNNING")
+    await _apply(run_id, "RUNNING")
 
     assert await _is_still_pending_work(changeset_id) is True
 
@@ -136,21 +125,40 @@ async def test_the_in_flight_row_answers_whether_the_run_is_going(status):
     Asked of `get_in_flight`, not the history query. It used to read this off the history row,
     but history is what *happened* — it no longer returns unresolved changesets, and carrying
     `is_running` there meant two queries deriving one fact from the same predicates."""
-    changeset_id = await _a_run_in_flight()
+    run_id, _ = await _a_run_with_a_proposal()
 
     before = await get_in_flight(_OCDID)
     assert [entry.is_running for entry in before.in_flight] == [True]
 
-    await _apply(changeset_id, status)
+    await _apply(run_id, status)
 
     after = await get_in_flight(_OCDID)
     assert [entry.is_running for entry in after.in_flight] == []
 
 
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_run_that_errors_after_ingest_settles_the_changeset_it_minted():
+    """Built through the real writers, so the ids differ the way production's now do.
+
+    `register_scrape_changeset` mints a fresh uuid; the run keeps its own. Every "settle the
+    request" call above is handed the run's id, and `mark_dismissed` matches `changesets.id`.
+    The fixtures in this file share one id, so they cannot tell the two apart.
+    """
+    await factories.seed_jurisdiction(_OCDID, "zz")
+    run_id = await factories.start_run(_OCDID)
+    changeset_id = await register_scrape_changeset(run_id)
+    assert changeset_id != run_id
+
+    await _apply(run_id, PipelineRunStatus.ERROR.value)
+
+    assert await _is_still_pending_work(changeset_id) is False
+
+
 # --- the stuck-run sweeper ---------------------------------------------------------
 
 
-async def _set_run(changeset_id: str, status: str, age_hours: int) -> None:
+async def _set_run(run_id: str, status: str, age_hours: int) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -165,17 +173,17 @@ async def _set_run(changeset_id: str, status: str, age_hours: int) -> None:
                 status,
                 [s.value for s in TERMINAL_PIPELINE_RUN_STATUSES],
                 age_hours,
-                changeset_id,
+                run_id,
             ),
         )
         await conn.commit()
 
 
-async def _status(changeset_id: str) -> str:
+async def _status(run_id: str) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT status FROM pipeline_runs WHERE id = %s", (changeset_id,)
+            "SELECT status FROM pipeline_runs WHERE id = %s", (run_id,)
         )
         return (await cur.fetchone())[0]
 
@@ -193,13 +201,13 @@ async def test_a_run_stuck_on_a_step_is_expired():
 
     from database.pipeline_runs import expire_stale_pipeline_runs
 
-    changeset_id = await _a_run_in_flight()
-    await _set_run(changeset_id, "SCRAPE_PAGE", age_hours=48)
+    run_id = await _a_run_in_flight()
+    await _set_run(run_id, "SCRAPE_PAGE", age_hours=48)
 
     expired = await expire_stale_pipeline_runs(timedelta(hours=6))
 
-    assert changeset_id in expired
-    assert await _status(changeset_id) == "ERROR"
+    assert run_id in expired
+    assert await _status(run_id) == "ERROR"
 
 
 @pytest.mark.integration
@@ -210,11 +218,11 @@ async def test_a_terminal_run_is_left_alone():
 
     from database.pipeline_runs import expire_stale_pipeline_runs
 
-    changeset_id = await _a_run_in_flight()
-    await _set_run(changeset_id, "SUCCESS", age_hours=48)
+    run_id = await _a_run_in_flight()
+    await _set_run(run_id, "SUCCESS", age_hours=48)
 
-    assert changeset_id not in await expire_stale_pipeline_runs(timedelta(hours=6))
-    assert await _status(changeset_id) == "SUCCESS"
+    assert run_id not in await expire_stale_pipeline_runs(timedelta(hours=6))
+    assert await _status(run_id) == "SUCCESS"
 
 
 @pytest.mark.integration
@@ -225,11 +233,11 @@ async def test_a_run_still_reporting_is_left_alone():
 
     from database.pipeline_runs import expire_stale_pipeline_runs
 
-    changeset_id = await _a_run_in_flight()
-    await _set_run(changeset_id, "SCRAPE_PAGE", age_hours=1)
+    run_id = await _a_run_in_flight()
+    await _set_run(run_id, "SCRAPE_PAGE", age_hours=1)
 
-    assert changeset_id not in await expire_stale_pipeline_runs(timedelta(hours=6))
-    assert await _status(changeset_id) == "SCRAPE_PAGE"
+    assert run_id not in await expire_stale_pipeline_runs(timedelta(hours=6))
+    assert await _status(run_id) == "SCRAPE_PAGE"
 
 
 @pytest.mark.asyncio
@@ -247,7 +255,7 @@ async def test_a_cancelled_run_reads_as_cancelled_from_its_dismissal():
     """
     from database.pipeline_runs import get_pipeline_run_status
 
-    changeset_id = await _a_run_in_flight()
+    run_id, changeset_id = await _a_run_with_a_proposal()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -257,6 +265,6 @@ async def test_a_cancelled_run_reads_as_cancelled_from_its_dismissal():
         )
         await conn.commit()
 
-    reported = await get_pipeline_run_status(changeset_id)
+    reported = await get_pipeline_run_status(run_id)
 
     assert reported["status"] == "CANCELLED"

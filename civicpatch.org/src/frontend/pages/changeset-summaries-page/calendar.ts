@@ -6,9 +6,9 @@ import { html, nothing } from "lit-html";
 export interface CalendarDay {
   state: string;
   day: string;
-  ok: number;
+  published: number;
   to_review: number;
-  failed: number;
+  dismissed: number;
   scrapes: number;
   imports: number;
 }
@@ -66,15 +66,15 @@ export function renderScale(days: string[]) {
 // A button, not a span: the popover opens on focus as well as hover, so the strip is readable
 // without a mouse.
 const BANDS = [
-  { key: "failed", label: "failed" },
+  { key: "dismissed", label: "dismissed" },
   { key: "review", label: "to review" },
-  { key: "ok", label: "ok" },
+  { key: "published", label: "published" },
 ] as const;
 
 const countOf = (day: CalendarDay, key: string) =>
-  key === "ok" ? day.ok : key === "review" ? day.to_review : day.failed;
+  key === "published" ? day.published : key === "review" ? day.to_review : day.dismissed;
 
-// What ran, not just how it ended. Imports are most of what runs, so a day reading "12 ok"
+// What ran, not just how it ended. Imports are most of what runs, so a day reading "12 published"
 // without saying no scraper produced them would mislead.
 //
 // Only collection attempts appear here at all — a hand edit has no run, so it has no outcome
@@ -87,7 +87,7 @@ const KINDS = [
 const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
 function renderPopover(day: CalendarDay | undefined, date: string, state: string) {
-  const total = day ? day.ok + day.to_review + day.failed : 0;
+  const total = day ? day.published + day.to_review + day.dismissed : 0;
   return html`
     <span class="cs-pop">
       <span class="cs-pop__head">${state.toUpperCase()} — ${shortDate(date)}</span>
@@ -124,7 +124,7 @@ export function renderDay(day: CalendarDay | undefined, date: string, state: str
       : nothing;
   return html`
     <button class="cs-cal__cell ${day ? "" : "cs-cal__cell--idle"}">
-      ${day ? html`${seg(day.failed, "failed")} ${seg(day.to_review, "review")} ${seg(day.ok, "ok")}` : nothing}
+      ${day ? html`${seg(day.dismissed, "dismissed")} ${seg(day.to_review, "review")} ${seg(day.published, "published")}` : nothing}
       ${renderPopover(day, date, state)}
     </button>
   `;

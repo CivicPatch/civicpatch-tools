@@ -16,15 +16,20 @@ class StateRollup(BaseModel):
     # Longest wait in the queue, in days. 0 when the queue is empty, which reads correctly:
     # nothing has been waiting.
     oldest_days: int
-    confirmed: int
-    rejected: int
-    errored: int
+    published: int
+    # Every dismissal the Dismissed bucket lists, counted by the same predicate that lists them.
+    # Reasons are not split: nothing renders them apart, and splitting is what let the count
+    # and the list disagree.
+    dismissed: int
     # Roster edits, not changesets — an order of magnitude larger, so the label has to carry
     # the unit wherever this is rendered.
     roster_edits: int
     # Runs still going. Gates the scrape button — starting a second batch on top of a live one
     # is the mistake this exists to prevent.
     running: int
+    # Attempts that died, windowed. Run-grain, not changeset-grain: a failed run mints no
+    # changeset, so it appears in none of the counts above.
+    failed_runs: int
     last_run_at: datetime | None
 
 
@@ -37,12 +42,12 @@ class CalendarDay(BaseModel):
 
     state: str
     day: date
-    ok: int
+    published: int
     to_review: int
-    failed: int
-    # By kind as well as outcome. `sheet_import` is most of what runs, so a day reading "12 ok"
-    # without saying no scraper produced them would mislead. Hand edits are not counted at all:
-    # they have no run, so "ok" and "failed" say nothing about them.
+    dismissed: int
+    # By kind as well as outcome. `sheet_import` is most of what runs, so a day reading
+    # "12 published" without saying no scraper produced them would mislead. Hand edits are not counted at all:
+    # they have no run, so "published" and "dismissed" say nothing about them.
     scrapes: int
     imports: int
 
