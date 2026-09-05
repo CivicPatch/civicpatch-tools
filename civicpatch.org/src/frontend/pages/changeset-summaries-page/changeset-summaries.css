@@ -182,13 +182,13 @@
   background: var(--civ-border);
 }
 
-.cs-cal__seg--ok,
+.cs-cal__seg--published,
 .cs-cal__seg--review,
-.cs-cal__seg--failed {
+.cs-cal__seg--dismissed {
   border-radius: 1px;
 }
 
-.cs-cal__seg--ok {
+.cs-cal__seg--published {
   background: var(--pico-ins-color);
 }
 
@@ -196,7 +196,7 @@
   background: var(--civ-accent);
 }
 
-.cs-cal__seg--failed {
+.cs-cal__seg--dismissed {
   background: var(--pico-del-color);
 }
 

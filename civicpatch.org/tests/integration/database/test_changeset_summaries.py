@@ -12,8 +12,8 @@ import pytest
 import pytest_asyncio
 
 from database.changeset_summaries import (
-    BUCKET_FAILED,
-    BUCKET_OK,
+    BUCKET_DISMISSED,
+    BUCKET_PUBLISHED,
     BUCKET_REVIEW,
     get_state_bucket,
     get_state_calendar,
@@ -22,6 +22,7 @@ from database.changeset_summaries import (
 from database.database import get_pool
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
 from shared.utils.statuses import ChangeLogType, DismissalReason
+from tests.integration import factories
 
 _STATE = "zy"
 _OCDID = f"ocd-jurisdiction/country:us/state:{_STATE}/place:zy_one/government"
@@ -97,15 +98,15 @@ async def _changeset(
         )
         changeset_id = (await cur.fetchone())[0]
         if status is not None:
-            # A status means a run; the run carries its own jurisdiction.
+            # A status means a run. Its own id, not the changeset's — `register_scrape_changeset`
+            # mints a fresh one, and sharing them is the shape that hid three broken readers.
             await cur.execute(
                 """
                 INSERT INTO pipeline_runs
                     (id, jurisdiction_ocdid, status, finished_at, changeset_id)
-                VALUES (%s, %s, %s, CASE WHEN %s = ANY(%s) THEN now() END, %s)
+                VALUES (gen_random_uuid(), %s, %s, CASE WHEN %s = ANY(%s) THEN now() END, %s)
                 """,
                 (
-                    changeset_id,
                     ocdid,
                     status,
                     status,
@@ -131,25 +132,30 @@ async def _row():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_only_a_publish_counts_as_confirmed():
+async def test_only_a_publish_counts_as_published():
     """A re-confirmed roster is a healthy outcome, and it reaches here as a publish — that is
     the whole reason it publishes rather than being dismissed. A dismissal is not a success."""
     await _changeset(published=True)
     await _changeset(reason=DismissalReason.REJECTED)
 
-    assert (await _row()).confirmed == 1
+    assert (await _row()).published == 1
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_rejected_and_errored_are_counted_apart():
-    """They share the Failed bucket but mean opposite things: one says the data was bad, the
-    other that the run broke. The badge says which, so the query has to keep them apart."""
-    await _changeset(reason=DismissalReason.REJECTED)
-    await _changeset(reason=DismissalReason.ERRORED)
+async def test_a_cancellation_is_counted_by_the_badge_that_lists_it():
+    """The count and the list must share a *predicate*, not a total — the bucket is deduped per
+    locality on purpose, so the two numbers legitimately differ.
 
-    row = await _row()
-    assert (row.rejected, row.errored) == (1, 1)
+    What was wrong is narrower: `DISMISSED` listed `cancelled` and the count filtered only
+    `rejected` and `errored`, so every cancellation was listed but never counted — 12 of them in
+    30 days, measured on dev. Both read `DISMISSED` now.
+    """
+    await _changeset(reason=DismissalReason.CANCELLED)
+
+    assert (await _row()).dismissed == 1
+    page = await get_state_bucket(_STATE, BUCKET_DISMISSED, limit=10)
+    assert [r.failure_reason for r in page.rows] == ["cancelled"]
 
 
 @pytest.mark.asyncio
@@ -220,13 +226,72 @@ async def test_a_finished_run_is_not_still_going():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_a_run_in_flight_is_counted_before_it_has_a_changeset():
+    """The regression. A run mints its changeset at ingest, so while it is still going there is
+    no changeset to reach it through — which is every run this count exists to find.
+
+    The two tests above pass either way: their fixture links a changeset by hand, so a
+    changeset-rooted lookup finds the run. Only a run built the way production builds one can
+    tell the two implementations apart.
+    """
+    await factories.seed_jurisdiction(_OCDID, _STATE)
+    await factories.start_run(_OCDID)
+
+    assert (await _row()).running == 1
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_failed_run_is_counted_as_an_attempt_not_a_proposal():
+    """A run that dies mints nothing, so it lands in no changeset column. Before `failed_runs`
+    it was in no column at all — a third of scrapes, invisible."""
+    await factories.seed_jurisdiction(_OCDID, _STATE)
+    run_id = await factories.start_run(_OCDID)
+    await factories.fail_run(run_id)
+
+    row = await _row()
+    assert row.running == 0
+    assert row.failed_runs == 1
+    assert (row.to_review, row.published, row.dismissed) == (0, 0, 0)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_failure_that_already_has_a_changeset_is_not_counted_twice():
+    """Every run minted before mint-at-ingest carries a changeset, and its failure is already
+    reported as a dismissal. Counting it again as a failed attempt would show the same failure in
+    two columns of one row — measured on dev, 9 of 10 ERROR runs are in exactly this shape.
+    """
+    await _changeset(status="ERROR", reason=DismissalReason.ERRORED)
+
+    row = await _row()
+    assert row.dismissed == 1
+    assert row.failed_runs == 0
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_run_that_reached_ingest_is_a_proposal_not_a_failure():
+    """The other half: `complete_run` mints the changeset the way ingest does, so the same run
+    leaves the attempt columns and enters the proposal ones."""
+    await factories.seed_jurisdiction(_OCDID, _STATE)
+    run_id = await factories.start_run(_OCDID)
+    await factories.complete_run(run_id)
+
+    row = await _row()
+    assert row.running == 0
+    assert row.failed_runs == 0
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_the_calendar_bands_a_day_by_what_became_of_its_runs():
     await _changeset(published=True, days_ago=3)
     await _changeset(reason=DismissalReason.ERRORED, days_ago=3)
     await _changeset(days_ago=3)
 
-    day = next(d for d in await get_state_calendar() if d.state == _STATE and d.ok)
-    assert (day.ok, day.failed, day.to_review) == (1, 1, 1)
+    day = next(d for d in await get_state_calendar() if d.state == _STATE and d.published)
+    assert (day.published, day.dismissed, day.to_review) == (1, 1, 1)
 
 
 @pytest.mark.asyncio
@@ -237,7 +302,7 @@ async def test_the_calendar_also_says_what_kind_ran():
     await _changeset(published=True, days_ago=4)
     await _changeset(published=True, days_ago=4, kind="sheet_import", status=None)
 
-    day = next(d for d in await get_state_calendar() if d.state == _STATE and d.ok == 2)
+    day = next(d for d in await get_state_calendar() if d.state == _STATE and d.published == 2)
     assert (day.scrapes, day.imports) == (1, 1)
 
 
@@ -250,21 +315,21 @@ async def test_a_hand_edit_is_not_a_collection_attempt():
     await _changeset(published=True, kind="people_edit", status=None, days_ago=6)
 
     row = await _row()
-    assert row.confirmed == 0
+    assert row.published == 0
     assert not [d for d in await get_state_calendar() if d.state == _STATE]
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_bucket_counts_localities_where_the_rollup_counts_changesets():
-    """Deliberately different numbers. One jurisdiction scraped twice is two confirmed runs and
+    """Deliberately different numbers. One jurisdiction scraped twice is two published runs and
     one place to look at, so the modal's pager must read its total from the bucket — computing
     "+N more" from the rollup would promise rows the list cannot reach."""
     await _changeset(published=True, days_ago=2)
     await _changeset(published=True, days_ago=3)
 
-    assert (await _row()).confirmed == 2
-    page = await get_state_bucket(_STATE, BUCKET_OK, limit=10)
+    assert (await _row()).published == 2
+    page = await get_state_bucket(_STATE, BUCKET_PUBLISHED, limit=10)
     assert page.total == 1
     assert [r.jurisdiction_ocdid for r in page.rows] == [_OCDID]
 
@@ -290,7 +355,7 @@ async def test_the_failed_bucket_says_which_kind_of_failure():
     bucket label drops."""
     await _changeset(reason=DismissalReason.REJECTED)
 
-    page = await get_state_bucket(_STATE, BUCKET_FAILED, limit=10)
+    page = await get_state_bucket(_STATE, BUCKET_DISMISSED, limit=10)
     assert [r.failure_reason for r in page.rows] == ["rejected"]
 
 

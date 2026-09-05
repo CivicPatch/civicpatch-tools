@@ -1,4 +1,3 @@
-import json
 import logging
 import math
 import os
@@ -7,11 +6,11 @@ from dataclasses import asdict
 from typing import Optional
 
 import lib.files as file_utils
-import lib.pubsub as pubsub_service
 import lib.buckets as buckets
 import lib.storage as storage_service
 import lib.temporal.client as temporal_service
 import services.jurisdiction_scrape_candidate as candidate_service
+import services.pipeline_runs as pipeline_run_service
 import shared.utils.id_utils
 from database.issues import (
     get_issue_by_id,
@@ -19,7 +18,6 @@ from database.issues import (
     get_issues_page,
     resolve_issue,
     set_issue_flagged,
-    supersede_prior_jurisdiction_issues,
 )
 import database.users
 from database.publications import dismiss_request
@@ -57,7 +55,6 @@ from services import people_collector
 from shared.utils.statuses import (
     ChangesetKind,
     DismissalReason,
-    TERMINAL_PIPELINE_RUN_STATUSES,
     PipelineRunStatus,
 )
 
@@ -88,89 +85,6 @@ def _build_request_row(r: dict) -> dict:
         "url": url,
         "source_urls": [url] if url else [],
     }
-
-
-# Terminal statuses that produce nothing to review. Their requests are dismissed so they stop
-# counting as pending work.
-ENDED_WITHOUT_A_ROSTER = frozenset(
-    {PipelineRunStatus.CANCELLED, PipelineRunStatus.ERROR}
-)
-
-
-async def finalize_pipeline_run(
-    changeset_id: str, status: str, jurisdiction_ocdid: Optional[str]
-) -> None:
-    """A run reached a state it will not leave. Settle what was waiting on it.
-
-    Only terminal statuses get here — a run at 40% has nothing to settle.
-
-    A run that ended without a roster has to leave the review queue. Otherwise its request
-    derives as `pending` forever, and pending requests are what populate the jurisdiction
-    page's list *and* disable roster editing — so every failure left a permanent blocker
-    behind. Measured before widening this: 8 pending ERROR runs, none carrying a roster.
-
-    `SUCCESS` and `RESOLVED` are excluded because they produce something to review. Named
-    rather than written as "not SUCCESS", so a status added later has to be considered instead
-    of silently inheriting dismissal.
-
-    No user id: `mark_dismissed` credits the system, which is what tells a machine giving up
-    from a person declining. A retry is a new run and a new request; this one is over either
-    way.
-    """
-    if status in ENDED_WITHOUT_A_ROSTER:
-        await dismiss_request(changeset_id, DismissalReason.ERRORED)
-
-    if jurisdiction_ocdid:
-        await supersede_prior_jurisdiction_issues(jurisdiction_ocdid, changeset_id)
-
-
-async def apply_pipeline_run_status(
-    changeset_id: str,
-    status: str,
-    progress: Optional[int],
-    jurisdiction_ocdid: Optional[str],
-    error_type: Optional[str] = None,
-    error_detail: Optional[dict] = None,
-):
-    """A run reported a status — store it, settle it if it is over, tell the page.
-
-    Named for the input because the consequences differ by status: every report is stored and
-    pushed to the `pipeline_run_status` topic the jurisdiction page listens on, but only a
-    terminal one finalizes anything.
-
-    Not "publish", which everywhere else here means a roster going live — the opposite of what
-    a cancelled run does.
-    """
-    await update_pipeline_run_status(
-        run_id=changeset_id, status=status, progress=progress
-    )
-
-    # The reporter does not always know it; the run's own arguments do.
-    if not jurisdiction_ocdid:
-        pipeline_run = await get_pipeline_run(changeset_id)
-        jurisdiction_ocdid = (
-            (pipeline_run.get("arguments_json") or {}).get("jurisdiction_ocdid")
-            if pipeline_run
-            else None
-        )
-
-    if status in TERMINAL_PIPELINE_RUN_STATUSES:
-        await finalize_pipeline_run(changeset_id, status, jurisdiction_ocdid)
-
-    if jurisdiction_ocdid:
-        await pubsub_service.publish(
-            f"pipeline_run_status:{jurisdiction_ocdid}",
-            json.dumps(
-                {
-                    "changeset_id": changeset_id,
-                    "status": status,
-                    "progress": progress,
-                    # Same answer the history rows carry, so a live update and a fetched row
-                    # cannot disagree about whether the scrape is still going.
-                    "is_running": status not in TERMINAL_PIPELINE_RUN_STATUSES,
-                }
-            ),
-        )
 
 
 async def _register_pipeline_run_bg(request: RegisterPipelineRunRequest) -> None:
@@ -338,7 +252,7 @@ def get_router(api_key_header):
         ),
     ):
         background_tasks.add_task(
-            apply_pipeline_run_status,
+            pipeline_run_service.apply_pipeline_run_status,
             changeset_id,
             request.status,
             request.progress,

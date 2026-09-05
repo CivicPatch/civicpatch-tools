@@ -45,7 +45,7 @@ interface TimelineProps {
 
 function renderAwaiting(entry: InFlightEntry, ocdid: string, isSignedIn: boolean) {
   const href = isSignedIn
-    ? reviewSessionUrl(jurisdictionOcdidToState(ocdid), entry.changeset_id)
+    ? reviewSessionUrl(jurisdictionOcdidToState(ocdid), entry.id)
     : LOGIN_PATH;
 
   return html`
@@ -102,7 +102,7 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
         setInFlight(rows);
         setTotalChangesets(body.data?.total_changesets ?? 0);
         // Forget the ones the server has stopped, so the poll below can stand down.
-        const live = new Set(rows.map((entry) => entry.changeset_id));
+        const live = new Set(rows.map((entry) => entry.id));
         setCancelRequested((prev) => prev.filter((id) => live.has(id)));
       })
       .catch(() => setInFlight([]));
@@ -161,7 +161,7 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
                   .canCancel=${permissions.can_cancel_pipeline_run}
                   .canViewTemporalWorkflowState=${permissions.can_view_temporal_workflow_state}
                   .onCancel=${handleCancel}
-                  .cancelRequested=${cancelRequested.includes(entry.changeset_id)}
+                  .cancelRequested=${cancelRequested.includes(entry.id)}
                   .temporalUrl=${null}
                 ></civ-scrape-in-progress>`,
               )}

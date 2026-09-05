@@ -2,13 +2,13 @@
 // database/changeset_summaries.py — the API takes these as path values.
 
 export const BUCKET_REVIEW = "review";
-export const BUCKET_FAILED = "failed";
-export const BUCKET_OK = "ok";
+export const BUCKET_DISMISSED = "dismissed";
+export const BUCKET_PUBLISHED = "published";
 
 export const BUCKET_LABEL: Record<string, string> = {
   [BUCKET_REVIEW]: "To review",
-  [BUCKET_FAILED]: "Failed",
-  [BUCKET_OK]: "Ok",
+  [BUCKET_DISMISSED]: "Dismissed",
+  [BUCKET_PUBLISHED]: "Published",
 };
 
 export interface BucketRow {

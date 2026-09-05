@@ -19,10 +19,21 @@ export const CHANGESET_KIND = Object.freeze({
   JURISDICTION_EDIT: "jurisdiction_edit",
 });
 
-// What `/jurisdictions/in-flight` returns: a changeset still running, or still awaiting a
-// decision. Was `HistoryEntry`, back when the page derived all of this from the full history.
+// Which table an entry came from, and so what its `id` names. Mirrors
+// schemas/common.py InFlightEntryType.
+export const IN_FLIGHT_ENTRY_TYPE = Object.freeze({
+  PIPELINE_RUN: "pipeline_run",
+  CHANGESET: "changeset",
+});
+
+// What `/jurisdictions/in-flight` returns: an attempt still running, or a proposal still
+// awaiting a decision. Was `HistoryEntry`, back when the page derived all of this from the
+// full history.
 export interface InFlightEntry {
-  changeset_id: string;
+  // A `pipeline_runs` id until the run reaches ingest, a `changesets` id after. `entry_type`
+  // is the only thing that says which — `is_running` is true in both.
+  id: string;
+  entry_type: string;
   created_at: string;
   kind?: string | null;
   change_url?: string | null;
@@ -110,7 +121,7 @@ function renderRow(entry: InFlightEntry, ocdid: string, isSignedIn: boolean) {
         ${manualEdit
           ? nothing
           : isSignedIn
-            ? html`<a class="btn-primary" href=${reviewSessionUrl(state, entry.changeset_id)}>
+            ? html`<a class="btn-primary" href=${reviewSessionUrl(state, entry.id)}>
                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Review
               </a>`
             : html`<a class="btn-primary" href=${LOGIN_PATH}>

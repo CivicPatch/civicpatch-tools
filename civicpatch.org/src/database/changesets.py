@@ -13,7 +13,7 @@ from database.review_sessions import (
 )
 from database.users import SYSTEM_USER_ID
 from shared.utils.id_utils import make_changeset_id
-from schemas.common import InFlightChangeset, JurisdictionInFlight
+from schemas.common import InFlightEntry, InFlightEntryType, JurisdictionInFlight
 from shared.utils.statuses import (
     ChangesetKind,
     DismissalReason,
@@ -223,41 +223,56 @@ async def live_roster_changeset(cur, jurisdiction_ocdid: str) -> str | None:
     return row[0] if row else None
 
 
+# Two lanes, rooted apart: before ingest there is no changeset row to reach a run through. They
+# split on `changeset_id`, so a run that has minted one is reported by the changeset lane.
+IN_FLIGHT_SQL = f"""
+    SELECT id::text, '{InFlightEntryType.PIPELINE_RUN.value}' AS entry_type,
+           created_at, updated_at,
+           '{ChangesetKind.SCRAPE.value}' AS kind, NULL AS change_url, status, progress,
+           true AS is_running, false AS awaiting_review
+    FROM pipeline_runs
+    WHERE jurisdiction_ocdid = %s
+      AND finished_at IS NULL
+      AND changeset_id IS NULL
+
+    UNION ALL
+
+    SELECT id::text, '{InFlightEntryType.CHANGESET.value}' AS entry_type,
+           created_at, updated_at, kind, change_url, status, progress,
+           is_running, awaiting_review
+    FROM (
+        SELECT r.id, r.created_at, r.updated_at, r.kind, r.change_url,
+               {RUN_STATUS} AS status, {RUN_PROGRESS} AS progress,
+               {RUN_IN_FLIGHT} AS is_running,
+               {AVAILABLE_FOR_REVIEW} AS awaiting_review
+        FROM changesets r
+        WHERE r.jurisdiction_ocdid = %s
+          AND r.published_at IS NULL
+          AND r.dismissed_at IS NULL
+    ) flags
+    WHERE is_running OR awaiting_review
+
+    ORDER BY created_at DESC
+"""
+
+
 async def get_in_flight(jurisdiction_ocdid: str) -> JurisdictionInFlight:
     """What this jurisdiction is still waiting on, without reading its whole history."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            f"""
-            WITH flags AS (
-                SELECT r.id, r.created_at, r.updated_at, r.kind, r.change_url,
-                       {RUN_STATUS} AS status, {RUN_PROGRESS} AS progress,
-                       {RUN_IN_FLIGHT} AS is_running,
-                       {AVAILABLE_FOR_REVIEW} AS awaiting_review
-                FROM changesets r
-                WHERE r.jurisdiction_ocdid = %s
-                  AND r.published_at IS NULL
-                  AND r.dismissed_at IS NULL
-            )
-            SELECT id::text, created_at, updated_at, kind, change_url, status, progress,
-                   is_running, awaiting_review
-            FROM flags
-            WHERE is_running OR awaiting_review
-            ORDER BY created_at DESC
-            """,
-            (jurisdiction_ocdid,),
-        )
+        await cur.execute(IN_FLIGHT_SQL, (jurisdiction_ocdid, jurisdiction_ocdid))
         in_flight = [
-            InFlightChangeset(
-                changeset_id=row[0],
-                created_at=to_iso(row[1]),
-                updated_at=to_iso(row[2]),
-                kind=row[3],
-                change_url=row[4],
-                pipeline_run_status=row[5],
-                pipeline_run_progress=row[6],
-                is_running=row[7],
-                awaiting_review=row[8],
+            InFlightEntry(
+                id=row[0],
+                entry_type=row[1],
+                created_at=to_iso(row[2]),
+                updated_at=to_iso(row[3]),
+                kind=row[4],
+                change_url=row[5],
+                pipeline_run_status=row[6],
+                pipeline_run_progress=row[7],
+                is_running=row[8],
+                awaiting_review=row[9],
             )
             for row in await cur.fetchall()
         ]

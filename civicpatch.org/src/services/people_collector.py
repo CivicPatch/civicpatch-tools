@@ -7,9 +7,7 @@ import lib.storage as storage_service
 from core.images import cdn_urls, records_with_images, resolve_images
 from database.changesets import register_scrape_changeset
 from database.issues import upsert_issue
-from database.pipeline_runs import (
-    update_pipeline_run_status,
-)
+from database.pipeline_runs import get_pipeline_run
 from database.roles import get_roles
 from database.source_records import insert_source_records
 from schemas.pipeline_runs import (
@@ -17,6 +15,7 @@ from schemas.pipeline_runs import (
     SubmitPipelineRunArtifactsResponse,
 )
 from services import pipeline_costs, roster_edits, roster_ingest
+from services import pipeline_runs as pipeline_run_service
 from services.jurisdiction_url import record_resolved_url, resolved_url
 from services.review_proposal import review_summary_for_request
 from shared.schemas import RoleConfig
@@ -43,12 +42,22 @@ async def handle_submit_pipeline_run_artifacts(
         logger.error(
             f"[{request.changeset_id}] Artifact submission failed: {e}", exc_info=True
         )
-        await update_pipeline_run_status(
-            request.changeset_id, status=PipelineRunStatus.ERROR, progress=None
+        # The same path the pipeline's own reports take; writing the row directly settled
+        # nothing and told the open page nothing.
+        await pipeline_run_service.apply_pipeline_run_status(
+            request.changeset_id,
+            PipelineRunStatus.ERROR,
+            None,
+            request.jurisdiction_ocdid,
         )
-        await upsert_issue(
-            request.changeset_id, PipelineIssueType.PIPELINE_ERROR, [{"error": str(e)}]
-        )
+        # Against the changeset: `issues.changeset_ids` is read by joining `changesets`, so a
+        # run id there resolves to nothing. A failure before ingest has none to hang off.
+        pipeline_run = await get_pipeline_run(request.changeset_id)
+        changeset_id = pipeline_run.get("changeset_id") if pipeline_run else None
+        if changeset_id:
+            await upsert_issue(
+                changeset_id, PipelineIssueType.PIPELINE_ERROR, [{"error": str(e)}]
+            )
         raise
 
 

@@ -498,3 +498,22 @@ def test_differently_spelled_queries_share_one_cache_entry(client):
         client.get("/jurisdictions/search", params={"q": "seattle  wa"})
 
     assert keys[0] == keys[1]
+
+
+@pytest.mark.unit
+def test_in_flight_answers_the_data_envelope(client):
+    """Thin on purpose: what the two lanes contain is
+    `tests/integration/database/test_jurisdiction_in_flight.py`'s subject. This is the wiring."""
+    payload = {"in_flight": [], "last_published_at": None, "total_changesets": 0}
+    with patch(
+        "database.changesets.get_in_flight",
+        new_callable=AsyncMock,
+        return_value=payload,
+    ):
+        response = client.get(
+            "/jurisdictions/in-flight",
+            params={"jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland"},
+        )
+
+    assert response.status_code == 200
+    assert response.json()["data"] == payload

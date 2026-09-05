@@ -133,15 +133,22 @@ class VerifyOtpRequest(BaseModel):
     code: str
 
 
-class InFlightChangeset(BaseModel):
-    """A changeset this jurisdiction is still waiting on — running, or awaiting a decision.
+class InFlightEntryType(str, Enum):
+    """Which table the entry came from, and therefore how to read its `id`."""
 
-    Two lanes, disjoint by construction: `AVAILABLE_FOR_REVIEW` requires source records, which a
-    scrape has not written while it is still running. Only the running lane has a pipeline run —
-    `changesets_scrape_has_a_run` makes status NULL for every import and edit.
+    PIPELINE_RUN = "pipeline_run"
+    CHANGESET = "changeset"
+
+
+class InFlightEntry(BaseModel):
+    """One thing this jurisdiction is still waiting on: an attempt, or a proposal.
+
+    `entry_type` says which table `id` is from. `is_running` cannot — it is true in both, since
+    between ingest and the terminal report a changeset exists and its run is still going.
     """
 
-    changeset_id: str
+    id: str
+    entry_type: InFlightEntryType
     created_at: Optional[str]
     # `updated_at` — when the source was read. What a run's elapsed time is measured against.
     updated_at: Optional[str]
@@ -161,6 +168,6 @@ class JurisdictionInFlight(BaseModel):
     rather than the decision and ignores imports and edits entirely.
     """
 
-    in_flight: list[InFlightChangeset]
+    in_flight: list[InFlightEntry]
     last_published_at: Optional[str]
     total_changesets: int

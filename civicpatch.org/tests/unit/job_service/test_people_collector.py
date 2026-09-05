@@ -34,20 +34,66 @@ async def test_handle_submit_pipeline_run_artifacts_updates_status_to_error_on_f
             side_effect=Exception("storage unavailable"),
         ),
         patch(
-            "services.people_collector.update_pipeline_run_status",
+            "services.people_collector.pipeline_run_service.apply_pipeline_run_status",
             new_callable=AsyncMock,
-        ) as mock_update_status,
+        ) as mock_apply_status,
         patch(
             "services.people_collector.upsert_issue",
             new_callable=AsyncMock,
+        ) as mock_upsert_issue,
+        patch(
+            "services.people_collector.get_pipeline_run",
+            new_callable=AsyncMock,
+            return_value={"changeset_id": "minted-changeset-id"},
         ),
     ):
         with pytest.raises(Exception, match="storage unavailable"):
             await handle_submit_pipeline_run_artifacts(request)
 
-        mock_update_status.assert_awaited_once_with(
-            "test-request-id", status=PipelineRunStatus.ERROR, progress=None
+        # Through the lifecycle service, not straight to the row: the direct write left the
+        # run terminal while its proposal stayed in the review queue.
+        mock_apply_status.assert_awaited_once_with(
+            "test-request-id",
+            PipelineRunStatus.ERROR,
+            None,
+            "ocd-division/country:us/state:ca/place:oakland",
         )
+        # The status goes on the run; the issue goes on the changeset that run minted.
+        # `issues.changeset_ids` is read by joining `changesets`, so a run id resolves to
+        # nothing there.
+        assert mock_upsert_issue.await_args.args[0] == "minted-changeset-id"
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_a_failure_before_ingest_files_no_issue():
+    """It minted no changeset, so there is nothing for the issue to hang off — and a row keyed
+    on the run would join to no jurisdiction. The failed run is what records this one."""
+    request = make_request()
+    with (
+        patch(
+            "services.people_collector._handle_submit_pipeline_run_artifacts",
+            new_callable=AsyncMock,
+            side_effect=Exception("died before ingest"),
+        ),
+        patch(
+            "services.people_collector.pipeline_run_service.apply_pipeline_run_status",
+            new_callable=AsyncMock,
+        ),
+        patch(
+            "services.people_collector.upsert_issue",
+            new_callable=AsyncMock,
+        ) as mock_upsert_issue,
+        patch(
+            "services.people_collector.get_pipeline_run",
+            new_callable=AsyncMock,
+            return_value={"changeset_id": None},
+        ),
+    ):
+        with pytest.raises(Exception, match="died before ingest"):
+            await handle_submit_pipeline_run_artifacts(request)
+
+        mock_upsert_issue.assert_not_awaited()
 
 
 @pytest.mark.unit
@@ -62,14 +108,14 @@ async def test_handle_submit_pipeline_run_artifacts_does_not_update_status_on_su
             return_value=mock_response,
         ),
         patch(
-            "services.people_collector.update_pipeline_run_status",
+            "services.people_collector.pipeline_run_service.apply_pipeline_run_status",
             new_callable=AsyncMock,
-        ) as mock_update_status,
+        ) as mock_apply_status,
     ):
         result = await handle_submit_pipeline_run_artifacts(request)
 
         assert result == mock_response
-        mock_update_status.assert_not_awaited()
+        mock_apply_status.assert_not_awaited()
 
 
 # --- identities: the prior reconciliation groups a scrape's records against ---

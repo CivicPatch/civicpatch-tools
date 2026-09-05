@@ -23,6 +23,7 @@ import {
   renderPendingReviews,
   editingBlockedReason,
   jurisdictionEditBlockedReason,
+  IN_FLIGHT_ENTRY_TYPE,
   type InFlightEntry,
 } from "./awaiting-review.js";
 
@@ -147,8 +148,11 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
         details.data.sourceUrls,
       );
       const now = new Date().toISOString();
+      // `result.changeset_id` is the run's id: POST /pipeline_runs still names its parameter
+      // that, from before runs and changesets were separate rows.
       const newEntry = {
-        changeset_id: result.changeset_id,
+        id: result.changeset_id,
+        entry_type: IN_FLIGHT_ENTRY_TYPE.PIPELINE_RUN,
         pipeline_run_status: result.status,
         pipeline_run_progress: 0,
         created_at: now,
