@@ -53,7 +53,11 @@ TERMINAL_PIPELINE_ISSUE_STATUSES = (
 
 class PipelineRunErrorType(StrEnum):
     # pipeline_error is the server-side fallback; the pipeline never sets it explicitly
-    NO_INFO = "no_info"
+    #
+    # Not a fault in the source, unlike its two neighbours: the domain resolved and the pages
+    # read, there was simply no roster to find. It reads on a jurisdiction's timeline as an
+    # outcome a maintainer can act on, not as the pipeline breaking.
+    NO_ROSTER_FOUND = "no_roster_found"
     DOMAIN_INACTIVE = "domain_inactive"
     # Domain resolved but navigation failed (timeout, DNS failure, HTTP error, etc.)
     DOMAIN_NAVIGATION_ERROR = "domain_navigation_error"
@@ -72,6 +76,15 @@ class PipelineIssueType(StrEnum):
     # Filed manually by a reviewer from the review page (not pipeline-detected), but follows
     # the identical issues lifecycle above, including scrape-candidate exclusion while pending.
     USER_REPORTED = "user_reported"
+
+
+
+# Issue types a run can produce, as opposed to ones about a proposal. These are keyed on the
+# run rather than a changeset, because a run that fails mints no changeset — so the issues page
+# renders the key bare. Defined once: it is both what cp.org accepts from the pipeline and what
+# the issues endpoint treats as run-shaped, and those two drifting is how a raw exception string
+# became an issue type.
+RUN_LEVEL_ISSUE_TYPES = frozenset(PipelineRunErrorType) | {PipelineIssueType.PIPELINE_ERROR}
 
 
 class RequestReviewStatus(StrEnum):

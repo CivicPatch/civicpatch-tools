@@ -6,228 +6,123 @@ from decimal import Decimal
 from datetime import datetime, timezone
 from pydantic import BaseModel
 
-_COSTS_BY_JURISDICTION = {}
-
-llm_model_prices = {
-    'google_gemini': {
-        'gemini-2.5-flash': {
-            'input_cost_per_1m': Decimal('0.30'),
-            'output_cost_per_1m': Decimal('2.50'),
-            # Do we need to calculate this? 1500 requests free
-            # So 500 municipalities free before it starts costing anything
-            # 'with_search': 
-        },
-        'gemini-3.1-flash-lite-preview': {
-            'input_cost_per_1m': Decimal('0.25'),
-            'output_cost_per_1m': Decimal('1.50')
-        }
-    },
-    # open_router prices are per (model, provider)
-    # Key is the model alias sent in the request (not the versioned slug OpenRouter returns)
-    #
-    # An unlisted (model, provider) pair costs Decimal('0.0') — see _model_prices below.
-    # That is silent, so a model bump without a matching entry here reports zero spend
-    # rather than failing. Requests pin allow_fallbacks=False and name their providers, so
-    # the routed provider is always one of the ones listed here — but only while this list
-    # and llm.py's `order` agree.
-    'open_router': {
-        # v4-flash prices from OpenRouter's endpoint catalogue, read 2026-08-14.
-        # These are the providers in llm.py's order — all support structured_outputs,
-        # which strict json_schema requires. SiliconFlow is deliberately absent: it is
-        # cheaper ($0.13/$0.28) but only does response_format, so it 404s.
-        'deepseek/deepseek-v4-flash': {
-            'DigitalOcean':{'input_cost_per_1m': Decimal('0.07'),  'output_cost_per_1m': Decimal('0.17')},
-            'DeepInfra':   {'input_cost_per_1m': Decimal('0.09'),  'output_cost_per_1m': Decimal('0.18')},
-            'AtlasCloud':  {'input_cost_per_1m': Decimal('0.14'),  'output_cost_per_1m': Decimal('0.28')},
-        },
-    }
-}
-
+_COSTS_BY_RUN = {}
 
 def get_timestamp():
     return datetime.now(timezone.utc).strftime('%Y-%m-%d')
 
-class LLMCost(BaseModel):
+class LLMCall(BaseModel):
+    """One HTTP call to a gateway, named for the columns it lands in (`llm_calls`, migration
+    171) so `costs.json` needs no translation on the way in."""
+
     @property
     def timestamp(self) -> str:
         return get_timestamp()
 
-    jurisdiction_ocdid: str
-    llm_name: str
+    # what was asked, and of what
+    prompt_name: str
+    source_url: str | None = None
+    chunk_index: int | None = None
+    chunk_count: int | None = None
+    # The two retry loops mean different things: `attempt` is the transport retry inside one
+    # call, `seed` marks the heuristics pass that re-ran the whole prompt.
+    attempt: int = 1
+    seed: int | None = None
+
+    # who answered, and by what route
+    gateway: str
     model: str
     routed_model: str = ""
-    provider: str = ""
+    upstream_provider: str = ""
+    generation_id: str | None = None
 
     input_tokens: int
     output_tokens: int
-    with_search: bool = False
+    cached_input_tokens: int = 0
+    reasoning_tokens: int = 0
 
-    def _model_prices(self) -> dict:
-        llm_prices = llm_model_prices.get(self.llm_name, {})
-        model_entry = llm_prices.get(self.model, {})
-        # open_router prices are keyed by provider
-        if self.llm_name == 'open_router' and self.provider:
-            return model_entry.get(self.provider, {})
-        return model_entry
+    # What the provider says it charged. None when it states none — the grounded Google calls,
+    # which are punted from `llm_calls` entirely. Never derived from a price table: one went
+    # stale silently and reported zero spend for an unlisted (model, provider) pair.
+    cost_usd: Decimal | None = None
+    web_search: bool = False
+    duration_ms: int | None = None
 
-    @property
-    def input_cost_per_1m(self) -> Decimal:
-        return self._model_prices().get('input_cost_per_1m', Decimal('0.0'))
-
-    @property
-    def output_cost_per_1m(self) -> Decimal:
-        return self._model_prices().get('output_cost_per_1m', Decimal('0.0'))
-
-    @property
-    def input_cost(self) -> Decimal:
-        return (Decimal(self.input_tokens) / Decimal(1_000_000)) * self.input_cost_per_1m
-
-    @property
-    def output_cost(self) -> Decimal:
-        return (Decimal(self.output_tokens) / Decimal(1_000_000)) * self.output_cost_per_1m
-
-    @property
-    def total_cost(self) -> Decimal:
-        return self.input_cost + self.output_cost
+    finish_reason: str | None = None
+    # Why the response could not be used; None means it was. The call billed either way.
+    error: str | None = None
 
 
-def reset_cost_tracker(jurisdiction_ocdid: str):
-    """Drop a jurisdiction's accumulated costs.
+def reset_cost_tracker(pipeline_run_id: str):
+    """Drop a run's accumulated costs.
 
-    `log_costs` already does this at the end of a pipeline run, but anything that measures
-    several runs in one process has to do it itself. The provider comparison did not, and
-    since every provider uses the same eval ocdid, each report inherited the tally of every
-    provider before it — the second provider's input tokens read as exactly double the
-    first's for byte-identical work.
+    Only needed by callers that reuse one id across measurements — the evals do. A real
+    scrape gets a fresh run id, so its tally starts empty without anyone remembering to ask.
     """
-    _COSTS_BY_JURISDICTION.pop(jurisdiction_ocdid, None)
+    _COSTS_BY_RUN.pop(pipeline_run_id, None)
 
 
-def get_cost_tracker(jurisdiction_ocdid: str):
-    if jurisdiction_ocdid not in _COSTS_BY_JURISDICTION:
-        _COSTS_BY_JURISDICTION[jurisdiction_ocdid] = {
+def get_cost_tracker(pipeline_run_id: str):
+    """Keyed on the run, not the jurisdiction.
+
+    Keyed on the jurisdiction, two runs for the same place in one process shared a tally and
+    the second inherited the first's — the eval provider comparison read input tokens as
+    exactly double for byte-identical work. A run id makes that impossible rather than
+    leaving a `reset_cost_tracker` call to remember.
+    """
+    if pipeline_run_id not in _COSTS_BY_RUN:
+        _COSTS_BY_RUN[pipeline_run_id] = {
             'llm_costs': [],
         }
-    return _COSTS_BY_JURISDICTION[jurisdiction_ocdid]
+    return _COSTS_BY_RUN[pipeline_run_id]
 
-def add_llm_cost(
-        logger: log_utils.PipelineRunLogger,
-        changeset_id: str,
-        jurisdiction_ocdid: str,
-        llm_name: str,
-        model: str,
-        input_tokens: int,
-        output_tokens: int,
-        with_search=False,
-        provider: str = "",
-        routed_model: str = "",
-):
-    result = LLMCost(
-        jurisdiction_ocdid=jurisdiction_ocdid,
-        llm_name=llm_name,
-        model=model,
-        routed_model=routed_model or model,
-        provider=provider,
-        input_tokens=input_tokens,
-        output_tokens=output_tokens,
-        with_search=with_search,
+def record_call(
+    logger: log_utils.PipelineRunLogger, pipeline_run_id: str, call: LLMCall
+) -> None:
+    """Add one call to this run's tally. The model crosses the boundary, not fifteen arguments."""
+    get_cost_tracker(pipeline_run_id)['llm_costs'].append(
+        {"timestamp": call.timestamp, **call.model_dump()}
     )
 
-    # HEADERS = [
-    #     "timestamp", 
-    #     "jurisdiction_ocdid", 
-    #     "llm_name", 
-    #     "model", 
-    #     "model_input_price_per_1m",
-    #     "model_output_price_per_1m",
-    #     "input_tokens", 
-    #     "output_tokens", 
-    #     "with_search",
-    #     "input_cost", 
-    #     "output_cost", 
-    #     "total_cost"
-    # ]
-    cost_tracker = get_cost_tracker(jurisdiction_ocdid)
-    cost_tracker['llm_costs'].append({
-        "timestamp": result.timestamp,
-        "changeset_id": changeset_id,
-        "jurisdiction_ocdid": result.jurisdiction_ocdid,
-        "llm_name": result.llm_name,
-        "model": result.model,
-        "routed_model": result.routed_model,
-        "provider": result.provider,
-        "model_input_price_per_1m": result.input_cost_per_1m,
-        "model_output_price_per_1m": result.output_cost_per_1m,
-        "input_tokens": result.input_tokens,
-        "output_tokens": result.output_tokens,
-        "with_search": result.with_search,
-        "input_cost": result.input_cost,
-        "output_cost": result.output_cost,
-        "total_cost": result.total_cost
-    })
-    logger.info(f"LLM Cost added: {result.llm_name} model {result.model} - Input tokens: {input_tokens}, Output tokens: {output_tokens}, Total cost: ${result.total_cost:.6f}")
+    stated = f"${call.cost_usd:.6f}" if call.cost_usd is not None else "not stated"
+    failure = "" if call.error is None else f" (error: {call.error})"
+    logger.info(
+        f"LLM call: {call.gateway} {call.model} {call.prompt_name} - "
+        f"in {call.input_tokens}, out {call.output_tokens}, cost {stated}{failure}"
+    )
 
 
-def total_cost_by_request(changeset_id, jurisdiction_ocdid: str) -> dict[str, Decimal]:
-    cost_tracker = get_cost_tracker(jurisdiction_ocdid)
-    llm_costs = cost_tracker['llm_costs']
-    total_costs_llm = sum([item['total_cost'] for item in llm_costs])
+def total_cost(pipeline_run_id: str) -> Decimal:
+    """What this run has spent so far, as its providers stated it.
 
-    # Group LLM costs by llm_name only
-    grouped_llm_costs = {}
-    for item in llm_costs:
-        key = item['llm_name']
-        if key not in grouped_llm_costs:
-            grouped_llm_costs[key] = {
-                "timestamp": item['timestamp'],
-                "changeset_id": item['changeset_id'],
-                "jurisdiction_ocdid": item['jurisdiction_ocdid'],
-                "llm_name": item['llm_name'],
-                "input_tokens": 0,
-                "output_tokens": 0,
-                "input_cost": Decimal('0.0'),
-                "output_cost": Decimal('0.0'),
-                "total_cost": Decimal('0.0')
-            }
-        grouped_llm_costs[key]['input_tokens'] += item['input_tokens']
-        grouped_llm_costs[key]['output_tokens'] += item['output_tokens']
-        grouped_llm_costs[key]['input_cost'] += item['input_cost']
-        grouped_llm_costs[key]['output_cost'] += item['output_cost']
-        grouped_llm_costs[key]['total_cost'] += item['total_cost']
+    Sums the in-memory tracker, never `costs.json`: the per-scrape cap reads this mid-run,
+    before that file exists. A call whose provider stated no cost — the grounded Gemini ones —
+    contributes nothing: it is absent, not zero.
+    """
+    return sum(
+        (
+            call['cost_usd']
+            for call in get_cost_tracker(pipeline_run_id)['llm_costs']
+            if call['cost_usd'] is not None
+        ),
+        Decimal('0.0'),
+    )
 
-    # Build the total_cost_by_changeset_id array with dynamic LLM columns
-    total_cost_row = {
-        "timestamp": get_timestamp(),
-        "changeset_id": changeset_id,
-        "jurisdiction_ocdid" : jurisdiction_ocdid,
-        "total_costs_llm": total_costs_llm,
-    }
 
-    # Emit all known LLM columns in a fixed order so the sheet layout is stable
-    # regardless of which LLMs were used in a given run
-    for llm_name in sorted(llm_model_prices.keys()):
-        cost_data = grouped_llm_costs.get(llm_name)
-        total_cost_row[f"llm_{llm_name}_cost"] = cost_data['total_cost'] if cost_data else Decimal('0.0')
+def log_costs(pipeline_run_id, jurisdiction_ocdid):
+    """Write the run's calls out, one row each, and drop the tracker.
 
-    total_cost_row["total_cost"] = total_costs_llm
-    return total_cost_row
-
-def log_costs(changeset_id, jurisdiction_ocdid):
-    cost_tracker = get_cost_tracker(jurisdiction_ocdid)
-    llm_costs = cost_tracker['llm_costs']
+    No summary alongside them: the only consumer was the Sheets push, deleted 2026-09-04, and a
+    stored total is a second place for the same number to be wrong.
+    """
+    llm_costs = get_cost_tracker(pipeline_run_id)['llm_costs']
 
     data_path = data_path_utils.get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
     costs_file_path = os.path.join(data_path, "costs.json")
 
-    total_cost_row = total_cost_by_request(changeset_id, jurisdiction_ocdid)
-
     with open(costs_file_path, mode='w') as file:
-        json_object = json.dumps({
-            "llm_costs": llm_costs,
-            "total_cost_by_request": total_cost_row
-        }, indent=4, default=str)
-        file.write(json_object)
-    
-    _COSTS_BY_JURISDICTION.pop(jurisdiction_ocdid, None)
+        file.write(json.dumps({"llm_costs": llm_costs}, indent=4, default=str))
+
+    _COSTS_BY_RUN.pop(pipeline_run_id, None)
 
 

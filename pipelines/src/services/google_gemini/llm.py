@@ -32,7 +32,7 @@ FIND_JURISDICTION_URL_MODEL_FALLBACKS = [
 # Note: CANNOT get flash-lite to extract dates
 
 
-async def run_prompt(pipeline_run_id, jurisdiction_ocdid, prompt, model_fallbacks=None):
+async def run_prompt(pipeline_run_id, jurisdiction_ocdid, prompt, prompt_name: str, model_fallbacks=None):
     """Ask Gemini a grounded question. Returns parsed JSON, not a validated model.
 
     Tool calls and structured output do not work together on gemini-2.5, which both ladders end
@@ -49,15 +49,22 @@ async def run_prompt(pipeline_run_id, jurisdiction_ocdid, prompt, model_fallback
         response, input_tokens_num, output_tokens_num = make_request_with_search(
             logger, model, api_key, prompt
         )
-        cost_utils.add_llm_cost(
+        # Grounded, so Google states no cost — grounding is sold on a quota, and a zero here
+        # would read as free. Tracked for tokens only; `record_calls` keeps it out of
+        # `llm_calls`, whose `cost_usd` is NOT NULL.
+        cost_utils.record_call(
             logger,
             pipeline_run_id,
-            jurisdiction_ocdid,
-            "google_gemini",
-            model,
-            input_tokens_num,
-            output_tokens_num,
-            with_search=True,
+            cost_utils.LLMCall(
+                prompt_name=prompt_name,
+                gateway="google",
+                model=model,
+                routed_model=model,
+                input_tokens=input_tokens_num,
+                output_tokens=output_tokens_num,
+                cost_usd=None,
+                web_search=True,
+            ),
         )
         return response
 

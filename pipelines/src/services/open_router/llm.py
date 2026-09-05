@@ -1,6 +1,7 @@
 import asyncio
 import json
 import time
+from decimal import Decimal
 
 import requests
 from pipelines_environment import get_env_vars
@@ -81,12 +82,16 @@ async def run_prompt(
     pipeline_run_id,
     jurisdiction_ocdid: str,
     prompt,
+    prompt_name: str,
     response_schema=None,
     content="",
     model_type="STANDARD",
     provider_order=None,
     seed=None,
     temperature: float = _DEFAULT_TEMPERATURE,
+    source_url: str | None = None,
+    chunk_index: int | None = None,
+    chunk_count: int | None = None,
 ):
     logger = get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info("Running OpenRouter prompt")
@@ -123,7 +128,12 @@ async def run_prompt(
         else {"type": "json_object"}
     )
 
+    attempts = 0
+
     def execute():
+        nonlocal attempts
+        attempts += 1
+        started = time.time()
         resp = requests.post(
             url=BASE_URL,
             headers={
@@ -141,6 +151,9 @@ async def run_prompt(
                     "max_tokens": _MAX_OUTPUT_TOKENS,
                     "response_format": response_format,
                     **({"seed": seed} if seed is not None else {}),
+                    # Ask for the billed cost. Deriving it from a price table in the repo
+                    # went stale silently: an unlisted (model, provider) pair reported zero.
+                    "usage": {"include": True},
                     "provider": {
                         # Every provider here must support `structured_outputs` — we send
                         # json_schema with strict=True, and allow_fallbacks is False, so a
@@ -180,8 +193,46 @@ async def run_prompt(
         provider = body.get("provider", "unknown")
         logger.info(f"OpenRouter routed to: {routed_model} via {provider}")
 
+        # Recorded before parsing, not after: a response that arrived, burned tokens and
+        # then failed to validate is billed either way, and recording it last made those
+        # calls invisible — including the repetition loop above, retried five times over.
         choices = body.get("choices")
+        usage = body.get("usage", {})
+        stated_cost = usage.get("cost")
+        prompt_details = usage.get("prompt_tokens_details") or {}
+        completion_details = usage.get("completion_tokens_details") or {}
+        duration_ms = int((time.time() - started) * 1000)
+
+        def record(error: str | None = None) -> None:
+            cost_utils.record_call(
+                logger,
+                pipeline_run_id,
+                cost_utils.LLMCall(
+                    prompt_name=prompt_name,
+                    source_url=source_url,
+                    chunk_index=chunk_index,
+                    chunk_count=chunk_count,
+                    attempt=attempts,
+                    seed=seed,
+                    gateway="openrouter",
+                    model=model,
+                    routed_model=routed_model,
+                    upstream_provider=provider,
+                    generation_id=body.get("id"),
+                    input_tokens=usage.get("prompt_tokens", 0),
+                    output_tokens=usage.get("completion_tokens", 0),
+                    cached_input_tokens=prompt_details.get("cached_tokens", 0) or 0,
+                    reasoning_tokens=completion_details.get("reasoning_tokens", 0) or 0,
+                    cost_usd=Decimal(str(stated_cost)) if stated_cost is not None else None,
+                    web_search=False,
+                    duration_ms=duration_ms,
+                    finish_reason=(choices or [{}])[0].get("finish_reason"),
+                    error=error,
+                ),
+            )
+
         if not choices:
+            record("no choices in response")
             logger.warning(
                 f"OpenRouter response missing 'choices'. "
                 f"Body: {body} | "
@@ -192,26 +243,17 @@ async def run_prompt(
             )
         response_text = choices[0]["message"]["content"]
         logger.debug(f"OpenRouter raw response: {response_text}")
-        response = (
-            response_schema.model_validate_json(response_text)
-            if response_schema
-            else json.loads(response_text)
-        )
+        try:
+            response = (
+                response_schema.model_validate_json(response_text)
+                if response_schema
+                else json.loads(response_text)
+            )
+        except Exception as e:
+            record(f"{type(e).__name__}: {e}")
+            raise
 
-        usage = body.get("usage", {})
-        cost_utils.add_llm_cost(
-            logger,
-            pipeline_run_id,
-            jurisdiction_ocdid,
-            "open_router",
-            model,
-            usage.get("prompt_tokens", 0),
-            usage.get("completion_tokens", 0),
-            with_search=False,
-            provider=provider,
-            routed_model=routed_model,
-        )
-
+        record()
         return response
 
     loop = asyncio.get_running_loop()

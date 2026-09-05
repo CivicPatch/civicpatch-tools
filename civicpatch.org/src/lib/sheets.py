@@ -341,23 +341,6 @@ def clear_rows_from(
     )
 
 
-def update_spreadsheet(sheet_name, values):
-    env = environment.get_env_vars()
-    spreadsheet_id = env["GOOGLE_SHEETS_SPREADSHEET_ID"]
-    if spreadsheet_id is None or spreadsheet_id == "":
-        raise ValueError("GOOGLE_SHEETS_SPREADSHEET_ID environment variable is not set.")
-    service = get_service()
-
-    result = service.spreadsheets().values().append(
-        spreadsheetId=spreadsheet_id,
-        range=f"{sheet_name}!A1",
-        valueInputOption="USER_ENTERED",
-        body={"values": values}
-        ).execute()
-
-    num_rows_updated = result.get('updates').get('updatedRows')
-    print(f"{sheet_name}: Number of rows updated: {num_rows_updated}")
-
 # Constant, not configuration: the token endpoint is the same for every service account, and
 # the key file carries it too.
 _TOKEN_URI = "https://oauth2.googleapis.com/token"

@@ -168,6 +168,7 @@ async def _request_roster(
         context.pipeline_run_id,
         context.data.jurisdiction_ocdid,
         prompt,
+        prompt_name="research_municipality",
     )
 
     if not response:

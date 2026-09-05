@@ -22,7 +22,7 @@ stateDiagram-v2
     state "step_07: SEND_SUCCESS" as SEND_SUCCESS
     state "step_07: SEND_ERROR (DOMAIN_INACTIVE)" as ERR_DOMAIN_INACTIVE
     state "step_07: SEND_ERROR (DOMAIN_NAVIGATION_TIMEOUT)" as ERR_DOMAIN_NAVIGATION_TIMEOUT
-    state "step_07: SEND_ERROR (NO_INFO)" as ERR_NO_INFO
+    state "step_07: SEND_ERROR (NO_ROSTER_FOUND)" as ERR_NO_ROSTER_FOUND
 
     [*] --> INIT
 
@@ -53,11 +53,11 @@ stateDiagram-v2
     CLEANUP --> REVIEW_OUTPUT
 
     REVIEW_OUTPUT --> no_officials_found : no officials found
-    REVIEW_OUTPUT --> ERR_NO_INFO : heuristics fail
+    REVIEW_OUTPUT --> ERR_NO_ROSTER_FOUND : heuristics fail
     REVIEW_OUTPUT --> SAVE_OUTPUT : officials found and valid
 
     no_officials_found --> FIND_JURISDICTION_URL : url_recovery_attempted = false
-    no_officials_found --> ERR_NO_INFO : url_recovery_attempted = true
+    no_officials_found --> ERR_NO_ROSTER_FOUND : url_recovery_attempted = true
 
     FIND_JURISDICTION_URL --> ERR_DOMAIN_NAVIGATION_TIMEOUT : root link timed out, no new domain found
     FIND_JURISDICTION_URL --> ERR_DOMAIN_INACTIVE : no URL discovered
@@ -69,9 +69,9 @@ stateDiagram-v2
     SEND_SUCCESS --> [*]
     ERR_DOMAIN_INACTIVE --> [*]
     ERR_DOMAIN_NAVIGATION_TIMEOUT --> [*]
-    ERR_NO_INFO --> [*]
+    ERR_NO_ROSTER_FOUND --> [*]
 
     class ERR_DOMAIN_INACTIVE errorState
     class ERR_DOMAIN_NAVIGATION_TIMEOUT errorState
-    class ERR_NO_INFO errorState
+    class ERR_NO_ROSTER_FOUND errorState
 ```

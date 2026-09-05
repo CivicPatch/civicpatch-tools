@@ -82,7 +82,8 @@ async def _process_with_llm_in_chunks(
     if len(chunks) > 1:
         logger.info(f"Content split into {len(chunks)} chunks for LLM: open_router")
     all_found: List[PersonSourceRecord] = []
-    for chunk in chunks:
+    # 1-based: a row saying "chunk 1 of 3" reads without the reader doing arithmetic.
+    for index, chunk in enumerate(chunks, start=1):
         found = await process_with_llm(
             source_url,
             pipeline_run_id,
@@ -90,6 +91,8 @@ async def _process_with_llm_in_chunks(
             chunk,
             prompt,
             seed=seed,
+            chunk_index=index,
+            chunk_count=len(chunks),
         )
         all_found.extend(found)
     return all_found
@@ -248,8 +251,10 @@ async def check_page_relevance(
         context.pipeline_run_id,
         context.data.jurisdiction_ocdid,
         prompt,
+        prompt_name="relevant_page",
         response_schema=RelevantPageResponseSchema,
         content=content,
+        source_url=page_to_process.url,
     )
     response = RelevantPageResponseSchema.model_validate(raw_response)
 
@@ -336,14 +341,20 @@ async def process_with_llm(
     content: str,
     prompt: str,
     seed: Optional[int] = None,
+    chunk_index: Optional[int] = None,
+    chunk_count: Optional[int] = None,
 ) -> List[PersonSourceRecord]:
     response = await open_router_llm.run_prompt(
         pipeline_run_id,
         jurisdiction_ocdid,
         prompt,
+        prompt_name="municipality_officials",
         response_schema=PeopleArrayLLMResponseSchema,
         content=content,
         seed=seed,
+        source_url=source_url,
+        chunk_index=chunk_index,
+        chunk_count=chunk_count,
     )
 
     processed_people = []

@@ -7,6 +7,7 @@ import lib.storage as storage_service
 from core.images import cdn_urls, records_with_images, resolve_images
 from database.changesets import register_scrape_changeset
 from database.issues import upsert_issue
+from database.llm_calls import record_calls
 from database.pipeline_runs import get_pipeline_run
 from database.roles import get_roles
 from database.source_records import insert_source_records
@@ -14,12 +15,16 @@ from schemas.pipeline_runs import (
     HandleSubmitPipelineRunArtifactsRequest,
     SubmitPipelineRunArtifactsResponse,
 )
-from services import pipeline_costs, roster_edits, roster_ingest
+from services import roster_edits, roster_ingest
 from services import pipeline_runs as pipeline_run_service
 from services.jurisdiction_url import record_resolved_url, resolved_url
 from services.review_proposal import review_summary_for_request
 from shared.schemas import RoleConfig
-from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
+from shared.utils.statuses import (
+    RUN_LEVEL_ISSUE_TYPES,
+    PipelineIssueType,
+    PipelineRunStatus,
+)
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
@@ -220,9 +225,19 @@ async def _record_pipeline_error(pipeline_run_id: str, workflow_context: dict) -
     """Keyed on the run: this branch is a scrape that never reached ingest, so it minted no
     proposal to hang the issue off."""
     context_data = workflow_context.get("data", {})
-    error_step = context_data.get("error_step") or PipelineIssueType.PIPELINE_ERROR
+    reported = context_data.get("error_step")
+    detail = context_data.get("error_detail") or {}
+
+    if reported and reported not in RUN_LEVEL_ISSUE_TYPES:
+        logger.warning(
+            f"[{pipeline_run_id}] Unrecognised error_step {reported!r}; filing as "
+            f"{PipelineIssueType.PIPELINE_ERROR}"
+        )
+        detail = {**detail, "reported_error_step": reported}
+        reported = None
+
     await upsert_issue(
-        pipeline_run_id, error_step, [context_data.get("error_detail") or {}]
+        pipeline_run_id, reported or PipelineIssueType.PIPELINE_ERROR, [detail]
     )
 
 
@@ -238,11 +253,16 @@ async def _handle_submit_pipeline_run_artifacts(
         PRIVATE_BUCKET, dirs.debug, request.pipeline_run_id
     )
 
+    # Best-effort, like the Sheets push it replaces: an unrecorded cost must not fail a submit
+    # whose people are already stored.
     try:
-        await pipeline_costs.send_costs(dirs.debug)
+        recorded = await record_calls(
+            request.pipeline_run_id, artifacts.read_costs(dirs.debug)["llm_costs"]
+        )
+        logger.info(f"[{request.pipeline_run_id}] Recorded {recorded} LLM call(s)")
     except Exception as e:
         logger.error(
-            f"Failed to send costs for {request.pipeline_run_id}: {e}", exc_info=True
+            f"Failed to record LLM calls for {request.pipeline_run_id}: {e}", exc_info=True
         )
 
     workflow_context = artifacts.read_workflow_context(dirs.debug)

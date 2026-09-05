@@ -1,5 +1,4 @@
 import os
-from decimal import Decimal, InvalidOperation
 from typing import Dict, List, Optional
 
 import yaml
@@ -110,19 +109,13 @@ def governance_keywords() -> List[str]:
 
 
 def load_job_config(logger=None) -> JobConfig:
+    """The cap comes from `pipeline.yml`, the package default.
+
+    No env override: it swallowed a malformed value and carried on with the default, so a
+    typo in a container's environment read as "no override was set". The per-state value
+    lives in `state_settings` (plan 3), set in the UI.
+    """
     config = _load_config_file("pipeline.yml")
-    if os.getenv("PIPELINE_RUN_COST_LIMIT"):
-        try:
-            pipeline_run_cost_limit_string = os.getenv("PIPELINE_RUN_COST_LIMIT")
-            if pipeline_run_cost_limit_string:
-                if logger is not None:
-                    logger.info(
-                        f"Overriding pipeline_run_cost_limit with environment variable: {pipeline_run_cost_limit_string}"
-                    )
-                pipeline_run_cost_limit = Decimal(pipeline_run_cost_limit_string)
-                config["pipeline_run_cost_limit"] = pipeline_run_cost_limit
-        except (ValueError, InvalidOperation):
-            pass
     return JobConfig(
         max_pages=config.get("max_pages"),
         pipeline_run_cost_limit=config.get("pipeline_run_cost_limit"),

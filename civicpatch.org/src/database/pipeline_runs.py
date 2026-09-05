@@ -5,8 +5,9 @@ from typing import Optional
 import database.changesets as changesets_db
 from database.database import get_pool, to_iso
 from psycopg import sql
-from schemas.pipeline_runs import ExpiredRun
+from schemas.pipeline_runs import ExpiredRun, JurisdictionPipelineRun
 from shared.utils.statuses import (
+    RUN_LEVEL_ISSUE_TYPES,
     DismissalReason,
     PipelineRunStatus,
     TERMINAL_PIPELINE_RUN_STATUSES,
@@ -45,6 +46,49 @@ async def register_run(
                 progress,
             ),
         )
+
+
+async def get_pipeline_runs_for_jurisdiction(
+    jurisdiction_ocdid: str, limit: int = 10
+) -> list[JurisdictionPipelineRun]:
+    """This jurisdiction's attempts, newest first — including ones that proposed nothing.
+
+    Asks by jurisdiction, not through `changeset_id`. Every other read joins runs to changesets,
+    which is why a failed run was visible only while it was running and then disappeared: it
+    minted no changeset to be reached through.
+
+    The issue is joined on the run's own id — a run that fails has no changeset, so
+    `upsert_issue` keys it on the run and the issues page renders that key bare.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT r.id::text, r.status, r.progress,
+                   r.finished_at IS NULL AS is_running,
+                   r.created_at, r.finished_at, r.changeset_id::text, i.issue_type
+            FROM pipeline_runs r
+            LEFT JOIN issues i
+                   ON i.issue_key = r.id::text AND i.issue_type = ANY(%s)
+            WHERE r.jurisdiction_ocdid = %s
+            ORDER BY r.created_at DESC
+            LIMIT %s;
+            """,
+            (list(RUN_LEVEL_ISSUE_TYPES), jurisdiction_ocdid, limit),
+        )
+        return [
+            JurisdictionPipelineRun(
+                pipeline_run_id=row[0],
+                status=row[1],
+                progress=row[2],
+                is_running=row[3],
+                created_at=to_iso(row[4]),
+                finished_at=to_iso(row[5]),
+                changeset_id=row[6],
+                issue_type=row[7],
+            )
+            for row in await cur.fetchall()
+        ]
 
 
 async def get_pipeline_run(run_id: str):
