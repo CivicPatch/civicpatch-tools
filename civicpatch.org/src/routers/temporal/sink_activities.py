@@ -1,77 +1,27 @@
+"""Outbound: the database rendered into the three mirrors — the sheet, open-data, and parquet.
+
+`services/sinks/` is the machinery; this is the Temporal-facing seam onto it. Everything here
+writes outward, which is what separates it from `jurisdiction_activities` — a distinction
+`AGENTS.md:40-41` makes deliberately and this split now makes structural.
+
+This is also where the memory is: a sweep peaks at 253Mi because these activities materialise
+whole tables. That is why the sinks worker is the one with a concurrency cap.
+
+Split out of the old single `activities.py` on 2026-09-05.
+"""
+
 import database.change_logs as change_logs_db
-import database.changesets as changesets_db
-import database.dismissals as dismissals_db
 import database.jurisdictions as jurisdictions_db
 import database.memberships as memberships_db
-import database.pipeline_runs as pipeline_runs_db
-import database.review_session_entries as review_session_entries_db
-import services.open_data_sync as data_sync
 import services.sinks.open_data as open_data_sink
 import services.sinks.parquet as parquet_sink
 import services.sinks.sheet as sheet_sink
-from database.issues import upsert_issue
 from lib.temporal.types import (
     OpenDataBatchCommitRequest,
     OpenDataCommitItem,
 )
 from services import entry_sheet
-from shared.utils.statuses import PipelineIssueType
-from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
 from temporalio import activity
-
-# A run that dies before send_error uploads is expired to ERROR with no issue of its own.
-# Raise the same generic-failure issue the collector raises (PIPELINE_ERROR), so the
-# jurisdiction lands in `blocked` (excluded by jurisdiction_ocdids_with_pending_issues) instead of
-# silently re-queuing forever.
-_STALE_RUN_ISSUE_DETAIL = {"error": "pipeline run timed out and was expired"}
-
-
-@activity.defn
-async def od_sync_activity() -> None:
-    await data_sync.sync_all()
-    # Its own workflow, not an activity here: this schedule is SKIP-overlap, so a Sheets write
-    # retrying forever would block every later sync.
-    #
-    # avoid circular import: the client imports the workflows module, which imports this one
-    import lib.temporal.client as temporal_client
-
-    if entry_sheet.is_configured():
-        await temporal_client.enqueue_jurisdictions_sheet_sync()
-
-
-@activity.defn
-async def od_sync_targeted_activity(jurisdiction_ocdids: list[str]) -> None:
-    await data_sync.sync_by_ocdids(jurisdiction_ocdids)
-
-
-@activity.defn
-async def expire_stale_pipeline_runs_activity() -> None:
-    expired = await pipeline_runs_db.expire_stale_pipeline_runs(
-        PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
-    )
-    if not expired:
-        return
-    activity.logger.warning(
-        "Expired %d stale pipeline run(s): %s", len(expired), expired
-    )
-    # Keyed on the proposal when there is one, so the issue resolves to a jurisdiction; else on
-    # the run, which the issues page falls back to rendering.
-    for run in expired:
-        await upsert_issue(
-            run.changeset_id or run.pipeline_run_id,
-            PipelineIssueType.PIPELINE_ERROR,
-            [_STALE_RUN_ISSUE_DETAIL],
-        )
-
-
-@activity.defn
-async def cleanup_stale_review_entries_activity() -> None:
-    result = await review_session_entries_db.purge_stale_idle_sessions()
-    if result["entries_deleted"]:
-        activity.logger.info(
-            "Review session cleanup: %d entries deleted",
-            result["entries_deleted"],
-        )
 
 
 @activity.defn
@@ -154,15 +104,6 @@ async def sync_roster_parquet_activity() -> None:
         sum(t["rows"] for t in tables.values()),
         len(tables),
     )
-
-
-@activity.defn
-async def supersede_stacked_requests_activity() -> None:
-    dismissed = await dismissals_db.supersede_stacked_requests()
-    if dismissed:
-        activity.logger.info(
-            "Superseded %d stacked request(s): %s", len(dismissed), dismissed
-        )
 
 
 @activity.defn

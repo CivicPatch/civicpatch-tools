@@ -1,97 +1,28 @@
+"""Sink workflows: the database rendered outward into the sheet, open-data, and parquet.
+
+Split out of the single `workflows.py` on 2026-09-05. This is the heavy half — the activities
+these drive materialise whole tables, and a sweep peaks around 253Mi — which is why the sinks
+worker is the one that caps concurrency.
+"""
+
 from datetime import timedelta
-from enum import StrEnum
 
 from temporalio import workflow
 from temporalio.common import RetryPolicy
 
 from lib.temporal.types import OpenDataBatchCommitRequest
 
-
-class ScheduleId(StrEnum):
-    OD_SYNC = "od-sync"
-    PIPELINE_RUN_CLEANUP = "pipeline-run-cleanup"
-    REVIEW_SESSION_CLEANUP = "review-session-cleanup"
-    SWEEP_CHANGES = "sweep-changes"
-    SWEEP_EVERYTHING = "sweep-everything"
-
-
-class WorkflowInstanceId(StrEnum):
-    OD_SYNC = "od-sync-workflow"
-    PIPELINE_RUN_CLEANUP = "pipeline-run-cleanup-workflow"
-    REVIEW_SESSION_CLEANUP = "review-session-cleanup-workflow"
-    REPO_MERGE_QUEUE = "repo-merge-queue"
-    SWEEP_CHANGES = "sweep-changes-workflow"
-    SWEEP_EVERYTHING = "sweep-everything-workflow"
-
-
 with workflow.unsafe.imports_passed_through():
-    from routers.temporal.activities import (
+    from routers.temporal.sink_activities import (
         backstop_open_data_activity,
-        sync_roster_parquet_activity,
-        cleanup_stale_review_entries_activity,
-        list_states_activity,
         commit_open_data_batch_activity,
-        expire_stale_pipeline_runs_activity,
-        od_sync_activity,
-        od_sync_targeted_activity,
-        supersede_stacked_requests_activity,
+        list_states_activity,
         sweep_open_data_activity,
         sweep_roster_sheets_activity,
         sync_jurisdictions_sheet_activity,
+        sync_roster_parquet_activity,
         sync_roster_sheet_activity,
     )
-
-TASK_QUEUE = "civicpatch-org-sync"
-
-# Bound history growth: after this many merges, continue-as-new with the remaining queue.
-# 500 keeps history well under Temporal's recommended 10k-event ceiling.
-_CONTINUE_AS_NEW_THRESHOLD = 500
-
-
-@workflow.defn
-class OdSyncWorkflow:
-    @workflow.run
-    async def run(self) -> None:
-        await workflow.execute_activity(
-            od_sync_activity,
-            start_to_close_timeout=timedelta(minutes=60),
-        )
-
-
-@workflow.defn
-class OdSyncTargetedWorkflow:
-    @workflow.run
-    async def run(self, jurisdiction_ocdids: list[str]) -> None:
-        await workflow.execute_activity(
-            od_sync_targeted_activity,
-            jurisdiction_ocdids,
-            start_to_close_timeout=timedelta(minutes=60),
-        )
-
-
-@workflow.defn
-class PipelineRunCleanupWorkflow:
-    @workflow.run
-    async def run(self) -> None:
-        await workflow.execute_activity(
-            expire_stale_pipeline_runs_activity,
-            start_to_close_timeout=timedelta(minutes=5),
-        )
-
-
-@workflow.defn
-class ReviewSessionCleanupWorkflow:
-    @workflow.run
-    async def run(self) -> None:
-        await workflow.execute_activity(
-            cleanup_stale_review_entries_activity,
-            start_to_close_timeout=timedelta(minutes=5),
-        )
-        await workflow.execute_activity(
-            supersede_stacked_requests_activity,
-            start_to_close_timeout=timedelta(minutes=5),
-        )
-
 
 # Long enough to collapse a state scrape's town-by-town publishing into one tab rewrite.
 _SHEET_DEBOUNCE = timedelta(seconds=60)

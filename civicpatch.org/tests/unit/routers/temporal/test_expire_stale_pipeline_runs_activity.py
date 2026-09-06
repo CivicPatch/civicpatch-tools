@@ -5,7 +5,7 @@ from temporalio.testing import ActivityEnvironment
 from schemas.pipeline_runs import ExpiredRun
 from shared.utils.statuses import PipelineIssueType
 
-from routers.temporal.activities import (
+from routers.temporal.expiry_activities import (
     _STALE_RUN_ISSUE_DETAIL,
     expire_stale_pipeline_runs_activity,
 )
@@ -14,12 +14,12 @@ from routers.temporal.activities import (
 def _patch(expired):
     return (
         patch(
-            "routers.temporal.activities.pipeline_runs_db.expire_stale_pipeline_runs",
+            "routers.temporal.expiry_activities.pipeline_runs_db.expire_stale_pipeline_runs",
             new_callable=AsyncMock,
             return_value=expired,
         ),
         patch(
-            "routers.temporal.activities.upsert_issue",
+            "routers.temporal.expiry_activities.upsert_issue",
             new_callable=AsyncMock,
         ),
     )

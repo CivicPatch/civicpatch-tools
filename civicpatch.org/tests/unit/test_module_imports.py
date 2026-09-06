@@ -1,6 +1,6 @@
 """Every entrypoint imports cleanly, in a fresh interpreter.
 
-`worker.py` is the only module that pulls the whole Temporal graph — workflows import the
+The worker entrypoints are the only modules that pulls the whole Temporal graph — workflows import the
 activities module, which imports the services it runs — and nothing else in the suite touches
 it. When `services/publish.py` started importing `lib.temporal.client`, that closed a cycle and
 the worker died on startup while all 626 other tests stayed green.
@@ -28,9 +28,14 @@ _SRC = os.path.join(_PROJECT_ROOT, "src")
     "module",
     [
         # The Temporal graph: workflows -> activities -> services. Where the cycle appeared.
-        "worker",
-        "lib.temporal.workflows",
-        "routers.temporal.activities",
+        # One entry per worker: each is a separate process with a deliberately different
+        # import graph, so a cycle can close in one and not the others.
+        "workers.jurisdictions",
+        "workers.sinks",
+        "workers.expiry",
+        # The scrape entrypoint carries the smallest graph of the four — it must not reach
+        # `database` or `services` at all.
+        "workers.scrape",
         # The web entrypoint, which pulls every router.
         "main",
     ],

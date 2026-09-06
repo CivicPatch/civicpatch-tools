@@ -22,7 +22,3 @@ if [ "$touches_api" = "1" ]; then
     mise run tcp
     mise run typecheck-cp
 fi
-
-if [ "$touches_worker" = "1" ]; then
-    mise run typecheck-worker
-fi

@@ -43,13 +43,13 @@ services:
     networks:
       - civicpatch_net
 
-  civicpatch-org-worker:
+  civicpatch-org-sinks:
     extends:
       file: civicpatch.org/docker-compose.yml
-      service: civicpatch-org-worker
+      service: civicpatch-org-sinks
     networks:
       - civicpatch_net
-    # The worker connects to the DB at startup (get_pool) and Temporal — wait for both to be
+    # These workers connect to the DB at startup (get_pool) and Temporal — wait for both to be
     # healthy, else main() wedges on a dead pool and never starts polling the task queue.
     # extends does not merge depends_on, so every dependency must be listed here.
     depends_on:
@@ -61,11 +61,53 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
-  # ── Temporal worker ────────────────────────────────────────────────────────
-  worker:
+  civicpatch-org-jurisdictions:
+    extends:
+      file: civicpatch.org/docker-compose.yml
+      service: civicpatch-org-jurisdictions
+    networks:
+      - civicpatch_net
+    # These workers connect to the DB at startup (get_pool) and Temporal — wait for both to be
+    # healthy, else main() wedges on a dead pool and never starts polling the task queue.
+    # extends does not merge depends_on, so every dependency must be listed here.
+    depends_on:
+      civicpatch-org-db:
+        condition: service_healthy
+      civicpatch-org-redis:
+        condition: service_started
+      temporal:
+        condition: service_healthy
+    restart: unless-stopped
+
+  civicpatch-org-expiry:
+    extends:
+      file: civicpatch.org/docker-compose.yml
+      service: civicpatch-org-expiry
+    networks:
+      - civicpatch_net
+    # These workers connect to the DB at startup (get_pool) and Temporal — wait for both to be
+    # healthy, else main() wedges on a dead pool and never starts polling the task queue.
+    # extends does not merge depends_on, so every dependency must be listed here.
+    depends_on:
+      civicpatch-org-db:
+        condition: service_healthy
+      civicpatch-org-redis:
+        condition: service_started
+      temporal:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── Scrape worker ──────────────────────────────────────────────────────────
+  # The civicpatch-org image, second entrypoint. Its own service rather than a second Worker
+  # inside another worker so it keeps the environment below — which is the whole of it.
+  # No database, no storage, no sheets: every activity here goes over HTTP.
+  civicpatch-org-scrape:
+    container_name: civicpatch-org-scrape
     build:
       context: .
-      dockerfile: worker/Dockerfile
+      dockerfile: civicpatch.org/Dockerfile
+      target: development
+    entrypoint: ["python", "src/workers/scrape.py"]
     depends_on:
       temporal:
         condition: service_healthy
@@ -81,14 +123,14 @@ services:
       SERVICE_API_KEY: ${SERVICE_API_KEY}
       CIVICPATCH_LOCAL_URL: http://pipelines:8001
     volumes:
-      - ./worker/src:/app/src
+      - ./civicpatch.org:/app
       - ./shared/src/shared:/app/src/shared
     networks:
       - civicpatch_net
     restart: unless-stopped
     develop:
       watch:
-        - path: ./worker/src
+        - path: ./civicpatch.org/src
           action: restart
         - path: ./shared/src/shared
           action: restart
@@ -114,7 +156,7 @@ services:
   temporal-admin-tools:
     image: ghcr.io/civicpatch/civicpatch_temporal_admin_tools:latest
     build:
-      context: ./worker/temporal
+      context: ./temporal
       dockerfile: Dockerfile.admin-tools
     restart: on-failure:6
     depends_on:
@@ -135,7 +177,7 @@ services:
   temporal:
     image: ghcr.io/civicpatch/civicpatch_temporal:latest
     build:
-      context: ./worker/temporal
+      context: ./temporal
       dockerfile: Dockerfile.temporal
     depends_on:
       temporal-admin-tools:
@@ -166,7 +208,7 @@ services:
   temporal-create-namespace:
     image: ghcr.io/civicpatch/civicpatch_temporal_admin_tools:latest
     build:
-      context: ./worker/temporal
+      context: ./temporal
       dockerfile: Dockerfile.admin-tools
     restart: on-failure:5
     depends_on:

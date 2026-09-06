@@ -1,0 +1,59 @@
+name: Deploy Temporal
+
+# The Temporal control plane images. Was `deploy_worker.yml`, which also built the
+# `civicpatch_worker` image — that worker now runs from the civicpatch-org image as
+# `src/workers/scrape.py`, so only these two remain.
+#
+# Build only, no deploy step. The old one dispatched CivicPatch/infrastructure's
+# deploy-civicpatch-org.yml with no `image_tag`, and that workflow's only job is guarded
+# `if: inputs.image_tag != ''` — so it has always been skipped. Rolling a new Temporal server
+# needs `kubectl rollout restart deploy/temporal -n civicpatch`: the manifest pins `:latest`,
+# so `kubectl apply` sees no change and restarts nothing.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "temporal/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build and push (temporal server)
+        uses: docker/build-push-action@v7
+        with:
+          context: ./temporal
+          file: ./temporal/Dockerfile.temporal
+          push: true
+          tags: ghcr.io/civicpatch/civicpatch_temporal:latest
+          cache-from: type=gha,scope=temporal-server
+          cache-to: type=gha,mode=max,scope=temporal-server
+
+      - name: Build and push (temporal admin-tools)
+        uses: docker/build-push-action@v7
+        with:
+          context: ./temporal
+          file: ./temporal/Dockerfile.admin-tools
+          push: true
+          tags: ghcr.io/civicpatch/civicpatch_temporal_admin_tools:latest
+          cache-from: type=gha,scope=temporal-admin-tools
+          cache-to: type=gha,mode=max,scope=temporal-admin-tools
