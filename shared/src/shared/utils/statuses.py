@@ -73,6 +73,10 @@ class PipelineIssueType(StrEnum):
     # roster is who needs to know it is short. Without it the cap was invisible outside the
     # container log — a capped run and a jurisdiction with no officials looked identical.
     COST_CAP_REACHED = "cost_cap_reached"
+    # The crawl finished but found fewer people than the roster we hold (or than research
+    # named) led it to expect. Short by more than the crawler's own tolerance, so a run that
+    # stopped because it had enough never files this.
+    FEWER_THAN_EXPECTED = "fewer_than_expected"
 
 
 # Issue types a run can produce, as opposed to ones about a proposal. These are keyed on the

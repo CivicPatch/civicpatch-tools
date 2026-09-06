@@ -10,8 +10,6 @@
   "reportUnknownVariableType": "none",
   "reportUnknownParameterType": "none",
   "reportUnknownLambdaType": "none",
-  "reportAny": "none",
-  "reportExplicitAny": "none",
   "reportImplicitOverride": "none",
   "reportMissingParameterType": "none"
 }

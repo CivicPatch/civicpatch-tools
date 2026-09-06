@@ -62,14 +62,20 @@ async def test_somebody_we_publish_and_this_scrape_missed_is_absent():
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_a_jurisdiction_we_have_never_published_raises_nothing_about_absence():
-    """Nothing to be absent from, so every person is simply new."""
-    with _summary_for([], [_person("Ann Lee")]):
+async def test_a_jurisdiction_we_have_never_published_raises_nothing_to_compare():
+    """A first scrape has no roster to compare with, so neither set check applies — everyone
+    would be new, which would keep every such jurisdiction out of auto-publish forever.
+
+    The checks that read the proposed roster alone still run, which is why a five-person
+    roster is used here: one person would fail `too_few_people` instead."""
+    roster = [_person(name) for name in ("Ann Lee", "Bo Ray", "Cy Fox", "Di Ash", "Ed Vale")]
+
+    with _summary_for([], roster):
         summary = await review_summary_for_changeset("req-1")
 
     codes = {issue["code"] for issue in summary["issues"]}
     assert "absent_person" not in codes
-    assert "new_person" in codes
+    assert "new_person" not in codes
 
 
 @pytest.mark.unit
