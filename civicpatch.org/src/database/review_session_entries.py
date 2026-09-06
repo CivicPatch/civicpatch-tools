@@ -8,9 +8,9 @@ from database.review_sessions import SESSION_IDLE_TIMEOUT_MINUTES
 #
 #   claimed ──pass_entry──────────────▶ passed
 #      │
-#      ├──save_entries_for_request─────▶ saved      (committed to the branch, not published)
+#      ├──save_entries_for_changeset─────▶ saved      (committed to the branch, not published)
 #      │                                     │
-#      └──resolve_entries_for_request──▶ resolved   (credit signal for stats/streak/goal)
+#      └──resolve_entries_for_changeset──▶ resolved   (credit signal for stats/streak/goal)
 #                                        ▲
 #              a saved card that is later published promotes to resolved
 #
@@ -40,7 +40,7 @@ async def pass_entry(review_session_id: str, entry_number: int) -> None:
             )
 
 
-async def save_entries_for_request(changeset_id: str) -> None:
+async def save_entries_for_changeset(changeset_id: str) -> None:
     """Mark the claimed entry holding this request as saved. A no-op if it is already saved."""
     pool = await get_pool()
     async with pool.connection() as conn:
@@ -55,7 +55,7 @@ async def save_entries_for_request(changeset_id: str) -> None:
             )
 
 
-async def resolve_entries_for_request(changeset_id: str) -> None:
+async def resolve_entries_for_changeset(changeset_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         async with conn.cursor() as cur:

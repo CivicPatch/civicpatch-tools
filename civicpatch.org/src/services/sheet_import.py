@@ -20,7 +20,7 @@ from core.entry_rows import (
     roster_columns,
     rows_by_jurisdiction,
 )
-from database.changesets import register_sheet_import_request
+from database.changesets import register_sheet_import_changeset
 from database import changeset_batches
 from database.roles import get_roles
 from database.source_records import insert_source_records
@@ -108,7 +108,7 @@ async def _import_jurisdiction(
             identities,
             taxonomy,
         )
-        await register_sheet_import_request(
+        await register_sheet_import_changeset(
             changeset_id, jurisdiction_ocdid, user_id, batch_id
         )
         sightings = await insert_source_records(

@@ -171,7 +171,7 @@ async def commit_jurisdiction_patch(
 
     # Published on commit: there is no review step between the edit and the file, so the
     # request is born resolved rather than waiting for a merge to tell us.
-    await changesets_db.register_jurisdiction_edit_request(
+    await changesets_db.register_jurisdiction_edit_changeset(
         changeset_id=changeset_id,
         jurisdiction_ocdid=jurisdiction_ocdid,
         change_url=commit_url,
@@ -226,7 +226,7 @@ async def merge_jurisdiction_pr(
     # write: this path merged the PR, so it already knows. A failure here is not a merge
     # failure — the merge stands and the hourly od_sync is the backstop.
     try:
-        jurisdiction_ocdid = await changesets_db.get_request_jurisdiction(changeset_id)
+        jurisdiction_ocdid = await changesets_db.get_changeset_jurisdiction(changeset_id)
         if jurisdiction_ocdid:
             await sync_jurisdictions_by_ocdids([jurisdiction_ocdid])
     except Exception:

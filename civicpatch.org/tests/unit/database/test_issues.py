@@ -4,7 +4,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from database.issues import create_user_reported_issue, get_user_reported_issues_for_request
+from database.issues import create_user_reported_issue, get_user_reported_issues_for_changeset
 from shared.utils.statuses import PipelineIssueStatus, PipelineIssueType
 
 
@@ -94,7 +94,7 @@ async def test_get_user_reported_issues_for_request_shapes_rows():
     )
     cur = _make_cursor(fetchall_return=[row])
     with patch("database.issues.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_user_reported_issues_for_request("req-1")
+        result = await get_user_reported_issues_for_changeset("req-1")
 
     assert result == [
         {
@@ -116,6 +116,6 @@ async def test_get_user_reported_issues_for_request_shapes_rows():
 async def test_get_user_reported_issues_for_request_returns_empty_list_when_none():
     cur = _make_cursor(fetchall_return=[])
     with patch("database.issues.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await get_user_reported_issues_for_request("req-missing")
+        result = await get_user_reported_issues_for_changeset("req-missing")
 
     assert result == []

@@ -20,7 +20,7 @@ from database.issues import (
     set_issue_flagged,
 )
 import database.users
-from database.publications import dismiss_request
+from database.publications import dismiss_changeset
 from database.pipeline_run_spend import get_state_spend, DEFAULT_SPEND_WINDOW_DAYS
 from database.pipeline_runs import (
     get_active_pipeline_runs,
@@ -33,7 +33,7 @@ from database.review_pool import (
     has_open_changeset,
 )
 from database.changesets import (
-    get_issue_request_details,
+    get_issue_changeset_details,
 )
 from fastapi import (
     APIRouter,
@@ -407,7 +407,7 @@ def get_router(api_key_header):
             user_id = await database.users.get_user_id_by_provider(
                 user.provider, user.provider_user_id
             )
-            await dismiss_request(
+            await dismiss_changeset(
                 minted, DismissalReason.CANCELLED, resolved_by_user_id=user_id
             )
         return {"pipeline_run_id": pipeline_run_id, "status": PipelineRunStatus.CANCELLED}
@@ -572,7 +572,7 @@ def get_router(api_key_header):
         if issue is None:
             raise HTTPException(status_code=404)
 
-        raw = await get_issue_request_details(issue["changeset_ids"])
+        raw = await get_issue_changeset_details(issue["changeset_ids"])
         issue_type = issue["issue_type"]
         issue_key = issue["issue_key"]
 

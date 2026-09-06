@@ -16,7 +16,7 @@ from database.dismissals import mark_dismissed
 from shared.utils.statuses import DismissalReason
 from database.review_sessions import create_or_get_review_session, get_active_review_session
 from database.review_sessions import end_review_session
-from database.publications import publish_request
+from database.publications import publish_changeset
 from database.review_pool import list_open_changesets
 from database.issues import create_user_reported_issue, resolve_issue
 from database.review_session_navigation import navigate_to_entry
@@ -429,7 +429,7 @@ async def test_publishing_removes_the_card_from_the_pool_for_good():
         before, _, _ = await list_open_changesets(state_code="zz")
         assert changeset_id in [r["changeset_id"] for r in before], "unpublished scrape starts in the pool"
 
-        await publish_request(changeset_id, ocdid, [])
+        await publish_changeset(changeset_id, ocdid, [])
 
         after, _, _ = await list_open_changesets(state_code="zz")
         assert changeset_id not in [r["changeset_id"] for r in after], "published scrape must leave the pool"

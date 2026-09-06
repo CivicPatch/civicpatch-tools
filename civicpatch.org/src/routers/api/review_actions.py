@@ -128,7 +128,7 @@ def get_router(api_key_header):
         # opened there — `dismissed_at` is what takes the request out of the review pool.
         await dismiss_people(changeset_id, user_id)
         # Credit the review: closing is a completed review action, same as publishing.
-        await review_session_entries_db.resolve_entries_for_request(changeset_id)
+        await review_session_entries_db.resolve_entries_for_changeset(changeset_id)
         return {"status": "success"}
 
     # -- Save updates: record the reviewer's corrections, publish nothing ---
@@ -147,7 +147,7 @@ def get_router(api_key_header):
         # No merge, no parking: the request stays in AVAILABLE_FOR_REVIEW. The entry is
         # held by its session (see _allocate_next_review) and returns to the pool
         # when that session is released.
-        await review_session_entries_db.save_entries_for_request(request.changeset_id)
+        await review_session_entries_db.save_entries_for_changeset(request.changeset_id)
         return {"status": "saved"}
 
     # -- Publish: make this roster the live one ---
@@ -180,7 +180,7 @@ def get_router(api_key_header):
             SupersededRoster,
         ) as exc:
             raise _http_error(exc)
-        await review_session_entries_db.resolve_entries_for_request(request.changeset_id)
+        await review_session_entries_db.resolve_entries_for_changeset(request.changeset_id)
         return {"status": "published"}
 
     return router

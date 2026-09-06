@@ -21,7 +21,7 @@ from database import divisions, memberships, organizations, posts
 from core.people_edits import PersonPatch
 from database.database import get_pool
 from database.changeset_predicates import DISMISSED_SUPERSEDED
-from database.dismissals import supersede_stacked_requests
+from database.dismissals import supersede_stacked_changesets
 from database.source_records import insert_source_records
 from services.roster import proposed_roster
 from schemas.assertions import EntityType
@@ -84,7 +84,7 @@ async def _seed() -> tuple[str, Identity]:
             (_OCDID,),
         )
         # The changeset that published them. `people` rows only exist because
-        # `publish_request` wrote them, so a fixture with a published person and no published
+        # `publish_changeset` wrote them, so a fixture with a published person and no published
         # changeset is a state production cannot reach — and a hand edit now files under it
         # rather than minting one of its own.
         await cur.execute(
@@ -189,7 +189,7 @@ async def test_the_edit_mints_a_changeset_born_published():
     Born published, and it has to be: it writes `source_records` for anyone added, so a pending
     one would satisfy AVAILABLE_FOR_REVIEW and flash into the queue between the two writes.
 
-    What it must *not* do is advance `last_seen_at` — that is `publish_request`'s rule, asserted
+    What it must *not* do is advance `last_seen_at` — that is `publish_changeset`'s rule, asserted
     separately below."""
     person_id, user = await _seed()
 
@@ -464,7 +464,7 @@ async def test_a_hand_edit_supersedes_a_pending_scrape():
     )
 
     # In the publish's own transaction, so there is nothing left for the sweep to find.
-    assert await supersede_stacked_requests() == []
+    assert await supersede_stacked_changesets() == []
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(

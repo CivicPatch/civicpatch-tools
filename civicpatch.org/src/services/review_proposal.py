@@ -35,9 +35,9 @@ from shared.utils.review_utils import ReviewInputs, build_review_summary
 from shared.utils.taxonomy import build_taxonomy
 
 
-async def review_summary_for_request(changeset_id: str) -> dict:
+async def review_summary_for_changeset(changeset_id: str) -> dict:
 
-    jurisdiction_ocdid = await changesets_db.get_request_jurisdiction(changeset_id)
+    jurisdiction_ocdid = await changesets_db.get_changeset_jurisdiction(changeset_id)
     if not jurisdiction_ocdid:
         return {}
 
@@ -95,7 +95,7 @@ async def proposals_for_requests(
     `rosters` is for a caller that already derived them — deriving a roster is the expensive
     half, and the summary reads the same one to diff against what we publish.
     """
-    ocdids = await changesets_db.jurisdictions_for_requests(changeset_ids)
+    ocdids = await changesets_db.jurisdictions_for_changesets(changeset_ids)
     if not ocdids:
         return {}
     # The post lookup is org-scoped, because `posts_identity_uq` is. A changeset naming no

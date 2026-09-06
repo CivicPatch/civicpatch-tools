@@ -10,7 +10,7 @@ That sighting is filed under the live roster's changeset, not a future scrape's,
 make the addition survive the next scrape: `_roster` reads one changeset's sightings, and a
 scrape that does not list the person retires them. Accepted — their field values live on as
 assertions, their seat does not. An edit to an *existing* person does survive, because
-`publish_request` re-applies `stated_values` over whatever the scrape says.
+`publish_changeset` re-applies `stated_values` over whatever the scrape says.
 """
 
 import logging
@@ -25,7 +25,7 @@ from core.people_edits import (
 )
 from core.people_roster import reviewer_source_records
 from database import assertions, posts
-from database.changesets import register_people_edit_request
+from database.changesets import register_people_edit_changeset
 from database.database import get_pool
 from database.people import get_roster
 from database.source_records import insert_source_records
@@ -90,9 +90,9 @@ async def edit_published(
     # Its own changeset: the edit is a bundle of changes to one jurisdiction, by one producer,
     # at one time, and it needs to be one — for its own row on the timeline, its own open-data
     # commit url, its own author, and to supersede any older pending scrape. What it must not do
-    # is advance `last_seen_at`, and that is `publish_request`'s rule, not this one's.
+    # is advance `last_seen_at`, and that is `publish_changeset`'s rule, not this one's.
     changeset_id = make_id()
-    await register_people_edit_request(changeset_id, jurisdiction_ocdid, user.user_id)
+    await register_people_edit_changeset(changeset_id, jurisdiction_ocdid, user.user_id)
     await _record_edits(
         changeset_id, jurisdiction_ocdid, base, patched, labels, user.user_id
     )

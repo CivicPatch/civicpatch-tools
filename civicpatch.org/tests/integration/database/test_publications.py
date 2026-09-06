@@ -25,8 +25,8 @@ from database.database import get_pool
 from core.post_derivation import DerivedMembership, DerivedPost
 from database.publications import (
     UnpublishableChangeset,
-    dismiss_request,
-    publish_request,
+    dismiss_changeset,
+    publish_changeset,
 )
 from schemas.assertions import Assertion, AssertionKind, EntityType
 
@@ -115,7 +115,7 @@ def _person(name: str) -> dict:
 def _seats(people: list[dict]) -> list[DerivedPost]:
     """One seat per person, so a publish actually seats them.
 
-    `publish_request` used to set `people.status = 'active'` and these tests passed no
+    `publish_changeset` used to set `people.status = 'active'` and these tests passed no
     `derived` at all. Being on the roster is holding an open membership now, so a publish with
     no posts seats nobody — which is the behaviour under test, not an artefact of the fixture.
     """
@@ -159,7 +159,7 @@ async def _people_by_status() -> dict[str, list[str]]:
 @pytest.mark.asyncio
 async def test_publish_writes_the_roster_as_current(sentinel_request):
     ann, bob = _person("Ann"), _person("Bob")
-    written = await publish_request(
+    written = await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=_seats([ann, bob])
     )
 
@@ -172,11 +172,11 @@ async def test_publish_writes_the_roster_as_current(sentinel_request):
 async def test_someone_absent_from_the_roster_becomes_inactive(sentinel_request):
     """`inactive`, not deleted — seat history has to survive a person leaving office."""
     ann, bob = _person("Ann"), _person("Bob")
-    await publish_request(
+    await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=_seats([ann, bob])
     )
 
-    await publish_request(
+    await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann], derived=_seats([ann])
     )
 
@@ -187,14 +187,14 @@ async def test_someone_absent_from_the_roster_becomes_inactive(sentinel_request)
 @pytest.mark.asyncio
 async def test_republishing_someone_brings_them_back_to_active(sentinel_request):
     ann, bob = _person("Ann"), _person("Bob")
-    await publish_request(
+    await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=_seats([ann, bob])
     )
-    await publish_request(
+    await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann], derived=_seats([ann])
     )
 
-    await publish_request(
+    await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=_seats([ann, bob])
     )
 
@@ -209,11 +209,11 @@ async def test_an_empty_roster_does_not_retire_everyone(sentinel_request):
     Now guards `close_absent` rather than the deleted `_retire_absent` — same claim, and the
     same guard inside `close_absent` still makes it true."""
     ann = _person("Ann")
-    await publish_request(
+    await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann], derived=_seats([ann])
     )
 
-    assert await publish_request(sentinel_request, _SENTINEL_OCDID, []) == 0
+    assert await publish_changeset(sentinel_request, _SENTINEL_OCDID, []) == 0
     assert await _people_by_status() == {"active": ["Ann"]}
 
 
@@ -222,7 +222,7 @@ async def test_an_empty_roster_does_not_retire_everyone(sentinel_request):
 async def test_a_failed_publish_writes_nothing(sentinel_request):
     """One transaction: a person the table rejects must not leave the roster half-written."""
     ann = _person("Ann")
-    await publish_request(
+    await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann], derived=_seats([ann])
     )
 
@@ -231,7 +231,7 @@ async def test_a_failed_publish_writes_nothing(sentinel_request):
     broken = _person("Cass")
     broken["id"] = None  # people.id is NOT NULL
     with pytest.raises(NotNullViolation):
-        await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Bob"), broken])
+        await publish_changeset(sentinel_request, _SENTINEL_OCDID, [_person("Bob"), broken])
 
     # Bob was in the same executemany as the rejected row, so he must not have landed.
     assert await _people_by_status() == {"active": ["Ann"]}
@@ -256,7 +256,7 @@ async def _publish_logs() -> list[str]:
 async def test_a_publish_logs_that_the_roster_changed(sentinel_request):
     """The feed every outward mirror runs on. Written on the publish cursor rather than
     best-effort afterwards, so it cannot be lost while the publish stands."""
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
 
     assert await _publish_logs() == [ChangeLogType.PUBLISH_REVIEW.value]
 
@@ -286,7 +286,7 @@ async def _request_state(changeset_id: str) -> tuple:
 @pytest.mark.asyncio
 async def test_publishing_stamps_the_request(sentinel_request):
     """Publish state lives on the request now, not on a GitHub PR's status."""
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
 
     published_at, dismissed_at, _ = await _request_state(sentinel_request)
     assert published_at is not None
@@ -297,10 +297,10 @@ async def test_publishing_stamps_the_request(sentinel_request):
 @pytest.mark.asyncio
 async def test_republishing_keeps_the_first_publish_time(sentinel_request):
     """`published_at` answers "when did this go live", so a replay must not move it."""
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
     first, _, _ = await _request_state(sentinel_request)
 
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
 
     again, _, _ = await _request_state(sentinel_request)
     assert again == first
@@ -312,16 +312,16 @@ async def test_republishing_keeps_the_first_publish_time(sentinel_request):
 async def test_a_dismissed_changeset_cannot_be_published(sentinel_request):
     """`DISMISSED` is terminal. A reviewer publishing a card another sweep just superseded must
     not resurrect it."""
-    await dismiss_request(sentinel_request, DismissalReason.REJECTED)
+    await dismiss_changeset(sentinel_request, DismissalReason.REJECTED)
 
     with pytest.raises(UnpublishableChangeset):
-        await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+        await publish_changeset(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_dismissing_stamps_the_request(sentinel_request):
-    await dismiss_request(sentinel_request, DismissalReason.ERRORED)
+    await dismiss_changeset(sentinel_request, DismissalReason.ERRORED)
 
     published_at, dismissed_at, _ = await _request_state(sentinel_request)
     assert published_at is None
@@ -333,9 +333,9 @@ async def test_dismissing_stamps_the_request(sentinel_request):
 async def test_a_published_request_cannot_be_dismissed(sentinel_request):
     """The CHECK forbids both being set, so dismiss refuses rather than raising: publishing
     already happened, and there is no undoing it by closing a card."""
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
 
-    await dismiss_request(sentinel_request, DismissalReason.ERRORED)
+    await dismiss_changeset(sentinel_request, DismissalReason.ERRORED)
 
     published_at, dismissed_at, _ = await _request_state(sentinel_request)
     assert published_at is not None
@@ -359,8 +359,8 @@ async def test_publish_does_not_blank_an_existing_resolver(sentinel_request):
         await conn.commit()
 
     try:
-        await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")], user_id)
-        await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")], None)
+        await publish_changeset(sentinel_request, _SENTINEL_OCDID, [_person("Ann")], user_id)
+        await publish_changeset(sentinel_request, _SENTINEL_OCDID, [_person("Ann")], None)
 
         _, _, resolver = await _request_state(sentinel_request)
         assert str(resolver) == user_id
@@ -380,7 +380,7 @@ async def test_a_machine_dismissal_is_credited_to_the_system(sentinel_request):
     """A cancelled run dismisses its own request. Since 160 that is attributed to the system
     user rather than left null: the thing that tells it apart from a person deciding not to
     publish is *who*, not *whether*."""
-    await dismiss_request(sentinel_request, DismissalReason.ERRORED)
+    await dismiss_changeset(sentinel_request, DismissalReason.ERRORED)
 
     _, dismissed_at, resolved_by = await _request_state(sentinel_request)
     assert dismissed_at is not None
@@ -392,9 +392,9 @@ async def test_a_machine_dismissal_is_credited_to_the_system(sentinel_request):
 async def test_dismissing_never_touches_a_published_request(sentinel_request):
     """The cancel path now fires from the shared status update, which any caller can reach.
     Publishing has to win: a late CANCELLED must not retire a roster that already went live."""
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
+    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
 
-    await dismiss_request(sentinel_request, DismissalReason.ERRORED)
+    await dismiss_changeset(sentinel_request, DismissalReason.ERRORED)
 
     published_at, dismissed_at, _ = await _request_state(sentinel_request)
     assert published_at is not None
@@ -452,7 +452,7 @@ async def test_publish_applies_what_a_human_accepted(sentinel_request):
     person = _person("Ann")
     await _assert_field(person["id"], "name", "Ann Rodriguez", AssertionKind.ACCEPT)
 
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [person])
+    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [person])
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -468,7 +468,7 @@ async def test_publish_drops_a_rejected_value_but_keeps_the_rest(sentinel_reques
     person = {**_person("Bob"), "phones": ["(555) 0001", "(555) 9999"]}
     await _assert_field(person["id"], "phones", "(555) 0001", AssertionKind.REJECT)
 
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [person])
+    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [person])
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -500,7 +500,7 @@ async def test_publishing_accepts_the_values_the_reviewer_saw(sentinel_request):
     user_id = await _seed_publisher()
     person = {**_person("Ann"), "phones": ["(555) 0001", "(555) 0002"]}
 
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [person], user_id)
+    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [person], user_id)
 
     assert await _accepted_for(person["id"]) == [
         ("name", "Ann"),
@@ -518,7 +518,7 @@ async def test_republishing_the_same_roster_adds_no_rows(sentinel_request):
     person = _person("Ann")
 
     for _ in range(3):
-        await publish_request(sentinel_request, _SENTINEL_OCDID, [person], user_id)
+        await publish_changeset(sentinel_request, _SENTINEL_OCDID, [person], user_id)
 
     assert await _accepted_for(person["id"]) == [("name", "Ann")]
 
@@ -530,7 +530,7 @@ async def test_an_unattended_publish_asserts_nothing(sentinel_request):
     `asserted_by` is NOT NULL, because an assertion nobody made is not an assertion."""
     person = _person("Ann")
 
-    await publish_request(sentinel_request, _SENTINEL_OCDID, [person], None)
+    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [person], None)
 
     assert await _accepted_for(person["id"]) == []
 
@@ -569,6 +569,6 @@ async def test_a_hand_edit_does_not_vouch_for_the_rest_of_the_roster(sentinel_ha
     user_id = await _seed_publisher()
     person = {**_person("Ann"), "phones": ["(555) 0001"]}
 
-    await publish_request(sentinel_hand_edit, _SENTINEL_OCDID, [person], user_id)
+    await publish_changeset(sentinel_hand_edit, _SENTINEL_OCDID, [person], user_id)
 
     assert await _accepted_for(person["id"]) == []

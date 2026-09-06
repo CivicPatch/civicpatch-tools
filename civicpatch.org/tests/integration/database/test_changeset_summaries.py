@@ -162,7 +162,7 @@ async def test_a_cancellation_is_counted_by_the_badge_that_lists_it():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_the_queue_counts_one_changeset_per_jurisdiction():
-    """Only one review per jurisdiction is valid. `supersede_stacked_requests` maintains that
+    """Only one review per jurisdiction is valid. `supersede_stacked_changesets` maintains that
     as a sweep, so duplicates exist transiently — counting rows instead of jurisdictions read
     Maine at 1,542 against a true 586."""
     await _changeset(days_ago=9)

@@ -104,7 +104,7 @@ async def dismiss_superseded_by(
     return [row[0] for row in dismissed]
 
 
-async def supersede_stacked_requests() -> list[str]:
+async def supersede_stacked_changesets() -> list[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(

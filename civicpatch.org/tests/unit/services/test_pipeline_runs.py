@@ -49,7 +49,7 @@ async def test_a_run_that_ended_without_a_roster_settles_its_request(status):
     jurisdiction page lists pending requests and `peopleEditBlockers` disables editing from the
     same set, so a failure left a permanent blocker behind."""
     with (
-        patch("services.pipeline_runs.dismiss_request", new_callable=AsyncMock) as dismiss,
+        patch("services.pipeline_runs.dismiss_changeset", new_callable=AsyncMock) as dismiss,
         patch(
             "services.pipeline_runs.supersede_prior_jurisdiction_issues",
             new_callable=AsyncMock,
@@ -69,7 +69,7 @@ async def test_a_run_that_produced_something_is_left_for_review(status):
     """The whole point of the queue. Dismissing a successful run would discard a roster nobody
     had looked at."""
     with (
-        patch("services.pipeline_runs.dismiss_request", new_callable=AsyncMock) as dismiss,
+        patch("services.pipeline_runs.dismiss_changeset", new_callable=AsyncMock) as dismiss,
         patch(
             "services.pipeline_runs.supersede_prior_jurisdiction_issues",
             new_callable=AsyncMock,
@@ -88,7 +88,7 @@ async def test_a_run_that_minted_nothing_settles_nothing(status):
     branches are skipped rather than matching zero rows. The attempt is still counted — the
     changesets page reads runs, not only proposals."""
     with (
-        patch("services.pipeline_runs.dismiss_request", new_callable=AsyncMock) as dismiss,
+        patch("services.pipeline_runs.dismiss_changeset", new_callable=AsyncMock) as dismiss,
         patch(
             "services.pipeline_runs.supersede_prior_jurisdiction_issues",
             new_callable=AsyncMock,

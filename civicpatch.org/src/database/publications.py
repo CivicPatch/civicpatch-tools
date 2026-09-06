@@ -46,7 +46,7 @@ async def record_change_url(changeset_id: str, url: str) -> None:
         )
 
 
-async def dismiss_request(
+async def dismiss_changeset(
     changeset_id: str,
     reason: DismissalReason,
     resolved_by_user_id: str | None = None,
@@ -214,6 +214,10 @@ async def _accept_published(
     """Accept every value in the roster on the publisher's behalf.
 
     Nothing without a user: an unattended publish read nothing and judged nothing.
+
+    Only for a roster read from a source, which is the caller's guard. A hand edit reached one
+    field, and `stated_from_edit` has already asserted that field — accepting the rest here
+    pinned every untouched value against every future scrape on the strength of one correction.
     """
     if not resolved_by_user_id:
         return
@@ -232,7 +236,7 @@ async def _accept_published(
             )
 
 
-async def publish_request(
+async def publish_changeset(
     changeset_id: str,
     jurisdiction_ocdid: str,
     people: list[dict],
@@ -246,8 +250,8 @@ async def publish_request(
         last_seen_at = await get_updated_at(cur, changeset_id)
         # `updated_at` orders superseding whatever the kind — a hand edit really is the newest
         # word. Whether it *dates a seat* is a different question, and only a source reading
-        # answers it.
-        advances_last_seen = await _collected_from_a_source(cur, changeset_id)
+        # answers it. Two consequences hang off this, so it is named for the question.
+        read_from_a_source = await _collected_from_a_source(cur, changeset_id)
         await _refuse_if_superseded(cur, changeset_id, jurisdiction_ocdid, last_seen_at)
         await _refuse_if_not_publishable(cur, changeset_id)
 
@@ -261,7 +265,8 @@ async def publish_request(
         if rows:
             await cur.executemany(PERSON_UPSERT, rows)
 
-        await _accept_published(cur, rows, resolved_by_user_id)
+        if read_from_a_source:
+            await _accept_published(cur, rows, resolved_by_user_id)
 
         await _record_publish(
             cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id
@@ -273,7 +278,7 @@ async def publish_request(
                 jurisdiction_ocdid,
                 derived,
                 last_seen_at,
-                advances_last_seen,
+                read_from_a_source,
             )
         # Outside the guard: who is no longer on the roster is answered by the roster.
         await memberships.close_absent(

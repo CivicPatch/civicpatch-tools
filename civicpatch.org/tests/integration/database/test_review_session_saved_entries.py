@@ -18,8 +18,8 @@ from database.database import get_pool
 from database.review_sessions import create_or_get_review_session, end_review_session
 from database.review_session_entries import (
     purge_stale_idle_sessions,
-    resolve_entries_for_request,
-    save_entries_for_request,
+    resolve_entries_for_changeset,
+    save_entries_for_changeset,
 )
 from database.review_session_navigation import navigate_to_entry
 
@@ -151,7 +151,7 @@ async def test_saved_card_is_not_reoffered_to_its_own_session(reviewer, open_pr)
     session_id = await _create_session(reviewer)
     await _insert_entry(session_id, 1, "claimed", changeset_id, ocdid)
 
-    await save_entries_for_request(changeset_id)
+    await save_entries_for_changeset(changeset_id)
 
     result = await navigate_to_entry(session_id, 2)
     assert result is not None
@@ -165,7 +165,7 @@ async def test_saved_card_is_held_from_another_reviewers_session(reviewer, other
     changeset_id, ocdid = open_pr
     session_id = await _create_session(reviewer)
     await _insert_entry(session_id, 1, "claimed", changeset_id, ocdid)
-    await save_entries_for_request(changeset_id)
+    await save_entries_for_changeset(changeset_id)
 
     other_session = await _create_session(other_reviewer)
     result = await navigate_to_entry(other_session, 1)
@@ -181,7 +181,7 @@ async def test_saved_card_returns_to_the_pool_once_the_session_ends(reviewer, ot
     changeset_id, ocdid = open_pr
     session_id = await _create_session(reviewer)
     await _insert_entry(session_id, 1, "claimed", changeset_id, ocdid)
-    await save_entries_for_request(changeset_id)
+    await save_entries_for_changeset(changeset_id)
 
     await end_review_session(session_id)
 
@@ -226,7 +226,7 @@ async def test_idle_session_sweep_releases_saved_cards(reviewer, open_pr):
     changeset_id, ocdid = open_pr
     session_id = await _create_session(reviewer)
     await _insert_entry(session_id, 1, "claimed", changeset_id, ocdid)
-    await save_entries_for_request(changeset_id)
+    await save_entries_for_changeset(changeset_id)
 
     pool = await get_pool()
     async with pool.connection() as conn:
@@ -249,8 +249,8 @@ async def test_saving_twice_is_a_no_op(reviewer, open_pr):
     session_id = await _create_session(reviewer)
     await _insert_entry(session_id, 1, "claimed", changeset_id, ocdid)
 
-    await save_entries_for_request(changeset_id)
-    await save_entries_for_request(changeset_id)
+    await save_entries_for_changeset(changeset_id)
+    await save_entries_for_changeset(changeset_id)
 
     assert await _entry_status(session_id, 1) == "saved"
 
@@ -262,9 +262,9 @@ async def test_publishing_a_saved_card_promotes_it_to_resolved(reviewer, open_pr
     changeset_id, ocdid = open_pr
     session_id = await _create_session(reviewer)
     await _insert_entry(session_id, 1, "claimed", changeset_id, ocdid)
-    await save_entries_for_request(changeset_id)
+    await save_entries_for_changeset(changeset_id)
 
-    await resolve_entries_for_request(changeset_id)
+    await resolve_entries_for_changeset(changeset_id)
 
     assert await _entry_status(session_id, 1) == "resolved"
 
@@ -276,6 +276,6 @@ async def test_saving_does_not_downgrade_a_resolved_entry(reviewer, open_pr):
     session_id = await _create_session(reviewer)
     await _insert_entry(session_id, 1, "resolved", changeset_id, ocdid)
 
-    await save_entries_for_request(changeset_id)
+    await save_entries_for_changeset(changeset_id)
 
     assert await _entry_status(session_id, 1) == "resolved"

@@ -95,7 +95,7 @@ def test_get_pull_requests_with_data_returns_paginated(client):
 def test_get_pull_request_review_returns_the_summary(client):
     """Thin: the composition of stored and computed issues is the service's, tested there."""
     with patch(
-        "routers.api.review_cards.review_summary_for_request",
+        "routers.api.review_cards.review_summary_for_changeset",
         new_callable=AsyncMock,
         return_value={"issues": [{"code": "unverified_post"}]},
     ):
@@ -114,7 +114,7 @@ def test_rejecting_a_scrape_dismisses_it(client):
             return_value="user-id-123",
         ),
         patch(
-            "database.review_session_entries.resolve_entries_for_request",
+            "database.review_session_entries.resolve_entries_for_changeset",
             new_callable=AsyncMock,
         ) as mock_resolve,
         patch(
@@ -141,7 +141,7 @@ def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
     recorded one would resolve to [] and retire every person in the jurisdiction."""
     with (
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
-        patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
+        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[]),
     ):
@@ -162,7 +162,7 @@ def test_save_refuses_when_the_scrape_recorded_no_roster(client):
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[]),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
-        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
+        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/save",
@@ -182,7 +182,7 @@ def test_publish_returns_200_and_queues_no_merge(client):
     """Publishing settles within the request: the roster is written and the entry resolved
     before the response, so there is nothing for the caller to poll."""
     with (
-        patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock) as mock_resolve,
+        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock) as mock_resolve,
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
@@ -220,7 +220,7 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
-        patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
+        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
     ):
         response = client.post(
@@ -248,7 +248,7 @@ def test_save_and_merge_rejects_invalid_field(client):
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("lib.redis.set", new_callable=AsyncMock),
-        patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
+        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/publish",
@@ -280,8 +280,8 @@ def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock) as mock_change_logs,
-        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
-        patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock) as mock_resolve,
+        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock) as mock_save,
+        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock) as mock_resolve,
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/save",
@@ -308,7 +308,7 @@ def test_reformatting_a_number_the_scrape_already_found_claims_nothing(client):
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
-        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
+        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/save",
@@ -331,7 +331,7 @@ def test_save_records_the_edited_field_canonicalized(client):
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
-        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
+        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/save",
@@ -383,7 +383,7 @@ def test_a_person_added_by_hand_becomes_evidence_and_claims(client):
               return_value={"p2": "Mayor"}),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_claims,
         patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
-        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock),
+        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/save",
@@ -410,7 +410,7 @@ def test_save_rejects_invalid_field_without_marking_the_entry(client):
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
-        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
+        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock) as mock_save,
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/save",
@@ -442,7 +442,7 @@ def test_save_returns_500_and_does_not_mark_the_entry_when_the_write_fails():
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("database.assertions.create_all", new_callable=AsyncMock, side_effect=RuntimeError("write failed")),
-        patch("database.review_session_entries.save_entries_for_request", new_callable=AsyncMock) as mock_save,
+        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock) as mock_save,
     ):
         response = failing_client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/save",
@@ -610,7 +610,7 @@ def test_publish_allows_default_role():
     AUTHENTICATED, not contributor-gated."""
     client = _client_as(_user_at(UserRole.DEFAULT))
     with (
-        patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
+        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch("services.roster_edits.publish_people", new_callable=AsyncMock),
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
@@ -705,7 +705,7 @@ def test_report_review_issue_401_when_user_id_missing():
 @pytest.mark.unit
 def test_get_reported_issues_returns_data(client):
     with patch(
-        "database.issues.get_user_reported_issues_for_request",
+        "database.issues.get_user_reported_issues_for_changeset",
         new_callable=AsyncMock,
         return_value=[{"id": "issue-1", "github_issue_url": "https://github.com/org/open-data/issues/9", "github_issue_number": 9, "status": "pending"}],
     ):
@@ -721,7 +721,7 @@ def test_get_reported_issues_allows_default_role():
     request — read-only, same gate as the POST that creates them."""
     client = _client_as(_user_at(UserRole.DEFAULT))
     with patch(
-        "database.issues.get_user_reported_issues_for_request",
+        "database.issues.get_user_reported_issues_for_changeset",
         new_callable=AsyncMock,
         return_value=[],
     ):
@@ -738,7 +738,7 @@ def test_publishing_a_superseded_roster_is_a_409_not_a_500(client):
     from database.publications import SupersededRoster
 
     with (
-        patch("database.review_session_entries.resolve_entries_for_request", new_callable=AsyncMock),
+        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch(
             "routers.api.review_actions.roster_edits.publish",
             new_callable=AsyncMock,

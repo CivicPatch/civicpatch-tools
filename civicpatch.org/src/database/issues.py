@@ -194,7 +194,7 @@ async def create_user_reported_issue(
     return row[0]
 
 
-async def get_user_reported_issues_for_request(changeset_id: str) -> list[dict]:
+async def get_user_reported_issues_for_changeset(changeset_id: str) -> list[dict]:
     """Reviewer-filed GitHub issues for this request only — not pipeline-internal
     issue types (those are browsed separately, via the admin issues page)."""
     pool = await get_pool()
