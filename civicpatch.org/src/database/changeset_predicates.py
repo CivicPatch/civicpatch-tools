@@ -123,10 +123,15 @@ LAST_ATTEMPT_JOIN = (
 )
 LAST_ATTEMPT_AT = "attempts.last_attempt_at"
 
-# A state's own cadence is the cooldown. NULL means manual: no schedule, and nothing excluded.
+# A state's own cadence is the cooldown, counted per jurisdiction from its own last attempt.
+#
+# It applies even where the state set none. NULL used to skip the cooldown entirely — it meant
+# both "no schedule" and "no cooldown" — so a jurisdiction that scraped cleanly and auto-published
+# was eligible again the moment its run went terminal. A state scrape given no `num_jurisdictions`
+# therefore never got an empty claim and never stopped. NULL now means "no schedule" alone.
 CADENCE_JOIN = "LEFT JOIN state_settings ss ON ss.state = j.state"
 OFF_COOLDOWN = (
-    "(ss.cadence_days IS NULL"
-    f" OR {LAST_ATTEMPT_AT} IS NULL"
-    f" OR {LAST_ATTEMPT_AT} < now() - make_interval(days => ss.cadence_days))"
+    f"({LAST_ATTEMPT_AT} IS NULL"
+    f" OR {LAST_ATTEMPT_AT} < now() - make_interval("
+    "days => COALESCE(ss.cadence_days, 30)))"
 )

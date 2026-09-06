@@ -72,10 +72,24 @@ async def _due() -> list[str]:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_manual_state_excludes_nothing():
-    """NULL cadence means no schedule and no cooldown — everything stays a candidate."""
-    ocdid = await _jurisdiction("manual")
+async def test_a_state_with_no_cadence_is_still_on_a_cooldown():
+    """NULL cadence means no schedule. It used to mean no cooldown as well, and that is the
+    bug: a jurisdiction that scraped cleanly and auto-published was eligible again the moment
+    its run went terminal, so a state scrape given no `num_jurisdictions` never ran out of
+    candidates and never stopped."""
+    ocdid = await _jurisdiction("no-cadence")
     await _attempt(ocdid, days_ago=0)
+
+    assert await _due() == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_state_with_no_cadence_comes_back_off_the_default():
+    """The other half: the fallback is a cooldown, not a permanent exclusion. Without this a
+    bug that blocked every unconfigured state forever would read as a pass above."""
+    ocdid = await _jurisdiction("no-cadence-aged")
+    await _attempt(ocdid, days_ago=31)
 
     assert await _due() == [ocdid]
 
