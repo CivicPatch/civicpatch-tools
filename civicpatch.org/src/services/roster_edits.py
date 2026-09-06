@@ -206,5 +206,8 @@ async def publish(
         raise MissingRoster(changeset_id)
     # Photos promote with the data: publishing is what moves them off the artifacts bucket.
     await publish_people(
-        changeset_id, jurisdiction_ocdid, promote_images(roster), resolved_by_user_id
+        changeset_id,
+        jurisdiction_ocdid,
+        await promote_images(roster),
+        resolved_by_user_id,
     )
