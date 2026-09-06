@@ -9,14 +9,17 @@ from temporalio.common import WorkflowIDConflictPolicy
 from temporalio.service import RPCError, RPCStatusCode
 
 from core.temporal_workflow_state import TemporalWorkflowState, summarize
-from lib.temporal.types import OpenDataBatchCommitRequest
-from lib.temporal.workflows import (
+from lib.temporal.sink_workflows import (
     JurisdictionsSheetSyncWorkflow,
-    OdSyncTargetedWorkflow,
     OpenDataBatchCommitWorkflow,
     RosterSheetSyncWorkflow,
-    ScheduleId,
-    TASK_QUEUE,
+)
+from lib.temporal.jurisdiction_workflows import OdSyncTargetedWorkflow
+from lib.temporal.types import (
+    SCRAPE_TASK_QUEUE,
+    SINKS_TASK_QUEUE,
+    JURISDICTIONS_TASK_QUEUE,
+    OpenDataBatchCommitRequest,
 )
 from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
 from environment import get_env_vars
@@ -25,7 +28,6 @@ _client: Client | None = None
 
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
-PEOPLE_COLLECTOR_TASK_QUEUE = "people-collector"
 WORKFLOW_CLASS_NAME = "PeopleCollectorWorkflow"
 
 
@@ -59,7 +61,7 @@ async def start_people_collector_workflow(
         WORKFLOW_CLASS_NAME,
         args=[jurisdiction_ocdid, pipeline_run_id, dispatch_mode, url, source_urls],
         id=workflow_id,
-        task_queue=PEOPLE_COLLECTOR_TASK_QUEUE,
+        task_queue=SCRAPE_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
         execution_timeout=PEOPLE_COLLECTOR_EXECUTION_TIMEOUT,
     )
@@ -90,7 +92,7 @@ async def start_state_scrape_workflow(
         "StateScrapeWorkflow",
         args=[state, num_jurisdictions, created_by_user_id, _pipeline_run_concurrency()],
         id=f"state-scrape-{state}",
-        task_queue=PEOPLE_COLLECTOR_TASK_QUEUE,
+        task_queue=SCRAPE_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.FAIL,
     )
     return handle.id
@@ -102,7 +104,7 @@ async def start_targeted_od_sync(jurisdiction_ocdids: list[str]) -> str:
         OdSyncTargetedWorkflow.run,
         args=[jurisdiction_ocdids],
         id=f"od-sync-targeted-{uuid.uuid4().hex[:8]}",
-        task_queue=TASK_QUEUE,
+        task_queue=JURISDICTIONS_TASK_QUEUE,
     )
     return handle.id
 
@@ -122,7 +124,7 @@ async def enqueue_roster_sheet_sync(state: str) -> None:
         RosterSheetSyncWorkflow.run,
         state,
         id=f"roster-sheet-sync:{state}",
-        task_queue=TASK_QUEUE,
+        task_queue=SINKS_TASK_QUEUE,
         start_signal="mark_dirty",
     )
 
@@ -134,7 +136,7 @@ async def enqueue_jurisdictions_sheet_sync() -> None:
     await client.start_workflow(
         JurisdictionsSheetSyncWorkflow.run,
         id="jurisdictions-sheet-sync",
-        task_queue=TASK_QUEUE,
+        task_queue=SINKS_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.USE_EXISTING,
     )
 
@@ -156,7 +158,7 @@ async def enqueue_open_data_batch_commit(request: OpenDataBatchCommitRequest) ->
         OpenDataBatchCommitWorkflow.run,
         request,
         id=f"open-data-batch-commit:{request.batch_id}:{digest}",
-        task_queue=TASK_QUEUE,
+        task_queue=SINKS_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.USE_EXISTING,
     )
 

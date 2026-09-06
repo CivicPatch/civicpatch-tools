@@ -407,11 +407,6 @@ run = "uv run pyright"
 dir = "civicpatch.org"
 description = "Run pyright type checker on civicpatch.org"
 
-[tasks.typecheck-worker]
-run = "uv run pyright"
-dir = "worker"
-description = "Run pyright type checker on worker"
-
 [tasks.typecheck-pipelines]
 run = "uv run pyright"
 dir = "pipelines"
@@ -470,8 +465,8 @@ docker compose up --watch
 """
 
 [tasks.watch-worker]
-description = "Hot-reload the Temporal worker when worker or shared code changes"
-run = "watchfiles --filter python 'docker compose restart worker civicpatch-org-worker' worker/src/ civicpatch.org/src/ shared/src/shared/"
+description = "Hot-reload both Temporal workers when civicpatch.org or shared code changes"
+run = "watchfiles --filter python 'docker compose restart civicpatch-org-sinks civicpatch-org-jurisdictions civicpatch-org-expiry civicpatch-org-scrape' civicpatch.org/src/ shared/src/shared/"
 
 [tasks.otp]
 description = "Print the most recent OTP code captured by local Supabase's Mailpit (port 54324). Useful when the Mailpit UI isn't reachable in the browser."

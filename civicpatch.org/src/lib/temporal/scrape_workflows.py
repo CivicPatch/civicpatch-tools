@@ -1,3 +1,11 @@
+"""The scrape workflows: one jurisdiction, and a whole state's worth of them.
+
+Moved from the standalone `worker` package on 2026-09-05. They run on their own task queue,
+registered by `workers/scrape.py`, its own process and pod — a different
+concurrency budget, because these activities are thin and long-lived where the sync ones are
+short and memory-hungry.
+"""
+
 import asyncio
 from datetime import timedelta
 from typing import Optional
@@ -6,13 +14,16 @@ from temporalio import workflow
 from temporalio.common import RetryPolicy, WorkflowIDReusePolicy
 
 with workflow.unsafe.imports_passed_through():
-    from activities.github_activity import cancel_local_run, trigger_github_action, trigger_local
-    from activities.pipeline_run_status_activity import update_pipeline_run_status, poll_pipeline_run_status
-    from activities.state_scrape_activity import claim_scrape_candidates
-    from constants import RunConclusion
+    from lib.temporal.types import RunConclusion
+    from routers.temporal.scrape_activities import (
+        cancel_local_run,
+        claim_scrape_candidates,
+        poll_pipeline_run_status,
+        trigger_github_action,
+        trigger_local,
+        update_pipeline_run_status,
+    )
     from shared.utils.statuses import PipelineRunStatus
-
-TASK_QUEUE = "people-collector"
 
 _DISPATCH_MODE_LOCAL = "local"
 

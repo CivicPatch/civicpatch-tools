@@ -111,17 +111,22 @@ services:
     networks:
       - civicpatch_net
 
-  civicpatch-org-worker:
-    container_name: civicpatch-org-worker
-    build:
+  # ── Workers ────────────────────────────────────────────────────────────────
+  # Three of the four run `get_pool()`, which goes through `environment.get_env_vars()` and so
+  # needs the whole required set — hence one shared block rather than three copies. The scrape
+  # worker is the exception and lives in the root compose file with a deliberately narrow
+  # environment: it touches no database, and that is the property worth protecting.
+  civicpatch-org-sinks:
+    container_name: civicpatch-org-sinks
+    build: &worker-build
       context: ..
       dockerfile: civicpatch.org/Dockerfile
       target: development
-    entrypoint: ["python", "src/worker.py"]
-    depends_on:
+    entrypoint: ["python", "src/workers/sinks.py"]
+    depends_on: &worker-depends
       civicpatch-org:
         condition: service_healthy
-    environment:
+    environment: &worker-env
       # Required by environment.get_env_vars() even though the worker
       # doesn't call Supabase. Values mirror the civicpatch-org service.
       SUPABASE_URL: "http://host.docker.internal:54321"
@@ -156,17 +161,42 @@ services:
       TEMPORAL_NAMESPACE: default
       DB_POOL_MIN_SIZE: 1
       DB_POOL_MAX_SIZE: 2
-    volumes:
+    volumes: &worker-volumes
       - ./:/app
       - ../shared/src/shared:/app/src/shared:ro
     networks:
       - civicpatch_net
-    develop:
+    develop: &worker-watch
       watch:
         - path: ./src
           action: restart
         - path: ../shared/src/shared
           action: restart
+
+  # Inbound: open-data's jurisdiction files into the database. Also the one worker that
+  # registers Temporal schedules — for all four queues. See lib/temporal/schedules.py.
+  civicpatch-org-jurisdictions:
+    container_name: civicpatch-org-jurisdictions
+    build: *worker-build
+    entrypoint: ["python", "src/workers/jurisdictions.py"]
+    depends_on: *worker-depends
+    environment: *worker-env
+    volumes: *worker-volumes
+    networks:
+      - civicpatch_net
+    develop: *worker-watch
+
+  # Retiring stale runs, idle review sessions and superseded changesets.
+  civicpatch-org-expiry:
+    container_name: civicpatch-org-expiry
+    build: *worker-build
+    entrypoint: ["python", "src/workers/expiry.py"]
+    depends_on: *worker-depends
+    environment: *worker-env
+    volumes: *worker-volumes
+    networks:
+      - civicpatch_net
+    develop: *worker-watch
 
 volumes:
   api_civicpatch_org_db_data:

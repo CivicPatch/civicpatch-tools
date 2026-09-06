@@ -4,10 +4,6 @@ from enum import StrEnum
 class PipelineRunStatus(StrEnum):
     # Lifecycle states
     PENDING = "PENDING"
-    # ⚠️ Written once, by the worker's first activity, and overwritten by the engine's first
-    # step report seconds later — so it is real but never observed in a stored row, and two
-    # separate sweeps have called it dead. Only `typecheck-worker` catches that; `worker/` has
-    # no tests. Nothing branches on it: every reader asks whether the status is terminal.
     RUNNING = "RUNNING"
     SUCCESS = "SUCCESS"
     ERROR = "ERROR"
@@ -79,13 +75,14 @@ class PipelineIssueType(StrEnum):
     COST_CAP_REACHED = "cost_cap_reached"
 
 
-
 # Issue types a run can produce, as opposed to ones about a proposal. These are keyed on the
 # run rather than a changeset, because a run that fails mints no changeset — so the issues page
 # renders the key bare. Defined once: it is both what cp.org accepts from the pipeline and what
 # the issues endpoint treats as run-shaped, and those two drifting is how a raw exception string
 # became an issue type.
-RUN_LEVEL_ISSUE_TYPES = frozenset(PipelineRunErrorType) | {PipelineIssueType.PIPELINE_ERROR}
+RUN_LEVEL_ISSUE_TYPES = frozenset(PipelineRunErrorType) | {
+    PipelineIssueType.PIPELINE_ERROR
+}
 
 
 class ChangesetKind(StrEnum):
