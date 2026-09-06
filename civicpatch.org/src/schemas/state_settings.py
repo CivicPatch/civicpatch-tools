@@ -19,8 +19,11 @@ class StateSettings(BaseModel):
     # NULL = manual: no schedule, and the scrape candidates for this state never drain on their
     # own. The page's own word for it.
     cadence_days: int | None = None
-    # Staggers the states, so fifty schedules do not all fire at midnight.
-    cadence_start: date | None = None
+    # Which day the cadence lands on. Sep 1 at 30 days gives Sep 1, Oct 1, Nov 1 — and
+    # Aug 2 before that: the anchor picks the day in the cycle, not the day it begins.
+    # Staggers the states so fifty schedules do not all fire at one midnight. Renamed from
+    # `cadence_start` in migration 184, which read as a delay it never was.
+    cadence_anchor: date | None = None
     # One run's cap. NULL = inherit the pipeline's own default.
     pipeline_run_cap_usd: Decimal | None = None
     # This state's calendar month. NULL = no cap.

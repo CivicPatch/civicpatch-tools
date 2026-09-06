@@ -16,7 +16,7 @@ pytestmark = pytest.mark.unit
 
 def test_the_package_default_applies_when_no_state_set_a_cap():
     """Every local run and every unconfigured state lands here, so this is the common path."""
-    assert load_pipeline_run_limits().pipeline_run_cap_usd == Decimal("0.20")
+    assert load_pipeline_run_limits().pipeline_run_cap_usd == Decimal("0.05")
 
 
 def test_a_states_cap_overrides_the_package_default():

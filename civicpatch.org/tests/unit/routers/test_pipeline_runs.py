@@ -355,9 +355,12 @@ def _as(client, role):
 
 
 @pytest.mark.unit
-@pytest.mark.parametrize("role", [UserRole.DEFAULT, UserRole.CONTRIBUTORS])
-def test_spend_is_refused_below_maintainer(role):
-    """Publishing a roster is open to any signed-in account; what it cost us is not."""
+@pytest.mark.parametrize(
+    "role", [UserRole.DEFAULT, UserRole.CONTRIBUTORS, UserRole.MAINTAINERS]
+)
+def test_spend_is_refused_below_admin(role):
+    """Publishing a roster is open to any signed-in account; what it cost us is not — and the
+    caps it is measured against are Admin, so seeing one without the other is half an answer."""
     client = _spend_client()
     _as(client, role)
 
@@ -367,8 +370,8 @@ def test_spend_is_refused_below_maintainer(role):
 
 
 @pytest.mark.unit
-@pytest.mark.parametrize("role", [UserRole.MAINTAINERS, UserRole.ADMINS])
-def test_spend_is_allowed_at_maintainer_and_above(role):
+def test_spend_is_allowed_for_an_admin():
+    role = UserRole.ADMINS
     client = _spend_client()
     _as(client, role)
     with patch.object(
@@ -393,7 +396,7 @@ def test_spend_will_not_scan_an_unbounded_window():
     """The window reaches SQL as an interval, so an unbounded one is an unbounded scan for
     anyone editing the query string."""
     client = _spend_client()
-    _as(client, UserRole.MAINTAINERS)
+    _as(client, UserRole.ADMINS)
 
     assert client.get("/pipeline_runs/spend?window_days=0").status_code == 422
     assert client.get("/pipeline_runs/spend?window_days=99999").status_code == 422

@@ -852,6 +852,47 @@ export const fetchStateSpend = async (windowDays) => {
   return body.data;
 };
 
+// Cadence and budget for one state. One call: the block renders as a unit.
+const SCRAPE_SETTINGS_URL = `${API_URL}/api/v1/scrape_settings`;
+
+const scrapeSettingsRequest = async (path, options = {}) => {
+  const res = await fetch(`${SCRAPE_SETTINGS_URL}${path}`, {
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    ...options,
+  });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.detail || `HTTP ${res.status}`);
+  return body.data;
+};
+
+export const fetchStateScrapeSettings = async (state) =>
+  scrapeSettingsRequest(`/${encodeURIComponent(state)}`);
+
+export const fetchGlobalScrapeSettings = async () => scrapeSettingsRequest("/global");
+
+export const saveGlobalCap = async (monthlyCapUsd) =>
+  scrapeSettingsRequest("/global", {
+    method: "PUT",
+    body: JSON.stringify({ monthly_cap_usd: monthlyCapUsd }),
+  });
+
+export const saveCadence = async (state, cadenceDays, cadenceAnchor) =>
+  scrapeSettingsRequest(`/${encodeURIComponent(state)}/cadence`, {
+    method: "PUT",
+    body: JSON.stringify({ cadence_days: cadenceDays, cadence_anchor: cadenceAnchor }),
+  });
+
+// Admin-gated server side; the page gates the control too.
+export const saveCaps = async (state, pipelineRunCapUsd, monthlyCapUsd) =>
+  scrapeSettingsRequest(`/${encodeURIComponent(state)}/caps`, {
+    method: "PUT",
+    body: JSON.stringify({
+      pipeline_run_cap_usd: pipelineRunCapUsd,
+      monthly_cap_usd: monthlyCapUsd,
+    }),
+  });
+
 // Starting a state-wide scrape. Maintainer-gated server side; the page gates the control too.
 // `numJurisdictions` omitted means every jurisdiction due — which is what the button offers.
 export const startStateScrape = async (state, numJurisdictions = null) => {

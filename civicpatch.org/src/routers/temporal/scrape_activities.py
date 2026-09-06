@@ -20,7 +20,6 @@ import jwt
 from temporalio import activity
 
 from lib.temporal.types import RunConclusion
-from services.spend_budget import cap_reached_for_state
 from shared.utils.statuses import PipelineRunStatus
 
 GITHUB_APP_ID = os.environ["GITHUB_APP_ID"]
@@ -206,17 +205,12 @@ async def claim_scrape_candidates(
         return resp.json()["data"]["jurisdictions"]
 
 
+# Which monthly cap this state has reached, or None if it may keep spending.
 @activity.defn
 async def budget_cap_reached(state: str) -> Optional[str]:
-    """Which monthly cap this state has reached, or None if it may keep spending.
+    # Imported here: `scrape_workflows` imports this module, and Temporal re-imports it inside
+    # the workflow sandbox, which cannot load the database layer.
+    from services.spend_budget import cap_reached_for_state
 
-    Reads the database rather than calling the API: this is two reads and a pure comparison,
-    with no logic a service owns — unlike the claim, where selecting and registering are one
-    operation that must not be reimplemented here.
-
-    Returns the name rather than a bool so the caller can say *which* cap stopped it. An
-    operator told only "over budget" cannot tell whether to raise one state's cap or the
-    global one.
-    """
     cap = await cap_reached_for_state(state)
     return cap.value if cap else None

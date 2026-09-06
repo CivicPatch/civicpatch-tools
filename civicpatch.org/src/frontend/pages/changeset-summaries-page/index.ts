@@ -7,7 +7,13 @@
 import { component, useEffect, useState } from "haunted";
 import { html, nothing } from "lit-html";
 import "./changeset-summaries.css";
-import { fetchStateCalendar, fetchStateRollup, fetchStateSpend } from "../../api.js";
+import {
+  fetchGlobalScrapeSettings,
+  fetchStateCalendar,
+  fetchStateRollup,
+  fetchStateSpend,
+  saveGlobalCap,
+} from "../../api.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import {
   dayKey,
@@ -23,9 +29,11 @@ import {
   spendOf,
   type StateSpend,
 } from "./spend.js";
+import { describeStateCaps, describeBudget, type GlobalScrapePanel } from "./scrape-settings.js";
 import { hasPickedEverything, isShown, toggle } from "./selection.js";
 import "./state-section.ts";
 import "./bucket-modal.ts";
+import "./global-budget-modal.ts";
 
 const WINDOW_DAYS = 30;
 
@@ -110,7 +118,7 @@ function renderRow(row: StateRollup, calendar: Map<string, CalendarDay>, days: s
   `;
 }
 
-// `rows` is the selection, not the fleet — the ledger answers for what is on screen.
+// `rows` is the selection, not every state — the ledger answers for what is on screen.
 function renderLedger(rows: StateRollup[], spend: SpendByState) {
   const sum = (pick: (r: StateRollup) => number) => rows.reduce((n, r) => n + pick(r), 0);
   const figures = [
@@ -119,7 +127,7 @@ function renderLedger(rows: StateRollup[], spend: SpendByState) {
     { n: sum((r) => r.published), label: "published" },
     { n: sum((r) => r.roster_edits), label: "roster edits" },
   ];
-  // A fleet total is a real total even when a member spent nothing, so summing over the
+  // A total across states is a real total even when one spent nothing, so summing over the
   // nothings is right here — unlike the per-state figure, where 0 would be a claim.
   const spendTotal = spend
     ? rows.reduce((n, row) => n + spendOf(spend.get(row.state)), 0)
@@ -154,6 +162,25 @@ function renderLedger(rows: StateRollup[], spend: SpendByState) {
 //
 // Absent rather than empty when nothing runs: a banner that says "0 scraping" is a banner
 // asking to be read every time, to learn nothing.
+function renderBudget(
+  panel: GlobalScrapePanel,
+  canEdit: boolean,
+  onEdit: () => void,
+) {
+  return html`
+    <div class="cs-budget">
+      <span class="cs-budget__label">All states</span>
+      <span class="cs-budget__fig">
+        ${describeBudget(panel.spent_this_month_usd, panel.monthly_cap_usd)} this month
+      </span>
+      <span class="cs-budget__fig cs-budget__fig--quiet">${describeStateCaps(panel)}</span>
+      ${canEdit
+        ? html`<button class="cs-budget__edit" @click=${onEdit}>edit</button>`
+        : nothing}
+    </div>
+  `;
+}
+
 function renderRunning(rows: StateRollup[]) {
   const live = rows.filter((row) => row.running);
   if (!live.length) return nothing;
@@ -234,6 +261,8 @@ function CivChangesetSummaries() {
   const [sortBy, setSortBy] = useState("queue");
   // Independent of `sortBy`, which is what makes a selection survive a sort change.
   const [picked, setPicked] = useState<string[]>([]);
+  const [budget, setBudget] = useState<GlobalScrapePanel | null>(null);
+  const [editingBudget, setEditingBudget] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -244,6 +273,13 @@ function CivChangesetSummaries() {
       })
       .catch((err: Error) => setError(err.message));
   }, [refresh]);
+
+  useEffect(() => {
+    if (!permissions.can_write_global_config) return;
+    fetchGlobalScrapeSettings()
+      .then(setBudget)
+      .catch(() => setBudget(null));
+  }, [refresh, permissions.can_write_global_config]);
 
   // Its own effect, and its own failure: spend is a second request that 403s for most users,
   // so a refusal here must not blank the page the way the rollup's would.
@@ -302,6 +338,24 @@ function CivChangesetSummaries() {
         </span>
       </div>
 
+      ${budget
+        ? renderBudget(
+            budget,
+            !!permissions.can_write_global_config,
+            () => setEditingBudget(true),
+          )
+        : nothing}
+      ${editingBudget && budget
+        ? html`<civ-global-budget-modal
+            .panel=${budget}
+            @settings-saved=${() => {
+              setEditingBudget(false);
+              setRefresh((n: number) => n + 1);
+            }}
+            @cancel=${() => setEditingBudget(false)}
+          ></civ-global-budget-modal>`
+        : nothing}
+
       ${renderRunning(shown)}
 
       ${renderCompare(rows, picked, setPicked)}
@@ -320,6 +374,7 @@ function CivChangesetSummaries() {
             .row=${row}
             .windowDays=${WINDOW_DAYS}
             .canScrape=${!!permissions.can_scrape}
+            .canEditSettings=${!!permissions.can_write_global_config}
             .spend=${spend ? (spend.get(row.state) ?? null) : null}
           ></civ-state-section>`,
         )}

@@ -91,7 +91,7 @@ async def test_writing_a_cadence_converges_that_state_and_nothing_else():
         "get_state_settings",
         new=AsyncMock(
             return_value=StateSettings(
-                state="wa", cadence_days=7, cadence_start=date(2026, 9, 1)
+                state="wa", cadence_days=7, cadence_anchor=date(2026, 9, 1)
             )
         ),
     ), patch.object(schedules, "_ensure_schedule", new=ensure):

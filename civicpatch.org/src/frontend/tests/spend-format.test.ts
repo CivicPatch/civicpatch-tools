@@ -13,26 +13,24 @@ import {
 } from "../pages/changeset-summaries-page/spend.ts";
 
 describe("formatUsd", () => {
-  it("reads a sub-cent figure in cents, not as leading zeroes", () => {
-    // The real dev figure for one Ellensburg scrape, 2026-09-05. As dollars this is
-    // `$0.00222` — five characters before anything informative.
-    expect(formatUsd("0.00221606")).toBe("0.22¢");
+  it("keeps a sub-cent figure visible instead of rounding it to nothing", () => {
+    // The real dev figure for one Ellensburg scrape, 2026-09-05.
+    expect(formatUsd("0.00221606")).toBe("$0.0022");
   });
 
-  it("stays in cents all the way up to a dollar", () => {
-    // Mixing `$0.04` and `4.25¢` in one column is harder to scan than either alone.
-    expect(formatUsd("0.0425")).toBe("4.25¢");
-    expect(formatUsd("0.99")).toBe("99.00¢");
+  it("shows small amounts to four places", () => {
+    expect(formatUsd("0.0425")).toBe("$0.0425");
+    expect(formatUsd("0.99")).toBe("$0.9900");
   });
 
-  it("switches to dollars at a dollar", () => {
+  it("switches to two places at a dollar", () => {
     expect(formatUsd("1")).toBe("$1.00");
     expect(formatUsd("18.4212")).toBe("$18.42");
   });
 
   it("reads the value as a string, so the exact decimal survives the wire", () => {
     // Pydantic serialises Decimal as text. Parsing early is what would lose this.
-    expect(formatUsd("0.10")).toBe("10.00¢");
+    expect(formatUsd("0.10")).toBe("$0.1000");
   });
 });
 

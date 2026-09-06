@@ -291,7 +291,7 @@ erDiagram
     state_settings {
         text            state               PK "no FK — `jurisdictions.state` is a column, not a table"
         int_null        cadence_days        "NULL = manual, the page's own word. CHECK > 0 — a cadence of 0 schedules an infinite loop"
-        date_null       cadence_start       "ScheduleIntervalSpec(offset=), so states stagger instead of all firing at once"
+        date_null       cadence_anchor       "ScheduleIntervalSpec(offset=), so states stagger instead of all firing at once"
         numeric_null    pipeline_run_cap_usd      "one run's ceiling. NULL = inherit pipeline.yml's pipeline_run_cap_usd"
         numeric_null    monthly_cap_usd     "this state's month. NULL = no ceiling. Both CHECK >= 0; 0 is legal and means spend nothing, which NULL does not"
         uuid_null       updated_by_user_id  FK

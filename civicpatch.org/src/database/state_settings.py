@@ -13,7 +13,7 @@ from psycopg.rows import dict_row
 from schemas.state_settings import GlobalSettings, StateSettings
 
 _COLUMNS = (
-    "state, cadence_days, cadence_start, pipeline_run_cap_usd, monthly_cap_usd, "
+    "state, cadence_days, cadence_anchor, pipeline_run_cap_usd, monthly_cap_usd, "
     "updated_by_user_id::text, updated_at"
 )
 
@@ -40,7 +40,7 @@ async def get_all_state_settings() -> dict[str, StateSettings]:
 
 
 async def set_cadence(
-    state: str, cadence_days: int | None, cadence_start, user_id: str | None
+    state: str, cadence_days: int | None, cadence_anchor, user_id: str | None
 ) -> None:
     """Maintainer-writable: how often a state is scraped. Separate from the caps below because
     admins allocate and maintainers spend — see the permissions table in README."""
@@ -48,15 +48,15 @@ async def set_cadence(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO state_settings (state, cadence_days, cadence_start, updated_by_user_id)
+            INSERT INTO state_settings (state, cadence_days, cadence_anchor, updated_by_user_id)
             VALUES (%s, %s, %s, %s)
             ON CONFLICT (state) DO UPDATE
                SET cadence_days = EXCLUDED.cadence_days,
-                   cadence_start = EXCLUDED.cadence_start,
+                   cadence_anchor = EXCLUDED.cadence_anchor,
                    updated_by_user_id = EXCLUDED.updated_by_user_id,
                    updated_at = now()
             """,
-            (state, cadence_days, cadence_start, user_id),
+            (state, cadence_days, cadence_anchor, user_id),
         )
         await conn.commit()
 
@@ -111,3 +111,16 @@ async def set_global_cap(monthly_cap_usd: Decimal | None, user_id: str | None) -
             (monthly_cap_usd, user_id),
         )
         await conn.commit()
+
+
+async def sum_state_monthly_caps() -> Decimal:
+    """Shown, never enforced: this may exceed the global cap, and that is a normal state
+    meaning the caps are ceilings rather than reservations."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT COALESCE(sum(monthly_cap_usd), 0) FROM state_settings"
+        )
+        row = await cur.fetchone()
+    assert row, "sum() always returns a row"
+    return row[0]
