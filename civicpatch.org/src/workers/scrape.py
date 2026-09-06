@@ -23,6 +23,7 @@ from lib.temporal.scrape_workflows import (
 )
 from lib.temporal.types import SCRAPE_TASK_QUEUE
 from routers.temporal.scrape_activities import (
+    budget_cap_reached,
     cancel_local_run,
     claim_scrape_candidates,
     poll_pipeline_run_status,
@@ -43,6 +44,7 @@ WORKFLOWS = [
 ]
 
 ACTIVITIES = [
+    budget_cap_reached,
     trigger_github_action,
     trigger_local,
     cancel_local_run,

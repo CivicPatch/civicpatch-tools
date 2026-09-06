@@ -270,6 +270,10 @@ def get_router(api_key_header):
             "name": args.get("name"),
             "url": args.get("url"),
             "source_urls": args.get("source_urls"),
+            # Asked for rather than carried: the run already knows its cap, so nothing
+            # between here and the scraper has to pass it along — not the workflow, not the
+            # activities, not the Actions workflow in the other repo. Null means inherit.
+            "pipeline_run_cap_usd": pipeline_run.get("pipeline_run_cap_usd"),
         }
 
     # ── Pipeline Runs: Status & Progress ──────────────

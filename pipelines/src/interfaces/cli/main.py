@@ -15,7 +15,11 @@ from runners.engine import PipelineRunError
 from runners.people_collector.main import start as start_people_collector
 from shared.utils import id_utils
 from pipelines_environment import get_env_vars
-from services.civicpatch_api import get_jurisdiction_info, register_pipeline_run
+from services.civicpatch_api import (
+    fetch_pipeline_run_config,
+    get_jurisdiction_info,
+    register_pipeline_run,
+)
 
 
 async def run_pipeline_cli(pipeline_run_id: str, request: PeopleCollectorRequest):
@@ -51,6 +55,12 @@ async def _run_pipeline_async(args):
             name = name or info.get("name")
             url = url or info.get("url")
         await register_pipeline_run(client, pipeline_run_id, args.jurisdiction_ocdid, name, url)
+        # The row is registered before dispatch, so its cap is resolved by the time we ask.
+        config_data = await fetch_pipeline_run_config(
+            client, None, pipeline_run_id
+        )
+        raw_cap = config_data.get("pipeline_run_cap_usd")
+        cap = Decimal(str(raw_cap)) if raw_cap is not None else None
 
     request = PeopleCollectorRequest(
         jurisdiction_ocdid=args.jurisdiction_ocdid,
@@ -58,9 +68,9 @@ async def _run_pipeline_async(args):
             name=name,
             url=url or "",
             source_urls=source_urls,
-            # Blank, not just absent: the workflow always passes the flag and sends an empty
-            # string when no state set a cap, so `or None` is what keeps that meaning inherit.
-            pipeline_run_cap_usd=Decimal(args.pipeline_run_cap_usd) if args.pipeline_run_cap_usd else None,
+            # The run's own ceiling, read back from the run this dispatch just registered.
+            # Nothing carries it here — not the Actions workflow, not the Temporal args.
+            pipeline_run_cap_usd=cap,
         ),
     )
     await run_pipeline_cli(pipeline_run_id, request)
@@ -106,11 +116,6 @@ def main():
     )
     run_pipeline_parser.add_argument(
         "--source-urls", required=False, help="JSON array of specific URLs to scrape"
-    )
-    run_pipeline_parser.add_argument(
-        "--pipeline-run-cap-usd",
-        required=False,
-        help="Ceiling for this run, in USD. Omitted or blank inherits pipeline.yml's default.",
     )
 
     args = parser.parse_args()

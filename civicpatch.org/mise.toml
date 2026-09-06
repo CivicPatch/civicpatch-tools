@@ -72,20 +72,6 @@ finally:
 '
 """
 
-[tasks.pr_sync]
-run = """
-    curl -X POST "http://localhost:8000/api/admin/pr_sync" \
-      -H "Content-Type: application/json" \
-      -H "Authorization: $SERVICE_API_KEY"
-"""
-
-[tasks.pr_sync_prod]
-run = """
-    curl -X POST "https://civicpatch.org/api/admin/pr_sync" \
-      -H "Content-Type: application/json" \
-      -H "Authorization: $PROD_SERVICE_API_KEY"
-"""
-
 
 # -d '{"jurisdiction_ocdids": ["ocd-jurisdiction/country:us/state:tx/place:combes/government"]}'
 

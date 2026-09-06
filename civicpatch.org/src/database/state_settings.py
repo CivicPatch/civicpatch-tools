@@ -1,7 +1,7 @@
 """Cadence and budget, read and written.
 
 `state_settings` has no row for a state until someone configures one, and that absence is not a
-missing value — it is the default: manual cadence, inherited per-run cap, no monthly ceiling. So
+missing value — it is the default: manual cadence, inherited per-run cap, no monthly cap. So
 every read here answers for every state, configured or not, and no caller has to handle `None`
 differently from a row of all-NULLs.
 """

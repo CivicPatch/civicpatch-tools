@@ -34,7 +34,7 @@ async def test_a_roster_sync_is_keyed_on_the_state():
     """One tab per state is the conflict domain, so forty MA towns publishing must not become
     forty rewrites of the MA tab."""
     client = _client()
-    with patch.object(temporal_client, "_get_client", return_value=client):
+    with patch.object(temporal_client, "get_client", return_value=client):
         await temporal_client.enqueue_roster_sheet_sync("ma")
 
     assert _started(client)["id"] == "roster-sheet-sync:ma"
@@ -47,7 +47,7 @@ async def test_a_roster_sync_signals_rather_than_dropping_a_duplicate():
     running, which between the activity's database read and the workflow closing means the
     change never reaches the sheet — and only the next publish in that state would repair it."""
     client = _client()
-    with patch.object(temporal_client, "_get_client", return_value=client):
+    with patch.object(temporal_client, "get_client", return_value=client):
         await temporal_client.enqueue_roster_sheet_sync("tx")
 
     started = _started(client)
@@ -61,7 +61,7 @@ async def test_the_jurisdiction_sync_is_a_singleton():
     """That tab covers every state, so a second request while one runs is the same work — the
     one place where dropping a duplicate is right."""
     client = _client()
-    with patch.object(temporal_client, "_get_client", return_value=client):
+    with patch.object(temporal_client, "get_client", return_value=client):
         await temporal_client.enqueue_jurisdictions_sheet_sync()
 
     started = _started(client)

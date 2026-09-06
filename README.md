@@ -33,19 +33,20 @@ This repository contains supporting infrastructure for the CivicPatch initiative
   ┌─────────────────────────────────────────────────────────────────────┐
   │  Temporal (workflow engine)                        UI :8002 (local) │
   │                                                                     │
-  │  Schedules:  pr-sync (hourly)  ·  od-sync (daily)                   │
+  │  Schedules:  od-sync (hourly)  ·  sweep-changes (5m)                │
+  │              sweep-everything (daily)  ·  two cleanups (10m / 15m)  │
   └───────────┬──────────────────────────────┬──────────────────────────┘
               │ orchestrates                 │ orchestrates
               ▼                              ▼
   ┌───────────────────────┐      ┌───────────────────────────────────┐
-  │  worker               │      │  civicpatch-org-worker            │
-  │  (people-collector    │      │  (civicpatch-org-sync queue)      │
-  │   queue)              │      │                                   │
-  │                       │      │  · sync open-data → DB            │
-  │  · trigger pipelines  │      │  · sync GitHub PR states → DB     │
-  │    or GitHub Actions  │      └───────────┬───────────────────────┘
-  │  · poll job status    │                  │ reads/writes
-  └──────────┬────────────┘                  │
+  │  scrape worker        │      │  three background workers         │
+  │  (civicpatch-         │      │                                   │
+  │   pipeline-runs)      │      │  jurisdictions  open-data → DB    │
+  │                       │      │  sinks          DB → sheet,       │
+  │  · trigger pipelines  │      │                 open-data, R2     │
+  │    or GitHub Actions  │      │  expiry         retire stale work │
+  │  · poll job status    │      └───────────┬───────────────────────┘
+  └──────────┬────────────┘                  │ reads/writes
              │ calls                         ▼
              ▼                   ┌───────────────────────┐
   ┌──────────────────────┐       │  civicpatch.org API   │◄── GitHub webhooks

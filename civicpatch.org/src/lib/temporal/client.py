@@ -36,7 +36,10 @@ def _workflow_id(jurisdiction_ocdid: str) -> str:
     return f"people-collector-{safe}"
 
 
-async def _get_client() -> Client:
+async def get_client() -> Client:
+    """The shared client, connected once. Public since 2026-09-05: the settings router converges
+    a state's schedule right after writing its cadence, and that is a caller outside this
+    module rather than one more wrapper inside it."""
     global _client
     if _client is None:
         _client = await Client.connect(
@@ -53,7 +56,7 @@ async def start_people_collector_workflow(
     url: Optional[str] = None,
     source_urls: Optional[list[str]] = None,
 ) -> str:
-    client = await _get_client()
+    client = await get_client()
     workflow_id = _workflow_id(jurisdiction_ocdid)
     # TERMINATE_EXISTING cleans up zombie Temporal workflows (e.g. after a worker crash).
     # The frontend is responsible for not calling this endpoint when a job is actively running.
@@ -87,7 +90,7 @@ async def start_state_scrape_workflow(
     candidate pool. Keyed on the state alone, `FAIL` makes a second start an error the caller
     sees rather than a silent duplicate.
     """
-    client = await _get_client()
+    client = await get_client()
     handle = await client.start_workflow(
         "StateScrapeWorkflow",
         args=[state, num_jurisdictions, created_by_user_id, _pipeline_run_concurrency()],
@@ -99,7 +102,7 @@ async def start_state_scrape_workflow(
 
 
 async def start_targeted_od_sync(jurisdiction_ocdids: list[str]) -> str:
-    client = await _get_client()
+    client = await get_client()
     handle = await client.start_workflow(
         OdSyncTargetedWorkflow.run,
         args=[jurisdiction_ocdids],
@@ -119,7 +122,7 @@ async def enqueue_roster_sheet_sync(state: str) -> None:
     that only the next publish in that state would repair. Signalling instead earns another
     pass; see `RosterSheetSyncWorkflow`.
     """
-    client = await _get_client()
+    client = await get_client()
     await client.start_workflow(
         RosterSheetSyncWorkflow.run,
         state,
@@ -132,7 +135,7 @@ async def enqueue_roster_sheet_sync(state: str) -> None:
 async def enqueue_jurisdictions_sheet_sync() -> None:
     """Refresh the dropdown source. One at a time — the id carries no argument because the tab
     covers every state, so a second request while one runs is genuinely the same work."""
-    client = await _get_client()
+    client = await get_client()
     await client.start_workflow(
         JurisdictionsSheetSyncWorkflow.run,
         id="jurisdictions-sheet-sync",
@@ -149,7 +152,7 @@ async def enqueue_open_data_batch_commit(request: OpenDataBatchCommitRequest) ->
     would let USE_EXISTING drop the second. Identical selections still dedupe, which is what
     makes a double-clicked Publish harmless.
     """
-    client = await _get_client()
+    client = await get_client()
     selection = ",".join(
         sorted(cid for item in request.items for cid in item.changeset_ids)
     )
@@ -173,7 +176,7 @@ async def describe_workflow(jurisdiction_ocdid: str) -> TemporalWorkflowState | 
     Read live rather than stored: this is true for seconds at a time, and a stored copy would
     be a stale answer to a question only worth asking about the present.
     """
-    client = await _get_client()
+    client = await get_client()
     handle = client.get_workflow_handle(_workflow_id(jurisdiction_ocdid))
     try:
         description = await handle.describe()
@@ -198,7 +201,7 @@ async def describe_workflow(jurisdiction_ocdid: str) -> TemporalWorkflowState | 
 
 
 async def cancel_workflow(jurisdiction_ocdid: str) -> None:
-    client = await _get_client()
+    client = await get_client()
     handle = client.get_workflow_handle(_workflow_id(jurisdiction_ocdid))
     try:
         await handle.cancel()

@@ -26,16 +26,30 @@ async def register_run(
     progress: int = 0,
     if_not_exists: bool = False,
 ) -> None:
-    """Start an attempt. No changeset — one is minted at ingest, and only if the run succeeds."""
+    """Start an attempt. No changeset — one is minted at ingest, and only if the run succeeds.
+
+    The spend cap is resolved here, in the INSERT, rather than passed in: two paths register
+    runs — one scrape and a state batch — and a lookup each of them has to remember is one that
+    will eventually be forgotten. A scalar subquery cannot be skipped.
+
+    It yields NULL for a state with no row, a state that set no cap, and an unknown
+    jurisdiction. All three mean the same thing: inherit `pipeline.yml`'s default.
+    """
     pool = await get_pool()
     conflict = "ON CONFLICT (id) DO NOTHING" if if_not_exists else ""
     async with pool.connection() as conn:
         await conn.execute(
             sql.SQL(f"""
             INSERT INTO pipeline_runs (
-                id, jurisdiction_ocdid, arguments_json, created_by_user_id, status, progress
+                id, jurisdiction_ocdid, arguments_json, created_by_user_id, status, progress,
+                pipeline_run_cap_usd
             )
-            VALUES (%s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, (
+                SELECT ss.pipeline_run_cap_usd
+                FROM jurisdictions j
+                JOIN state_settings ss ON ss.state = j.state
+                WHERE j.jurisdiction_ocdid = %s
+            ))
             {conflict}
             """),
             (
@@ -45,6 +59,7 @@ async def register_run(
                 created_by_user_id,
                 status,
                 progress,
+                jurisdiction_ocdid,
             ),
         )
 

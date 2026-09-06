@@ -53,8 +53,8 @@ async def open_jurisdiction_edit_pr(
     fields: dict,
     author: PrAuthor,
 ) -> tuple[int, str] | tuple[None, str]:
-    """The jurisdictions-repo route. Not yet reachable from the app — the live path
-    is open_jurisdiction_url_pr — but real code, so it can be exercised by pointing
+    """The jurisdictions-repo route. Not reachable from the app — the live path is
+    `commit_jurisdiction_patch` — but real code, so it can be exercised by pointing
     JURISDICTIONS_REPO_URL at open-data rather than openstates/jurisdictions.
     """
     repo_url = _get_jurisdictions_repo_url()
@@ -196,6 +196,8 @@ async def merge_jurisdiction_pr(
     pull_request_number: str, approved_by: str | None, changeset_id: str
 ) -> None:
     # Best-effort auto-merge: any failure leaves the PR open for a manual merge.
+    # Auto-merging rather than waiting for review is deliberate (settled 2026-09-05) — a
+    # jurisdiction edit registers a changeset, but nothing holds it pending on purpose.
     # open-data, not the jurisdictions repo — that is where the PR was opened.
     try:
         mergeable_state = await github_service.get_pull_request_mergeability(

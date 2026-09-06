@@ -20,6 +20,7 @@ import jwt
 from temporalio import activity
 
 from lib.temporal.types import RunConclusion
+from services.spend_budget import cap_reached_for_state
 from shared.utils.statuses import PipelineRunStatus
 
 GITHUB_APP_ID = os.environ["GITHUB_APP_ID"]
@@ -181,9 +182,13 @@ async def claim_scrape_candidates(
 ) -> list[dict]:
     """The jurisdictions this run will scrape, each with a changeset already registered.
 
-    Asks the API rather than reaching into the database directly — which is also what makes the
-    claim atomic: selecting and registering happen in one call, so the same jurisdiction cannot
-    be handed to two batches.
+    Asks the API because selecting-and-registering is one operation owned by a service, not
+    because HTTP is safer than SQL — this process holds database credentials and a pool, and
+    `expiry_activities` uses them. Reimplementing the claim here would duplicate the logic, and
+    that is the whole of the argument.
+
+    The claim is atomic because it is one transaction, which is what stops the same jurisdiction
+    being handed to two batches.
 
     Safe to retry: a registered changeset is a non-terminal run, which the candidate query
     excludes — so a second attempt after a partial failure resumes rather than duplicating.
@@ -199,3 +204,19 @@ async def claim_scrape_candidates(
         )
         resp.raise_for_status()
         return resp.json()["data"]["jurisdictions"]
+
+
+@activity.defn
+async def budget_cap_reached(state: str) -> Optional[str]:
+    """Which monthly cap this state has reached, or None if it may keep spending.
+
+    Reads the database rather than calling the API: this is two reads and a pure comparison,
+    with no logic a service owns — unlike the claim, where selecting and registering are one
+    operation that must not be reimplemented here.
+
+    Returns the name rather than a bool so the caller can say *which* cap stopped it. An
+    operator told only "over budget" cannot tell whether to raise one state's cap or the
+    global one.
+    """
+    cap = await cap_reached_for_state(state)
+    return cap.value if cap else None

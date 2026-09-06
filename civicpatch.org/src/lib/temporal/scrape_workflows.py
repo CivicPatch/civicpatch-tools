@@ -17,6 +17,7 @@ with workflow.unsafe.imports_passed_through():
     from lib.temporal.types import RunConclusion
     from routers.temporal.scrape_activities import (
         cancel_local_run,
+        budget_cap_reached,
         claim_scrape_candidates,
         poll_pipeline_run_status,
         trigger_github_action,
@@ -138,16 +139,50 @@ class StateScrapeWorkflow:
         created_by_user_id: Optional[str] = None,
         concurrency: int = DEFAULT_PIPELINE_RUN_CONCURRENCY,
     ) -> int:
-        items = await workflow.execute_activity(
-            claim_scrape_candidates,
-            args=[state, num_jurisdictions, created_by_user_id],
-            start_to_close_timeout=timedelta(minutes=2),
-            retry_policy=RetryPolicy(maximum_attempts=3),
-        )
-        if not items:
-            return 0
-        await _dispatch(items, max(1, concurrency))
-        return len(items)
+        slice_size = max(1, concurrency)
+        dispatched = 0
+
+        # A slice at a time, claimed as it is dispatched. Claiming the whole state up front and
+        # stopping partway would leave every undispatched jurisdiction holding a registered run
+        # — and `get_scrape_candidates` excludes non-terminal runs, so those places would drop
+        # out of the pool until something swept them. Claiming per slice means the only claimed
+        # work is the slice in flight, so stopping needs no compensating release.
+        #
+        # Terminates three ways: the budget is reached, the state runs out of candidates (the
+        # claim returns nothing), or the caller's requested count is met. The claim registers a
+        # run for what it hands back, and registered runs are excluded from candidates, so each
+        # call returns fresh jurisdictions and the second case always arrives.
+        while num_jurisdictions is None or dispatched < num_jurisdictions:
+            cap = await workflow.execute_activity(
+                budget_cap_reached,
+                args=[state],
+                start_to_close_timeout=timedelta(seconds=30),
+                retry_policy=RetryPolicy(maximum_attempts=3),
+            )
+            if cap:
+                workflow.logger.warning(
+                    f"{state}: stopping after {dispatched} jurisdictions, {cap} reached"
+                )
+                break
+
+            wanted = (
+                slice_size
+                if num_jurisdictions is None
+                else min(slice_size, num_jurisdictions - dispatched)
+            )
+            items = await workflow.execute_activity(
+                claim_scrape_candidates,
+                args=[state, wanted, created_by_user_id],
+                start_to_close_timeout=timedelta(minutes=2),
+                retry_policy=RetryPolicy(maximum_attempts=3),
+            )
+            if not items:
+                break
+
+            await _dispatch(items, slice_size)
+            dispatched += len(items)
+
+        return dispatched
 
 
 async def _dispatch(items: list[dict], concurrency: int) -> None:
