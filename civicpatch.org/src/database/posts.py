@@ -47,18 +47,20 @@ async def _accept_fields(cur, post_id: str, values: dict, user_id: str | None) -
     """
     if not user_id:
         return
-    for field, value in _fields_to_accept(values):
-        await assertions.upsert(
-            cur,
+    await assertions.upsert_all(
+        cur,
+        [
             Assertion(
                 entity_type=EntityType.POST,
                 entity_id=post_id,
                 field_path=field,
                 kind=AssertionKind.ACCEPT,
                 value=value,
-            ),
-            user_id,
-        )
+            )
+            for field, value in _fields_to_accept(values)
+        ],
+        user_id,
+    )
 
 
 async def create_if_absent(

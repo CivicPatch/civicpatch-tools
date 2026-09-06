@@ -43,6 +43,73 @@ _DROP_THE_OPPOSITE = """
 """
 
 
+_INSERT = """
+    INSERT INTO assertions
+        (entity_type, entity_id, field_path, kind, value, sources, asserted_by)
+    VALUES (%s, %s, %s, %s, %s, %s, %s)
+    ON CONFLICT {conflict}
+    DO UPDATE SET value = EXCLUDED.value,
+                  sources = EXCLUDED.sources,
+                  asserted_by = EXCLUDED.asserted_by,
+                  asserted_at = now()
+"""
+
+_INSERT_REPLACING_THE_FIELD = _INSERT.format(conflict=_REPLACES_THE_FIELD)
+_INSERT_REPLACING_THE_VALUE = _INSERT.format(conflict=_REPLACES_THE_VALUE)
+
+
+def _conflict_key(claim: Assertion) -> tuple:
+    field = (claim.entity_type.value, claim.entity_id, claim.field_path)
+    return (*field, json.dumps(claim.value)) if _keyed_by_value(claim) else field
+
+
+def latest_of_each(claims: list[Assertion]) -> list[Assertion]:
+    return list({_conflict_key(claim): claim for claim in claims}.values())
+
+
+async def upsert_all(cur, claims: list[Assertion], asserted_by: str) -> None:
+    claims = latest_of_each(claims)
+    if not claims:
+        return
+
+    await cur.executemany(
+        _DROP_THE_OPPOSITE,
+        [
+            (
+                claim.entity_type.value,
+                claim.entity_id,
+                claim.field_path,
+                claim.kind.value,
+                json.dumps(claim.value),
+            )
+            for claim in claims
+        ],
+    )
+
+    for statement, keyed_by_value in (
+        (_INSERT_REPLACING_THE_FIELD, False),
+        (_INSERT_REPLACING_THE_VALUE, True),
+    ):
+        group = [c for c in claims if _keyed_by_value(c) is keyed_by_value]
+        if not group:
+            continue
+        await cur.executemany(
+            statement,
+            [
+                (
+                    claim.entity_type.value,
+                    claim.entity_id,
+                    claim.field_path,
+                    claim.kind.value,
+                    json.dumps(claim.value),
+                    _sources(claim),
+                    asserted_by,
+                )
+                for claim in group
+            ],
+        )
+
+
 async def upsert(cur, assertion: Assertion, asserted_by: str) -> str:
     """Record one claim on a caller's cursor. Returns its id.
 
@@ -119,8 +186,7 @@ async def create_all(claims: list[Assertion], asserted_by: str) -> None:
         return
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        for claim in claims:
-            await upsert(cur, claim, asserted_by)
+        await upsert_all(cur, claims, asserted_by)
         await conn.commit()
 
 
