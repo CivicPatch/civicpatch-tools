@@ -4,7 +4,7 @@ from core.change_logs import field_changes
 from core.jurisdiction_patch import JurisdictionPatch
 from core.people_diff import diff_people
 from database import posts
-from database.change_logs import create_change_log
+from database.change_logs import create_change_log, create_change_logs
 from database.database import get_pool
 from schemas.assertions import EntityType
 from schemas.change_logs import Change
@@ -25,8 +25,12 @@ async def record_manual_edits(
     # versus the content just written to GitHub. Best-effort, like the event records above.
     try:
         labels = await _post_labels(before + after)
-        for change in diff_people(before, after, labels):
-            await create_change_log(change.type, user_id, jurisdiction_ocdid, changeset_id, change.payload)
+        await create_change_logs(
+            [(change.type, change.payload) for change in diff_people(before, after, labels)],
+            user_id,
+            jurisdiction_ocdid,
+            changeset_id,
+        )
     except Exception:
         logger.exception("Failed to record manual edits for request %s", changeset_id)
 
