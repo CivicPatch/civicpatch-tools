@@ -76,7 +76,10 @@ async def clean_sentinels():
     await _wipe()
 
 
-async def _seed_person():
+_ROSTER_URL = "https://zz.gov/roster"
+
+
+async def _seed_person(name: str = "Test Person", urls: list[str] | None = None):
     """A real `people` row, because memberships.person_id is a FK to it."""
     person_id = str(uuid.uuid4())
     pool = await get_pool()
@@ -90,9 +93,9 @@ async def _seed_person():
             (_OCDID, json.dumps({})),
         )
         await cur.execute(
-            "INSERT INTO people (id, jurisdiction_ocdid, name) "
-            "VALUES (%s, %s, %s)",
-            (person_id, _OCDID, "Test Person"),
+            "INSERT INTO people (id, jurisdiction_ocdid, name, urls) "
+            "VALUES (%s, %s, %s, %s)",
+            (person_id, _OCDID, name, urls or []),
         )
         await conn.commit()
     return person_id
@@ -1017,7 +1020,11 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes_and_moves_last_see
     # Three, because `MIN_EXPECTED_PEOPLE` is 3: a one-person roster is itself a review issue,
     # and the gate would rightly refuse it.
     seats = [("mayor", "Mayor"), ("clerk", "Clerk"), ("treasurer", "Treasurer")]
-    people = [await _seed_person() for _ in seats]
+    # Seeded under the names the source records carry. They used to differ — every person
+    # was "Test Person" against a "Seed Mayor" sighting — which made the fixture a
+    # *renaming* scrape rather than a re-confirming one. Invisible while the review checks
+    # only read the set of people; `_check_changed_fields` reads values.
+    people = [await _seed_person(f"Seed {label}") for _, label in seats]
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
@@ -1038,8 +1045,8 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes_and_moves_last_see
             await cur.execute(
                 "INSERT INTO source_records "
                 "  (changeset_id, jurisdiction_ocdid, name, label, source_url) "
-                "VALUES (%s, %s, %s, %s, 'https://zz.gov/roster') RETURNING id",
-                (changeset_id, _OCDID, f"Seed {role_label}", role_label),
+                "VALUES (%s, %s, %s, %s, %s) RETURNING id",
+                (changeset_id, _OCDID, f"Seed {role_label}", role_label, _ROSTER_URL),
             )
             await cur.execute(
                 "INSERT INTO source_record_identities (source_record_id, person_id) "

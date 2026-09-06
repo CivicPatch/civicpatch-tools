@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE changesets DROP COLUMN IF EXISTS verified_at;
+
+COMMIT;

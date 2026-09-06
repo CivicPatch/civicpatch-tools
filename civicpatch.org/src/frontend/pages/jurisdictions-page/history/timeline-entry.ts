@@ -34,6 +34,10 @@ export interface TimelineEntry {
   changeset_id: string;
   created_at: string;
   updated_at: string;
+  pipeline_run_started_at?: string | null;
+  pipeline_run_finished_at?: string | null;
+  dismissed_reason?: string | null;
+  issue_types?: string[];
   kind: string | null;
   change_url: string | null;
   outcome: string;
@@ -67,16 +71,49 @@ const QUIET_NOTE: Record<string, string> = {
   published: "The roster was re-confirmed. Nothing to review.",
   errored: "The scrape failed before producing a roster.",
   cancelled: "Stopped before it produced a roster.",
-  rejected: "Rejected without recorded roster changes.",
+  rejected: "Rejected. Nothing it proposed was applied.",
   unknown: "Dismissed with no recorded reason.",
 };
 
 const quietNote = (outcome: string) =>
   QUIET_NOTE[outcome] ?? "No roster changes.";
 
+// Only a scrape has a pipeline run. An import or a hand edit has no duration to report, and
+// the changeset's own timestamps are not one — it is minted at ingest with created_at ==
+// updated_at, which read 0s for a run that took nine minutes.
+const pipelineRunDuration = (entry: TimelineEntry) =>
+  entry.pipeline_run_started_at && entry.pipeline_run_finished_at
+    ? durationBetween(entry.pipeline_run_started_at, entry.pipeline_run_finished_at)
+    : null;
+
+const ISSUE_LABEL: Record<string, string> = {
+  cost_cap_reached: "stopped at its cost cap",
+  no_roster_found: "found no roster",
+  domain_inactive: "domain inactive",
+  domain_navigation_error: "could not navigate the site",
+  pipeline_error: "pipeline error",
+  merge_failed: "merge failed",
+  user_reported: "reported by a reviewer",
+};
+
+// The issues still open on this changeset. Without them, a short roster and a complete one look
+// identical on the timeline.
+function renderIssues(entry: TimelineEntry) {
+  const types = entry.issue_types ?? [];
+  if (!types.length) return nothing;
+  return html`
+    <span class="tl-entry__issues">
+      ${types.map((t) => ISSUE_LABEL[t] ?? t).join(", ")}
+    </span>
+  `;
+}
+
 function renderSummaryChanges(entry: TimelineEntry) {
   if (!entry.changes.length) {
-    return html`<span class="runs-more">${quietNote(entry.outcome)}</span>`;
+    return html`
+      <span class="runs-more">${quietNote(entry.outcome)}</span>
+      ${renderIssues(entry)}
+    `;
   }
   const hidden = entry.changes.length - SHOWN_BADGES;
   return html`
@@ -84,6 +121,7 @@ function renderSummaryChanges(entry: TimelineEntry) {
     ${hidden > 0
       ? html`<span class="runs-more">+${hidden} more</span>`
       : nothing}
+    ${renderIssues(entry)}
   `;
 }
 
@@ -140,7 +178,9 @@ function renderIds(entry: TimelineEntry, isAdmin: boolean) {
       ${entry.pipeline_run_status
         ? html`<span>${entry.pipeline_run_status}</span>`
         : nothing}
-      <span>${durationBetween(entry.created_at, entry.updated_at)}</span>
+      ${pipelineRunDuration(entry)
+        ? html`<span>${pipelineRunDuration(entry)}</span>`
+        : nothing}
       <span>outcome ${entry.outcome}</span>
     </div>
   `;

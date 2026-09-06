@@ -8,6 +8,8 @@ Nothing is written. A post can be proposed; a membership is only true once accep
 
 import asyncio
 
+from core.people_edits import SURFACED_FIELDS
+
 from core.membership_proposal import ExistingMembership, ProposedChange, propose
 from core.post_derivation import RosterEntry, derived_posts
 from core.post_issues import (
@@ -50,6 +52,7 @@ async def review_summary_for_request(changeset_id: str) -> dict:
         ReviewInputs(
             identities=person_list_to_identities([Person(**p) for p in published]),
             unique_roles=get_unique_roles(RoleConfig(roles=roles)),
+            changed_field_names=list(SURFACED_FIELDS),
         ),
     )
     summary["issues"] = [issue.model_dump() for issue in summary["issues"]]

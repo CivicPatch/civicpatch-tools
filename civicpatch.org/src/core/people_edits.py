@@ -20,6 +20,19 @@ EDITABLE_FIELDS = (
     "post_id",
 )
 
+# What a scrape changing a value should stop for review. The three a reviewer would actually
+# read: who this is and how to reach them.
+#
+# The other seven are out for their own reasons, none of them "it moves a lot":
+#   image        adjudicated on the card during review, so a change needs no separate stop
+#   other_names  merged forward, so a scrape only ever adds
+#   urls         a guess at the person's page, falling back to source_urls
+#   source_urls  must change between scrapes; it is where we looked
+#   start_date   changes between scrapes
+#   end_date     changes between scrapes
+#   post_id      already raises `moved_person` or `disputed_post`, which say more
+SURFACED_FIELDS = ("name", "phones", "emails")
+
 # Of those, the ones holding several values: a list field is a set, so `phones` carries many
 # accepts where `name` carries one. Mirrors the two partial unique indexes in 137.
 #

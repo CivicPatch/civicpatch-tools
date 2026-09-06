@@ -11,6 +11,9 @@ from . import name_utils
 class ReviewInputs(BaseModel):
     identities: Dict[str, List[str]] = {}
     unique_roles: List[str] = []
+    # Which fields a change is worth surfacing on. Passed in because the canonical list
+    # lives in cp.org's `core`, which `shared` cannot import.
+    changed_field_names: List[str] = []
 
 
 MIN_EXPECTED_PEOPLE = 3
@@ -158,6 +161,45 @@ def _check_too_few_people(people) -> List[Issue]:
     return [Issue(code=IssueCode.TOO_FEW_PEOPLE, message=message, person_ids=[])]
 
 
+def _values_differ(before, after) -> bool:
+    # List fields are sets: order churns as the scraper reads different pages.
+    if isinstance(before, list) or isinstance(after, list):
+        return {str(v) for v in (before or [])} != {str(v) for v in (after or [])}
+    return (before or None) != (after or None)
+
+
+def _check_changed_fields(
+    research_people, people, canonical_map, field_names: List[str]
+) -> List[Issue]:
+    """A field moving on someone in both rosters. The other five checks all read the *set* of
+    people, so a scrape that kept the same seven councillors and rewrote every phone number
+    raised nothing and auto-published as "nothing to review"."""
+    if not field_names:
+        return []
+    before_by_canonical = {
+        canonical_map[name_utils.get_person_name(p)]: p for p in research_people
+    }
+    issues: List[Issue] = []
+    for person in people:
+        canonical = canonical_map[name_utils.get_person_name(person)]
+        before = before_by_canonical.get(canonical)
+        if before is None:
+            continue  # a new person is _check_new_people's business
+        for field in field_names:
+            if not _values_differ(before.get(field), person.get(field)):
+                continue
+            person_id = _get_person_id(person)
+            issues.append(
+                Issue(
+                    code=IssueCode.CHANGED_FIELD,
+                    message=f"{field} changed for {name_utils.get_person_name(person)}",
+                    person_ids=[person_id] if person_id else [],
+                    field=field,
+                )
+            )
+    return issues
+
+
 def _check_duplicate_unique_roles(people, unique_roles: List[str]) -> List[Issue]:
     unique_roles_set = {r.lower() for r in unique_roles}
     role_to_holders = defaultdict(list)  # role -> [(id, name), ...]
@@ -221,6 +263,9 @@ def build_review_summary(
         *_check_absent_people(research_canonicals, people_canonicals),
         *_check_new_people(people, canonical_map, research_canonicals),
         *_check_too_few_people(people),
+        *_check_changed_fields(
+            research_people, people, canonical_map, inputs.changed_field_names
+        ),
         *_check_duplicate_unique_roles(people, inputs.unique_roles),
         *_check_division_numbering(people),
     ]

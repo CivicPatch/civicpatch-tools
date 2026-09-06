@@ -111,3 +111,22 @@ LAST_COLLECTED_JOIN = (
 
 # What the join exposes, so a WHERE clause reads without hunting for the join.
 LAST_COLLECTED_AT = "collected.last_collected_at"
+
+
+# When a jurisdiction was last *tried*, not last published. A dismissed card and an errored run
+# both leave no published changeset, so a pool keyed on publishes re-offers them at once.
+LAST_ATTEMPT_JOIN = (
+    "LEFT JOIN ("
+    "SELECT jurisdiction_ocdid, max(created_at) AS last_attempt_at "
+    "FROM pipeline_runs GROUP BY jurisdiction_ocdid"
+    ") attempts USING (jurisdiction_ocdid)"
+)
+LAST_ATTEMPT_AT = "attempts.last_attempt_at"
+
+# A state's own cadence is the cooldown. NULL means manual: no schedule, and nothing excluded.
+CADENCE_JOIN = "LEFT JOIN state_settings ss ON ss.state = j.state"
+OFF_COOLDOWN = (
+    "(ss.cadence_days IS NULL"
+    f" OR {LAST_ATTEMPT_AT} IS NULL"
+    f" OR {LAST_ATTEMPT_AT} < now() - make_interval(days => ss.cadence_days))"
+)

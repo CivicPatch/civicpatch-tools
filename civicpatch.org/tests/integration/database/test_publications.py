@@ -533,3 +533,42 @@ async def test_an_unattended_publish_asserts_nothing(sentinel_request):
     await publish_request(sentinel_request, _SENTINEL_OCDID, [person], None)
 
     assert await _accepted_for(person["id"]) == []
+
+
+@pytest_asyncio.fixture
+async def sentinel_hand_edit():
+    """The same jurisdiction, but the changeset is a hand edit rather than a scrape."""
+    await _cleanup()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid) VALUES (%s)", (_SENTINEL_OCDID,)
+        )
+        await cur.execute(
+            """
+            INSERT INTO changesets (kind, jurisdiction_ocdid)
+            VALUES ('people_edit', %s) RETURNING id::text
+            """,
+            (_SENTINEL_OCDID,),
+        )
+        changeset_id = (await cur.fetchone())[0]
+        await conn.commit()
+    yield changeset_id
+    await _cleanup()
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_hand_edit_does_not_vouch_for_the_rest_of_the_roster(sentinel_hand_edit):
+    """A reviewer publishing a scrape read the roster; someone correcting one field did not.
+
+    `stated_from_edit` has already asserted the field they touched. Accepting the rest here
+    pinned every untouched value against every future scrape — one phone correction froze a
+    whole council's names, images and urls.
+    """
+    user_id = await _seed_publisher()
+    person = {**_person("Ann"), "phones": ["(555) 0001"]}
+
+    await publish_request(sentinel_hand_edit, _SENTINEL_OCDID, [person], user_id)
+
+    assert await _accepted_for(person["id"]) == []

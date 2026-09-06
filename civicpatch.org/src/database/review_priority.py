@@ -31,6 +31,9 @@ _ISSUE_WEIGHT = {
     # event seen twice. Counted from `posts`, never stored, so its CASE arm never matches — the
     # entry is here so one table holds every weight.
     IssueCode.UNVERIFIED_POST: 2,
+    # Above the numbering gap, below anyone arriving or leaving: a moved value is worth a
+    # look but it is the commonest issue there is, so it must not outrank a lost person.
+    IssueCode.CHANGED_FIELD: 2,
     IssueCode.DIVISION_NUMBERING_GAP: 1,
 }
 # A stored summary can still name a code since renamed out of the enum.
