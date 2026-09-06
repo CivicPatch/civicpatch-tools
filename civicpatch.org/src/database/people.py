@@ -118,9 +118,13 @@ _PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
     "start_date": ("'start_date'", PERSON_START_DATE),
     "end_date": ("'end_date'", PERSON_END_DATE),
     "image": ("'image'", "people.image"),
+    # In every view, not only `detail`: it is how the card knows this person already holds a
+    # seat. Without it a published person restored into the roster reads as never having
+    # answered the post question, and `isPostUnanswered` blocks the publish on them.
+    "memberships": ("'memberships'", PERSON_MEMBERSHIPS),
 }
 
-_QUICK_FIELDS = frozenset({"id", "name", "labels", "source_urls"})
+_QUICK_FIELDS = frozenset({"id", "name", "labels", "memberships", "source_urls"})
 _DETAIL_FIELDS = frozenset(
     {
         "id",
@@ -133,6 +137,7 @@ _DETAIL_FIELDS = frozenset(
         "start_date",
         "end_date",
         "image",
+        "memberships",
     }
 )
 
