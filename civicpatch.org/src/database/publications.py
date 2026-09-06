@@ -229,19 +229,21 @@ async def _accept_published(
     """
     if not resolved_by_user_id:
         return
-    for row in rows:
-        for field, value in values_to_accept(row):
-            await assertions.upsert(
-                cur,
-                Assertion(
-                    entity_type=EntityType.PERSON,
-                    entity_id=row["id"],
-                    field_path=field,
-                    kind=AssertionKind.ACCEPT,
-                    value=value,
-                ),
-                resolved_by_user_id,
+    await assertions.upsert_all(
+        cur,
+        [
+            Assertion(
+                entity_type=EntityType.PERSON,
+                entity_id=row["id"],
+                field_path=field,
+                kind=AssertionKind.ACCEPT,
+                value=value,
             )
+            for row in rows
+            for field, value in values_to_accept(row)
+        ],
+        resolved_by_user_id,
+    )
 
 
 async def publish_changeset(
