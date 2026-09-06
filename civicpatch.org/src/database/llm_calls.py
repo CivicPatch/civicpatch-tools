@@ -10,35 +10,18 @@ import logging
 from psycopg import sql
 
 from database.database import get_pool
+from shared.schemas import LLMCall
 
 logger = logging.getLogger(__name__)
 
-# The row as `costs.json` carries it — every key, because the pipeline writes the file from
-# `LLMCall.model_dump()`. Read with `[]`, not `.get()`: a missing key would insert an explicit
-# NULL rather than falling back to the column default, so half these columns would raise
-# NotNullViolation anyway. A shape mismatch should say so, and the caller already logs it.
-_COLUMNS = (
-    "prompt_name",
-    "source_url",
-    "chunk_index",
-    "chunk_count",
-    "attempt",
-    "seed",
-    "gateway",
-    "model",
-    "routed_model",
-    "upstream_provider",
-    "generation_id",
-    "input_tokens",
-    "output_tokens",
-    "cached_input_tokens",
-    "reasoning_tokens",
-    "cost_usd",
-    "web_search",
-    "duration_ms",
-    "finish_reason",
-    "error",
-)
+# Derived, not restated. These are the columns `costs.json` carries because the pipeline writes
+# that file from this very model — so a field added to `LLMCall` reaches the table instead of
+# being silently dropped here, which two hand-kept lists could not promise.
+#
+# Read with `[]`, not `.get()`: a missing key would insert an explicit NULL rather than falling
+# back to the column default, so half these columns would raise NotNullViolation anyway. A shape
+# mismatch should say so, and the caller already logs it.
+_COLUMNS = tuple(LLMCall.model_fields)
 
 
 async def record_calls(pipeline_run_id: str, calls: list[dict]) -> int:

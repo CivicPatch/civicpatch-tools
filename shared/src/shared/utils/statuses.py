@@ -71,6 +71,12 @@ class PipelineIssueType(StrEnum):
     # Filed manually by a reviewer from the review page (not pipeline-detected), but follows
     # the identical issues lifecycle above, including scrape-candidate exclusion while pending.
     USER_REPORTED = "user_reported"
+    # The run stopped at its spend ceiling before it had the roster it was looking for, so the
+    # proposal is partial. Deliberately NOT in `PipelineRunErrorType`: the run succeeded and
+    # minted a changeset, and this hangs off that changeset because the reviewer reading the
+    # roster is who needs to know it is short. Without it the cap was invisible outside the
+    # container log — a capped run and a jurisdiction with no officials looked identical.
+    COST_CAP_REACHED = "cost_cap_reached"
 
 
 

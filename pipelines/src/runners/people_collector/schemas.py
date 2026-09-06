@@ -292,6 +292,10 @@ class PeopleCollectorData(BaseModel):
     issues: list[dict] = []
     error_step: Optional[str] = None
     error_detail: Optional[dict] = None
+    # Why the crawl stopped early, when it did. Not an error — the run goes on to succeed with
+    # whatever it has — but a cost-cap stop becomes an issue on the changeset, so the reason has
+    # to survive from the crawl loop to `review_output_transition`.
+    stop_reason: Optional[str] = None
 
 
 class PeopleCollectorContext(PipelineRunContext[PeopleCollectorData, PipelineStatus]):

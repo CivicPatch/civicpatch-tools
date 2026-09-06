@@ -85,12 +85,12 @@ def _sample_prompt() -> str:
 def _write_report(failed_cases, elapsed_seconds, total_cases):
     # Every case runs under one id, so the tally is read back under that id and not per
     # jurisdiction — costs key on the run.
-    all_costs = cost_utils.get_cost_tracker(_EVAL_RUN_ID)["llm_costs"]
+    all_costs = cost_utils.get_cost_tracker(_EVAL_RUN_ID)
     cost_summary = {
-        "model": all_costs[0]["model"] if all_costs else None,
+        "model": all_costs[0].model if all_costs else None,
         "elapsed_seconds": elapsed_seconds,
-        "total_input_tokens": sum(c["input_tokens"] for c in all_costs),
-        "total_output_tokens": sum(c["output_tokens"] for c in all_costs),
+        "total_input_tokens": sum(c.input_tokens for c in all_costs),
+        "total_output_tokens": sum(c.output_tokens for c in all_costs),
         # Grounded Gemini states no cost, so this is 0.0 here — absent, not measured as free.
         "total_cost_usd": float(cost_utils.sum_cost(all_costs)),
     }

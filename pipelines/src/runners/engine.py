@@ -6,7 +6,7 @@ from time import sleep
 from domain.pipeline_run_context import PipelineRunContext
 
 TContext = TypeVar("TContext", bound=PipelineRunContext)
-from shared.utils.config_utils import load_job_config
+from shared.utils.config_utils import load_pipeline_run_limits
 from utils import log_utils
 import time
 from datetime import datetime, timezone
@@ -42,7 +42,9 @@ async def run_pipeline(
     persist_fn: Optional[Callable] = None,
 ) -> TContext:
     ctx = context
-    job_config = load_job_config(logger)
+    # The context carries the state's ceiling when a dispatch resolved one; otherwise this
+    # is `pipeline.yml`'s default, unchanged.
+    limits = load_pipeline_run_limits(logger, context.data.config.pipeline_run_cap_usd)
     jurisdiction_ocdid = ctx.data.jurisdiction_ocdid
 
     created_at = time.time()
@@ -72,7 +74,7 @@ async def run_pipeline(
 
             transition_fn = transition_map[ctx.current_state]
             try:
-                ctx, next_state = await transition_fn(job_config, logger, ctx, api_client)
+                ctx, next_state = await transition_fn(limits, logger, ctx, api_client)
                 ctx = ctx.copy(update={"current_state": next_state, "updated_at": time.time()})
             except Exception as e:
                 logger.error(

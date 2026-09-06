@@ -27,7 +27,7 @@ _running_tasks: dict[str, asyncio.Task] = {}
 async def lifespan(app: FastAPI):
     yield
     if _running_tasks:
-        logger.info("Waiting for %d in-flight job(s) to finish...", len(_running_tasks))
+        logger.info("Waiting for %d in-flight pipeline run(s) to finish...", len(_running_tasks))
         await asyncio.gather(*_running_tasks.values(), return_exceptions=True)
 
 
@@ -39,7 +39,7 @@ def _track(pipeline_run_id: str, task: asyncio.Task) -> None:
     task.add_done_callback(lambda _: _running_tasks.pop(pipeline_run_id, None))
 
 
-class TriggerJobRequest(BaseModel):
+class StartPipelineRunRequest(BaseModel):
     pipeline_run_id: str
     jurisdiction_ocdid: str
     url: Optional[str] = None
@@ -63,7 +63,7 @@ async def _run(pipeline_run_id: str, jurisdiction_ocdid: str, url: Optional[str]
             source_urls=source_urls or config_data.get("source_urls"),
         )
     except Exception:
-        logger.exception("job %s failed during config fetch", pipeline_run_id)
+        logger.exception("pipeline run %s failed during config fetch", pipeline_run_id)
         async with httpx.AsyncClient(headers=headers, timeout=30.0) as client:
             await update_pipeline_run_status(client, logger, pipeline_run_id, jurisdiction_ocdid, PipelineRunStatus.ERROR, 0)
         return
@@ -74,7 +74,7 @@ async def _run(pipeline_run_id: str, jurisdiction_ocdid: str, url: Optional[str]
         except PipelineRunError:
             pass
         except Exception:
-            logger.exception("job %s failed", pipeline_run_id)
+            logger.exception("pipeline run %s failed", pipeline_run_id)
             async with httpx.AsyncClient(headers={"Authorization": env["SERVICE_API_KEY"]}, timeout=30.0) as client:
                 await update_pipeline_run_status(client, logger, pipeline_run_id, jurisdiction_ocdid, PipelineRunStatus.ERROR, 0)
 
@@ -82,7 +82,7 @@ async def _run(pipeline_run_id: str, jurisdiction_ocdid: str, url: Optional[str]
 
 
 @app.post("/pipeline_runs", response_model=PipelineRunStatusResponse)
-async def trigger_job(req: TriggerJobRequest) -> PipelineRunStatusResponse:
+async def start_pipeline_run(req: StartPipelineRunRequest) -> PipelineRunStatusResponse:
     _track(req.pipeline_run_id, asyncio.create_task(
         _run(req.pipeline_run_id, req.jurisdiction_ocdid, req.url, req.source_urls)
     ))
@@ -90,7 +90,7 @@ async def trigger_job(req: TriggerJobRequest) -> PipelineRunStatusResponse:
 
 
 @app.post("/pipeline_runs/{pipeline_run_id}/cancel", response_model=PipelineRunStatusResponse)
-async def cancel_job(pipeline_run_id: str) -> PipelineRunStatusResponse:
+async def cancel_pipeline_run(pipeline_run_id: str) -> PipelineRunStatusResponse:
     """Stop a running scrape. Idempotent: a run that already finished, or was never started
     here, reports cancelled rather than 404 — the caller wants it stopped, and it is."""
     task = _running_tasks.get(pipeline_run_id)

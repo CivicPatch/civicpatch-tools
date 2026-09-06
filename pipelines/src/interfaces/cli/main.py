@@ -1,12 +1,13 @@
 import argparse
 import asyncio
 import json
+from decimal import Decimal
 import sys
 
 import httpx
 
 from interfaces.schemas import (
-    PeopleCollectorJobRequest,
+    PeopleCollectorRequest,
     validate_people_request
 )
 from runners.people_collector.schemas import PipelineRunConfig
@@ -17,7 +18,7 @@ from pipelines_environment import get_env_vars
 from services.civicpatch_api import get_jurisdiction_info, register_pipeline_run
 
 
-async def run_pipeline_cli(pipeline_run_id: str, request: PeopleCollectorJobRequest):
+async def run_pipeline_cli(pipeline_run_id: str, request: PeopleCollectorRequest):
     warnings, errors = validate_people_request(request)
     if errors:
         print("Errors:", errors)
@@ -51,12 +52,15 @@ async def _run_pipeline_async(args):
             url = url or info.get("url")
         await register_pipeline_run(client, pipeline_run_id, args.jurisdiction_ocdid, name, url)
 
-    request = PeopleCollectorJobRequest(
+    request = PeopleCollectorRequest(
         jurisdiction_ocdid=args.jurisdiction_ocdid,
         config=PipelineRunConfig(
             name=name,
             url=url or "",
             source_urls=source_urls,
+            # Blank, not just absent: the workflow always passes the flag and sends an empty
+            # string when no state set a cap, so `or None` is what keeps that meaning inherit.
+            pipeline_run_cap_usd=Decimal(args.pipeline_run_cap_usd) if args.pipeline_run_cap_usd else None,
         ),
     )
     await run_pipeline_cli(pipeline_run_id, request)
@@ -102,6 +106,11 @@ def main():
     )
     run_pipeline_parser.add_argument(
         "--source-urls", required=False, help="JSON array of specific URLs to scrape"
+    )
+    run_pipeline_parser.add_argument(
+        "--pipeline-run-cap-usd",
+        required=False,
+        help="Ceiling for this run, in USD. Omitted or blank inherits pipeline.yml's default.",
     )
 
     args = parser.parse_args()

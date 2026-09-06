@@ -2,6 +2,7 @@ from decimal import Decimal
 from unittest.mock import MagicMock
 
 import pytest
+from shared.schemas import LLMCall
 from utils import cost_utils
 
 pytestmark = pytest.mark.unit
@@ -21,7 +22,7 @@ def _add(cost_usd, error=None, gateway="openrouter", tokens=(10, 20), run=_RUN):
     cost_utils.record_call(
         MagicMock(),
         run,
-        cost_utils.LLMCall(
+        LLMCall(
             prompt_name="municipality_officials",
             gateway=gateway,
             model="deepseek/deepseek-v4-flash",
@@ -52,7 +53,7 @@ def test_the_eval_reports_sum_a_held_list_the_way_the_cap_sums_the_tracker():
     absent-cost rule and read `total_cost`, a field that has not existed since migration 171."""
     _add(Decimal("0.01"))
     _add(None, gateway="google")
-    rows = cost_utils.get_cost_tracker(_RUN)["llm_costs"]
+    rows = cost_utils.get_cost_tracker(_RUN)
     assert cost_utils.sum_cost(rows) == cost_utils.total_cost(_RUN) == Decimal("0.01")
 
 
@@ -69,7 +70,7 @@ def test_a_billed_failure_still_counts_against_the_cap():
 def test_the_error_is_on_the_record():
     _add(Decimal("0.05"), error="ValidationError: bad json")
     _add(Decimal("0.01"))
-    reasons = [c["error"] for c in cost_utils.get_cost_tracker(_RUN)["llm_costs"]]
+    reasons = [call.error for call in cost_utils.get_cost_tracker(_RUN)]
     assert reasons == ["ValidationError: bad json", None]
 
 
@@ -98,6 +99,20 @@ def test_every_llm_counts_toward_the_one_total():
 
 def test_tokens_are_kept_even_though_cost_is_no_longer_derived_from_them():
     _add(Decimal("0.01"), tokens=(111, 222))
-    call = cost_utils.get_cost_tracker(_RUN)["llm_costs"][0]
-    assert (call["input_tokens"], call["output_tokens"]) == (111, 222)
-    assert "input_cost" not in call and "model_input_price_per_1m" not in call
+    call = cost_utils.get_cost_tracker(_RUN)[0]
+    assert (call.input_tokens, call.output_tokens) == (111, 222)
+    # The derived-price fields are gone from the model, so they cannot come back by accident.
+    assert not {"input_cost", "model_input_price_per_1m"} & set(LLMCall.model_fields)
+
+
+def test_the_tally_holds_models_that_costs_json_and_llm_calls_both_read():
+    """`llm_calls._COLUMNS` is `tuple(LLMCall.model_fields)` and `log_costs` writes
+    `model_dump()`, so the file's keys and the table's columns are the same list by
+    construction. A field added here reaches the table; two hand-kept lists could drift."""
+    _add(Decimal("0.01"))
+    call = cost_utils.get_cost_tracker(_RUN)[0]
+
+    assert isinstance(call, LLMCall)
+    assert set(call.model_dump()) == set(LLMCall.model_fields)
+    # It was written to `costs.json` and read by nobody; `llm_calls.created_at` is the real one.
+    assert "timestamp" not in LLMCall.model_fields

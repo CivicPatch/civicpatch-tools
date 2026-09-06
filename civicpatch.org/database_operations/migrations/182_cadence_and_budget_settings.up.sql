@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS state_settings (
     state              text PRIMARY KEY,
     cadence_days       integer,          -- NULL = manual, the page's own word for it
     cadence_start      date,             -- ScheduleIntervalSpec(offset=), staggers the states
-    scrape_cap_usd     numeric(8, 4),    -- NULL = inherit pipeline.yml's pipeline_run_cost_limit
+    pipeline_run_cap_usd     numeric(8, 4),    -- NULL = inherit pipeline.yml's pipeline_run_cap_usd
     monthly_cap_usd    numeric(8, 4),    -- NULL = no monthly ceiling for this state
     updated_by_user_id uuid REFERENCES users(id),
     updated_at         timestamptz NOT NULL DEFAULT now()
@@ -36,11 +36,11 @@ ALTER TABLE state_settings
 ALTER TABLE state_settings
     ADD CONSTRAINT state_settings_caps_not_negative
     CHECK (
-        (scrape_cap_usd IS NULL OR scrape_cap_usd >= 0)
+        (pipeline_run_cap_usd IS NULL OR pipeline_run_cap_usd >= 0)
         AND (monthly_cap_usd IS NULL OR monthly_cap_usd >= 0)
     );
 
--- The fleet's own monthly ceiling. The per-state caps do not add up to a promise: fifty states
+-- The monthly ceiling for everything, across every state. The per-state caps do not add up to a promise: fifty states
 -- at $2 is $100 even when the month's intent was $40, and every state added raises the implied
 -- ceiling silently.
 --
@@ -48,25 +48,30 @@ ALTER TABLE state_settings
 -- table and not an env var because an admin sets it at runtime — a redeploy is not a budget
 -- control.
 --
--- The pool is a shared ceiling, not an allocation: states draw from it first-come, and the
--- per-state monthly cap is what stops one state emptying it. SUM(monthly_cap_usd) across states
--- may therefore exceed the pool, and the UI shows that rather than refusing it.
-CREATE TABLE IF NOT EXISTS fleet_settings (
+-- `monthly_cap_usd` on purpose, the same name the per-state table uses: one concept at two
+-- scopes, told apart by which table it is in. "Global" rather than "fleet" because
+-- `can_write_global_config` is already this codebase's word for config at this scope, and
+-- "fleet" has never appeared in front of a user.
+--
+-- It is a shared ceiling, not an allocation: states draw from it first-come, and the per-state
+-- monthly cap is what stops one state emptying it. SUM(state_settings.monthly_cap_usd) may
+-- therefore exceed this, and the UI shows that rather than refusing it.
+CREATE TABLE IF NOT EXISTS global_settings (
     id                 integer PRIMARY KEY DEFAULT 1 CHECK (id = 1),
-    monthly_pool_usd   numeric(10, 4),   -- NULL = no fleet ceiling
+    monthly_cap_usd   numeric(10, 4),   -- NULL = no global ceiling
     updated_by_user_id uuid REFERENCES users(id),
     updated_at         timestamptz NOT NULL DEFAULT now()
 );
 
-ALTER TABLE fleet_settings
-    DROP CONSTRAINT IF EXISTS fleet_settings_pool_not_negative;
-ALTER TABLE fleet_settings
-    ADD CONSTRAINT fleet_settings_pool_not_negative
-    CHECK (monthly_pool_usd IS NULL OR monthly_pool_usd >= 0);
+ALTER TABLE global_settings
+    DROP CONSTRAINT IF EXISTS global_settings_cap_not_negative;
+ALTER TABLE global_settings
+    ADD CONSTRAINT global_settings_cap_not_negative
+    CHECK (monthly_cap_usd IS NULL OR monthly_cap_usd >= 0);
 
 -- The row exists from the start, so every reader is a plain SELECT rather than one that has to
--- cope with no row. A NULL pool means no fleet ceiling, which is the safe default.
-INSERT INTO fleet_settings (id, monthly_pool_usd)
+-- cope with no row. A NULL cap means no global ceiling, which is the safe default.
+INSERT INTO global_settings (id, monthly_cap_usd)
 VALUES (1, NULL)
 ON CONFLICT (id) DO NOTHING;
 

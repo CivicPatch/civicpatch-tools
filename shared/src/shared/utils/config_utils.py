@@ -1,8 +1,9 @@
+from decimal import Decimal
 import os
 from typing import Dict, List, Optional
 
 import yaml
-from shared.schemas import JobConfig, RoleConfig, Role, RoleStatus
+from shared.schemas import PipelineRunLimits, RoleConfig, Role, RoleStatus
 
 # In-memory cache for config files
 _config_cache = {}
@@ -108,17 +109,25 @@ def governance_keywords() -> List[str]:
     return _load_config_file("keywords.yml", "keywords", [])
 
 
-def load_job_config(logger=None) -> JobConfig:
-    """The cap comes from `pipeline.yml`, the package default.
+def load_pipeline_run_limits(logger=None, pipeline_run_cap_usd: Decimal | None = None) -> PipelineRunLimits:
+    """`pipeline.yml` is the default; `pipeline_run_cap_usd` overrides it for one run.
 
-    No env override: it swallowed a malformed value and carried on with the default, so a
-    typo in a container's environment read as "no override was set". The per-state value
-    lives in `state_settings` (plan 3), set in the UI.
+    The override arrives from `state_settings` via the dispatch, so a state can be given a
+    tighter or looser ceiling than the fleet default without a redeploy. `None` means no state
+    said otherwise — which is also every local run, so those keep working untouched.
+
+    Still no *env* override: that one swallowed a malformed value and carried on with the
+    default, so a typo in a container's environment read as "no override was set". An explicit
+    argument cannot be typo'd into silence — a bad value fails to parse at the boundary.
     """
     config = _load_config_file("pipeline.yml")
-    return JobConfig(
+    return PipelineRunLimits(
         max_pages=config.get("max_pages"),
-        pipeline_run_cost_limit=config.get("pipeline_run_cost_limit"),
+        pipeline_run_cap_usd=(
+            pipeline_run_cap_usd
+            if pipeline_run_cap_usd is not None
+            else config.get("pipeline_run_cap_usd")
+        ),
     )
 
 
