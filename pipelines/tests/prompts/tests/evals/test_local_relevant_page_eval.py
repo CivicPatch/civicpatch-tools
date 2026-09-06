@@ -181,12 +181,12 @@ def _score_case(model_client, case, case_scores, actual_output):
 
 
 def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), case_ids=()):
-    llm_costs = cost_utils.get_cost_tracker(_eval_run_id(model_client["name"]))["llm_costs"]
+    llm_costs = cost_utils.get_cost_tracker(_eval_run_id(model_client["name"]))
     cost_summary = {
-        "model": llm_costs[0]["model"] if llm_costs else None,
+        "model": llm_costs[0].model if llm_costs else None,
         "elapsed_seconds": elapsed_seconds,
-        "total_input_tokens": sum(c["input_tokens"] for c in llm_costs),
-        "total_output_tokens": sum(c["output_tokens"] for c in llm_costs),
+        "total_input_tokens": sum(c.input_tokens for c in llm_costs),
+        "total_output_tokens": sum(c.output_tokens for c in llm_costs),
         "total_cost_usd": float(cost_utils.sum_cost(llm_costs)),
     }
     merged: dict[str, list] = {}

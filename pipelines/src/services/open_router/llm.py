@@ -5,6 +5,7 @@ from decimal import Decimal
 
 import requests
 from pipelines_environment import get_env_vars
+from shared.schemas import LLMCall
 from utils import cost_utils
 from utils.log_utils import get_pipeline_run_logger
 from utils.request_utils import with_retry
@@ -155,26 +156,6 @@ async def run_prompt(
                     # went stale silently: an unlisted (model, provider) pair reported zero.
                     "usage": {"include": True},
                     "provider": {
-                        # Every provider here must support `structured_outputs` — we send
-                        # json_schema with strict=True, and allow_fallbacks is False, so a
-                        # provider that only does `response_format` (json_object) makes
-                        # OpenRouter return 404 "No endpoints found" rather than routing on.
-                        # Google (no v4-flash endpoint) and SiliconFlow (no
-                        # structured_outputs) were both dropped for that reason.
-                        # One order for every prompt — nothing passes provider_order in
-                        # production, so this is the single routing decision.
-                        #
-                        # AtlasCloud leads on recall, which is what the pipeline is bounded
-                        # by. Measured 2026-08-15: on relevant_page it returns every wanted
-                        # link (recall 1.000, 1 failing case) against DigitalOcean's 0.875
-                        # and 4 — and DigitalOcean returned *zero* links for one page. That
-                        # step runs first and decides which pages the extractor ever sees,
-                        # so a link it never returns is a page nothing downstream can
-                        # recover. On officials it misses 6 values to DigitalOcean's 63.
-                        #
-                        # DigitalOcean is 2.7x cheaper and equivalent on roles and district
-                        # (0.976-0.992 and 1.000 for both), which is why it led until
-                        # relevant_page was measured. It stays as the fallback.
                         "order": provider_order or ["AtlasCloud", "DigitalOcean"],
                         "allow_fallbacks": False,
                         "data_collection": "deny",
@@ -207,7 +188,7 @@ async def run_prompt(
             cost_utils.record_call(
                 logger,
                 pipeline_run_id,
-                cost_utils.LLMCall(
+                LLMCall(
                     prompt_name=prompt_name,
                     source_url=source_url,
                     chunk_index=chunk_index,
@@ -223,7 +204,9 @@ async def run_prompt(
                     output_tokens=usage.get("completion_tokens", 0),
                     cached_input_tokens=prompt_details.get("cached_tokens", 0) or 0,
                     reasoning_tokens=completion_details.get("reasoning_tokens", 0) or 0,
-                    cost_usd=Decimal(str(stated_cost)) if stated_cost is not None else None,
+                    cost_usd=Decimal(str(stated_cost))
+                    if stated_cost is not None
+                    else None,
                     web_search=False,
                     duration_ms=duration_ms,
                     finish_reason=(choices or [{}])[0].get("finish_reason"),

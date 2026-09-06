@@ -31,6 +31,8 @@ from runners.people_collector.steps.step_07_send_success.send_success import (
     send_success,
 )
 from runners.people_collector.transitions.process_page_content_transition import (
+    STOP_COST_CAP,
+    STOP_MESSAGES,
     describe_progress,
     next_process_content_state,
 )
@@ -39,8 +41,8 @@ from runners.people_collector.utils.links import (
     get_links_with_status,
     get_next_link_with_status,
 )
-from shared.schemas import JobConfig
-from shared.utils.statuses import PipelineRunErrorType
+from shared.schemas import PipelineRunLimits
+from shared.utils.statuses import PipelineIssueType, PipelineRunErrorType
 from shared.utils.url_utils import same_domain
 from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
@@ -58,7 +60,7 @@ def _next_context(
 
 
 async def start_job(
-    job_config: JobConfig,
+    limits: PipelineRunLimits,
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
@@ -71,7 +73,7 @@ async def start_job(
 
 
 async def research_municipality_transition(
-    job_config: JobConfig,
+    limits: PipelineRunLimits,
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     api_client: httpx.AsyncClient,
@@ -116,7 +118,7 @@ def _navigation_error_detail(frontier: LinkFrontier) -> dict:
 
 
 async def scrape_page_transition(
-    _: JobConfig,
+    _: PipelineRunLimits,
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
@@ -168,7 +170,7 @@ async def scrape_page_transition(
 
 
 async def preprocess_page_content_transition(
-    _: JobConfig,
+    _: PipelineRunLimits,
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
@@ -215,7 +217,7 @@ async def preprocess_page_content_transition(
 
 
 async def process_page_content_transition(
-    job_config: JobConfig,
+    limits: PipelineRunLimits,
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
@@ -253,23 +255,25 @@ async def process_page_content_transition(
         describe_progress(
             processed_count=len(links_processed),
             current_cost=current_cost,
-            job_config=job_config,
+            limits=limits,
             progress=result.progress,
         )
     )
-    next_state, stop_warning = next_process_content_state(
+    next_state, stop_reason = next_process_content_state(
         processed_count=len(links_processed),
         current_cost=current_cost,
-        job_config=job_config,
+        limits=limits,
         progress=result.progress,
     )
-    if stop_warning:
-        logger.warning(stop_warning)
-    return next_context, next_state
+    # Carried on the context, not just logged: `review_output_transition` turns a cost-cap
+    # stop into an issue the reviewer sees. A log line reached nobody outside the container.
+    if stop_reason:
+        logger.warning(STOP_MESSAGES[stop_reason])
+    return _next_context(next_context, stop_reason=stop_reason), next_state
 
 
 async def cleanup_transition(
-    _: JobConfig,
+    _: PipelineRunLimits,
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
@@ -283,7 +287,7 @@ async def cleanup_transition(
 
 
 async def review_output_transition(
-    _: JobConfig,
+    _: PipelineRunLimits,
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
@@ -294,7 +298,7 @@ async def review_output_transition(
     if not records and context.data.find_jurisdiction_url_step is None:
         return context, PipelineStatus.FIND_JURISDICTION_URL
 
-    error_type, issues = _collect_pipeline_heuristics(records)
+    error_type, issues = _collect_pipeline_heuristics(records, context.data.stop_reason)
 
     if error_type:
         return _next_context(
@@ -311,7 +315,7 @@ async def review_output_transition(
 
 
 async def save_output_transition(
-    _: JobConfig,
+    _: PipelineRunLimits,
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
@@ -326,7 +330,7 @@ async def save_output_transition(
 
 
 async def send_success_transition(
-    _: JobConfig,
+    _: PipelineRunLimits,
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     api_client: httpx.AsyncClient,
@@ -341,7 +345,7 @@ async def send_success_transition(
 
 
 async def send_error_transition(
-    _: JobConfig,
+    _: PipelineRunLimits,
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     api_client: httpx.AsyncClient,
@@ -367,7 +371,7 @@ async def send_error_transition(
 
 
 async def find_jurisdiction_url_transition(
-    _: JobConfig,
+    _: PipelineRunLimits,
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
@@ -437,11 +441,20 @@ def calculate_progress_percentage(context_data: PeopleCollectorData, current_ste
     return int(combined_progress * 100)
 
 
-def _collect_pipeline_heuristics(records) -> tuple[str | None, list[dict]]:
-    """Only emptiness. An unrecognized role is not an issue here: the raw label crosses the
-    boundary in the record, so `parse_label` recovers `unmatched` wherever it is needed."""
+def _collect_pipeline_heuristics(
+    records, stop_reason: str | None = None
+) -> tuple[str | None, list[dict]]:
+    """Emptiness, and a crawl that stopped at its ceiling. An unrecognized role is not an issue
+    here: the raw label crosses the boundary in the record, so `parse_label` recovers
+    `unmatched` wherever it is needed.
+
+    Emptiness wins: a run that found nothing has nothing partial to warn about, and reporting
+    both would put two issues on one run saying the same thing twice.
+    """
     if not records:
         return PipelineRunErrorType.NO_ROSTER_FOUND, []
+    if stop_reason == STOP_COST_CAP:
+        return None, [{"type": PipelineIssueType.COST_CAP_REACHED, "data": {}}]
     return None, []
 
 

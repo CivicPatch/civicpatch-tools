@@ -268,9 +268,65 @@ class OpenStatesPersonRecord(PersonBase):
     roles: List[OpenStatesRole] = []
 
 
-class JobConfig(BaseModel):
+class LLMCall(BaseModel):
+    """One HTTP call to a gateway.
+
+    **In `shared` so it can be the single declaration of these columns.** `pipelines` writes
+    them into `costs.json` and `civicpatch.org` reads them into `llm_calls` (migration 171);
+    that reader derives its column list from `model_fields` here, so a field added below reaches
+    the table instead of being silently dropped on the way in.
+
+    No timestamp: `llm_calls.created_at` is when the row landed, and a per-call date written
+    into `costs.json` had no reader at all.
+    """
+
+    # what was asked, and of what
+    prompt_name: str
+    source_url: str | None = None
+    chunk_index: int | None = None
+    chunk_count: int | None = None
+    # The two retry loops mean different things: `attempt` is the transport retry inside one
+    # call, `seed` marks the heuristics pass that re-ran the whole prompt.
+    attempt: int = 1
+    seed: int | None = None
+
+    # who answered, and by what route
+    gateway: str
+    model: str
+    routed_model: str = ""
+    upstream_provider: str = ""
+    generation_id: str | None = None
+
+    input_tokens: int
+    output_tokens: int
+    cached_input_tokens: int = 0
+    reasoning_tokens: int = 0
+
+    # What the provider says it charged. None when it states none — the grounded Google calls,
+    # which are punted from `llm_calls` entirely. Never derived from a price table: one went
+    # stale silently and reported zero spend for an unlisted (model, provider) pair.
+    cost_usd: Decimal | None = None
+    web_search: bool = False
+    duration_ms: int | None = None
+
+    finish_reason: str | None = None
+    # Why the response could not be used; None means it was. The call billed either way.
+    error: str | None = None
+
+
+class PipelineRunLimits(BaseModel):
+    """The ceilings one pipeline run may not cross.
+
+    Was `JobConfig` — "job" is the vocabulary `pipeline_runs` replaced, and these are limits
+    rather than configuration: `PipelineRunConfig` already holds what to scrape.
+
+    `pipeline_run_cap_usd` carries its unit in the name, matching the column it is resolved
+    from. It was `pipeline_run_cost_limit` with `# in USD` in a comment, which is a unit nobody
+    greps for.
+    """
+
     max_pages: int
-    pipeline_run_cost_limit: Decimal  # in USD
+    pipeline_run_cap_usd: Decimal
 
 
 class JurisdictionLevel(StrEnum):
@@ -322,6 +378,14 @@ class PipelineRunConfig(BaseModel):
     url: str
     name: Optional[str] = None
     source_urls: Optional[List[str]] = None
+    # What this run may spend, resolved from `state_settings` at dispatch. None inherits
+    # `pipeline.yml`'s default, which is what keeps local runs working with no state row.
+    #
+    # Here rather than threaded as a parameter through five signatures: it is per-run
+    # configuration and this model is already the per-run configuration. It also means the run
+    # context records the ceiling it ran under, which is the first thing worth knowing when
+    # asking why a scrape stopped early.
+    pipeline_run_cap_usd: Optional[Decimal] = None
 
 
 class IssueCode(str, Enum):

@@ -4,14 +4,14 @@ from shared.utils import id_utils
 from typing import List, Literal, Optional
 from urllib.parse import urlparse
 
-class PeopleCollectorJobRequest(BaseModel):
+class PeopleCollectorRequest(BaseModel):
     jurisdiction_ocdid: str  # Format: ocd-jurisdiction/country:us/state:wa/place:seattle
     # OR ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville, for cousubs
     state: PipelineStatus = PipelineStatus.INIT
     config: PipelineRunConfig
     scrape_mode: Literal["remote", "local"] = "local"
 
-def validate_people_request(request: PeopleCollectorJobRequest) -> tuple[List[str], List[str]]:
+def validate_people_request(request: PeopleCollectorRequest) -> tuple[List[str], List[str]]:
     warnings = []
     errors = []
 

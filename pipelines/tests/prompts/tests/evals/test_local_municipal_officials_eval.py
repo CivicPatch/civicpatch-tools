@@ -240,7 +240,7 @@ async def _run_provider(client, cases):
         client, cases, ocdid
     )
     elapsed_seconds = round(time.time() - start_time, 2)
-    llm_costs = cost_utils.get_cost_tracker(_eval_run_id(client["name"]))["llm_costs"]
+    llm_costs = cost_utils.get_cost_tracker(_eval_run_id(client["name"]))
     return {
         "client": client,
         "report": report,
@@ -280,15 +280,15 @@ async def test_provider_comparison(load_eval_cases):
             continue
         llm_costs = result["llm_costs"]
         cost_summary = {
-            "model": llm_costs[0]["model"] if llm_costs else None,
+            "model": llm_costs[0].model if llm_costs else None,
             # Read back from the response, not assumed from what was asked for — this is a
             # per-provider comparison, so which provider served is the premise of every
             # number below it. A set rather than [0]: routing is pinned, and this is what
             # would show it if that ever stopped being true.
-            "providers": sorted({c["upstream_provider"] for c in llm_costs if c["upstream_provider"]}),
+            "providers": sorted({c.upstream_provider for c in llm_costs if c.upstream_provider}),
             "elapsed_seconds": result["elapsed_seconds"],
-            "total_input_tokens": sum(c["input_tokens"] for c in llm_costs),
-            "total_output_tokens": sum(c["output_tokens"] for c in llm_costs),
+            "total_input_tokens": sum(c.input_tokens for c in llm_costs),
+            "total_output_tokens": sum(c.output_tokens for c in llm_costs),
             "total_cost_usd": float(cost_utils.sum_cost(llm_costs)),
         }
         accuracy_report = as_report(result["accuracy"])

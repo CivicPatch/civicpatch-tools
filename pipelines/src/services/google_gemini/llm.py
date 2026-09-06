@@ -10,6 +10,7 @@ import time
 
 import requests
 from pipelines_environment import get_env_vars
+from shared.schemas import LLMCall
 from utils import cost_utils
 from utils.log_utils import get_pipeline_run_logger
 from utils.request_utils import with_retry
@@ -55,7 +56,7 @@ async def run_prompt(pipeline_run_id, jurisdiction_ocdid, prompt, prompt_name: s
         cost_utils.record_call(
             logger,
             pipeline_run_id,
-            cost_utils.LLMCall(
+            LLMCall(
                 prompt_name=prompt_name,
                 gateway="google",
                 model=model,

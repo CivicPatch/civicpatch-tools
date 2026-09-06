@@ -291,15 +291,15 @@ erDiagram
         text            state               PK "no FK — `jurisdictions.state` is a column, not a table"
         int_null        cadence_days        "NULL = manual, the page's own word. CHECK > 0 — a cadence of 0 schedules an infinite loop"
         date_null       cadence_start       "ScheduleIntervalSpec(offset=), so states stagger instead of all firing at once"
-        numeric_null    scrape_cap_usd      "one run's ceiling. NULL = inherit pipeline.yml's pipeline_run_cost_limit"
+        numeric_null    pipeline_run_cap_usd      "one run's ceiling. NULL = inherit pipeline.yml's pipeline_run_cap_usd"
         numeric_null    monthly_cap_usd     "this state's month. NULL = no ceiling. Both CHECK >= 0; 0 is legal and means spend nothing, which NULL does not"
         uuid_null       updated_by_user_id  FK
         timestamptz     updated_at
     }
 
-    fleet_settings {
+    global_settings {
         int             id                  PK "CHECK (id = 1) — a single-row table that says so rather than hoping. Seeded by the migration, so every reader is a plain SELECT"
-        numeric_null    monthly_pool_usd    "the whole fleet's month. NULL = no ceiling. A shared ceiling, NOT an allocation: SUM(state_settings.monthly_cap_usd) may exceed it and the UI shows that rather than refusing it"
+        numeric_null    monthly_cap_usd     "every state's month, together. NULL = no ceiling. Same name as state_settings.monthly_cap_usd on purpose: one concept at two scopes, told apart by the table. A shared ceiling, NOT an allocation — SUM(state_settings.monthly_cap_usd) may exceed it, and the UI shows that rather than refusing it"
         uuid_null       updated_by_user_id  FK
         timestamptz     updated_at
     }
@@ -335,7 +335,7 @@ erDiagram
     change_log_types ||--o{ change_logs : "type"
     users ||--o{ change_logs : "user_id (ON DELETE SET NULL)"
     users ||--o{ state_settings : "updated_by_user_id"
-    users ||--o{ fleet_settings : "updated_by_user_id"
+    users ||--o{ global_settings : "updated_by_user_id"
     jurisdictions ||--o{ change_logs : "jurisdiction_ocdid"
     roles ||--o{ change_logs : "jurisdiction_ocdid"
     review_sessions ||--o{ review_session_entries : "review_session_id"
