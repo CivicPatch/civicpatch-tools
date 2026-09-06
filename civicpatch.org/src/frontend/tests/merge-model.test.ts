@@ -272,6 +272,38 @@ describe("link behaviour, via mergeCards", () => {
   });
 });
 
+describe("the survivor's seat", () => {
+  const seat = [
+    {
+      post_id: "post-1",
+      role_id: "council-member",
+      role_label: "Council Member",
+      division_ocdid: DIVISION,
+      label: "Council Member",
+    },
+  ];
+
+  it("survives the merge, though it lives only on the published side", () => {
+    // `liveRecord` prefers `newRecord`, and for someone the scrape found that is the derived
+    // proposal — which holds no membership, because nothing is seated until a publish. The
+    // spread therefore dropped the seat, and the merged person read as never having answered
+    // the post question, so `isPostUnanswered` blocked publishing on "Choose a post".
+    const survivor = card("p1", {
+      old: person("p1", { memberships: seat }),
+      now: person("p1"),
+    });
+    const merged: any = mergeCards(survivor, added("p2"));
+
+    expect(merged.memberships).toEqual(seat);
+  });
+
+  it("is absent when the survivor never held one", () => {
+    const merged: any = mergeCards(added("p1"), added("p2"));
+
+    expect(merged.memberships).toBeUndefined();
+  });
+});
+
 describe("merge candidates", () => {
   const decided = (id: string, status: string) => card(id, { now: person(id), status });
 

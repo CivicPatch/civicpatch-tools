@@ -185,11 +185,13 @@ async def _bind_memberships(
     derived: list[DerivedPost],
     last_seen_at,
     advances_last_seen: bool,
-) -> None:
-    """Put this roster's people in their posts.
+) -> str:
+    """Put this roster's people in their posts, and answer which body they were seated in.
 
     A membership is a binding: who holds a seat is only true once the scrape is accepted.
-    Closing absentees is outside — it depends on the roster, not on `derived`.
+    Closing absentees is outside — it depends on the roster, not on `derived` — but it has to
+    close within the same body, which is why the organization is returned rather than resolved
+    twice.
     """
     # The changeset's own organization, not "the jurisdiction's one" — a review is about one
     # body, and `posts_identity_uq` scopes a post's identity to it.
@@ -211,6 +213,7 @@ async def _bind_memberships(
                 last_seen_at,
                 advances_last_seen=advances_last_seen,
             )
+    return organization_id
 
 
 async def _accept_published(
@@ -276,7 +279,11 @@ async def publish_changeset(
         await _record_publish(
             cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id
         )
-        if derived:
+        # The body that seats people is the body that retires them, so the close reuses the
+        # scope the binding chose. Looked up rather than created when there is nothing to bind:
+        # a publish that seats nobody must not mint an organization as a side effect, and a
+        # jurisdiction without one has no memberships to close.
+        organization_id = (
             await _bind_memberships(
                 cur,
                 changeset_id,
@@ -285,10 +292,14 @@ async def publish_changeset(
                 last_seen_at,
                 read_from_a_source,
             )
-        # Outside the guard: who is no longer on the roster is answered by the roster.
-        await memberships.close_absent(
-            cur, jurisdiction_ocdid, incoming_ids, last_seen_at
+            if derived
+            else await organizations.for_changeset(cur, changeset_id)
         )
+        # Outside the guard: who is no longer on the roster is answered by the roster.
+        if organization_id:
+            await memberships.close_absent(
+                cur, organization_id, incoming_ids, last_seen_at
+            )
 
         # Same transaction, so a published roster and the cards it obsoletes cannot disagree.
         stale = await dismissals_db.dismiss_superseded_by(

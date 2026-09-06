@@ -40,6 +40,7 @@ import {
   type Save,
 } from "../fields/field-controls.js";
 import { multiValueDiff } from "../fields/field-model.js";
+import { LOCK_OVERRODE, type FieldLock } from "./field-provenance.js";
 import {
   heldPost,
   postLabelFor,
@@ -107,7 +108,7 @@ export interface EditorFieldProps {
   focusRef: FocusRef | null;
   // Opens the add-post form. The page owns the modal; this only asks for it.
   onAddPost: () => void;
-  provenance: string | null;
+  lock: FieldLock | null;
 }
 
 function renderControl(props: EditorFieldProps, record: PresentRecord) {
@@ -231,6 +232,29 @@ function renderWas(props: EditorFieldProps) {
   </div>`;
 }
 
+// Who stood behind this value, and what they overrode. A button rather than a `title`: a
+// native tooltip is slow, unstyleable, and reaches neither touch nor keyboard.
+function renderLock(lock: FieldLock) {
+  const overrode = lock.state === LOCK_OVERRODE;
+  return html`<div
+    class="person-editor__lock person-editor__lock--${lock.state}"
+  >
+    <button
+      class="person-editor__lock-button"
+      type="button"
+      aria-label=${lock.disclosure ? `${lock.label}. ${lock.disclosure}` : lock.label}
+    >
+      <i class="fa-solid fa-lock" aria-hidden="true"></i>
+    </button>
+    <span class="person-editor__lock-pop" role="tooltip">
+      ${overrode && lock.disclosure
+        ? html`<span class="person-editor__lock-said">${lock.disclosure}</span>`
+        : nothing}
+      <span class="person-editor__lock-who">${lock.label}</span>
+    </span>
+  </div>`;
+}
+
 // Why the field is on screen, as the badge for its current condition. The reason
 // is frozen at first appearance (§2.2); the badge is derived, so a field that
 // surfaced because of an error stays visible and reads `resolved` once fixed
@@ -258,10 +282,12 @@ function renderAttention(props: EditorFieldProps) {
     </div>`;
   }
   // Editor only. Preview carries no diff vocabulary, and this is exactly that.
-  if (props.provenance) {
-    return html`<div class="person-editor__provenance">
-      ${props.provenance}
-    </div>`;
+  //
+  // A glyph, not the sentence it replaces: after a review every non-null field is asserted, so
+  // the sentence appeared on all of them and the card was mostly provenance. The lock keeps the
+  // signal and gives the row back.
+  if (props.lock) {
+    return renderLock(props.lock);
   }
   return nothing;
 }

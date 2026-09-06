@@ -20,10 +20,11 @@ EDITABLE_FIELDS = (
     "post_id",
 )
 
-# What a scrape changing a value should stop for review. The three a reviewer would actually
-# read: who this is and how to reach them.
+# What a scrape changing a value should *stop for review*. Not what the card shows: a field
+# whose value moved is rendered as changed either way, because `survivingFields` keeps anything
+# that differs. This list is only about raising a checklist issue.
 #
-# The other seven are out for their own reasons, none of them "it moves a lot":
+# The others are out for their own reasons, none of them "it moves a lot":
 #   image        adjudicated on the card during review, so a change needs no separate stop
 #   other_names  merged forward, so a scrape only ever adds
 #   urls         a guess at the person's page, falling back to source_urls
@@ -31,7 +32,7 @@ EDITABLE_FIELDS = (
 #   start_date   changes between scrapes
 #   end_date     changes between scrapes
 #   post_id      already raises `moved_person` or `disputed_post`, which say more
-SURFACED_FIELDS = ("name", "phones", "emails")
+SURFACED_FIELDS = ("name",)
 
 # Of those, the ones holding several values: a list field is a set, so `phones` carries many
 # accepts where `name` carries one. Mirrors the two partial unique indexes in 137.
@@ -65,6 +66,22 @@ def _values_of(field: str, value: object) -> list:
     # Anything that is not a sequence yields nothing rather than iterating: a bare string under
     # a list field would otherwise come apart into characters.
     return list(value) if isinstance(value, (list, tuple, set)) else []
+
+
+def source_values_overridden(person: dict, stated: dict) -> dict:
+    """What the source said, for each field an assertion then changed.
+
+    The card shows the *published* value — `with_stated_values` has already overlaid it — and a
+    lock saying somebody stood behind it. This is what the lock hides, revealed on hover, and it
+    is only the fields where the two actually differ: a lock over a value the scrape agrees with
+    has nothing to disclose.
+    """
+    published = with_stated_values(person, stated)
+    return {
+        field: person.get(field)
+        for field in stated
+        if field in EDITABLE_FIELDS and published.get(field) != person.get(field)
+    }
 
 
 def with_stated_values(person: dict, stated: dict) -> dict:

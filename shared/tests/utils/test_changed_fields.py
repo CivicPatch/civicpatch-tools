@@ -77,11 +77,16 @@ def test_the_issue_names_the_field_and_the_person():
     assert "Rich Elliott" in issues[0].message
 
 
-def test_only_who_this_is_and_how_to_reach_them_is_surfaced():
-    """Everything else is out for its own reason: `image` is adjudicated on the card anyway,
+def test_only_who_this_is_stops_a_scrape_for_review():
+    """`phones` and `emails` were here until 2026-09-06. A jurisdiction that auto-published
+    holds no assertions, so nothing pins its contact details and the next scrape differs on
+    nearly everyone — which buried the absent/new lists under contact churn. The card still
+    *renders* those changes; this list only decides what raises a checklist issue.
+
+    Everything else is out for its own reason: `image` is adjudicated on the card anyway,
     `other_names` is merged forward so a scrape only adds, `urls`/`source_urls`/the dates change
     between scrapes by design, and `post_id` already raises `moved_person`/`disputed_post`."""
     from core.people_edits import EDITABLE_FIELDS, SURFACED_FIELDS
 
-    assert set(SURFACED_FIELDS) == {"name", "phones", "emails"}
+    assert set(SURFACED_FIELDS) == {"name"}
     assert set(SURFACED_FIELDS) < set(EDITABLE_FIELDS)
