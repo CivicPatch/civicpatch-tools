@@ -79,6 +79,43 @@ async def create_change_log(
         )
 
 
+async def create_change_logs(
+    entries: list[tuple[ChangeLogType, Change | None]],
+    user_id: str | None,
+    jurisdiction_ocdid: str | None = None,
+    changeset_id: str | None = None,
+) -> None:
+    """A whole save's worth of change logs, on one connection.
+
+    `create_change_log` above takes a connection *per row* — a reviewer's edit to five people
+    checked five out of a pool of twenty, one after another, which costs more than the insert
+    it wraps. One `executemany` here instead.
+
+    Still its own connection rather than a caller's cursor: these are recorded best-effort
+    beside a publish that already committed, which is `record_change`'s job and not this one's.
+    """
+    if not entries:
+        return
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.executemany(
+            """
+            INSERT INTO change_logs (type, jurisdiction_ocdid, changeset_id, changes, user_id)
+            VALUES (%s, %s, %s, %s, %s)
+            """,
+            [
+                (
+                    change_type,
+                    jurisdiction_ocdid,
+                    changeset_id,
+                    json.dumps(changes.model_dump()) if changes else None,
+                    user_id or SYSTEM_USER_ID,
+                )
+                for change_type, changes in entries
+            ],
+        )
+
+
 async def record_change(
     cur,
     change_type: ChangeLogType,

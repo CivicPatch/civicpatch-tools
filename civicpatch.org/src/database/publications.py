@@ -203,16 +203,17 @@ async def _bind_memberships(
     post_ids = await posts.create_all(
         cur, jurisdiction_ocdid, organization_id, derived, changeset_id
     )
-    for post in derived:
-        for member in post.members:
-            await memberships.upsert(
-                cur,
-                member,
-                post_ids[(post.role_id, post.division_ocdid)],
-                organization_id,
-                last_seen_at,
-                advances_last_seen=advances_last_seen,
-            )
+    await memberships.upsert_all(
+        cur,
+        [
+            (member, post_ids[(post.role_id, post.division_ocdid)])
+            for post in derived
+            for member in post.members
+        ],
+        organization_id,
+        last_seen_at,
+        advances_last_seen=advances_last_seen,
+    )
     return organization_id
 
 

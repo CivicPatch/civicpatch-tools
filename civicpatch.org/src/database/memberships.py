@@ -72,6 +72,106 @@ async def _set_membership_roles(cur, membership_id: str, role_ids: list[str]) ->
     )
 
 
+async def upsert_all(
+    cur,
+    seatings: list[tuple[DerivedMembership, str]],
+    organization_id: str,
+    last_seen_at,
+    *,
+    advances_last_seen: bool = True,
+) -> dict[str, str]:
+    """Seat a whole roster. Returns each person's membership id.
+
+    Five statements whatever the roster's size, where `upsert` is four *per person* — a close,
+    an insert, and the two that replace the membership's roles. Publishing eight people ran
+    thirty-two round trips in series inside the publish transaction.
+
+    `executemany` pipelines under psycopg 3, so each of these costs one round trip rather than
+    one per row, and no SQL has to be composed to get there.
+
+    The ids come back from a `SELECT` rather than `RETURNING`: the partial unique index
+    `(person_id, organization_id) WHERE closed_at IS NULL` means one open membership per person
+    per body, so reading them back is unambiguous and avoids interleaving results with an
+    `executemany`.
+    """
+    if not seatings:
+        return {}
+
+    await cur.executemany(
+        """
+        UPDATE memberships SET closed_at = %s
+        WHERE person_id = %s AND organization_id = %s
+          AND closed_at IS NULL AND post_id <> %s
+        """,
+        [
+            (last_seen_at, member.person_id, organization_id, post_id)
+            for member, post_id in seatings
+        ],
+    )
+
+    await cur.executemany(
+        f"""
+        INSERT INTO memberships
+            (post_id, organization_id, person_id, designations, unmatched_text,
+             source_labels, start_date, end_date, first_seen_at, last_seen_at, label)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
+        DO UPDATE SET
+            last_seen_at = CASE WHEN %s
+                THEN GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at)
+                ELSE memberships.last_seen_at END,
+            designations = EXCLUDED.designations,
+            unmatched_text = EXCLUDED.unmatched_text,
+            source_labels = EXCLUDED.source_labels,
+            start_date = EXCLUDED.start_date,
+            end_date = EXCLUDED.end_date,
+            label = CASE WHEN {LABEL_IS_HUMAN_SET}
+                         THEN memberships.label ELSE EXCLUDED.label END
+        """,
+        [
+            (
+                post_id,
+                organization_id,
+                member.person_id,
+                member.designations,
+                member.unmatched_text,
+                member.source_labels,
+                member.start_date,
+                member.end_date,
+                last_seen_at,
+                last_seen_at,
+                member.label,
+                advances_last_seen,
+            )
+            for member, post_id in seatings
+        ],
+    )
+
+    await cur.execute(
+        """
+        SELECT person_id::text, id::text FROM memberships
+        WHERE organization_id = %s AND person_id = ANY(%s) AND closed_at IS NULL
+        """,
+        (organization_id, [member.person_id for member, _ in seatings]),
+    )
+    by_person = {row[0]: row[1] for row in await cur.fetchall()}
+
+    await cur.executemany(
+        "DELETE FROM membership_roles WHERE membership_id::text = %s",
+        [(by_person[member.person_id],) for member, _ in seatings],
+    )
+    await cur.executemany(
+        "INSERT INTO membership_roles (membership_id, role_id) VALUES (%s, %s) "
+        "ON CONFLICT DO NOTHING",
+        [
+            (by_person[member.person_id], role_id)
+            for member, _ in seatings
+            for role_id in member.role_ids
+        ],
+    )
+    return by_person
+
+
 async def upsert(
     cur,
     member: DerivedMembership,
