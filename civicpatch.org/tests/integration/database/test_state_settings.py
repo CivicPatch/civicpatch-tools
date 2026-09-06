@@ -18,6 +18,7 @@ import pytest_asyncio
 from core.spend_limits import Cap
 from database.database import get_pool
 from database.pipeline_runs import register_run
+from services.scrape_settings import get_state_panel
 from services.spend_budget import cap_reached_for_state
 from database.state_settings import (
     get_all_state_settings,
@@ -69,7 +70,7 @@ async def test_setting_caps_does_not_clear_the_cadence():
     settings = await get_state_settings(_STATE)
 
     assert settings.cadence_days == 30
-    assert settings.cadence_start == datetime.date(2026, 9, 1)
+    assert settings.cadence_anchor == datetime.date(2026, 9, 1)
     assert settings.pipeline_run_cap_usd == Decimal("0.5000")
     assert settings.monthly_cap_usd == Decimal("12.0000")
 
@@ -211,3 +212,29 @@ async def test_the_budget_gate_reads_caps_and_spend_together():
     await set_caps(_STATE, None, Decimal("0"), None)
     # A monthly cap of $0 is reached before anything is spent — the stop switch.
     assert await cap_reached_for_state(_STATE) == Cap.STATE_MONTH
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_settings_panel_answers_from_one_moment():
+    """Five reads and one piece of arithmetic, assembled in a service rather than a router.
+    A state nobody has configured still answers — every field has a meaning at NULL."""
+    panel = await get_state_panel(_STATE)
+
+    assert panel.state == _STATE
+    assert panel.cadence_days is None
+    assert panel.next_run_at is None  # manual has no next run
+    assert panel.spent_this_month_usd == Decimal("0")
+    assert panel.cap_reached is None
+    assert panel.cost_cap_hits_this_month == 0
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_cadence_gives_the_panel_a_next_run():
+    await set_cadence(_STATE, 30, datetime.date(2026, 9, 1), None)
+
+    panel = await get_state_panel(_STATE)
+
+    assert panel.cadence_days == 30
+    assert panel.next_run_at is not None

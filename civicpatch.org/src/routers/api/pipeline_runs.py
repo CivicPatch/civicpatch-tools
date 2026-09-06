@@ -125,7 +125,7 @@ def get_router(api_key_header):
     router = APIRouter()
 
     # Declared first: it must not be swallowed by the `/{pipeline_run_id}` paths below.
-    # Maintainer-only, unlike the run counts it sits beside on the Activity page — what the
+    # Admin-only, unlike the run counts it sits beside on the Activity page — what the
     # roster says is public, what it cost us to find out is not.
     @router.get(
         "/spend",
@@ -141,7 +141,7 @@ def get_router(api_key_header):
             DEFAULT_SPEND_WINDOW_DAYS, ge=MIN_SPEND_WINDOW_DAYS, le=MAX_SPEND_WINDOW_DAYS
         ),
         _: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
         ),
     ):
         return {"data": await get_state_spend(window_days)}

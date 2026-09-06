@@ -28,20 +28,13 @@ export const costPerScrapeOf = (spend: StateSpend | undefined) =>
 export const spendChangeOf = (spend: StateSpend | undefined) =>
   spend ? amount(spend.spend_usd) - amount(spend.prior_spend_usd) : 0;
 
-// One scrape costs a fraction of a cent, so dollars are the wrong unit for most of this page:
-// `$0.00222` is five characters of leading zero before anything informative. Under a dollar the
-// figure reads in cents, where the same number is `0.22¢`.
-//
-// The threshold is a dollar rather than a cent because mixing `$0.04` and `4.25¢` in one column
-// is harder to scan than either alone.
+// Four places under a dollar: a run costs a fraction of a cent, and $0.00 hides it.
 export function formatUsd(value: string): string {
   const n = Number(value);
-  if (n >= 1) return `$${n.toFixed(2)}`;
-  return `${(n * 100).toFixed(2)}¢`;
+  return n >= 1 ? `$${n.toFixed(2)}` : `$${n.toFixed(4)}`;
 }
 
-// Signed, because a fall is as worth seeing as a rise. Exactly flat says so in words — `+0.00¢`
-// is a number that has to be read to find out it says nothing.
+// Signed, because a fall is as worth seeing as a rise. Flat says so in words, not as a zero.
 export const formatChange = (change: number) =>
   change === 0
     ? "unchanged"

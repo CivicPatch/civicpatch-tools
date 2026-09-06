@@ -10,7 +10,7 @@ import {
 } from "../pages/changeset-summaries-page/selection.ts";
 
 describe("isShown", () => {
-  it("shows the whole fleet when nothing is picked", () => {
+  it("shows every state when nothing is picked", () => {
     // The resting state is everything, not nothing — there is no empty view to fall into.
     expect(isShown([], "wa")).toBe(true);
   });
@@ -35,7 +35,7 @@ describe("toggle", () => {
 });
 
 describe("hasPickedEverything", () => {
-  it("is false for an empty selection even though it renders the same fleet", () => {
+  it("is false for an empty selection even though it renders the same rows", () => {
     // They render alike; they differ in what unpicking one state leaves behind.
     expect(hasPickedEverything([], 50)).toBe(false);
     expect(hasPickedEverything(["wa"], 1)).toBe(true);

@@ -30,7 +30,7 @@
   margin: 0;
 }
 
-/* Ledger — the fleet totals, so a reader knows the scale before reading any row. */
+/* Ledger — the totals, so a reader knows the scale before reading any row. */
 
 .cs-ledger {
   display: flex;
@@ -415,7 +415,7 @@
 
 /* Narrow screens
    ─────────────────────────────────────────────────────────────────────────────
-   The fleet row is built wide: a state, a figure, thirty day cells and three more
+   Each row is built wide: a state, a figure, thirty day cells and three more
    figures on one line. Below 720px the calendar takes its own full-width line and
    the figures wrap under the state — at which point the scale no longer sits above
    anything, so it and its group headings go. */
@@ -438,4 +438,39 @@
     order: 1;
     flex: 0 0 100%;
   }
+}
+
+/* All-states budget, above the sort chips. */
+
+.cs-budget {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  font-size: var(--text-sm);
+}
+
+.cs-budget__label {
+  font-size: var(--text-xs);
+  color: var(--civ-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cs-budget__fig--quiet {
+  color: var(--civ-text-muted);
+}
+
+.cs-budget__edit {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: var(--text-sm);
+  font-family: inherit;
+  color: var(--civ-text-muted);
+  text-decoration: underline;
+  cursor: pointer;
 }

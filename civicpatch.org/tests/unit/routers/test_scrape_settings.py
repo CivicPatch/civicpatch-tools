@@ -15,6 +15,7 @@ from fastapi.testclient import TestClient
 from lib.auth import get_optional_user
 from routers.api import scrape_settings as settings_router
 from schemas.common import Identity, UserRole
+from schemas.scrape_settings import GlobalScrapePanel, StateScrapePanel
 from schemas.state_settings import GlobalSettings, StateSettings
 
 pytestmark = pytest.mark.unit
@@ -44,6 +45,15 @@ def _patched():
         patch.object(settings_router.db, "set_caps", new=AsyncMock()),
         patch.object(settings_router.db, "set_global_cap", new=AsyncMock()),
         patch.object(
+            settings_router,
+            "get_global_panel",
+            new=AsyncMock(
+                return_value=GlobalScrapePanel(
+                    spent_this_month_usd=Decimal("9"), state_monthly_caps_usd=Decimal("50")
+                )
+            ),
+        ),
+        patch.object(
             settings_router.db,
             "get_state_settings",
             new=AsyncMock(return_value=StateSettings(state="wa")),
@@ -56,57 +66,84 @@ def _patched():
     )
 
 
-@pytest.mark.parametrize("role", [UserRole.MAINTAINERS, UserRole.ADMINS])
-def test_a_maintainer_may_set_how_often_a_state_is_scraped(client, role):
-    _as(client, role)
-    with _patched()[0], _patched()[3]:
+def test_an_admin_may_set_the_cadence(client):
+    _as(client, UserRole.ADMINS)
+    with _patched()[0], _patched()[4]:
         response = client.put("/scrape_settings/wa/cadence", json={"cadence_days": 30})
     assert response.status_code == 200
 
 
-def test_a_maintainer_may_not_set_what_a_state_may_spend(client):
-    """The split the plan settled: admins allocate, maintainers spend. A maintainer raising
-    their own state's cap would make the fleet budget advisory."""
-    _as(client, UserRole.MAINTAINERS)
-    response = client.put(
-        "/scrape_settings/wa/caps", json={"monthly_cap_usd": "999"}
-    )
-    assert response.status_code == 403
+@pytest.mark.parametrize("role", [UserRole.DEFAULT, UserRole.CONTRIBUTORS, UserRole.MAINTAINERS])
+def test_nobody_below_admin_may_touch_cadence_or_caps(client, role):
+    """Cadence and budget are one decision — how often a state is scraped is what it costs — so
+    a maintainer able to set the schedule could set the spending without seeing the ceiling it
+    is measured against."""
+    _as(client, role)
+    assert client.get("/scrape_settings/wa").status_code == 403
+    assert client.get("/scrape_settings/global").status_code == 403
+    assert client.put("/scrape_settings/wa/cadence", json={"cadence_days": 30}).status_code == 403
+    assert client.put("/scrape_settings/wa/caps", json={"monthly_cap_usd": "1"}).status_code == 403
+    assert client.put("/scrape_settings/global", json={"monthly_cap_usd": "1"}).status_code == 403
 
 
 def test_an_admin_may_set_the_caps(client):
     _as(client, UserRole.ADMINS)
-    with _patched()[1], _patched()[3]:
+    with _patched()[1], _patched()[4]:
         response = client.put(
             "/scrape_settings/wa/caps", json={"monthly_cap_usd": "12.00"}
         )
     assert response.status_code == 200
 
 
-def test_a_maintainer_may_not_set_the_global_cap(client):
-    _as(client, UserRole.MAINTAINERS)
-    response = client.put("/scrape_settings/global", json={"monthly_cap_usd": "40"})
-    assert response.status_code == 403
-
-
-def test_a_contributor_may_not_even_read_the_settings(client):
-    """Read is Maintainer-and-up, matching the spend figures these are read against."""
-    _as(client, UserRole.CONTRIBUTORS)
-    assert client.get("/scrape_settings/wa").status_code == 403
-    assert client.get("/scrape_settings/global").status_code == 403
-
-
 def test_a_cadence_of_zero_days_is_refused_before_it_reaches_sql(client):
     """The CHECK constraint would catch it, but a 422 names the field and a CheckViolation
     does not."""
-    _as(client, UserRole.MAINTAINERS)
+    _as(client, UserRole.ADMINS)
     response = client.put("/scrape_settings/wa/cadence", json={"cadence_days": 0})
     assert response.status_code == 422
 
 
 def test_a_negative_cap_is_refused_before_it_reaches_sql(client):
     _as(client, UserRole.ADMINS)
-    response = client.put(
-        "/scrape_settings/wa/caps", json={"monthly_cap_usd": "-1"}
-    )
+    response = client.put("/scrape_settings/wa/caps", json={"monthly_cap_usd": "-1"})
     assert response.status_code == 422
+
+
+def test_the_panel_is_one_response_rather_than_five(client):
+    """The block renders as a unit. Five requests would let it paint in pieces, each from a
+    slightly different moment — spend from one instant against a cap read at another."""
+    _as(client, UserRole.ADMINS)
+    panel = StateScrapePanel(
+        state="wa",
+        cadence_days=30,
+        spent_this_month_usd=Decimal("1.50"),
+        global_spent_this_month_usd=Decimal("9.00"),
+        cost_cap_hits_this_month=2,
+        candidates_due=41,
+    )
+    with patch.object(
+        settings_router, "get_state_panel", new=AsyncMock(return_value=panel)
+    ):
+        body = client.get("/scrape_settings/wa").json()["data"]
+
+    assert body["candidates_due"] == 41
+    assert body["cost_cap_hits_this_month"] == 2
+
+
+def test_the_state_caps_total_is_shown_even_when_it_exceeds_the_cap(client):
+    """State caps adding up past the global one is normal: they are ceilings, not reservations."""
+    _as(client, UserRole.ADMINS)
+    with patch.object(
+        settings_router,
+        "get_global_panel",
+        new=AsyncMock(
+            return_value=GlobalScrapePanel(
+                monthly_cap_usd=Decimal("40"),
+                spent_this_month_usd=Decimal("9"),
+                state_monthly_caps_usd=Decimal("120"),
+            )
+        ),
+    ):
+        body = client.get("/scrape_settings/global").json()["data"]
+
+    assert body["state_monthly_caps_usd"] == "120"

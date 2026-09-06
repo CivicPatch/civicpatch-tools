@@ -18,8 +18,10 @@ pytestmark = pytest.mark.unit
 
 
 def _patch(cap):
+    # Patched at its source, not on the activity module: the import is inside the function so
+    # that Temporal's workflow sandbox never loads the database layer.
     return patch(
-        "routers.temporal.scrape_activities.cap_reached_for_state",
+        "services.spend_budget.cap_reached_for_state",
         new_callable=AsyncMock,
         return_value=cap,
     )

@@ -368,3 +368,34 @@ async def get_issue_by_id(issue_id: str) -> dict | None:
         "resolved_at": row[6].isoformat() if row[6] else None,
         "created_at": row[7].isoformat() if row[7] else None,
     }
+
+
+# Keyed on the changeset, so the state comes from the jurisdiction behind it. Windowed to the
+# calendar month because that is the window the cap it refers to is measured over — "hit twice"
+# means twice this month, not twice ever.
+COST_CAP_HITS_SQL = """
+SELECT count(*)::int
+FROM issues i
+JOIN changesets c ON c.id::text = i.issue_key
+JOIN jurisdictions j USING (jurisdiction_ocdid)
+WHERE i.issue_type = %(issue_type)s
+  AND j.state = %(state)s
+  AND i.created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
+"""
+
+
+async def count_cost_cap_hits_this_month(state: str) -> int:
+    """How many of this state's runs stopped at their per-run ceiling this month.
+
+    The signal an operator needs before raising a cap: one run truncating is noise, a third of
+    them truncating means the cap is set below what the state's pages actually cost.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            COST_CAP_HITS_SQL,
+            {"issue_type": PipelineIssueType.COST_CAP_REACHED, "state": state},
+        )
+        row = await cur.fetchone()
+    assert row, "count(*) always returns a row"
+    return row[0]

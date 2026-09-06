@@ -7,11 +7,18 @@ import { component, useState } from "haunted";
 import "./state-section.css";
 import "../../components/status-badge.js";
 import { html, nothing } from "lit-html";
-import { fetchStateBucket, startStateScrape } from "../../api.js";
+import { fetchStateBucket, fetchStateScrapeSettings, startStateScrape } from "../../api.js";
 import "../../components/confirm-modal/confirm-modal.ts";
+import "./scrape-settings-modal.ts";
 import { hostDispatch } from "../../utils/host-dispatch.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 import { formatChange, formatUsd, spendChangeOf, type StateSpend } from "./spend.js";
+import {
+  describeBudget,
+  describeCadence,
+  describeNextRun,
+  type StateScrapePanel,
+} from "./scrape-settings.js";
 import {
   BUCKET_DISMISSED,
   BUCKET_FAILED_RUNS,
@@ -40,6 +47,7 @@ type StateSectionHost = HTMLElement & {
   };
   windowDays: number;
   canScrape: boolean;
+  canEditSettings: boolean;
   // Null for two reasons that render alike: not a maintainer, or the state spent nothing.
   // Neither is $0.00, which would claim it scraped for free.
   spend: StateSpend | null;
@@ -82,6 +90,8 @@ function CivStateSection(host: StateSectionHost) {
   const [confirming, setConfirming] = useState(false);
   const [starting, setStarting] = useState(false);
   const [scrapeError, setScrapeError] = useState<string | null>(null);
+  const [settings, setSettings] = useState<StateScrapePanel | null>(null);
+  const [editing, setEditing] = useState(false);
 
   const load = () => {
     if (loading || Object.keys(pages).length) return;
@@ -96,6 +106,7 @@ function CivStateSection(host: StateSectionHost) {
       .then((entries) => setPages(Object.fromEntries(entries)))
       .catch(() => setPages({}))
       .finally(() => setLoading(false));
+    if (host.canEditSettings) loadSettings();
   };
 
   // `toggle` rather than a click handler on the summary: it fires for keyboard opens too.
@@ -156,7 +167,7 @@ function CivStateSection(host: StateSectionHost) {
       color=${TONES.quiet.color}
     ></civ-status-badge>`;
 
-  // In the header rather than the fleet row: a currency figure beside thirty calendar cells and
+  // In the header rather than the row: a currency figure beside thirty calendar cells and
   // three counts is what broke that line, and this is where a state's own numbers belong.
   //
   // All three, because each is what one of the spend sorts ranks by — a sort whose figure is
@@ -209,6 +220,51 @@ function CivStateSection(host: StateSectionHost) {
     `;
   }
 
+  const loadSettings = () =>
+    fetchStateScrapeSettings(row.state)
+      .then(setSettings)
+      .catch(() => setSettings(null));
+
+  // Absent until the section is opened, so this renders nothing rather than a skeleton.
+  function renderSettings() {
+    if (!settings) return nothing;
+    const overBudget = settings.cap_reached !== null;
+    return html`
+      <span class="cs-settings">
+        <span class="cs-settings__fig">${describeCadence(settings)}</span>
+        <span class="cs-settings__sep">|</span>
+        <span class="cs-settings__fig">${describeNextRun(settings.next_run_at, new Date())}</span>
+        <span class="cs-settings__sep">|</span>
+        <span class="cs-settings__fig ${overBudget ? "cs-settings__fig--alert" : ""}">
+          ${describeBudget(settings.spent_this_month_usd, settings.monthly_cap_usd)}
+          this month
+        </span>
+        ${settings.candidates_due
+          ? html`<span class="cs-settings__sep">|</span>
+              <span class="cs-settings__fig">${settings.candidates_due} due</span>`
+          : nothing}
+        ${settings.cost_cap_hits_this_month
+          ? html`<span class="cs-settings__sep">|</span>
+              <span class="cs-settings__fig cs-settings__fig--alert"
+                >${settings.cost_cap_hits_this_month} hit the run cap</span
+              >`
+          : nothing}
+        <button class="cs-settings__edit" @click=${() => setEditing(true)}>edit</button>
+      </span>
+      ${editing
+        ? html`<civ-scrape-settings-modal
+            .panel=${settings}
+            
+            @settings-saved=${() => {
+              setEditing(false);
+              loadSettings();
+            }}
+            @cancel=${() => setEditing(false)}
+          ></civ-scrape-settings-modal>`
+        : nothing}
+    `;
+  }
+
   // Disabled while this state has a run going: a second batch on top of a live one is the
   // mistake the count exists to prevent.
   function renderScrapeControl() {
@@ -226,7 +282,7 @@ function CivStateSection(host: StateSectionHost) {
           ? html`<span class="cs-scrape__busy">${row.running} already running</span>`
           : nothing}
         ${scrapeError ? html`<span class="cs-scrape__error">${scrapeError}</span>` : nothing}
-        <span class="cs-scrape__note">No schedule</span>
+        ${renderSettings()}
       </div>
       ${confirming
         ? html`<civ-confirm-modal

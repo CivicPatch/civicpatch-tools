@@ -150,7 +150,7 @@ async def _register_state_schedules(client: Client) -> set[str]:
                     intervals=[
                         ScheduleIntervalSpec(
                             every=every,
-                            offset=interval_offset(settings.cadence_start, every),
+                            offset=interval_offset(settings.cadence_anchor, every),
                         )
                     ]
                 ),
@@ -270,7 +270,7 @@ async def reconcile_state_schedule(client: Client, state: str) -> None:
                 intervals=[
                     ScheduleIntervalSpec(
                         every=every,
-                        offset=interval_offset(settings.cadence_start, every),
+                        offset=interval_offset(settings.cadence_anchor, every),
                     )
                 ]
             ),
