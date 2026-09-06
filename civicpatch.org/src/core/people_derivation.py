@@ -168,13 +168,16 @@ def merge_records_to_person(
     phones = merge_field_to_list([r.phone for r in records if r.phone is not None])
     emails = merge_field_to_list([r.email for r in records if r.email is not None])
     urls = merge_field_to_list([r.url for r in records if r.url is not None])
-    other_names = sorted(
-        {
-            person.name
-            for person in records
-            if person.name and person.name != canonical_name
-        }
-    )
+    # Case-insensitive both ways: a source that writes the name differently on two pages is
+    # spelling one name, not naming an alias.
+    other_names: List[str] = []
+    for record in records:
+        if not record.name or name_utils.exact_match(record.name, canonical_name):
+            continue
+        if any(name_utils.exact_match(record.name, kept) for kept in other_names):
+            continue
+        other_names.append(record.name)
+    other_names.sort()
 
     person = DerivedPerson(
         name=canonical_name,

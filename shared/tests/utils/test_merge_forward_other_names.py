@@ -53,3 +53,28 @@ def test_merge_forward_no_existing_match_is_a_noop():
         existing_other_names=[],
     )
     assert result == ["Rob"]
+
+
+def test_a_different_spelling_of_the_same_name_is_not_a_rename():
+    """A source writing "Melvin taylor" on one page and "Melvin Taylor" on another used to read
+    as a rename, so the variant was filed as an alias — and then carried forward on every run
+    after, because existing aliases always merge."""
+    result = merge_forward_other_names(
+        person_name="Melvin Taylor",
+        person_other_names=[],
+        existing_name="Melvin taylor",
+        existing_other_names=[],
+    )
+    assert result == []
+
+
+def test_an_alias_already_stored_as_a_spelling_of_the_name_is_dropped():
+    """The backlog heals: rosters already carrying the variant stop carrying it on the next run
+    rather than needing a migration."""
+    result = merge_forward_other_names(
+        person_name="Carrie Hubbard",
+        person_other_names=[],
+        existing_name="Carrie Hubbard",
+        existing_other_names=["CARRIE HUBBARD", "Carrie H."],
+    )
+    assert result == ["Carrie H."]
