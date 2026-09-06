@@ -6,6 +6,7 @@ than two paths to keep in step. Previously publishing was a side effect of the G
 made the repo the authority for what is live and meant a dead merge worker meant stale data.
 """
 
+import asyncio
 import logging
 
 import environment
@@ -37,7 +38,7 @@ from shared.utils.yaml_utils import yaml_dump
 logger = logging.getLogger(__name__)
 
 
-def promote_images(people: list[dict]) -> list[dict]:
+async def promote_images(people: list[dict]) -> list[dict]:
     """Move this roster's photos from the artifacts bucket to the CDN, and point the records
     at their new home. Mutates nothing the caller owns — returns the rewritten roster.
 
@@ -46,12 +47,24 @@ def promote_images(people: list[dict]) -> list[dict]:
 
     A photo that fails to copy is left pointing at the artifacts bucket rather than failing
     the publish — the URL still resolves, it is just not on the permanent host yet.
+
+    Concurrent, because each copy is an independent round trip to object storage and this runs
+    inside the publish request: nine councillors were nine serial copies, each also building
+    its own boto client. `to_thread` rather than an async client because boto is synchronous —
+    called directly these blocked the event loop, so they delayed every other request too, not
+    only this one.
+
+    `gather` preserves order, so the roster comes back in the order it went in.
     """
     friendly_host = environment.get_env_vars()["FRIENDLY_STORAGE_HOST"]
-    promoted = []
-    for person in people:
-        promoted.append(_promote_person_image(person, friendly_host))
-    return promoted
+    return list(
+        await asyncio.gather(
+            *(
+                asyncio.to_thread(_promote_person_image, person, friendly_host)
+                for person in people
+            )
+        )
+    )
 
 
 def _promote_person_image(person: dict, friendly_host: str) -> dict:
