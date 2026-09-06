@@ -504,7 +504,7 @@ PERSON_UPSERT = f"""
 def person_upsert_params(people: list[dict]) -> list[dict]:
     """A roster's dicts as rows for `PERSON_UPSERT`.
 
-    One caller now — `publish_request`. It also shaped the people files `od_sync` read back,
+    One caller now — `publish_changeset`. It also shaped the people files `od_sync` read back,
     until that read-back was removed.
     """
     return [

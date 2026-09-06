@@ -38,7 +38,7 @@ from schemas.common import (
 from services.review_proposal import (
     assertions_for_people,
     proposals_for_requests,
-    review_summary_for_request,
+    review_summary_for_changeset,
 )
 import services.roster as services_roster
 from services.review_sources import build_sources
@@ -287,7 +287,7 @@ def get_router(api_key_header):
         changeset_id: str,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        return {"data": await review_summary_for_request(changeset_id)}
+        return {"data": await review_summary_for_changeset(changeset_id)}
 
     # -- Issues a reviewer filed by hand on this scrape ---
     @router.get("/{changeset_id}/issues")
@@ -295,7 +295,7 @@ def get_router(api_key_header):
         changeset_id: str,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        result = await database.issues.get_user_reported_issues_for_request(changeset_id)
+        result = await database.issues.get_user_reported_issues_for_changeset(changeset_id)
         return {"data": result}
 
     return router

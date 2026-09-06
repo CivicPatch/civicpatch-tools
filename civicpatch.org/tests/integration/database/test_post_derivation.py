@@ -201,7 +201,7 @@ async def test_a_different_post_closes_the_old_membership_and_opens_a_new_one():
 @pytest.mark.integration
 async def test_close_absent_ignores_an_empty_roster():
     """An empty roster is a failed scrape, not a dissolved council — the same guard
-    `publish_request` already applies before retiring people."""
+    `publish_changeset` already applies before retiring people."""
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -350,7 +350,7 @@ async def test_publish_writes_memberships_for_the_roster():
     post derivation failed at submit.
     """
     from core.post_derivation import DerivedMembership, DerivedPost
-    from database.publications import publish_request
+    from database.publications import publish_changeset
 
     person_id = await _seed_person()
     pool = await get_pool()
@@ -402,7 +402,7 @@ async def test_publish_writes_memberships_for_the_roster():
         )
     ]
 
-    written = await publish_request(changeset_id, _OCDID, people, None, derived=derived)
+    written = await publish_changeset(changeset_id, _OCDID, people, None, derived=derived)
     assert written == 1
 
     pool = await get_pool()
@@ -1006,7 +1006,7 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
 async def test_a_scrape_that_re_confirms_the_roster_publishes_and_moves_last_seen_at():
     """The complement of the test above, and the thing that was silently broken.
 
-    A scrape proposing nothing new used to be dismissed as `unchanged`, so `publish_request`
+    A scrape proposing nothing new used to be dismissed as `unchanged`, so `publish_changeset`
     never ran and `last_seen_at` never moved — leaving it frozen at the last scrape that
     *changed* something. Ellensburg read 2025-06-22 after a 2026-09 scrape saw all fourteen of
     its people on the page.

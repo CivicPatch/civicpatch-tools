@@ -11,7 +11,7 @@ import pytest_asyncio
 
 import database.issues as issues_db
 from database.database import get_pool
-from database.publications import dismiss_request
+from database.publications import dismiss_changeset
 from shared.utils.statuses import DismissalReason, PipelineIssueType
 from tests.integration import factories
 
@@ -75,7 +75,7 @@ async def test_resolving_the_changeset_unblocks_it_even_with_the_issue_still_ope
     Measured 2026-09-05: all 15 pending issues in dev sat on terminal changesets, freezing 10
     jurisdictions."""
     changeset_id = await _changeset_with_a_pending_issue()
-    await dismiss_request(changeset_id, DismissalReason.REJECTED)
+    await dismiss_changeset(changeset_id, DismissalReason.REJECTED)
 
     assert _OCDID not in await issues_db.jurisdiction_ocdids_with_pending_issues()
     assert _OCDID not in await issues_db.jurisdiction_ocdids_with_pending_issues_in_state("zz")

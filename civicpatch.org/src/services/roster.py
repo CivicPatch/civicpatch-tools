@@ -10,7 +10,7 @@ from database.people import get_people_by_ids
 from database.roles import get_roles
 from database import changesets as changesets_db
 from database import posts as posts_db
-from database.source_records import get_source_records_for_request
+from database.source_records import get_source_records_for_changeset
 from schemas.assertions import EntityType
 from shared.schemas import POST_FIELD, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 async def _roster(changeset_id: str, jurisdiction_ocdid: str) -> tuple[list[dict], dict]:
-    sightings = await get_source_records_for_request(changeset_id)
+    sightings = await get_source_records_for_changeset(changeset_id)
     if not sightings:
         return [], {}
 
@@ -103,7 +103,7 @@ async def proposed_rosters(changeset_ids: list[str]) -> dict[str, list[dict]]:
     """
     if not changeset_ids:
         return {}
-    ocdids = await changesets_db.jurisdictions_for_requests(changeset_ids)
+    ocdids = await changesets_db.jurisdictions_for_changesets(changeset_ids)
     limit = asyncio.Semaphore(_ROSTER_CONCURRENCY)
 
     async def one(changeset_id: str, ocdid: str) -> list[dict]:

@@ -15,9 +15,9 @@ import pytest_asyncio
 import database.changeset_batches as batches_db
 from core.changeset_lifecycle import INITIAL_STATE, ChangesetState
 from database.changesets import (
-    register_jurisdiction_edit_request,
-    register_people_edit_request,
-    register_sheet_import_request,
+    register_jurisdiction_edit_changeset,
+    register_people_edit_changeset,
+    register_sheet_import_changeset,
 )
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
@@ -133,9 +133,9 @@ async def test_every_kind_is_born_where_INITIAL_STATE_says():
         str(uuid.uuid4()),
         str(uuid.uuid4()),
     )
-    await register_people_edit_request(people_edit_id, _OCDID, SYSTEM_USER_ID)
-    await register_sheet_import_request(import_id, _OCDID, SYSTEM_USER_ID, batch_id)
-    await register_jurisdiction_edit_request(
+    await register_people_edit_changeset(people_edit_id, _OCDID, SYSTEM_USER_ID)
+    await register_sheet_import_changeset(import_id, _OCDID, SYSTEM_USER_ID, batch_id)
+    await register_jurisdiction_edit_changeset(
         jurisdiction_edit_id, _OCDID, "https://example.test/commit/1", SYSTEM_USER_ID
     )
 

@@ -11,7 +11,7 @@ import lib.pubsub as pubsub_service
 from core.pipeline_runs import dismissal_for, is_final
 from database.issues import supersede_prior_jurisdiction_issues
 from database.pipeline_runs import get_pipeline_run, update_pipeline_run_status
-from database.publications import dismiss_request
+from database.publications import dismiss_changeset
 
 
 async def finalize_pipeline_run(
@@ -28,7 +28,7 @@ async def finalize_pipeline_run(
 
     reason = dismissal_for(status)
     if reason:
-        await dismiss_request(changeset_id, reason)
+        await dismiss_changeset(changeset_id, reason)
 
     if jurisdiction_ocdid:
         await supersede_prior_jurisdiction_issues(jurisdiction_ocdid, changeset_id)

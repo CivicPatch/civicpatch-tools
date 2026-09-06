@@ -16,7 +16,7 @@ from psycopg.errors import ForeignKeyViolation
 
 from database.database import get_pool
 from database.source_records import (
-    get_source_records_for_request,
+    get_source_records_for_changeset,
     insert_source_records,
 )
 
@@ -92,7 +92,7 @@ async def test_stores_each_sighting_verbatim(sentinel_request):
         _records("Ann", "Council Member Place 3 (East Ward)"),
     )
 
-    rows = await get_source_records_for_request(sentinel_request)
+    rows = await get_source_records_for_changeset(sentinel_request)
     assert len(rows) == 1
     # The label is stored as the page gave it — undecomposed. Nothing derived is written, so
     # a later parser fix changes what this row means without rewriting it.
@@ -111,7 +111,7 @@ async def test_a_replay_adds_rows_rather_than_being_rejected(sentinel_request):
     await insert_source_records(sentinel_request, _SENTINEL_OCDID, records)
     await insert_source_records(sentinel_request, _SENTINEL_OCDID, records)
 
-    rows = await get_source_records_for_request(sentinel_request)
+    rows = await get_source_records_for_changeset(sentinel_request)
     assert len(rows) == 2
     assert {r["person_id"] for r in rows} == {_ANN}
 
@@ -157,7 +157,7 @@ async def test_evidence_for_an_unknown_request_is_rejected():
 @pytest.mark.asyncio
 async def test_no_records_writes_nothing(sentinel_request):
     assert await insert_source_records(sentinel_request, _SENTINEL_OCDID, {}) == 0
-    assert await get_source_records_for_request(sentinel_request) == []
+    assert await get_source_records_for_changeset(sentinel_request) == []
 
 
 @pytest.mark.integration
@@ -171,7 +171,7 @@ async def test_every_sighting_of_one_person_is_its_own_row(sentinel_request):
         _records("Dee", "Council Member", "Mayor"),
     )
 
-    rows = await get_source_records_for_request(sentinel_request)
+    rows = await get_source_records_for_changeset(sentinel_request)
 
     assert len(rows) == 2
     assert [r["label"] for r in rows] == ["Council Member", "Mayor"]
@@ -199,7 +199,7 @@ async def test_photo_urls_are_stored_on_the_sighting(sentinel_request):
 
     await insert_source_records(sentinel_request, _SENTINEL_OCDID, records)
 
-    rows = await get_source_records_for_request(sentinel_request)
+    rows = await get_source_records_for_changeset(sentinel_request)
 
     assert rows[0]["image"] == "https://zz.gov/eve.png"
     assert rows[0]["cdn_image"] == "https://cdn.example/eve.png"

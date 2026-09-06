@@ -361,15 +361,15 @@ async def test_get_people_by_state_not_found():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_request_jurisdiction_not_found():
-    result = await db_requests.get_request_jurisdiction(_FAKE_UUID)
+async def test_get_changeset_jurisdiction_not_found():
+    result = await db_requests.get_changeset_jurisdiction(_FAKE_UUID)
     assert result is None
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_issue_request_details_empty():
-    result = await db_requests.get_issue_request_details([])
+async def test_get_issue_changeset_details_empty():
+    result = await db_requests.get_issue_changeset_details([])
     assert isinstance(result, list)
 
 

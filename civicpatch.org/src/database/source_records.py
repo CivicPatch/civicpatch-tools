@@ -80,7 +80,7 @@ async def insert_source_records(
     return len(sightings)
 
 
-async def get_source_records_for_request(changeset_id: str) -> list[dict]:
+async def get_source_records_for_changeset(changeset_id: str) -> list[dict]:
     """Every sighting one scrape saw, each with the person it was resolved to."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

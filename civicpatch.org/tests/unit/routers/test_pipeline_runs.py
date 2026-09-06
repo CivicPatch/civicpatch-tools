@@ -201,7 +201,7 @@ def _cancel_mocks(
         patch("routers.api.pipeline_runs.temporal_service.cancel_workflow", new_callable=AsyncMock),
         patch("routers.api.pipeline_runs.update_pipeline_run_status", new_callable=AsyncMock),
         patch("database.users.get_user_id_by_provider", new_callable=AsyncMock, return_value="user-1"),
-        patch("routers.api.pipeline_runs.dismiss_request", new_callable=AsyncMock),
+        patch("routers.api.pipeline_runs.dismiss_changeset", new_callable=AsyncMock),
     )
 
 

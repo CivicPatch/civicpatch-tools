@@ -18,7 +18,7 @@ from schemas.pipeline_runs import (
 from services import roster_edits, roster_ingest
 from services import pipeline_runs as pipeline_run_service
 from services.jurisdiction_url import record_resolved_url, resolved_url
-from services.review_proposal import review_summary_for_request
+from services.review_proposal import review_summary_for_changeset
 from shared.schemas import RoleConfig
 from shared.utils.statuses import (
     RUN_LEVEL_ISSUE_TYPES,
@@ -124,7 +124,7 @@ async def _store_source_records(
 async def _publish_if_nothing_to_review(
     changeset_id: str, jurisdiction_ocdid: str
 ) -> None:
-    summary = await review_summary_for_request(changeset_id)
+    summary = await review_summary_for_changeset(changeset_id)
     if summary.get("issues"):
         return
     await roster_edits.publish(
@@ -165,7 +165,7 @@ async def _ingest_roster(
         data = yaml_load(f.read())
 
     # Reconciliation classifies each sighting's label against this. Post derivation used to
-    # read it here too and no longer does — `review_summary_for_request` builds its own, at the
+    # read it here too and no longer does — `review_summary_for_changeset` builds its own, at the
     # point it needs one.
     taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
 
@@ -207,7 +207,7 @@ async def _apply_scrape_changes(changeset_id: str, jurisdiction_ocdid: str) -> N
     left office — which holds for a good scrape and not for a bad one, and nothing here can
     tell which. The reviewer's own issue list can, which is what gates the publish below.
 
-    It derives no posts of its own any more: `review_summary_for_request` derives what it needs
+    It derives no posts of its own any more: `review_summary_for_changeset` derives what it needs
     from the proposed roster, at the point it is needed.
 
     Never fatal: a scrape whose people are stored must not error over its own bookkeeping. A

@@ -56,7 +56,7 @@ async def cleanup_stale_review_entries_activity() -> None:
 
 @activity.defn
 async def supersede_stacked_requests_activity() -> None:
-    dismissed = await dismissals_db.supersede_stacked_requests()
+    dismissed = await dismissals_db.supersede_stacked_changesets()
     if dismissed:
         activity.logger.info(
             "Superseded %d stacked request(s): %s", len(dismissed), dismissed

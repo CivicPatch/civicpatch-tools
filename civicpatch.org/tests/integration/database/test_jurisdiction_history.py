@@ -15,7 +15,7 @@ import pytest_asyncio
 from database import jurisdictions as db_jurisdictions
 from database.database import get_pool
 from database.changesets import live_roster_changeset
-from database.publications import dismiss_request
+from database.publications import dismiss_changeset
 from database.users import SYSTEM_USER_ID
 from shared.utils.statuses import ChangeLogType, DismissalReason
 
@@ -95,17 +95,17 @@ async def _publish(changeset_id: str, user_id: str | None = None) -> None:
 
 
 async def _dismiss(changeset_id: str, reason: DismissalReason) -> None:
-    """Through `dismiss_request`, the real write path.
+    """Through `dismiss_changeset`, the real write path.
 
     It used to hand-roll the UPDATE and write the reason only to the `dismiss_review` log, which
     is what let it keep passing after migration 161 moved the reason onto the changeset — a
     fixture that copies a write path drifts the moment that path changes.
     """
-    await dismiss_request(changeset_id, reason)
+    await dismiss_changeset(changeset_id, reason)
 
 
 async def _dismiss_without_a_reason(changeset_id: str) -> None:
-    """A shape `dismiss_request` cannot produce: dismissed before any reason was recorded.
+    """A shape `dismiss_changeset` cannot produce: dismissed before any reason was recorded.
 
     Raw on purpose. 19 dev rows are in it, and the reader has to keep answering for them, so
     something has to seed it. Nothing writes it any more — see 161.
@@ -253,7 +253,7 @@ async def test_publishing_is_its_own_outcome_and_names_who_did_it():
 async def test_a_dismissal_reports_the_reason_it_recorded():
     """Off `changesets.dismissed_reason`, which every dismissal path writes.
 
-    It used to be read from the `dismiss_review` log, which only `dismiss_request` wrote — so the
+    It used to be read from the `dismiss_review` log, which only `dismiss_changeset` wrote — so the
     sweeps' dismissals had no reason any reader could see, and 249 of 381 resolved changesets
     rendered "unknown" while the column said superseded or unchanged. Migration 161.
     """
@@ -285,12 +285,12 @@ async def test_a_dismissal_nobody_asked_for_is_credited_to_the_system():
     read the same as a person whose display name is unset.
 
     This replaced `test_nobody_is_named_when_nobody_resolved_it`, which asserted the opposite —
-    that such a dismissal reports no resolver. That shape is unreachable: `dismiss_request`
+    that such a dismissal reports no resolver. That shape is unreachable: `dismiss_changeset`
     COALESCEs to the system user, and 0 of 381 resolved changesets on dev have a null resolver.
     """
     changeset_id = await _seed_changeset()
 
-    await dismiss_request(changeset_id, DismissalReason.SUPERSEDED, None)
+    await dismiss_changeset(changeset_id, DismissalReason.SUPERSEDED, None)
 
     entry = await _entry_for(changeset_id)
     assert entry.resolved_by == "CivicPatch"

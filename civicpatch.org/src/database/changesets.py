@@ -54,7 +54,7 @@ async def register_scrape_changeset(run_id: str) -> str:
     return changeset_id
 
 
-async def register_people_edit_request(
+async def register_people_edit_changeset(
     changeset_id: str,
     jurisdiction_ocdid: str,
     created_by_user_id: str,
@@ -84,7 +84,7 @@ async def register_people_edit_request(
         )
 
 
-async def register_sheet_import_request(
+async def register_sheet_import_changeset(
     changeset_id: str,
     jurisdiction_ocdid: str,
     created_by_user_id: str,
@@ -115,7 +115,7 @@ async def register_sheet_import_request(
         )
 
 
-async def register_jurisdiction_edit_request(
+async def register_jurisdiction_edit_changeset(
     changeset_id: str,
     jurisdiction_ocdid: str,
     change_url: str,
@@ -238,7 +238,7 @@ async def live_roster_changeset_for(jurisdiction_ocdid: str) -> str | None:
         return await live_roster_changeset(cur, jurisdiction_ocdid)
 
 
-async def get_request_jurisdiction(changeset_id: str) -> str | None:
+async def get_changeset_jurisdiction(changeset_id: str) -> str | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -249,7 +249,7 @@ async def get_request_jurisdiction(changeset_id: str) -> str | None:
     return row[0] if row else None
 
 
-async def jurisdictions_for_requests(changeset_ids: list[str]) -> dict[str, str]:
+async def jurisdictions_for_changesets(changeset_ids: list[str]) -> dict[str, str]:
     """Which jurisdiction each request is about. The roster itself is derived from that
     request's sightings, so this is all a caller needs to ask for one."""
     if not changeset_ids:
@@ -283,7 +283,7 @@ async def organizations_for_changesets(changeset_ids: list[str]) -> dict[str, st
         return {changeset_id: org for changeset_id, org in await cur.fetchall()}
 
 
-async def get_issue_request_details(changeset_ids: list[str]) -> list[dict]:
+async def get_issue_changeset_details(changeset_ids: list[str]) -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(

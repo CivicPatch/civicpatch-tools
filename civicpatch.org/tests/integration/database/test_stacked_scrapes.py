@@ -13,8 +13,8 @@ import pytest_asyncio
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
 from database.pipeline_runs import expire_stale_pipeline_runs
-from database.publications import publish_request
-from database.dismissals import supersede_stacked_requests
+from database.publications import publish_changeset
+from database.dismissals import supersede_stacked_changesets
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_stacked/government"
@@ -185,7 +185,7 @@ async def test_an_older_card_is_superseded_and_the_newest_survives():
     await _jurisdiction()
     old, new = await _request(_OLD), await _request(_NEW)
 
-    assert await supersede_stacked_requests() == [old]
+    assert await supersede_stacked_changesets() == [old]
 
     old_dismissed, resolved_by = await _dismissed_at(old)
     assert old_dismissed is not None
@@ -203,7 +203,7 @@ async def test_ordering_comes_from_the_roster_not_created_at():
     newer_roster = await _request(_NEW)
     older_roster = await _request(_OLD)
 
-    assert await supersede_stacked_requests() == [older_roster]
+    assert await supersede_stacked_changesets() == [older_roster]
     assert (await _dismissed_at(newer_roster))[0] is None
 
 
@@ -260,7 +260,7 @@ async def test_a_single_card_is_never_swept():
     await _jurisdiction()
     only = await _request(_OLD)
 
-    assert await supersede_stacked_requests() == []
+    assert await supersede_stacked_changesets() == []
     assert (await _dismissed_at(only))[0] is None
 
 
@@ -272,7 +272,7 @@ async def test_jurisdictions_do_not_supersede_each_other():
     here = await _request(_OLD, _OCDID)
     there = await _request(_NEW, _OTHER)
 
-    assert await supersede_stacked_requests() == []
+    assert await supersede_stacked_changesets() == []
     assert (await _dismissed_at(here))[0] is None
     assert (await _dismissed_at(there))[0] is None
 
@@ -286,7 +286,7 @@ async def test_a_card_a_reviewer_holds_is_not_swept(held_status):
     old, new = await _request(_OLD), await _request(_NEW)
     await _hold(old, held_status)
 
-    assert await supersede_stacked_requests() == []
+    assert await supersede_stacked_changesets() == []
     assert (await _dismissed_at(old))[0] is None
     assert (await _dismissed_at(new))[0] is None
 
@@ -302,7 +302,7 @@ async def test_a_held_newest_card_shields_the_whole_jurisdiction_for_that_pass()
     old, new = await _request(_OLD), await _request(_NEW)
     await _hold(new, "saved")
 
-    assert await supersede_stacked_requests() == []
+    assert await supersede_stacked_changesets() == []
     assert (await _dismissed_at(old))[0] is None
     assert (await _dismissed_at(new))[0] is None
 
@@ -314,7 +314,7 @@ async def test_an_inactive_jurisdiction_is_left_entirely_alone():
     await _jurisdiction(status="inactive")
     old, new = await _request(_OLD), await _request(_NEW)
 
-    assert await supersede_stacked_requests() == []
+    assert await supersede_stacked_changesets() == []
     assert (await _dismissed_at(old))[0] is None
     assert (await _dismissed_at(new))[0] is None
 
@@ -340,10 +340,10 @@ async def test_the_guard_refuses_a_roster_older_than_one_already_published():
     await _jurisdiction()
     newer, older = await _request(_NEW), await _request(_OLD)
 
-    await publish_request(newer, _OCDID, [{**_person(), "updated_at": _NEW}])
+    await publish_changeset(newer, _OCDID, [{**_person(), "updated_at": _NEW}])
 
     with pytest.raises(ValueError, match="already published a newer roster"):
-        await publish_request(older, _OCDID, [{**_person(), "updated_at": _OLD}])
+        await publish_changeset(older, _OCDID, [{**_person(), "updated_at": _OLD}])
 
 
 @pytest.mark.asyncio
@@ -354,8 +354,8 @@ async def test_the_guard_permits_republishing_the_same_request():
     changeset_id = await _request(_NEW)
     people = [{**_person(), "updated_at": _NEW}]
 
-    await publish_request(changeset_id, _OCDID, people)
-    await publish_request(changeset_id, _OCDID, people)  # must not raise
+    await publish_changeset(changeset_id, _OCDID, people)
+    await publish_changeset(changeset_id, _OCDID, people)  # must not raise
 
 
 @pytest.mark.asyncio
@@ -364,8 +364,8 @@ async def test_the_guard_permits_a_newer_roster():
     await _jurisdiction()
     older, newer = await _request(_OLD), await _request(_NEW)
 
-    await publish_request(older, _OCDID, [{**_person(), "updated_at": _OLD}])
-    await publish_request(newer, _OCDID, [{**_person(), "updated_at": _NEW}])
+    await publish_changeset(older, _OCDID, [{**_person(), "updated_at": _OLD}])
+    await publish_changeset(newer, _OCDID, [{**_person(), "updated_at": _NEW}])
 
 
 @pytest.mark.asyncio
@@ -378,7 +378,7 @@ async def test_a_draft_older_than_a_published_roster_is_superseded():
     stale = await _request(_OLD)
     published = await _published_request(_NEW)
 
-    assert await supersede_stacked_requests() == [stale]
+    assert await supersede_stacked_changesets() == [stale]
 
     assert (await _dismissed_at(stale))[0] is not None
     # The publish is untouched: it is a supersedor, never a candidate.
@@ -394,5 +394,5 @@ async def test_a_draft_newer_than_a_published_roster_survives():
     await _published_request(_OLD)
     fresher = await _request(_NEW)
 
-    assert await supersede_stacked_requests() == []
+    assert await supersede_stacked_changesets() == []
     assert (await _dismissed_at(fresher))[0] is None

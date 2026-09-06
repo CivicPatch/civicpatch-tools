@@ -252,7 +252,7 @@ async def test_commit_jurisdiction_patch_commits_and_syncs_the_row():
             new_callable=AsyncMock,
         ) as mock_record,
         patch(
-            "services.jurisdiction_pull_request.changesets_db.register_jurisdiction_edit_request",
+            "services.jurisdiction_pull_request.changesets_db.register_jurisdiction_edit_changeset",
             new_callable=AsyncMock,
         ) as mock_register,
     ):
@@ -411,7 +411,7 @@ async def test_merge_jurisdiction_pr_merges_when_clean():
             return_value=None,
         ) as mock_merge,
         patch(
-            "services.jurisdiction_pull_request.changesets_db.get_request_jurisdiction",
+            "services.jurisdiction_pull_request.changesets_db.get_changeset_jurisdiction",
             new_callable=AsyncMock,
             return_value=JURISDICTION_OCDID,
         ),
@@ -443,7 +443,7 @@ async def test_merge_jurisdiction_pr_skips_when_not_clean():
             new_callable=AsyncMock,
         ) as mock_merge,
         patch(
-            "services.jurisdiction_pull_request.changesets_db.get_request_jurisdiction",
+            "services.jurisdiction_pull_request.changesets_db.get_changeset_jurisdiction",
             new_callable=AsyncMock,
             return_value=JURISDICTION_OCDID,
         ),

@@ -22,7 +22,7 @@ from database import output_hashes as output_hashes_db
 from database import posts as posts_db
 from database.database import get_pool
 from database.people import get_roster
-from database.publications import dismiss_request, publish_request, record_change_url
+from database.publications import dismiss_changeset, publish_changeset, record_change_url
 from database.roles import get_roles
 from lib.temporal.types import (
     OpenDataBatchCommitRequest,
@@ -118,7 +118,7 @@ async def publish_people(
     resolved_by_user_id: str | None = None,
 ) -> int:
     """Publish one scrape's roster. Returns the number of people written."""
-    written = await publish_request(
+    written = await publish_changeset(
         changeset_id,
         jurisdiction_ocdid,
         people,
@@ -133,7 +133,7 @@ async def dismiss_people(
     changeset_id: str, resolved_by_user_id: str | None = None
 ) -> None:
     """Mark a scrape reviewed-and-not-published. Leaves the roster untouched."""
-    # `dismiss_request` writes the dismiss_review log itself now, with the reason — so every
+    # `dismiss_changeset` writes the dismiss_review log itself now, with the reason — so every
     # dismissal has one, not just the reviewer's. That is what retires `record_close`.
-    await dismiss_request(changeset_id, DismissalReason.REJECTED, resolved_by_user_id)
+    await dismiss_changeset(changeset_id, DismissalReason.REJECTED, resolved_by_user_id)
     logger.info(f"[{changeset_id}] Dismissed without publishing")

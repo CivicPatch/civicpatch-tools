@@ -22,7 +22,6 @@ import lib.github.git_data as git_data
 import shared.utils.id_utils
 from core.membership_label import derive_post_label
 from core.output_hash import hash_text
-from core.post_derivation import DerivedPost
 from database import output_hashes as output_hashes_db
 from database.people import get_roster
 from database.publications import record_change_url
@@ -60,6 +59,7 @@ def _role_rank(role: dict) -> tuple:
         role.get("division_ocdid") or "",
         role.get("name") or "",
     )
+
 
 # Needed to build the record, absent from the published one. `jurisdiction_ocdid` lives on
 # `PersonBase` because every other consumer of that model wants it — but in the published file
@@ -140,16 +140,6 @@ class OpenDataWriteRejected(RuntimeError):
 async def commit_rendered_files(
     items: list[OpenDataCommitItem], commit_message: str
 ) -> str | None:
-    """Render every jurisdiction out of the database and write the changed ones as one commit.
-
-    Rendering happens per attempt, so a retry carries what is true when it lands.
-
-    Returns None when every file already matches what open-data holds, and raises when the
-    write was rejected — two outcomes that both used to be None. The sweep re-selects the same
-    change on three consecutive runs (a 15-minute lookback on a 5-minute cadence), so without
-    the first of those, two of the three commits are empty and the last one takes over
-    `change_url`.
-    """
     contents = {}
     taxonomy = await _taxonomy()
     for item in items:
@@ -159,7 +149,9 @@ async def commit_rendered_files(
     hashes = {path: hash_text(body) for path, body in contents.items()}
     stored = await output_hashes_db.get_hashes(list(hashes))
     pending = {
-        path: body for path, body in contents.items() if stored.get(path) != hashes[path]
+        path: body
+        for path, body in contents.items()
+        if stored.get(path) != hashes[path]
     }
     if not pending:
         return None
@@ -190,15 +182,7 @@ def reviewed_file_path(jurisdiction_ocdid: str) -> str:
     return f"data/{folder}.yml"
 
 
-async def promote_batch_to_reviewed(
-    batch_id: str, published: dict[str, str]
-) -> None:
-    """One open-data commit for everything a bulk publish made live.
-
-    `published` maps changeset_id to jurisdiction_ocdid — every jurisdiction that reached the
-    database, which is not every jurisdiction the reviewer selected: one refusing must not keep
-    the rest out of open-data.
-    """
+async def promote_batch_to_reviewed(batch_id: str, published: dict[str, str]) -> None:
     # avoid circular import: lib.temporal.workflows imports the activities module, which
     # imports this one, so importing the client at module scope closes the loop
     import lib.temporal.client as temporal_client
