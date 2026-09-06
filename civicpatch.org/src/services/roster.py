@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from core.people_edits import with_stated_values
+from core.people_edits import source_values_overridden, with_stated_values
 from core.people_roster import roster_from_sightings
 from database import assertions
 from database import changesets as changesets_db
@@ -41,10 +41,39 @@ async def _roster(changeset_id: str, jurisdiction_ocdid: str) -> tuple[list[dict
 
 
 async def proposed_roster(changeset_id: str, jurisdiction_ocdid: str) -> list[dict]:
+    roster, _overridden = await proposed_roster_and_source_values(
+        changeset_id, jurisdiction_ocdid
+    )
+    return roster
+
+
+async def proposed_roster_and_source_values(
+    changeset_id: str, jurisdiction_ocdid: str
+) -> tuple[list[dict], dict[str, dict]]:
+    """The roster a reviewer sees, and what the source said where an assertion changed it.
+
+    Both from one pass: the pre-overlay roster is `_roster`'s own answer, so the second half
+    costs nothing beyond the comparison. Asking for it separately would re-read every sighting.
+    """
     roster, stated = await _roster(changeset_id, jurisdiction_ocdid)
-    return await _one_post_each(
-        changeset_id,
-        [with_stated_values(person, stated.get(person["id"], {})) for person in roster],
+    overridden = {
+        person["id"]: source_values
+        for person in roster
+        if (
+            source_values := source_values_overridden(
+                person, stated.get(person["id"], {})
+            )
+        )
+    }
+    return (
+        await _one_post_each(
+            changeset_id,
+            [
+                with_stated_values(person, stated.get(person["id"], {}))
+                for person in roster
+            ],
+        ),
+        overridden,
     )
 
 

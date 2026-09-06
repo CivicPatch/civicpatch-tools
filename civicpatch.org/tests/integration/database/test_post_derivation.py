@@ -210,8 +210,43 @@ async def test_close_absent_ignores_an_empty_roster():
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         await memberships.upsert(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
 
-        assert await memberships.close_absent(cur, _OCDID, [], _T1) == 0
-        assert await memberships.close_absent(cur, _OCDID, [str(uuid.uuid4())], _T1) == 1
+        assert await memberships.close_absent(cur, org, [], _T1) == 0
+        assert await memberships.close_absent(cur, org, [str(uuid.uuid4())], _T1) == 1
+        await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_close_absent_leaves_another_body_in_the_jurisdiction_alone():
+    """It used to sweep on `posts.jurisdiction_ocdid` while `_bind_memberships` seated people in
+    the changeset's organization alone. So publishing a council roster retired the whole school
+    board — none of whom appear on a council roster — with nothing recording why.
+
+    Invisible while a jurisdiction has one organization, which is every one of them in dev."""
+    councillor = await _seed_person("Council Person")
+    trustee = await _seed_person("School Trustee")
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        council = await organizations.find_or_create(cur, _OCDID, "Testville Council")
+        board = await organizations.find_or_create(cur, _OCDID, "Testville School Board")
+        council_post = await posts.find_or_create(cur, _OCDID, council, "mayor", _BASE)
+        board_post = await posts.find_or_create(cur, _OCDID, board, "mayor", _BASE)
+        await memberships.upsert(
+            cur, DerivedMembership(person_id=councillor), council_post, council, _T0
+        )
+        await memberships.upsert(
+            cur, DerivedMembership(person_id=trustee), board_post, board, _T0
+        )
+
+        # A council publish naming nobody who currently holds a council seat.
+        closed = await memberships.close_absent(cur, council, [str(uuid.uuid4())], _T1)
+
+        assert closed == 1
+        await cur.execute(
+            "SELECT closed_at FROM memberships WHERE person_id = %s", (trustee,)
+        )
+        assert (await cur.fetchone())[0] is None
         await conn.rollback()
 
 
@@ -230,7 +265,7 @@ async def test_close_absent_closes_an_untracked_posts_membership_too():
         await memberships.upsert(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
         await cur.execute("UPDATE posts SET _is_tracked = false WHERE id = %s", (post_id,))
 
-        assert await memberships.close_absent(cur, _OCDID, [str(uuid.uuid4())], _T1) == 1
+        assert await memberships.close_absent(cur, org, [str(uuid.uuid4())], _T1) == 1
         await conn.rollback()
 
 

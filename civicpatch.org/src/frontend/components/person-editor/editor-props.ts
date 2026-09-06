@@ -47,6 +47,9 @@ export interface EditorContext {
   proposals: Map<string, ProposedChange[]>;
   // Every person's assertions, keyed by person id, as the review read returns them.
   assertions: Record<string, PersonAssertion[]>;
+  // What the source said, for the fields an assertion then changed — keyed the same way. Only
+  // those fields: a lock over a value the scrape agrees with has nothing to disclose.
+  overriddenSourceValues: Record<string, Record<string, unknown>>;
   // A predicate, not a set: a page whose default is "expanded" has no set to
   // keep in sync with the roster, so a person it has never seen cannot arrive
   // collapsed.
@@ -107,6 +110,7 @@ export function personEditorPropsFor(
     subtitle: postsFor(card, ctx.proposals),
     derivedPost: derivedPostFor(card, ctx.proposals),
     accepts: acceptsByField(ctx.assertions[card.personId] ?? []),
+    overriddenSourceValues: ctx.overriddenSourceValues[card.personId] ?? {},
     posts: ctx.posts,
     onAddPost: () => ctx.onAddPost(card.personId),
     isDirty: ctx.dirtyIds.has(card.personId),

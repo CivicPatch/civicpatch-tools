@@ -56,6 +56,20 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     return [dict(zip(columns, row)) for row in await cur.fetchall()]
 
 
+async def for_changeset(cur, changeset_id: str) -> str | None:
+    """The organization this changeset is about, or None if nothing has assigned one.
+
+    Read-only, unlike `find_or_create_for_changeset` below: a caller that only needs the scope
+    to *close* memberships must not mint a body as a side effect. None is not a gap — a
+    jurisdiction with no organization has no posts, so it has no memberships to close either.
+    """
+    await cur.execute(
+        "SELECT organization_id::text FROM changesets WHERE id = %s", (changeset_id,)
+    )
+    row = await cur.fetchone()
+    return row[0] if row else None
+
+
 async def find_or_create_for_changeset(cur, changeset_id: str, jurisdiction_ocdid: str) -> str:
     """The organization a changeset is about — found on the changeset, or created and written
     onto it the first time anything asks.

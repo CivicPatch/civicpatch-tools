@@ -21,16 +21,15 @@ from core.membership_label import derive_post_label
 from core.post_derivation import DerivedMembership
 from database import assertions, posts
 from database.change_logs import record_change
-from database.changesets import live_roster_changeset
+from database.changesets import get_updated_at, live_roster_changeset
 from database.database import get_pool
-from database.changesets import get_updated_at
 from schemas.assertions import Assertion, AssertionKind, EntityType
-from schemas.posts import AssignmentResult
 from schemas.change_logs import (
     MEMBERSHIP_POST_FIELD,
     Change,
     FieldChange,
 )
+from schemas.posts import AssignmentResult
 from shared.utils.statuses import ChangeLogType
 
 # The field a human can own, named once: it is compared in SQL below and asserted in Python.
@@ -165,29 +164,21 @@ async def advance_last_seen_at(cur, person_ids: list[str], last_seen_at) -> int:
 
 
 async def close_absent(
-    cur, jurisdiction_ocdid: str, present_person_ids: list[str], closed_at
+    cur, organization_id: str, present_person_ids: list[str], closed_at
 ) -> int:
-    """Close open memberships for anyone the scrape did not name.
-
-    An empty roster closes nobody — that is a failed scrape, not a dissolved council.
-
-    Untracked posts close too. `closed_at` is transaction time: it records that we stopped
-    seeing someone, not a claim that they left. Whether anyone is asked to look at that is
-    `posts.is_tracked`, and that gates the review queue, not the record.
-    """
     if not present_person_ids:
         return 0
 
+    # No join: `memberships.organization_id` is the scope, and an organization belongs to one
+    # jurisdiction by construction.
     await cur.execute(
         """
-        UPDATE memberships m SET closed_at = %s
-        FROM posts p
-        WHERE m.post_id = p.id
-          AND p.jurisdiction_ocdid = %s
-          AND m.closed_at IS NULL
-          AND m.person_id <> ALL(%s)
+        UPDATE memberships SET closed_at = %s
+        WHERE organization_id = %s
+          AND closed_at IS NULL
+          AND person_id <> ALL(%s)
         """,
-        (closed_at, jurisdiction_ocdid, present_person_ids),
+        (closed_at, organization_id, present_person_ids),
     )
     return cur.rowcount
 
@@ -224,9 +215,7 @@ async def list_for_jurisdiction(
     return [
         {
             **row,
-            "post_label": derive_post_label(
-                row["role_label"], row["division_ocdid"]
-            ),
+            "post_label": derive_post_label(row["role_label"], row["division_ocdid"]),
         }
         for row in rows
     ]
@@ -255,9 +244,7 @@ def _with_post_label(row: dict) -> dict:
     """
     composed = {
         **row,
-        "post_label": derive_post_label(
-            row["role_label"], row["post_division_ocdid"]
-        ),
+        "post_label": derive_post_label(row["role_label"], row["post_division_ocdid"]),
     }
     del composed["role_label"]
     return composed
@@ -376,9 +363,7 @@ async def stream_for_state(
             )
             while rows := await cur.fetchmany(chunk_size):
                 columns = [column.name for column in cur.description or []]
-                yield [
-                    _with_post_label(dict(zip(columns, row))) for row in rows
-                ]
+                yield [_with_post_label(dict(zip(columns, row))) for row in rows]
 
 
 async def list_for_state(state: str) -> list[dict]:
