@@ -1,6 +1,4 @@
 """Starting and watching a curated-sheet import.
-
-`/api/internal/` because the response is UI-shaped and the frontend is the sole consumer.
 """
 
 import logging

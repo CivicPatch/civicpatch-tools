@@ -63,6 +63,8 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         # stopping it are different acts, and the frontend uses this one to decide whether to
         # poll at all rather than fire a rejected request every few seconds.
         "can_view_temporal_workflow_state": has_at_least(role, UserRole.ADMINS),
+        # What a scrape cost. The rest of the Activity page is signed-in; spend is not.
+        "can_edit_spend": has_at_least(role, UserRole.MAINTAINERS),
         "can_write_config": has_at_least(role, UserRole.MAINTAINERS),
         "can_write_global_config": has_at_least(role, UserRole.ADMINS),
         "can_manage_roles": has_at_least(role, UserRole.ADMINS),

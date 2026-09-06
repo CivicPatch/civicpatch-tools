@@ -287,6 +287,23 @@ erDiagram
         timestamptz     asserted_at         "idx: (entity_type, entity_id, asserted_at DESC). APPEND-ONLY — history is only trustworthy if rows never change"
     }
 
+    state_settings {
+        text            state               PK "no FK — `jurisdictions.state` is a column, not a table"
+        int_null        cadence_days        "NULL = manual, the page's own word. CHECK > 0 — a cadence of 0 schedules an infinite loop"
+        date_null       cadence_start       "ScheduleIntervalSpec(offset=), so states stagger instead of all firing at once"
+        numeric_null    scrape_cap_usd      "one run's ceiling. NULL = inherit pipeline.yml's pipeline_run_cost_limit"
+        numeric_null    monthly_cap_usd     "this state's month. NULL = no ceiling. Both CHECK >= 0; 0 is legal and means spend nothing, which NULL does not"
+        uuid_null       updated_by_user_id  FK
+        timestamptz     updated_at
+    }
+
+    fleet_settings {
+        int             id                  PK "CHECK (id = 1) — a single-row table that says so rather than hoping. Seeded by the migration, so every reader is a plain SELECT"
+        numeric_null    monthly_pool_usd    "the whole fleet's month. NULL = no ceiling. A shared ceiling, NOT an allocation: SUM(state_settings.monthly_cap_usd) may exceed it and the UI shows that rather than refusing it"
+        uuid_null       updated_by_user_id  FK
+        timestamptz     updated_at
+    }
+
     roles ||--o{ role_aliases : "role_id"
     jurisdictions ||--o{ organizations : "jurisdiction_ocdid"
     jurisdictions ||--o{ divisions : "jurisdiction_ocdid"
@@ -317,6 +334,8 @@ erDiagram
     users ||--o| api_usage_limits : "user_id (ON DELETE CASCADE)"
     change_log_types ||--o{ change_logs : "type"
     users ||--o{ change_logs : "user_id (ON DELETE SET NULL)"
+    users ||--o{ state_settings : "updated_by_user_id"
+    users ||--o{ fleet_settings : "updated_by_user_id"
     jurisdictions ||--o{ change_logs : "jurisdiction_ocdid"
     roles ||--o{ change_logs : "jurisdiction_ocdid"
     review_sessions ||--o{ review_session_entries : "review_session_id"

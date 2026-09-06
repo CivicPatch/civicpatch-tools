@@ -1,8 +1,5 @@
 """Changeset activity across every state.
 
-`/api/internal/` because the response is shaped for this page and the frontend is its only
-consumer.
-
 Signed-in, matching the rest of the Activity section: these are counts of changesets whose
 underlying rows are already public on each jurisdiction page. Starting a scrape from this data
 is a separate, Maintainer-gated action.

@@ -11,6 +11,7 @@ import { fetchStateBucket, startStateScrape } from "../../api.js";
 import "../../components/confirm-modal/confirm-modal.ts";
 import { hostDispatch } from "../../utils/host-dispatch.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
+import { formatChange, formatUsd, spendChangeOf, type StateSpend } from "./spend.js";
 import {
   BUCKET_DISMISSED,
   BUCKET_FAILED_RUNS,
@@ -39,6 +40,9 @@ type StateSectionHost = HTMLElement & {
   };
   windowDays: number;
   canScrape: boolean;
+  // Null for two reasons that render alike: not a maintainer, or the state spent nothing.
+  // Neither is $0.00, which would claim it scraped for free.
+  spend: StateSpend | null;
 };
 
 const BUCKETS = [
@@ -145,6 +149,34 @@ function CivStateSection(host: StateSectionHost) {
     `;
   }
 
+  const money = (label: string) =>
+    html`<civ-status-badge
+      label=${label}
+      bg=${TONES.quiet.bg}
+      color=${TONES.quiet.color}
+    ></civ-status-badge>`;
+
+  // In the header rather than the fleet row: a currency figure beside thirty calendar cells and
+  // three counts is what broke that line, and this is where a state's own numbers belong.
+  //
+  // All three, because each is what one of the spend sorts ranks by — a sort whose figure is
+  // nowhere on screen reorders the page for no visible reason.
+  function renderSpend(spend: StateSpend | null) {
+    if (!spend) return nothing;
+    const change = spendChangeOf(spend);
+    return html`
+      ${spend.spend_usd
+        ? money(`${formatUsd(spend.spend_usd)} spent, ${host.windowDays}d`)
+        : nothing}
+      ${spend.cost_per_scrape_usd
+        ? money(`${formatUsd(spend.cost_per_scrape_usd)} per run`)
+        : nothing}
+      ${spend.prior_spend_usd
+        ? money(`${formatChange(change)} vs prior ${host.windowDays}d`)
+        : nothing}
+    `;
+  }
+
   const badge = (n: number, text: string, tone: string) =>
     n
       ? html`<civ-status-badge
@@ -216,6 +248,7 @@ function CivStateSection(host: StateSectionHost) {
       <summary class="cs-section__summary">
         <span class="cs-section__state">${row.state}</span>
         <span class="cs-section__badges">
+          ${renderSpend(host.spend)}
           ${nothingRan
             ? html`<civ-status-badge
                 label="Nothing ran"

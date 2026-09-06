@@ -28,7 +28,7 @@
     },
     {
       "title": "5. Suggest endpoint — orchestration",
-      "description": "Try 2-word → DB check → fall back to 3-word → DB check → final fallback adds 4-digit suffix. Worst case is 2 indexed DB lookups (the UNIQUE constraint from step 2 created the index). The chain is inlined deliberately rather than extracted; only one caller exists. Path is `GET /api/internal/user/display-name/suggestion` — REST-y nesting on a virtual sub-resource, not an `:action` verb in the URL.",
+      "description": "Try 2-word → DB check → fall back to 3-word → DB check → final fallback adds 4-digit suffix. Worst case is 2 indexed DB lookups (the UNIQUE constraint from step 2 created the index). The chain is inlined deliberately rather than extracted; only one caller exists. Path is `GET /api/v1/user/display-name/suggestion` — REST-y nesting on a virtual sub-resource, not an `:action` verb in the URL.",
       "file": "civicpatch.org/src/routers/api/user.py",
       "line": 31
     },
@@ -52,7 +52,7 @@
     },
     {
       "title": "9. /settings page + frontend",
-      "description": "Route handler is logged-in-only (no role gate) — the middleware sends users here, so it must not redirect them away. Frontend `settings-page/index.ts` fetches `/api/internal/user/display-name/suggestion` on mount, prefills the input, POSTs on submit, redirects to `/` on success. The banner above the form only renders when `display_name` is null (passed via the `user` attribute from the Jinja template). No 'try another' button per design — refresh the page for a new suggestion.",
+      "description": "Route handler is logged-in-only (no role gate) — the middleware sends users here, so it must not redirect them away. Frontend `settings-page/index.ts` fetches `/api/v1/user/display-name/suggestion` on mount, prefills the input, POSTs on submit, redirects to `/` on success. The banner above the form only renders when `display_name` is null (passed via the `user` attribute from the Jinja template). No 'try another' button per design — refresh the page for a new suggestion.",
       "file": "civicpatch.org/src/routers/frontend.py",
       "line": 135
     },

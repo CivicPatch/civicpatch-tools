@@ -26,7 +26,7 @@ def _app() -> FastAPI:
     async def settings():
         return PlainTextResponse("settings")
 
-    @app.get("/api/internal/user/display-name/suggestion")
+    @app.get("/api/v1/user/display-name/suggestion")
     async def suggest():
         return {"data": "apple-witch"}
 
@@ -100,7 +100,7 @@ def test_logged_in_without_display_name_can_reach_suggest_endpoint():
     with _patch_session_returning(display_name=None):
         client = TestClient(_app(), follow_redirects=False)
         client.cookies.set("token", "fake-token")
-        response = client.get("/api/internal/user/display-name/suggestion")
+        response = client.get("/api/v1/user/display-name/suggestion")
 
     assert response.status_code == 200
 

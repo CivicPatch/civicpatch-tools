@@ -146,12 +146,15 @@ This execs `psql` inside the container, so no host postgres client is required �
 
 ## API consumers
 
-The API has two surfaces, distinguished by prefix:
+Every route lives under **`/api/v1/...`** (plus `/api/admin/...` for the admin console and
+`/webhooks/...` for inbound hooks). There is no separate internal surface: an endpoint the
+frontend uses today is an endpoint a third party may use tomorrow, and the split only ever
+told us which routes we had permitted ourselves to break.
 
-- **`/api/v1/...`** — intended to grow into a public-consumer surface (third parties, integrations). Treat as a stable contract going forward: renames/removals/shape changes need explicit deprecation, not silent edits. New endpoints here should be designed assuming external consumers.
-- **`/api/internal/...`** — the civicpatch frontend is the sole consumer. Backward compatibility is not required; endpoints can be renamed, removed, or changed freely as long as the frontend is updated in the same changeset.
-
-When adding a new endpoint, pick the prefix deliberately. If it returns frontend-shaped data (permission flags, identity blobs tailored to the current UI), it belongs under `/api/internal/`. If it returns a clean domain resource a third party could plausibly consume, it can live under `/api/v1/`.
+So treat every `/api/v1/` route as a contract: renames, removals and shape changes are
+deprecations, not silent edits. Design a new endpoint as a domain resource — if the shape is
+only meaningful to one page, that is a reason to reconsider the shape, not to hide it behind
+a prefix.
 
 ## Frontend components
 

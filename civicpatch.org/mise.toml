@@ -159,7 +159,7 @@ run = """
 
 [tasks.get_api_usage]
 run = """
-    curl -X GET "http://localhost:8000/api/internal/user/usage" \
+    curl -X GET "http://localhost:8000/api/v1/user/usage" \
     -H "Content-Type: application/json" \
     -H "Authorization: $CRUDDER_SHARED_TOKEN"
 """

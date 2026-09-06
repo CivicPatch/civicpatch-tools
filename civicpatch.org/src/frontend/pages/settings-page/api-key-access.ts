@@ -7,7 +7,7 @@ export type SettingsUser = {
 /**
  * Whether to show the API-key section.
  *
- * Cosmetic only — every `/api/internal/api_keys` route enforces the same level server-side, so
+ * Cosmetic only — every `/api/v1/api_keys` route enforces the same level server-side, so
  * this hides a control rather than protecting anything. It fails closed: an unparseable or
  * absent user is not a maintainer.
  *
