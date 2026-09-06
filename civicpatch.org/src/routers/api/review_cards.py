@@ -42,7 +42,7 @@ from services.review_proposal import (
 )
 import services.roster as services_roster
 from services.review_sources import build_sources
-from services.roster import proposed_roster
+from services.roster import proposed_roster, proposed_roster_and_source_values
 
 logger = logging.getLogger(__name__)
 # ──────────────────────────────────────────────
@@ -239,9 +239,9 @@ def get_router(api_key_header):
         changeset_id = result["changeset_id"]
         jurisdiction_ocdid = result["jurisdiction_ocdid"]
 
-        existing, proposed, has_ever_collected, proposals = await asyncio.gather(
+        existing, (proposed, overridden), has_ever_collected, proposals = await asyncio.gather(
             database.people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
-            proposed_roster(changeset_id, jurisdiction_ocdid),
+            proposed_roster_and_source_values(changeset_id, jurisdiction_ocdid),
             jurisdictions_db.has_ever_collected(jurisdiction_ocdid),
             # What this scrape would change about who holds what. The queue listing has carried
             # it since the proposal landed; the review session reads this endpoint instead, and
@@ -275,6 +275,9 @@ def get_router(api_key_header):
                 "assertions": await assertions_for_people(
                     [person["id"] for person in existing if person.get("id")]
                 ),
+                # See the same key on the session endpoint: the fields an assertion changed,
+                # with what the source had said.
+                "overridden_source_values": overridden,
                 "sources": build_sources(
                     changeset_id, jurisdiction_ocdid, unique_source_urls
                 ),

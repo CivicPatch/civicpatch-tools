@@ -13,6 +13,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from lib.auth import require_route_access
 from pydantic import BaseModel
 from schemas.common import Identity, RouteCategory, UserRole
+from services.review_proposal import assertions_for_people
 from shared.utils.person_id_utils import resolve_people_ids
 
 
@@ -47,6 +48,25 @@ def get_router() -> APIRouter:
         """
         people = await database.get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
         return {"data": people}
+
+    @router.get("/assertions")
+    async def list_assertions_endpoint(
+        jurisdiction_ocdid: str,
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+    ):
+        """Every assertion on this jurisdiction's seated roster, keyed by person id.
+
+        Its own route rather than a field on `GET ""`, which is public: an assertion carries
+        `asserted_by_name`, so folding it in would tell anonymous visitors who edited which
+        field of which official. Signed-in only, and the page asks for it only where the
+        editor is offered.
+        """
+        people = await database.get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
+        return {
+            "data": await assertions_for_people(
+                [person["id"] for person in people if person.get("id")]
+            )
+        }
 
     @router.get("/bulk")
     async def bulk_people_endpoint(

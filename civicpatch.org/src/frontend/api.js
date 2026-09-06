@@ -407,6 +407,17 @@ export const patchJurisdictionData = async (jurisdictionOcdid, data) => {
   return res.json();
 };
 
+// Signed-in only, and deliberately not folded into `fetchPeople`: that route is public, and an
+// assertion names who made it.
+export const fetchPeopleAssertions = async (jurisdictionOcdid) => {
+  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
+  const res = await fetch(`${API_URL}/api/v1/people/assertions?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchPeople = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
   const res = await fetch(`/api/v1/people?${params}`, { credentials: "include" });

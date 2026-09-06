@@ -503,10 +503,12 @@ def test_get_by_request_200_for_open_pr(client):
             new_callable=AsyncMock,
             return_value=[],
         ),
+        # The roster and what the source said where an assertion changed it, from one pass —
+        # so the card can show the published value under a lock and disclose what it replaced.
         patch(
-            "routers.api.review_cards.proposed_roster",
+            "routers.api.review_cards.proposed_roster_and_source_values",
             new_callable=AsyncMock,
-            return_value=[{"name": "Jane Doe"}],
+            return_value=([{"name": "Jane Doe"}], {}),
         ),
         patch(
             "database.jurisdictions.has_ever_collected",
@@ -546,10 +548,12 @@ def test_get_by_request_200_for_merged_pr(client):
             new_callable=AsyncMock,
             return_value=[],
         ),
+        # The roster and what the source said where an assertion changed it, from one pass —
+        # so the card can show the published value under a lock and disclose what it replaced.
         patch(
-            "routers.api.review_cards.proposed_roster",
+            "routers.api.review_cards.proposed_roster_and_source_values",
             new_callable=AsyncMock,
-            return_value=[{"name": "Jane Doe"}],
+            return_value=([{"name": "Jane Doe"}], {}),
         ),
         patch(
             "database.jurisdictions.has_ever_collected",

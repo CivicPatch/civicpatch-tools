@@ -10,11 +10,12 @@ import "../person-image.js";
 import "./person-editor.css";
 import type { DerivedPost, Post } from "../posts-list/posts-model.js";
 import {
-  provenanceLabel,
+  fieldLock,
   type PersonAssertion,
 } from "./field-provenance.js";
 import {
   FIELD_SCHEMA,
+  diffValue,
   isContextField,
   type DiffRecord,
   type FieldReason,
@@ -59,6 +60,8 @@ export interface PersonEditorProps {
   subtitle: string;
   // The accepts on each of this person's fields, for the per-field tags.
   accepts: Map<string, PersonAssertion[]>;
+  // What the source said, per field, where an assertion changed it.
+  overriddenSourceValues: Record<string, unknown>;
   posts: Post[];
   // The derivation's post, shown when nobody has picked one. Never saved.
   derivedPost: DerivedPost | null;
@@ -245,7 +248,14 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
         ? []
         : issues.filter((issue) => issue.field === field.key).map((issue) => issue.message),
       save: onSave,
-      provenance: provenanceLabel(props.accepts.get(field.key)),
+      // Replaces the provenance line: the same sentence, moved behind a lock so it costs a
+      // glyph rather than a row. `undefined` for a field no assertion moved, which `fieldLock`
+      // reads as the quiet state.
+      lock: fieldLock(
+        props.accepts.get(field.key),
+        props.overriddenSourceValues[field.key],
+        diffValue(newRecord ?? oldRecord, field),
+      ),
       isReadOnly,
       jurisdictionOcdid,
       posts,
