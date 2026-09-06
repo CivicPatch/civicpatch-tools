@@ -28,6 +28,8 @@
   --editor-added: var(--pico-ins-color);
   --editor-cleared: var(--pico-del-color);
   --editor-issue: var(--pico-info-color);
+  /* Who decided, on an axis of its own — see the lock rules below. */
+  --editor-lock: var(--pico-primary);
 
   /* How much of the state colour the header strip carries. Dark needs more of it
      to read as tinted at all against a dark card. */
@@ -368,10 +370,71 @@
 }
 
 /* Provenance, not attention: it shares the row but must not read as something to act on. */
-.person-editor__provenance {
-  grid-column: 2 / -1;
+/* The lock sits in the attention slot the provenance line used to fill, so it costs a glyph
+   rather than a row — after a review every non-null field is asserted, and the sentence
+   appeared on all of them. */
+.person-editor__lock {
+  position: relative;
+  grid-column: 3;
+  justify-self: start;
   padding-top: 0.15rem;
+}
+
+.person-editor__lock-button {
+  background: none;
+  border: 0;
+  padding: 0.1rem;
+  font-size: 0.78em;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* Its own colour, not `--editor-changed`: the diff vocabulary says what the scrape moved, and
+   this says who decided. An overridden field is usually also a changed one, so sharing the
+   amber would put two meanings on one hue in the same row. */
+.person-editor__lock--held .person-editor__lock-button {
+  color: var(--pico-muted-color);
+  opacity: 0.6;
+}
+
+.person-editor__lock--overrode .person-editor__lock-button {
+  color: var(--editor-lock);
+  opacity: 1;
+}
+
+.person-editor__lock-button:hover,
+.person-editor__lock-button:focus-visible {
+  opacity: 1;
+}
+
+/* Below the row, not beside it: the column to the right already carries `was … Restore`. */
+.person-editor__lock-pop {
+  position: absolute;
+  top: 1.4rem;
+  left: -0.4rem;
+  z-index: 5;
+  display: none;
+  min-width: 15rem;
+  padding: 0.4rem 0.55rem;
+  background: var(--pico-card-background-color);
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
   font-size: var(--text-xs);
+}
+
+.person-editor__lock:hover .person-editor__lock-pop,
+.person-editor__lock-button:focus-visible + .person-editor__lock-pop {
+  display: block;
+}
+
+.person-editor__lock-said {
+  display: block;
+  font-weight: 600;
+}
+
+.person-editor__lock-who {
+  display: block;
   color: var(--pico-muted-color);
 }
 

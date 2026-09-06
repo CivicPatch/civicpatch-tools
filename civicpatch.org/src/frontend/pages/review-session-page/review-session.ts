@@ -62,6 +62,7 @@ type CurrentEntry = {
   pr_people: { existing: any[]; proposed: any[] };
   changes?: ProposedChange[];
   assertions?: Record<string, PersonAssertion[]>;
+  overriddenSourceValues?: Record<string, Record<string, unknown>>;
   review_data: any;
   source_content_urls: any[];
   is_read_only: boolean;
@@ -102,6 +103,7 @@ function ReviewSession(host: ReviewSessionHost) {
     pr_people,
     changes,
     assertions,
+    overriddenSourceValues,
     review_data,
     source_content_urls,
     is_read_only,
@@ -257,6 +259,7 @@ function ReviewSession(host: ReviewSessionHost) {
     posts,
     proposals: proposalsByPersonId(changes ?? []),
     assertions: assertions ?? {},
+    overriddenSourceValues: overriddenSourceValues ?? {},
     onPersonSave: handlePersonSave,
     onRemovePerson: handleRemovePerson,
     onUnremovePerson: handleUnremove,

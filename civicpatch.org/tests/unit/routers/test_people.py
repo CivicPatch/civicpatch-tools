@@ -232,3 +232,44 @@ def test_bulk_refuses_a_state_that_is_not_a_code(client):
 def test_bulk_requires_a_state(client):
     """Without one this would be every person in the database."""
     assert client.get("/people/bulk").status_code == 422
+
+
+# ── who may read who edited what ─────────────────────────────────────────────
+
+
+@pytest.mark.unit
+def test_assertions_are_keyed_by_person_for_the_roster(client):
+    with (
+        patch(
+            "database.people.get_roster",
+            new_callable=AsyncMock,
+            return_value=[{"id": "p-1", "name": "Jane Doe"}],
+        ),
+        patch(
+            "routers.api.people.assertions_for_people",
+            new_callable=AsyncMock,
+            return_value={"p-1": [{"field_path": "phones", "kind": "accept"}]},
+        ) as mock_assertions,
+    ):
+        response = client.get("/people/assertions", params={"jurisdiction_ocdid": TEST_OCDID})
+
+    assert response.status_code == 200
+    assert response.json()["data"]["p-1"][0]["field_path"] == "phones"
+    mock_assertions.assert_awaited_once_with(["p-1"])
+
+
+@pytest.mark.unit
+def test_assertions_are_not_public_though_the_roster_beside_them_is(client):
+    """The reason this is its own route. `GET /people` is public — "the public page's own
+    data" — but an assertion carries `asserted_by_name`, so folding it in would tell an
+    anonymous visitor who edited which field of which official."""
+    client.app.dependency_overrides[get_optional_user] = lambda: None
+
+    with patch("database.people.get_roster", new_callable=AsyncMock, return_value=[]):
+        assert client.get(
+            "/people/assertions", params={"jurisdiction_ocdid": TEST_OCDID}
+        ).status_code in (401, 403)
+        # ...while the roster itself still answers.
+        assert client.get(
+            "/people", params={"jurisdiction_ocdid": TEST_OCDID}
+        ).status_code == 200

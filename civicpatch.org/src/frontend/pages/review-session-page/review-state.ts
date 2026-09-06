@@ -44,6 +44,7 @@ export type CurrentEntry = {
   pr: { url: string | null; status: string | null; reviewState: string | null; number?: number | null };
   mode: ReviewModeValue;
   pr_people: { existing: any[]; proposed: any[] };
+  overriddenSourceValues?: Record<string, Record<string, unknown>>;
   changes?: ProposedChange[];
   review_data: any;
   source_content_urls: any[];

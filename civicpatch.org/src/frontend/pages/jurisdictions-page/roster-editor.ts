@@ -16,6 +16,7 @@ import {
   patchPeopleData,
   generatePersonId,
 } from "../../api.js";
+import { fetchPeopleAssertions } from "../../api.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
 import { emptyPerson } from "../../components/edit-people/people-editing.js";
 import { blockingErrors, buildPersonCards, type PersonCard } from "../../components/people/person-cards.js";
@@ -95,6 +96,17 @@ function RosterEditor({
     assignPeople(published);
   }, [people]);
 
+  // Who stood behind each published value. Its own signed-in read: `/people` is public and an
+  // assertion names its author, so this is asked for only where the editor is offered — and a
+  // reader who cannot edit sees no locks, which is the same rule the rest of the page follows.
+  const [assertions, setAssertions] = useState<Record<string, any[]>>({});
+  useEffect(() => {
+    if (!canEdit || !jurisdictionOcdid) return;
+    fetchPeopleAssertions(jurisdictionOcdid)
+      .then((body) => setAssertions(body.data ?? {}))
+      .catch(() => setAssertions({}));
+  }, [jurisdictionOcdid, canEdit]);
+
   const cards: PersonCard[] = buildPersonCards({
     existing: published,
     currentPeople: currentPeople ?? [],
@@ -145,8 +157,12 @@ function RosterEditor({
       posts,
       // Published people hold memberships, so nothing on this page is proposed.
       proposals: new Map(),
-      // This page publishes nothing, so no field carries a publisher yet.
-      assertions: {},
+      assertions,
+      // No proposal on this page, so nothing to compare a value against: the lock says who
+      // stood behind it, and stays in its quiet state. Disclosing what a source once said
+      // would mean reading the jurisdiction's last changeset, which is a different question
+      // from the one a review asks.
+      overriddenSourceValues: {},
       isExpanded: (id: string) => !collapsedIds.has(id),
       onToggleExpand: () => {
         const next = new Set(collapsedIds);

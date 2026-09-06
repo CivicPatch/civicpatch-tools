@@ -25,6 +25,7 @@ const context = (over = {}) =>
     posts: [],
     proposals: proposalsByPersonId([]),
     assertions: {},
+    overriddenSourceValues: {},
     isExpanded: () => false,
     onToggleExpand: () => {},
     onPersonSave: () => {},

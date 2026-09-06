@@ -48,3 +48,56 @@ export function provenanceLabel(
   const who = newest.asserted_by_name || UNNAMED;
   return when ? `Published by ${who}, ${when}` : `Published by ${who}`;
 }
+
+// ── the lock ─────────────────────────────────────────────────────────────────
+
+export const LOCK_HELD = "held";
+export const LOCK_OVERRODE = "overrode";
+
+export interface FieldLock {
+  state: typeof LOCK_HELD | typeof LOCK_OVERRODE;
+  /** Who published it, always — this is what the provenance line used to say. */
+  label: string;
+  /** What the source said, when an assertion changed it. Null when it agrees. */
+  disclosure: string | null;
+}
+
+const asList = (value: unknown): string[] =>
+  value == null ? [] : Array.isArray(value) ? value.map(String) : [String(value)];
+
+/** What the lock hides, in the reviewer's words.
+ *
+ * Two sentences, because the data distinguishes two acts: an accept that replaced what was
+ * scraped, and a reject that removed one of several values. A reject is the more useful of the
+ * two — the value is gone from the field, so this is the only place it still exists on screen.
+ */
+function disclose(sourceValue: unknown, publishedValue: unknown): string | null {
+  const source = asList(sourceValue);
+  const published = new Set(asList(publishedValue));
+  const removed = source.filter((value) => !published.has(value));
+  if (!removed.length) return null;
+  return removed.length === source.length && published.size
+    ? `Source said ${removed.join(", ")}`
+    : `Removed ${removed.join(", ")}`;
+}
+
+/** The lock on one field, or null where nobody has stood behind it.
+ *
+ * `sourceValue` is `undefined` for a field no assertion moved, which is most of them after a
+ * review — `_accept_published` accepts every non-null value, so agreement is the common case
+ * and it earns the quiet lock.
+ */
+export function fieldLock(
+  accepts: PersonAssertion[] | undefined,
+  sourceValue: unknown,
+  publishedValue: unknown,
+): FieldLock | null {
+  const label = provenanceLabel(accepts);
+  if (!label) return null;
+  if (sourceValue === undefined) return { state: LOCK_HELD, label, disclosure: null };
+  return {
+    state: LOCK_OVERRODE,
+    label,
+    disclosure: disclose(sourceValue, publishedValue),
+  };
+}

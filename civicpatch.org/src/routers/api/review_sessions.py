@@ -16,7 +16,7 @@ from pydantic import BaseModel
 from schemas.common import Identity, ReviewMode, RouteCategory
 from services.review_proposal import assertions_for_people, proposals_for_requests
 from services.review_sources import build_sources
-from services.roster import proposed_roster
+from services.roster import proposed_roster_and_source_values
 logger = logging.getLogger(__name__)
 
 
@@ -122,10 +122,10 @@ async def _navigate_response(session_id: str, entry_number: int):
     changeset_id = result["changeset_id"]
     jurisdiction_ocdid = result["jurisdiction_ocdid"]
 
-    pr_meta, existing, proposed, has_ever_collected = await asyncio.gather(
+    pr_meta, existing, (proposed, overridden), has_ever_collected = await asyncio.gather(
         review_pool_db.get_changeset_for_review(changeset_id),
         database_people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
-        proposed_roster(changeset_id, jurisdiction_ocdid),
+        proposed_roster_and_source_values(changeset_id, jurisdiction_ocdid),
         jurisdictions_db.has_ever_collected(jurisdiction_ocdid),
     )
 
@@ -168,6 +168,10 @@ async def _navigate_response(session_id: str, entry_number: int):
                     }
                 )
             ),
+            # What the source said, for the fields an assertion then changed. Only those: the
+            # card shows the published value and a lock, and a lock over a value the scrape
+            # agrees with has nothing to disclose.
+            "overridden_source_values": overridden,
             "sources": sources,
         }
     }
