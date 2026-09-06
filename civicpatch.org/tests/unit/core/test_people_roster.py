@@ -8,7 +8,6 @@ from core.people_roster import (
     roster_from_rows,
     roster_from_sightings,
     reviewer_source_records,
-    with_fallback_url,
 )
 from shared.schemas import Person, PersonSourceRecord, Role, RoleConfig, RoleStatus
 from shared.utils.taxonomy import build_taxonomy
@@ -202,24 +201,50 @@ def test_a_one_word_name_is_not_a_person():
 
 
 @pytest.mark.unit
-def test_someone_with_no_url_of_their_own_gets_the_page_they_were_found_on():
-    person = _person("Ann Lee")
-    person.source_urls = ["https://alpha.gov/council"]
-    assert with_fallback_url(person).urls == ["https://alpha.gov/council"]
+def test_the_page_someone_was_found_on_is_not_copied_into_their_own_urls():
+    """It used to be, so every councillor scraped off one roster page came out with `urls` and
+    `source_urls` holding the same string — the same URL twice on the card, in open-data and in
+    the exports. `source_records` had it right all along: `source_url` is NOT NULL and `url` is
+    nullable, so the evidence already said this person has no page of their own."""
+    entry = _reconcile([_record("Ann Lee", "Mayor")])[0]
+
+    assert entry["urls"] == []
+    assert entry["source_urls"] == ["https://alpha.gov/council"]
 
 
 @pytest.mark.unit
-def test_a_url_of_their_own_is_not_replaced():
-    person = _person("Ann Lee")
-    person.urls = ["https://alpha.gov/ann"]
-    person.source_urls = ["https://alpha.gov/council"]
-    assert with_fallback_url(person).urls == ["https://alpha.gov/ann"]
+def test_a_different_spelling_of_the_name_is_not_recorded_as_another_name():
+    """Sources spell the same councillor "Melvin Taylor" on one page and "Melvin taylor" on the
+    next. Grouping is case-insensitive, so they became one person — and then the variant was
+    filed under `other_names`, where the card showed it as an alias of the name it already is."""
+    entry = _reconcile(
+        [
+            _record("Melvin Taylor", "Mayor"),
+            _record("Melvin taylor", "Council Member"),
+        ]
+    )[0]
+
+    assert entry["other_names"] == []
 
 
 @pytest.mark.unit
-def test_nothing_to_fall_back_to_leaves_the_person_alone():
-    person = _person("Ann Lee")
-    assert with_fallback_url(person) is person
+def test_a_genuinely_different_name_is_still_recorded():
+    """The identities map is what says these two spellings are one person; without it they
+    stay two people and nothing would be under test here."""
+    entry = _reconcile(
+        [_record("Melvin Taylor", "Mayor"), _record("Mel Taylor", "Council Member")],
+        identities={"Melvin Taylor": ["Mel Taylor"]},
+    )[0]
+
+    assert entry["other_names"] == ["Mel Taylor"]
+
+
+@pytest.mark.unit
+def test_a_url_of_their_own_is_kept():
+    entry = _reconcile([_record("Ann Lee", "Mayor", url="https://alpha.gov/ann")])[0]
+
+    assert entry["urls"] == ["https://alpha.gov/ann"]
+    assert entry["source_urls"] == ["https://alpha.gov/council"]
 
 
 # --- the records behind each person, for the evidence table ---

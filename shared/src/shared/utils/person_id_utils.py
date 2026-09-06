@@ -6,6 +6,7 @@ from shared.utils.email_utils import normalize_email
 from shared.utils.name_utils import (
     best_identity_match,
     build_canonical_map,
+    exact_match,
     fuzzy_match_score,
 )
 
@@ -130,10 +131,19 @@ def merge_forward_other_names(
     Load-bearing: drop the existing-aliases merge and each run clobbers human aliases.
     """
     # A renamed entity keeps both names as aliases; existing aliases always carry forward.
-    renamed_variants = (
-        [person_name, existing_name]
-        if existing_name and existing_name != person_name
-        else []
-    )
+    # `exact_match`, not `!=`: a source spelling the same person "Melvin taylor" on one page and
+    # "Melvin Taylor" on another is not a rename, and treating it as one filed the variant as an
+    # alias — then carried it forward on every run after.
+    renamed = bool(existing_name) and not exact_match(existing_name or "", person_name)
+    renamed_variants = [person_name, existing_name] if renamed else []
     existing_aliases = [n for n in existing_other_names if isinstance(n, str)]
-    return list(dict.fromkeys(person_other_names + renamed_variants + existing_aliases))
+
+    merged: List[str] = []
+    for name in person_other_names + renamed_variants + existing_aliases:
+        # Only a rename earns the current name a place among its own aliases.
+        if not renamed and exact_match(name, person_name):
+            continue
+        if any(exact_match(name, kept) for kept in merged):
+            continue
+        merged.append(name)
+    return merged

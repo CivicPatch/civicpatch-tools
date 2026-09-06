@@ -181,14 +181,6 @@ def named_like_a_person(person: DerivedPerson) -> bool:
     return len(person.name.split()) >= MINIMUM_NAME_WORDS
 
 
-def with_fallback_url(person: DerivedPerson) -> DerivedPerson:
-    """Somewhere to send a reader. Someone with no url of their own gets the page they were
-    found on, which is the next best answer to "where does this come from"."""
-    if person.urls or not person.source_urls:
-        return person
-    return person.model_copy(update={"urls": [person.source_urls[0]]})
-
-
 def _rendered(person: DerivedPerson, records: list[PersonSourceRecord], taxonomy: Taxonomy) -> dict:
     """The term comes off the records, not the person: it belongs to the tenure."""
     derived = derive_roles(person.labels, person.jurisdiction_ocdid, taxonomy)
@@ -238,9 +230,7 @@ def _render(
     kept = [person for person, _ in people if named_like_a_person(person)]
     return [
         order_person_fields(
-            _rendered(
-                with_fallback_url(person), records_by_person[id(person)], taxonomy
-            )
+            _rendered(person, records_by_person[id(person)], taxonomy)
         )
         for person in sort_people(kept, taxonomy)
     ]
