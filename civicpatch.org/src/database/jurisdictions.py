@@ -12,8 +12,12 @@ from core.jurisdiction_search import (
 )
 from core.change_logs import roster_change
 from database.changeset_predicates import (
+    CADENCE_JOIN,
+    LAST_ATTEMPT_AT,
+    LAST_ATTEMPT_JOIN,
     LAST_COLLECTED_AT,
     LAST_COLLECTED_JOIN,
+    OFF_COOLDOWN,
     RESOLVED,
 )
 from database.database import get_pool, to_iso
@@ -30,6 +34,9 @@ from shared.utils.statuses import ChangeLogType
 
 logger = logging.getLogger(__name__)
 
+# How old data may be before the map calls it stale. Deliberately NOT the state's cadence:
+# "is this fresh?" and "is this due?" are different questions, and a state on a 90-day
+# cadence is on schedule and stale at once. Scheduling reads `OFF_COOLDOWN` instead.
 FRESH_SINCE_SQL = "now() - interval '90 days'"
 
 
@@ -669,12 +676,25 @@ async def get_jurisdiction_history(
                        WHEN changesets.published_at IS NOT NULL THEN '{PUBLISHED_OUTCOME}'
                        ELSE COALESCE(changesets.dismissed_reason, '{UNKNOWN_OUTCOME}')
                    END AS outcome,
+                   -- The run's own clock, not the changeset's: a changeset is minted at
+                   -- ingest with created_at == updated_at, so measuring it reads 0s for
+                   -- work that took minutes.
+                   run.created_at AS pipeline_run_started_at,
+                   run.finished_at AS pipeline_run_finished_at,
                    resolver.display_name AS resolved_by,
+                   -- Why it ended the way it did. `dismissed_reason` was stored and never
+                   -- shown, so a dismissal read as motiveless.
+                   changesets.dismissed_reason,
+                   COALESCE(iss.issue_types, '[]'::jsonb) AS issue_types,
                    COALESCE(rc.changes, '[]'::jsonb) AS changes
             FROM changesets
             LEFT JOIN pipeline_runs run ON run.changeset_id = changesets.id
             LEFT JOIN users resolver ON resolver.id = changesets.resolved_by_user_id
             LEFT JOIN roster_changes rc ON rc.changeset_id = changesets.id::text
+            LEFT JOIN (
+                SELECT issue_key, jsonb_agg(DISTINCT issue_type) AS issue_types
+                FROM issues WHERE status = 'pending' GROUP BY issue_key
+            ) iss ON iss.issue_key = changesets.id::text
             WHERE changesets.jurisdiction_ocdid = %s AND {RESOLVED}
             ORDER BY changesets.created_at DESC
             LIMIT %s OFFSET %s;
@@ -700,6 +720,8 @@ async def get_jurisdiction_history(
                 created_at=to_iso(row["created_at"]),
                 # `updated_at`: when the source was read, which a duration measures against.
                 updated_at=to_iso(row["updated_at"]),
+                pipeline_run_started_at=to_iso(row["pipeline_run_started_at"]),
+                pipeline_run_finished_at=to_iso(row["pipeline_run_finished_at"]),
                 pipeline_run_status=row["status"],
                 pipeline_run_progress=row["progress"],
                 change_url=row["change_url"],
@@ -708,6 +730,8 @@ async def get_jurisdiction_history(
                 # used the run's created_at, so it dated the scrape rather than the decision.
                 published_at=to_iso(row["published_at"]),
                 outcome=row["outcome"],
+                dismissed_reason=row["dismissed_reason"],
+                issue_types=row["issue_types"],
                 resolved_by=row["resolved_by"],
                 changes=[
                     roster_change(
@@ -849,25 +873,25 @@ async def has_ever_collected(jurisdiction_ocdid: str) -> bool:
 
 
 async def get_stale_jurisdictions(state: str) -> list[Jurisdiction]:
-    # Stale = never scraped, or last scraped before the rolling freshness window. Only
-    # active, url-bearing jurisdictions; never-scraped first.
+    # Due = off its state's cadence cooldown, measured from the last *attempt*. A dismissed card
+    # and an errored run both publish nothing, so a pool keyed on publishes re-offers them at
+    # once — and orders them first forever, since their last publish never moves.
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
             SELECT j.jurisdiction_ocdid, j.data->>'name', j.data->>'url'
             FROM jurisdictions j
-            {LAST_COLLECTED_JOIN}
+            {LAST_ATTEMPT_JOIN}
+            {CADENCE_JOIN}
             WHERE j.state = %s
               AND j.status = 'active'
               AND NULLIF(j.data->>'url', '') IS NOT NULL
-              AND ({LAST_COLLECTED_AT} IS NULL OR {LAST_COLLECTED_AT} < {FRESH_SINCE_SQL})
-            -- `jurisdiction_ocdid` breaks the tie, because nearly every row is tied: 6,738 of
-            -- 6,778 stale jurisdictions have never been collected. Without a total order
-            -- Postgres returns them however it likes and a LIMIT can re-offer the same places
-            -- on every drain while never reaching others — the lesson `review_pool` already
-            -- carries: "without a total order a row can appear on two pages or none".
-            ORDER BY {LAST_COLLECTED_AT} ASC NULLS FIRST, j.jurisdiction_ocdid
+              AND {OFF_COOLDOWN}
+            -- `jurisdiction_ocdid` breaks the tie, because nearly every row is tied. Without a
+            -- total order a LIMIT can re-offer the same places on every drain while never
+            -- reaching others.
+            ORDER BY {LAST_ATTEMPT_AT} ASC NULLS FIRST, j.jurisdiction_ocdid
             """,
             (state,),
         )

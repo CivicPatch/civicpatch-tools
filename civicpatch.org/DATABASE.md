@@ -50,6 +50,7 @@ erDiagram
         jsonb           arguments_json
         timestamptz_null published_at       "set when a reviewer approves; this is the publish state"
         timestamptz_null dismissed_at       "set when a reviewer rejects. check: not both set"
+        timestamptz_null verified_at       "185: when a *person* stood behind it, not when it published. Equal to published_at for every row so far, because nothing has ever auto-published; once the cadence flush lands a changeset can publish with published_at set and this NULL"
         text_null       dismissed_reason
         uuid_null       resolved_by_user_id FK  "whoever published or dismissed it; NULL means not resolved yet"
         text_null       change_url          "where the change landed: a commit URL going forward, a PR URL on backfilled rows"

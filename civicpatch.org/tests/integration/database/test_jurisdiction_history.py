@@ -7,6 +7,7 @@ Isolation: sentinel state 'zz', cleaned before and after each test.
 """
 
 import json
+import uuid
 
 import pytest
 import pytest_asyncio
@@ -392,3 +393,124 @@ async def test_a_details_edit_shows_what_it_changed():
 
     assert [change.name for change in changes] == ["Crystal town"]
     assert [field.field for field in changes[0].fields] == ["url"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_scrape_entry_carries_its_run_s_clock_not_the_changeset_s():
+    """A scrape's changeset is minted at ingest with `updated_at == created_at`, so a duration
+    measured off it reads 0s for a run that took minutes. Seattle read `SUCCESS 0s` for a run
+    that took 9m12s."""
+    pool = await get_pool()
+    changeset_id = str(uuid.uuid4())
+    run_id = str(uuid.uuid4())
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, data, status) "
+            "VALUES (%s, 'zz', 'local', '{}'::jsonb, 'active') ON CONFLICT DO NOTHING",
+            (_OCDID,),
+        )
+        await cur.execute(
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, created_at, updated_at, "
+            "published_at) VALUES (%s, %s, 'scrape', now(), now(), now())",
+            (changeset_id, _OCDID),
+        )
+        await cur.execute(
+            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
+            "changeset_id, created_at, finished_at) VALUES (%s, %s, '{}'::jsonb, 'SUCCESS', %s, "
+            "now() - interval '9 minutes', now())",
+            (run_id, _OCDID, changeset_id),
+        )
+        await conn.commit()
+
+    _total, entries = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    entry = next(e for e in entries if e.changeset_id == changeset_id)
+
+    assert entry.pipeline_run_started_at is not None
+    assert entry.pipeline_run_finished_at is not None
+    # The changeset's own two timestamps are equal, which is what made this read 0s.
+    assert entry.created_at == entry.updated_at
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_only_a_scrape_carries_pipeline_run_timestamps():
+    """A sheet import or a hand edit has no pipeline run, so it has no duration to report — and
+    the changeset's own timestamps are not one."""
+    pool = await get_pool()
+    changeset_id = str(uuid.uuid4())
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, data, status) "
+            "VALUES (%s, 'zz', 'local', '{}'::jsonb, 'active') ON CONFLICT DO NOTHING",
+            (_OCDID,),
+        )
+        await cur.execute(
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, created_at, updated_at, "
+            "published_at) VALUES (%s, %s, 'people_edit', now(), now(), now())",
+            (changeset_id, _OCDID),
+        )
+        await conn.commit()
+
+    _total, entries = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    entry = next(e for e in entries if e.changeset_id == changeset_id)
+
+    assert entry.pipeline_run_started_at is None
+    assert entry.pipeline_run_finished_at is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_entry_carries_the_issues_still_open_on_it():
+    """The Seattle entry read `SUCCESS 0s, rejected` with no hint that the run had stopped at
+    its cost cap — the one fact that explained the short roster."""
+    pool = await get_pool()
+    changeset_id = str(uuid.uuid4())
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, data, status) "
+            "VALUES (%s, 'zz', 'local', '{}'::jsonb, 'active') ON CONFLICT DO NOTHING",
+            (_OCDID,),
+        )
+        await cur.execute(
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, created_at, updated_at, "
+            "published_at) VALUES (%s, %s, 'scrape', now(), now(), now())",
+            (changeset_id, _OCDID),
+        )
+        await cur.execute(
+            "INSERT INTO issues (issue_type, issue_key, changeset_ids, data, status) "
+            "VALUES ('cost_cap_reached', %s, ARRAY[%s], '{}'::jsonb, 'pending')",
+            (changeset_id, changeset_id),
+        )
+        await conn.commit()
+
+    _total, entries = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    entry = next(e for e in entries if e.changeset_id == changeset_id)
+
+    assert entry.issue_types == ["cost_cap_reached"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_dismissal_says_why():
+    """`dismissed_reason` was stored and never shown, so a dismissal read as motiveless."""
+    pool = await get_pool()
+    changeset_id = str(uuid.uuid4())
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, data, status) "
+            "VALUES (%s, 'zz', 'local', '{}'::jsonb, 'active') ON CONFLICT DO NOTHING",
+            (_OCDID,),
+        )
+        await cur.execute(
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, created_at, updated_at, "
+            "dismissed_at, dismissed_reason) "
+            "VALUES (%s, %s, 'scrape', now(), now(), now(), 'rejected')",
+            (changeset_id, _OCDID),
+        )
+        await conn.commit()
+
+    _total, entries = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    entry = next(e for e in entries if e.changeset_id == changeset_id)
+
+    assert entry.dismissed_reason == "rejected"

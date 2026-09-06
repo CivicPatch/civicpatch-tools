@@ -1,0 +1,6 @@
+
+/* Issues still open on a changeset. Without them a short roster and a complete one look alike. */
+.tl-entry__issues {
+  font-size: var(--text-xs);
+  color: var(--pico-del-color);
+}

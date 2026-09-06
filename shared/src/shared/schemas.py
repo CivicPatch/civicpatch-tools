@@ -397,6 +397,8 @@ class IssueCode(str, Enum):
     DUPLICATE_UNIQUE_ROLE = "duplicate_unique_role"
     DIVISION_NUMBERING_GAP = "division_numbering_gap"
     UNVERIFIED_POST = "unverified_post"
+    # A field moved on someone who is in both rosters.
+    CHANGED_FIELD = "changed_field"
 
 
 # Two packages write this anchor and the frontend reads it; a typo un-anchors an issue silently.

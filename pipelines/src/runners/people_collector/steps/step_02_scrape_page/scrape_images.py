@@ -24,6 +24,11 @@ def hash_string(s: str) -> str:
     return hashlib.sha256(s.encode('utf-8')).hexdigest()[:12]
 
 
+def hash_file(path: str) -> str:
+    with open(path, "rb") as f:
+        return hashlib.sha256(f.read()).hexdigest()[:12]
+
+
 def is_valid_image(src: str | None) -> bool:
     if not src:
         return False
@@ -88,8 +93,18 @@ async def load_and_save_image(page: Page, image_dir: str, img_url: str, logger, 
     return None
 
 
+async def _register_image(img, image_dir: str, temp_path: str, image_map: dict, src: str) -> None:
+    """Name the file after its bytes. Hashing the source url instead let a jurisdiction that
+    swaps the photo at a stable url overwrite the old one on the permanent CDN key."""
+    file_name = f"{hash_file(temp_path)}.png"
+    os.replace(temp_path, os.path.join(image_dir, file_name))
+    image_map[file_name] = src
+    await img.evaluate('(el, name) => el.setAttribute("src", "local://" + name)', file_name)
+
+
 async def _download_single_image(page: Page, img, image_dir: str, image_map: dict, logger):
     src = None
+    temp_path = None
     try:
         src = await img.get_attribute("src")
         if not is_valid_image(src):
@@ -97,16 +112,14 @@ async def _download_single_image(page: Page, img, image_dir: str, image_map: dic
             logger.debug(f"Skipping blacklisted or invalid image: {log_src}")
             return
         src = urljoin(page.url, src)
-        image_hash = hash_string(src)
-        file_name = f"{image_hash}.png"
-        file_path = os.path.join(image_dir, file_name)
+        temp_name = f"{hash_string(src)}.tmp"
+        temp_path = os.path.join(image_dir, temp_name)
 
         try:
             logger.debug(f"Attempting to intercept and save image for: {src}")
-            intercepted_image_path = await load_and_save_image(page, image_dir, src, logger, file_name)
+            intercepted_image_path = await load_and_save_image(page, image_dir, src, logger, temp_name)
             if intercepted_image_path:
-                image_map[file_name] = src
-                await img.evaluate('(el, name) => el.setAttribute("src", "local://" + name)', file_name)
+                await _register_image(img, image_dir, temp_path, image_map, src)
                 return
         except Exception as e:
             logger.warning(f"Failed to intercept and save image for {src}: {e}")
@@ -133,27 +146,29 @@ async def _download_single_image(page: Page, img, image_dir: str, image_map: dic
             """
             data_url = await page.evaluate(canvas_script, src)
             header, encoded = data_url.split(",", 1)
-            with open(file_path, "wb") as f:
+            with open(temp_path, "wb") as f:
                 f.write(base64.b64decode(encoded))
-            logger.debug(f"Image saved from canvas: {file_name}")
-            image_map[file_name] = src
-            await img.evaluate('(el, name) => el.setAttribute("src", "local://" + name)', file_name)
+            logger.debug(f"Image saved from canvas: {src}")
+            await _register_image(img, image_dir, temp_path, image_map, src)
             return
         except Exception as e:
             logger.warning(f"Failed to create canvas for image: {src} - {e}")
 
         try:
             logger.debug(f"Attempting to screenshot image element: {src}")
-            await img.screenshot(path=file_path)
-            logger.debug(f"Image captured via element screenshot: {file_name}")
-            image_map[file_name] = src
-            await img.evaluate('(el, name) => el.setAttribute("src", "local://" + name)', file_name)
+            await img.screenshot(path=temp_path)
+            logger.debug(f"Image captured via element screenshot: {src}")
+            await _register_image(img, image_dir, temp_path, image_map, src)
         except Exception as e:
             logger.warning(f"Failed to screenshot image element: {src} - {e}")
 
     except Exception as e:
         logger.warning(f"Failed to process image: {src} - {e}")
         await remove_image_from_dom(page, img, logger)
+    finally:
+        # A capture that failed part-way through writing must not leave a .tmp for the zip.
+        if temp_path and os.path.exists(temp_path):
+            os.remove(temp_path)
 
 
 async def download_images(browser, logger, page: Page, image_dir: str, timeout_s: int = IMAGE_DOWNLOAD_TIMEOUT_S):

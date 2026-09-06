@@ -57,13 +57,21 @@ class JurisdictionHistoryEntry(BaseModel):
     the coarse three-way answer that `outcome` supersedes. So did `branch_name` and
     `jurisdiction_ocdid` — nothing read either, and the first cost a `make_job_branch` per row.
 
-    `updated_at` is when the changeset's content last moved — for a scrape, its last report,
-    which is what a duration is measured against. `created_at` is when the changeset was made.
+    `updated_at` is when the changeset's content last moved. It is **not** what a duration is
+    measured against: a scrape's changeset is minted at ingest with `updated_at == created_at`,
+    so measuring it read 0s for a run that took nine minutes. `pipeline_run_started_at`/`pipeline_run_finished_at`
+    are the run's own clock, NULL for a changeset no run produced.
     """
 
     changeset_id: str
     created_at: str | None
     updated_at: str | None
+    pipeline_run_started_at: str | None = None
+    pipeline_run_finished_at: str | None = None
+    # Why it ended that way, and what is still open on it. `cost_cap_reached` is the one
+    # that explains a short roster, and it was invisible here.
+    dismissed_reason: str | None = None
+    issue_types: list[str] = []
     pipeline_run_status: str | None
     pipeline_run_progress: int | None
     change_url: str | None
