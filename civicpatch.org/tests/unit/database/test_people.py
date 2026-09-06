@@ -70,6 +70,21 @@ def test_both_sides_of_the_card_carry_the_same_keys():
 
 
 @pytest.mark.unit
+def test_memberships_reach_the_card_so_a_seated_person_is_not_asked_for_a_post():
+    """The one key the two sides do *not* share, deliberately. `isPostUnanswered` treats an open
+    membership as the post question already answered; without it in the projection a published
+    person restored into the roster read as unanswered and blocked the publish.
+
+    The proposed side has no memberships to carry — nothing is seated until a publish — so it
+    simply lacks the key rather than carrying an empty one."""
+    assert "memberships" in db_people.VIEWS["quick"]
+    assert "memberships" in db_people.VIEWS["detail"]
+
+    derived = {"id": "p1", "name": "Jane Doe", "labels": ["Mayor"]}
+    assert "memberships" not in db_people.projected(derived, "quick")
+
+
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_get_people_refuses_a_read_with_no_scope():
     with pytest.raises(db_people.UnscopedRead):
