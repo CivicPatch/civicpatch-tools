@@ -137,6 +137,11 @@ def _check_absent_people(
 def _check_new_people(
     people, canonical_map: Dict[str, str], research_canonicals: Set[str]
 ) -> List[Issue]:
+    # A first scrape has nothing to be new against: every person would raise one, so a
+    # jurisdiction we hold nothing for could never auto-publish. The set checks resume on the
+    # next scrape, when there is a roster to compare with.
+    if not research_canonicals:
+        return []
     issues = []
     for person in people:
         if canonical_map[name_utils.get_person_name(person)] in research_canonicals:

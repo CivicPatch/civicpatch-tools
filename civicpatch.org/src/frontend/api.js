@@ -858,7 +858,7 @@ const SCRAPE_SETTINGS_URL = `${API_URL}/api/v1/scrape_settings`;
 const scrapeSettingsRequest = async (path, options = {}) => {
   const res = await fetch(`${SCRAPE_SETTINGS_URL}${path}`, {
     credentials: "include",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
     ...options,
   });
   const body = await res.json().catch(() => ({}));

@@ -6,7 +6,7 @@ import lib.pipeline_artifacts as artifacts
 import lib.storage as storage_service
 from core.images import cdn_urls, records_with_images, resolve_images
 from database.changesets import register_scrape_changeset
-from database.issues import upsert_issue
+from database.issues import has_pending_issues, upsert_issue
 from database.llm_calls import record_calls
 from database.pipeline_runs import get_pipeline_run
 from database.roles import get_roles
@@ -124,6 +124,10 @@ async def _store_source_records(
 async def _publish_if_nothing_to_review(
     changeset_id: str, jurisdiction_ocdid: str
 ) -> None:
+    # The pipeline's own issues first: the summary below is derived from the two rosters and
+    # cannot see them, so a run that stopped at its cost cap published its partial roster.
+    if await has_pending_issues(changeset_id):
+        return
     summary = await review_summary_for_changeset(changeset_id)
     if summary.get("issues"):
         return
@@ -189,13 +193,15 @@ async def _ingest_roster(
         request.jurisdiction_ocdid,
         records_with_images(records_by_person, source_urls, served),
     )
+    # Before the publish decision, not after: these are what `_publish_if_nothing_to_review`
+    # asks about, and filing them afterwards meant they never gated anything.
+    for issue in workflow_context.get("data", {}).get("issues", []):
+        await upsert_issue(changeset_id, issue["type"], [issue.get("data") or {}])
+
     await _apply_scrape_changes(changeset_id, request.jurisdiction_ocdid)
     await _record_resolved_url(
         changeset_id, request.jurisdiction_ocdid, workflow_context
     )
-
-    for issue in workflow_context.get("data", {}).get("issues", []):
-        await upsert_issue(changeset_id, issue["type"], [issue.get("data") or {}])
 
 
 async def _apply_scrape_changes(changeset_id: str, jurisdiction_ocdid: str) -> None:

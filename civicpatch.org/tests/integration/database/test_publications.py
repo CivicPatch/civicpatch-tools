@@ -572,3 +572,34 @@ async def test_a_hand_edit_does_not_vouch_for_the_rest_of_the_roster(sentinel_ha
     await publish_changeset(sentinel_hand_edit, _SENTINEL_OCDID, [person], user_id)
 
     assert await _accepted_for(person["id"]) == []
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_publish_somebody_made_is_verified(sentinel_request):
+    """`published_at` says it went live; `verified_at` says a person stood behind it. The
+    column shipped in 185 with nothing writing it, so every publish read as unverified."""
+    user_id = await _seed_publisher()
+
+    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [_person("Ann")], user_id)
+
+    assert await _verified_at(sentinel_request) is not None
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_an_unattended_publish_is_not_verified(sentinel_request):
+    """A clean scrape publishing itself read nothing and judged nothing — the same rule that
+    stops it asserting values."""
+    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [_person("Ann")], None)
+
+    assert await _verified_at(sentinel_request) is None
+
+
+async def _verified_at(changeset_id: str):
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT verified_at FROM changesets WHERE id::text = %s", (changeset_id,)
+        )
+        return (await cur.fetchone())[0]

@@ -58,6 +58,12 @@ def should_stop_for_data_requirement(progress: ProgressState) -> bool:
     found_enough = progress.current_data >= progress.required_data - DATA_REQUIREMENT_TOLERANCE
     return found_enough and progress.has_target_role and progress.has_target_divisions
 
+def is_short_of_expected(progress: ProgressState) -> bool:
+    """Short by more than the tolerance above — the same slack `should_stop_for_data_requirement`
+    allows, so the two readings of "enough" cannot disagree."""
+    return progress.current_data < progress.required_data - DATA_REQUIREMENT_TOLERANCE
+
+
 def should_stop_for_max_pages(processed_count: int, limits: PipelineRunLimits, progress: ProgressState) -> bool:
     return processed_count >= max_pages_allowed(limits, progress)
 

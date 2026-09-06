@@ -83,6 +83,26 @@ async def jurisdiction_ocdids_with_pending_issues_in_state(state_code: str) -> s
     return {row[0] for row in rows}
 
 
+async def has_pending_issues(changeset_id: str) -> bool:
+    """Whether anything the pipeline reported about this changeset is still open.
+
+    Asked before the auto-publish: `review_summary_for_changeset` derives its issues from the
+    rosters and never reads this table, so a `cost_cap_reached` — a run that stopped short of
+    the roster it was looking for — published its partial roster regardless.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT 1 FROM issues
+            WHERE status = %s AND %s = ANY(changeset_ids)
+            LIMIT 1
+            """,
+            (PipelineIssueStatus.PENDING, changeset_id),
+        )
+        return await cur.fetchone() is not None
+
+
 async def resolve_issue(issue_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:

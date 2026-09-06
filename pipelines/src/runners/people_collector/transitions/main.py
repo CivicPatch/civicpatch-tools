@@ -7,6 +7,7 @@ from runners.people_collector.schemas import (
     PeopleCollectorContext,
     PeopleCollectorData,
     PipelineStatus,
+    ProgressState,
 )
 from runners.people_collector.steps.step_00_prepare_pipeline.prepare_pipeline import (
     prepare_pipeline,
@@ -32,6 +33,7 @@ from runners.people_collector.steps.step_07_send_success.send_success import (
 )
 from runners.people_collector.transitions.process_page_content_transition import (
     STOP_COST_CAP,
+    is_short_of_expected,
     STOP_MESSAGES,
     describe_progress,
     next_process_content_state,
@@ -298,7 +300,11 @@ async def review_output_transition(
     if not records and context.data.find_jurisdiction_url_step is None:
         return context, PipelineStatus.FIND_JURISDICTION_URL
 
-    error_type, issues = _collect_pipeline_heuristics(records, context.data.stop_reason)
+    error_type, issues = _collect_pipeline_heuristics(
+        records,
+        context.data.stop_reason,
+        context.data.process_page_content_step.progress,
+    )
 
     if error_type:
         return _next_context(
@@ -442,19 +448,30 @@ def calculate_progress_percentage(context_data: PeopleCollectorData, current_ste
 
 
 def _collect_pipeline_heuristics(
-    records, stop_reason: str | None = None
+    records, stop_reason: str | None = None, progress: ProgressState | None = None
 ) -> tuple[str | None, list[dict]]:
-    """Emptiness, and a crawl that stopped at its ceiling. An unrecognized role is not an issue
-    here: the raw label crosses the boundary in the record, so `parse_label` recovers
-    `unmatched` wherever it is needed.
+    """Emptiness, a crawl that stopped at its ceiling, and one that ran out of pages short of
+    the roster it expected. An unrecognized role is not an issue here: the raw label crosses
+    the boundary in the record, so `parse_label` recovers `unmatched` wherever it is needed.
 
-    Emptiness wins: a run that found nothing has nothing partial to warn about, and reporting
-    both would put two issues on one run saying the same thing twice.
+    Ordered, and only one is returned: a run that found nothing has nothing partial to warn
+    about, and a run that stopped at its cost cap has already said why it is short. Reporting
+    two would put one run's single fact on the issues page twice.
     """
     if not records:
         return PipelineRunErrorType.NO_ROSTER_FOUND, []
     if stop_reason == STOP_COST_CAP:
         return None, [{"type": PipelineIssueType.COST_CAP_REACHED, "data": {}}]
+    if progress and is_short_of_expected(progress):
+        return None, [
+            {
+                "type": PipelineIssueType.FEWER_THAN_EXPECTED,
+                "data": {
+                    "found": progress.current_data,
+                    "expected": progress.required_data,
+                },
+            }
+        ]
     return None, []
 
 

@@ -123,7 +123,9 @@ def test_check_absent_people_is_list_level():
 def test_check_new_people_anchors_to_person_id():
     people = [_official("Carol White", person_id="c1")]
     canonical_map = name_utils.build_canonical_map(people, {})
-    issues = _check_new_people(people, canonical_map, research_canonicals=set())
+    # A prior roster that does not hold her: an empty one means a first scrape, which raises
+    # nothing at all.
+    issues = _check_new_people(people, canonical_map, research_canonicals={"someone else"})
     assert len(issues) == 1
     assert issues[0].code == IssueCode.NEW_PERSON
     assert issues[0].person_ids == ["c1"]
@@ -132,7 +134,7 @@ def test_check_new_people_anchors_to_person_id():
 def test_check_new_people_new_person_degrades_to_list_level():
     people = [_official("New Person", person_id="")]  # not yet in the DB
     canonical_map = name_utils.build_canonical_map(people, {})
-    issues = _check_new_people(people, canonical_map, research_canonicals=set())
+    issues = _check_new_people(people, canonical_map, research_canonicals={"someone else"})
     assert issues[0].person_ids == []
 
 

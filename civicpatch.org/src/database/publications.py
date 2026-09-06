@@ -149,12 +149,17 @@ async def _record_publish(
         """
         UPDATE changesets
            SET published_at = COALESCE(published_at, now()),
+               -- A person stood behind this one. An auto-publish passes no user and leaves it
+               -- NULL, which is the whole distinction the column exists to carry.
+               verified_at = COALESCE(
+                   verified_at, CASE WHEN %s::uuid IS NOT NULL THEN now() END
+               ),
                -- Same chain as the dismissal: an auto-publish is the system publishing, not
                -- a publish with nobody behind it.
                resolved_by_user_id = COALESCE(%s, resolved_by_user_id, %s)
          WHERE id = %s
         """,
-        (resolved_by_user_id, SYSTEM_USER_ID, changeset_id),
+        (resolved_by_user_id, resolved_by_user_id, SYSTEM_USER_ID, changeset_id),
     )
     await record_change(
         cur,

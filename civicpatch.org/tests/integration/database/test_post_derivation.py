@@ -1078,6 +1078,69 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes_and_moves_last_see
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_a_scrape_the_pipeline_reported_an_issue_on_does_not_publish():
+    """The same re-confirmed roster as above, plus one pending issue — so the only difference
+    between publishing and not is the issue.
+
+    `review_summary_for_changeset` derives its issues from the two rosters and never reads the
+    `issues` table, so a `cost_cap_reached` run — one that stopped at its ceiling before it had
+    the roster it was looking for — published its partial roster as "nothing to review". The
+    issues were also filed *after* the publish decision, so they could not have gated it even
+    if it had asked.
+    """
+    from core.post_derivation import DerivedMembership
+    from database.issues import upsert_issue
+    from services.people_collector import _apply_scrape_changes
+    from shared.utils.statuses import PipelineIssueType
+
+    seats = [("mayor", "Mayor"), ("clerk", "Clerk"), ("treasurer", "Treasurer")]
+    people = [await _seed_person(f"Seed {label}") for _, label in seats]
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        await cur.execute(
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, "
+            "                        created_at, updated_at) "
+            "VALUES (%s, %s, 'scrape', %s, %s)",
+            (changeset_id := str(uuid.uuid4()), _OCDID, _T1, _T1),
+        )
+        for person_id, (role_id, role_label) in zip(people, seats):
+            post_id = await posts.find_or_create(cur, _OCDID, org, role_id, _BASE)
+            await memberships.upsert(
+                cur, DerivedMembership(person_id=person_id), post_id, org, _T0
+            )
+            await cur.execute(
+                "INSERT INTO source_records "
+                "  (changeset_id, jurisdiction_ocdid, name, label, source_url) "
+                "VALUES (%s, %s, %s, %s, %s) RETURNING id",
+                (changeset_id, _OCDID, f"Seed {role_label}", role_label, _ROSTER_URL),
+            )
+            await cur.execute(
+                "INSERT INTO source_record_identities (source_record_id, person_id) "
+                "VALUES (%s, %s)",
+                ((await cur.fetchone())[0], person_id),
+            )
+        await conn.commit()
+
+    await upsert_issue(
+        changeset_id, PipelineIssueType.COST_CAP_REACHED, [{"spent_usd": "0.5000"}]
+    )
+
+    await _apply_scrape_changes(changeset_id, _OCDID)
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT published_at IS NOT NULL FROM changesets WHERE id::text = %s",
+            (changeset_id,),
+        )
+        published = (await cur.fetchone())[0]
+
+    assert not published, "a scrape with a pending issue published itself unreviewed"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_a_partial_term_date_is_stored_as_the_source_gave_it():
     """Sources give "2024" and "2024-05" far more often than a full date — 3,513 of 4,547 on
     dev. `date` cannot hold either, so the column is text, like `people`'s and for the same
