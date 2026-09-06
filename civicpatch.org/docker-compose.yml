@@ -114,8 +114,12 @@ services:
   # ── Workers ────────────────────────────────────────────────────────────────
   # Three of the four run `get_pool()`, which goes through `environment.get_env_vars()` and so
   # needs the whole required set — hence one shared block rather than three copies. The scrape
-  # worker is the exception and lives in the root compose file with a deliberately narrow
-  # environment: it touches no database, and that is the property worth protecting.
+  # The workers live in the root compose file. Their environment mirrors the API's because
+  # they need most of the same things — including the database: `CIVICPATCH_API_DB_URL` and an
+  # explicit pool below. An earlier version of this comment said they touch no database, which
+  # was true when the worker was a separate package and stopped being true when it was folded
+  # in; `expiry_activities` reads `database.issues` directly. Whether an activity should use SQL
+  # or call the API is a question about where the logic lives, not about what it may reach.
   civicpatch-org-sinks:
     container_name: civicpatch-org-sinks
     build: &worker-build

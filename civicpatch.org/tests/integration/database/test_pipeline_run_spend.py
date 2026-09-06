@@ -14,7 +14,7 @@ from decimal import Decimal
 import pytest
 import pytest_asyncio
 
-from database.pipeline_run_spend import get_state_spend
+from database.pipeline_run_spend import get_month_to_date_spend, get_state_spend
 from database.database import get_pool
 from database.llm_calls import record_calls
 from tests.integration import factories
@@ -216,3 +216,46 @@ async def test_cost_per_scrape_averages_only_the_current_window_s_runs():
 
     assert row is not None
     assert row.cost_per_scrape_usd == Decimal("0.02")  # one run, not two
+
+
+# --- Month to date, for the two monthly caps ------------------------------------------
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_month_to_date_reports_this_state_and_everything_together():
+    """One statement for both scopes: read separately they can disagree about which month it is
+    at a boundary."""
+    await _seed_jurisdiction()
+    run = await factories.start_run(_OCDID)
+    await record_calls(run, [_call("0.04")])
+
+    state_spent, global_spent = await get_month_to_date_spend(_STATE)
+
+    assert state_spent == Decimal("0.04")
+    assert global_spent >= state_spent  # other states share the fleet figure
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_last_month_s_spend_does_not_count_against_this_month():
+    """A calendar month, not a rolling window — a rolling one would let spend refused on the
+    30th become affordable again on the 31st."""
+    await _seed_jurisdiction()
+    old = await factories.start_run(_OCDID)
+    await record_calls(old, [_call("5.00")])
+    await _backdate(old, 45)
+
+    state_spent, _global = await get_month_to_date_spend(_STATE)
+
+    assert state_spent == Decimal("0")
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_state_that_spent_nothing_reads_zero_rather_than_null():
+    """The one place zero is the honest answer: a budget check needs a number to compare, and
+    the caller measures it against a cap rather than displaying it as a cost."""
+    state_spent, _global = await get_month_to_date_spend(_STATE)
+
+    assert state_spent == Decimal("0")

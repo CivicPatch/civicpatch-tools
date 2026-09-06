@@ -32,7 +32,7 @@ class CreatePipelineRunResponse(BaseModel):
 class BatchPipelineRunRequest(BaseModel):
     state: str
     # None means every eligible jurisdiction — which is what "scrape this state" means. A
-    # number is a ceiling, kept for callers that want a smaller bite.
+    # number is a cap, kept for callers that want a smaller bite.
     num_jurisdictions: Optional[int] = None
     # Who asked. Carried through the workflow so the changesets it registers are attributed to
     # the person who pressed the button, not to the system.

@@ -40,15 +40,17 @@ def _track(pipeline_run_id: str, task: asyncio.Task) -> None:
     task.add_done_callback(lambda _: _running_tasks.pop(pipeline_run_id, None))
 
 
+def _cap(config_data: dict) -> Optional[Decimal]:
+    """Null, absent, or empty all mean the same thing: inherit `pipeline.yml`'s default."""
+    raw = config_data.get("pipeline_run_cap_usd")
+    return Decimal(str(raw)) if raw is not None else None
+
+
 class StartPipelineRunRequest(BaseModel):
     pipeline_run_id: str
     jurisdiction_ocdid: str
     url: Optional[str] = None
     source_urls: Optional[list[str]] = None
-    # What this run may spend, resolved from `state_settings` by whoever dispatched it.
-    # Optional so a caller that does not send it keeps working — the run then inherits
-    # `pipeline.yml`'s default, which is what every local run does today.
-    pipeline_run_cap_usd: Optional[Decimal] = None
 
 
 class PipelineRunStatusResponse(BaseModel):
@@ -56,13 +58,7 @@ class PipelineRunStatusResponse(BaseModel):
     status: str
 
 
-async def _run(
-    pipeline_run_id: str,
-    jurisdiction_ocdid: str,
-    url: Optional[str],
-    source_urls: Optional[list[str]],
-    pipeline_run_cap_usd: Optional[Decimal] = None,
-) -> None:
+async def _run(pipeline_run_id: str, jurisdiction_ocdid: str, url: Optional[str], source_urls: Optional[list[str]]) -> None:
     env = get_env_vars()
     headers = {"Authorization": env["SERVICE_API_KEY"]}
     try:
@@ -72,7 +68,8 @@ async def _run(
             url=url or config_data["url"],
             name=config_data.get("name"),
             source_urls=source_urls or config_data.get("source_urls"),
-            pipeline_run_cap_usd=pipeline_run_cap_usd,
+            # The run's own ceiling, from the same fetch. Nothing had to carry it here.
+            pipeline_run_cap_usd=_cap(config_data),
         )
     except Exception:
         logger.exception("pipeline run %s failed during config fetch", pipeline_run_id)
@@ -96,13 +93,7 @@ async def _run(
 @app.post("/pipeline_runs", response_model=PipelineRunStatusResponse)
 async def start_pipeline_run(req: StartPipelineRunRequest) -> PipelineRunStatusResponse:
     _track(req.pipeline_run_id, asyncio.create_task(
-        _run(
-            req.pipeline_run_id,
-            req.jurisdiction_ocdid,
-            req.url,
-            req.source_urls,
-            req.pipeline_run_cap_usd,
-        )
+        _run(req.pipeline_run_id, req.jurisdiction_ocdid, req.url, req.source_urls)
     ))
     return PipelineRunStatusResponse(pipeline_run_id=req.pipeline_run_id, status=PipelineRunStatus.PENDING)
 

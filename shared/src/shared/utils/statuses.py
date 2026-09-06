@@ -103,13 +103,6 @@ class ChangesetKind(StrEnum):
     JURISDICTION_EDIT = "jurisdiction_edit"
 
 
-# Kinds that collected from a source, rather than stating something by hand. A publish that
-# collected may say "still listed"; a hand edit may not, and "ok / failed" is a collection
-# attempt's vocabulary, not an edit's.
-#
-# `collect` is the system's word for this — `people_collector`, the `people-collector` task
-# queue. This used to be `SOURCE_READING_KINDS` with a second copy named `COLLECTION_KINDS` in
-# `changeset_summaries` and a third, `COLLECTED`, spliced into SQL: three names, one set.
 COLLECTION_KINDS = (ChangesetKind.SCRAPE, ChangesetKind.SHEET_IMPORT)
 
 

@@ -47,8 +47,8 @@ OPTIONAL_ENV_VARS = [
     "FRIENDLY_STORAGE_HOST",
     "TEMPORAL_HOST",
     "TEMPORAL_NAMESPACE",
-    # This service's own URL, for the people-collector activities to call back on. Required in
-    # the worker, unused by the web app — optional here because they share one image.
+    # This service's own URL, for the scrape activities to call back on. Required in the scrape
+    # worker, unused by the app and the other workers — optional here because they share an image.
     "CIVICPATCH_ORG_URL",
     # Only needed to make edits to a jurisdiction. Point this at open-data while the
     # upstream jurisdictions route is being built — the code path stays real, only

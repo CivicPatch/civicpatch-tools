@@ -65,6 +65,7 @@ erDiagram
         text_null       status
         int_null        progress
         jsonb           arguments_json      "170: moved off changesets. What the scrape was asked to fetch"
+        numeric_null    pipeline_run_cap_usd "183: the ceiling this run was dispatched under. Resolved from state_settings inside register_run's INSERT, so neither dispatch path can forget the lookup; NULL = the state set none, or is unconfigured, or the jurisdiction is unknown — all meaning inherit pipeline.yml. Recorded rather than only resolved: the llm_calls total cannot say what it was measured against"
         uuid_null       created_by_user_id  FK
         timestamptz_null finished_at        "NULL means in flight; the stale-run sweep reads this"
         timestamptz     created_at

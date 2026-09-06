@@ -10,11 +10,15 @@ whatever it found rather than assuming a value.
 
 from decimal import Decimal
 import datetime
+import uuid
 
 import pytest
 import pytest_asyncio
 
+from core.spend_limits import Cap
 from database.database import get_pool
+from database.pipeline_runs import register_run
+from services.spend_budget import cap_reached_for_state
 from database.state_settings import (
     get_all_state_settings,
     get_global_settings,
@@ -45,7 +49,7 @@ async def _clean():
 @pytest.mark.integration
 async def test_a_state_nobody_configured_reads_as_the_defaults():
     """No row is not a missing value — it is manual cadence, inherited per-run cap, no monthly
-    ceiling. If this returned None, fifty rows would have to be seeded to avoid it."""
+    cap. If this returned None, fifty rows would have to be seeded to avoid it."""
     settings = await get_state_settings(_STATE)
 
     assert settings.state == _STATE
@@ -139,3 +143,71 @@ async def test_the_global_row_exists_without_anyone_creating_it():
         assert (await get_global_settings()).monthly_cap_usd is None
     finally:
         await set_global_cap(before.monthly_cap_usd, before.updated_by_user_id)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_run_records_the_cap_its_state_was_set_to():
+    """Resolved in the INSERT, so neither dispatch path can forget to look it up — and recorded,
+    so `why did this run stop at $0.05` is answerable from the row rather than from a log."""
+    await set_caps(_STATE, Decimal("0.05"), None, None)
+    ocdid = f"ocd-jurisdiction/country:us/state:{_STATE}/place:zw_one/government"
+    run_id = str(uuid.uuid4())
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, state, data, updated_at) "
+            "VALUES (%s, %s, '{}'::jsonb, now()) ON CONFLICT DO NOTHING",
+            (ocdid, _STATE),
+        )
+        await conn.commit()
+    try:
+        await register_run(run_id, ocdid, {})
+
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute(
+                "SELECT pipeline_run_cap_usd FROM pipeline_runs WHERE id = %s", (run_id,)
+            )
+            row = await cur.fetchone()
+        assert row is not None and row[0] == Decimal("0.0500")
+    finally:
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute("DELETE FROM pipeline_runs WHERE id = %s", (run_id,))
+            await cur.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
+            await conn.commit()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_run_in_an_unconfigured_state_inherits_rather_than_failing():
+    """No state row, no jurisdiction row, and a state that set no cap all yield NULL, which the
+    pipeline reads as `use pipeline.yml`. The subquery matching nothing is the common case."""
+    run_id = str(uuid.uuid4())
+    try:
+        await register_run(run_id, "ocd-jurisdiction/country:us/state:zw/place:nope/government", {})
+
+        pool = await get_pool()
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute(
+                "SELECT pipeline_run_cap_usd FROM pipeline_runs WHERE id = %s", (run_id,)
+            )
+            row = await cur.fetchone()
+        assert row is not None and row[0] is None
+    finally:
+        pool = await get_pool()
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute("DELETE FROM pipeline_runs WHERE id = %s", (run_id,))
+            await conn.commit()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_budget_gate_reads_caps_and_spend_together():
+    """The service half: two reads and the pure decision, against real rows. A state with no
+    caps set is never over budget, however much it has spent."""
+    assert await cap_reached_for_state(_STATE) is None
+
+    await set_caps(_STATE, None, Decimal("0"), None)
+    # A monthly cap of $0 is reached before anything is spent — the stop switch.
+    assert await cap_reached_for_state(_STATE) == Cap.STATE_MONTH

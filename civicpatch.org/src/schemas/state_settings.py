@@ -21,23 +21,23 @@ class StateSettings(BaseModel):
     cadence_days: int | None = None
     # Staggers the states, so fifty schedules do not all fire at midnight.
     cadence_start: date | None = None
-    # One run's ceiling. NULL = inherit the pipeline's own default.
+    # One run's cap. NULL = inherit the pipeline's own default.
     pipeline_run_cap_usd: Decimal | None = None
-    # This state's calendar month. NULL = no ceiling.
+    # This state's calendar month. NULL = no cap.
     monthly_cap_usd: Decimal | None = None
     updated_by_user_id: str | None = None
     updated_at: datetime | None = None
 
 
 class GlobalSettings(BaseModel):
-    """The monthly ceiling for everything, across every state.
+    """The monthly cap for everything, across every state.
 
     Same field name as `StateSettings.monthly_cap_usd` on purpose: one concept at two scopes,
     told apart by which model it is on.
 
-    A **shared ceiling, not an allocation**: states draw from it first-come, and each state's own
+    A **shared cap, not an allocation**: states draw from it first-come, and each state's own
     monthly cap is what stops one state emptying it. `SUM(state_settings.monthly_cap_usd)` may
-    therefore exceed it — a normal state, meaning *these caps are ceilings, not reservations* —
+    therefore exceed it — a normal state, meaning *these caps are caps, not reservations* —
     and the UI says so rather than refusing it.
     """
 
