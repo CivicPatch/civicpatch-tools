@@ -899,7 +899,7 @@ export const startStateScrape = async (state, numJurisdictions = null) => {
   const res = await fetch(`${API_URL}/api/v1/pipeline_runs/batch`, {
     method: "POST",
     credentials: "include",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
     body: JSON.stringify({ state, num_jurisdictions: numJurisdictions }),
   });
   const body = await res.json().catch(() => ({}));
