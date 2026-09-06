@@ -203,7 +203,7 @@ app.include_router(
 # Curated-sheet imports: start one, watch it, release a stuck lock.
 app.include_router(
     api_imports_router.get_router(),
-    prefix="/api/internal/imports",
+    prefix="/api/v1/imports",
     tags=["imports"],
 )
 
@@ -211,7 +211,7 @@ app.include_router(
 # localities behind each bucket. MAINTAINERS and up; the router carries its own dependency.
 app.include_router(
     api_changeset_summaries_router.get_router(),
-    prefix="/api/internal/changeset_summaries",
+    prefix="/api/v1/changeset_summaries",
     tags=["changeset_summaries"],
 )
 
@@ -219,7 +219,7 @@ app.include_router(
 # Mostly for civicpatch users who need to contribute data
 app.include_router(
     api_keys_router.get_router(),
-    prefix="/api/internal/api_keys",
+    prefix="/api/v1/api_keys",
     tags=["api_keys"],
     dependencies=[
         Depends(require_route_access(RouteCategory.AUTHENTICATED))
@@ -284,7 +284,7 @@ app.include_router(
 
 app.include_router(
     api_user_router.get_router(),
-    prefix="/api/internal/user",
+    prefix="/api/v1/user",
     tags=["user"],
     dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))],
 )

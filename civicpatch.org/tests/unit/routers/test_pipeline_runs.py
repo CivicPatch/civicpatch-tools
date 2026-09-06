@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
 
-from schemas.common import Identity
+from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
 from routers.api import pipeline_runs as pipeline_runs_router
 
@@ -330,3 +330,70 @@ def test_claim_404s_for_an_unknown_state(client):
         response = client.post("/pipeline_runs/batch/claim", json={"state": "zz"})
 
     assert response.status_code == 404
+
+
+# --- Spend: the one route on this router that is not open to every signed-in user ---
+
+
+def _spend_client():
+    """Its own client: the module-level one authenticates as a service key, which bypasses every
+    role check by design and so cannot see a trust ladder at all."""
+    app = FastAPI()
+    app.include_router(pipeline_runs_router.get_router(None), prefix="/pipeline_runs")
+    return TestClient(app)
+
+
+def _as(client, role):
+    client.app.dependency_overrides[get_optional_user] = lambda: Identity(
+        type="session",
+        provider="github",
+        provider_user_id="u1",
+        email="u@x.com",
+        role=role,
+        user_id="user-1",
+    )
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("role", [UserRole.DEFAULT, UserRole.CONTRIBUTORS])
+def test_spend_is_refused_below_maintainer(role):
+    """Publishing a roster is open to any signed-in account; what it cost us is not."""
+    client = _spend_client()
+    _as(client, role)
+
+    response = client.get("/pipeline_runs/spend")
+
+    assert response.status_code == 403
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("role", [UserRole.MAINTAINERS, UserRole.ADMINS])
+def test_spend_is_allowed_at_maintainer_and_above(role):
+    client = _spend_client()
+    _as(client, role)
+    with patch.object(
+        pipeline_runs_router, "get_state_spend", new=AsyncMock(return_value=[])
+    ):
+        response = client.get("/pipeline_runs/spend")
+
+    assert response.status_code == 200
+    assert response.json() == {"data": []}
+
+
+@pytest.mark.unit
+def test_spend_is_refused_when_signed_out():
+    client = _spend_client()
+    client.app.dependency_overrides[get_optional_user] = lambda: None
+
+    assert client.get("/pipeline_runs/spend").status_code == 403
+
+
+@pytest.mark.unit
+def test_spend_will_not_scan_an_unbounded_window():
+    """The window reaches SQL as an interval, so an unbounded one is an unbounded scan for
+    anyone editing the query string."""
+    client = _spend_client()
+    _as(client, UserRole.MAINTAINERS)
+
+    assert client.get("/pipeline_runs/spend?window_days=0").status_code == 422
+    assert client.get("/pipeline_runs/spend?window_days=99999").status_code == 422

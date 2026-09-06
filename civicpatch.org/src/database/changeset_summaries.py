@@ -57,40 +57,43 @@ DISMISSED = "changesets.dismissed_reason IN ({})".format(
     ", ".join(f"'{r.value}'" for r in DismissalReason if r not in _NOT_A_FAILURE)
 )
 
-# Each side aggregates to one row per state before joining — measured, ~114 ms at 571k
-# changesets. Joining first spilled to disk. Served live; no cache.
-STATE_ROLLUP_SQL = f"""
--- THE STOCK. Unwindowed: an item waiting 90 days is still waiting.
--- `AVAILABLE_FOR_REVIEW` verbatim, never a copy — a copy drifts from the pool it mirrors.
--- `DISTINCT ON` because the supersede sweep leaves transient duplicates.
-WITH valid_queue AS (
+# The rollup, one CTE at a time. Each is the SELECT alone; the assembly at the bottom names
+# them and joins them, so the shape of the query is readable without reading the parts. Every
+# piece stays a literal — no `.join()` — so the finished query is one too.
+
+# THE STOCK. Unwindowed: an item waiting 90 days is still waiting.
+# `AVAILABLE_FOR_REVIEW` verbatim, never a copy — a copy drifts from the pool it mirrors.
+# `DISTINCT ON` because the supersede sweep leaves transient duplicates.
+_VALID_QUEUE = f"""
     SELECT DISTINCT ON (changesets.jurisdiction_ocdid)
            changesets.jurisdiction_ocdid, changesets.updated_at
     FROM changesets
     WHERE {AVAILABLE_FOR_REVIEW}
     ORDER BY changesets.jurisdiction_ocdid, changesets.updated_at DESC
-),
--- THE ATTEMPTS. Read from `pipeline_runs` directly, never through `changesets`: a run mints no
--- changeset until ingest, so a changeset-rooted join matches only runs that have already
--- finished — which is every run except the ones this is asking about.
--- Unwindowed on purpose: a run started before the window is still running, and this gates the
--- scrape button. Missing one would offer a second batch on top of a live one.
-running AS (
+"""
+
+# THE ATTEMPTS. Read from `pipeline_runs` directly, never through `changesets`: a run mints no
+# changeset until ingest, so a changeset-rooted join matches only runs that have already
+# finished — which is every run except the ones this is asking about.
+# Unwindowed on purpose: a run started before the window is still running, and this gates the
+# scrape button. Missing one would offer a second batch on top of a live one.
+_RUNNING = """
     SELECT j.state, count(*)::int AS running
     FROM pipeline_runs pr
     JOIN jurisdictions j USING (jurisdiction_ocdid)
     WHERE pr.finished_at IS NULL
     GROUP BY j.state
-),
--- Windowed, like the other flows. Attempts that died *proposing nothing* — the population that
--- appears in no changeset column at all.
---
--- Both halves of the predicate are load-bearing. `status = 'ERROR'` alone double-counts: every
--- run minted before mint-at-ingest has a changeset, and measured on dev, 9 of 10 ERROR runs are
--- already counted as `errored` there. `changeset_id IS NULL` alone catches a run that succeeded
--- and proposed nothing, which did not fail. Together they are disjoint from every proposal
--- count, so no failure is reported twice.
-failed_runs AS (
+"""
+
+# Windowed, like the other flows. Attempts that died *proposing nothing* — the population that
+# appears in no changeset column at all.
+#
+# Both halves of the predicate are load-bearing. `status = 'ERROR'` alone double-counts: every
+# run minted before mint-at-ingest has a changeset, and measured on dev, 9 of 10 ERROR runs are
+# already counted as `errored` there. `changeset_id IS NULL` alone catches a run that succeeded
+# and proposed nothing, which did not fail. Together they are disjoint from every proposal
+# count, so no failure is reported twice.
+_FAILED_RUNS = f"""
     SELECT j.state, count(*)::int AS failed_runs
     FROM pipeline_runs pr
     JOIN jurisdictions j USING (jurisdiction_ocdid)
@@ -98,18 +101,20 @@ failed_runs AS (
       AND pr.status = '{PipelineRunStatus.ERROR.value}'
       AND pr.changeset_id IS NULL
     GROUP BY j.state
-),
-queue AS (
+"""
+
+_QUEUE = """
     SELECT j.state,
            count(*)::int                                    AS to_review,
            max(date_part('day', now() - q.updated_at))::int AS oldest_days
     FROM valid_queue q
     JOIN jurisdictions j USING (jurisdiction_ocdid)
     GROUP BY j.state
-),
--- THE FLOWS. Windowed events; pending belongs to the queue above.
--- A dismissal with no reason falls through every FILTER, which is the honest answer.
-flows AS (
+"""
+
+# THE FLOWS. Windowed events; pending belongs to the queue above.
+# A dismissal with no reason falls through every FILTER, which is the honest answer.
+_FLOWS = f"""
     SELECT j.state,
            count(*) FILTER (WHERE {PUBLISHED})::int AS published,
            -- `FAILED` verbatim, the same predicate `get_state_bucket` lists by. Counting the
@@ -123,17 +128,29 @@ flows AS (
     WHERE changesets.created_at >= now() - %(window)s::interval
       AND {COLLECTED}
     GROUP BY j.state
-),
--- An allow-list, same one the timeline uses: counting review lifecycle would report
--- bookkeeping as roster movement. An unlisted type undercounts, which is the safe direction.
-edits AS (
+"""
+
+# An allow-list, same one the timeline uses: counting review lifecycle would report
+# bookkeeping as roster movement. An unlisted type undercounts, which is the safe direction.
+_EDITS = """
     SELECT j.state, count(*)::int AS roster_edits
     FROM change_logs cl
     JOIN jurisdictions j USING (jurisdiction_ocdid)
     WHERE cl.created_at >= now() - %(window)s::interval
       AND cl.type = ANY(%(roster_types)s)
     GROUP BY j.state
-)
+"""
+
+# Every state appears, from `jurisdictions`, and each side aggregates to one row per state
+# before joining — measured, ~114 ms at 571k changesets. Joining first spilled to disk. Served
+# live; no cache.
+STATE_ROLLUP_SQL = f"""
+WITH valid_queue AS ({_VALID_QUEUE}),
+     running     AS ({_RUNNING}),
+     failed_runs AS ({_FAILED_RUNS}),
+     queue       AS ({_QUEUE}),
+     flows       AS ({_FLOWS}),
+     edits       AS ({_EDITS})
 SELECT
     j.state,
     COALESCE(q.to_review, 0)    AS to_review,
@@ -145,11 +162,11 @@ SELECT
     COALESCE(fr.failed_runs, 0) AS failed_runs,
     f.last_run_at
 FROM (SELECT DISTINCT state FROM jurisdictions) j
-LEFT JOIN running rn USING (state)
+LEFT JOIN running     rn USING (state)
 LEFT JOIN failed_runs fr USING (state)
-LEFT JOIN queue q USING (state)
-LEFT JOIN flows f USING (state)
-LEFT JOIN edits e USING (state)
+LEFT JOIN queue       q  USING (state)
+LEFT JOIN flows       f  USING (state)
+LEFT JOIN edits       e  USING (state)
 ORDER BY to_review DESC, j.state;
 """
 

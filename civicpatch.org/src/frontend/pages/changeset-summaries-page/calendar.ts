@@ -44,10 +44,17 @@ function weekMarks(days: string[]) {
   return marks;
 }
 
+// The lead and tail already span exactly the figures either side of the calendar, so they are
+// where the group headings belong — no new row, and the headings cannot drift from the columns
+// they name.
+//
+// This resolves a stock-and-flow mix: `to review` is everything outstanding and deliberately
+// unwindowed, while everything to the right of the calendar happened inside the window. Without
+// the headings the two read as one set of columns measured the same way.
 export function renderScale(days: string[]) {
   return html`
     <div class="cs-scale">
-      <span class="cs-scale__lead"></span>
+      <span class="cs-scale__lead">outstanding</span>
       <span class="cs-scale__track">
         ${weekMarks(days).map(
           (mark) => html`<span class="cs-scale__mark" style="flex: ${mark.span} 1 0"
@@ -55,7 +62,7 @@ export function renderScale(days: string[]) {
           >`,
         )}
       </span>
-      <span class="cs-scale__tail"></span>
+      <span class="cs-scale__tail">last 30 days</span>
     </div>
   `;
 }

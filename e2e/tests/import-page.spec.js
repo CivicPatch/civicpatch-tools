@@ -19,12 +19,12 @@
 
 import { test, expect } from "../fixtures/index.js";
 
-const SHEET = "**/api/internal/imports/sheet";
-const LATEST = "**/api/internal/imports/latest";
-const START = "**/api/internal/imports";
-const PROGRESS = "**/api/internal/imports/batch-e2e";
-const REVIEW = "**/api/internal/imports/batch-e2e/review";
-const PUBLISH = "**/api/internal/imports/batch-e2e/publish";
+const SHEET = "**/api/v1/imports/sheet";
+const LATEST = "**/api/v1/imports/latest";
+const START = "**/api/v1/imports";
+const PROGRESS = "**/api/v1/imports/batch-e2e";
+const REVIEW = "**/api/v1/imports/batch-e2e/review";
+const PUBLISH = "**/api/v1/imports/batch-e2e/publish";
 
 const READY = "ocd-jurisdiction/country:us/state:wa/place:e2e_ready/government";
 const BLOCKED = "ocd-jurisdiction/country:us/state:wa/place:e2e_blocked/government";

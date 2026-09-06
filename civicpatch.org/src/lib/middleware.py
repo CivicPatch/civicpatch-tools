@@ -13,7 +13,7 @@ _ALLOWLISTED_PATHS = {
 }
 
 _ALLOWLISTED_PREFIXES = (
-    "/api/internal/user/display-name",
+    "/api/v1/user/display-name",
     "/api/v1/auth/",
     "/frontend/",
 )

@@ -681,7 +681,7 @@ export const revokeInvite = async (userId) => {
 };
 
 export const fetchDisplayNameSuggestion = async () => {
-  const res = await fetch(`${API_URL}/api/internal/user/display-name/suggestion`, {
+  const res = await fetch(`${API_URL}/api/v1/user/display-name/suggestion`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -690,7 +690,7 @@ export const fetchDisplayNameSuggestion = async () => {
 };
 
 export const setDisplayName = async (displayName) => {
-  const res = await fetch(`${API_URL}/api/internal/user/display-name`, {
+  const res = await fetch(`${API_URL}/api/v1/user/display-name`, {
     credentials: "include",
     method: "POST",
     headers: {
@@ -746,7 +746,7 @@ export const fetchJurisdiction = async (jurisdictionOcdid) => {
 
 // ── Curated-sheet imports ────────────────────────────────────────────────────
 
-const IMPORTS_URL = `${API_URL}/api/internal/imports`;
+const IMPORTS_URL = `${API_URL}/api/v1/imports`;
 
 async function importsRequest(path, method) {
   const res = await fetch(`${IMPORTS_URL}${path}`, {
@@ -793,7 +793,7 @@ export const publishBatch = async (batchId, jurisdictionOcdids) => {
 
 // ── API keys ─────────────────────────────────────────────────────────────────
 
-const API_KEYS_URL = `${API_URL}/api/internal/api_keys`;
+const API_KEYS_URL = `${API_URL}/api/v1/api_keys`;
 
 async function apiKeysRequest(path, method) {
   const res = await fetch(`${API_KEYS_URL}${path}`, {
@@ -818,7 +818,7 @@ export const deleteApiKey = async (apiKeyId) =>
 
 // ── Changeset summaries (maintainers) ──────────────────────────────────────
 
-const SUMMARIES_URL = `${API_URL}/api/internal/changeset_summaries`;
+const SUMMARIES_URL = `${API_URL}/api/v1/changeset_summaries`;
 
 const summariesRequest = async (path) => {
   const res = await fetch(`${SUMMARIES_URL}${path}`, { credentials: "include" });
@@ -838,6 +838,19 @@ export const fetchStateBucket = async (state, bucket, limit, offset, windowDays)
     `/buckets/${encodeURIComponent(state)}/${encodeURIComponent(bucket)}` +
       `?limit=${limit}&offset=${offset}&window_days=${windowDays}`,
   );
+
+// What scraping cost, per state. Its own endpoint under `pipeline_runs`, not the summaries
+// block above: cost attaches to the run that spent it, and this one 403s for non-maintainers
+// while the rest of the page does not.
+export const fetchStateSpend = async (windowDays) => {
+  const res = await fetch(
+    `${API_URL}/api/v1/pipeline_runs/spend?window_days=${windowDays}`,
+    { credentials: "include" },
+  );
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.detail || `HTTP ${res.status}`);
+  return body.data;
+};
 
 // Starting a state-wide scrape. Maintainer-gated server side; the page gates the control too.
 // `numJurisdictions` omitted means every jurisdiction due — which is what the button offers.

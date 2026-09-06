@@ -98,6 +98,58 @@
   color: var(--civ-bg);
 }
 
+/* Running: what is in flight right now. Unwindowed, like the queue it sits above — a run
+   started before the window is still running. */
+
+.cs-running {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--civ-border);
+  font-size: var(--text-sm);
+}
+
+.cs-running__n {
+  font-weight: 700;
+}
+
+.cs-running__where {
+  color: var(--civ-text-muted);
+}
+
+/* Compare: pick which states the ledger, the rows and the sections answer for. */
+
+.cs-compare {
+  flex-wrap: wrap;
+  row-gap: 0.3rem;
+}
+
+/* Italic because these two are actions, not toggles — they carry no pressed state. */
+.cs-compare__action {
+  font-style: italic;
+}
+
+.cs-compare__action:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.cs-compare .cs-chips__chip[aria-pressed="true"] {
+  border-color: var(--civ-text);
+  border-width: 2px;
+  font-weight: 700;
+}
+
+/* The chips already say which states are picked, so the note only says how many. */
+.cs-compare__note {
+  font-size: var(--text-xs);
+  color: var(--civ-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
 /* Rows */
 
 .cs-row {
@@ -217,6 +269,18 @@
 
 .cs-scale__tail {
   flex: 0 0 calc(var(--cs-figure-w) * 3 + var(--cs-gap) * 2);
+}
+
+/* Group headings: `outstanding` names a stock, `last 30 days` names the flows. Quiet, because
+   they label the columns rather than competing with them. */
+.cs-scale__lead,
+.cs-scale__tail {
+  font-size: var(--text-xs);
+  color: var(--civ-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .cs-scale__track {
@@ -347,4 +411,31 @@
 .cs-bucket-modal dialog article {
   width: min(34rem, calc(100vw - 2rem));
   max-width: none;
+}
+
+/* Narrow screens
+   ─────────────────────────────────────────────────────────────────────────────
+   The fleet row is built wide: a state, a figure, thirty day cells and three more
+   figures on one line. Below 720px the calendar takes its own full-width line and
+   the figures wrap under the state — at which point the scale no longer sits above
+   anything, so it and its group headings go. */
+
+@media (max-width: 720px) {
+  .cs-scale {
+    display: none;
+  }
+
+  .cs-row {
+    flex-wrap: wrap;
+    row-gap: 0.4rem;
+  }
+
+  .cs-row__state {
+    flex: 0 0 100%;
+  }
+
+  .cs-cal {
+    order: 1;
+    flex: 0 0 100%;
+  }
 }

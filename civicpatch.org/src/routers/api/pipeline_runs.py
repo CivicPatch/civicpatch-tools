@@ -21,6 +21,7 @@ from database.issues import (
 )
 import database.users
 from database.publications import dismiss_request
+from database.pipeline_run_spend import get_state_spend, DEFAULT_SPEND_WINDOW_DAYS
 from database.pipeline_runs import (
     get_active_pipeline_runs,
     get_pipeline_run,
@@ -34,7 +35,15 @@ from database.review_pool import (
 from database.changesets import (
     get_issue_request_details,
 )
-from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, UploadFile
+from fastapi import (
+    APIRouter,
+    BackgroundTasks,
+    Depends,
+    Form,
+    HTTPException,
+    Query,
+    UploadFile,
+)
 from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory, UserRole, has_at_least
@@ -107,8 +116,35 @@ async def _register_pipeline_run_bg(request: RegisterPipelineRunRequest) -> None
         )
 
 
+# Bounded: an unbounded window is an unbounded scan for anyone editing the query string.
+MIN_SPEND_WINDOW_DAYS = 1
+MAX_SPEND_WINDOW_DAYS = 365
+
+
 def get_router(api_key_header):
     router = APIRouter()
+
+    # Declared first: it must not be swallowed by the `/{pipeline_run_id}` paths below.
+    # Maintainer-only, unlike the run counts it sits beside on the Activity page — what the
+    # roster says is public, what it cost us to find out is not.
+    @router.get(
+        "/spend",
+        summary="What scraping cost, per state",
+        description=(
+            "Total spend and average cost per run over the window, by state. States that ran "
+            "nothing are absent rather than zero. Excludes grounded Google calls, which state "
+            "no cost."
+        ),
+    )
+    async def get_state_spend_endpoint(
+        window_days: int = Query(
+            DEFAULT_SPEND_WINDOW_DAYS, ge=MIN_SPEND_WINDOW_DAYS, le=MAX_SPEND_WINDOW_DAYS
+        ),
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+        ),
+    ):
+        return {"data": await get_state_spend(window_days)}
 
     @router.post(
         "",
