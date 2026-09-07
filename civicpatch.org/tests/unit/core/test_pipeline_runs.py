@@ -2,7 +2,7 @@
 
 import pytest
 
-from core.pipeline_runs import ENDED_IN_FAILURE, dismissal_for, is_final
+from core.pipeline_runs import DISMISSAL_ON_ENTERING, dismissal_for, is_final
 from shared.utils.statuses import (
     DismissalReason,
     PipelineRunStatus,
@@ -26,9 +26,18 @@ def test_a_step_report_is_not_final():
 
 
 @pytest.mark.unit
-@pytest.mark.parametrize("status", sorted(ENDED_IN_FAILURE))
-def test_a_run_that_failed_dismisses_what_it_minted(status):
-    assert dismissal_for(status) is DismissalReason.ERRORED
+@pytest.mark.parametrize(
+    "status,reason",
+    [
+        (PipelineRunStatus.ERROR, DismissalReason.ERRORED),
+        (PipelineRunStatus.CANCELLED, DismissalReason.CANCELLED),
+    ],
+)
+def test_a_run_that_produced_nothing_dismisses_with_its_own_reason(status, reason):
+    """Both settle what they minted, but they are not the same event: one gave up, someone
+    stopped the other. `DismissalReason.CANCELLED` exists to say which, and the cancel endpoint
+    already writes it — `dismissal_for` used to answer `errored` for both."""
+    assert dismissal_for(status) is reason
 
 
 @pytest.mark.unit
@@ -41,12 +50,21 @@ def test_a_run_that_produced_something_is_left_for_review(status):
 
 
 @pytest.mark.unit
-@pytest.mark.parametrize("status", sorted(ENDED_IN_FAILURE))
-def test_the_two_lifecycles_agree_on_the_reason(status):
+@pytest.mark.parametrize(
+    "status", [PipelineRunStatus.ERROR, PipelineRunStatus.CANCELLED]
+)
+def test_a_run_that_produced_nothing_is_never_rejected(status):
     """A failed run is `errored`, never `rejected`: nobody read the roster and declined it.
 
     This used to assert `dismissal_is_legal(OPEN, reason)`, which could not fail — the
     changeset machine accepted every reason from its one unresolved state. The claim worth
     pinning is about the *run's* machine, which is where the pairing actually lives: dev holds
     a `CANCELLED` run dismissed as `rejected`, and this is what forbids minting another."""
-    assert dismissal_for(status) is DismissalReason.ERRORED
+    assert dismissal_for(status) is not DismissalReason.REJECTED
+
+
+@pytest.mark.unit
+def test_every_terminal_state_has_an_answer_here():
+    """The table is keyed by state so a new one cannot fall into a default. That only holds if
+    it covers exactly the states the graph calls terminal."""
+    assert set(DISMISSAL_ON_ENTERING) == set(TERMINAL_PIPELINE_RUN_STATUSES)
