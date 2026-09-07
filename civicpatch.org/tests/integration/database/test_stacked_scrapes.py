@@ -218,6 +218,11 @@ async def test_giving_up_on_a_run_does_not_restamp_the_source_clock():
     which removed the generic clock a reviewer edit could move; the hazard it guarded now lives
     entirely in this one query.
     """
+    # Drain first, for the same reason `test_a_run_stuck_on_a_step_is_expired` does: the sweep
+    # is global and the test database survives between runs, so a run an earlier session left
+    # unfinished is old enough by now to be swept alongside this one.
+    await expire_stale_pipeline_runs(timedelta(days=1))
+
     await _jurisdiction()
     abandoned = await _request(_OLD)
     await _request(_NEW)

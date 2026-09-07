@@ -201,6 +201,11 @@ async def test_a_run_stuck_on_a_step_is_expired():
 
     from database.pipeline_runs import expire_stale_pipeline_runs
 
+    # Drain first. The sweep is global and `tcp-integration` keeps its database between runs,
+    # so any run an earlier session left unfinished is over six hours old by now and would be
+    # swept alongside this one. Draining is what lets the assertion below stay an equality.
+    await expire_stale_pipeline_runs(timedelta(hours=6))
+
     run_id = await _a_run_in_flight()
     await _set_run(run_id, "SCRAPE_PAGE", age_hours=48)
 

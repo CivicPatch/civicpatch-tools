@@ -482,8 +482,8 @@ async def test_an_entry_carries_what_the_run_reported():
         # to name the changeset directly.
         await cur.execute(
             "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
-            "  changeset_id) "
-            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'SUCCESS', %s) RETURNING id::text",
+            "  changeset_id, finished_at) "
+            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'SUCCESS', %s, now()) RETURNING id::text",
             (_OCDID, changeset_id),
         )
         run_id = (await cur.fetchone())[0]
@@ -523,8 +523,8 @@ async def test_a_settled_issue_still_appears_on_the_entry():
         )
         await cur.execute(
             "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
-            "  changeset_id) "
-            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'SUCCESS', %s) RETURNING id::text",
+            "  changeset_id, finished_at) "
+            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'SUCCESS', %s, now()) RETURNING id::text",
             (_OCDID, changeset_id),
         )
         run_id = (await cur.fetchone())[0]
