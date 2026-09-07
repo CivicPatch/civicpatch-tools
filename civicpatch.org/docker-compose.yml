@@ -179,10 +179,10 @@ services:
 
   # Inbound: open-data's jurisdiction files into the database. Also the one worker that
   # registers Temporal schedules — for all four queues. See lib/temporal/schedules.py.
-  civicpatch-org-jurisdictions:
-    container_name: civicpatch-org-jurisdictions
+  civicpatch-org-source:
+    container_name: civicpatch-org-source
     build: *worker-build
-    entrypoint: ["python", "src/workers/jurisdictions.py"]
+    entrypoint: ["python", "src/workers/source.py"]
     depends_on: *worker-depends
     environment: *worker-env
     volumes: *worker-volumes
@@ -191,10 +191,10 @@ services:
     develop: *worker-watch
 
   # Retiring stale runs, idle review sessions and superseded changesets.
-  civicpatch-org-expiry:
-    container_name: civicpatch-org-expiry
+  civicpatch-org-cleanup:
+    container_name: civicpatch-org-cleanup
     build: *worker-build
-    entrypoint: ["python", "src/workers/expiry.py"]
+    entrypoint: ["python", "src/workers/cleanup.py"]
     depends_on: *worker-depends
     environment: *worker-env
     volumes: *worker-volumes

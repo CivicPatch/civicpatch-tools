@@ -61,10 +61,10 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
-  civicpatch-org-jurisdictions:
+  civicpatch-org-source:
     extends:
       file: civicpatch.org/docker-compose.yml
-      service: civicpatch-org-jurisdictions
+      service: civicpatch-org-source
     networks:
       - civicpatch_net
     # These workers connect to the DB at startup (get_pool) and Temporal — wait for both to be
@@ -79,10 +79,10 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
-  civicpatch-org-expiry:
+  civicpatch-org-cleanup:
     extends:
       file: civicpatch.org/docker-compose.yml
-      service: civicpatch-org-expiry
+      service: civicpatch-org-cleanup
     networks:
       - civicpatch_net
     # These workers connect to the DB at startup (get_pool) and Temporal — wait for both to be

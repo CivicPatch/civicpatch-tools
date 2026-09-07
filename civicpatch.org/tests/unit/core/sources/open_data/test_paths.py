@@ -16,7 +16,7 @@ Example real paths:
 
 import pytest
 
-from core.open_data.paths import (
+from core.sources.open_data.paths import (
     SyncFileKind,
     classify_path,
     jurisdiction_path_parts,

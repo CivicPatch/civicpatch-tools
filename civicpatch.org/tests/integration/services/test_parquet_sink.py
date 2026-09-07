@@ -108,7 +108,7 @@ async def _sync() -> _Recorder:
 
     recorder = _Recorder()
     with patch("lib.storage.get_client", return_value=recorder):
-        await parquet_sink.sync_all()
+        await parquet_sink.write_all()
     return recorder
 
 

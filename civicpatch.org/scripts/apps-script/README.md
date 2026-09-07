@@ -43,7 +43,7 @@ spreadsheet by id and is invisible to them.
 4. Run `setUpEntrySheet`, approving the authorization prompt on first run
 5. Share the spreadsheet with the backend's service account as an **Editor** — it writes the
    `Live[...]` tabs, so read access is not enough
-6. In Temporal, trigger the **`sweep-everything`** schedule. That fills every state's tabs and
+6. In Temporal, trigger the **`sink-write-everything`** schedule. That fills every state's tabs and
    the dropdown in one run
 
 **`ENTRY_SPREADSHEET_ID` must match the backend's.** The script is standalone, so it cannot read

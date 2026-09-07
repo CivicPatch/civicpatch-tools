@@ -8,7 +8,7 @@ import lib.github.api as github_service
 import shared.utils.id_utils as id_utils
 from lib.github.auth import get_jurisdictions_sync_headers
 from lib.github.pull_requests import PrAuthor, open_attributed_pr
-from services.open_data_sync import sync_jurisdictions_by_ocdids
+from services.sources.open_data import read_jurisdictions_by_ocdids
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 import database.jurisdictions as jurisdictions_db
@@ -228,7 +228,7 @@ async def merge_jurisdiction_pr(
     try:
         jurisdiction_ocdid = await changesets_db.get_changeset_jurisdiction(changeset_id)
         if jurisdiction_ocdid:
-            await sync_jurisdictions_by_ocdids([jurisdiction_ocdid])
+            await read_jurisdictions_by_ocdids([jurisdiction_ocdid])
     except Exception:
         logger.exception(
             "Merged jurisdiction PR %s but recording/syncing it failed for request %s; "

@@ -15,18 +15,20 @@ import pytest
 
 import lib.temporal.schedules as schedules
 from lib.temporal.types import (
-    EXPIRY_TASK_QUEUE,
-    SCRAPE_TASK_QUEUE,
+    CLEANUP_TASK_QUEUE,
+    PIPELINE_RUNS_TASK_QUEUE,
     SINKS_TASK_QUEUE,
-    JURISDICTIONS_TASK_QUEUE,
+    SOURCE_TASK_QUEUE,
+    ScheduleId,
+    WorkflowInstanceId,
 )
 
 # worker module -> (its queue, the activities module it should register in full)
 WORKERS = {
-    "workers.jurisdictions": (JURISDICTIONS_TASK_QUEUE, "routers.temporal.jurisdiction_activities"),
+    "workers.source": (SOURCE_TASK_QUEUE, "routers.temporal.source_activities"),
     "workers.sinks": (SINKS_TASK_QUEUE, "routers.temporal.sink_activities"),
-    "workers.expiry": (EXPIRY_TASK_QUEUE, "routers.temporal.expiry_activities"),
-    "workers.scrape": (SCRAPE_TASK_QUEUE, "routers.temporal.scrape_activities"),
+    "workers.cleanup": (CLEANUP_TASK_QUEUE, "routers.temporal.cleanup_activities"),
+    "workers.scrape": (PIPELINE_RUNS_TASK_QUEUE, "routers.temporal.scrape_activities"),
 }
 
 
@@ -51,14 +53,14 @@ async def test_terminates_only_the_workflows_this_worker_no_longer_registers():
     client = MagicMock()
     client.list_workflows = MagicMock(
         return_value=_executions(
-            _execution("od-sync", "OdSyncWorkflow"),
+            _execution("source:open-data:jurisdictions", "ReadOpenDataJurisdictionsWorkflow"),
             _execution("pr-sync-workflow-2026-08-25T22:00:00Z", "PRSyncWorkflow"),
         )
     )
     client.get_workflow_handle = MagicMock(return_value=handle)
 
     await schedules.terminate_undeclared_workflows(
-        client, JURISDICTIONS_TASK_QUEUE, {"OdSyncWorkflow"}
+        client, SOURCE_TASK_QUEUE, {"ReadOpenDataJurisdictionsWorkflow"}
     )
 
     handle.terminate.assert_awaited_once()
@@ -140,3 +142,15 @@ def test_every_activity_defined_is_registered_on_the_worker(module_name):
 
     assert defined, "no activities found — the introspection broke, not the registration"
     assert defined - registered == set()
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("enum", [ScheduleId, WorkflowInstanceId])
+def test_every_id_member_is_named_after_its_own_value(enum):
+    """A member whose name drifts from its value is a second, silent claim about what the id
+    means — and the one a reader believes, since the value is the half they never see."""
+    for member in enum:
+        expected = member.value.upper().replace("-", "_").replace(":", "_")
+        assert member.name == expected, (
+            f"{enum.__name__}.{member.name} = {member.value!r}; name should be {expected}"
+        )

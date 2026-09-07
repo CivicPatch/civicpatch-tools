@@ -35,9 +35,9 @@ async def test_a_roster_sync_is_keyed_on_the_state():
     forty rewrites of the MA tab."""
     client = _client()
     with patch.object(temporal_client, "get_client", return_value=client):
-        await temporal_client.enqueue_roster_sheet_sync("ma")
+        await temporal_client.enqueue_write_sheet_roster("ma")
 
-    assert _started(client)["id"] == "roster-sheet-sync:ma"
+    assert _started(client)["id"] == "sink:sheet:roster:ma"
 
 
 @pytest.mark.unit
@@ -48,7 +48,7 @@ async def test_a_roster_sync_signals_rather_than_dropping_a_duplicate():
     change never reaches the sheet — and only the next publish in that state would repair it."""
     client = _client()
     with patch.object(temporal_client, "get_client", return_value=client):
-        await temporal_client.enqueue_roster_sheet_sync("tx")
+        await temporal_client.enqueue_write_sheet_roster("tx")
 
     started = _started(client)
     assert started["start_signal"] == "mark_dirty"
@@ -62,9 +62,9 @@ async def test_the_jurisdiction_sync_is_a_singleton():
     one place where dropping a duplicate is right."""
     client = _client()
     with patch.object(temporal_client, "get_client", return_value=client):
-        await temporal_client.enqueue_jurisdictions_sheet_sync()
+        await temporal_client.enqueue_write_sheet_jurisdictions()
 
     started = _started(client)
-    assert started["id"] == "jurisdictions-sheet-sync"
+    assert started["id"] == "sink:sheet:jurisdictions"
     assert started["id_conflict_policy"] is not None
     assert "start_signal" not in started

@@ -416,7 +416,7 @@ async def test_merge_jurisdiction_pr_merges_when_clean():
             return_value=JURISDICTION_OCDID,
         ),
         patch(
-            "services.jurisdiction_pull_request.sync_jurisdictions_by_ocdids",
+            "services.jurisdiction_pull_request.read_jurisdictions_by_ocdids",
             new_callable=AsyncMock,
         ) as mock_sync,
     ):
@@ -448,7 +448,7 @@ async def test_merge_jurisdiction_pr_skips_when_not_clean():
             return_value=JURISDICTION_OCDID,
         ),
         patch(
-            "services.jurisdiction_pull_request.sync_jurisdictions_by_ocdids",
+            "services.jurisdiction_pull_request.read_jurisdictions_by_ocdids",
             new_callable=AsyncMock,
         ) as mock_sync,
     ):

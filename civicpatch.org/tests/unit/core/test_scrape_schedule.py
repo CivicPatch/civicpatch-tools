@@ -18,8 +18,8 @@ def test_a_state_schedule_is_recognisable_from_its_id_alone():
     """`_retire_undeclared_schedules` deletes anything it does not recognise, so telling a
     state schedule from the five fixed ones cannot depend on reading the database."""
     assert is_state_schedule(schedule_id("wa"))
-    assert not is_state_schedule("od-sync")
-    assert not is_state_schedule("sweep-changes")
+    assert not is_state_schedule("source-open-data-jurisdictions")
+    assert not is_state_schedule("sink-write-recent-changes")
 
 
 def test_the_schedule_id_is_not_the_workflow_instance_id():

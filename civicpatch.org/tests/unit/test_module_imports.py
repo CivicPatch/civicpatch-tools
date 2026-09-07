@@ -30,9 +30,9 @@ _SRC = os.path.join(_PROJECT_ROOT, "src")
         # The Temporal graph: workflows -> activities -> services. Where the cycle appeared.
         # One entry per worker: each is a separate process with a deliberately different
         # import graph, so a cycle can close in one and not the others.
-        "workers.jurisdictions",
+        "workers.source",
         "workers.sinks",
-        "workers.expiry",
+        "workers.cleanup",
         # The scrape entrypoint carries the smallest graph of the four — it must not reach
         # `database` or `services` at all.
         "workers.scrape",

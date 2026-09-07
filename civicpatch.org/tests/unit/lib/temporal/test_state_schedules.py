@@ -62,7 +62,7 @@ async def test_the_declared_ids_reach_the_retire_pass():
 
     declared = retired.await_args.args[1]
     assert schedule_id("wa") in declared
-    assert "od-sync" in declared  # and the fixed five are still there
+    assert "source-open-data-jurisdictions" in declared  # and the fixed five are still there
 
 
 @pytest.mark.asyncio

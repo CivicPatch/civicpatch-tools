@@ -203,12 +203,3 @@ async def _dispatch(items: list[dict], concurrency: int) -> None:
             )
             handles.append(handle)
         await asyncio.gather(*handles)
-
-
-# Kept for the workflows already running against it when StateScrapeWorkflow landed; nothing
-# starts one any more.
-@workflow.defn
-class BatchPeopleCollectorWorkflow:
-    @workflow.run
-    async def run(self, items: list[dict]) -> None:
-        await _dispatch(items, DEFAULT_PIPELINE_RUN_CONCURRENCY)

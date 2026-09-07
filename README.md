@@ -33,8 +33,10 @@ This repository contains supporting infrastructure for the CivicPatch initiative
   ┌─────────────────────────────────────────────────────────────────────┐
   │  Temporal (workflow engine)                        UI :8002 (local) │
   │                                                                     │
-  │  Schedules:  od-sync (hourly)  ·  sweep-changes (5m)                │
-  │              sweep-everything (daily)  ·  two cleanups (10m / 15m)  │
+  │  Schedules:  open-data-sync (hourly)                                │
+  │               sinks-write-recent-changes (5m)                       │
+  │               sinks-write-everything (daily)                        │
+  │               two cleanups (10m / 15m)                              │
   └───────────┬──────────────────────────────┬──────────────────────────┘
               │ orchestrates                 │ orchestrates
               ▼                              ▼

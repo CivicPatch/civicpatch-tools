@@ -32,43 +32,6 @@ description = "Install all workspace dependencies"
 ## 🚀✨ Syncs                                ✨🚀 ##
 ###################################################
 
-[tasks.sheet_sync]
-description = "Re-sync one state's sheet tabs now, or every state with no argument"
-# Literal ''' string, not """: TOML processes escapes in basic strings, so \" there reaches
-# the shell as a bare quote and curl gets three concatenated fragments instead of JSON.
-run = '''
-    curl -X POST "http://localhost:8000/api/admin/sheet_sync/rosters" \
-      -H "Content-Type: application/json" \
-      -H "Authorization: $SERVICE_API_KEY" \
-      -d "{\"state\": \"${state:-}\"}"
-'''
-
-[tasks.sheet_sync_jurisdictions]
-description = "Refresh the sheet's all-states jurisdiction dropdown source"
-run = """
-    curl -X POST "http://localhost:8000/api/admin/sheet_sync/jurisdictions" \
-      -H "Content-Type: application/json" \
-      -H "Authorization: $SERVICE_API_KEY"
-"""
-
-[tasks.od_sync]
-run = """
-    curl -X POST "http://localhost:8000/api/admin/od_sync" \
-      -H "Content-Type: application/json" \
-      -H "Authorization: service-api-key" \
-      -d '{}'
-"""
-#\
-# -d '{"jurisdiction_ocdids": ["ocd-jurisdiction/country:us/state:tx/place:combes/government"]}'
-
-[tasks.od_sync_prod]
-run = """
-    curl -X POST "https://civicpatch.org/api/admin/od_sync" \
-      -H "Content-Type: application/json" \
-      -H "Authorization: $PROD_SERVICE_API_KEY" \
-      -d '{}'
-"""
-
 [tasks.refresh_test_open_data]
 description = "Reset CivicPatch/test-open-data to match CivicPatch/open-data main: fetches from open-data, updates the local ./test-open-data clone, and force-pushes to test-open-data on GitHub. Destructive: any uncommitted changes in the local clone are discarded; open dev PR feature branches on test-open-data are preserved."
 run = """
@@ -452,7 +415,7 @@ docker compose up --watch
 
 [tasks.watch-worker]
 description = "Hot-reload both Temporal workers when civicpatch.org or shared code changes"
-run = "watchfiles --filter python 'docker compose restart civicpatch-org-sinks civicpatch-org-jurisdictions civicpatch-org-expiry civicpatch-org-scrape' civicpatch.org/src/ shared/src/shared/"
+run = "watchfiles --filter python 'docker compose restart civicpatch-org-sinks civicpatch-org-source civicpatch-org-cleanup civicpatch-org-scrape' civicpatch.org/src/ shared/src/shared/"
 
 [tasks.otp]
 description = "Print the most recent OTP code captured by local Supabase's Mailpit (port 54324). Useful when the Mailpit UI isn't reachable in the browser."

@@ -17,11 +17,10 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 from lib.temporal.scrape_workflows import (
-    BatchPeopleCollectorWorkflow,
     PeopleCollectorWorkflow,
     StateScrapeWorkflow,
 )
-from lib.temporal.types import SCRAPE_TASK_QUEUE
+from lib.temporal.types import PIPELINE_RUNS_TASK_QUEUE
 from routers.temporal.scrape_activities import (
     budget_cap_reached,
     cancel_local_run,
@@ -39,7 +38,6 @@ TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
 
 WORKFLOWS = [
     PeopleCollectorWorkflow,
-    BatchPeopleCollectorWorkflow,
     StateScrapeWorkflow,
 ]
 
@@ -78,11 +76,11 @@ async def main() -> None:
     client = await connect_with_retry(TEMPORAL_HOST, TEMPORAL_NAMESPACE)
     async with Worker(
         client,
-        task_queue=SCRAPE_TASK_QUEUE,
+        task_queue=PIPELINE_RUNS_TASK_QUEUE,
         workflows=WORKFLOWS,
         activities=ACTIVITIES,
     ):
-        print(f"Worker started on task queue: {SCRAPE_TASK_QUEUE}")
+        print(f"Worker started on task queue: {PIPELINE_RUNS_TASK_QUEUE}")
         await asyncio.Event().wait()
 
 

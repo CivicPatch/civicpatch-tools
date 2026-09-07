@@ -7,14 +7,14 @@ import database.synced_files as synced_files_db
 import environment
 import lib.github.api as github_service
 import yaml
-from core.open_data.paths import (
+from core.sources.open_data.paths import (
     SyncFileKind,
     classify_path,
     jurisdiction_path_parts,
     jurisdictions_file_path,
     level_ordered_batches,
 )
-from core.open_data.tree_diff import TreeDiff, diff_tree
+from core.sources.open_data.tree_diff import TreeDiff, diff_tree
 from database.synced_files import get_synced_file_shas
 
 logger = logging.getLogger(__name__)
@@ -38,7 +38,7 @@ def get_stored_tree(synced_files: dict[str, str]) -> dict[str, str]:
     }
 
 
-async def _sync_jurisdiction_level(paths: list[str], now, fetch) -> list[str]:
+async def _read_jurisdiction_level(paths: list[str], now, fetch) -> list[str]:
     # Reading state names here is safe because level_ordered_batches runs the state group
     # first: any state file in this same diff is already stored before the levels that
     # embed its display name are built.
@@ -70,7 +70,7 @@ async def _sync_jurisdiction_level(paths: list[str], now, fetch) -> list[str]:
 
 
 # path -> sha: list[path]
-async def sync_jurisdictions(diffs: TreeDiff) -> list[str]:
+async def read_jurisdictions(diffs: TreeDiff) -> list[str]:
     semaphore = asyncio.Semaphore(10)
     now = datetime.now(timezone.utc)
 
@@ -81,11 +81,11 @@ async def sync_jurisdictions(diffs: TreeDiff) -> list[str]:
 
     synced = []
     for batch in level_ordered_batches(diffs.changed):
-        synced.extend(await _sync_jurisdiction_level(batch, now, _fetch))
+        synced.extend(await _read_jurisdiction_level(batch, now, _fetch))
     return synced
 
 
-async def sync_all():
+async def read_all():
     logger.info("Starting bulk sync")
 
     env = environment.get_env_vars()
@@ -103,7 +103,7 @@ async def sync_all():
         logger.warning("od_sync: tree truncated; skipping the deletion pass this run")
         jurisdiction_diffs = TreeDiff(changed=jurisdiction_diffs.changed, deleted=[])
 
-    synced_jurisdictions = await sync_jurisdictions(jurisdiction_diffs)
+    synced_jurisdictions = await read_jurisdictions(jurisdiction_diffs)
 
     # SHA last, only for files that synced — a transient miss retries next run
     for path in synced_jurisdictions:
@@ -118,13 +118,9 @@ async def sync_all():
 #     one-off TreeDiff (no cursor advancement — the bulk run owns the cursors).
 
 
-async def sync_jurisdictions_by_ocdids(jurisdiction_ocdids):
+async def read_jurisdictions_by_ocdids(jurisdiction_ocdids):
     # The ocdid says which level it is, so a county or state id refreshes its own file
-    # rather than the state's local list. sync_jurisdictions orders the batches.
+    # rather than the state's local list. read_jurisdictions orders the batches.
     paths = {jurisdictions_file_path(o) for o in jurisdiction_ocdids}
-    await sync_jurisdictions(TreeDiff(changed=sorted(paths), deleted=[]))
+    await read_jurisdictions(TreeDiff(changed=sorted(paths), deleted=[]))
 
-
-async def sync_by_ocdids(jurisdiction_ocdids: list[str]):
-    logger.info(f"Targeted sync for OCDIDs: {jurisdiction_ocdids}")
-    await sync_jurisdictions_by_ocdids(jurisdiction_ocdids)
