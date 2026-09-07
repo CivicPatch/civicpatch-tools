@@ -174,7 +174,7 @@ function JurisdictionDetails({ data, canEdit, onSave }: JurisdictionDetailsProps
             here.
           </p>`
         : nothing}
-      ${error ? html`<p style="color: var(--pico-del-color);">${error}</p>` : nothing}
+      ${error ? html`<p style="color: var(--diff-removed);">${error}</p>` : nothing}
     </div>
   `;
 }

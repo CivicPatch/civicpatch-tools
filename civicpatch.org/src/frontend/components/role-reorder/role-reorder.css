@@ -15,13 +15,13 @@
     justify-content: space-between;
     gap: 0.75rem;
     padding: 0.4rem 0;
-    background: var(--pico-card-background-color);
-    border-bottom: 1px solid var(--pico-muted-border-color);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
 }
 
 .role-reorder__hint {
-    font-size: var(--text-xs);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
 }
 
 .role-reorder__list {
@@ -30,8 +30,8 @@
     padding: 0;
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--pico-muted-border-color);
-    border-radius: var(--pico-border-radius);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
 }
 
 .role-reorder__row {
@@ -39,9 +39,9 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.4rem 0.6rem;
-    font-size: var(--text-sm);
-    border-bottom: 1px solid color-mix(in srgb, var(--pico-muted-border-color) 50%, transparent);
-    background: var(--pico-card-background-color);
+    font-size: var(--font-size-sm);
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
+    background: var(--surface);
     cursor: grab;
 }
 
@@ -58,20 +58,20 @@
    row when dragging up, below it when dragging down. inset box-shadow avoids
    the layout shift a border would cause. */
 .role-reorder__row--drop-before {
-    box-shadow: inset 0 3px 0 0 var(--pico-primary);
+    box-shadow: inset 0 3px 0 0 var(--action);
 }
 
 .role-reorder__row--drop-after {
-    box-shadow: inset 0 -3px 0 0 var(--pico-primary);
+    box-shadow: inset 0 -3px 0 0 var(--action);
 }
 
 /* Rows the user has actively moved — a persistent "pending change" tint. */
 .role-reorder__row--moved {
-    background: color-mix(in srgb, var(--pico-primary) 12%, var(--pico-card-background-color));
+    background: color-mix(in srgb, var(--action) 12%, var(--surface));
 }
 
 .role-reorder__handle {
-    color: var(--pico-muted-color);
+    color: var(--text-muted);
     font-size: 0.8rem;
 }
 
@@ -86,8 +86,8 @@
 
 /* Visually subtle; the aria-live attribute carries it to assistive tech. */
 .role-reorder__announce {
-    font-size: var(--text-xs);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
     min-height: 1em;
 }
 

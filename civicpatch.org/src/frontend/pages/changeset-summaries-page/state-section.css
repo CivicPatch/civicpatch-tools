@@ -2,14 +2,14 @@
    Width tokens come from `.cs-page` in changeset-summaries.css. */
 
 .cs-sections__h2 {
-  font-size: var(--text-md);
+  font-size: var(--font-size-md);
   font-weight: 700;
   margin: 2.5rem 0 0.5rem;
 }
 
 .cs-section {
   margin: 0;
-  border-bottom: 1px solid var(--civ-border);
+  border-bottom: 1px solid var(--border);
 }
 
 .cs-section:last-child {
@@ -27,7 +27,7 @@
 }
 
 .cs-section__summary:hover {
-  background: var(--civ-surface-2);
+  background: var(--surface-2);
 }
 
 .cs-section__state {
@@ -56,16 +56,16 @@
   display: flex;
   align-items: baseline;
   gap: 0.4rem;
-  font-size: var(--text-xs);
+  font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
   margin: 0 0 0.4rem;
 }
 
 .cs-bucket__n {
   font-weight: 700;
-  color: var(--civ-text);
+  color: var(--text-default);
 }
 
 .cs-bucket__more {
@@ -73,18 +73,18 @@
   margin-top: 0.4rem;
   margin: 0;
   padding: 0.1rem 0.5rem;
-  border: 1px dashed var(--civ-border);
+  border: 1px dashed var(--border);
   border-radius: 999px;
   background: transparent;
-  color: var(--civ-text-muted);
-  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
   font-family: inherit;
   cursor: pointer;
 }
 
 .cs-bucket__more:hover {
-  color: var(--civ-text);
-  border-color: var(--civ-border-strong);
+  color: var(--text-default);
+  border-color: var(--border-strong);
 }
 
 /* Modal list */
@@ -99,19 +99,19 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 0.4rem 0.2rem;
-  border-bottom: 1px solid var(--civ-border);
-  font-size: var(--text-sm);
-  color: var(--civ-text);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--font-size-sm);
+  color: var(--text-default);
   text-decoration: none;
 }
 
 .cs-bucket__item:hover {
-  background: var(--civ-surface-2);
+  background: var(--surface-2);
 }
 
 .cs-bucket__note {
-  color: var(--civ-text-muted);
-  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
   white-space: nowrap;
 }
 
@@ -124,7 +124,7 @@
   align-items: center;
   gap: 0.75rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--civ-border);
+  border-bottom: 1px solid var(--border);
 }
 
 .cs-scrape__btn {
@@ -134,18 +134,18 @@
 
 .cs-scrape__note,
 .cs-scrape__busy {
-  font-size: var(--text-xs);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
 }
 
 /* Why the button is off, distinguished from the schedule line beside it. */
 .cs-scrape__busy {
-  color: var(--civ-text);
+  color: var(--text-default);
 }
 
 .cs-scrape__error {
-  font-size: var(--text-xs);
-  color: var(--pico-del-color);
+  font-size: var(--font-size-xs);
+  color: var(--diff-removed);
 }
 
 /* Pipeline runs — attempts, not proposals. Quiet by design: the badges above are what needs a
@@ -157,24 +157,24 @@
   align-items: baseline;
   gap: 0.75rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--civ-border);
+  border-bottom: 1px solid var(--border);
 }
 
 .cs-runs__label {
-  font-size: var(--text-xs);
+  font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
   font-weight: 700;
 }
 
 .cs-runs__fig {
-  font-size: var(--text-xs);
+  font-size: var(--font-size-xs);
 }
 
 /* A failure nobody has to act on today reads quieter than a run in flight. */
 .cs-runs__fig--quiet {
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
 }
 
 /* Opens the bucket, so it carries the affordance without becoming a second button style. */
@@ -191,7 +191,7 @@
 
 .cs-runs__fig--open:hover,
 .cs-runs__fig--open:focus-visible {
-  color: var(--civ-text);
+  color: var(--text-default);
   text-decoration-style: solid;
 }
 
@@ -202,8 +202,8 @@
   align-items: baseline;
   gap: 0.5rem;
   flex-wrap: wrap;
-  font-size: var(--text-sm);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
 }
 
 .cs-settings__sep {
@@ -211,7 +211,7 @@
 }
 
 .cs-settings__fig--alert {
-  color: var(--pico-del-color);
+  color: var(--diff-removed);
   font-weight: 600;
 }
 
@@ -221,9 +221,9 @@
   padding: 0;
   border: none;
   background: none;
-  font-size: var(--text-sm);
+  font-size: var(--font-size-sm);
   font-family: inherit;
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -249,12 +249,12 @@
 
 .cs-settings-form__hint,
 .cs-settings-form__estimate {
-  font-size: var(--text-xs);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
   margin: 0 0 0.75rem;
 }
 
 .cs-settings-form__error {
-  font-size: var(--text-sm);
-  color: var(--pico-del-color);
+  font-size: var(--font-size-sm);
+  color: var(--diff-removed);
 }

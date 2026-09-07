@@ -26,14 +26,14 @@ function renderRow(m: Municipality, jurisdictionHref: string) {
       <td>
         <span
           class="municipalities-table__dot"
-          style="background:var(--civ-status-${m.status})"
+          style="background:var(--status-${m.status})"
         ></span>
         <a href="${jurisdictionHref}">${m.name}</a>
       </td>
       <td>
         <span
           class="municipalities-table__status-pill"
-          style="background:var(--civ-status-${m.status}); color:var(--civ-bg)"
+          style="background:var(--status-${m.status}); color:var(--bg)"
         >
           ${STATUS_LABELS[m.status] ?? m.status}
         </span>
@@ -44,7 +44,7 @@ function renderRow(m: Municipality, jurisdictionHref: string) {
       <td class="municipalities-table__officials">
         ${m.officials_count > 0 ? m.officials_count : '—'}
       </td>
-      <td style=${m.status === 'stale' ? 'color:var(--civ-status-stale)' : ''}>
+      <td style=${m.status === 'stale' ? 'color:var(--status-stale)' : ''}>
         ${m.last_collected_at ? dateStringToFriendly(m.last_collected_at) : '—'}
       </td>
       <td>

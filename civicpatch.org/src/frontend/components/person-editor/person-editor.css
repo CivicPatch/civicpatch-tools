@@ -15,7 +15,7 @@
   margin-inline: auto;
 
   /* State colours (§11.1, axis 1 — what the scrape did) and attention (axis 2).
-     Sourced from pico semantics, which styles.css remaps per theme, so these
+     Sourced from the base layer's semantics, which styles.css remaps per theme, so these
      follow light/dark with no second rule set — and survive the Catppuccin
      removal, since that layer only feeds these same semantics today. The old
      diff hardcoded #fef3c7 and could do neither.
@@ -24,21 +24,21 @@
      in the editorial palette, and §11.1 is explicit that shape carries the
      distinction (triangle stops you, circle advises you) with colour as
      reinforcement. */
-  --editor-changed: var(--pico-warn-color);
-  --editor-added: var(--pico-ins-color);
-  --editor-cleared: var(--pico-del-color);
-  --editor-issue: var(--pico-info-color);
+  --editor-changed: var(--warning);
+  --editor-added: var(--diff-added);
+  --editor-cleared: var(--diff-removed);
+  --editor-issue: var(--info);
   /* Who decided, on an axis of its own — see the lock rules below. */
-  --editor-lock: var(--pico-primary);
+  --editor-lock: var(--action);
 
   /* How much of the state colour the header strip carries. Dark needs more of it
      to read as tinted at all against a dark card. */
   --head-tint: 14%;
 
-  /* Dense form controls — pico sizes inputs from these, and overriding raw
+  /* Dense form controls — the base layer sizes inputs from these, and overriding raw
      padding loses to its specificity. */
-  --pico-form-element-spacing-vertical: 0.15rem;
-  --pico-form-element-spacing-horizontal: 0.45rem;
+  --control-pad-y: 0.15rem;
+  --control-pad-x: 0.45rem;
 }
 
 .person-editor-list input,
@@ -60,11 +60,11 @@
      below carry their own. */
   padding: 0;
   overflow: hidden;
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
-  background: var(--pico-card-background-color);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
 
-  --editor-state: var(--pico-muted-border-color);
+  --editor-state: var(--border);
 }
 
 .person-editor--changed {
@@ -90,7 +90,7 @@
   flex-direction: column;
   gap: 0.35rem;
   padding: 0.35rem 0.75rem;
-  background: color-mix(in srgb, var(--editor-state) var(--head-tint), var(--pico-card-background-color));
+  background: color-mix(in srgb, var(--editor-state) var(--head-tint), var(--surface));
   border-bottom: 2px solid var(--editor-state);
 }
 
@@ -104,8 +104,8 @@
    decision. It replaced the status label, which named the state but never said
    how much work was in it. */
 .editor-summary {
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   margin-right: auto;
 }
 
@@ -156,16 +156,16 @@
 }
 
 .person-editor__office {
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   overflow-wrap: anywhere;
 }
 
 .person-editor__status {
-  font-size: var(--text-xs);
+  font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
 }
 
 /* No top margin: these sit in the modal head now, which centres its row. */
@@ -179,37 +179,37 @@
    `button:not(.btn-ghost):not(.secondary):not(…)`, and that chain of :not()s
    outspecifies a single class — it was painting these #fafafa on a white card,
    so Restore rendered as an empty box.
-   `--pico-del-color` rather than `--editor-cleared`: the head sits outside
+   `--diff-removed` rather than `--editor-cleared`: the head sits outside
    `.person-editor-list`, so the editor's tokens are not in scope there. */
 .review-modal__head .person-editor__delete,
 .review-modal__head .person-editor__reset,
 .review-modal__head .person-editor__merge,
 .review-modal__head .person-editor__restore-person {
   padding: 0.05rem 0.4rem;
-  font-size: var(--text-xs);
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
+  font-size: var(--font-size-xs);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   background: none;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   cursor: pointer;
   width: auto;
 }
 
 .review-modal__head .person-editor__delete:hover {
-  border-color: var(--pico-del-color);
-  color: var(--pico-del-color);
+  border-color: var(--diff-removed);
+  color: var(--diff-removed);
 }
 
 .review-modal__head .person-editor__restore-person {
-  border-color: var(--pico-del-color);
-  color: var(--pico-del-color);
+  border-color: var(--diff-removed);
+  color: var(--diff-removed);
 }
 
-/* See review-modal.css: --pico-color is overridden to the inverse on every bare
+/* See review-modal.css: --control-text is overridden to the inverse on every bare
    button, so an unfilled button must name its colour rather than read it. */
 .person-editor--ghost:hover {
-  border-color: var(--civ-text);
-  color: var(--civ-text);
+  border-color: var(--text-default);
+  color: var(--text-default);
 }
 
 /* Add person is an empty slot at the end of the roster rather than a button
@@ -221,10 +221,10 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.9rem;
-  border: 1px dashed var(--pico-muted-border-color);
+  border: 1px dashed var(--border);
   background: none;
-  color: var(--pico-muted-color);
-  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
   cursor: pointer;
   width: 100%;
 }
@@ -259,19 +259,19 @@
   gap: 0.5rem;
   align-items: start;
   padding: 0.1rem var(--ring-space);
-  border-radius: var(--pico-border-radius);
+  border-radius: var(--radius);
 }
 
 /* Visible focus on every control and button in a person editor. The gaps above reserve
    the clearance this needs. */
 .person-editor :is(input, select, button, a):focus-visible {
-  outline: var(--ring-width) solid var(--pico-primary);
+  outline: var(--ring-width) solid var(--action);
   outline-offset: var(--ring-offset);
 }
 
 .person-editor__label {
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   padding-top: 0.25rem;
 }
 
@@ -299,8 +299,8 @@
 }
 
 /* A field rendering several controls carries `role="group"` so its label names
-   the set. That is an ARIA annotation only — it must not also opt into pico's
-   input-group component (elements.css), whose `margin-bottom: --pico-spacing`
+   the set. That is an ARIA annotation only — it must not also opt into the base layer's
+   input-group component (elements.css), whose `margin-bottom: --space`
    put a 1rem gap under every grouped field. */
 .person-editor__control[role="group"] {
   display: block;
@@ -312,7 +312,7 @@
 .person-editor__control input,
 .person-editor__control select {
   width: 100%;
-  font-size: var(--text-sm);
+  font-size: var(--font-size-sm);
 }
 
 /* The live OCD-ID preview is a full division path — let it wrap instead of
@@ -320,8 +320,8 @@
 .person-editor__control .field-control__division-preview {
   display: block;
   overflow-wrap: anywhere;
-  font-size: var(--text-xs);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
 }
 
 /* The old value, as a trailing annotation rather than a second column. */
@@ -330,8 +330,8 @@
   align-items: baseline;
   flex-wrap: wrap;
   gap: 0.35rem;
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   padding-top: 0.25rem;
   min-width: 0;
 }
@@ -345,8 +345,8 @@
   background: none;
   border: none;
   padding: 0;
-  font-size: var(--text-sm);
-  color: var(--pico-primary);
+  font-size: var(--font-size-sm);
+  color: var(--action);
   text-decoration: underline;
   cursor: pointer;
   width: auto;
@@ -360,7 +360,7 @@
   display: flex;
   align-items: baseline;
   gap: 0.3rem;
-  font-size: var(--text-sm);
+  font-size: var(--font-size-sm);
   grid-column: 2 / -1;
   padding-top: 0.15rem;
 }
@@ -393,7 +393,7 @@
    this says who decided. An overridden field is usually also a changed one, so sharing the
    amber would put two meanings on one hue in the same row. */
 .person-editor__lock--held .person-editor__lock-button {
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   opacity: 0.6;
 }
 
@@ -416,11 +416,11 @@
   display: none;
   min-width: 15rem;
   padding: 0.4rem 0.55rem;
-  background: var(--pico-card-background-color);
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
-  font-size: var(--text-xs);
+  font-size: var(--font-size-xs);
 }
 
 .person-editor__lock:hover .person-editor__lock-pop,
@@ -435,7 +435,7 @@
 
 .person-editor__lock-who {
   display: block;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
 }
 
 .person-editor__issue {
@@ -454,8 +454,8 @@
   border: none;
   padding: 0.2rem 0.25rem;
   margin-top: 0.15rem;
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   text-decoration: underline;
   cursor: pointer;
   width: auto;
@@ -468,9 +468,9 @@
   flex-direction: column;
   gap: 0.3rem;
   padding: 0.4rem 0.5rem;
-  border-radius: var(--pico-border-radius);
-  background: var(--pico-del-background);
-  font-size: var(--text-sm);
+  border-radius: var(--radius);
+  background: var(--diff-removed-bg);
+  font-size: var(--font-size-sm);
 }
 
 .person-editor__banner-title {
@@ -531,14 +531,14 @@
   flex-direction: column;
   gap: 0.25rem;
   padding: 0.5rem 0.6rem;
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
-  background: var(--pico-card-sectioning-background-color);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
 }
 
 .person-editor__merge-lede {
-  font-size: var(--text-xs);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
 }
 
 .person-editor__merge-faces {

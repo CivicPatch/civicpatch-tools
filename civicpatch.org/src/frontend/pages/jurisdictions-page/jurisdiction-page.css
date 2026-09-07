@@ -20,17 +20,17 @@
   margin-inline: 0;
   padding: 0;
   border-bottom: none;
-  font-size: var(--text-sm);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   margin-bottom: 0.6rem;
 }
 
 .jurisdiction-page__breadcrumb a {
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
 }
 
 .jurisdiction-page__breadcrumb a:hover {
-  color: var(--civ-text);
+  color: var(--text-default);
 }
 
 /* ── Title row ────────────────────────────────────────────────────────────── */
@@ -51,10 +51,10 @@
 }
 
 .jurisdiction-page__h1 {
-  font-size: var(--text-xl);
+  font-size: var(--font-size-xl);
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--civ-text);
+  color: var(--text-default);
   margin: 0;
 }
 
@@ -65,14 +65,14 @@
 }
 
 .jurisdiction-page__published {
-  font-size: var(--text-sm);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   white-space: nowrap;
 }
 
 .jurisdiction-page__hairline {
   border: none;
-  border-top: 1px solid var(--civ-border);
+  border-top: 1px solid var(--border);
   margin: 1rem 0 1.5rem 0;
 }
 
@@ -84,11 +84,11 @@
   gap: 0.4rem;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
-  font-size: var(--text-xs);
+  font-size: var(--font-size-xs);
   font-weight: 700;
   white-space: nowrap;
-  background: var(--pico-muted-background);
-  color: var(--pico-muted-color);
+  background: var(--surface-2);
+  color: var(--text-muted);
 }
 
 /* Four states, same three signal colours the timeline uses: muted is nothing to do here,
@@ -96,18 +96,18 @@
    `--untracked` needs no override. */
 
 .jurisdiction-status--fresh {
-  background: rgba(var(--tone-green), 0.18);
-  color: rgb(var(--tone-green));
+  background: var(--success-tint);
+  color: var(--success);
 }
 
 .jurisdiction-status--stale {
-  background: rgba(var(--tone-yellow), 0.2);
-  color: rgb(var(--tone-yellow));
+  background: var(--warning-tint);
+  color: var(--warning);
 }
 
 .jurisdiction-status--empty {
-  background: rgba(var(--tone-red), 0.15);
-  color: rgb(var(--tone-red));
+  background: var(--error-tint);
+  color: var(--error);
 }
 
 .jurisdiction-status__dot {
@@ -123,8 +123,8 @@
    tear down mid-click. Wears the status pill's shape because it sits beside it. */
 
 .jurisdiction-status--running {
-  background: rgba(var(--tone-blue), 0.15);
-  color: rgb(var(--tone-blue));
+  background: var(--info-tint);
+  color: var(--info);
   text-decoration: none;
 }
 
@@ -136,27 +136,27 @@
   gap: 0.7rem;
   padding: 0.75rem 1rem;
   margin-bottom: 1.5rem;
-  border: 1px solid var(--civ-accent-border);
+  border: 1px solid var(--accent-border);
   border-left-width: var(--state-bar-width);
-  border-radius: var(--pico-border-radius);
+  border-radius: var(--radius);
   background: rgba(240, 200, 64, 0.08);
 }
 
 .data-flag__icon {
-  color: var(--civ-accent-border);
+  color: var(--accent-border);
   margin-top: 0.1rem;
 }
 
 .data-flag__title {
-  font-size: var(--text-md);
+  font-size: var(--font-size-md);
   font-weight: 700;
-  color: var(--civ-text);
+  color: var(--text-default);
   margin: 0 0 0.2rem 0;
 }
 
 .data-flag__body {
-  font-size: var(--text-sm);
-  color: var(--civ-text-secondary);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
   margin: 0;
 }
 
@@ -175,15 +175,15 @@
 }
 
 .jurisdiction-section__title {
-  font-size: var(--text-base);
+  font-size: var(--font-size-base);
   font-weight: 700;
-  color: var(--civ-text);
+  color: var(--text-default);
   margin: 0;
 }
 
 .jurisdiction-section__meta {
-  font-size: var(--text-sm);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
 }
 
 /* The count belongs to the heading, not the button row — sitting among the
@@ -205,8 +205,8 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: var(--text-sm);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   margin: 0 0 0.75rem 0;
 }
 
@@ -223,13 +223,13 @@
   align-items: center;
   gap: 0.9rem;
   padding: 0.7rem 0.9rem;
-  border: 1px solid var(--civ-border);
-  border-radius: var(--pico-border-radius);
-  background: var(--pico-card-background-color);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
 }
 
 .pr-row:hover {
-  border-color: var(--civ-text);
+  border-color: var(--text-default);
 }
 
 .pr-row__main {
@@ -241,12 +241,12 @@
 
 .pr-row__title {
   font-weight: 600;
-  color: var(--civ-text);
+  color: var(--text-default);
 }
 
 .pr-row__sub {
-  font-size: var(--text-sm);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
 }
 
 .pr-row__actions {
@@ -290,18 +290,18 @@
 }
 
 .jurisdiction-details__group-title {
-  font-size: var(--text-xs);
+  font-size: var(--font-size-xs);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
   margin: 0 0 0.35rem 0;
 }
 
 .jurisdiction-details__group-item + .jurisdiction-details__group-item {
   margin-top: 0.5rem;
   padding-top: 0.5rem;
-  border-top: 1px solid var(--civ-border);
+  border-top: 1px solid var(--border);
 }
 
 .jurisdiction-details__actions {
@@ -311,8 +311,8 @@
 }
 
 .jurisdiction-details__note {
-  font-size: var(--text-sm);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   margin: 0.5rem 0 0 0;
 }
 
@@ -344,8 +344,8 @@
   gap: 0.4rem;
   height: 2.1rem;
   padding: 0 0.9rem;
-  border-radius: var(--pico-border-radius);
-  font-size: var(--text-sm);
+  border-radius: var(--radius);
+  font-size: var(--font-size-sm);
   cursor: pointer;
   width: auto;
   margin: 0;
@@ -353,27 +353,27 @@
 }
 
 .btn-quiet {
-  border: 1px solid var(--civ-border);
+  border: 1px solid var(--border);
   background: transparent;
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
   font-weight: 500;
 }
 
 .btn-quiet:hover {
-  border-color: var(--civ-text);
-  color: var(--civ-text);
+  border-color: var(--text-default);
+  color: var(--text-default);
   background: transparent;
 }
 
 .btn-primary {
-  border: 1px solid var(--pico-primary-border);
-  background: var(--pico-primary-background);
-  color: var(--pico-primary-inverse);
+  border: 1px solid var(--action);
+  background: var(--action);
+  color: var(--action-text);
   font-weight: 600;
 }
 
 .btn-primary:hover {
-  background: var(--pico-primary-hover);
+  background: var(--action-hover);
 }
 
 .btn-primary:disabled {

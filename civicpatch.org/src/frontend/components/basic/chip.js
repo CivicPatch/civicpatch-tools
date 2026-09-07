@@ -1,7 +1,7 @@
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 
-function PicoChipsInput({ value = [], onChange, placeholder = "Add..." }) {
+function ChipsInput({ value = [], onChange, placeholder = "Add..." }) {
   const [chips, setChips] = useState(value);
 
   useEffect(() => {
@@ -38,8 +38,8 @@ function PicoChipsInput({ value = [], onChange, placeholder = "Add..." }) {
       .chip-btn {
         display: inline-flex;
         align-items: center;
-        background: var(--pico-primary-background, #e0e8f3);
-        border: 1px solid var(--pico-primary, #264478);
+        background: var(--action, #e0e8f3);
+        border: 1px solid var(--action, #264478);
         border-radius: 2em;
         padding: 0.18em 0.7em 0.18em 0.7em;
         font-size: 0.97em;
@@ -64,14 +64,14 @@ function PicoChipsInput({ value = [], onChange, placeholder = "Add..." }) {
       }
       .chips-row input[type="text"] {
         min-width: 100px;
-        border: 1px solid var(--pico-muted-border-color, #e0e0e0);
+        border: 1px solid var(--border, #e0e0e0);
         padding: 0.25em 0.75em;
         font-size: 1em;
         outline: none;
         transition: border 0.2s;
       }
       .chips-row input[type="text"]:focus {
-        border: 1.5px solid var(--pico-primary, #0d6efd);
+        border: 1.5px solid var(--action, #0d6efd);
       }
     </style>
     <div class="chips-row">
@@ -102,5 +102,5 @@ function PicoChipsInput({ value = [], onChange, placeholder = "Add..." }) {
 
 customElements.define(
   "civ-chips-input",
-  component(PicoChipsInput, { useShadowDOM: false })
+  component(ChipsInput, { useShadowDOM: false })
 );

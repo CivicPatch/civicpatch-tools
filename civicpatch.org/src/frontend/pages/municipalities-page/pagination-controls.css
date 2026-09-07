@@ -4,8 +4,8 @@
   justify-content: space-between;
   gap: 1rem;
   margin-top: 0.75rem;
-  font-size: var(--text-sm);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
 }
 
 .municipalities-pagination__pages {
@@ -16,19 +16,19 @@
 
 .municipalities-pagination__pages button {
   padding: 0.3rem 0.6rem;
-  border-radius: var(--pico-border-radius);
-  border: 1px solid var(--civ-border);
-  background: var(--civ-surface);
-  color: var(--civ-text);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-default);
 }
 
 .municipalities-pagination__pages button:disabled {
-  background: var(--civ-surface-2);
-  color: var(--civ-text-muted);
+  background: var(--surface-2);
+  color: var(--text-muted);
 }
 
 .municipalities-pagination__page--active {
-  background: var(--civ-text);
-  border-color: var(--civ-text);
-  color: var(--civ-bg);
+  background: var(--text-default);
+  border-color: var(--text-default);
+  color: var(--bg);
 }

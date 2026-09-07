@@ -4,10 +4,10 @@
 }
 
 .settings-page__banner {
-  background: var(--pico-mark-background-color);
-  color: var(--pico-mark-color);
+  background: var(--mark-bg);
+  color: var(--mark-text);
   padding: 0.75rem 1rem;
-  border-radius: var(--pico-border-radius);
+  border-radius: var(--radius);
   margin-bottom: 1.5rem;
   font-size: 0.9rem;
 }
@@ -28,11 +28,11 @@
 }
 
 .settings-page__input {
-  font-family: var(--pico-font-family-monospace);
+  font-family: var(--font-mono);
 }
 
 .settings-page__error {
-  color: var(--pico-color-red-600, #c92a2a);
+  color: var(--error);
   font-size: 0.85rem;
 }
 
@@ -43,7 +43,7 @@
 /* API keys */
 
 .api-keys {
-  border-top: 1px solid var(--pico-muted-border-color);
+  border-top: 1px solid var(--border);
   margin: 2.5rem 0 0;
   padding-top: 1.5rem;
 }
@@ -56,19 +56,19 @@
 }
 
 .api-keys__hint {
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   font-size: 0.9rem;
   margin: 0 0 1rem;
 }
 
 .api-keys__error {
-  border-left: 3px solid var(--pico-del-color);
+  border-left: 3px solid var(--diff-removed);
   padding: 0.5rem 0.75rem;
   margin: 0 0 1rem;
 }
 
 .api-keys__created {
-  border-left: 3px solid var(--pico-ins-color);
+  border-left: 3px solid var(--diff-added);
   padding: 0.5rem 0.75rem;
   margin: 0 0 1rem;
 }
@@ -78,7 +78,7 @@
 }
 
 .api-keys__secret {
-  font-family: var(--pico-font-family-monospace);
+  font-family: var(--font-mono);
   overflow-wrap: anywhere;
   user-select: all;
 }
@@ -89,7 +89,7 @@
 }
 
 .api-key__suffix {
-  font-family: var(--pico-font-family-monospace);
+  font-family: var(--font-mono);
 }
 
 .api-key--revoked {
@@ -105,7 +105,7 @@
 .api-key__link {
   background: none;
   border: none;
-  color: var(--pico-color);
+  color: var(--control-text);
   font-size: 0.9rem;
   padding: 0;
   text-decoration: underline;
@@ -113,7 +113,7 @@
 }
 
 .api-key__link--danger {
-  color: var(--pico-del-color);
+  color: var(--diff-removed);
 }
 
 .api-keys__create {

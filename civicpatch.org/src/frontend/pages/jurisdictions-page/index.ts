@@ -196,7 +196,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
       })}
 
       ${renderDataFlag(jurisdictionData?.data)}
-      ${scrapeError ? html`<p style="color: var(--pico-del-color);">${scrapeError}</p>` : nothing}
+      ${scrapeError ? html`<p style="color: var(--diff-removed);">${scrapeError}</p>` : nothing}
 
       ${renderPendingReviews(awaitingReview, jurisdiction_ocdid, isSignedIn)}
 

@@ -7,9 +7,9 @@
   /* Same mapping and the same theme-aware mix Overview uses: dark deepens the hue
      toward black first, because mixing toward it raises luminance and crushes the
      muted text. */
-  --tile-changed: var(--pico-warn-color);
-  --tile-added: var(--pico-ins-color);
-  --tile-cleared: var(--pico-del-color);
+  --tile-changed: var(--warning);
+  --tile-added: var(--diff-added);
+  --tile-cleared: var(--diff-removed);
   --tint-strength: 12%;
   --tint-shade: 0%;
 
@@ -27,9 +27,9 @@
   gap: 0.5rem;
   flex-wrap: wrap;
   padding: 0.5rem 0.7rem;
-  border-radius: var(--pico-border-radius);
-  background: var(--pico-muted-background);
-  font-size: var(--text-sm);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  font-size: var(--font-size-sm);
 }
 
 .review-preview__count {
@@ -37,7 +37,7 @@
 }
 
 .review-preview__sub {
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
 }
 
 /* The one place a problem is allowed to show, because Publish lives here. */
@@ -46,15 +46,15 @@
   flex-direction: column;
   gap: 0.25rem;
   padding: 0.55rem 0.7rem;
-  border-radius: var(--pico-border-radius);
-  border: 1px solid var(--pico-del-color);
-  background: var(--pico-del-background);
-  font-size: var(--text-sm);
+  border-radius: var(--radius);
+  border: 1px solid var(--diff-removed);
+  background: var(--diff-removed-bg);
+  font-size: var(--font-size-sm);
 }
 
 .review-preview__blockers-title {
   font-weight: 700;
-  color: var(--pico-del-color);
+  color: var(--diff-removed);
 }
 
 .review-preview__blockers ul {
@@ -76,18 +76,18 @@
   align-items: baseline;
   gap: 0.35rem;
   min-width: 0;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
 }
 
 .review-preview__value-text {
-  color: var(--civ-text);
+  color: var(--text-default);
   overflow-wrap: anywhere;
   user-select: text;
 }
 
 /* Preview rows are static, so nothing overlays these — they stay real links. */
 .review-preview__link {
-  color: var(--civ-text);
+  color: var(--text-default);
   text-decoration: underline;
   text-underline-offset: 0.1rem;
   overflow-wrap: anywhere;
@@ -102,14 +102,14 @@
 .review-preview__value--sources {
   gap: 0.3rem;
   padding-left: 0.35rem;
-  border-left: 1px solid var(--pico-muted-border-color);
+  border-left: 1px solid var(--border);
 }
 
 .review-preview__sources-label {
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  font-size: var(--text-xs);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
 }
 
 /* Number and colour belong to the url, so [2] is the same page on every person. */
@@ -123,8 +123,8 @@
 }
 
 .review-preview__empty {
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   font-style: italic;
 }
 
@@ -153,7 +153,7 @@
     in srgb,
     color-mix(in srgb, #000 var(--tint-shade), var(--tile-added))
       var(--tint-strength),
-    var(--pico-card-background-color)
+    var(--surface)
   );
 }
 
@@ -162,6 +162,6 @@
     in srgb,
     color-mix(in srgb, #000 var(--tint-shade), var(--tile-changed))
       var(--tint-strength),
-    var(--pico-card-background-color)
+    var(--surface)
   );
 }

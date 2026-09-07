@@ -35,7 +35,7 @@ export function renderFreshnessWidget({ stats, state }: FreshnessWidgetProps) {
         ${segments.map(
           (s) => html`<div
             class="freshness-widget__segment"
-            style="width:${s.percent}%; background:var(--civ-status-${s.key})"
+            style="width:${s.percent}%; background:var(--status-${s.key})"
             title="${STATUS_LABELS[s.key]}: ${s.count}"
           ></div>`,
         )}
@@ -43,7 +43,7 @@ export function renderFreshnessWidget({ stats, state }: FreshnessWidgetProps) {
       <div class="freshness-widget__legend">
         ${segments.map(
           (s) => html`<span class="freshness-widget__legend-item">
-            <span class="freshness-widget__legend-dot" style="background:var(--civ-status-${s.key})"></span>
+            <span class="freshness-widget__legend-dot" style="background:var(--status-${s.key})"></span>
             <span class="freshness-widget__legend-count">${s.count}</span>
             ${STATUS_LABELS[s.key]}
           </span>`,

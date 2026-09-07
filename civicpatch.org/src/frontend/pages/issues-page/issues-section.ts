@@ -1,3 +1,4 @@
+import "../../components/section-header/section-header.css";
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { fetchJobIssues, fetchIssueCounts, flagIssue, dismissIssues } from "../../api.js";

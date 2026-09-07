@@ -1,4 +1,5 @@
 import "./home-page.css";
+import "./blog-preview.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { fetchPeople, fetchDashboard, fetchMapsCoverage } from "../../api.js";

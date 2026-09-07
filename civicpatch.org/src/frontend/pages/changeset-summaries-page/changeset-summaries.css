@@ -24,7 +24,7 @@
 }
 
 .cs-head__h1 {
-  font-size: var(--text-xl);
+  font-size: var(--font-size-xl);
   font-weight: 800;
   letter-spacing: -0.02em;
   margin: 0;
@@ -43,21 +43,21 @@
 }
 
 .cs-ledger__n {
-  font-size: var(--text-lg);
+  font-size: var(--font-size-lg);
   font-weight: 800;
   line-height: 1.1;
 }
 
 .cs-ledger__label {
-  font-size: var(--text-xs);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .cs-rule {
   border: none;
-  border-top: 1px solid var(--civ-border);
+  border-top: 1px solid var(--border);
   margin: 1.25rem 0 1rem;
 }
 
@@ -72,8 +72,8 @@
 }
 
 .cs-chips__label {
-  font-size: var(--text-xs);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-right: 0.25rem;
@@ -83,19 +83,19 @@
   width: auto;
   margin: 0;
   padding: 0.15rem 0.6rem;
-  border: 1px solid var(--civ-border);
+  border: 1px solid var(--border);
   border-radius: 999px;
   background: transparent;
-  font-size: var(--text-xs);
+  font-size: var(--font-size-xs);
   font-family: inherit;
-  color: var(--civ-text);
+  color: var(--text-default);
   cursor: pointer;
 }
 
 .cs-chips__chip--active {
-  background: var(--civ-text);
-  border-color: var(--civ-text);
-  color: var(--civ-bg);
+  background: var(--text-default);
+  border-color: var(--text-default);
+  color: var(--bg);
 }
 
 /* Running: what is in flight right now. Unwindowed, like the queue it sits above — a run
@@ -108,8 +108,8 @@
   flex-wrap: wrap;
   padding-bottom: 0.5rem;
   margin-bottom: 1.25rem;
-  border-bottom: 1px solid var(--civ-border);
-  font-size: var(--text-sm);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--font-size-sm);
 }
 
 .cs-running__n {
@@ -117,7 +117,7 @@
 }
 
 .cs-running__where {
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
 }
 
 /* Compare: pick which states the ledger, the rows and the sections answer for. */
@@ -138,15 +138,15 @@
 }
 
 .cs-compare .cs-chips__chip[aria-pressed="true"] {
-  border-color: var(--civ-text);
+  border-color: var(--text-default);
   border-width: 2px;
   font-weight: 700;
 }
 
 /* The chips already say which states are picked, so the note only says how many. */
 .cs-compare__note {
-  font-size: var(--text-xs);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
   font-variant-numeric: tabular-nums;
 }
 
@@ -157,7 +157,7 @@
   align-items: center;
   gap: var(--cs-gap);
   padding: 0.5rem 0.2rem;
-  border-bottom: 1px solid var(--civ-border);
+  border-bottom: 1px solid var(--border);
 }
 
 .cs-row:last-child {
@@ -176,7 +176,7 @@
   display: flex;
   align-items: baseline;
   gap: 0.3rem;
-  font-size: var(--text-sm);
+  font-size: var(--font-size-sm);
 }
 
 .cs-figure__n {
@@ -184,17 +184,17 @@
 }
 
 .cs-figure__label {
-  color: var(--civ-text-muted);
-  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
 }
 
 /* Red is the whole signal: a queue with something past a week in it. */
 .cs-figure--alert .cs-figure__n {
-  color: rgb(var(--tone-red));
+  color: var(--error);
 }
 
 .cs-figure--quiet .cs-figure__n {
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
   font-weight: 400;
 }
 
@@ -215,12 +215,12 @@
   justify-content: flex-end;
   border-radius: 2px;
   min-width: 3px;
-  /* A <button>, so pico paints it as a primary control — background, border and
+  /* A <button>, so the base layer paints it as a primary control — background, border and
      primary-inverse text. All three are wrong here, and the last one is what the popover
      inherits. */
   background: none;
   border: none;
-  color: var(--civ-text);
+  color: var(--text-default);
   padding: 0;
   margin: 0;
   cursor: default;
@@ -231,7 +231,7 @@
 /* A colour, not `opacity`: opacity applies to the whole subtree, so it faded the popover
    rendered inside the cell along with the cell itself. */
 .cs-cal__cell--idle {
-  background: var(--civ-border);
+  background: var(--border);
 }
 
 .cs-cal__seg--published,
@@ -241,15 +241,15 @@
 }
 
 .cs-cal__seg--published {
-  background: var(--pico-ins-color);
+  background: var(--diff-added);
 }
 
 .cs-cal__seg--review {
-  background: var(--civ-accent);
+  background: var(--accent);
 }
 
 .cs-cal__seg--dismissed {
-  background: var(--pico-del-color);
+  background: var(--diff-removed);
 }
 
 /* Scale — a date every 7 columns, so a band can be placed in time without counting cells.
@@ -275,8 +275,8 @@
    they label the columns rather than competing with them. */
 .cs-scale__lead,
 .cs-scale__tail {
-  font-size: var(--text-xs);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   white-space: nowrap;
@@ -292,10 +292,10 @@
 /* Each mark spans the week it labels, so the label sits at that week's first column and never
    overflows the cell the way a per-day label would. */
 .cs-scale__mark {
-  font-size: var(--text-xs);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
   white-space: nowrap;
-  border-left: 1px solid var(--civ-border);
+  border-left: 1px solid var(--border);
   padding-left: 0.25rem;
   line-height: 1.4;
   min-width: 0;
@@ -318,12 +318,12 @@
   display: none;
   width: max-content;
   padding: 0.5rem 0.7rem;
-  border: 1px solid var(--civ-border);
-  border-radius: var(--pico-border-radius);
-  background: var(--civ-surface);
-  color: var(--civ-text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-default);
   box-shadow: 0 2px 10px rgb(0 0 0 / 25%);
-  font-size: var(--text-xs);
+  font-size: var(--font-size-xs);
   line-height: 1.5;
   text-align: left;
   pointer-events: none;
@@ -358,7 +358,7 @@
 }
 
 .cs-pop__quiet {
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
 }
 
 /* Legend */
@@ -368,8 +368,8 @@
   flex-wrap: wrap;
   gap: 0.9rem;
   align-items: center;
-  font-size: var(--text-xs);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
   margin-bottom: 0.75rem;
 }
 
@@ -387,21 +387,21 @@
 }
 
 .cs-empty {
-  font-size: var(--text-sm);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
 }
 
 .cs-pop__kinds {
   display: block;
   margin-top: 0.35rem;
   padding-top: 0.35rem;
-  border-top: 1px solid var(--civ-border);
+  border-top: 1px solid var(--border);
 }
 
 /* ── Bucket modal ────────────────────────────────────────────────────────────
  * Sized for what it holds: one locality name and a short note per row. The review
  * modal's 68rem is for a diff; this only needs the note to clear the name without
- * the list stretching into a band of whitespace. Pico constrains `dialog`, and
+ * the list stretching into a band of whitespace. The base layer constrains `dialog`, and
  * `dialog[open] > article` is width:100%, so both have to be released — the same
  * pair `.review-modal` and `.merge-picker-host` override. */
 .cs-bucket-modal dialog {
@@ -448,18 +448,18 @@
   gap: 0.6rem;
   flex-wrap: wrap;
   margin-bottom: 1rem;
-  font-size: var(--text-sm);
+  font-size: var(--font-size-sm);
 }
 
 .cs-budget__label {
-  font-size: var(--text-xs);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .cs-budget__fig--quiet {
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
 }
 
 .cs-budget__edit {
@@ -468,9 +468,9 @@
   padding: 0;
   border: none;
   background: none;
-  font-size: var(--text-sm);
+  font-size: var(--font-size-sm);
   font-family: inherit;
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
   text-decoration: underline;
   cursor: pointer;
 }

@@ -104,8 +104,8 @@
   border-bottom: 0;
   gap: 0;
   padding: 0.35rem 0 0.5rem;
-  border-right: 1px solid var(--pico-muted-border-color);
-  background: var(--pico-card-sectioning-background-color);
+  border-right: 1px solid var(--border);
+  background: var(--surface-2);
   overflow-y: auto;
   /* Long names ellipsis rather than widening the column — without this the panel
      grows a horizontal scrollbar and the list becomes a two-axis scroll. */
@@ -118,12 +118,12 @@
   position: sticky;
   top: -0.5rem;
   padding: 0.1rem 0.3rem 0.35rem;
-  font-size: var(--text-xs);
+  font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 700;
-  color: var(--pico-muted-color);
-  background: var(--pico-card-sectioning-background-color);
+  color: var(--text-muted);
+  background: var(--surface-2);
 }
 
 .review-modal .review-modal__person {
@@ -135,12 +135,12 @@
      hair after it, so the list starts where the panel does. */
   padding: 0.2rem 0.5rem 0.2rem 0.3rem;
   border: 0;
-  border-left: 3px solid var(--pico-muted-border-color);
+  border-left: 3px solid var(--border);
   border-radius: 0;
   background: none;
   font: inherit;
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   text-align: left;
   cursor: pointer;
 }
@@ -149,60 +149,60 @@
    and --on so the row you are on still reads as selected rather than as its
    status; `unchanged` stays plain. */
 .review-modal .review-modal__person--changed {
-  background: color-mix(in srgb, var(--pico-warn-color) 14%, transparent);
+  background: color-mix(in srgb, var(--warning) 14%, transparent);
 }
 
 .review-modal .review-modal__person--added {
-  background: color-mix(in srgb, var(--pico-ins-color) 14%, transparent);
+  background: color-mix(in srgb, var(--diff-added) 14%, transparent);
 }
 
 .review-modal .review-modal__person--removed,
 .review-modal .review-modal__person--deleted {
-  background: color-mix(in srgb, var(--pico-del-color) 14%, transparent);
+  background: color-mix(in srgb, var(--diff-removed) 14%, transparent);
 }
 
 .review-modal .review-modal__person--restored {
-  background: color-mix(in srgb, var(--pico-muted-color) 12%, transparent);
+  background: color-mix(in srgb, var(--text-muted) 12%, transparent);
 }
 
 .review-modal .review-modal__person:hover {
-  background: var(--pico-muted-background);
+  background: var(--surface-2);
 }
 
 /* An outline, not a background: the status tints above are backgrounds, so setting one
    here erased the person's status and made "current" indistinguishable from :hover.
    Inset offset so it reads as a ring inside the row without shifting the list. */
 .review-modal .review-modal__person--on {
-  outline: 2px solid var(--pico-primary);
+  outline: 2px solid var(--action);
   outline-offset: -2px;
-  color: var(--civ-text);
+  color: var(--text-default);
   font-weight: 600;
 }
 
-.review-modal__person--changed { border-left-color: var(--pico-warn-color); }
-.review-modal__person--added { border-left-color: var(--pico-ins-color); }
+.review-modal__person--changed { border-left-color: var(--warning); }
+.review-modal__person--added { border-left-color: var(--diff-added); }
 .review-modal__person--removed,
-.review-modal__person--deleted { border-left-color: var(--pico-del-color); }
-.review-modal__person--restored { border-left-color: var(--pico-muted-color); }
+.review-modal__person--deleted { border-left-color: var(--diff-removed); }
+.review-modal__person--restored { border-left-color: var(--text-muted); }
 
 /* The name carries the status too, not just the edge — the edge is easy to miss
    when scanning a long sidebar, and `unchanged` stays plain so the ones that
    matter are the ones that are coloured. */
 .review-modal__person--changed .review-modal__person-name {
-  color: var(--pico-warn-color);
+  color: var(--warning);
 }
 
 .review-modal__person--added .review-modal__person-name {
-  color: var(--pico-ins-color);
+  color: var(--diff-added);
 }
 
 .review-modal__person--removed .review-modal__person-name,
 .review-modal__person--deleted .review-modal__person-name {
-  color: var(--pico-del-color);
+  color: var(--diff-removed);
 }
 
 .review-modal__person--restored .review-modal__person-name {
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
 }
 
 .review-modal__person-who {
@@ -222,8 +222,8 @@
 }
 
 .review-modal__person-sub {
-  font-size: var(--text-xs);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -239,12 +239,12 @@
 
 .review-modal__person-meta {
   flex: 0 0 auto;
-  font-size: var(--text-xs);
+  font-size: var(--font-size-xs);
   font-variant-numeric: tabular-nums;
 }
 
-.review-modal__person-issue { color: var(--pico-info-color); font-weight: 700; }
-.review-modal__person-done { color: var(--pico-ins-color); font-weight: 700; }
+.review-modal__person-issue { color: var(--info); font-weight: 700; }
+.review-modal__person-done { color: var(--diff-added); font-weight: 700; }
 
 /* Head and foot */
 
@@ -260,8 +260,8 @@
      two was the only thing separating them. There is one strip now. */
   margin: -0.75rem -0.75rem 0;
   padding: 0.5rem 0.75rem;
-  background: var(--pico-card-background-color);
-  border-bottom: 1px solid var(--pico-muted-border-color);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
   font-weight: 600;
 }
 
@@ -281,8 +281,8 @@
 }
 
 .review-modal__pos {
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -295,20 +295,20 @@
   flex-wrap: wrap;
 }
 
-/* `color: var(--civ-text)`, NOT `var(--pico-color)`. styles.css gives every bare
-   button `--pico-color: var(--pico-primary-inverse)` so filled buttons get light
-   text — pico then applies `color: var(--pico-color)`. Reading that variable on
+/* `color: var(--text-default)`, NOT `var(--control-text)`. styles.css gives every bare
+   button `--control-text: var(--action-text)` so filled buttons get light
+   text — the base layer then applies `color: var(--control-text)`. Reading that variable on
    an unfilled button therefore paints it #fafafa on a white footer, which is why
    Revert rendered as an empty box. Not a specificity problem: the variable is
    already poisoned by the time any rule reads it. */
 .review-modal .review-modal__revert,
 .review-modal .review-modal__nav-btn {
   padding: 0.15rem 0.6rem;
-  font-size: var(--text-sm);
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   background: none;
-  color: var(--civ-text);
+  color: var(--text-default);
   cursor: pointer;
   width: auto;
 }
@@ -327,7 +327,7 @@
 
   .review-modal__people {
     border-right: none;
-    border-bottom: 1px solid var(--pico-muted-border-color);
+    border-bottom: 1px solid var(--border);
     max-height: 8rem;
   }
 }
@@ -363,5 +363,5 @@
 }
 
 .review-modal__body .person-editor__control :is(input, select) {
-  font-size: var(--text-md);
+  font-size: var(--font-size-md);
 }

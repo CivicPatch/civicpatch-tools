@@ -20,14 +20,14 @@ civ-table-cell {
     }
     /* focus: cell selected via keyboard navigation, not yet editing */
     & > div:focus {
-        outline: 2px solid rgb(var(--tone-teal));
-        border-radius: var(--pico-border-radius);
+        outline: 2px solid var(--focus-ring);
+        border-radius: var(--radius);
     }
 
     /* active edit: a descendant (contenteditable or tag input) has focus */
     & > div:focus-within:not(:focus) {
-        outline: 2px solid rgb(var(--tone-sapphire));
-        border-radius: var(--pico-border-radius);
+        outline: 2px solid var(--focus-ring-soft);
+        border-radius: var(--radius);
     }
 
     /* suppress browser default outlines — the div handles all focus rings */
@@ -50,7 +50,7 @@ civ-table-cell {
     /* view-mode: plain text or link, no pill */
     .tag-list .tag-link {
         display: inline;
-        font-size: var(--text-sm);
+        font-size: var(--font-size-sm);
     }
 
     .tag-list span.tag-link {
@@ -61,14 +61,14 @@ civ-table-cell {
     .tag-list button {
         all: unset;
         /* re-apply shared styles after reset */
-        border: 1px solid rgb(var(--tone-line-mid));
-        background: rgb(var(--tone-line));
+        border: 1px solid var(--border);
+        background: var(--surface-2);
         border-radius: 999px;
         padding: 0.1rem 0.5rem;
-        font-size: var(--text-sm);
+        font-size: var(--font-size-sm);
         font-family: inherit;
         line-height: 1;
-        color: var(--_c, rgb(var(--tone-ink)));
+        color: var(--_c, var(--text-default));
         max-width: 200px;
         cursor: pointer;
         display: inline-flex;
@@ -77,8 +77,8 @@ civ-table-cell {
     }
 
     .tag-list button:hover {
-        background: rgba(var(--tone-sapphire), 0.2);
-        border-color: rgb(var(--tone-line-strong));
+        background: var(--focus-tint);
+        border-color: var(--border-strong);
     }
 
     .tag-list button span.tag-label {
@@ -102,7 +102,7 @@ civ-table-cell {
         border: none;
         background: transparent;
         padding: 0;
-        font-size: var(--text-md);
+        font-size: var(--font-size-md);
         font-family: inherit;
         color: inherit;
         white-space: normal;
@@ -118,7 +118,7 @@ civ-table-cell {
 
     .tag-input:empty::before {
         content: attr(data-placeholder);
-        color: var(--pico-muted-color);
+        color: var(--text-muted);
         pointer-events: none;
     }
 }

@@ -26,11 +26,11 @@ function cssVar(name: string): string {
 // Read once at module load; theme toggles mid-session won't update paint expressions
 // since they're baked when the layer is added. A reload re-reads the values.
 const STATUS_COLORS = {
-  fresh:     cssVar('--civ-status-fresh'),
-  stale:     cssVar('--civ-status-stale'),
-  gap:       cssVar('--civ-status-gap'),
-  untracked: cssVar('--civ-status-untracked'),
-  selected:  cssVar('--civ-status-selected'),
+  fresh:     cssVar('--status-fresh'),
+  stale:     cssVar('--status-stale'),
+  gap:       cssVar('--status-gap'),
+  untracked: cssVar('--status-untracked'),
+  selected:  cssVar('--status-selected'),
 };
 
 export function getVisibleLayers(level: DrillLevel): string[] {

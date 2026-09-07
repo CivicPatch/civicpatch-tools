@@ -1,9 +1,9 @@
 .map-container {
   position: relative;
   width: 100%;
-  border-radius: var(--pico-border-radius);
+  border-radius: var(--radius);
   overflow: hidden;
-  border: 1px solid var(--pico-muted-border-color);
+  border: 1px solid var(--border);
 }
 
 .map-container .maplibregl-map {
@@ -16,9 +16,9 @@
   bottom: 2.5rem;
   right: 0.5rem;
   z-index: 10;
-  background: var(--pico-card-background-color, #fff);
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
+  background: var(--surface, #fff);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 0.4rem 0.6rem;
   cursor: pointer;
   font-size: 1rem;
@@ -26,7 +26,7 @@
 }
 
 .map-locate-btn:hover {
-  background: var(--pico-primary-background, #e0e7ff);
+  background: var(--action, #e0e7ff);
 }
 
 .map-reset-btn {
@@ -34,10 +34,10 @@
   top: 0.5rem;
   left: 0.5rem;
   z-index: 10;
-  background: var(--civ-surface) !important;
-  color: var(--civ-text) !important;
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
+  background: var(--surface) !important;
+  color: var(--text-default) !important;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 0.4rem 0.75rem;
   cursor: pointer;
   font-size: 0.8rem;
@@ -47,8 +47,8 @@
 }
 
 .map-reset-btn:hover {
-  background: var(--civ-surface-2) !important;
-  color: var(--civ-text) !important;
+  background: var(--surface-2) !important;
+  color: var(--text-default) !important;
 }
 
 .map-empty {
@@ -56,8 +56,8 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: var(--pico-muted-color);
-  font-size: var(--text-sm, 0.875rem);
+  color: var(--text-muted);
+  font-size: var(--font-size-sm, 0.875rem);
 }
 
 /* Fills the already-sized .map-container while the maplibre chunk downloads, so the
@@ -69,9 +69,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--civ-surface);
-  color: var(--pico-muted-color);
-  font-size: var(--text-sm, 0.875rem);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: var(--font-size-sm, 0.875rem);
 }
 
 .map-legend {
@@ -84,10 +84,10 @@
   align-items: center;
   gap: 0.35rem 0.7rem;
   max-width: calc(100% - 1rem);
-  background: var(--civ-surface, #fff);
-  color: var(--civ-text);
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
+  background: var(--surface, #fff);
+  color: var(--text-default);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 0.4rem 0.6rem;
   font-size: 0.72rem;
   line-height: 1;
@@ -105,16 +105,16 @@
   width: 0.7rem;
   height: 0.7rem;
   border-radius: 2px;
-  border: 1px solid var(--pico-muted-border-color);
+  border: 1px solid var(--border);
 }
 
-.map-legend__swatch--fresh { background: var(--civ-status-fresh); }
-.map-legend__swatch--stale { background: var(--civ-status-stale); }
-.map-legend__swatch--gap { background: var(--civ-status-gap); }
-.map-legend__swatch--untracked { background: var(--civ-status-untracked); }
+.map-legend__swatch--fresh { background: var(--status-fresh); }
+.map-legend__swatch--stale { background: var(--status-stale); }
+.map-legend__swatch--gap { background: var(--status-gap); }
+.map-legend__swatch--untracked { background: var(--status-untracked); }
 
 .map-legend__note {
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   white-space: nowrap;
 }
 
@@ -124,7 +124,7 @@
   gap: 0.15rem;
   font-size: 0.75rem;
   line-height: 1.3;
-  color: var(--civ-text);
+  color: var(--text-default);
 }
 
 .map-tooltip strong {
@@ -132,14 +132,14 @@
 }
 
 .map-tooltip__sub {
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
 }
 
 /* maplibre popup chrome — match the app surface instead of the default white */
 .map-tooltip-popup .maplibregl-popup-content {
-  background: var(--civ-surface, #fff);
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
+  background: var(--surface, #fff);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 0.45rem 0.6rem;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
 }

@@ -49,12 +49,12 @@
 
 .admin-page__status {
   font-size: 0.9rem;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   margin: 0.5rem 0;
 }
 
 .admin-page__error {
-  color: var(--pico-del-color);
+  color: var(--diff-removed);
 }
 
 /* Scrolls the table horizontally inside its own box on screens too narrow for
@@ -72,7 +72,7 @@
 .admin-users-table th,
 .admin-users-table td {
   padding: 0.3rem 0.5rem;
-  border-bottom: 1px solid var(--pico-muted-border-color);
+  border-bottom: 1px solid var(--border);
   text-align: left;
   vertical-align: middle;
 }
@@ -101,19 +101,19 @@
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
 }
 
 .admin-users-table__self-tag {
   display: inline-block;
   margin-left: 0.4rem;
   font-size: 0.7rem;
-  font-family: var(--pico-font-family-monospace);
+  font-family: var(--font-mono);
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: lowercase;
-  color: var(--pico-muted-color);
-  border: 1px solid var(--pico-muted-border-color);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
   border-radius: 4px;
   padding: 0.1em 0.4em;
   vertical-align: middle;
@@ -127,16 +127,16 @@
 
 .admin-users-table__row-status {
   font-size: 0.8rem;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   margin-left: 0.5rem;
 }
 
 .admin-users-table__row-status--error {
-  color: var(--pico-del-color);
+  color: var(--diff-removed);
 }
 
 .admin-users-table__row-status--saved {
-  color: var(--pico-ins-color, #4caf50);
+  color: var(--diff-added, #4caf50);
 }
 
 /* ── Role chips ─────────────────────────────────────────────────────────── */
@@ -150,7 +150,7 @@ role-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-family: var(--pico-font-family-monospace);
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -209,7 +209,7 @@ role-chip {
 
 .confirm-role-modal__blurb {
   margin: 0 0 0.85rem;
-  color: var(--pico-color);
+  color: var(--text);
 }
 
 .confirm-role-modal__powers-label {
@@ -217,14 +217,14 @@ role-chip {
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   margin-bottom: 0.3rem;
 }
 
 .confirm-role-modal__powers {
   margin: 0;
   padding-left: 1.2rem;
-  color: var(--pico-color);
+  color: var(--text);
 }
 
 .confirm-role-modal__powers li {
@@ -238,7 +238,7 @@ status-toast {
   bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000; /* sits above Pico's dialog (z-index: 999) */
+  z-index: 1000; /* sits above the base dialog (z-index: 999) */
 }
 
 .status-toast {
@@ -246,9 +246,9 @@ status-toast {
   align-items: center;
   gap: 0.85rem;
   padding: 0.6rem 0.85rem 0.6rem 1rem;
-  background: var(--pico-color);
-  color: var(--pico-background-color);
-  border-radius: var(--pico-border-radius);
+  background: var(--text);
+  color: var(--bg);
+  border-radius: var(--radius);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
   font-size: 0.9rem;
 }

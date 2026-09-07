@@ -22,11 +22,11 @@ function PersonImage({ person, onClick, size = "2rem" }) {
         role="img"
         aria-label=${label}
         style="
-        width: ${size}; height: ${size}; border-radius: var(--pico-border-radius);
+        width: ${size}; height: ${size}; border-radius: var(--radius);
         display: flex; align-items: center; justify-content: center;
         font-size: calc(${size} * 0.3); font-weight: 600;
-        background: var(--pico-muted-background);
-        color: var(--pico-muted-color);
+        background: var(--surface-2);
+        color: var(--text-muted);
       "
       >
         ${initials}
@@ -35,7 +35,7 @@ function PersonImage({ person, onClick, size = "2rem" }) {
         src="${value}"
         alt=${label}
         style="
-        width: ${size}; height: ${size}; border-radius: var(--pico-border-radius);
+        width: ${size}; height: ${size}; border-radius: var(--radius);
         object-fit: cover; object-position: center;
         display: block; flex-shrink: 0;
       "

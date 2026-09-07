@@ -5,22 +5,22 @@
 .person-editor-list,
 .review-overview,
 .jurisdiction-details__fields {
-  /* Dense form controls — pico sizes inputs from these, and overriding raw
+  /* Dense form controls — the base layer sizes inputs from these, and overriding raw
      padding loses to its specificity. */
-  --pico-form-element-spacing-vertical: 0.15rem;
-  --pico-form-element-spacing-horizontal: 0.45rem;
+  --control-pad-y: 0.15rem;
+  --control-pad-x: 0.45rem;
 
   /* One height and one radius for every interactive thing in a field body. A row
      of controls at four different heights reads as four different kinds of
-     thing. Pinned, not a minimum: pico sizes inputs from its own spacing vars and
+     thing. Pinned, not a minimum: the base layer sizes inputs from its own spacing vars and
      lands taller than a bare button, so a floor leaves them mismatched. */
   --control-h: 1.65rem;
-  --control-radius: var(--pico-border-radius);
+  --control-radius: var(--radius);
 
   /* The tint recipe's inputs. --field-ground must be opaque; a surface that
      tints itself overrides it with whatever it painted. */
   --field-tint: 12%;
-  --field-ground: var(--pico-card-background-color);
+  --field-ground: var(--surface);
 
   /* A focus ring is drawn outside the control's box and takes no layout space,
      so on a dense grid it lands on top of whatever is next to it. This is the
@@ -57,9 +57,9 @@
   width: 100%;
   height: auto;
   padding: 0.15rem 0.4rem;
-  border: 1px solid var(--pico-form-element-border-color);
-  border-radius: var(--pico-border-radius);
-  font-size: var(--text-sm);
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius);
+  font-size: var(--font-size-sm);
   line-height: 1.2;
   box-sizing: border-box;
 }
@@ -73,7 +73,7 @@
   width: 100%;
   padding: 0.15rem 0.4rem;
   border: 1px solid transparent;
-  font-size: var(--text-sm);
+  font-size: var(--font-size-sm);
   line-height: 1.2;
   box-sizing: border-box;
   overflow-wrap: anywhere;
@@ -84,7 +84,7 @@
   overflow-wrap: anywhere;
 }
 
-/* pico gives selects extra right padding for the arrow + a tall background; keep
+/* The base layer gives selects extra right padding for the arrow + a tall background; keep
    the arrow but match the input height. */
 /* The unified rule above pins padding at 0.15rem; selects need more vertical
    room (and right room for the chevron) to match the text inputs visually. */
@@ -100,13 +100,13 @@
    `changed` did — composites over whatever is behind the input, so the same class
    rendered a different colour on a tinted card than on a plain one. Any surface
    that tints itself sets --field-ground to what it actually painted. */
-.field-control__input--changed { --field-state: var(--pico-warn-color); }
-.field-control__input--added { --field-state: var(--pico-ins-color); }
+.field-control__input--changed { --field-state: var(--warning); }
+.field-control__input--added { --field-state: var(--diff-added); }
 /* Cleared is informational: the scrape read the page and the value was not on it.
    It publishes. Muted rather than red so that red can mean exactly one thing.
    Declared before error, so a field that is both renders as the error. */
-.field-control__input--cleared { --field-state: var(--pico-muted-color); }
-.field-control__input--error { --field-state: var(--pico-del-color); }
+.field-control__input--cleared { --field-state: var(--text-muted); }
+.field-control__input--error { --field-state: var(--diff-removed); }
 
 .field-control__input--changed,
 .field-control__input--added,
@@ -168,11 +168,11 @@ span.field-control__input s {
   min-width: 1.5rem;
   width: auto;
   padding: 0 0.3rem;
-  border: 1px solid var(--pico-muted-border-color);
+  border: 1px solid var(--border);
   border-radius: var(--control-radius);
-  background: var(--pico-card-background-color);
-  color: var(--pico-muted-color);
-  font-size: var(--text-xs);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
   line-height: 1;
   text-decoration: none;
   box-sizing: border-box;
@@ -180,19 +180,19 @@ span.field-control__input s {
 }
 
 .field-control__action:hover {
-  border-color: var(--pico-primary);
-  color: var(--pico-primary);
+  border-color: var(--action);
+  color: var(--action);
 }
 
 /* Removing is the destructive one, so it is the only one that goes red. */
 .field-control__action--remove:hover {
-  border-color: var(--pico-del-color);
-  background: var(--pico-del-background);
-  color: var(--pico-del-color);
+  border-color: var(--diff-removed);
+  background: var(--diff-removed-bg);
+  color: var(--diff-removed);
 }
 
 .field-control__action--restore {
-  color: var(--pico-primary);
+  color: var(--action);
 }
 
 /* Holds an absent action's place, so the trailing empty row lines up with the
@@ -207,9 +207,9 @@ span.field-control__input s {
 .field-control__input--draft {
   /* Muted, not absent: the fill alone is 1.06:1 against the card, so a
      transparent border left the control with no discernible boundary. */
-  border-color: var(--pico-muted-color);
-  background: var(--pico-muted-background);
-  color: var(--pico-muted-color);
+  border-color: var(--text-muted);
+  background: var(--surface-2);
+  color: var(--text-muted);
 }
 
 .field-control__input--draft::placeholder {
@@ -218,9 +218,9 @@ span.field-control__input s {
 }
 
 .field-control__input--draft:focus {
-  border-color: var(--pico-form-element-border-color);
-  background: var(--pico-card-background-color);
-  color: var(--civ-text);
+  border-color: var(--field-border);
+  background: var(--surface);
+  color: var(--text-default);
 }
 
 /* Date — a year box plus optional month/day, since partial dates are the norm */
@@ -239,12 +239,12 @@ span.field-control__input s {
   display: inline-flex;
   align-items: center;
   gap: 0.15rem;
-  font-size: var(--text-sm);
+  font-size: var(--font-size-sm);
   word-break: break-all;
 }
 .field-control__source-icon {
   font-size: 0.6rem;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   flex-shrink: 0;
 }
 
@@ -255,15 +255,15 @@ span.field-control__input s {
   gap: 0.5rem;
 }
 .field-control__photo-clear {
-  border: 1px solid var(--pico-del-color);
+  border: 1px solid var(--diff-removed);
   background: transparent;
-  border-radius: var(--pico-border-radius);
+  border-radius: var(--radius);
   padding: 0.15rem 0.4rem;
-  font-size: var(--text-xs);
-  color: var(--pico-del-color);
+  font-size: var(--font-size-xs);
+  color: var(--diff-removed);
   cursor: pointer;
 }
-.field-control__photo-clear:hover { background: var(--pico-del-background); }
+.field-control__photo-clear:hover { background: var(--diff-removed-bg); }
 
 /* Shared control sizing — one height and one radius for everything in a field
    body, so a row of controls reads as one kind of thing.
@@ -271,10 +271,10 @@ span.field-control__input s {
    Scoped to the two containers, not written as bare classes: elements.css sizes
    inputs with `input:not([type="checkbox"], …)`, and that is one class *and* one
    element, which outranks a lone class. The descendant form is two classes and
-   wins. This is the same reason the block above sets pico's spacing vars rather
+   wins. This is the same reason the block above sets the base layer's spacing vars rather
    than overriding padding directly.
 
-   Pinned height rather than a minimum — pico's computed input height lands ~6px
+   Pinned height rather than a minimum — the base layer's computed input height lands ~6px
    taller than a bare button, so a floor would leave them mismatched. Only the
    block axis and the radius are unified; horizontal padding stays per-control. */
 :is(.person-editor-list, .review-overview)

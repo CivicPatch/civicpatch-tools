@@ -234,7 +234,7 @@ function BasicTable(props) {
           @dragover=${e => isInternalDrag() && handleDragOver(dragOverIndex, e)}
           @drop=${e => handleDrop(dragOverIndex, e)}
           >
-          <div style="background:rgba(var(--tone-sapphire),0.18); border-radius:var(--pico-border-radius);"></div>
+          <div style="background:var(--focus-tint); border-radius:var(--radius);"></div>
         </td>
       </tr>
     `;

@@ -7,7 +7,7 @@
 }
 
 .activity-page__subtitle {
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   font-size: 0.85rem;
   margin-bottom: 0.75rem;
 }
@@ -23,22 +23,22 @@
   text-align: left;
   vertical-align: top;
   padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid var(--pico-muted-border-color);
+  border-bottom: 1px solid var(--border);
 }
 
 .activity-page__type {
-  font-family: var(--pico-font-family-monospace);
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   white-space: nowrap;
 }
 
 .activity-page__muted {
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
 }
 
 .activity-page__date {
   white-space: nowrap;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
 }
 
 .activity-page__fields {
@@ -47,19 +47,19 @@
 }
 
 .activity-page__field-name {
-  font-family: var(--pico-font-family-monospace);
+  font-family: var(--font-mono);
   font-size: 0.75rem;
 }
 
 .activity-page__before {
-  color: var(--pico-del-color);
+  color: var(--diff-removed);
 }
 
 .activity-page__after {
-  color: var(--pico-ins-color, var(--pico-primary));
+  color: var(--diff-added, var(--action));
 }
 
 .activity-page__empty {
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   font-style: italic;
 }

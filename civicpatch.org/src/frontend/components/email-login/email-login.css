@@ -1,4 +1,4 @@
-/* Co-located styles for <civ-email-login>. Uses Pico CSS custom properties
+/* Co-located styles for <civ-email-login>. Uses the shared CSS custom properties
  * so the form matches the rest of the site's theme (light/dark variants). */
 
 civ-email-login {
@@ -10,22 +10,22 @@ civ-email-login {
 .email-login__form {
   display: flex;
   flex-direction: column;
-  gap: var(--pico-spacing, 1rem);
+  gap: var(--space, 1rem);
 }
 
 .email-login__form label {
   font-weight: 500;
-  margin-bottom: calc(var(--pico-spacing, 1rem) * -0.5);
+  margin-bottom: calc(var(--space, 1rem) * -0.5);
   text-align: left;
 }
 
 .email-login__form input {
-  font-family: var(--pico-font-family);
+  font-family: var(--font-sans);
 }
 
 .email-login__form input:disabled {
-  background-color: var(--pico-muted-background);
-  color: var(--pico-muted-color);
+  background-color: var(--surface-2);
+  color: var(--text-muted);
   cursor: not-allowed;
 }
 
@@ -40,24 +40,24 @@ button.email-login__reset {
   align-self: flex-start;
   margin: 0 0 0.25rem;
   font-size: 0.85rem;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   transition: color 0.15s ease;
 }
 button.email-login__reset:hover:not(:disabled) {
-  color: var(--pico-color);
+  color: var(--control-text);
 }
 
 .email-login__hint {
   margin: 0;
   font-size: 0.9rem;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
 }
 
 .email-login__error {
-  color: var(--pico-del-color, #c0392b);
-  background-color: var(--pico-muted-background);
+  color: var(--diff-removed, #c0392b);
+  background-color: var(--surface-2);
   border-left: 3px solid currentColor;
   padding: 0.5rem 0.75rem;
-  border-radius: var(--pico-border-radius);
-  font-size: var(--text-sm);
+  border-radius: var(--radius);
+  font-size: var(--font-size-sm);
 }

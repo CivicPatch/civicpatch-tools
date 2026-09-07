@@ -11,6 +11,12 @@ repos:
         entry: scripts/tour_staleness_reminder.sh
         pass_filenames: false
         always_run: true
+      - id: css-tiers
+        name: Check CSS tiers (no primitives in components, no retired token names)
+        language: system
+        entry: scripts/check_css_tiers.py
+        pass_filenames: false
+        files: '\.(css|ts)$'
       - id: run-tests
         name: Run unit tests
         language: system

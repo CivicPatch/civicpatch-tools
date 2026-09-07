@@ -5,14 +5,14 @@
 }
 
 .people-directory__group-label {
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--pico-muted-color);
+    color: var(--text-muted);
     margin: 0 0 0.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--pico-muted-border-color);
+    border-bottom: 1px solid var(--border);
 }
 
 .people-directory__row {
@@ -20,7 +20,7 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 0;
-    border-bottom: 1px solid var(--pico-muted-border-color);
+    border-bottom: 1px solid var(--border);
 }
 
 .people-directory__row:last-child {
@@ -33,13 +33,13 @@
 
 .people-directory__name {
     font-weight: 600;
-    font-size: var(--text-base);
+    font-size: var(--font-size-base);
     margin: 0;
 }
 
 .people-directory__office {
-    font-size: var(--text-md);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-md);
+    color: var(--text-muted);
     margin: 0;
 }
 
@@ -47,6 +47,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.1rem;
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     margin-top: 0.25rem;
 }

@@ -6,8 +6,8 @@ civ-badge {
 }
 
 .civ-badge {
-    font-family: var(--pico-font-family-monospace);
-    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -19,58 +19,58 @@ civ-badge {
 }
 
 .civ-badge--primary {
-    color: var(--civ-bg, #fafafa);
-    background: var(--civ-text, #111111);
-    border: 1px solid var(--civ-text, #111111);
+    color: var(--bg, #fafafa);
+    background: var(--text-default, #111111);
+    border: 1px solid var(--text-default, #111111);
 }
 
 .civ-badge--secondary {
-    color: var(--pico-muted-color);
-    border: 1px solid var(--pico-muted-border-color);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
 }
 
 .civ-badge--danger {
-    color: var(--pico-del-color);
-    border: 1px solid var(--pico-del-color);
+    color: var(--diff-removed);
+    border: 1px solid var(--diff-removed);
     cursor: pointer;
 }
 
 .civ-badge--danger:hover {
-    background: color-mix(in srgb, var(--pico-del-color) 12%, transparent);
+    background: color-mix(in srgb, var(--diff-removed) 12%, transparent);
 }
 
 .civ-badge--success {
-    color: var(--pico-ins-color);
-    border: 1px solid var(--pico-ins-color);
+    color: var(--diff-added);
+    border: 1px solid var(--diff-added);
     cursor: pointer;
 }
 
 .civ-badge--success:hover {
-    background: color-mix(in srgb, var(--pico-ins-color) 12%, transparent);
+    background: color-mix(in srgb, var(--diff-added) 12%, transparent);
 }
 
 
 .civ-badge--global {
-    color: rgb(var(--tone-mauve));
-    border: 1px solid rgba(var(--tone-mauve), 0.4);
+    color: var(--level-global);
+    border: 1px solid var(--level-global);
 }
 
 .civ-badge--state {
-    color: rgb(var(--tone-green));
-    border: 1px solid rgba(var(--tone-green), 0.4);
+    color: var(--level-state);
+    border: 1px solid var(--success-tint);
 }
 
 .civ-badge--locality {
-    color: rgb(var(--tone-yellow));
-    border: 1px solid rgba(var(--tone-yellow), 0.4);
+    color: var(--level-locality);
+    border: 1px solid var(--warning-tint);
 }
 
 .civ-badge__popover {
-    font-size: var(--text-md);
+    font-size: var(--font-size-md);
     padding: 0.6rem 0.9rem;
     border-radius: 8px;
-    border: 1px solid var(--pico-del-color);
-    background: var(--pico-card-background-color);
-    color: var(--pico-color);
+    border: 1px solid var(--diff-removed);
+    background: var(--surface);
+    color: var(--text);
     max-width: 260px;
 }

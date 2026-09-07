@@ -36,7 +36,7 @@
 .merge-picker__agreed {
   margin: 0;
   font-size: 0.8125rem;
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
 }
 
 /* Step 1 — candidates */
@@ -49,9 +49,9 @@
 }
 
 .merge-picker__candidate {
-  --pico-background-color: transparent;
-  --pico-border-color: var(--civ-border);
-  --pico-color: var(--civ-text);
+  --control-bg: transparent;
+  --control-border: var(--border);
+  --control-text: var(--text-default);
 
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
@@ -62,7 +62,7 @@
 }
 
 .merge-picker__candidate:hover {
-  --pico-border-color: var(--civ-border-strong);
+  --control-border: var(--border-strong);
 }
 
 .merge-picker__candidate-name {
@@ -73,7 +73,7 @@
 .merge-picker__candidate-sub,
 .merge-picker__candidate-status {
   font-size: 0.75rem;
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
 }
 
 /* Step 2 — what survives */
@@ -82,16 +82,16 @@
   margin: 0;
   font-size: 0.875rem;
   padding: 0.5rem 0.7rem;
-  border: 1px solid var(--civ-border);
-  border-left: 3px solid var(--pico-primary);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--action);
   border-radius: 4px;
-  background: var(--civ-surface-2);
+  background: var(--surface-2);
 }
 
 .merge-picker__absorbed {
   display: block;
   font-size: 0.75rem;
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
 }
 
 .merge-grid {
@@ -107,9 +107,9 @@
   font-size: 0.6875rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
   padding-bottom: 0.2rem;
-  border-bottom: 1px solid var(--civ-border);
+  border-bottom: 1px solid var(--border);
 }
 
 .merge-grid__head--centre {
@@ -118,7 +118,7 @@
 
 .merge-grid__label {
   font-size: 0.8125rem;
-  color: var(--civ-text-secondary);
+  color: var(--text-secondary);
 }
 
 .merge-grid__candidate,
@@ -138,9 +138,9 @@
 }
 
 .merge-picker .merge-grid__choice {
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
-  color: var(--pico-muted-color);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
   font-family: ui-monospace, Menlo, monospace;
   font-size: 0.6875rem;
   letter-spacing: 0.04em;
@@ -149,9 +149,9 @@
 }
 
 .merge-picker .merge-grid__choice[aria-pressed="true"] {
-  border-color: var(--pico-ins-color);
-  background: var(--pico-ins-background);
-  color: var(--pico-ins-color);
+  border-color: var(--diff-added);
+  background: var(--diff-added-bg);
+  color: var(--diff-added);
 }
 
 .merge-grid__fixed {
@@ -159,7 +159,7 @@
   font-size: 0.6875rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
 }
 
 /* Back to the person this merge started from — the modal stays open on them, so
@@ -172,11 +172,11 @@
   border: none;
   background: none;
   font: inherit;
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   cursor: pointer;
 }
 
 .merge-picker__back:hover {
-  color: var(--civ-text);
+  color: var(--text-default);
 }

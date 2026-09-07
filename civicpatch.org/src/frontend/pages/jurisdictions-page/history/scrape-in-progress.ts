@@ -101,7 +101,7 @@ function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onC
       }
       .sip-timing {
         font-size: 0.72rem;
-        color: var(--pico-muted-color);
+        color: var(--text-muted);
       }
       .sip-progress {
         display: block;
@@ -116,10 +116,10 @@ function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onC
         align-items: center;
         gap: 0.5rem;
         font-size: 0.68rem;
-        color: var(--pico-muted-color);
+        color: var(--text-muted);
       }
       .sip-temporal {
-        font-family: var(--pico-font-family-monospace, monospace);
+        font-family: var(--font-mono, monospace);
         overflow-wrap: anywhere;
       }
       .sip-cancel {
@@ -136,8 +136,8 @@ function ScrapeInProgress({ scrape, canCancel, canViewTemporalWorkflowState, onC
           : nothing}
         <civ-status-badge
           label="${scrape.pipeline_run_status}"
-          bg="var(--pico-info-background)"
-          color="var(--pico-info-color)"
+          bg="var(--info-bg)"
+          color="var(--info)"
         ></civ-status-badge>
         <span class="sip-timing">
           started ${dateStringToFriendly(scrape.created_at)}, running

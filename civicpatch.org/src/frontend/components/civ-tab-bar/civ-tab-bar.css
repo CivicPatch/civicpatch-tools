@@ -6,12 +6,12 @@
 .civ-tab {
     display: block;
     padding: 0.2rem 0.75rem;
-    font-family: var(--pico-font-family-monospace);
-    font-size: var(--text-sm);
-    color: var(--pico-muted-color);
-    background: var(--pico-muted-background);
-    border: 1px solid var(--pico-muted-border-color);
-    border-radius: var(--pico-border-radius) var(--pico-border-radius) 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius) var(--radius) 0 0;
     cursor: pointer;
     transition: color 0.15s, border-color 0.15s;
     white-space: nowrap;
@@ -22,13 +22,13 @@
 }
 
 .civ-tab:not(.civ-tab--active):hover {
-    border-color: var(--pico-primary);
+    border-color: var(--action);
 }
 
 .civ-tab--active {
-    background: var(--pico-card-background-color);
-    color: var(--pico-primary);
-    border-bottom: 2px solid var(--pico-primary);
+    background: var(--surface);
+    color: var(--action);
+    border-bottom: 2px solid var(--action);
     font-weight: 600;
     z-index: 1;
 }

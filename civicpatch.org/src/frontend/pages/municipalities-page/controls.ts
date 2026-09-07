@@ -62,7 +62,7 @@ export function renderControls({
               >
                 <span
                   class="municipalities-controls__pill-dot"
-                  style="background:var(--civ-status-${key})"
+                  style="background:var(--status-${key})"
                 ></span>
                 ${STATUS_LABELS[key]}
                 <span class="municipalities-controls__pill-count"

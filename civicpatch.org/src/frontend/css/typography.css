@@ -1,0 +1,181 @@
+@layer base {
+/* Document base and the type scale. Split out of elements.css 2026-09-07 at the
+   400-line ceiling; same layer, so only the file boundary moved. */
+
+/* ── Document base ───────────────────────────────────────────────────────────
+ * `:where()` = specificity 0, the floor everything stands on. `--font-size`
+ * is deliberately unread; styles.css sets a flat `:root { font-size }`. */
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+}
+
+:where(:host),
+:where(:root) {
+  background-color: var(--bg);
+  color: var(--text);
+  font-weight: var(--font-weight);
+  line-height: var(--line-height);
+  font-family: var(--font-sans);
+  text-underline-offset: var(--underline-offset);
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+  tab-size: 4;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  width: 100%;
+  margin: 0;
+}
+
+/* Selection highlight. Easy to lose track of — nothing is selected in a
+   screenshot, so the visual baseline cannot see this rule at all. */
+::selection {
+  background-color: var(--selection-bg);
+}
+
+main {
+  display: block;
+}
+
+/* ── Typography ──────────────────────────────────────────────────────────────
+ * Skipped as unused: blockquote, mark, figure, sub/sup, abbr, kbd, samp, b.
+ * Headings set --font-size/-line-height per level; one shared rule reads them. */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  --font-weight: 700;
+  margin-top: 0;
+  margin-bottom: var(--space-prose);
+  color: var(--text);
+  font-weight: var(--font-weight);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  font-family: var(--font-sans);
+}
+
+h1 { --font-size: 2rem;     --line-height: 1.125; --heading-space-top: 3rem; }
+h2 { --font-size: 1.75rem;  --line-height: 1.15;  --heading-space-top: 2.625rem; }
+h3 { --font-size: 1.5rem;   --line-height: 1.175; --heading-space-top: 2.25rem; }
+h4 { --font-size: 1.25rem;  --line-height: 1.2;   --heading-space-top: 1.874rem; }
+h5 { --font-size: 1.125rem; --line-height: 1.225; --heading-space-top: 1.6875rem; }
+h6 { --font-size: 1rem;     --line-height: 1.25;  --heading-space-top: 1.5rem; }
+
+address,
+dl,
+ol,
+p,
+pre,
+ul {
+  margin-top: 0;
+  margin-bottom: var(--space-prose);
+  color: var(--text);
+  font-style: normal;
+  font-weight: var(--font-weight);
+}
+
+/* A heading following a block of content gets extra room above it — the amount
+   scales with the heading level via the token set above. */
+:where(article, address, dl, figure, form, ol, p, pre, table, ul) ~ :is(h1, h2, h3, h4, h5, h6) {
+  margin-top: var(--heading-space-top);
+}
+
+p {
+  margin-bottom: var(--space-prose);
+}
+
+hgroup {
+  margin-bottom: var(--space-prose);
+}
+
+hgroup > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* A trailing line in an hgroup is a subtitle, not another heading. */
+hgroup > :not(:first-child):last-child {
+  --text: var(--text-muted);
+  --font-weight: unset;
+  font-size: 1rem;
+}
+
+:where(ol, ul) li {
+  margin-bottom: calc(var(--space-prose) * 0.25);
+}
+
+:where(dl, ol, ul) :where(dl, ol, ul) {
+  margin: 0;
+  margin-top: calc(var(--space-prose) * 0.25);
+}
+
+ul li {
+  list-style: square;
+}
+
+small {
+  --font-size: 0.875em;
+}
+
+strong {
+  font-weight: bolder;
+}
+
+ins {
+  color: var(--diff-added);
+  text-decoration: none;
+}
+
+del {
+  color: var(--diff-removed);
+}
+
+hr {
+  height: 0;
+  margin: var(--space-prose) 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+  color: inherit;
+}
+
+code,
+kbd,
+pre,
+samp {
+  --font-sans: var(--font-mono);
+}
+
+code,
+kbd,
+samp {
+  display: inline-block;
+  padding: 0.375rem;
+}
+
+pre {
+  overflow: auto;
+}
+
+pre code,
+pre samp {
+  font-size: inherit;
+  font-family: inherit;
+}
+
+pre > code,
+pre > samp {
+  display: block;
+  padding: var(--space);
+  background: 0 0;
+  line-height: var(--line-height);
+}
+}

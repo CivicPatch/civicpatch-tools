@@ -3,7 +3,7 @@
   width: 100%;
 }
 
-/* `.grid` was Pico's and went with it, leaving this fieldset in normal flow — the input
+/* `.grid` came from the removed framework and went with it, leaving this fieldset in normal flow — the input
    fell back to its default ~20ch width and the toggle looked oversized beside it. Flex
    restores the intent: input fills, toggle hugs its caret. */
 .autocomplete-wrapper fieldset.grid {
@@ -21,9 +21,9 @@
 
 /* Focus ring on the whole input+button group, not just the input */
 .autocomplete-wrapper fieldset.grid:focus-within {
-  outline: var(--pico-outline-width) solid var(--pico-form-element-focus-color);
+  outline: var(--focus-ring-width) solid var(--border-strong);
   outline-offset: 0;
-  border-radius: var(--pico-border-radius);
+  border-radius: var(--radius);
 }
 
 .autocomplete-input {
@@ -52,9 +52,9 @@
   justify-content: center;
   margin-bottom: 0;
   /* Neutral form-element style — not a primary-coloured button */
-  --pico-background-color: var(--pico-form-element-background-color);
-  --pico-border-color: var(--pico-form-element-border-color);
-  --pico-color: var(--pico-form-element-color);
+  --control-bg: var(--surface);
+  --control-border: var(--field-border);
+  --control-text: var(--text-default);
 }
 
 .autocomplete-toggle__icon {
@@ -70,9 +70,9 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: var(--civ-surface, #ffffff);
-  border: 1px solid var(--civ-border, #e0e0e0);
-  border-radius: var(--pico-border-radius);
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--border, #e0e0e0);
+  border-radius: var(--radius);
   margin-top: 0.25rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   max-height: 400px;
@@ -92,7 +92,7 @@
 .autocomplete-option {
   padding: 0.75rem 1rem;
   cursor: pointer;
-  border-bottom: 1px solid var(--pico-muted-border-color);
+  border-bottom: 1px solid var(--border);
   transition: background-color 0.1s ease;
   list-style: none;
 }
@@ -103,28 +103,28 @@
 
 .autocomplete-option:hover,
 .autocomplete-option.active {
-  background-color: var(--pico-secondary-background);
-  color: var(--pico-secondary-inverse);
+  background-color: var(--muted-action-bg);
+  color: var(--muted-action-text);
 }
 
 .autocomplete-option[aria-selected="true"] {
-  background-color: var(--pico-primary-background);
-  color: var(--pico-primary-inverse);
+  background-color: var(--action);
+  color: var(--action-text);
 }
 
 .autocomplete-pagination {
-  border-top: 1px solid var(--pico-muted-border-color);
+  border-top: 1px solid var(--border);
   padding: 0.75rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--pico-card-background-color);
-  border-radius: 0 0 var(--pico-border-radius) var(--pico-border-radius);
+  background: var(--surface);
+  border-radius: 0 0 var(--radius) var(--radius);
 }
 
 .autocomplete-pagination-info {
-  font-size: var(--text-md);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-md);
+  color: var(--text-muted);
 }
 
 .autocomplete-pagination-controls {
@@ -134,7 +134,7 @@
 
 .autocomplete-pagination button {
   padding: 0.25rem 0.75rem;
-  font-size: var(--text-md);
+  font-size: var(--font-size-md);
   margin: 0;
 }
 
@@ -146,5 +146,5 @@
 .autocomplete-selected {
   display: block;
   margin-top: 0.5rem;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
 }

@@ -233,7 +233,7 @@ function RosterEditor({
     })}
 
     ${publishError
-      ? html`<p style="color: var(--pico-del-color);">${publishError}</p>`
+      ? html`<p style="color: var(--diff-removed);">${publishError}</p>`
       : nothing}
 
     <review-modal

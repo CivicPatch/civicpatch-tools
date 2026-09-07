@@ -1,25 +1,25 @@
 .config-editor__table {
     width: 100%;
     border-collapse: collapse;
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     margin: 0;
 }
 
 .config-editor__table th {
-    font-size: var(--text-xs);
+    font-size: var(--font-size-xs);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--pico-muted-color);
+    color: var(--text-muted);
     padding: 0.4rem 0.5rem;
-    border-bottom: 1px solid var(--pico-muted-border-color);
+    border-bottom: 1px solid var(--border);
     text-align: left;
     background: none;
 }
 
 .config-editor__table td {
     padding: 0.45rem 0.5rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--pico-muted-border-color) 50%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
     vertical-align: middle;
     background: none;
 }
@@ -42,7 +42,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.07em;
-    color: var(--pico-muted-color);
+    color: var(--text-muted);
     margin: 0.5rem 0 0;
 }
 
@@ -59,26 +59,26 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    background: var(--pico-primary);
-    color: var(--pico-primary-inverse);
+    background: var(--action);
+    color: var(--action-text);
     padding: 0.5rem 1rem;
-    border-radius: var(--pico-border-radius);
-    font-size: var(--text-sm);
+    border-radius: var(--radius);
+    font-size: var(--font-size-sm);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 
 .config-editor__empty {
-    color: var(--pico-muted-color);
+    color: var(--text-muted);
     font-style: italic;
     text-align: center;
     padding: 0.75rem;
 }
 
 .config-editor__add-btn {
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     font-weight: 500;
-    color: var(--pico-primary);
+    color: var(--action);
     background: none;
     border: none;
     cursor: pointer;
@@ -102,12 +102,12 @@
 /* ── Section card ── */
 
 .config-editor__section {
-    border: 1px solid var(--pico-muted-border-color);
-    border-radius: var(--pico-border-radius);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     margin: 0;
 }
 
-/* Reset Pico accordion — Pico adds padding, border-bottom, and list-item display */
+/* Reset the base accordion — it adds padding, border-bottom, and list-item display */
 details.config-editor__section {
     margin-bottom: 0;
     padding: 0;
@@ -117,13 +117,13 @@ details.config-editor__section > summary {
     display: flex;
     list-style: none;
     padding: 0;
-    margin: 0;       /* Pico sets margin-bottom: var(--pico-spacing) on open summary */
+    margin: 0;       /* The base layer sets margin-bottom: var(--space) on open summary */
 }
 
-/* Pico overrides summary color via accordion tokens — restore it */
+/* The base layer overrides summary color — restore it */
 details.config-editor__section > summary:not([role]),
 details.config-editor__section[open] > summary:not([role]):not(:focus) {
-    color: var(--pico-color);
+    color: var(--text);
 }
 
 details.config-editor__section > summary::-webkit-details-marker { display: none; }
@@ -138,37 +138,37 @@ summary.config-editor__section-title {
     padding: 0.6rem 0.85rem;
     margin: 0;
     width: 100%;
-    font-size: var(--text-md);
+    font-size: var(--font-size-md);
     font-weight: 500;
     cursor: pointer;
-    background: var(--pico-card-sectioning-background-color);
+    background: var(--surface-2);
     border-bottom: 1px solid transparent;
-    border-radius: calc(var(--pico-border-radius) - 1px) calc(var(--pico-border-radius) - 1px) 0 0;
+    border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
     transition: background 0.1s;
     user-select: none;
     line-height: normal;
 }
 
 details.config-editor__section[open] > summary.config-editor__section-title {
-    border-bottom-color: var(--pico-muted-border-color);
+    border-bottom-color: var(--border);
 }
 
 summary.config-editor__section-title:hover {
-    background: color-mix(in srgb, var(--civ-border, #e0e0e0) 40%, var(--pico-card-sectioning-background-color));
+    background: color-mix(in srgb, var(--border, #e0e0e0) 40%, var(--surface-2));
 }
 
 .config-editor__section-label {
-    color: var(--pico-muted-color);
-    font-size: var(--text-sm);
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
     font-weight: 400;
 }
 
 .config-editor__role-count {
     font-size: 0.7rem;
     font-weight: 600;
-    font-family: var(--pico-font-family-monospace);
-    background: var(--pico-muted-background);
-    color: var(--pico-muted-color);
+    font-family: var(--font-mono);
+    background: var(--surface-2);
+    color: var(--text-muted);
     border-radius: 999px;
     padding: 0.1em 0.55em;
     margin-left: auto;
@@ -176,7 +176,7 @@ summary.config-editor__section-title:hover {
 
 .config-editor__chevron {
     font-size: 0.65rem;
-    color: var(--pico-muted-color);
+    color: var(--text-muted);
     transition: transform 0.15s;
     flex-shrink: 0;
 }
@@ -207,14 +207,14 @@ summary.config-editor__section-title + .config-editor__section-body {
     display: flex;
     align-items: center;
     gap: 0.45rem;
-    background: var(--pico-card-sectioning-background-color);
-    border: 1px solid var(--pico-muted-border-color);
-    border-radius: var(--pico-border-radius);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     padding: 0.3rem 0.6rem;
 }
 
 .config-editor__filter-icon {
-    color: var(--pico-muted-color);
+    color: var(--text-muted);
     font-size: 0.72rem;
     flex-shrink: 0;
 }
@@ -224,8 +224,8 @@ input.config-editor__filter-input {
     background: none;
     outline: none;
     box-shadow: none;
-    font-size: var(--text-sm);
-    color: var(--pico-color);
+    font-size: var(--font-size-sm);
+    color: var(--control-text);
     width: 100%;
     padding: 0;
     margin: 0;
@@ -237,8 +237,8 @@ input.config-editor__filter-input {
 /* ── Readonly label ── */
 
 .config-editor__readonly {
-    color: var(--pico-muted-color);
-    font-size: var(--text-xs);
+    color: var(--text-muted);
+    font-size: var(--font-size-xs);
     font-weight: 400;
     font-style: italic;
 }
@@ -255,13 +255,13 @@ input.config-editor__filter-input {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     margin: 0;
 }
 
 .config-editor__edit-form input[type="text"],
 .config-editor__edit-form textarea {
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     padding: 0.3em 0.5em;
     margin: 0;
 }
@@ -301,22 +301,22 @@ civ-role-table {
 /* ── Error / locality autocomplete ── */
 
 .config-editor__error {
-    color: var(--pico-del-color);
-    font-size: var(--text-sm);
+    color: var(--diff-removed);
+    font-size: var(--font-size-sm);
     margin: 0;
 }
 
 .config-editor__locality-autocomplete {
     width: 100%;
     font-weight: 400;
-    /* Compact Pico form element sizing for admin context */
-    --pico-form-element-spacing-vertical: 0.25rem;
-    --pico-form-element-spacing-horizontal: 0.6rem;
-    font-size: var(--text-sm);
+    /* Compact form-control sizing for admin context */
+    --control-pad-y: 0.25rem;
+    --control-pad-x: 0.6rem;
+    font-size: var(--font-size-sm);
 }
 
 .config-editor__locality-autocomplete input.autocomplete-input {
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     min-height: unset;
     margin-bottom: 0;
 }
@@ -325,21 +325,21 @@ civ-role-table {
     min-height: unset;
     min-width: 2.25rem;
     margin-bottom: 0;
-    background-color: var(--pico-form-element-background-color);
-    color: var(--pico-form-element-color);
-    border-color: var(--pico-form-element-border-color);
+    background-color: var(--surface);
+    color: var(--text-default);
+    border-color: var(--field-border);
     box-shadow: none;
 }
 
 .config-editor__locality-autocomplete .autocomplete-option {
     padding: 0.4rem 0.75rem;
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     font-weight: 400;
 }
 
 .config-editor__locality-autocomplete .autocomplete-selected,
 .config-editor__locality-autocomplete .autocomplete-pagination-info {
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     font-weight: 400;
 }
 
@@ -349,5 +349,5 @@ civ-role-table {
 
 .config-editor__locality-autocomplete .autocomplete-pagination button {
     padding: 0.2rem 0.5rem;
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
 }

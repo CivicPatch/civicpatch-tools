@@ -13,8 +13,8 @@ type PeopleBySourceHost = HTMLElement & {
 
 const checkmark = (value: boolean) =>
   value
-    ? html`<i class="fa-solid fa-check" style="color: var(--pico-ins-color);"></i>`
-    : html`<i class="fa-solid fa-xmark" style="color: var(--pico-del-color);"></i>`;
+    ? html`<i class="fa-solid fa-check" style="color: var(--diff-added);"></i>`
+    : html`<i class="fa-solid fa-xmark" style="color: var(--diff-removed);"></i>`;
 
 function PeopleBySource(host: PeopleBySourceHost) {
   const { rows = [], originSource } = host;

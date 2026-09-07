@@ -9,26 +9,26 @@
   align-items: baseline;
   gap: 0.32rem;
   padding: 0.1rem 0.5rem;
-  border: 1px solid var(--civ-border);
+  border: 1px solid var(--border);
   border-radius: 999px;
-  background: var(--civ-surface);
-  font-size: var(--text-xs);
+  background: var(--surface);
+  font-size: var(--font-size-xs);
   line-height: 1.6;
   white-space: nowrap;
 }
 
 .change-badge__sigil {
-  font-family: var(--pico-font-family-monospace, monospace);
+  font-family: var(--font-mono, monospace);
   font-weight: 700;
 }
 
 .change-badge__who {
-  color: var(--civ-text);
+  color: var(--text-default);
   font-weight: 600;
 }
 
 .change-badge__role {
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
 }
 
 /* Row — the full form, and the list that stacks them */
@@ -37,7 +37,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  font-size: var(--text-sm);
+  font-size: var(--font-size-sm);
 }
 
 .change-row {
@@ -48,7 +48,7 @@
 }
 
 .change-row__sigil {
-  font-family: var(--pico-font-family-monospace, monospace);
+  font-family: var(--font-mono, monospace);
   font-weight: 700;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .change-row__detail {
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
   overflow-wrap: anywhere;
 }
 
@@ -65,20 +65,20 @@
 
 .change-badge--add .change-badge__sigil,
 .change-row--add .change-row__sigil {
-  color: rgb(var(--tone-green));
+  color: var(--diff-added);
 }
 
 .change-badge--edit .change-badge__sigil,
 .change-row--edit .change-row__sigil {
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
 }
 
 .change-badge--remove .change-badge__sigil,
 .change-row--remove .change-row__sigil {
-  color: rgb(var(--tone-red));
+  color: var(--diff-removed);
 }
 
 .change-badge--move .change-badge__sigil,
 .change-row--move .change-row__sigil {
-  color: rgb(var(--tone-blue));
+  color: var(--info);
 }

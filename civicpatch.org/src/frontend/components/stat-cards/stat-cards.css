@@ -6,18 +6,18 @@
 }
 
 .stat-cards__card {
-    background: var(--pico-card-background-color);
+    background: var(--surface);
     border-radius: 3px;
     padding: 1.25rem 1rem;
     display: flex;
     flex-direction: column;
     gap: 0.2em;
     text-align: left;
-    border: 1.5px solid var(--pico-muted-border-color);
+    border: 1.5px solid var(--border);
     transition: border-color 0.15s ease;
     width: 100%;
     position: relative;
-    border-top: 2px solid var(--civ-border-strong);
+    border-top: 2px solid var(--border-strong);
 }
 
 button.stat-cards__card {
@@ -25,29 +25,29 @@ button.stat-cards__card {
 }
 
 button.stat-cards__card:hover {
-    border-color: var(--pico-primary);
+    border-color: var(--action);
 }
 
 .stat-cards__label {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 0.6875rem;
     font-weight: 500;
-    color: var(--civ-text-muted);
+    color: var(--text-muted);
     letter-spacing: 0;
 }
 
 .stat-cards__value {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: var(--text-2xl);
+    font-size: var(--font-size-2xl);
     font-weight: 700;
-    color: var(--civ-text);
+    color: var(--text-default);
     line-height: 1.1;
     letter-spacing: -0.03em;
 }
 
 .stat-cards__sub {
-    font-size: var(--text-md);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-md);
+    color: var(--text-muted);
 }
 
 .stat-cards__card[data-tooltip]::before {
@@ -60,15 +60,15 @@ button.stat-cards__card:hover {
     position: absolute;
     bottom: 0.75rem;
     right: 0.85rem;
-    font-size: var(--text-sm);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
     transition: color 0.15s ease;
 }
 
 button.stat-cards__card:hover .stat-cards__copy-icon {
-    color: var(--pico-primary);
+    color: var(--action);
 }
 
 .stat-cards__copy-icon--copied {
-    color: var(--pico-ins-color);
+    color: var(--diff-added);
 }
