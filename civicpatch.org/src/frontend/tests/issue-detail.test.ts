@@ -1,26 +1,16 @@
 import { describe, it, expect } from "vitest";
 import { getIssueDetail } from "../pages/issues-page/utils.js";
-import { ISSUE_TYPE } from "../utils/issue-types.js";
-
-const CHANGESET_ID = "req-123";
 
 describe("getIssueDetail", () => {
-  it("shows the merge error string for a merge_failed issue", () => {
-    const data = { error: "Pull request is blocked", mergeable_state: "blocked" };
-    expect(getIssueDetail(ISSUE_TYPE.MERGE_FAILED, CHANGESET_ID, data)).toBe("Pull request is blocked");
+  it("shows the stored error string", () => {
+    expect(getIssueDetail({ error: "some pipeline error" })).toBe("some pipeline error");
   });
 
-  it("falls back to the issue key when a merge_failed issue has no error", () => {
-    const data = { mergeable_state: null };
-    expect(getIssueDetail(ISSUE_TYPE.MERGE_FAILED, CHANGESET_ID, data)).toBe(CHANGESET_ID);
+  it("is empty when the issue records no error", () => {
+    expect(getIssueDetail({ mergeable_state: null })).toBe("");
   });
 
-  it("falls back to the issue key when a merge_failed issue has no data", () => {
-    expect(getIssueDetail(ISSUE_TYPE.MERGE_FAILED, CHANGESET_ID, null)).toBe(CHANGESET_ID);
-  });
-
-  it("does not surface a stored error for non-merge_failed types", () => {
-    const data = { error: "some pipeline error" };
-    expect(getIssueDetail(ISSUE_TYPE.PIPELINE_ERROR, CHANGESET_ID, data)).toBe(CHANGESET_ID);
+  it("is empty when the issue has no data at all", () => {
+    expect(getIssueDetail(null)).toBe("");
   });
 });

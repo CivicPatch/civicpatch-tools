@@ -43,6 +43,18 @@ class JurisdictionSearchResponse(BaseModel):
     links: PaginationLinks
 
 
+class TimelineIssue(BaseModel):
+    """What a run reported about one changeset, whatever became of it since.
+
+    `data` differs by type — `{}`, `{found, expected}`, `{error}` — so it is passed through
+    rather than flattened to a key not every type has.
+    """
+
+    issue_type: str
+    status: str
+    data: dict = {}
+
+
 class JurisdictionHistoryEntry(BaseModel):
     """One changeset on a jurisdiction's timeline: what it was, how it ended, what it changed.
 
@@ -68,10 +80,10 @@ class JurisdictionHistoryEntry(BaseModel):
     updated_at: str | None
     pipeline_run_started_at: str | None = None
     pipeline_run_finished_at: str | None = None
-    # Why it ended that way, and what is still open on it. `cost_cap_reached` is the one
-    # that explains a short roster, and it was invisible here.
+    # Why it ended that way, and everything the run reported about it. `cost_cap_reached` is
+    # the one that explains a short roster, and it was invisible here.
     dismissed_reason: str | None = None
-    issue_types: list[str] = []
+    issues: list[TimelineIssue] = []
     pipeline_run_status: str | None
     pipeline_run_progress: int | None
     change_url: str | None

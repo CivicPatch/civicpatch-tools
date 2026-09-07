@@ -23,9 +23,10 @@ export const fetchPullRequests = async (jurisdictionOcdid) => {
   return res.json();
 };
 
-export const fetchIssueCounts = async (stateCode) => {
+export const fetchIssueCounts = async (stateCode, kind) => {
   const params = new URLSearchParams();
   if (stateCode) params.set("state_code", stateCode);
+  if (kind) params.set("kind", kind);
   const query = params.toString() ? `?${params}` : "";
   const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/counts${query}`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -39,11 +40,12 @@ export const fetchChangeLogs = async (bucket, page = 1, perPage = 20) => {
   return res.json();
 };
 
-export const fetchJobIssues = async (tags, page, perPage, sort, stateCode, showArchived = false) => {
+export const fetchJobIssues = async (tags, page, perPage, sort, stateCode, showArchived = false, kind) => {
   const params = new URLSearchParams({ page, per_page: perPage, sort });
   if (tags && tags.length) params.set("tags", tags.join(","));
   if (stateCode) params.set("state_code", stateCode);
   if (showArchived) params.set("show_archived", "true");
+  if (kind) params.set("kind", kind);
   const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues?${params}`, {
     credentials: "include",
   });
@@ -75,6 +77,17 @@ export const dismissIssue = async (issueId) => {
     credentials: "include",
     method: "POST",
     headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const dismissIssues = async (issueIds) => {
+  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/dismiss`, {
+    credentials: "include",
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    body: JSON.stringify({ issue_ids: issueIds }),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();

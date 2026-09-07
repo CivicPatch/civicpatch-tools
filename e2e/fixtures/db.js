@@ -46,38 +46,30 @@ export function personUuid(slug) {
   ].join("-");
 }
 
-// issue_key for the seeded unrecognized_role issue. It is the role name itself —
-// see upsert_issue in database/issues.py, which keys this issue type on the role.
-export const UNRECOGNIZED_ROLE_KEY = "Deputy Vice Chair (e2e)";
-const TEST_PR_ID = "00000000-0000-0000-eeee-000000000002";
 
 export const TEST_JURISDICTION_OCDID_2 =
   "ocd-jurisdiction/country:us/state:nj/place:e2e_test_2/government";
 export const TEST_CHANGESET_ID_2 = "00000000-0000-0000-eeee-000000000003";
-const TEST_PR_ID_2 = "00000000-0000-0000-eeee-000000000004";
 
 export const TEST_JURISDICTION_OCDID_3 =
   "ocd-jurisdiction/country:us/state:nj/place:e2e_test_3/government";
 export const TEST_CHANGESET_ID_3 = "00000000-0000-0000-eeee-000000000005";
-const TEST_PR_ID_3 = "00000000-0000-0000-eeee-000000000006";
 
-// Baseline fixture — a first-capture jurisdiction (scraped_at left NULL) so the
+// Baseline fixture — a first-capture jurisdiction (no prior collection) so the
 // review renders in BASELINE mode (banner, no diff panel). The baseline-mode spec
 // deep-links to it by changeset_id. Kept in its own state (vt) so this extra open
 // card doesn't pollute the nj review queue the state-switching specs count on.
 export const BASELINE_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:vt/place:e2e_baseline/government";
 export const BASELINE_CHANGESET_ID = "00000000-0000-0000-eeee-000000000007";
-const BASELINE_PR_ID = "00000000-0000-0000-eeee-000000000008";
 const BASELINE_PR_NUMBER = 4;
 
-// Populated reconcile fixture — a previously-scraped jurisdiction (scraped_at
-// set) with existing people, so the diff renders real changed/added/removed
+// Populated reconcile fixture — a previously-collected jurisdiction with existing
+// people, so the diff renders real changed/added/removed
 // states. Own state (vt2 → "nh") and deep-linked by changeset_id, like baseline.
 export const RECONCILE_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:nh/place:e2e_reconcile/government";
 export const RECONCILE_CHANGESET_ID = "00000000-0000-0000-eeee-000000000009";
-const RECONCILE_PR_ID = "00000000-0000-0000-eeee-00000000000a";
 const RECONCILE_PR_NUMBER = 5;
 
 // Scale fixture — a realistically-sized council (§20). Every other card here has
@@ -88,7 +80,6 @@ const RECONCILE_PR_NUMBER = 5;
 export const SCALE_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:ma/place:e2e_scale/government";
 export const SCALE_CHANGESET_ID = "00000000-0000-0000-eeee-00000000000f";
-const SCALE_PR_ID = "00000000-0000-0000-eeee-000000000010";
 const SCALE_PR_NUMBER = 8;
 
 const SCALE_DIVISION_BASE = "ocd-division/country:us/state:ma/place:e2e_scale";
@@ -176,7 +167,6 @@ function buildScaleProposed() {
 export const TX_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:tx/place:e2e_tx/government";
 export const TX_CHANGESET_ID = "00000000-0000-0000-eeee-000000000010";
-const TX_PR_ID = "00000000-0000-0000-eeee-000000000011";
 
 // Attempts, not proposals: an in-flight or failed run has `changeset_id` NULL, so it appears
 // in no changeset-rooted query. nj is busy and has failed once, tx has only failed.
@@ -189,14 +179,13 @@ const SEEDED_RUN_IDS = [
   TX_RUN_FAILED_ID,
 ];
 
-// Issue-markers fixture — reconcile mode (scraped_at set), no existing people so
+// Issue-markers fixture — reconcile mode (a prior collection), no existing people so
 // every proposed person renders as an "added" card. Its issues carry
 // structured issues that anchor to proposed person ids, exercising the review card's
 // per-card markers. Own state (me) and deep-linked by changeset_id, like the others.
 export const MARKERS_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:me/place:e2e_markers/government";
 export const MARKERS_CHANGESET_ID = "00000000-0000-0000-eeee-000000000012";
-const MARKERS_PR_ID = "00000000-0000-0000-eeee-000000000013";
 const MARKERS_PR_NUMBER = 12;
 
 // Read-only fixture — a published request, the state a card lands in once it has
@@ -212,7 +201,6 @@ export const READ_ONLY_CHANGESET_ID = "00000000-0000-0000-eeee-000000000014";
 export const READ_ONLY_PR_URL =
   "https://github.com/civicpatch/open-data/pull/14";
 export const READ_ONLY_WEBSITE_URL = "https://e2e-readonly.example.gov";
-const READ_ONLY_PR_ID = "00000000-0000-0000-eeee-000000000015";
 const READ_ONLY_PR_NUMBER = 14;
 
 // Map fixtures — one jurisdiction per status bucket so map e2e tests can assert
@@ -298,6 +286,19 @@ function asSightings(proposed) {
  * migration 141, and `requests.data_json` with 142. The roster a reviewer sees is derived from
  * these sightings, not stored.
  */
+// What puts a card in RECONCILE rather than BASELINE mode: `has_ever_collected` asks whether the
+// jurisdiction has a published changeset of a collection kind. Replaces `jurisdictions.scraped_at`
+// (dropped by migration 181), so the fixture is previously collected rather than stamped.
+async function seedPriorCollection(client, ocdid) {
+  await client.query(
+    `INSERT INTO changesets (id, kind, jurisdiction_ocdid, created_at, updated_at, published_at)
+     VALUES ($1, 'scrape', $2,
+             NOW() - INTERVAL '30 days', NOW() - INTERVAL '30 days', NOW() - INTERVAL '30 days')
+     ON CONFLICT (id) DO NOTHING`,
+    [personUuid(`prior-collection:${ocdid}`), ocdid],
+  );
+}
+
 async function seedReviewCard(
   client,
   { changesetId, ocdid, people = [], publishedAt = null, ageSeconds = 0, changeUrl = null },
@@ -524,15 +525,16 @@ export async function seedE2eFixtures() {
       ],
     );
 
-    // Jurisdiction. scraped_at set (NOW) so the review renders in RECONCILE mode
-    // (old<->new diff panel). The baseline fixture below leaves scraped_at NULL.
+    // Jurisdiction, with a prior collection so the review renders in RECONCILE mode
+    // (old<->new diff panel). The baseline fixture below gets none.
     await client.query(
-      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-       VALUES ($1, 'nj', 'active', '{"name":"E2E Test City","geoid":"0600001"}', NOW())
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
+       VALUES ($1, 'nj', 'active', '{"name":"E2E Test City","geoid":"0600001"}')
        ON CONFLICT (jurisdiction_ocdid)
-       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
       [TEST_JURISDICTION_OCDID],
     );
+    await seedPriorCollection(client, TEST_JURISDICTION_OCDID);
 
     await seedReviewCard(client, {
       changesetId: TEST_CHANGESET_ID,
@@ -547,12 +549,11 @@ export async function seedE2eFixtures() {
     });
 
     // Second card
-    for (const [jOcdid, jName, reqId, prId, prNum, stateCode, geoidPrefix] of [
+    for (const [jOcdid, jName, reqId, prNum, stateCode, geoidPrefix] of [
       [
         TEST_JURISDICTION_OCDID_2,
         "E2E Test City 2",
         TEST_CHANGESET_ID_2,
-        TEST_PR_ID_2,
         2,
         "nj",
         "060000",
@@ -561,7 +562,6 @@ export async function seedE2eFixtures() {
         TEST_JURISDICTION_OCDID_3,
         "E2E Test City 3",
         TEST_CHANGESET_ID_3,
-        TEST_PR_ID_3,
         3,
         "nj",
         "060000",
@@ -570,22 +570,22 @@ export async function seedE2eFixtures() {
         TX_JURISDICTION_OCDID,
         "E2E TX City",
         TX_CHANGESET_ID,
-        TX_PR_ID,
         10,
         "tx",
         "480000",
       ],
     ]) {
       await client.query(
-        `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-         VALUES ($1, $3, 'active', $2, NOW())
-         ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
+        `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
+         VALUES ($1, $3, 'active', $2)
+         ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
         [
           jOcdid,
           JSON.stringify({ name: jName, geoid: `${geoidPrefix}${prNum}` }),
           stateCode,
         ],
       );
+      await seedPriorCollection(client, jOcdid);
       await seedReviewCard(client, {
         changesetId: reqId,
         ocdid: jOcdid,
@@ -610,7 +610,7 @@ export async function seedE2eFixtures() {
     );
     await seedFailedRun(client, TX_RUN_FAILED_ID, TX_JURISDICTION_OCDID, 7200);
 
-    // Baseline card — scraped_at intentionally omitted (NULL) → BASELINE mode.
+    // Baseline card — no prior collection, deliberately, so the review is BASELINE mode.
     await client.query(
       `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
        VALUES ($1, 'vt', 'active', '{"name":"E2E Baseline City","geoid":"5000009"}')
@@ -630,15 +630,16 @@ export async function seedE2eFixtures() {
       ],
     });
 
-    // Populated reconcile card — scraped_at set → RECONCILE mode, with existing
+    // Populated reconcile card — a prior collection → RECONCILE mode, with existing
     // people so the diff renders changed / added / removed states.
     await client.query(
-      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-       VALUES ($1, 'nh', 'active', '{"name":"E2E Reconcile City","geoid":"3300001"}', NOW())
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
+       VALUES ($1, 'nh', 'active', '{"name":"E2E Reconcile City","geoid":"3300001"}')
        ON CONFLICT (jurisdiction_ocdid)
-       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
       [RECONCILE_JURISDICTION_OCDID],
     );
+    await seedPriorCollection(client, RECONCILE_JURISDICTION_OCDID);
     // Existing people: maria will be CHANGED, bob will be REMOVED. The `id` in
     // the JSONB is what computePeopleDiff pairs old<->new on.
     const reconcileExisting = [
@@ -709,12 +710,13 @@ export async function seedE2eFixtures() {
 
     // Scale card — 38 existing, 40 proposed (3 dropped, 5 added, 10 changed).
     await client.query(
-      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-       VALUES ($1, 'ma', 'active', '{"name":"E2E Scale City","geoid":"2500001"}', NOW())
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
+       VALUES ($1, 'ma', 'active', '{"name":"E2E Scale City","geoid":"2500001"}')
        ON CONFLICT (jurisdiction_ocdid)
-       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
       [SCALE_JURISDICTION_OCDID],
     );
+    await seedPriorCollection(client, SCALE_JURISDICTION_OCDID);
     await clearRoster(client, SCALE_JURISDICTION_OCDID);
     for (const person of buildScaleExisting()) {
       await seedPerson(client, SCALE_JURISDICTION_OCDID, person);
@@ -727,12 +729,13 @@ export async function seedE2eFixtures() {
 
     // Issue-markers card — reconcile mode, all proposed render as added cards.
     await client.query(
-      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-       VALUES ($1, 'me', 'active', '{"name":"E2E Markers City","geoid":"2300001"}', NOW())
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
+       VALUES ($1, 'me', 'active', '{"name":"E2E Markers City","geoid":"2300001"}')
        ON CONFLICT (jurisdiction_ocdid)
-       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
       [MARKERS_JURISDICTION_OCDID],
     );
+    await seedPriorCollection(client, MARKERS_JURISDICTION_OCDID);
     // Alice, Bob and Dave are already published here; the scrape finds Alice, Bob and Carol.
     // That is what makes each issue kind reachable: Carol is new, Dave is absent, and Alice and
     // Bob both hold "Mayor" — the duplicated unique role. Seeding only the proposed side made
@@ -814,10 +817,10 @@ export async function seedE2eFixtures() {
     // Read-only card — merged PR, so the card renders in its terminal state.
     // `url` on the jurisdiction data is what surfaces as the website link.
     await client.query(
-      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data, scraped_at)
-       VALUES ($1, 'ri', 'active', $2, NOW())
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
+       VALUES ($1, 'ri', 'active', $2)
        ON CONFLICT (jurisdiction_ocdid)
-       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data, scraped_at = EXCLUDED.scraped_at`,
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
       [
         READ_ONLY_JURISDICTION_OCDID,
         JSON.stringify({
@@ -875,26 +878,31 @@ export async function seedE2eFixtures() {
       }
     }
 
-    // One `unrecognized_role` issue, so the issues page has a row whose Resolve
-    // button opens the config editor. That modal is the only place
-    // config-editor.css renders, and it holds the largest remaining cluster of
-    // Pico overrides — without this row the visual baseline cannot see it.
-    //
-    // `jurisdictions` on the API response is derived from the request's
-    // jurisdiction_ocdid, so pointing at TEST_CHANGESET_ID is what makes the
-    // button appear at all (issue-row.js renders it only when the issue is
-    // unrecognized_role AND carries jurisdictions).
+    // One row per section of the issues page. Both cascade with their parent, so teardown
+    // does not name them.
     await client.query(
-      `INSERT INTO issues (issue_type, issue_key, changeset_ids, data, status)
-       VALUES ('unrecognized_role', $1, ARRAY[$2], $3, 'pending')
-       ON CONFLICT (issue_type, issue_key) DO UPDATE
-         SET changeset_ids = EXCLUDED.changeset_ids,
-             data = EXCLUDED.data,
-             status = EXCLUDED.status`,
+      `INSERT INTO pipeline_run_issues (pipeline_run_id, issue_type, data, status)
+       VALUES ($1, 'pipeline_error', $2, 'pending')
+       ON CONFLICT (pipeline_run_id, issue_type) DO UPDATE
+         SET data = EXCLUDED.data, status = EXCLUDED.status, resolved_at = NULL`,
+      [NJ_RUN_FAILED_ID, JSON.stringify({ error: "Navigation timed out" })],
+    );
+
+    await client.query(
+      `INSERT INTO changeset_issues (changeset_id, issue_type, data, status)
+       SELECT $1, 'user_reported', $2, 'pending'
+       WHERE NOT EXISTS (
+         SELECT 1 FROM changeset_issues WHERE changeset_id = $1 AND issue_type = 'user_reported'
+       )`,
       [
-        UNRECOGNIZED_ROLE_KEY,
         TEST_CHANGESET_ID,
-        JSON.stringify({ person_names: ["Jane Smith"] }),
+        JSON.stringify({
+          title: "Jane Smith is no longer on the council",
+          body: "She resigned in March; the city page is stale.",
+          github_issue_url: "",
+          github_issue_number: 0,
+          reported_by_user_id: "e2e",
+        }),
       ],
     );
   } finally {
@@ -906,11 +914,6 @@ export async function teardownE2eFixtures() {
   const client = makeClient();
   await client.connect();
   try {
-    await client.query(
-      `DELETE FROM issues WHERE issue_type = 'unrecognized_role' AND issue_key = $1`,
-      [UNRECOGNIZED_ROLE_KEY],
-    );
-
     // Delete in reverse FK order
     await client.query(
       `DELETE FROM review_session_entries
@@ -936,19 +939,22 @@ export async function teardownE2eFixtures() {
     await client.query(`DELETE FROM pipeline_runs WHERE id = ANY($1)`, [
       SEEDED_RUN_IDS,
     ]);
-    for (const [prId, reqId, jOcdid] of [
-      [TEST_PR_ID, TEST_CHANGESET_ID, TEST_JURISDICTION_OCDID],
-      [TEST_PR_ID_2, TEST_CHANGESET_ID_2, TEST_JURISDICTION_OCDID_2],
-      [TEST_PR_ID_3, TEST_CHANGESET_ID_3, TEST_JURISDICTION_OCDID_3],
-      [BASELINE_PR_ID, BASELINE_CHANGESET_ID, BASELINE_JURISDICTION_OCDID],
-      [RECONCILE_PR_ID, RECONCILE_CHANGESET_ID, RECONCILE_JURISDICTION_OCDID],
-      [SCALE_PR_ID, SCALE_CHANGESET_ID, SCALE_JURISDICTION_OCDID],
-      [TX_PR_ID, TX_CHANGESET_ID, TX_JURISDICTION_OCDID],
-      [MARKERS_PR_ID, MARKERS_CHANGESET_ID, MARKERS_JURISDICTION_OCDID],
-      [READ_ONLY_PR_ID, READ_ONLY_CHANGESET_ID, READ_ONLY_JURISDICTION_OCDID],
+    // By jurisdiction, not by changeset id: the card under review is no longer the only
+    // changeset a fixture seeds — `seedPriorCollection` adds one to put the review in
+    // RECONCILE mode.
+    for (const jOcdid of [
+      TEST_JURISDICTION_OCDID,
+      TEST_JURISDICTION_OCDID_2,
+      TEST_JURISDICTION_OCDID_3,
+      BASELINE_JURISDICTION_OCDID,
+      RECONCILE_JURISDICTION_OCDID,
+      SCALE_JURISDICTION_OCDID,
+      TX_JURISDICTION_OCDID,
+      MARKERS_JURISDICTION_OCDID,
+      READ_ONLY_JURISDICTION_OCDID,
     ]) {
       // source_records cascades from changesets; identities cascade from source_records.
-      await client.query(`DELETE FROM changesets WHERE id = $1`, [reqId]);
+      await client.query(`DELETE FROM changesets WHERE jurisdiction_ocdid = $1`, [jOcdid]);
       await clearRoster(client, jOcdid);
       await client.query(
         `DELETE FROM jurisdictions WHERE jurisdiction_ocdid = $1`,

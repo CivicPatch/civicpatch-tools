@@ -1158,8 +1158,20 @@ async def test_a_scrape_the_pipeline_reported_an_issue_on_does_not_publish():
             )
         await conn.commit()
 
+    # The issue hangs off the run, and `has_pending_issues` reaches it through the changeset
+    # that run produced — so the fixture needs a real run, which the foreign key now insists on.
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
+            "  changeset_id) "
+            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'SUCCESS', %s) RETURNING id::text",
+            (_OCDID, changeset_id),
+        )
+        run_id = (await cur.fetchone())[0]
+        await conn.commit()
+
     await upsert_issue(
-        changeset_id, PipelineIssueType.COST_CAP_REACHED, [{"spent_usd": "0.5000"}]
+        run_id, PipelineIssueType.COST_CAP_REACHED, [{"spent_usd": "0.5000"}]
     )
 
     await _apply_scrape_changes(changeset_id, _OCDID)

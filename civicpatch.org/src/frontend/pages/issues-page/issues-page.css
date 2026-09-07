@@ -117,6 +117,45 @@
     min-width: 120px;
 }
 
+/* Selection */
+
+.issues-page__issue-select {
+    text-align: center;
+    width: 2.5rem;
+}
+
+.issues-page__issue-select input[type="checkbox"] {
+    margin: 0;
+    cursor: pointer;
+}
+
+.issues-page__bulk-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    font-size: var(--text-sm);
+    color: var(--pico-muted-color);
+}
+
+/* A reviewer's report — a title, and the body they wrote under it */
+
+.issues-page__issue-report {
+    min-width: 220px;
+}
+
+.issues-page__issue-report-title {
+    display: block;
+    font-weight: 600;
+}
+
+.issues-page__issue-report-body {
+    display: block;
+    font-size: var(--text-sm);
+    color: var(--pico-muted-color);
+}
+
 .issues-page__issue-flag {
     text-align: center;
     white-space: nowrap;

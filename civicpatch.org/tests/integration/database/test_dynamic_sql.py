@@ -12,10 +12,12 @@ Run with:
 import pytest
 
 import database.jurisdictions as db_jurisdictions
+from database.database import get_pool
 import database.pipeline_runs as db_jobs
 import database.people as db_people
 import database.review_pool as db_pull_requests
 import database.changesets as db_requests
+import database.issue_listings as db_issue_listings
 import database.issues as db_issues
 import database.summary as db_summary
 import database.users as db_users
@@ -75,28 +77,6 @@ async def test_update_pipeline_run_status_only_progress():
         run_id="00000000-0000-0000-0000-000000000000",
         progress=42,
     )
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_issues_page_no_filter():
-    rows, total = await db_issues.get_issues_page(issue_types=[], page=1, per_page=10)
-    assert isinstance(rows, list)
-    assert isinstance(total, int)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_issues_page_with_issue_types():
-    """Exercises the IN clause and ORDER BY direction branches."""
-    rows, total = await db_issues.get_issues_page(
-        issue_types=["unrecognized_role"],
-        page=1,
-        per_page=5,
-        sort_desc=False,
-    )
-    assert isinstance(rows, list)
-    assert isinstance(total, int)
 
 
 # ---------------------------------------------------------------------------
@@ -379,19 +359,39 @@ async def test_get_issue_changeset_details_empty():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_upsert_issue_unrecognized_role():
-    """Exercises the INSERT ... ON CONFLICT path; catches placeholder count mismatches."""
-    await db_issues.upsert_issue(
-        "test-request-id",
-        "unrecognized_role",
-        [{"role": "grand_poobah", "person_name": "Alice"}],
-    )
+async def test_upsert_issue_refreshes_rather_than_duplicating():
+    """Exercises the INSERT ... ON CONFLICT path; catches placeholder count mismatches.
+
+    Was `test_upsert_issue_unrecognized_role` until migration 186. That type was retired in 179
+    and the conflict branch it exercised — merging changeset ids into an array — went with the
+    array. What is left to check is that a run reporting the same fault twice is one row."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status) "
+            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'ERROR') RETURNING id::text",
+            ("ocd-jurisdiction/country:us/state:zz/place:upsert/government",),
+        )
+        run_id = (await cur.fetchone())[0]
+        await conn.commit()
+
+    await db_issues.upsert_issue(run_id, "pipeline_error", [{"error": "first"}])
+    await db_issues.upsert_issue(run_id, "pipeline_error", [{"error": "second"}])
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT count(*), max(data->>'error') FROM pipeline_run_issues "
+            "WHERE pipeline_run_id = %s",
+            (run_id,),
+        )
+        count, error = await cur.fetchone()
+    assert (count, error) == (1, "second")
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_get_issue_by_id_not_found():
-    result = await db_issues.get_issue_by_id(_FAKE_UUID)
+    result = await db_issue_listings.get_issue_by_id(_FAKE_UUID)
     assert result is None
 
 

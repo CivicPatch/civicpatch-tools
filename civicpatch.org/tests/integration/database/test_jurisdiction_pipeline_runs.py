@@ -1,7 +1,7 @@
 """A jurisdiction's attempts, including the ones that proposed nothing.
 
-Real Postgres: the point of this read is a LEFT JOIN to `issues` on the run's own id, and the
-absence of a changeset — neither of which a unit test can exercise honestly.
+Real Postgres: the point of this read is a LEFT JOIN to `pipeline_run_issues` on the run's own
+id, and the absence of a changeset — neither of which a unit test can exercise honestly.
 
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
@@ -10,9 +10,9 @@ import pytest
 import pytest_asyncio
 
 from database.database import get_pool
-from database.issues import upsert_issue
+from database.issues import create_user_reported_issue, upsert_issue
 from database.pipeline_runs import get_pipeline_runs_for_jurisdiction
-from shared.utils.statuses import PipelineIssueType, PipelineRunErrorType
+from shared.utils.statuses import PipelineRunErrorType
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_runs/government"
@@ -22,8 +22,8 @@ async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "DELETE FROM issues WHERE issue_key IN ("
-            "  SELECT id::text FROM pipeline_runs WHERE jurisdiction_ocdid = %s)",
+            "DELETE FROM pipeline_run_issues WHERE pipeline_run_id IN ("
+            "  SELECT id FROM pipeline_runs WHERE jurisdiction_ocdid = %s)",
             (_OCDID,),
         )
         await cur.execute(
@@ -136,10 +136,12 @@ async def test_another_jurisdictions_runs_are_not_borrowed():
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_an_issue_about_a_changeset_is_not_mistaken_for_the_runs():
-    """The join is on the run's own id. A changeset-keyed issue belongs to the proposal."""
+    """The join is on the run's own id, and a user report is a row in another table entirely."""
     run_id = await factories.start_run(_OCDID)
     changeset_id = await factories.complete_run(run_id)
-    await upsert_issue(changeset_id, PipelineIssueType.USER_REPORTED, [{}])
+    await create_user_reported_issue(
+        changeset_id, "wrong seat", "not on the council", "", 0, "someone"
+    )
 
     runs = await get_pipeline_runs_for_jurisdiction(_OCDID)
 

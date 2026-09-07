@@ -7,7 +7,7 @@ is orchestration, and routers in this codebase do none.
 from datetime import datetime, timezone
 
 from core.scrape_schedule import next_run_at
-from database.issues import count_cost_cap_hits_this_month
+from database.issue_listings import count_cost_cap_hits_this_month
 from database.pipeline_run_spend import get_month_to_date_spend
 from database.state_settings import (
     get_global_settings,

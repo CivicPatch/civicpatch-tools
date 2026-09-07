@@ -1,6 +1,40 @@
 
-/* Issues still open on a changeset. Without them a short roster and a complete one look alike. */
+/* What the run reported about a changeset. Without these, a short roster and a complete one
+   look alike. Settled ones are muted and open ones keep the alarm colour — the list used to
+   hold only open ones, so the whole thing was red. */
 .tl-entry__issues {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
   font-size: var(--text-xs);
+  color: var(--pico-muted-color);
+}
+
+.tl-entry__issue--open {
   color: var(--pico-del-color);
+}
+
+/* The payload behind each label, in the expanded body. `pipeline_error` on its own says
+   nothing; the message it carries is the answer. */
+.tl-issue-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: var(--text-sm);
+}
+
+.tl-issue-detail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.tl-issue-detail__label {
+  font-weight: 600;
+}
+
+.tl-issue-detail__field {
+  font-size: var(--text-xs);
+  color: var(--pico-muted-color);
 }

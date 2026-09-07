@@ -29,7 +29,9 @@ from shared.utils.statuses import ChangesetKind, DismissalReason, PipelineIssueS
 EXACT = {
     "changesets_kind_check": ChangesetKind,
     "changesets_dismissed_reason_valid": DismissalReason,
-    "pipeline_issues_status_check": PipelineIssueStatus,
+    # Two tables since migration 186, each with its own copy of the same vocabulary.
+    "pipeline_run_issues_status_check": PipelineIssueStatus,
+    "changeset_issues_status_check": PipelineIssueStatus,
     "assertions_kind_check": AssertionKind,
     "assertions_entity_type_check": EntityType,
     "changeset_batches_kind_check": BatchKind,

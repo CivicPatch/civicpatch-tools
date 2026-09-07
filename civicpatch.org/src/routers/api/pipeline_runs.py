@@ -12,13 +12,14 @@ import lib.temporal.client as temporal_service
 import services.jurisdiction_scrape_candidate as candidate_service
 import services.pipeline_runs as pipeline_run_service
 import shared.utils.id_utils
-from database.issues import (
+from database.issue_listings import (
+    get_changeset_issue_counts,
+    get_changeset_issues_page,
     get_issue_by_id,
-    get_issue_counts,
-    get_issues_page,
-    resolve_issue,
-    set_issue_flagged,
+    get_pipeline_run_issue_counts,
+    get_pipeline_run_issues_page,
 )
+from database.issues import resolve_issue, resolve_issues, set_issue_flagged
 import database.users
 from database.publications import dismiss_changeset
 from database.pipeline_run_spend import get_state_spend, DEFAULT_SPEND_WINDOW_DAYS
@@ -51,6 +52,8 @@ from schemas.pipeline_runs import (
     BatchPipelineRunRequest,
     CreatePipelineRunRequest,
     CreatePipelineRunResponse,
+    DismissPipelineIssuesRequest,
+    DismissPipelineIssuesResponse,
     ErrorResponse,
     FlagPipelineIssueRequest,
     GetPipelineRunStatusResponse,
@@ -78,6 +81,12 @@ _is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 _DISPATCH_MODE_LOCAL = "local"
 DISPATCH_MODE = "remote" if _is_production else _DISPATCH_MODE_LOCAL
 
+
+# Which of the two an admin is looking at. Separate queries and separate pages — a pipeline
+# issue is for whoever runs the scrapes, a reported one for whoever reviews rosters — but the
+# two share a response shape, so they share these routes.
+PIPELINE_RUN_ISSUES = "pipeline_run"
+CHANGESET_ISSUES = "changeset"
 
 ARTIFACTS_BASE_URL = storage_service.get_civicpatch_artifacts_url("").rstrip("/")
 PAUSED_CONTEXT_BUCKET = buckets.ARTIFACTS
@@ -475,12 +484,17 @@ def get_router(api_key_header):
     @router.get("/issues/counts", summary="Count pending issues grouped by issue_type")
     async def get_issue_counts_endpoint(
         state_code: Optional[str] = None,
+        kind: str = PIPELINE_RUN_ISSUES,
         _: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
         ),
     ):
-        counts = await get_issue_counts(state_code=state_code)
-        return {"data": counts}
+        counts_for = (
+            get_pipeline_run_issue_counts
+            if kind == PIPELINE_RUN_ISSUES
+            else get_changeset_issue_counts
+        )
+        return {"data": await counts_for(state_code=state_code)}
 
     @router.get(
         "/issues",
@@ -493,13 +507,19 @@ def get_router(api_key_header):
         sort: str = "desc",
         state_code: Optional[str] = None,
         show_archived: bool = False,
+        kind: str = PIPELINE_RUN_ISSUES,
         _: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
         ),
     ):
         issue_types = [t.strip() for t in tags.split(",")] if tags else []
         sort_desc = sort != "asc"
-        rows, total = await get_issues_page(
+        page_of = (
+            get_pipeline_run_issues_page
+            if kind == PIPELINE_RUN_ISSUES
+            else get_changeset_issues_page
+        )
+        rows, total = await page_of(
             issue_types,
             page,
             per_page,
@@ -541,6 +561,21 @@ def get_router(api_key_header):
         await resolve_issue(issue_id)
         return {"data": None}
 
+    @router.post(
+        "/issues/dismiss",
+        summary="Dismiss several issues at once",
+    )
+    async def dismiss_review_issues_endpoint(
+        request: DismissPipelineIssuesRequest,
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
+    ):
+        """Ids already settled are not counted rather than raising: a 404 for one row would
+        lose the rest of the batch."""
+        dismissed = await resolve_issues(request.issue_ids)
+        return {"data": DismissPipelineIssuesResponse(dismissed=dismissed).model_dump()}
+
     @router.patch(
         "/issues/{issue_id}/flag",
         summary="Set or clear the in-progress flag on a review issue",
@@ -572,14 +607,17 @@ def get_router(api_key_header):
         if issue is None:
             raise HTTPException(status_code=404)
 
-        raw = await get_issue_changeset_details(issue["changeset_ids"])
+        # One changeset at most now, and none at all for a run that died before ingest.
+        raw = await get_issue_changeset_details(
+            [issue["changeset_id"]] if issue.get("changeset_id") else []
+        )
         issue_type = issue["issue_type"]
-        issue_key = issue["issue_key"]
 
         is_admin = has_at_least(identity.role, UserRole.ADMINS)
 
         if issue_type in RUN_LEVEL_ISSUE_TYPES:
-            changeset_id = issue["issue_key"]
+            # A run-level issue names its run; `issue_key` used to carry that id.
+            changeset_id = issue.get("changeset_id") or issue.get("pipeline_run_id")
             base_rows = [
                 _build_request_row(raw[0])
                 if raw

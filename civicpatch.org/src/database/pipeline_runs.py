@@ -84,8 +84,8 @@ async def get_pipeline_runs_for_jurisdiction(
                    r.finished_at IS NULL AS is_running,
                    r.created_at, r.finished_at, r.changeset_id::text, i.issue_type
             FROM pipeline_runs r
-            LEFT JOIN issues i
-                   ON i.issue_key = r.id::text AND i.issue_type = ANY(%s)
+            LEFT JOIN pipeline_run_issues i
+                   ON i.pipeline_run_id = r.id AND i.issue_type = ANY(%s)
             WHERE r.jurisdiction_ocdid = %s
             ORDER BY r.created_at DESC
             LIMIT %s;

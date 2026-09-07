@@ -30,6 +30,16 @@ const SUPERSEDED_OUTCOME = "superseded";
 // Collapsed rows stay one line tall; the rest are behind the disclosure.
 const SHOWN_BADGES = 3;
 
+// An issue is still actionable only while pending; the rest are history.
+const PENDING_ISSUE = "pending";
+
+export interface TimelineIssue {
+  issue_type: string;
+  status: string;
+  // Free-form and different per type, so the body renders it as-is.
+  data: Record<string, unknown>;
+}
+
 export interface TimelineEntry {
   changeset_id: string;
   created_at: string;
@@ -37,7 +47,7 @@ export interface TimelineEntry {
   pipeline_run_started_at?: string | null;
   pipeline_run_finished_at?: string | null;
   dismissed_reason?: string | null;
-  issue_types?: string[];
+  issues?: TimelineIssue[];
   kind: string | null;
   change_url: string | null;
   outcome: string;
@@ -88,23 +98,62 @@ const pipelineRunDuration = (entry: TimelineEntry) =>
 
 const ISSUE_LABEL: Record<string, string> = {
   cost_cap_reached: "stopped at its cost cap",
+  fewer_than_expected: "found fewer than expected",
   no_roster_found: "found no roster",
   domain_inactive: "domain inactive",
   domain_navigation_error: "could not navigate the site",
   pipeline_error: "pipeline error",
-  merge_failed: "merge failed",
   user_reported: "reported by a reviewer",
 };
 
-// The issues still open on this changeset. Without them, a short roster and a complete one look
-// identical on the timeline.
+const issueLabel = (issue: TimelineIssue) =>
+  ISSUE_LABEL[issue.issue_type] ?? issue.issue_type;
+
+// What the run reported, whatever became of it since. Listing only open ones hid the reason on
+// every dismissed entry, since dismissing settles them.
 function renderIssues(entry: TimelineEntry) {
-  const types = entry.issue_types ?? [];
-  if (!types.length) return nothing;
+  const issues = entry.issues ?? [];
+  if (!issues.length) return nothing;
   return html`
     <span class="tl-entry__issues">
-      ${types.map((t) => ISSUE_LABEL[t] ?? t).join(", ")}
+      ${issues.map(
+        (issue) => html`
+          <span
+            class="tl-entry__issue${issue.status === PENDING_ISSUE
+              ? " tl-entry__issue--open"
+              : ""}"
+            >${issueLabel(issue)}</span
+          >
+        `,
+      )}
     </span>
+  `;
+}
+
+// The payload behind each label: `pipeline_error` alone says nothing.
+function renderIssueDetails(entry: TimelineEntry) {
+  const issues = entry.issues ?? [];
+  if (!issues.length) return nothing;
+  return html`
+    <div class="tl-issue-details">
+      ${issues.map(
+        (issue) => html`
+          <div class="tl-issue-detail">
+            <span class="tl-issue-detail__label">${issueLabel(issue)}</span>
+            ${issue.status !== PENDING_ISSUE
+              ? html`<span class="tl-quiet">${issue.status}</span>`
+              : nothing}
+            ${Object.entries(issue.data ?? {}).map(
+              ([field, value]) => html`
+                <span class="tl-issue-detail__field">
+                  ${field}: <code>${String(value)}</code>
+                </span>
+              `,
+            )}
+          </div>
+        `,
+      )}
+    </div>
   `;
 }
 
@@ -222,7 +271,7 @@ function CivTimelineEntry({
         <span class="tl-entry__changes">${renderSummaryChanges(entry)}</span>
       </summary>
       <div class="tl-entry__body">
-        ${renderChangeList(entry)}
+        ${renderChangeList(entry)} ${renderIssueDetails(entry)}
         ${renderActions(entry, isSignedIn, jurisdictionOcdid)}
         ${renderIds(entry, isAdmin)}
       </div>

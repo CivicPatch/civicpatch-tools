@@ -463,7 +463,9 @@ async def test_reported_pr_leaves_pool_until_issue_resolved():
     finally:
         pool = await get_pool()
         async with pool.connection() as conn:
-            await conn.execute("DELETE FROM issues WHERE %s = ANY(changeset_ids)", (changeset_id,))
+            await conn.execute(
+                "DELETE FROM changeset_issues WHERE changeset_id = %s", (changeset_id,)
+            )
         await _cleanup_open_pr(changeset_id, ocdid)
 
 

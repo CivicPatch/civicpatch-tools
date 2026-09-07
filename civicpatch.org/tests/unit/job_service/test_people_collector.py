@@ -58,17 +58,19 @@ async def test_handle_submit_pipeline_run_artifacts_updates_status_to_error_on_f
             None,
             "ocd-division/country:us/state:ca/place:oakland",
         )
-        # The status goes on the run; the issue goes on the changeset that run minted.
-        # `issues.changeset_ids` is read by joining `changesets`, so a run id resolves to
-        # nothing there.
-        assert mock_upsert_issue.await_args.args[0] == "minted-changeset-id"
+        # The status and the issue both go on the run. This asserted the *changeset* until
+        # migration 186: the issue was filed against whatever the run had minted, falling back
+        # to the run only when it had minted nothing — which is how one table came to hold two
+        # kinds of id, and why an issue from a run that died before ingest matched no changeset
+        # and so vanished from every state-filtered view of the issues page.
+        assert mock_upsert_issue.await_args.args[0] == "test-request-id"
 
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_a_failure_before_ingest_files_the_issue_against_the_run():
-    """There is no proposal to key on, and the issue still has to reach the issues page — which
-    renders `issue_key` bare when it resolves to no changeset."""
+async def test_a_failure_before_ingest_is_not_a_special_case():
+    """It used to be: no changeset meant falling back to the run id. Now every failure is keyed
+    the same way, and the jurisdiction comes off the run rather than off what it proposed."""
     request = make_request()
     with (
         patch(
@@ -84,11 +86,6 @@ async def test_a_failure_before_ingest_files_the_issue_against_the_run():
             "services.people_collector.upsert_issue",
             new_callable=AsyncMock,
         ) as mock_upsert_issue,
-        patch(
-            "services.people_collector.get_pipeline_run",
-            new_callable=AsyncMock,
-            return_value={"changeset_id": None},
-        ),
     ):
         with pytest.raises(Exception, match="died before ingest"):
             await handle_submit_pipeline_run_artifacts(request)

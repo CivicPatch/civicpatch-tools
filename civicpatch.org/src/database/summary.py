@@ -13,17 +13,14 @@ _OPEN_PRS_STATE = f"""
 """
 
 _ISSUES_SUBQUERIES_GLOBAL = """
-    , (SELECT COUNT(*) FROM issues WHERE status = 'pending')
+    , (SELECT COUNT(*) FROM pipeline_run_issues WHERE status = 'pending')
 """
 
 _ISSUES_SUBQUERIES_STATE = """
-    , (SELECT COUNT(*) FROM issues pi2
-       WHERE pi2.status = 'pending'
-       AND EXISTS (
-           SELECT 1 FROM changesets r2
-           JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r2.jurisdiction_ocdid
-           WHERE r2.id::text = ANY(pi2.changeset_ids) AND jur.state = %s
-       ))
+    , (SELECT COUNT(*) FROM pipeline_run_issues issue
+       JOIN pipeline_runs run ON run.id = issue.pipeline_run_id
+       JOIN jurisdictions jur ON jur.jurisdiction_ocdid = run.jurisdiction_ocdid
+       WHERE issue.status = 'pending' AND jur.state = %s)
 """
 
 

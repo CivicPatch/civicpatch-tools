@@ -83,13 +83,6 @@ function ResolveModal(host) {
     ? html`<p class="issues-page__modal-meta"><code>${detail.error}</code></p>`
     : null;
 
-  const mergeFailedMeta = data.error || data.mergeable_state ? html`
-    <div class="issues-page__modal-meta">
-      ${data.error ? html`<p><code>${data.error}</code></p>` : null}
-      ${data.mergeable_state ? html`<p>Mergeable state: <code>${data.mergeable_state}</code></p>` : null}
-    </div>
-  ` : null;
-
   const domainNavigationMeta = data.failure_reason || data.failure_source ? html`
     <div class="issues-page__modal-meta">
       ${data.failure_reason ? html`<p><code>${data.failure_reason}</code></p>` : null}
@@ -180,15 +173,12 @@ function ResolveModal(host) {
     </div>
   `;
 
-  // Sections common to pipeline/domain issues: a URL change, pipeline debug tabs, and the
-  // scraped source context. merge_failed deliberately skips the first two — a merge failure
-  // is about the PR's state and the failing jurisdiction, not pipeline run artifacts.
+  // Sections common to every issue type: a URL change, pipeline debug tabs, and the scraped
+  // source context.
   const sharedSections = html`${domainChangeExtras}${debugSection}${sourceSection}`;
 
   function renderBody() {
     switch (issue.issue_type) {
-      case ISSUE_TYPE.MERGE_FAILED:
-        return html`${mergeFailedMeta}${sourceSection}`;
       case ISSUE_TYPE.PIPELINE_ERROR:
         return html`${pipelineErrorMeta}${sharedSections}`;
       case ISSUE_TYPE.DOMAIN_NAVIGATION_ERROR:
