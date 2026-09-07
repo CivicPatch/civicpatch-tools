@@ -174,7 +174,7 @@ async def poll_pipeline_run_status(pipeline_run_id: str) -> str:
 
 
 @activity.defn
-async def claim_scrape_candidates(
+async def claim_jurisdictions_to_scrape(
     state: str,
     num_jurisdictions: int | None = None,
     created_by_user_id: str | None = None,
@@ -208,7 +208,7 @@ async def claim_scrape_candidates(
 # Which monthly cap this state has reached, or None if it may keep spending.
 @activity.defn
 async def budget_cap_reached(state: str) -> Optional[str]:
-    # Imported here: `scrape_workflows` imports this module, and Temporal re-imports it inside
+    # Imported here: `pipeline_run_workflows` imports this module, and Temporal re-imports it inside
     # the workflow sandbox, which cannot load the database layer.
     from services.spend_budget import cap_reached_for_state
 

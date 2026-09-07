@@ -28,7 +28,7 @@ async def get_scrape_candidates(
     return eligible[:num_jurisdictions] if num_jurisdictions else eligible
 
 
-async def claim_scrape_candidates(
+async def claim_jurisdictions_to_scrape(
     state: str,
     num_jurisdictions: int | None = None,
     created_by_user_id: str | None = None,

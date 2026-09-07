@@ -234,7 +234,17 @@ async def get_pipeline_run_status(run_id: str):
 
 async def update_pipeline_run_status(
     run_id: str, status: str | None = None, progress: Optional[int] = None
-):
+) -> bool:
+    """Report a status for a run that is still going. Returns whether it applied.
+
+    `finished_at IS NULL` in the WHERE is the whole guard: a finished run takes no further
+    reports. The pipeline reports over a best-effort PATCH and keeps running after cp.org has
+    already settled the run — cancelling one used to end with the engine's `finally` writing the
+    step it was on back over `CANCELLED`, leaving a row that was finished and mid-scrape at once.
+
+    In the WHERE rather than a read-then-write in the caller, so two reports racing cannot both
+    see an unfinished run.
+    """
     pool = await get_pool()
     set_clauses = []
     params = []
@@ -256,7 +266,7 @@ async def update_pipeline_run_status(
     set_clauses.append("updated_at = CURRENT_TIMESTAMP")
 
     if not set_clauses:
-        return
+        return False
 
     params.append(run_id)
     set_clause_str = ", ".join(set_clauses)
@@ -266,10 +276,11 @@ async def update_pipeline_run_status(
             sql.SQL(f"""
             UPDATE pipeline_runs
             SET {set_clause_str}
-            WHERE id = %s;
+            WHERE id = %s AND finished_at IS NULL;
             """),
             params,
         )
+        return cur.rowcount > 0
 
 
 async def expire_stale_pipeline_runs(older_than: timedelta) -> list[ExpiredRun]:

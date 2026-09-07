@@ -28,7 +28,7 @@ WORKERS = {
     "workers.source": (SOURCE_TASK_QUEUE, "routers.temporal.source_activities"),
     "workers.sinks": (SINKS_TASK_QUEUE, "routers.temporal.sink_activities"),
     "workers.cleanup": (CLEANUP_TASK_QUEUE, "routers.temporal.cleanup_activities"),
-    "workers.scrape": (PIPELINE_RUNS_TASK_QUEUE, "routers.temporal.scrape_activities"),
+    "workers.pipeline_runs": (PIPELINE_RUNS_TASK_QUEUE, "routers.temporal.pipeline_run_activities"),
 }
 
 

@@ -276,3 +276,33 @@ async def test_a_cancelled_run_reads_as_cancelled_from_its_dismissal():
     reported = await get_pipeline_run_status(run_id)
 
     assert reported["status"] == "CANCELLED"
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_cancelled_run_is_not_reopened_by_a_late_step_report():
+    """Cancelling has to stick, and the pipeline does not stop the instant it is cancelled.
+
+    cp.org cancels; the engine is mid-step in GitHub Actions and nothing kills it. It notices at
+    its next poll and returns — and its `finally` PATCHes the step it was on, arriving *after*
+    the cancel. Unguarded, that wrote `SCRAPE_PAGE` back over `CANCELLED` and left a run both
+    finished and mid-scrape.
+    """
+    run_id = await _a_run_in_flight()
+
+    await _apply(run_id, PipelineRunStatus.CANCELLED.value)
+    await _apply(run_id, PipelineRunStatus.SCRAPE_PAGE.value)
+
+    assert await _status(run_id) == PipelineRunStatus.CANCELLED
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_finished_run_takes_no_further_reports():
+    """The same guard, for the ordinary case: reporting is best-effort and can arrive late."""
+    run_id = await _a_run_in_flight()
+
+    await _apply(run_id, PipelineRunStatus.SUCCESS.value)
+    await _apply(run_id, PipelineRunStatus.ERROR.value)
+
+    assert await _status(run_id) == PipelineRunStatus.SUCCESS

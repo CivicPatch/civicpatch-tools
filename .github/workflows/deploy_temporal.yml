@@ -2,7 +2,7 @@ name: Deploy Temporal
 
 # The Temporal control plane images. Was `deploy_worker.yml`, which also built the
 # `civicpatch_worker` image — that worker now runs from the civicpatch-org image as
-# `src/workers/scrape.py`, so only these two remain.
+# `src/workers/pipeline_runs.py`, so only these two remain.
 #
 # Build only, no deploy step. The old one dispatched CivicPatch/infrastructure's
 # deploy-civicpatch-org.yml with no `image_tag`, and that workflow's only job is guarded

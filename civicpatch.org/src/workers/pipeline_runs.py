@@ -16,15 +16,15 @@ import os
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-from lib.temporal.scrape_workflows import (
+from lib.temporal.pipeline_run_workflows import (
     PeopleCollectorWorkflow,
     StateScrapeWorkflow,
 )
 from lib.temporal.types import PIPELINE_RUNS_TASK_QUEUE
-from routers.temporal.scrape_activities import (
+from routers.temporal.pipeline_run_activities import (
     budget_cap_reached,
     cancel_local_run,
-    claim_scrape_candidates,
+    claim_jurisdictions_to_scrape,
     poll_pipeline_run_status,
     trigger_github_action,
     trigger_local,
@@ -48,7 +48,7 @@ ACTIVITIES = [
     cancel_local_run,
     poll_pipeline_run_status,
     update_pipeline_run_status,
-    claim_scrape_candidates,
+    claim_jurisdictions_to_scrape,
 ]
 
 # Deliberately uncapped, unlike `sinks.py`: `poll_pipeline_run_status` holds a slot for up to

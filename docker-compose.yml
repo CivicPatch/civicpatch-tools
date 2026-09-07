@@ -101,13 +101,13 @@ services:
   # The civicpatch-org image, second entrypoint. Its own service rather than a second Worker
   # inside another worker so it keeps the environment below — which is the whole of it.
   # No database, no storage, no sheets: every activity here goes over HTTP.
-  civicpatch-org-scrape:
-    container_name: civicpatch-org-scrape
+  civicpatch-org-pipeline-runs:
+    container_name: civicpatch-org-pipeline-runs
     build:
       context: .
       dockerfile: civicpatch.org/Dockerfile
       target: development
-    entrypoint: ["python", "src/workers/scrape.py"]
+    entrypoint: ["python", "src/workers/pipeline_runs.py"]
     depends_on:
       temporal:
         condition: service_healthy

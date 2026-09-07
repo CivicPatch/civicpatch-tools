@@ -5,6 +5,7 @@ are in `core/pipeline_runs`; this is only the I/O.
 """
 
 import json
+import logging
 from typing import Optional
 
 import lib.pubsub as pubsub_service
@@ -12,6 +13,8 @@ from core.pipeline_runs import dismissal_for, is_final
 from database.issues import supersede_prior_jurisdiction_issues
 from database.pipeline_runs import get_pipeline_run, update_pipeline_run_status
 from database.publications import dismiss_changeset
+
+logger = logging.getLogger(__name__)
 
 
 async def finalize_pipeline_run(
@@ -46,9 +49,19 @@ async def apply_pipeline_run_status(
 
     Not "publish", which everywhere else means a roster going live.
     """
-    await update_pipeline_run_status(
+    applied = await update_pipeline_run_status(
         run_id=pipeline_run_id, status=status, progress=progress
     )
+    # The run was already settled. Reporting is best-effort and the pipeline keeps going after a
+    # cancel, so this is ordinary — but everything below settles the changeset and tells the
+    # page a run is live, and neither is true a second time.
+    if not applied:
+        logger.info(
+            "Ignoring %s for pipeline run %s: it is already finished",
+            status,
+            pipeline_run_id,
+        )
+        return
 
     # The run's row knows the jurisdiction and the changeset; a report arrives every loop, so
     # read it only when one of them is needed.

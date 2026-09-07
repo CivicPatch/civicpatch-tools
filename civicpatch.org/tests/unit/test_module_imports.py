@@ -35,7 +35,7 @@ _SRC = os.path.join(_PROJECT_ROOT, "src")
         "workers.cleanup",
         # The scrape entrypoint carries the smallest graph of the four — it must not reach
         # `database` or `services` at all.
-        "workers.scrape",
+        "workers.pipeline_runs",
         # The web entrypoint, which pulls every router.
         "main",
     ],

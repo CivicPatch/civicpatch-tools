@@ -1,7 +1,7 @@
-"""The scrape workflows: one jurisdiction, and a whole state's worth of them.
+"""The pipeline-run workflows: one jurisdiction's run, and a whole state's worth of them.
 
 Moved from the standalone `worker` package on 2026-09-05. They run on their own task queue,
-registered by `workers/scrape.py`, its own process and pod — a different
+registered by `workers/pipeline_runs.py`, its own process and pod — a different
 concurrency budget, because these activities are thin and long-lived where the sync ones are
 short and memory-hungry.
 """
@@ -14,17 +14,18 @@ from temporalio import workflow
 from temporalio.common import RetryPolicy, WorkflowIDReusePolicy
 
 with workflow.unsafe.imports_passed_through():
-    from lib.temporal.types import RunConclusion
-    from routers.temporal.scrape_activities import (
-        cancel_local_run,
+    from routers.temporal.pipeline_run_activities import (
         budget_cap_reached,
-        claim_scrape_candidates,
+        cancel_local_run,
+        claim_jurisdictions_to_scrape,
         poll_pipeline_run_status,
         trigger_github_action,
         trigger_local,
         update_pipeline_run_status,
     )
     from shared.utils.statuses import PipelineRunStatus
+
+    from lib.temporal.types import RunConclusion
 
 _DISPATCH_MODE_LOCAL = "local"
 
@@ -51,7 +52,9 @@ class PeopleCollectorWorkflow:
             start_to_close_timeout=timedelta(seconds=30),
         )
         try:
-            conclusion = await self._dispatch_and_poll(dispatch_mode, jurisdiction_ocdid, pipeline_run_id, url, source_urls)
+            conclusion = await self._dispatch_and_poll(
+                dispatch_mode, jurisdiction_ocdid, pipeline_run_id, url, source_urls
+            )
         except asyncio.CancelledError:
             # The scrape outlives this workflow unless it is told otherwise: cancelling here
             # only stops the poller. Shielded because the workflow is already cancelling, so an
@@ -65,6 +68,14 @@ class PeopleCollectorWorkflow:
                     )
                 )
             raise
+        except Exception:
+            await workflow.execute_activity(
+                update_pipeline_run_status,
+                args=[pipeline_run_id, PipelineRunStatus.ERROR],
+                start_to_close_timeout=timedelta(seconds=30),
+                retry_policy=RetryPolicy(maximum_attempts=3),
+            )
+            raise
         return await self._handle_conclusion(conclusion, pipeline_run_id)
 
     async def _dispatch_and_poll(
@@ -75,11 +86,11 @@ class PeopleCollectorWorkflow:
         url: Optional[str] = None,
         source_urls: Optional[list[str]] = None,
     ) -> str:
-        trigger = trigger_local if dispatch_mode == _DISPATCH_MODE_LOCAL else trigger_github_action
-        # Never retried. Dispatching is not idempotent — each attempt starts a real GitHub
-        # Actions run — and the activity waits for that run to register before returning, so a
-        # slow registration used to time it out and dispatch again. Observed 2026-08-17:
-        # fourteen runs queued for one scrape. A failure here should surface, not multiply.
+        trigger = (
+            trigger_local
+            if dispatch_mode == _DISPATCH_MODE_LOCAL
+            else trigger_github_action
+        )
         await workflow.execute_activity(
             trigger,
             args=[jurisdiction_ocdid, pipeline_run_id, url, source_urls],
@@ -92,6 +103,13 @@ class PeopleCollectorWorkflow:
             args=[pipeline_run_id],
             start_to_close_timeout=timedelta(minutes=35),
             heartbeat_timeout=timedelta(seconds=60),
+            # Bounded, where the default is forever. The activity is already its own retry loop
+            # — transient HTTP errors never leave it — so an attempt ending means the run has
+            # gone quiet, and starting a fresh 35-minute watch just delays saying so. Unbounded,
+            # the workflow never failed: it ran to its 2h execution timeout, and a *terminated*
+            # workflow runs no `except`, so nothing settled the run. Two, not one, so a worker
+            # restart mid-watch resumes rather than failing the run.
+            retry_policy=RetryPolicy(maximum_attempts=2),
         )
 
     async def _handle_conclusion(self, conclusion: str, pipeline_run_id: str) -> str:
@@ -171,7 +189,7 @@ class StateScrapeWorkflow:
                 else min(slice_size, num_jurisdictions - dispatched)
             )
             items = await workflow.execute_activity(
-                claim_scrape_candidates,
+                claim_jurisdictions_to_scrape,
                 args=[state, wanted, created_by_user_id],
                 start_to_close_timeout=timedelta(minutes=2),
                 retry_policy=RetryPolicy(maximum_attempts=3),

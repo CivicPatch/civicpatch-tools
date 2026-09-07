@@ -242,14 +242,14 @@ def get_router(api_key_header):
         return {"data": {"workflow_id": workflow_id, "state": request.state}}
 
     @router.post("/batch/claim", include_in_schema=False)
-    async def claim_scrape_candidates_endpoint(
+    async def claim_jurisdictions_to_scrape_endpoint(
         request: BatchPipelineRunRequest,
         _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
     ):
         """What the workflow calls to find its work. Synchronous, unlike `/register`: the
         workflow must know the changesets exist before it dispatches anything at them."""
         try:
-            items = await candidate_service.claim_scrape_candidates(
+            items = await candidate_service.claim_jurisdictions_to_scrape(
                 request.state, request.num_jurisdictions, request.created_by_user_id
             )
         except ValueError as e:

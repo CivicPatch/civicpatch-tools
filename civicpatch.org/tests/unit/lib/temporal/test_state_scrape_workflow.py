@@ -16,7 +16,7 @@ from temporalio.testing import WorkflowEnvironment
 from temporalio.worker import Worker
 
 from core.spend_limits import Cap
-from lib.temporal.scrape_workflows import (
+from lib.temporal.pipeline_run_workflows import (
     PeopleCollectorWorkflow,
     StateScrapeWorkflow,
 )
@@ -44,8 +44,8 @@ def _activities(rec: Recorder):
             return Cap.STATE_MONTH.value
         return None
 
-    @activity.defn(name="claim_scrape_candidates")
-    async def claim_scrape_candidates(state, num_jurisdictions=None, created_by_user_id=None):
+    @activity.defn(name="claim_jurisdictions_to_scrape")
+    async def claim_jurisdictions_to_scrape(state, num_jurisdictions=None, created_by_user_id=None):
         rec.claims.append(num_jurisdictions)
         take = min(num_jurisdictions or rec.pool, rec.pool)
         rec.pool -= take
@@ -81,7 +81,7 @@ def _activities(rec: Recorder):
 
     return [
         budget_cap_reached,
-        claim_scrape_candidates,
+        claim_jurisdictions_to_scrape,
         trigger_github_action,
         trigger_local,
         poll_pipeline_run_status,
@@ -166,3 +166,67 @@ async def test_it_never_claims_more_than_the_caller_asked_for():
 
     assert rec.claims == [5, 2]
     assert dispatched == 7
+
+
+# --- a run whose watcher gives up -------------------------------------------------------
+
+
+def _activities_that_stop_watching(reported: list[tuple[str, str]]):
+    """`poll_pipeline_run_status` fails the way it does when GitHub has killed the job: the run
+    never reports an ending, so the poller times out rather than returning a conclusion."""
+
+    @activity.defn(name="trigger_github_action")
+    async def trigger_github_action(jurisdiction_ocdid, pipeline_run_id, url=None, source_urls=None):
+        return None
+
+    @activity.defn(name="trigger_local")
+    async def trigger_local(jurisdiction_ocdid, pipeline_run_id, url=None, source_urls=None):
+        return None
+
+    @activity.defn(name="poll_pipeline_run_status")
+    async def poll_pipeline_run_status(pipeline_run_id: str):
+        raise RuntimeError("stopped watching")
+
+    @activity.defn(name="update_pipeline_run_status")
+    async def update_pipeline_run_status(pipeline_run_id, status, progress=None):
+        reported.append((pipeline_run_id, status))
+
+    @activity.defn(name="cancel_local_run")
+    async def cancel_local_run(pipeline_run_id: str):
+        return None
+
+    return [
+        trigger_github_action,
+        trigger_local,
+        poll_pipeline_run_status,
+        update_pipeline_run_status,
+        cancel_local_run,
+    ]
+
+
+@pytest.mark.asyncio
+async def test_a_run_whose_watcher_gives_up_is_settled_rather_than_left_running():
+    """Otherwise only `expire_stale_pipeline_runs` closes it — six hours later, with the
+    jurisdiction blocked from re-scraping the whole time."""
+    reported: list[tuple[str, str]] = []
+    run_id = str(uuid.uuid4())
+
+    async with await WorkflowEnvironment.start_time_skipping() as env:
+        queue = f"test-{uuid.uuid4()}"
+        async with Worker(
+            env.client,
+            task_queue=queue,
+            workflows=[PeopleCollectorWorkflow],
+            activities=_activities_that_stop_watching(reported),
+        ):
+            with pytest.raises(Exception):
+                await env.client.execute_workflow(
+                    PeopleCollectorWorkflow.run,
+                    args=["ocd-jurisdiction/country:us/state:zz/place:p/government", run_id, "remote", None, None],
+                    id=f"people-collector-{uuid.uuid4()}",
+                    task_queue=queue,
+                )
+
+    assert (run_id, PipelineRunStatus.ERROR) in reported, (
+        f"the run was left unsettled; reports were {reported}"
+    )
