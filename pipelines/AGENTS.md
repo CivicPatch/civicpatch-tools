@@ -33,12 +33,13 @@ tests/
 
 ## State machine
 
-The `people_collector` pipeline is a state machine. The full transition diagram lives in [`docs/people_collector_states.md`](docs/people_collector_states.md).
+The `people_collector` pipeline is a state machine, and the graph is
+`PIPELINE_RUN_TRANSITIONS` in `shared/utils/statuses.py`. It is the definition, not a
+description of one: the engine checks every step's answer against it, and
+`TERMINAL_PIPELINE_RUN_STATUSES` is derived from it.
 
-**Update the diagram in the same set of edits — never leave it for a follow-up.** It must be updated whenever you:
-- Add, remove, or rewire states or edges in `transitions/main.py`
-- Add or remove a step directory under `steps/`
-- Rename a step directory
+You cannot forget to update it: a handler returning a state the table does not list raises on
+the spot, so the table and the handlers cannot drift apart the way a diagram could.
 
 ## Pipeline conventions
 

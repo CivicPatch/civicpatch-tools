@@ -16,6 +16,15 @@ from shared.utils.statuses import PipelineRunStatus
 import psutil
 
 from runners.people_collector.schemas import PipelineStatus
+from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES, next_states
+
+
+class IllegalTransition(Exception):
+    """A step returned a state `PIPELINE_RUN_TRANSITIONS` does not allow from this one."""
+    def __init__(self, current: PipelineStatus, requested: PipelineStatus):
+        self.current = current
+        self.requested = requested
+        super().__init__(f"{current} -> {requested} is not a legal transition")
 
 
 class PipelineRunError(Exception):
@@ -50,7 +59,7 @@ async def run_pipeline(
     created_at = time.time()
     ctx = ctx.copy(update={"created_at": created_at, "updated_at": created_at})
 
-    terminal_states = {PipelineStatus.SUCCESS, PipelineStatus.ERROR}
+    terminal_states = set(TERMINAL_PIPELINE_RUN_STATUSES)
 
     try:
         while ctx.current_state not in terminal_states:
@@ -59,7 +68,13 @@ async def run_pipeline(
                 current_status = await civicpatch_api.fetch_pipeline_run_status(api_client, ctx.pipeline_run_id)
                 if current_status == PipelineRunStatus.CANCELLED:
                     logger.info(f"Pipeline run {ctx.pipeline_run_id} cancelled — stopping.")
-                    return ctx
+                    ctx = ctx.copy(
+                        update={
+                            "current_state": PipelineStatus.CANCELLED,
+                            "updated_at": time.time(),
+                        }
+                    )
+                    break
             except Exception as e:
                 logger.warning(f"Failed to check cancellation status (non-fatal): {e}")
             try:
@@ -72,16 +87,22 @@ async def run_pipeline(
             except Exception as e:
                 logger.warning(f"Failed to update job status (non-fatal): {e}")
 
-            transition_fn = transition_map[ctx.current_state]
+            current = ctx.current_state
+            transition_fn = transition_map[current]
             try:
                 ctx, next_state = await transition_fn(limits, logger, ctx, api_client)
-                ctx = ctx.copy(update={"current_state": next_state, "updated_at": time.time()})
             except Exception as e:
                 logger.error(
-                    f"Unhandled exception in {ctx.current_state} transition: {e}\n"
+                    f"Unhandled exception in {current} transition: {e}\n"
                     f"{traceback.format_exc()}"
                 )
                 ctx = ctx.copy(update={"current_state": PipelineStatus.SEND_ERROR, "updated_at": time.time()})
+            else:
+                # Outside the except: a step failing ends a run, a step naming an impossible
+                # state is a bug, and SEND_ERROR would hide the second as the first.
+                if next_state not in next_states(current):
+                    raise IllegalTransition(current, next_state)
+                ctx = ctx.copy(update={"current_state": next_state, "updated_at": time.time()})
 
             if persist_fn:
                 persist_fn(ctx)

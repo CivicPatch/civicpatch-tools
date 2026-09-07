@@ -287,7 +287,7 @@ def test_batch_starts_a_workflow_and_does_not_pick_candidates(client):
         new_callable=AsyncMock,
         return_value="state-scrape-wa",
     ) as start, patch(
-        "routers.api.pipeline_runs.candidate_service.claim_scrape_candidates",
+        "routers.api.pipeline_runs.candidate_service.claim_jurisdictions_to_scrape",
         new_callable=AsyncMock,
     ) as claim:
         response = client.post("/pipeline_runs/batch", json={"state": "wa"})
@@ -308,7 +308,7 @@ def test_claim_registers_and_returns_the_work(client):
     dispatches anything at them."""
     items = [{"jurisdiction_ocdid": "ocd/x", "changeset_id": "c1", "name": "X", "url": "u"}]
     with patch(
-        "routers.api.pipeline_runs.candidate_service.claim_scrape_candidates",
+        "routers.api.pipeline_runs.candidate_service.claim_jurisdictions_to_scrape",
         new_callable=AsyncMock,
         return_value=items,
     ):
@@ -323,7 +323,7 @@ def test_claim_registers_and_returns_the_work(client):
 @pytest.mark.unit
 def test_claim_404s_for_an_unknown_state(client):
     with patch(
-        "routers.api.pipeline_runs.candidate_service.claim_scrape_candidates",
+        "routers.api.pipeline_runs.candidate_service.claim_jurisdictions_to_scrape",
         new_callable=AsyncMock,
         side_effect=ValueError("No such state: zz"),
     ):

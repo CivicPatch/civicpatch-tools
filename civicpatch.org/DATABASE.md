@@ -43,7 +43,7 @@ erDiagram
 
     changesets {
         uuid            id                  PK
-        text            kind                "CHECK scrape|sheet_import|people_edit|jurisdiction_edit; CHECK (kind=scrape) = (status IS NOT NULL)"
+        text            kind                "CHECK scrape|sheet_import|people_edit|jurisdiction_edit. No default — a writer that does not say its producer should fail"
         text_null       jurisdiction_ocdid  FK  "idx"
         uuid_null       organization_id     FK  "idx: which body this review is about"
         uuid_null       created_by_user_id FK  "the system user for a scrape nobody asked for; see Actors"
@@ -289,10 +289,10 @@ erDiagram
 
     assertions {
         uuid            id                  PK
-        text            entity_type         "CHECK post|membership|person; no FK — heterogeneous subjects, the price of an event log"
+        text            entity_type         "CHECK post|membership|person|jurisdiction|organization; no FK — heterogeneous subjects, the price of an event log"
         uuid            entity_id           "no FK; deletes are refused rather than cascaded"
         text_null       field_path          "NULL = the entity itself, not a field. UNIQUE NULLS NOT DISTINCT, so no sentinel. List fields (incl. post_id since 159) key on the value, scalars on the field — two partial indexes from 137"
-        text            kind                "CHECK confirm|correct|retract"
+        text            kind                "CHECK accept|reject"
         jsonb_null      value               "corrections only; NULL = deliberately empty, which is why kind exists"
         jsonb_null      sources             "[{note, url}] — note may stand alone: 'phoned the clerk'"
         uuid            asserted_by         FK "NOT NULL — an assertion nobody made is not an assertion"

@@ -12,7 +12,7 @@ import pytest
 from temporalio.testing import ActivityEnvironment
 
 from core.spend_limits import Cap
-from routers.temporal.scrape_activities import budget_cap_reached
+from routers.temporal.pipeline_run_activities import budget_cap_reached
 
 pytestmark = pytest.mark.unit
 
