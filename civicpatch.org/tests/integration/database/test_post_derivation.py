@@ -1163,8 +1163,8 @@ async def test_a_scrape_the_pipeline_reported_an_issue_on_does_not_publish():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
-            "  changeset_id) "
-            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'SUCCESS', %s) RETURNING id::text",
+            "  changeset_id, finished_at) "
+            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'SUCCESS', %s, now()) RETURNING id::text",
             (_OCDID, changeset_id),
         )
         run_id = (await cur.fetchone())[0]

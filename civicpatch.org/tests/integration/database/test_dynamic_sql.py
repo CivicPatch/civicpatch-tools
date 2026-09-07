@@ -368,8 +368,9 @@ async def test_upsert_issue_refreshes_rather_than_duplicating():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status) "
-            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'ERROR') RETURNING id::text",
+            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
+            "  finished_at) "
+            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'ERROR', now()) RETURNING id::text",
             ("ocd-jurisdiction/country:us/state:zz/place:upsert/government",),
         )
         run_id = (await cur.fetchone())[0]
