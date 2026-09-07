@@ -187,7 +187,7 @@ async def _jurisdiction_chunks(
             yield jurisdiction_rows.to_rows(chunk)
 
 
-async def sync_state(
+async def write_roster(
     state: str, chunk_size: int = memberships.STATE_CHUNK_SIZE
 ) -> tuple[int | None, int | None, int | None]:
     """Rewrite one state's three tabs. Returns how many rows each got, None for one left alone.
@@ -218,7 +218,7 @@ async def sync_state(
     return people, seats, posts
 
 
-async def sync_jurisdictions(
+async def write_jurisdictions(
     chunk_size: int = memberships.STATE_CHUNK_SIZE,
 ) -> int | None:
     """The dropdown source: every active jurisdiction, every state, one flat tab."""

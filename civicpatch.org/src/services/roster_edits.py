@@ -191,7 +191,7 @@ async def publish(
 ) -> None:
     """Make this scrape's roster live.
 
-    Nothing here commits: `SweepChangesWorkflow` mirrors to open-data and the sheets from
+    Nothing here commits: `WriteRecentChangesWorkflow` mirrors to open-data and the sheets from
     `change_logs`. The old `publish` / `publish_to_database` split named a choice that
     disappeared when mirroring moved to the sweep, and left the two identical.
     """

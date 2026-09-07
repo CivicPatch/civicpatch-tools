@@ -42,7 +42,7 @@ def batch_commit():
     real.
     """
     with patch(
-        "lib.temporal.client.enqueue_open_data_batch_commit", new_callable=AsyncMock
+        "lib.temporal.client.enqueue_write_open_data_batch", new_callable=AsyncMock
     ) as enqueued:
         yield enqueued
 

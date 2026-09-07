@@ -37,16 +37,16 @@ src/
     jurisdiction_patch.py, jurisdiction_search.py, coverage.py
     change_logs.py, role_taxonomy.py, temporal_workflow_state.py
     output_hash.py           ← the content gate's fingerprint, shared by every sink
-    open_data/               ← tree_diff.py, paths.py — the INBOUND sync, not a sink
-    sinks/                   ← how each outward mirror renders its rows
+    sources/                 ← open_data/ (tree_diff.py, paths.py) — what we READ in
+    sinks/                   ← how each outward sink renders its rows
       sheet/                 ← people_rows.py, membership_rows.py, post_rows.py, jurisdiction_rows.py
       parquet.py             ← the declared column schemas
   services/         ← orchestration: coordinates lib/ + database/ + core/ (does the I/O)
-    sinks/                   ← the three outward mirrors; each renders, names its target, writes
+    sinks/                   ← the three outward sinks; each renders, names its target, writes
       open_data.py           ← one YAML file per jurisdiction, in git
       sheet.py               ← Live[...] tabs, per state, for a curator
-      parquet.py             ← partitioned files in R2, for an analyst
-    open_data_sync.py        ← open-data sync (INBOUND: git → database)
+      parquet.py             ← one file per table in R2, for an analyst
+    sources/open_data.py     ← jurisdictions read in from open-data git → database
     people_csv_export.py     ← requests/people export
     people_collector.py      ← artifact processing pipeline
     jurisdiction_scrape_candidate.py ← scrape candidate selection
@@ -56,7 +56,7 @@ src/
     common.py       ← shared enums + models (Identity, Role, PullRequest, …)
   frontend/
     vite.py         ← Jinja template helpers for Vite asset paths
-  worker.py         ← Temporal worker entrypoint
+  workers/          ← one Temporal worker per queue: source, sinks, cleanup, scrape
   main.py           ← FastAPI app + lifespan
 tests/
   unit/

@@ -2,7 +2,7 @@
 
 The pure cores (diff_tree, classify_path, *_rows) are tested in their own modules. Here we
 cover the I/O orchestration with the external boundaries mocked (GitHub fetch, DB writes):
-the per-kind sync functions (return-synced / None-skip / deactivate-not-in) and sync_all's
+the per-kind sync functions (return-synced / None-skip / deactivate-not-in) and read_all's
 wiring (cursor writes, truncation guard, per-run cap).
 """
 
@@ -11,13 +11,13 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 import yaml
-from core.open_data.tree_diff import TreeDiff
+from core.sources.open_data.tree_diff import TreeDiff
 from lib.github.api import RepoTree
-from services.open_data_sync import sync_all, sync_jurisdictions
+from services.sources.open_data import read_all, read_jurisdictions
 
 
 def _patch(stack, target, **kwargs):
-    return stack.enter_context(patch(f"services.open_data_sync.{target}", **kwargs))
+    return stack.enter_context(patch(f"services.sources.open_data.{target}", **kwargs))
 
 
 # `sync_people` and `bulk_update_people` are gone: open-data is a publish target, and the
@@ -52,7 +52,7 @@ async def test_sync_jurisdictions_upserts_deactivates_and_returns_synced():
             "jurisdictions_db.deactivate_jurisdictions_not_in",
             new_callable=AsyncMock,
         )
-        synced = await sync_jurisdictions(TreeDiff(changed=[path], deleted=[]))
+        synced = await read_jurisdictions(TreeDiff(changed=[path], deleted=[]))
 
     assert synced == [path]
     assert bulk.await_count == 1
@@ -94,7 +94,7 @@ async def test_sync_jurisdictions_scopes_deactivation_per_level():
             "jurisdictions_db.deactivate_jurisdictions_not_in",
             new_callable=AsyncMock,
         )
-        await sync_jurisdictions(TreeDiff(changed=list(contents), deleted=[]))
+        await read_jurisdictions(TreeDiff(changed=list(contents), deleted=[]))
 
     # each row carries its file's level (not a hardcoded "local"). Rows arrive across one
     # bulk call per level group, so collect from every call rather than just the last.
@@ -149,13 +149,13 @@ async def test_sync_jurisdictions_writes_state_level_before_dependent_levels():
             new_callable=AsyncMock,
         )
         # local listed first — ordering must come from the level, not the input order
-        await sync_jurisdictions(TreeDiff(changed=list(contents), deleted=[]))
+        await read_jurisdictions(TreeDiff(changed=list(contents), deleted=[]))
 
     written_levels = [call.args[0][0][2] for call in bulk.await_args_list]
     assert written_levels == ["state", "counties", "local"]
 
 
-# ── sync_all ─────────────────────────────────────────────────────────────────
+# ── read_all ─────────────────────────────────────────────────────────────────
 
 
 def _patch_sync_all(stack, tree, stored, contents):
@@ -214,7 +214,7 @@ async def test_sync_all_writes_cursors_for_changed_jurisdiction_files():
         upsert, _delete = _patch_sync_all(
             stack, tree, {}, contents
         )  # empty stored → all new
-        await sync_all()
+        await read_all()
 
     written = {c.args[0]: c.args[1] for c in upsert.await_args_list}
     assert written == {"data_source/tx/local/jurisdictions.yml": "jsha"}
@@ -230,7 +230,7 @@ async def test_sync_all_skips_deletion_pass_when_truncated():
     contents = {"data/tx/local/a.yml": yaml.dump([{"id": "p1"}])}
     with ExitStack() as stack:
         _upsert, delete = _patch_sync_all(stack, tree, stored, contents)
-        await sync_all()
+        await read_all()
 
     delete.assert_not_awaited()  # truncated tree → deletion pass skipped
 

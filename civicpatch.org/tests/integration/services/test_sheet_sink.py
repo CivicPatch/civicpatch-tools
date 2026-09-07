@@ -1,4 +1,4 @@
-"""Integration tests for `sync_state` — the sequence of Sheets calls one state produces.
+"""Integration tests for `write_roster` — the sequence of Sheets calls one state produces.
 
 Real Postgres, fake Sheets. The database half has to be real because the row count drives the
 grid size and the chunk offsets; the Google half is a recorder, because what is under test is
@@ -104,7 +104,7 @@ class _Recorder:
 
     def spans(self, tab: str) -> list[tuple[int, int]]:
         """The first and last row of every write to one tab, in order. Filtered by tab because
-        `sync_state` writes the people tab and the posts tab in one call."""
+        `write_roster` writes the people tab and the posts tab in one call."""
         found = [
             _SPAN.search(call["range"])
             for call in self.updates
@@ -236,7 +236,7 @@ async def _sync(
         patch("lib.sheets.get_service", return_value=recorder),
         patch("services.entry_sheet.spreadsheet_id", return_value=spreadsheet_id),
     ):
-        await roster_sheet.sync_state(state, chunk_size=chunk_size)
+        await roster_sheet.write_roster(state, chunk_size=chunk_size)
     return recorder
 
 
@@ -386,7 +386,7 @@ async def test_the_jurisdiction_tab_covers_every_state_in_one_flat_tab():
         patch("lib.sheets.get_service", return_value=recorder),
         patch("services.entry_sheet.spreadsheet_id", return_value="test-sheet"),
     ):
-        written = await roster_sheet.sync_jurisdictions(chunk_size=500)
+        written = await roster_sheet.write_jurisdictions(chunk_size=500)
 
     tab = roster_sheet.JURISDICTIONS_TAB
     assert written >= 1
@@ -416,7 +416,7 @@ async def test_every_county_is_listed_before_any_municipality():
         patch("lib.sheets.get_service", return_value=recorder),
         patch("services.entry_sheet.spreadsheet_id", return_value="test-sheet"),
     ):
-        await roster_sheet.sync_jurisdictions(chunk_size=500)
+        await roster_sheet.write_jurisdictions(chunk_size=500)
 
     level = jurisdiction_rows.HEADERS.index("level")
     levels = [row[level] for row in recorder.rows_for(roster_sheet.JURISDICTIONS_TAB)]

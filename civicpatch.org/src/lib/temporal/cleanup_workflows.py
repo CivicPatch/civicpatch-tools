@@ -9,7 +9,7 @@ from datetime import timedelta
 from temporalio import workflow
 
 with workflow.unsafe.imports_passed_through():
-    from routers.temporal.expiry_activities import (
+    from routers.temporal.cleanup_activities import (
         cleanup_stale_review_entries_activity,
         expire_stale_pipeline_runs_activity,
         supersede_stacked_requests_activity,
@@ -17,7 +17,7 @@ with workflow.unsafe.imports_passed_through():
 
 
 @workflow.defn
-class PipelineRunCleanupWorkflow:
+class CleanupPipelineRunsWorkflow:
     @workflow.run
     async def run(self) -> None:
         await workflow.execute_activity(
@@ -27,7 +27,7 @@ class PipelineRunCleanupWorkflow:
 
 
 @workflow.defn
-class ReviewSessionCleanupWorkflow:
+class CleanupReviewSessionsWorkflow:
     @workflow.run
     async def run(self) -> None:
         await workflow.execute_activity(

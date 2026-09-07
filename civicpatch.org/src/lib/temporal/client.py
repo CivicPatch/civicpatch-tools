@@ -1,6 +1,5 @@
 import hashlib
 import os
-import uuid
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -10,15 +9,13 @@ from temporalio.service import RPCError, RPCStatusCode
 
 from core.temporal_workflow_state import TemporalWorkflowState, summarize
 from lib.temporal.sink_workflows import (
-    JurisdictionsSheetSyncWorkflow,
-    OpenDataBatchCommitWorkflow,
-    RosterSheetSyncWorkflow,
+    WriteSheetJurisdictionsWorkflow,
+    WriteOpenDataBatchWorkflow,
+    WriteSheetRosterWorkflow,
 )
-from lib.temporal.jurisdiction_workflows import OdSyncTargetedWorkflow
 from lib.temporal.types import (
-    SCRAPE_TASK_QUEUE,
+    PIPELINE_RUNS_TASK_QUEUE,
     SINKS_TASK_QUEUE,
-    JURISDICTIONS_TASK_QUEUE,
     OpenDataBatchCommitRequest,
 )
 from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
@@ -64,7 +61,7 @@ async def start_people_collector_workflow(
         WORKFLOW_CLASS_NAME,
         args=[jurisdiction_ocdid, pipeline_run_id, dispatch_mode, url, source_urls],
         id=workflow_id,
-        task_queue=SCRAPE_TASK_QUEUE,
+        task_queue=PIPELINE_RUNS_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
         execution_timeout=PEOPLE_COLLECTOR_EXECUTION_TIMEOUT,
     )
@@ -95,56 +92,43 @@ async def start_state_scrape_workflow(
         "StateScrapeWorkflow",
         args=[state, num_jurisdictions, created_by_user_id, _pipeline_run_concurrency()],
         id=f"state-scrape-{state}",
-        task_queue=SCRAPE_TASK_QUEUE,
+        task_queue=PIPELINE_RUNS_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.FAIL,
     )
     return handle.id
 
 
-async def start_targeted_od_sync(jurisdiction_ocdids: list[str]) -> str:
-    client = await get_client()
-    handle = await client.start_workflow(
-        OdSyncTargetedWorkflow.run,
-        args=[jurisdiction_ocdids],
-        id=f"od-sync-targeted-{uuid.uuid4().hex[:8]}",
-        task_queue=JURISDICTIONS_TASK_QUEUE,
-    )
-    return handle.id
-
-
-
-
-async def enqueue_roster_sheet_sync(state: str) -> None:
+async def enqueue_write_sheet_roster(state: str) -> None:
     """Ask for one state's sheet tabs to be rewritten.
 
     Signal-with-start, not `USE_EXISTING`. A request arriving while the workflow runs must not
     be dropped — between the activity's read and the workflow closing, a drop is a lost update
     that only the next publish in that state would repair. Signalling instead earns another
-    pass; see `RosterSheetSyncWorkflow`.
+    pass; see `WriteSheetRosterWorkflow`.
     """
     client = await get_client()
     await client.start_workflow(
-        RosterSheetSyncWorkflow.run,
+        WriteSheetRosterWorkflow.run,
         state,
-        id=f"roster-sheet-sync:{state}",
+        id=f"sink:sheet:roster:{state}",
         task_queue=SINKS_TASK_QUEUE,
         start_signal="mark_dirty",
     )
 
 
-async def enqueue_jurisdictions_sheet_sync() -> None:
+async def enqueue_write_sheet_jurisdictions() -> None:
     """Refresh the dropdown source. One at a time — the id carries no argument because the tab
     covers every state, so a second request while one runs is genuinely the same work."""
     client = await get_client()
     await client.start_workflow(
-        JurisdictionsSheetSyncWorkflow.run,
-        id="jurisdictions-sheet-sync",
+        WriteSheetJurisdictionsWorkflow.run,
+        id="sink:sheet:jurisdictions",
         task_queue=SINKS_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.USE_EXISTING,
     )
 
 
-async def enqueue_open_data_batch_commit(request: OpenDataBatchCommitRequest) -> None:
+async def enqueue_write_open_data_batch(request: OpenDataBatchCommitRequest) -> None:
     """Queue a durable write of one commit covering every jurisdiction in the request.
 
     The workflow id covers the batch *and* what was selected, not the batch alone: a reviewer
@@ -158,9 +142,9 @@ async def enqueue_open_data_batch_commit(request: OpenDataBatchCommitRequest) ->
     )
     digest = hashlib.sha256(selection.encode()).hexdigest()[:12]
     await client.start_workflow(
-        OpenDataBatchCommitWorkflow.run,
+        WriteOpenDataBatchWorkflow.run,
         request,
-        id=f"open-data-batch-commit:{request.batch_id}:{digest}",
+        id=f"sink:open-data:batch:{request.batch_id}:{digest}",
         task_queue=SINKS_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.USE_EXISTING,
     )

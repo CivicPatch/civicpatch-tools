@@ -14,14 +14,14 @@ from lib.temporal.types import OpenDataBatchCommitRequest
 
 with workflow.unsafe.imports_passed_through():
     from routers.temporal.sink_activities import (
-        backstop_open_data_activity,
-        commit_open_data_batch_activity,
+        write_open_data_state_activity,
+        write_open_data_batch_activity,
         list_states_activity,
-        sweep_open_data_activity,
-        sweep_roster_sheets_activity,
-        sync_jurisdictions_sheet_activity,
-        sync_roster_parquet_activity,
-        sync_roster_sheet_activity,
+        dispatch_open_data_changes_activity,
+        dispatch_sheet_changes_activity,
+        write_sheet_jurisdictions_activity,
+        write_parquet_roster_activity,
+        write_sheet_roster_activity,
     )
 
 # Long enough to collapse a state scrape's town-by-town publishing into one tab rewrite.
@@ -47,7 +47,7 @@ _SHEET_RETRY = RetryPolicy(
 
 
 @workflow.defn
-class RosterSheetSyncWorkflow:
+class WriteSheetRosterWorkflow:
     """Rewrite one state's tabs, coalescing everything that asks while it waits.
 
     Started with `start_signal`, never `USE_EXISTING`: a dropped request between the activity's
@@ -72,7 +72,7 @@ class RosterSheetSyncWorkflow:
             self._dirty = False
             await workflow.sleep(_SHEET_DEBOUNCE)
             await workflow.execute_activity(
-                sync_roster_sheet_activity,
+                write_sheet_roster_activity,
                 state,
                 start_to_close_timeout=timedelta(minutes=15),
                 retry_policy=_SHEET_RETRY,
@@ -82,25 +82,25 @@ class RosterSheetSyncWorkflow:
 
 
 @workflow.defn
-class JurisdictionsSheetSyncWorkflow:
-    """Rewrite the all-states dropdown source. Triggered by od_sync, but its own workflow —
+class WriteSheetJurisdictionsWorkflow:
+    """Rewrite the all-states dropdown source. Triggered by the open-data read, but its own workflow —
     that schedule is SKIP-overlap and a forever-retrying write would wedge it."""
 
     @workflow.run
     async def run(self) -> None:
         await workflow.execute_activity(
-            sync_jurisdictions_sheet_activity,
+            write_sheet_jurisdictions_activity,
             start_to_close_timeout=timedelta(minutes=15),
             retry_policy=_SHEET_RETRY,
         )
 
 
 @workflow.defn
-class SweepChangesWorkflow:
+class WriteRecentChangesWorkflow:
     """Every 5 minutes: what `change_logs` saw in the last 15, to both sinks.
 
     Named for its scope rather than its cadence — the cadence is a cron string that may change,
-    while "only what changed" is the definition. `SweepEverythingWorkflow` is the other half.
+    while "only what changed" is the definition. `WriteEverythingWorkflow` is the other half.
 
     One sweep, not two: both sinks read the same `change_logs` window, so a second schedule would
     ask the same question of the same rows five minutes out of step.
@@ -113,20 +113,20 @@ class SweepChangesWorkflow:
     @workflow.run
     async def run(self) -> None:
         await workflow.execute_activity(
-            sweep_roster_sheets_activity,
+            dispatch_sheet_changes_activity,
             start_to_close_timeout=timedelta(minutes=5),
         )
         await workflow.execute_activity(
-            sweep_open_data_activity,
+            dispatch_open_data_changes_activity,
             start_to_close_timeout=timedelta(minutes=5),
         )
 
 
 @workflow.defn
-class SweepEverythingWorkflow:
+class WriteEverythingWorkflow:
     """Once a day: every state and every jurisdiction, whatever `change_logs` said.
 
-    The backstop. `SweepChangesWorkflow` only ever sees what the feed reports, so a write path
+    The backstop. `WriteRecentChangesWorkflow` only ever sees what the feed reports, so a write path
     that skips it or an activity that fails non-retryably leaves a mirror stale forever. Nothing
     else notices.
 
@@ -154,7 +154,7 @@ class SweepEverythingWorkflow:
             start_to_close_timeout=timedelta(minutes=1),
         ):
             await workflow.execute_activity(
-                sync_roster_sheet_activity,
+                write_sheet_roster_activity,
                 state,
                 start_to_close_timeout=timedelta(minutes=15),
                 retry_policy=_SHEET_RETRY,
@@ -164,7 +164,7 @@ class SweepEverythingWorkflow:
             # states used to race one branch ref, and every lost fast-forward re-rendered and
             # re-uploaded a multi-megabyte tree. Still one commit per state.
             await workflow.execute_activity(
-                backstop_open_data_activity,
+                write_open_data_state_activity,
                 state,
                 start_to_close_timeout=timedelta(minutes=15),
                 retry_policy=RetryPolicy(maximum_attempts=3),
@@ -173,14 +173,14 @@ class SweepEverythingWorkflow:
         # schedule's SKIP policy would then suppress tomorrow's backstop entirely — the mirrors
         # would quietly stop being checked because a dump nobody is waiting on could not write.
         await workflow.execute_activity(
-            sync_roster_parquet_activity,
+            write_parquet_roster_activity,
             start_to_close_timeout=timedelta(minutes=30),
             retry_policy=RetryPolicy(maximum_attempts=3),
         )
 
 
 @workflow.defn
-class OpenDataBatchCommitWorkflow:
+class WriteOpenDataBatchWorkflow:
     """Write every jurisdiction a bulk publish made live, as one commit.
 
     The activity re-renders every file from the database on each attempt, so
@@ -192,7 +192,7 @@ class OpenDataBatchCommitWorkflow:
     @workflow.run
     async def run(self, request: OpenDataBatchCommitRequest) -> None:
         await workflow.execute_activity(
-            commit_open_data_batch_activity,
+            write_open_data_batch_activity,
             request,
             # Longer than the single-file write: this renders one roster per jurisdiction
             # before it writes anything.

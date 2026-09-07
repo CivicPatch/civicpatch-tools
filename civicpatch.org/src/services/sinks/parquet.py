@@ -51,7 +51,7 @@ def _relative(key: str) -> str:
     return key[len(_PREFIX) + 1 :]
 
 
-async def sync_all() -> dict[str, dict]:
+async def write_all() -> dict[str, dict]:
     """Every table, then the manifest that names them.
 
     The manifest is written last on purpose: it names files, so publishing it before they exist

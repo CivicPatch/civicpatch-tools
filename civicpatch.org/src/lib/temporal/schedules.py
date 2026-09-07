@@ -36,10 +36,10 @@ from temporalio.service import RPCError, RPCStatusCode
 from core.scrape_schedule import interval_offset, schedule_id as state_schedule_id
 from database.state_settings import get_all_state_settings, get_state_settings
 from lib.temporal.types import (
-    EXPIRY_TASK_QUEUE,
-    SCRAPE_TASK_QUEUE,
+    CLEANUP_TASK_QUEUE,
+    PIPELINE_RUNS_TASK_QUEUE,
     SINKS_TASK_QUEUE,
-    JURISDICTIONS_TASK_QUEUE,
+    SOURCE_TASK_QUEUE,
     ScheduleId,
     WorkflowInstanceId,
 )
@@ -48,38 +48,38 @@ logger = logging.getLogger(__name__)
 
 # schedule id -> (workflow type name, instance id, task queue, cron)
 _SCHEDULES = {
-    ScheduleId.OD_SYNC: (
-        "OdSyncWorkflow",
-        WorkflowInstanceId.OD_SYNC,
-        JURISDICTIONS_TASK_QUEUE,
+    ScheduleId.SOURCE_OPEN_DATA_JURISDICTIONS: (
+        "ReadOpenDataJurisdictionsWorkflow",
+        WorkflowInstanceId.SOURCE_OPEN_DATA_JURISDICTIONS,
+        SOURCE_TASK_QUEUE,
         "0 * * * *",
     ),
-    ScheduleId.PIPELINE_RUN_CLEANUP: (
-        "PipelineRunCleanupWorkflow",
-        WorkflowInstanceId.PIPELINE_RUN_CLEANUP,
-        EXPIRY_TASK_QUEUE,
+    ScheduleId.CLEANUP_PIPELINE_RUNS: (
+        "CleanupPipelineRunsWorkflow",
+        WorkflowInstanceId.CLEANUP_PIPELINE_RUNS,
+        CLEANUP_TASK_QUEUE,
         "*/15 * * * *",
     ),
-    ScheduleId.REVIEW_SESSION_CLEANUP: (
-        "ReviewSessionCleanupWorkflow",
-        WorkflowInstanceId.REVIEW_SESSION_CLEANUP,
-        EXPIRY_TASK_QUEUE,
+    ScheduleId.CLEANUP_REVIEW_SESSIONS: (
+        "CleanupReviewSessionsWorkflow",
+        WorkflowInstanceId.CLEANUP_REVIEW_SESSIONS,
+        CLEANUP_TASK_QUEUE,
         "*/10 * * * *",
     ),
     # Every five minutes, against a fifteen-minute lookback. This is both mirrors' only route
     # in during normal running, so the gap between a publish and the tab is this plus the
     # debounce.
-    ScheduleId.SWEEP_CHANGES: (
-        "SweepChangesWorkflow",
-        WorkflowInstanceId.SWEEP_CHANGES,
+    ScheduleId.SINK_WRITE_RECENT_CHANGES: (
+        "WriteRecentChangesWorkflow",
+        WorkflowInstanceId.SINK_WRITE_RECENT_CHANGES,
         SINKS_TASK_QUEUE,
         "*/5 * * * *",
     ),
     # 09:00 UTC, the quiet end of a US night. Nothing depends on the hour; what matters is that
     # it is far from the 5-minute sweep's busy periods.
-    ScheduleId.SWEEP_EVERYTHING: (
-        "SweepEverythingWorkflow",
-        WorkflowInstanceId.SWEEP_EVERYTHING,
+    ScheduleId.SINK_WRITE_EVERYTHING: (
+        "WriteEverythingWorkflow",
+        WorkflowInstanceId.SINK_WRITE_EVERYTHING,
         SINKS_TASK_QUEUE,
         "0 9 * * *",
     ),
@@ -144,7 +144,7 @@ async def _register_state_schedules(client: Client) -> set[str]:
                     "StateScrapeWorkflow",
                     args=[state],
                     id=f"state-scrape-{state}",
-                    task_queue=SCRAPE_TASK_QUEUE,
+                    task_queue=PIPELINE_RUNS_TASK_QUEUE,
                 ),
                 spec=ScheduleSpec(
                     intervals=[
@@ -176,8 +176,8 @@ async def register_schedules(client: Client) -> None:
                 policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
             ),
         )
-        # Only od-sync earns an immediate first run; the others fire soon enough on their own.
-        if created and schedule_id == ScheduleId.OD_SYNC:
+        # Only the inbound read earns an immediate first run; the others fire soon enough on their own.
+        if created and schedule_id == ScheduleId.SOURCE_OPEN_DATA_JURISDICTIONS:
             await client.get_schedule_handle(schedule_id).trigger()
 
     # The union, not the literal: state schedules are declared from the table, and leaving
@@ -264,7 +264,7 @@ async def reconcile_state_schedule(client: Client, state: str) -> None:
                 "StateScrapeWorkflow",
                 args=[state],
                 id=f"state-scrape-{state}",
-                task_queue=SCRAPE_TASK_QUEUE,
+                task_queue=PIPELINE_RUNS_TASK_QUEUE,
             ),
             spec=ScheduleSpec(
                 intervals=[
@@ -277,3 +277,38 @@ async def reconcile_state_schedule(client: Client, state: str) -> None:
             policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
         ),
     )
+
+
+async def terminate_workflows_on_undeclared_queues(
+    client: Client, declared: frozenset[str]
+) -> None:
+    """Terminate running work on queues this deployment no longer has.
+
+    `terminate_undeclared_workflows` is scoped to one queue so a worker never touches another's
+    work — which is right, and is also why a queue that *lost* its worker is swept by nobody.
+    `civicpatch-org-sync` sat that way after the 2026-09-05 split: nothing polled it, so nothing
+    ran the sweep for it, so its executions could not be reached by anything but a human.
+
+    This is the namespace-wide half, and belongs to the worker that owns schedules for the same
+    reason `register_schedules` does: exactly one owner, or two of them race.
+
+    Each terminate is best-effort. A `Timeout expired` here crashed the worker before it reached
+    `Worker(...)` — tidying up an abandoned queue must never stop this one from serving, and an
+    orphan that survives is a log line, where a crash-looping worker is an outage.
+    """
+    async for execution in client.list_workflows("ExecutionStatus='Running'"):
+        if execution.task_queue in declared:
+            continue
+        logger.info(
+            "Terminating %s: task queue %s is no longer declared",
+            execution.id,
+            execution.task_queue,
+        )
+        try:
+            await client.get_workflow_handle(
+                execution.id, run_id=execution.run_id
+            ).terminate(reason="task queue no longer declared")
+        except RPCError:
+            logger.exception(
+                "Could not terminate %s; leaving it for the next boot", execution.id
+            )

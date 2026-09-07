@@ -17,7 +17,6 @@ from temporalio.worker import Worker
 
 from core.spend_limits import Cap
 from lib.temporal.scrape_workflows import (
-    BatchPeopleCollectorWorkflow,
     PeopleCollectorWorkflow,
     StateScrapeWorkflow,
 )
@@ -97,7 +96,7 @@ async def _run_state_scrape(rec: Recorder, **kwargs) -> int:
         async with Worker(
             env.client,
             task_queue=queue,
-            workflows=[StateScrapeWorkflow, PeopleCollectorWorkflow, BatchPeopleCollectorWorkflow],
+            workflows=[StateScrapeWorkflow, PeopleCollectorWorkflow],
             activities=_activities(rec),
         ):
             return await env.client.execute_workflow(

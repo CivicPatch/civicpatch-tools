@@ -189,7 +189,7 @@ async def promote_batch_to_reviewed(batch_id: str, published: dict[str, str]) ->
 
     if not published:
         return
-    await temporal_client.enqueue_open_data_batch_commit(
+    await temporal_client.enqueue_write_open_data_batch(
         OpenDataBatchCommitRequest(
             batch_id=batch_id,
             items=[

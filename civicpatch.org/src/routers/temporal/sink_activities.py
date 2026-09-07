@@ -1,7 +1,7 @@
 """Outbound: the database rendered into the three mirrors — the sheet, open-data, and parquet.
 
 `services/sinks/` is the machinery; this is the Temporal-facing seam onto it. Everything here
-writes outward, which is what separates it from `jurisdiction_activities` — a distinction
+writes outward, which is what separates it from `source_activities` — a distinction
 `AGENTS.md:40-41` makes deliberately and this split now makes structural.
 
 This is also where the memory is: a sweep peaks at 253Mi because these activities materialise
@@ -25,7 +25,7 @@ from temporalio import activity
 
 
 @activity.defn
-async def commit_open_data_batch_activity(request: OpenDataBatchCommitRequest) -> None:
+async def write_open_data_batch_activity(request: OpenDataBatchCommitRequest) -> None:
     """Render every jurisdiction in the batch and write the changed ones as one commit.
 
     Raises on failure so Temporal retries, including when another commit won the branch in
@@ -44,13 +44,8 @@ async def commit_open_data_batch_activity(request: OpenDataBatchCommitRequest) -
         )
 
 
-# Named so a backstop commit is legible in open-data's history as one — it is the only thing
-# that writes without a change_log behind it.
-_BACKSTOP_BATCH_ID = "backstop"
-
-
 @activity.defn
-async def backstop_open_data_activity(state: str) -> None:
+async def write_open_data_state_activity(state: str) -> None:
 
     ocdids = await memberships_db.jurisdictions_with_rosters(state)
     if not ocdids:
@@ -80,7 +75,7 @@ async def backstop_open_data_activity(state: str) -> None:
 async def list_states_activity() -> list[str]:
     """Every state we hold, for the backstop to walk one at a time.
 
-    A list, not a fan-out. This used to enqueue a sync workflow per state, and all fifteen then
+    A list, not a fan-out. This used to enqueue a write workflow per state, and all fifteen then
     raced the same Google Sheets quota — 60 write requests a minute for the whole service
     account, against ~192 requests fired at once. The losers sat in 429 backoff until their
     activity timed out: Colorado, 2,177 rows and twelve requests, died at fifteen minutes
@@ -92,13 +87,13 @@ async def list_states_activity() -> list[str]:
 
 
 @activity.defn
-async def sync_roster_parquet_activity() -> None:
+async def write_parquet_roster_activity() -> None:
     """The roster as parquet, once a day: every state, every table, to R2.
 
-    Last in `SweepEverythingWorkflow` and with bounded retries, both deliberately — see that
+    Last in `WriteEverythingWorkflow` and with bounded retries, both deliberately — see that
     workflow's docstring. Nothing is waiting on this; the two mirrors ahead of it are.
     """
-    tables = await parquet_sink.sync_all()
+    tables = await parquet_sink.write_all()
     activity.logger.info(
         "Roster parquet: %d rows across %d tables",
         sum(t["rows"] for t in tables.values()),
@@ -107,11 +102,11 @@ async def sync_roster_parquet_activity() -> None:
 
 
 @activity.defn
-async def sync_roster_sheet_activity(state: str) -> None:
+async def write_sheet_roster_activity(state: str) -> None:
     """Rewrite one state's people and posts tabs. Retry-safe: replaced whole, not patched."""
-    people, seats, posts = await sheet_sink.sync_state(state)
+    people, seats, posts = await sheet_sink.write_roster(state)
     activity.logger.info(
-        "Sheet sync %s: people %s, memberships %s, posts %s",
+        "Sheet write %s: people %s, memberships %s, posts %s",
         state,
         sheet_sink.describe(people),
         sheet_sink.describe(seats),
@@ -120,14 +115,14 @@ async def sync_roster_sheet_activity(state: str) -> None:
 
 
 @activity.defn
-async def sync_jurisdictions_sheet_activity() -> None:
+async def write_sheet_jurisdictions_activity() -> None:
     """Rewrite the all-states dropdown source, then put the tab bar back in order.
 
     The bar is spreadsheet-wide like this tab is, and re-imposing it costs one read when it is
     already right — so it rides along here rather than earning an activity of its own.
     """
-    written = await sheet_sink.sync_jurisdictions()
-    activity.logger.info("Sheet sync jurisdictions: %s", sheet_sink.describe(written))
+    written = await sheet_sink.write_jurisdictions()
+    activity.logger.info("Sheet write jurisdictions: %s", sheet_sink.describe(written))
 
     moved = await sheet_sink.order_tabs()
     activity.logger.info("Sheet tab order: %d tab(s) moved", moved)
@@ -142,7 +137,7 @@ _SWEEP_BATCH_ID = "sweep"
 
 
 @activity.defn
-async def sweep_open_data_activity() -> None:
+async def dispatch_open_data_changes_activity() -> None:
     """Commit every jurisdiction that changed recently, as **one** commit.
 
     The same feed the sheet runs on, read at open-data's grain: one file per jurisdiction
@@ -159,7 +154,7 @@ async def sweep_open_data_activity() -> None:
     changed = await change_logs_db.jurisdictions_changed_since(_SWEEP_LOOKBACK_MINUTES)
     if not changed:
         return
-    await temporal_client.enqueue_open_data_batch_commit(
+    await temporal_client.enqueue_write_open_data_batch(
         OpenDataBatchCommitRequest(
             batch_id=_SWEEP_BATCH_ID,
             items=[
@@ -179,7 +174,7 @@ async def sweep_open_data_activity() -> None:
 
 
 @activity.defn
-async def sweep_roster_sheets_activity() -> None:
+async def dispatch_sheet_changes_activity() -> None:
     """Sync every state that changed recently. The sheet's only route in during normal running.
 
     Derived, not dispatched — nothing calls out to the sheet, so a new write path cannot forget
@@ -193,6 +188,6 @@ async def sweep_roster_sheets_activity() -> None:
         return
     states = await change_logs_db.states_changed_since(_SWEEP_LOOKBACK_MINUTES)
     for state in states:
-        await temporal_client.enqueue_roster_sheet_sync(state)
+        await temporal_client.enqueue_write_sheet_roster(state)
     if states:
         activity.logger.info("Swept %s into sheet syncs", ", ".join(states))

@@ -183,7 +183,7 @@ async def claim_scrape_candidates(
 
     Asks the API because selecting-and-registering is one operation owned by a service, not
     because HTTP is safer than SQL — this process holds database credentials and a pool, and
-    `expiry_activities` uses them. Reimplementing the claim here would duplicate the logic, and
+    `cleanup_activities` uses them. Reimplementing the claim here would duplicate the logic, and
     that is the whole of the argument.
 
     The claim is atomic because it is one transaction, which is what stops the same jurisdiction
