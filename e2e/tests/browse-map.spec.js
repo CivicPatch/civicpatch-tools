@@ -18,6 +18,22 @@ import { test, expect } from "../fixtures/index.js";
 
 test.describe("Browse map", () => {
   test.beforeEach(async ({ page }) => {
+    // The pmtiles bucket allowlists origins for CORS — it answers `https://civicpatch.org` and
+    // nobody else, so from localhost the browser blocks every range fetch and the states layer
+    // silently has no features. Proxy through Node, which has no CORS, and return the bytes with
+    // the header the browser wants. Not a stub: the tiles are the real ones, so a change to them
+    // still shows up here.
+    await page.route("https://cdn.civicpatch.org/maps/**", async (route) => {
+      const response = await route.fetch();
+      await route.fulfill({
+        response,
+        headers: {
+          ...response.headers(),
+          "access-control-allow-origin": "*",
+          "access-control-expose-headers": "content-range,content-length,etag",
+        },
+      });
+    });
     // Wipe persisted default-state so each test starts at the national view.
     await page.addInitScript(() => localStorage.clear());
     await page.goto("/");
@@ -40,10 +56,13 @@ test.describe("Browse map", () => {
   });
 
   test("national view adds the states fill layer and applies coverage feature-state", async ({ page }) => {
+    // `isSourceLoaded` goes true when the source is *registered*, before any tile for the
+    // current viewport has been parsed — so wait for the features themselves.
     await page.waitForFunction(() => {
       const map = document.querySelector(".map-inner")?._map;
-      return map && map.getLayer("states") && map.isSourceLoaded("national");
-    }, null, { timeout: 15000 });
+      if (!map || !map.getLayer("states") || !map.isSourceLoaded("national")) return false;
+      return map.querySourceFeatures("national", { sourceLayer: "states" }).length > 0;
+    }, null, { timeout: 30000 });
 
     const result = await page.evaluate(() => {
       const map = document.querySelector(".map-inner")._map;
@@ -64,7 +83,12 @@ test.describe("Browse map", () => {
   });
 
   test("reset clears the state selector and hides itself", async ({ page }) => {
+    // The button appears when the drill level leaves `national`, which the state effect only
+    // does once the style is ready — so wait for the fetch that selection kicks off, as the
+    // sibling test above does. Asserting straight after `selectOption` races the map's load.
+    const selected = page.waitForResponse(/\/api\/v1\/coverage\/nj\/local/);
     await page.locator("civ-select-state select").selectOption("nj");
+    await selected;
     await expect(page.locator(".map-reset-btn")).toBeVisible();
 
     await page.locator(".map-reset-btn").click();

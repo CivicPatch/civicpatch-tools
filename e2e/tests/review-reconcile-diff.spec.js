@@ -64,9 +64,9 @@ test.describe("Review reconcile diff (populated)", () => {
       "Term end",
       "Email",
       "Phone",
-      // `with_fallback_url` gives a person with no url one on the proposed side, so Links reads
-      // as added. A real difference between the two sides, not an artefact of the fixture.
-      "Links",
+      // No Links row: `with_fallback_url` used to copy `source_urls[0]` into a person's empty
+      // `urls`, which made Links read as added on every such person. Deleted 2026-09-06 — the
+      // difference it showed was one it had invented.
       "Source urls *",
     ]);
 
@@ -133,7 +133,7 @@ test.describe("Review reconcile diff (populated)", () => {
     // fields never leave a card once shown (§2.1).
     await term.locator("input").first().fill("2025");
     await expect(term.locator(".person-editor__was")).toHaveCount(0);
-    await expect(maria.locator(".person-editor__field")).toHaveCount(6);
+    await expect(maria.locator(".person-editor__field")).toHaveCount(5);
   });
 
   test("Restore puts the old value back", async ({

@@ -76,7 +76,10 @@ const reviewBody = (people) => ({
       jurisdiction_ocdid: READY,
       name: "E2E Ready",
       changeset_id: "00000000-0000-0000-dddd-000000000001",
-      review_status: "pending",
+      // `selectableOcdids` filters on this. It was `review_status: "pending"` until migration
+      // 177 renamed the column and 178 settled 'ready' → 'open'; with the stale name nothing
+      // was selectable and the panel read "Imported localities" instead of "Review and publish".
+      changeset_state: "open",
       people,
     },
   ],
@@ -125,7 +128,11 @@ test.describe("Import from the sheet", () => {
     // The rejected row names its line, column and locality, so it is fixable in the sheet.
     await expect(page.getByRole("cell", { name: "4", exact: true })).toBeVisible();
     await expect(page.getByRole("cell", { name: "label" })).toBeVisible();
-    await expect(page.getByText(BLOCKED)).toBeVisible();
+    // By town name, linking to the jurisdiction — the raw ocdid is unreadable in bulk, so it
+    // moved to the link's title rather than being the cell's text.
+    const rejected = page.getByRole("link", { name: "E2e Blocked" });
+    await expect(rejected).toBeVisible();
+    await expect(rejected).toHaveAttribute("title", BLOCKED);
   });
 
   test("links to the sheet being read", async ({ maintainerPage: page }) => {

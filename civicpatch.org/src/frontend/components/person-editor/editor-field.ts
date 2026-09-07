@@ -298,11 +298,9 @@ export function renderEditorField(props: EditorFieldProps) {
   const grouped = !props.isReadOnly && groupsControls(field);
   return html`
     <div class="person-editor__field person-editor__field--${state}">
-      <div class="person-editor__label">
-        ${field.label}${field.required
-          ? html` <span class="person-editor__req">*</span>`
-          : nothing}
-      </div>
+      <div class="person-editor__label">${field.label}${field.required
+        ? html` <span class="person-editor__req">*</span>`
+        : nothing}</div>
       <div
         class="person-editor__control"
         role=${grouped ? "group" : nothing}
