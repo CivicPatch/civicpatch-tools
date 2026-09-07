@@ -1,8 +1,8 @@
 """The pipeline run lifecycle, as far as cp.org owns it.
 
-The step order belongs to the engine, in
-`pipelines/src/runners/people_collector/transitions/main.py`; cp.org owns only the end — which
-reports are final, and what a final one means for the proposal the run minted.
+The step order belongs to the engine — `PIPELINE_RUN_TRANSITIONS` in `shared/utils/statuses.py`
+is the graph, and cp.org owns only the ends: which reports are final, and what a final one means
+for the proposal the run minted.
 """
 
 from shared.utils.statuses import (
@@ -11,8 +11,19 @@ from shared.utils.statuses import (
     TERMINAL_PIPELINE_RUN_STATUSES,
 )
 
-# Named rather than written as "not SUCCESS", so a status added later has to be considered.
-ENDED_IN_FAILURE = frozenset({PipelineRunStatus.CANCELLED, PipelineRunStatus.ERROR})
+# What entering a terminal state does to what the run minted. A table rather than a branch, so
+# a state added to the graph has to be given an answer here instead of falling into a default.
+#
+# `errored`, never `rejected` — the attempt gave up, nobody read the roster and declined it.
+DISMISSAL_ON_ENTERING: dict[str, DismissalReason | None] = {
+    # Produced a roster. It stays for review.
+    PipelineRunStatus.SUCCESS: None,
+    PipelineRunStatus.RESOLVED: None,
+    PipelineRunStatus.ERROR: DismissalReason.ERRORED,
+    # Its own reason, not `errored`: somebody stopped this one on purpose, and
+    # `DismissalReason.CANCELLED` exists to say so.
+    PipelineRunStatus.CANCELLED: DismissalReason.CANCELLED,
+}
 
 
 def is_final(status: str) -> bool:
@@ -21,8 +32,5 @@ def is_final(status: str) -> bool:
 
 
 def dismissal_for(status: str) -> DismissalReason | None:
-    """How the proposal this run minted leaves the queue, or None if it stays for review.
-
-    `errored`, never `rejected` — the attempt gave up, nobody read the roster and declined it.
-    """
-    return DismissalReason.ERRORED if status in ENDED_IN_FAILURE else None
+    """How the proposal this run minted leaves the queue, or None if it stays for review."""
+    return DISMISSAL_ON_ENTERING.get(status)

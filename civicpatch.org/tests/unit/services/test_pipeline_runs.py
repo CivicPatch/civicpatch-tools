@@ -43,11 +43,19 @@ async def test_apply_pipeline_run_status_skips_publish_when_no_jurisdiction():
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-@pytest.mark.parametrize("status", ["CANCELLED", "ERROR"])
-async def test_a_run_that_ended_without_a_roster_settles_its_request(status):
+@pytest.mark.parametrize(
+    "status,reason",
+    [
+        ("CANCELLED", DismissalReason.CANCELLED),
+        ("ERROR", DismissalReason.ERRORED),
+    ],
+)
+async def test_a_run_that_ended_without_a_roster_settles_its_request(status, reason):
     """Both leave nothing to review, so both have to stop counting as pending work — the
     jurisdiction page lists pending requests and `peopleEditBlockers` disables editing from the
-    same set, so a failure left a permanent blocker behind."""
+    same set, so a failure left a permanent blocker behind.
+
+    They settle with different reasons: one gave up, someone stopped the other."""
     with (
         patch("services.pipeline_runs.dismiss_changeset", new_callable=AsyncMock) as dismiss,
         patch(
@@ -59,7 +67,7 @@ async def test_a_run_that_ended_without_a_roster_settles_its_request(status):
 
     # No user id: a machine giving up, not a person declining. The reason is passed rather
     # than inferred later, because `status` is mutable and a guess could drift.
-    dismiss.assert_awaited_once_with(TEST_CHANGESET_ID, DismissalReason.ERRORED)
+    dismiss.assert_awaited_once_with(TEST_CHANGESET_ID, reason)
 
 
 @pytest.mark.unit
