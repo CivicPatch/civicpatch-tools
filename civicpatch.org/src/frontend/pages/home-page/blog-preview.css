@@ -1,0 +1,191 @@
+/* ── Blog preview (homepage) ─────────────────────────────────────────────────*/
+
+.blog-preview {
+  margin-top: 1.5rem;
+}
+
+.blog-preview__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.blog-preview__view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.625rem;
+  font-family: "Space Grotesk", var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-default);
+  text-decoration: none;
+  border-bottom: 1px solid var(--text-default);
+  padding-bottom: 0.1rem;
+}
+
+.blog-preview__view-all:hover {
+  color: var(--text-secondary);
+  border-bottom-color: var(--text-secondary);
+}
+
+.blog-preview__get-involved {
+  border-left: 1px solid var(--border);
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Section heading inside get-involved: flex gap already gives separation */
+.blog-preview__get-involved .civ-section-label {
+  margin-bottom: 0;
+}
+
+/* Each group: tight internal spacing */
+.blog-preview__get-involved > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+/* When there are no posts, the get-involved spans the full grid */
+.blog-preview__get-involved--full {
+  border-left: none;
+  padding-left: 0;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 2rem;
+  row-gap: 1.25rem;
+}
+
+/* Heading spans the full row; its underline becomes a divider above the columns */
+.blog-preview__get-involved--full .civ-section-label {
+  grid-column: 1 / -1;
+}
+
+.blog-preview__gi-section {
+  font-family: "Space Grotesk", var(--font-sans);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 0 0 0.25rem; /* reset the base 1rem p margin-bottom */
+}
+
+.blog-preview__gi-links {
+  list-style: none !important;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.blog-preview__gi-links li {
+  list-style: none !important;
+  padding: 0;
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.blog-preview__gi-links li::marker {
+  content: none;
+}
+
+.blog-preview__gi-links a {
+  font-size: var(--font-size-sm);
+  color: var(--text-default);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.blog-preview__gi-links a:hover {
+  text-decoration: underline;
+}
+
+.blog-preview__gi-links i {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.blog-preview__gi-note {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .blog-preview__grid {
+    grid-template-columns: 1fr;
+  }
+  .blog-preview__get-involved {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+  }
+  .blog-preview__get-involved--full {
+    grid-template-columns: 1fr;
+  }
+}
+
+.blog-preview__item {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+  /* Reset the base article card styles */
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.blog-preview__item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.blog-preview__date {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Cap the prose measure so titles/leads stay readable now that the section
+   fills the full page rail rather than a narrower 1200px band */
+.blog-preview__body {
+  max-width: 65ch;
+}
+
+.blog-preview__title {
+  font-family: "Space Grotesk", var(--font-sans);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-default);
+  text-decoration: none;
+  display: block;
+}
+
+.blog-preview__title:hover {
+  text-decoration: underline;
+}
+
+.blog-preview__lead {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin: 0.2rem 0 0;
+  line-height: 1.55;
+}

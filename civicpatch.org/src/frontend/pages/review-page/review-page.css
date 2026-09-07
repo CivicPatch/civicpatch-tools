@@ -29,8 +29,8 @@
 }
 
 .review-page__streak-card {
-    background: var(--pico-card-background-color);
-    border: 1.5px solid var(--pico-muted-border-color);
+    background: var(--surface);
+    border: 1.5px solid var(--border);
     border-radius: 0.75rem;
     padding: 1.25rem 1rem;
     display: flex;
@@ -78,25 +78,25 @@
 }
 
 .review-page__streak-label {
-    font-size: var(--text-md);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-md);
+    color: var(--text-muted);
 }
 
 .review-page__streak-value {
-    font-size: var(--text-2xl);
+    font-size: var(--font-size-2xl);
     font-weight: 700;
-    color: var(--pico-primary);
+    color: var(--action);
     line-height: 1.1;
 }
 
 .review-page__streak-sub {
-    font-size: var(--text-md);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-md);
+    color: var(--text-muted);
 }
 
 .review-page__ready-card {
-    background: var(--pico-card-background-color);
-    border: 1.5px solid var(--pico-muted-border-color);
+    background: var(--surface);
+    border: 1.5px solid var(--border);
     border-radius: 0.75rem;
     padding: 1.25rem 1rem;
     display: flex;
@@ -118,31 +118,31 @@
 }
 
 .review-page__goal-label {
-    font-size: var(--text-xs);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
     opacity: 0.6;
 }
 
 .review-page__gear-btn {
-    font-size: var(--text-md);
+    font-size: var(--font-size-md);
 }
 
 .review-page__ready-title {
-    font-size: var(--text-md);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-md);
+    color: var(--text-muted);
 }
 
 .review-page__ready-count {
-    font-size: var(--text-2xl);
+    font-size: var(--font-size-2xl);
     font-weight: 700;
-    color: var(--pico-primary);
+    color: var(--action);
     line-height: 1.1;
     margin-top: 0.25rem;
 }
 
 .review-page__ready-sub {
-    font-size: var(--text-md);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-md);
+    color: var(--text-muted);
 }
 
 .review-page__ready-empty {
@@ -152,19 +152,19 @@
     text-align: center;
     gap: 0.4rem;
     padding: 1.75rem 0.5rem;
-    color: var(--pico-muted-color);
+    color: var(--text-muted);
 }
 
 .review-page__ready-empty i {
-    font-size: var(--text-2xl);
+    font-size: var(--font-size-2xl);
     opacity: 0.4;
     margin-bottom: 0.25rem;
 }
 
 .review-page__ready-empty-title {
-    font-size: var(--text-md);
+    font-size: var(--font-size-md);
     font-weight: 600;
-    color: var(--pico-color);
+    color: var(--text);
 }
 
 .review-page__setup-card {
@@ -174,14 +174,14 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    background: var(--pico-card-background-color);
-    border: 1.5px solid var(--pico-muted-border-color);
+    background: var(--surface);
+    border: 1.5px solid var(--border);
     border-radius: 0.75rem;
     padding: 1.5rem;
 }
 
 .review-page__setup-title {
-    font-size: var(--text-xl);
+    font-size: var(--font-size-xl);
     font-weight: 800;
     margin: 0;
 }
@@ -197,8 +197,8 @@
 }
 
 .review-page__modal {
-    background: var(--pico-card-background-color);
-    border: 1.5px solid var(--pico-muted-border-color);
+    background: var(--surface);
+    border: 1.5px solid var(--border);
     border-radius: 0.75rem;
     padding: 1.5rem;
     width: 300px;
@@ -212,7 +212,7 @@
     align-items: center;
     justify-content: space-between;
     font-weight: 700;
-    font-size: var(--text-base);
+    font-size: var(--font-size-base);
 }
 
 .review-page__custom-goal {
@@ -235,22 +235,22 @@
 }
 
 .review-page__goal-chip {
-    --pico-color: var(--pico-contrast);
-    --pico-background-color: transparent;
+    --control-text: var(--contrast);
+    --control-bg: transparent;
     flex: 1;
     padding: 0.6rem 0;
-    border: 2px solid var(--pico-muted-border-color);
+    border: 2px solid var(--border);
     border-radius: 0.75rem;
     font-weight: 700;
-    font-size: var(--text-md);
+    font-size: var(--font-size-md);
     cursor: pointer;
     transition: border-color 0.15s, background-color 0.15s, color 0.15s;
 }
 
 .review-page__goal-chip--active {
-    --pico-color: var(--pico-primary-inverse);
-    --pico-background-color: var(--pico-primary);
-    border-color: var(--pico-primary);
+    --control-text: var(--action-text);
+    --control-bg: var(--action);
+    border-color: var(--action);
 }
 
 .review-page__start-btn {
@@ -265,8 +265,8 @@
 }
 
 .review-page__goal-met {
-    font-size: var(--text-md);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-md);
+    color: var(--text-muted);
     margin: 0;
 }
 
@@ -286,11 +286,11 @@ review-session-actions {
     gap: 1.5rem;
     width: 100%;
     padding: 0.6rem 1rem;
-    background: rgba(var(--tone-bg), 0.92);
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid var(--pico-muted-border-color);
-    border-radius: 0 0 var(--pico-border-radius) var(--pico-border-radius);
+    border: 1px solid var(--border);
+    border-radius: 0 0 var(--radius) var(--radius);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
@@ -311,15 +311,15 @@ review-session-actions {
 /* The rule the buttons cannot state: what a save keeps and what waits for approval. */
 .review-page__actions-rule {
     max-width: 22ch;
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     line-height: 1.2;
-    color: var(--pico-muted-color);
+    color: var(--text-muted);
 }
 
 .review-page__jurisdiction {
     font-size: 1.4rem;
     font-weight: 800;
-    color: var(--pico-color);
+    color: var(--text);
     text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
@@ -329,19 +329,19 @@ review-session-actions {
 }
 
 .review-page__jurisdiction:hover {
-    color: var(--pico-primary);
+    color: var(--action);
     text-decoration: underline;
 }
 
 .review-page__jurisdiction-website {
-    font-size: var(--text-sm);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
     text-decoration: none;
     overflow-wrap: anywhere;
 }
 
 .review-page__jurisdiction-website:hover {
-    color: var(--pico-primary);
+    color: var(--action);
     text-decoration: underline;
 }
 
@@ -371,53 +371,53 @@ review-session-actions {
 }
 
 .review-page__dot--current {
-    background: var(--pico-primary);
+    background: var(--action);
 }
 
 .review-page__dot--resolved {
-    background: var(--pico-success-color);
+    background: var(--success);
 }
 
 .review-page__dot--failed {
-    background: var(--pico-del-color);
+    background: var(--diff-removed);
 }
 
 /* Committed to the branch but not published — a hollow ring, so it reads as
    started-not-finished next to the solid dot a published entry gets. */
 .review-page__dot--saved {
     background: transparent;
-    box-shadow: inset 0 0 0 2px var(--pico-success-color);
+    box-shadow: inset 0 0 0 2px var(--success);
 }
 
 .review-page__dot--deferred {
-    background: var(--pico-muted-border-color);
+    background: var(--border);
 }
 
 .review-page__dot--future {
-    background: var(--pico-muted-border-color);
+    background: var(--border);
     opacity: 0.25;
     cursor: default;
 }
 
 .review-page__progress {
-    font-family: var(--pico-font-family-monospace);
-    font-size: var(--text-md);
-    color: var(--pico-muted-color);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-md);
+    color: var(--text-muted);
     white-space: nowrap;
 }
 
 
 .review-page__back-btn {
-    --pico-color: var(--pico-muted-color);
-    --pico-background-color: transparent;
-    --pico-border-color: transparent;
+    --control-text: var(--text-muted);
+    --control-bg: transparent;
+    --control-border: transparent;
     padding-left: 0.5rem;
 }
 
 .review-page__next-btn {
-    --pico-color: var(--pico-primary);
-    --pico-background-color: transparent;
-    --pico-border-color: var(--pico-primary);
+    --control-text: var(--action);
+    --control-bg: transparent;
+    --control-border: var(--action);
 }
 
 .review-page__publish-btn {
@@ -425,21 +425,21 @@ review-session-actions {
 }
 
 .review-page__save-btn {
-    --pico-color: var(--pico-primary);
-    --pico-background-color: transparent;
-    --pico-border-color: var(--pico-muted-border-color);
+    --control-text: var(--action);
+    --control-bg: transparent;
+    --control-border: var(--border);
 }
 
 .review-page__end-btn {
-    --pico-color: var(--pico-muted-color);
-    --pico-background-color: transparent;
-    --pico-border-color: var(--pico-muted-border-color);
+    --control-text: var(--text-muted);
+    --control-bg: transparent;
+    --control-border: var(--border);
 }
 
 
 .review-page__error {
-    font-size: var(--text-md);
-    color: var(--pico-del-color);
+    font-size: var(--font-size-md);
+    color: var(--diff-removed);
 }
 
 .review-page__info-row {
@@ -481,7 +481,7 @@ dialog[open]:has(.report-issue-modal__form) {
 }
 
 .report-issue-modal__label {
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     font-weight: 600;
 }
 
@@ -494,13 +494,13 @@ dialog[open]:has(.report-issue-modal__form) {
     list-style: none;
     margin: 0;
     padding: 0;
-    font-size: var(--text-sm);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
 }
 
 .review-page__review-state {
-    font-size: var(--text-sm);
-    font-family: var(--pico-font-family-monospace);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-mono);
     font-weight: 600;
     padding: 0.15em 0.5em;
     border-radius: 0.4rem;
@@ -508,13 +508,13 @@ dialog[open]:has(.report-issue-modal__form) {
 }
 
 .review-page__review-state--approved {
-    background: var(--pico-ins-color);
-    color: var(--pico-primary-inverse);
+    background: var(--diff-added);
+    color: var(--action-text);
 }
 
 .review-page__review-state--changes_requested {
-    background: var(--pico-del-color);
-    color: var(--pico-primary-inverse);
+    background: var(--diff-removed);
+    color: var(--action-text);
 }
 
 .review-page__left-col {
@@ -541,10 +541,10 @@ dialog[open]:has(.report-issue-modal__form) {
         flex-wrap: wrap;
         gap: 0.5rem;
         padding: 0.6rem 0.75rem;
-        background: rgba(var(--tone-bg), 0.92);
+        background: color-mix(in srgb, var(--bg) 92%, transparent);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
-        border-bottom: 1px solid var(--pico-muted-border-color);
+        border-bottom: 1px solid var(--border);
     }
     .review-page__progress {
         order: 1;
@@ -582,7 +582,7 @@ dialog[open]:has(.report-issue-modal__form) {
 
     .review-page__header .btn-sm,
     .review-page__header .btn {
-        font-size: var(--text-base);
+        font-size: var(--font-size-base);
     }
 }
 
@@ -590,36 +590,36 @@ dialog[open]:has(.report-issue-modal__form) {
     text-align: center;
     padding: 0.5rem 1rem;
     font-weight: 600;
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
 .review-page__status-banner--merged {
-    background: var(--pico-ins-color);
+    background: var(--diff-added);
     color: #fff;
 }
 
 .review-page__status-banner--closed {
-    background: var(--pico-del-color);
+    background: var(--diff-removed);
     color: #fff;
 }
 
 /* A first capture has no previous state to fall back on, so publishing it is
    the one irreversible thing on this page — it reads as a warning rather than
    as the muted aside it used to be. Tinted with color-mix rather than a
-   --pico-warn-background, which does not exist; the same technique
+   --warning-bg, which does not exist; the same technique
    review-overview uses for its state tints. */
 .review-page__baseline-banner {
     max-width: var(--page-width);
     width: 100%;
     margin-inline: auto;
     padding: 0.55rem 0.7rem;
-    font-size: var(--text-sm);
-    color: var(--civ-text);
-    background: color-mix(in srgb, var(--pico-warn-color) 14%, var(--pico-card-background-color));
-    border: 1px solid var(--pico-warn-color);
-    border-radius: var(--pico-border-radius);
+    font-size: var(--font-size-sm);
+    color: var(--text-default);
+    background: color-mix(in srgb, var(--warning) 14%, var(--surface));
+    border: 1px solid var(--warning);
+    border-radius: var(--radius);
 }
 
 /* Publishing preview (§7). A section under the roster rather than a tab: what will be
@@ -631,9 +631,9 @@ dialog[open]:has(.report-issue-modal__form) {
   margin-inline: auto;
   margin-top: 2.5rem;
   padding: 1.5rem 1rem 1.25rem;
-  border-top: 3px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
-  background: var(--pico-card-sectioning-background-color);
+  border-top: 3px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
 }
 
 /* Sits on the section's top rule, so the break reads as one thing rather than a
@@ -642,12 +642,12 @@ dialog[open]:has(.report-issue-modal__form) {
   margin: -1.9rem 0 0.9rem;
   padding-right: 0.6rem;
   display: inline-block;
-  font-size: var(--text-sm);
+  font-size: var(--font-size-sm);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--pico-muted-color);
-  background: var(--pico-background-color);
+  color: var(--text-muted);
+  background: var(--bg);
 }
 
 /* Two people resolving to one id (§21.8). Loud, because the consequence is
@@ -657,10 +657,10 @@ dialog[open]:has(.report-issue-modal__form) {
   width: 100%;
   margin-inline: auto;
   padding: 0.55rem 0.7rem;
-  border: 1px solid var(--pico-del-color);
-  border-radius: var(--pico-border-radius);
-  background: var(--pico-del-background);
-  font-size: var(--text-sm);
+  border: 1px solid var(--diff-removed);
+  border-radius: var(--radius);
+  background: var(--diff-removed-bg);
+  font-size: var(--font-size-sm);
 }
 
 
@@ -668,6 +668,6 @@ dialog[open]:has(.report-issue-modal__form) {
    these are styled buttons whose default outline was suppressed. */
 .review-page__start-btn:focus-visible,
 .review-page__gear-btn:focus-visible {
-  outline: var(--pico-outline-width) solid var(--pico-primary-focus);
+  outline: var(--focus-ring-width) solid var(--action-focus);
   outline-offset: 2px;
 }

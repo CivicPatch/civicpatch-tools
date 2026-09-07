@@ -33,16 +33,16 @@
   gap: 0.35rem;
   padding: 0.3rem 0.7rem;
   border-radius: 999px;
-  border: 1px solid var(--civ-border);
-  background: var(--civ-surface);
-  color: var(--civ-text);
-  font-size: var(--text-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-default);
+  font-size: var(--font-size-sm);
 }
 
 .municipalities-controls__pill--active {
-  background: var(--civ-text);
-  border-color: var(--civ-text);
-  color: var(--civ-bg);
+  background: var(--text-default);
+  border-color: var(--text-default);
+  color: var(--bg);
 }
 
 .municipalities-controls__pill-dot {
@@ -61,8 +61,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: var(--text-sm);
-  color: var(--civ-text);
+  font-size: var(--font-size-sm);
+  color: var(--text-default);
 }
 
 .municipalities-controls__checkbox input[type="checkbox"] {

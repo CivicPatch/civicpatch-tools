@@ -13,17 +13,17 @@
 }
 
 .civ-pagination__counter {
-    font-family: var(--pico-font-family-monospace);
-    font-size: var(--text-sm);
-    color: var(--pico-muted-color);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
 }
 
 .civ-pagination__per-page {
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    font-size: var(--text-md);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-md);
+    color: var(--text-muted);
 }
 
 .civ-pagination__per-page select {
@@ -31,5 +31,5 @@
     margin: 0;
     padding-block: 0.2em;
     padding-inline-start: 0.75em;
-    font-size: var(--text-md);
+    font-size: var(--font-size-md);
 }

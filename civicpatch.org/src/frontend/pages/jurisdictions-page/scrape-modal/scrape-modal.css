@@ -13,8 +13,8 @@ dialog[open]:has(.scrape-modal__body) {
 }
 
 .scrape-modal__radio-group {
-    border: var(--pico-border-width) solid var(--pico-form-element-border-color);
-    border-radius: var(--pico-border-radius);
+    border: var(--border-width) solid var(--field-border);
+    border-radius: var(--radius);
     padding: 0.6rem 0.9rem 0.75rem;
     margin: 0;
     display: flex;
@@ -23,11 +23,11 @@ dialog[open]:has(.scrape-modal__body) {
 }
 
 .scrape-modal__radio-group legend {
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--pico-muted-color);
+    color: var(--text-muted);
     padding: 0 0.25rem;
     margin-bottom: 0.25rem;
 }
@@ -50,7 +50,7 @@ dialog[open]:has(.scrape-modal__body) {
     gap: 0.4rem;
     cursor: pointer;
     margin: 0;
-    font-size: var(--text-md);
+    font-size: var(--font-size-md);
 }
 
 .scrape-modal__radio-label input[type="radio"] {
@@ -64,11 +64,11 @@ dialog[open]:has(.scrape-modal__body) {
 }
 
 .scrape-modal__mode-label {
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--pico-muted-color);
+    color: var(--text-muted);
 }
 
 .scrape-modal__url-section {
@@ -91,5 +91,5 @@ dialog[open]:has(.scrape-modal__body) {
 .scrape-modal__add-url {
     align-self: flex-start;
     padding: 0.3rem 0.75rem;
-    font-size: var(--text-md);
+    font-size: var(--font-size-md);
 }

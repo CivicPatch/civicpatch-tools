@@ -1,3 +1,15 @@
+/* ── Cascade layers ──────────────────────────────────────────────────────────
+   Declared here because tokens.css loads first; the order below is the whole
+   point — a rule in a later layer beats an earlier one **regardless of
+   specificity**, so the base layer can no longer win a fight against a
+   component by piling on `:not()`.
+
+   `components` and `utilities` are declared but not yet used. Unlayered styles
+   beat every layer, so component CSS and utilities.css keep their current
+   precedence until they are moved in together — layering utilities first would
+   make them *lose* to components, which is backwards. */
+@layer base, layout, components, utilities;
+
 /* Design tokens — every custom property the app defines, and nothing else.
    Rules live in styles.css and in the component stylesheets; this file only
    declares values, so "where does this colour come from" has one answer.
@@ -24,8 +36,8 @@
    making them theme-aware means re-encoding each SVG and is its own change. */
 
 :root {
-  --pico-icon-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  --pico-icon-date: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+  --icon-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  --icon-date: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
 }
 
 /* ── Source-url accent ramp ──────────────────────────────────────────────── */
@@ -53,56 +65,70 @@
 
 :root,
 :host {
-  --pico-font-family: "Figtree", sans-serif;
-  --pico-form-element-spacing-vertical: 0.5rem;
-  --pico-form-element-spacing-horizontal: 0.5rem;
-  --pico-border-radius: 3px;
-  --pico-border-width: 0.03rem;
-  --pico-line-height: 1.65;
-  --pico-outline-width: 0.2rem;
+  --font-sans: "Figtree", sans-serif;
+  --control-pad-y: 0.5rem;
+  --control-pad-x: 0.5rem;
+  --radius: 3px;
+  --border-width: 0.03rem;
+  --line-height: 1.65;
+  --focus-ring-width: 0.2rem;
 
 
   /* Values inherited from the CSS framework's :root — still referenced, so they
      have to live somewhere. */
-  --pico-spacing: 1rem;
-  --pico-block-spacing-horizontal: var(--pico-spacing);
-  --pico-typography-spacing-vertical: 1rem;
-  --pico-transition: 0.2s ease-in-out;
-  --pico-font-weight: 400;
-  --pico-font-family-emoji: "Apple Color Emoji", "Segoe UI Emoji",
+  --space: 1rem;
+  --space-prose: 1rem;
+  --transition: 0.2s ease-in-out;
+  --font-weight: 400;
+  --font-emoji: "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "Noto Color Emoji";
-  --pico-font-family-monospace: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
-    Consolas, "Liberation Mono", monospace, var(--pico-font-family-emoji);
-  --pico-group-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  --pico-text-underline-offset: 0.1rem;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    Consolas, "Liberation Mono", monospace, var(--font-emoji);
+  --underline-offset: 0.1rem;
 
   /* Accordion summary colours. Identical in both themes because each resolves
      through another token that is itself theme-aware. */
-  --pico-accordion-close-summary-color: var(--pico-color);
-  --pico-accordion-active-summary-color: var(--pico-primary-hover);
-  --pico-accordion-open-summary-color: var(--pico-muted-color);
-  --pico-block-spacing-vertical: var(--pico-spacing);
-  --pico-nav-element-spacing-vertical: 1rem;
-  --pico-nav-element-spacing-horizontal: 0.5rem;
-  --pico-nav-link-spacing-vertical: 0.5rem;
-  --pico-nav-link-spacing-horizontal: 0.5rem;
-  --pico-primary-hover-underline: var(--pico-primary-hover);
+  --nav-element-pad-y: 1rem;
+  --nav-element-pad-x: 0.5rem;
+  --nav-link-pad-y: 0.5rem;
+  --nav-link-pad-x: 0.5rem;
 
   /* Same in both themes, so they live here rather than being stated twice. */
-  --pico-form-element-disabled-opacity: 0.5;
-  --pico-primary-hover-border: var(--pico-primary-hover-background);
-  --pico-table-border-color: var(--pico-muted-border-color);
+  --disabled-opacity: 0.5;
+
+  /* ── Roles the components needed and the tier did not have ──────────────
+     Defined once: every value resolves through a --tone-*, which each theme
+     redefines, so these follow the theme without being restated.
+
+     Status tints replace five hand-rolled alphas (0.12 / 0.15 / 0.18 / 0.2)
+     that all meant "wash this in the status colour". One strength now. */
+  --success-tint: rgba(var(--tone-green), 0.15);
+  --warning-tint: rgba(var(--tone-yellow), 0.15);
+  --error-tint: rgba(var(--tone-red), 0.15);
+  --info-tint: rgba(var(--tone-blue), 0.15);
+
+  /* Focus and selection. --focus-ring is the element you are on; -soft is the
+     container that contains it, which is why both exist. */
+  --focus-ring: rgb(var(--tone-teal));
+  --focus-ring-soft: rgb(var(--tone-sapphire));
+  --focus-tint: rgba(var(--tone-sapphire), 0.15);
+
+  /* Jurisdiction level — categorical, not status: these say what kind of thing
+     a badge names, so they must not collapse into success/warning/info. */
+  --level-global: rgb(var(--tone-mauve));
+  --level-state: rgb(var(--tone-green));
+  --level-locality: rgb(var(--tone-yellow));
 
   /* ── Type scale ──────────────────────────────────────────────────────── */
   /* Monospace: tables, badges, metadata, IDs, pagination, counters        */
   /* Sans-serif: all other UI text                                         */
-  --text-xs: 0.65rem; /* tiny labels, diff metadata, table headers */
-  --text-sm: 0.75rem; /* small metadata, badges, btn-sm */
-  --text-md: 0.875rem; /* body text, card content, items */
-  --text-base: 1rem; /* default paragraph, modal headers */
-  --text-lg: 1.25rem; /* display values, goal numbers */
-  --text-xl: 1.75rem; /* section titles, display headings */
-  --text-2xl: 2rem; /* stat values, hero numbers */
+  --font-size-xs: 0.65rem; /* tiny labels, diff metadata, table headers */
+  --font-size-sm: 0.75rem; /* small metadata, badges, btn-sm */
+  --font-size-md: 0.875rem; /* body text, card content, items */
+  --font-size-base: 1rem; /* default paragraph, modal headers */
+  --font-size-lg: 1.25rem; /* display values, goal numbers */
+  --font-size-xl: 1.75rem; /* section titles, display headings */
+  --font-size-2xl: 2rem; /* stat values, hero numbers */
 }
 
 /* ── Light theme ─────────────────────────────────────────────────────────── */
@@ -110,17 +136,17 @@
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
   /* ── Editorial palette tokens (Lemon light) ──────────────────────────── */
-  --civ-bg: #fafafa;
-  --civ-surface: #fcfcfc;
-  --civ-surface-2: #f5f5f5;
-  --civ-text: #222222;
-  --civ-text-secondary: #444444;
-  --civ-text-muted: #767676; /* WCAG AA minimum on white */
-  --civ-border: #e0e0e0;
-  --civ-border-strong: #333333;
-  --civ-accent: #f0c840;
-  --civ-accent-border: #d4a800;
-  --civ-accent-text: #111111; /* text on top of accent bg */
+  --bg: #fafafa;
+  --surface: #fcfcfc;
+  --surface-2: #f5f5f5;
+  --text-default: #222222;
+  --text-secondary: #444444;
+  --text-muted: #767676; /* WCAG AA minimum on white */
+  --border: #e0e0e0;
+  --border-strong: #333333;
+  --accent: #f0c840;
+  --accent-border: #d4a800;
+  --accent-text: #111111; /* text on top of accent bg */
 
   /* ── Tones ─────────────────────────────────────────────────────────────
      Primitives, as `R, G, B` triples so callers can add an alpha:
@@ -144,73 +170,53 @@
   --tone-sapphire: 32, 159, 181;
   --tone-lavender: 114, 135, 253;
 
-  /* Pico overrides — light */
-  --pico-color: var(--civ-text);
-  --pico-background-color: var(--civ-bg);
-  --pico-text-selection-color: rgba(255, 224, 102, 0.35);
+  /* Base-layer roles — light */
+  --text: var(--text-default);
+  --selection-bg: rgba(255, 224, 102, 0.35);
 
-  --pico-primary: #111111;
-  --pico-primary-background: #111111;
-  --pico-primary-underline: #111111;
-  --pico-primary-hover: #333333;
-  --pico-primary-hover-background: #333333;
-  --pico-primary-border: #111111;
-  --pico-primary-focus: rgba(17, 17, 17, 0.25);
-  --pico-primary-inverse: #fafafa;
+  --action: #111111;
+  --action-hover: #333333;
+  --action-focus: rgba(17, 17, 17, 0.25);
+  --action-text: #fafafa;
 
-  --pico-secondary-background: #555555;
-  --pico-secondary-inverse: #ffffff;
-
-  --pico-muted-color: var(--civ-text-muted);
-  --pico-muted-background: var(--civ-surface-2);
-  --pico-muted-border-color: var(--civ-border);
-
-  --pico-form-element-color: var(--civ-text);
-  --pico-form-element-background-color: var(--civ-surface);
-  --pico-form-element-active-background-color: var(--civ-surface-2);
-  --pico-form-element-active-border-color: var(--civ-border-strong);
-  --pico-form-element-focus-color: var(--civ-border-strong);
-  --pico-form-element-border-color: var(--civ-border);
+  --muted-action-bg: #555555;
+  --muted-action-text: #ffffff;
 
 
-  --pico-ins-color: rgb(var(--tone-green));
-  --pico-ins-background: rgba(var(--tone-green), 0.1);
-  --pico-del-color: rgb(var(--tone-red));
-  --pico-del-background: rgba(var(--tone-red), 0.1);
-  --pico-info-color: rgb(var(--tone-blue));
-  --pico-info-background: rgba(var(--tone-blue), 0.1);
-  --pico-warn-color: #b35c00;
-  --pico-success-color: rgb(var(--tone-green));
-  --pico-error-color: rgb(var(--tone-red));
-  --pico-warning-color: #b35c00;
+  --field-border: var(--border);
 
 
-  --pico-card-background-color: var(--civ-surface);
-  --pico-card-sectioning-background-color: var(--civ-surface-2);
-  --pico-card-box-shadow: none;
+  --diff-added: rgb(var(--tone-green));
+  --diff-added-bg: rgba(var(--tone-green), 0.1);
+  --diff-removed: rgb(var(--tone-red));
+  --diff-removed-bg: rgba(var(--tone-red), 0.1);
+  --info: rgb(var(--tone-blue));
+  --info-bg: rgba(var(--tone-blue), 0.1);
+  --warning: rgb(var(--tone-yellow));
+  --success: rgb(var(--tone-green));
+  --error: rgb(var(--tone-red));
 
 
-  --civ-status-fresh: var(--pico-success-color);
-  --civ-status-stale: var(--pico-warning-color);
-  --civ-status-gap: var(--pico-error-color);
-  --civ-status-untracked: var(--civ-text-muted);
-  --civ-status-selected: var(--civ-accent);
+
+
+  --status-fresh: var(--success);
+  --status-stale: var(--warning);
+  --status-gap: var(--error);
+  --status-untracked: var(--text-muted);
+  --status-selected: var(--accent);
 
   /* Inherited framework tokens — theme-dependent half. */
-  --pico-contrast: #dfe3eb;
-  --pico-form-element-placeholder-color: #8891a4;
-  --pico-form-element-selected-background-color: #2a3140;
-  --pico-mark-background-color: #014063;
-  --pico-mark-color: #fff;
-  --pico-secondary: #969eaf;
-  --pico-secondary-hover: #b3b9c5;
-  --pico-secondary-underline: rgba(150, 158, 175, 0.5);
-  --pico-secondary-hover-underline: var(--pico-secondary-hover);
-  --pico-card-border-color: var(--pico-card-background-color);
-  --pico-progress-color: var(--pico-primary-background);
-  --pico-contrast-hover: #fff;
-  --pico-contrast-underline: rgba(223, 227, 235, 0.5);
-  --pico-contrast-hover-underline: var(--pico-contrast-hover);
+  --contrast: #dfe3eb;
+  --placeholder: #8891a4;
+  --option-selected-bg: #2a3140;
+  --mark-bg: #014063;
+  --mark-text: #fff;
+  --muted-action: #969eaf;
+  --muted-action-hover: #b3b9c5;
+  --muted-action-underline: rgba(150, 158, 175, 0.5);
+  --card-border: var(--surface);
+  --contrast-hover: #fff;
+  --contrast-underline: rgba(223, 227, 235, 0.5);
 
   --surface-hover: rgba(0, 0, 0, 0.035);
 }
@@ -219,17 +225,17 @@
 
 :root[data-theme="dark"] {
   /* ── Editorial palette tokens (Graphite dark) ────────────────────────── */
-  --civ-bg: #111111;
-  --civ-surface: #242424;
-  --civ-surface-2: #1c1c1c;
-  --civ-text: #eeeeee;
-  --civ-text-secondary: #aaaaaa;
-  --civ-text-muted: #aaaaaa; /* WCAG AA on #242424: 7.5:1 */
-  --civ-border: #333333;
-  --civ-border-strong: #eeeeee;
-  --civ-accent: #f0c840; /* same as light */
-  --civ-accent-border: #d4a800;
-  --civ-accent-text: #111111;
+  --bg: #111111;
+  --surface: #242424;
+  --surface-2: #1c1c1c;
+  --text-default: #eeeeee;
+  --text-secondary: #aaaaaa;
+  --text-muted: #aaaaaa; /* WCAG AA on #242424: 7.5:1 */
+  --border: #333333;
+  --border-strong: #eeeeee;
+  --accent: #f0c840; /* same as light */
+  --accent-border: #d4a800;
+  --accent-text: #111111;
 
   /* ── Tones — see the light block for the format note ─────────────────── */
   --tone-bg: 30, 30, 46;
@@ -249,73 +255,53 @@
   --tone-sapphire: 116, 199, 236;
   --tone-lavender: 180, 190, 254;
 
-  /* Pico overrides — dark */
-  --pico-color: var(--civ-text);
-  --pico-background-color: var(--civ-bg);
-  --pico-text-selection-color: rgba(255, 224, 102, 0.3);
+  /* Base-layer roles — dark */
+  --text: var(--text-default);
+  --selection-bg: rgba(255, 224, 102, 0.3);
 
-  --pico-primary: #eeeeee;
-  --pico-primary-background: #eeeeee;
-  --pico-primary-underline: #eeeeee;
-  --pico-primary-hover: #cccccc;
-  --pico-primary-hover-background: #cccccc;
-  --pico-primary-border: #eeeeee;
-  --pico-primary-focus: rgba(238, 238, 238, 0.25);
-  --pico-primary-inverse: #111111;
+  --action: #eeeeee;
+  --action-hover: #cccccc;
+  --action-focus: rgba(238, 238, 238, 0.25);
+  --action-text: #111111;
 
-  --pico-secondary-background: #555555;
-  --pico-secondary-inverse: #ffffff;
-
-  --pico-muted-color: var(--civ-text-muted);
-  --pico-muted-background: var(--civ-surface-2);
-  --pico-muted-border-color: var(--civ-border);
-
-  --pico-form-element-color: var(--civ-text);
-  --pico-form-element-background-color: var(--civ-surface);
-  --pico-form-element-active-background-color: var(--civ-surface-2);
-  --pico-form-element-active-border-color: var(--civ-border-strong);
-  --pico-form-element-focus-color: var(--civ-border-strong);
-  --pico-form-element-border-color: var(--civ-text-muted);
+  --muted-action-bg: #555555;
+  --muted-action-text: #ffffff;
 
 
-  --pico-ins-color: rgb(var(--tone-green));
-  --pico-ins-background: rgba(var(--tone-green), 0.1);
-  --pico-del-color: rgb(var(--tone-red));
-  --pico-del-background: rgba(var(--tone-red), 0.1);
-  --pico-info-color: rgb(var(--tone-blue));
-  --pico-info-background: rgba(var(--tone-blue), 0.1);
-  --pico-warn-color: #f0c040;
-  --pico-success-color: rgb(var(--tone-green));
-  --pico-error-color: rgb(var(--tone-red));
-  --pico-warning-color: #f0c040;
+  --field-border: var(--text-muted);
 
 
-  --pico-card-background-color: var(--civ-surface);
-  --pico-card-sectioning-background-color: var(--civ-surface-2);
-  --pico-card-box-shadow: none;
+  --diff-added: rgb(var(--tone-green));
+  --diff-added-bg: rgba(var(--tone-green), 0.1);
+  --diff-removed: rgb(var(--tone-red));
+  --diff-removed-bg: rgba(var(--tone-red), 0.1);
+  --info: rgb(var(--tone-blue));
+  --info-bg: rgba(var(--tone-blue), 0.1);
+  --warning: rgb(var(--tone-yellow));
+  --success: rgb(var(--tone-green));
+  --error: rgb(var(--tone-red));
 
 
-  --civ-status-fresh: var(--pico-success-color);
-  --civ-status-stale: var(--pico-warning-color);
-  --civ-status-gap: var(--pico-error-color);
-  --civ-status-untracked: var(--civ-text-muted);
-  --civ-status-selected: var(--civ-accent);
+
+
+  --status-fresh: var(--success);
+  --status-stale: var(--warning);
+  --status-gap: var(--error);
+  --status-untracked: var(--text-muted);
+  --status-selected: var(--accent);
 
   /* Inherited framework tokens — theme-dependent half. */
-  --pico-contrast: #181c25;
-  --pico-form-element-placeholder-color: var(--pico-muted-color);
-  --pico-form-element-selected-background-color: #dfe3eb;
-  --pico-mark-background-color: rgb(252.5, 230.5, 191.5);
-  --pico-mark-color: #0f1114;
-  --pico-secondary: #5d6b89;
-  --pico-secondary-hover: #48536b;
-  --pico-secondary-underline: rgba(93, 107, 137, 0.5);
-  --pico-secondary-hover-underline: var(--pico-secondary-hover);
-  --pico-card-border-color: var(--pico-muted-border-color);
-  --pico-progress-color: var(--pico-primary-background);
-  --pico-contrast-hover: #000;
-  --pico-contrast-underline: rgba(24, 28, 37, 0.5);
-  --pico-contrast-hover-underline: var(--pico-contrast-hover);
+  --contrast: #181c25;
+  --placeholder: var(--text-muted);
+  --option-selected-bg: #dfe3eb;
+  --mark-bg: rgb(252.5, 230.5, 191.5);
+  --mark-text: #0f1114;
+  --muted-action: #5d6b89;
+  --muted-action-hover: #48536b;
+  --muted-action-underline: rgba(93, 107, 137, 0.5);
+  --card-border: var(--border);
+  --contrast-hover: #000;
+  --contrast-underline: rgba(24, 28, 37, 0.5);
 
   --surface-hover: rgba(255, 255, 255, 0.045);
 }

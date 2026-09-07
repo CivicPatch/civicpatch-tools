@@ -1,7 +1,7 @@
 .freshness-widget {
-  background: var(--civ-surface);
-  border: 1px solid var(--civ-border);
-  border-radius: var(--pico-border-radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -11,14 +11,14 @@
 .freshness-widget__title {
   margin: 0;
   font-weight: 700;
-  color: var(--civ-text);
+  color: var(--text-default);
 }
 
 .freshness-widget__cutoff {
   margin: 0;
   text-align: right;
-  font-size: var(--text-xs);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
 }
 
 .freshness-widget__bar {
@@ -27,7 +27,7 @@
   height: 0.5rem;
   border-radius: 999px;
   overflow: hidden;
-  background: var(--civ-surface-2);
+  background: var(--surface-2);
 }
 
 .freshness-widget__segment {
@@ -46,8 +46,8 @@
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: var(--text-xs);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
 }
 
 .freshness-widget__legend-dot {
@@ -58,5 +58,5 @@
 
 .freshness-widget__legend-count {
   font-weight: 700;
-  color: var(--civ-text);
+  color: var(--text-default);
 }

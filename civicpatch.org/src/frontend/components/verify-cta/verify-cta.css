@@ -1,9 +1,9 @@
 /* ── Card ─────────────────────────────────────────────────────────────────── */
 
 .verify-cta {
-  background: var(--civ-surface);
-  border: 1px solid var(--civ-border);
-  border-radius: var(--pico-border-radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -12,14 +12,14 @@
 }
 
 .verify-cta__count {
-  font-size: var(--text-2xl);
+  font-size: var(--font-size-2xl);
   font-weight: 800;
-  color: var(--civ-accent);
+  color: var(--accent);
   margin: 0;
 }
 
 .verify-cta__description {
-  color: var(--civ-text-muted);
+  color: var(--text-muted);
   margin: 0 0 0.25rem 0;
 }
 
@@ -31,10 +31,10 @@
   padding: 0.6rem 1.3rem;
   border: none;
   border-radius: 999px;
-  background: var(--civ-text);
-  color: var(--civ-bg);
+  background: var(--text-default);
+  color: var(--bg);
   font-weight: 700;
-  font-size: var(--text-md);
+  font-size: var(--font-size-md);
   cursor: pointer;
 }
 

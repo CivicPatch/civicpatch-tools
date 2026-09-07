@@ -62,12 +62,12 @@ const BUCKETS = [
   { key: BUCKET_FAILED_RUNS, count: (r: any) => r.failed_runs },
 ];
 
-// The app's own badge, driven by the pico tone pairs rather than a private set of pills.
+// The app's own badge, driven by the shared tone pairs rather than a private set of pills.
 const TONES: Record<string, { bg: string; color: string }> = {
-  review: { bg: "rgba(var(--tone-yellow), 0.2)", color: "rgb(var(--tone-yellow))" },
-  alert: { bg: "var(--pico-del-background)", color: "var(--pico-del-color)" },
-  ok: { bg: "var(--pico-ins-background)", color: "var(--pico-ins-color)" },
-  quiet: { bg: "var(--pico-muted-background)", color: "var(--civ-text-muted)" },
+  review: { bg: "var(--warning-tint)", color: "var(--warning)" },
+  alert: { bg: "var(--diff-removed-bg)", color: "var(--diff-removed)" },
+  ok: { bg: "var(--diff-added-bg)", color: "var(--diff-added)" },
+  quiet: { bg: "var(--surface-2)", color: "var(--text-muted)" },
 };
 
 const label = (row: BucketRow) => row.name ?? row.jurisdiction_ocdid;

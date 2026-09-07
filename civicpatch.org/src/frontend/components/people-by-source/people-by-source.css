@@ -7,7 +7,7 @@
     table-layout: fixed;
     width: 100%;
     margin: 0;
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
 }
 
 .people-by-source th,
@@ -25,15 +25,15 @@
 /* The tint sits behind the check and cross, not instead of them: the icons say
    which side has the person, the row says which way the roster moved. */
 .people-by-source__row--added td {
-    background-color: var(--pico-ins-background);
+    background-color: var(--diff-added-bg);
 }
 
 .people-by-source__row--dropped td {
-    background-color: var(--pico-del-background);
+    background-color: var(--diff-removed-bg);
 }
 
 .people-by-source__empty {
     margin: 0.35rem 0 0;
-    font-size: var(--text-xs);
-    color: var(--pico-muted-color);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
 }

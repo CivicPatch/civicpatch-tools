@@ -3,15 +3,15 @@
 .review-issues {
     margin-bottom: 1.25rem;
     padding: 0.75rem 1rem;
-    border-left: 3px solid var(--pico-del-color);
-    background: var(--pico-del-background);
-    border-radius: var(--pico-border-radius);
+    border-left: 3px solid var(--diff-removed);
+    background: var(--diff-removed-bg);
+    border-radius: var(--radius);
 }
 
 .review-issues__heading {
     margin: 0 0 0.5rem;
-    color: var(--pico-del-color);
-    font-size: var(--text-md);
+    color: var(--diff-removed);
+    font-size: var(--font-size-md);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -27,14 +27,14 @@
     align-items: baseline;
     gap: 0.5rem;
     padding: 0.25rem 0;
-    font-size: var(--text-md);
-    color: var(--pico-color);
+    font-size: var(--font-size-md);
+    color: var(--text);
 }
 
 .review-issues__icon {
-    color: var(--pico-del-color);
+    color: var(--diff-removed);
     flex-shrink: 0;
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
 }
 
 /* ── Review popover ── */
@@ -49,9 +49,9 @@
     max-height: 80vh;
     overflow-y: auto;
     padding: 1.25rem;
-    border-radius: var(--pico-border-radius);
-    border: 1px solid var(--pico-muted-border-color);
-    background: var(--pico-background-color);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--bg);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 

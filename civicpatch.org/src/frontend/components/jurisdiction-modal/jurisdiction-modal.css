@@ -41,13 +41,13 @@
 
 .jurisdiction-modal__where {
   margin: 0;
-  font-size: var(--text-sm);
-  color: var(--civ-text-muted);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
 }
 
 .jurisdiction-modal__status {
   margin: 0;
-  color: var(--civ-text-secondary);
+  color: var(--text-secondary);
 }
 
 /* Footer */

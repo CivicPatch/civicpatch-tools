@@ -35,8 +35,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}civicpatch tool{% endblock %}</title>
 
-        <!-- Tokens before rules: tokens.css declares, elements.css styles bare
-             elements, styles.css holds page and component rules. -->
+        <!-- Order is the cascade, and @layer now states it explicitly: tokens.css
+             declares the layer order and the custom properties; elements/typography/
+             controls are @layer base; layout.css is @layer layout; styles.css is the
+             remaining shared shell rules. utilities.css and component CSS are
+             deliberately unlayered — unlayered beats every layer, so they keep their
+             current precedence until they move into `components`/`utilities` together.
+             Page CSS follows via the styles block below. -->
         <link
             href="{{ url_for('frontend', path='/css/tokens.css') }}"
             rel="stylesheet"
@@ -46,9 +51,26 @@
             rel="stylesheet"
         />
         <link
+            href="{{ url_for('frontend', path='/css/typography.css') }}"
+            rel="stylesheet"
+        />
+        <link
+            href="{{ url_for('frontend', path='/css/controls.css') }}"
+            rel="stylesheet"
+        />
+        <link
+            href="{{ url_for('frontend', path='/css/layout.css') }}"
+            rel="stylesheet"
+        />
+        <link
             href="{{ url_for('frontend', path='/css/styles.css') }}"
             rel="stylesheet"
         />
+        <link
+            href="{{ url_for('frontend', path='/css/utilities.css') }}"
+            rel="stylesheet"
+        />
+
 
         {% block styles %}{% endblock %}
         {% block head %}{% endblock %}

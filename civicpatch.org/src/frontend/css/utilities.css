@@ -1,0 +1,239 @@
+/* Deliberately NOT in @layer utilities yet: unlayered styles outrank every
+   layer, so these would start losing to component CSS the moment they moved.
+   They join `utilities` when components join `components`. */
+
+/* ── Utilities ───────────────────────────────────────────────────────────────
+   Single-purpose classes, applied from markup. Last in the cascade order by
+   intent, so they win without needing `!important`. */
+
+/* ── Source-url colour utilities ─────────────────────────────────────────── */
+/* getSourceColorClass() in utils/source-color-utils.js hashes a URL to one. */
+
+.color-1 {
+  --_c: var(--color-1);
+  color: rgb(var(--color-1));
+}
+.color-2 {
+  --_c: var(--color-2);
+  color: rgb(var(--color-2));
+}
+.color-3 {
+  --_c: var(--color-3);
+  color: rgb(var(--color-3));
+}
+.color-4 {
+  --_c: var(--color-4);
+  color: rgb(var(--color-4));
+}
+.color-5 {
+  --_c: var(--color-5);
+  color: rgb(var(--color-5));
+}
+.color-6 {
+  --_c: var(--color-6);
+  color: rgb(var(--color-6));
+}
+.color-7 {
+  --_c: var(--color-7);
+  color: rgb(var(--color-7));
+}
+.color-8 {
+  --_c: var(--color-8);
+  color: rgb(var(--color-8));
+}
+.color-9 {
+  --_c: var(--color-9);
+  color: rgb(var(--color-9));
+}
+.color-10 {
+  --_c: var(--color-10);
+  color: rgb(var(--color-10));
+}
+
+:root,
+:host {
+  font-size: 17px;
+}
+
+
+/* ── Button utilities ─────────────────────────────────────────────────────────
+   Generic button classes used across pages. `.civ-action-btn` is a component and
+   lives in components/action-btn/; these are not. */
+
+.btn-icon {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  padding: 0;
+  margin: 0;
+  min-width: unset;
+  min-height: unset;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    color 0.15s;
+}
+
+.btn-icon:hover {
+  color: var(--contrast);
+}
+
+.btn-icon--rotated {
+  transform: rotate(180deg);
+}
+
+.btn-gradient {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.btn-gradient:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Review start button — yellow when enabled, the one place yellow earns its spot */
+.review-page__start-btn:not(:disabled) {
+  --control-bg: var(--accent);
+  --control-border: var(--accent-border);
+  --control-text: var(--accent-text);
+}
+
+.review-page__start-btn:not(:disabled):hover {
+  --control-bg: var(--accent-border);
+  --control-border: var(--accent-border);
+}
+
+.btn-sm {
+  width: auto;
+  margin: 0;
+  padding: 0.2em 0.75em;
+  font-size: var(--font-size-sm);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+.btn-lg {
+  font-size: var(--font-size-lg);
+  padding: 0.85rem;
+}
+
+a.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--control-text);
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.4rem 1.1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+  white-space: nowrap;
+}
+
+a.btn:hover {
+  border-color: var(--control-text);
+  background: transparent;
+  color: var(--control-text);
+  text-decoration: none;
+}
+
+a.btn:active {
+  background: var(--surface-2);
+}
+
+/* ── Action buttons toolbar ── */
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.action-buttons__reset {
+  margin-left: auto;
+}
+
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
+
+.page-content {
+  /* width:100% so the rail fills its parent up to max-width. Without it, a
+     .page-content that's a flex item (main is a column flex) shrinks to its
+     content width instead of stretching — collapsing on content-light pages. */
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+}
+
+a.btn:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--action-focus);
+}
+
+a {
+  border-radius: var(--radius);
+  padding: 0.1em 0.2em;
+  margin: 0 -0.2em;
+}
+
+a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--action-focus);
+}
+
+:focus-visible {
+  outline-offset: 0.2rem;
+  border-radius: var(--radius);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  padding: 0;
+  margin: 0;
+  min-width: unset;
+  min-height: unset;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-md);
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: var(--contrast);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+.details-dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+  margin: 0;
+}
+

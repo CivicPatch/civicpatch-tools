@@ -1,0 +1,382 @@
+@layer base {
+/* Buttons, form controls, labels, fieldsets and grouped controls. Split out of
+   elements.css 2026-09-07 when it passed the 400-line ceiling. Same layer,
+   loaded after it, so the cascade is unchanged. */
+
+/* ── Buttons ─────────────────────────────────────────────────────────────────
+ * Filled primary by default; styles.css opts classes out by overriding the three
+ * custom properties. Keep the indirection — it is what makes an opt-out three
+ * lines instead of a full restatement. */
+
+[role="button"],
+[type="button"],
+[type="file"]::file-selector-button,
+[type="reset"],
+[type="submit"],
+button {
+  --control-bg: var(--action);
+  --control-border: var(--action);
+  --control-text: var(--action-text);
+
+  padding: var(--control-pad-y)
+    var(--control-pad-x);
+  border: var(--border-width) solid var(--control-border);
+  border-radius: var(--radius);
+  outline: 0;
+  background-color: var(--control-bg);
+  color: var(--control-text);
+  font-weight: var(--font-weight);
+  font-size: 1rem;
+  line-height: var(--line-height);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    box-shadow var(--transition);
+}
+
+:where(
+  [role="button"],
+  [type="button"],
+  [type="file"]::file-selector-button,
+  [type="reset"],
+  [type="submit"],
+  button
+):is(:hover, :active, :focus) {
+  --control-bg: var(--action-hover);
+  --control-border: var(--action-hover);
+  --control-text: var(--action-text);
+}
+
+/* A submit button fills its form row; every other button hugs its label. */
+button[type="submit"] {
+  width: 100%;
+}
+
+/* A summary styled as a button is still a disclosure control — it spans its
+   container and reads left-aligned, unlike a real button. */
+details summary[role="button"] {
+  width: 100%;
+  text-align: left;
+}
+/* ── Form controls ───────────────────────────────────────────────────────────
+ * Only what this app renders. Absent because unused: search/time inputs,
+ * aria-invalid, [dir=rtl], role=search, switches. */
+
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  font-size: 1rem;
+  line-height: var(--line-height);
+  font-family: inherit;
+  letter-spacing: inherit;
+}
+
+:where(input, select, textarea) {
+  --control-bg: var(--surface);
+  --control-border: var(--field-border);
+  --control-text: var(--text-default);
+}
+
+input,
+select,
+textarea {
+  border: var(--border-width) solid var(--control-border);
+  border-radius: var(--radius);
+  outline: 0;
+  background-color: var(--control-bg);
+  color: var(--control-text);
+  font-weight: var(--font-weight);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    box-shadow var(--transition);
+}
+
+/* Checkbox and radio keep their native box; everything else gets ours. */
+input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"]),
+select,
+textarea {
+  appearance: none;
+  padding: var(--control-pad-y)
+    var(--control-pad-x);
+}
+
+/* A fixed height keeps inputs and selects on the same baseline even when one of
+   them has no text in it yet. */
+input:not([type="checkbox"], [type="radio"], [type="range"]) {
+  height: calc(
+    1rem * var(--line-height) + var(--control-pad-y) * 2 +
+      var(--border-width) * 2
+  );
+}
+
+input:not([type="checkbox"], [type="radio"]),
+select,
+textarea {
+  margin-bottom: var(--space);
+}
+
+textarea {
+  display: block;
+  resize: vertical;
+}
+
+:where(select, textarea):not([readonly]):is(:active, :focus),
+input:not(
+    [type="submit"],
+    [type="button"],
+    [type="reset"],
+    [type="checkbox"],
+    [type="radio"],
+    [readonly]
+  ):is(:active, :focus) {
+  --control-bg: var(--surface-2);
+  --control-border: var(--border-strong);
+}
+
+:where(select, textarea):not([readonly]):focus,
+input:not(
+    [type="submit"],
+    [type="button"],
+    [type="reset"],
+    [type="range"],
+    [type="file"],
+    [readonly]
+  ):focus {
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--border-strong);
+}
+
+input::placeholder,
+textarea::placeholder,
+select:invalid {
+  color: var(--placeholder);
+  opacity: 1;
+}
+
+/* The chevron is a background image, so the right padding has to leave room for
+   it — otherwise long option text runs underneath. */
+select:not([multiple], [size]) {
+  padding-inline-start: var(--control-pad-x);
+  padding-inline-end: calc(var(--control-pad-x) + 1.5rem);
+  background-image: var(--icon-chevron);
+  background-position: center right 0.75rem;
+  background-size: 1rem auto;
+  background-repeat: no-repeat;
+}
+
+select[multiple] option:checked {
+  background: var(--option-selected-bg);
+  color: var(--text-default);
+}
+
+input[type="date"] {
+  --icon-position: 0.75rem;
+  --icon-width: 1rem;
+  padding-right: calc(var(--icon-width) + var(--icon-position));
+  background-image: var(--icon-date);
+  background-position: center right var(--icon-position);
+  background-size: var(--icon-width) auto;
+  background-repeat: no-repeat;
+}
+
+/* ── Labels, fieldsets ─────────────────────────────────────────────────────── */
+
+fieldset {
+  width: 100%;
+  margin: 0 0 var(--space);
+  padding: 0;
+  border: 0;
+}
+
+fieldset legend,
+label {
+  display: block;
+  margin-bottom: calc(var(--space) * 0.375);
+  color: var(--text);
+  font-weight: var(--font-weight);
+}
+
+fieldset legend {
+  margin-bottom: calc(var(--space) * 0.5);
+}
+
+legend {
+  max-width: 100%;
+  padding: 0;
+  color: inherit;
+  white-space: normal;
+}
+
+label > :where(input, select, textarea) {
+  margin-top: calc(var(--space) * 0.25);
+}
+
+/* A label wrapping a tick is a hit target, not a block heading. */
+label:has([type="checkbox"], [type="radio"]) {
+  width: fit-content;
+  cursor: pointer;
+}
+
+/* Helper text under a field: pulled up against the field it describes. */
+:where(input, select, textarea, fieldset) + small {
+  display: block;
+  width: 100%;
+  margin-top: calc(var(--space) * -0.75);
+  margin-bottom: var(--space);
+  color: var(--text-muted);
+}
+
+/* ── Disabled ──────────────────────────────────────────────────────────────── */
+
+:where(fieldset[disabled]) :is(input, select, textarea),
+input[disabled],
+select[disabled],
+textarea[disabled],
+label[aria-disabled="true"] {
+  opacity: var(--disabled-opacity);
+  pointer-events: none;
+}
+
+:where(button, [type="submit"], [type="reset"], [type="button"], [role="button"])[disabled],
+:where(fieldset[disabled]) :is(button, [type="submit"], [type="button"], [type="reset"], [role="button"]) {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ── Grouped controls ────────────────────────────────────────────────────────
+ * `inline-flex`, not `flex` — a block-level flex container claims its whole line. */
+
+[role="group"] {
+  display: inline-flex;
+  position: relative;
+  width: 100%;
+  margin-bottom: var(--space);
+  border-radius: var(--radius);
+  box-shadow: 0 0 0 transparent;
+  vertical-align: middle;
+  transition: box-shadow var(--transition);
+}
+
+[role="group"] > *,
+[role="group"] input:not([type="checkbox"], [type="radio"]),
+[role="group"] select {
+  position: relative;
+  flex: 1 1 auto;
+  margin-bottom: 0;
+}
+
+/* Buttons in a group size to their label rather than sharing the row equally,
+   and get roomier horizontal padding. */
+[role="group"] :is([role="button"], [type="button"], [type="reset"], [type="submit"], button) {
+  --control-pad-x: 2rem;
+  width: auto;
+}
+
+/* The group owns the focus ring, so members must not draw their own. */
+[role="group"] :is([role="button"], [type="button"], [type="reset"], [type="submit"], button):focus {
+  box-shadow: none;
+}
+
+/* Interior edges square up so the group reads as one control. */
+[role="group"] > :not(:first-child) {
+  margin-left: calc(var(--border-width) * -1);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+[role="group"] > :not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+
+/* ── Bare control styling ────────────────────────────────────────────────────
+   Moved here from styles.css 2026-09-07, where it sat under the misleading
+   heading "Component overrides". Same layer, appended at the end, so its
+   position in the cascade is unchanged. */
+
+input:not(
+  [type="submit"],
+  [type="button"],
+  [type="reset"],
+  [type="checkbox"],
+  [type="radio"],
+  [type="file"]
+),
+:where(select, textarea) {
+  --focus-ring-width: 0.2rem;
+}
+
+[type="checkbox"]:checked {
+  --control-bg: var(--focus-ring-soft);
+  --control-border: var(--focus-ring-soft);
+}
+
+[type="submit"]:not(.profile-modal__tab),
+[type="button"]:not(.profile-modal__tab):not(.secondary):not(.btn-ghost):not(.role-chip),
+[type="reset"],
+button:not(.btn-ghost):not(.profile-modal__tab):not(.secondary):not(.role-chip):not(
+    .destructive
+  ) {
+  --control-bg: var(--action);
+  --control-border: var(--action);
+  --control-text: var(--action-text);
+}
+
+button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(.role-chip):not(
+    .profile-modal__tab
+  ):not(.secondary):hover,
+[type="submit"]:not(.profile-modal__tab):hover,
+[type="button"]:not(.profile-modal__tab):not(.secondary):not(.btn-ghost):not(.role-chip):hover {
+  --control-bg: var(--action-hover);
+  --control-border: var(--action-hover);
+  --control-text: var(--action-text);
+}
+
+button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(.role-chip):active,
+[type="submit"]:active,
+[type="button"]:not(.btn-ghost):not(.role-chip):active {
+  --control-bg: var(--action-hover);
+  --control-border: var(--action-hover);
+  --control-text: var(--action-text);
+}
+
+/* elements.css sets --control-text to the on-primary inverse on every button (and
+ * keeps it on :hover/:active/:focus via a [type=button]:is(...) selector
+ * with specificity (0,2,0)). Ghost buttons live on the page background,
+ * so any rule that reads var(--control-text) would render invisible. We
+ * reset it back to inherit, repeating the override across pseudo-class
+ * states to match its specificity. */
+button.btn-ghost,
+button.btn-ghost:hover,
+button.btn-ghost:focus,
+button.btn-ghost:active {
+  --control-text: inherit;
+}
+button.btn-ghost {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  height: auto;
+  width: auto;
+  line-height: inherit;
+  font-size: inherit;
+}
+
+button.btn-ghost:not(:focus-visible) {
+  box-shadow: none;
+}
+}

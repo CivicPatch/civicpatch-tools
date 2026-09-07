@@ -3,10 +3,10 @@
 }
 
 .leaderboard__title {
-    font-size: var(--text-xl);
+    font-size: var(--font-size-xl);
     font-weight: 700;
     margin-bottom: 1rem;
-    color: var(--pico-color);
+    color: var(--text);
 }
 
 .leaderboard__grid {
@@ -25,16 +25,16 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    background: var(--pico-card-background-color);
-    border: 1px solid var(--pico-muted-border-color);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 0.5rem;
     padding: 0.6rem 0.9rem;
 }
 
 .leaderboard__state {
-    font-size: var(--text-sm);
+    font-size: var(--font-size-sm);
     font-weight: 700;
-    color: var(--pico-muted-color);
+    color: var(--text-muted);
     text-transform: uppercase;
     width: 2rem;
     flex-shrink: 0;
@@ -60,25 +60,25 @@
     font-size: 24px;
     line-height: 1;
     flex-shrink: 0;
-    color: var(--pico-muted-border-color);
+    color: var(--border);
 }
 
 .leaderboard__contributor {
-    font-size: var(--text-md);
+    font-size: var(--font-size-md);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .leaderboard__count {
-    font-size: var(--text-sm);
-    color: var(--pico-primary);
+    font-size: var(--font-size-sm);
+    color: var(--action);
     font-weight: 600;
     flex-shrink: 0;
 }
 
 .leaderboard__empty {
-    color: var(--pico-muted-color);
-    font-size: var(--text-md);
+    color: var(--text-muted);
+    font-size: var(--font-size-md);
     padding: 1rem 0;
 }

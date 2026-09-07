@@ -3,23 +3,26 @@ civ-navbar {
   z-index: 100;
 }
 
-nav {
+/* Scoped to the host: `nav {}` here applied to every <nav> on the page — the blog
+   breadcrumbs, the jurisdiction breadcrumb, locality-gaps and the review modal's
+   people list all inherited the navbar's flex layout and had to fight it. */
+civ-navbar nav {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.85rem;
   padding: 0.875rem 0;
   background: transparent;
-  border-bottom: 3px solid var(--civ-border-strong, #111);
+  border-bottom: 3px solid var(--border-strong, #111);
   user-select: none;
   max-width: var(--page-width);
   margin-inline: auto;
 }
 
 .nav-logout {
-  font-size: var(--text-sm);
+  font-size: var(--font-size-sm);
   font-weight: 400;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   text-decoration: none;
   opacity: 0.7;
   transition: opacity 0.15s ease;
@@ -27,7 +30,7 @@ nav {
 }
 .nav-logout:hover {
   opacity: 1;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   text-decoration: none;
 }
 nav.nav--logged-out {
@@ -49,7 +52,7 @@ nav.nav--logged-out .nav-brand {
   font-weight: 700;
   font-size: 1.125rem;
   text-decoration: none;
-  color: var(--pico-color);
+  color: var(--control-text);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -58,7 +61,7 @@ nav.nav--logged-out .nav-brand {
 }
 .nav-brand:hover {
   opacity: 0.7;
-  color: var(--pico-color);
+  color: var(--control-text);
   text-decoration: none;
 }
 .nav-brand-icon {
@@ -67,20 +70,20 @@ nav.nav--logged-out .nav-brand {
   justify-content: center;
   width: 1.75rem;
   height: 1.75rem;
-  background: var(--pico-primary);
+  background: var(--action);
   border-radius: 0.375rem;
-  color: var(--pico-primary-inverse);
+  color: var(--action-text);
   font-size: 0.8rem;
   flex-shrink: 0;
 }
 .nav-beta-badge {
   font-size: 0.6rem;
-  font-family: var(--pico-font-family-monospace);
+  font-family: var(--font-mono);
   font-weight: 700;
   letter-spacing: 0.05em;
   line-height: 1;
-  color: rgb(var(--tone-yellow));
-  border: 1px solid rgb(var(--tone-yellow));
+  color: var(--warning);
+  border: 1px solid var(--warning);
   border-radius: 4px;
   padding: 0.2em 0.35em;
   opacity: 0.7;
@@ -103,7 +106,7 @@ nav.nav--logged-out .nav-brand {
   gap: 0.5rem;
   font-size: 0.9rem;
   font-weight: 400;
-  color: var(--pico-color);
+  color: var(--text);
   cursor: default;
   max-width: 220px;
   text-decoration: none;
@@ -119,7 +122,7 @@ nav.nav--logged-out .nav-brand {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background: var(--pico-primary);
+  background: var(--action);
   flex-shrink: 0;
 }
 .user-name {
@@ -132,7 +135,7 @@ nav.nav--logged-out .nav-brand {
 .nav-link {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--pico-primary);
+  color: var(--action);
   text-decoration: none;
   opacity: 0.45;
   transition: opacity 0.15s ease;
@@ -140,7 +143,7 @@ nav.nav--logged-out .nav-brand {
 }
 .nav-link:hover {
   opacity: 0.7;
-  color: var(--pico-primary);
+  color: var(--action);
   text-decoration: none;
 }
 .nav-link--active {
@@ -148,7 +151,7 @@ nav.nav--logged-out .nav-brand {
 }
 
 /* Admin disclosure menu — native <details>/<summary> (tap + keyboard, no JS) */
-/* Override Pico's accordion <details>/<summary> defaults that misalign it in the nav:
+/* Override the base accordion <details>/<summary> defaults that misalign it in the nav:
    its margin-bottom (shifts the item up), its ::after chevron marker, and the
    margin it adds to summary when open (shifts the row). */
 .nav-dropdown {
@@ -188,9 +191,9 @@ summary.nav-dropdown-trigger::after {
   flex-direction: column;
   min-width: 9rem;
   padding: 0.35rem 0;
-  background: var(--pico-background-color);
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
   z-index: 200;
 }
@@ -202,17 +205,17 @@ summary.nav-dropdown-trigger::after {
 }
 .nav-dropdown__menu .nav-link:hover {
   opacity: 1;
-  color: var(--pico-primary);
-  background: color-mix(in srgb, var(--pico-primary) 14%, transparent);
+  color: var(--action);
+  background: color-mix(in srgb, var(--action) 14%, transparent);
 }
 
 /* Active state indicator */
 .nav-state-badge {
   font-size: 0.7rem;
-  font-family: var(--pico-font-family-monospace);
+  font-family: var(--font-mono);
   font-weight: 700;
-  color: var(--pico-muted-color);
-  border: 1px solid var(--pico-muted-border-color);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
   border-radius: 4px;
   padding: 0.15em 0.4em;
   margin-right: 0.25rem;
@@ -220,10 +223,10 @@ summary.nav-dropdown-trigger::after {
 
 .nav-state-selector select {
   font-size: 0.8rem;
-  font-family: var(--pico-font-family-monospace);
-  color: var(--pico-muted-color);
+  font-family: var(--font-mono);
+  color: var(--text-muted);
   background-color: transparent;
-  border: 1px solid var(--pico-muted-border-color);
+  border: 1px solid var(--border);
   border-radius: 4px;
   padding-block: 0.15em;
   padding-inline: 0.45em;
@@ -241,7 +244,7 @@ summary.nav-dropdown-trigger::after {
   visibility: hidden;
 }
 .nav-count--error {
-  background: var(--pico-del-color);
+  background: var(--diff-removed);
   color: #fff;
   font-size: 0.85rem;
   min-width: 1.6em;
@@ -255,10 +258,10 @@ summary.nav-dropdown-trigger::after {
   height: 1.5em;
   border-radius: 999px;
   font-size: 0.7rem;
-  font-family: var(--pico-font-family-monospace);
+  font-family: var(--font-mono);
   font-weight: 700;
-  background: var(--pico-primary);
-  color: var(--pico-primary-inverse);
+  background: var(--action);
+  color: var(--action-text);
   line-height: 1;
   vertical-align: middle;
   margin-left: 0.2em;
@@ -271,10 +274,10 @@ summary.nav-dropdown-trigger::after {
   gap: 0.4rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--pico-color);
+  color: var(--control-text);
   background: transparent;
-  border: 1.5px solid var(--pico-muted-border-color);
-  border-radius: var(--pico-border-radius);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
   padding: 0.4rem 1.1rem;
   cursor: pointer;
   text-decoration: none;
@@ -284,13 +287,13 @@ summary.nav-dropdown-trigger::after {
   white-space: nowrap;
 }
 .btn-outline:hover {
-  border-color: var(--pico-color);
+  border-color: var(--control-text);
   background: transparent;
-  color: var(--pico-color);
+  color: var(--control-text);
   text-decoration: none;
 }
 .btn-outline:active {
-  background: var(--pico-muted-background);
+  background: var(--surface-2);
 }
 
 /* Login — filled primary button */
@@ -300,8 +303,8 @@ summary.nav-dropdown-trigger::after {
   gap: 0.4rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--pico-primary-inverse);
-  background: var(--pico-primary);
+  color: var(--action-text);
+  background: var(--action);
   border: none;
   border-radius: 0.5rem;
   padding: 0.4rem 1.1rem;
@@ -312,7 +315,7 @@ summary.nav-dropdown-trigger::after {
 }
 .btn-primary:hover {
   opacity: 0.85;
-  color: var(--pico-primary-inverse);
+  color: var(--action-text);
   text-decoration: none;
 }
 .btn-primary:active {
@@ -326,9 +329,9 @@ summary.nav-dropdown-trigger::after {
   height: 0.75em;
   background: linear-gradient(
     90deg,
-    var(--pico-muted-background) 25%,
-    color-mix(in srgb, var(--pico-muted-background) 60%, transparent) 50%,
-    var(--pico-muted-background) 75%
+    var(--surface-2) 25%,
+    color-mix(in srgb, var(--surface-2) 60%, transparent) 50%,
+    var(--surface-2) 75%
   );
   background-size: 200% 100%;
   border-radius: 0.4em;
@@ -349,7 +352,7 @@ summary.nav-dropdown-trigger::after {
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   font-size: 0.9rem;
   padding: 0.25rem;
   display: inline-flex;
@@ -367,10 +370,10 @@ summary.nav-dropdown-trigger::after {
 .btn-primary:focus-visible,
 .btn-outline:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-primary-focus);
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--action-focus);
 }
 
-/* The trigger is a role-less <summary>, so Pico's `details summary:focus-visible
+/* The trigger is a role-less <summary>, so the base layer's `details summary:focus-visible
    :not([role])` (specificity 0,2,2) draws an offset outline that stacked a second
    ring on top of our box-shadow. Out-specify it (0,3,2) to zero both treatments,
    then draw exactly one ring on keyboard focus. */
@@ -380,13 +383,13 @@ details.nav-dropdown > summary.nav-dropdown-trigger:focus-visible {
   box-shadow: none;
 }
 details.nav-dropdown > summary.nav-dropdown-trigger:focus-visible {
-  box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-primary-focus);
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--action-focus);
 }
 
 /* Login link when logged out */
 .login-link {
   font-size: 0.85rem;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -394,7 +397,7 @@ details.nav-dropdown > summary.nav-dropdown-trigger:focus-visible {
   transition: color 0.15s ease;
 }
 .login-link:hover {
-  color: var(--pico-color);
+  color: var(--control-text);
   text-decoration: none;
 }
 

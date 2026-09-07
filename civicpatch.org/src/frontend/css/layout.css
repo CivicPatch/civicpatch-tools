@@ -1,0 +1,96 @@
+@layer layout {
+/* ── Layout ──────────────────────────────────────────────────────────────────
+   Page containers, the body ground, and the web-component loading states that
+   keep an undefined element from flashing. Shell: these rules are allowed to
+   speak to the page as a whole, which is why they are not in a component. */
+
+/* ── Body background ─────────────────────────────────────────────────────── */
+
+body {
+  min-height: 100vh;
+}
+
+[data-theme="light"] body {
+  background: var(--bg);
+}
+
+/* ── Web component loading states ────────────────────────────────────────── */
+
+civ-navbar:not(:defined) {
+  display: block;
+  height: 57px;
+  border-bottom: 1px solid var(--border);
+}
+
+
+/* ── Layout ──────────────────────────────────────────────────────────────── */
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+main.container-fluid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 1rem 2rem;
+  flex: 1;
+}
+
+main.container-fluid--wide {
+  padding-inline: 0.5rem;
+}
+
+/* Blog pages: tighten the nav→content gap so the breadcrumb sits close under the nav */
+main.container-fluid--blog {
+  gap: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  main.container-fluid {
+    padding-inline: 1.25rem;
+  }
+}
+
+@media (min-width: 576px) {
+  :root,
+  :host {
+    --font-size: 106.25%;
+  }
+}
+
+@media (min-width: 768px) {
+  :root,
+  :host {
+    --font-size: 112.5%;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root,
+  :host {
+    --font-size: 118.75%;
+  }
+  main.container-fluid {
+    padding: 0.5rem 1rem 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root,
+  :host {
+    --font-size: 125%;
+  }
+  main.container-fluid {
+    padding: 0.5rem 2rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  main.container-fluid {
+    padding: 0.5rem 4rem;
+  }
+}
+}

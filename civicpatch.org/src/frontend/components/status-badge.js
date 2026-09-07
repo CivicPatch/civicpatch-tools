@@ -9,7 +9,7 @@ const STATUS_BADGE_CSS = html`
       padding: var(--badge-padding, 0.2rem 0.6rem);
       border-radius: 999px;
       display: inline-block;
-      background: var(--badge-bg, var(--pico-muted-background));
+      background: var(--badge-bg, var(--surface-2));
       color: var(--badge-color, inherit);
     }
   </style>

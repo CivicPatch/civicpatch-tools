@@ -17,15 +17,15 @@
 }
 
 .streak-graph__streak {
-  font-size: var(--text-2xl);
+  font-size: var(--font-size-2xl);
   font-weight: 700;
   line-height: 1;
-  color: var(--pico-primary);
+  color: var(--action);
 }
 
 .streak-graph__label {
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
 }
 
 .streak-graph__body {
@@ -44,7 +44,7 @@
 .streak-graph__dow {
   height: 15px;
   font-size: 10px;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   line-height: 15px;
   text-align: right;
 }
@@ -63,7 +63,7 @@
 .streak-graph__month {
   width: 15px;
   font-size: 10px;
-  color: var(--pico-muted-color);
+  color: var(--text-muted);
   overflow: visible;
   white-space: nowrap;
 }
@@ -83,17 +83,17 @@
 
 .streak-graph__copy-icon {
   align-self: flex-end;
-  font-size: var(--text-sm);
-  color: var(--pico-muted-color);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
   transition: color 0.15s ease;
 }
 
 .streak-graph:hover .streak-graph__copy-icon {
-  color: var(--pico-primary);
+  color: var(--action);
 }
 
 .streak-graph__copy-icon--copied {
-  color: var(--pico-ins-color);
+  color: var(--diff-added);
 }
 
 .streak-graph__day--future {
@@ -101,14 +101,14 @@
 }
 
 .streak-graph__day--today {
-  outline: 1.5px solid var(--pico-primary);
+  outline: 1.5px solid var(--action);
   outline-offset: 1px;
 }
 
 .streak-graph__day--empty {
-  background: var(--pico-muted-background);
+  background: var(--surface-2);
 }
 
 .streak-graph__day--active {
-  background: rgba(var(--tone-green), var(--day-opacity, 1));
+  background: color-mix(in srgb, var(--success) calc(var(--day-opacity, 1) * 100%), transparent);
 }

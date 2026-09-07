@@ -108,7 +108,7 @@ export function renderJurisdictionHeader(props: JurisdictionHeaderProps) {
       </div>
 
       <div class="jurisdiction-page__actions">
-        <a href=${historyHref} style="font-size: var(--text-sm); white-space: nowrap;">
+        <a href=${historyHref} style="font-size: var(--font-size-sm); white-space: nowrap;">
           <i class="fa-solid fa-clock-rotate-left"></i> History
         </a>
         ${name && ocdid
@@ -116,7 +116,7 @@ export function renderJurisdictionHeader(props: JurisdictionHeaderProps) {
               href=${issueUrl(name, ocdid)}
               target="_blank"
               rel="noopener noreferrer"
-              style="font-size: var(--text-sm); white-space: nowrap;"
+              style="font-size: var(--font-size-sm); white-space: nowrap;"
             >
               <i class="fa-solid fa-flag"></i> Report an issue
             </a>`
