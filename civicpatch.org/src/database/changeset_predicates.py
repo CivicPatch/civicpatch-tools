@@ -43,9 +43,9 @@ AVAILABLE_FOR_REVIEW = (
     # Composed, not restated: widening one used to leave the two disagreeing.
     f"AND {WORK_IN_FLIGHT} "
     "AND NOT EXISTS ("
-    "SELECT 1 FROM issues i "
+    "SELECT 1 FROM changeset_issues i "
     f"WHERE i.issue_type = '{PipelineIssueType.USER_REPORTED.value}' "
-    "AND changesets.id::text = ANY(i.changeset_ids) "
+    "AND i.changeset_id = changesets.id "
     f"AND i.status NOT IN ('{PipelineIssueStatus.RESOLVED.value}', '{PipelineIssueStatus.SUPERSEDED.value}')"
     ")"
 )
@@ -130,8 +130,24 @@ LAST_ATTEMPT_AT = "attempts.last_attempt_at"
 # was eligible again the moment its run went terminal. A state scrape given no `num_jurisdictions`
 # therefore never got an empty claim and never stopped. NULL now means "no schedule" alone.
 CADENCE_JOIN = "LEFT JOIN state_settings ss ON ss.state = j.state"
+
+# When somebody last settled an issue here. Resolving one is a person saying "dealt with, try
+# again" — so the wait runs from their answer, not from the attempt that raised it. Without
+# this, dismissing an issue cleared the block and left the jurisdiction locked out for the rest
+# of the interval anyway, which is the opposite of what dismissing it means.
+RESOLUTION_JOIN = (
+    "LEFT JOIN ("
+    "SELECT run.jurisdiction_ocdid, max(issue.resolved_at) AS last_resolved_at "
+    "FROM pipeline_run_issues issue "
+    "JOIN pipeline_runs run ON run.id = issue.pipeline_run_id "
+    "WHERE issue.resolved_at IS NOT NULL GROUP BY 1"
+    ") resolutions USING (jurisdiction_ocdid)"
+)
+LAST_RESOLVED_AT = "resolutions.last_resolved_at"
+
 OFF_COOLDOWN = (
     f"({LAST_ATTEMPT_AT} IS NULL"
     f" OR {LAST_ATTEMPT_AT} < now() - make_interval("
-    "days => COALESCE(ss.cadence_days, 30)))"
+    "days => COALESCE(ss.cadence_days, 30))"
+    f" OR {LAST_RESOLVED_AT} > {LAST_ATTEMPT_AT})"
 )

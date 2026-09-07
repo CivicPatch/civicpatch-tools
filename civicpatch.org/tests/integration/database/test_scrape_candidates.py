@@ -66,6 +66,26 @@ async def _attempt(ocdid: str, days_ago: int, status: str = "ERROR") -> None:
         await conn.commit()
 
 
+async def _issue(ocdid: str, resolved_days_ago: int | None) -> None:
+    """An issue on this jurisdiction's most recent run, settled or not. It hangs off the run,
+    which is what carries the jurisdiction."""
+    resolved = (
+        None if resolved_days_ago is None else f"now() - make_interval(days => {resolved_days_ago})"
+    )
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO pipeline_run_issues "
+            "  (issue_type, pipeline_run_id, data, status, resolved_at) "
+            "SELECT 'cost_cap_reached', run.id, '{}'::jsonb, %s, "
+            f"       {resolved or 'NULL'} "
+            "FROM pipeline_runs run WHERE run.jurisdiction_ocdid = %s "
+            "ORDER BY run.created_at DESC LIMIT 1",
+            ("resolved" if resolved else "pending", ocdid),
+        )
+        await conn.commit()
+
+
 async def _due() -> list[str]:
     return [j.id for j in await get_stale_jurisdictions(_STATE)]
 
@@ -141,3 +161,30 @@ async def test_a_place_tried_repeatedly_stops_leading_the_queue():
         await _attempt(tried, days_ago=days)
 
     assert await _due() == [untried, tried]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_settling_an_issue_puts_a_jurisdiction_back_in_the_pool():
+    """Resolving an issue is a person saying "dealt with, try again". It used to clear the
+    block and leave the cooldown running, so a jurisdiction stopped at its cost cap stayed
+    locked out for the rest of the interval — exactly the wait the reviewer was clearing."""
+    ocdid = await _jurisdiction("settled")
+    await set_cadence(_STATE, 30, None, None)
+    await _attempt(ocdid, days_ago=1)
+    await _issue(ocdid, resolved_days_ago=0)
+
+    assert await _due() == [ocdid]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_issue_settled_before_the_attempt_does_not_reopen_it():
+    """Only an answer *newer* than the attempt says anything about it. An older one was about
+    a run that has already been superseded by the one now on cooldown."""
+    ocdid = await _jurisdiction("stale-answer")
+    await set_cadence(_STATE, 30, None, None)
+    await _issue(ocdid, resolved_days_ago=10)
+    await _attempt(ocdid, days_ago=1)
+
+    assert await _due() == []

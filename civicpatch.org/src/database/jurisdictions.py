@@ -18,6 +18,7 @@ from database.changeset_predicates import (
     LAST_COLLECTED_AT,
     LAST_COLLECTED_JOIN,
     OFF_COOLDOWN,
+    RESOLUTION_JOIN,
     RESOLVED,
 )
 from database.database import get_pool, to_iso
@@ -28,7 +29,11 @@ from schemas.common import (
     Jurisdiction,
     StateJurisdictionSets,
 )
-from schemas.jurisdictions import JurisdictionHistoryEntry, JurisdictionSearchResult
+from schemas.jurisdictions import (
+    JurisdictionHistoryEntry,
+    JurisdictionSearchResult,
+    TimelineIssue,
+)
 from shared.schemas import Person
 from shared.utils.statuses import ChangeLogType
 
@@ -685,16 +690,26 @@ async def get_jurisdiction_history(
                    -- Why it ended the way it did. `dismissed_reason` was stored and never
                    -- shown, so a dismissal read as motiveless.
                    changesets.dismissed_reason,
-                   COALESCE(iss.issue_types, '[]'::jsonb) AS issue_types,
+                   COALESCE(iss.issues, '[]'::jsonb) AS issues,
                    COALESCE(rc.changes, '[]'::jsonb) AS changes
             FROM changesets
             LEFT JOIN pipeline_runs run ON run.changeset_id = changesets.id
             LEFT JOIN users resolver ON resolver.id = changesets.resolved_by_user_id
             LEFT JOIN roster_changes rc ON rc.changeset_id = changesets.id::text
+            -- Every status: dismissing settles an issue, so filtering to open ones hid the
+            -- reason on exactly the entries that needed one.
             LEFT JOIN (
-                SELECT issue_key, jsonb_agg(DISTINCT issue_type) AS issue_types
-                FROM issues WHERE status = 'pending' GROUP BY issue_key
-            ) iss ON iss.issue_key = changesets.id::text
+                SELECT run.changeset_id,
+                       jsonb_agg(jsonb_build_object(
+                           'issue_type', issue.issue_type,
+                           'status', issue.status,
+                           'data', issue.data
+                       ) ORDER BY issue.created_at) AS issues
+                FROM pipeline_run_issues issue
+                JOIN pipeline_runs run ON run.id = issue.pipeline_run_id
+                WHERE run.changeset_id IS NOT NULL
+                GROUP BY run.changeset_id
+            ) iss ON iss.changeset_id = changesets.id
             WHERE changesets.jurisdiction_ocdid = %s AND {RESOLVED}
             ORDER BY changesets.created_at DESC
             LIMIT %s OFFSET %s;
@@ -731,7 +746,7 @@ async def get_jurisdiction_history(
                 published_at=to_iso(row["published_at"]),
                 outcome=row["outcome"],
                 dismissed_reason=row["dismissed_reason"],
-                issue_types=row["issue_types"],
+                issues=[TimelineIssue(**issue) for issue in row["issues"]],
                 resolved_by=row["resolved_by"],
                 changes=[
                     roster_change(
@@ -884,6 +899,7 @@ async def get_stale_jurisdictions(state: str) -> list[Jurisdiction]:
             FROM jurisdictions j
             {LAST_ATTEMPT_JOIN}
             {CADENCE_JOIN}
+            {RESOLUTION_JOIN}
             WHERE j.state = %s
               AND j.status = 'active'
               AND NULLIF(j.data->>'url', '') IS NOT NULL

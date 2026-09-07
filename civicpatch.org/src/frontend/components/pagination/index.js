@@ -3,7 +3,9 @@ import { html } from 'lit-html';
 
 const PER_PAGE_OPTIONS = [10, 25, 50];
 
-export const Pagination = ({ page, totalPages, onPrevious, onNext, perPage, onPerPageChange }) => {
+// The per-page selector is opt-in: pass `onPerPageChange` to get it, omit it when the caller
+// renders its own control.
+export const Pagination = ({ page, totalPages, onPrevious, onNext, perPage = null, onPerPageChange = null }) => {
   return html`
     <div class="civ-pagination">
       <button

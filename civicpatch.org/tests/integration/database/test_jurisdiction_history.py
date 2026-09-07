@@ -461,7 +461,7 @@ async def test_only_a_scrape_carries_pipeline_run_timestamps():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_an_entry_carries_the_issues_still_open_on_it():
+async def test_an_entry_carries_what_the_run_reported():
     """The Seattle entry read `SUCCESS 0s, rejected` with no hint that the run had stopped at
     its cost cap — the one fact that explained the short roster."""
     pool = await get_pool()
@@ -477,17 +477,71 @@ async def test_an_entry_carries_the_issues_still_open_on_it():
             "published_at) VALUES (%s, %s, 'scrape', now(), now(), now())",
             (changeset_id, _OCDID),
         )
+        # A pipeline issue hangs off the run, and the timeline reaches it through the changeset
+        # that run produced — so this entry needs a run, which it did not before: the issue used
+        # to name the changeset directly.
         await cur.execute(
-            "INSERT INTO issues (issue_type, issue_key, changeset_ids, data, status) "
-            "VALUES ('cost_cap_reached', %s, ARRAY[%s], '{}'::jsonb, 'pending')",
-            (changeset_id, changeset_id),
+            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
+            "  changeset_id) "
+            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'SUCCESS', %s) RETURNING id::text",
+            (_OCDID, changeset_id),
+        )
+        run_id = (await cur.fetchone())[0]
+        await cur.execute(
+            "INSERT INTO pipeline_run_issues (issue_type, pipeline_run_id, data, status) "
+            "VALUES ('cost_cap_reached', %s, '{}'::jsonb, 'pending')",
+            (run_id,),
         )
         await conn.commit()
 
     _total, entries = await db_jurisdictions.get_jurisdiction_history(_OCDID)
     entry = next(e for e in entries if e.changeset_id == changeset_id)
 
-    assert entry.issue_types == ["cost_cap_reached"]
+    assert [(i.issue_type, i.status) for i in entry.issues] == [
+        ("cost_cap_reached", "pending")
+    ]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_settled_issue_still_appears_on_the_entry():
+    """Dismissing settles an issue, so filtering to `pending` hid the reason on exactly the
+    entries that needed one."""
+    pool = await get_pool()
+    changeset_id = str(uuid.uuid4())
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, data, status) "
+            "VALUES (%s, 'zz', 'local', '{}'::jsonb, 'active') ON CONFLICT DO NOTHING",
+            (_OCDID,),
+        )
+        await cur.execute(
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, created_at, updated_at, "
+            "dismissed_at, dismissed_reason) "
+            "VALUES (%s, %s, 'scrape', now(), now(), now(), 'errored')",
+            (changeset_id, _OCDID),
+        )
+        await cur.execute(
+            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
+            "  changeset_id) "
+            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'SUCCESS', %s) RETURNING id::text",
+            (_OCDID, changeset_id),
+        )
+        run_id = (await cur.fetchone())[0]
+        await cur.execute(
+            "INSERT INTO pipeline_run_issues (issue_type, pipeline_run_id, data, status) "
+            "VALUES ('pipeline_error', %s, %s::jsonb, 'superseded')",
+            (run_id, json.dumps({"error": "OPEN_ROUTER_TOKEN is not set"})),
+        )
+        await conn.commit()
+
+    _total, entries = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    entry = next(e for e in entries if e.changeset_id == changeset_id)
+
+    assert len(entry.issues) == 1
+    assert entry.issues[0].status == "superseded"
+    # The payload, not just the type: `pipeline_error` alone says nothing.
+    assert entry.issues[0].data == {"error": "OPEN_ROUTER_TOKEN is not set"}
 
 
 @pytest.mark.asyncio

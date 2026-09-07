@@ -1,5 +1,21 @@
+"""Issues, in two tables that mean different things.
+
+`pipeline_run_issues` says a **run** went wrong — it errored, stopped at its spend cap, or came
+back short. `changeset_issues` says a **person** reported something about a proposal they were
+reviewing. Migration 186 split them; before it they shared one table whose `changeset_ids text[]`
+held a changeset id, or a run id when the scrape died before minting one, as text with no foreign
+key either way.
+
+Both anchors are honest: every scrape changeset has a run, and a scrape that died before ingest
+has a run and no changeset. So the run side never needs the changeset to name its jurisdiction —
+`pipeline_runs.jurisdiction_ocdid` is a column — and reaches it in one indexed hop rather than a
+cast and an array scan.
+
+`run`, never `r`: `r` has meant `requests` (now `changesets`), `roles` and `pipeline_runs` in this
+codebase, and these queries join two of the three.
+"""
+
 import json
-import uuid
 from typing import Any
 
 import shared.utils.id_utils
@@ -9,55 +25,23 @@ from psycopg import sql
 from shared.utils.statuses import PipelineIssueStatus, PipelineIssueType
 
 
-def _build_jurisdictions(
-    ocdids: list[str] | None, name_by_ocdid: dict[str, str] | None = None
-) -> list[dict]:
-    result = []
-    for ocdid in ocdids or []:
-        try:
-            folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(ocdid)
-            parts = folder.split("/")
-            result.append(
-                {
-                    "jurisdiction_ocdid": ocdid,
-                    "folder": folder,
-                    "path": folder,
-                    "name": (name_by_ocdid or {}).get(ocdid) or ocdid,
-                    "state": parts[0] if parts else "",
-                    "locality": parts[2] if len(parts) > 2 else "",
-                }
-            )
-        except Exception:
-            pass
-    return result
+# An issue blocks only while the changeset its run produced is still open — otherwise it froze
+# the jurisdiction against the very scrape that would have resolved it.
+# `LEFT JOIN`: a run that died before ingest has no changeset, so it blocks nothing.
+_BLOCKING_JURISDICTIONS = f"""
+    SELECT DISTINCT run.jurisdiction_ocdid
+    FROM pipeline_run_issues issue
+    JOIN pipeline_runs run ON run.id = issue.pipeline_run_id
+    LEFT JOIN changesets ON changesets.id = run.changeset_id
+    WHERE issue.status = %s
+      AND {WORK_IN_FLIGHT}
+"""
 
 
-# An issue only blocks its jurisdiction while the changeset it hangs off is still open.
-#
-# Without `WORK_IN_FLIGHT` a pending issue on an already published-or-dismissed changeset froze
-# its jurisdiction forever: nothing could re-scrape it, so no new run could finish, so
-# `supersede_prior_jurisdiction_issues` — which only fires from `finalize_pipeline_run` — never
-# cleared the issue. The issue blocked the scrape whose completion would have resolved it.
-# Measured 2026-09-05: all 15 pending issues in dev sat on terminal changesets, freezing 10
-# jurisdictions.
-#
-# Both readers narrow together on purpose. `jurisdiction_ocdids_with_pending_issues` gates scrape candidates
-# and the by-state one feeds the coverage page's `blocked` count, which means "blocked from
-# scraping" — if they disagreed the page would report a block that no longer exists.
 async def jurisdiction_ocdids_with_pending_issues() -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            f"""
-            SELECT DISTINCT changesets.jurisdiction_ocdid
-            FROM issues pi
-            JOIN changesets ON changesets.id::text = ANY(pi.changeset_ids)
-            WHERE pi.status = %s
-              AND changesets.jurisdiction_ocdid IS NOT NULL
-              AND {WORK_IN_FLIGHT}
-            """,
-            (PipelineIssueStatus.PENDING,),
-        )
+        await cur.execute(_BLOCKING_JURISDICTIONS, (PipelineIssueStatus.PENDING,))
         rows = await cur.fetchall()
     return {row[0] for row in rows}
 
@@ -66,36 +50,23 @@ async def jurisdiction_ocdids_with_pending_issues_in_state(state_code: str) -> s
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            f"""
-            SELECT DISTINCT changesets.jurisdiction_ocdid
-            FROM issues pi
-            JOIN changesets ON changesets.id::text = ANY(pi.changeset_ids)
-            WHERE pi.status = %s
-              AND changesets.jurisdiction_ocdid LIKE %s
-              AND {WORK_IN_FLIGHT}
-            """,
-            (
-                PipelineIssueStatus.PENDING,
-                f"%state:{state_code}%",
-            ),
+            _BLOCKING_JURISDICTIONS + " AND run.jurisdiction_ocdid LIKE %s",
+            (PipelineIssueStatus.PENDING, f"%state:{state_code}%"),
         )
         rows = await cur.fetchall()
     return {row[0] for row in rows}
 
 
 async def has_pending_issues(changeset_id: str) -> bool:
-    """Whether anything the pipeline reported about this changeset is still open.
-
-    Asked before the auto-publish: `review_summary_for_changeset` derives its issues from the
-    rosters and never reads this table, so a `cost_cap_reached` — a run that stopped short of
-    the roster it was looking for — published its partial roster regardless.
-    """
+    """Gates auto-publish: the roster-derived summary never reads this table, so a capped run
+    used to publish its partial roster regardless."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT 1 FROM issues
-            WHERE status = %s AND %s = ANY(changeset_ids)
+            SELECT 1 FROM pipeline_run_issues issue
+            JOIN pipeline_runs run ON run.id = issue.pipeline_run_id
+            WHERE issue.status = %s AND run.changeset_id = %s
             LIMIT 1
             """,
             (PipelineIssueStatus.PENDING, changeset_id),
@@ -103,77 +74,108 @@ async def has_pending_issues(changeset_id: str) -> bool:
         return await cur.fetchone() is not None
 
 
+# ── Writing them ─────────────────────────────────────────────────────────────
+
+
+async def upsert_issue(pipeline_run_id: str, issue_type: str, issues: list[dict]) -> None:
+    """Keyed on the run, so a retry refreshes and a later run files its own row."""
+    if not issues:
+        return
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.executemany(
+            """
+            INSERT INTO pipeline_run_issues (pipeline_run_id, issue_type, data, status)
+            VALUES (%s, %s, %s, %s)
+            ON CONFLICT (pipeline_run_id, issue_type) DO UPDATE SET
+              data = EXCLUDED.data,
+              -- Re-reported, so open again whatever it was.
+              status = 'pending',
+              resolved_at = NULL
+            """,
+            [
+                (
+                    pipeline_run_id,
+                    issue_type,
+                    json.dumps(issue),
+                    PipelineIssueStatus.PENDING,
+                )
+                for issue in issues
+            ],
+        )
+
+
 async def resolve_issue(issue_id: str) -> None:
+    """An id belongs to exactly one table, so both statements run and one matches."""
     pool = await get_pool()
     async with pool.connection() as conn:
-        await conn.execute(
-            "UPDATE issues SET status = %s, resolved_at = NOW() WHERE id = %s",
-            (PipelineIssueStatus.RESOLVED, issue_id),
-        )
+        for table in ("pipeline_run_issues", "changeset_issues"):
+            await conn.execute(
+                sql.SQL("UPDATE {} SET status = %s, resolved_at = NOW() WHERE id = %s").format(
+                    sql.Identifier(table)
+                ),
+                (PipelineIssueStatus.RESOLVED, issue_id),
+            )
+
+
+async def resolve_issues(issue_ids: list[str]) -> int:
+    """Two statements for a page. Returns rows actually moved, so an already-settled id shows."""
+    if not issue_ids:
+        return 0
+    pool = await get_pool()
+    resolved = 0
+    async with pool.connection() as conn, conn.cursor() as cur:
+        for table in ("pipeline_run_issues", "changeset_issues"):
+            await cur.execute(
+                sql.SQL(
+                    "UPDATE {} SET status = %s, resolved_at = NOW() "
+                    "WHERE id = ANY(%s::uuid[]) AND status = %s"
+                ).format(sql.Identifier(table)),
+                (PipelineIssueStatus.RESOLVED, issue_ids, PipelineIssueStatus.PENDING),
+            )
+            resolved += cur.rowcount
+    return resolved
+
+
+async def set_issue_flagged(issue_id: str, is_flagged: bool) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        for table in ("pipeline_run_issues", "changeset_issues"):
+            await conn.execute(
+                sql.SQL("UPDATE {} SET is_flagged = %s WHERE id = %s").format(
+                    sql.Identifier(table)
+                ),
+                (is_flagged, issue_id),
+            )
 
 
 async def supersede_prior_jurisdiction_issues(
     jurisdiction_ocdid: str, current_changeset_id: str
 ) -> None:
+    """A newer run for this jurisdiction settles what older ones reported."""
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
             """
-            UPDATE issues
+            UPDATE pipeline_run_issues
             SET status = %s, resolved_at = NOW()
             WHERE status = %s
-              AND NOT (%s = ANY(changeset_ids))
-              AND EXISTS (
-                SELECT 1 FROM changesets
-                WHERE changesets.id::text = ANY(issues.changeset_ids)
-                  AND changesets.jurisdiction_ocdid = %s
+              AND pipeline_run_id IN (
+                SELECT run.id FROM pipeline_runs run
+                WHERE run.jurisdiction_ocdid = %s
+                  AND (run.changeset_id IS NULL OR run.changeset_id::text <> %s)
               )
             """,
             (
                 PipelineIssueStatus.SUPERSEDED,
                 PipelineIssueStatus.PENDING,
-                current_changeset_id,
                 jurisdiction_ocdid,
+                current_changeset_id,
             ),
         )
 
 
-async def upsert_issue(changeset_id: str, issue_type: str, issues: list[dict]) -> None:
-    if not issues:
-        return
-    # `issue_key` is the subject's own id. `unrecognized_role` was the one type that keyed on
-    # something else — the role — and accumulated changesets; migration 179 drained it, so a
-    # conflict now always means the same subject raising the same issue again.
-    rows = [
-        (
-            issue_type,
-            changeset_id,
-            [changeset_id],
-            json.dumps(issue),
-            PipelineIssueStatus.PENDING,
-        )
-        for issue in issues
-    ]
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.executemany(
-            """
-            INSERT INTO issues (issue_type, issue_key, changeset_ids, data, status)
-            VALUES (%s, %s, %s, %s, %s)
-            ON CONFLICT (issue_type, issue_key) DO UPDATE SET
-              changeset_ids = (
-                SELECT array_agg(DISTINCT r)
-                FROM unnest(issues.changeset_ids || EXCLUDED.changeset_ids) r
-              ),
-              data = issues.data,
-              -- Re-reported, so it is open again whatever it was. The CASE this replaces
-              -- had one live branch, `pr_opened`, which migration 174 retired.
-              status = 'pending',
-              resolved_at = NULL
-            """,
-            rows,
-        )
+# ── What a reviewer reported ─────────────────────────────────────────────────
 
 
 async def create_user_reported_issue(
@@ -184,28 +186,27 @@ async def create_user_reported_issue(
     github_issue_number: int,
     reported_by_user_id: str,
 ) -> str:
-    data = json.dumps(
-        {
-            "title": title,
-            "body": body,
-            "github_issue_url": github_issue_url,
-            "github_issue_number": github_issue_number,
-            "reported_by_user_id": reported_by_user_id,
-        }
-    )
+    """No uniqueness here: two reports about one roster are two reports."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO issues (issue_type, issue_key, changeset_ids, data, status)
-            VALUES (%s, %s, %s, %s, %s)
+            INSERT INTO changeset_issues (changeset_id, issue_type, data, status)
+            VALUES (%s, %s, %s, %s)
             RETURNING id::text
             """,
             (
+                changeset_id,
                 PipelineIssueType.USER_REPORTED,
-                str(uuid.uuid4()),
-                [changeset_id],
-                data,
+                json.dumps(
+                    {
+                        "title": title,
+                        "body": body,
+                        "github_issue_url": github_issue_url,
+                        "github_issue_number": github_issue_number,
+                        "reported_by_user_id": reported_by_user_id,
+                    }
+                ),
                 PipelineIssueStatus.PENDING,
             ),
         )
@@ -215,15 +216,15 @@ async def create_user_reported_issue(
 
 
 async def get_user_reported_issues_for_changeset(changeset_id: str) -> list[dict]:
-    """Reviewer-filed GitHub issues for this request only — not pipeline-internal
-    issue types (those are browsed separately, via the admin issues page)."""
+    """Reviewer-filed issues for this changeset only — pipeline issues are browsed separately,
+    on the admin issues page."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             SELECT id::text, data, status, created_at
-            FROM issues
-            WHERE issue_type = %s AND %s = ANY(changeset_ids)
+            FROM changeset_issues
+            WHERE issue_type = %s AND changeset_id = %s
             ORDER BY created_at DESC
             """,
             (PipelineIssueType.USER_REPORTED, changeset_id),
@@ -242,180 +243,9 @@ async def get_user_reported_issues_for_changeset(changeset_id: str) -> list[dict
     ]
 
 
-async def get_issues_page(
-    issue_types: list[str],
-    page: int,
-    per_page: int,
-    sort_desc: bool = True,
-    state_code: str | None = None,
-    show_archived: bool = False,
-) -> tuple[list[dict], int]:
-    if show_archived:
-        active_statuses = [PipelineIssueStatus.RESOLVED, PipelineIssueStatus.SUPERSEDED]
-    else:
-        active_statuses = [PipelineIssueStatus.PENDING]
-    conditions: list[sql.Composable] = [
-        sql.SQL("ri.status IN ({})").format(
-            sql.SQL(", ").join(sql.Placeholder() for _ in range(len(active_statuses)))
-        )
-    ]
-    params: list[Any] = list(active_statuses)
-    if issue_types:
-        conditions.append(
-            sql.SQL("ri.issue_type IN ({})").format(
-                sql.SQL(", ").join(sql.Placeholder() for _ in range(len(issue_types)))
-            )
-        )
-        params.extend(issue_types)
-    if state_code:
-        conditions.append(
-            sql.SQL(
-                "EXISTS (SELECT 1 FROM changesets WHERE changesets.id::text = ANY(ri.changeset_ids) AND changesets.jurisdiction_ocdid LIKE %s)"
-            )
-        )
-        params.append(f"%state:{state_code.lower()}%")
-    where_clause = sql.SQL("WHERE ") + sql.SQL(" AND ").join(conditions)
-    order_clause = sql.SQL("DESC") if sort_desc else sql.SQL("ASC")
-    offset = (page - 1) * per_page
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            sql.SQL("""
-            WITH issue_jurisdictions AS (
-                SELECT ri.id AS issue_id,
-                       array_agg(DISTINCT changesets.jurisdiction_ocdid)
-                           FILTER (WHERE changesets.jurisdiction_ocdid IS NOT NULL) AS ocdids
-                FROM issues ri
-                LEFT JOIN changesets ON changesets.id::text = ANY(ri.changeset_ids)
-                GROUP BY ri.id
-            )
-            SELECT ri.id::text, ri.issue_type, ri.issue_key, ri.changeset_ids,
-                   ri.data, ri.status, ri.resolved_at, ri.created_at,
-                   COALESCE(ij.ocdids, ARRAY[]::text[]) AS raw_jurisdiction_ocdids,
-                   COUNT(*) OVER() AS total_count,
-                   (
-                       SELECT jsonb_object_agg(u.ocdid, COALESCE(j.data->>'name', u.ocdid))
-                       FROM unnest(COALESCE(ij.ocdids, ARRAY[]::text[])) AS u(ocdid)
-                       LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = u.ocdid
-                   ) AS jurisdiction_names,
-                   ri.is_flagged
-            FROM issues ri
-            LEFT JOIN issue_jurisdictions ij ON ij.issue_id = ri.id
-            {where}
-            ORDER BY ri.created_at {order}
-            LIMIT %s OFFSET %s
-            """).format(where=where_clause, order=order_clause),
-            params + [per_page, offset],
-        )
-        rows = await cur.fetchall()
-    total = rows[0][9] if rows else 0
-    result = []
-    for r in rows:
-        jurisdictions = _build_jurisdictions(r[8], name_by_ocdid=r[10])
-        result.append(
-            {
-                "id": r[0],
-                "issue_type": r[1],
-                "issue_key": r[2],
-                "changeset_ids": r[3],
-                "data": r[4],
-                "status": r[5],
-                "resolved_at": r[6].isoformat() if r[6] else None,
-                "created_at": r[7].isoformat() if r[7] else None,
-                "is_flagged": r[11],
-                "states": sorted({j["state"] for j in jurisdictions if j["state"]}),
-                "jurisdictions": jurisdictions,
-            }
-        )
-    return result, total
-
-
-async def get_issue_counts(state_code: str | None = None) -> dict[str, int]:
-    pool = await get_pool()
-    active_statuses = [PipelineIssueStatus.PENDING]
-    params: list[Any] = list(active_statuses)
-    state_filter = sql.SQL("")
-    if state_code:
-        state_filter = sql.SQL(
-            "AND EXISTS (SELECT 1 FROM changesets WHERE changesets.id::text = ANY(pi.changeset_ids) AND changesets.jurisdiction_ocdid LIKE %s)"
-        )
-        params.append(f"%state:{state_code.lower()}%")
-    query = sql.SQL("""
-        SELECT pi.issue_type, COUNT(*) AS cnt
-        FROM issues pi
-        WHERE pi.status IN ({statuses})
-        {state_filter}
-        GROUP BY pi.issue_type
-    """).format(
-        statuses=sql.SQL(", ").join(sql.Placeholder() for _ in active_statuses),
-        state_filter=state_filter,
-    )
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(query, params)
-        rows = await cur.fetchall()
-    return {row[0]: row[1] for row in rows}
-
-
-async def set_issue_flagged(issue_id: str, is_flagged: bool) -> None:
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
-            "UPDATE issues SET is_flagged = %s WHERE id = %s",
-            (is_flagged, issue_id),
-        )
-
-
-async def get_issue_by_id(issue_id: str) -> dict | None:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT id::text, issue_type, issue_key, changeset_ids, data, status, resolved_at, created_at
-            FROM issues WHERE id = %s
-            """,
-            (issue_id,),
-        )
-        row = await cur.fetchone()
-    if row is None:
-        return None
-    return {
-        "id": row[0],
-        "issue_type": row[1],
-        "issue_key": row[2],
-        "changeset_ids": row[3],
-        "data": row[4],
-        "status": row[5],
-        "resolved_at": row[6].isoformat() if row[6] else None,
-        "created_at": row[7].isoformat() if row[7] else None,
-    }
-
-
-# Keyed on the changeset, so the state comes from the jurisdiction behind it. Windowed to the
-# calendar month because that is the window the cap it refers to is measured over — "hit twice"
-# means twice this month, not twice ever.
-COST_CAP_HITS_SQL = """
-SELECT count(*)::int
-FROM issues i
-JOIN changesets c ON c.id::text = i.issue_key
-JOIN jurisdictions j USING (jurisdiction_ocdid)
-WHERE i.issue_type = %(issue_type)s
-  AND j.state = %(state)s
-  AND i.created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
-"""
-
-
-async def count_cost_cap_hits_this_month(state: str) -> int:
-    """How many of this state's runs stopped at their per-run ceiling this month.
-
-    The signal an operator needs before raising a cap: one run truncating is noise, a third of
-    them truncating means the cap is set below what the state's pages actually cost.
-    """
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            COST_CAP_HITS_SQL,
-            {"issue_type": PipelineIssueType.COST_CAP_REACHED, "state": state},
-        )
-        row = await cur.fetchone()
-    assert row, "count(*) always returns a row"
-    return row[0]
+# ── The two listings ─────────────────────────────────────────────────────────
+#
+# Two queries, not one union over both tables. They are different pages: a pipeline issue is
+# read by whoever runs the scrapes, a reported one by whoever reviews rosters. Sharing a query
+# meant a `kind` discriminator, doubled parameters, and a filter that had to name only columns
+# both selects happened to expose.

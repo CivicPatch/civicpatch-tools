@@ -45,10 +45,9 @@ async def test_create_user_reported_issue_inserts_pending_row_and_returns_id():
     assert issue_id == "issue-id-123"
     cur.execute.assert_awaited_once()
     _, params = cur.execute.call_args[0]
-    issue_type, issue_key, changeset_ids, data, status = params
+    changeset_id, issue_type, data, status = params
+    assert changeset_id == "req-1"
     assert issue_type == PipelineIssueType.USER_REPORTED
-    assert isinstance(issue_key, str) and issue_key
-    assert changeset_ids == ["req-1"]
     assert status == PipelineIssueStatus.PENDING
     assert json.loads(data) == {
         "title": "Review flag: Oakland",
@@ -61,19 +60,25 @@ async def test_create_user_reported_issue_inserts_pending_row_and_returns_id():
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_create_user_reported_issue_uses_distinct_keys_per_call():
+async def test_two_reports_on_one_changeset_are_two_rows():
+    """This used to be `uses_distinct_keys_per_call`: `issue_key` was a random uuid *because*
+    the table had a `(issue_type, issue_key)` unique constraint, and two reports about one
+    roster would otherwise have collapsed into one. Migration 186 dropped both — `changeset_issues`
+    has no uniqueness, deliberately, so nothing has to be randomised to defeat it.
+
+    A run reporting the same fault twice is one fault; a person reporting two things about one
+    roster is two reports."""
     cur1 = _make_cursor(("issue-1",))
     cur2 = _make_cursor(("issue-2",))
     with patch(
         "database.issues.get_pool",
         AsyncMock(side_effect=[_make_pool(cur1), _make_pool(cur2)]),
     ):
-        await create_user_reported_issue("req-1", "t", "b", "url", 1, "user-1")
-        await create_user_reported_issue("req-1", "t", "b", "url", 1, "user-1")
+        first = await create_user_reported_issue("req-1", "t", "b", "url", 1, "user-1")
+        second = await create_user_reported_issue("req-1", "t", "b", "url", 1, "user-1")
 
-    key1 = cur1.execute.call_args[0][1][1]
-    key2 = cur2.execute.call_args[0][1][1]
-    assert key1 != key2
+    assert (first, second) == ("issue-1", "issue-2")
+    assert "ON CONFLICT" not in cur1.execute.call_args[0][0]
 
 
 @pytest.mark.asyncio

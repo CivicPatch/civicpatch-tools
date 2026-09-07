@@ -1,4 +1,4 @@
-import { ISSUE_TYPE, KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
+import { KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
 
 export function getIssueTypeConfig(issueType) {
   return KNOWN_ISSUE_TYPES.find((t) => t.value === issueType);
@@ -13,10 +13,7 @@ export function formatDate(isoString) {
   return new Date(isoString).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
 }
 
-export function getIssueDetail(issueType, issueKey, data) {
-  if (!data) return issueKey || "";
-  if (issueType === ISSUE_TYPE.MERGE_FAILED) {
-    return data.error || issueKey;
-  }
-  return issueKey;
+// The stored error, for the types that record one.
+export function getIssueDetail(data) {
+  return data?.error ?? "";
 }

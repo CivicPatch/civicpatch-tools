@@ -127,16 +127,26 @@ erDiagram
         timestamptz_null updated_at         "ours, not the source's: PERSON_UPSERT stamps now() on insert and on any real change; its DO UPDATE has a WHERE so an unchanged republish does not move it"
     }
 
-    issues {
-        uuid            id          PK
-        text            issue_type      "idx"
-        text            issue_key       "unique: (issue_type, issue_key)"
-        text_array      changeset_ids
-        jsonb           data
-        text            status          "idx, check: pending|resolved|superseded"
+    pipeline_run_issues {
+        uuid            id                  PK
+        uuid            pipeline_run_id     FK "unique: (pipeline_run_id, issue_type) — one issue of a type per run, so a retried activity refreshes"
+        text            issue_type
+        jsonb           data                "default: {}"
+        text            status              "idx WHERE pending, check: pending|resolved|superseded"
         timestamptz_null resolved_at
+        boolean         is_flagged          "default: false"
         timestamptz     created_at
+    }
+
+    changeset_issues {
+        uuid            id              PK
+        uuid            changeset_id    FK "idx"
+        text            issue_type
+        jsonb           data            "default: {}"
+        text            status          "idx WHERE pending, check: pending|resolved|superseded"
+        timestamptz_null resolved_at
         boolean         is_flagged      "default: false"
+        timestamptz     created_at
     }
 
     review_sessions {
@@ -329,7 +339,8 @@ erDiagram
     jurisdictions ||--o{ pipeline_runs : "jurisdiction_ocdid"
     changesets ||--o| pipeline_runs : "changeset_id"
     pipeline_runs ||--o{ llm_calls : "pipeline_run_id"
-    changesets }o--o{ issues : "changeset_ids"
+    pipeline_runs ||--o{ pipeline_run_issues : "pipeline_run_id (ON DELETE CASCADE)"
+    changesets ||--o{ changeset_issues : "changeset_id (ON DELETE CASCADE)"
     users ||--o{ review_sessions : "user_id"
     users ||--o{ changesets : "created_by_user_id"
     users ||--o{ api_keys : "user_id (ON DELETE CASCADE)"
@@ -348,6 +359,27 @@ erDiagram
 - `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
 - `pipeline_runs` was folded into `requests` in migration 147: `changeset_id` was UNIQUE NOT NULL and every request had exactly one run, so the two tables were a vertical partition of one entity that 21 queries had to join. **Undone by 169 and 170 (2026-09-04)** — the premise stopped holding once a changeset was minted at ingest rather than at dispatch, so a run that fails has no changeset and the relationship became one-to-zero-or-one. `status`, `progress` and `arguments_json` went back to `pipeline_runs`, and `changesets.changeset_state` (then `state`) lost `running` and `failed` — those describe an attempt, not a proposal. `pull_requests` went the same way in 141 — nothing opens a pull request for a scrape any more, and every column it held either lived on `requests` already or died with the merge queue.
 - **`requests` became `changesets` in migration 152**, with `request_batches` → `changeset_batches`, `source_records.request_id` → `changeset_id`, and `change_logs.request_id` → `changeset_id`. Pure rename, including every index and constraint name — a rename that leaves `requests_pkey` on `changesets` puts the old vocabulary back into the schema in a dozen places. The table grew from "a job someone asked for" and that fits only the oldest of its four producers: nobody _requests_ a sheet import, and both hand-edit kinds are born published. What all four are is a bundle of proposed changes to one jurisdiction, by one producer, at one time, awaiting a decision. `submissions` was rejected as past tense — it misnames the whole dispatched-and-running phase of a scrape, which exists at `status = PENDING, progress = 0` before it has any `source_records`, exactly the state an OSM changeset models as open-and-empty. **Migration 156 finished the job**: `issues.request_ids` and `review_session_entries.request_ids` — plural arrays 152 did not touch — became `changeset_ids`, and `requested_by_user_id` became `created_by_user_id`, matching its neighbour `resolved_by_user_id` and `changeset_batches.started_by_user_id`. It stays nullable, and the null _was_ load-bearing: a changeset with no user was machine-triggered — **superseded by migration 160**, which gives the machine a user instead. `issues.pull_request_url` kept its name at the time — it was a genuine GitHub pull request — but **migration 174 dropped it along with the `pr_opened` status**: `open_issue_pull_request` was the only writer of either and had zero callers, so nothing could set them and the webhook that looked an issue up by that url could never match. Both were vestiges of resolving an issue via a `resolve/` PR against open-data.
+- **`issues` split in two in migration 186.** One table held two different things behind one
+  polymorphic reference: `changeset_ids text[]` carried a changeset id — or a *pipeline-run* id
+  when the scrape died before minting a changeset — as text, with no foreign key either way.
+  `pipeline_run_issues` says a run went wrong (`pipeline_error`, `cost_cap_reached`,
+  `fewer_than_expected`, `no_roster_found`, `domain_inactive`); `changeset_issues` says a person
+  flagged something about a proposal (`user_reported`). Each side now names its subject with a
+  real FK, and the run side reaches a jurisdiction through `pipeline_runs.jurisdiction_ocdid`
+  without touching `changesets` at all — which is what the old join could not do, so a run that
+  died before ingest fell out of every state-filtered view. The array was never many: migration
+  063 added it for `unrecognized_role`, which keyed on the role name and legitimately spanned
+  changesets; that type is retired, and every surviving type keys on its own subject, so every
+  row held exactly one id. `issue_key` and its `(issue_type, issue_key)` uniqueness went with
+  it — a recurring problem files a fresh row per run and is dismissed again, which is what it
+  already did, since each run mints its own changeset. Uniqueness is kept only on the run side,
+  `(pipeline_run_id, issue_type)`, so a retried activity refreshes rather than duplicates;
+  **`changeset_issues` deliberately has none**, because a run reporting the same fault twice is
+  one fault but a person reporting two things about one roster is two reports — the index on
+  both sides collapsed five user reports into three on the first backfill. `merge_failed` was
+  dropped rather than migrated: nothing had been able to raise one since 2026-09-04, when
+  rosters moved to committing straight to `main`.
+
 - **`post_id` became a list-valued assertion field in migration 159.** A reviewer picks one post, so a scalar assertion looks right — but its uniqueness is per `(person, field_path)`, and a person holds one open membership per _organization_. With a second body in a jurisdiction, picking their school-board post would overwrite their council post on the same key, silently. A post names its own organization, so a list is self-scoping and one-per-organization stays enforced by `memberships_one_open_per_organization`. **The array of list fields is written in three places** — `core/people_edits.LIST_FIELDS`, these two partial indexes, and the `ON CONFLICT` predicates in `database/assertions.py` (now derived from the first). They must agree exactly: postgres matches a conflict predicate against an index's, and a mismatch fails with "no unique or exclusion constraint matching the ON CONFLICT specification".
 
 - **Actors: the system got a user in migration 160.** `change_logs.user_id`,

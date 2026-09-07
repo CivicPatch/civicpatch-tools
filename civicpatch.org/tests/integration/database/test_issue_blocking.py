@@ -1,7 +1,7 @@
 """Which jurisdictions a pending issue keeps out of the scrape pool.
 
-Real DB: the thing under test is a join between `issues` and `changesets`, and the bug it
-replaces was a missing condition in that join.
+Real DB: the thing under test is a join from `pipeline_run_issues` through `pipeline_runs` to
+`changesets`, and the bug it replaces was a missing condition in that join.
 
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
@@ -22,9 +22,9 @@ async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "DELETE FROM issues WHERE EXISTS ("
-            "SELECT 1 FROM changesets c WHERE c.id::text = ANY(issues.changeset_ids) "
-            "AND c.jurisdiction_ocdid = %s)",
+            "DELETE FROM pipeline_run_issues WHERE EXISTS ("
+            "SELECT 1 FROM pipeline_runs run WHERE run.id = pipeline_run_issues.pipeline_run_id "
+            "AND run.jurisdiction_ocdid = %s)",
             (_OCDID,),
         )
         await cur.execute(
@@ -48,9 +48,10 @@ async def _clean():
 
 
 async def _changeset_with_a_pending_issue() -> str:
-    changeset_id = await factories.complete_run(await factories.start_run(_OCDID))
+    run_id = await factories.start_run(_OCDID)
+    changeset_id = await factories.complete_run(run_id)
     await issues_db.upsert_issue(
-        changeset_id, PipelineIssueType.PIPELINE_ERROR, [{"detail": "boom"}]
+        run_id, PipelineIssueType.PIPELINE_ERROR, [{"detail": "boom"}]
     )
     return changeset_id
 

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 # ── Shared ────────────────────────────────────────────────────────────────────
@@ -86,6 +86,17 @@ class SubmitPipelineRunArtifactsResponse(BaseModel):
 
 class FlagPipelineIssueRequest(BaseModel):
     is_flagged: bool
+
+
+# ── POST /api/v1/pipeline_runs/issues/dismiss ────────────────────────────────
+
+class DismissPipelineIssuesRequest(BaseModel):
+    # A page's worth, not a filter: one click clearing every match is one mis-click too.
+    issue_ids: list[str] = Field(min_length=1, max_length=100)
+
+
+class DismissPipelineIssuesResponse(BaseModel):
+    dismissed: int
 
 
 # ── GET /api/v1/pipeline_runs/{pipeline_run_id} ───────────────────────────────────

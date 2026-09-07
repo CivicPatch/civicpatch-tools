@@ -57,10 +57,10 @@ async def handle_submit_pipeline_run_artifacts(
         )
         # Keyed on the proposal when there is one, so the issue resolves to a jurisdiction;
         # else on the run, which the issues page falls back to rendering.
-        pipeline_run = await get_pipeline_run(request.pipeline_run_id)
-        changeset_id = pipeline_run.get("changeset_id") if pipeline_run else None
+        # Keyed on the run, always: a scrape that never reached ingest minted no changeset,
+        # and the run is the one thing every failure has.
         await upsert_issue(
-            changeset_id or request.pipeline_run_id,
+            request.pipeline_run_id,
             PipelineIssueType.PIPELINE_ERROR,
             [{"error": str(e)}],
         )
@@ -196,7 +196,9 @@ async def _ingest_roster(
     # Before the publish decision, not after: these are what `_publish_if_nothing_to_review`
     # asks about, and filing them afterwards meant they never gated anything.
     for issue in workflow_context.get("data", {}).get("issues", []):
-        await upsert_issue(changeset_id, issue["type"], [issue.get("data") or {}])
+        await upsert_issue(
+            request.pipeline_run_id, issue["type"], [issue.get("data") or {}]
+        )
 
     await _apply_scrape_changes(changeset_id, request.jurisdiction_ocdid)
     await _record_resolved_url(

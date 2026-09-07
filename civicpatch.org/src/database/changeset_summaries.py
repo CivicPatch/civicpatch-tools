@@ -280,13 +280,14 @@ WITH rows AS (
            pr.jurisdiction_ocdid,
            j.data->>'name' AS name,
            NULL::int AS days_waiting,
-           -- Why it ended, keyed on the run: a run that mints no changeset has its issue
-           -- filed against its own id.
+           -- Why it ended. Every pipeline issue is keyed on its run now, so this no longer
+           -- depends on the run having minted nothing.
            i.issue_type AS failure_reason,
            pr.created_at
     FROM pipeline_runs pr
     JOIN jurisdictions j USING (jurisdiction_ocdid)
-    LEFT JOIN issues i ON i.issue_key = pr.id::text AND i.issue_type = ANY(%(issue_types)s)
+    LEFT JOIN pipeline_run_issues i
+           ON i.pipeline_run_id = pr.id AND i.issue_type = ANY(%(issue_types)s)
     WHERE j.state = %(state)s
       AND pr.created_at >= now() - %(window)s::interval
       AND pr.status = '{PipelineRunStatus.ERROR.value}'
