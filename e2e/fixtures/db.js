@@ -289,13 +289,15 @@ function asSightings(proposed) {
 // What puts a card in RECONCILE rather than BASELINE mode: `has_ever_collected` asks whether the
 // jurisdiction has a published changeset of a collection kind. Replaces `jurisdictions.scraped_at`
 // (dropped by migration 181), so the fixture is previously collected rather than stamped.
+const priorCollectionId = (ocdid) => personUuid(`prior-collection:${ocdid}`);
+
 async function seedPriorCollection(client, ocdid) {
   await client.query(
     `INSERT INTO changesets (id, kind, jurisdiction_ocdid, created_at, updated_at, published_at)
      VALUES ($1, 'scrape', $2,
              NOW() - INTERVAL '30 days', NOW() - INTERVAL '30 days', NOW() - INTERVAL '30 days')
      ON CONFLICT (id) DO NOTHING`,
-    [personUuid(`prior-collection:${ocdid}`), ocdid],
+    [priorCollectionId(ocdid), ocdid],
   );
 }
 
@@ -895,7 +897,10 @@ export async function seedE2eFixtures() {
          SELECT 1 FROM changeset_issues WHERE changeset_id = $1 AND issue_type = 'user_reported'
        )`,
       [
-        TEST_CHANGESET_ID,
+        // Against the prior collection, not the card under review: an open user report holds
+        // its changeset out of `AVAILABLE_FOR_REVIEW`, and putting one on TEST_CHANGESET_ID
+        // took the first card away from every review spec.
+        priorCollectionId(TEST_JURISDICTION_OCDID),
         JSON.stringify({
           title: "Jane Smith is no longer on the council",
           body: "She resigned in March; the city page is stale.",
