@@ -10,7 +10,7 @@
   gap: 0.32rem;
   padding: 0.1rem 0.5rem;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: var(--surface);
   font-size: var(--font-size-xs);
   line-height: 1.6;

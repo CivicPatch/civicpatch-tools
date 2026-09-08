@@ -14,9 +14,8 @@
 .diff-panel__label {
     font-family: var(--font-mono);
     font-size: var(--font-size-xs);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-weight: 400;
+    text-transform: lowercase;
     color: var(--text-muted);
 }
 
@@ -120,8 +119,8 @@
     white-space: nowrap;
     width: 6rem;
     font-size: var(--font-size-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    text-transform: lowercase;
+    font-family: var(--font-mono);
 }
 
 .diff-field__before,
@@ -162,9 +161,9 @@
 .diff-table th {
     text-align: left;
     font-size: var(--font-size-xs);
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-weight: 400;
+    text-transform: lowercase;
+    font-family: var(--font-mono);
     color: var(--text-muted);
     padding: 0.3rem 0.5rem 0.4rem;
     border-bottom: 1px solid var(--field-border);

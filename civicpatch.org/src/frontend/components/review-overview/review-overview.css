@@ -157,7 +157,7 @@
   align-items: center;
   gap: 0.25rem;
   padding: 0 0.35rem;
-  border-radius: 3px;
+  border-radius: var(--radius);
   font-size: var(--font-size-xs);
   font-weight: 700;
   white-space: nowrap;
@@ -191,7 +191,7 @@
   align-items: center;
   gap: 0.3rem;
   padding: 0 0.35rem;
-  border-radius: 3px;
+  border-radius: var(--radius);
   font-size: var(--font-size-xs);
   font-weight: 700;
   white-space: nowrap;

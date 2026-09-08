@@ -84,7 +84,7 @@
   padding: 0.5rem 0.7rem;
   border: 1px solid var(--border);
   border-left: 3px solid var(--action);
-  border-radius: 4px;
+  border-radius: var(--radius);
   background: var(--surface-2);
 }
 
@@ -106,7 +106,7 @@
   font-family: ui-monospace, Menlo, monospace;
   font-size: 0.6875rem;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: var(--text-muted);
   padding-bottom: 0.2rem;
   border-bottom: 1px solid var(--border);
@@ -144,7 +144,7 @@
   font-family: ui-monospace, Menlo, monospace;
   font-size: 0.6875rem;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
+  text-transform: lowercase;
   padding: 0.1rem 0.4rem;
 }
 
@@ -157,8 +157,7 @@
 .merge-grid__fixed {
   font-family: ui-monospace, Menlo, monospace;
   font-size: 0.6875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  text-transform: lowercase;
   color: var(--text-muted);
 }
 

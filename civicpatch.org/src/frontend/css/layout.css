@@ -48,41 +48,27 @@ main.container-fluid--blog {
   gap: 0.5rem;
 }
 
+/* The one place the page's base size is set. Everything sized in rem scales from
+   here, so this is the density knob for the whole app: 17px → 14px for the redesign,
+   matching the demo's ground. */
+:root,
+:host {
+  font-size: 14px;
+}
+
 @media (max-width: 480px) {
   main.container-fluid {
     padding-inline: 1.25rem;
   }
 }
 
-@media (min-width: 576px) {
-  :root,
-  :host {
-    --font-size: 106.25%;
-  }
-}
-
-@media (min-width: 768px) {
-  :root,
-  :host {
-    --font-size: 112.5%;
-  }
-}
-
 @media (min-width: 1024px) {
-  :root,
-  :host {
-    --font-size: 118.75%;
-  }
   main.container-fluid {
     padding: 0.5rem 1rem 2rem;
   }
 }
 
 @media (min-width: 1280px) {
-  :root,
-  :host {
-    --font-size: 125%;
-  }
   main.container-fluid {
     padding: 0.5rem 2rem;
   }

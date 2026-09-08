@@ -38,7 +38,7 @@
 }
 
 .blog-list__title {
-  font-family: "Space Grotesk", var(--font-sans);
+  font-family: var(--font-display);
   font-size: var(--font-size-base);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -113,7 +113,7 @@
 }
 
 .blog-page-title {
-  font-family: "Space Grotesk", var(--font-sans);
+  font-family: var(--font-display);
   font-size: var(--font-size-xl);
   font-weight: 700;
   letter-spacing: -0.02em;

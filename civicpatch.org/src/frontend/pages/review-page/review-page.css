@@ -31,7 +31,7 @@
 .review-page__streak-card {
     background: var(--surface);
     border: 1.5px solid var(--border);
-    border-radius: 0.75rem;
+    border-radius: var(--radius);
     padding: 1.25rem 1rem;
     display: flex;
     flex-direction: column;
@@ -74,7 +74,7 @@
 .review-page__streak-card .streak-graph__day {
     width: 10px;
     height: 10px;
-    border-radius: 2px;
+    border-radius: var(--radius-sm);
 }
 
 .review-page__streak-label {
@@ -97,7 +97,7 @@
 .review-page__ready-card {
     background: var(--surface);
     border: 1.5px solid var(--border);
-    border-radius: 0.75rem;
+    border-radius: var(--radius);
     padding: 1.25rem 1rem;
     display: flex;
     flex-direction: column;
@@ -176,7 +176,7 @@
     gap: 1.5rem;
     background: var(--surface);
     border: 1.5px solid var(--border);
-    border-radius: 0.75rem;
+    border-radius: var(--radius);
     padding: 1.5rem;
 }
 
@@ -199,7 +199,7 @@
 .review-page__modal {
     background: var(--surface);
     border: 1.5px solid var(--border);
-    border-radius: 0.75rem;
+    border-radius: var(--radius);
     padding: 1.5rem;
     width: 300px;
     display: flex;
@@ -240,7 +240,7 @@
     flex: 1;
     padding: 0.6rem 0;
     border: 2px solid var(--border);
-    border-radius: 0.75rem;
+    border-radius: var(--radius);
     font-weight: 700;
     font-size: var(--font-size-md);
     cursor: pointer;
@@ -257,7 +257,7 @@
     width: 100%;
     padding: 0.85rem;
     border: none;
-    border-radius: 0.75rem;
+    border-radius: var(--radius);
     font-size: 1.1rem;
     font-weight: 800;
     cursor: pointer;
@@ -503,7 +503,7 @@ dialog[open]:has(.report-issue-modal__form) {
     font-family: var(--font-mono);
     font-weight: 600;
     padding: 0.15em 0.5em;
-    border-radius: 0.4rem;
+    border-radius: var(--radius);
     width: fit-content;
 }
 
@@ -589,10 +589,10 @@ dialog[open]:has(.report-issue-modal__form) {
 .review-page__status-banner {
     text-align: center;
     padding: 0.5rem 1rem;
-    font-weight: 600;
+    font-weight: 400;
     font-size: var(--font-size-sm);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    text-transform: lowercase;
+    font-family: var(--font-mono);
 }
 
 .review-page__status-banner--merged {
@@ -643,9 +643,9 @@ dialog[open]:has(.report-issue-modal__form) {
   padding-right: 0.6rem;
   display: inline-block;
   font-size: var(--font-size-sm);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-weight: 400;
+  text-transform: lowercase;
+  font-family: var(--font-mono);
   color: var(--text-muted);
   background: var(--bg);
 }

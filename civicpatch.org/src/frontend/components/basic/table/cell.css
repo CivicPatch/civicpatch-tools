@@ -63,7 +63,7 @@ civ-table-cell {
         /* re-apply shared styles after reset */
         border: 1px solid var(--border);
         background: var(--surface-2);
-        border-radius: 999px;
+        border-radius: var(--radius-sm);
         padding: 0.1rem 0.5rem;
         font-size: var(--font-size-sm);
         font-family: inherit;

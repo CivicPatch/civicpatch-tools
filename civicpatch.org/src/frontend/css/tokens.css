@@ -65,10 +65,19 @@
 
 :root,
 :host {
-  --font-sans: "Figtree", sans-serif;
+  /* The redesign's faces. --font-display is the knob the demo calls --disp: it
+     picks the voice for headings and labels, and is the single point a future
+     serif/sans toggle would flip. */
+  --font-sans: "Public Sans", system-ui, -apple-system, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, serif;
+  --font-display: var(--font-sans);
   --control-pad-y: 0.5rem;
   --control-pad-x: 0.5rem;
+  /* Two steps, matching the demo: 3px for surfaces, 2px for small controls and
+     chips. Deliberately no pill step — the demo has none, and 18 lozenges were the
+     loudest thing in the old language. */
   --radius: 3px;
+  --radius-sm: 2px;
   --border-width: 0.03rem;
   --line-height: 1.65;
   --focus-ring-width: 0.2rem;
@@ -82,7 +91,7 @@
   --font-weight: 400;
   --font-emoji: "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "Noto Color Emoji";
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo,
     Consolas, "Liberation Mono", monospace, var(--font-emoji);
   --underline-offset: 0.1rem;
 
@@ -102,16 +111,27 @@
 
      Status tints replace five hand-rolled alphas (0.12 / 0.15 / 0.18 / 0.2)
      that all meant "wash this in the status colour". One strength now. */
-  --success-tint: rgba(var(--tone-green), 0.15);
-  --warning-tint: rgba(var(--tone-yellow), 0.15);
-  --error-tint: rgba(var(--tone-red), 0.15);
-  --info-tint: rgba(var(--tone-blue), 0.15);
+  --success-tint: color-mix(in srgb, var(--success) 15%, transparent);
+  --warning-tint: color-mix(in srgb, var(--warning) 15%, transparent);
+  --error-tint: color-mix(in srgb, var(--error) 15%, transparent);
+  --info-tint: color-mix(in srgb, var(--info) 15%, transparent);
+
+  /* Two neutrals the conversion turned up as missing. --border was doing the work of
+     both a panel edge and a caption underline, and --surface-2 was doing both "this
+     a caption underline. --border-subtle completes the rule ramp: subtle < border <
+     strong. Derived from --border, so a theme engine fills one colour and gets both.
+
+     A --row-stripe was minted here too and removed the same day: one real consumer,
+     and within minutes it was also painting a progress-bar trough, which is not a row
+     stripe. Two unrelated jobs under one name is how the last redundant tier began.
+     Striping uses --surface-2 until a second table wants to disagree with it. */
+  --border-subtle: color-mix(in srgb, var(--border) 55%, var(--bg));
 
   /* Focus and selection. --focus-ring is the element you are on; -soft is the
      container that contains it, which is why both exist. */
   --focus-ring: rgb(var(--tone-teal));
   --focus-ring-soft: rgb(var(--tone-sapphire));
-  --focus-tint: rgba(var(--tone-sapphire), 0.15);
+  --focus-tint: color-mix(in srgb, var(--focus-ring-soft) 15%, transparent);
 
   /* Jurisdiction level — categorical, not status: these say what kind of thing
      a badge names, so they must not collapse into success/warning/info. */

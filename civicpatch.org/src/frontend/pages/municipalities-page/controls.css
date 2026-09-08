@@ -32,7 +32,7 @@
   align-items: center;
   gap: 0.35rem;
   padding: 0.3rem 0.7rem;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text-default);
