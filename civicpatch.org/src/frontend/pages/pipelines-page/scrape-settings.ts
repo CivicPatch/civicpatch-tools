@@ -1,6 +1,6 @@
 // The cadence and budget block, and the pure formatting it needs.
 
-import { formatUsd } from "./spend.js";
+import { formatUsd } from "../spend-page/spend.js";
 
 export interface StateScrapePanel {
   state: string;

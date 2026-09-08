@@ -53,7 +53,7 @@
 }
 
 .secnav__item {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   font-weight: 600;
   color: var(--text-muted);
   text-decoration: none;

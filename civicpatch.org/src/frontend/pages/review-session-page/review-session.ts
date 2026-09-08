@@ -282,7 +282,7 @@ function ReviewSession(host: ReviewSessionHost) {
   };
 
   return html`
-    <main class="review-page">
+    <main class="review-page page-content">
       ${addingPostFor
         ? html`<civ-post-add
             .jurisdictionOcdid=${jurisdictionOcdid ?? ""}

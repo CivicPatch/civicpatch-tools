@@ -5,7 +5,7 @@ import { html } from "lit-html";
 import { saveGlobalCap } from "../../api.js";
 import { inputValue } from "../../components/fields/field-controls.js";
 import { hostDispatch } from "../../utils/host-dispatch.js";
-import { describeStateCaps, type GlobalScrapePanel } from "./scrape-settings.js";
+import { describeStateCaps, type GlobalScrapePanel } from "../pipelines-page/scrape-settings.js";
 
 export const SAVED_EVENT = "settings-saved";
 export const CANCEL_EVENT = "cancel";

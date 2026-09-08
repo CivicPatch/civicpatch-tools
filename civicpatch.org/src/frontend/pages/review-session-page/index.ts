@@ -58,10 +58,10 @@ function ReviewSessionPage() {
 
   const renderBody = () => {
     if (fsm.kind === StateKind.LOADING) {
-      return html`<main class="review-page"><p>Loading...</p></main>`;
+      return html`<main class="review-page page-content"><p>Loading...</p></main>`;
     }
     if (fsm.kind === StateKind.ERROR) {
-      return html`<main class="review-page">
+      return html`<main class="review-page page-content">
         <p class="review-page__error">${fsm.message}</p>
         <a class="btn btn-sm" href=${landingUrl(stateCode)}>Back to review</a>
       </main>`;

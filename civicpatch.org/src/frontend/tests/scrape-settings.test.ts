@@ -7,7 +7,7 @@ import {
   describeNextRun,
   estimateMonthlyCost,
   type StateScrapePanel,
-} from "../pages/changeset-summaries-page/scrape-settings.ts";
+} from "../pages/pipelines-page/scrape-settings.ts";
 
 const panel = (over: Partial<StateScrapePanel> = {}): StateScrapePanel => ({
   state: "wa",

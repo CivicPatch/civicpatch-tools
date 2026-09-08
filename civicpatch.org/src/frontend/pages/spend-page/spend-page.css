@@ -1,0 +1,162 @@
+@layer components {
+.spend-page {
+  --spend-page-state-w: 3rem;
+}
+
+.spend-page__empty {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+/* Ledger */
+
+.spend-page__ledger-figure {
+  display: flex;
+  flex-direction: column;
+}
+
+.spend-page__ledger-n {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.spend-page__ledger-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  text-transform: lowercase;
+}
+
+/* Budget banner */
+
+.spend-page__budget {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  font-size: var(--font-size-sm);
+}
+
+.spend-page__budget-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  text-transform: lowercase;
+}
+
+.spend-page__budget-fig {
+  font-family: var(--font-mono);
+}
+
+.spend-page__budget-fig--quiet {
+  color: var(--text-muted);
+}
+
+.spend-page__budget-edit {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  color: var(--text-muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Sort chips */
+
+.spend-page__chips {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.spend-page__chips-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  text-transform: lowercase;
+  margin-right: 0.25rem;
+}
+
+.spend-page__chip {
+  width: auto;
+  margin: 0;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-size: var(--font-size-xs);
+  font-family: inherit;
+  color: var(--text-default);
+  cursor: pointer;
+}
+
+.spend-page__chip--active {
+  background: var(--text-default);
+  border-color: var(--text-default);
+  color: var(--bg);
+}
+
+/* Rows */
+
+.spend-page__row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0.2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.spend-page__row:last-child {
+  border-bottom: none;
+}
+
+.spend-page__row-state {
+  flex: 0 0 var(--spend-page-state-w);
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+.spend-page__row-fig {
+  flex: 1 1 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-size: var(--font-size-sm);
+}
+
+.spend-page__row-n {
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.spend-page__row-label {
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
+}
+
+/* ── Global budget edit form ── */
+
+.cs-settings-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.cs-settings-form__hint {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+}
+
+.cs-settings-form__error {
+  font-size: var(--font-size-sm);
+  color: var(--diff-removed);
+}
+}

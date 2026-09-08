@@ -166,15 +166,20 @@ dialog[open] > article {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 2px solid var(--border-strong, var(--text));
-  box-shadow: 6px 6px 0 var(--border-strong, var(--text));
+  border: 1px solid var(--border);
+  box-shadow: none;
   border-radius: 0;
 }
 
-/* pin header + footer; only the body scrolls (sticky footer on tall modals) */
+/* pin header + footer; only the body scrolls (sticky footer on tall modals). Flush with the
+   body rather than the base article's shaded band — a hairline divider is the only separator.
+   `--border`, not the base rule's `--card-border`: that token equals `--surface` in the light
+   theme, which made the divider invisible there. */
 dialog[open] > article > header,
 dialog[open] > article > footer {
   flex: 0 0 auto;
+  background: none;
+  border-color: var(--border);
 }
 
 dialog[open] > article > section {

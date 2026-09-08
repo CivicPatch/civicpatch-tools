@@ -6,7 +6,7 @@ import { saveCadence, saveCaps } from "../../api.js";
 import { inputValue } from "../../components/fields/field-controls.js";
 import { hostDispatch } from "../../utils/host-dispatch.js";
 import { estimateMonthlyCost, type StateScrapePanel } from "./scrape-settings.js";
-import { formatUsd } from "./spend.js";
+import { formatUsd } from "../spend-page/spend.js";
 
 export const SAVED_EVENT = "settings-saved";
 export const CANCEL_EVENT = "cancel";

@@ -222,7 +222,7 @@ def get_router(api_key_header):
     async def create_batch_pipeline_runs_endpoint(
         request: BatchPipelineRunRequest,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
         ),
     ):
         """Starts the workflow and returns; it picks its own candidates.
