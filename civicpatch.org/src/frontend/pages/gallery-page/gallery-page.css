@@ -1,0 +1,24 @@
+@layer components {
+.gallery-page__section {
+  margin-bottom: 1.5rem;
+}
+
+.gallery-page__stage {
+  padding: 0.5rem 0;
+}
+
+.gallery-page__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.gallery-page__sectioned-demo {
+  max-width: 24rem;
+}
+
+.gallery-page__sectioned-demo .secnav__label {
+  display: none;
+}
+}

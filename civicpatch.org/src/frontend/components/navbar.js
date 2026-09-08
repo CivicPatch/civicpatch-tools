@@ -129,6 +129,9 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
             ${user.permissions?.can_view_issues_page
               ? html`<a href="/issues" class="${active("/issues")}">Issues</a>`
               : ""}
+            ${user.permissions?.can_view_gallery_page
+              ? html`<a href="/gallery" class="${active("/gallery")}">Components</a>`
+              : ""}
           </div>
         </details>`
       : ""}
