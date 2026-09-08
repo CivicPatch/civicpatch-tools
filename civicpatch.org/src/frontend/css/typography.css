@@ -1,10 +1,9 @@
 @layer base {
-/* Document base and the type scale. Split out of elements.css 2026-09-07 at the
-   400-line ceiling; same layer, so only the file boundary moved. */
+/* Document base and the type scale. */
 
 /* ── Document base ───────────────────────────────────────────────────────────
- * `:where()` = specificity 0, the floor everything stands on. `--font-size`
- * is deliberately unread; styles.css sets a flat `:root { font-size }`. */
+ * `:where()` = specificity 0, the floor everything stands on. The page's base
+ * size is the flat `:root { font-size }` in layout.css. */
 
 *,
 ::after,

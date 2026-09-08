@@ -1,7 +1,7 @@
+@layer components {
 /* ── Card ─────────────────────────────────────────────────────────────────── */
 
 .contribution-card {
-  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1rem;
@@ -33,4 +33,5 @@
   align-self: flex-start;
   font-weight: 700;
   color: var(--text-default);
+}
 }

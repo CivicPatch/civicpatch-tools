@@ -1,3 +1,4 @@
+@layer components {
 /* ── Publish Log ── */
 
 civ-review-log {
@@ -8,11 +9,10 @@ civ-review-log {
 }
 
 .review-log {
-    background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     min-width: 280px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
 
@@ -73,7 +73,6 @@ civ-review-log {
     white-space: nowrap;
 }
 
-
 .review-log__status {
     width: 1.2em;
     text-align: center;
@@ -84,7 +83,7 @@ civ-review-log {
     display: inline-block;
     width: 0.75em;
     height: 0.75em;
-    border: 2px solid var(--border);
+    border: 1px solid var(--border);
     border-top-color: var(--action);
     border-radius: 50%;
     animation: review-log-spin 0.7s linear infinite;
@@ -100,4 +99,5 @@ civ-review-log {
 
 .review-log__item--error .review-log__status {
     color: var(--diff-removed);
+}
 }

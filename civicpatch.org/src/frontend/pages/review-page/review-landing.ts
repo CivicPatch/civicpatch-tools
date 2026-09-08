@@ -22,22 +22,26 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, resu
 
   return html`
     <main class="review-page">
+      <div class="page-focal">
+        <h1 class="page-focal__title">Review</h1>
+      </div>
+
       <div class="review-page__main-grid">
-        <div class="review-page__streak-card">
+        <div class="panel review-page__streak-card">
           <civ-streak-graph .dailyCounts=${stats.daily_counts ?? []} .streak=${stats.streak} .currentDate=${stats.current_date ?? null}></civ-streak-graph>
         </div>
-        <div class="review-page__ready-card">
-          <div class="review-page__ready-header">
-            <span class="review-page__ready-title">Ready for Review</span>
+        <div class="panel review-page__ready-card">
+          <div class="panel__cap">
+            <b>Ready for Review</b>
             ${stateCode ? html`
-            <div class="review-page__goal-control">
+            <div class="panel__cap-right review-page__goal-control">
+              <span class="review-page__goal-label">Goal: ${dailyGoal}</span>
               <button class="review-page__gear-btn btn-icon" @click=${() => {
                 setPendingGoal(dailyGoal);
                 setGoalModalOpen(true);
               }}>
                 <i class="fa-solid fa-gear"></i>
               </button>
-              <span class="review-page__goal-label">Goal: ${dailyGoal}</span>
             </div>
             ` : ""}
           </div>

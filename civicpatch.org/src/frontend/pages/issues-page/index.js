@@ -27,6 +27,10 @@ function IssuesPage() {
 
   return html`
     <main class="issues-page page-content">
+      <div class="page-focal">
+        <h1 class="page-focal__title">Issues</h1>
+      </div>
+
       <issues-section
         .kind=${PIPELINE_RUN_ISSUES}
         .stateCode=${stateCode}

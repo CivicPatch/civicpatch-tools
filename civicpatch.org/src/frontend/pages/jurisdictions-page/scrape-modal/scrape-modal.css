@@ -1,3 +1,4 @@
+@layer components {
 /* The global dialog is `width: max-content`, which for a text input resolves to
    its ~20-character intrinsic size — so a full URL renders in a 213px box. State
    a width instead of shrink-wrapping. */
@@ -92,4 +93,5 @@ dialog[open]:has(.scrape-modal__body) {
     align-self: flex-start;
     padding: 0.3rem 0.75rem;
     font-size: var(--font-size-md);
+}
 }

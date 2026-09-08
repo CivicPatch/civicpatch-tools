@@ -1,3 +1,4 @@
+@layer components {
 /* ── PR Card ── */
 
 review-card {
@@ -94,33 +95,24 @@ review-card {
     font-variant-numeric: tabular-nums;
     font-weight: 400;
     padding: 0.1em 0.45em;
+    border: 1px solid transparent;
     border-radius: var(--radius-sm);
+    line-height: 1.45;
 }
 
 .review-card__stat--added {
     color: var(--diff-added);
-    background: var(--diff-added-bg);
+    border-color: var(--diff-added);
 }
 
 .review-card__stat--removed {
     color: var(--diff-removed);
-    background: var(--diff-removed-bg);
+    border-color: var(--diff-removed);
 }
 
 .review-card__stat--changed {
     color: var(--info);
-    background: var(--info-bg);
-}
-
-.review-card__title {
-    font-size: var(--font-size-md);
-    font-weight: 500;
-    color: var(--text);
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    border-color: var(--info);
 }
 
 .review-card__jurisdiction-link {
@@ -181,4 +173,5 @@ review-card {
         grid-row: 2;
         justify-content: flex-start;
     }
+}
 }

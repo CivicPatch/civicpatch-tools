@@ -1,3 +1,4 @@
+@layer components {
 /* The card shell shared by Overview and Preview. Only what must not drift between
    them lives here; anything a single view owns stays in that view's stylesheet. */
 
@@ -9,7 +10,6 @@
   align-items: center;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--surface);
   overflow: hidden;
   cursor: pointer;
 }
@@ -148,4 +148,5 @@
   .review-row__photo {
     width: 4.5rem;
   }
+}
 }

@@ -1,4 +1,4 @@
-import "./queue-page.css";
+import "./bulk-review-page.css";
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { useAuth } from "../../hooks/useAuth.js";
@@ -8,11 +8,9 @@ import { useReviewActions } from "../../hooks/use-review-actions.js";
 import { config } from "../../assets/config.js";
 import {
   fetchPullRequestsWithData,
-  fetchActivePipelineRuns,
 } from "../../api.js";
 import "../../components/review-log/index.js";
-import "./queue-summary/index.js";
-import "./active-jobs/index.js";
+import "./summary/index.js";
 import "./review-card-list/index.js";
 
 const API_URL = config.apiUrl;
@@ -52,19 +50,12 @@ function setPrParamsInUrl(page: number, perPage: number): void {
   window.history.pushState({}, "", `${window.location.pathname}?${params}`);
 }
 
-function setAjParamsInUrl(page: number, perPage: number): void {
-  const params = new URLSearchParams(window.location.search);
-  params.set("aj_page", String(page));
-  params.set("aj_per_page", String(perPage));
-  window.history.pushState({}, "", `${window.location.pathname}?${params}`);
-}
-
-function QueuePage() {
+function BulkReviewPage() {
   const { permissions } = useAuth();
   const [defaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", { ttl: PERSIST_FOREVER });
   const [defaultView, setDefaultView] = useLocalStorage(STORAGE_KEYS.QUEUE_VIEW, "quick", { ttl: PERSIST_FOREVER });
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
-  const [queueSummary, setQueueSummary] = useState<any>(null);
+  const [summary, setSummary] = useState<any>(null);
   const [pullRequests, setPullRequests] = useState<PrItem[]>([]);
   const { actionState, entries: reviewLogEntries, trackApprove, trackReject } = useReviewActions();
   const [loading, setLoading] = useState(true);
@@ -73,17 +64,11 @@ function QueuePage() {
   const [perPage, setPerPage] = useState(getIntParam("pr_per_page", 10, [10, 25, 50]));
   const [totalPages, setTotalPages] = useState(1);
   const [viewMode, setViewMode] = useState<string>(getViewFromUrl() || defaultView);
-  const [activePipelineRuns, setActivePipelineRuns] = useState<any[]>([]);
-  const [activePipelineRunsPage, setActivePipelineRunsPage] = useState(getIntParam("aj_page", 1));
-  const [activePipelineRunsTotalPages, setActivePipelineRunsTotalPages] = useState(1);
-  const [activePipelineRunsPerPage, setActivePipelineRunsPerPage] = useState(getIntParam("aj_per_page", 25, [10, 25, 50]));
 
   useEffect(() => {
     const onPopState = () => {
       setPage(getIntParam("pr_page", 1));
       setPerPage(getIntParam("pr_per_page", 10, [10, 25, 50]));
-      setActivePipelineRunsPage(getIntParam("aj_page", 1));
-      setActivePipelineRunsPerPage(getIntParam("aj_per_page", 25, [10, 25, 50]));
       setViewMode(getViewFromUrl() || defaultView);
     };
     window.addEventListener("popstate", onPopState);
@@ -97,21 +82,12 @@ function QueuePage() {
     fetchPullRequestsWithData(stateCode, page, perPage, viewMode)
       .then((result: any) => {
         setPullRequests(result.data || []);
-        setQueueSummary(result.summary || null);
+        setSummary(result.summary || null);
         setTotalPages(result.total_pages || 1);
       })
       .catch((err: any) => setError(err.message))
       .finally(() => setLoading(false));
   }, [stateCode, page, perPage, viewMode]);
-
-  useEffect(() => {
-    fetchActivePipelineRuns(stateCode || undefined, activePipelineRunsPage, activePipelineRunsPerPage)
-      .then((result: any) => {
-        setActivePipelineRuns(result.data || []);
-        setActivePipelineRunsTotalPages(result.total_pages || 1);
-      })
-      .catch(() => setActivePipelineRuns([]));
-  }, [stateCode, activePipelineRunsPage, activePipelineRunsPerPage]);
 
   const handleApprove = (event: CustomEvent<PrActionDetail>) => {
     const { changeset_id, jurisdiction_ocdid } = event.detail;
@@ -133,19 +109,6 @@ function QueuePage() {
     setViewMode(newView);
   };
 
-  const handleCancel = (pipelineRunId: string) => {
-    setActivePipelineRuns((prev) =>
-      prev.filter((j) => j.pipeline_run_id !== pipelineRunId),
-    );
-  };
-
-  const handleActivePipelineRunsPerPageChange = (e: Event) => {
-    const n = parseInt((e.target as HTMLSelectElement).value, 10);
-    setAjParamsInUrl(1, n);
-    setActivePipelineRunsPerPage(n);
-    setActivePipelineRunsPage(1);
-  };
-
   const handlePageChange = (newPage: number) => {
     setPrParamsInUrl(newPage, perPage);
     setPage(newPage);
@@ -159,30 +122,21 @@ function QueuePage() {
   };
 
   return html`
-    <main class="queue-page page-content">
-      ${permissions.can_view_queue_page_errors ? html`
-        <div class="queue-page__filters">
-          <div class="queue-page__filters-right">
-            <a class="btn btn-sm" href="${API_URL}/api/v1/requests/people-export.csv?state=${stateCode}" download>Export people</a>
-          </div>
-        </div>
-      ` : null}
+    <main class="bulk-review page-content">
+      <div class="page-focal">
+        <h1 class="page-focal__title">Bulk review</h1>
+        ${stateCode && summary
+          ? html`<bulk-review-summary .summary=${summary}></bulk-review-summary>`
+          : null}
+        ${permissions.can_view_queue_page_errors
+          ? html`<a class="page-focal__end btn btn-sm" href="${API_URL}/api/v1/requests/people-export.csv?state=${stateCode}" download>Export people</a>`
+          : null}
+      </div>
 
-      ${!stateCode ? html`<p class="queue-page__select-state-prompt">Select a state to get started.</p>` : null}
+      ${!stateCode ? html`<p class="bulk-review__select-state-prompt">Select a state to get started.</p>` : null}
 
       ${stateCode ? html`
-        ${queueSummary ? html`<queue-summary .summary=${queueSummary}></queue-summary>` : null}
-        <queue-active-pipeline-runs
-          .jobs=${activePipelineRuns}
-          .page=${activePipelineRunsPage}
-          .totalPages=${activePipelineRunsTotalPages}
-          .perPage=${activePipelineRunsPerPage}
-          .onPageChange=${(p: number) => { setAjParamsInUrl(p, activePipelineRunsPerPage); setActivePipelineRunsPage(p); }}
-          .onPerPageChange=${handleActivePipelineRunsPerPageChange}
-          .canCancel=${permissions.can_cancel_pipeline_run}
-          .onCancel=${handleCancel}
-        ></queue-active-pipeline-runs>
-        <queue-review-card-list
+        <bulk-review-card-list
           .cards=${pullRequests}
           .actionState=${actionState}
           .loading=${loading}
@@ -196,12 +150,12 @@ function QueuePage() {
           .onViewChange=${handleViewChange}
           .onPageChange=${handlePageChange}
           .onPerPageChange=${handlePerPageChange}
-        ></queue-review-card-list>
+        ></bulk-review-card-list>
       ` : null}
     </main>
     <civ-review-log .entries=${reviewLogEntries}></civ-review-log>
   `;
 }
 
-customElements.define("queue-page", component(QueuePage, { useShadowDOM: false }));
-export default QueuePage;
+customElements.define("bulk-review-page", component(BulkReviewPage, { useShadowDOM: false }));
+export default BulkReviewPage;

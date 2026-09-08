@@ -1,2 +1,2 @@
 import "../components/navbar.js";
-import "../pages/queue-page/index.ts";
+import "../pages/bulk-review-page/index.ts";

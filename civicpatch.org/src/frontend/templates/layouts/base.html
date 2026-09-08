@@ -35,13 +35,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}civicpatch tool{% endblock %}</title>
 
-        <!-- Order is the cascade, and @layer now states it explicitly: tokens.css
-             declares the layer order and the custom properties; elements/typography/
-             controls are @layer base; layout.css is @layer layout; styles.css is the
-             remaining shared shell rules. utilities.css and component CSS are
-             deliberately unlayered — unlayered beats every layer, so they keep their
-             current precedence until they move into `components`/`utilities` together.
-             Page CSS follows via the styles block below. -->
+        <!-- tokens.css declares the layer order: base, layout, components, utilities. -->
+        <link rel="preload" as="font" type="font/woff2" crossorigin
+            href="{{ url_for('frontend', path='/fonts/public-sans-variable.woff2') }}" />
+        <link rel="preload" as="font" type="font/woff2" crossorigin
+            href="{{ url_for('frontend', path='/fonts/ibm-plex-mono-400.woff2') }}" />
+        <link
+            href="{{ url_for('frontend', path='/css/fonts.css') }}"
+            rel="stylesheet"
+        />
         <link
             href="{{ url_for('frontend', path='/css/tokens.css') }}"
             rel="stylesheet"
@@ -75,9 +77,6 @@
         {% block styles %}{% endblock %}
         {% block head %}{% endblock %}
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:ital,wght@0,300..800;1,300..800&family=Source+Serif+4:opsz,wght@8..60,300..700&display=swap" rel="stylesheet">
 
 
     </head>

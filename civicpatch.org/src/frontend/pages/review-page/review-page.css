@@ -1,3 +1,4 @@
+@layer components {
 .review-page {
     max-width: var(--page-width);
     margin: 0 auto;
@@ -29,14 +30,11 @@
 }
 
 .review-page__streak-card {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.25rem 1rem;
     display: flex;
     flex-direction: column;
     gap: 0.2em;
     position: relative;
+    margin-bottom: 0;
 }
 
 /* the shared streak-graph cell sizing was enlarged for the home page's
@@ -95,41 +93,25 @@
 }
 
 .review-page__ready-card {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.25rem 1rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-}
-
-.review-page__ready-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    margin-bottom: 0;
 }
 
 .review-page__goal-control {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.1rem;
+    align-items: baseline;
+    gap: 0.4rem;
 }
 
 .review-page__goal-label {
     font-size: var(--font-size-xs);
     color: var(--text-muted);
-    opacity: 0.6;
 }
 
 .review-page__gear-btn {
     font-size: var(--font-size-md);
-}
-
-.review-page__ready-title {
-    font-size: var(--font-size-md);
-    color: var(--text-muted);
 }
 
 .review-page__ready-count {
@@ -174,8 +156,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 1.5rem;
 }
@@ -198,7 +179,7 @@
 
 .review-page__modal {
     background: var(--surface);
-    border: 1.5px solid var(--border);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 1.5rem;
     width: 300px;
@@ -239,7 +220,7 @@
     --control-bg: transparent;
     flex: 1;
     padding: 0.6rem 0;
-    border: 2px solid var(--border);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
     font-weight: 700;
     font-size: var(--font-size-md);
@@ -291,7 +272,7 @@ review-session-actions {
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--border);
     border-radius: 0 0 var(--radius) var(--radius);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
 }
 
 .review-page__step-nav {
@@ -406,7 +387,6 @@ review-session-actions {
     white-space: nowrap;
 }
 
-
 .review-page__back-btn {
     --control-text: var(--text-muted);
     --control-bg: transparent;
@@ -435,7 +415,6 @@ review-session-actions {
     --control-bg: transparent;
     --control-border: var(--border);
 }
-
 
 .review-page__error {
     font-size: var(--font-size-md);
@@ -663,11 +642,11 @@ dialog[open]:has(.report-issue-modal__form) {
   font-size: var(--font-size-sm);
 }
 
-
 /* Keyboard focus has to be visible on the page's primary actions — several of
    these are styled buttons whose default outline was suppressed. */
 .review-page__start-btn:focus-visible,
 .review-page__gear-btn:focus-visible {
   outline: var(--focus-ring-width) solid var(--action-focus);
   outline-offset: 2px;
+}
 }

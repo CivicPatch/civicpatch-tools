@@ -1,3 +1,4 @@
+@layer components {
 /* ── Diff panel ── */
 
 .diff-panel {
@@ -206,4 +207,5 @@
 
 .source-link:hover {
     opacity: 1;
+}
 }

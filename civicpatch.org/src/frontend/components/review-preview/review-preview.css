@@ -1,3 +1,4 @@
+@layer components {
 /* Preview (spec §7) — what publishing produces.
    No diff vocabulary: no state colours, no strikethrough, no attention icons.
    This view answers "what will the site say about this council", so anything
@@ -164,4 +165,5 @@
       var(--tint-strength),
     var(--surface)
   );
+}
 }

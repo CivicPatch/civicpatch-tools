@@ -4,6 +4,27 @@
    keep an undefined element from flashing. Shell: these rules are allowed to
    speak to the page as a whole, which is why they are not in a component. */
 
+.page-focal {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin: 1.6rem 0 1.4rem;
+}
+
+.page-focal__title {
+  font-size: var(--font-size-xl);
+  font-weight: 500;
+  letter-spacing: -0.006em;
+  line-height: 1.22;
+  max-width: 30ch;
+  margin: 0;
+}
+
+.page-focal__end {
+  margin-left: auto;
+}
+
 /* ── Body background ─────────────────────────────────────────────────────── */
 
 body {
@@ -22,6 +43,18 @@ civ-navbar:not(:defined) {
   border-bottom: 1px solid var(--border);
 }
 
+home-page:not(:defined),
+bulk-review-page:not(:defined),
+pipeline-runs-page:not(:defined),
+activity-page:not(:defined),
+issues-page:not(:defined),
+review-page:not(:defined),
+import-page:not(:defined),
+admin-page:not(:defined),
+roles-page:not(:defined) {
+  display: block;
+  min-height: 60vh;
+}
 
 /* ── Layout ──────────────────────────────────────────────────────────────── */
 

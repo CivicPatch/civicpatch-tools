@@ -1,7 +1,5 @@
 @layer base {
-/* Buttons, form controls, labels, fieldsets and grouped controls. Split out of
-   elements.css 2026-09-07 when it passed the 400-line ceiling. Same layer,
-   loaded after it, so the cascade is unchanged. */
+/* Buttons, form controls, labels, fieldsets and grouped controls. */
 
 /* ── Buttons ─────────────────────────────────────────────────────────────────
  * Filled primary by default; styles.css opts classes out by overriding the three
@@ -298,10 +296,7 @@ label[aria-disabled="true"] {
 }
 
 
-/* ── Bare control styling ────────────────────────────────────────────────────
-   Moved here from styles.css 2026-09-07, where it sat under the misleading
-   heading "Component overrides". Same layer, appended at the end, so its
-   position in the cascade is unchanged. */
+/* ── Bare control styling ── */
 
 input:not(
   [type="submit"],

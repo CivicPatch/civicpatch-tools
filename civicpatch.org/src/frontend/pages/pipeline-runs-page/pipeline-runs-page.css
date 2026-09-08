@@ -1,0 +1,21 @@
+@layer components {
+/* ── Pipeline runs ── */
+
+.pipeline-runs__fact {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+}
+
+.pipeline-runs__fact b {
+    font-variant-numeric: tabular-nums;
+    font-weight: 400;
+    color: var(--text);
+    margin-right: 0.3rem;
+}
+
+.pipeline-runs__empty {
+    color: var(--text-muted);
+    margin: 0;
+}
+}

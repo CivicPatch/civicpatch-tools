@@ -21,6 +21,7 @@ import "../../components/civ-tab-bar/civ-tab-bar.js";
 import "./import-history.js";
 import "./import-preview.js";
 import "./batch-review.js";
+import "../../components/panel/panel.css";
 import "./import-page.css";
 
 const POLL_INTERVAL_MS = 2000;
@@ -32,7 +33,7 @@ function progressPanel(batch: ImportProgress | null) {
   // Null for the moment between starting and the first poll returning.
   const total = batch?.items_total;
   return html`
-    <section class="import-panel import-progress">
+    <section class="panel import-panel import-progress">
       <h3 class="import-section__title">Importing…</h3>
       <p class="import-progress__count">
         ${batch ? batch.items_done : 0}${total == null ? "" : ` of ${total}`}
@@ -228,7 +229,7 @@ function ImportPage() {
       ${error ? html`<p class="import-error">${error}</p>` : null}
       ${resultsPanel(results)}
       ${tab === HISTORY_TAB
-        ? html`<section class="import-panel">
+        ? html`<section class="panel import-panel">
             <h2 class="import-panel__title">Past imports</h2>
             <import-history
               .batches=${history}
@@ -239,7 +240,7 @@ function ImportPage() {
         : html`${running
             ? progressPanel(batch)
             : html`
-                <section class="import-panel">
+                <section class="panel import-panel">
                   <h2 class="import-panel__title">Import from the sheet</h2>
                   ${sheetUrl
                     ? html`<p class="import-hint">
@@ -259,12 +260,12 @@ function ImportPage() {
                 </section>
               `}`}
       ${preview
-        ? html`<section class="import-panel">
+        ? html`<section class="panel import-panel">
             <import-preview .preview=${preview}></import-preview>
           </section>`
         : null}
       ${review
-        ? html`<section class="import-panel">
+        ? html`<section class="panel import-panel">
             <batch-review
               .review=${review}
               .busy=${busy}

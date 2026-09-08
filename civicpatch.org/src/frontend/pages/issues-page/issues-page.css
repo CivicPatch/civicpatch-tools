@@ -1,3 +1,4 @@
+@layer components {
 /* ── Issues page ── */
 
 .issues-page__filters {
@@ -20,7 +21,7 @@
     margin-bottom: 2rem;
 }
 
-.issues-page .section-header {
+.issues-page__cap {
     cursor: pointer;
     user-select: none;
 }
@@ -30,7 +31,6 @@
     align-items: center;
     gap: 0.5rem;
 }
-
 
 /* ── Issues filters ── */
 
@@ -59,7 +59,7 @@
     font-family: var(--font-mono);
     font-weight: 500;
     cursor: pointer;
-    border: 1.5px solid var(--border);
+    border: 1px solid var(--border);
     background: transparent;
     color: var(--text-muted);
     transition: border-color 0.1s, background 0.1s, color 0.1s;
@@ -185,7 +185,6 @@
     word-break: break-all;
     overflow-wrap: anywhere;
 }
-
 
 /* ── Pagination ── */
 
@@ -455,7 +454,6 @@
     margin-top: 0.25rem;
 }
 
-
 .issues-page__resolve-content {
     display: flex;
     flex-direction: column;
@@ -465,11 +463,8 @@
     word-break: break-word;
 }
 
-/* The resolve modal carries source URLs + debug content + form — the global
-   32rem dialog cap is too narrow. :has() lets us widen this one modal without
-   touching other dialogs or threading a className through civ-modal's props. */
 dialog[open]:has(.issues-page__resolve-content) {
-    max-width: min(95vw, 56rem) !important;
+    max-width: min(95vw, 56rem);
 }
 
 .issues-page__resolve-role-form {
@@ -545,4 +540,5 @@ dialog[open]:has(.issues-page__resolve-content) {
 .issues-page__issue-tag-count {
     font-size: 0.75em;
     opacity: 0.75;
+}
 }

@@ -25,10 +25,10 @@ function QueueSummary({ summary }) {
   ];
 
   return html`
-    <section class="queue-summary">
+    <section class="bulk-review-summary">
       <stat-cards .stats=${stats}></stat-cards>
     </section>
   `;
 }
 
-customElements.define("queue-summary", component(QueueSummary, { useShadowDOM: false }));
+customElements.define("bulk-review-summary", component(QueueSummary, { useShadowDOM: false }));

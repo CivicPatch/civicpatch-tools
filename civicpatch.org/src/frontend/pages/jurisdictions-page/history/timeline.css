@@ -1,3 +1,4 @@
+@layer components {
 /* One jurisdiction's timeline: an entry per changeset, its outcome, and what it did to the
    roster. Lifted from .scratch/2026-09-01-mockup-jurisdiction-history.html. */
 
@@ -164,4 +165,5 @@
   color: var(--text-muted);
   font-size: var(--font-size-xs);
   padding-left: 0.15rem;
+}
 }

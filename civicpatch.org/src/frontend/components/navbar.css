@@ -1,3 +1,4 @@
+@layer components {
 civ-navbar {
   display: block;
   z-index: 100;
@@ -194,7 +195,7 @@ summary.nav-dropdown-trigger::after {
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   z-index: 200;
 }
 .nav-dropdown__menu .nav-link {
@@ -276,7 +277,7 @@ summary.nav-dropdown-trigger::after {
   font-weight: 600;
   color: var(--control-text);
   background: transparent;
-  border: 1.5px solid var(--border);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 0.4rem 1.1rem;
   cursor: pointer;
@@ -429,4 +430,5 @@ details.nav-dropdown > summary.nav-dropdown-trigger:focus-visible {
     flex-wrap: wrap;
     gap: 0.5rem;
   }
+}
 }

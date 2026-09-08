@@ -104,12 +104,22 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             },
         )
 
-    @router.get("/queue", response_class=HTMLResponse, include_in_schema=False)
-    async def queue_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
+    @router.get("/bulk-review", response_class=HTMLResponse, include_in_schema=False)
+    async def bulk_review_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
         if not user["authenticated"] or not user["permissions"]["can_view_queue_page"]:
             return RedirectResponse("/", status_code=303)
-        return templates.TemplateResponse("pages/queue.html", {"request": request, "user": user})
+        return templates.TemplateResponse("pages/bulk-review.html", {"request": request, "user": user})
+
+    # Split from /queue 2026-09-07: watching runs and reviewing rosters are different
+    # jobs at different tempos. Same gate — a contributor who can see the queue can see
+    # what is feeding it; cancelling stays behind can_cancel_pipeline_run.
+    @router.get("/pipeline-runs", response_class=HTMLResponse, include_in_schema=False)
+    async def pipeline_runs_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
+        user = _build_user_dict(identity)
+        if not user["authenticated"] or not user["permissions"]["can_view_queue_page"]:
+            return RedirectResponse("/", status_code=303)
+        return templates.TemplateResponse("pages/pipeline-runs.html", {"request": request, "user": user})
 
     @router.get("/review", response_class=HTMLResponse, include_in_schema=False)
     async def review_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):

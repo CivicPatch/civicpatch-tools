@@ -1,3 +1,4 @@
+@layer components {
 /* Cross-jurisdiction triage: label text the parser could not classify. */
 
 .unmatched-text {
@@ -69,4 +70,5 @@
 .unmatched-text__error {
     font-size: var(--font-size-sm);
     color: var(--diff-removed);
+}
 }

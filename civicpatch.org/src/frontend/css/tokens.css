@@ -1,13 +1,6 @@
-/* ── Cascade layers ──────────────────────────────────────────────────────────
-   Declared here because tokens.css loads first; the order below is the whole
-   point — a rule in a later layer beats an earlier one **regardless of
-   specificity**, so the base layer can no longer win a fight against a
-   component by piling on `:not()`.
-
-   `components` and `utilities` are declared but not yet used. Unlayered styles
-   beat every layer, so component CSS and utilities.css keep their current
-   precedence until they are moved in together — layering utilities first would
-   make them *lose* to components, which is backwards. */
+/* ── Cascade layers ── */
+/* Declared here because tokens.css loads first. A later layer wins regardless of
+   specificity. Third-party CSS is unlayered and so outranks all of these. */
 @layer base, layout, components, utilities;
 
 /* Design tokens — every custom property the app defines, and nothing else.
@@ -65,23 +58,15 @@
 
 :root,
 :host {
-  /* The redesign's faces. --font-display is the knob the demo calls --disp: it
-     picks the voice for headings and labels, and is the single point a future
-     serif/sans toggle would flip. */
   --font-sans: "Public Sans", system-ui, -apple-system, sans-serif;
-  --font-serif: "Source Serif 4", Georgia, serif;
   --font-display: var(--font-sans);
   --control-pad-y: 0.5rem;
   --control-pad-x: 0.5rem;
-  /* Two steps, matching the demo: 3px for surfaces, 2px for small controls and
-     chips. Deliberately no pill step — the demo has none, and 18 lozenges were the
-     loudest thing in the old language. */
   --radius: 3px;
   --radius-sm: 2px;
   --border-width: 0.03rem;
   --line-height: 1.65;
   --focus-ring-width: 0.2rem;
-
 
   /* Values inherited from the CSS framework's :root — still referenced, so they
      have to live somewhere. */
@@ -105,39 +90,20 @@
   /* Same in both themes, so they live here rather than being stated twice. */
   --disabled-opacity: 0.5;
 
-  /* ── Roles the components needed and the tier did not have ──────────────
-     Defined once: every value resolves through a --tone-*, which each theme
-     redefines, so these follow the theme without being restated.
-
-     Status tints replace five hand-rolled alphas (0.12 / 0.15 / 0.18 / 0.2)
-     that all meant "wash this in the status colour". One strength now. */
   --success-tint: color-mix(in srgb, var(--success) 15%, transparent);
   --warning-tint: color-mix(in srgb, var(--warning) 15%, transparent);
   --error-tint: color-mix(in srgb, var(--error) 15%, transparent);
   --info-tint: color-mix(in srgb, var(--info) 15%, transparent);
 
-  /* Two neutrals the conversion turned up as missing. --border was doing the work of
-     both a panel edge and a caption underline, and --surface-2 was doing both "this
-     a caption underline. --border-subtle completes the rule ramp: subtle < border <
-     strong. Derived from --border, so a theme engine fills one colour and gets both.
-
-     A --row-stripe was minted here too and removed the same day: one real consumer,
-     and within minutes it was also painting a progress-bar trough, which is not a row
-     stripe. Two unrelated jobs under one name is how the last redundant tier began.
-     Striping uses --surface-2 until a second table wants to disagree with it. */
   --border-subtle: color-mix(in srgb, var(--border) 55%, var(--bg));
 
-  /* Focus and selection. --focus-ring is the element you are on; -soft is the
-     container that contains it, which is why both exist. */
-  --focus-ring: rgb(var(--tone-teal));
-  --focus-ring-soft: rgb(var(--tone-sapphire));
+  --focus-ring: var(--accent);
+  --focus-ring-soft: var(--info);
   --focus-tint: color-mix(in srgb, var(--focus-ring-soft) 15%, transparent);
 
-  /* Jurisdiction level — categorical, not status: these say what kind of thing
-     a badge names, so they must not collapse into success/warning/info. */
-  --level-global: rgb(var(--tone-mauve));
-  --level-state: rgb(var(--tone-green));
-  --level-locality: rgb(var(--tone-yellow));
+  --level-global: var(--level-note);
+  --level-state: var(--success);
+  --level-locality: var(--warning);
 
   /* ── Type scale ──────────────────────────────────────────────────────── */
   /* Monospace: tables, badges, metadata, IDs, pagination, counters        */
@@ -147,8 +113,9 @@
   --font-size-md: 0.875rem; /* body text, card content, items */
   --font-size-base: 1rem; /* default paragraph, modal headers */
   --font-size-lg: 1.25rem; /* display values, goal numbers */
-  --font-size-xl: 1.75rem; /* section titles, display headings */
-  --font-size-2xl: 2rem; /* stat values, hero numbers */
+  --font-size-xl: 1.65rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.45rem;
 }
 
 /* ── Light theme ─────────────────────────────────────────────────────────── */
@@ -156,17 +123,19 @@
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
   /* ── Editorial palette tokens (Lemon light) ──────────────────────────── */
-  --bg: #fafafa;
-  --surface: #fcfcfc;
-  --surface-2: #f5f5f5;
-  --text-default: #222222;
-  --text-secondary: #444444;
-  --text-muted: #767676; /* WCAG AA minimum on white */
-  --border: #e0e0e0;
-  --border-strong: #333333;
-  --accent: #f0c840;
-  --accent-border: #d4a800;
-  --accent-text: #111111; /* text on top of accent bg */
+  --bg: #ffffff;
+  --surface: #f1f2f3;
+  --surface-2: #e8e9ea;
+  --surface-stripe: #f3f4f5;
+  --text-default: #101112;
+  --text-secondary: #454546;
+  --text-muted: #666767;
+  --border: #b8bcbe;
+  --border-strong: #28292a;
+  --accent: #17639f;
+  --level-note: #4a3390;
+  --accent-border: #154e7c;
+  --accent-text: #ffffff; /* text on top of accent bg */
 
   /* ── Tones ─────────────────────────────────────────────────────────────
      Primitives, as `R, G, B` triples so callers can add an alpha:
@@ -192,32 +161,27 @@
 
   /* Base-layer roles — light */
   --text: var(--text-default);
-  --selection-bg: rgba(255, 224, 102, 0.35);
+  --selection-bg: rgba(23, 99, 159, 0.25);
 
-  --action: #111111;
-  --action-hover: #333333;
-  --action-focus: rgba(17, 17, 17, 0.25);
-  --action-text: #fafafa;
+  --action: #101112;
+  --action-hover: #454546;
+  --action-focus: rgba(16, 17, 18, 0.25);
+  --action-text: #ffffff;
 
-  --muted-action-bg: #555555;
+  --muted-action-bg: #70777b;
   --muted-action-text: #ffffff;
-
 
   --field-border: var(--border);
 
-
-  --diff-added: rgb(var(--tone-green));
-  --diff-added-bg: rgba(var(--tone-green), 0.1);
-  --diff-removed: rgb(var(--tone-red));
-  --diff-removed-bg: rgba(var(--tone-red), 0.1);
-  --info: rgb(var(--tone-blue));
-  --info-bg: rgba(var(--tone-blue), 0.1);
-  --warning: rgb(var(--tone-yellow));
-  --success: rgb(var(--tone-green));
-  --error: rgb(var(--tone-red));
-
-
-
+  --diff-added: #0a6b41;
+  --diff-added-bg: rgba(10, 107, 65, 0.12);
+  --diff-removed: #c23321;
+  --diff-removed-bg: rgba(194, 51, 33, 0.12);
+  --info: #17706b;
+  --info-bg: rgba(31, 140, 134, 0.12);
+  --warning: #a85c14;
+  --success: #0a6b41;
+  --error: #c23321;
 
   --status-fresh: var(--success);
   --status-stale: var(--warning);
@@ -226,36 +190,38 @@
   --status-selected: var(--accent);
 
   /* Inherited framework tokens — theme-dependent half. */
-  --contrast: #dfe3eb;
-  --placeholder: #8891a4;
-  --option-selected-bg: #2a3140;
-  --mark-bg: #014063;
-  --mark-text: #fff;
-  --muted-action: #969eaf;
-  --muted-action-hover: #b3b9c5;
-  --muted-action-underline: rgba(150, 158, 175, 0.5);
+  --contrast: #101112;
+  --placeholder: #898f92;
+  --option-selected-bg: #d5e3ee;
+  --mark-bg: rgba(201, 112, 31, 0.28);
+  --mark-text: #101112;
+  --muted-action: #666767;
+  --muted-action-hover: #707071;
+  --muted-action-underline: rgba(87, 95, 100, 0.5);
   --card-border: var(--surface);
-  --contrast-hover: #fff;
-  --contrast-underline: rgba(223, 227, 235, 0.5);
+  --contrast-hover: #454546;
+  --contrast-underline: rgba(16, 17, 18, 0.5);
 
-  --surface-hover: rgba(0, 0, 0, 0.035);
+  --surface-hover: rgba(16, 17, 18, 0.05);
 }
 
 /* ── Dark theme ──────────────────────────────────────────────────────────── */
 
 :root[data-theme="dark"] {
   /* ── Editorial palette tokens (Graphite dark) ────────────────────────── */
-  --bg: #111111;
-  --surface: #242424;
-  --surface-2: #1c1c1c;
-  --text-default: #eeeeee;
-  --text-secondary: #aaaaaa;
-  --text-muted: #aaaaaa; /* WCAG AA on #242424: 7.5:1 */
-  --border: #333333;
-  --border-strong: #eeeeee;
-  --accent: #f0c840; /* same as light */
-  --accent-border: #d4a800;
-  --accent-text: #111111;
+  --bg: #161821;
+  --surface: #1e2132;
+  --surface-2: #212537;
+  --surface-stripe: #1d202f;
+  --text-default: #c6c8d1;
+  --text-secondary: #9fa1aa;
+  --text-muted: #91939c;
+  --border: #303548;
+  --border-strong: #b4b6bf;
+  --accent: #84a0c6;
+  --level-note: #a093c7;
+  --accent-border: #94aac9;
+  --accent-text: #161821;
 
   /* ── Tones — see the light block for the format note ─────────────────── */
   --tone-bg: 30, 30, 46;
@@ -277,32 +243,27 @@
 
   /* Base-layer roles — dark */
   --text: var(--text-default);
-  --selection-bg: rgba(255, 224, 102, 0.3);
+  --selection-bg: rgba(132, 160, 198, 0.25);
 
-  --action: #eeeeee;
-  --action-hover: #cccccc;
-  --action-focus: rgba(238, 238, 238, 0.25);
-  --action-text: #111111;
+  --action: #c6c8d1;
+  --action-hover: #9fa1aa;
+  --action-focus: rgba(198, 200, 209, 0.25);
+  --action-text: #161821;
 
-  --muted-action-bg: #555555;
-  --muted-action-text: #ffffff;
-
+  --muted-action-bg: #4c5270;
+  --muted-action-text: #161821;
 
   --field-border: var(--text-muted);
 
-
-  --diff-added: rgb(var(--tone-green));
-  --diff-added-bg: rgba(var(--tone-green), 0.1);
-  --diff-removed: rgb(var(--tone-red));
-  --diff-removed-bg: rgba(var(--tone-red), 0.1);
-  --info: rgb(var(--tone-blue));
-  --info-bg: rgba(var(--tone-blue), 0.1);
-  --warning: rgb(var(--tone-yellow));
-  --success: rgb(var(--tone-green));
-  --error: rgb(var(--tone-red));
-
-
-
+  --diff-added: #b4be82;
+  --diff-added-bg: rgba(180, 190, 130, 0.12);
+  --diff-removed: #e27878;
+  --diff-removed-bg: rgba(226, 120, 120, 0.12);
+  --info: #89b8c2;
+  --info-bg: rgba(137, 184, 194, 0.12);
+  --warning: #e2a478;
+  --success: #b4be82;
+  --error: #e27878;
 
   --status-fresh: var(--success);
   --status-stale: var(--warning);
@@ -311,17 +272,17 @@
   --status-selected: var(--accent);
 
   /* Inherited framework tokens — theme-dependent half. */
-  --contrast: #181c25;
-  --placeholder: var(--text-muted);
-  --option-selected-bg: #dfe3eb;
-  --mark-bg: rgb(252.5, 230.5, 191.5);
-  --mark-text: #0f1114;
-  --muted-action: #5d6b89;
-  --muted-action-hover: #48536b;
-  --muted-action-underline: rgba(93, 107, 137, 0.5);
+  --contrast: #c6c8d1;
+  --placeholder: #424862;
+  --option-selected-bg: #2a303f;
+  --mark-bg: rgba(226, 164, 120, 0.28);
+  --mark-text: #c6c8d1;
+  --muted-action: #91939c;
+  --muted-action-hover: #80828b;
+  --muted-action-underline: rgba(85, 92, 126, 0.5);
   --card-border: var(--border);
-  --contrast-hover: #000;
-  --contrast-underline: rgba(24, 28, 37, 0.5);
+  --contrast-hover: #9fa1aa;
+  --contrast-underline: rgba(198, 200, 209, 0.5);
 
-  --surface-hover: rgba(255, 255, 255, 0.045);
+  --surface-hover: rgba(198, 200, 209, 0.05);
 }

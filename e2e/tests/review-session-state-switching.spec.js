@@ -17,7 +17,7 @@ test.describe("Review session — state switching", () => {
 
     // Leave the review page. "/" is a global route (no state selector) — use
     // another state-scoped page instead.
-    await page.goto("/queue");
+    await page.goto("/bulk-review");
 
     // Switch to TX via the navbar selector
     await page.locator(".nav-state-selector select").selectOption("tx");
@@ -48,7 +48,7 @@ test.describe("Review session — state switching", () => {
     await expect(page.locator(".review-page__progress")).toContainText("2");
 
     // Leave, switch to TX, return — NJ session must be hidden (idle landing for TX)
-    await page.goto("/queue");
+    await page.goto("/bulk-review");
     await page.locator(".nav-state-selector select").selectOption("tx");
     await page.goto("/review");
     await expect(page.locator(".review-page__start-btn")).toBeVisible();

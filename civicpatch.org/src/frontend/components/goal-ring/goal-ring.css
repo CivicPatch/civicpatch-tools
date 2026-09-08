@@ -1,3 +1,4 @@
+@layer components {
 .goal-bar {
     display: flex;
     flex-direction: column;
@@ -24,4 +25,5 @@
     background: var(--diff-added);
     border-radius: var(--radius);
     transition: width 0.4s ease;
+}
 }

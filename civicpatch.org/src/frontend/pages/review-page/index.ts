@@ -6,6 +6,7 @@ import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { sessionUrl, STATE_PARAM, DEFAULT_DAILY_GOAL } from "../review-routes.js";
 import { DEFAULT_STATS } from "../review-session-page/review-state.js";
 import "./review-landing.js";
+import "../../components/panel/panel.css";
 import "./review-page.css";
 
 function getStateFromUrl() {

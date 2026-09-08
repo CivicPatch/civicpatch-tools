@@ -1,0 +1,145 @@
+@layer components {
+/* ── Active runs ── */
+/* Each row is its own grid, so the name is capped rather than fluid — an
+   auto-width name would start every bar at a different x. */
+
+/* ── A run ── */
+
+.run-row {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 14rem) 1fr 2.6rem 3rem auto;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.3rem 0.25rem;
+}
+
+.run-row:nth-child(even) {
+    background: var(--surface-stripe);
+}
+
+.run-row--cancelling .run-row__name {
+    color: var(--text-muted);
+    text-decoration: line-through;
+}
+
+.run-row__status {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    letter-spacing: 0.02em;
+    color: var(--text-secondary);
+}
+
+.run-row__status--running {
+    color: var(--success);
+}
+
+.run-row__status--cancelling {
+    color: var(--error);
+}
+
+.run-row__who {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.run-row__name {
+    color: var(--text);
+    text-decoration-color: var(--border);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.run-row__name:hover {
+    text-decoration-color: var(--accent);
+}
+
+/* State and run id read as one quiet line under the name — the gap separates them,
+   so no glyph has to. */
+.run-row__sub {
+    display: flex;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    min-width: 0;
+}
+
+.run-row__id {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.run-row__bar {
+    height: 5px;
+    background: var(--surface-stripe);
+    border: 1px solid var(--border-subtle);
+}
+
+.run-row__bar i {
+    display: block;
+    height: 100%;
+    background: var(--success);
+}
+
+.run-row__pct,
+.run-row__age {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    text-align: right;
+}
+
+.run-row__cancel {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    padding: 0.1rem 0.4rem;
+    width: auto;
+    margin: 0;
+    border: 1px solid transparent;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    color: var(--error);
+    cursor: pointer;
+}
+
+.run-row__cancel:hover:not([disabled]) {
+    background: var(--error);
+    color: var(--bg);
+    border-color: var(--error);
+}
+
+.run-row__cancel[disabled] {
+    color: var(--text-muted);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+@media (max-width: 720px) {
+    .run-row {
+        grid-template-columns: 1fr auto;
+        gap: 0.25rem 0.6rem;
+    }
+
+    .run-row__status {
+        grid-column: 1;
+    }
+
+    .run-row__who {
+        grid-column: 1 / -1;
+    }
+
+    .run-row__bar {
+        grid-column: 1;
+    }
+
+    .run-row__pct,
+    .run-row__age {
+        grid-column: 2;
+    }
+}
+}

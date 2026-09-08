@@ -13,11 +13,16 @@ SHELL = ROOT / "css"  # tokens, elements, layout, styles, utilities
 TOKENS = SHELL / "tokens.css"
 
 # !important is a specificity fight. Every one left is a known debt; the number
-# may fall, never rise. Adopting @layer should take it most of the way to zero.
-IMPORTANT_CEILING = 21
+# may fall, never rise. @layer removed the ones that were fighting the base layer;
+# what is left fights third-party CSS, which is unlayered and so outranks us.
+IMPORTANT_CEILING = 14
 
 ELEMENT = r"a|p|ul|ol|li|h[1-6]|table|thead|tbody|tr|td|th|button|input|select|textarea|label|form|fieldset|legend|section|article|aside|nav|main|header|footer|dialog|details|summary|img|svg|pre|code|figure|blockquote"
 BARE_SELECTOR = re.compile(rf"^(?:{ELEMENT})(?:[\s,{{:>+~]|$)")
+
+
+def strip_comments(text):
+    return re.sub(r"/\*.*?\*/", "", text, flags=re.S)
 
 
 def top_level_bare_selectors(text):
@@ -49,7 +54,9 @@ def main() -> int:
     for p in sources():
         text = p.read_text(errors="ignore")
         rel = p.relative_to(ROOT)
-        important += text.count("!important")
+        # declarations only — a comment explaining why an `!important` was removed
+        # must not count as one, or the check punishes the fix
+        important += strip_comments(text).count("!important")
 
         if p != TOKENS and "--tone-" in text:
             failures.append(f"{rel}: references a --tone-* primitive; use a semantic token")

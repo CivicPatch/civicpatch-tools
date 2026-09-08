@@ -1,3 +1,4 @@
+@layer components {
 /* ── Container ──────────────────────────────────────────────────────────── */
 
 civ-table {
@@ -203,4 +204,5 @@ civ-table td.col-division span.cell-content,
 civ-table td.col-email .tag-link {
   white-space: normal;
   word-break: break-all;
+}
 }

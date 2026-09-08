@@ -1,4 +1,4 @@
-import "../../components/section-header/section-header.css";
+import "../../components/panel/panel.css";
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { fetchChangeLogs } from "../../api.js";
@@ -28,69 +28,56 @@ function formatValue(value) {
 const fieldLabel = (key: string) =>
   FIELD_SCHEMA.find((field) => field.key === key)?.label ?? key;
 
-// Person edits get a field-level diff expander; everything else relies on the
-// server-rendered `summary` string.
+// Person edits get a field-level diff under the summary line; everything else
+// relies on the server-rendered `summary` string alone.
 function renderChange(entry) {
-  if (entry.type === "edit_person" && entry.changes?.fields?.length) {
-    return html`
-      <div class="activity-page__change">
-        <ul class="activity-page__fields">
-          ${entry.changes.fields.map(
-            (f) => html`<li>
-              <span class="activity-page__field-name">${fieldLabel(f.field)}</span>:
-              <span class="activity-page__before">${formatValue(f.before)}</span> →
-              <span class="activity-page__after">${formatValue(f.after)}</span>
-            </li>`,
-          )}
-        </ul>
-      </div>
-    `;
-  }
-  return html`<span class="activity-page__muted">—</span>`;
+  if (entry.type !== "edit_person" || !entry.changes?.fields?.length) return null;
+  return entry.changes.fields.map(
+    (f) => html`
+      <div class="activity-row__field">
+        <span class="activity-row__field-name">${fieldLabel(f.field)}</span>
+        <span class="activity-row__before">${formatValue(f.before)}</span>
+        <span class="activity-row__arrow">→</span>
+        <span class="activity-row__after">${formatValue(f.after)}</span>
+      </div>`,
+  );
 }
 
+// A row, not a table row: every column but the summary is a fixed width, and the
+// field diff needs to sit under the head rather than inside a cell.
 function renderRow(entry) {
   return html`
-    <tr>
-      <td><span class="activity-page__type">${formatType(entry.type)}</span></td>
-      <td>${entry.author_name} <span class="activity-page__muted">(${entry.author_role})</span></td>
-      <td>${entry.jurisdiction_path
-        ? html`<a href="/${jurisdictionOcdidToPath(entry.jurisdiction_path)}" target="_blank" rel="noopener">${entry.jurisdiction_name}</a>`
-        : (entry.jurisdiction_name ?? "—")}</td>
-      <td>
-        <div class="activity-page__summary">${entry.summary}</div>
-        ${renderChange(entry)}
-      </td>
-      <td>${entry.pull_request_url
-        ? html`<a href=${entry.pull_request_url} target="_blank" rel="noopener">PR</a>`
-        : html`<span class="activity-page__muted">—</span>`}</td>
-      <!-- Masked in the visual suite: seeded with NOW(), so it renders the day
-           the run happens on and would rot the baseline overnight. -->
-      <td class="activity-page__date" data-visual-volatile>${formatDate(entry.created_at)}</td>
-    </tr>
+    <div class="activity-row">
+      <div class="activity-row__head">
+        <span class="activity-row__type">${formatType(entry.type)}</span>
+        <span class="activity-row__who">
+          ${entry.author_name}
+          <span class="activity-row__role">${entry.author_role}</span>
+        </span>
+        <span class="activity-row__what">
+          ${entry.jurisdiction_path
+            ? html`<a href="/${jurisdictionOcdidToPath(entry.jurisdiction_path)}" target="_blank" rel="noopener">${entry.jurisdiction_name}</a>`
+            : (entry.jurisdiction_name ?? "")}
+          <span class="activity-row__summary">${entry.summary}</span>
+        </span>
+        ${entry.pull_request_url
+          ? html`<a class="activity-row__pr" href=${entry.pull_request_url} target="_blank" rel="noopener">PR</a>`
+          : html`<span></span>`}
+        <!-- Masked in the visual suite: seeded with NOW(), so it renders the day
+             the run happens on and would rot the baseline overnight. -->
+        <span class="activity-row__at" data-visual-volatile>${formatDate(entry.created_at)}</span>
+      </div>
+      ${renderChange(entry)}
+    </div>
   `;
 }
 
-function renderTable(entries, emptyText) {
-  return html`
-    <table class="activity-page__table">
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Author</th>
-          <th>Jurisdiction</th>
-          <th>Change</th>
-          <th>PR</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${entries.length === 0
-          ? html`<tr><td colspan="6" class="activity-page__empty">${emptyText}</td></tr>`
-          : entries.map(renderRow)}
-      </tbody>
-    </table>
-  `;
+// No header row: with five columns, four of which are self-evident from their own
+// formatting, a header costs a line and tells the reader nothing they cannot see.
+function renderList(entries, emptyText) {
+  return entries.length === 0
+    ? html`<p class="activity-page__empty">${emptyText}</p>`
+    : entries.map(renderRow);
 }
 
 function ActivityPage({ user }) {
@@ -135,15 +122,18 @@ function ActivityPage({ user }) {
 
   return html`
     <main class="activity-page page-content">
+      <div class="page-focal">
+        <h1 class="page-focal__title">Activity</h1>
+      </div>
+
       ${canViewQuarantine
-        ? html`<section class="activity-page__section">
-            <div class="section-header">
-              <h2 class="section-title section-title--warning">
-                Quarantine <span class="section-count">${quarantineTotal || ""}</span>
-              </h2>
+        ? html`<section class="panel activity-page__section">
+            <div class="panel__cap">
+              <b>quarantine</b>
+              <span class="panel__cap-right">${quarantineTotal || ""}</span>
             </div>
             <p class="activity-page__subtitle">Changes from untrusted (default-role) contributors — review for spam or profanity.</p>
-            ${renderTable(quarantine, "Nothing awaiting review.")}
+            ${renderList(quarantine, "Nothing awaiting review.")}
             ${Pagination({
               page: quarantinePage,
               totalPages: quarantineTotalPages,
@@ -155,14 +145,13 @@ function ActivityPage({ user }) {
           </section>`
         : ""}
 
-      <section class="activity-page__section">
-        <div class="section-header">
-          <h2 class="section-title section-title--info">
-            Change log <span class="section-count">${activityTotal || ""}</span>
-          </h2>
+      <section class="panel activity-page__section">
+        <div class="panel__cap">
+          <b>change log</b>
+          <span class="panel__cap-right">${activityTotal || ""}</span>
         </div>
         <p class="activity-page__subtitle">Changes from trusted contributors and up.</p>
-        ${renderTable(activity, "No changes yet.")}
+        ${renderList(activity, "No changes yet.")}
         ${Pagination({
           page: activityPage,
           totalPages: activityTotalPages,

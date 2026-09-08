@@ -1,3 +1,4 @@
+@layer components {
 /* One person as a clickable chip — photo plus name. Shared by Overview's
    unchanged roster and the merge picker. */
 
@@ -16,3 +17,4 @@
 }
 
 .review-face:hover { color: var(--text-default); }
+}

@@ -1,3 +1,4 @@
+@layer components {
 .settings-page {
   margin-inline: auto;
   max-width: 36rem;
@@ -105,8 +106,8 @@
 .api-key__link {
   background: none;
   border: none;
-  color: var(--control-text);
-  font-size: 0.9rem;
+  color: var(--text);
+  font-size: var(--font-size-sm);
   padding: 0;
   text-decoration: underline;
   width: auto;
@@ -119,4 +120,5 @@
 .api-keys__create {
   margin: 0;
   width: auto;
+}
 }

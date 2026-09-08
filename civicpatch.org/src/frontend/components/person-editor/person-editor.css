@@ -1,3 +1,4 @@
+@layer components {
 /* Detail v2 — a vertical list of editors (spec §5).
    Each editor is `identity | fields`, so the field body starts at a fixed x and
    every control aligns across every person. That alignment is the reason for
@@ -62,7 +63,6 @@
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--surface);
 
   --editor-state: var(--border);
 }
@@ -141,7 +141,6 @@
   min-width: 0;
   padding: 0.6rem 0 0.75rem 0.75rem;
 }
-
 
 .person-editor__name {
   font-weight: 600;
@@ -545,4 +544,5 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.2rem 0.7rem;
+}
 }

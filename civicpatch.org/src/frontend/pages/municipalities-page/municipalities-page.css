@@ -1,3 +1,4 @@
+@layer components {
 /* ── Header ───────────────────────────────────────────────────────────────── */
 
 .municipalities-page__title-row {
@@ -42,4 +43,5 @@
 .municipalities-page__count {
   color: var(--text-muted);
   margin-bottom: 0.5rem;
+}
 }
