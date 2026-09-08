@@ -1,24 +1,4 @@
 @layer components {
-/* Page */
-
-.import-page__header {
-  margin: 1.6rem 0 1.4rem;
-}
-
-.import-page__header h1 {
-  font-size: var(--font-size-xl);
-  font-weight: 500;
-  letter-spacing: -0.006em;
-  line-height: 1.22;
-  margin: 0 0 0.4rem;
-}
-
-.import-page__header .import-hint {
-  color: var(--text-muted);
-  max-width: 46ch;
-  margin: 0;
-}
-
 /* Panels — one per step, so the page reads as a sequence rather than a wall */
 
 .import-panel {

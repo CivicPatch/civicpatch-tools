@@ -2,33 +2,12 @@
 /* Changeset activity across every state. One row per state: what is waiting on a reviewer, a
    strip of what ran each day, and what came of it. */
 
-/* Shared by the rows and the scale above them, so the scale cannot drift out of alignment. */
+/* Shared by the rows and the scale above them, so the scale cannot drift out of alignment.
+   Width/centering comes from the shared .page-content rail on the page. */
 .cs-page {
   --cs-state-w: 3rem;
   --cs-figure-w: 5.5rem;
   --cs-gap: 1rem;
-
-  width: 100%;
-  max-width: var(--page-width);
-  margin: 0 auto;
-  padding: 2rem 1.5rem 5rem;
-}
-
-/* Header */
-
-.cs-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.cs-head__h1 {
-  font-size: var(--font-size-xl);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin: 0;
 }
 
 /* Ledger — the totals, so a reader knows the scale before reading any row. */
@@ -54,12 +33,6 @@
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   text-transform: lowercase;
-}
-
-.cs-rule {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 1.25rem 0 1rem;
 }
 
 /* Sort chips */
@@ -396,21 +369,6 @@
   margin-top: 0.35rem;
   padding-top: 0.35rem;
   border-top: 1px solid var(--border);
-}
-
-/* ── Bucket modal ────────────────────────────────────────────────────────────
- * Sized for what it holds: one locality name and a short note per row. The review
- * modal's 68rem is for a diff; this only needs the note to clear the name without
- * the list stretching into a band of whitespace. The base layer constrains `dialog`, and
- * `dialog[open] > article` is width:100%, so both have to be released — the same
- * pair `.review-modal` and `.merge-picker-host` override. */
-.cs-bucket-modal dialog {
-  max-width: none;
-}
-
-.cs-bucket-modal dialog article {
-  width: min(34rem, calc(100vw - 2rem));
-  max-width: none;
 }
 
 /* Narrow screens

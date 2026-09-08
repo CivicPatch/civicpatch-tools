@@ -120,6 +120,12 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
           </summary>
           <div class="nav-dropdown__menu">
             <a href="/admin" class="${active("/admin")}">Users</a>
+            ${user.permissions?.can_edit_spend
+              ? html`<a href="/spend" class="${active("/spend")}">Spend</a>`
+              : ""}
+            ${user.permissions?.can_batch_scrape
+              ? html`<a href="/pipelines" class="${active("/pipelines")}">Pipelines</a>`
+              : ""}
             ${user.permissions?.can_view_issues_page
               ? html`<a href="/issues" class="${active("/issues")}">Issues</a>`
               : ""}

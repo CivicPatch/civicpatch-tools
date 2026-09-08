@@ -40,12 +40,15 @@
   box-shadow: inset 2px 0 0 var(--warning);
 }
 
+/* Fixed widths on the trailing two columns, not `auto`: each row is its own grid, so an
+   `auto` column sizes to that row's own content — a shorter timestamp on one row and a
+   longer one on the next land at different x-positions instead of lining up as a table. */
 .activity-row__head {
   display: grid;
-  grid-template-columns: 8rem minmax(0, 10rem) 1fr auto auto;
+  grid-template-columns: 8rem minmax(0, 10rem) 1fr 2.5rem 10rem;
   gap: 0.7rem;
   align-items: baseline;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
 }
 
 .activity-row__type {
@@ -100,10 +103,11 @@
   align-items: baseline;
   margin: 0.2rem 0 0 8.7rem;
   font-family: var(--font-mono);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
 }
 
 .activity-row__field-name {
+  font-size: var(--font-size-xs);
   color: var(--text-muted);
 }
 

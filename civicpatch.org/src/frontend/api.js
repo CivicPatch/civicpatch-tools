@@ -857,12 +857,6 @@ export const fetchStateRollup = async (windowDays) =>
 export const fetchStateCalendar = async (windowDays) =>
   summariesRequest(`/calendar?window_days=${windowDays}`);
 
-export const fetchStateBucket = async (state, bucket, limit, offset, windowDays) =>
-  summariesRequest(
-    `/buckets/${encodeURIComponent(state)}/${encodeURIComponent(bucket)}` +
-      `?limit=${limit}&offset=${offset}&window_days=${windowDays}`,
-  );
-
 // What scraping cost, per state. Its own endpoint under `pipeline_runs`, not the summaries
 // block above: cost attaches to the run that spent it, and this one 403s for non-maintainers
 // while the rest of the page does not.
@@ -916,6 +910,14 @@ export const saveCaps = async (state, pipelineRunCapUsd, monthlyCapUsd) =>
       monthly_cap_usd: monthlyCapUsd,
     }),
   });
+
+// Public: every state code, for pages that list one row per state rather than reading a
+// single jurisdiction's own.
+export const fetchJurisdictionStates = async () => {
+  const res = await fetch(`${API_URL}/api/v1/jurisdictions/states`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return (await res.json()).data;
+};
 
 // Starting a state-wide scrape. Maintainer-gated server side; the page gates the control too.
 // `numJurisdictions` omitted means every jurisdiction due — which is what the button offers.

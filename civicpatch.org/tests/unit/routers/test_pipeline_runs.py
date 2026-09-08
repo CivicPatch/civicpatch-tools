@@ -302,6 +302,43 @@ def test_batch_starts_a_workflow_and_does_not_pick_candidates(client):
     assert start.await_args.args[:2] == ("wa", None)
 
 
+def _batch_client():
+    """Its own client, undecorated: `client` authenticates as a service key, which bypasses
+    every role check by design — the same reason `_spend_client` exists below."""
+    app = FastAPI()
+    app.include_router(pipeline_runs_router.get_router(None), prefix="/pipeline_runs")
+    return TestClient(app)
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "role", [UserRole.DEFAULT, UserRole.CONTRIBUTORS, UserRole.MAINTAINERS]
+)
+def test_batch_is_refused_below_admin(role):
+    """Moved off the changesets page along with its own page (Pipelines): triggering a state's
+    scrape now costs the same trust as reading what one costs."""
+    client = _batch_client()
+    _as(client, role)
+
+    response = client.post("/pipeline_runs/batch", json={"state": "wa"})
+
+    assert response.status_code == 403
+
+
+@pytest.mark.unit
+def test_batch_is_allowed_for_an_admin():
+    client = _batch_client()
+    _as(client, UserRole.ADMINS)
+    with patch(
+        "routers.api.pipeline_runs.temporal_service.start_state_scrape_workflow",
+        new_callable=AsyncMock,
+        return_value="state-scrape-wa",
+    ):
+        response = client.post("/pipeline_runs/batch", json={"state": "wa"})
+
+    assert response.status_code == 200
+
+
 @pytest.mark.unit
 def test_claim_registers_and_returns_the_work(client):
     """Synchronous, unlike `/register`: the workflow must know the changesets exist before it

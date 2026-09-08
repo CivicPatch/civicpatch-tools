@@ -21,7 +21,7 @@ function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, resu
   const canStart = resumable || (stateCode && stats.today_resolved < effectiveGoal && stats.available_count > 0);
 
   return html`
-    <main class="review-page">
+    <main class="review-page review-page--narrow">
       <div class="page-focal">
         <h1 class="page-focal__title">Review</h1>
       </div>

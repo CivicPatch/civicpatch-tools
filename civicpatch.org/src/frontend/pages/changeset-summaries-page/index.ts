@@ -7,14 +7,7 @@
 import { component, useEffect, useState } from "haunted";
 import { html, nothing } from "lit-html";
 import "./changeset-summaries.css";
-import {
-  fetchGlobalScrapeSettings,
-  fetchStateCalendar,
-  fetchStateRollup,
-  fetchStateSpend,
-  saveGlobalCap,
-} from "../../api.js";
-import { useAuth } from "../../hooks/useAuth.js";
+import { fetchStateCalendar, fetchStateRollup } from "../../api.js";
 import {
   dayKey,
   renderDay,
@@ -22,19 +15,8 @@ import {
   windowDays,
   type CalendarDay,
 } from "./calendar.js";
-import {
-  costPerScrapeOf,
-  formatUsd,
-  spendChangeOf,
-  spendOf,
-  type StateSpend,
-} from "./spend.js";
-import { describeStateCaps, describeBudget, type GlobalScrapePanel } from "./scrape-settings.js";
 import { SectionNav, ACTIVITY_SECTION } from "../../components/section-nav/index.js";
 import { hasPickedEverything, isShown, toggle } from "./selection.js";
-import "./state-section.ts";
-import "./bucket-modal.ts";
-import "./global-budget-modal.ts";
 
 const WINDOW_DAYS = 30;
 
@@ -92,21 +74,12 @@ function renderLifecycle(shown: StateRollup[]) {
   `;
 }
 
-// Every comparator takes the spend map, whether it reads it or not: one registry that all
-// sorts share beats two that have to be kept in step.
-type Sort = (a: StateRollup, b: StateRollup, spend: SpendByState) => number;
-type SpendByState = Map<string, StateSpend> | null;
-
-const by = (pick: (spend: StateSpend | undefined) => number): Sort =>
-  (a, b, spend) => pick(spend?.get(b.state)) - pick(spend?.get(a.state));
+type Sort = (a: StateRollup, b: StateRollup) => number;
 
 const SORTS: Record<string, Sort> = {
   queue: (a, b) => b.to_review - a.to_review,
   oldest: (a, b) => b.oldest_days - a.oldest_days,
   dismissed: (a, b) => b.dismissed - a.dismissed,
-  spend: by(spendOf),
-  cost: by(costPerScrapeOf),
-  trend: by(spendChangeOf),
   name: (a, b) => a.state.localeCompare(b.state),
 };
 
@@ -115,14 +88,6 @@ const CHIPS = [
   { key: "oldest", label: "Longest waiting" },
   { key: "dismissed", label: "Dismissed" },
   { key: "name", label: "State" },
-];
-
-// Only offered when spend is on screen — a chip that sorts by a column you cannot see would
-// reorder the table for no visible reason.
-const SPEND_CHIPS = [
-  { key: "spend", label: "Spend" },
-  { key: "cost", label: "Cost per run" },
-  { key: "trend", label: "Rising spend" },
 ];
 
 // The age is no longer its own column, so it rides on the queue figure — which is the only
@@ -159,7 +124,7 @@ function renderRow(row: StateRollup, calendar: Map<string, CalendarDay>, days: s
 }
 
 // `rows` is the selection, not every state — the ledger answers for what is on screen.
-function renderLedger(rows: StateRollup[], spend: SpendByState) {
+function renderLedger(rows: StateRollup[]) {
   const sum = (pick: (r: StateRollup) => number) => rows.reduce((n, r) => n + pick(r), 0);
   const figures = [
     { n: sum((r) => r.to_review), label: "to review" },
@@ -167,11 +132,6 @@ function renderLedger(rows: StateRollup[], spend: SpendByState) {
     { n: sum((r) => r.published), label: "published" },
     { n: sum((r) => r.roster_edits), label: "roster edits" },
   ];
-  // A total across states is a real total even when one spent nothing, so summing over the
-  // nothings is right here — unlike the per-state figure, where 0 would be a claim.
-  const spendTotal = spend
-    ? rows.reduce((n, row) => n + spendOf(spend.get(row.state)), 0)
-    : null;
   return html`
     <div class="cs-ledger">
       ${figures.map(
@@ -182,41 +142,6 @@ function renderLedger(rows: StateRollup[], spend: SpendByState) {
           </span>
         `,
       )}
-      ${spendTotal === null
-        ? nothing
-        : html`
-            <span class="cs-ledger__figure">
-              <span class="cs-ledger__n">${formatUsd(String(spendTotal))}</span>
-              <span class="cs-ledger__label">spend, 30d</span>
-            </span>
-          `}
-    </div>
-  `;
-}
-
-// Scoped to the selection, like the ledger: it answers for what is on screen.
-//
-// Jurisdictions only. Organizations are punted — every jurisdiction has exactly one today, so a
-// second count would print the same number twice. Worth adding when a place actually holds a
-// council and a school board.
-//
-// Absent rather than empty when nothing runs: a banner that says "0 scraping" is a banner
-// asking to be read every time, to learn nothing.
-function renderBudget(
-  panel: GlobalScrapePanel,
-  canEdit: boolean,
-  onEdit: () => void,
-) {
-  return html`
-    <div class="cs-budget">
-      <span class="cs-budget__label">All states</span>
-      <span class="cs-budget__fig">
-        ${describeBudget(panel.spent_this_month_usd, panel.monthly_cap_usd)} this month
-      </span>
-      <span class="cs-budget__fig cs-budget__fig--quiet">${describeStateCaps(panel)}</span>
-      ${canEdit
-        ? html`<button class="cs-budget__edit" @click=${onEdit}>edit</button>`
-        : nothing}
     </div>
   `;
 }
@@ -286,23 +211,12 @@ function renderCompare(
   `;
 }
 
-type OpenBucket = { state: string; bucket: string };
-
 function CivChangesetSummaries() {
-  const { permissions } = useAuth();
   const [rows, setRows] = useState<StateRollup[] | null>(null);
-  const [openBucket, setOpenBucket] = useState<OpenBucket | null>(null);
-  // Bumped after a batch starts, so the rows refetch and the button reads its own effect.
-  const [refresh, setRefresh] = useState(0);
   const [calendar, setCalendar] = useState<Map<string, CalendarDay>>(new Map());
-  // `null` means not shown at all, which is not the same as an empty map (permitted, but
-  // nothing spent). The column only exists for the first.
-  const [spend, setSpend] = useState<Map<string, StateSpend> | null>(null);
   const [sortBy, setSortBy] = useState("queue");
   // Independent of `sortBy`, which is what makes a selection survive a sort change.
   const [picked, setPicked] = useState<string[]>([]);
-  const [budget, setBudget] = useState<GlobalScrapePanel | null>(null);
-  const [editingBudget, setEditingBudget] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -312,40 +226,21 @@ function CivChangesetSummaries() {
         setCalendar(new Map(days.map((d) => [dayKey(d.state, d.day), d])));
       })
       .catch((err: Error) => setError(err.message));
-  }, [refresh]);
+  }, []);
 
-  useEffect(() => {
-    if (!permissions.can_write_global_config) return;
-    fetchGlobalScrapeSettings()
-      .then(setBudget)
-      .catch(() => setBudget(null));
-  }, [refresh, permissions.can_write_global_config]);
-
-  // Its own effect, and its own failure: spend is a second request that 403s for most users,
-  // so a refusal here must not blank the page the way the rollup's would.
-  useEffect(() => {
-    if (!permissions.can_edit_spend) return;
-    fetchStateSpend(WINDOW_DAYS)
-      .then((rows: StateSpend[]) => setSpend(new Map(rows.map((r) => [r.state, r]))))
-      .catch(() => setSpend(null));
-  }, [refresh, permissions.can_edit_spend]);
-
-  if (error) return html`<main class="cs-page"><p class="cs-empty">${error}</p></main>`;
-  if (!rows) return html`<main class="cs-page"><p class="cs-empty">Loading…</p></main>`;
+  if (error) return html`<main class="cs-page page-content"><p class="cs-empty">${error}</p></main>`;
+  if (!rows) return html`<main class="cs-page page-content"><p class="cs-empty">Loading…</p></main>`;
 
   const days = windowDays(WINDOW_DAYS);
-  const ordered = [...rows].sort((a, b) => SORTS[sortBy](a, b, spend));
-  const chips = spend ? [...CHIPS, ...SPEND_CHIPS] : CHIPS;
+  const ordered = [...rows].sort((a, b) => SORTS[sortBy](a, b));
   const shown = ordered.filter((row) => isShown(picked, row.state));
 
   return html`
-    <main class="cs-page">
-      <div class="cs-head">
-        <h1 class="cs-head__h1">Changesets</h1>
-        ${renderLedger(shown, spend)}
+    <main class="cs-page page-content">
+      <div class="page-focal">
+        <h1 class="page-focal__title">Changesets</h1>
+        <div class="page-focal__end">${renderLedger(shown)}</div>
       </div>
-
-      <hr class="cs-rule" />
 
       <div class="sectioned">
       ${SectionNav("activity", ACTIVITY_SECTION, "/activity/changesets")}
@@ -355,7 +250,7 @@ function CivChangesetSummaries() {
 
       <div class="cs-chips">
         <span class="cs-chips__label">Sort by</span>
-        ${chips.map(
+        ${CHIPS.map(
           (chip) => html`
             <button
               class="cs-chips__chip ${sortBy === chip.key ? "cs-chips__chip--active" : ""}"
@@ -384,56 +279,12 @@ function CivChangesetSummaries() {
         </span>
       </div>
 
-      ${budget
-        ? renderBudget(
-            budget,
-            !!permissions.can_write_global_config,
-            () => setEditingBudget(true),
-          )
-        : nothing}
-      ${editingBudget && budget
-        ? html`<civ-global-budget-modal
-            .panel=${budget}
-            @settings-saved=${() => {
-              setEditingBudget(false);
-              setRefresh((n: number) => n + 1);
-            }}
-            @cancel=${() => setEditingBudget(false)}
-          ></civ-global-budget-modal>`
-        : nothing}
-
       ${renderRunning(shown)}
 
       ${renderCompare(rows, picked, setPicked)}
 
       ${renderScale(days)}
       <div>${shown.map((row) => renderRow(row, calendar, days))}</div>
-
-      <h2 class="cs-sections__h2">By state</h2>
-      <div
-        class="cs-sections"
-        @open-bucket=${(e: CustomEvent) => setOpenBucket(e.detail as OpenBucket)}
-        @scrape-started=${() => setRefresh((n: number) => n + 1)}
-      >
-        ${shown.map(
-          (row) => html`<civ-state-section
-            .row=${row}
-            .windowDays=${WINDOW_DAYS}
-            .canScrape=${!!permissions.can_scrape}
-            .canEditSettings=${!!permissions.can_write_global_config}
-            .spend=${spend ? (spend.get(row.state) ?? null) : null}
-          ></civ-state-section>`,
-        )}
-      </div>
-
-      ${openBucket
-        ? html`<civ-bucket-modal
-            .state=${openBucket.state}
-            .bucket=${openBucket.bucket}
-            .windowDays=${WINDOW_DAYS}
-            @close-bucket=${() => setOpenBucket(null)}
-          ></civ-bucket-modal>`
-        : nothing}
       </div>
       </div>
     </main>

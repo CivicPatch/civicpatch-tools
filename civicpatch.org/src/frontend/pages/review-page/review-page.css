@@ -1,11 +1,18 @@
 @layer components {
+/* Width/centering comes from the shared .page-content rail on the page. */
 .review-page {
-    max-width: var(--page-width);
-    margin: 0 auto;
     padding: 1rem 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+}
+
+/* The landing page's content tops out at 600px on its own; the session workspace beside it
+   needs the full rail. Opts out of .page-content rather than fighting its layer. */
+.review-page--narrow {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
 }
 
 .review-page__stat-cards {

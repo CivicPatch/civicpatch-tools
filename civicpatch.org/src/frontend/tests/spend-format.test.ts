@@ -10,7 +10,7 @@ import {
   spendChangeOf,
   spendOf,
   type StateSpend,
-} from "../pages/changeset-summaries-page/spend.ts";
+} from "../pages/spend-page/spend.ts";
 
 describe("formatUsd", () => {
   it("keeps a sub-cent figure visible instead of rounding it to nothing", () => {

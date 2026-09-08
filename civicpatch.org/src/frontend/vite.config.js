@@ -24,6 +24,8 @@ export default defineConfig(({ command }) => ({
         municipalities: "./assets/municipalities.ts",
         imports: "./assets/imports.ts",
         changesets: "./assets/changesets.ts",
+        spend: "./assets/spend.ts",
+        pipelines: "./assets/pipelines.ts",
       },
     },
   },

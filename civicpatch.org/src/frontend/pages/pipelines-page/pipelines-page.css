@@ -1,0 +1,142 @@
+@layer components {
+.pipelines-page__empty {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.pipelines-page__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.pipelines-page__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.6rem 0.2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.pipelines-page__row:last-child {
+  border-bottom: none;
+}
+
+.pipelines-page__row--head {
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
+  text-transform: lowercase;
+}
+
+.pipelines-page__row--head .pipelines-page__row-state {
+  font-weight: 400;
+  text-transform: lowercase;
+}
+
+.pipelines-page__row-state {
+  flex: 0 0 3rem;
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+.pipelines-page__row-fig {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+/* Fixed to what each figure actually needs, not an even split — a short value (a per-run cap)
+   in as wide a cell as a long one (cadence + anchor) is where the empty space came from. */
+.pipelines-page__row-fig--cadence {
+  flex: 0 0 12rem;
+}
+
+.pipelines-page__row-fig--next-run {
+  flex: 0 0 6rem;
+}
+
+.pipelines-page__row-fig--per-run {
+  flex: 0 0 4.5rem;
+}
+
+.pipelines-page__row-fig--month {
+  flex: 1 1 14rem;
+}
+
+.pipelines-page__row-fig--due {
+  flex: 0 0 4rem;
+}
+
+.pipelines-page__row-fig--alert {
+  color: var(--diff-removed);
+  font-weight: 600;
+}
+
+.pipelines-page__row-alert {
+  display: block;
+  color: var(--diff-removed);
+  font-size: var(--font-size-xs);
+}
+
+.pipelines-page__edit {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  color: var(--text-muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.pipelines-page__scrape {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.pipelines-page__scrape-btn {
+  width: auto;
+  margin: 0;
+}
+
+.pipelines-page__scrape-error {
+  font-size: var(--font-size-xs);
+  color: var(--diff-removed);
+}
+
+/* ── Cadence and budget edit form ── */
+
+.cs-settings-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.cs-settings-form__row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.cs-settings-form__row input {
+  width: auto;
+  margin: 0;
+}
+
+.cs-settings-form__hint,
+.cs-settings-form__estimate {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+}
+
+.cs-settings-form__error {
+  font-size: var(--font-size-sm);
+  color: var(--diff-removed);
+}
+}

@@ -51,6 +51,9 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         # One key, because the caller no longer picks a mode: the environment does, server
         # side. Whether you may scrape is a role question; how it dispatches is not.
         "can_scrape": has_at_least(role, UserRole.MAINTAINERS),
+        # The state-wide batch trigger, on the Pipelines page — separate from `can_scrape`
+        # (a single jurisdiction, from its own page) because it moved to admins-only.
+        "can_batch_scrape": has_at_least(role, UserRole.ADMINS),
         "can_view_reviews_page": has_at_least(role, UserRole.DEFAULT),
         "can_view_issues_page": has_at_least(role, UserRole.ADMINS),
         "can_view_activity_page": has_at_least(role, UserRole.DEFAULT),
@@ -140,6 +143,20 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         if not user["authenticated"] or not user["permissions"]["can_view_issues_page"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/issues.html", {"request": request, "user": user})
+
+    @router.get("/spend", response_class=HTMLResponse, include_in_schema=False)
+    async def spend_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
+        user = _build_user_dict(identity)
+        if not user["authenticated"] or not user["permissions"]["can_edit_spend"]:
+            return RedirectResponse("/", status_code=303)
+        return templates.TemplateResponse("pages/spend.html", {"request": request, "user": user})
+
+    @router.get("/pipelines", response_class=HTMLResponse, include_in_schema=False)
+    async def pipelines_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
+        user = _build_user_dict(identity)
+        if not user["authenticated"] or not user["permissions"]["can_batch_scrape"]:
+            return RedirectResponse("/", status_code=303)
+        return templates.TemplateResponse("pages/pipelines.html", {"request": request, "user": user})
 
     # `/activity` is a section, not a page: the change log and the cross-state changeset
     # summary are two views of "what has been happening". The bare path redirects rather than

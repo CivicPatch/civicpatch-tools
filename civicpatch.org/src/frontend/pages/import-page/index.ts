@@ -211,14 +211,14 @@ function ImportPage() {
   };
 
   return html`
-    <main class="container import-page">
-      <header class="import-page__header">
-        <h1>Sheet import</h1>
-        <p class="import-hint">
-          The curated roster sheet, read as a scrape. Importing raises a review
-          card per locality. Publishing stays your decision.
-        </p>
-      </header>
+    <main class="import-page page-content">
+      <div class="page-focal">
+        <h1 class="page-focal__title">Sheet import</h1>
+      </div>
+      <p class="import-hint">
+        The curated roster sheet, read as a scrape. Importing raises a review
+        card per locality. Publishing stays your decision.
+      </p>
 
       <civ-tab-bar
         .tabs=${TABS}
