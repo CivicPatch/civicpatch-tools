@@ -3,11 +3,20 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { fetchChangeLogs } from "../../api.js";
 import { Pagination } from "../../components/pagination/index.js";
+import { SectionNav, ACTIVITY_SECTION } from "../../components/section-nav/index.js";
 import { FIELD_SCHEMA } from "../../components/fields/field-schema.js";
 import "./activity-page.css";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 
 const PER_PAGE = 20;
+
+// Mirrors ChangeLogAuthors on the API.
+const AUTHORS_ALL = "all";
+const AUTHORS_QUARANTINED = "quarantined";
+
+// The author role whose changes are unreviewed. `author_role` is already on every entry, so the
+// feed can mark them in place instead of asking for a second list.
+const QUARANTINED_ROLE = "default";
 
 function formatType(type) {
   return type.replace(/_/g, " ");
@@ -28,26 +37,60 @@ function formatValue(value) {
 const fieldLabel = (key: string) =>
   FIELD_SCHEMA.find((field) => field.key === key)?.label ?? key;
 
+// GitHub's label/assignee events, applied to list fields: only the items that actually moved
+// render, as removed/added chips — never the whole list twice, so an unrelated unchanged
+// member (most of `emails`, say) never has to be read to find the one that changed.
+function diffListItems(before, after) {
+  const beforeList = Array.isArray(before) ? before : [];
+  const afterList = Array.isArray(after) ? after : [];
+  return {
+    removed: beforeList.filter((v) => !afterList.includes(v)),
+    added: afterList.filter((v) => !beforeList.includes(v)),
+  };
+}
+
+// A scalar field, GitHub's own edit-history phrasing: the whole old value struck through next
+// to the whole new one — always visible, nothing hidden regardless of how much changed.
+function renderScalarDiff(f) {
+  return html`
+    <span class="activity-row__diff">
+      <span class="activity-row__before">${formatValue(f.before)}</span>
+      <span class="activity-row__arrow"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+      <span class="activity-row__after">${formatValue(f.after)}</span>
+    </span>
+  `;
+}
+
+function renderListDiff(f) {
+  const { removed, added } = diffListItems(f.before, f.after);
+  return html`
+    <span class="activity-row__diff">
+      ${removed.map((v) => html`<span class="activity-row__chip activity-row__chip--removed">${v}</span>`)}
+      ${added.map((v) => html`<span class="activity-row__chip activity-row__chip--added">${v}</span>`)}
+    </span>
+  `;
+}
+
 // Person edits get a field-level diff under the summary line; everything else
 // relies on the server-rendered `summary` string alone.
 function renderChange(entry) {
   if (entry.type !== "edit_person" || !entry.changes?.fields?.length) return null;
-  return entry.changes.fields.map(
-    (f) => html`
+  return entry.changes.fields.map((f) => {
+    const isList = Array.isArray(f.before) || Array.isArray(f.after);
+    return html`
       <div class="activity-row__field">
         <span class="activity-row__field-name">${fieldLabel(f.field)}</span>
-        <span class="activity-row__before">${formatValue(f.before)}</span>
-        <span class="activity-row__arrow">→</span>
-        <span class="activity-row__after">${formatValue(f.after)}</span>
-      </div>`,
-  );
+        ${isList ? renderListDiff(f) : renderScalarDiff(f)}
+      </div>`;
+  });
 }
 
 // A row, not a table row: every column but the summary is a fixed width, and the
 // field diff needs to sit under the head rather than inside a cell.
-function renderRow(entry) {
+function renderRow(entry, markQuarantined: boolean) {
+  const quarantined = markQuarantined && entry.author_role === QUARANTINED_ROLE;
   return html`
-    <div class="activity-row">
+    <div class="activity-row ${quarantined ? "activity-row--quarantined" : ""}">
       <div class="activity-row__head">
         <span class="activity-row__type">${formatType(entry.type)}</span>
         <span class="activity-row__who">
@@ -74,51 +117,38 @@ function renderRow(entry) {
 
 // No header row: with five columns, four of which are self-evident from their own
 // formatting, a header costs a line and tells the reader nothing they cannot see.
-function renderList(entries, emptyText) {
+function renderList(entries, markQuarantined: boolean) {
+  // A wrapper of its own — not just mapped siblings — so `.activity-row:last-child` in CSS
+  // actually lands on the last row: Pagination sits after this in the DOM, and without a
+  // wrapper it would be the true last child instead, so no row's own border ever cleared.
   return entries.length === 0
-    ? html`<p class="activity-page__empty">${emptyText}</p>`
-    : entries.map(renderRow);
+    ? html`<p class="activity-page__empty">No changes yet.</p>`
+    : html`<div class="activity-row-list">
+        ${entries.map((entry) => renderRow(entry, markQuarantined))}
+      </div>`;
 }
 
-function ActivityPage({ user }) {
-  let canViewQuarantine = false;
-  try {
-    const parsed = user ? JSON.parse(user) : null;
-    canViewQuarantine = !!parsed?.permissions?.can_view_quarantine;
-  } catch (_e) {
-    /* leave false */
-  }
-
-  const [quarantine, setQuarantine] = useState([]);
-  const [quarantineTotal, setQuarantineTotal] = useState(0);
-  const [quarantinePage, setQuarantinePage] = useState(1);
-  const [quarantineTotalPages, setQuarantineTotalPages] = useState(1);
-
-  const [activity, setActivity] = useState([]);
-  const [activityTotal, setActivityTotal] = useState(0);
-  const [activityPage, setActivityPage] = useState(1);
-  const [activityTotalPages, setActivityTotalPages] = useState(1);
+function ActivityPage() {
+  const [entries, setEntries] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [quarantinedOnly, setQuarantinedOnly] = useState(false);
 
   useEffect(() => {
-    if (!canViewQuarantine) return;
-    fetchChangeLogs("quarantine", quarantinePage, PER_PAGE)
+    fetchChangeLogs(quarantinedOnly ? AUTHORS_QUARANTINED : AUTHORS_ALL, page, PER_PAGE)
       .then((r) => {
-        setQuarantine(r.data || []);
-        setQuarantineTotal(r.total_items || 0);
-        setQuarantineTotalPages(r.total_pages || 1);
+        setEntries(r.data || []);
+        setTotal(r.total_items || 0);
+        setTotalPages(r.total_pages || 1);
       })
       .catch(console.error);
-  }, [quarantinePage, canViewQuarantine]);
+  }, [page, quarantinedOnly]);
 
-  useEffect(() => {
-    fetchChangeLogs("activity", activityPage, PER_PAGE)
-      .then((r) => {
-        setActivity(r.data || []);
-        setActivityTotal(r.total_items || 0);
-        setActivityTotalPages(r.total_pages || 1);
-      })
-      .catch(console.error);
-  }, [activityPage]);
+  const toggleQuarantinedOnly = () => {
+    setQuarantinedOnly(!quarantinedOnly);
+    setPage(1);
+  };
 
   return html`
     <main class="activity-page page-content">
@@ -126,43 +156,34 @@ function ActivityPage({ user }) {
         <h1 class="page-focal__title">Activity</h1>
       </div>
 
-      ${canViewQuarantine
-        ? html`<section class="panel activity-page__section">
-            <div class="panel__cap">
-              <b>quarantine</b>
-              <span class="panel__cap-right">${quarantineTotal || ""}</span>
-            </div>
-            <p class="activity-page__subtitle">Changes from untrusted (default-role) contributors — review for spam or profanity.</p>
-            ${renderList(quarantine, "Nothing awaiting review.")}
-            ${Pagination({
-              page: quarantinePage,
-              totalPages: quarantineTotalPages,
-              onPrevious: () => setQuarantinePage(quarantinePage - 1),
-              onNext: () => setQuarantinePage(quarantinePage + 1),
-              perPage: PER_PAGE,
-              onPerPageChange: undefined,
-            })}
-          </section>`
-        : ""}
-
+      <div class="sectioned">
+      ${SectionNav("activity", ACTIVITY_SECTION, "/activity/changelogs")}
+      <div class="secbody">
       <section class="panel activity-page__section">
         <div class="panel__cap">
           <b>change log</b>
-          <span class="panel__cap-right">${activityTotal || ""}</span>
+          <span class="panel__cap-right">
+            <label class="activity-page__filter">
+              <input type="checkbox" .checked=${quarantinedOnly} @change=${toggleQuarantinedOnly} />
+              quarantined only
+            </label>
+            ${total || ""}
+          </span>
         </div>
-        <p class="activity-page__subtitle">Changes from trusted contributors and up.</p>
-        ${renderList(activity, "No changes yet.")}
+        ${renderList(entries, !quarantinedOnly)}
         ${Pagination({
-          page: activityPage,
-          totalPages: activityTotalPages,
-          onPrevious: () => setActivityPage(activityPage - 1),
-          onNext: () => setActivityPage(activityPage + 1),
+          page,
+          totalPages,
+          onPrevious: () => setPage(page - 1),
+          onNext: () => setPage(page + 1),
           perPage: PER_PAGE,
           onPerPageChange: undefined,
         })}
       </section>
+      </div>
+      </div>
     </main>
   `;
 }
 
-customElements.define("activity-page", component(ActivityPage, { useShadowDOM: false, observedAttributes: ["user"] }));
+customElements.define("activity-page", component(ActivityPage, { useShadowDOM: false }));

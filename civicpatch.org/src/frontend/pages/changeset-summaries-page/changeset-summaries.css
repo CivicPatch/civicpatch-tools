@@ -44,6 +44,7 @@
 }
 
 .cs-ledger__n {
+  font-family: var(--font-mono);
   font-size: var(--font-size-lg);
   font-weight: 800;
   line-height: 1.1;
@@ -53,7 +54,6 @@
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   text-transform: lowercase;
-  font-family: var(--font-mono);
 }
 
 .cs-rule {
@@ -76,7 +76,6 @@
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   text-transform: lowercase;
-  font-family: var(--font-mono);
   margin-right: 0.25rem;
 }
 
@@ -181,6 +180,7 @@
 }
 
 .cs-figure__n {
+  font-family: var(--font-mono);
   font-weight: 700;
 }
 
@@ -279,7 +279,6 @@
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   text-transform: lowercase;
-  font-family: var(--font-mono);
   white-space: nowrap;
   overflow: hidden;
 }
@@ -456,6 +455,9 @@
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   text-transform: lowercase;
+}
+
+.cs-budget__fig {
   font-family: var(--font-mono);
 }
 
@@ -474,5 +476,51 @@
   color: var(--text-muted);
   text-decoration: underline;
   cursor: pointer;
+}
+
+/* ── Lifecycle ── */
+
+.cs-flow__row {
+  display: grid;
+  grid-template-columns: 6rem 1fr 3rem;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.15rem 0;
+}
+
+.cs-flow__label {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.cs-flow__bar {
+  height: 6px;
+  background: var(--surface-stripe);
+  border: 1px solid var(--border-subtle);
+}
+
+.cs-flow__fill {
+  display: block;
+  height: 100%;
+}
+
+.cs-flow__fill--ok {
+  background: var(--success);
+}
+
+.cs-flow__fill--open {
+  background: var(--warning);
+}
+
+.cs-flow__fill--bad {
+  background: var(--error);
+}
+
+.cs-flow__n {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  text-align: right;
 }
 }

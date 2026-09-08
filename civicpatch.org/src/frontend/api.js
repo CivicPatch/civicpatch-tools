@@ -33,8 +33,8 @@ export const fetchIssueCounts = async (stateCode, kind) => {
   return res.json();
 };
 
-export const fetchChangeLogs = async (bucket, page = 1, perPage = 20) => {
-  const params = new URLSearchParams({ bucket, page, per_page: perPage });
+export const fetchChangeLogs = async (authors, page = 1, perPage = 20) => {
+  const params = new URLSearchParams({ authors, page, per_page: perPage });
   const res = await fetch(`${API_URL}/api/v1/change_logs?${params}`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();

@@ -1,4 +1,3 @@
-import math
 import re
 import uuid
 from typing import Optional
@@ -13,6 +12,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from lib.auth import require_route_access
 from pydantic import BaseModel
 from schemas.common import Identity, RouteCategory, UserRole
+from schemas.pagination import paginated_response, pagination_offset
 from services.review_proposal import assertions_for_people
 from shared.utils.person_id_utils import resolve_people_ids
 
@@ -88,14 +88,9 @@ def get_router() -> APIRouter:
                 status_code=400, detail="state must be a two-letter code, e.g. 'wa'"
             )
         total, people = await database.get_roster_page(
-            None, state.lower(), per_page, (page - 1) * per_page
+            None, state.lower(), per_page, pagination_offset(page, per_page)
         )
-        return {
-            "total_items": total,
-            "page": page,
-            "total_pages": math.ceil(total / per_page) if total > 0 else 1,
-            "data": people,
-        }
+        return paginated_response(total, page, per_page, people)
 
     @router.get("/search")
     async def search_people_endpoint(
@@ -137,16 +132,10 @@ def get_router() -> APIRouter:
         per_page: int = Query(20, ge=1, le=100),
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        offset = (page - 1) * per_page
         total, people = await database.get_people_page(
-            jurisdiction_ocdid, per_page, offset
+            jurisdiction_ocdid, per_page, pagination_offset(page, per_page)
         )
-        return {
-            "total_items": total,
-            "page": page,
-            "total_pages": math.ceil(total / per_page) if total > 0 else 1,
-            "data": people,
-        }
+        return paginated_response(total, page, per_page, people)
 
     @router.post("/batch-resolve")
     async def batch_resolve_people_endpoint(

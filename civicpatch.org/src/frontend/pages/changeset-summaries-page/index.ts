@@ -30,6 +30,7 @@ import {
   type StateSpend,
 } from "./spend.js";
 import { describeStateCaps, describeBudget, type GlobalScrapePanel } from "./scrape-settings.js";
+import { SectionNav, ACTIVITY_SECTION } from "../../components/section-nav/index.js";
 import { hasPickedEverything, isShown, toggle } from "./selection.js";
 import "./state-section.ts";
 import "./bucket-modal.ts";
@@ -51,6 +52,45 @@ export interface StateRollup {
 
 // A queue is not a problem because it is deep; it is a problem because something in it is old.
 const STALE_DAYS = 7;
+
+const LIFECYCLE = [
+  { key: "published", label: "published", tone: "ok" },
+  { key: "to_review", label: "to review", tone: "open" },
+  { key: "dismissed", label: "dismissed", tone: "bad" },
+] as const;
+
+// Summed over the states in view, so filtering the list re-reads the outcome mix.
+function renderLifecycle(shown: StateRollup[]) {
+  const totals = LIFECYCLE.map((band) => ({
+    ...band,
+    n: shown.reduce((sum, row) => sum + (row[band.key] ?? 0), 0),
+  }));
+  const total = totals.reduce((sum, band) => sum + band.n, 0);
+  if (!total) return nothing;
+
+  return html`
+    <section class="panel cs-flow">
+      <div class="panel__cap">
+        <b>lifecycle</b>
+        <span class="panel__cap-right">${total} changesets</span>
+      </div>
+      ${totals.map(
+        (band) => html`
+          <div class="cs-flow__row">
+            <span class="cs-flow__label">${band.label}</span>
+            <span class="cs-flow__bar"
+              ><i
+                class="cs-flow__fill cs-flow__fill--${band.tone}"
+                style="width:${((band.n / total) * 100).toFixed(1)}%"
+              ></i
+            ></span>
+            <span class="cs-flow__n">${band.n}</span>
+          </div>
+        `,
+      )}
+    </section>
+  `;
+}
 
 // Every comparator takes the spend map, whether it reads it or not: one registry that all
 // sorts share beats two that have to be kept in step.
@@ -307,6 +347,12 @@ function CivChangesetSummaries() {
 
       <hr class="cs-rule" />
 
+      <div class="sectioned">
+      ${SectionNav("activity", ACTIVITY_SECTION, "/activity/changesets")}
+      <div class="secbody">
+
+      ${renderLifecycle(shown)}
+
       <div class="cs-chips">
         <span class="cs-chips__label">Sort by</span>
         ${chips.map(
@@ -388,6 +434,8 @@ function CivChangesetSummaries() {
             @close-bucket=${() => setOpenBucket(null)}
           ></civ-bucket-modal>`
         : nothing}
+      </div>
+      </div>
     </main>
   `;
 }

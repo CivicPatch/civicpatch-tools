@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, Query
 from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory, UserRole
+from schemas.pagination import pagination_offset, pagination_total_pages
 from schemas.posts import AssignMembershipRequest
 
 
@@ -39,13 +40,12 @@ def get_router() -> APIRouter:
         per_page: int = Query(20, ge=1, le=100),
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED)),
     ):
-        offset = (page - 1) * per_page
-        total, rows = await memberships.unmatched_text(per_page, offset)
+        total, rows = await memberships.unmatched_text(per_page, pagination_offset(page, per_page))
         return {
             "data": {"unmatched_text": rows},
             "total_items": total,
             "page": page,
-            "total_pages": max(1, (total + per_page - 1) // per_page),
+            "total_pages": pagination_total_pages(total, per_page),
         }
 
     # Declared after `/unmatched` — `:path` matches greedily, so the reverse order would make

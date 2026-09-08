@@ -4,22 +4,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from lib.auth import get_optional_user
 from routers.api import change_logs as change_logs_router
-from schemas.common import Identity, UserRole
-
-
-def _identity(role: str | None) -> Identity | None:
-    if role is None:
-        return None
-    return Identity(
-        type="cookie",
-        provider="supabase",
-        provider_user_id="sb-1",
-        email="user@example.com",
-        role=role,
-        user_id="11111111-1111-1111-1111-111111111111",
-    )
 
 ROW = {
     "id": "cl-1",
@@ -40,74 +25,49 @@ ROW = {
 }
 
 
-def _client(role: str | None = UserRole.MAINTAINERS.value) -> TestClient:
+@pytest.fixture
+def client() -> TestClient:
     app = FastAPI()
-    app.dependency_overrides[get_optional_user] = lambda: _identity(role)
     app.include_router(change_logs_router.get_router(), prefix="/change_logs")
     return TestClient(app)
 
 
-@pytest.fixture
-def client():
-    return _client()
-
-
 @pytest.mark.unit
-def test_quarantine_bucket_queries_default_role(client):
+def test_quarantined_queries_default_role(client):
+    # Every signed-in user may see quarantined changes — the router mount already requires
+    # that, so there is no further role check here.
     with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(0, [])) as mock_get:
-        response = client.get("/change_logs", params={"bucket": "quarantine"})
+        response = client.get("/change_logs", params={"authors": "quarantined"})
 
     assert response.status_code == 200
     mock_get.assert_awaited_once_with(["default"], 20, 0)
 
 
 @pytest.mark.unit
-def test_quarantine_bucket_forbidden_for_default_role():
-    client = _client(role=UserRole.DEFAULT.value)
-    response = client.get("/change_logs", params={"bucket": "quarantine"})
-    assert response.status_code == 403
-
-
-@pytest.mark.unit
-def test_quarantine_bucket_forbidden_for_contributors():
-    client = _client(role=UserRole.CONTRIBUTORS.value)
-    response = client.get("/change_logs", params={"bucket": "quarantine"})
-    assert response.status_code == 403
-
-
-@pytest.mark.unit
-def test_quarantine_bucket_allowed_for_admins():
-    client = _client(role=UserRole.ADMINS.value)
-    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(0, [])):
-        response = client.get("/change_logs", params={"bucket": "quarantine"})
-    assert response.status_code == 200
-
-
-@pytest.mark.unit
-def test_activity_bucket_queries_trusted_roles(client):
+def test_all_applies_no_role_filter(client):
     with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(0, [])) as mock_get:
-        response = client.get("/change_logs", params={"bucket": "activity"})
+        response = client.get("/change_logs", params={"authors": "all"})
 
     assert response.status_code == 200
-    mock_get.assert_awaited_once_with(["contributors", "maintainers", "admins"], 20, 0)
+    mock_get.assert_awaited_once_with(None, 20, 0)
 
 
 @pytest.mark.unit
-def test_activity_bucket_allowed_for_default_role():
-    # The trusted-author change log is visible to any signed-in user.
-    client = _client(role=UserRole.DEFAULT.value)
-    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(0, [])):
-        response = client.get("/change_logs", params={"bucket": "activity"})
+def test_all_is_the_default_filter(client):
+    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(0, [])) as mock_get:
+        response = client.get("/change_logs")
+
     assert response.status_code == 200
+    mock_get.assert_awaited_once_with(None, 20, 0)
 
 
 @pytest.mark.unit
 def test_pagination_offset_computed_from_page(client):
     with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(45, [])) as mock_get:
-        response = client.get("/change_logs", params={"bucket": "activity", "page": 3, "per_page": 10})
+        response = client.get("/change_logs", params={"authors": "all", "page": 3, "per_page": 10})
 
     assert response.status_code == 200
-    mock_get.assert_awaited_once_with(["contributors", "maintainers", "admins"], 10, 20)
+    mock_get.assert_awaited_once_with(None, 10, 20)
     body = response.json()
     assert body["total_items"] == 45
     assert body["page"] == 3
@@ -115,15 +75,15 @@ def test_pagination_offset_computed_from_page(client):
 
 
 @pytest.mark.unit
-def test_unknown_bucket_rejected(client):
-    response = client.get("/change_logs", params={"bucket": "everything"})
+def test_unknown_authors_filter_rejected(client):
+    response = client.get("/change_logs", params={"authors": "everything"})
     assert response.status_code == 422
 
 
 @pytest.mark.unit
 def test_row_maps_to_entry(client):
     with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
-        response = client.get("/change_logs", params={"bucket": "activity"})
+        response = client.get("/change_logs", params={"authors": "all"})
 
     assert response.status_code == 200
     entry = response.json()["data"][0]
@@ -135,7 +95,7 @@ def test_row_maps_to_entry(client):
 @pytest.mark.unit
 def test_pull_request_url_maps_to_entry(client):
     with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
-        response = client.get("/change_logs", params={"bucket": "activity"})
+        response = client.get("/change_logs", params={"authors": "all"})
 
     assert response.json()["data"][0]["pull_request_url"] == "https://github.com/org/repo/pull/42"
 
@@ -144,7 +104,7 @@ def test_pull_request_url_maps_to_entry(client):
 def test_pull_request_url_null_when_no_pr(client):
     row = {**ROW, "pull_request_url": None}
     with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [row])):
-        response = client.get("/change_logs", params={"bucket": "activity"})
+        response = client.get("/change_logs", params={"authors": "all"})
 
     assert response.json()["data"][0]["pull_request_url"] is None
 
@@ -159,7 +119,7 @@ def test_jurisdiction_path_is_the_ocdid(client):
     JavaScript, that had to agree.
     """
     with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
-        response = client.get("/change_logs", params={"bucket": "activity"})
+        response = client.get("/change_logs", params={"authors": "all"})
 
     entry = response.json()["data"][0]
     assert entry["jurisdiction_path"] == ROW["jurisdiction_ocdid"]
@@ -169,6 +129,6 @@ def test_jurisdiction_path_is_the_ocdid(client):
 def test_jurisdiction_path_null_when_no_ocdid(client):
     row = {**ROW, "jurisdiction_ocdid": None}
     with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [row])):
-        response = client.get("/change_logs", params={"bucket": "activity"})
+        response = client.get("/change_logs", params={"authors": "all"})
 
     assert response.json()["data"][0]["jurisdiction_path"] is None

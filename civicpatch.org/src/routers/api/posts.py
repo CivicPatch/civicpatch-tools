@@ -1,4 +1,3 @@
-import math
 import re
 
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -7,6 +6,7 @@ from fastapi.responses import JSONResponse
 from database import posts
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory
+from schemas.pagination import paginated_response, pagination_offset
 from schemas.posts import CreatePostRequest, UpdatePostRequest
 
 
@@ -19,7 +19,7 @@ def get_router() -> APIRouter:
         body: CreatePostRequest,
         # Any signed-in user: a reviewer who knows somebody sits in District 4 cannot say so
         # unless that post exists, and the post select offers only what already does. Their
-        # changes land in the quarantine bucket like every other default-role write.
+        # changes are marked quarantined in the change log like every other default-role write.
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         """Create a post. 409 if the triple is taken — silently returning the existing id
@@ -69,14 +69,9 @@ def get_router() -> APIRouter:
                 status_code=400, detail="state must be a two-letter code, e.g. 'wa'"
             )
         total, rows = await posts.list_page_for_state(
-            state.lower(), per_page, (page - 1) * per_page
+            state.lower(), per_page, pagination_offset(page, per_page)
         )
-        return {
-            "total_items": total,
-            "page": page,
-            "total_pages": math.ceil(total / per_page) if total > 0 else 1,
-            "data": rows,
-        }
+        return paginated_response(total, page, per_page, rows)
 
     @router.get("/{jurisdiction_ocdid:path}")
     async def get_posts_endpoint(jurisdiction_ocdid: str):

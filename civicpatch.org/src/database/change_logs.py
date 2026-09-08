@@ -8,24 +8,27 @@ from shared.utils.statuses import ChangeLogType, DismissalReason
 
 
 async def get_change_logs_for_roles(
-    roles: list[str], limit: int, offset: int
+    roles: list[str] | None, limit: int, offset: int
 ) -> tuple[int, list[dict]]:
+    """`roles=None` is no filter at all — every author. A list narrows to just those roles."""
+    role_filter = "AND u.role = ANY(%s)" if roles is not None else ""
+    params = (roles,) if roles is not None else ()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
+            f"""
             SELECT COUNT(*)
             FROM change_logs cl
             JOIN users u ON u.id = cl.user_id
-            WHERE u.role = ANY(%s)
+            WHERE true {role_filter}
             """,
-            (roles,),
+            params,
         )
         count_row = await cur.fetchone()
         total = count_row[0] if count_row is not None else 0
 
         await cur.execute(
-            """
+            f"""
             SELECT cl.id::text, cl.type, cl.jurisdiction_ocdid, cl.changeset_id,
                    cl.changes, cl.created_at,
                    COALESCE(u.display_name, 'Anonymous') AS author_name, u.role AS author_role,
@@ -35,11 +38,11 @@ async def get_change_logs_for_roles(
             JOIN users u ON u.id = cl.user_id
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = cl.jurisdiction_ocdid
             LEFT JOIN changesets ON changesets.id::text = cl.changeset_id
-            WHERE u.role = ANY(%s)
+            WHERE true {role_filter}
             ORDER BY cl.created_at DESC
             LIMIT %s OFFSET %s
             """,
-            (roles, limit, offset),
+            (*params, limit, offset),
         )
         rows = await cur.fetchall()
     return total, [
