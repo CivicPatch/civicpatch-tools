@@ -1,10 +1,126 @@
-.pipeline-run-section { margin-bottom: 2rem; }
-.pipeline-run-table { width: 100%; font-size: 0.8125rem; margin: 0; }
-.pipeline-run-table th { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; padding: 0.3rem 0.5rem; }
-.pipeline-run-table td { padding: 0.3rem 0.5rem; vertical-align: middle; }
-.pipeline-run-table tr:last-child td { border-bottom: none; }
-.pipeline-run-name { color: var(--action); }
-.pipeline-run-meta { color: var(--text-muted); white-space: nowrap; }
-.pipeline-run-mono { font-family: var(--font-mono); font-size: 0.75rem; }
-.pipeline-run-id { white-space: normal; word-break: break-all; min-width: 8rem; }
-.pipeline-run-cancel-btn { font-size: 0.75rem; padding: 0.15rem 0.5rem; cursor: pointer; }
+/* ── Active jobs ──────────────────────────────────────────────────────────────
+   What is scraping right now. Converted to the redesign's language 2026-09-07:
+   mono for every column you read as data, hairline rules instead of boxes, and a
+   bar beside the percentage — a share reads faster as a length than as a number. */
+
+.pipeline-run-section {
+    margin-bottom: 1.5rem;
+}
+
+.pipeline-run-table {
+    width: 100%;
+    margin: 0;
+    font-size: var(--font-size-sm);
+}
+
+.pipeline-run-table th {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: 400;
+    text-transform: lowercase;
+    color: var(--text-muted);
+    padding: 0.25rem 0.5rem;
+}
+
+.pipeline-run-table td {
+    padding: 0.25rem 0.5rem;
+    vertical-align: middle;
+}
+
+.pipeline-run-table tbody tr:nth-child(even) {
+    background: var(--surface-2);
+}
+
+.pipeline-run-table tr:last-child td {
+    border-bottom: none;
+}
+
+.pipeline-run-name {
+    color: var(--text);
+    text-decoration-color: var(--border);
+}
+
+.pipeline-run-name:hover {
+    text-decoration-color: var(--accent);
+}
+
+.pipeline-run-meta {
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.pipeline-run-mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: var(--font-size-xs);
+}
+
+/* The run id is the one column nobody reads in full — let it wrap rather than
+   stretch the row, and keep it quiet. */
+.pipeline-run-id {
+    white-space: normal;
+    word-break: break-all;
+    min-width: 8rem;
+    color: var(--text-muted);
+}
+
+/* ── Progress ── */
+
+.pipeline-run-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 7rem;
+}
+
+.pipeline-run-bar {
+    flex: 1;
+    height: 5px;
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+}
+
+.pipeline-run-bar i {
+    display: block;
+    height: 100%;
+    background: var(--success);
+}
+
+.pipeline-run-pct {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    text-align: right;
+    min-width: 2.5rem;
+}
+
+/* ── Cancel ──────────────────────────────────────────────────────────────────
+   Destructive, so it reads as text until you reach for it. */
+
+.pipeline-run-cancel-btn {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    text-transform: lowercase;
+    padding: 0.1rem 0.4rem;
+    width: auto;
+    margin: 0;
+    border: 1px solid transparent;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    color: var(--error);
+    cursor: pointer;
+}
+
+.pipeline-run-cancel-btn:hover:not([disabled]) {
+    background: var(--error);
+    color: var(--bg);
+    border-color: var(--error);
+}
+
+.pipeline-run-cancel-btn[disabled] {
+    color: var(--text-muted);
+    cursor: not-allowed;
+    opacity: 0.5;
+}

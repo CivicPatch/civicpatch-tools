@@ -24,9 +24,9 @@ dialog[open]:has(.scrape-modal__body) {
 
 .scrape-modal__radio-group legend {
     font-size: var(--font-size-sm);
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    font-weight: 400;
+    text-transform: lowercase;
+    font-family: var(--font-mono);
     color: var(--text-muted);
     padding: 0 0.25rem;
     margin-bottom: 0.25rem;
@@ -65,9 +65,9 @@ dialog[open]:has(.scrape-modal__body) {
 
 .scrape-modal__mode-label {
     font-size: var(--font-size-sm);
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    font-weight: 400;
+    text-transform: lowercase;
+    font-family: var(--font-mono);
     color: var(--text-muted);
 }
 

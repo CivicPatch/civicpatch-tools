@@ -83,7 +83,7 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.2rem 0.6rem;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   font-size: var(--font-size-xs);
   font-weight: 700;
   white-space: nowrap;
@@ -291,9 +291,9 @@
 
 .jurisdiction-details__group-title {
   font-size: var(--font-size-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
+  font-weight: 400;
+  text-transform: lowercase;
+  font-family: var(--font-mono);
   color: var(--text-muted);
   margin: 0 0 0.35rem 0;
 }

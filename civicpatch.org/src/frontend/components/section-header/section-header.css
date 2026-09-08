@@ -13,7 +13,7 @@
 
 .section-title {
   padding-left: 0.65rem;
-  font-family: "Space Grotesk", var(--font-sans);
+  font-family: var(--font-display);
   font-weight: 700;
 }
 

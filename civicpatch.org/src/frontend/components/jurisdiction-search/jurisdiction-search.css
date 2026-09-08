@@ -45,7 +45,7 @@
 .jurisdiction-search__level {
   padding: 0.1rem 0.5rem;
   border: 1px solid currentColor;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   font-size: var(--font-size-xs);
   font-weight: 700;
   letter-spacing: 0.08em;

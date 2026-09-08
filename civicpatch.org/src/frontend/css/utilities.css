@@ -50,10 +50,6 @@
   color: rgb(var(--color-10));
 }
 
-:root,
-:host {
-  font-size: 17px;
-}
 
 
 /* ── Button utilities ─────────────────────────────────────────────────────────

@@ -8,11 +8,10 @@ civ-badge {
 .civ-badge {
     font-family: var(--font-mono);
     font-size: var(--font-size-sm);
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-weight: 400;
+    text-transform: lowercase;
     padding: 0.15em 0.55em;
-    border-radius: 2px;
+    border-radius: var(--radius-sm);
     white-space: nowrap;
     line-height: 1;
     background: none;
@@ -68,7 +67,7 @@ civ-badge {
 .civ-badge__popover {
     font-size: var(--font-size-md);
     padding: 0.6rem 0.9rem;
-    border-radius: 8px;
+    border-radius: var(--radius);
     border: 1px solid var(--diff-removed);
     background: var(--surface);
     color: var(--text);

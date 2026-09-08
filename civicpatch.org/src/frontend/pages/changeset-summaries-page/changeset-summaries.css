@@ -51,8 +51,8 @@
 .cs-ledger__label {
   font-size: var(--font-size-xs);
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  font-family: var(--font-mono);
 }
 
 .cs-rule {
@@ -74,8 +74,8 @@
 .cs-chips__label {
   font-size: var(--font-size-xs);
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  font-family: var(--font-mono);
   margin-right: 0.25rem;
 }
 
@@ -84,7 +84,7 @@
   margin: 0;
   padding: 0.15rem 0.6rem;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: transparent;
   font-size: var(--font-size-xs);
   font-family: inherit;
@@ -213,7 +213,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   min-width: 3px;
   /* A <button>, so the base layer paints it as a primary control — background, border and
      primary-inverse text. All three are wrong here, and the last one is what the popover
@@ -277,8 +277,8 @@
 .cs-scale__tail {
   font-size: var(--font-size-xs);
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  font-family: var(--font-mono);
   white-space: nowrap;
   overflow: hidden;
 }
@@ -349,7 +349,7 @@
 .cs-pop__swatch {
   width: 0.55rem;
   height: 0.55rem;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   flex: 0 0 auto;
 }
 
@@ -382,7 +382,7 @@
 .cs-legend__swatch {
   width: 0.7rem;
   height: 0.7rem;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   display: inline-block;
 }
 
@@ -454,8 +454,8 @@
 .cs-budget__label {
   font-size: var(--font-size-xs);
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  font-family: var(--font-mono);
 }
 
 .cs-budget__fig--quiet {

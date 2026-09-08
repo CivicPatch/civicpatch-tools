@@ -104,7 +104,7 @@
 .map-legend__swatch {
   width: 0.7rem;
   height: 0.7rem;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
 }
 

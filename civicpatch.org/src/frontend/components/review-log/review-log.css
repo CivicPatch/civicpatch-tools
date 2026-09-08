@@ -28,9 +28,8 @@ civ-review-log {
 .review-log__title {
     font-family: var(--font-mono);
     font-size: var(--font-size-xs);
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    font-weight: 400;
+    text-transform: lowercase;
     color: var(--text-muted);
 }
 

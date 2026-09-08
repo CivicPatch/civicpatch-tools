@@ -163,8 +163,8 @@
 
 .person-editor__status {
   font-size: var(--font-size-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  font-family: var(--font-mono);
   color: var(--text-muted);
 }
 

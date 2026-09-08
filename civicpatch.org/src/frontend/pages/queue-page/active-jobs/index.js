@@ -52,7 +52,12 @@ function ActiveJobs({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange
               </td>
               <td class="pipeline-run-meta">${job.state}</td>
               <td class="pipeline-run-meta">${job.status}</td>
-              <td class="pipeline-run-meta">${job.progress ?? 0}%</td>
+              <td>
+                <div class="pipeline-run-progress">
+                  <div class="pipeline-run-bar"><i style="width:${job.progress ?? 0}%"></i></div>
+                  <span class="pipeline-run-pct">${job.progress ?? 0}%</span>
+                </div>
+              </td>
               <td class="pipeline-run-meta pipeline-run-mono pipeline-run-id">${job.pipeline_run_id}</td>
               <td class="pipeline-run-meta">${durationBetween(job.created_at, job.updated_at)}</td>
               ${canCancel ? html`

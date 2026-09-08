@@ -78,7 +78,7 @@
 .streak-graph__day {
   width: 15px;
   height: 15px;
-  border-radius: 3px;
+  border-radius: var(--radius);
 }
 
 .streak-graph__copy-icon {

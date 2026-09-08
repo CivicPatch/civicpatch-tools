@@ -119,9 +119,9 @@
   top: -0.5rem;
   padding: 0.1rem 0.3rem 0.35rem;
   font-size: var(--font-size-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-weight: 700;
+  text-transform: lowercase;
+  font-family: var(--font-mono);
+  font-weight: 400;
   color: var(--text-muted);
   background: var(--surface-2);
 }

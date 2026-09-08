@@ -57,8 +57,8 @@
   align-items: baseline;
   gap: 0.4rem;
   font-size: var(--font-size-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  font-family: var(--font-mono);
   color: var(--text-muted);
   margin: 0 0 0.4rem;
 }
@@ -74,7 +74,7 @@
   margin: 0;
   padding: 0.1rem 0.5rem;
   border: 1px dashed var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--text-muted);
   font-size: var(--font-size-xs);
@@ -162,10 +162,10 @@
 
 .cs-runs__label {
   font-size: var(--font-size-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  font-family: var(--font-mono);
   color: var(--text-muted);
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .cs-runs__fig {

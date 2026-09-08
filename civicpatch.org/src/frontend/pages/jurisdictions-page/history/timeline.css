@@ -50,8 +50,8 @@
   flex: 0 0 4rem;
   font-size: var(--font-size-xs);
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  font-family: var(--font-mono);
   white-space: nowrap;
 }
 
@@ -123,7 +123,7 @@
 .runs-pill {
   display: inline-block;
   padding: 0.05rem 0.5rem;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   font-size: var(--font-size-xs);
   white-space: nowrap;
 }
