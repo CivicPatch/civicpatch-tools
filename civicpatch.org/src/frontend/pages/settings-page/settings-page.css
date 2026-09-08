@@ -13,8 +13,9 @@
   font-size: 0.9rem;
 }
 
-.settings-page__title {
-  margin-bottom: 1.5rem;
+.settings-page .panel,
+.settings-page .api-keys {
+  border-top-left-radius: 0;
 }
 
 .settings-page__form {
@@ -44,16 +45,20 @@
 /* API keys */
 
 .api-keys {
-  border-top: 1px solid var(--border);
-  margin: 2.5rem 0 0;
-  padding-top: 1.5rem;
+  border: 1px solid var(--border);
+  margin: 0;
+  padding: 0.7rem 0.8rem 0.8rem;
 }
 
 .api-keys__title {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.2rem;
-  margin: 0 0 0.25rem;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  text-transform: lowercase;
+  padding-bottom: 0.45rem;
+  margin: 0 0 0.35rem;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .api-keys__hint {

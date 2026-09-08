@@ -3,7 +3,13 @@ import { component, useState, useEffect } from "haunted";
 import { fetchDisplayNameSuggestion, setDisplayName } from "../../api.js";
 import "./api-keys.js";
 import { canManageApiKeys } from "./api-key-access.js";
+import "../../components/civ-tab-bar/civ-tab-bar.js";
+import "../../components/panel/panel.css";
 import "./settings-page.css";
+
+const PROFILE_TAB = 0;
+const API_KEYS_TAB = 1;
+const TABS = [{ label: "Profile" }, { label: "API keys" }];
 
 type User = {
   authenticated: boolean;
@@ -24,6 +30,7 @@ function SettingsPage({ user }: { user: string }) {
   const [value, setValue] = useState(userData.display_name || "");
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [tab, setTab] = useState(PROFILE_TAB);
 
   useEffect(() => {
     if (!needsDisplayName) return;
@@ -56,30 +63,49 @@ function SettingsPage({ user }: { user: string }) {
             other contributors will see on your edits.
           </div>`
         : ""}
-      <h1 class="settings-page__title">Settings</h1>
-      <form class="settings-page__form" @submit=${onSubmit}>
-        <label class="settings-page__label" for="display-name">Display name</label>
-        <input
-          class="settings-page__input"
-          id="display-name"
-          type="text"
-          .value=${value}
-          @input=${(e: Event) => setValue((e.target as HTMLInputElement).value)}
-          maxlength="50"
-          required
-        />
-        ${error
-          ? html`<div class="settings-page__error" role="alert">${error}</div>`
-          : ""}
-        <button
-          class="settings-page__submit"
-          type="submit"
-          ?disabled=${saving || !value.trim()}
-        >
-          ${saving ? "Saving…" : "Save"}
-        </button>
-      </form>
-      ${canHoldKeys ? html`<api-keys></api-keys>` : null}
+      <div class="page-focal">
+        <h1 class="page-focal__title">Settings</h1>
+      </div>
+
+      ${canHoldKeys
+        ? html`<civ-tab-bar
+            .tabs=${TABS}
+            .selectedIndex=${tab}
+            .onTabClick=${(index: number) => setTab(index)}
+          ></civ-tab-bar>`
+        : null}
+
+      ${tab === PROFILE_TAB || !canHoldKeys
+        ? html`<section class="panel">
+            <div class="panel__cap"><b>display name</b></div>
+            <form class="settings-page__form" @submit=${onSubmit}>
+              <label class="settings-page__label" for="display-name">Display name</label>
+              <input
+                class="settings-page__input"
+                id="display-name"
+                type="text"
+                .value=${value}
+                @input=${(e: Event) => setValue((e.target as HTMLInputElement).value)}
+                maxlength="50"
+                required
+              />
+              ${error
+                ? html`<div class="settings-page__error" role="alert">${error}</div>`
+                : ""}
+              <button
+                class="settings-page__submit"
+                type="submit"
+                ?disabled=${saving || !value.trim()}
+              >
+                ${saving ? "Saving…" : "Save"}
+              </button>
+            </form>
+          </section>`
+        : null}
+
+      ${canHoldKeys && tab === API_KEYS_TAB
+        ? html`<api-keys></api-keys>`
+        : null}
     </main>
   `;
 }

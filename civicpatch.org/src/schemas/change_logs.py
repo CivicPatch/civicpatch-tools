@@ -60,9 +60,12 @@ class RosterChange(BaseModel):
     fields: list[FieldChange] = []
 
 
-class ChangeLogBucket(StrEnum):
-    QUARANTINE = "quarantine"  # changes authored by default-role users — reviewed for spam/profanity
-    ACTIVITY = "activity"  # changes authored by trusted users (contributors and up)
+class ChangeLogAuthors(StrEnum):
+    """Which authors' changes the feed asks for. One log, narrowed — quarantined changes are
+    activity too, so they are marked in place rather than kept in a separate list."""
+
+    ALL = "all"
+    QUARANTINED = "quarantined"  # default-role authors, reviewed for spam or profanity
 
 
 class ChangeLogEntry(BaseModel):

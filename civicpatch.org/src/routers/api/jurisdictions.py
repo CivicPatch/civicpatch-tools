@@ -11,6 +11,7 @@ import database.jurisdictions as database
 import lib.cache as cache_service
 from lib.auth import require_route_access
 from schemas.common import Identity, UserRole, RouteCategory
+from schemas.pagination import paginated_response, pagination_offset
 from core.jurisdiction_search import build_fuzzy_tokens, build_tsquery
 from schemas.jurisdictions import (
     JurisdictionSearchResult,
@@ -284,9 +285,9 @@ def get_router() -> APIRouter:
         )
         return response
 
-    # The house pagination shape: `page` + `per_page` in, `{total_items, page, total_pages,
-    # data}` out — 9 of 12 paged endpoints take these params and 5 return this envelope.
-    # `offset` stays inside the database layer, where the window is what the query wants.
+    # The house pagination shape: `page` + `per_page` in, `paginated_response`'s
+    # `{total_items, page, total_pages, data}` out — 9 of 12 paged endpoints take these params
+    # and 5 return this envelope.
     @router.get("/history")
     async def get_jurisdiction_history_endpoint(
         jurisdiction_ocdid: str = Query(..., description="The OCD ID of the jurisdiction"),
@@ -294,14 +295,9 @@ def get_router() -> APIRouter:
         per_page: int = Query(database.DEFAULT_HISTORY_LIMIT, ge=1, le=100),
     ):
         total, history = await database.get_jurisdiction_history(
-            jurisdiction_ocdid, limit=per_page, offset=(page - 1) * per_page
+            jurisdiction_ocdid, limit=per_page, offset=pagination_offset(page, per_page)
         )
-        return {
-            "total_items": total,
-            "page": page,
-            "total_pages": max(1, (total + per_page - 1) // per_page),
-            "data": history,
-        }
+        return paginated_response(total, page, per_page, history)
 
     # Public, like the history it summarises: the jurisdiction page is public and each action
     # gates itself. This is the whole-history fetch that page used to do, narrowed to the rows

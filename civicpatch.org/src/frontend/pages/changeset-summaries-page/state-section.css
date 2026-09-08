@@ -59,12 +59,12 @@
   gap: 0.4rem;
   font-size: var(--font-size-xs);
   text-transform: lowercase;
-  font-family: var(--font-mono);
   color: var(--text-muted);
   margin: 0 0 0.4rem;
 }
 
 .cs-bucket__n {
+  font-family: var(--font-mono);
   font-weight: 700;
   color: var(--text-default);
 }
@@ -104,6 +104,10 @@
   font-size: var(--font-size-sm);
   color: var(--text-default);
   text-decoration: none;
+}
+
+.cs-bucket__item:last-child {
+  border-bottom: none;
 }
 
 .cs-bucket__item:hover {
@@ -164,12 +168,12 @@
 .cs-runs__label {
   font-size: var(--font-size-xs);
   text-transform: lowercase;
-  font-family: var(--font-mono);
   color: var(--text-muted);
   font-weight: 400;
 }
 
 .cs-runs__fig {
+  font-family: var(--font-mono);
   font-size: var(--font-size-xs);
 }
 
