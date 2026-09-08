@@ -1,0 +1,8 @@
+{% extends "layouts/base.html" %}
+{% block scripts %}<script type="module" src="{{ vite_asset('assets/gallery.ts') }}"></script>{% endblock %}
+{% block styles %}{% for href in vite_css('assets/gallery.ts') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %} {% block title %}Components{% endblock %}
+{% block content %}
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
+
+<gallery-page></gallery-page>
+{% endblock %}

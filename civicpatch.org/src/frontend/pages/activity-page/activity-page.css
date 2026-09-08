@@ -117,6 +117,8 @@
   align-items: baseline;
   gap: 0.3rem;
   min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
 }
 
 .activity-row__before,

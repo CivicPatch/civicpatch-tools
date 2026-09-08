@@ -72,6 +72,9 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         "can_write_config": has_at_least(role, UserRole.MAINTAINERS),
         "can_write_global_config": has_at_least(role, UserRole.ADMINS),
         "can_manage_roles": has_at_least(role, UserRole.ADMINS),
+        # A design-review tool, not a data page — gated the same as the rest of the Admin
+        # menu rather than opened up, so it stays a dev aid and not a second public surface.
+        "can_view_gallery_page": has_at_least(role, UserRole.ADMINS),
     }
 
 
@@ -157,6 +160,13 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         if not user["authenticated"] or not user["permissions"]["can_batch_scrape"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/pipelines.html", {"request": request, "user": user})
+
+    @router.get("/gallery", response_class=HTMLResponse, include_in_schema=False)
+    async def gallery_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
+        user = _build_user_dict(identity)
+        if not user["authenticated"] or not user["permissions"]["can_view_gallery_page"]:
+            return RedirectResponse("/", status_code=303)
+        return templates.TemplateResponse("pages/gallery.html", {"request": request, "user": user})
 
     # `/activity` is a section, not a page: the change log and the cross-state changeset
     # summary are two views of "what has been happening". The bare path redirects rather than

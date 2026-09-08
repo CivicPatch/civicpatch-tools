@@ -26,6 +26,7 @@ export default defineConfig(({ command }) => ({
         changesets: "./assets/changesets.ts",
         spend: "./assets/spend.ts",
         pipelines: "./assets/pipelines.ts",
+        gallery: "./assets/gallery.ts",
       },
     },
   },

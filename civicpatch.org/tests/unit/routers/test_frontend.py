@@ -93,6 +93,7 @@ def test_permissions_maintainer_role():
     assert p["can_batch_scrape"] is False  # Admin-only
     assert p["can_view_reviews_page"] is True
     assert p["can_view_issues_page"] is False  # Admin-only
+    assert p["can_view_gallery_page"] is False  # Admin-only
     assert p["can_delete_directory_person"] is True
     assert p["can_reject_scrape"] is True
 
@@ -109,6 +110,7 @@ def test_permissions_admin_role():
     assert p["can_scrape"] is True
     assert p["can_batch_scrape"] is True
     assert p["can_view_issues_page"] is True
+    assert p["can_view_gallery_page"] is True
     assert p["can_delete_directory_person"] is True
     assert p["can_reject_scrape"] is True
     assert p["can_manage_roles"] is True
@@ -371,6 +373,40 @@ def test_the_pipelines_page_is_closed_to_signed_out_visitors(permissions_client)
     permissions_client.dependency_overrides[get_optional_user] = lambda: None
     client = TestClient(permissions_client, follow_redirects=False)
     response = client.get("/pipelines")
+
+    assert response.status_code == 303
+    assert response.headers["location"] == "/"
+
+
+# ── GET /gallery ───────────────────────────────────────────────────────────────
+# A component catalog for design review, not a data page — gated the same as the rest of
+# the Admin menu (`can_view_gallery_page`).
+
+@pytest.mark.unit
+def test_the_gallery_page_renders_for_an_admin(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = lambda: ADMIN
+    client = TestClient(permissions_client)
+    response = client.get("/gallery")
+
+    assert response.status_code == 200
+    assert "gallery-page" in response.text
+
+
+@pytest.mark.unit
+def test_the_gallery_page_is_closed_to_a_maintainer(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = _maintainer
+    client = TestClient(permissions_client, follow_redirects=False)
+    response = client.get("/gallery")
+
+    assert response.status_code == 303
+    assert response.headers["location"] == "/"
+
+
+@pytest.mark.unit
+def test_the_gallery_page_is_closed_to_signed_out_visitors(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = lambda: None
+    client = TestClient(permissions_client, follow_redirects=False)
+    response = client.get("/gallery")
 
     assert response.status_code == 303
     assert response.headers["location"] == "/"
