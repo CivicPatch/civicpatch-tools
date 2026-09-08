@@ -1,5 +1,5 @@
+@layer components {
 .freshness-widget {
-  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1rem;
@@ -59,4 +59,5 @@
 .freshness-widget__legend-count {
   font-weight: 700;
   color: var(--text-default);
+}
 }

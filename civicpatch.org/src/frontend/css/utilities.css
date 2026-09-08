@@ -1,7 +1,4 @@
-/* Deliberately NOT in @layer utilities yet: unlayered styles outrank every
-   layer, so these would start losing to component CSS the moment they moved.
-   They join `utilities` when components join `components`. */
-
+@layer utilities {
 /* ── Utilities ───────────────────────────────────────────────────────────────
    Single-purpose classes, applied from markup. Last in the cascade order by
    intent, so they win without needing `!important`. */
@@ -49,8 +46,6 @@
   --_c: var(--color-10);
   color: rgb(var(--color-10));
 }
-
-
 
 /* ── Button utilities ─────────────────────────────────────────────────────────
    Generic button classes used across pages. `.civ-action-btn` is a component and
@@ -164,7 +159,6 @@ a.btn:active {
   margin-left: auto;
 }
 
-
 /* ── Utilities ───────────────────────────────────────────────────────────── */
 
 .page-content {
@@ -218,7 +212,7 @@ a:focus-visible {
 }
 
 .visually-hidden {
-  position: absolute !important;
+  position: absolute;
   height: 1px;
   width: 1px;
   overflow: hidden;
@@ -232,4 +226,4 @@ a:focus-visible {
   gap: 0.25rem 1rem;
   margin: 0;
 }
-
+}

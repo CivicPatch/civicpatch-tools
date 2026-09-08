@@ -1,3 +1,4 @@
+@layer components {
 .people-directory {
     display: flex;
     flex-direction: column;
@@ -49,4 +50,5 @@
     gap: 0.1rem;
     font-size: var(--font-size-sm);
     margin-top: 0.25rem;
+}
 }

@@ -1,0 +1,35 @@
+@layer components {
+/* ── Panel ── */
+/* A bordered region with a caption on a hairline. No fill: depth is the border. */
+
+.panel {
+    border: 1px solid var(--border);
+    padding: 0.7rem 0.8rem 0.8rem;
+    margin-bottom: 1.4rem;
+}
+
+.panel__cap {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    text-transform: lowercase;
+    padding-bottom: 0.45rem;
+    margin-bottom: 0.35rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+/* The caption's own subject reads as text; everything else in it stays muted. */
+.panel__cap b {
+    font-weight: 400;
+    color: var(--text);
+}
+
+/* Anything pushed to the right of a caption — a count, a control. */
+.panel__cap-right {
+    margin-left: auto;
+    font-variant-numeric: tabular-nums;
+}
+}

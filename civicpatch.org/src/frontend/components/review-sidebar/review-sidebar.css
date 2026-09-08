@@ -1,3 +1,4 @@
+@layer components {
 /* ── Trigger ── */
 
 /* The host dissolves so the button is a direct flex item of .review-page__step-nav
@@ -45,7 +46,6 @@ review-sidebar-trigger {
     max-width: calc(100vw - 3rem);
     display: flex;
     flex-direction: column;
-    background: var(--surface);
     border-left: 1px solid var(--border);
     box-shadow: -8px 0 32px rgba(0, 0, 0, 0.18);
     transition: translate 180ms ease;
@@ -198,4 +198,5 @@ review-sidebar-trigger {
     margin: 0.35rem 0 0;
     font-size: var(--font-size-xs);
     color: var(--text-muted);
+}
 }

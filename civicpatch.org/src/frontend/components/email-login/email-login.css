@@ -1,3 +1,4 @@
+@layer components {
 /* Co-located styles for <civ-email-login>. Uses the shared CSS custom properties
  * so the form matches the rest of the site's theme (light/dark variants). */
 
@@ -60,4 +61,5 @@ button.email-login__reset:hover:not(:disabled) {
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius);
   font-size: var(--font-size-sm);
+}
 }

@@ -1,3 +1,4 @@
+@layer components {
 /* Overview — one roster in seat order (2026-07-30 spec).
    Status is carried by the card, so position stays free for seat order. */
 
@@ -247,7 +248,6 @@
   padding-right: 1.6rem;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--surface);
 }
 
 .review-fold:hover,
@@ -316,4 +316,4 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+}

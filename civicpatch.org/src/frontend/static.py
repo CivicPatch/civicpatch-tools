@@ -1,3 +1,4 @@
+import mimetypes
 import os
 
 from starlette.responses import Response
@@ -8,6 +9,10 @@ from starlette.types import Scope
 # URLs can never serve different bytes and the browser never has to ask again.
 HASHED_ASSET_PREFIX = "/build/assets/"
 IMMUTABLE_CACHE_CONTROL = "public, max-age=31536000, immutable"
+
+# Without these, woff2 is served as text/plain and the preload is discarded.
+mimetypes.add_type("font/woff2", ".woff2")
+mimetypes.add_type("font/woff", ".woff")
 
 
 def is_hashed_asset(path: str, root_path: str) -> bool:

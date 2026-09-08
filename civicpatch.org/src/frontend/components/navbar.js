@@ -111,10 +111,11 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
             Manage <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
           </summary>
           <div class="nav-dropdown__menu">
-            <a href="/queue" class="${active("/queue")}">Bulk review
+            <a href="/bulk-review" class="${active("/bulk-review")}">Bulk review
               <span class="nav-count ${summary == null ? "nav-count--hidden" : ""}"
                 >${summary?.open_prs ?? 0}</span
               ></a>
+            <a href="/pipeline-runs" class="${active("/pipeline-runs")}">Pipeline runs</a>
             ${user.permissions?.can_write_config
               ? html`<a href="/roles" class="${active("/roles")}">Roles</a>`
               : ""}
@@ -149,7 +150,7 @@ function Navbar(host) {
     userData = null;
   }
   const isAuthed = userData?.authenticated;
-  const canViewQueue = isAuthed && userData.permissions?.can_view_queue_page;
+  const canViewBulkReview = isAuthed && userData.permissions?.can_view_queue_page;
   const [stateCode, setStateCode] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", {
     ttl: PERSIST_FOREVER,
   });
@@ -222,7 +223,7 @@ function Navbar(host) {
   const toggleTheme = () =>
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   const onLogoutClick = () => localStorage.removeItem(STORAGE_KEYS.DEFAULT_STATE);
-  const summary = useSummary(canViewQueue, stateCode);
+  const summary = useSummary(canViewBulkReview, stateCode);
   const currentPath = window.location.pathname;
   return html`
     <nav class="${!isAuthed ? "nav--logged-out" : ""}">

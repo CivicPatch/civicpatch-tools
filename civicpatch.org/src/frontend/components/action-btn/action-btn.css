@@ -1,3 +1,4 @@
+@layer components {
 /* Compact outline button for table-row actions.
    Imported by the pages that use it (issues, roles) rather than living in the
    global stylesheet — it is a component, not a page or a global default. */
@@ -54,4 +55,5 @@ button.civ-action-btn:focus-visible {
   border-color: var(--diff-removed);
   background: color-mix(in srgb, var(--diff-removed) 6%, transparent);
   color: var(--diff-removed);
+}
 }

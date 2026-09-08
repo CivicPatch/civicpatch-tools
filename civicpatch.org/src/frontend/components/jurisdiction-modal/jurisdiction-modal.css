@@ -1,3 +1,4 @@
+@layer components {
 /* Layout */
 
 .jurisdiction-modal {
@@ -90,4 +91,5 @@ dialog[open]:has(.jurisdiction-modal) > article > section {
 
 .jurisdiction-modal__aside .person-editor__control {
   overflow-wrap: anywhere;
+}
 }

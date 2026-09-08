@@ -1,3 +1,4 @@
+@layer components {
 .config-editor__table {
     width: 100%;
     border-collapse: collapse;
@@ -64,9 +65,8 @@
     padding: 0.5rem 1rem;
     border-radius: var(--radius);
     font-size: var(--font-size-sm);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
 }
-
 
 .config-editor__empty {
     color: var(--text-muted);
@@ -350,4 +350,5 @@ civ-role-table {
 .config-editor__locality-autocomplete .autocomplete-pagination button {
     padding: 0.2rem 0.5rem;
     font-size: var(--font-size-sm);
+}
 }

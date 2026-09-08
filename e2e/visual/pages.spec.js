@@ -29,7 +29,7 @@ const themeEntry = (theme) =>
 const PAGES = [
   { name: "home", path: "/" },
   { name: "login", path: "/login" },
-  { name: "queue", path: "/queue" },
+  { name: "bulk-review", path: "/bulk-review" },
   { name: "review-landing", path: "/review?state=nj" },
   // One page since the view tabs went: the roster, then Preview as a section under it.
   {

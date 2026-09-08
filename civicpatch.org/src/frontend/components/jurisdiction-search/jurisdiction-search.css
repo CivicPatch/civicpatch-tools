@@ -1,3 +1,4 @@
+@layer components {
 /* Search box */
 
 /* Sits in the narrow left column beside the map, so it fills its column rather than
@@ -49,11 +50,12 @@
   font-size: var(--font-size-xs);
   font-weight: 700;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
+  text-transform: lowercase;
 }
 
 /* The custom element is inline by default; without this the block inside has nothing
    to fill and the input collapses to content width in the flex column. */
 civ-jurisdiction-search {
   display: block;
+}
 }

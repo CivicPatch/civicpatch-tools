@@ -1,3 +1,4 @@
+@layer components {
 /* One roster change, in its two forms: a compact badge for a collapsed summary line, and a
    full row for an expanded list. Both take their colour from the same tone rules below, which
    is why they live together rather than beside whichever page renders them. */
@@ -81,4 +82,5 @@
 .change-badge--move .change-badge__sigil,
 .change-row--move .change-row__sigil {
   color: var(--info);
+}
 }

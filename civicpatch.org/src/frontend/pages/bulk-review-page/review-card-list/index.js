@@ -1,5 +1,6 @@
 import { html } from "lit-html";
 import { component } from "haunted";
+import "../../../components/panel/panel.css";
 import { Pagination } from "../../../components/pagination/index.js";
 import "../../../components/review-card/index.js";
 
@@ -8,27 +9,30 @@ function ReviewCardList({ cards, actionState, loading, error, page, perPage, tot
   if (error) return html`<div>Error: ${error}</div>`;
 
   return html`
-    <section>
-      <div class="queue-page__section-label">Awaiting review</div>
-      <div class="queue-page__view-toggle">
+    <section class="panel">
+      <div class="panel__cap">
+        <b>awaiting review</b>
+        <span class="panel__cap-right">${cards.length} on this page</span>
+      </div>
+      <div class="bulk-review__view-toggle">
         <button
-          class="queue-page__view-toggle-btn ${viewMode === "quick" ? "queue-page__view-toggle-btn--active" : ""}"
+          class="bulk-review__view-toggle-btn ${viewMode === "quick" ? "bulk-review__view-toggle-btn--active" : ""}"
           @click=${() => onViewChange("quick")}
         >Quick</button>
         <button
-          class="queue-page__view-toggle-btn ${viewMode === "detail" ? "queue-page__view-toggle-btn--active" : ""}"
+          class="bulk-review__view-toggle-btn ${viewMode === "detail" ? "bulk-review__view-toggle-btn--active" : ""}"
           @click=${() => onViewChange("detail")}
         >Detail</button>
       </div>
 
-      <div style="margin-bottom: 1rem;">
+      <div class="bulk-review__pager-top">
         ${Pagination({ page, totalPages, onPrevious: () => onPageChange(page - 1), onNext: () => onPageChange(page + 1), perPage, onPerPageChange })}
       </div>
 
       ${cards.length === 0
         ? html`<p>Nothing awaiting review.</p>`
         : html`
-          <div style="display: flex; gap: 2rem; flex-direction: column;">
+          <div class="bulk-review__cards">
             ${cards.map(card => html`
               <review-card
                 @approve=${onApprove}
@@ -46,4 +50,4 @@ function ReviewCardList({ cards, actionState, loading, error, page, perPage, tot
   `;
 }
 
-customElements.define("queue-review-card-list", component(ReviewCardList, { useShadowDOM: false }));
+customElements.define("bulk-review-card-list", component(ReviewCardList, { useShadowDOM: false }));

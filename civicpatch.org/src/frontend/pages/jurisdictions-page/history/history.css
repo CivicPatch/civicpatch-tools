@@ -1,4 +1,4 @@
-
+@layer components {
 /* What the run reported about a changeset. Without these, a short roster and a complete one
    look alike. Settled ones are muted and open ones keep the alarm colour — the list used to
    hold only open ones, so the whole thing was red. */
@@ -37,4 +37,5 @@
 .tl-issue-detail__field {
   font-size: var(--font-size-xs);
   color: var(--text-muted);
+}
 }

@@ -1,3 +1,4 @@
+@layer components {
 /* Styling for the editable field controls (field-controls.ts).
    Split out of people-diff.css when that component was retired: the controls
    outlive the two-column diff they were born in, so their CSS travels with them. */
@@ -46,7 +47,6 @@
 [data-theme="light"] :is(.person-editor-list, .review-overview, .jurisdiction-details__fields) {
   --field-tint: 12%;
 }
-
 
 /* Inputs */
 /* Unified input sizing — shared by scalar inputs, selects, and multi-value inputs */
@@ -290,4 +290,5 @@ span.field-control__input s {
   border-radius: var(--control-radius);
   box-sizing: border-box;
   line-height: 1;
+}
 }

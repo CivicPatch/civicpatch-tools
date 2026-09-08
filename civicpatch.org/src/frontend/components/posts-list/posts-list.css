@@ -1,3 +1,4 @@
+@layer components {
 /* The roster by post: every office a jurisdiction has, grouped under its role. */
 
 .posts-list {
@@ -270,7 +271,6 @@
     width: 11ch;
 }
 
-
 /* What the source said, and what the parser made of it */
 
 .posts-list__post--stacked {
@@ -326,4 +326,5 @@
 
 .post-edit__hint--error {
     color: var(--diff-removed);
+}
 }

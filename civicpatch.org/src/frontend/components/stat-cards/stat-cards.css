@@ -1,53 +1,55 @@
+@layer components {
 .stat-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, max-content));
+    gap: 1.4rem;
+    margin-bottom: 1.25rem;
 }
 
 .stat-cards__card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 1.25rem 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.2em;
+    gap: 0.1em;
+    padding: 0;
+    margin: 0;
+    width: auto;
     text-align: left;
-    border: 1.5px solid var(--border);
-    transition: border-color 0.15s ease;
-    width: 100%;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
     position: relative;
-    border-top: 2px solid var(--border-strong);
 }
 
 button.stat-cards__card {
     cursor: pointer;
 }
 
-button.stat-cards__card:hover {
-    border-color: var(--action);
+.stat-cards__value {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: var(--font-size-lg);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0;
+    color: var(--text);
 }
 
 .stat-cards__label {
-    font-family: var(--font-display);
-    font-size: 0.6875rem;
-    font-weight: 500;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: 400;
     color: var(--text-muted);
-    letter-spacing: 0;
-}
-
-.stat-cards__value {
-    font-family: var(--font-display);
-    font-size: var(--font-size-2xl);
-    font-weight: 700;
-    color: var(--text-default);
-    line-height: 1.1;
-    letter-spacing: -0.03em;
 }
 
 .stat-cards__sub {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-xs);
     color: var(--text-muted);
+}
+
+button.stat-cards__card:hover .stat-cards__value,
+button.stat-cards__card:hover .stat-cards__label {
+    color: var(--text);
 }
 
 .stat-cards__card[data-tooltip]::before {
@@ -58,17 +60,20 @@ button.stat-cards__card:hover {
 
 .stat-cards__copy-icon {
     position: absolute;
-    bottom: 0.75rem;
-    right: 0.85rem;
-    font-size: var(--font-size-sm);
+    top: 0;
+    right: -1rem;
+    font-size: var(--font-size-xs);
     color: var(--text-muted);
-    transition: color 0.15s ease;
+    opacity: 0;
+    transition: opacity 0.15s ease;
 }
 
 button.stat-cards__card:hover .stat-cards__copy-icon {
-    color: var(--action);
+    opacity: 1;
 }
 
 .stat-cards__copy-icon--copied {
     color: var(--diff-added);
+    opacity: 1;
+}
 }

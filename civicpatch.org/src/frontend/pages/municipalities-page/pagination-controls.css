@@ -1,3 +1,4 @@
+@layer components {
 .municipalities-pagination {
   display: flex;
   align-items: center;
@@ -31,4 +32,5 @@
   background: var(--text-default);
   border-color: var(--text-default);
   color: var(--bg);
+}
 }

@@ -1,3 +1,4 @@
+@layer components {
 /* ── civ-badge ── */
 
 civ-badge {
@@ -48,7 +49,6 @@ civ-badge {
     background: color-mix(in srgb, var(--diff-added) 12%, transparent);
 }
 
-
 .civ-badge--global {
     color: var(--level-global);
     border: 1px solid var(--level-global);
@@ -72,4 +72,5 @@ civ-badge {
     background: var(--surface);
     color: var(--text);
     max-width: 260px;
+}
 }

@@ -1,3 +1,4 @@
+@layer components {
 /* ── Login page ──────────────────────────────────────────────────────────────*/
 
 .login-page {
@@ -10,4 +11,4 @@
   align-items: center;
   text-align: center;
 }
-
+}

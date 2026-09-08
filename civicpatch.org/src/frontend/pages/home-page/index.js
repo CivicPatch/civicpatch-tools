@@ -95,13 +95,6 @@ function HomePage() {
 
   return html`
     <div class="home-page">
-      <hgroup>
-        <h1>Find your local representatives</h1>
-        <p>
-          Find contact information for local government officials across the
-          U.S.
-        </p>
-      </hgroup>
       <div class="home-page__grid">
         <div class="home-page__select-col">
           <div class="home-page__finder">

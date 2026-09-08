@@ -1,3 +1,4 @@
+@layer components {
 /* Merge picker — step 2, what survives. Step 1 is inline on the editor. */
 
 /* styles.css caps dialogs at 32rem, which cuts the result column off. The
@@ -178,4 +179,5 @@
 
 .merge-picker__back:hover {
   color: var(--text-default);
+}
 }

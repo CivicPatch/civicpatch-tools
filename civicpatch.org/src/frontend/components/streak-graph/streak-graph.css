@@ -1,3 +1,4 @@
+@layer components {
 .streak-graph {
   position: relative;
   display: flex;
@@ -111,4 +112,5 @@
 
 .streak-graph__day--active {
   background: color-mix(in srgb, var(--success) calc(var(--day-opacity, 1) * 100%), transparent);
+}
 }

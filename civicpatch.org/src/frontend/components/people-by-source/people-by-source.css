@@ -1,3 +1,4 @@
+@layer components {
 /* ── Source comparison table ── */
 
 /* table-layout: fixed, or the origin-source label ("Google Gemini") sets its
@@ -36,4 +37,5 @@
     margin: 0.35rem 0 0;
     font-size: var(--font-size-xs);
     color: var(--text-muted);
+}
 }

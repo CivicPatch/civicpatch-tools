@@ -1,3 +1,4 @@
+@layer components {
 .map-container {
   position: relative;
   width: 100%;
@@ -43,7 +44,7 @@
   font-size: 0.8rem;
   font-weight: 600;
   line-height: 1;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
 }
 
 .map-reset-btn:hover {
@@ -91,7 +92,7 @@
   padding: 0.4rem 0.6rem;
   font-size: 0.72rem;
   line-height: 1;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
 }
 
 .map-legend__item {
@@ -141,9 +142,10 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 0.45rem 0.6rem;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
 }
 
 .map-tooltip-popup .maplibregl-popup-tip {
   display: none;
+}
 }

@@ -1,4 +1,4 @@
-import "../../components/section-header/section-header.css";
+import "../../components/panel/panel.css";
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { fetchJobIssues, fetchIssueCounts, flagIssue, dismissIssues } from "../../api.js";
@@ -244,13 +244,11 @@ function IssuesSection(host: SectionHost) {
   `;
 
   return html`
-    <section class="issues-page__section">
-      <div class="section-header" @click=${() => host.dispatchEvent(new CustomEvent(SECTION_TOGGLE_EVENT, { bubbles: true, composed: true }))}>
-        <h2 class="section-title section-title--info">
-          ${showArchived ? config.archivedTitle : config.title}
-          <span class="section-count">${total || ""}</span>
-        </h2>
-        <i class="fa-solid fa-chevron-down btn-icon${open ? " btn-icon--rotated" : ""}"></i>
+    <section class="panel issues-page__section">
+      <div class="panel__cap issues-page__cap" @click=${() => host.dispatchEvent(new CustomEvent(SECTION_TOGGLE_EVENT, { bubbles: true, composed: true }))}>
+        <b>${showArchived ? config.archivedTitle : config.title}</b>
+        <span>${total || ""}</span>
+        <i class="panel__cap-right fa-solid fa-chevron-down btn-icon${open ? " btn-icon--rotated" : ""}"></i>
       </div>
       ${open ? html`${filters}${loading ? html`<div>Loading…</div>` : table}` : null}
     </section>

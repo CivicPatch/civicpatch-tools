@@ -1,3 +1,4 @@
+@layer components {
 .source-content-debug-modal__link {
   display: block;
   margin-bottom: 0.75rem;
@@ -9,4 +10,5 @@
   padding: 0.75rem;
   max-height: 60vh;
   overflow-y: auto;
+}
 }

@@ -1,3 +1,4 @@
+@layer components {
 .civ-tab-bar {
     display: flex;
     gap: 0.25rem;
@@ -36,4 +37,5 @@
 .civ-tab--active[class*="color-"] {
     color: rgb(var(--_c));
     border-bottom-color: rgb(var(--_c));
+}
 }

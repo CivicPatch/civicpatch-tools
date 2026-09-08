@@ -1,3 +1,4 @@
+@layer components {
 /* The edit modal (spec §6) — the Detail editor mounted with one person, plus a
    sidebar for walking the set it was opened from. */
 
@@ -364,4 +365,5 @@
 
 .review-modal__body .person-editor__control :is(input, select) {
   font-size: var(--font-size-md);
+}
 }

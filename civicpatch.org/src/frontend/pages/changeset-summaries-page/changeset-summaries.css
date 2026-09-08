@@ -1,3 +1,4 @@
+@layer components {
 /* Changeset activity across every state. One row per state: what is waiting on a reviewer, a
    strip of what ran each day, and what came of it. */
 
@@ -167,7 +168,7 @@
 .cs-row__state {
   flex: 0 0 var(--cs-state-w);
   font-weight: 700;
-  text-transform: uppercase;
+  text-transform: lowercase;
 }
 
 /* Fixed widths so the figures line up into columns a reader can scan down. */
@@ -473,4 +474,5 @@
   color: var(--text-muted);
   text-decoration: underline;
   cursor: pointer;
+}
 }
