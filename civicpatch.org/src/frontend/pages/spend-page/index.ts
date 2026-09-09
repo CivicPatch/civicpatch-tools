@@ -22,6 +22,7 @@ import {
   type GlobalScrapePanel,
 } from "../pipelines-page/scrape-settings.js";
 import "./global-budget-modal.ts";
+import { SectionNav, adminSection } from "../../components/section-nav/index.js";
 
 const WINDOW_DAYS = 30;
 
@@ -131,6 +132,10 @@ function SpendPage() {
         ${renderLedger(rows)}
       </div>
 
+      <div class="sectioned">
+      ${SectionNav("admin", adminSection(permissions), "/spend")}
+      <div class="secbody">
+
       ${budget
         ? renderBudget(budget, !!permissions.can_write_global_config, () => setEditingBudget(true))
         : nothing}
@@ -162,6 +167,8 @@ function SpendPage() {
       ${ordered.length
         ? html`<div class="spend-page__list">${ordered.map(renderRow)}</div>`
         : html`<p class="spend-page__empty">No spend recorded.</p>`}
+      </div>
+      </div>
     </main>
   `;
 }

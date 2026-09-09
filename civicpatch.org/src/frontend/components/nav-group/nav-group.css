@@ -1,0 +1,72 @@
+@layer components {
+.nav-group {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.nav-group__caret {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0.2rem;
+  font-size: 0.6rem;
+  opacity: 0.7;
+  transition: opacity 0.15s ease;
+}
+
+.nav-group__caret:hover {
+  opacity: 1;
+  color: var(--text);
+}
+
+/* Flush against the link (no margin-top) rather than floating below it with a real
+   gap: a `:hover` gap is dead space the mouse has to cross in a straight line to
+   reach the menu, and drifting off that line for a moment (which is normal, nobody
+   moves the mouse in a perfect diagonal) drops out of :hover and closes it before
+   arrival. The border itself reads as the separation now, so padding stays even
+   on all sides rather than padded out on top to fake the old gap. */
+.nav-group__menu {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 10rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.35rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  z-index: 200;
+}
+
+.nav-group__menu--open {
+  display: flex;
+}
+
+/* Hover only where hover is real — a mouse or trackpad. Touch never matches this,
+   so the caret's click-toggle stays the only way in there, same as any other
+   disclosure control has to be on a screen with no hover state. */
+@media (hover: hover) and (pointer: fine) {
+  .nav-group:hover .nav-group__menu {
+    display: flex;
+  }
+}
+
+.nav-group__menu-item {
+  padding: 0.4rem 0.6rem;
+  font-size: var(--font-size-md);
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.nav-group__menu-item:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+}

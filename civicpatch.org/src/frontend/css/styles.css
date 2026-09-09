@@ -136,6 +136,11 @@ del {
 
 /* ── Dialog / modal ─────────────────────────────────────────────────────────── */
 
+/* A real default width, not a shrink-to-fit one: `width: max-content` looked fine for
+   a one-line confirm dialog but left every richer modal (a form, a multi-column list)
+   fighting for room — four separate `dialog[open]:has(...)` overrides already existed
+   just to undo it. Modals that genuinely need more still override width/max-width the
+   same way; this just means "just some text and two buttons" no longer needs one. */
 dialog[open] {
   z-index: 9999 !important;
   position: fixed !important;
@@ -144,9 +149,9 @@ dialog[open] {
   border: none;
   padding: 0;
   background: transparent;
+  width: min(90vw, 32rem);
   max-width: min(90vw, 32rem);
   max-height: 90vh;
-  width: max-content;
 }
 
 dialog[open]::backdrop {
@@ -189,7 +194,12 @@ dialog[open] > article > section {
   /* Stop scroll chaining: reaching the end of the modal must not hand the wheel to the
      page behind it. */
   overscroll-behavior: contain;
-  scrollbar-gutter: stable;
+  /* Not `stable`: most modals (confirms, short forms) never scroll, and reserving
+     gutter space they never use read as a spurious empty scrollbar. The few modals
+     with genuinely long content (a roster, a long list) take a small one-time layout
+     shift when a scrollbar appears instead — cheaper than a permanent dead strip on
+     every other modal in the app. */
+  scrollbar-gutter: auto;
   /* full-bleed to the article edges and re-pad (like header/footer) so the
      scrollbar sits at the edge with content padded clear of it */
   margin-left: calc(var(--space) * -1);

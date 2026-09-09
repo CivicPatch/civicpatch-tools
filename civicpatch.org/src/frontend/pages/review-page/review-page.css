@@ -7,33 +7,17 @@
     gap: 1.5rem;
 }
 
-/* The landing page's content tops out at 600px on its own; the session workspace beside it
-   needs the full rail. Opts out of .page-content rather than fighting its layer. */
+/* The session workspace beside this needs the full rail; the landing page gets its own
+   width here instead, same cap as every other page's .page-content rail. Opts out of
+   .page-content rather than fighting its layer. */
 .review-page--narrow {
     width: 100%;
-    max-width: 760px;
-    margin: 0 auto;
-}
-
-.review-page__stat-cards {
-    display: block;
-    width: 100%;
-    max-width: 600px;
+    max-width: var(--page-width);
     margin: 0 auto;
 }
 
 .review-page__stat-cards .stat-cards {
     margin-bottom: 0;
-}
-
-.review-page__main-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    align-items: stretch;
 }
 
 .review-page__streak-card {
@@ -106,21 +90,6 @@
     margin-bottom: 0;
 }
 
-.review-page__goal-control {
-    display: flex;
-    align-items: baseline;
-    gap: 0.4rem;
-}
-
-.review-page__goal-label {
-    font-size: var(--font-size-xs);
-    color: var(--text-muted);
-}
-
-.review-page__gear-btn {
-    font-size: var(--font-size-md);
-}
-
 .review-page__ready-count {
     font-size: var(--font-size-2xl);
     font-weight: 700;
@@ -174,49 +143,6 @@
     margin: 0;
 }
 
-.review-page__modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-}
-
-.review-page__modal {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-}
-
-.review-page__modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-weight: 700;
-    font-size: var(--font-size-base);
-}
-
-.review-page__custom-goal {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.review-page__custom-goal input {
-    margin: 0;
-}
-
-.review-page__modal-save {
-    width: 100%;
-}
-
 .review-page__goal-chips {
     display: flex;
     gap: 0.5rem;
@@ -241,6 +167,11 @@
     border-color: var(--action);
 }
 
+.review-page__goal-chip:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
 .review-page__start-btn {
     width: 100%;
     padding: 0.85rem;
@@ -250,12 +181,6 @@
     font-weight: 800;
     cursor: pointer;
     letter-spacing: 0.03em;
-}
-
-.review-page__goal-met {
-    font-size: var(--font-size-md);
-    color: var(--text-muted);
-    margin: 0;
 }
 
 /* the component host dissolves so its .review-page__header child becomes a direct
@@ -511,10 +436,6 @@ dialog[open]:has(.report-issue-modal__form) {
 }
 
 @media (max-width: 768px) {
-    .review-page__main-grid {
-        grid-template-columns: 1fr;
-    }
-
     /* dissolve the header so only the slim step-nav stays sticky; the action
        buttons drop into normal flow below it, reclaiming the vertical space */
     .review-page__header {
@@ -652,8 +573,53 @@ dialog[open]:has(.report-issue-modal__form) {
 /* Keyboard focus has to be visible on the page's primary actions — several of
    these are styled buttons whose default outline was suppressed. */
 .review-page__start-btn:focus-visible,
-.review-page__gear-btn:focus-visible {
+.review-page__goal-chip:focus-visible {
   outline: var(--focus-ring-width) solid var(--action-focus);
   outline-offset: 2px;
 }
+
+.review-page__recent-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 0;
+}
+
+.review-page__recent-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-page__recent-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.review-page__recent-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.review-page__recent-summary {
+    font-size: var(--font-size-sm);
+    color: var(--text);
+}
+
+.review-page__recent-meta {
+    display: flex;
+    gap: 0.5rem;
+    font-size: var(--font-size-xs);
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+}
+
+.review-page__recent-empty {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    margin: 0;
+}
+
 }

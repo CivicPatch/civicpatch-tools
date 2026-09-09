@@ -1,0 +1,77 @@
+@layer components {
+/* Wider than the shared default (32rem) — three columns of pages need more room
+   than the base size gives before auto-fit has anything to distribute into. A
+   command-menu also reads better with some presence rather than hugging its own
+   content tightly, so it gets its own height floor too, with the content centered
+   in the extra room rather than left pinned to the top.  */
+dialog[open]:has(.nav-shortcuts-list) {
+  width: min(92vw, 40rem);
+  max-width: min(92vw, 40rem);
+}
+
+dialog[open]:has(.nav-shortcuts-list) > article {
+  min-height: min(60vh, 22rem);
+}
+
+dialog[open]:has(.nav-shortcuts-list) > article > section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nav-shortcuts-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.15em 0.5em;
+  background: none;
+}
+
+.nav-shortcuts-hint:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+.nav-shortcuts-hint-key {
+  font-weight: 700;
+}
+
+.nav-shortcuts-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 1.25rem;
+}
+
+.nav-shortcuts-section-label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  padding: 0 0.5rem 0.4rem;
+}
+
+.nav-shortcuts-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.5rem;
+  font-size: var(--font-size-sm);
+  color: var(--text);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+
+.nav-shortcuts-row:hover {
+  background: var(--surface-2);
+}
+
+.nav-shortcuts-row civ-badge {
+  flex: none;
+}
+}

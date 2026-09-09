@@ -10,7 +10,8 @@ import "../../components/panel/panel.css";
 import "../../components/status-badge.js";
 import "../../components/confirm-modal/confirm-modal.ts";
 import { Pagination } from "../../components/pagination/index.js";
-import { SectionNav } from "../../components/section-nav/index.js";
+import { SectionNav, adminSection } from "../../components/section-nav/index.js";
+import { useAuth } from "../../hooks/useAuth.js";
 // Diff-chip classes are page-scoped to activity-page — imported here, not copied, so this
 // section can never show something the real page does not.
 import "../activity-page/activity-page.css";
@@ -129,17 +130,23 @@ function renderConfirmModal() {
 }
 
 function GalleryPage() {
+  const { permissions } = useAuth();
   return html`
     <main class="gallery-page page-content">
       <div class="page-focal">
         <h1 class="page-focal__title">Components</h1>
       </div>
+      <div class="sectioned">
+      ${SectionNav("admin", adminSection(permissions), "/gallery")}
+      <div class="secbody">
       ${renderPanel()}
       ${renderSectionNav()}
       ${renderPagination()}
       ${renderStatusBadges()}
       ${renderDiffChips()}
       ${renderConfirmModal()}
+      </div>
+      </div>
     </main>
   `;
 }

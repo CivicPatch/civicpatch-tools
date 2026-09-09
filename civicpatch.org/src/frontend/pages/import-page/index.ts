@@ -23,6 +23,9 @@ import "./import-preview.js";
 import "./batch-review.js";
 import "../../components/panel/panel.css";
 import "./import-page.css";
+import { useAuth } from "../../hooks/useAuth.js";
+import { SectionNav, manageSection } from "../../components/section-nav/index.js";
+import { useSummary } from "../../hooks/useSummary.js";
 
 const POLL_INTERVAL_MS = 2000;
 const TABS = [{ label: "Import" }, { label: "History" }];
@@ -70,6 +73,10 @@ function resultsPanel(results: PublishResult[]) {
 }
 
 function ImportPage() {
+  const { permissions } = useAuth();
+  // Global, not scoped to any page's own state — the sidebar badge is a constant
+  // "how much is waiting overall" figure, the same wherever it appears.
+  const globalSummary = useSummary(true, "");
   const [preview, setPreview] = useState<ImportPreview | null>(null);
   // The batch being tracked, kept apart from its progress: starting an import sets this, and
   // that is what makes the poll below begin. Folding them together is why a fresh import used
@@ -215,6 +222,9 @@ function ImportPage() {
       <div class="page-focal">
         <h1 class="page-focal__title">Sheet import</h1>
       </div>
+      <div class="sectioned">
+      ${SectionNav("manage", manageSection(permissions, globalSummary?.open_prs), "/imports")}
+      <div class="secbody">
       <p class="import-hint">
         The curated roster sheet, read as a scrape. Importing raises a review
         card per locality. Publishing stays your decision.
@@ -273,6 +283,8 @@ function ImportPage() {
             ></batch-review>
           </section>`
         : null}
+      </div>
+      </div>
     </main>
   `;
 }

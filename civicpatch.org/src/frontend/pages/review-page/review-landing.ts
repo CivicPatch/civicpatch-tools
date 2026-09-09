@@ -1,9 +1,8 @@
 import { html } from "lit-html";
-import { component, useState } from "haunted";
-import { reviewsReady } from "../review-session-page/review-progress.js";
+import { component } from "haunted";
 import "../../components/stat-cards/index.js";
 import "../../components/streak-graph/streak-graph.js";
-import "../../components/goal-ring/goal-ring.js";
+import "../../components/leaderboard/index.js";
 
 function formatDuration(seconds) {
   if (seconds == null) return "—";
@@ -13,82 +12,82 @@ function formatDuration(seconds) {
   return s > 0 ? `${m}m ${s}s` : `${m}m`;
 }
 
-function ReviewLanding({ stateCode, stats, error, dailyGoal, effectiveGoal, resumable, onGoalChange, onStartReview }) {
-  const [goalModalOpen, setGoalModalOpen] = useState(false);
-  const [pendingGoal, setPendingGoal] = useState(dailyGoal);
+function formatDate(iso) {
+  return new Date(iso).toLocaleString();
+}
 
-  // Resume is always available; a fresh review needs a state, an unmet goal, and something to review.
-  const canStart = resumable || (stateCode && stats.today_resolved < effectiveGoal && stats.available_count > 0);
+// How many cards to pull into the next session. A session simply ends early if
+// there aren't enough cards to reach it — review-page/index.ts is explicit about
+// that — so this is what you want, not a running daily target: pick fresh each
+// time, capped to what's actually there.
+export const SESSION_COUNTS = [5, 10, 25, 50];
+
+function ReviewLanding({ stateCode, stats, error, sessionCount, resumable, onSessionCountChange, onStartReview }) {
+  const available = stats.available_count ?? 0;
+  const canStart = resumable || (stateCode && available > 0);
 
   return html`
     <main class="review-page review-page--narrow">
       <div class="page-focal">
-        <h1 class="page-focal__title">Review</h1>
+        <h1 class="page-focal__title">Overview</h1>
       </div>
 
-      <div class="review-page__main-grid">
-        <div class="panel review-page__streak-card">
-          <civ-streak-graph .dailyCounts=${stats.daily_counts ?? []} .streak=${stats.streak} .currentDate=${stats.current_date ?? null}></civ-streak-graph>
-        </div>
-        <div class="panel review-page__ready-card">
-          <div class="panel__cap">
-            <b>Ready for Review</b>
-            ${stateCode ? html`
-            <div class="panel__cap-right review-page__goal-control">
-              <span class="review-page__goal-label">Goal: ${dailyGoal}</span>
-              <button class="review-page__gear-btn btn-icon" @click=${() => {
-                setPendingGoal(dailyGoal);
-                setGoalModalOpen(true);
-              }}>
-                <i class="fa-solid fa-gear"></i>
-              </button>
-            </div>
-            ` : ""}
+      <div class="panel review-page__ready-card">
+        <div class="panel__cap"><b>Ready for Review</b></div>
+        ${!stateCode ? html`
+          <div class="review-page__ready-empty">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="review-page__ready-empty-title">Pick a state to begin</span>
+            <span>Use the state selector in the top nav to load reviews.</span>
           </div>
-          ${!stateCode ? html`
-            <div class="review-page__ready-empty">
-              <i class="fa-solid fa-location-dot"></i>
-              <span class="review-page__ready-empty-title">Pick a state to begin</span>
-              <span>Use the state selector in the top nav to load reviews.</span>
-            </div>
-          ` : html`
-            <span class="review-page__ready-count">${reviewsReady(stats.available_count ?? 0, dailyGoal, stats.today_resolved ?? 0)}</span>
-            <civ-goal-ring .resolved=${stats.today_resolved} .goal=${dailyGoal}></civ-goal-ring>
-            <span class="review-page__ready-sub">to review, ${stats.available_count} available in ${stateCode.toUpperCase()}</span>
-            ${stats.today_resolved >= effectiveGoal ? html`
-              <p class="review-page__goal-met">Daily goal of ${effectiveGoal} reached. Update via ⚙ to continue.</p>
-            ` : ""}
-            ${error ? html`<p class="review-page__error">${error}</p>` : ""}
-            <button class="review-page__start-btn btn-gradient" @click=${onStartReview} ?disabled=${!canStart}>${resumable ? "Resume" : "Review"} <i class="fa-solid fa-arrow-right"></i></button>
-          `}
-        </div>
+        ` : html`
+          <span class="review-page__ready-count">${available}</span>
+          <span class="review-page__ready-sub">${available
+            ? `available in ${stateCode.toUpperCase()}, worst first`
+            : `nothing waiting in ${stateCode.toUpperCase()}`}</span>
+          ${error ? html`<p class="review-page__error">${error}</p>` : ""}
+          <div class="review-page__goal-chips">
+            ${SESSION_COUNTS.map((n) => html`
+              <button
+                class="review-page__goal-chip ${n === sessionCount ? "review-page__goal-chip--active" : ""}"
+                ?disabled=${n > available}
+                @click=${() => onSessionCountChange(n)}
+              >${n}</button>
+            `)}
+          </div>
+          <button class="review-page__start-btn btn-gradient" @click=${onStartReview} ?disabled=${!canStart}>${resumable ? "Resume" : "Review"} <i class="fa-solid fa-arrow-right"></i></button>
+        `}
       </div>
+
+      <div class="panel review-page__streak-card">
+        <civ-streak-graph .dailyCounts=${stats.daily_counts ?? []} .streak=${stats.streak} .currentDate=${stats.current_date ?? null}></civ-streak-graph>
+      </div>
+
       <stat-cards class="review-page__stat-cards" .stats=${[
         { key: "today", label: "Today", value: stats.today_resolved, sub: "reviews" },
         { key: "all_time", label: "All time", value: stats.all_time_resolved, sub: "reviews" },
         { key: "best_streak", label: "Best streak", value: stats.best_streak ?? 0, sub: "days" },
         { key: "avg_time", label: "Avg time", value: formatDuration(stats.avg_seconds_per_review), sub: "per review (30d)" },
       ]}></stat-cards>
-      ${goalModalOpen ? html`
-        <div class="review-page__modal-backdrop" @click=${() => setGoalModalOpen(false)}>
-          <div class="review-page__modal" @click=${(e) => e.stopPropagation()}>
-            <div class="review-page__modal-header">
-              <span>Daily Goal</span>
-              <button class="modal-close" @click=${() => setGoalModalOpen(false)}>✕</button>
-            </div>
-            <input
-              type="number"
-              min="1"
-              .value=${String(pendingGoal)}
-              @input=${(e) => setPendingGoal(parseInt(e.target.value, 10) || 1)}
-            />
-            <button class="review-page__modal-save" @click=${() => {
-              onGoalChange(pendingGoal);
-              setGoalModalOpen(false);
-            }}>Save</button>
+
+      <civ-leaderboard></civ-leaderboard>
+
+      <div class="panel review-page__recent-card">
+        <div class="panel__cap"><b>Your Recent Activity</b></div>
+        ${stats.recent_activity?.length ? html`
+          <div class="review-page__recent-list">
+            ${stats.recent_activity.map((entry) => html`
+              <div class="review-page__recent-row">
+                <span class="review-page__recent-summary">${entry.summary}</span>
+                <span class="review-page__recent-meta">
+                  ${entry.jurisdiction_name ? html`<span>${entry.jurisdiction_name}</span>` : ""}
+                  <span data-visual-volatile>${formatDate(entry.created_at)}</span>
+                </span>
+              </div>
+            `)}
           </div>
-        </div>
-      ` : ""}
+        ` : html`<p class="review-page__recent-empty">Nothing published yet.</p>`}
+      </div>
     </main>
   `;
 }

@@ -12,6 +12,9 @@ import {
 import "../../components/review-log/index.js";
 import "./summary/index.js";
 import "./review-card-list/index.js";
+import { SectionNav, manageSection } from "../../components/section-nav/index.js";
+import "../../components/select-state/select-state.js";
+import { useSummary } from "../../hooks/useSummary.js";
 
 const API_URL = config.apiUrl;
 
@@ -33,9 +36,22 @@ function getIntParam(key: string, fallback: number, allowed: number[] | null = n
   return val;
 }
 
+const STATE_QUERY_KEY = "state";
+
 function getStateFromUrl(): string {
-  const val = new URLSearchParams(window.location.search).get("state");
+  const val = new URLSearchParams(window.location.search).get(STATE_QUERY_KEY);
   return val ? val.toLowerCase() : "";
+}
+
+// Bulk review spans every state by default now — an unfiltered queue is a valid
+// worklist, not an error state — so this is its own filter with its own URL param,
+// not a fallback to the navbar's stored default.
+function setStateInUrl(code: string): void {
+  const params = new URLSearchParams(window.location.search);
+  if (code) params.set(STATE_QUERY_KEY, code);
+  else params.delete(STATE_QUERY_KEY);
+  const qs = params.toString();
+  window.history.replaceState({}, "", `${window.location.pathname}${qs ? "?" + qs : ""}`);
 }
 
 function getViewFromUrl(): "detail" | "quick" | null {
@@ -52,10 +68,17 @@ function setPrParamsInUrl(page: number, perPage: number): void {
 
 function BulkReviewPage() {
   const { permissions } = useAuth();
-  const [defaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", { ttl: PERSIST_FOREVER });
   const [defaultView, setDefaultView] = useLocalStorage(STORAGE_KEYS.QUEUE_VIEW, "quick", { ttl: PERSIST_FOREVER });
-  const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
+  const [stateCode, setStateCode] = useState(getStateFromUrl());
+  const handleStateChange = (e: CustomEvent<{ state: string }>) => {
+    const code = (e.detail.state || "").toLowerCase();
+    setStateCode(code);
+    setStateInUrl(code);
+  };
   const [summary, setSummary] = useState<any>(null);
+  // Global, not scoped to this page's own state filter — the sidebar badge is a
+  // constant "how much is waiting overall" figure, the same wherever it appears.
+  const globalSummary = useSummary(true, "");
   const [pullRequests, setPullRequests] = useState<PrItem[]>([]);
   const { actionState, entries: reviewLogEntries, trackApprove, trackReject } = useReviewActions();
   const [loading, setLoading] = useState(true);
@@ -76,7 +99,6 @@ function BulkReviewPage() {
   }, []);
 
   useEffect(() => {
-    if (!stateCode) return;
     setLoading(true);
     setError(null);
     fetchPullRequestsWithData(stateCode, page, perPage, viewMode)
@@ -125,33 +147,39 @@ function BulkReviewPage() {
     <main class="bulk-review page-content">
       <div class="page-focal">
         <h1 class="page-focal__title">Bulk review</h1>
-        ${stateCode && summary
+        ${summary
           ? html`<bulk-review-summary .summary=${summary}></bulk-review-summary>`
           : null}
         ${permissions.can_view_queue_page_errors
-          ? html`<a class="page-focal__end btn btn-sm" href="${API_URL}/api/v1/requests/people-export.csv?state=${stateCode}" download>Export people</a>`
+          ? html`<a class="page-focal__end btn btn-sm" href="${API_URL}/api/v1/requests/people-export.csv${stateCode ? `?state=${stateCode}` : ""}" download>Export people</a>`
           : null}
       </div>
 
-      ${!stateCode ? html`<p class="bulk-review__select-state-prompt">Select a state to get started.</p>` : null}
+      <div class="sectioned">
+        ${SectionNav("manage", manageSection(permissions, globalSummary?.open_prs), "/bulk-review")}
+        <div class="secbody">
+          <div class="bulk-review__state-filter">
+            <label>State</label>
+            <civ-select-state .selected=${stateCode} @state-change=${handleStateChange}></civ-select-state>
+          </div>
 
-      ${stateCode ? html`
-        <bulk-review-card-list
-          .cards=${pullRequests}
-          .actionState=${actionState}
-          .loading=${loading}
-          .error=${error}
-          .page=${page}
-          .perPage=${perPage}
-          .totalPages=${totalPages}
-          .viewMode=${viewMode}
-          @approve=${handleApprove}
-          @reject=${handleReject}
-          .onViewChange=${handleViewChange}
-          .onPageChange=${handlePageChange}
-          .onPerPageChange=${handlePerPageChange}
-        ></bulk-review-card-list>
-      ` : null}
+          <bulk-review-card-list
+            .cards=${pullRequests}
+            .actionState=${actionState}
+            .loading=${loading}
+            .error=${error}
+            .page=${page}
+            .perPage=${perPage}
+            .totalPages=${totalPages}
+            .viewMode=${viewMode}
+            @approve=${handleApprove}
+            @reject=${handleReject}
+            .onViewChange=${handleViewChange}
+            .onPageChange=${handlePageChange}
+            .onPerPageChange=${handlePerPageChange}
+          ></bulk-review-card-list>
+        </div>
+      </div>
     </main>
     <civ-review-log .entries=${reviewLogEntries}></civ-review-log>
   `;
