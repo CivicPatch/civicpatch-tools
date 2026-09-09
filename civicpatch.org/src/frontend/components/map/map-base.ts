@@ -114,7 +114,7 @@ export function createMap(engine: MapEngine, container: HTMLElement): maplibregl
       glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
     },
     center: [-98.5, 39.5],
-    zoom: 3.5,
+    zoom: 3,
   });
   return m;
 }

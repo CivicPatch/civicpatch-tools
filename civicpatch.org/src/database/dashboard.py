@@ -1,6 +1,10 @@
 from database.people import IS_ON_THE_ROSTER
 from database.database import get_pool
-from database.changeset_predicates import LAST_COLLECTED_AT, LAST_COLLECTED_JOIN
+from database.changeset_predicates import (
+    AVAILABLE_FOR_REVIEW,
+    LAST_COLLECTED_AT,
+    LAST_COLLECTED_JOIN,
+)
 from database.jurisdictions import FRESH_SINCE_SQL
 
 
@@ -49,9 +53,16 @@ async def get_dashboard() -> dict:
             ) pc ON pc.jurisdiction_ocdid = j.jurisdiction_ocdid
             WHERE j.status = 'active'
               AND j.level = 'local'
+        ),
+        review_counts AS (
+            SELECT j.state, COUNT(*)::int AS needs_review
+            FROM changesets
+            JOIN jurisdictions j ON j.jurisdiction_ocdid = changesets.jurisdiction_ocdid
+            WHERE {AVAILABLE_FOR_REVIEW}
+            GROUP BY j.state
         )
         SELECT
-            state,
+            lf.state,
             COUNT(*)::int                                                     AS known,
             COUNT(*) FILTER (WHERE has_url)::int                               AS scrapeable,
             COUNT(*) FILTER (WHERE has_url AND has_people AND is_fresh)::int   AS covered_fresh,
@@ -63,10 +74,12 @@ async def get_dashboard() -> dict:
             COUNT(*) FILTER (WHERE has_people AND NOT is_fresh)::int          AS status_stale,
             COUNT(*) FILTER (WHERE NOT has_people AND has_url)::int           AS status_gap,
             COUNT(*) FILTER (WHERE NOT has_people AND NOT has_url)::int       AS status_untracked,
+            COALESCE(MAX(rc.needs_review), 0)                                 AS needs_review,
             {FRESH_SINCE_SQL}                                                 AS cutoff
-        FROM local_flags
-        GROUP BY state
-        ORDER BY state
+        FROM local_flags lf
+        LEFT JOIN review_counts rc ON rc.state = lf.state
+        GROUP BY lf.state
+        ORDER BY lf.state
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -76,7 +89,7 @@ async def get_dashboard() -> dict:
     states: dict = {}
     for (
         state, known, scrapeable, covered_fresh, covered_stale, officials,
-        status_fresh, status_stale, status_gap, status_untracked, cutoff,
+        status_fresh, status_stale, status_gap, status_untracked, needs_review, cutoff,
     ) in rows:
         states[state] = {
             "state": state,
@@ -96,6 +109,7 @@ async def get_dashboard() -> dict:
                     "gap": status_gap,
                     "untracked": status_untracked,
                 },
+                "needs_review": needs_review,
             },
         }
     return {"states": states}

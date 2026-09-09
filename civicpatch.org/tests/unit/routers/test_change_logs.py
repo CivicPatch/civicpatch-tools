@@ -3,8 +3,29 @@ from unittest.mock import AsyncMock, patch
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+from lib.auth import get_optional_user
+from schemas.common import Identity, UserRole
 
 from routers.api import change_logs as change_logs_router
+
+_IDENTITY = Identity(
+    type="cookie",
+    provider="supabase",
+    provider_user_id="user-uuid",
+    email="user@example.com",
+    role=UserRole.DEFAULT.value,
+)
+
+PUBLICATION_ROW = {
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
+    "jurisdiction_name": "Seattle city",
+    "state": "wa",
+    "author_name": "michelle@civicpatch.org",
+    "author_role": "admins",
+    "commit_url": "https://github.com/org/open-data/commit/abc123",
+    "created_at": "2026-05-24T13:27:00+00:00",
+    "review_count": 1,
+}
 
 ROW = {
     "id": "cl-1",
@@ -27,6 +48,14 @@ ROW = {
 
 @pytest.fixture
 def client() -> TestClient:
+    app = FastAPI()
+    app.dependency_overrides[get_optional_user] = lambda: _IDENTITY
+    app.include_router(change_logs_router.get_router(), prefix="/change_logs")
+    return TestClient(app)
+
+
+@pytest.fixture
+def anonymous_client() -> TestClient:
     app = FastAPI()
     app.include_router(change_logs_router.get_router(), prefix="/change_logs")
     return TestClient(app)
@@ -132,3 +161,79 @@ def test_jurisdiction_path_null_when_no_ocdid(client):
         response = client.get("/change_logs", params={"authors": "all"})
 
     assert response.json()["data"][0]["jurisdiction_path"] is None
+
+
+@pytest.mark.unit
+def test_change_logs_rejects_anonymous_visitor(anonymous_client):
+    response = anonymous_client.get("/change_logs")
+    assert response.status_code == 403
+
+
+# ── GET /change_logs/recent-publications (public) ──────────────────────
+
+
+@pytest.mark.unit
+def test_recent_publications_is_open_to_an_anonymous_visitor(anonymous_client):
+    with patch(
+        "database.change_logs.get_recent_publications",
+        new_callable=AsyncMock,
+        return_value=[PUBLICATION_ROW],
+    ):
+        response = anonymous_client.get("/change_logs/recent-publications")
+
+    assert response.status_code == 200
+    entry = response.json()["data"][0]
+    assert entry["jurisdiction_name"] == "Seattle city"
+    assert entry["commit_url"] == "https://github.com/org/open-data/commit/abc123"
+
+
+@pytest.mark.unit
+def test_recent_publications_carries_no_review_detail(anonymous_client):
+    """The public feed must never leak the raw diff or the internal summary text — only
+    the fields `PublicPublication` declares reach the response."""
+    with patch(
+        "database.change_logs.get_recent_publications",
+        new_callable=AsyncMock,
+        return_value=[PUBLICATION_ROW],
+    ):
+        response = anonymous_client.get("/change_logs/recent-publications")
+
+    entry = response.json()["data"][0]
+    assert "changes" not in entry
+    assert "summary" not in entry
+
+
+@pytest.mark.unit
+def test_recent_publications_uses_the_requested_limit(anonymous_client):
+    with patch(
+        "database.change_logs.get_recent_publications", new_callable=AsyncMock, return_value=[]
+    ) as mock_get:
+        anonymous_client.get("/change_logs/recent-publications", params={"limit": 5})
+
+    mock_get.assert_awaited_once_with(5)
+
+
+@pytest.mark.unit
+def test_recent_publications_defaults_to_a_small_limit(anonymous_client):
+    with patch(
+        "database.change_logs.get_recent_publications", new_callable=AsyncMock, return_value=[]
+    ) as mock_get:
+        anonymous_client.get("/change_logs/recent-publications")
+
+    mock_get.assert_awaited_once_with(10)
+
+
+@pytest.mark.unit
+def test_recent_publications_carries_a_review_count(anonymous_client):
+    """Grouping happens in the DB query — the router just has to carry the count through
+    rather than dropping it, so a heavily-reviewed town says so instead of looking like
+    one town filled several of the feed's slots."""
+    row = {**PUBLICATION_ROW, "review_count": 3}
+    with patch(
+        "database.change_logs.get_recent_publications",
+        new_callable=AsyncMock,
+        return_value=[row],
+    ):
+        response = anonymous_client.get("/change_logs/recent-publications")
+
+    assert response.json()["data"][0]["review_count"] == 3

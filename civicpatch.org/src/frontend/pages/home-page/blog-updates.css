@@ -1,0 +1,33 @@
+@layer components {
+.blog-updates__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.blog-updates__row {
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-updates__title {
+  /* Flex items stretch to fill the cross axis by default — without this, the anchor's
+     hit box covers the row's full width, not just the visible title text. */
+  align-self: flex-start;
+  font-weight: 600;
+  color: var(--text-default);
+}
+
+/* The global link rule (elements.css) can't reach this — it sets `color`, and this
+   class's own `color: var(--text-default)` above wins at equal specificity by coming
+   later. Every other link in the app gets hover feedback; this needs its own copy. */
+.blog-updates__title:hover {
+  color: var(--action-hover);
+  text-decoration: underline;
+}
+
+.blog-updates__meta {
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+}
+}

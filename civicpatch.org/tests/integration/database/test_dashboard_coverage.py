@@ -159,3 +159,41 @@ async def test_status_counts_and_cutoff():
     # rather than an exact timestamp, which is server-computed at query time.
     cutoff = datetime.datetime.fromisoformat(civicpatch["cutoff"])
     assert _STALE_SCRAPE < cutoff < _FRESH_SCRAPE
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_needs_review_counts_open_review_pool_changesets():
+    # An open, unpublished scrape changeset — start_run + complete_run without the
+    # publish step collect_and_publish takes — is exactly AVAILABLE_FOR_REVIEW's pool.
+    # register_scrape_changeset mints the changeset alone; AVAILABLE_FOR_REVIEW also
+    # requires a source_records row, which only ingest's own writer produces.
+    await _insert("zz-awaiting", url="https://a", collected_at=None, people=False)
+    run_id = await factories.start_run("zz-awaiting")
+    changeset_id = await factories.complete_run(run_id)
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            INSERT INTO source_records
+                (changeset_id, jurisdiction_ocdid, name, label, source_url)
+            VALUES (%s, 'zz-awaiting', 'A Name', 'Mayor', 'https://a')
+            """,
+            (changeset_id,),
+        )
+        await conn.commit()
+
+    civicpatch = (await get_dashboard())["states"]["zz"]["civicpatch"]
+    assert civicpatch["needs_review"] == 1
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_needs_review_excludes_published_changesets():
+    # collect_and_publish's changeset is resolved (published), so it never enters the
+    # pool — needs_review must stay 0, not double-count what covered_fresh already counts.
+    await _insert("zz-fresh", url="https://f", collected_at=_FRESH_SCRAPE, people=True)
+
+    civicpatch = (await get_dashboard())["states"]["zz"]["civicpatch"]
+    assert civicpatch["needs_review"] == 0

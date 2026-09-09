@@ -1,0 +1,42 @@
+@layer components {
+.recent-publications__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.recent-publications__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 0.6rem;
+  row-gap: 0.1rem;
+}
+
+.recent-publications__name {
+  /* Grid items stretch to fill their cell by default — without this, the anchor's
+     hit box covers the whole 1fr column, not just the visible text. */
+  justify-self: start;
+  font-weight: 600;
+  color: var(--text-default);
+}
+
+/* The global link rule (elements.css) can't reach this — it sets `color`, and this
+   class's own `color: var(--text-default)` above wins at equal specificity by coming
+   later. Every other link in the app gets hover feedback; this needs its own copy. */
+.recent-publications__name:hover {
+  color: var(--action-hover);
+  text-decoration: underline;
+}
+
+.recent-publications__state {
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  text-align: right;
+}
+
+.recent-publications__meta {
+  grid-column: 1 / -1;
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+}
+}

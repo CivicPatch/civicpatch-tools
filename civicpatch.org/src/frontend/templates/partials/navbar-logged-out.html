@@ -1,0 +1,19 @@
+<nav class="nav--logged-out">
+  <a href="/" class="nav-brand">
+    <span class="nav-brand-icon"><i class="fa-solid fa-landmark"></i></span>
+    civicpatch
+    <span class="nav-beta-badge">BETA</span>
+  </a>
+  <div class="nav-links">
+    <a
+      href="/blog"
+      class="nav-link{% if request.url.path.startswith('/blog') %} nav-link--active{% endif %}"
+      >blog</a
+    >
+  </div>
+  <div class="nav-controls">
+    <a class="login-link" href="/login"
+      ><i class="fa-solid fa-envelope"></i> sign in</a
+    >
+  </div>
+</nav>

@@ -1,5 +1,5 @@
 import "./jurisdiction-search.css";
-import { component, useState } from "haunted";
+import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { searchJurisdictions } from "../../api.js";
 import { jurisdictionOcdidToFriendly } from "../ocdid-utils.js";
@@ -40,12 +40,16 @@ type JurisdictionSearchHost = HTMLElement & {
   state?: string;
   level?: string;
   placeholder?: string;
+  // Set from outside (an example chip) to fill and run the search as if typed.
+  // A string that never repeats twice in a row, so clicking the same chip again re-fires.
+  seedQuery?: string;
 };
 
 function JurisdictionSearch(this: JurisdictionSearchHost) {
   const hostState = this.state;
   const hostLevel = this.level;
   const hostPlaceholder = this.placeholder || PLACEHOLDER;
+  const hostSeedQuery = this.seedQuery;
   const [results, setResults] = useState<SearchResult[]>([]);
   const [metadata, setMetadata] = useState<SearchMetadata | null>(null);
   const [query, setQuery] = useState("");
@@ -71,6 +75,15 @@ function JurisdictionSearch(this: JurisdictionSearchHost) {
       throw error;
     }
   };
+
+  useEffect(() => {
+    if (!hostSeedQuery) return;
+    setQuery(hostSeedQuery);
+    fetchSuggestions({ query: hostSeedQuery, page: 1 });
+    // Focusing is what actually opens the results dropdown — setting the value
+    // alone leaves it closed, since that state lives on the input's own focus handler.
+    this.querySelector("input")?.focus();
+  }, [hostSeedQuery]);
 
   const handleSelect = (result: SearchResult) =>
     this.dispatchEvent(

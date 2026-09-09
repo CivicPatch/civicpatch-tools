@@ -214,4 +214,13 @@ dialog[open] > article > footer {
   justify-content: flex-end;
   align-items: center;
 }
+
+/* The section is the dialog's default initial-focus target (nothing else inside is
+   always focusable) and sits flush against article's overflow:hidden edge and the
+   header/footer above/below it. An outward outline gets clipped on the sides and
+   painted over top/bottom by those siblings — drawing inward avoids both. */
+dialog[open] > article > section:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 var(--focus-ring-width) var(--action-focus);
+}
 }

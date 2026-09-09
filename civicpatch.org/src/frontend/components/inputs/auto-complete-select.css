@@ -144,9 +144,15 @@
   cursor: not-allowed;
 }
 
+/* Always present (even empty) so picking an option doesn't shove the input down. Line-height
+   is pinned, not just min-height — otherwise populated text uses the inherited line-height
+   (taller than 1.2em) while the empty placeholder sits at exactly min-height, and the
+   mismatch between the two still shifts things by a couple of pixels. */
 .autocomplete-selected {
   display: block;
-  margin-top: 0.5rem;
+  line-height: 1.2;
+  min-height: 1.2em;
+  margin-bottom: 0.5rem;
   color: var(--text-muted);
 }
 }

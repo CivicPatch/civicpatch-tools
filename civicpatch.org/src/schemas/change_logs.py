@@ -86,6 +86,20 @@ class ChangeLogEntry(BaseModel):
     summary: str
 
 
+class PublicPublication(BaseModel):
+    """A publish event, stripped to what an anonymous visitor may see: no author diff, no
+    internal review detail. `commit_url` is a link to the open-data commit, already public."""
+
+    jurisdiction_ocdid: str
+    jurisdiction_name: str | None
+    state: str | None
+    author_name: str
+    author_role: str
+    commit_url: str | None
+    created_at: datetime
+    review_count: int
+
+
 class ChangedJurisdiction(BaseModel):
     """One jurisdiction the feed says changed, what kinds of change reached it, and which
     changesets they belonged to.

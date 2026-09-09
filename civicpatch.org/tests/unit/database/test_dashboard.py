@@ -33,9 +33,9 @@ async def test_get_dashboard_shapes_rows_per_state():
     cutoff = datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc)
     rows = [
         # (state, known, scrapeable, covered_fresh, covered_stale, officials,
-        #  status_fresh, status_stale, status_gap, status_untracked, cutoff)
-        ("co", 271, 250, 90, 30, 850, 90, 30, 130, 21, cutoff),
-        ("tx", 1221, 900, 300, 100, 3200, 300, 100, 700, 121, cutoff),
+        #  status_fresh, status_stale, status_gap, status_untracked, needs_review, cutoff)
+        ("co", 271, 250, 90, 30, 850, 90, 30, 130, 21, 12, cutoff),
+        ("tx", 1221, 900, 300, 100, 3200, 300, 100, 700, 121, 45, cutoff),
     ]
     cur = _make_cursor(rows)
     with patch("database.dashboard.get_pool", AsyncMock(return_value=_make_pool(cur))):
@@ -61,6 +61,7 @@ async def test_get_dashboard_shapes_rows_per_state():
                         "gap": 130,
                         "untracked": 21,
                     },
+                    "needs_review": 12,
                 },
             },
             "tx": {
@@ -81,6 +82,7 @@ async def test_get_dashboard_shapes_rows_per_state():
                         "gap": 700,
                         "untracked": 121,
                     },
+                    "needs_review": 45,
                 },
             },
         }
