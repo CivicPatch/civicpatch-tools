@@ -10,7 +10,7 @@ import { landingUrl, STATE_PARAM } from "../review-routes.js";
 import { StateKind } from "./review-state.js";
 import "./review-session.js";
 import "../../components/review-log/index.js";
-import "../review-page/review-page.css";
+import "./review-session-page.css";
 
 function getStateFromUrl() {
   return (new URLSearchParams(window.location.search).get(STATE_PARAM) || "").toLowerCase();
@@ -58,11 +58,11 @@ function ReviewSessionPage() {
 
   const renderBody = () => {
     if (fsm.kind === StateKind.LOADING) {
-      return html`<main class="review-page page-content"><p>Loading...</p></main>`;
+      return html`<main class="review-session page-content"><p>Loading...</p></main>`;
     }
     if (fsm.kind === StateKind.ERROR) {
-      return html`<main class="review-page page-content">
-        <p class="review-page__error">${fsm.message}</p>
+      return html`<main class="review-session page-content">
+        <p class="review-session__error">${fsm.message}</p>
         <a class="btn btn-sm" href=${landingUrl(stateCode)}>Back to review</a>
       </main>`;
     }

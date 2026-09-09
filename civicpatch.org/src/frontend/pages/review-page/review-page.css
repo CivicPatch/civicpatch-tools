@@ -1,9 +1,14 @@
 @layer components {
   .review-page {
-    padding: 1rem 1.5rem;
+    padding-block: 1rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+  }
+  @media (max-width: 640px) {
+    .review-page {
+      padding-inline: 0.5rem;
+    }
   }
   .review-page--narrow {
     width: 100%;
@@ -104,6 +109,39 @@
     font-size: var(--font-size-md);
     color: var(--text-muted);
   }
+  .review-page__state-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .review-page__state-chip {
+    --control-text: var(--contrast);
+    --control-bg: transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition:
+      border-color 0.15s,
+      background-color 0.15s,
+      color 0.15s;
+  }
+  .review-page__state-chip--active {
+    --control-text: var(--action);
+    --control-bg: color-mix(in srgb, var(--action) 12%, transparent);
+    border-color: var(--action);
+  }
+  .review-page__state-chip-count {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    opacity: 0.7;
+  }
   .review-page__ready-empty {
     display: flex;
     flex-direction: column;
@@ -159,8 +197,8 @@
       color 0.15s;
   }
   .review-page__goal-chip--active {
-    --control-text: var(--action-text);
-    --control-bg: var(--action);
+    --control-text: var(--action);
+    --control-bg: color-mix(in srgb, var(--action) 12%, transparent);
     border-color: var(--action);
   }
   .review-page__goal-chip:disabled {
@@ -177,184 +215,12 @@
     cursor: pointer;
     letter-spacing: 0.03em;
   }
-  review-session-controls,
-  review-session-actions {
-    display: contents;
-  }
-  .review-page__header {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    width: 100%;
-    padding: 0.6rem 1rem;
-    background: color-mix(in srgb, var(--bg) 92%, transparent);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid var(--border);
-    border-radius: 0 0 var(--radius) var(--radius);
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-  }
-  .review-page__step-nav {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    min-width: 0;
-  }
-  .review-page__actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .review-page__actions-rule {
-    max-width: 22ch;
-    font-size: var(--font-size-sm);
-    line-height: 1.2;
-    color: var(--text-muted);
-  }
-  .review-page__jurisdiction {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: var(--text);
-    text-decoration: none;
-    letter-spacing: -0.02em;
-  }
-  .review-page__jurisdiction:hover {
-    color: var(--action);
-    text-decoration: underline;
-  }
-  .review-page__jurisdiction-website {
-    font-size: var(--font-size-sm);
-    color: var(--text-muted);
-    text-decoration: none;
-    overflow-wrap: anywhere;
-  }
-  .review-page__jurisdiction-website:hover {
-    color: var(--action);
-    text-decoration: underline;
-  }
-  .review-page__dots {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.35rem;
-    max-width: 24rem;
-  }
-  .review-page__dot {
-    width: 0.7rem;
-    height: 0.7rem;
-    border-radius: 50%;
-    padding: 0;
-    border: none;
-    min-width: unset;
-    min-height: unset;
-    cursor: pointer;
-    transition:
-      opacity 0.15s,
-      transform 0.1s;
-  }
-  .review-page__dot:not(:disabled):hover {
-    opacity: 0.75;
-    transform: scale(1.2);
-  }
-  .review-page__dot--current {
-    background: var(--action);
-  }
-  .review-page__dot--resolved {
-    background: var(--success);
-  }
-  .review-page__dot--failed {
-    background: var(--diff-removed);
-  }
-  .review-page__dot--saved {
-    background: transparent;
-    box-shadow: inset 0 0 0 2px var(--success);
-  }
-  .review-page__dot--deferred {
-    background: var(--border);
-  }
-  .review-page__dot--future {
-    background: var(--border);
-    opacity: 0.25;
-    cursor: default;
-  }
-  .review-page__progress {
-    font-family: var(--font-mono);
-    font-size: var(--font-size-md);
-    color: var(--text-muted);
-    white-space: nowrap;
-  }
-  .review-page__back-btn {
-    --control-text: var(--text-muted);
-    --control-bg: transparent;
-    --control-border: transparent;
-    padding-left: 0.5rem;
-  }
-  .review-page__next-btn {
-    --control-text: var(--action);
-    --control-bg: transparent;
-    --control-border: var(--action);
-  }
   .review-page__publish-btn {
     border: none;
-  }
-  .review-page__save-btn {
-    --control-text: var(--action);
-    --control-bg: transparent;
-    --control-border: var(--border);
-  }
-  .review-page__end-btn {
-    --control-text: var(--text-muted);
-    --control-bg: transparent;
-    --control-border: var(--border);
   }
   .review-page__error {
     font-size: var(--font-size-md);
     color: var(--diff-removed);
-  }
-  .review-page__info-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    align-items: flex-start;
-    width: 100%;
-  }
-  .review-page__pr-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-  report-issue-button {
-    display: contents;
-  }
-  dialog[open]:has(.report-issue-modal__form) {
-    width: min(92vw, 34rem);
-    max-width: min(92vw, 34rem);
-  }
-  .report-issue-modal__form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .report-issue-modal__label {
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-  }
-  .report-issue-modal__textarea {
-    width: 100%;
-    resize: vertical;
-  }
-  .review-page__reported-issues {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: var(--font-size-sm);
-    color: var(--text-muted);
   }
   .review-page__review-state {
     font-size: var(--font-size-sm);
@@ -377,110 +243,6 @@
     flex-direction: column;
     gap: 1.5rem;
     min-width: 0;
-  }
-  @media (max-width: 768px) {
-    .review-page__header {
-      display: contents;
-    }
-    .review-page__step-nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      padding: 0.6rem 0.75rem;
-      background: color-mix(in srgb, var(--bg) 92%, transparent);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
-    }
-    .review-page__progress {
-      order: 1;
-      flex: 0 0 auto;
-    }
-    .review-page__step-nav .review-page__dots {
-      order: 2;
-      flex: 1 1 100%;
-      justify-content: center;
-      max-width: none;
-    }
-    .review-page__back-btn {
-      order: 3;
-      flex: 1 1 0;
-    }
-    .review-page__next-btn {
-      order: 4;
-      flex: 1 1 0;
-    }
-    .review-page__actions {
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .review-page__actions > * {
-      width: 100%;
-    }
-    .review-page__header .btn-sm,
-    .review-page__header .btn {
-      font-size: var(--font-size-base);
-    }
-  }
-  .review-page__status-banner {
-    text-align: center;
-    padding: 0.5rem 1rem;
-    font-weight: 400;
-    font-size: var(--font-size-sm);
-    text-transform: lowercase;
-    font-family: var(--font-mono);
-  }
-  .review-page__status-banner--merged {
-    background: var(--diff-added);
-    color: #fff;
-  }
-  .review-page__status-banner--closed {
-    background: var(--diff-removed);
-    color: #fff;
-  }
-  .review-page__baseline-banner {
-    max-width: var(--page-width);
-    width: 100%;
-    margin-inline: auto;
-    padding: 0.55rem 0.7rem;
-    font-size: var(--font-size-sm);
-    color: var(--text-default);
-    background: color-mix(in srgb, var(--warning) 14%, var(--surface));
-    border: 1px solid var(--warning);
-    border-radius: var(--radius);
-  }
-  .review-page__publishing {
-    max-width: var(--page-width);
-    width: 100%;
-    margin-inline: auto;
-    margin-top: 2.5rem;
-    padding: 1.5rem 1rem 1.25rem;
-    border-top: 3px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface-2);
-  }
-  .review-page__section-title {
-    margin: -1.9rem 0 0.9rem;
-    padding-right: 0.6rem;
-    display: inline-block;
-    font-size: var(--font-size-sm);
-    font-weight: 400;
-    text-transform: lowercase;
-    font-family: var(--font-mono);
-    color: var(--text-muted);
-    background: var(--surface-2);
-  }
-  .review-page__duplicate-banner {
-    max-width: var(--page-width);
-    width: 100%;
-    margin-inline: auto;
-    padding: 0.55rem 0.7rem;
-    border: 1px solid var(--diff-removed);
-    border-radius: var(--radius);
-    background: var(--diff-removed-bg);
-    font-size: var(--font-size-sm);
   }
   .review-page__start-btn:focus-visible,
   .review-page__goal-chip:focus-visible {

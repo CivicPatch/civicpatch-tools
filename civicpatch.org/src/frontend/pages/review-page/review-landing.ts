@@ -18,7 +18,7 @@ function formatDate(iso) {
 
 export const SESSION_COUNTS = [5, 10, 25, 50];
 
-function ReviewLanding({ stateCode, stats, error, sessionCount, resumable, onSessionCountChange, onStartReview }) {
+function ReviewLanding({ stateCode, stats, error, sessionCount, resumable, availableStates, onSessionCountChange, onStartReview, onPickState }) {
   const available = stats.available_count ?? 0;
   const canStart = resumable || (stateCode && available > 0);
   return html`
@@ -30,11 +30,24 @@ function ReviewLanding({ stateCode, stats, error, sessionCount, resumable, onSes
         <div class="review-page__main">
           <div class="panel review-page__ready-card">
             <div class="panel__cap"><b>Ready for Review</b></div>
+            ${availableStates.length ? html`
+              <div class="review-page__state-chips">
+                ${availableStates.map((s) => html`
+                  <button
+                    class="review-page__state-chip ${s.state_code === stateCode ? "review-page__state-chip--active" : ""}"
+                    @click=${() => onPickState(s.state_code)}
+                  >
+                    <span class="review-page__state-chip-name">${s.state_name}</span>
+                    <span class="review-page__state-chip-count">${s.available_count}</span>
+                  </button>
+                `)}
+              </div>
+            ` : ""}
             ${!stateCode ? html`
               <div class="review-page__ready-empty">
                 <i class="fa-solid fa-location-dot"></i>
-                <span class="review-page__ready-empty-title">Pick a state to begin</span>
-                <span>Use the state selector in the top nav to load reviews.</span>
+                <span class="review-page__ready-empty-title">${availableStates.length ? "Pick a state above to begin" : "Nothing to review"}</span>
+                ${availableStates.length ? "" : html`<span>Nothing is waiting for review anywhere right now.</span>`}
               </div>
             ` : html`
               <span class="review-page__ready-count">${available}</span>

@@ -19,6 +19,7 @@ const PUBLISH_EVENT = "publish-selection";
 
 type BatchReviewHost = HTMLElement & {
   review: BatchReview | null;
+  importedAt: string | null;
   busy: boolean;
 };
 
@@ -28,6 +29,12 @@ function BatchReviewPanel(host: BatchReviewHost) {
   const review = host.review;
 
   if (!review) return html``;
+
+  const importedNote = host.importedAt
+    ? html`<p class="import-hint">
+        Imported ${new Date(host.importedAt).toLocaleString()}
+      </p>`
+    : null;
 
   const pages = pageCount(review.jurisdictions);
   const visible = pageOf(review.jurisdictions, page);
@@ -132,6 +139,7 @@ function BatchReviewPanel(host: BatchReviewHost) {
   if (!review.jurisdictions.length) {
     return html`
       <h2 class="import-panel__title">Nothing changed</h2>
+      ${importedNote}
       <p class="import-hint">
         Every locality in the sheet reads exactly as it did on the last import,
         so no review cards were raised. Edit the sheet and import again.
@@ -144,6 +152,7 @@ function BatchReviewPanel(host: BatchReviewHost) {
   if (!everything.length) {
     return html`
       <h2 class="import-panel__title">Imported localities</h2>
+      ${importedNote}
       <p class="import-hint">
         Every locality in this import has been settled, so there is nothing left
         to publish. Each one says below whether it went live or was superseded
@@ -157,6 +166,7 @@ function BatchReviewPanel(host: BatchReviewHost) {
     <h2 class="import-panel__title">
       Review and publish <span>[${selected.length}]</span>
     </h2>
+    ${importedNote}
     <div class="import-toolbar">
       <label class="import-pick">
         <input

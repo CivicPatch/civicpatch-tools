@@ -5,9 +5,9 @@
 [type="reset"],
 [type="submit"],
 button {
-  --control-bg: var(--action);
+  --control-bg: transparent;
   --control-border: var(--action);
-  --control-text: var(--action-text);
+  --control-text: var(--action);
   padding: var(--control-pad-y)
     var(--control-pad-x);
   border: var(--border-width) solid var(--control-border);
@@ -253,9 +253,9 @@ input:not(
 button:not(.btn-ghost):not(.profile-modal__tab):not(.secondary):not(.role-chip):not(
     .destructive
   ) {
-  --control-bg: var(--action);
+  --control-bg: transparent;
   --control-border: var(--action);
-  --control-text: var(--action-text);
+  --control-text: var(--action);
 }
 button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(.role-chip):not(
     .profile-modal__tab

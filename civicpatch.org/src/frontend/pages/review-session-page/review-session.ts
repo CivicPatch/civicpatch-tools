@@ -275,7 +275,7 @@ function ReviewSession(host: ReviewSessionHost) {
     reloadPosts();
   };
   return html`
-    <main class="review-page page-content">
+    <main class="review-session page-content">
       ${addingPostFor
         ? html`<civ-post-add
             .jurisdictionOcdid=${jurisdictionOcdid ?? ""}
@@ -284,7 +284,7 @@ function ReviewSession(host: ReviewSessionHost) {
             @cancel=${() => setAddingPostFor(null)}
           ></civ-post-add>`
         : ""}
-      <div class="review-page__header">
+      <div class="review-session__header">
         <review-session-controls
           .progress=${progress}
           .hasSession=${hasSession}
@@ -302,17 +302,30 @@ function ReviewSession(host: ReviewSessionHost) {
           .isRejecting=${isRejecting}
           .hasSession=${hasSession}
         ></review-session-actions>
+        <div class="review-session__header-tools">
+          ${hasSourceContent
+            ? html`<button
+                class="btn btn-sm secondary"
+                @click=${() => setDebugOpen(true)}
+              >
+                Debug
+              </button>`
+            : ""}
+          <report-issue-button
+            .changesetId=${changesetId}
+          ></report-issue-button>
+        </div>
       </div>
-      ${error ? html`<p class="review-page__error">${error}</p>` : ""}
+      ${error ? html`<p class="review-session__error">${error}</p>` : ""}
       ${is_read_only
         ? html`<div
-            class="review-page__status-banner review-page__status-banner--${reviewStatus}"
+            class="review-session__status-banner review-session__status-banner--${reviewStatus}"
           >
             ${reviewStatus}
           </div>`
         : ""}
       ${duplicateIds.length
-        ? html`<div class="review-page__duplicate-banner">
+        ? html`<div class="review-session__duplicate-banner">
             <strong>
               ${duplicateIds.length}
               record${duplicateIds.length === 1 ? "" : "s"} share an id with
@@ -323,7 +336,7 @@ function ReviewSession(host: ReviewSessionHost) {
           </div>`
         : nothing}
       ${isBaseline
-        ? html`<div class="review-page__baseline-banner">
+        ? html`<div class="review-session__baseline-banner">
             <strong
               >First capture for
               ${jurisdictionName ?? "this jurisdiction"}.</strong
@@ -332,11 +345,11 @@ function ReviewSession(host: ReviewSessionHost) {
             for the first time.
           </div>`
         : ""}
-      <div class="review-page__info-row">
-        <div class="review-page__pr-meta">
+      <div class="review-session__info-row">
+        <div class="review-session__pr-meta">
           ${jurisdictionName
             ? html`<a
-                class="review-page__jurisdiction"
+                class="review-session__jurisdiction"
                 href="/${jurisdictionOcdidToPath(jurisdiction?.path)}"
                 target="_blank"
                 rel="noopener"
@@ -347,7 +360,7 @@ function ReviewSession(host: ReviewSessionHost) {
             : ""}
           ${jurisdictionWebsiteUrl
             ? html`<a
-                class="review-page__jurisdiction-website"
+                class="review-session__jurisdiction-website"
                 href=${jurisdictionWebsiteUrl}
                 target="_blank"
                 rel="noopener"
@@ -366,17 +379,6 @@ function ReviewSession(host: ReviewSessionHost) {
                 <i class="fa-solid fa-arrow-up-right-from-square"></i
               ></a>`
             : ""}
-          ${hasSourceContent
-            ? html`<button
-                class="btn btn-sm secondary"
-                @click=${() => setDebugOpen(true)}
-              >
-                Debug
-              </button>`
-            : ""}
-          <report-issue-button
-            .changesetId=${changesetId}
-          ></report-issue-button>
         </div>
       </div>
       <review-overview
@@ -391,8 +393,8 @@ function ReviewSession(host: ReviewSessionHost) {
         .assertions=${assertions ?? {}}
         .overriddenSourceValues=${overriddenSourceValues ?? {}}
       ></review-overview>
-      <section class="review-page__publishing" aria-label="Preview">
-        <h2 class="review-page__section-title">Preview</h2>
+      <section class="review-session__publishing" aria-label="Preview">
+        <h2 class="review-session__section-title">Preview</h2>
         <review-preview
           .changes=${changes}
           .cards=${cards}

@@ -1,0 +1,299 @@
+@layer components {
+  .review-session {
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .review-session--narrow {
+    width: 100%;
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+  review-session-controls,
+  review-session-actions {
+    display: contents;
+  }
+  .review-session__header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 0.6rem 1rem;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  }
+  .review-session__step-nav {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 0;
+  }
+  .review-session__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .review-session__header-tools {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: none;
+  }
+  .review-session__actions-rule {
+    max-width: 22ch;
+    font-size: var(--font-size-sm);
+    line-height: 1.2;
+    color: var(--text-muted);
+  }
+  .review-session__jurisdiction {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .review-session__jurisdiction:hover {
+    color: var(--action);
+    text-decoration: underline;
+  }
+  .review-session__jurisdiction-website {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .review-session__jurisdiction-website:hover {
+    color: var(--action);
+    text-decoration: underline;
+  }
+  .review-session__dots {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    max-width: 24rem;
+  }
+  .review-session__dot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    padding: 0;
+    border: none;
+    min-width: unset;
+    min-height: unset;
+    cursor: pointer;
+    transition:
+      opacity 0.15s,
+      transform 0.1s;
+  }
+  .review-session__dot:not(:disabled):hover {
+    opacity: 0.75;
+    transform: scale(1.2);
+  }
+  .review-session__dot--current {
+    background: var(--action);
+  }
+  .review-session__dot--resolved {
+    background: var(--success);
+  }
+  .review-session__dot--failed {
+    background: var(--diff-removed);
+  }
+  .review-session__dot--saved {
+    background: transparent;
+    box-shadow: inset 0 0 0 2px var(--success);
+  }
+  .review-session__dot--deferred {
+    background: var(--border);
+  }
+  .review-session__dot--future {
+    background: var(--border);
+    opacity: 0.25;
+    cursor: default;
+  }
+  .review-session__progress {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-md);
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .review-session__back-btn {
+    --control-text: var(--text-muted);
+    --control-bg: transparent;
+    --control-border: transparent;
+    padding-left: 0.5rem;
+  }
+  .review-session__next-btn {
+    --control-text: var(--action);
+    --control-bg: transparent;
+    --control-border: var(--action);
+  }
+  .review-session__save-btn {
+    --control-text: var(--action);
+    --control-bg: transparent;
+    --control-border: var(--border);
+  }
+  .review-session__end-btn {
+    --control-text: var(--text-muted);
+    --control-bg: transparent;
+    --control-border: var(--border);
+  }
+  .review-session__error {
+    font-size: var(--font-size-md);
+    color: var(--diff-removed);
+  }
+  .review-session__info-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .review-session__pr-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  report-issue-button {
+    display: contents;
+  }
+  dialog[open]:has(.report-issue-modal__form) {
+    width: min(92vw, 34rem);
+    max-width: min(92vw, 34rem);
+  }
+  .report-issue-modal__form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .report-issue-modal__label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+  }
+  .report-issue-modal__textarea {
+    width: 100%;
+    resize: vertical;
+  }
+  .review-session__reported-issues {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+  }
+  @media (max-width: 768px) {
+    .review-session__header {
+      display: contents;
+    }
+    .review-session__step-nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.6rem 0.75rem;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .review-session__progress {
+      order: 1;
+      flex: 0 0 auto;
+    }
+    .review-session__step-nav .review-session__dots {
+      order: 2;
+      flex: 1 1 100%;
+      justify-content: center;
+      max-width: none;
+    }
+    .review-session__back-btn {
+      order: 3;
+      flex: 1 1 0;
+    }
+    .review-session__next-btn {
+      order: 4;
+      flex: 1 1 0;
+    }
+    .review-session__actions {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .review-session__actions > * {
+      width: 100%;
+    }
+    .review-session__header .btn-sm,
+    .review-session__header .btn {
+      font-size: var(--font-size-base);
+    }
+  }
+  .review-session__status-banner {
+    text-align: center;
+    padding: 0.5rem 1rem;
+    font-weight: 400;
+    font-size: var(--font-size-sm);
+    text-transform: lowercase;
+    font-family: var(--font-mono);
+  }
+  .review-session__status-banner--merged {
+    background: var(--diff-added);
+    color: #fff;
+  }
+  .review-session__status-banner--closed {
+    background: var(--diff-removed);
+    color: #fff;
+  }
+  .review-session__baseline-banner {
+    max-width: var(--page-width);
+    width: 100%;
+    margin-inline: auto;
+    padding: 0.55rem 0.7rem;
+    font-size: var(--font-size-sm);
+    color: var(--text-default);
+    background: color-mix(in srgb, var(--warning) 14%, var(--surface));
+    border: 1px solid var(--warning);
+    border-radius: var(--radius);
+  }
+  .review-session__publishing {
+    max-width: var(--page-width);
+    width: 100%;
+    margin-inline: auto;
+    margin-top: 2.5rem;
+    padding: 1.5rem 1rem 1.25rem;
+    border-top: 3px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-2);
+  }
+  .review-session__section-title {
+    margin: -1.9rem 0 0.9rem;
+    padding-right: 0.6rem;
+    display: inline-block;
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    text-transform: lowercase;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    background: var(--surface-2);
+  }
+  .review-session__duplicate-banner {
+    max-width: var(--page-width);
+    width: 100%;
+    margin-inline: auto;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--diff-removed);
+    border-radius: var(--radius);
+    background: var(--diff-removed-bg);
+    font-size: var(--font-size-sm);
+  }
+}

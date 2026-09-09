@@ -77,7 +77,7 @@ function ReportIssueButton(host: ReportIssueButtonHost) {
     <button class="btn btn-sm secondary" @click=${handleOpen}>Report issue</button>
     ${reportedIssues.length
       ? html`
-          <ul class="review-page__reported-issues">
+          <ul class="review-session__reported-issues">
             ${reportedIssues.map(
               (issue) => html`
                 <li>
