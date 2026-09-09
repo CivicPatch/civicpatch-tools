@@ -1,24 +1,16 @@
-import { component, useEffect } from "haunted";
+import { component } from "haunted";
 import { html } from "lit";
 import { config } from "../assets/config.js";
-import { useSummary } from "../hooks/useSummary.js";
 import {
   useLocalStorage,
   PERSIST_FOREVER,
 } from "../hooks/use-local-storage.js";
 import { STORAGE_KEYS } from "../utils/storage-keys.js";
 import { useStorageSweep } from "../hooks/use-storage-sweep.js";
-import {
-  STATE_PARAM,
-  REVIEW_PATH,
-  REVIEW_SESSION_PATH,
-  landingUrl,
-} from "../pages/review-routes.ts";
-import {
-  municipalitiesUrl,
-  isMunicipalitiesPath,
-} from "../pages/municipalities-page/municipalities-routes.ts";
-import "./select-state/select-state.js";
+import "./nav-shortcuts/index.js";
+import { assignLetters, markLetterParts } from "./nav-shortcuts/letters.js";
+import { manageSection, adminSection } from "./section-nav/index.ts";
+import "./nav-group/index.js";
 import "./navbar.css";
 // Font Awesome, self-hosted. It was a CDN kit until that kit started returning
 // a bare 403 to every caller and every page in every environment lost its icons.
@@ -38,37 +30,121 @@ function getRoleTooltip(role) {
   return `Role: ${role}`;
 }
 
-function activeClass(currentPath, href) {
-  const isActive =
-    href === "/" ? currentPath === "/" : currentPath.startsWith(href);
-  return isActive ? "nav-link nav-link--active" : "nav-link";
+function isActivePath(currentPath, href) {
+  return href === "/" ? currentPath === "/" : currentPath.startsWith(href);
 }
 
-// Pages that aren't scoped to a state. On these we hide the state selector
-// (it doesn't apply) and show a static "Global" badge instead. The badge is
-// presentational only — it never touches the stored app:default-state, so the
-// user's selected state is preserved for when they return to a scoped page.
-// "/" gets an exact match (its own state selector — the "Find Representatives"
-// widget — is page-local and deliberately doesn't write app:default-state)
-// since a prefix match would swallow every route.
-const GLOBAL_ROUTES = ["/activity", "/blog", "/admin"];
-const isGlobalRoute = (currentPath) =>
-  currentPath === "/" || GLOBAL_ROUTES.some((route) => currentPath.startsWith(route));
+function activeClass(currentPath, href) {
+  return isActivePath(currentPath, href) ? "nav-link nav-link--active" : "nav-link";
+}
 
 function renderPublicLinks(currentPath) {
   return html`
-    <a href="/blog" class="${activeClass(currentPath, "/blog")}">Blog</a>
+    <a href="/blog" class="${activeClass(currentPath, "/blog")}">blog</a>
     <a
       href="/blog/volunteer"
       class="${activeClass(currentPath, "/blog/volunteer")}"
-      >Volunteer</a
+      >volunteer</a
     >
   `;
 }
 
-function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
-  const tooltip = getRoleTooltip(user.role);
+// The nav's own direct links (including "manage"/"admin", which land on a group
+// rather than a single page) get one letter each, bolded in place — a second,
+// independent assignment from the shortcut menu's own (which lists every individual
+// page instead). Built from whichever links this user actually has, so the letters
+// stay stable per-user rather than reserving one for a link nobody sees.
+function directNavItems(permissions) {
+  const items = [
+    { label: "home", href: "/" },
+    { label: "blog", href: "/blog" },
+  ];
+  if (permissions?.can_view_reviews_page) items.push({ label: "overview", href: "/review" });
+  if (permissions?.can_view_activity_page) items.push({ label: "activity", href: "/activity/changelogs" });
+  if (permissions?.can_view_queue_page) items.push({ label: "manage", href: "/bulk-review" });
+  if (permissions?.can_manage_roles) items.push({ label: "admin", href: "/admin" });
+  return items;
+}
+
+function renderLabel(label, letter) {
+  const [before, bolded, after] = markLetterParts(label, letter);
+  return bolded ? html`${before}<b>${bolded}</b>${after}` : label;
+}
+
+// Everything the ? menu can jump to: the direct links plus each group's real pages,
+// same grouping as the nav bar (Manage/Admin land on the group's first page; this is
+// where their siblings show up).
+function shortcutSections(permissions) {
+  const sections = [
+    { label: "pages", items: directNavItems(permissions).filter((i) => i.label !== "manage" && i.label !== "admin") },
+  ];
+  if (permissions?.can_view_queue_page) sections.push({ label: "manage", items: manageSection(permissions) });
+  if (permissions?.can_manage_roles) sections.push({ label: "admin", items: adminSection(permissions) });
+  return sections;
+}
+
+// "pages" — the plain links, left side of the bar. "manage"/"admin" land on a
+// group rather than a single page: the label still navigates straight to the
+// group's default page in one click, and civ-nav-group adds a caret that reveals
+// the rest of the group (see nav-group/index.js for the hover/click split).
+function renderAuthedLinks(user, currentPath) {
   const active = (href) => activeClass(currentPath, href);
+  const navLetters = assignLetters(directNavItems(user.permissions));
+  const letterOf = (label) => navLetters.find((i) => i.label === label).letter;
+  return html`
+    <a href="/" class="${active("/")}">${renderLabel("home", letterOf("home"))}</a>
+    <a href="/blog" class="${active("/blog")}">${renderLabel("blog", letterOf("blog"))}</a>
+    ${user.permissions?.can_view_reviews_page
+      ? html`<a href="/review" class="${active("/review")}">${renderLabel("overview", letterOf("overview"))}</a>`
+      : ""}
+    ${user.permissions?.can_view_activity_page
+      ? html`<a href="/activity/changelogs" class="${active("/activity")}">${renderLabel("activity", letterOf("activity"))}</a>`
+      : ""}
+    ${user.permissions?.can_view_queue_page
+      ? html`<civ-nav-group
+          .label=${renderLabel("manage", letterOf("manage"))}
+          .href=${"/bulk-review"}
+          .active=${isActivePath(currentPath, "/bulk-review")}
+          .items=${manageSection(user.permissions)}
+        ></civ-nav-group>`
+      : ""}
+    ${user.permissions?.can_manage_roles
+      ? html`<civ-nav-group
+          .label=${renderLabel("admin", letterOf("admin"))}
+          .href=${"/admin"}
+          .active=${isActivePath(currentPath, "/admin")}
+          .items=${adminSection(user.permissions)}
+        ></civ-nav-group>`
+      : ""}
+  `;
+}
+
+// Mobile has no room for hover flyouts or a toggle-behind-a-hamburger — both showed
+// as confusing dead ends rather than "nicer". Every page is listed flat and always
+// visible instead (same set the ? menu already computes) — nothing to fail to open —
+// with "manage"/"admin" kept as a small label plus an indent, so the grouping that
+// still exists on desktop isn't lost, just no longer interactive.
+function renderMobileLinks(user, currentPath) {
+  const active = (href) => activeClass(currentPath, href);
+  return html`
+    ${shortcutSections(user.permissions).map((section) => {
+      const grouped = section.label !== "pages";
+      return html`
+        ${grouped ? html`<span class="nav-mobile-links__label">${section.label}</span>` : ""}
+        ${section.items.map((item) => html`
+          <a
+            href="${item.href}"
+            class="${active(item.href)}${grouped ? " nav-mobile-links__item--grouped" : ""}"
+          >${item.label.toLowerCase()}</a>
+        `)}
+      `;
+    })}
+  `;
+}
+
+// Identity + the ? shortcut menu — right side of the bar, opposite the links.
+function renderAuthedControls(user) {
+  const tooltip = getRoleTooltip(user.role);
   return html`
     <span class="user-info" data-tooltip="${tooltip}" data-placement="bottom">
       ${user.avatar_url
@@ -78,63 +154,7 @@ function renderAuthed(user, summary, currentPath, stateCode, onStateChange) {
         >${user.display_name || user.email || "User"}</span
       >
     </span>
-    ${isGlobalRoute(currentPath)
-      ? html`<span class="nav-state-badge">Global</span>`
-      : html`<civ-select-state
-          class="nav-state-selector"
-          .selected=${stateCode}
-          @state-change=${onStateChange}
-        ></civ-select-state>`}
-    <a href="/" class="${active("/")}">Home</a>
-    <a href="/blog" class="${active("/blog")}">Blog</a>
-    ${user.permissions?.can_view_reviews_page
-      ? html`<a href="/review" class="${active("/review")}">Reviews</a>`
-      : ""}
-    ${user.permissions?.can_view_activity_page
-      ? html`<a href="/activity/changelogs" class="${active("/activity")}">Activity</a>`
-      : ""}
-    ${user.permissions?.can_view_queue_page
-      ? html`<details class="nav-dropdown">
-          <summary class="nav-link nav-dropdown-trigger">
-            Manage <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
-          </summary>
-          <div class="nav-dropdown__menu">
-            <a href="/bulk-review" class="${active("/bulk-review")}">Bulk review
-              <span class="nav-count ${summary == null ? "nav-count--hidden" : ""}"
-                >${summary?.open_prs ?? 0}</span
-              ></a>
-            <a href="/pipeline-runs" class="${active("/pipeline-runs")}">Pipeline runs</a>
-            ${user.permissions?.can_write_config
-              ? html`<a href="/roles" class="${active("/roles")}">Roles</a>`
-              : ""}
-            ${user.permissions?.can_write_config
-              ? html`<a href="/imports" class="${active("/imports")}">Sheet import</a>`
-              : ""}
-          </div>
-        </details>`
-      : ""}
-    ${user.permissions?.can_manage_roles
-      ? html`<details class="nav-dropdown">
-          <summary class="nav-link nav-dropdown-trigger">
-            Admin <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
-          </summary>
-          <div class="nav-dropdown__menu">
-            <a href="/admin" class="${active("/admin")}">Users</a>
-            ${user.permissions?.can_edit_spend
-              ? html`<a href="/spend" class="${active("/spend")}">Spend</a>`
-              : ""}
-            ${user.permissions?.can_batch_scrape
-              ? html`<a href="/pipelines" class="${active("/pipelines")}">Pipelines</a>`
-              : ""}
-            ${user.permissions?.can_view_issues_page
-              ? html`<a href="/issues" class="${active("/issues")}">Issues</a>`
-              : ""}
-            ${user.permissions?.can_view_gallery_page
-              ? html`<a href="/gallery" class="${active("/gallery")}">Components</a>`
-              : ""}
-          </div>
-        </details>`
-      : ""}
+    <civ-nav-shortcuts .sections=${shortcutSections(user.permissions)}></civ-nav-shortcuts>
   `;
 }
 
@@ -147,67 +167,11 @@ function Navbar(host) {
     userData = null;
   }
   const isAuthed = userData?.authenticated;
-  const canViewBulkReview = isAuthed && userData.permissions?.can_view_queue_page;
-  const [stateCode, setStateCode] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", {
-    ttl: PERSIST_FOREVER,
-  });
 
   // Here because the navbar is the only component on every page, not because
   // sweeping is navigation's business.
   useStorageSweep();
 
-  // Native <details> dropdowns don't light-dismiss; close any open one when a
-  // click lands outside it (the contains() check skips the summary that just
-  // opened it) or on Escape. One document listener, work only while open.
-  useEffect(() => {
-    const closeOnOutsideClick = (e) => {
-      for (const dropdown of host.querySelectorAll(".nav-dropdown[open]")) {
-        if (!dropdown.contains(e.target)) dropdown.open = false;
-      }
-    };
-    const closeOnEscape = (e) => {
-      if (e.key !== "Escape") return;
-      for (const dropdown of host.querySelectorAll(".nav-dropdown[open]")) {
-        dropdown.open = false;
-      }
-    };
-    document.addEventListener("click", closeOnOutsideClick);
-    document.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.removeEventListener("click", closeOnOutsideClick);
-      document.removeEventListener("keydown", closeOnEscape);
-    };
-  }, []);
-
-  const handleNavStateChange = (e) => {
-    const newState = (e.detail.state || "").toLowerCase();
-    setStateCode(newState);
-    const path = window.location.pathname;
-    // On the review routes, switch state with a full navigation back to the new
-    // state's landing — an in-place URL change would leave the previous state's
-    // in-memory session showing. The landing's Review/Resume button takes it from
-    // there.
-    if (path === REVIEW_PATH || path === REVIEW_SESSION_PATH) {
-      window.location.href = landingUrl(newState);
-      return;
-    }
-    // State is a path segment here (/{state}/local), not a query param — the
-    // default in-place branch below would leave a stale/mismatched path
-    // (/wa/local?state=co) if we didn't navigate instead.
-    if (isMunicipalitiesPath(path)) {
-      window.location.href = municipalitiesUrl(newState);
-      return;
-    }
-    const params = new URLSearchParams(window.location.search);
-    if (newState) params.set(STATE_PARAM, newState);
-    else params.delete(STATE_PARAM);
-    const qs = params.toString();
-    window.history.replaceState(
-      {},
-      "",
-      `${window.location.pathname}${qs ? "?" + qs : ""}`,
-    );
-  };
   const [theme, setTheme] = useLocalStorage(STORAGE_KEYS.THEME, "", {
     ttl: PERSIST_FOREVER,
   });
@@ -220,10 +184,10 @@ function Navbar(host) {
   const toggleTheme = () =>
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   const onLogoutClick = () => localStorage.removeItem(STORAGE_KEYS.DEFAULT_STATE);
-  const summary = useSummary(canViewBulkReview, stateCode);
   const currentPath = window.location.pathname;
+  const navClass = !isAuthed ? "nav--logged-out" : "";
   return html`
-    <nav class="${!isAuthed ? "nav--logged-out" : ""}">
+    <nav class="${navClass}">
       <a href="/" class="nav-brand">
         <span class="nav-brand-icon">
           <i class="fa-solid fa-landmark"></i>
@@ -231,17 +195,20 @@ function Navbar(host) {
         CivicPatch
         <span class="nav-beta-badge">BETA</span>
       </a>
-      ${isAuthed
-        ? html`<a
-            href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(
-              window.location.href,
-            )}"
-            class="nav-logout"
-            @click=${onLogoutClick}
-            ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
-          >`
-        : ""}
       <div class="nav-links">
+        ${isAuthed
+          ? renderAuthedLinks(userData, currentPath)
+          : renderPublicLinks(currentPath)}
+      </div>
+      ${isAuthed
+        ? html`<div class="nav-mobile-links">${renderMobileLinks(userData, currentPath)}</div>`
+        : ""}
+      <div class="nav-controls">
+        ${isAuthed
+          ? renderAuthedControls(userData)
+          : html`<a class="login-link" href="/login"
+              ><i class="fa-solid fa-envelope"></i> sign in</a
+            >`}
         <button
           class="theme-toggle"
           @click=${toggleTheme}
@@ -255,19 +222,15 @@ function Navbar(host) {
           ></i>
         </button>
         ${isAuthed
-          ? renderAuthed(
-              userData,
-              summary,
-              currentPath,
-              stateCode,
-              handleNavStateChange,
-            )
-          : html`
-              ${renderPublicLinks(currentPath)}
-              <a class="login-link" href="/login"
-                ><i class="fa-solid fa-envelope"></i> Sign in</a
-              >
-            `}
+          ? html`<a
+              href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(
+                window.location.href,
+              )}"
+              class="nav-logout"
+              @click=${onLogoutClick}
+              ><i class="fa-solid fa-right-from-bracket"></i> logout</a
+            >`
+          : ""}
       </div>
     </nav>
   `;

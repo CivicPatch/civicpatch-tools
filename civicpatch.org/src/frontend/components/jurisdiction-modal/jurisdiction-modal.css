@@ -63,17 +63,11 @@
   z-index: 120;
 }
 
-/* dialog[open] is width:max-content globally, so a modal's width is whatever its content
-   happens to be. Officials rows want a predictable, readable measure. */
+/* Wider than the shared default (32rem) — officials rows want a predictable,
+   readable measure that the base size can't give them. */
 dialog[open]:has(.jurisdiction-modal) {
   width: min(94vw, 56rem);
   max-width: none;
-}
-
-/* The shared dialog section reserves a scrollbar gutter, but here the inner body is the
-   only thing that scrolls — so that gutter is dead space beside the real scrollbar. */
-dialog[open]:has(.jurisdiction-modal) > article > section {
-  scrollbar-gutter: auto;
 }
 
 /* Details */

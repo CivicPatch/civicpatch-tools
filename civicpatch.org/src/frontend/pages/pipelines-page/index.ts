@@ -19,6 +19,8 @@ import {
 // Four places under a dollar, matching `formatUsd` in spend-page/spend.ts — a per-run cap of
 // a fraction of a cent should not read as "$0.00".
 import { formatUsd } from "../spend-page/spend.js";
+import { useAuth } from "../../hooks/useAuth.js";
+import { SectionNav, adminSection } from "../../components/section-nav/index.js";
 
 const COLS = [
   { key: "cadence", label: "cadence" },
@@ -103,6 +105,7 @@ function renderRow(
 }
 
 function PipelinesPage() {
+  const { permissions } = useAuth();
   const [panels, setPanels] = useState<StateScrapePanel[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [editingState, setEditingState] = useState<string | null>(null);
@@ -140,6 +143,10 @@ function PipelinesPage() {
         <h1 class="page-focal__title">Pipelines</h1>
       </div>
 
+      <div class="sectioned">
+      ${SectionNav("admin", adminSection(permissions), "/pipelines")}
+      <div class="secbody">
+
       <div class="pipelines-page__list">
         ${renderHead()}
         ${panels.map((panel) =>
@@ -168,6 +175,8 @@ function PipelinesPage() {
             @cancel=${() => setConfirmingState(null)}
           ></civ-confirm-modal>`
         : nothing}
+      </div>
+      </div>
     </main>
   `;
 }

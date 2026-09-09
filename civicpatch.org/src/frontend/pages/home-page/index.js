@@ -11,6 +11,7 @@ import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/badge/badge.js";
 import "../../components/leaderboard/index.js";
+import "../../components/select-state/select-state.js";
 import "../../components/progress-dashboard/locality-gaps.js";
 import "../../components/people-directory/people-directory.ts";
 import "../../components/map/browse-map.ts";

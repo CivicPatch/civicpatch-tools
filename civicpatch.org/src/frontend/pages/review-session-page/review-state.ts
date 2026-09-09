@@ -54,6 +54,13 @@ export type CurrentEntry = {
 
 export type SessionMeta = { id: string; daily_goal: number };
 
+export type RecentActivityEntry = {
+  type: string;
+  jurisdiction_name: string | null;
+  created_at: string;
+  summary: string;
+};
+
 export type Stats = {
   today_resolved: number;
   streak: number;
@@ -62,6 +69,7 @@ export type Stats = {
   claimed_count: number;
   best_streak: number;
   avg_seconds_per_review: number | null;
+  recent_activity: RecentActivityEntry[];
 };
 
 export const DEFAULT_STATS: Stats = {
@@ -72,6 +80,7 @@ export const DEFAULT_STATS: Stats = {
   claimed_count: 0,
   best_streak: 0,
   avg_seconds_per_review: null,
+  recent_activity: [],
 };
 
 export type ReviewState =

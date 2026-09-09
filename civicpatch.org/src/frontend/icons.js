@@ -5,7 +5,8 @@
 // see names built at runtime, so those are listed here by hand and noted below.
 
 // Includes names no scan can find: arrow-up/down (municipalities table),
-// ATTENTION_COPY, FIELD_ICON, FALLBACK_ICONS (leaderboard), sun/moon (theme toggle).
+// ATTENTION_COPY, FIELD_ICON, FALLBACK_ICONS (leaderboard), sun/moon (theme toggle),
+// bars/xmark (mobile nav toggle).
 export const SOLID = [
   "angles-up",
   "apple-whole",
@@ -15,6 +16,7 @@ export const SOLID = [
   "arrow-right-to-bracket",
   "arrow-up",
   "arrow-up-right-from-square",
+  "bars",
   "beer-mug-empty",
   "bottle-water",
   "calendar-day",

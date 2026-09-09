@@ -1,6 +1,18 @@
 @layer components {
 /* ── Issues page ── */
 
+.issues-page__state-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.issues-page__state-filter label {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
 .issues-page__filters {
     display: flex;
     align-items: center;

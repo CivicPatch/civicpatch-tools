@@ -1,8 +1,11 @@
 from typing import Any
+from core.change_logs import summarize_change_log
 from database.database import get_pool
 from database.changeset_predicates import AVAILABLE_FOR_REVIEW
 from psycopg.rows import namedtuple_row
 from shared.utils.date_utils import STREAK_TIMEZONE
+
+RECENT_ACTIVITY_LIMIT = 6
 
 
 async def get_leaderboard() -> list[dict]:
@@ -198,6 +201,20 @@ async def get_review_stats(
             )
             avg_row = await cur.fetchone()
 
+            await cur.execute(
+                """
+                SELECT cl.type, cl.changes, cl.created_at,
+                       COALESCE(j.data->>'name', cl.jurisdiction_ocdid) AS jurisdiction_name
+                FROM change_logs cl
+                LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = cl.jurisdiction_ocdid
+                WHERE cl.user_id = %s
+                ORDER BY cl.created_at DESC
+                LIMIT %s
+                """,
+                (user_id, RECENT_ACTIVITY_LIMIT),
+            )
+            recent_rows = await cur.fetchall()
+
     return {
         "today_resolved": stats.today_resolved,  # type: ignore[union-attr]
         "streak": streak_row.length if streak_row else 0,  # type: ignore[union-attr]
@@ -208,4 +225,13 @@ async def get_review_stats(
         "current_date": stats.current_date.isoformat(),  # type: ignore[union-attr]
         "best_streak": best_streak_row.best_streak,  # type: ignore[union-attr]
         "avg_seconds_per_review": avg_row.avg_seconds,  # type: ignore[union-attr]
+        "recent_activity": [
+            {
+                "type": row.type,  # type: ignore[union-attr]
+                "jurisdiction_name": row.jurisdiction_name,  # type: ignore[union-attr]
+                "created_at": row.created_at.isoformat(),  # type: ignore[union-attr]
+                "summary": summarize_change_log(row.type, row.changes),  # type: ignore[union-attr]
+            }
+            for row in recent_rows
+        ],
     }

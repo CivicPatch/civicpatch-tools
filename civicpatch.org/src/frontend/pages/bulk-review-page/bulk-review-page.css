@@ -49,11 +49,15 @@
     text-underline-offset: 4px;
 }
 
-/* ── Empty and prompt states ── */
+.bulk-review__state-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
 
-.bulk-review__select-state-prompt {
+.bulk-review__state-filter label {
+    font-size: var(--font-size-sm);
     color: var(--text-muted);
-    text-align: center;
-    margin-top: 3rem;
 }
 }

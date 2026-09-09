@@ -9,6 +9,7 @@ import {
   revokeInvite,
 } from "../../api.js";
 import { useAuth } from "../../hooks/useAuth.js";
+import { SectionNav, adminSection } from "../../components/section-nav/index.js";
 import {
   DEFAULT_ROLE,
   ROLES_META,
@@ -76,7 +77,7 @@ function changedMessage(
 }
 
 function AdminPage() {
-  const { user: currentUser } = useAuth();
+  const { user: currentUser, permissions } = useAuth();
   const currentUserId: string | null = currentUser?.user_id ?? null;
 
   const [users, setUsers] = useState<AdminUser[]>([]);
@@ -241,6 +242,9 @@ function AdminPage() {
           Invite user
         </button>
       </div>
+      <div class="sectioned">
+      ${SectionNav("admin", adminSection(permissions), "/admin")}
+      <div class="secbody">
       ${pendingInvites.length > 0
         ? html`
             <section class="admin-page__pending">
@@ -382,7 +386,8 @@ function AdminPage() {
             ></invite-user-modal>
           `
         : null}
-
+      </div>
+      </div>
     </main>
   `;
 }

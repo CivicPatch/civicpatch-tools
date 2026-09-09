@@ -6,6 +6,8 @@ import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.
 import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { fetchActivePipelineRuns } from "../../api.js";
 import "./active-runs/index.js";
+import { SectionNav, manageSection } from "../../components/section-nav/index.js";
+import { useSummary } from "../../hooks/useSummary.js";
 
 const PER_PAGE_CHOICES = [10, 25, 50];
 
@@ -32,6 +34,9 @@ function InFlightPage() {
   const { permissions } = useAuth();
   const [defaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", { ttl: PERSIST_FOREVER });
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
+  // Global, not scoped to this page's own state — the sidebar badge is a constant
+  // "how much is waiting overall" figure, the same wherever it appears.
+  const globalSummary = useSummary(true, "");
   const [runs, setRuns] = useState<any[]>([]);
   const [page, setPage] = useState(getIntParam("page", 1));
   const [perPage, setPerPage] = useState(getIntParam("per_page", 25, PER_PAGE_CHOICES));
@@ -78,20 +83,25 @@ function InFlightPage() {
           : null}
       </div>
 
-      ${loaded && runs.length === 0
-        ? html`<p class="pipeline-runs__empty">No runs in progress.</p>`
-        : html`
-            <pipeline-runs-list
-              .jobs=${runs}
-              .page=${page}
-              .totalPages=${totalPages}
-              .perPage=${perPage}
-              .onPageChange=${(p: number) => { setParamsInUrl(p, perPage); setPage(p); }}
-              .onPerPageChange=${handlePerPageChange}
-              .canCancel=${permissions.can_cancel_pipeline_run}
-              .onCancel=${(pipelineRunId: string) =>
-                setRuns((prev) => prev.filter((j) => j.pipeline_run_id !== pipelineRunId))}
-            ></pipeline-runs-list>`}
+      <div class="sectioned">
+        ${SectionNav("manage", manageSection(permissions, globalSummary?.open_prs), "/pipeline-runs")}
+        <div class="secbody">
+          ${loaded && runs.length === 0
+            ? html`<p class="pipeline-runs__empty">No runs in progress.</p>`
+            : html`
+                <pipeline-runs-list
+                  .jobs=${runs}
+                  .page=${page}
+                  .totalPages=${totalPages}
+                  .perPage=${perPage}
+                  .onPageChange=${(p: number) => { setParamsInUrl(p, perPage); setPage(p); }}
+                  .onPerPageChange=${handlePerPageChange}
+                  .canCancel=${permissions.can_cancel_pipeline_run}
+                  .onCancel=${(pipelineRunId: string) =>
+                    setRuns((prev) => prev.filter((j) => j.pipeline_run_id !== pipelineRunId))}
+                ></pipeline-runs-list>`}
+        </div>
+      </div>
     </main>
   `;
 }
