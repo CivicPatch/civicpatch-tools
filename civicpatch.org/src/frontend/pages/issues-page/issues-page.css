@@ -1,18 +1,14 @@
 @layer components {
-/* ── Issues page ── */
-
 .issues-page__state-filter {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 1.5rem;
 }
-
 .issues-page__state-filter label {
     font-size: var(--font-size-sm);
     color: var(--text-muted);
 }
-
 .issues-page__filters {
     display: flex;
     align-items: center;
@@ -20,7 +16,6 @@
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
 }
-
 .issues-page__filters select {
     width: auto;
     margin: 0;
@@ -28,24 +23,18 @@
     padding-inline-start: 0.75em;
     font-size: var(--font-size-md);
 }
-
 .issues-page__section {
     margin-bottom: 2rem;
 }
-
 .issues-page__cap {
     cursor: pointer;
     user-select: none;
 }
-
 .issues-page__section-header-actions {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
-
-/* ── Issues filters ── */
-
 .issues-page__issues-filters {
     display: flex;
     align-items: center;
@@ -53,14 +42,12 @@
     flex-wrap: wrap;
     margin-bottom: 1rem;
 }
-
 .issues-page__issue-tags {
     display: flex;
     align-items: center;
     gap: 0.4rem;
     flex-wrap: wrap;
 }
-
 .issues-page__issue-tag {
     display: inline-flex;
     align-items: center;
@@ -80,46 +67,36 @@
     line-height: 1.4;
     margin: 0;
 }
-
 .issues-page__issue-tag:hover {
     border-color: var(--action);
     color: var(--action);
 }
-
 .issues-page__issue-tag--active {
     background: var(--action);
     border-color: var(--action);
     color: var(--action-text);
 }
-
 .issues-page__issue-tag--active:hover {
     opacity: 0.85;
     color: var(--action-text);
 }
-
 .issues-page__issue-tag-x {
     font-size: 1em;
     line-height: 1;
     opacity: 0.8;
 }
-
 .issues-page__sort-btn {
     margin-left: auto;
 }
-
-/* ── Issues table ── */
-
 .issues-page__issues-table {
     width: 100%;
     margin-bottom: 0;
 }
-
 .issues-page__issues-table th {
     font-size: var(--font-size-sm);
     color: var(--text-muted);
     font-weight: 600;
 }
-
 .issues-page__issue-detail {
     font-family: var(--font-mono);
     font-size: var(--font-size-sm);
@@ -128,19 +105,14 @@
     overflow-wrap: anywhere;
     min-width: 120px;
 }
-
-/* Selection */
-
 .issues-page__issue-select {
     text-align: center;
     width: 2.5rem;
 }
-
 .issues-page__issue-select input[type="checkbox"] {
     margin: 0;
     cursor: pointer;
 }
-
 .issues-page__bulk-bar {
     display: flex;
     align-items: center;
@@ -150,41 +122,32 @@
     font-size: var(--font-size-sm);
     color: var(--text-muted);
 }
-
-/* A reviewer's report — a title, and the body they wrote under it */
-
 .issues-page__issue-report {
     min-width: 220px;
 }
-
 .issues-page__issue-report-title {
     display: block;
     font-weight: 600;
 }
-
 .issues-page__issue-report-body {
     display: block;
     font-size: var(--font-size-sm);
     color: var(--text-muted);
 }
-
 .issues-page__issue-flag {
     text-align: center;
     white-space: nowrap;
     width: auto;
 }
-
 .issues-page__issue-flag input[type="checkbox"] {
     margin: 0;
     cursor: pointer;
 }
-
 .issues-page__issue-date {
     font-size: var(--font-size-sm);
     color: var(--text-muted);
     white-space: nowrap;
 }
-
 .issues-page__issue-type-chip {
     display: inline-block;
     padding: 0.15rem 0.5rem;
@@ -197,25 +160,19 @@
     word-break: break-all;
     overflow-wrap: anywhere;
 }
-
-/* ── Pagination ── */
-
 .issues-page__top-controls {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     margin-bottom: 1.5rem;
 }
-
 .issues-page__top-controls .issues-page__pagination {
     grid-column: 2;
 }
-
 .issues-page__top-controls .issues-page__per-page {
     grid-column: 3;
     justify-self: end;
 }
-
 .issues-page__pagination {
     display: flex;
     align-items: center;
@@ -223,7 +180,6 @@
     gap: 0.5rem;
     margin-top: 1.5rem;
 }
-
 .issues-page__per-page {
     display: flex;
     align-items: center;
@@ -231,7 +187,6 @@
     font-size: var(--font-size-md);
     color: var(--text-muted);
 }
-
 .issues-page__per-page select {
     width: auto;
     margin: 0;
@@ -239,13 +194,9 @@
     padding-inline-start: 0.75em;
     font-size: var(--font-size-md);
 }
-
-/* ── State badges ── */
-
 .issues-page__issue-states {
     white-space: nowrap;
 }
-
 .issues-page__state-badge {
     display: inline-block;
     padding: 0.1rem 0.4rem;
@@ -258,26 +209,16 @@
     margin-right: 0.2rem;
     white-space: nowrap;
 }
-
-/* ── Issue status column ── */
-
 .issues-page__issue-status {
     white-space: nowrap;
 }
-
 .issues-page__issue-status-badge {
     font-size: var(--font-size-sm);
     color: var(--text-muted);
 }
-
-/* ── Flagged row ── */
-
 .issues-page__issue-row--flagged > td {
     background-color: color-mix(in srgb, var(--warning) 8%, transparent);
 }
-
-/* ── Issue actions column ── */
-
 .issues-page__issue-actions {
     display: flex;
     flex-wrap: wrap;
@@ -286,74 +227,37 @@
     align-items: center;
     height: 100%;
 }
-
-/* ── Resolve modal ── */
-
-.issues-page__modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    z-index: 1000;
-    overflow-y: auto;
-    padding: 2rem 1rem;
-}
-
-.issues-page__modal {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    min-width: 360px;
-    max-width: 520px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin: auto;
-}
-
 .issues-page__modal-header {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
 }
-
 .issues-page__modal-title {
     margin: 0;
     font-size: 1rem;
     font-weight: 600;
 }
-
 .issues-page__modal-jurisdiction-link {
     display: block;
     font-size: var(--font-size-sm);
     font-weight: 500;
 }
-
 .issues-page__modal-header .issues-page__modal-source-url {
     display: block;
     font-size: var(--font-size-sm);
 }
-
 .issues-page__modal-meta {
     margin: 0;
     font-size: var(--font-size-sm);
     color: var(--text-muted);
     word-break: break-all;
 }
-
 .issues-page__modal label {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
     font-size: var(--font-size-md);
 }
-
-/* ── Modal source context ── */
-
 .issues-page__modal-source {
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -362,18 +266,15 @@
     flex-direction: column;
     gap: 0.5rem;
 }
-
 .issues-page__modal-source-label {
     font-size: var(--font-size-sm);
     font-weight: 600;
     color: var(--text-muted);
 }
-
 .issues-page__modal-source-loading {
     font-size: var(--font-size-sm);
     color: var(--text-muted);
 }
-
 .issues-page__modal-source-entry {
     display: flex;
     flex-direction: column;
@@ -381,46 +282,39 @@
     padding-top: 0.35rem;
     border-top: 1px solid var(--border);
 }
-
 .issues-page__modal-source-entry:first-of-type {
     border-top: none;
     padding-top: 0;
 }
-
 .issues-page__modal-source-header {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: 0.5rem;
 }
-
 .issues-page__modal-source-name {
     font-size: var(--font-size-sm);
     font-weight: 600;
     min-width: 0;
     overflow-wrap: break-word;
 }
-
 .issues-page__modal-source-link {
     font-size: var(--font-size-sm);
     white-space: nowrap;
     flex-shrink: 0;
 }
-
 .issues-page__modal-source-url {
     font-size: var(--font-size-sm);
     font-family: var(--font-mono);
     word-break: break-all;
     color: var(--action);
 }
-
 .issues-page__modal-source-toggle {
     font-size: var(--font-size-sm);
     color: var(--action);
     padding: 0.25rem 0;
     cursor: pointer;
 }
-
 .issues-page__modal-debug-links {
     display: flex;
     flex-direction: column;
@@ -428,12 +322,10 @@
     margin-bottom: 1rem;
     font-size: var(--font-size-sm);
 }
-
 .issues-page__modal-debug {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
-
 .issues-page__modal-debug-content {
     border: 1px solid var(--border);
     border-top: none;
@@ -441,7 +333,6 @@
     padding: 0.75rem;
     font-size: var(--font-size-sm);
 }
-
 .issues-page__modal-debug-pre {
     margin: 0;
     white-space: pre-wrap;
@@ -452,44 +343,36 @@
     font-size: var(--font-size-xs);
     line-height: 1.5;
 }
-
 .issues-page__modal-debug-cache {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
-
 .issues-page__modal-actions {
     display: flex;
     justify-content: flex-end;
     gap: 0.5rem;
     margin-top: 0.25rem;
 }
-
 .issues-page__resolve-content {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    /* Long source URLs break onto a new line instead of clipping the row. */
     overflow-wrap: anywhere;
     word-break: break-word;
 }
-
 dialog[open]:has(.issues-page__resolve-content) {
     max-width: min(95vw, 56rem);
 }
-
 .issues-page__resolve-role-form {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
-
 .issues-page__resolve-scope {
     display: flex;
     gap: 1rem;
 }
-
 .issues-page__resolve-scope-option {
     display: flex;
     align-items: center;
@@ -498,24 +381,20 @@ dialog[open]:has(.issues-page__resolve-content) {
     cursor: pointer;
     flex-direction: row !important;
 }
-
 .issues-page__resolve-scope-option--disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
-
 .issues-page__resolve-scope-hint {
     font-size: var(--font-size-xs);
     color: var(--text-muted);
 }
-
 .issues-page__resolve-tabs {
     display: flex;
     gap: 0;
     border-bottom: 1px solid var(--border);
     margin-bottom: 1rem;
 }
-
 .issues-page__resolve-tab {
     padding: 0.4rem 1rem;
     border: none;
@@ -530,25 +409,21 @@ dialog[open]:has(.issues-page__resolve-content) {
     min-height: unset;
     width: auto;
 }
-
 .issues-page__resolve-tab--active {
     color: var(--action);
     border-bottom-color: var(--action);
     font-weight: 600;
 }
-
 .issues-page__resolve-tab--disabled {
     opacity: 0.45;
     cursor: not-allowed;
 }
-
 .issues-page__resolve-tab-content {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     min-height: 4rem;
 }
-
 .issues-page__issue-tag-count {
     font-size: 0.75em;
     opacity: 0.75;

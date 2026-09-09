@@ -1,89 +1,46 @@
 @layer components {
-/* Detail v2 — a vertical list of editors (spec §5).
-   Each editor is `identity | fields`, so the field body starts at a fixed x and
-   every control aligns across every person. That alignment is the reason for
-   the layout; today's card grid cannot do it at any width. */
-
 .person-editor-list {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   width: 100%;
-  /* The editor needs identity (12rem) + label (7rem) + control (22rem) + a `was`
-     annotation — about 58rem. Left at full page width the content stopped well
-     short of the edge and the right third read as broken rather than empty. */
   max-width: min(var(--page-width), 58rem);
   margin-inline: auto;
-
-  /* State colours (§11.1, axis 1 — what the scrape did) and attention (axis 2).
-     Sourced from the base layer's semantics, which styles.css remaps per theme, so these
-     follow light/dark with no second rule set — and survive the Catppuccin
-     removal, since that layer only feeds these same semantics today. The old
-     diff hardcoded #fef3c7 and could do neither.
-
-     Issue reads info-blue rather than the violet §11.1 names: there is no violet
-     in the editorial palette, and §11.1 is explicit that shape carries the
-     distinction (triangle stops you, circle advises you) with colour as
-     reinforcement. */
   --editor-changed: var(--warning);
   --editor-added: var(--diff-added);
   --editor-cleared: var(--diff-removed);
   --editor-issue: var(--info);
-  /* Who decided, on an axis of its own — see the lock rules below. */
   --editor-lock: var(--action);
-
-  /* How much of the state colour the header strip carries. Dark needs more of it
-     to read as tinted at all against a dark card. */
   --head-tint: 14%;
-
-  /* Dense form controls — the base layer sizes inputs from these, and overriding raw
-     padding loses to its specificity. */
   --control-pad-y: 0.15rem;
   --control-pad-x: 0.45rem;
 }
-
 .person-editor-list input,
 .person-editor-list select,
 .person-editor-list button {
   margin: 0;
   line-height: 1.25;
 }
-
-/* Editor. The identity column is narrower than the body it labels — the body is
-   where the work happens, and a wide identity column pushes every control right
-   without earning it. */
-
 .person-editor {
   display: grid;
   grid-template-columns: 12rem minmax(0, 1fr);
   column-gap: 1rem;
-  /* No padding: the state header spans the card edge to edge, so the two columns
-     below carry their own. */
   padding: 0;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-
   --editor-state: var(--border);
 }
-
 .person-editor--changed {
   --editor-state: var(--editor-changed);
 }
-
 .person-editor--added {
   --editor-state: var(--editor-added);
 }
-
 .person-editor--removed,
 .person-editor--deleted {
   --editor-state: var(--editor-cleared);
 }
-
-/* State header — a thin strip across the whole card. This is what replaced the
-   coloured left bar: a bar is only visible while the top of the card is, and a
-   twenty-field card is taller than the viewport. */
-
 .person-editor__head {
   grid-column: 1 / -1;
   display: flex;
@@ -93,47 +50,32 @@
   background: color-mix(in srgb, var(--editor-state) var(--head-tint), var(--surface));
   border-bottom: 2px solid var(--editor-state);
 }
-
 .person-editor__head-main {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
-
-/* What the card is asking of you — how many fields moved and whether any needs a
-   decision. It replaced the status label, which named the state but never said
-   how much work was in it. */
 .editor-summary {
   font-size: var(--font-size-sm);
   color: var(--text-muted);
   margin-right: auto;
 }
-
-/* The actions sit at the far end of the strip, away from the status. */
 .person-editor__head-main .person-editor__actions {
   margin-top: 0;
   margin-left: auto;
 }
-
-/* A person with nothing to review: one line, laid out across rather than
-   stacked, so the row is as tall as its content. */
 .person-editor--strip {
   display: flex;
   align-items: center;
   gap: 0.6rem;
   padding: 0.35rem 0.75rem;
 }
-
 .person-editor--strip .person-editor__name {
   font-weight: 500;
 }
-
 .person-editor--strip .person-editor__status {
   margin-left: auto;
 }
-
-/* Identity column */
-
 .person-editor__identity {
   display: flex;
   flex-direction: column;
@@ -141,79 +83,61 @@
   min-width: 0;
   padding: 0.6rem 0 0.75rem 0.75rem;
 }
-
 .person-editor__name {
   font-weight: 600;
   line-height: 1.2;
   overflow-wrap: anywhere;
 }
-
 .person-editor--removed .person-editor__name,
 .person-editor--deleted .person-editor__name {
   text-decoration: line-through;
   color: var(--editor-cleared);
 }
-
 .person-editor__office {
   font-size: var(--font-size-sm);
   color: var(--text-muted);
   overflow-wrap: anywhere;
 }
-
 .person-editor__status {
   font-size: var(--font-size-xs);
   text-transform: lowercase;
   font-family: var(--font-mono);
   color: var(--text-muted);
 }
-
-/* No top margin: these sit in the modal head now, which centres its row. */
 .person-editor__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
 }
-
-/* Scoped under the modal head deliberately: styles.css styles bare buttons via
-   `button:not(.btn-ghost):not(.secondary):not(…)`, and that chain of :not()s
-   outspecifies a single class — it was painting these #fafafa on a white card,
-   so Restore rendered as an empty box.
-   `--diff-removed` rather than `--editor-cleared`: the head sits outside
-   `.person-editor-list`, so the editor's tokens are not in scope there. */
-.review-modal__head .person-editor__delete,
-.review-modal__head .person-editor__reset,
-.review-modal__head .person-editor__merge,
-.review-modal__head .person-editor__restore-person {
+:is(.review-modal__head, .person-editor-list) .person-editor__action-btn {
   padding: 0.05rem 0.4rem;
+  font-family: var(--font-mono);
   font-size: var(--font-size-xs);
+  letter-spacing: 0.02em;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   background: none;
   color: var(--text-muted);
   cursor: pointer;
   width: auto;
 }
-
-.review-modal__head .person-editor__delete:hover {
+:is(.review-modal__head, .person-editor-list)
+  :is(.person-editor__reset, .person-editor__merge):hover {
+  border-color: var(--border-strong);
+  color: var(--text-default);
+}
+:is(.review-modal__head, .person-editor-list) .person-editor__delete:hover {
   border-color: var(--diff-removed);
   color: var(--diff-removed);
 }
-
-.review-modal__head .person-editor__restore-person {
+:is(.review-modal__head, .person-editor-list) .person-editor__restore-person {
   border-color: var(--diff-removed);
   color: var(--diff-removed);
 }
-
-/* See review-modal.css: --control-text is overridden to the inverse on every bare
-   button, so an unfilled button must name its colour rather than read it. */
 .person-editor--ghost:hover {
   border-color: var(--text-default);
   color: var(--text-default);
 }
-
-/* Add person is an empty slot at the end of the roster rather than a button
-   above it: it reads as "there is room for one more" in the same shape as the
-   editors it sits among, and it stays out of the way of the actual work. */
 .person-editor--ghost {
   display: flex;
   align-items: center;
@@ -227,30 +151,17 @@
   cursor: pointer;
   width: 100%;
 }
-
 .person-editor__ghost-mark {
   font-size: 1.1rem;
   line-height: 1;
 }
-
-/* Field body */
-
 .person-editor__fields {
   display: flex;
   flex-direction: column;
-  /* Never tighter than a focus ring needs — see --ring-space in
-     field-controls.css. This is the floor on density, not a stylistic choice. */
   gap: var(--ring-space);
   min-width: 0;
   padding: 0.6rem 0.75rem 0.75rem 0;
 }
-
-/* `label | control | was … Restore`. One column set for every row, so the
-   controls line up down the whole card.
-
-   The third column is `auto`, not 1fr: `was …` is absent on most rows, and a
-   greedy column reserved a third of the card for nothing. `justify-content:
-   start` stops the row stretching to fill the body. */
 .person-editor__field {
   display: grid;
   grid-template-columns: 7rem minmax(0, 22rem) auto;
@@ -260,70 +171,50 @@
   padding: 0.1rem var(--ring-space);
   border-radius: var(--radius);
 }
-
-/* Visible focus on every control and button in a person editor. The gaps above reserve
-   the clearance this needs. */
 .person-editor :is(input, select, button, a):focus-visible {
   outline: var(--ring-width) solid var(--action);
   outline-offset: var(--ring-offset);
 }
-
 .person-editor__label {
   font-size: var(--font-size-sm);
   color: var(--text-muted);
   padding-top: 0.25rem;
 }
-
 .person-editor__field--changed .person-editor__label {
   color: var(--editor-changed);
   font-weight: 600;
 }
-
 .person-editor__field--added .person-editor__label {
   color: var(--editor-added);
   font-weight: 600;
 }
-
 .person-editor__field--cleared .person-editor__label {
   color: var(--editor-cleared);
   font-weight: 600;
 }
-
 .person-editor__req {
   color: var(--editor-cleared);
 }
-
 .person-editor__control {
   min-width: 0;
 }
-
-/* A field rendering several controls carries `role="group"` so its label names
-   the set. That is an ARIA annotation only — it must not also opt into the base layer's
-   input-group component (elements.css), whose `margin-bottom: --space`
-   put a 1rem gap under every grouped field. */
 .person-editor__control[role="group"] {
   display: block;
   width: auto;
   margin-bottom: 0;
   box-shadow: none;
 }
-
 .person-editor__control input,
 .person-editor__control select {
   width: 100%;
   font-size: var(--font-size-sm);
 }
-
-/* The live OCD-ID preview is a full division path — let it wrap instead of
-   spilling past the control it belongs to. */
 .person-editor__control .field-control__division-preview {
   display: block;
   overflow-wrap: anywhere;
   font-size: var(--font-size-xs);
   color: var(--text-muted);
 }
-
-/* The old value, as a trailing annotation rather than a second column. */
 .person-editor__was {
   display: flex;
   align-items: baseline;
@@ -334,12 +225,10 @@
   padding-top: 0.25rem;
   min-width: 0;
 }
-
 .person-editor__was-value {
   text-decoration: line-through;
   overflow-wrap: anywhere;
 }
-
 .person-editor .person-editor__restore {
   background: none;
   border: none;
@@ -350,10 +239,6 @@
   cursor: pointer;
   width: auto;
 }
-
-/* Attention (§11.1, axis 2 — what needs a person). Shape carries the
-   distinction so colour is reinforcement: triangle stops you, circle advises. */
-
 .person-editor__error,
 .person-editor__issue {
   display: flex;
@@ -363,90 +248,50 @@
   grid-column: 2 / -1;
   padding-top: 0.15rem;
 }
-
 .person-editor__error {
   color: var(--editor-cleared);
 }
-
-/* Provenance, not attention: it shares the row but must not read as something to act on. */
-/* The lock sits in the attention slot the provenance line used to fill, so it costs a glyph
-   rather than a row — after a review every non-null field is asserted, and the sentence
-   appeared on all of them. */
 .person-editor__lock {
-  position: relative;
   grid-column: 3;
   justify-self: start;
   padding-top: 0.15rem;
-}
-
-.person-editor__lock-button {
-  background: none;
-  border: 0;
-  padding: 0.1rem;
   font-size: 0.78em;
   line-height: 1;
-  cursor: pointer;
 }
-
-/* Its own colour, not `--editor-changed`: the diff vocabulary says what the scrape moved, and
-   this says who decided. An overridden field is usually also a changed one, so sharing the
-   amber would put two meanings on one hue in the same row. */
-.person-editor__lock--held .person-editor__lock-button {
+.person-editor__lock--held {
   color: var(--text-muted);
   opacity: 0.6;
 }
-
-.person-editor__lock--overrode .person-editor__lock-button {
+.person-editor__lock--overrode {
   color: var(--editor-lock);
   opacity: 1;
 }
-
-.person-editor__lock-button:hover,
-.person-editor__lock-button:focus-visible {
-  opacity: 1;
-}
-
-/* Below the row, not beside it: the column to the right already carries `was … Restore`. */
-.person-editor__lock-pop {
-  position: absolute;
-  top: 1.4rem;
-  left: -0.4rem;
-  z-index: 5;
-  display: none;
-  min-width: 15rem;
-  padding: 0.4rem 0.55rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
+.person-editor__disclosure {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+  padding: 0.35rem 0.5rem;
   border-radius: var(--radius);
-  box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
+  background: var(--surface-2);
   font-size: var(--font-size-xs);
+  color: var(--editor-lock);
 }
-
-.person-editor__lock:hover .person-editor__lock-pop,
-.person-editor__lock-button:focus-visible + .person-editor__lock-pop {
-  display: block;
-}
-
-.person-editor__lock-said {
-  display: block;
+.person-editor__disclosure-said {
   font-weight: 600;
 }
-
-.person-editor__lock-who {
-  display: block;
+.person-editor__disclosure-who {
   color: var(--text-muted);
+  margin-left: auto;
 }
-
 .person-editor__issue {
   color: var(--editor-issue);
 }
-
 .person-editor__resolved {
   color: var(--editor-added);
 }
-
-/* Expander */
-
 .person-editor-list .person-editor__expander {
   align-self: flex-start;
   background: none;
@@ -459,9 +304,30 @@
   cursor: pointer;
   width: auto;
 }
-
-/* Departure banner — one decision, so the fields collapse away (§5). */
-
+.person-editor__nav-hint {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.4rem;
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+.person-editor__nav-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.person-editor__nav-chip kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.1rem;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  line-height: 1;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0 0.3rem;
+}
 .person-editor__banner {
   display: flex;
   flex-direction: column;
@@ -471,60 +337,44 @@
   background: var(--diff-removed-bg);
   font-size: var(--font-size-sm);
 }
-
 .person-editor__banner-title {
   font-weight: 600;
   color: var(--editor-cleared);
 }
-
 @media (prefers-color-scheme: dark) {
   .person-editor-list {
     --head-tint: 30%;
   }
 }
-
 [data-theme="dark"] .person-editor-list {
   --head-tint: 30%;
 }
-
 [data-theme="light"] .person-editor-list {
   --head-tint: 14%;
 }
-
 @media (max-width: 48rem) {
   .person-editor {
     grid-template-columns: 1fr;
   }
-
   .person-editor__identity {
     padding: 0.6rem 0.75rem 0;
   }
-
   .person-editor__fields {
     padding: 0.6rem 0.75rem 0.75rem;
   }
-
   .person-editor__field {
     grid-template-columns: 1fr;
     gap: 0.15rem;
   }
-
   .person-editor__error,
   .person-editor__issue {
     grid-column: 1;
   }
 }
-
-/* An issue anchored to the person rather than a field sits above the field list.
-   Full width, because it is about the whole card. */
 .person-editor__issue--row {
   grid-column: 1 / -1;
   padding: 0.2rem 0.25rem;
 }
-
-/* Step 1 of a merge, in place — the other people on this card as chips. Sits in
-   the identity column, directly under the button that opens it. */
-
 .person-editor__merge-with {
   display: flex;
   flex-direction: column;
@@ -534,12 +384,10 @@
   border-radius: var(--radius);
   background: var(--surface-2);
 }
-
 .person-editor__merge-lede {
   font-size: var(--font-size-xs);
   color: var(--text-muted);
 }
-
 .person-editor__merge-faces {
   display: flex;
   flex-wrap: wrap;

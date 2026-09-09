@@ -5,7 +5,6 @@
     font-size: var(--font-size-sm);
     margin: 0;
 }
-
 .config-editor__table th {
     font-size: var(--font-size-xs);
     font-weight: 400;
@@ -17,27 +16,22 @@
     text-align: left;
     background: none;
 }
-
 .config-editor__table td {
     padding: 0.45rem 0.5rem;
     border-bottom: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
     vertical-align: middle;
     background: none;
 }
-
 .config-editor__table tbody tr:last-child td {
     border-bottom: none;
 }
-
 .config-editor__table tbody tr:hover {
     background: transparent;
 }
-
 .config-editor__alias-clickable {
     cursor: pointer;
     text-decoration: underline dotted;
 }
-
 .config-editor__subsection-label {
     font-size: 0.7rem;
     font-weight: 400;
@@ -46,14 +40,12 @@
     color: var(--text-muted);
     margin: 0.5rem 0 0;
 }
-
 .config-editor__subsection-header {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: 0.5rem;
 }
-
 .config-editor__toast {
     position: fixed;
     bottom: 1.5rem;
@@ -63,18 +55,16 @@
     background: var(--action);
     color: var(--action-text);
     padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
     border-radius: var(--radius);
     font-size: var(--font-size-sm);
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
 }
-
 .config-editor__empty {
     color: var(--text-muted);
     font-style: italic;
     text-align: center;
     padding: 0.75rem;
 }
-
 .config-editor__add-btn {
     font-size: var(--font-size-sm);
     font-weight: 500;
@@ -92,45 +82,33 @@
     margin: 0;
     width: auto;
 }
-
 .config-editor__inline {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
-
-/* ── Section card ── */
-
 .config-editor__section {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     margin: 0;
 }
-
-/* Reset the base accordion — it adds padding, border-bottom, and list-item display */
 details.config-editor__section {
     margin-bottom: 0;
     padding: 0;
 }
-
 details.config-editor__section > summary {
     display: flex;
     list-style: none;
     padding: 0;
-    margin: 0;       /* The base layer sets margin-bottom: var(--space) on open summary */
+    margin: 0;
 }
-
-/* The base layer overrides summary color — restore it */
 details.config-editor__section > summary:not([role]),
 details.config-editor__section[open] > summary:not([role]):not(:focus) {
     color: var(--text);
 }
-
 details.config-editor__section > summary::-webkit-details-marker { display: none; }
 details.config-editor__section > summary::marker { display: none; }
 details.config-editor__section > summary::after { display: none; }
-
-/* Summary = tinted header bar */
 summary.config-editor__section-title {
     display: flex;
     align-items: center;
@@ -148,21 +126,17 @@ summary.config-editor__section-title {
     user-select: none;
     line-height: normal;
 }
-
 details.config-editor__section[open] > summary.config-editor__section-title {
     border-bottom-color: var(--border);
 }
-
 summary.config-editor__section-title:hover {
     background: color-mix(in srgb, var(--border, #e0e0e0) 40%, var(--surface-2));
 }
-
 .config-editor__section-label {
     color: var(--text-muted);
     font-size: var(--font-size-sm);
     font-weight: 400;
 }
-
 .config-editor__role-count {
     font-size: 0.7rem;
     font-weight: 600;
@@ -173,36 +147,27 @@ summary.config-editor__section-title:hover {
     padding: 0.1em 0.55em;
     margin-left: auto;
 }
-
 .config-editor__chevron {
     font-size: 0.65rem;
     color: var(--text-muted);
     transition: transform 0.15s;
     flex-shrink: 0;
 }
-
 details.config-editor__section[open] > summary .config-editor__chevron {
     transform: rotate(180deg);
 }
-
-/* Section body */
 .config-editor__section-body {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     padding: 0.85rem;
 }
-
 .config-editor__section button {
     font-weight: 400;
 }
-
 summary.config-editor__section-title + .config-editor__section-body {
     padding-top: 0.85rem;
 }
-
-/* ── Filter ── */
-
 .config-editor__filter {
     display: flex;
     align-items: center;
@@ -212,13 +177,11 @@ summary.config-editor__section-title + .config-editor__section-body {
     border-radius: var(--radius);
     padding: 0.3rem 0.6rem;
 }
-
 .config-editor__filter-icon {
     color: var(--text-muted);
     font-size: 0.72rem;
     flex-shrink: 0;
 }
-
 input.config-editor__filter-input {
     border: none;
     background: none;
@@ -233,24 +196,17 @@ input.config-editor__filter-input {
     min-height: unset;
     font-family: inherit;
 }
-
-/* ── Readonly label ── */
-
 .config-editor__readonly {
     color: var(--text-muted);
     font-size: var(--font-size-xs);
     font-weight: 400;
     font-style: italic;
 }
-
-/* ── Edit form (in modal) ── */
-
 .config-editor__edit-form {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
-
 .config-editor__edit-form label {
     display: flex;
     flex-direction: column;
@@ -258,69 +214,53 @@ input.config-editor__filter-input {
     font-size: var(--font-size-sm);
     margin: 0;
 }
-
 .config-editor__edit-form input[type="text"],
 .config-editor__edit-form textarea {
     font-size: var(--font-size-sm);
     padding: 0.3em 0.5em;
     margin: 0;
 }
-
 .config-editor__edit-form textarea {
     resize: vertical;
     min-height: 5rem;
 }
-
 .config-editor__edit-form td {
     padding: 0;
 }
-
 label.config-editor__checkbox-label {
     flex-direction: row;
     align-items: center;
     gap: 0.4rem;
     cursor: pointer;
 }
-
-/* ── Role table ── */
-
 civ-role-table {
     display: block;
     width: 100%;
 }
-
 .config-editor__actions {
     text-align: right;
     white-space: nowrap;
 }
-
 .config-editor__table th:last-child {
     text-align: right;
 }
-
-/* ── Error / locality autocomplete ── */
-
 .config-editor__error {
     color: var(--diff-removed);
     font-size: var(--font-size-sm);
     margin: 0;
 }
-
 .config-editor__locality-autocomplete {
     width: 100%;
     font-weight: 400;
-    /* Compact form-control sizing for admin context */
     --control-pad-y: 0.25rem;
     --control-pad-x: 0.6rem;
     font-size: var(--font-size-sm);
 }
-
 .config-editor__locality-autocomplete input.autocomplete-input {
     font-size: var(--font-size-sm);
     min-height: unset;
     margin-bottom: 0;
 }
-
 .config-editor__locality-autocomplete button.autocomplete-toggle {
     min-height: unset;
     min-width: 2.25rem;
@@ -330,23 +270,19 @@ civ-role-table {
     border-color: var(--field-border);
     box-shadow: none;
 }
-
 .config-editor__locality-autocomplete .autocomplete-option {
     padding: 0.4rem 0.75rem;
     font-size: var(--font-size-sm);
     font-weight: 400;
 }
-
 .config-editor__locality-autocomplete .autocomplete-selected,
 .config-editor__locality-autocomplete .autocomplete-pagination-info {
     font-size: var(--font-size-sm);
     font-weight: 400;
 }
-
 .config-editor__locality-autocomplete .autocomplete-pagination {
     padding: 0.4rem 0.75rem;
 }
-
 .config-editor__locality-autocomplete .autocomplete-pagination button {
     padding: 0.2rem 0.5rem;
     font-size: var(--font-size-sm);

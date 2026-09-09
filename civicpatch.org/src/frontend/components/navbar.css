@@ -3,10 +3,6 @@ civ-navbar {
   display: block;
   z-index: 100;
 }
-
-/* Scoped to the host: `nav {}` here applied to every <nav> on the page — the blog
-   breadcrumbs, the jurisdiction breadcrumb, locality-gaps and the review modal's
-   people list all inherited the navbar's flex layout and had to fight it. */
 civ-navbar nav {
   display: flex;
   align-items: center;
@@ -19,7 +15,6 @@ civ-navbar nav {
   max-width: var(--page-width);
   margin-inline: auto;
 }
-
 .nav-logout {
   font-size: var(--font-size-sm);
   font-weight: 400;
@@ -46,8 +41,6 @@ nav.nav--logged-out .nav-brand {
   left: 50%;
   transform: translateX(-50%);
 }
-
-/* Brand */
 .nav-brand {
   font-family: var(--font-display);
   font-weight: 700;
@@ -87,23 +80,17 @@ nav.nav--logged-out .nav-brand {
   position: relative;
   bottom: 0.35em;
 }
-
-/* Pages — left side, right after the brand */
 .nav-links {
   display: flex;
   align-items: center;
   gap: 0.85rem;
 }
-
-/* Identity, shortcuts, theme, logout — right side, opposite the pages */
 .nav-controls {
   display: flex;
   align-items: center;
   gap: 0.85rem;
   margin-left: auto;
 }
-
-/* User identity — avatar + display name */
 .user-info {
   display: inline-flex;
   align-items: center;
@@ -134,9 +121,6 @@ nav.nav--logged-out .nav-brand {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-/* A nav link reads as a plain text link — same treatment prose links get — rather
-   than a button. Weight is the only thing that marks the current page. */
 .nav-link {
   font-size: var(--font-size-md);
   font-weight: 400;
@@ -152,11 +136,14 @@ nav.nav--logged-out .nav-brand {
   color: var(--action);
   text-decoration: underline;
 }
-.nav-link--active {
-  font-weight: 700;
+.nav-link--active::before {
+  content: "> ";
 }
-
-/* Logout — outline button, no fill */
+.nav-link--active {
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  padding: 0.1rem 0.4rem;
+}
 .btn-outline {
   display: inline-flex;
   align-items: center;
@@ -184,8 +171,6 @@ nav.nav--logged-out .nav-brand {
 .btn-outline:active {
   background: var(--surface-2);
 }
-
-/* Login — filled primary button */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -210,8 +195,6 @@ nav.nav--logged-out .nav-brand {
 .btn-primary:active {
   opacity: 0.95;
 }
-
-/* Loading skeleton */
 .loading-skeleton {
   display: inline-block;
   width: 7em;
@@ -235,8 +218,6 @@ nav.nav--logged-out .nav-brand {
     background-position: -200% 0;
   }
 }
-
-/* Theme toggle */
 .theme-toggle {
   background: none;
   border: none;
@@ -252,8 +233,6 @@ nav.nav--logged-out .nav-brand {
 .theme-toggle:hover {
   opacity: 1;
 }
-
-/* Rounded focus outlines */
 .nav-brand:focus-visible,
 .nav-link:focus-visible,
 .btn-primary:focus-visible,
@@ -261,8 +240,6 @@ nav.nav--logged-out .nav-brand {
   outline: none;
   box-shadow: 0 0 0 var(--focus-ring-width) var(--action-focus);
 }
-
-/* Login link when logged out */
 .login-link {
   font-size: 0.85rem;
   color: var(--text-muted);
@@ -276,14 +253,9 @@ nav.nav--logged-out .nav-brand {
   color: var(--control-text);
   text-decoration: none;
 }
-
-/* Only ever shown on mobile (below) — a flat list of every page, no groups and no
-   hover/click flyout to fight with on a screen that has neither hover nor room for
-   a floating panel. */
 .nav-mobile-links {
   display: none;
 }
-
 @media (max-width: 640px) {
   .user-info {
     display: none;
@@ -305,8 +277,6 @@ nav.nav--logged-out .nav-brand {
     position: static;
     transform: none;
   }
-  /* The desktop link row (with its hover-flyout groups) doesn't fit or make sense
-     here — swap it for the flat always-visible list instead. */
   nav:not(.nav--logged-out) .nav-links {
     display: none;
   }

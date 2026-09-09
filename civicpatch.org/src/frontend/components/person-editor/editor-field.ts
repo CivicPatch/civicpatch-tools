@@ -1,11 +1,3 @@
-// One field of one person, as `label | control | was … Restore` (spec §5).
-//
-// This is the shape that replaces the diff's `old | copy | new`: the old value
-// is a trailing annotation, not a second column, so every control starts at the
-// same x down the whole card. §21.5 is the other reason — a merge picker is
-// `A | B | C → chosen`, so the *controls* must stay free of any assumption that
-// there are exactly two sides. They live in field-controls.ts and know nothing
-// about old records; this module is the only place that pairs them.
 
 import { html, nothing } from "lit-html";
 import "../person-image.js";
@@ -50,20 +42,10 @@ import {
 
 export const DASH = "—";
 
-// The photo is the one field with no Restore (§5.1): the old side is a CDN
-// copy and the new side a raw scrape URL, so there is nothing meaningful to put
-// back — the field diffs on presence only.
 const PHOTO_KEY = "image";
 
-
-
-// A field that renders several controls has to hang its label on the set — the
-// label is "Term start", but no one input is that; they are its year and month.
 const groupsControls = (field: FieldSpec) => isMulti(field) || isDate(field);
 
-// Multi-value fields carry provenance on each row (§5.2 — `new` / unmarked /
-// `dropped`), so a field-level "was" would encode the same fact twice, which is
-// audit finding 4.
 const CARRIES_OWN_PROVENANCE = new Set([
   "emails",
   "phones",
@@ -72,16 +54,11 @@ const CARRIES_OWN_PROVENANCE = new Set([
   "source_urls",
 ]);
 
-// Which multi-value fields are followable, and in whose window. A person's links
-// and the sources they were read from deliberately do not share a tab.
 const LINK_TARGETS: Record<string, string> = {
   urls: PERSON_LINK_TARGET,
   source_urls: SOURCE_LINK_TARGET,
 };
 
-// For the soft keyboard, not for validation — format is checked in field-model,
-// where it can also block Publish. Url fields stay `text`: the browser's own
-// bubble would report a second, differently-worded verdict on the same value.
 const INPUT_TYPES: Record<string, string> = {
   phones: "tel",
   emails: "email",
@@ -98,15 +75,9 @@ export interface EditorFieldProps {
   save: Save;
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
-  // Every post in the jurisdiction. Empty until the read lands; the control still shows the
-  // record's own value.
   posts: Post[];
-  // The derivation's post, shown as the Post field's value when nobody has picked one.
   derivedPost: DerivedPost | null;
-  // Non-null on the one field the view opened on, so the control it belongs to
-  // can take focus. The editor picks the row; the control picks the element.
   focusRef: FocusRef | null;
-  // Opens the add-post form. The page owns the modal; this only asks for it.
   onAddPost: () => void;
   lock: FieldLock | null;
 }
@@ -125,12 +96,7 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
     focusRef,
     onAddPost,
   } = props;
-
-  // Read-only renders every field as its value, never a disabled input (§10) —
-  // but "its value" is not always text. displayScalar on the photo field returns
-  // the image URL, which is not what a reader wants to see.
   if (isReadOnly) {
-    // A post is stored by id, so the generic scalar path would print a UUID.
     if (field.key === POST_FIELD) {
       return html`<span class="person-editor__readonly"
         >${postLabelFor(diffValue(record, field), posts)}</span
@@ -163,16 +129,10 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
     );
   if (isImage(field)) return renderPhotoNewSide(record, save, isReadOnly);
   if (isMulti(field)) {
-    // Derived every render from (current, old) rather than stamped when a row is
-    // made — that is what makes editing a value until it matches a dropped one
-    // clear that dropped row, and restore-then-remove return it, with no
-    // bookkeeping (§5.2).
     const diff = multiValueDiff(
       (diffValue(oldRecord, field) as string[]) ?? [],
       (diffValue(record, field) as string[]) ?? [],
     );
-    // A duplicate is a property of the list, so the rows have to be judged
-    // together — hence the values array rather than a per-entry check.
     const present = diff.filter((entry) => entry.status !== "removed");
     const values = present.map((entry) => entry.value);
     return renderMultiList({
@@ -181,7 +141,6 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
         isNew: entry.status === "added",
         isInvalid: !!rowError(field, values, index, record),
       })),
-      // A context field is never compared, so it has nothing to have dropped.
       dropped: isContextField(field)
         ? []
         : diff
@@ -198,15 +157,11 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
   return renderScalarNewSide(field, record, save, { state, error }, focusRef);
 }
 
-// `was 2025, Restore`. Absent when there is nothing to say: no old value, an
-// unchanged field, a field that carries provenance per value, or the photo.
 function renderWas(props: EditorFieldProps) {
   const { field, oldRecord, newRecord, state, save, isReadOnly } = props;
   if (state === "same" || CARRIES_OWN_PROVENANCE.has(field.key)) return nothing;
   if (isMulti(field)) return nothing;
-
   const oldValue = diffValue(oldRecord, field);
-  // Same reason as the read-only branch: "was a3f2c1…" tells a reviewer nothing.
   const oldText = !oldRecord
     ? ""
     : field.key === POST_FIELD
@@ -214,7 +169,6 @@ function renderWas(props: EditorFieldProps) {
         (heldPost(oldRecord.memberships)?.label ?? "")
       : displayScalar(field, oldRecord);
   if (!oldText.trim()) return nothing;
-
   const canRestore = !isReadOnly && !!newRecord && field.key !== PHOTO_KEY;
   return html`<div class="person-editor__was">
     <span class="person-editor__was-value">was ${oldText}</span>
@@ -232,36 +186,26 @@ function renderWas(props: EditorFieldProps) {
   </div>`;
 }
 
-// Who stood behind this value, and what they overrode. A button rather than a `title`: a
-// native tooltip is slow, unstyleable, and reaches neither touch nor keyboard.
 function renderLock(lock: FieldLock) {
-  const overrode = lock.state === LOCK_OVERRODE;
-  return html`<div
+  return html`<span
     class="person-editor__lock person-editor__lock--${lock.state}"
+    aria-label=${lock.label}
   >
-    <button
-      class="person-editor__lock-button"
-      type="button"
-      aria-label=${lock.disclosure ? `${lock.label}. ${lock.disclosure}` : lock.label}
-    >
-      <i class="fa-solid fa-lock" aria-hidden="true"></i>
-    </button>
-    <span class="person-editor__lock-pop" role="tooltip">
-      ${overrode && lock.disclosure
-        ? html`<span class="person-editor__lock-said">${lock.disclosure}</span>`
-        : nothing}
-      <span class="person-editor__lock-who">${lock.label}</span>
-    </span>
+    <i class="fa-solid fa-lock" aria-hidden="true"></i>
+  </span>`;
+}
+
+function renderDisclosure(lock: FieldLock | null) {
+  if (!lock || lock.state !== LOCK_OVERRODE || !lock.disclosure) return nothing;
+  return html`<div class="person-editor__disclosure">
+    <i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>
+    <span class="person-editor__disclosure-said">${lock.disclosure}</span>
+    <span class="person-editor__disclosure-who">${lock.label}</span>
   </div>`;
 }
 
-// Why the field is on screen, as the badge for its current condition. The reason
-// is frozen at first appearance (§2.2); the badge is derived, so a field that
-// surfaced because of an error stays visible and reads `resolved` once fixed
-// rather than vanishing at the moment the reviewer fixed it.
 function renderAttention(props: EditorFieldProps) {
   const { reason, error, issueMessages } = props;
-
   if (error) {
     return html`<div class="person-editor__error">
       <i class="fa-solid fa-triangle-exclamation"></i><span>${error}</span>
@@ -275,17 +219,11 @@ function renderAttention(props: EditorFieldProps) {
         </div>`,
     );
   }
-  // Appeared as a task, and the task is done.
   if (reason === "error" || reason === "issue") {
     return html`<div class="person-editor__issue person-editor__resolved">
       <i class="fa-solid fa-circle-check"></i><span>Resolved</span>
     </div>`;
   }
-  // Editor only. Preview carries no diff vocabulary, and this is exactly that.
-  //
-  // A glyph, not the sentence it replaces: after a review every non-null field is asserted, so
-  // the sentence appeared on all of them and the card was mostly provenance. The lock keeps the
-  // signal and gives the row back.
   if (props.lock) {
     return renderLock(props.lock);
   }
@@ -294,7 +232,6 @@ function renderAttention(props: EditorFieldProps) {
 
 export function renderEditorField(props: EditorFieldProps) {
   const { field, newRecord, state } = props;
-  // Read-only renders values, not controls, so there is no set to name.
   const grouped = !props.isReadOnly && groupsControls(field);
   return html`
     <div class="person-editor__field person-editor__field--${state}">
@@ -309,6 +246,7 @@ export function renderEditorField(props: EditorFieldProps) {
         ${newRecord ? renderControl(props, newRecord) : DASH}
       </div>
       ${renderWas(props)} ${renderAttention(props)}
+      ${renderDisclosure(props.lock)}
     </div>
   `;
 }

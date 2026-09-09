@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
 
-from schemas.common import Identity, UserRole
+from schemas.common import Identity, LeaderboardPeriod, UserRole
 from lib.auth import get_optional_user
 from routers.api import leaderboard as leaderboard_router
 
@@ -17,8 +17,8 @@ MOCK_IDENTITY = Identity(
 )
 
 MOCK_ENTRIES = [
-    {"state_code": "ca", "display_name": "alice_reviews", "provider": "github", "provider_user_id": "seed-1", "resolved_count": 142},
-    {"state_code": "ny", "display_name": "bob_patch", "provider": "github", "provider_user_id": "seed-2", "resolved_count": 38},
+    {"display_name": "alice_reviews", "provider": "github", "provider_user_id": "seed-1", "resolved_count": 142},
+    {"display_name": "bob_patch", "provider": "github", "provider_user_id": "seed-2", "resolved_count": 38},
 ]
 
 
@@ -74,5 +74,23 @@ def test_get_leaderboard_writes_cache_on_db_fetch(client):
 
     mock_set_cached.assert_called_once()
     args = mock_set_cached.call_args
-    assert args[0][0] == "leaderboard_data"
+    assert args[0][0] == "leaderboard_data:all_time"
     assert args[0][1]["entries"] == MOCK_ENTRIES
+
+
+@pytest.mark.unit
+def test_get_leaderboard_with_week_period_uses_its_own_cache_key(client):
+    """A week-scoped board must not collide with the all-time board's cache entry —
+    each ranks a different window and needs its own key."""
+    mock_get_leaderboard = AsyncMock(return_value=MOCK_ENTRIES)
+    mock_set_cached = AsyncMock()
+    with (
+        patch("lib.cache.get_cached", new_callable=AsyncMock, return_value=None),
+        patch("database.review_session_stats.get_leaderboard", mock_get_leaderboard),
+        patch("lib.cache.set_cached", mock_set_cached),
+    ):
+        response = client.get("/leaderboard", params={"period": "week"})
+
+    assert response.status_code == 200
+    mock_get_leaderboard.assert_called_once_with(LeaderboardPeriod.WEEK)
+    assert mock_set_cached.call_args[0][0] == "leaderboard_data:week"

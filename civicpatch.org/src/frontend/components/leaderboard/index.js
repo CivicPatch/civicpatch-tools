@@ -3,6 +3,9 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { fetchLeaderboard } from "../../api.js";
 
+export const LEADERBOARD_PERIOD_WEEK = "week";
+export const LEADERBOARD_PERIOD_ALL_TIME = "all_time";
+
 const FALLBACK_ICONS = [
   "fa-mug-hot",
   "fa-mug-saucer",
@@ -24,41 +27,44 @@ function hashIcon(name) {
   return FALLBACK_ICONS[Math.abs(h) % FALLBACK_ICONS.length];
 }
 
-function Leaderboard() {
+function Leaderboard({ title, period = LEADERBOARD_PERIOD_ALL_TIME }) {
   const [entries, setEntries] = useState(null);
   const [brokenAvatars, setBrokenAvatars] = useState(new Set());
-
   useEffect(() => {
-    fetchLeaderboard()
+    setEntries(null);
+    fetchLeaderboard(period)
       .then((res) => setEntries(res.data.entries))
       .catch(() => setEntries([]));
-  }, []);
-
+  }, [period]);
   const handleAvatarError = (id) => {
     setBrokenAvatars((prev) => new Set([...prev, id]));
   };
-
-  if (entries === null) return html``;
-
+  const header = html`
+    <div class="leaderboard__header">
+      <div class="panel__cap"><b>${title}</b></div>
+    </div>
+  `;
+  if (entries === null) {
+    return html`<div class="leaderboard">${header}</div>`;
+  }
   if (entries.length === 0) {
     return html`
       <div class="leaderboard">
-        <div class="leaderboard__title">Top Contributors by State</div>
+        ${header}
         <div class="leaderboard__empty">No contributor data yet.</div>
       </div>
     `;
   }
-
   return html`
     <div class="leaderboard">
-      <div class="leaderboard__title">Top Contributors by State</div>
+      ${header}
       <div class="leaderboard__grid">
-        ${entries.map((entry) => {
+        ${entries.map((entry, i) => {
           const avatarBroken = brokenAvatars.has(entry.provider_user_id);
           const showAvatar = entry.provider === "github" && !avatarBroken;
           return html`
             <div class="leaderboard__row">
-              <span class="leaderboard__state">${entry.state_code}</span>
+              <span class="leaderboard__rank">${i + 1}</span>
               <span class="leaderboard__identity">
                 ${showAvatar ? html`
                   <img

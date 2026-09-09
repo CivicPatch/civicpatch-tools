@@ -106,8 +106,6 @@ export const fetchPullRequestsWithData = async (stateCode, page = 1, perPage = 1
   return res.json();
 };
 
-// Publishing, start to finish: a 200 means the roster is live and stamped. Throws (with a
-// parsed message) on a validation or publish rejection.
 export const publishReview = async (changeset_id, jurisdiction_ocdid, people) => {
   const res = await fetch(`${API_URL}/api/v1/reviews/${changeset_id}/publish`, {
     credentials: "include",
@@ -127,8 +125,6 @@ export const publishReview = async (changeset_id, jurisdiction_ocdid, people) =>
   return res.json();
 };
 
-// Commit the reviewer's edits to `data_json` without publishing. The request stays in the
-// review pool; the session entry is held until the session is released.
 export const saveReviewData = async (changeset_id, jurisdiction_ocdid, people) => {
   const res = await fetch(`${API_URL}/api/v1/reviews/${changeset_id}/save`, {
     credentials: "include",
@@ -184,8 +180,6 @@ export const fetchRoles = async () => {
   return res.json();
 };
 
-// Undated: a post is not a temporal fact. Who holds one at a given moment is
-// `fetchMemberships`, which windows on when a membership opened and closed.
 export const fetchPosts = async (jurisdictionOcdid) => {
   const res = await fetch(`${API_URL}/api/v1/posts/${jurisdictionOcdid}`, {
     credentials: "include",
@@ -203,9 +197,6 @@ export const fetchMemberships = async (jurisdictionOcdid, asOf = null) => {
   return res.json();
 };
 
-// PUT, not POST: assigning is idempotent — re-assigning to the post someone already holds
-// only sets the label. The response carries a `change` — `post_id` with a `before` when they
-// moved — so the caller can say "moved from X" rather than "assigned".
 export const assignMembership = async (personId, postId, label = null) => {
   const res = await fetch(`${API_URL}/api/v1/memberships`, {
     method: "PUT",
@@ -234,9 +225,6 @@ export const updatePost = async (postId, { headcount, isTracked }) => {
     method: "PATCH",
     credentials: "include",
     headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    // `_is_tracked` is underscored on the wire: a post is a civic-data object and no
-    // standard models tracking, so a consumer dropping every `_*` key still has a conforming
-    // record. The route requires it — omitting it would silently re-track the post.
     body: JSON.stringify({
       _headcount: headcount,
       _is_tracked: isTracked,
@@ -296,8 +284,6 @@ export const fetchJurisdictionHistory = async (jurisdictionOcdid, page = 1, perP
   return res.json();
 };
 
-// What the jurisdiction is still waiting on, plus the two scalars a page needs about its
-// whole history. Replaces fetching every changeset to derive four things from the array.
 export const fetchJurisdictionInFlight = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
   const res = await fetch(`/api/v1/jurisdictions/in-flight?${params}`, {
@@ -386,9 +372,6 @@ export const patchPeopleData = async (jurisdictionOcdid, data) => {
 
 const PATCHABLE_JURISDICTION_FIELDS = ["url", "geoid", "population"];
 
-// Only the keys actually present are sent. Coercing an absent field to null would ask the
-// server to clear it: null means "a human set this to nothing", and an untouched field has
-// to stay out of the payload entirely to mean "leave it alone".
 const jurisdictionPatchBody = (jurisdictionOcdid, data) => {
   const body = { jurisdiction_ocdid: jurisdictionOcdid };
   for (const field of PATCHABLE_JURISDICTION_FIELDS) {
@@ -420,8 +403,6 @@ export const patchJurisdictionData = async (jurisdictionOcdid, data) => {
   return res.json();
 };
 
-// Signed-in only, and deliberately not folded into `fetchPeople`: that route is public, and an
-// assertion names who made it.
 export const fetchPeopleAssertions = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
   const res = await fetch(`${API_URL}/api/v1/people/assertions?${params}`, {
@@ -479,13 +460,15 @@ export const fetchMunicipalityList = async (state) => {
   return res.json();
 };
 
-export const fetchLeaderboard = async () => {
-  const res = await fetch(`${API_URL}/api/v1/leaderboard`, { credentials: "include" });
+export const fetchLeaderboard = async (period) => {
+  const params = new URLSearchParams();
+  if (period) params.set("period", period);
+  const query = params.toString() ? `?${params}` : "";
+  const res = await fetch(`${API_URL}/api/v1/leaderboard${query}`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
-/** Pipeline runs */
 export const triggerPipelineRun = async (jurisdictionOcdid, name, url, sourceUrls) => {
   const res = await fetch(`${API_URL}/api/v1/pipeline_runs`, {
     method: "POST",
@@ -516,9 +499,6 @@ export const fetchActivePipelineRuns = async (stateCode, page = 1, perPage = 25)
   return res.json();
 };
 
-// Live Temporal state for a run still in flight. Admin-gated, so a 403 is an ordinary
-// outcome for most viewers — resolves to null rather than throwing, and the caller shows
-// nothing. Diagnostics must never be the reason a page fails to render.
 export const fetchTemporalWorkflowState = async (changesetId) => {
   const res = await fetch(`${API_URL}/api/v1/pipeline_runs/${changesetId}/temporal-workflow-state`, {
     credentials: "include",
@@ -537,7 +517,6 @@ export const cancelPipelineRun = async (pipelineRunId) => {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
-
 
 export const fetchJurisdictionsGeojson = async (lat, lng, zoom) => {
   const params = new URLSearchParams({ lat, long: lng, zoom });
@@ -583,7 +562,6 @@ export const navigateToEntry = async (sessionId, entryNumber) => {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
-
 
 export const endReviewSession = async (sessionId) => {
   const res = await fetch(`${API_URL}/api/v1/review-sessions/${sessionId}/end`, {
@@ -732,11 +710,6 @@ export const setDisplayName = async (displayName) => {
   return res.json();
 };
 
-
-
-// Nationwide jurisdiction typeahead. Each call aborts the previous one: with a debounce
-// plus variable latency, a slow response for "sea" can otherwise land after "seattle"
-// and overwrite it with stale results.
 let jurisdictionSearchController = null;
 
 /**
@@ -746,7 +719,6 @@ let jurisdictionSearchController = null;
 export const searchJurisdictions = async (query, { page = 1, limit = 10, state, level } = {}) => {
   jurisdictionSearchController?.abort();
   jurisdictionSearchController = new AbortController();
-
   const params = new URLSearchParams({ q: query, page, limit });
   if (state) params.set("state", state);
   if (level) params.set("level", level);
@@ -758,7 +730,6 @@ export const searchJurisdictions = async (query, { page = 1, limit = 10, state, 
   return res.json();
 };
 
-// One jurisdiction's open-data fields plus when a source was last collected for it.
 export const fetchJurisdiction = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
   const res = await fetch(`${API_URL}/api/v1/jurisdictions?${params}`, {
@@ -767,8 +738,6 @@ export const fetchJurisdiction = async (jurisdictionOcdid) => {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
-
-// ── Curated-sheet imports ────────────────────────────────────────────────────
 
 const IMPORTS_URL = `${API_URL}/api/v1/imports`;
 
@@ -779,8 +748,6 @@ async function importsRequest(path, method) {
     headers: { "X-CSRF-Token": getCsrfCookie() },
   });
   const body = await res.json();
-  // The router's failures are all actionable text (unshared sheet, import already
-  // running), so the message is worth more to the caller than the status code.
   if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);
   return body;
 }
@@ -815,8 +782,6 @@ export const publishBatch = async (batchId, jurisdictionOcdids) => {
   return body;
 };
 
-// ── API keys ─────────────────────────────────────────────────────────────────
-
 const API_KEYS_URL = `${API_URL}/api/v1/api_keys`;
 
 async function apiKeysRequest(path, method) {
@@ -840,8 +805,6 @@ export const revokeApiKey = async (apiKeyId) =>
 export const deleteApiKey = async (apiKeyId) =>
   apiKeysRequest(`/${apiKeyId}`, "DELETE");
 
-// ── Changeset summaries (maintainers) ──────────────────────────────────────
-
 const SUMMARIES_URL = `${API_URL}/api/v1/changeset_summaries`;
 
 const summariesRequest = async (path) => {
@@ -857,9 +820,6 @@ export const fetchStateRollup = async (windowDays) =>
 export const fetchStateCalendar = async (windowDays) =>
   summariesRequest(`/calendar?window_days=${windowDays}`);
 
-// What scraping cost, per state. Its own endpoint under `pipeline_runs`, not the summaries
-// block above: cost attaches to the run that spent it, and this one 403s for non-maintainers
-// while the rest of the page does not.
 export const fetchStateSpend = async (windowDays) => {
   const res = await fetch(
     `${API_URL}/api/v1/pipeline_runs/spend?window_days=${windowDays}`,
@@ -870,7 +830,6 @@ export const fetchStateSpend = async (windowDays) => {
   return body.data;
 };
 
-// Cadence and budget for one state. One call: the block renders as a unit.
 const SCRAPE_SETTINGS_URL = `${API_URL}/api/v1/scrape_settings`;
 
 const scrapeSettingsRequest = async (path, options = {}) => {
@@ -901,7 +860,6 @@ export const saveCadence = async (state, cadenceDays, cadenceAnchor) =>
     body: JSON.stringify({ cadence_days: cadenceDays, cadence_anchor: cadenceAnchor }),
   });
 
-// Admin-gated server side; the page gates the control too.
 export const saveCaps = async (state, pipelineRunCapUsd, monthlyCapUsd) =>
   scrapeSettingsRequest(`/${encodeURIComponent(state)}/caps`, {
     method: "PUT",
@@ -911,16 +869,12 @@ export const saveCaps = async (state, pipelineRunCapUsd, monthlyCapUsd) =>
     }),
   });
 
-// Public: every state code, for pages that list one row per state rather than reading a
-// single jurisdiction's own.
 export const fetchJurisdictionStates = async () => {
   const res = await fetch(`${API_URL}/api/v1/jurisdictions/states`);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return (await res.json()).data;
 };
 
-// Starting a state-wide scrape. Maintainer-gated server side; the page gates the control too.
-// `numJurisdictions` omitted means every jurisdiction due — which is what the button offers.
 export const startStateScrape = async (state, numJurisdictions = null) => {
   const res = await fetch(`${API_URL}/api/v1/pipeline_runs/batch`, {
     method: "POST",

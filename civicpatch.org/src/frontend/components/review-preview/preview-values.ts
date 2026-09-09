@@ -1,11 +1,3 @@
-// The published values of one person record, as Preview renders them.
-//
-// Record-level, not card-level: the jurisdiction page draws the same values from
-// a plain person record with no diff card around it. Preview passes
-// `card.newRecord`; nothing here knows what a PersonCard is.
-//
-// Split out of review-preview.ts so a consumer can have the values without
-// registering the <review-preview> element.
 
 import { html, nothing } from "lit-html";
 import "./review-preview.css";
@@ -15,24 +7,16 @@ import { ensureUrl } from "../fields/field-controls.js";
 import {
   FIELD_SCHEMA,
   diffValue,
+  POST_FIELD,
   type DiffRecord,
   type FieldSpec,
 } from "../fields/field-model.js";
 
-// Identity is already in the card head, so the field list is what remains.
-//
-// Sources ARE included, unlike the rest of the review apparatus. §11.2 originally
-// excluded them as provenance rather than published data, but that put Preview at
-// odds with the collapse rule, which shows source urls always precisely because
-// they are the evidence behind every other value. Being able to check where a
-// number came from is not review-time overhead; it is part of reading the record.
 const DETAIL_FIELDS = FIELD_SCHEMA.filter(
   (field) =>
-    !["image", "name", "labels"].includes(field.key),
+    !["image", "name", "labels", POST_FIELD].includes(field.key),
 );
 
-// An icon per field instead of a label: the value is what a reader is here for, and
-// the label repeated down a column is noise. The name stays for screen readers.
 const FIELD_ICON: Record<string, string> = {
   other_names: "id-card",
   start_date: "calendar-day",
@@ -42,8 +26,6 @@ const FIELD_ICON: Record<string, string> = {
   urls: "link",
 };
 
-// Sources are provenance, not a value to read: they get a word rather than an icon,
-// and the numbers come from one map per card so [2] is the same page on everyone.
 const SOURCES_KEY = "source_urls";
 
 export type SourceMap = Map<string, { number: number; colorClass: string }>;
@@ -102,7 +84,6 @@ export function renderValues(record: DiffRecord, sources: SourceMap) {
   const populated = DETAIL_FIELDS.filter((field) => field.key !== SOURCES_KEY)
     .map((field) => [field, values(record, field)] as const)
     .filter(([, list]) => list.length > 0);
-
   return html`
     ${populated.map(
       ([field, list]) => html`<span class="review-preview__value">

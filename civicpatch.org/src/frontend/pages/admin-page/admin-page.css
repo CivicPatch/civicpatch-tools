@@ -2,14 +2,12 @@
 .admin-page {
   margin-inline: auto;
 }
-
 .admin-page__title {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.5rem;
   margin: 0.5rem 0 1rem;
 }
-
 .admin-page__header {
   display: flex;
   align-items: center;
@@ -17,59 +15,46 @@
   gap: 1rem;
   margin: 0.5rem 0 1rem;
 }
-
 .admin-page__header .admin-page__title {
   margin: 0;
 }
-
 .admin-page__invite-button {
   margin: 0;
   white-space: nowrap;
 }
-
 .admin-page__pending {
   margin: 0 0 1.5rem;
 }
-
 .admin-page__subtitle {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.1rem;
   margin: 0 0 0.5rem;
 }
-
 .admin-page__pending-actions {
   display: flex;
   gap: 0.5rem;
   white-space: nowrap;
 }
-
 .admin-page__pending-actions .btn {
   margin: 0;
 }
-
 .admin-page__status {
   font-size: 0.9rem;
   color: var(--text-muted);
   margin: 0.5rem 0;
 }
-
 .admin-page__error {
   color: var(--diff-removed);
 }
-
-/* Scrolls the table horizontally inside its own box on screens too narrow for
-   the full row, so the page itself never overflows. */
 .admin-table-scroll {
   overflow-x: auto;
 }
-
 .admin-users-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.9rem;
 }
-
 .admin-users-table th,
 .admin-users-table td {
   padding: 0.3rem 0.5rem;
@@ -77,9 +62,6 @@
   text-align: left;
   vertical-align: middle;
 }
-
-/* Email + Display name (columns 1-2): capped tight so they don't hog width;
-   long values wrap instead of widening the table. */
 .admin-users-table th:nth-child(1),
 .admin-users-table th:nth-child(2),
 .admin-users-table td:nth-child(1),
@@ -88,15 +70,12 @@
   white-space: normal;
   word-break: break-all;
 }
-
-/* Provider, Last login (columns 3-4): keep their value on one line. */
 .admin-users-table th:nth-child(3),
 .admin-users-table th:nth-child(4),
 .admin-users-table td:nth-child(3),
 .admin-users-table td:nth-child(4) {
   white-space: nowrap;
 }
-
 .admin-users-table th {
   font-weight: 400;
   font-size: 0.8rem;
@@ -104,7 +83,6 @@
   font-family: var(--font-mono);
   color: var(--text-muted);
 }
-
 .admin-users-table__self-tag {
   display: inline-block;
   margin-left: 0.4rem;
@@ -118,33 +96,25 @@
   padding: 0.1em 0.4em;
   vertical-align: middle;
 }
-
 .admin-users-table__roles {
   display: flex;
   flex-wrap: wrap;
   gap: 0.3rem;
 }
-
 .admin-users-table__row-status {
   font-size: 0.8rem;
   color: var(--text-muted);
   margin-left: 0.5rem;
 }
-
 .admin-users-table__row-status--error {
   color: var(--diff-removed);
 }
-
 .admin-users-table__row-status--saved {
   color: var(--diff-added, #4caf50);
 }
-
-/* ── Role chips ─────────────────────────────────────────────────────────── */
-
 role-chip {
   display: inline-block;
 }
-
 .role-chip {
   position: relative;
   display: inline-flex;
@@ -162,56 +132,40 @@ role-chip {
   transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
   white-space: nowrap;
 }
-
-/* Per-role palettes — teal / indigo / purple, distinct from the status (green/red/blue)
-   and brand (yellow) colors so a role chip never reads as a status. */
 .role-chip--contributors { --role-bg: #ccfbf1; --role-text: #0f766e; --role-border: #5eead4; }
 .role-chip--maintainers  { --role-bg: #e0e7ff; --role-text: #4338ca; --role-border: #a5b4fc; }
 .role-chip--admins       { --role-bg: #fae8ff; --role-text: #a21caf; --role-border: #f0abfc; }
-
 [data-theme="dark"] .role-chip--contributors { --role-bg: #134e4a; --role-text: #5eead4; --role-border: #0f766e; }
 [data-theme="dark"] .role-chip--maintainers  { --role-bg: #312e81; --role-text: #a5b4fc; --role-border: #4338ca; }
 [data-theme="dark"] .role-chip--admins       { --role-bg: #701a75; --role-text: #f0abfc; --role-border: #a21caf; }
-
-/* Unassigned: outline + "+" glyph — the role color, ghosted, reads as "click to add". */
 .role-chip--unassigned {
   background: transparent;
   color: var(--role-text);
   border: 1px solid var(--role-border);
   opacity: 0.7;
 }
-
 .role-chip--unassigned:hover:not(:disabled) {
   opacity: 1;
 }
-
-/* Assigned: filled tinted pill — same treatment as the status badges. */
 .role-chip--assigned {
   background: var(--role-bg);
   color: var(--role-text);
   border: 1px solid transparent;
 }
-
 .role-chip--assigned:hover:not(:disabled) {
   opacity: 0.85;
 }
-
 .role-chip:disabled {
   cursor: not-allowed;
   opacity: 0.6;
 }
-
 .role-chip__glyph {
   font-size: 0.9em;
 }
-
-/* ── Confirm role modal content ─────────────────────────────────────────── */
-
 .confirm-role-modal__blurb {
   margin: 0 0 0.85rem;
   color: var(--text);
 }
-
 .confirm-role-modal__powers-label {
   font-size: 0.75rem;
   font-weight: 400;
@@ -220,27 +174,21 @@ role-chip {
   color: var(--text-muted);
   margin-bottom: 0.3rem;
 }
-
 .confirm-role-modal__powers {
   margin: 0;
   padding-left: 1.2rem;
   color: var(--text);
 }
-
 .confirm-role-modal__powers li {
   margin-bottom: 0.25rem;
 }
-
-/* ── Status toast ───────────────────────────────────────────────────────── */
-
 status-toast {
   position: fixed;
   bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000; /* sits above the base dialog (z-index: 999) */
+  z-index: 1000;
 }
-
 .status-toast {
   display: inline-flex;
   align-items: center;
@@ -249,14 +197,11 @@ status-toast {
   background: var(--text);
   color: var(--bg);
   border-radius: var(--radius);
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   font-size: 0.9rem;
 }
-
 .status-toast__message {
   white-space: nowrap;
 }
-
 .status-toast__close {
   background: transparent;
   border: none;
@@ -267,7 +212,6 @@ status-toast {
   cursor: pointer;
   opacity: 0.7;
 }
-
 .status-toast__close:hover {
   opacity: 1;
 }

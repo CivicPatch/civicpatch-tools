@@ -1,12 +1,3 @@
-// The published roster, edited in place.
-//
-// Not a second editor: the cards are the ones Overview and Preview draw, and
-// clicking one opens the same review modal the review flow opens. What differs is
-// the baseline — there is no scrape proposal here, so `existing` and
-// `currentPeople` start identical and every card is UNCHANGED until someone edits.
-//
-// Publishing reuses the manual-edit path: a people patch becomes a PR, which is
-// merged immediately.
 
 import { html, nothing } from "lit-html";
 import { component, useState, useEffect } from "haunted";
@@ -43,7 +34,6 @@ interface OpenPerson {
 
 type PublishStage = "idle" | "publishing";
 
-// Blockers outrank the stage copy: a card with errors never reaches "Publishing…".
 function publishLabel(blockerCount: number, stage: PublishStage): string {
   if (blockerCount) return `${blockerCount} to fix before publishing`;
   if (stage === "publishing") return "Publishing…";
@@ -60,7 +50,6 @@ function RosterEditor({
 }: RosterEditorProps) {
   const { posts, reload: reloadPosts } = useJurisdictionPosts(jurisdictionOcdid);
   const roles = useJurisdictionRoles();
-  // Which person asked for a post, so the one it creates can be picked for them.
   const [addingPostFor, setAddingPostFor] = useState<string | null>(null);
   const published = people ?? [];
   const state = usePeopleState({ people: published });
@@ -79,26 +68,14 @@ function RosterEditor({
     handleRestore,
     handleResetAll,
   } = state;
-
   const [openPerson, setOpenPerson] = useState<OpenPerson | null>(null);
-  // Collapsed, not expanded: nothing here is ever a diff, so expanded is the default.
   const [collapsedIds, setCollapsedIds] = useState<Set<string>>(new Set());
-  // The write is a PR: the endpoint returns once it is *enqueued*, then Temporal
-  // merges it and syncs open-data back into the DB. Reloading on enqueue lands on
-  // stale data and reads as "nothing happened", so the button says which half it
-  // is in and only reloads once the merge has actually settled.
   const [publishStage, setPublishStage] = useState<PublishStage>("idle");
   const [publishError, setPublishError] = useState<string | null>(null);
   const isPublishing = publishStage !== "idle";
-
-  // People arrive async, so the baseline is set when they land — not at mount.
   useEffect(() => {
     assignPeople(published);
   }, [people]);
-
-  // Who stood behind each published value. Its own signed-in read: `/people` is public and an
-  // assertion names its author, so this is asked for only where the editor is offered — and a
-  // reader who cannot edit sees no locks, which is the same rule the rest of the page follows.
   const [assertions, setAssertions] = useState<Record<string, any[]>>({});
   useEffect(() => {
     if (!canEdit || !jurisdictionOcdid) return;
@@ -106,7 +83,6 @@ function RosterEditor({
       .then((body) => setAssertions(body.data ?? {}))
       .catch(() => setAssertions({}));
   }, [jurisdictionOcdid, canEdit]);
-
   const cards: PersonCard[] = buildPersonCards({
     existing: published,
     currentPeople: currentPeople ?? [],
@@ -114,30 +90,21 @@ function RosterEditor({
     restoredIds,
     issues: [],
   });
-
-  // The same rule the review session publishes by, so the two pages cannot
-  // disagree about whether a roster is publishable (§9). The per-field badges are
-  // already on screen; this is what stops the button.
   const blockers = blockingErrors(cards);
   const blockerTitle = blockers
     .map((blocker) => `${blocker.name}, ${blocker.fieldLabel}: ${blocker.message}`)
     .join("\n");
-
   const handlePersonSave = (id: string, updates: Record<string, unknown>) =>
     updatePerson(id, updates);
-
   const handleAdd = async () => {
     const personId = await generatePersonId();
     addPerson(emptyPerson(personId, jurisdictionOcdid));
     setOpenPerson({ id: personId, field: null });
   };
-
   const handlePublish = async () => {
     setPublishStage("publishing");
     setPublishError(null);
     try {
-      // The endpoint writes `people` and queues the open-data commit, so a reload after this
-      // resolves shows the published values.
       await patchPeopleData(jurisdictionOcdid, peoplePatch);
       onPublished();
     } catch (err: any) {
@@ -145,9 +112,6 @@ function RosterEditor({
       setPublishStage("idle");
     }
   };
-
-  // No scrape diff here, so nothing is frozen and there is no merge picker: both
-  // exist to reconcile a proposal against the published record.
   const editorFor = (card: PersonCard) =>
     personEditorPropsFor(card, {
       frozen: EMPTY_FROZEN,
@@ -155,13 +119,8 @@ function RosterEditor({
       isReadOnly: !canEdit,
       jurisdictionOcdid,
       posts,
-      // Published people hold memberships, so nothing on this page is proposed.
       proposals: new Map(),
       assertions,
-      // No proposal on this page, so nothing to compare a value against: the lock says who
-      // stood behind it, and stays in its quiet state. Disclosing what a source once said
-      // would mean reading the jurisdiction's last changeset, which is a different question
-      // from the one a review asks.
       overriddenSourceValues: {},
       isExpanded: (id: string) => !collapsedIds.has(id),
       onToggleExpand: () => {
@@ -171,20 +130,15 @@ function RosterEditor({
       },
       onPersonSave: handlePersonSave,
       onAddPost: setAddingPostFor,
-      // handleRemove takes a list; passing an id raw spreads it into characters.
       onRemovePerson: (id: string) => handleRemove([id]),
       onUnremovePerson: handleUnremove,
       onRestorePerson: handleRestore,
       onResetPerson: (id: string) => updatePerson(id, published.find((p) => p.id === id) ?? {}),
-      // No merge here yet. The editor hides the button when there are no candidates,
-      // and an empty list is how that is said — better than rendering a control
-      // whose handler does nothing.
       cards: [],
-      candidatesOpenFor: null,
+      candidatesOpenFor: false,
       onToggleCandidates: () => {},
       onPickPartner: () => {},
     });
-
   const actions = canEdit
     ? html`
         <button class="btn-quiet" ?disabled=${isPublishing} @click=${handleAdd}>
@@ -205,16 +159,12 @@ function RosterEditor({
           : nothing}
       `
     : nothing;
-
-  // The post the form just made becomes this person's pick — the reviewer opened it to
-  // answer the Post field, so leaving them to find it in a reloaded select is half the job.
   const handlePostAdded = (e: CustomEvent) => {
     const postId = e.detail?.post_id;
     if (addingPostFor && postId) handlePersonSave(addingPostFor, { post_id: postId });
     setAddingPostFor(null);
     reloadPosts();
   };
-
   return html`
     ${addingPostFor
       ? html`<civ-post-add
@@ -231,13 +181,12 @@ function RosterEditor({
       actions,
       onOpenPerson: canEdit ? (id: string) => setOpenPerson({ id, field: null }) : null,
     })}
-
     ${publishError
       ? html`<p style="color: var(--diff-removed);">${publishError}</p>`
       : nothing}
-
     <review-modal
       .cards=${cards}
+      .posts=${posts}
       .openPersonId=${openPerson?.id ?? null}
       .focusFieldKey=${openPerson?.field ?? null}
       .editor=${editorFor}

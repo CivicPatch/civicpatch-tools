@@ -1,11 +1,3 @@
-// Preview (spec §7) — the published result, not a diff.
-//
-// Deliberately carries no diff vocabulary: no state colours, no strikethrough,
-// no attention icons. The question it answers is "what will the site say about
-// this council", and what the scrape did to get there is not part of that.
-//
-// Live, because it renders from the same cards Detail edits — including behind
-// an open modal.
 
 import { html, nothing } from "lit-html";
 import { component } from "haunted";
@@ -27,50 +19,40 @@ import {
   PersonStatus,
   type PersonCard,
 } from "../people/person-cards.js";
+import { type Post } from "../posts-list/posts-model.js";
 
 interface ReviewPreviewProps {
   cards: PersonCard[];
-  // See `postsFor`: the publish set is proposed people, who hold no membership yet.
   changes?: ProposedChange[];
   jurisdictionOcdid: string | null | undefined;
-  onOpenPerson: (personId: string, fieldKey: string | null) => void;
+  posts: Post[];
 }
 
-// Not clickable: this is the published record, so the values are plain selectable
-// text you can copy field by field. Nothing here opens an editor.
 function rowFor(
   card: PersonCard,
   sources: SourceMap,
   proposals: Map<string, ProposedChange[]>,
+  posts: Post[],
 ): PersonRowProps {
   const record = card.newRecord;
-  const posts = postsFor(card, proposals);
-
   return {
     record,
     name: record?.name || "(unnamed)",
-    subtitle: posts,
-    // Status tints the card here too. Preview still carries no other diff
-    // vocabulary — no badge, no strikethrough, no attention icon — so the tint is
-    // the one cue, and only ever a background.
+    subtitle: postsFor(card, proposals, posts),
     modifier: card.status,
     meta: renderValues(record, sources),
   };
 }
 
 function ReviewPreview(props: ReviewPreviewProps) {
-  const { cards, jurisdictionOcdid, changes } = props;
+  const { cards, jurisdictionOcdid, changes, posts } = props;
   const publishing = publishSet(cards ?? []);
   const ordered = byDivision(publishing, jurisdictionOcdid);
   const blockers = blockingErrors(cards ?? []);
   const sources = sourceMapFor(publishing.map((card) => card.newRecord));
   const proposals = proposalsByPersonId(changes ?? []);
-
   const added = publishing.filter((c) => c.status === PersonStatus.ADDED).length;
-  // Everyone with a record who is not being published — the scrape lost them or
-  // the reviewer dropped them. Both are "dropped" from the roster's point of view.
   const dropped = (cards ?? []).length - publishing.length;
-
   return html`
     <div class="review-preview">
       <div class="review-preview__bar">
@@ -81,7 +63,6 @@ function ReviewPreview(props: ReviewPreviewProps) {
           ${added} new, ${dropped} dropped
         </span>
       </div>
-
       ${blockers.length
         ? html`<div class="review-preview__blockers">
             <span class="review-preview__blockers-title">
@@ -96,10 +77,9 @@ function ReviewPreview(props: ReviewPreviewProps) {
             </ul>
           </div>`
         : nothing}
-
       ${ordered.length
         ? renderPersonGrid(
-            ordered.map((card) => rowFor(card, sources, proposals)),
+            ordered.map((card) => rowFor(card, sources, proposals, posts)),
           )
         : html`<p class="review-preview__empty">
             This card would publish an empty roster.
