@@ -532,6 +532,12 @@ export const fetchReviewStats = async (stateCode) => {
   return res.json();
 };
 
+export const fetchAvailableReviewStates = async () => {
+  const res = await fetch(`${API_URL}/api/v1/review-sessions/available-states`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchActiveReviewSession = async (stateCode) => {
   const res = await fetch(
     `${API_URL}/api/v1/review-sessions/active?state_code=${encodeURIComponent(stateCode)}`,

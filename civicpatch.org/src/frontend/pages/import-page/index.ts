@@ -278,6 +278,7 @@ function ImportPage() {
         ? html`<section class="panel import-panel">
             <batch-review
               .review=${review}
+              .importedAt=${batch?.started_at ?? null}
               .busy=${busy}
               @publish-selection=${handlePublish}
             ></batch-review>

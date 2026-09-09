@@ -42,6 +42,25 @@ def get_router() -> APIRouter:
         stats = await review_session_stats_db.get_review_stats(user.user_id, state_code)
         return {"data": stats}
 
+    @router.get("/available-states")
+    async def get_available_review_states(
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+    ):
+        if not user.user_id:
+            raise HTTPException(status_code=401, detail="User ID not available")
+        counts = await review_session_stats_db.get_available_review_counts(user.user_id)
+        names = await jurisdictions_db.get_state_names()
+        return {
+            "data": [
+                {
+                    "state_code": row["state_code"],
+                    "state_name": names.get(row["state_code"], row["state_code"]),
+                    "available_count": row["available_count"],
+                }
+                for row in counts
+            ]
+        }
+
     @router.post("")
     async def create_review_session(
         body: CreateReviewSessionRequest,

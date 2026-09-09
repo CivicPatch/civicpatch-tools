@@ -3,7 +3,7 @@ import { component } from "haunted";
 import "../issues-page/config-editor.js";
 import "../../components/unmatched-text/unmatched-text.ts";
 import { useAuth } from "../../hooks/useAuth.js";
-import { SectionNav, manageSection } from "../../components/section-nav/index.js";
+import { SectionNav, manageSection } from "../../components/section-nav/index.ts";
 import { useSummary } from "../../hooks/useSummary.js";
 
 function RolesPage() {

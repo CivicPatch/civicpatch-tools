@@ -41,7 +41,7 @@ function ReportIssueModal(host: ReportIssueModalHost) {
         @input=${(e: Event) => setDescription((e.target as HTMLTextAreaElement).value)}
         ?disabled=${submitting}
       ></textarea>
-      ${error ? html`<p class="review-page__error">${error}</p>` : ""}
+      ${error ? html`<p class="review-session__error">${error}</p>` : ""}
     </form>
   `;
 

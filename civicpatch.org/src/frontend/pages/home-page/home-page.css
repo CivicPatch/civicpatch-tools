@@ -110,8 +110,8 @@
   text-align: center;
   padding: 0.6rem 1.3rem;
   border-radius: var(--radius-sm);
-  background: var(--text-default);
-  color: var(--bg);
+  background: var(--action);
+  color: var(--action-text);
   font-weight: 700;
   font-size: var(--font-size-md);
 }

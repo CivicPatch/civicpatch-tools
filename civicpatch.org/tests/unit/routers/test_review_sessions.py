@@ -65,6 +65,34 @@ def test_get_review_stats_does_not_consult_cache(client):
 
 
 @pytest.mark.unit
+def test_get_available_review_states_merges_counts_and_names(client):
+    counts = [
+        {"state_code": "ca", "available_count": 12},
+        {"state_code": "ny", "available_count": 3},
+    ]
+    names = {"ca": "California", "ny": "New York"}
+    with (
+        patch(
+            "database.review_session_stats.get_available_review_counts",
+            new_callable=AsyncMock,
+            return_value=counts,
+        ),
+        patch(
+            "database.jurisdictions.get_state_names",
+            new_callable=AsyncMock,
+            return_value=names,
+        ),
+    ):
+        response = client.get("/review-sessions/available-states")
+
+    assert response.status_code == 200
+    assert response.json()["data"] == [
+        {"state_code": "ca", "state_name": "California", "available_count": 12},
+        {"state_code": "ny", "state_name": "New York", "available_count": 3},
+    ]
+
+
+@pytest.mark.unit
 def test_create_review_session_returns_session(client):
     session = {"id": TEST_SESSION_ID, "state_code": "ca"}
     with patch(

@@ -21,6 +21,7 @@ import {
   proposalsByPersonId,
   type ProposedChange,
   DEPARTING,
+  movedNote,
   personOf,
   PersonStatus,
   STATUS_LABEL,
@@ -37,6 +38,8 @@ import {
   attentionOf,
   fieldClass,
   FIELD_CAP,
+  isDated,
+  isVerified,
   runsOf,
   sourceMapFor,
   STATUS_BADGE,
@@ -129,7 +132,8 @@ function renderRow(
   sources: SourceMap,
   proposals: Map<string, ProposedChange[]>,
 ) {
-  const badge = STATUS_BADGE[card.status];
+  const moved = movedNote(card, proposals, props.posts);
+  const badge = moved ? "Moved" : STATUS_BADGE[card.status];
   const firstField = visibleFields(card)[0]?.field.key ?? null;
   return renderPersonRow({
     record: personOf(card),
@@ -145,6 +149,23 @@ function renderRow(
       ${badge
         ? html`<span class="review-row__badge review-row__badge--${card.status}"
             >${badge}</span
+          >`
+        : nothing}
+      ${moved
+        ? html`<span class="review-row__moved">${moved.from} → ${moved.to}</span>`
+        : nothing}
+      ${!isVerified(card, props.assertions)
+        ? html`<span
+            class="review-row__badge review-row__badge--unverified"
+            title="No human has published any field on this record"
+            >unverified</span
+          >`
+        : nothing}
+      ${!isDated(card)
+        ? html`<span
+            class="review-row__badge review-row__badge--unverified"
+            title="No term dates on file, so we cannot say whether they still hold this seat"
+            >no term</span
           >`
         : nothing}
       ${renderFields(card, props)}

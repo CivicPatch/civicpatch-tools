@@ -177,9 +177,15 @@
   color: var(--tile-changed);
 }
 .review-row__badge--restored,
-.review-row__badge--unchanged {
+.review-row__badge--unchanged,
+.review-row__badge--unverified {
   background: color-mix(in srgb, var(--text-muted) 16%, transparent);
   color: var(--text-muted);
+}
+.review-row__moved {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 .review-overview__tally {
   display: flex;

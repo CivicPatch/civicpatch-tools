@@ -295,10 +295,13 @@
   opacity: 0.55;
 }
 
+/* Fixed trailing columns, not flex — so "N people" and the status word land at the same
+   x-position on every row regardless of how long the jurisdiction's name is. */
 .review-jurisdiction__header {
   align-items: center;
-  display: flex;
+  display: grid;
   gap: 0.75rem;
+  grid-template-columns: minmax(0, 1fr) 5rem 5.5rem;
 }
 
 .review-jurisdiction__pick {
@@ -306,6 +309,7 @@
   display: flex;
   gap: 0.6rem;
   margin: 0;
+  min-width: 0;
 }
 
 .review-jurisdiction__pick input {
@@ -313,17 +317,19 @@
 }
 
 .review-jurisdiction__name {
+  flex: 1;
   font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .review-jurisdiction__count,
 .review-jurisdiction__status {
   color: var(--text-muted);
   font-size: 0.85rem;
-}
-
-.review-jurisdiction__status {
-  margin-left: auto;
+  text-align: right;
 }
 
 /* Two up where there is room: a roster is a dozen people, and one per line makes a bulk review

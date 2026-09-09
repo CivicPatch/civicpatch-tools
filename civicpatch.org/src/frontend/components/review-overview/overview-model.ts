@@ -1,7 +1,8 @@
 
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
-import { PersonStatus, type PersonCard } from "../people/person-cards.js";
-import { isContextField, type SurvivingField } from "../fields/field-model.js";
+import { personOf, PersonStatus, type PersonCard } from "../people/person-cards.js";
+import { getFieldValue, isContextField, type SurvivingField } from "../fields/field-model.js";
+import { ACCEPT, type PersonAssertion } from "../person-editor/field-provenance.js";
 
 const FIELD_ORDER = [
   "labels",
@@ -51,6 +52,20 @@ export function attentionOf(card: PersonCard): "error" | "issue" | null {
   if (card.surviving.some((field) => field.error)) return "error";
   if (card.surviving.some((field) => field.reason === "issue")) return "issue";
   return null;
+}
+
+// Has any human ever stood behind a field on this record?
+export function isVerified(
+  card: PersonCard,
+  assertions: Record<string, PersonAssertion[]>,
+): boolean {
+  return (assertions[card.personId] ?? []).some((a) => a.kind === ACCEPT);
+}
+
+// No term dates on file means we cannot say whether they still hold the seat.
+export function isDated(card: PersonCard): boolean {
+  const record = personOf(card);
+  return Boolean(getFieldValue(record, "start_date") || getFieldValue(record, "end_date"));
 }
 
 export interface TallyEntry {

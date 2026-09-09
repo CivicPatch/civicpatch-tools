@@ -48,6 +48,39 @@ async def get_leaderboard(period: LeaderboardPeriod = LeaderboardPeriod.ALL_TIME
     ]
 
 
+async def get_available_review_counts(user_id: str) -> list[dict[str, Any]]:
+    """States with at least one review available right now, busiest first."""
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor(row_factory=namedtuple_row) as cur:
+            await cur.execute(
+                f"""
+                SELECT
+                    j.state AS state_code,
+                    COUNT(*) AS available_count
+                FROM changesets
+                JOIN jurisdictions j ON j.jurisdiction_ocdid = changesets.jurisdiction_ocdid
+                WHERE {AVAILABLE_FOR_REVIEW}
+                  AND NOT EXISTS (
+                      SELECT 1
+                      FROM review_session_entries rse
+                      JOIN review_sessions rs ON rs.id = rse.review_session_id
+                      WHERE rse.jurisdiction_ocdid = changesets.jurisdiction_ocdid
+                        AND rse.status = 'claimed'
+                        AND rs.user_id != %s
+                  )
+                GROUP BY j.state
+                ORDER BY available_count DESC
+                """,
+                (user_id,),
+            )
+            rows = await cur.fetchall()
+    return [
+        {"state_code": row.state_code, "available_count": row.available_count}  # type: ignore[union-attr]
+        for row in rows
+    ]
+
+
 async def get_review_stats(
     user_id: str,
     state_code: str,

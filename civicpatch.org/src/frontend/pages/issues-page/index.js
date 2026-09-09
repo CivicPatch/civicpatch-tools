@@ -8,7 +8,7 @@ import "./issues-section.ts";
 import "./config-editor.js";
 import "./issues-page.css";
 import { useAuth } from "../../hooks/useAuth.js";
-import { SectionNav, adminSection } from "../../components/section-nav/index.js";
+import { SectionNav, adminSection } from "../../components/section-nav/index.ts";
 import "../../components/select-state/select-state.js";
 
 const STATE_QUERY_KEY = "state";

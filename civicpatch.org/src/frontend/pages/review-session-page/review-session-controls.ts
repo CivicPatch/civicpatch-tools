@@ -16,14 +16,14 @@ export interface Progress {
 // that act on the card's data (publish, save, close) belong to the card, which
 // owns that data — this is navigation only.
 //
-// The host dissolves (`display: contents`) so .review-page__step-nav is a direct
+// The host dissolves (`display: contents`) so .review-session__step-nav is a direct
 // flex item of the header; on narrow screens the header dissolves too and the
 // step-nav is what stays sticky.
 const BACK_EVENT = "back";
 const ADVANCE_EVENT = "advance";
 const NAVIGATE_TO_EVENT = "navigate-to";
 
-// The checklist trigger rides in here rather than in .review-page__actions
+// The checklist trigger rides in here rather than in .review-session__actions
 // because the step-nav is the only part of the header that stays sticky below
 // 768px — the header itself becomes `display: contents` and the action buttons
 // drop into normal flow and scroll away. The trigger is the drawer's only
@@ -73,24 +73,24 @@ function ReviewSessionControls(host: ReviewSessionControlsHost) {
   // header's left column so the actions stay right-aligned — and it still needs
   // the checklist trigger, since arriving from a PR link is a normal way in.
   if (!hasSession) {
-    return html`<div class="review-page__step-nav">${checklistTrigger}</div>`;
+    return html`<div class="review-session__step-nav">${checklistTrigger}</div>`;
   }
 
   return html`
-    <div class="review-page__step-nav">
-      <button class="btn-sm review-page__back-btn" @click=${handleBack} ?disabled=${!hasPrev}><i class="fa-solid fa-arrow-left"></i> Back</button>
-      <span class="review-page__progress">${entryNumber} of ${displayMax}</span>
-      <div class="review-page__dots">
+    <div class="review-session__step-nav">
+      <button class="btn-sm review-session__back-btn" @click=${handleBack} ?disabled=${!hasPrev}><i class="fa-solid fa-arrow-left"></i> Back</button>
+      <span class="review-session__progress">${entryNumber} of ${displayMax}</span>
+      <div class="review-session__dots">
         ${Array.from({ length: total }, (_, i) => i + 1).map((n) => {
           const status = getDotStatus(n);
           return html`<button
-            class="review-page__dot review-page__dot--${status}"
+            class="review-session__dot review-session__dot--${status}"
             ?disabled=${status === "future" || status === "current"}
             @click=${() => handleNavigateTo(n)}
           ></button>`;
         })}
       </div>
-      <button class="btn-sm review-page__next-btn" @click=${handleAdvance} ?disabled=${!hasNext}>Next <i class="fa-solid fa-arrow-right"></i></button>
+      <button class="btn-sm review-session__next-btn" @click=${handleAdvance} ?disabled=${!hasNext}>Next <i class="fa-solid fa-arrow-right"></i></button>
       ${checklistTrigger}
     </div>
   `;

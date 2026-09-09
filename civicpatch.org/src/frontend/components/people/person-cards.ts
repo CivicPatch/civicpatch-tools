@@ -136,6 +136,27 @@ const postMoved = (
     (change) => change.disposition !== "unchanged",
   );
 
+export interface MovedNote {
+  from: string;
+  to: string;
+}
+
+// postMoved already folds a seat change into one CHANGED card; this says which
+// post it left and which it landed in.
+export function movedNote(
+  card: PersonCard,
+  proposals: Map<string, ProposedChange[]> | undefined,
+  posts: Post[],
+): MovedNote | null {
+  if (!postMoved(card.personId, proposals)) return null;
+  const oldMemberships = card.oldRecord?.memberships;
+  const from = oldMemberships?.length
+    ? postsHeld(oldMemberships)
+    : (card.oldRecord?.labels?.join("; ") ?? "");
+  const to = postsFor(card, proposals, posts);
+  return from && from !== to ? { from, to } : null;
+}
+
 function statusFor(
   type: string,
   personId: string,

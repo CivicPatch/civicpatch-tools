@@ -8,7 +8,7 @@ import { component } from "haunted";
 // Save records corrections to people; approving decides the roster. Adding or removing
 // somebody only takes effect on approve, which is why the two are separate buttons.
 //
-// The host dissolves (`display: contents`) so .review-page__actions stays a
+// The host dissolves (`display: contents`) so .review-session__actions stays a
 // direct flex item of the header, as review-session-controls does.
 const APPROVE_EVENT = "publish";
 const SAVE_EVENT = "save";
@@ -59,13 +59,13 @@ function ReviewSessionActions(host: ReviewSessionActionsHost) {
     host.dispatchEvent(new CustomEvent(END_SESSION_EVENT, { bubbles: true, composed: true }));
 
   return html`
-    <div class="review-page__actions">
+    <div class="review-session__actions">
       ${isReadOnly ? "" : html`
       ${dirty ? html`
-      <button class="btn-sm review-page__save-btn" @click=${handleSave}>Save updates</button>
+      <button class="btn-sm review-session__save-btn" @click=${handleSave}>Save updates</button>
       ` : ""}
       <button
-        class="btn-sm review-page__approve-btn btn-gradient"
+        class="btn-sm review-session__approve-btn btn-gradient"
         @click=${handleApprove}
         ?disabled=${blockers.length > 0}
         title=${blockers.length ? blockerTitle : ""}
@@ -82,7 +82,7 @@ function ReviewSessionActions(host: ReviewSessionActionsHost) {
       </button>
       ` : ""}
       `}
-      <button class="btn-sm review-page__end-btn" @click=${handleEndSession}>${hasSession ? "End session" : "Exit"}</button>
+      <button class="btn-sm review-session__end-btn" @click=${handleEndSession}>${hasSession ? "End session" : "Exit"}</button>
     </div>
   `;
 }
