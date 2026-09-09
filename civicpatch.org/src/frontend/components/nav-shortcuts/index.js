@@ -1,6 +1,7 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { assignLetters } from "./letters.js";
+import { isTyping } from "../../utils/keyboard.ts";
 import "../basic/modal.js";
 import "../badge/badge.js";
 import "./nav-shortcuts.css";
@@ -9,8 +10,6 @@ import "./nav-shortcuts.css";
 // the caller), grouped the same way the nav bar itself is — direct links, manage,
 // admin. Each page's letter is assigned once across the full flattened list, so a
 // press while the menu is open can never mean two different pages.
-const isTyping = (el) => el && /^(input|textarea|select)$/i.test(el.tagName);
-
 function NavShortcuts({ sections }) {
   const [open, setOpen] = useState(false);
   const flat = assignLetters(sections.flatMap((s) => s.items));

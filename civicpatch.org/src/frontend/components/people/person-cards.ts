@@ -1,10 +1,14 @@
-// One card per person: what happened to them, and which fields survive the collapse rule.
-
 import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
-import { divisionOf, postsHeld } from "../posts-list/posts-model.js";
+import {
+  divisionOf,
+  postLabelFor,
+  postsHeld,
+  type Post,
+} from "../posts-list/posts-model.js";
 import {
   FIELD_SCHEMA,
   fieldError,
+  getFieldValue,
   isContextField,
   POST_FIELD,
   recordsDiffer,
@@ -30,8 +34,7 @@ export const PersonStatus = Object.freeze({
 
 export type PersonStatusKey = (typeof PersonStatus)[keyof typeof PersonStatus];
 
-// Each label names its actor: "removed" and "deleted" are synonyms in English but mean
-// different things here, so neither bare word is ever UI copy.
+// "removed" and "deleted" are synonyms in English but mean different things here.
 export const STATUS_LABEL: Record<PersonStatusKey, string> = {
   [PersonStatus.CHANGED]: "changed",
   [PersonStatus.ADDED]: "new",
@@ -50,10 +53,16 @@ export const DEPARTING = new Set<string>([
 export function postsFor(
   card: PersonCard,
   proposedByPersonId?: Map<string, ProposedChange[]>,
+  posts: Post[] = [],
 ): string {
+  const record = personOf(card);
+  // A reviewer's own post pick outranks the derivation's guess everywhere this card shows.
+  const pickedPostId = record ? getFieldValue(record, POST_FIELD) : null;
+  const pickedLabel = pickedPostId ? postLabelFor(pickedPostId, posts) : "";
+  if (pickedLabel) return pickedLabel;
+
   const proposed = proposedByPersonId?.get(card.personId) ?? [];
   if (proposed.length) {
-    // From the derivation rather than from memberships: the person holds none yet.
     return postsHeld(
       proposed.map((change) => ({
         post_label: change.post_label,
@@ -61,16 +70,11 @@ export function postsFor(
       })),
     );
   }
-  const record = personOf(card);
   if (record?.memberships?.length) return postsHeld(record.memberships);
-  // A proposed person holds no membership yet, so this is the live path for every scrape
-  // card. `labels` verbatim, joined for display only — `office.name` was the same join done
-  // upstream, where it could not be undone.
   return record?.labels?.join("; ") ?? "";
 }
 
-/** A list per person, not one change: a person can be proposed onto more than one post, and
- * keying a plain Map on `person_id` kept only the last of them. */
+// A list per person: a person can be proposed onto more than one post.
 export function proposalsByPersonId(
   changes: ProposedChange[],
 ): Map<string, ProposedChange[]> {
@@ -84,7 +88,6 @@ export function proposalsByPersonId(
   return byPerson;
 }
 
-// The new side is live; someone the scrape didn't find has only the old side.
 export const personOf = (card: PersonCard) => card.newRecord ?? card.oldRecord;
 
 export interface CardsResult {
@@ -92,8 +95,7 @@ export interface CardsResult {
   duplicateIds: string[];
 }
 
-// The card's only source for "which post would this person land in" — they hold no
-// membership yet.
+// The only source for "which post would this person land in" — they hold no membership yet.
 export interface ProposedChange {
   person_id: string;
   disposition: string;
@@ -122,15 +124,10 @@ export interface BuildCardsInput {
   removedIds: Set<string>;
   restoredIds: Set<string>;
   issues: Issue[];
-  // Which post each person would land in. Needed because the post is not a field: `post_id` on
-  // a person is the reviewer's *pick*, null on both sides until they make one, so a field diff
-  // cannot see a move. Without this, somebody becoming Council President reads `unchanged` and
-  // folds out of the review entirely.
+  // Which post each person would land in — a field diff can't see a post move on its own.
   proposals?: Map<string, ProposedChange[]>;
 }
 
-// A post that is not simply staying put. `propose` works in dispositions, and anything but
-// UNCHANGED is a change a reviewer should see.
 const postMoved = (
   personId: string,
   proposals?: Map<string, ProposedChange[]>,
@@ -145,10 +142,8 @@ function statusFor(
   removedIds: Set<string>,
   restoredIds: Set<string>,
 ): PersonStatusKey {
-  // Before the diff verdict: restoring copies the old record back, so they compare identical
-  // and would otherwise read `unchanged`.
+  // Restoring copies the old record back, so it would otherwise diff as `unchanged`.
   if (restoredIds.has(personId)) return PersonStatus.RESTORED;
-  // foldRemovals already re-typed them REMOVED; only the set says who caused it.
   if (removedIds.has(personId)) return PersonStatus.DELETED;
   return type as PersonStatusKey;
 }
@@ -189,8 +184,7 @@ export function buildPersonCards({
     if (status === PersonStatus.UNCHANGED && moved) {
       status = PersonStatus.CHANGED;
     }
-    // Only the scrape dropping someone leaves no new-side record; a reviewer removal is a
-    // decision about a row that is still in the list.
+    // Only the scrape dropping someone leaves no new-side record.
     const newRecord = status === PersonStatus.REMOVED ? null : entry.person;
     return {
       personId,
@@ -203,8 +197,7 @@ export function buildPersonCards({
   });
 }
 
-// Reported separately because there is no card to attach it to — that is the problem: one of
-// the two people has no diff entry at all.
+// Reported separately: there is no card to attach it to — one of the pair has no diff entry.
 export function duplicateIdsFor({
   existing,
   currentPeople,
@@ -225,12 +218,9 @@ export function cardFields(cards: PersonCard[]) {
 
 // ── What needs a decision (§3) ───────────────────────────────────────────────
 
-// Deletion counts deliberately: someone marked for removal with nothing else changed would
-// otherwise hide in the faded group.
 export function needsReview(card: PersonCard): boolean {
   return (
-    // Context fields are always visible, so counting them would put everyone in To review —
-    // unless one carries an error, which blocks publish and cannot fold away unseen.
+    // Context fields are always visible, so they only count here on error.
     card.surviving.some(
       (field) => !isContextField(field.field) || field.error,
     ) ||
@@ -255,8 +245,7 @@ export interface BlockingError {
   message: string;
 }
 
-// Scans the schema, not the screen: a collapsed field can still block publishing. Publish set
-// only — an empty required field on someone being dropped is moot.
+// Scans the schema, not the screen: a collapsed field can still block publishing.
 export function blockingErrors(cards: PersonCard[]): BlockingError[] {
   const errors: BlockingError[] = [];
   for (const card of publishSet(cards)) {
@@ -306,8 +295,7 @@ export interface PeopleDiffResult {
   duplicateIds?: string[];
 }
 
-// computePeopleDiff knows nothing about reviewer removals, so an untouched removed person
-// comes back UNCHANGED. Every removed person keeps a card, including one the scrape added.
+// computePeopleDiff knows nothing about reviewer removals, so an untouched one reads UNCHANGED.
 export function foldRemovals(
   { diffEntries, unchangedEntries, duplicateIds }: PeopleDiffResult,
   removedIds: Set<string>,
@@ -347,4 +335,13 @@ export function indexIssuesByPersonId(issues: Issue[]): Map<string, Issue[]> {
     }
   }
   return byId;
+}
+
+export function adjacentPeer(
+  cards: PersonCard[],
+  currentId: string,
+  direction: -1 | 1,
+): PersonCard | undefined {
+  const index = cards.findIndex((c) => c.personId === currentId);
+  return index === -1 ? undefined : cards[index + direction];
 }

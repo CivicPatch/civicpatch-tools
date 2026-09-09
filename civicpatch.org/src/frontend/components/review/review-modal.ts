@@ -1,10 +1,3 @@
-// The edit modal (spec §6): the Detail editor mounted with one person, inside the
-// existing <civ-modal> shell, built from the same editor props.
-//
-// Editing behaviour is therefore defined exactly once — this adds navigation
-// around the person editor, not a second one. §21.3 is why it consumes
-// <civ-modal> rather than baking the editor into a shell: merge will need an
-// N-column body in the same frame.
 
 import { html, nothing } from "lit-html";
 import { component, useState, useEffect, useCallback } from "haunted";
@@ -27,6 +20,7 @@ import {
   type PersonEditorProps,
 } from "../person-editor/person-editor.js";
 import {
+  adjacentPeer,
   postsFor,
   personOf,
   proposalsByPersonId,
@@ -35,21 +29,19 @@ import {
   type ProposedChange,
 } from "../people/person-cards.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
+import { focusOnMount } from "../../utils/focus-on-mount.js";
+import { altArrowDirection } from "../../utils/keyboard.js";
+import { type Post } from "../posts-list/posts-model.js";
 
 export interface ReviewModalProps {
-  // The set the modal was opened from, already narrowed by the caller — from
-  // Overview that is the group the person was in. Stepping out of it would land
-  // on someone with no visible fields, which is a dead end (§6).
   cards: PersonCard[];
-  // See `postsFor`: a proposed person holds no membership yet.
   changes?: ProposedChange[];
+  posts: Post[];
   openPersonId: string | null;
   focusFieldKey: string | null;
   editor: EditorFactory;
   isReadOnly: boolean;
   onClose: () => void;
-  // Opens the merge picker anchored on the person in view.
-  // Merge is the modal's other screen, not a second dialog. Set means "show it".
   mergePartner?: PersonCard | null;
   onMergeBack?: () => void;
   onMerge?: (
@@ -59,15 +51,13 @@ export interface ReviewModalProps {
   ) => void;
 }
 
-// The caller already knows how to build a person editor for a card (it does so for
-// Detail), so it hands that over rather than this rebuilding it — one definition
-// of what a person's row looks like.
 export type EditorFactory = (card: PersonCard) => PersonEditorProps;
 
 function ReviewModal(props: ReviewModalProps) {
   const {
     cards,
     changes,
+    posts,
     openPersonId,
     focusFieldKey,
     editor,
@@ -77,66 +67,36 @@ function ReviewModal(props: ReviewModalProps) {
     onMergeBack,
     onMerge,
   } = props;
-
   const [personId, setPersonId] = useState<string | null>(null);
   const [mergePlan, setMergePlan] = useState<MergePlan | null>(null);
-
   const open = openPersonId !== null;
   const index = cards.findIndex((c) => c.personId === (personId ?? openPersonId));
   const card = cards[index];
-
   useEffect(() => {
     setMergePlan(null);
   }, [mergePartner?.personId]);
-
   const goTo = (nextId: string) => {
     if (!cards.some((c) => c.personId === nextId)) return;
     setPersonId(nextId);
   };
-
   useEffect(() => {
     setPersonId(open ? openPersonId : null);
   }, [openPersonId]);
-
-  // Focus only on open. Navigating must not move focus, or pressing Next twice
-  // fails — the second press lands on a control instead of the button. lit keys
-  // refs by callback identity, so memoising on the open is what makes "only on
-  // open" true: a fresh closure would re-fire on every render, and the controls
-  // save on `input`, so every keystroke would snap focus back here.
-  const focusOnOpen = useCallback(
-    (el?: Element) => {
-      // Element parts commit while the fragment is still detached, where
-      // focus() is a no-op.
-      if (el instanceof HTMLElement) queueMicrotask(() => el.focus());
-    },
-    [openPersonId, focusFieldKey],
-  );
-
-  // Alt-arrows, because plain arrows have to stay free for the caret.
+  const focusOnOpen = useCallback(focusOnMount, [openPersonId, focusFieldKey]);
   const onKey = (e: KeyboardEvent) => {
-    if (!e.altKey) return;
-    if (e.key === "ArrowLeft" && index > 0) goTo(cards[index - 1].personId);
-    if (e.key === "ArrowRight" && index < cards.length - 1) goTo(cards[index + 1].personId);
+    const direction = altArrowDirection(e);
+    if (!direction || !card) return;
+    const next = adjacentPeer(cards, card.personId, direction);
+    if (next) goTo(next.personId);
   };
-
   if (!open || !card) return nothing;
-
   const editedCount = cards.filter((c) => c.surviving.length > 0).length;
   const proposals = proposalsByPersonId(changes ?? []);
-  // Revert is the editor's own Reset, moved into the footer: one baseline — the
-  // card as it loaded — so reopening cannot strand edits the roster calls dirty.
   const editorProps = editor(card);
-
   const name = personOf(card)?.name || "(unnamed)";
-
-  // Rendered inside the body rather than passed as civ-modal's `title`: `title`
-  // is a native HTMLElement property, so setting it to anything but a string
-  // coerces — a template arrived as "[object Object]".
   const head = html`
     <div class="review-modal__head">
       <span class="review-modal__who">${name}</span>
-      <!-- The editor's own header used to sit directly under this one: two strips, two
-           backgrounds, and a gap between them saying nothing. One strip now. -->
       ${renderPersonSummary({ ...editorProps, onReset: null })}
       <span class="review-modal__nav">
         <button
@@ -159,7 +119,6 @@ function ReviewModal(props: ReviewModalProps) {
       </span>
     </div>
   `;
-
   const content = html`
     <div class="review-modal__main" @keydown=${onKey}>
       <nav class="review-modal__people" aria-label="People in this review">
@@ -180,7 +139,7 @@ function ReviewModal(props: ReviewModalProps) {
             <span class="review-modal__person-who">
               <span class="review-modal__person-name">${record?.name || "(unnamed)"}</span>
               <span class="review-modal__person-sub"
-                >${postsFor(entry, proposals)}</span
+                >${postsFor(entry, proposals, posts)}</span
               >
             </span>
             <span class="review-modal__person-meta">
@@ -195,8 +154,6 @@ function ReviewModal(props: ReviewModalProps) {
       </nav>
       <div class="review-modal__body">
         ${head}
-        <!-- The editor's own Reset is dropped here: the footer is showing the same
-             action, and two identical buttons read as two different ones. -->
         <div class="person-editor-list">
           ${renderPersonEditor({
             ...editorProps,
@@ -207,9 +164,6 @@ function ReviewModal(props: ReviewModalProps) {
       </div>
     </div>
   `;
-
-  // Read-only opens and navigates, but offers nothing to undo — there is
-  // nothing to have changed, so Revert would be a button that never applies.
   const footer = html`
     <div class="review-modal__foot">
       <span>
@@ -226,29 +180,18 @@ function ReviewModal(props: ReviewModalProps) {
       </span>
     </div>
   `;
-
-  // The merge plan lives here, not in merge-picker: its actions belong in the
-  // dialog footer, where they cannot scroll out of reach, and the footer is
-  // rendered from this side of civ-modal.
   const merging = !!mergePartner && !!onMergeBack && !!onMerge;
-
-  // The survivor is computed, never chosen: the reviewer is asserting that two
-  // records are one human, not deciding which id outlives the other.
   const survivor = merging ? chooseSurvivor(card, mergePartner!) : null;
   const absorbed = !survivor
     ? null
     : survivor.personId === card.personId
       ? mergePartner!
       : card;
-  // Derived until the reviewer touches it, so reopening on a different pair
-  // cannot show a stale plan.
   const plan =
     survivor && absorbed ? (mergePlan ?? planMerge(survivor, absorbed)) : null;
-
   const chooseMerge = (fieldKey: string, choice: MergeChoiceKey) => {
     if (plan) setMergePlan(setChoice(plan, fieldKey, choice));
   };
-
   const commitMerge = () => {
     if (!plan || !survivor || !absorbed || !onMerge) return;
     onMerge(
@@ -257,9 +200,7 @@ function ReviewModal(props: ReviewModalProps) {
       applyMergePlan(plan, survivor, absorbed) as Record<string, unknown>,
     );
   };
-
   const survivorName = survivor ? (personOf(survivor)?.name ?? "this record") : "";
-
   const body = merging
     ? html`<merge-picker
         .anchor=${card}
@@ -270,7 +211,6 @@ function ReviewModal(props: ReviewModalProps) {
         .onBack=${onMergeBack}
       ></merge-picker>`
     : content;
-
   const mergeFooter = html`
     <div class="review-modal__foot">
       <span>
@@ -279,11 +219,8 @@ function ReviewModal(props: ReviewModalProps) {
       </span>
     </div>
   `;
-
   return html`
     <div class="review-modal">
-      <!-- Escape and the backdrop behave as Done, not Cancel: discarding on a
-           stray Escape is worse than keeping (§6.1). -->
       <civ-modal
         .content=${body}
         .footer=${merging ? mergeFooter : footer}

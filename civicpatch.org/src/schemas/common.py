@@ -30,6 +30,11 @@ class UserRole(str, Enum):
     ADMINS = "admins"
 
 
+class LeaderboardPeriod(str, Enum):
+    WEEK = "week"
+    ALL_TIME = "all_time"
+
+
 # Trust ladder: a user holds one level; permissions cascade downward.
 # admins > maintainers > contributors > default. Higher rank = more powers.
 _ROLE_RANK: dict[str, int] = {

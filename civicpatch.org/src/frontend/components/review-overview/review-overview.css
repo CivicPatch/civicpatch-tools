@@ -1,7 +1,4 @@
 @layer components {
-/* Overview — one roster in seat order (2026-07-30 spec).
-   Status is carried by the card, so position stays free for seat order. */
-
 .review-overview {
   display: flex;
   flex-direction: column;
@@ -9,55 +6,73 @@
   width: 100%;
   max-width: var(--page-width);
   margin-inline: auto;
-
-  /* Same semantics as the editor, theme-remapped. */
   --tile-changed: var(--warning);
   --tile-added: var(--diff-added);
   --tile-cleared: var(--diff-removed);
   --tile-issue: var(--info);
-
-  /* Light tints with the state colour as-is. Dark deepens it toward black first:
-     mixing toward the hue raises luminance, which crushes the muted subtitle
-     below AA. Shading gives both better separation and better contrast. */
   --tint-strength: 12%;
   --tint-shade: 0%;
 }
-
 @media (prefers-color-scheme: dark) {
   .review-overview {
     --tint-strength: 42%;
     --tint-shade: 62%;
   }
 }
-
 :root[data-theme="dark"] .review-overview {
   --tint-strength: 42%;
   --tint-shade: 62%;
 }
-
 :root[data-theme="light"] .review-overview {
   --tint-strength: 12%;
   --tint-shade: 0%;
 }
-
-/* Cards use the space available rather than one massively wide row. min(26rem, 100%),
-   not a bare 26rem: a plain minmax floor holds the track and overflows once the
-   container is narrower than one card. The breakpoint is a consequence of that floor,
-   not a media query. */
 .review-overview__list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(26rem, 100%), 1fr));
   gap: 0.6rem;
 }
-
+.review-overview__editor {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-rows: 1fr;
+  outline: none;
+}
+@starting-style {
+  .review-overview__editor {
+    grid-template-rows: 0fr;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .review-overview__editor {
+    transition: grid-template-rows 200ms ease;
+  }
+}
+.review-overview__editor-inner {
+  overflow: hidden;
+  min-height: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.review-overview__editor-summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.review-overview__editor-summary .editor-summary {
+  margin-right: auto;
+}
+.review-overview .review-row--open {
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--action-focus);
+}
 .review-overview__empty {
   font-size: var(--font-size-sm);
   color: var(--text-muted);
   font-style: italic;
 }
-
-/* Tint follows the status. `restored` is deliberately absent: it is a decision
-   already taken, so the card stays at the base background with only a badge. */
 .review-overview .review-row--added {
   background: color-mix(
     in srgb,
@@ -66,7 +81,6 @@
     var(--surface)
   );
 }
-
 .review-overview .review-row--changed {
   background: color-mix(
     in srgb,
@@ -75,7 +89,6 @@
     var(--surface)
   );
 }
-
 .review-overview .review-row--removed,
 .review-overview .review-row--deleted {
   background: color-mix(
@@ -85,45 +98,39 @@
     var(--surface)
   );
 }
-
 .review-overview .review-row--removed .review-row__name,
 .review-overview .review-row--deleted .review-row__name {
   text-decoration: line-through;
   text-decoration-thickness: 1.5px;
 }
-
-/* Two rows of tags, cut between line boxes so a third hides whole — an arbitrary
-   pixel height slices glyphs mid-row and reads as a rendering bug. Safe here only
-   because `+N more` accounts for what is cut. */
 .review-overview .review-row__meta {
   max-height: 3em;
   overflow: hidden;
 }
-
 .review-row__field {
   font-size: var(--font-size-xs);
   color: var(--text-muted);
 }
-
 .review-row__field--changed { color: var(--tile-changed); font-weight: 700; }
 .review-row__field--added { color: var(--tile-added); font-weight: 700; }
 .review-row__field--cleared { color: var(--tile-cleared); font-weight: 700; }
 .review-row__field--issue { color: var(--tile-issue); font-weight: 700; }
 .review-row__field--error { color: var(--tile-cleared); font-weight: 700; }
-
+.review-row__field-lock {
+  margin-right: 0.2em;
+  font-size: 0.85em;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+.review-row__field-lock--overrode {
+  color: var(--action);
+  opacity: 1;
+}
 .review-row__more {
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   white-space: nowrap;
 }
-
-/* Number and colour belong to the url, so [2] is the same page on every person. */
-/* Provenance sits under everything else it stands behind: pushed to the trailing
-   edge of the meta row, and quiet — the number still identifies the page, it just
-   stops competing with what changed. */
-/* Raised above the card's stretched hit area so the links are reachable. Only this
-   wrapper is raised — the field tags stay under it, so the card still opens from
-   everywhere except the tags themselves. */
 .review-row__sources {
   position: relative;
   z-index: 1;
@@ -132,27 +139,20 @@
   gap: 0.2rem;
   opacity: 0.6;
 }
-
 .review-row__sources:hover {
   opacity: 1;
 }
-
 .review-row__source {
   text-decoration: none;
 }
-
 .review-row__source:hover {
   text-decoration: underline;
 }
-
 .review-row__source {
   font-size: var(--font-size-xs);
   font-weight: 500;
   white-space: nowrap;
 }
-
-/* Status badge — colour is never the only carrier, and `removed` / `deleted`
-   share a hue so the word does the separating. */
 .review-row__badge {
   display: inline-flex;
   align-items: center;
@@ -163,30 +163,29 @@
   font-weight: 700;
   white-space: nowrap;
 }
-
 .review-row__badge--added {
   background: var(--diff-added-bg);
   color: var(--tile-added);
 }
-
 .review-row__badge--removed,
 .review-row__badge--deleted {
   background: var(--diff-removed-bg);
   color: var(--tile-cleared);
 }
-
 .review-row__badge--changed {
   background: color-mix(in srgb, var(--tile-changed) 16%, transparent);
   color: var(--tile-changed);
 }
-
-.review-row__badge--restored {
+.review-row__badge--restored,
+.review-row__badge--unchanged {
   background: color-mix(in srgb, var(--text-muted) 16%, transparent);
   color: var(--text-muted);
 }
-
-/* Attention — a second axis. Self-contained, because it renders on a folded row
-   as well as on a card. */
+.review-overview__tally {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
 .review-row__attn {
   display: inline-flex;
   align-items: center;
@@ -198,19 +197,14 @@
   white-space: nowrap;
   flex: none;
 }
-
 .review-row__attn--error {
   background: var(--diff-removed-bg);
   color: var(--tile-cleared);
 }
-
 .review-row__attn--issue {
   background: color-mix(in srgb, var(--tile-issue) 16%, transparent);
   color: var(--tile-issue);
 }
-
-/* The ghost is always last: adding someone puts their card where it stood and
-   pushes it down, so the affordance never moves. */
 .review-overview .review-row--ghost {
   display: flex;
   align-items: center;
@@ -224,22 +218,16 @@
   font-size: var(--font-size-sm);
   width: 100%;
 }
-
 .review-overview .review-row--ghost:hover {
   border-color: var(--text-default);
   color: var(--text-default);
 }
-
-/* Folded rows — untouched people keep their seat at a fraction of the height. */
-
-/* Folded people pack several to a row — as many as fit, one when narrow. */
 .review-overview__strip {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(17rem, 100%), 1fr));
   gap: 0.4rem 0.6rem;
 }
-
 .review-fold {
   position: relative;
   display: flex;
@@ -249,17 +237,14 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
-
 .review-fold:hover,
 .review-fold:focus-within {
   border-color: var(--text-default);
 }
-
 .review-fold:hover .review-row__hint {
   opacity: 1;
   color: var(--text-default);
 }
-
 .review-fold__open {
   display: flex;
   align-items: center;
@@ -275,23 +260,18 @@
   text-align: left;
   cursor: pointer;
 }
-
 .review-fold__open:hover {
   color: var(--text-default);
 }
-
 .review-fold__open person-image {
   opacity: 0.75;
   flex: none;
 }
-
 .review-fold__who {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
-
-/* Collapsed still identifies the person fully — name and seat, not just a name. */
 .review-fold__name {
   font-size: var(--font-size-sm);
   line-height: 1.2;
@@ -299,15 +279,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-/* Sub and chip share one line, so a flagged fold is no taller than a quiet one. */
 .review-fold__meta {
   display: flex;
   align-items: center;
   gap: 0.35rem;
   min-width: 0;
 }
-
 .review-fold__sub {
   font-size: var(--font-size-xs);
   line-height: 1.2;
@@ -315,5 +292,21 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.review-overview__editor-inner .person-editor {
+  grid-template-columns: 1fr;
+  border: none;
+  border-radius: 0;
+}
+.review-overview__editor-inner .person-editor__identity {
+  display: none;
+}
+.review-overview__editor-inner .person-editor__fields {
+  padding: 0.6rem 0.75rem 0.75rem;
+}
+.review-overview__editor-inner .person-editor--strip person-image,
+.review-overview__editor-inner .person-editor--strip .person-editor__name,
+.review-overview__editor-inner .person-editor--strip .person-editor__office {
+  display: none;
 }
 }

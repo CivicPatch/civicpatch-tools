@@ -1,10 +1,12 @@
 import { html, nothing } from "lit-html";
-import { component, useState } from "haunted";
+import { component, useState, useEffect, useCallback } from "haunted";
 import "../../components/review-overview/review-overview.js";
 import "../../components/review-preview/review-preview.js";
 import "../../components/review/review-modal.js";
 import "../../components/review-sidebar/review-sidebar.js";
 import { checkedCount } from "../../components/review-sidebar/sidebar-model.js";
+import { focusOnMount } from "../../utils/focus-on-mount.js";
+import { altArrowDirection, isTyping } from "../../utils/keyboard.js";
 import "../../components/source-content/source-content-debug-modal.js";
 import { type Progress } from "./review-session-controls.js";
 import "./review-session-controls.js";
@@ -23,6 +25,7 @@ import {
 import { useFrozenFields } from "./use-frozen-fields.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
 import {
+  adjacentPeer,
   blockingErrors,
   buildPersonCards,
   cardFields,
@@ -42,7 +45,11 @@ import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
 import "../../components/posts-list/post-add.js";
 import type { ProposedChange } from "../../components/people/person-cards.js";
 import type { PersonAssertion } from "../../components/person-editor/field-provenance.js";
-import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
+import {
+  jurisdictionOcdidToPath,
+  jurisdictionOcdidToState,
+  stateNameForCode,
+} from "../../components/ocdid-utils.js";
 
 type CurrentEntry = {
   changeset_id: string;
@@ -69,7 +76,6 @@ type CurrentEntry = {
   has_next: boolean;
 };
 
-// Everything else is derived from `currentEntry`; these are what only the page knows.
 type ReviewSessionHost = HTMLElement & {
   progress: Progress;
   hasSession: boolean;
@@ -79,12 +85,6 @@ type ReviewSessionHost = HTMLElement & {
   isRejecting: boolean;
 };
 
-/** The cards alike enough to page between: same review state, in roster order.
- *
- * Roster order so Prev / Next matches the list the modal was opened from, and same state
- * because stepping from someone with fields to review into someone with none is a dead end.
- * `needsReview` is the rule the views themselves split on.
- */
 const peersOf = (
   openCard: PersonCard | undefined,
   cards: PersonCard[],
@@ -114,13 +114,17 @@ function ReviewSession(host: ReviewSessionHost) {
     name: jurisdictionName,
     website_url: jurisdictionWebsiteUrl,
   } = jurisdiction ?? {};
+  const jurisdictionStateName = stateNameForCode(
+    jurisdictionOcdidToState(jurisdictionOcdid ?? ""),
+  );
+  const jurisdictionTitle = jurisdictionStateName
+    ? `${jurisdictionName}, ${jurisdictionStateName}`
+    : jurisdictionName;
   const { posts, reload: reloadPosts } = useJurisdictionPosts(jurisdictionOcdid);
   const roles = useJurisdictionRoles();
-  // Which person asked for a post, so the one it creates can be picked for them.
   const [addingPostFor, setAddingPostFor] = useState<string | null>(null);
   const { url: publishedUrl, status: reviewStatus = null } = pr ?? {};
   const isBaseline = mode === ReviewMode.BASELINE;
-
   const {
     currentPeople,
     dirtyIds,
@@ -136,15 +140,11 @@ function ReviewSession(host: ReviewSessionHost) {
     updatePerson,
     mergePeople,
   } = useReviewPeople(currentEntry);
-
   const [debugOpen, setDebugOpen] = useState(false);
   const hasSourceContent = Boolean(
     source_content_urls && source_content_urls.length > 0,
   );
-
   const changesetId = currentEntry?.changeset_id ?? null;
-
-  // Personal progress, so client-side — one key per card, which is why it needs a TTL.
   const allIssues = review_data?.issues ?? [];
   const [issueChecks, setIssueChecks] = useLocalStorage(
     issueChecksKey(changesetId ?? "none"),
@@ -153,83 +153,86 @@ function ReviewSession(host: ReviewSessionHost) {
   ) as [IssueChecks, (next: IssueChecks) => void];
   const handleToggleIssue = (issue: any) =>
     setIssueChecks(toggleCheck(issueChecks, issue));
-
-  // Not persisted: landing on a card with a scrim already up is worse than reopening it.
   const [checklistOpen, setChecklistOpen] = useState(false);
-
   const cards = buildPersonCards({
     existing: pr_people?.existing ?? [],
     currentPeople: currentPeople ?? [],
     removedIds,
     restoredIds,
-    // A tick has to clear the card's marker, or it does nothing where the reviewer is looking.
     issues: unresolvedIssues(allIssues, issueChecks),
-    // A post is not a field, so the diff cannot see a move on its own.
     proposals: proposalsByPersonId(changes ?? []),
   });
   const frozen = useFrozenFields(changesetId, cardFields(cards));
-
-  // Two people on one id collapse to a single entry, so one is on screen nowhere. Everything
-  // downstream is keyed by person id, so keeping both is not an option; reporting it is.
   const duplicateIds = duplicateIdsFor({
     existing: pr_people?.existing ?? [],
     currentPeople: currentPeople ?? [],
   });
-
-  // Same function fills Preview's banner, so the button and the banner cannot disagree.
   const blockers = blockingErrors(cards);
-
-  const [openPerson, setOpenPerson] = useState<{
-    id: string;
-    field: string | null;
-  } | null>(null);
-  // Its own set, not Detail's: expanding in the modal is a different intent from expanding in
-  // the list, and sharing would make one silently change the other.
-  const [modalExpanded, setModalExpanded] = useState<Set<string>>(new Set());
-  const openCard = cards.find((c) => c.personId === openPerson?.id);
-  const modalCards = peersOf(openCard, cards);
-
-  const handleOpenPerson = (personId: string, fieldKey: string | null) =>
-    setOpenPerson({ id: personId, field: fieldKey });
-
-  // The modal renders the same editor Detail does, so both are built from one
-  // definition — it is the person editor mounted with one person, not a second one.
-  const editorFor = (card: (typeof cards)[number]) =>
-    personEditorPropsFor(card, {
+  const [openPersonId, setOpenPersonId] = useState<string | null>(null);
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  const [focusFieldKey, setFocusFieldKey] = useState<string | null>(null);
+  const openCard = cards.find((c) => c.personId === openPersonId);
+  const openPeers = peersOf(openCard, cards);
+  const handleOpenPerson = (personId: string, fieldKey: string | null) => {
+    const opening = openPersonId !== personId;
+    setOpenPersonId(opening ? personId : null);
+    setFocusFieldKey(opening ? fieldKey : null);
+  };
+  useEffect(() => {
+    if (!openPersonId) return;
+    const onKey = (e: KeyboardEvent) => {
+      const direction = altArrowDirection(e);
+      if (!direction || isTyping(document.activeElement)) return;
+      const nextCard = adjacentPeer(openPeers, openPersonId, direction);
+      if (!nextCard) return;
+      e.preventDefault();
+      setOpenPersonId(nextCard.personId);
+      setFocusFieldKey(null);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [openPersonId, openPeers]);
+  const focusOnOpen = useCallback(focusOnMount, [focusFieldKey]);
+  const editorFor = (card: (typeof cards)[number]) => {
+    const base = personEditorPropsFor(card, {
       ...editorContext,
-      isExpanded: (id: string) => modalExpanded.has(id),
+      isExpanded: (id: string) => expandedIds.has(id),
       onToggleExpand: () => {
-        const next = new Set(modalExpanded);
+        const next = new Set(expandedIds);
         next.has(card.personId)
           ? next.delete(card.personId)
           : next.add(card.personId);
-        setModalExpanded(next);
+        setExpandedIds(next);
       },
     });
-
+    const peers = card.personId === openPersonId ? openPeers : peersOf(card, cards);
+    const peerIndex = peers.findIndex((c) => c.personId === card.personId);
+    return {
+      ...base,
+      navHint:
+        peers.length > 1
+          ? { hasPrev: peerIndex > 0, hasNext: peerIndex < peers.length - 1 }
+          : undefined,
+      focusField:
+        card.personId === openPersonId && focusFieldKey
+          ? { key: focusFieldKey, attach: focusOnOpen }
+          : null,
+    };
+  };
   const handlePersonSave = (id: string, updates: Record<string, unknown>) =>
     updatePerson(id, updates);
-
-  // Merge step 1 — picking who the same person is — renders inline on the editor, so only its
-  // open/closed state lives here.
-  const [candidatesOpenFor, setCandidatesOpenFor] = useState<string | null>(null);
-  const handleToggleCandidates = (personId: string) =>
-    setCandidatesOpenFor((current) => (current === personId ? null : personId));
-
-  // Step 2 is the modal's other screen, not a second dialog — so merge always has a person
-  // behind it and "back" always has somewhere to go.
+  const [candidatesOpen, setCandidatesOpen] = useState(false);
+  const handleToggleCandidates = () => setCandidatesOpen((open) => !open);
   const [pendingMerge, setPendingMerge] = useState<{
     anchorId: string;
     partnerId: string;
   } | null>(null);
+  const mergeAnchorId = pendingMerge?.anchorId ?? null;
   const handlePickPartner = (anchorId: string, partnerId: string) => {
-    setCandidatesOpenFor(null);
+    setCandidatesOpen(false);
     setPendingMerge({ anchorId, partnerId });
-    setOpenPerson({ id: anchorId, field: null });
   };
   const clearPendingMerge = () => setPendingMerge(null);
-
-  // The picker owns the policy; this only carries its result through.
   const handleMergePeople = (
     survivorId: string,
     absorbedId: string,
@@ -237,20 +240,14 @@ function ReviewSession(host: ReviewSessionHost) {
   ) => {
     setPendingMerge(null);
     mergePeople(survivorId, absorbedId, merged);
-    // Follow the survivor: the absorbed id is gone, so leaving it open renders no card
-    // and the modal vanishes — dropping the reviewer to the roster just as the merged
-    // record needs checking.
-    setOpenPerson({ id: survivorId, field: null });
+    handleOpenPerson(survivorId, null);
   };
   const handleAddPerson = async () => {
     const personId = await handleAdd();
-    setOpenPerson({ id: personId, field: null });
+    handleOpenPerson(personId, null);
   };
-
   const handleResetPerson = (id: string) => handleReset(id);
-  // `handleRemove` takes a list because the jurisdiction table deletes in bulk.
   const handleRemovePerson = (id: string) => handleRemove([id]);
-
   const editorContext: EditorContextBase = {
     frozen,
     dirtyIds,
@@ -266,21 +263,17 @@ function ReviewSession(host: ReviewSessionHost) {
     onRestorePerson: handleRestore,
     onResetPerson: handleResetPerson,
     cards,
-    candidatesOpenFor,
+    candidatesOpenFor: candidatesOpen,
     onToggleCandidates: handleToggleCandidates,
     onPickPartner: handlePickPartner,
     onAddPost: setAddingPostFor,
   };
-
-  // The post the form just made becomes this person's pick — the reviewer opened it to
-  // answer the Post field, so leaving them to find it in a reloaded select is half the job.
   const handlePostAdded = (e: CustomEvent) => {
     const postId = e.detail?.post_id;
     if (addingPostFor && postId) handlePersonSave(addingPostFor, { post_id: postId });
     setAddingPostFor(null);
     reloadPosts();
   };
-
   return html`
     <main class="review-page page-content">
       ${addingPostFor
@@ -310,9 +303,6 @@ function ReviewSession(host: ReviewSessionHost) {
           .hasSession=${hasSession}
         ></review-session-actions>
       </div>
-      <!-- Notices come before the jurisdiction, not after it: each one changes
-           what publishing this card will do, so it has to be read before the
-           card is. -->
       ${error ? html`<p class="review-page__error">${error}</p>` : ""}
       ${is_read_only
         ? html`<div
@@ -351,7 +341,7 @@ function ReviewSession(host: ReviewSessionHost) {
                 target="_blank"
                 rel="noopener"
               >
-                ${jurisdictionName}
+                ${jurisdictionTitle}
                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
               </a>`
             : ""}
@@ -395,17 +385,19 @@ function ReviewSession(host: ReviewSessionHost) {
         .isReadOnly=${is_read_only}
         .onOpenPerson=${handleOpenPerson}
         .onAdd=${handleAddPerson}
+        .openPersonId=${openPersonId}
+        .editorFor=${editorFor}
+        .posts=${posts}
+        .assertions=${assertions ?? {}}
+        .overriddenSourceValues=${overriddenSourceValues ?? {}}
       ></review-overview>
-      <!-- Not a tab: what will be published is the same question as what changed, and a
-           reviewer had to remember to go and look. It reads after the roster because it is
-           the consequence of it. -->
       <section class="review-page__publishing" aria-label="Preview">
         <h2 class="review-page__section-title">Preview</h2>
         <review-preview
           .changes=${changes}
           .cards=${cards}
           .jurisdictionOcdid=${jurisdictionOcdid}
-          .onOpenPerson=${handleOpenPerson}
+          .posts=${posts}
         ></review-preview>
       </section>
       <review-sidebar
@@ -419,12 +411,13 @@ function ReviewSession(host: ReviewSessionHost) {
       ></review-sidebar>
       <review-modal
         .changes=${changes}
-        .cards=${modalCards}
-        .openPersonId=${openPerson?.id ?? null}
-        .focusFieldKey=${openPerson?.field ?? null}
+        .cards=${cards}
+        .posts=${posts}
+        .openPersonId=${mergeAnchorId}
+        .focusFieldKey=${null}
         .editor=${editorFor}
         .isReadOnly=${!!is_read_only}
-        .onClose=${() => setOpenPerson(null)}
+        .onClose=${clearPendingMerge}
         .mergePartner=${pendingMerge
           ? (cards.find((c) => c.personId === pendingMerge.partnerId) ?? null)
           : null}

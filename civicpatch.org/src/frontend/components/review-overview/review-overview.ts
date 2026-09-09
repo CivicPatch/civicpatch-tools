@@ -1,14 +1,17 @@
-// Overview — triage a whole card at a glance (2026-07-30 spec).
-//
-// One list in division order, not two groups: status is carried by the card itself, so
-// position is free for the roster order a reviewer checks against a source page.
-// People the scrape left untouched fold to a compact row rather than spending a card.
-
 import { html, nothing } from "lit-html";
 import { component } from "haunted";
+import { ref } from "lit-html/directives/ref.js";
+import { focusOnMount } from "../../utils/focus-on-mount.js";
 import "../person-image.js";
 import "./review-overview.css";
 import { renderPersonRow } from "../people/person-row.js";
+import "../person-editor/person-editor.css";
+import {
+  renderPersonEditor,
+  renderPersonSummary,
+  type PersonEditorProps,
+} from "../person-editor/person-editor.js";
+import { type Post } from "../posts-list/posts-model.js";
 import { ensureUrl, withDisplayImage } from "../fields/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
@@ -23,7 +26,12 @@ import {
   STATUS_LABEL,
   type PersonCard,
 } from "../people/person-cards.js";
-import { type SurvivingField } from "../fields/field-model.js";
+import { diffValue, type SurvivingField } from "../fields/field-model.js";
+import {
+  acceptsByField,
+  fieldLock,
+  type PersonAssertion,
+} from "../person-editor/field-provenance.js";
 import {
   ATTENTION_COPY,
   attentionOf,
@@ -32,22 +40,24 @@ import {
   runsOf,
   sourceMapFor,
   STATUS_BADGE,
+  tallyOf,
   visibleFields,
   type SourceMap,
 } from "./overview-model.js";
 
 interface ReviewOverviewProps {
   cards: PersonCard[];
-  // What the scrape proposes for each person. A proposed person holds no membership, so this
-  // is the only thing that can name the post they would land in.
   changes?: ProposedChange[];
   isReadOnly: boolean;
   onOpenPerson: (personId: string, fieldKey: string | null) => void;
   onAdd?: () => void;
+  openPersonId: string | null;
+  editorFor: (card: PersonCard) => PersonEditorProps;
+  posts: Post[];
+  assertions: Record<string, PersonAssertion[]>;
+  overriddenSourceValues: Record<string, Record<string, unknown>>;
 }
 
-// Everything the row says, in one string: the identity area is a single button and
-// a screen reader gets its label rather than its parts.
 function rowLabel(card: PersonCard): string {
   const parts = [
     personOf(card)?.name || "unnamed",
@@ -59,10 +69,6 @@ function rowLabel(card: PersonCard): string {
   return parts.join(", ");
 }
 
-// Real links, and the only thing on the card that is: checking a source without
-// opening the person is the point of putting them here. They sit above the card's
-// hit area, so the card does not open beneath them — which is why the raised area
-// is exactly the tags and nothing around them.
 function renderSources(card: PersonCard, sources: SourceMap) {
   const urls = (card.newRecord?.source_urls ?? []).filter(Boolean);
   return urls.map((url: string) => {
@@ -88,22 +94,29 @@ function renderAttention(card: PersonCard) {
 }
 
 function renderFields(card: PersonCard, props: ReviewOverviewProps) {
-  // A departing person shows no field list: with no new-side record every field
-  // reads cleared, so the list would imply nine things to review on one decision.
   if (DEPARTING.has(card.status)) return nothing;
-  // Context fields are dropped: source urls render as numbered links instead, so a
-  // tag would say the same thing twice.
   const ranked = visibleFields(card);
   const shown = ranked.slice(0, FIELD_CAP);
   const hidden = ranked.length - shown.length;
-  // Plain text, not buttons: anything interactive here sits above the card's hit
-  // area and punches holes in it. The card opens the person; the tags say why.
-  return shown.map(
-    (field) => html`<span
+  const record = personOf(card);
+  const accepts = acceptsByField(props.assertions[card.personId] ?? []);
+  const overrides = props.overriddenSourceValues[card.personId] ?? {};
+  return shown.map((field) => {
+    const lock = fieldLock(
+      accepts.get(field.field.key),
+      overrides[field.field.key],
+      diffValue(record, field.field),
+    );
+    return html`<span
       class="review-row__field review-row__field--${fieldClass(field)}"
-      >${field.field.label}</span
-    >`,
-  ).concat(
+      >${lock
+        ? html`<i
+            class="fa-solid fa-lock review-row__field-lock review-row__field-lock--${lock.state}"
+            title="${lock.label}${lock.disclosure ? `. ${lock.disclosure}` : ""}"
+          ></i>`
+        : nothing}${field.field.label}</span
+    >`;
+  }).concat(
     hidden > 0
       ? [html`<span class="review-row__more">+${hidden} more</span>`]
       : [],
@@ -117,16 +130,16 @@ function renderRow(
   proposals: Map<string, ProposedChange[]>,
 ) {
   const badge = STATUS_BADGE[card.status];
-  // The field the card leads with — not surviving[0], which is schema order and
-  // would focus a different field from the one the reviewer clicked.
   const firstField = visibleFields(card)[0]?.field.key ?? null;
   return renderPersonRow({
     record: personOf(card),
     name: personOf(card)?.name || "(unnamed)",
-    subtitle: postsFor(card, proposals) || "",
+    subtitle: postsFor(card, proposals, props.posts) || "",
     ariaLabel: rowLabel(card),
     onOpen: () => props.onOpenPerson(card.personId, firstField),
     modifier: card.status,
+    isOpen: card.personId === props.openPersonId,
+    controlsId: `review-person-${card.personId}`,
     meta: html`
       ${renderAttention(card)}
       ${badge
@@ -138,6 +151,30 @@ function renderRow(
       <span class="review-row__sources">${renderSources(card, sources)}</span>
     `,
   });
+}
+
+function renderInlineEditor(card: PersonCard, props: ReviewOverviewProps) {
+  if (card.personId !== props.openPersonId) return nothing;
+  const editorProps = props.editorFor(card);
+  const focusWrapper = (el?: Element) => {
+    el?.scrollIntoView({ block: "center", behavior: "smooth" });
+    if (!editorProps.focusField) focusOnMount(el);
+  };
+  return html`
+    <div
+      class="review-overview__editor"
+      id="review-person-${card.personId}"
+      tabindex="-1"
+      ${ref(focusWrapper)}
+    >
+      <div class="review-overview__editor-inner person-editor-list">
+        <div class="review-overview__editor-summary">
+          ${renderPersonSummary(editorProps)}
+        </div>
+        ${renderPersonEditor(editorProps)}
+      </div>
+    </div>
+  `;
 }
 
 function renderFold(
@@ -161,7 +198,7 @@ function renderFold(
           <span class="review-fold__name">${record?.name || "(unnamed)"}</span>
           <span class="review-fold__meta">
             <span class="review-fold__sub"
-              >${postsFor(card, proposals) || nothing}</span
+              >${postsFor(card, proposals, props.posts) || nothing}</span
             >
             ${renderAttention(card)}
           </span>
@@ -172,27 +209,43 @@ function renderFold(
   `;
 }
 
+function renderTally(cards: PersonCard[]) {
+  const tally = tallyOf(cards);
+  if (!tally.length) return nothing;
+  return html`
+    <div class="review-overview__tally">
+      ${tally.map(
+        (entry) => html`<span
+          class="review-row__badge review-row__badge--${entry.status}"
+          >${entry.count} ${entry.label}</span
+        >`,
+      )}
+    </div>
+  `;
+}
+
 function ReviewOverview(props: ReviewOverviewProps) {
   const { cards, isReadOnly, onAdd } = props;
-  // Indexed once per render, beside `sources`, rather than rebuilt inside each row —
-  // which is the scan the index exists to avoid.
   const proposals = proposalsByPersonId(props.changes ?? []);
   const list = cards ?? [];
   const sources = sourceMapFor(list);
 
   return html`
     <div class="review-overview">
+      ${renderTally(list)}
       ${list.length
         ? html`<div class="review-overview__list">
             ${runsOf(list).map((run) =>
               run.folded
                 ? html`<div class="review-overview__strip">
-                    ${run.cards.map((card) => renderFold(card, props, proposals))}
-                  </div>`
-                : run.cards.map((card) => renderRow(card, props, sources, proposals)),
+                      ${run.cards.map((card) => renderFold(card, props, proposals))}
+                    </div>
+                    ${run.cards.map((card) => renderInlineEditor(card, props))}`
+                : run.cards.flatMap((card) => [
+                    renderRow(card, props, sources, proposals),
+                    renderInlineEditor(card, props),
+                  ]),
             )}
-            <!-- The ghost is always last: adding someone puts their card where it
-                 stood and pushes it down, so the affordance never moves. -->
             ${!isReadOnly && onAdd
               ? html`<button class="review-row review-row--ghost" @click=${onAdd}>
                   <span aria-hidden="true">+</span>

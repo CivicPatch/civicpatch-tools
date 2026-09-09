@@ -1,99 +1,62 @@
 @layer components {
-/* The edit modal (spec §6) — the Detail editor mounted with one person, plus a
-   sidebar for walking the set it was opened from. */
-
-/* styles.css caps dialogs at 32rem; this modal sizes its own panel. */
 .review-modal dialog {
+  width: min(76rem, calc(100vw - 2rem));
   max-width: none;
 }
-
 .review-modal dialog article {
-  /* Pinned height: navigating between people must never resize or re-centre the
-     dialog. The body scrolls instead. */
   height: min(78vh, 42rem);
-  width: min(68rem, calc(100vw - 2rem));
+  width: min(76rem, calc(100vw - 2rem));
   max-width: none;
   display: flex;
   flex-direction: column;
   padding: 0;
   gap: 0;
 }
-
 .review-modal dialog article > header,
 .review-modal dialog article > footer {
   flex: 0 0 auto;
   margin: 0;
   padding: 0.6rem 0.85rem;
 }
-
-/* `[open]` is load-bearing, not decoration: styles.css dresses the shell as
-   `dialog[open] > article > section` (0,2,3), which outranks the same selector
-   written without it — so its full-bleed negative margin, its re-padding and its
-   stable gutter all stayed on, insetting the sidebar and reserving an empty
-   strip at the right edge. */
 .review-modal dialog[open] > article > section {
   flex: 1 1 auto;
   min-height: 0;
   padding: 0;
   margin: 0;
-  /* The body scrolls, not this. */
   overflow: hidden;
   scrollbar-gutter: auto;
 }
-
 .review-modal__main {
   display: grid;
-  /* A fixed track, not minmax(): a range sizes itself to its content, so a card
-     with short office names rendered a narrower sidebar than one with long
-     names. The panel must not change shape as you page through people. */
   grid-template-columns: 17rem minmax(0, 1fr);
   height: 100%;
   min-height: 0;
 }
-
 .review-modal__body {
   overflow-y: auto;
-  /* Keep the gesture inside the modal rather than chaining to the page. */
   overscroll-behavior: contain;
   min-height: 0;
   padding: 0.75rem 1rem;
 }
-
-/* One person, full width — identity stacks above the fields and centres. */
 .review-modal__body .person-editor__identity {
   align-items: center;
   text-align: center;
 }
-
-/* Direct child only: the merge strip also lives in the identity block, and its
-   chip photos are not this photo. */
 .review-modal__body .person-editor__identity > person-image,
 .review-modal__body .person-editor__identity > person-image > * {
   width: 7rem !important;
   height: 7rem !important;
   font-size: 2.6rem !important;
 }
-
-/* The editor inside the modal is one person and the full width, so its identity
-   column stacks above the fields rather than beside them. */
 .review-modal__body .person-editor-list {
   max-width: none;
 }
-
 .review-modal__body .person-editor {
   border: none;
   padding: 0;
   grid-template-columns: 1fr;
   gap: 0.5rem;
 }
-
-/* Sidebar */
-
-/* This is a <nav>, and two stylesheets dress every bare <nav> on the site:
-   elements.css (`justify-content: space-between`) and navbar.css (the site
-   header's own rule, unscoped). Everything reset here is one of theirs —
-   `margin-inline: auto` is why the sidebar shrank to its text and centred in its
-   track, which is what made a short office name yield a narrow sidebar. */
 .review-modal__people {
   display: flex;
   flex-direction: column;
@@ -108,13 +71,10 @@
   border-right: 1px solid var(--border);
   background: var(--surface-2);
   overflow-y: auto;
-  /* Long names ellipsis rather than widening the column — without this the panel
-     grows a horizontal scrollbar and the list becomes a two-axis scroll. */
   overflow-x: hidden;
   min-height: 0;
   min-width: 0;
 }
-
 .review-modal__people-head {
   position: sticky;
   top: -0.5rem;
@@ -126,14 +86,11 @@
   color: var(--text-muted);
   background: var(--surface-2);
 }
-
 .review-modal .review-modal__person {
   display: flex;
   align-items: center;
   gap: 0.4rem;
   width: 100%;
-  /* The status edge is the row's left edge — no inset before it, and only a
-     hair after it, so the list starts where the panel does. */
   padding: 0.2rem 0.5rem 0.2rem 0.3rem;
   border: 0;
   border-left: 3px solid var(--border);
@@ -145,83 +102,57 @@
   text-align: left;
   cursor: pointer;
 }
-
-/* Status tints the row as well as its edge and its name. Declared before :hover
-   and --on so the row you are on still reads as selected rather than as its
-   status; `unchanged` stays plain. */
 .review-modal .review-modal__person--changed {
   background: color-mix(in srgb, var(--warning) 14%, transparent);
 }
-
 .review-modal .review-modal__person--added {
   background: color-mix(in srgb, var(--diff-added) 14%, transparent);
 }
-
 .review-modal .review-modal__person--removed,
 .review-modal .review-modal__person--deleted {
   background: color-mix(in srgb, var(--diff-removed) 14%, transparent);
 }
-
 .review-modal .review-modal__person--restored {
   background: color-mix(in srgb, var(--text-muted) 12%, transparent);
 }
-
 .review-modal .review-modal__person:hover {
   background: var(--surface-2);
 }
-
-/* An outline, not a background: the status tints above are backgrounds, so setting one
-   here erased the person's status and made "current" indistinguishable from :hover.
-   Inset offset so it reads as a ring inside the row without shifting the list. */
 .review-modal .review-modal__person--on {
   outline: 2px solid var(--action);
   outline-offset: -2px;
   color: var(--text-default);
   font-weight: 600;
 }
-
 .review-modal__person--changed { border-left-color: var(--warning); }
 .review-modal__person--added { border-left-color: var(--diff-added); }
 .review-modal__person--removed,
 .review-modal__person--deleted { border-left-color: var(--diff-removed); }
 .review-modal__person--restored { border-left-color: var(--text-muted); }
-
-/* The name carries the status too, not just the edge — the edge is easy to miss
-   when scanning a long sidebar, and `unchanged` stays plain so the ones that
-   matter are the ones that are coloured. */
 .review-modal__person--changed .review-modal__person-name {
   color: var(--warning);
 }
-
 .review-modal__person--added .review-modal__person-name {
   color: var(--diff-added);
 }
-
 .review-modal__person--removed .review-modal__person-name,
 .review-modal__person--deleted .review-modal__person-name {
   color: var(--diff-removed);
 }
-
 .review-modal__person--restored .review-modal__person-name {
   color: var(--text-muted);
 }
-
 .review-modal__person-who {
   display: flex;
   flex-direction: column;
   flex: 1;
-  /* Without this the row cannot shrink, so the names push the sidebar wider than
-     its track and get clipped instead of ellipsised. */
   min-width: 0;
   line-height: 1.15;
 }
-
-/* Only the people who are leaving get struck through. */
 .review-modal__person--removed .review-modal__person-name,
 .review-modal__person--deleted .review-modal__person-name {
   text-decoration: line-through;
 }
-
 .review-modal__person-sub {
   font-size: var(--font-size-xs);
   color: var(--text-muted);
@@ -229,7 +160,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .review-modal__person-name {
   flex: 1;
   min-width: 0;
@@ -237,18 +167,13 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .review-modal__person-meta {
   flex: 0 0 auto;
   font-size: var(--font-size-xs);
   font-variant-numeric: tabular-nums;
 }
-
 .review-modal__person-issue { color: var(--info); font-weight: 700; }
 .review-modal__person-done { color: var(--diff-added); font-weight: 700; }
-
-/* Head and foot */
-
 .review-modal__head {
   position: sticky;
   top: -0.75rem;
@@ -257,37 +182,29 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
-  /* No bottom margin: the editor's own header used to follow it, and the gap between the
-     two was the only thing separating them. There is one strip now. */
   margin: -0.75rem -0.75rem 0;
   padding: 0.5rem 0.75rem;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   font-weight: 600;
 }
-
 .review-modal__who {
   font-weight: 600;
 }
-
-/* Pushes the nav to the far end, so the summary and actions sit beside the name. */
 .review-modal__head .editor-summary {
   margin-right: auto;
 }
-
 .review-modal__nav {
   display: flex;
   align-items: center;
   gap: 0.4rem;
 }
-
 .review-modal__pos {
   font-size: var(--font-size-sm);
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
-
 .review-modal__foot {
   display: flex;
   align-items: center;
@@ -295,13 +212,6 @@
   gap: 0.5rem;
   flex-wrap: wrap;
 }
-
-/* `color: var(--text-default)`, NOT `var(--control-text)`. styles.css gives every bare
-   button `--control-text: var(--action-text)` so filled buttons get light
-   text — the base layer then applies `color: var(--control-text)`. Reading that variable on
-   an unfilled button therefore paints it #fafafa on a white footer, which is why
-   Revert rendered as an empty box. Not a specificity problem: the variable is
-   already poisoned by the time any rule reads it. */
 .review-modal .review-modal__revert,
 .review-modal .review-modal__nav-btn {
   padding: 0.15rem 0.6rem;
@@ -313,56 +223,34 @@
   cursor: pointer;
   width: auto;
 }
-
 .review-modal .review-modal__revert[disabled],
 .review-modal .review-modal__nav-btn[disabled] {
   opacity: 0.4;
   cursor: default;
 }
-
 @media (max-width: 44rem) {
   .review-modal__main {
     grid-template-columns: 1fr;
     grid-template-rows: auto minmax(0, 1fr);
   }
-
   .review-modal__people {
     border-right: none;
     border-bottom: 1px solid var(--border);
     max-height: 8rem;
   }
 }
-
-/* No modal-specific rule for the state header on purpose: it renders in here
-   exactly as it does in the list. The corner badge that used to stand in for it
-   is gone, along with the `position: relative` that only the badge needed. */
-
-/* Density.
-
-   The list is a working surface: you are scanning twenty people for the three
-   that need you, so every row of air costs a person off-screen. In here there is
-   one person, already chosen, and nothing is competing for the space — so the
-   controls get their height back and the text stops being small.
-
-   Same components either way. Only these values differ, and --control-h does most
-   of the work on its own because every control is sized from it. */
-
 .review-modal__body .person-editor-list {
   --control-h: 2rem;
 }
-
 .review-modal__body .person-editor__fields {
   gap: 0.3rem;
 }
-
 .review-modal__body .person-editor__field {
   padding: 0.3rem var(--ring-space);
 }
-
 .review-modal__body .person-editor__label {
   padding-top: 0.45rem;
 }
-
 .review-modal__body .person-editor__control :is(input, select) {
   font-size: var(--font-size-md);
 }

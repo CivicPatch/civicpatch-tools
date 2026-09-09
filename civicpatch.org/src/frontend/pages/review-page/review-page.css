@@ -1,109 +1,110 @@
 @layer components {
-/* Width/centering comes from the shared .page-content rail on the page. */
-.review-page {
+  .review-page {
     padding: 1rem 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-}
-
-/* The session workspace beside this needs the full rail; the landing page gets its own
-   width here instead, same cap as every other page's .page-content rail. Opts out of
-   .page-content rather than fighting its layer. */
-.review-page--narrow {
+  }
+  .review-page--narrow {
     width: 100%;
     max-width: var(--page-width);
     margin: 0 auto;
-}
-
-.review-page__stat-cards .stat-cards {
+  }
+  .review-page__layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .review-page__main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .review-page__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    order: -1;
+  }
+  @media (max-width: 768px) {
+    .review-page__layout {
+      grid-template-columns: 1fr;
+    }
+    .review-page__sidebar {
+      order: 0;
+    }
+  }
+  .review-page__stat-cards .stat-cards {
     margin-bottom: 0;
-}
-
-.review-page__streak-card {
+  }
+  .review-page__streak-card {
     display: flex;
     flex-direction: column;
     gap: 0.2em;
     position: relative;
     margin-bottom: 0;
-}
-
-/* the shared streak-graph cell sizing was enlarged for the home page's
-   contribution card; scale it back down here so the calendar doesn't
-   outgrow its grid column and squish the ready-for-review card */
-.review-page__streak-card .streak-graph__dow-col {
-    gap: 2px;
-    padding-top: 14px;
-}
-
-.review-page__streak-card .streak-graph__dow {
-    height: 10px;
-    font-size: 8px;
-    line-height: 10px;
-}
-
-.review-page__streak-card .streak-graph__right {
-    gap: 2px;
-}
-
-.review-page__streak-card .streak-graph__months {
-    gap: 2px;
-}
-
-.review-page__streak-card .streak-graph__month {
-    width: 10px;
-    font-size: 9px;
-}
-
-.review-page__streak-card .streak-graph__grid {
-    grid-template-rows: repeat(7, 10px);
-    gap: 2px;
-}
-
-.review-page__streak-card .streak-graph__day {
-    width: 10px;
-    height: 10px;
+  }
+  .review-page__streak-card .streak-graph__dow-col {
+    gap: 4px;
+    padding-top: 19px;
+  }
+  .review-page__streak-card .streak-graph__dow {
+    height: 17px;
+    font-size: 11px;
+    line-height: 17px;
+  }
+  .review-page__streak-card .streak-graph__right {
+    gap: 4px;
+  }
+  .review-page__streak-card .streak-graph__months {
+    gap: 4px;
+  }
+  .review-page__streak-card .streak-graph__month {
+    width: 17px;
+    font-size: 11px;
+  }
+  .review-page__streak-card .streak-graph__grid {
+    grid-template-rows: repeat(7, 17px);
+    gap: 4px;
+  }
+  .review-page__streak-card .streak-graph__day {
+    width: 17px;
+    height: 17px;
     border-radius: var(--radius-sm);
-}
-
-.review-page__streak-label {
+  }
+  .review-page__streak-label {
     font-size: var(--font-size-md);
     color: var(--text-muted);
-}
-
-.review-page__streak-value {
+  }
+  .review-page__streak-value {
     font-size: var(--font-size-2xl);
     font-weight: 700;
     color: var(--action);
     line-height: 1.1;
-}
-
-.review-page__streak-sub {
+  }
+  .review-page__streak-sub {
     font-size: var(--font-size-md);
     color: var(--text-muted);
-}
-
-.review-page__ready-card {
+  }
+  .review-page__ready-card {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin-bottom: 0;
-}
-
-.review-page__ready-count {
+  }
+  .review-page__ready-count {
     font-size: var(--font-size-2xl);
     font-weight: 700;
     color: var(--action);
     line-height: 1.1;
     margin-top: 0.25rem;
-}
-
-.review-page__ready-sub {
+  }
+  .review-page__ready-sub {
     font-size: var(--font-size-md);
     color: var(--text-muted);
-}
-
-.review-page__ready-empty {
+  }
+  .review-page__ready-empty {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -111,21 +112,18 @@
     gap: 0.4rem;
     padding: 1.75rem 0.5rem;
     color: var(--text-muted);
-}
-
-.review-page__ready-empty i {
+  }
+  .review-page__ready-empty i {
     font-size: var(--font-size-2xl);
     opacity: 0.4;
     margin-bottom: 0.25rem;
-}
-
-.review-page__ready-empty-title {
+  }
+  .review-page__ready-empty-title {
     font-size: var(--font-size-md);
     font-weight: 600;
     color: var(--text);
-}
-
-.review-page__setup-card {
+  }
+  .review-page__setup-card {
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
@@ -135,20 +133,17 @@
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 1.5rem;
-}
-
-.review-page__setup-title {
+  }
+  .review-page__setup-title {
     font-size: var(--font-size-xl);
     font-weight: 800;
     margin: 0;
-}
-
-.review-page__goal-chips {
+  }
+  .review-page__goal-chips {
     display: flex;
     gap: 0.5rem;
-}
-
-.review-page__goal-chip {
+  }
+  .review-page__goal-chip {
     --control-text: var(--contrast);
     --control-bg: transparent;
     flex: 1;
@@ -158,21 +153,21 @@
     font-weight: 700;
     font-size: var(--font-size-md);
     cursor: pointer;
-    transition: border-color 0.15s, background-color 0.15s, color 0.15s;
-}
-
-.review-page__goal-chip--active {
+    transition:
+      border-color 0.15s,
+      background-color 0.15s,
+      color 0.15s;
+  }
+  .review-page__goal-chip--active {
     --control-text: var(--action-text);
     --control-bg: var(--action);
     border-color: var(--action);
-}
-
-.review-page__goal-chip:disabled {
+  }
+  .review-page__goal-chip:disabled {
     opacity: 0.4;
     cursor: not-allowed;
-}
-
-.review-page__start-btn {
+  }
+  .review-page__start-btn {
     width: 100%;
     padding: 0.85rem;
     border: none;
@@ -181,16 +176,12 @@
     font-weight: 800;
     cursor: pointer;
     letter-spacing: 0.03em;
-}
-
-/* the component host dissolves so its .review-page__header child becomes a direct
-   flex item of .review-page — otherwise position:sticky is trapped inside the host */
-review-session-controls,
-review-session-actions {
+  }
+  review-session-controls,
+  review-session-actions {
     display: contents;
-}
-
-.review-page__header {
+  }
+  .review-page__header {
     position: sticky;
     top: 0;
     z-index: 10;
@@ -205,68 +196,54 @@ review-session-actions {
     border: 1px solid var(--border);
     border-radius: 0 0 var(--radius) var(--radius);
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-}
-
-.review-page__step-nav {
+  }
+  .review-page__step-nav {
     flex: 1;
     display: flex;
     align-items: center;
     gap: 1rem;
     min-width: 0;
-}
-
-.review-page__actions {
+  }
+  .review-page__actions {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-}
-
-/* The rule the buttons cannot state: what a save keeps and what waits for approval. */
-.review-page__actions-rule {
+  }
+  .review-page__actions-rule {
     max-width: 22ch;
     font-size: var(--font-size-sm);
     line-height: 1.2;
     color: var(--text-muted);
-}
-
-.review-page__jurisdiction {
+  }
+  .review-page__jurisdiction {
     font-size: 1.4rem;
     font-weight: 800;
     color: var(--text);
     text-decoration: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 28rem;
     letter-spacing: -0.02em;
-}
-
-.review-page__jurisdiction:hover {
+  }
+  .review-page__jurisdiction:hover {
     color: var(--action);
     text-decoration: underline;
-}
-
-.review-page__jurisdiction-website {
+  }
+  .review-page__jurisdiction-website {
     font-size: var(--font-size-sm);
     color: var(--text-muted);
     text-decoration: none;
     overflow-wrap: anywhere;
-}
-
-.review-page__jurisdiction-website:hover {
+  }
+  .review-page__jurisdiction-website:hover {
     color: var(--action);
     text-decoration: underline;
-}
-
-.review-page__dots {
+  }
+  .review-page__dots {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.35rem;
     max-width: 24rem;
-}
-
-.review-page__dot {
+  }
+  .review-page__dot {
     width: 0.7rem;
     height: 0.7rem;
     border-radius: 50%;
@@ -275,249 +252,195 @@ review-session-actions {
     min-width: unset;
     min-height: unset;
     cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
-}
-
-.review-page__dot:not(:disabled):hover {
+    transition:
+      opacity 0.15s,
+      transform 0.1s;
+  }
+  .review-page__dot:not(:disabled):hover {
     opacity: 0.75;
     transform: scale(1.2);
-}
-
-.review-page__dot--current {
+  }
+  .review-page__dot--current {
     background: var(--action);
-}
-
-.review-page__dot--resolved {
+  }
+  .review-page__dot--resolved {
     background: var(--success);
-}
-
-.review-page__dot--failed {
+  }
+  .review-page__dot--failed {
     background: var(--diff-removed);
-}
-
-/* Committed to the branch but not published — a hollow ring, so it reads as
-   started-not-finished next to the solid dot a published entry gets. */
-.review-page__dot--saved {
+  }
+  .review-page__dot--saved {
     background: transparent;
     box-shadow: inset 0 0 0 2px var(--success);
-}
-
-.review-page__dot--deferred {
+  }
+  .review-page__dot--deferred {
     background: var(--border);
-}
-
-.review-page__dot--future {
+  }
+  .review-page__dot--future {
     background: var(--border);
     opacity: 0.25;
     cursor: default;
-}
-
-.review-page__progress {
+  }
+  .review-page__progress {
     font-family: var(--font-mono);
     font-size: var(--font-size-md);
     color: var(--text-muted);
     white-space: nowrap;
-}
-
-.review-page__back-btn {
+  }
+  .review-page__back-btn {
     --control-text: var(--text-muted);
     --control-bg: transparent;
     --control-border: transparent;
     padding-left: 0.5rem;
-}
-
-.review-page__next-btn {
+  }
+  .review-page__next-btn {
     --control-text: var(--action);
     --control-bg: transparent;
     --control-border: var(--action);
-}
-
-.review-page__publish-btn {
+  }
+  .review-page__publish-btn {
     border: none;
-}
-
-.review-page__save-btn {
+  }
+  .review-page__save-btn {
     --control-text: var(--action);
     --control-bg: transparent;
     --control-border: var(--border);
-}
-
-.review-page__end-btn {
+  }
+  .review-page__end-btn {
     --control-text: var(--text-muted);
     --control-bg: transparent;
     --control-border: var(--border);
-}
-
-.review-page__error {
+  }
+  .review-page__error {
     font-size: var(--font-size-md);
     color: var(--diff-removed);
-}
-
-.review-page__info-row {
+  }
+  .review-page__info-row {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
     align-items: flex-start;
     width: 100%;
-}
-
-.review-page__pr-meta {
+  }
+  .review-page__pr-meta {
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    flex: 0 0 18rem;
+    flex: 1 1 auto;
     min-width: 0;
-}
-
-/* The report-issue element groups the button with the list of issues already
-   filed. It must not become a flex item itself, or the two would share one slot
-   in the pr-meta column and lose the gap between them. */
-report-issue-button {
+  }
+  report-issue-button {
     display: contents;
-}
-
-/* Report-issue modal */
-
-/* The global dialog is `width: max-content`, which for a textarea resolves to its
-   ~20-column intrinsic size. State a width instead of shrink-wrapping. */
-dialog[open]:has(.report-issue-modal__form) {
+  }
+  dialog[open]:has(.report-issue-modal__form) {
     width: min(92vw, 34rem);
     max-width: min(92vw, 34rem);
-}
-
-.report-issue-modal__form {
+  }
+  .report-issue-modal__form {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-}
-
-.report-issue-modal__label {
+  }
+  .report-issue-modal__label {
     font-size: var(--font-size-sm);
     font-weight: 600;
-}
-
-.report-issue-modal__textarea {
+  }
+  .report-issue-modal__textarea {
     width: 100%;
     resize: vertical;
-}
-
-.review-page__reported-issues {
+  }
+  .review-page__reported-issues {
     list-style: none;
     margin: 0;
     padding: 0;
     font-size: var(--font-size-sm);
     color: var(--text-muted);
-}
-
-.review-page__review-state {
+  }
+  .review-page__review-state {
     font-size: var(--font-size-sm);
     font-family: var(--font-mono);
     font-weight: 600;
     padding: 0.15em 0.5em;
     border-radius: var(--radius);
     width: fit-content;
-}
-
-.review-page__review-state--approved {
+  }
+  .review-page__review-state--approved {
     background: var(--diff-added);
     color: var(--action-text);
-}
-
-.review-page__review-state--changes_requested {
+  }
+  .review-page__review-state--changes_requested {
     background: var(--diff-removed);
     color: var(--action-text);
-}
-
-.review-page__left-col {
+  }
+  .review-page__left-col {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     min-width: 0;
-}
-
-@media (max-width: 768px) {
-    /* dissolve the header so only the slim step-nav stays sticky; the action
-       buttons drop into normal flow below it, reclaiming the vertical space */
+  }
+  @media (max-width: 768px) {
     .review-page__header {
-        display: contents;
+      display: contents;
     }
     .review-page__step-nav {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        padding: 0.6rem 0.75rem;
-        background: color-mix(in srgb, var(--bg) 92%, transparent);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.6rem 0.75rem;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
     }
     .review-page__progress {
-        order: 1;
-        flex: 0 0 auto;
+      order: 1;
+      flex: 0 0 auto;
     }
     .review-page__step-nav .review-page__dots {
-        order: 2;
-        flex: 1 1 100%;
-        justify-content: center;
-        max-width: none;
+      order: 2;
+      flex: 1 1 100%;
+      justify-content: center;
+      max-width: none;
     }
     .review-page__back-btn {
-        order: 3;
-        flex: 1 1 0;
+      order: 3;
+      flex: 1 1 0;
     }
     .review-page__next-btn {
-        order: 4;
-        flex: 1 1 0;
+      order: 4;
+      flex: 1 1 0;
     }
-
-    /* actions stack full-width, sharing the same edges */
     .review-page__actions {
-        flex-direction: column;
-        gap: 0.5rem;
+      flex-direction: column;
+      gap: 0.5rem;
     }
     .review-page__actions > * {
-        width: 100%;
+      width: 100%;
     }
-
-    /* jurisdiction wraps instead of spilling sideways */
-    .review-page__jurisdiction {
-        white-space: normal;
-        max-width: none;
-    }
-
     .review-page__header .btn-sm,
     .review-page__header .btn {
-        font-size: var(--font-size-base);
+      font-size: var(--font-size-base);
     }
-}
-
-.review-page__status-banner {
+  }
+  .review-page__status-banner {
     text-align: center;
     padding: 0.5rem 1rem;
     font-weight: 400;
     font-size: var(--font-size-sm);
     text-transform: lowercase;
     font-family: var(--font-mono);
-}
-
-.review-page__status-banner--merged {
+  }
+  .review-page__status-banner--merged {
     background: var(--diff-added);
     color: #fff;
-}
-
-.review-page__status-banner--closed {
+  }
+  .review-page__status-banner--closed {
     background: var(--diff-removed);
     color: #fff;
-}
-
-/* A first capture has no previous state to fall back on, so publishing it is
-   the one irreversible thing on this page — it reads as a warning rather than
-   as the muted aside it used to be. Tinted with color-mix rather than a
-   --warning-bg, which does not exist; the same technique
-   review-overview uses for its state tints. */
-.review-page__baseline-banner {
+  }
+  .review-page__baseline-banner {
     max-width: var(--page-width);
     width: 100%;
     margin-inline: auto;
@@ -527,99 +450,78 @@ dialog[open]:has(.report-issue-modal__form) {
     background: color-mix(in srgb, var(--warning) 14%, var(--surface));
     border: 1px solid var(--warning);
     border-radius: var(--radius);
-}
-
-/* Publishing preview (§7). A section under the roster rather than a tab: what will be
-   written is the consequence of what changed, and behind a tab nobody looked. */
-
-.review-page__publishing {
-  max-width: var(--page-width);
-  width: 100%;
-  margin-inline: auto;
-  margin-top: 2.5rem;
-  padding: 1.5rem 1rem 1.25rem;
-  border-top: 3px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface-2);
-}
-
-/* Sits on the section's top rule, so the break reads as one thing rather than a
-   line and a heading that happen to be near each other. */
-.review-page__section-title {
-  margin: -1.9rem 0 0.9rem;
-  padding-right: 0.6rem;
-  display: inline-block;
-  font-size: var(--font-size-sm);
-  font-weight: 400;
-  text-transform: lowercase;
-  font-family: var(--font-mono);
-  color: var(--text-muted);
-  background: var(--bg);
-}
-
-/* Two people resolving to one id (§21.8). Loud, because the consequence is
-   silent data loss: one of them is not rendered anywhere on the card. */
-.review-page__duplicate-banner {
-  max-width: var(--page-width);
-  width: 100%;
-  margin-inline: auto;
-  padding: 0.55rem 0.7rem;
-  border: 1px solid var(--diff-removed);
-  border-radius: var(--radius);
-  background: var(--diff-removed-bg);
-  font-size: var(--font-size-sm);
-}
-
-/* Keyboard focus has to be visible on the page's primary actions — several of
-   these are styled buttons whose default outline was suppressed. */
-.review-page__start-btn:focus-visible,
-.review-page__goal-chip:focus-visible {
-  outline: var(--focus-ring-width) solid var(--action-focus);
-  outline-offset: 2px;
-}
-
-.review-page__recent-card {
+  }
+  .review-page__publishing {
+    max-width: var(--page-width);
+    width: 100%;
+    margin-inline: auto;
+    margin-top: 2.5rem;
+    padding: 1.5rem 1rem 1.25rem;
+    border-top: 3px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-2);
+  }
+  .review-page__section-title {
+    margin: -1.9rem 0 0.9rem;
+    padding-right: 0.6rem;
+    display: inline-block;
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    text-transform: lowercase;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    background: var(--surface-2);
+  }
+  .review-page__duplicate-banner {
+    max-width: var(--page-width);
+    width: 100%;
+    margin-inline: auto;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--diff-removed);
+    border-radius: var(--radius);
+    background: var(--diff-removed-bg);
+    font-size: var(--font-size-sm);
+  }
+  .review-page__start-btn:focus-visible,
+  .review-page__goal-chip:focus-visible {
+    outline: var(--focus-ring-width) solid var(--action-focus);
+    outline-offset: 2px;
+  }
+  .review-page__recent-card {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
     margin-bottom: 0;
-}
-
-.review-page__recent-list {
+  }
+  .review-page__recent-list {
     display: flex;
     flex-direction: column;
-}
-
-.review-page__recent-row {
+  }
+  .review-page__recent-row {
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
     padding: 0.5rem 0;
     border-bottom: 1px solid var(--border);
-}
-
-.review-page__recent-row:last-child {
+  }
+  .review-page__recent-row:last-child {
     border-bottom: none;
     padding-bottom: 0;
-}
-
-.review-page__recent-summary {
+  }
+  .review-page__recent-summary {
     font-size: var(--font-size-sm);
     color: var(--text);
-}
-
-.review-page__recent-meta {
+  }
+  .review-page__recent-meta {
     display: flex;
     gap: 0.5rem;
     font-size: var(--font-size-xs);
     font-family: var(--font-mono);
     color: var(--text-muted);
-}
-
-.review-page__recent-empty {
+  }
+  .review-page__recent-empty {
     font-size: var(--font-size-sm);
     color: var(--text-muted);
     margin: 0;
-}
-
+  }
 }

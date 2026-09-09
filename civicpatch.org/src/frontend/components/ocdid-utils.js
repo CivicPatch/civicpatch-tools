@@ -4,13 +4,6 @@ import {
   PLACE_LABEL,
 } from "./edit-people/person-edit-utils.ts";
 
-/** The last segment of a division ocdid, split into its designation and value.
- *
- * "ocd-division/country:us/state:wa/place:x/ward:3" -> { key: "ward", value: "3" }
- *
- * One place, because renderers disagree about presentation but not about parsing:
- * `divisionOcdidToFriendly` wants a compact badge, `divisionName` a row heading.
- */
 export const parseDivision = (division_ocdid) => {
   const tail = division_ocdid?.split("/").pop() ?? "";
   const [key = "", value = ""] = tail.split(":");
@@ -19,9 +12,7 @@ export const parseDivision = (division_ocdid) => {
 
 export const divisionOcdidToFriendly = (division_ocdid) => {
   if (!division_ocdid) return "";
-
   const { key: label, value } = parseDivision(division_ocdid);
-
   switch (label) {
     case DIVISION_COUNCIL_DISTRICT:
       return `[D${value}]`;
@@ -45,42 +36,39 @@ export const jurisdictionOcdidToFriendly = jurisdiction_ocdid => {
   const parts = jurisdiction_ocdid.split("/");
   const last = parts[parts.length - 2];
   let [_placeLabel, placeValue] = last ? last.split(":") : ["", ""];
-
   placeValue = placeValue.replace(/_/g, ' ');
-
   return toTitleCaseMap(placeValue) || jurisdiction_ocdid;
 };
 
-// Every jurisdiction ocdid starts with this. Mirrors OCDID_PREFIX in shared/utils/id_utils.py.
 export const OCDID_PREFIX = "ocd-jurisdiction";
 
-/** An ocdid's segments, or null when the string is not one.
- *
- * One place, for the same reason `parseDivision` is one place: the readers below disagree
- * about what to pull out, not about what a jurisdiction ocdid looks like, and each was
- * re-deriving "is this even one" on its way past.
- *
- * Five segments is the shortest real ocdid — prefix / country / state / place / government.
- */
 const jurisdictionSegments = (jurisdiction_ocdid) => {
   if (!jurisdiction_ocdid?.startsWith(`${OCDID_PREFIX}/`)) return null;
   const parts = jurisdiction_ocdid.split("/");
   return parts.length < 5 ? null : parts;
 };
 
-// The two-letter state code an ocdid belongs to, e.g. "me". Callers building a
-// review-session url need this on its own, without the rest of the path.
 export const jurisdictionOcdidToState = jurisdiction_ocdid =>
   jurisdictionSegments(jurisdiction_ocdid)?.[2]?.split(":")[1] ?? "";
 
-// A jurisdiction page's URL is its ocdid. `encodeURI`, not `encodeURIComponent`: the slashes
-// and colons are legal in a path and stay readable, and only what must be escaped is — two
-// place names carry an "ñ".
-//
-// This used to reimplement `jurisdiction_ocdid_to_folder` in JavaScript, one of two encoders
-// that had to agree across languages. Using the identifier as the URL deletes that problem.
+const STATE_NAMES = {
+  al: "Alabama", ak: "Alaska", az: "Arizona", ar: "Arkansas", ca: "California",
+  co: "Colorado", ct: "Connecticut", de: "Delaware", dc: "District of Columbia",
+  fl: "Florida", ga: "Georgia", hi: "Hawaii", id: "Idaho", il: "Illinois",
+  in: "Indiana", ia: "Iowa", ks: "Kansas", ky: "Kentucky", la: "Louisiana",
+  me: "Maine", md: "Maryland", ma: "Massachusetts", mi: "Michigan", mn: "Minnesota",
+  ms: "Mississippi", mo: "Missouri", mt: "Montana", ne: "Nebraska", nv: "Nevada",
+  nh: "New Hampshire", nj: "New Jersey", nm: "New Mexico", ny: "New York",
+  nc: "North Carolina", nd: "North Dakota", oh: "Ohio", ok: "Oklahoma", or: "Oregon",
+  pa: "Pennsylvania", ri: "Rhode Island", sc: "South Carolina", sd: "South Dakota",
+  tn: "Tennessee", tx: "Texas", ut: "Utah", vt: "Vermont", va: "Virginia",
+  wa: "Washington", wv: "West Virginia", wi: "Wisconsin", wy: "Wyoming",
+  as: "American Samoa", gu: "Guam", mp: "Northern Mariana Islands",
+  pr: "Puerto Rico", vi: "U.S. Virgin Islands",
+};
+
+export const stateNameForCode = (state_code) =>
+  STATE_NAMES[state_code?.toLowerCase()] ?? "";
+
 export const jurisdictionOcdidToPath = jurisdiction_ocdid =>
-  // Validated, not just encoded. The folder encoder this replaced returned "" for anything
-  // malformed, and callers rely on that to render nothing rather than a broken link —
-  // `encodeURI` alone would happily hand back "garbage".
   jurisdictionSegments(jurisdiction_ocdid) ? encodeURI(jurisdiction_ocdid) : "";

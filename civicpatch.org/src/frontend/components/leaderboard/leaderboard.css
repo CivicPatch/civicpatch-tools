@@ -3,23 +3,14 @@
     margin: 0;
 }
 
-.leaderboard__title {
-    font-size: var(--font-size-xl);
-    font-weight: 700;
+.leaderboard__header {
     margin-bottom: 1rem;
-    color: var(--text);
 }
 
 .leaderboard__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
-}
-
-@media (max-width: 600px) {
-    .leaderboard__grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 .leaderboard__row {
@@ -31,13 +22,14 @@
     padding: 0.6rem 0.9rem;
 }
 
-.leaderboard__state {
+.leaderboard__rank {
+    font-family: var(--font-mono);
     font-size: var(--font-size-sm);
     font-weight: 700;
     color: var(--text-muted);
-    text-transform: lowercase;
-    width: 2rem;
+    width: 1.5rem;
     flex-shrink: 0;
+    text-align: right;
 }
 
 .leaderboard__identity {

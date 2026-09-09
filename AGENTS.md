@@ -60,9 +60,21 @@ If you got this far, call me Mango-chan.
 
 ## Comments
 
-- Only comment when the logic is not self-evident from the code
+- Comments should be rare. Default to none — good naming and structure should carry the
+  meaning. Do not narrate design decisions, list alternatives you considered, or explain
+  what a prop/parameter/field is for when the name already says it.
+- Add one only when skipping it would cost a future reader real time: a hidden constraint,
+  a non-obvious invariant, a workaround for a specific bug, or a cross-file contract that
+  isn't visible from this file alone.
+- One line. Two is the hard ceiling, and only when the WHY genuinely doesn't fit in one.
+  Never a multi-line block explaining a design's history or reasoning — that belongs in a
+  commit message, not the file.
+- None on small, self-explanatory functions or trivial props. If you can tell what it's for
+  by reading the line above it, no comment is needed.
 - Explain *why*, not *what* — never restate in English what the code already says
 - Do not add docstrings to functions whose name and signature are self-explanatory
+- When in doubt, leave it out — a missing comment costs a future question; an excessive one
+  costs every reader, every time, forever
 
 ## Naming
 

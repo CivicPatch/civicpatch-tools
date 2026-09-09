@@ -1,21 +1,4 @@
 @layer components {
-/* Merge picker — step 2, what survives. Step 1 is inline on the editor. */
-
-/* styles.css caps dialogs at 32rem, which cuts the result column off. The
-   wrapper mirrors review-modal's shape so the selector outranks that cap. */
-.merge-picker-host dialog {
-  max-width: none;
-}
-
-.merge-picker-host dialog article {
-  width: min(58rem, calc(100vw - 2rem));
-  max-width: none;
-}
-
-/* This screen replaces .review-modal__main, which is what normally fills the
-   dialog's section — and that section carries no padding of its own, because the
-   person view supplies its own. So the merge screen has to bring both its own
-   inset and its own scrolling, or it sits flush against the dialog edges. */
 .merge-picker {
   display: flex;
   flex-direction: column;
@@ -26,12 +9,10 @@
   overscroll-behavior: contain;
   padding: 0.85rem 1.1rem 1.1rem;
 }
-
 .merge-picker__title {
   margin: 0;
   font-size: 1.05rem;
 }
-
 .merge-picker__lede,
 .merge-picker__empty,
 .merge-picker__agreed {
@@ -39,21 +20,16 @@
   font-size: 0.8125rem;
   color: var(--text-muted);
 }
-
-/* Step 1 — candidates */
-
 .merge-picker__list {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
   margin-top: 0.3rem;
 }
-
 .merge-picker__candidate {
   --control-bg: transparent;
   --control-border: var(--border);
   --control-text: var(--text-default);
-
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
   gap: 0.6rem;
@@ -61,24 +37,18 @@
   text-align: left;
   width: 100%;
 }
-
 .merge-picker__candidate:hover {
   --control-border: var(--border-strong);
 }
-
 .merge-picker__candidate-name {
   font-weight: 600;
   font-size: 0.875rem;
 }
-
 .merge-picker__candidate-sub,
 .merge-picker__candidate-status {
   font-size: 0.75rem;
   color: var(--text-muted);
 }
-
-/* Step 2 — what survives */
-
 .merge-picker__survivor {
   margin: 0;
   font-size: 0.875rem;
@@ -88,23 +58,20 @@
   border-radius: var(--radius);
   background: var(--surface-2);
 }
-
 .merge-picker__absorbed {
   display: block;
   font-size: 0.75rem;
   color: var(--text-muted);
 }
-
 .merge-grid {
   display: grid;
-  grid-template-columns: 6rem minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-columns: 6rem minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.3rem 0.6rem;
-  align-items: baseline;
+  align-items: stretch;
   margin-top: 0.4rem;
 }
-
 .merge-grid__head {
-  font-family: ui-monospace, Menlo, monospace;
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
   letter-spacing: 0.08em;
   text-transform: lowercase;
@@ -112,58 +79,75 @@
   padding-bottom: 0.2rem;
   border-bottom: 1px solid var(--border);
 }
-
-.merge-grid__head--centre {
-  text-align: center;
-}
-
 .merge-grid__label {
+  align-self: center;
+  min-width: 0;
   font-size: 0.8125rem;
   color: var(--text-secondary);
 }
-
-.merge-grid__candidate,
-.merge-grid__result {
+.merge-grid__side {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.3rem 0.5rem;
+  background: var(--surface-2);
+}
+.merge-grid__side--absorbed {
+  flex-direction: row-reverse;
+}
+.merge-grid__side[aria-pressed="true"] {
+  border-width: 2px;
+  border-color: var(--diff-added);
+  background: var(--diff-added-bg);
+  padding: calc(0.3rem - 1px) calc(0.5rem - 1px);
+}
+.merge-grid__side-value {
+  min-width: 0;
   font-size: 0.8125rem;
   overflow-wrap: anywhere;
 }
-
-.merge-grid__result {
-  font-weight: 560;
-}
-
-.merge-grid__choices {
-  display: flex;
-  gap: 0.25rem;
-  justify-content: center;
-}
-
-.merge-picker .merge-grid__choice {
+.merge-grid__pick {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
+  background: none;
   color: var(--text-muted);
-  font-family: ui-monospace, Menlo, monospace;
-  font-size: 0.6875rem;
-  letter-spacing: 0.04em;
-  text-transform: lowercase;
-  padding: 0.1rem 0.4rem;
+  cursor: pointer;
 }
-
-.merge-picker .merge-grid__choice[aria-pressed="true"] {
+.merge-grid__pick:hover {
+  border-color: var(--border-strong);
+  color: var(--text-default);
+}
+.merge-grid__side[aria-pressed="true"] .merge-grid__pick {
   border-color: var(--diff-added);
-  background: var(--diff-added-bg);
   color: var(--diff-added);
 }
-
-.merge-grid__fixed {
-  font-family: ui-monospace, Menlo, monospace;
+.merge-grid__combined {
+  grid-column: 2 / -1;
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
   text-transform: lowercase;
   color: var(--text-muted);
 }
-
-/* Back to the person this merge started from — the modal stays open on them, so
-   this is a step backwards, never a close. */
+.merge-grid__fixed-value {
+  grid-column: span 2;
+  align-self: center;
+  min-width: 0;
+  font-size: 0.8125rem;
+  overflow-wrap: anywhere;
+}
+.merge-grid__fixed {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: lowercase;
+  color: var(--text-muted);
+}
 .merge-picker__back {
   align-self: flex-start;
   width: auto;
@@ -176,7 +160,6 @@
   color: var(--text-muted);
   cursor: pointer;
 }
-
 .merge-picker__back:hover {
   color: var(--text-default);
 }
