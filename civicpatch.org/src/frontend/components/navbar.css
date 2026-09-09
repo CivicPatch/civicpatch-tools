@@ -3,17 +3,10 @@ civ-navbar {
   display: block;
   z-index: 100;
 }
+/* Base flex/width layout lives in layout.css, on `civ-navbar nav, nav.nav--logged-out` —
+   shared with the static logged-out nav, which never loads this stylesheet's JS path. */
 civ-navbar nav {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.85rem;
-  padding: 0.875rem 0;
   background: transparent;
-  border-bottom: 1px solid var(--border-subtle);
-  user-select: none;
-  max-width: var(--page-width);
-  margin-inline: auto;
 }
 .nav-logout {
   font-size: var(--font-size-sm);
@@ -30,7 +23,6 @@ civ-navbar nav {
   text-decoration: none;
 }
 nav.nav--logged-out {
-  border-bottom: none;
   position: relative;
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;

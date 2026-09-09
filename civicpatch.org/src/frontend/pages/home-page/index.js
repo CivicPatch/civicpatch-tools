@@ -1,13 +1,8 @@
 import "./home-page.css";
-import "./blog-preview.css";
+import "../../components/panel/panel.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { fetchPeople, fetchDashboard, fetchMapsCoverage } from "../../api.js";
-import {
-  useLocalStorage,
-  PERSIST_FOREVER,
-} from "../../hooks/use-local-storage.js";
-import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/badge/badge.js";
 import "../../components/leaderboard/index.js";
@@ -15,36 +10,35 @@ import "../../components/select-state/select-state.js";
 import "../../components/progress-dashboard/locality-gaps.js";
 import "../../components/people-directory/people-directory.ts";
 import "../../components/map/browse-map.ts";
-import "../../components/verify-cta/verify-cta.ts";
-import { renderContributionCard } from "../../components/contribution-card/contribution-card.ts";
 import { renderFreshnessWidget } from "../../components/progress-dashboard/freshness-widget.ts";
 import "../../components/jurisdiction-search/jurisdiction-search.ts";
-import "../../components/jurisdiction-modal/jurisdiction-modal.ts";
-import { useJurisdictionModal } from "./use-jurisdiction-modal.ts";
+import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 import { useStateCoverage } from "./use-state-coverage.ts";
 import { useReviewProgress } from "./use-review-progress.ts";
+import { useRecentPublications } from "./use-recent-publications.ts";
+import { renderRecentPublications } from "./recent-publications.ts";
+import { renderCoverageByState } from "./coverage-by-state.ts";
+import { useBlogUpdates } from "./use-blog-updates.ts";
+import { renderBlogUpdates } from "./blog-updates.ts";
+
+// A handful of recognizable towns across different states, each confirmed to already
+// have a published roster — a chip that returns nothing undercuts the point of showing one.
+const EXAMPLE_LOCATIONS = ["Seattle, WA", "Austin, TX", "Boston, MA", "San Francisco, CA"];
 
 function HomePage() {
   const { user, permissions } = useAuth();
-  const [defaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", {
-    ttl: PERSIST_FOREVER,
-  });
-  const [selectedState, setSelectedState] = useState(
-    (defaultState || "").toLowerCase(),
-  );
+  const [selectedState, setSelectedState] = useState("");
   const [selectedJurisdictionOcdid, setSelectedJurisdictionOcdid] =
     useState(null);
   const [selectedCountyOcdid, setSelectedCountyOcdid] = useState(null);
+  const [exampleQuery, setExampleQuery] = useState("");
   const [people, setPeople] = useState([]);
   const [dashboardData, setDashboardData] = useState(null);
   const [coverageSummary, setCoverageSummary] = useState({});
   const { localStatus, toReviewCount } = useStateCoverage(selectedState);
   const { reviewStats, activeSession } = useReviewProgress(user, selectedState);
-  const {
-    selection: searchSelection,
-    open: openJurisdiction,
-    close: handleModalClose,
-  } = useJurisdictionModal();
+  const { recentPublications } = useRecentPublications();
+  const { blogUpdates } = useBlogUpdates();
 
   useEffect(() => {
     if (!selectedJurisdictionOcdid) {
@@ -77,106 +71,130 @@ function HomePage() {
     setSelectedJurisdictionOcdid(null);
   };
 
+  const handleCoverageStateSelect = (stateCode) =>
+    handleStateChange({ detail: { state: stateCode } });
+
   const handleCountyChange = (event) => {
     setSelectedCountyOcdid(event.detail.jurisdiction_ocdid);
     setSelectedJurisdictionOcdid(null);
   };
 
-  // Clicking a local jurisdiction on the map is the same intent as picking one from
-  // search, so it opens the same modal rather than only filling the directory below.
+  // Map clicks stay exploratory — they fill the directory preview below rather than
+  // leaving the page, since browsing the map is a different intent than search.
   const handleSelectJurisdictionChange = (event) => {
-    const { jurisdiction_ocdid } = event.detail;
-    setSelectedJurisdictionOcdid(jurisdiction_ocdid);
-    if (jurisdiction_ocdid) openJurisdiction({ jurisdiction_ocdid });
+    setSelectedJurisdictionOcdid(event.detail.jurisdiction_ocdid);
   };
 
-  // A search hit opens the modal rather than filtering the page: the browse flow below
-  // stays where it was, and the answer is not somewhere the reader has to hunt for.
-  const handleSearchSelect = (event) => openJurisdiction(event.detail);
+  // A search hit is a deliberate pick, not a browse — it navigates straight to the
+  // jurisdiction's own page rather than previewing it in place.
+  const handleSearchSelect = (event) => {
+    window.location.href = `/${jurisdictionOcdidToPath(event.detail.jurisdiction_ocdid)}`;
+  };
 
   return html`
     <div class="home-page">
-      <div class="home-page__grid">
+      <div class="home-page__grid home-page__grid--3col">
         <div class="home-page__select-col">
-          <div class="home-page__finder">
-            <h3 class="home-page__finder-title">
-              Find your representatives
-            </h3>
+          <div class="panel home-page__finder">
+            <div class="panel__cap"><b>find your representatives</b></div>
 
-            <civ-jurisdiction-search
-              @jurisdiction-select=${handleSearchSelect}
-            ></civ-jurisdiction-search>
+            <div class="home-page__finder-search">
+              <div class="home-page__example-chips">
+                ${EXAMPLE_LOCATIONS.map(
+                  (location) => html`
+                    <button
+                      type="button"
+                      class="civ-badge civ-badge--secondary"
+                      @click=${() => setExampleQuery(location)}
+                    >
+                      ${location}
+                    </button>
+                  `,
+                )}
+              </div>
 
-            <p class="home-page__finder-or">
-              <span>or browse by state</span>
-            </p>
+              <civ-jurisdiction-search
+                .seedQuery=${exampleQuery}
+                @jurisdiction-select=${handleSearchSelect}
+              ></civ-jurisdiction-search>
+            </div>
 
-            <civ-select-state
-              .selected=${selectedState}
-              @state-change=${handleStateChange}
-            ></civ-select-state>
+            <div class="home-page__finder-divider"><span>or</span></div>
 
-            ${selectedState && dashboardData?.states?.[selectedState]
-              ? html`
-                  <a
-                    class="home-page__browse-link"
-                    href="/${selectedState}/local"
-                  >
-                    Browse
-                    ${dashboardData.states[selectedState].civicpatch.localities
-                      .known}
-                    municipalities <i class="fa-solid fa-arrow-right"></i>
-                  </a>
-                `
-              : ""}
+            <div class="home-page__finder-browse">
+              <civ-select-state
+                .selected=${selectedState}
+                @state-change=${handleStateChange}
+              ></civ-select-state>
+
+              ${selectedState && dashboardData?.states?.[selectedState]
+                ? html`
+                    <a
+                      class="home-page__browse-link"
+                      href="/${selectedState}/local"
+                    >
+                      Browse
+                      ${dashboardData.states[selectedState].civicpatch
+                        .localities.known}
+                      municipalities <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                  `
+                : html`
+                    <span
+                      class="home-page__browse-link home-page__browse-link--disabled"
+                      aria-disabled="true"
+                    >
+                      Browse <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                  `}
+            </div>
           </div>
 
-          <civ-verify-cta
-            .isLoggedIn=${!!user}
-            .toReviewCount=${user
-              ? (reviewStats?.available_count ?? 0)
-              : toReviewCount}
-            .state=${selectedState}
-            .hasActiveSession=${activeSession != null}
-          ></civ-verify-cta>
-
-          ${renderContributionCard({
+          ${renderCoverageByState({
+            statesData: dashboardData?.states ?? {},
+            onSelectState: handleCoverageStateSelect,
+            selectedState,
             isLoggedIn: !!user,
-            dailyCounts: reviewStats?.daily_counts ?? [],
-            streak: reviewStats?.streak ?? 0,
-            currentDate: reviewStats?.current_date ?? null,
-            allTimeResolved: reviewStats?.all_time_resolved ?? 0,
-            avgSecondsPerReview: reviewStats?.avg_seconds_per_review ?? null,
+            toReviewCount: user ? (reviewStats?.available_count ?? 0) : toReviewCount,
+            hasActiveSession: activeSession != null,
           })}
         </div>
 
-        <div class="home-page__map-col">
-          <browse-map
-            .state=${selectedState || ""}
-            .selectedOcdid=${selectedJurisdictionOcdid || ""}
-            .localStatus=${localStatus}
-            .coverageSummary=${coverageSummary}
-            @on-jurisdiction-change=${handleSelectJurisdictionChange}
-            @on-state-change=${handleStateChange}
-            @on-county-change=${handleCountyChange}
-          ></browse-map>
-          ${selectedState
-            ? renderFreshnessWidget({
-                stats: dashboardData,
-                state: selectedState,
-              })
-            : ""}
+        ${user
+          ? html`
+              <div class="home-page__second-col">
+                <browse-map
+                  .state=${selectedState || ""}
+                  .selectedOcdid=${selectedJurisdictionOcdid || ""}
+                  .localStatus=${localStatus}
+                  .coverageSummary=${coverageSummary}
+                  @on-jurisdiction-change=${handleSelectJurisdictionChange}
+                  @on-state-change=${handleStateChange}
+                  @on-county-change=${handleCountyChange}
+                ></browse-map>
+                ${selectedState
+                  ? renderFreshnessWidget({
+                      stats: dashboardData,
+                      state: selectedState,
+                    })
+                  : ""}
+                ${renderRecentPublications({
+                  publications: recentPublications,
+                })}
+              </div>
+            `
+          : html`
+              <div class="home-page__second-col">
+                ${renderRecentPublications({
+                  publications: recentPublications,
+                })}
+              </div>
+            `}
+
+        <div class="home-page__third-col">
+          ${renderBlogUpdates({ updates: blogUpdates })}
         </div>
       </div>
-
-      ${searchSelection
-        ? html`<civ-jurisdiction-modal
-            .jurisdictionOcdid=${searchSelection.jurisdiction_ocdid}
-            .displayName=${searchSelection.display_name || ""}
-            .parentNames=${searchSelection.parent_names || []}
-            @close-jurisdiction=${handleModalClose}
-          ></civ-jurisdiction-modal>`
-        : ""}
 
       <div class="home-page__below">
         <civ-people-directory

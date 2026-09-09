@@ -44,7 +44,7 @@
   align-self: end;
   min-width: 0;
   width: 100%;
-  padding: 0.5rem 1.1rem 0 0;
+  padding: 0.5rem 0.85rem 0 0;
   border: none;
   background: none;
   color: inherit;
@@ -95,7 +95,7 @@
 .review-row__hint {
   position: absolute;
   top: 0.5rem;
-  right: 0.5rem;
+  right: 0.4rem;
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   opacity: 0.5;

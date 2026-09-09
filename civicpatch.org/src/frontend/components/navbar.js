@@ -24,7 +24,6 @@ import "../generated/fontawesome/icons.css";
 
 const API_URL = config.apiUrl;
 
-
 function getRoleTooltip(role) {
   if (!role) return "No role assigned";
   return `Role: ${role}`;
@@ -35,17 +34,14 @@ function isActivePath(currentPath, href) {
 }
 
 function activeClass(currentPath, href) {
-  return isActivePath(currentPath, href) ? "nav-link nav-link--active" : "nav-link";
+  return isActivePath(currentPath, href)
+    ? "nav-link nav-link--active"
+    : "nav-link";
 }
 
 function renderPublicLinks(currentPath) {
   return html`
     <a href="/blog" class="${activeClass(currentPath, "/blog")}">blog</a>
-    <a
-      href="/blog/volunteer"
-      class="${activeClass(currentPath, "/blog/volunteer")}"
-      >volunteer</a
-    >
   `;
 }
 
@@ -59,10 +55,14 @@ function directNavItems(permissions) {
     { label: "home", href: "/" },
     { label: "blog", href: "/blog" },
   ];
-  if (permissions?.can_view_reviews_page) items.push({ label: "overview", href: "/review" });
-  if (permissions?.can_view_activity_page) items.push({ label: "activity", href: "/activity/changelogs" });
-  if (permissions?.can_view_queue_page) items.push({ label: "manage", href: "/bulk-review" });
-  if (permissions?.can_manage_roles) items.push({ label: "admin", href: "/admin" });
+  if (permissions?.can_view_reviews_page)
+    items.push({ label: "overview", href: "/review" });
+  if (permissions?.can_view_activity_page)
+    items.push({ label: "activity", href: "/activity/changelogs" });
+  if (permissions?.can_view_queue_page)
+    items.push({ label: "manage", href: "/bulk-review" });
+  if (permissions?.can_manage_roles)
+    items.push({ label: "admin", href: "/admin" });
   return items;
 }
 
@@ -76,10 +76,17 @@ function renderLabel(label, letter) {
 // where their siblings show up).
 function shortcutSections(permissions) {
   const sections = [
-    { label: "pages", items: directNavItems(permissions).filter((i) => i.label !== "manage" && i.label !== "admin") },
+    {
+      label: "pages",
+      items: directNavItems(permissions).filter(
+        (i) => i.label !== "manage" && i.label !== "admin",
+      ),
+    },
   ];
-  if (permissions?.can_view_queue_page) sections.push({ label: "manage", items: manageSection(permissions) });
-  if (permissions?.can_manage_roles) sections.push({ label: "admin", items: adminSection(permissions) });
+  if (permissions?.can_view_queue_page)
+    sections.push({ label: "manage", items: manageSection(permissions) });
+  if (permissions?.can_manage_roles)
+    sections.push({ label: "admin", items: adminSection(permissions) });
   return sections;
 }
 
@@ -92,13 +99,21 @@ function renderAuthedLinks(user, currentPath) {
   const navLetters = assignLetters(directNavItems(user.permissions));
   const letterOf = (label) => navLetters.find((i) => i.label === label).letter;
   return html`
-    <a href="/" class="${active("/")}">${renderLabel("home", letterOf("home"))}</a>
-    <a href="/blog" class="${active("/blog")}">${renderLabel("blog", letterOf("blog"))}</a>
+    <a href="/" class="${active("/")}"
+      >${renderLabel("home", letterOf("home"))}</a
+    >
+    <a href="/blog" class="${active("/blog")}"
+      >${renderLabel("blog", letterOf("blog"))}</a
+    >
     ${user.permissions?.can_view_reviews_page
-      ? html`<a href="/review" class="${active("/review")}">${renderLabel("overview", letterOf("overview"))}</a>`
+      ? html`<a href="/review" class="${active("/review")}"
+          >${renderLabel("overview", letterOf("overview"))}</a
+        >`
       : ""}
     ${user.permissions?.can_view_activity_page
-      ? html`<a href="/activity/changelogs" class="${active("/activity")}">${renderLabel("activity", letterOf("activity"))}</a>`
+      ? html`<a href="/activity/changelogs" class="${active("/activity")}"
+          >${renderLabel("activity", letterOf("activity"))}</a
+        >`
       : ""}
     ${user.permissions?.can_view_queue_page
       ? html`<civ-nav-group
@@ -130,13 +145,20 @@ function renderMobileLinks(user, currentPath) {
     ${shortcutSections(user.permissions).map((section) => {
       const grouped = section.label !== "pages";
       return html`
-        ${grouped ? html`<span class="nav-mobile-links__label">${section.label}</span>` : ""}
-        ${section.items.map((item) => html`
-          <a
-            href="${item.href}"
-            class="${active(item.href)}${grouped ? " nav-mobile-links__item--grouped" : ""}"
-          >${item.label.toLowerCase()}</a>
-        `)}
+        ${grouped
+          ? html`<span class="nav-mobile-links__label">${section.label}</span>`
+          : ""}
+        ${section.items.map(
+          (item) => html`
+            <a
+              href="${item.href}"
+              class="${active(item.href)}${grouped
+                ? " nav-mobile-links__item--grouped"
+                : ""}"
+              >${item.label.toLowerCase()}</a
+            >
+          `,
+        )}
       `;
     })}
   `;
@@ -154,7 +176,9 @@ function renderAuthedControls(user) {
         >${user.display_name || user.email || "User"}</span
       >
     </span>
-    <civ-nav-shortcuts .sections=${shortcutSections(user.permissions)}></civ-nav-shortcuts>
+    <civ-nav-shortcuts
+      .sections=${shortcutSections(user.permissions)}
+    ></civ-nav-shortcuts>
   `;
 }
 
@@ -183,7 +207,8 @@ function Navbar(host) {
   document.documentElement.dataset.theme = resolvedTheme;
   const toggleTheme = () =>
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
-  const onLogoutClick = () => localStorage.removeItem(STORAGE_KEYS.DEFAULT_STATE);
+  const onLogoutClick = () =>
+    localStorage.removeItem(STORAGE_KEYS.DEFAULT_STATE);
   const currentPath = window.location.pathname;
   const navClass = !isAuthed ? "nav--logged-out" : "";
   return html`
@@ -192,7 +217,7 @@ function Navbar(host) {
         <span class="nav-brand-icon">
           <i class="fa-solid fa-landmark"></i>
         </span>
-        CivicPatch
+        civicpatch
         <span class="nav-beta-badge">BETA</span>
       </a>
       <div class="nav-links">
@@ -201,7 +226,9 @@ function Navbar(host) {
           : renderPublicLinks(currentPath)}
       </div>
       ${isAuthed
-        ? html`<div class="nav-mobile-links">${renderMobileLinks(userData, currentPath)}</div>`
+        ? html`<div class="nav-mobile-links">
+            ${renderMobileLinks(userData, currentPath)}
+          </div>`
         : ""}
       <div class="nav-controls">
         ${isAuthed

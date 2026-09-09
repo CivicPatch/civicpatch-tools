@@ -1,0 +1,94 @@
+@layer components {
+/* A grid, not a flex column, and each row below is `subgrid` — so name/bar/count line
+   up in the same columns across every state, not just within one row's own text. */
+.coverage-by-state__list {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, auto) 1fr auto;
+  row-gap: 0.3rem;
+}
+
+.coverage-by-state civ-verify-cta {
+  display: block;
+  margin-top: 0.6rem;
+}
+
+.coverage-by-state__row {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: center;
+  column-gap: 0.6rem;
+  width: 100%;
+  padding: 0.15rem 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.coverage-by-state__row:hover {
+  background: var(--surface-2);
+}
+
+.coverage-by-state__name {
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+}
+
+.coverage-by-state__bar {
+  display: flex;
+  /* A hairline gap, not flush — abutting segments anti-alias into each other at these
+     widths and read as one smeared color instead of two distinct ones. */
+  gap: 1px;
+  height: 5px;
+  background: var(--border-subtle);
+}
+
+.coverage-by-state__segment {
+  display: block;
+  height: 100%;
+}
+
+.coverage-by-state__segment--fresh {
+  background: var(--status-fresh);
+}
+
+.coverage-by-state__segment--stale {
+  background: var(--status-stale);
+}
+
+.coverage-by-state__count {
+  color: var(--status-needs-review);
+  font-size: var(--font-size-sm);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.coverage-by-state__legend {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  text-transform: none;
+}
+
+.coverage-by-state__swatch {
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 1px;
+}
+
+.coverage-by-state__swatch--fresh {
+  background: var(--status-fresh);
+}
+
+.coverage-by-state__swatch--stale {
+  background: var(--status-stale);
+}
+}

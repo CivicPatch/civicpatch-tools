@@ -1,44 +1,23 @@
 @layer components {
-/* ── Card ─────────────────────────────────────────────────────────────────── */
-
+/* Plain text link, not a card — matches the demo's "review 10 in #washington" button
+   sitting right under the state list, rather than a separate boxed CTA. */
 .verify-cta {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.25rem;
-}
-
-.verify-cta__count {
-  font-size: var(--font-size-2xl);
-  font-weight: 800;
-  color: var(--accent);
-  margin: 0;
-}
-
-.verify-cta__description {
-  color: var(--text-muted);
-  margin: 0 0 0.25rem 0;
-}
-
-.verify-cta__link {
-  display: block;
-  align-self: stretch;
-  width: 100%;
-  text-align: center;
-  padding: 0.6rem 1.3rem;
+  display: inline-block;
+  background: none;
   border: none;
-  border-radius: var(--radius-sm);
-  background: var(--action);
-  color: var(--action-text);
-  font-weight: 700;
-  font-size: var(--font-size-md);
+  padding: 0;
+  color: var(--action);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-mono);
+  text-decoration: underline;
   cursor: pointer;
 }
 
-.verify-cta__link:disabled {
+.verify-cta:hover:not(:disabled) {
+  color: var(--action-hover);
+}
+
+.verify-cta:disabled {
   opacity: 0.6;
   cursor: default;
 }

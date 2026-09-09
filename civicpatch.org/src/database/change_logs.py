@@ -63,6 +63,67 @@ async def get_change_logs_for_roles(
     ]
 
 
+async def get_recent_publications(limit: int) -> list[dict]:
+    """Public proof-of-life feed: publish events only, no author diff or review detail.
+
+    Grouped by jurisdiction + day — several review passes on the same town in one day
+    collapse to a single row (the latest one), with `review_count` saying how many. Without
+    this, one actively-reviewed town could fill the whole feed and crowd out everything else.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            WITH publish_events AS (
+                SELECT cl.jurisdiction_ocdid,
+                       cl.created_at,
+                       cl.user_id,
+                       changesets.change_url AS commit_url,
+                       COUNT(*) OVER (
+                           PARTITION BY cl.jurisdiction_ocdid, date_trunc('day', cl.created_at)
+                       ) AS review_count
+                FROM change_logs cl
+                LEFT JOIN changesets ON changesets.id::text = cl.changeset_id
+                WHERE cl.type = 'publish_review'
+            ),
+            latest_per_group AS (
+                SELECT DISTINCT ON (jurisdiction_ocdid, date_trunc('day', created_at))
+                       jurisdiction_ocdid, created_at, user_id, commit_url, review_count
+                FROM publish_events
+                ORDER BY jurisdiction_ocdid, date_trunc('day', created_at), created_at DESC
+            )
+            SELECT g.jurisdiction_ocdid,
+                   COALESCE(j.data->>'name', g.jurisdiction_ocdid) AS jurisdiction_name,
+                   j.state,
+                   COALESCE(u.display_name, 'Anonymous') AS author_name,
+                   u.role AS author_role,
+                   g.commit_url,
+                   g.created_at,
+                   g.review_count
+            FROM latest_per_group g
+            JOIN users u ON u.id = g.user_id
+            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = g.jurisdiction_ocdid
+            ORDER BY g.created_at DESC
+            LIMIT %s
+            """,
+            (limit,),
+        )
+        rows = await cur.fetchall()
+    return [
+        {
+            "jurisdiction_ocdid": r[0],
+            "jurisdiction_name": r[1],
+            "state": r[2],
+            "author_name": r[3],
+            "author_role": r[4],
+            "commit_url": r[5],
+            "created_at": r[6],
+            "review_count": r[7],
+        }
+        for r in rows
+    ]
+
+
 async def create_change_log(
     change_type: ChangeLogType,
     user_id: str | None,

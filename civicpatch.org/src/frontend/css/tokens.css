@@ -53,7 +53,7 @@
 
   /* Shared max content width for the navbar + page containers, so the nav rail
      and page content align on the same gutters. */
-  --page-width: 1400px;
+  --page-width: 1360px;
 }
 
 :root,
@@ -185,8 +185,12 @@
 
   --status-fresh: var(--success);
   --status-stale: var(--warning);
-  --status-gap: var(--error);
-  --status-untracked: var(--text-muted);
+  /* untracked (never attempted) is the concerning one; gap (attempted, found nothing)
+     just reads as neutral "no data yet" — swapped from the original fresh/stale/error/
+     muted mapping, which had that backwards. */
+  --status-gap: var(--text-muted);
+  --status-untracked: var(--error);
+  --status-needs-review: var(--info);
   --status-selected: var(--accent);
 
   /* Inherited framework tokens — theme-dependent half. */
@@ -267,8 +271,12 @@
 
   --status-fresh: var(--success);
   --status-stale: var(--warning);
-  --status-gap: var(--error);
-  --status-untracked: var(--text-muted);
+  /* untracked (never attempted) is the concerning one; gap (attempted, found nothing)
+     just reads as neutral "no data yet" — swapped from the original fresh/stale/error/
+     muted mapping, which had that backwards. */
+  --status-gap: var(--text-muted);
+  --status-untracked: var(--error);
+  --status-needs-review: var(--info);
   --status-selected: var(--accent);
 
   /* Inherited framework tokens — theme-dependent half. */

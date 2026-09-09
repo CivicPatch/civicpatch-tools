@@ -53,27 +53,22 @@ function VerifyCta({
     }
   };
 
-  return html`
-    <div class="verify-cta">
-      <p class="verify-cta__count">${toReviewCount}</p>
-      <p class="verify-cta__description">
-        ${toReviewCount === 1 ? "municipality needs" : "municipalities need"} a
-        review before publishing.
-      </p>
-      ${isLoggedIn
-        ? html`<button
-            class="verify-cta__link"
-            type="button"
-            ?disabled=${starting}
-            @click=${handleVerifyClick}
-          >
-            Verify officials <i class="fa-solid fa-arrow-right"></i>
-          </button>`
-        : html`<a class="verify-cta__link" href="/login">
-            Sign in to review data <i class="fa-solid fa-arrow-right"></i>
-          </a>`}
-    </div>
-  `;
+  return isLoggedIn
+    ? html`
+        <button
+          class="verify-cta"
+          type="button"
+          ?disabled=${starting}
+          @click=${handleVerifyClick}
+        >
+          review ${toReviewCount}${state ? html` in #${state}` : ""}
+        </button>
+      `
+    : html`
+        <a class="verify-cta" href="/login">
+          sign in to review ${toReviewCount}${state ? html` in #${state}` : ""}
+        </a>
+      `;
 }
 
 customElements.define(

@@ -430,6 +430,15 @@ export const fetchJurisdictionsByOcdids = async (ocdids) => {
   return res.json();
 };
 
+export const fetchBlogPosts = async (limit = 3) => {
+  const params = new URLSearchParams({ limit });
+  const res = await fetch(`${API_URL}/api/v1/blog/posts?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchDashboard = async () => {
   const res = await fetch(`${API_URL}/api/v1/data/dashboard`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -438,6 +447,15 @@ export const fetchDashboard = async () => {
 
 export const fetchMapsCoverage = async () => {
   const res = await fetch(`${API_URL}/api/v1/coverage`, { credentials: "include" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchRecentPublications = async (limit = 10) => {
+  const params = new URLSearchParams({ limit });
+  const res = await fetch(`${API_URL}/api/v1/change_logs/recent-publications?${params}`, {
+    credentials: "include",
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };

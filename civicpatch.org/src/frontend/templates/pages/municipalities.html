@@ -3,7 +3,11 @@
 {% block styles %}{% for href in vite_css('assets/municipalities.ts') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %}
 {% block title %}{{ state.upper() }} municipalities{% endblock %}
 {% block content %}
+{% if user.authenticated %}
 <civ-navbar user='{{ user | tojson }}'></civ-navbar>
+{% else %}
+{% include "partials/navbar-logged-out.html" %}
+{% endif %}
 
 <municipalities-page state="{{ state }}"></municipalities-page>
 {% endblock %}

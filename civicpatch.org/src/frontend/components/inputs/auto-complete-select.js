@@ -189,6 +189,7 @@ function AutocompleteSelect({
 
   return html`
     <label class="visually-hidden">${label}</label>
+    <small class="autocomplete-selected">${selectedItem ? `Selected: ${selectedItem.label}` : ''}</small>
     <div class="autocomplete-wrapper" @focusout=${handleFocusOut}>
       <fieldset class="grid" role="group">
         <input 
@@ -265,8 +266,6 @@ function AutocompleteSelect({
           ` : ''}
         </div>
       ` : ''}
-      
-      ${selectedItem ? html`<small class="autocomplete-selected">Selected: ${selectedItem.label}</small>` : ''}
     </div>
   `;
 }

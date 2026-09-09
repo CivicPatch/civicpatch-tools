@@ -92,9 +92,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/", response_class=HTMLResponse, include_in_schema=False)
     async def index(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
-        return templates.TemplateResponse(
-            "pages/index.html", {"request": request, "user": user, "posts": (await get_all_posts())[:3]}
-        )
+        return templates.TemplateResponse("pages/index.html", {"request": request, "user": user})
 
     @router.get("/login", response_class=HTMLResponse, include_in_schema=False)
     async def login_page(

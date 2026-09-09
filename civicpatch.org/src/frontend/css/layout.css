@@ -132,10 +132,33 @@ body {
 
 /* ── Web component loading states ────────────────────────────────────────── */
 
-civ-navbar:not(:defined) {
+civ-navbar {
   display: block;
-  height: 57px;
-  border-bottom: 1px solid var(--border);
+  /* customElements.define() flips :not(:defined) off synchronously, but haunted's
+     first paint lands a tick later — this holds the space through that gap, not
+     just before the element is defined. */
+  min-height: 57px;
+}
+
+/* The signed-in nav (rendered by navbar.js inside civ-navbar) and the static signed-out
+   nav (templates/partials/navbar-logged-out.html, no JS involved) must share this — it's
+   what keeps the nav row the same width/alignment as the rest of the page in both cases. */
+civ-navbar nav,
+nav.nav--logged-out {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  padding: 0.875rem 0;
+  /* width:100% is load-bearing here, not decorative — nav is a direct flex item of
+     main.container-fluid's column layout, and auto cross-axis margins on a flex item
+     defeat align-items: stretch (the item shrinks to content, then the margins center
+     that shrunk box). Forcing 100% first restores the plain "centered container" behavior
+     the max-width + margin-inline: auto pattern is supposed to give it. */
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+  user-select: none;
 }
 
 home-page:not(:defined),

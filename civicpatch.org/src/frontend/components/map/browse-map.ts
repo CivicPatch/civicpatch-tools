@@ -345,7 +345,7 @@ function BrowseMap(this: HTMLElement, {
       });
       if (features.length && features[0].geometry) {
         const bounds = featureBounds(features[0].geometry as GeoJSON.Geometry);
-        if (bounds) map.fitBounds(bounds, { padding: 80, maxZoom: 14, duration: 600 });
+        if (bounds) map.fitBounds(bounds, { padding: 80, maxZoom: 16, duration: 600 });
       }
     }
     prevSelectedOcdidRef.current = selectedOcdid;
@@ -356,7 +356,7 @@ function BrowseMap(this: HTMLElement, {
     if (!map) return;
     setLevelBoth('national');
     applyLevelVisibility(map, 'national');
-    map.flyTo({ center: [-98.5, 39.5], zoom: 3.5 });
+    map.flyTo({ center: [-98.5, 39.5], zoom: 3 });
     this.dispatchEvent(new CustomEvent('on-state-change', {
       detail: { state: '' },
       bubbles: true,
@@ -372,8 +372,8 @@ function BrowseMap(this: HTMLElement, {
       <div class="map-legend" aria-label="Map legend">
         <span class="map-legend__item"><span class="map-legend__swatch map-legend__swatch--fresh"></span>Fresh</span>
         <span class="map-legend__item"><span class="map-legend__swatch map-legend__swatch--stale"></span>Stale</span>
-        <span class="map-legend__item"><span class="map-legend__swatch map-legend__swatch--gap"></span>No data</span>
         <span class="map-legend__item"><span class="map-legend__swatch map-legend__swatch--untracked"></span>Untracked</span>
+        <span class="map-legend__item"><span class="map-legend__swatch map-legend__swatch--gap"></span>No data</span>
         ${level === 'local' ? '' : html`<span class="map-legend__note">bolder = more covered</span>`}
       </div>
     </div>
