@@ -23,7 +23,12 @@ import { renderBlogUpdates } from "./blog-updates.ts";
 
 // A handful of recognizable towns across different states, each confirmed to already
 // have a published roster — a chip that returns nothing undercuts the point of showing one.
-const EXAMPLE_LOCATIONS = ["Seattle, WA", "Austin, TX", "Boston, MA", "San Francisco, CA"];
+const EXAMPLE_LOCATIONS = [
+  "Seattle, WA",
+  "Austin, TX",
+  "Boston, MA",
+  "San Francisco, CA",
+];
 
 function HomePage() {
   const { user, permissions } = useAuth();
@@ -96,7 +101,7 @@ function HomePage() {
       <div class="home-page__grid home-page__grid--3col">
         <div class="home-page__select-col">
           <div class="panel home-page__finder">
-            <div class="panel__cap"><b>find your representatives</b></div>
+            <div class="panel__cap"><b>search</b></div>
 
             <div class="home-page__finder-search">
               <div class="home-page__example-chips">
@@ -155,7 +160,9 @@ function HomePage() {
             onSelectState: handleCoverageStateSelect,
             selectedState,
             isLoggedIn: !!user,
-            toReviewCount: user ? (reviewStats?.available_count ?? 0) : toReviewCount,
+            toReviewCount: user
+              ? (reviewStats?.available_count ?? 0)
+              : toReviewCount,
             hasActiveSession: activeSession != null,
           })}
         </div>

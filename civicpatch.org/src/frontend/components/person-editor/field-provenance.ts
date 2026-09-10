@@ -83,9 +83,8 @@ function disclose(sourceValue: unknown, publishedValue: unknown): string | null 
 
 /** The lock on one field, or null where nobody has stood behind it.
  *
- * `sourceValue` is `undefined` for a field no assertion moved, which is most of them after a
- * review — `_accept_published` accepts every non-null value, so agreement is the common case
- * and it earns the quiet lock.
+ * `sourceValue` is `undefined` for a field no assertion moved — most fields on most people,
+ * since only a field someone actually edited carries a claim at all.
  */
 export function fieldLock(
   accepts: PersonAssertion[] | undefined,

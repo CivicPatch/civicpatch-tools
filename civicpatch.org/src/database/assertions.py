@@ -195,7 +195,7 @@ async def list_for_entities(
 ) -> dict[str, list[dict]]:
     """Every assertion about these rows, newest first, keyed by entity id.
 
-    Carries who and when, which `stated_values` does not — the editor tags each field with the
+    Carries who and when, which `asserted_values` does not — the editor tags each field with the
     person behind it.
     """
     if not entity_ids:
@@ -219,7 +219,7 @@ async def list_for_entities(
     return by_entity
 
 
-async def stated_values(
+async def asserted_values(
     cur, entity_type: EntityType, entity_ids: list[str]
 ) -> dict[str, dict]:
     """`{entity_id: {field: {"accept": [...], "reject": [...]}}}` for these rows.
@@ -237,10 +237,10 @@ async def stated_values(
         """,
         (entity_type.value, entity_ids),
     )
-    stated: dict[str, dict] = {}
+    asserted: dict[str, dict] = {}
     for entity_id, field_path, kind, value in await cur.fetchall():
-        by_kind = stated.setdefault(entity_id, {}).setdefault(
+        by_kind = asserted.setdefault(entity_id, {}).setdefault(
             field_path, {AssertionKind.ACCEPT: [], AssertionKind.REJECT: []}
         )
         by_kind[kind].append(value)
-    return stated
+    return asserted

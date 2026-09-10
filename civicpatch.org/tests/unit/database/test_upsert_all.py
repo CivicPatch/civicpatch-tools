@@ -1,8 +1,8 @@
 """Batching a roster's worth of assertions.
 
-`_accept_published` accepts every non-null value on the roster, so a publish writes one claim
-per value. Written one at a time that was two statements each, in series inside one
-transaction — 336 of them for an eight-person roster.
+A single save can state claims for several people at once — `roster_edits.py` builds one list of
+`Assertion`s across the whole patched roster and writes it in one call. Written one at a time
+that was two statements each, in series inside one transaction.
 """
 
 import pytest

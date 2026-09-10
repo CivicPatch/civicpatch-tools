@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from core.people_edits import source_values_overridden, with_stated_values
+from core.people_edits import source_values_overridden, with_asserted_values
 from core.people_roster import roster_from_sightings
 from database import assertions
 from database import changesets as changesets_db
@@ -26,10 +26,10 @@ async def _roster(changeset_id: str, jurisdiction_ocdid: str) -> tuple[list[dict
     person_ids = list({sighting["person_id"] for sighting in sightings})
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        published, roles, stated = await asyncio.gather(
+        published, roles, asserted = await asyncio.gather(
             get_people_by_ids(person_ids),
             get_roles(),
-            assertions.stated_values(cur, EntityType.PERSON, person_ids),
+            assertions.asserted_values(cur, EntityType.PERSON, person_ids),
         )
     return roster_from_sightings(
         sightings,
@@ -37,7 +37,7 @@ async def _roster(changeset_id: str, jurisdiction_ocdid: str) -> tuple[list[dict
         build_taxonomy(RoleConfig(roles=roles)),
         jurisdiction_ocdid,
         logger,
-    ), stated
+    ), asserted
 
 
 async def proposed_roster(changeset_id: str, jurisdiction_ocdid: str) -> list[dict]:
@@ -55,13 +55,13 @@ async def proposed_roster_and_source_values(
     Both from one pass: the pre-overlay roster is `_roster`'s own answer, so the second half
     costs nothing beyond the comparison. Asking for it separately would re-read every sighting.
     """
-    roster, stated = await _roster(changeset_id, jurisdiction_ocdid)
+    roster, asserted = await _roster(changeset_id, jurisdiction_ocdid)
     overridden = {
         person["id"]: source_values
         for person in roster
         if (
             source_values := source_values_overridden(
-                person, stated.get(person["id"], {})
+                person, asserted.get(person["id"], {})
             )
         )
     }
@@ -69,7 +69,7 @@ async def proposed_roster_and_source_values(
         await _one_post_each(
             changeset_id,
             [
-                with_stated_values(person, stated.get(person["id"], {}))
+                with_asserted_values(person, asserted.get(person["id"], {}))
                 for person in roster
             ],
         ),
