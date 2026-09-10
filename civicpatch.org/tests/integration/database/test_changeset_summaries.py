@@ -21,7 +21,7 @@ from database.changeset_summaries import (
 )
 from database.database import get_pool
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
-from shared.utils.statuses import ChangeLogType, DismissalReason
+from shared.utils.statuses import ActivityType, DismissalReason
 from tests.integration import factories
 
 _STATE = "zy"
@@ -34,7 +34,7 @@ async def _wipe():
     async with pool.connection() as conn, conn.cursor() as cur:
         for ocdid in (_OCDID, _OCDID_TWO):
             await cur.execute(
-                "DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (ocdid,)
+                "DELETE FROM activity WHERE jurisdiction_ocdid = %s", (ocdid,)
             )
             await cur.execute(
                 "DELETE FROM source_records WHERE jurisdiction_ocdid = %s", (ocdid,)
@@ -194,10 +194,10 @@ async def test_review_lifecycle_is_not_a_roster_edit():
     changeset_id = await _changeset(published=True)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        for type_ in (ChangeLogType.ADD_PERSON, ChangeLogType.PUBLISH_REVIEW):
+        for type_ in (ActivityType.ADD_PERSON, ActivityType.PUBLISH_REVIEW):
             await cur.execute(
                 """
-                INSERT INTO change_logs (type, jurisdiction_ocdid, changeset_id, changes)
+                INSERT INTO activity (type, jurisdiction_ocdid, changeset_id, changes)
                 VALUES (%s, %s, %s, '{}'::jsonb)
                 """,
                 (type_, _OCDID, changeset_id),

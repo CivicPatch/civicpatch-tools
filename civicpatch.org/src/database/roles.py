@@ -85,15 +85,15 @@ async def get_roles() -> list[Role]:
         return await _fetch_roles(cur)
 
 
-async def _emit_change_log(
+async def _emit_activity(
     cur,
-    log_type: str,
+    activity_type: str,
     payload: dict,
     user_id: str | None,
 ):
     await cur.execute(
-        "INSERT INTO change_logs (type, jurisdiction_ocdid, changes, user_id) VALUES (%s, NULL, %s, %s)",
-        (log_type, json.dumps(payload), user_id or SYSTEM_USER_ID),
+        "INSERT INTO activity (type, jurisdiction_ocdid, changes, user_id) VALUES (%s, NULL, %s, %s)",
+        (activity_type, json.dumps(payload), user_id or SYSTEM_USER_ID),
     )
 
 
@@ -104,7 +104,7 @@ async def _sync_aliases(
     incoming: list[str],
 ) -> tuple[set[str], set[str]]:
     """Bring one role's aliases in line with the submitted list, returning
-    (added, removed) for the change_log.
+    (added, removed) for the activity row.
 
     Submitted aliases land approved: a maintainer typing one *is* the approval.
     `candidate` is for a future auto-mint path, which is the case approval was
@@ -125,7 +125,7 @@ async def _sync_aliases(
 
 
 async def upsert_roles(entries: list[RoleInput], user_id: str | None) -> None:
-    """Add or update the submitted roles, one change_log per affected row.
+    """Add or update the submitted roles, one activity row per affected row.
 
     Absence is NOT removal — a label missing from `entries` is left alone.
     Removal is deactivate_role.
@@ -178,7 +178,7 @@ async def upsert_roles(entries: list[RoleInput], user_id: str | None) -> None:
                 )
 
                 if op is not RoleOp.NO_CHANGE or added or removed:
-                    await _emit_change_log(
+                    await _emit_activity(
                         cur,
                         change_log_type(op),
                         build_event_payload(entry.label, added, removed),
@@ -195,8 +195,8 @@ async def reorder_roles(
 ) -> None:
     """Set priority = position in role_order. role_order must be a permutation
     of the current role *ids*. moved_roles names the ids the user actively moved
-    (folded into the change_log so the summary can list them, not just the
-    furthest shift). Emits one reorder_roles change_log; an unchanged order
+    (folded into the activity row so the summary can list them, not just the
+    furthest shift). Emits one reorder_roles activity row; an unchanged order
     writes nothing."""
     pool = await get_pool()
     async with pool.connection() as conn:
@@ -221,7 +221,7 @@ async def reorder_roles(
                     (position, role_id),
                 )
 
-            # The payload is stored in labels, not ids: core.change_logs
+            # The payload is stored in labels, not ids: core.activity
             # renders it straight into the activity feed, where "moved Council
             # Member" reads and "moved council-member" does not.
             payload: dict = {
@@ -236,7 +236,7 @@ async def reorder_roles(
             ]
             if valid_moved:
                 payload["moved"] = valid_moved
-            await _emit_change_log(cur, "reorder_roles", payload, user_id)
+            await _emit_activity(cur, "reorder_roles", payload, user_id)
         await conn.commit()
 
 
@@ -245,7 +245,7 @@ async def deactivate_role(role_id: str, user_id: str | None) -> bool:
     already inactive — either way there is nothing to log.
 
     Logged as `delete_role`: the user's action is unchanged, only the storage
-    consequence is, and adding a change_log type needs its own migration.
+    consequence is, and adding an activity type needs its own migration.
     """
     pool = await get_pool()
     async with pool.connection() as conn:
@@ -261,6 +261,6 @@ async def deactivate_role(role_id: str, user_id: str | None) -> bool:
             row = await cur.fetchone()
             if row is None:
                 return False
-            await _emit_change_log(cur, "delete_role", {"role": row[0]}, user_id)
+            await _emit_activity(cur, "delete_role", {"role": row[0]}, user_id)
         await conn.commit()
         return True

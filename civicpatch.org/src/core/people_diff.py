@@ -1,12 +1,12 @@
 from collections.abc import Mapping
 from typing import Any
 
-from core.change_logs import field_changes
+from core.activity import field_changes
 from core.people_edits import EDITABLE_FIELDS
 from shared.schemas import POST_FIELD
 from schemas.assertions import EntityType
-from schemas.change_logs import Change, FieldChange, PersonChange
-from shared.utils.statuses import ChangeLogType
+from schemas.activity import Change, FieldChange, PersonChange
+from shared.utils.statuses import ActivityType
 
 
 # `id` is the match key, not a field. Everything else a reviewer can touch is here, because a
@@ -105,7 +105,7 @@ def _added(person: dict, post_labels: Mapping[str, str]) -> PersonChange:
         for field, value in _comparable(person, post_labels).items()
         if value
     ]
-    return PersonChange(type=ChangeLogType.ADD_PERSON, payload=_payload(person, fields))
+    return PersonChange(type=ActivityType.ADD_PERSON, payload=_payload(person, fields))
 
 
 def _removed(person: dict, post_labels: Mapping[str, str]) -> PersonChange:
@@ -114,11 +114,11 @@ def _removed(person: dict, post_labels: Mapping[str, str]) -> PersonChange:
         for field, value in _comparable(person, post_labels).items()
         if value
     ]
-    return PersonChange(type=ChangeLogType.DELETE_PERSON, payload=_payload(person, fields))
+    return PersonChange(type=ActivityType.DELETE_PERSON, payload=_payload(person, fields))
 
 
 def _edited(person: dict, fields: list[FieldChange]) -> PersonChange:
-    return PersonChange(type=ChangeLogType.EDIT_PERSON, payload=_payload(person, fields))
+    return PersonChange(type=ActivityType.EDIT_PERSON, payload=_payload(person, fields))
 
 
 def _payload(person: dict, fields: list[FieldChange]) -> Change:

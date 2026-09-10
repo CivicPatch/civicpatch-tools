@@ -3,12 +3,12 @@ from core.post_derivation import DerivedPost
 from shared.schemas import Post
 from core.post_grouping import group_by_organization
 from database import assertions, divisions, organizations
-from database.change_logs import record_change
+from database.activity import record_change
 from database.changesets import live_roster_changeset
 from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType
-from schemas.change_logs import Change, FieldChange
-from shared.utils.statuses import ChangeLogType
+from schemas.activity import Change, FieldChange
+from shared.utils.statuses import ActivityType
 
 
 class PostHasMembers(Exception):
@@ -39,9 +39,16 @@ def _fields_to_accept(values: dict) -> list[tuple[str, object]]:
     ]
 
 
-async def _accept_fields(cur, post_id: str, values: dict, user_id: str | None) -> None:
+async def _accept_fields(
+    cur,
+    post_id: str,
+    values: dict,
+    user_id: str | None,
+    changeset_id: str | None = None,
+) -> None:
     """Accept this post's human fields on somebody's behalf — what makes a hand-made post
-    verified, and what a no-op edit refreshes.
+    verified. A no-op edit claims nothing new: `upsert_all` skips a value already the current
+    answer, so re-saving does not insert a row.
 
     Skipped without a user: the derivation's path claims nothing, so its posts stay unverified.
     """
@@ -56,6 +63,7 @@ async def _accept_fields(cur, post_id: str, values: dict, user_id: str | None) -
                 field_path=field,
                 kind=AssertionKind.ACCEPT,
                 value=value,
+                changeset_id=changeset_id,
             )
             for field, value in _fields_to_accept(values)
         ],
@@ -434,7 +442,7 @@ async def create_all(
         if minted:
             await record_change(
                 cur,
-                ChangeLogType.ADD_POST,
+                ActivityType.ADD_POST,
                 None,
                 jurisdiction_ocdid,
                 Change(
@@ -482,11 +490,15 @@ async def create(
         )
         # Nothing to log when the triple was taken: no post was created.
         if post_id:
-            await _accept_fields(cur, post_id, {"_headcount": headcount}, user_id)
+            # A seat somebody added by hand belongs to the roster they added it to.
+            changeset_id = await live_roster_changeset(cur, jurisdiction_ocdid)
+            await _accept_fields(
+                cur, post_id, {"_headcount": headcount}, user_id, changeset_id
+            )
             minted = await get(cur, post_id)
             await record_change(
                 cur,
-                ChangeLogType.ADD_POST,
+                ActivityType.ADD_POST,
                 user_id,
                 jurisdiction_ocdid,
                 Change(
@@ -494,8 +506,7 @@ async def create(
                     entity_id=post_id,
                     subject=(minted.label if minted else None) or role_id,
                 ),
-                # A seat somebody added by hand belongs to the roster they added it to.
-                changeset_id=await live_roster_changeset(cur, jurisdiction_ocdid),
+                changeset_id=changeset_id,
             )
         return post_id
 
@@ -521,16 +532,18 @@ async def update(
         if before is None:
             return None
 
+        changeset_id = await live_roster_changeset(cur, before.jurisdiction_ocdid)
         await update_human_fields(cur, post_id, headcount, is_tracked)
         await _accept_fields(
             cur,
             post_id,
             {"_headcount": headcount, "_is_tracked": is_tracked},
             user_id,
+            changeset_id,
         )
         await record_change(
             cur,
-            ChangeLogType.EDIT_POST,
+            ActivityType.EDIT_POST,
             user_id,
             before.jurisdiction_ocdid,
             Change(
@@ -548,7 +561,7 @@ async def update(
                     if was != now
                 ],
             ),
-            changeset_id=await live_roster_changeset(cur, before.jurisdiction_ocdid),
+            changeset_id=changeset_id,
         )
         return before.jurisdiction_ocdid
 
@@ -574,7 +587,7 @@ async def delete(post_id: str, user_id: str | None = None) -> bool:
 
         await record_change(
             cur,
-            ChangeLogType.DELETE_POST,
+            ActivityType.DELETE_POST,
             user_id,
             before.jurisdiction_ocdid,
             Change(

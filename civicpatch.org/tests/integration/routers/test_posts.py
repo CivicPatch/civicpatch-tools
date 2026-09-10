@@ -66,7 +66,7 @@ async def _wipe():
             (_OCDID,),
         )
         await cur.execute(
-            "DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (_OCDID,)
+            "DELETE FROM activity WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         for table in ("posts", "divisions", "organizations", "people"):
             await cur.execute(
@@ -100,11 +100,11 @@ def _create(client, role_id: str = "mayor", division: str = _BASE, **body):
     )
 
 
-async def _change_logs() -> list[dict]:
+async def _activity_rows() -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT type, changes FROM change_logs WHERE jurisdiction_ocdid = %s "
+            "SELECT type, changes FROM activity WHERE jurisdiction_ocdid = %s "
             "ORDER BY created_at",
             (_OCDID,),
         )
@@ -247,7 +247,7 @@ async def test_every_write_leaves_a_trace(client):
     post_id = _create(client).json()["data"]["id"]
     client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 2, "_is_tracked": True})
 
-    logs = await _change_logs()
+    logs = await _activity_rows()
 
     assert [log["type"] for log in logs] == ["add_post", "edit_post"]
     assert all(log["entity_id"] == post_id for log in logs)
@@ -264,7 +264,7 @@ async def test_a_rejected_create_leaves_no_trace(client):
     _create(client)
     _create(client)
 
-    assert [log["type"] for log in await _change_logs()] == ["add_post"]
+    assert [log["type"] for log in await _activity_rows()] == ["add_post"]
 
 
 async def _is_tracked(post_id: str) -> bool:

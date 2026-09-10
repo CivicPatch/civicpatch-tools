@@ -17,7 +17,7 @@ import pytest
 import pytest_asyncio
 
 from core.sinks.sheet.people_rows import HEADERS
-from database import change_logs, divisions, memberships, organizations, posts
+from database import activity, divisions, memberships, organizations, posts
 from database.database import get_pool
 
 _ZZ = "ocd-jurisdiction/country:us/state:zz/place:zz_sheet/government"
@@ -51,9 +51,9 @@ async def _wipe():
                 "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,)
             )
             await cur.execute(
-                "DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (ocdid,)
+                "DELETE FROM activity WHERE jurisdiction_ocdid = %s", (ocdid,)
             )
-        await cur.execute("DELETE FROM change_logs WHERE type = 'reorder_roles'")
+        await cur.execute("DELETE FROM activity WHERE type = 'reorder_roles'")
         await conn.commit()
 
 
@@ -225,18 +225,18 @@ async def test_the_stream_hands_back_chunks_rather_than_the_whole_state():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_change_log_puts_its_state_on_the_sweep_feed():
-    """The feed the whole sync runs on. Every mutation writes a change log on the cursor it
+async def test_an_activity_row_puts_its_state_on_the_sweep_feed():
+    """The feed the whole sync runs on. Every mutation writes an activity row on the cursor it
     mutates with, so this is what makes the sheet unforgettable — no endpoint calls out to it."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO change_logs (type, jurisdiction_ocdid) VALUES ('edit_person', %s)",
+            "INSERT INTO activity (type, jurisdiction_ocdid) VALUES ('edit_person', %s)",
             (_ZX,),
         )
         await conn.commit()
 
-    assert "zx" in await change_logs.states_changed_since(60)
+    assert "zx" in await activity.states_changed_since(60)
 
 
 @pytest.mark.asyncio
@@ -246,14 +246,14 @@ async def test_a_change_outside_the_window_is_not_swept():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO change_logs (type, jurisdiction_ocdid, created_at) "
+            "INSERT INTO activity (type, jurisdiction_ocdid, created_at) "
             "VALUES ('edit_person', %s, now() - interval '2 hours')",
             (_ZX,),
         )
         await conn.commit()
 
-    assert "zx" not in await change_logs.states_changed_since(15)
-    assert "zx" in await change_logs.states_changed_since(180)
+    assert "zx" not in await activity.states_changed_since(15)
+    assert "zx" in await activity.states_changed_since(180)
 
 
 @pytest.mark.asyncio
@@ -264,11 +264,11 @@ async def test_a_global_change_names_no_state():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO change_logs (type, jurisdiction_ocdid) VALUES ('reorder_roles', NULL)"
+            "INSERT INTO activity (type, jurisdiction_ocdid) VALUES ('reorder_roles', NULL)"
         )
         await conn.commit()
 
-    assert None not in await change_logs.states_changed_since(60)
+    assert None not in await activity.states_changed_since(60)
 
 
 @pytest.mark.asyncio
@@ -280,15 +280,15 @@ async def test_a_dismissal_does_not_put_its_state_on_the_feed():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO change_logs (type, jurisdiction_ocdid) VALUES ('dismiss_review', %s)",
+            "INSERT INTO activity (type, jurisdiction_ocdid) VALUES ('dismiss_review', %s)",
             (_ZX,),
         )
         await conn.commit()
 
-    assert "zx" not in await change_logs.states_changed_since(60)
+    assert "zx" not in await activity.states_changed_since(60)
     assert _ZX not in [
         row.jurisdiction_ocdid
-        for row in await change_logs.jurisdictions_changed_since(60)
+        for row in await activity.jurisdictions_changed_since(60)
     ]
 
 
@@ -300,13 +300,13 @@ async def test_the_jurisdiction_feed_names_what_changed():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO change_logs (type, jurisdiction_ocdid) "
+            "INSERT INTO activity (type, jurisdiction_ocdid) "
             "VALUES ('add_post', %s), ('edit_person', %s)",
             (_ZX, _ZX),
         )
         await conn.commit()
 
-    changed = await change_logs.jurisdictions_changed_since(60)
+    changed = await activity.jurisdictions_changed_since(60)
 
     mine = [row for row in changed if row.jurisdiction_ocdid == _ZX]
     assert len(mine) == 1

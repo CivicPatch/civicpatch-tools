@@ -1,5 +1,5 @@
 from typing import Any
-from core.change_logs import summarize_change_log
+from core.activity import summarize_activity
 from database.database import get_pool
 from database.changeset_predicates import AVAILABLE_FOR_REVIEW
 from psycopg.rows import namedtuple_row
@@ -225,12 +225,12 @@ async def get_review_stats(
 
             await cur.execute(
                 """
-                SELECT cl.type, cl.changes, cl.created_at,
-                       COALESCE(j.data->>'name', cl.jurisdiction_ocdid) AS jurisdiction_name
-                FROM change_logs cl
-                LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = cl.jurisdiction_ocdid
-                WHERE cl.user_id = %s
-                ORDER BY cl.created_at DESC
+                SELECT a.type, a.changes, a.created_at,
+                       COALESCE(j.data->>'name', a.jurisdiction_ocdid) AS jurisdiction_name
+                FROM activity a
+                LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = a.jurisdiction_ocdid
+                WHERE a.user_id = %s
+                ORDER BY a.created_at DESC
                 LIMIT %s
                 """,
                 (user_id, RECENT_ACTIVITY_LIMIT),
@@ -252,7 +252,7 @@ async def get_review_stats(
                 "type": row.type,  # type: ignore[union-attr]
                 "jurisdiction_name": row.jurisdiction_name,  # type: ignore[union-attr]
                 "created_at": row.created_at.isoformat(),  # type: ignore[union-attr]
-                "summary": summarize_change_log(row.type, row.changes),  # type: ignore[union-attr]
+                "summary": summarize_activity(row.type, row.changes),  # type: ignore[union-attr]
             }
             for row in recent_rows
         ],

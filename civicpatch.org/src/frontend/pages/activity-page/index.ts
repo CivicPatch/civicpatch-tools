@@ -10,7 +10,7 @@ import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 
 const PER_PAGE = 20;
 
-// Mirrors ChangeLogAuthors on the API.
+// Mirrors ActivityAuthors on the API.
 const AUTHORS_ALL = "all";
 const AUTHORS_QUARANTINED = "quarantined";
 

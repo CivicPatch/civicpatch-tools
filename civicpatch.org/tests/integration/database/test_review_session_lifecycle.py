@@ -541,30 +541,30 @@ async def test_available_count_excludes_jurisdiction_claimed_by_another_user(tes
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_recent_activity_lists_this_users_own_change_logs_newest_first(test_user):
+async def test_recent_activity_lists_this_users_own_activity_newest_first(test_user):
     """The review landing page's "recent activity" widget reads straight off
-    change_logs, scoped to the current user — never another reviewer's rows, and
+    activity, scoped to the current user — never another reviewer's rows, and
     ordered so the most recent action is always first."""
-    from database.change_logs import create_change_log
+    from database.activity import create_activity_row
     from database.review_session_stats import get_review_stats
-    from shared.utils.statuses import ChangeLogType
+    from shared.utils.statuses import ActivityType
 
     changeset_id, ocdid = await _seed_open_pr("recent-activity")
     try:
-        await create_change_log(ChangeLogType.EDIT_PERSON, str(test_user), ocdid, changeset_id)
-        await create_change_log(ChangeLogType.PUBLISH_REVIEW, str(test_user), ocdid, changeset_id)
+        await create_activity_row(ActivityType.EDIT_PERSON, str(test_user), ocdid, changeset_id)
+        await create_activity_row(ActivityType.PUBLISH_REVIEW, str(test_user), ocdid, changeset_id)
 
         stats = await get_review_stats(str(test_user), _STATE_CODE)
         recent = stats["recent_activity"]
 
         assert len(recent) == 2
-        assert recent[0]["type"] == ChangeLogType.PUBLISH_REVIEW.value, "newest entry first"
-        assert recent[1]["type"] == ChangeLogType.EDIT_PERSON.value
-        assert recent[0]["summary"], "summarize_change_log always returns a non-empty string"
+        assert recent[0]["type"] == ActivityType.PUBLISH_REVIEW.value, "newest entry first"
+        assert recent[1]["type"] == ActivityType.EDIT_PERSON.value
+        assert recent[0]["summary"], "summarize_activity always returns a non-empty string"
     finally:
         pool = await get_pool()
         async with pool.connection() as conn:
-            await conn.execute("DELETE FROM change_logs WHERE user_id = %s", (test_user,))
+            await conn.execute("DELETE FROM activity WHERE user_id = %s", (test_user,))
         await _cleanup_open_pr(changeset_id, ocdid)
 
 

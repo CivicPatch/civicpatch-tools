@@ -14,7 +14,7 @@ from shared.utils.yaml_utils import yaml_dump, yaml_load
 import database.jurisdictions as jurisdictions_db
 import database.changesets as changesets_db
 import core.jurisdiction_patch as jurisdiction_patch
-import services.change_logs as change_logs
+import services.activity as activity_service
 
 logger = logging.getLogger(__name__)
 
@@ -180,7 +180,7 @@ async def commit_jurisdiction_patch(
 
     # The change log records the url specifically, so it only fires when url moved.
     if user_id:
-        await change_logs.record_jurisdiction_edit(
+        await activity_service.record_jurisdiction_edit(
             changeset_id=changeset_id,
             jurisdiction_ocdid=jurisdiction_ocdid,
             jurisdiction_name=entry["name"],

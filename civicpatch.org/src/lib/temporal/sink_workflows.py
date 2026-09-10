@@ -97,12 +97,12 @@ class WriteSheetJurisdictionsWorkflow:
 
 @workflow.defn
 class WriteRecentChangesWorkflow:
-    """Every 5 minutes: what `change_logs` saw in the last 15, to both sinks.
+    """Every 5 minutes: what `activity` saw in the last 15, to both sinks.
 
     Named for its scope rather than its cadence — the cadence is a cron string that may change,
     while "only what changed" is the definition. `WriteEverythingWorkflow` is the other half.
 
-    One sweep, not two: both sinks read the same `change_logs` window, so a second schedule would
+    One sweep, not two: both sinks read the same `activity` window, so a second schedule would
     ask the same question of the same rows five minutes out of step.
 
     Sequential rather than concurrent because a permanent failure in one costs nothing — the
@@ -124,7 +124,7 @@ class WriteRecentChangesWorkflow:
 
 @workflow.defn
 class WriteEverythingWorkflow:
-    """Once a day: every state and every jurisdiction, whatever `change_logs` said.
+    """Once a day: every state and every jurisdiction, whatever `activity` said.
 
     The backstop. `WriteRecentChangesWorkflow` only ever sees what the feed reports, so a write path
     that skips it or an activity that fails non-retryably leaves a mirror stale forever. Nothing

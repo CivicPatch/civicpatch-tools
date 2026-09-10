@@ -9,7 +9,7 @@ them in `roster_issues` and restores the full score; until then the queue orders
 posts, then recency.
 
 Not in `changesets.py`: the score reads `posts` too, and importing posts there closes a cycle
-(`changesets` → `posts` → `change_logs` → `changesets`).
+(`changesets` → `posts` → `activity` → `changesets`).
 """
 
 from typing import LiteralString, cast

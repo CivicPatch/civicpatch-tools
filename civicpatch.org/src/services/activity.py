@@ -1,15 +1,15 @@
 import logging
 
-from core.change_logs import field_changes
+from core.activity import field_changes
 from core.jurisdiction_patch import JurisdictionPatch
 from core.people_diff import diff_people
 from database import posts
-from database.change_logs import create_change_log, create_change_logs
+from database.activity import create_activity_row, create_activity_rows
 from database.database import get_pool
 from schemas.assertions import EntityType
-from schemas.change_logs import Change
+from schemas.activity import Change
 from shared.schemas import POST_FIELD
-from shared.utils.statuses import ChangeLogType
+from shared.utils.statuses import ActivityType
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ async def record_manual_edits(
     # versus the content just written to GitHub. Best-effort, like the event records above.
     try:
         labels = await _post_labels(before + after)
-        await create_change_logs(
+        await create_activity_rows(
             [(change.type, change.payload) for change in diff_people(before, after, labels)],
             user_id,
             jurisdiction_ocdid,
@@ -53,8 +53,8 @@ async def record_jurisdiction_edit(
             subject=jurisdiction_name,
             fields=field_changes(before, after),
         )
-        await create_change_log(
-            ChangeLogType.EDIT_JURISDICTION, user_id, jurisdiction_ocdid, changeset_id, payload
+        await create_activity_row(
+            ActivityType.EDIT_JURISDICTION, user_id, jurisdiction_ocdid, changeset_id, payload
         )
     except Exception:
         logger.exception("Failed to record jurisdiction edit for %s", jurisdiction_ocdid)

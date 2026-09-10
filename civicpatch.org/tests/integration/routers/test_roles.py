@@ -20,7 +20,7 @@ from schemas.common import Identity
 _PREFIX = "/api/v1/roles"
 _SENTINEL_PREFIX = "ZZ Route "
 _SENTINEL_ID_PATTERN = "zz-route-%"
-_ROLE_LOG_TYPES = ["add_role", "edit_role", "delete_role", "reorder_roles"]
+_ROLE_ACTIVITY_TYPES = ["add_role", "edit_role", "delete_role", "reorder_roles"]
 
 
 def _label(name: str) -> str:
@@ -29,7 +29,7 @@ def _label(name: str) -> str:
 
 def _fake_admin() -> Identity:
     # user_id=None matches the system-action pattern used elsewhere in
-    # integration tests — change_logs.user_id allows NULL, so we sidestep
+    # integration tests — activity.user_id allows NULL, so we sidestep
     # the need to seed a test user row just for FK satisfaction.
     return Identity(
         type="session",
@@ -53,7 +53,7 @@ async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute("DELETE FROM roles WHERE id LIKE %s", (_SENTINEL_ID_PATTERN,))
-        await cur.execute("DELETE FROM change_logs WHERE type = ANY(%s)", (_ROLE_LOG_TYPES,))
+        await cur.execute("DELETE FROM activity WHERE type = ANY(%s)", (_ROLE_ACTIVITY_TYPES,))
         await conn.commit()
 
 
@@ -77,12 +77,12 @@ async def _fetch_sentinel_rows() -> list[dict]:
         ]
 
 
-async def _fetch_change_log_types() -> list[str]:
+async def _fetch_role_activity_types() -> list[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT type FROM change_logs WHERE type = ANY(%s) ORDER BY created_at",
-            (_ROLE_LOG_TYPES,),
+            "SELECT type FROM activity WHERE type = ANY(%s) ORDER BY created_at",
+            (_ROLE_ACTIVITY_TYPES,),
         )
         return [r[0] for r in await cur.fetchall()]
 
@@ -107,7 +107,7 @@ async def test_put_roles_adds_role(client):
         "status": "active",
         "is_unique": True,
     }]
-    assert "add_role" in await _fetch_change_log_types()
+    assert "add_role" in await _fetch_role_activity_types()
 
 
 @pytest.mark.asyncio
@@ -126,7 +126,7 @@ async def test_put_roles_edit_is_unique_emits_edit_role(client):
 
     rows = await _fetch_sentinel_rows()
     assert rows[0]["is_unique"] is True
-    assert "edit_role" in await _fetch_change_log_types()
+    assert "edit_role" in await _fetch_role_activity_types()
 
 
 # ── DELETE /roles/{role_id} ─────────────────────────────────────────────
@@ -144,7 +144,7 @@ async def test_delete_role_deactivates_rather_than_removing(client):
 
     rows = await _fetch_sentinel_rows()
     assert rows[0]["status"] == "inactive", "the row must survive so seat history can"
-    assert "delete_role" in await _fetch_change_log_types()
+    assert "delete_role" in await _fetch_role_activity_types()
 
 
 @pytest.mark.asyncio

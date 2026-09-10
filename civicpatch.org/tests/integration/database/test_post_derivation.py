@@ -53,18 +53,18 @@ async def _wipe():
         # takes the whole module down — and takes new breakage with it, silently.
         # `source_records` and `pipeline_runs` cascade from the request.
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
-        # The curator, and the assertions pointing at them. `asserted_by` is a FK, so the user
+        # The curator, and the assertions pointing at them. `created_by` is a FK, so the user
         # cannot go first — and `assertions` has none to memberships, so its rows outlive the
         # memberships they describe and would otherwise accumulate across runs.
         await cur.execute(
-            "DELETE FROM assertions WHERE asserted_by IN "
+            "DELETE FROM assertions WHERE created_by IN "
             "(SELECT id FROM users WHERE email = %s)",
             (_CURATOR,),
         )
         await cur.execute("DELETE FROM users WHERE email = %s", (_CURATOR,))
         # Otherwise `add_post` rows survive the run and the mint counts below climb.
         await cur.execute(
-            "DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (_OCDID,)
+            "DELETE FROM activity WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         await conn.commit()
 
@@ -582,7 +582,7 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
 async def _human_sets_label(cur, membership_id: str, label: str) -> None:
     """What `assign` does. `set_label` with a user is the whole human edit: the value and the
     assertion saying somebody chose it, which is what survives the next scrape."""
-    # `assertions.asserted_by` is a foreign key, so an assertion needs somebody to have made it.
+    # `assertions.created_by` is a foreign key, so an assertion needs somebody to have made it.
     await cur.execute(
         "INSERT INTO users (email, provider, provider_user_id, role) "
         "VALUES (%s, 'email', %s, 'admins') RETURNING id::text",
@@ -848,7 +848,7 @@ async def _add_post_logs(changeset_id: str) -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT changes, user_id FROM change_logs "
+            "SELECT changes, user_id FROM activity "
             "WHERE type = 'add_post' AND changeset_id = %s",
             (changeset_id,),
         )

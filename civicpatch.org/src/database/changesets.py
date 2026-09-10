@@ -11,9 +11,11 @@ from typing import Optional
 
 from database.changeset_predicates import (
     AVAILABLE_FOR_REVIEW,
+    COLLECTION_KIND_VALUES_SQL,
     RUN_IN_FLIGHT,
     RUN_PROGRESS,
     RUN_STATUS,
+    TOUCHES_THE_ROSTER,
 )
 from database.database import get_pool, to_iso
 from schemas.common import InFlightEntry, InFlightEntryType, JurisdictionInFlight
@@ -35,16 +37,32 @@ async def register_scrape_changeset(run_id: str) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
+            "SELECT jurisdiction_ocdid, created_by_user_id FROM pipeline_runs WHERE id = %s",
+            (run_id,),
+        )
+        row = await cur.fetchone()
+        jurisdiction_ocdid, created_by_user_id = row if row else (None, None)
+        parent_changeset_id, base_changeset_id = (
+            await _resolve_collection_lineage(cur, jurisdiction_ocdid)
+            if jurisdiction_ocdid
+            else (None, None)
+        )
+        await cur.execute(
             """
             INSERT INTO changesets (
                 id, kind, jurisdiction_ocdid, created_by_user_id,
-                created_at, updated_at
+                created_at, updated_at, parent_changeset_id, base_changeset_id
             )
-            SELECT %s, %s, run.jurisdiction_ocdid, run.created_by_user_id,
-                   CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
-            FROM pipeline_runs run WHERE run.id = %s
+            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, %s, %s)
             """,
-            (changeset_id, ChangesetKind.SCRAPE, run_id),
+            (
+                changeset_id,
+                ChangesetKind.SCRAPE,
+                jurisdiction_ocdid,
+                created_by_user_id,
+                parent_changeset_id,
+                base_changeset_id,
+            ),
         )
         await cur.execute(
             "UPDATE pipeline_runs SET changeset_id = %s WHERE id = %s",
@@ -52,6 +70,21 @@ async def register_scrape_changeset(run_id: str) -> str:
         )
         await conn.commit()
     return changeset_id
+
+
+async def mark_published(cur, changeset_id: str) -> None:
+    """Stamp this changeset as live, if it isn't already.
+
+    Deliberately narrow — this is not `publications.py`'s `_record_publish`, which also stamps
+    `verified_at`/`resolved_by_user_id` and writes a `PUBLISH_REVIEW` activity row. Right for a
+    reviewer publishing a proposed roster; wrong for a synchronous hand edit or a deletion,
+    neither of which is a review. `COALESCE` makes this idempotent: a changeset already
+    published (by a real review) keeps its original stamp.
+    """
+    await cur.execute(
+        "UPDATE changesets SET published_at = COALESCE(published_at, now()) WHERE id = %s",
+        (changeset_id,),
+    )
 
 
 async def register_people_edit_changeset(
@@ -62,17 +95,22 @@ async def register_people_edit_changeset(
     """A maintainer's hand edit of a live roster. Nothing ran, so no run.
 
     Born published: the edit writes sightings for anyone added, and a pending changeset holding
-    those would land straight in the review pool.
+    those would land straight in the review pool. Inserted unpublished and published
+    immediately after, in the same transaction — the same shape every changeset kind uses,
+    rather than a second INSERT column list that bakes the stamp in.
     """
     pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
+    async with pool.connection() as conn, conn.cursor() as cur:
+        # Before the insert: this changeset must not find itself.
+        parent_changeset_id = await live_roster_changeset(cur, jurisdiction_ocdid)
+        await cur.execute(
             """
             INSERT INTO changesets (
                 id, kind, jurisdiction_ocdid, created_by_user_id,
-                published_at, resolved_by_user_id, created_at, updated_at
+                resolved_by_user_id, created_at, updated_at,
+                parent_changeset_id
             )
-            VALUES (%s, %s, %s, %s, now(), %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, %s)
             """,
             (
                 changeset_id,
@@ -80,8 +118,10 @@ async def register_people_edit_changeset(
                 jurisdiction_ocdid,
                 created_by_user_id,
                 created_by_user_id,
+                parent_changeset_id,
             ),
         )
+        await mark_published(cur, changeset_id)
 
 
 async def register_sheet_import_changeset(
@@ -96,14 +136,17 @@ async def register_sheet_import_changeset(
     belongs in the review queue. Writing its sightings is what puts it there.
     """
     pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
+    async with pool.connection() as conn, conn.cursor() as cur:
+        parent_changeset_id, base_changeset_id = await _resolve_collection_lineage(
+            cur, jurisdiction_ocdid
+        )
+        await cur.execute(
             """
             INSERT INTO changesets (
                 id, kind, jurisdiction_ocdid, created_by_user_id, batch_id,
-                created_at, updated_at
+                created_at, updated_at, parent_changeset_id, base_changeset_id
             )
-            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, %s, %s)
             """,
             (
                 changeset_id,
@@ -111,6 +154,8 @@ async def register_sheet_import_changeset(
                 jurisdiction_ocdid,
                 created_by_user_id,
                 batch_id,
+                parent_changeset_id,
+                base_changeset_id,
             ),
         )
 
@@ -123,14 +168,14 @@ async def register_jurisdiction_edit_changeset(
 ):
     """A hand-edited jurisdiction field. Born published: the edit is already committed."""
     pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
             """
             INSERT INTO changesets (
                 id, kind, jurisdiction_ocdid, created_by_user_id,
-                change_url, published_at, resolved_by_user_id, created_at
+                change_url, resolved_by_user_id, created_at
             )
-            VALUES (%s, %s, %s, %s, %s, now(), %s, CURRENT_TIMESTAMP)
+            VALUES (%s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
             """,
             (
                 changeset_id,
@@ -141,14 +186,21 @@ async def register_jurisdiction_edit_changeset(
                 created_by_user_id,
             ),
         )
+        await mark_published(cur, changeset_id)
 
 
 async def live_roster_changeset(cur, jurisdiction_ocdid: str) -> str | None:
-    """The changeset whose publish produced the live roster — not the one in flight."""
+    """The changeset whose publish produced the live roster — not the one in flight.
+
+    Any kind except JURISDICTION_EDIT (`TOUCHES_THE_ROSTER`): that one edits a registry
+    civicpatch does not own and never touches posts/memberships, so it is never "the changeset
+    this edit belongs to". Every other kind, PEOPLE_EDIT included, does — a hand edit filed
+    here must find a prior hand edit rather than a stale scrape (189).
+    """
     await cur.execute(
-        """
+        f"""
         SELECT id::text FROM changesets
-        WHERE jurisdiction_ocdid = %s AND published_at IS NOT NULL
+        WHERE jurisdiction_ocdid = %s AND published_at IS NOT NULL AND {TOUCHES_THE_ROSTER}
         ORDER BY published_at DESC
         LIMIT 1
         """,
@@ -156,6 +208,34 @@ async def live_roster_changeset(cur, jurisdiction_ocdid: str) -> str | None:
     )
     row = await cur.fetchone()
     return row[0] if row else None
+
+
+async def _newest_collection_changeset(cur, jurisdiction_ocdid: str) -> str | None:
+    """The newest published scrape or sheet import — a new collection changeset's own
+    `base_changeset_id`, and what a rollback rebases a scrape/import back TO (189)."""
+    await cur.execute(
+        f"""
+        SELECT id::text FROM changesets
+        WHERE jurisdiction_ocdid = %s AND published_at IS NOT NULL
+          AND kind IN ({COLLECTION_KIND_VALUES_SQL})
+        ORDER BY published_at DESC
+        LIMIT 1
+        """,
+        (jurisdiction_ocdid,),
+    )
+    row = await cur.fetchone()
+    return row[0] if row else None
+
+
+async def _resolve_collection_lineage(
+    cur, jurisdiction_ocdid: str
+) -> tuple[str | None, str | None]:
+    """`(parent_changeset_id, base_changeset_id)` for a new scrape or sheet import — the two
+    lineage lookups a collection-kind mint always makes together (189)."""
+    return (
+        await live_roster_changeset(cur, jurisdiction_ocdid),
+        await _newest_collection_changeset(cur, jurisdiction_ocdid),
+    )
 
 
 # Two lanes, rooted apart: before ingest there is no changeset row to reach a run through. They

@@ -134,10 +134,10 @@ _FLOWS = f"""
 # bookkeeping as roster movement. An unlisted type undercounts, which is the safe direction.
 _EDITS = """
     SELECT j.state, count(*)::int AS roster_edits
-    FROM change_logs cl
+    FROM activity a
     JOIN jurisdictions j USING (jurisdiction_ocdid)
-    WHERE cl.created_at >= now() - %(window)s::interval
-      AND cl.type = ANY(%(roster_types)s)
+    WHERE a.created_at >= now() - %(window)s::interval
+      AND a.type = ANY(%(roster_types)s)
     GROUP BY j.state
 """
 

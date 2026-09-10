@@ -1,7 +1,7 @@
 import pytest
 
 from core.people_diff import diff_people
-from shared.utils.statuses import ChangeLogType
+from shared.utils.statuses import ActivityType
 
 
 def _person(person_id, name="Jane Doe", office_name="Mayor", **extra):
@@ -32,7 +32,7 @@ def test_identical_lists_produce_no_changes():
 def test_changed_field_emits_edit_person():
     result = diff_people([_person("1", name="Jane Doe")], [_person("1", name="Jane Smith")])
     assert len(result) == 1
-    assert result[0].type == ChangeLogType.EDIT_PERSON
+    assert result[0].type == ActivityType.EDIT_PERSON
     assert [(f.field, f.before, f.after) for f in result[0].payload.fields] == [("name", "Jane Doe", "Jane Smith")]
 
 
@@ -65,7 +65,7 @@ def test_fields_a_reviewer_can_edit_are_diffed(field, before, after):
 @pytest.mark.unit
 def test_new_id_emits_add_person_with_null_from():
     result = diff_people([], [_person("1", name="New Person")])
-    assert result[0].type == ChangeLogType.ADD_PERSON
+    assert result[0].type == ActivityType.ADD_PERSON
     assert result[0].payload.subject == "New Person"
     name_field = next(f for f in result[0].payload.fields if f.field == "name")
     assert (name_field.before, name_field.after) == (None, "New Person")
@@ -76,7 +76,7 @@ def test_new_id_emits_add_person_with_null_from():
 @pytest.mark.unit
 def test_missing_id_emits_delete_person_with_null_to():
     result = diff_people([_person("1", name="Gone")], [])
-    assert result[0].type == ChangeLogType.DELETE_PERSON
+    assert result[0].type == ActivityType.DELETE_PERSON
     name_field = next(f for f in result[0].payload.fields if f.field == "name")
     assert (name_field.before, name_field.after) == ("Gone", None)
 
@@ -89,9 +89,9 @@ def test_mixed_add_edit_delete():
     after = [_person("1", name="Edited"), _person("3", name="Added")]
     result = diff_people(before, after)
     assert {c.type for c in result} == {
-        ChangeLogType.EDIT_PERSON,
-        ChangeLogType.ADD_PERSON,
-        ChangeLogType.DELETE_PERSON,
+        ActivityType.EDIT_PERSON,
+        ActivityType.ADD_PERSON,
+        ActivityType.DELETE_PERSON,
     }
 
 
@@ -110,7 +110,7 @@ def test_relink_to_existing_id_with_same_content_is_no_change():
 def test_distinct_people_still_add_and_delete():
     # Different content must NOT be cancelled as a re-link.
     result = diff_people([_person("a", name="Alice")], [_person("b", name="Bob")])
-    assert {c.type for c in result} == {ChangeLogType.ADD_PERSON, ChangeLogType.DELETE_PERSON}
+    assert {c.type for c in result} == {ActivityType.ADD_PERSON, ActivityType.DELETE_PERSON}
 
 
 @pytest.mark.unit

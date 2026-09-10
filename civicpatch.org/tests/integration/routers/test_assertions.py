@@ -53,14 +53,14 @@ async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "DELETE FROM assertions WHERE asserted_by IN "
+            "DELETE FROM assertions WHERE created_by IN "
             "(SELECT id FROM users WHERE email = %s)",
             (_EMAIL,),
         )
         await cur.execute("DELETE FROM users WHERE email = %s", (_EMAIL,))
         # Before organizations and jurisdictions: both are FKs from changesets.
         await cur.execute(
-            "DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (_OCDID,)
+            "DELETE FROM activity WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
@@ -186,7 +186,7 @@ async def test_an_unknown_kind_is_rejected_by_the_model(client):
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_an_unattributable_assertion_is_refused(client):
-    """`asserted_by` is NOT NULL by design — an assertion nobody made is not an assertion — so
+    """`created_by` is NOT NULL by design — an assertion nobody made is not an assertion — so
     a session with no user row is turned away rather than being stored anonymously."""
     post_id = await _seed()
     global _USER_ID
@@ -229,7 +229,7 @@ async def _assert_field_log(entity_id: str) -> tuple:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT jurisdiction_ocdid, changeset_id FROM change_logs "
+            "SELECT jurisdiction_ocdid, changeset_id FROM activity "
             "WHERE type = 'assert_field' AND changes->>'entity_id' = %s",
             (entity_id,),
         )
@@ -305,7 +305,7 @@ async def test_an_assertion_is_logged_with_its_sources(client):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT changes->'fields'->0->>'after', "
-            "       changes->'fields'->0->'sources'->0->>'note' FROM change_logs "
+            "       changes->'fields'->0->'sources'->0->>'note' FROM activity "
             "WHERE type = 'assert_field' AND changes->>'entity_id' = %s "
             "ORDER BY created_at",
             (post_id,),

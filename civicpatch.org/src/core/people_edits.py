@@ -226,7 +226,9 @@ def patch_people(base: list[dict], edits: list[PersonPatch]) -> list[dict]:
     return [order_person_fields(person) for person in patched]
 
 
-def assertions_from_edit(person_id: str, scraped: dict, edited: dict) -> list[Assertion]:
+def assertions_from_edit(
+    person_id: str, scraped: dict, edited: dict, changeset_id: str | None = None
+) -> list[Assertion]:
     """What a reviewer's save claims about one person.
 
     Diffed against the **scrape**, not against what was displayed: displayed already folds in
@@ -241,6 +243,7 @@ def assertions_from_edit(person_id: str, scraped: dict, edited: dict) -> list[As
             field_path=field,
             kind=kind,
             value=value,
+            changeset_id=changeset_id,
         )
 
     claims: list[Assertion] = []

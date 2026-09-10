@@ -12,7 +12,7 @@ async def load_roles() -> list[Role]:
 
 
 async def set_roles(entries: list[RoleInput], user_id: str | None = None) -> None:
-    """Add or update the submitted roles and write change_logs.
+    """Add or update the submitted roles and write activity rows.
 
     Absence is not removal — see `db_roles.upsert_roles`. Removal is
     `deactivate_role`.

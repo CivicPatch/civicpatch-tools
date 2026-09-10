@@ -6,7 +6,6 @@ Python: the CHECKs, `UNIQUE NULLS NOT DISTINCT`, and `DISTINCT ON` picking the l
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
 
-import re
 import uuid
 from datetime import datetime, timezone
 
@@ -14,7 +13,6 @@ import pytest
 import pytest_asyncio
 from psycopg.errors import CheckViolation, ForeignKeyViolation, NotNullViolation
 
-from core.people_edits import LIST_FIELDS
 from core.post_derivation import DerivedMembership
 from database import assertions, divisions, memberships, organizations, posts
 from database.database import get_pool
@@ -30,7 +28,7 @@ async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "DELETE FROM assertions WHERE asserted_by IN "
+            "DELETE FROM assertions WHERE created_by IN "
             "(SELECT id FROM users WHERE email = %s)",
             (_USER,),
         )
@@ -152,7 +150,7 @@ async def test_vouching_for_a_post_verifies_it_without_a_publish():
 async def test_a_hand_made_post_is_verified_by_having_been_made():
     """Nobody has to vouch separately. Creating a post is somebody saying it exists, so it reads
     verified without a publish and without a second action — which is what `created_by` was
-    briefly a column for, before `change_logs` turned out to already record it.
+    briefly a column for, before `activity` turned out to already record it.
 
     The derivation's path leaves one unverified, because nothing there is claiming anything.
     """
@@ -180,9 +178,9 @@ async def test_a_hand_made_post_is_verified_by_having_been_made():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_looking_again_refreshes_rather_than_accumulating():
-    """A no-op edit is somebody saying "I looked and it stands". Since `insert` upserts, saying
-    it again moves `asserted_at` instead of adding a row — which is what keeps this table
-    bounded by distinct values rather than by how often anyone looks."""
+    """A no-op edit is somebody saying "I looked and it stands". Saying it again skips the
+    insert entirely (already the current answer) rather than adding a row — which is what keeps
+    this table bounded by distinct values rather than by how often anyone looks."""
     user_id, _ = await _seed()
     post_id = await posts.create(_OCDID, "treasurer", _BASE, 1, user_id)
 
@@ -211,14 +209,16 @@ async def test_the_evidence_survives():
 
     assert len(rows) == 1
     assert rows[0]["sources"][0]["note"].startswith("phoned the clerk")
-    assert rows[0]["asserted_by_name"] == _USER
+    assert rows[0]["created_by_name"] == _USER
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_stating_a_scalar_field_twice_replaces_rather_than_accumulates():
-    """One answer per scalar field, held by a unique index rather than by every reader
-    remembering to take the latest. `change_logs` keeps what the earlier answer was."""
+async def test_stating_a_scalar_field_twice_keeps_both_but_resolves_to_the_latest():
+    """One CURRENT answer per scalar field, resolved by `asserted_values` reading the most
+    recent non-withdrawn row — not by there being only one row. Since assertions became
+    append-only (187) both survive: `list_for_entities` still holds the earlier answer, which
+    is what lets a withdrawal of the second fall back to it instead of the scrape."""
     user_id, _ = await _seed()
     person_id = str(uuid.uuid4())
 
@@ -240,7 +240,7 @@ async def test_stating_a_scalar_field_twice_replaces_rather_than_accumulates():
         rows = (await assertions.list_for_entities(cur, EntityType.PERSON, [person_id])).get(person_id, [])
 
     assert asserted["name"][AssertionKind.ACCEPT] == ["second@town.gov"]
-    assert len(rows) == 1
+    assert len(rows) == 2
 
 
 @pytest.mark.asyncio
@@ -313,10 +313,11 @@ async def test_a_list_field_accumulates_one_row_per_element():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_withdrawing_stops_the_claim():
-    """Undo is a delete since 137. Append-only needed a third kind whose only job was to cancel
-    a row it could not remove — and that could never express *un-rejecting*, since accepting a
-    value you had rejected forces it to be the value rather than merely unblocking it."""
+async def test_withdrawing_stops_the_claim_without_deleting_it():
+    """A stamp, not a delete, since assertions became append-only: `withdraw` must stop the
+    claim from applying while leaving the row — and its attribution — in place for the audit
+    trail. `asserted_values` (what currently applies) must forget it; `list_for_entities`
+    (the full history) must not."""
     user_id, _ = await _seed()
     person_id = str(uuid.uuid4())
 
@@ -333,17 +334,85 @@ async def test_withdrawing_stops_the_claim():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        assert await assertions.withdraw(cur, EntityType.PERSON, person_id, "name") == 1
+        withdrawn = await assertions.withdraw(
+            cur, EntityType.PERSON, person_id, "name", AssertionKind.ACCEPT, user_id, "typo"
+        )
+        assert withdrawn == 1
         await conn.commit()
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        assert (await assertions.asserted_values(cur, EntityType.PERSON, [person_id])).get(person_id, {}) == {}
+        assert (
+            await assertions.asserted_values(cur, EntityType.PERSON, [person_id])
+        ).get(person_id, {}) == {}
+
+        rows = (
+            await assertions.list_for_entities(cur, EntityType.PERSON, [person_id])
+        ).get(person_id, [])
+        assert len(rows) == 1
+        assert rows[0]["value"] == "Wrong Name"
+        assert rows[0]["created_by"] == user_id
+
+        await cur.execute(
+            "SELECT withdrawn_by::text, withdrawn_reason FROM assertions "
+            "WHERE entity_type = 'person' AND entity_id::text = %s",
+            (person_id,),
+        )
+        row = await cur.fetchone()
+        assert row is not None
+        withdrawn_by, withdrawn_reason = row
+        assert withdrawn_by == user_id
+        assert withdrawn_reason == "typo"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_withdrawing_falls_back_to_the_earlier_claim_not_the_scrape():
+    """The property the whole design is for. A field can hold several accepts over time;
+    withdrawing the current one must retract exactly that row — not an older one a later claim
+    already superseded, which would misreport who un-did what — and the fold must then land on
+    whichever earlier claim is still standing, never straight through to the scrape while a
+    human judgement about this field still exists."""
+    user_id, _ = await _seed()
+    person_id = str(uuid.uuid4())
+
+    for value in ("First Name", "Second Name"):
+        await assertions.create(
+            Assertion(
+                entity_type=EntityType.PERSON,
+                entity_id=person_id,
+                field_path="name",
+                kind=AssertionKind.ACCEPT,
+                value=value,
+            ),
+            user_id,
+        )
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        assert (
+            await assertions.withdraw(
+                cur, EntityType.PERSON, person_id, "name", AssertionKind.ACCEPT, user_id
+            )
+            == 1
+        )
+        await conn.commit()
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        asserted = (
+            await assertions.asserted_values(cur, EntityType.PERSON, [person_id])
+        ).get(person_id, {})
+        assert asserted["name"][AssertionKind.ACCEPT] == ["First Name"]
+
+        rows = (
+            await assertions.list_for_entities(cur, EntityType.PERSON, [person_id])
+        ).get(person_id, [])
+        assert len(rows) == 2
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_an_assertion_nobody_made_is_refused():
-    """`asserted_by` is NOT NULL, unlike `requests.resolved_by_user_id` where NULL means a
+    """`created_by` is NOT NULL, unlike `requests.resolved_by_user_id` where NULL means a
     machine gave up. Nothing machine-generated belongs in here."""
     _, post_id = await _seed()
 
@@ -363,7 +432,7 @@ async def test_an_unknown_entity_type_is_refused():
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
                 "INSERT INTO assertions "
-                "(entity_type, entity_id, field_path, value, kind, asserted_by) "
+                "(entity_type, entity_id, field_path, value, kind, created_by) "
                 "VALUES ('organisation', %s, 'name', '\"x\"', 'accept', %s)",
                 (post_id, user_id),
             )
@@ -381,7 +450,7 @@ async def test_an_assertion_about_nothing_is_refused():
     with pytest.raises(NotNullViolation):
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
-                "INSERT INTO assertions (entity_type, entity_id, kind, asserted_by) "
+                "INSERT INTO assertions (entity_type, entity_id, kind, created_by) "
                 "VALUES ('post', %s, 'accept', %s)",
                 (post_id, user_id),
             )
@@ -429,41 +498,3 @@ async def test_a_post_someone_holds_cannot_be_deleted():
         await conn.rollback()
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_the_partial_indexes_agree_with_list_fields():
-    """`LIST_FIELDS` and the two partial indexes must name exactly the same fields.
-
-    They are written in three places — the Python set, the index predicates a migration created,
-    and the `ON CONFLICT` clauses in `database/assertions.py` (derived from the set). Postgres
-    matches a conflict predicate against an index's, so a mismatch does not degrade, it raises:
-    either "no unique or exclusion constraint matching the ON CONFLICT specification" from the
-    file that never mentions the field, or a duplicate-key violation on the second write.
-
-    Adding a list field therefore needs a migration, not just an edit to the set. That is what
-    this asserts — against the live index, because the migration file is history and the database
-    is the thing Python has to agree with.
-    """
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT indexname, indexdef FROM pg_indexes
-            WHERE tablename = 'assertions'
-              AND indexname IN (
-                  'assertions_one_accept_per_scalar_field', 'assertions_one_row_per_value'
-              )
-            """
-        )
-        definitions = {name: definition for name, definition in await cur.fetchall()}
-
-    assert len(definitions) == 2, f"expected both partial indexes, got {definitions.keys()}"
-
-    for name, definition in definitions.items():
-        named = set(re.findall(r"'([a-z_]+)'::text", definition))
-        # The predicates also name the `kind` they filter on; only field names are compared.
-        named -= {"accept", "reject"}
-        assert named == set(LIST_FIELDS), (
-            f"{name} names {sorted(named)}, LIST_FIELDS is {sorted(LIST_FIELDS)} — "
-            "adding a list field needs a migration on both indexes"
-        )

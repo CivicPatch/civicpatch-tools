@@ -4,8 +4,8 @@ export interface PersonAssertion {
   field_path: string;
   kind: string;
   value: unknown;
-  asserted_at: string;
-  asserted_by_name: string | null;
+  created_at: string;
+  created_by_name: string | null;
 }
 
 export const ACCEPT = "accept";
@@ -35,9 +35,9 @@ export function provenanceLabel(
 ): string | null {
   if (!accepts?.length) return null;
   const newest = accepts.reduce((latest, next) =>
-    next.asserted_at > latest.asserted_at ? next : latest,
+    next.created_at > latest.created_at ? next : latest,
   );
-  const on = new Date(newest.asserted_at);
+  const on = new Date(newest.created_at);
   const when = Number.isNaN(on.getTime())
     ? null
     : on.toLocaleDateString(undefined, {
@@ -45,7 +45,7 @@ export function provenanceLabel(
         month: "short",
         year: "numeric",
       });
-  const who = newest.asserted_by_name || UNNAMED;
+  const who = newest.created_by_name || UNNAMED;
   return when ? `Published by ${who}, ${when}` : `Published by ${who}`;
 }
 

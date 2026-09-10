@@ -82,10 +82,10 @@ async def _cleanup():
             "(SELECT id FROM users WHERE email = %s)",
             (_EMAIL,),
         )
-        # Publishing can leave assertions behind, and `assertions.asserted_by` is NOT NULL with
+        # Publishing can leave assertions behind, and `assertions.created_by` is NOT NULL with
         # no cascade — so the user cannot go until they do.
         await cur.execute(
-            "DELETE FROM assertions WHERE asserted_by IN "
+            "DELETE FROM assertions WHERE created_by IN "
             "(SELECT id FROM users WHERE email = %s)",
             (_EMAIL,),
         )

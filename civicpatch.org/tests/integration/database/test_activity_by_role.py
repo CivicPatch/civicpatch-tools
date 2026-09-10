@@ -1,16 +1,16 @@
-"""Integration test for get_change_logs_for_roles' role filter.
+"""Integration test for get_activity_for_roles' role filter.
 
 Real Postgres: `roles=None` must drop the `WHERE u.role = ANY(%s)` clause entirely rather than
 matching an empty list, which would silently return zero rows.
 
 Run with: mise run tcp-integration
-Isolation: sentinel users below, deleted before/after — change_logs cascades on user delete.
+Isolation: sentinel users below, deleted before/after — activity cascades on user delete.
 """
 
 import pytest
 import pytest_asyncio
 
-from database.change_logs import get_change_logs_for_roles
+from database.activity import get_activity_for_roles
 from database.database import get_pool
 
 _DEFAULT_EMAIL = "zz-default@example.com"
@@ -24,7 +24,7 @@ async def _wipe():
 
 
 async def _seed() -> tuple[str, str]:
-    """Returns the two seeded change_logs ids (default author, admin author)."""
+    """Returns the two seeded activity ids (default author, admin author)."""
     pool = await get_pool()
     ids = {}
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -38,7 +38,7 @@ async def _seed() -> tuple[str, str]:
             assert row is not None
             user_id = row[0]
             await cur.execute(
-                "INSERT INTO change_logs (type, user_id) VALUES ('add_person', %s) RETURNING id::text",
+                "INSERT INTO activity (type, user_id) VALUES ('add_person', %s) RETURNING id::text",
                 (user_id,),
             )
             log_row = await cur.fetchone()
@@ -60,7 +60,7 @@ async def seeded_ids():
 async def test_none_returns_rows_from_every_role(seeded_ids):
     default_id, admin_id = seeded_ids
     # A large enough page to reach both sentinel rows regardless of what else is in the table.
-    _, rows = await get_change_logs_for_roles(None, limit=1000, offset=0)
+    _, rows = await get_activity_for_roles(None, limit=1000, offset=0)
     ids = {row["id"] for row in rows}
     assert {default_id, admin_id} <= ids
 
@@ -69,7 +69,7 @@ async def test_none_returns_rows_from_every_role(seeded_ids):
 @pytest.mark.integration
 async def test_role_list_narrows_to_those_roles(seeded_ids):
     default_id, admin_id = seeded_ids
-    _, rows = await get_change_logs_for_roles(["default"], limit=1000, offset=0)
+    _, rows = await get_activity_for_roles(["default"], limit=1000, offset=0)
     ids = {row["id"] for row in rows}
     assert default_id in ids
     assert admin_id not in ids

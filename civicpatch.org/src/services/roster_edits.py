@@ -16,7 +16,7 @@ assertions, their seat does not. An edit to an *existing* person does survive, b
 import logging
 from typing import List
 
-import services.change_logs as change_logs
+import services.activity as activity_service
 from core.people_edits import (
     PeopleValidationError,
     PersonPatch,
@@ -42,7 +42,7 @@ class MissingRoster(Exception):
 
 
 class AnonymousEdit(Exception):
-    """`assertions.asserted_by` is NOT NULL: an assertion nobody made is not an assertion."""
+    """`assertions.created_by` is NOT NULL: an assertion nobody made is not an assertion."""
 
 
 class EmptyEdit(Exception):
@@ -174,11 +174,11 @@ async def _record_edits(
         claim
         for person in patched
         for claim in assertions_from_edit(
-            person["id"], base_by_id.get(person["id"], {}), person
+            person["id"], base_by_id.get(person["id"], {}), person, changeset_id
         )
     ]
     await assertions.create_all(claims, user_id)
-    await change_logs.record_manual_edits(
+    await activity_service.record_manual_edits(
         changeset_id, jurisdiction_ocdid, user_id, base, patched
     )
 
@@ -192,7 +192,7 @@ async def publish(
     """Make this scrape's roster live.
 
     Nothing here commits: `WriteRecentChangesWorkflow` mirrors to open-data and the sheets from
-    `change_logs`. The old `publish` / `publish_to_database` split named a choice that
+    `activity`. The old `publish` / `publish_to_database` split named a choice that
     disappeared when mirroring moved to the sweep, and left the two identical.
     """
     roster = edited

@@ -10,8 +10,8 @@ const accept = (over = {}) => [
     field_path: "phones",
     kind: "accept",
     value: "(253) 931-3041",
-    asserted_at: "2026-09-06T10:00:00Z",
-    asserted_by_name: "Mango-chan",
+    created_at: "2026-09-06T10:00:00Z",
+    created_by_name: "Mango-chan",
     ...over,
   },
 ];

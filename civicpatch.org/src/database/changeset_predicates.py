@@ -21,6 +21,19 @@ from shared.utils.statuses import (
 
 PUBLISHED = f"changesets.changeset_state IN ('{ChangesetState.PUBLISHED.value}')"
 
+# Every kind except JURISDICTION_EDIT — a registry edit civicpatch does not own, and the one
+# kind that never touches posts/memberships. This is "the changeset a roster edit belongs to":
+# `live_roster_changeset` and every mint's own `parent_changeset_id` use it, so a hand edit
+# correctly finds a prior hand edit rather than a stale scrape (189).
+TOUCHES_THE_ROSTER = f"changesets.kind != '{ChangesetKind.JURISDICTION_EDIT.value}'"
+
+# Spelled out, not joined from COLLECTION_KINDS, so this stays a LiteralString — same reasoning
+# as `LAST_COLLECTED_JOIN` below, which now shares this constant with it rather than carrying
+# its own copy of the list.
+COLLECTION_KIND_VALUES_SQL = (
+    f"'{ChangesetKind.SCRAPE.value}', '{ChangesetKind.SHEET_IMPORT.value}'"
+)
+
 # Both terminal states. The complement of open, and the counterpart to `resolved_by_user_id`.
 RESOLVED = (
     "changesets.changeset_state IN "
@@ -104,7 +117,7 @@ LAST_COLLECTED_JOIN = (
     "SELECT jurisdiction_ocdid, max(updated_at) AS last_collected_at "
     "FROM changesets "
     "WHERE published_at IS NOT NULL "
-    f"AND kind IN ('{ChangesetKind.SCRAPE.value}', '{ChangesetKind.SHEET_IMPORT.value}') "
+    f"AND kind IN ({COLLECTION_KIND_VALUES_SQL}) "
     "GROUP BY jurisdiction_ocdid"
     ") collected USING (jurisdiction_ocdid)"
 )
