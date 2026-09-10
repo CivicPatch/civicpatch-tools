@@ -236,20 +236,20 @@ async def test_stating_a_scalar_field_twice_replaces_rather_than_accumulates():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        stated = (await assertions.stated_values(cur, EntityType.PERSON, [person_id])).get(person_id, {})
+        asserted = (await assertions.asserted_values(cur, EntityType.PERSON, [person_id])).get(person_id, {})
         rows = (await assertions.list_for_entities(cur, EntityType.PERSON, [person_id])).get(person_id, [])
 
-    assert stated["name"][AssertionKind.ACCEPT] == ["second@town.gov"]
+    assert asserted["name"][AssertionKind.ACCEPT] == ["second@town.gov"]
     assert len(rows) == 1
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_stating_a_claim_drops_only_its_opposite_about_the_same_value():
-    """A save recomputes a few fields; a person carries claims from every scrape before it,
-    because publishing accepts every value the reviewer saw. So a write must take out the
-    claim it contradicts and nothing else — otherwise correcting a phone in April silently
-    un-rejects the wrong email somebody caught in March.
+    """A person can carry claims from several separate saves over time, each stating only the
+    fields it touched. So a write must take out the claim it contradicts and nothing else —
+    otherwise correcting a phone in April silently un-rejects the wrong email somebody caught
+    in March.
     """
     user_id, _ = await _seed()
     person_id = str(uuid.uuid4())
@@ -273,15 +273,15 @@ async def test_stating_a_claim_drops_only_its_opposite_about_the_same_value():
             await assertions.upsert(cur, c, user_id)
         # A later save puts the rejected number back and says nothing about the email.
         await assertions.upsert(cur, claim("phones", AssertionKind.ACCEPT, "(555) 0001"), user_id)
-        stated = (
-            await assertions.stated_values(cur, EntityType.PERSON, [person_id])
+        asserted = (
+            await assertions.asserted_values(cur, EntityType.PERSON, [person_id])
         ).get(person_id, {})
         await conn.commit()
 
-    assert stated["phones"][AssertionKind.REJECT] == []
-    assert sorted(stated["phones"][AssertionKind.ACCEPT]) == ["(555) 0001", "(555) 0002"]
+    assert asserted["phones"][AssertionKind.REJECT] == []
+    assert sorted(asserted["phones"][AssertionKind.ACCEPT]) == ["(555) 0001", "(555) 0002"]
     # Untouched by a save about phones.
-    assert stated["emails"][AssertionKind.REJECT] == ["typo@town.gov"]
+    assert asserted["emails"][AssertionKind.REJECT] == ["typo@town.gov"]
 
 
 @pytest.mark.asyncio
@@ -306,9 +306,9 @@ async def test_a_list_field_accumulates_one_row_per_element():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        stated = (await assertions.stated_values(cur, EntityType.PERSON, [person_id])).get(person_id, {})
+        asserted = (await assertions.asserted_values(cur, EntityType.PERSON, [person_id])).get(person_id, {})
 
-    assert sorted(stated["phones"][AssertionKind.ACCEPT]) == ["(555) 0001", "(555) 0002"]
+    assert sorted(asserted["phones"][AssertionKind.ACCEPT]) == ["(555) 0001", "(555) 0002"]
 
 
 @pytest.mark.asyncio
@@ -337,7 +337,7 @@ async def test_withdrawing_stops_the_claim():
         await conn.commit()
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        assert (await assertions.stated_values(cur, EntityType.PERSON, [person_id])).get(person_id, {}) == {}
+        assert (await assertions.asserted_values(cur, EntityType.PERSON, [person_id])).get(person_id, {}) == {}
 
 
 @pytest.mark.asyncio

@@ -10,7 +10,7 @@ That sighting is filed under the live roster's changeset, not a future scrape's,
 make the addition survive the next scrape: `_roster` reads one changeset's sightings, and a
 scrape that does not list the person retires them. Accepted — their field values live on as
 assertions, their seat does not. An edit to an *existing* person does survive, because
-`publish_changeset` re-applies `stated_values` over whatever the scrape says.
+`publish_changeset` re-applies `asserted_values` over whatever the scrape says.
 """
 
 import logging
@@ -20,8 +20,8 @@ import services.change_logs as change_logs
 from core.people_edits import (
     PeopleValidationError,
     PersonPatch,
+    assertions_from_edit,
     patch_people,
-    stated_from_edit,
 )
 from core.people_roster import reviewer_source_records
 from database import assertions, posts
@@ -173,7 +173,7 @@ async def _record_edits(
     claims = [
         claim
         for person in patched
-        for claim in stated_from_edit(
+        for claim in assertions_from_edit(
             person["id"], base_by_id.get(person["id"], {}), person
         )
     ]

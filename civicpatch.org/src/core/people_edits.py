@@ -45,7 +45,7 @@ LIST_FIELDS = frozenset(
     {"other_names", "phones", "emails", "urls", "source_urls", "post_id"}
 )
 # Derived from the sightings now, so editing it states nothing about the world.
-NOT_STATED = frozenset({"source_urls"})
+NOT_ASSERTABLE = frozenset({"source_urls"})
 
 # A date left blank means "unknown" or "still serving", never "that date is wrong". Editing one
 # still states something, so this suppresses the reject only — not the field.
@@ -68,23 +68,23 @@ def _values_of(field: str, value: object) -> list:
     return list(value) if isinstance(value, (list, tuple, set)) else []
 
 
-def source_values_overridden(person: dict, stated: dict) -> dict:
+def source_values_overridden(person: dict, asserted: dict) -> dict:
     """What the source said, for each field an assertion then changed.
 
-    The card shows the *published* value — `with_stated_values` has already overlaid it — and a
+    The card shows the *published* value — `with_asserted_values` has already overlaid it — and a
     lock saying somebody stood behind it. This is what the lock hides, revealed on hover, and it
     is only the fields where the two actually differ: a lock over a value the scrape agrees with
     has nothing to disclose.
     """
-    published = with_stated_values(person, stated)
+    published = with_asserted_values(person, asserted)
     return {
         field: person.get(field)
-        for field in stated
+        for field in asserted
         if field in EDITABLE_FIELDS and published.get(field) != person.get(field)
     }
 
 
-def with_stated_values(person: dict, stated: dict) -> dict:
+def with_asserted_values(person: dict, asserted: dict) -> dict:
     """`published = (scraped ∪ accepted) − rejected`, per field.
 
     A reject suppresses one *value*, never the field, so the scraper keeps looking and something
@@ -93,7 +93,7 @@ def with_stated_values(person: dict, stated: dict) -> dict:
     A scalar cannot union, so an accept replaces it and a reject empties it.
     """
     published = dict(person)
-    for field, by_kind in stated.items():
+    for field, by_kind in asserted.items():
         if field not in EDITABLE_FIELDS:
             continue
         accepted = by_kind.get(AssertionKind.ACCEPT) or []
@@ -115,22 +115,6 @@ def with_stated_values(person: dict, stated: dict) -> dict:
         elif person.get(field) in rejected:
             published[field] = None
     return published
-
-
-def values_to_accept(person: dict) -> list[tuple[str, object]]:
-    """Every value on a published person a human could have looked at, one entry per value so a
-    list field yields one per element.
-
-    A field they saw blank stays the scraper's — and `value` is NOT NULL.
-    """
-    accepted: list[tuple[str, object]] = []
-    for field in EDITABLE_FIELDS:
-        value = person.get(field)
-        if field in LIST_FIELDS:
-            accepted.extend((field, item) for item in _values_of(field, value) if item)
-        elif value is not None and value != "":
-            accepted.append((field, value))
-    return accepted
 
 
 class PersonPatch(BaseModel):
@@ -242,7 +226,7 @@ def patch_people(base: list[dict], edits: list[PersonPatch]) -> list[dict]:
     return [order_person_fields(person) for person in patched]
 
 
-def stated_from_edit(person_id: str, scraped: dict, edited: dict) -> list[Assertion]:
+def assertions_from_edit(person_id: str, scraped: dict, edited: dict) -> list[Assertion]:
     """What a reviewer's save claims about one person.
 
     Diffed against the **scrape**, not against what was displayed: displayed already folds in
@@ -250,7 +234,7 @@ def stated_from_edit(person_id: str, scraped: dict, edited: dict) -> list[Assert
     Recomputing the whole set each time is what makes the save idempotent.
     """
 
-    def stated(field: str, kind: AssertionKind, value: object) -> Assertion:
+    def assertion(field: str, kind: AssertionKind, value: object) -> Assertion:
         return Assertion(
             entity_type=EntityType.PERSON,
             entity_id=person_id,
@@ -261,7 +245,7 @@ def stated_from_edit(person_id: str, scraped: dict, edited: dict) -> list[Assert
 
     claims: list[Assertion] = []
     for field in EDITABLE_FIELDS:
-        if field in NOT_STATED:
+        if field in NOT_ASSERTABLE:
             continue
         was, now = scraped.get(field), edited.get(field)
         rejectable = field not in NOT_REJECTABLE
@@ -269,15 +253,15 @@ def stated_from_edit(person_id: str, scraped: dict, edited: dict) -> list[Assert
         if field in LIST_FIELDS:
             was, now = set(_values_of(field, was)), set(_values_of(field, now))
             claims.extend(
-                stated(field, AssertionKind.ACCEPT, v) for v in sorted(now - was)
+                assertion(field, AssertionKind.ACCEPT, v) for v in sorted(now - was)
             )
             if rejectable:
                 claims.extend(
-                    stated(field, AssertionKind.REJECT, v) for v in sorted(was - now)
+                    assertion(field, AssertionKind.REJECT, v) for v in sorted(was - now)
                 )
         elif now not in (None, "") and now != was:
-            claims.append(stated(field, AssertionKind.ACCEPT, now))
+            claims.append(assertion(field, AssertionKind.ACCEPT, now))
         elif was and now in (None, "") and rejectable:
-            claims.append(stated(field, AssertionKind.REJECT, was))
+            claims.append(assertion(field, AssertionKind.REJECT, was))
 
     return claims

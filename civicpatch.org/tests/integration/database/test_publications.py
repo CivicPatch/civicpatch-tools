@@ -366,9 +366,9 @@ async def test_publish_does_not_blank_an_existing_resolver(sentinel_request):
         assert str(resolver) == user_id
     finally:
         async with pool.connection() as conn, conn.cursor() as cur:
-            # Publishing accepts every value on the roster in this user's name, and
-            # `asserted_by` is NOT NULL — no production path deletes a user, but this one has
-            # to unwind its own.
+            # Defensive: nothing in a clean publish asserts on this user's behalf, but
+            # `asserted_by` is NOT NULL REFERENCES users — clear first in case that ever
+            # changes, since no production path deletes a user.
             await cur.execute("DELETE FROM assertions WHERE asserted_by = %s", (user_id,))
             await cur.execute("DELETE FROM users WHERE id = %s", (user_id,))
             await conn.commit()
@@ -488,53 +488,6 @@ async def _accepted_for(person_id: str) -> list[tuple[str, object]]:
         return [(row[0], row[1]) for row in await cur.fetchall()]
 
 
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_publishing_accepts_the_values_the_reviewer_saw(sentinel_request):
-    """What replaced `confirm`. Nobody has to remember to vouch for a field — publishing a
-    roster is somebody saying its values stand, so every field carries who last did.
-
-    One row per *element* on a list field, which is what lets a reviewer reject one phone number
-    later without restating the others.
-    """
-    user_id = await _seed_publisher()
-    person = {**_person("Ann"), "phones": ["(555) 0001", "(555) 0002"]}
-
-    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [person], user_id)
-
-    assert await _accepted_for(person["id"]) == [
-        ("name", "Ann"),
-        ("phones", "(555) 0001"),
-        ("phones", "(555) 0002"),
-    ]
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_republishing_the_same_roster_adds_no_rows(sentinel_request):
-    """Re-stating a value moves its timestamp rather than adding a row, which is what keeps the
-    table bounded by distinct values instead of by how often anyone publishes."""
-    user_id = await _seed_publisher()
-    person = _person("Ann")
-
-    for _ in range(3):
-        await publish_changeset(sentinel_request, _SENTINEL_OCDID, [person], user_id)
-
-    assert await _accepted_for(person["id"]) == [("name", "Ann")]
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_an_unattended_publish_asserts_nothing(sentinel_request):
-    """A GitHub merge or an automated publish read nothing and judged nothing — and
-    `asserted_by` is NOT NULL, because an assertion nobody made is not an assertion."""
-    person = _person("Ann")
-
-    await publish_changeset(sentinel_request, _SENTINEL_OCDID, [person], None)
-
-    assert await _accepted_for(person["id"]) == []
-
-
 @pytest_asyncio.fixture
 async def sentinel_hand_edit():
     """The same jurisdiction, but the changeset is a hand edit rather than a scrape."""
@@ -560,12 +513,8 @@ async def sentinel_hand_edit():
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_a_hand_edit_does_not_vouch_for_the_rest_of_the_roster(sentinel_hand_edit):
-    """A reviewer publishing a scrape read the roster; someone correcting one field did not.
-
-    `stated_from_edit` has already asserted the field they touched. Accepting the rest here
-    pinned every untouched value against every future scrape — one phone correction froze a
-    whole council's names, images and urls.
-    """
+    """Publishing asserts nothing on its own — only `assertions_from_edit`, at edit time, does.
+    A hand edit that touches one field must not leave every other field looking accepted."""
     user_id = await _seed_publisher()
     person = {**_person("Ann"), "phones": ["(555) 0001"]}
 

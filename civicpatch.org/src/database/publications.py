@@ -14,7 +14,7 @@ import logging
 
 import database.changesets as changesets_db
 import database.dismissals as dismissals_db
-from core.people_edits import values_to_accept, with_stated_values
+from core.people_edits import with_asserted_values
 from core.post_derivation import DerivedPost
 from database import assertions, memberships, organizations, posts
 from database.change_logs import record_change
@@ -22,7 +22,7 @@ from database.changesets import get_updated_at
 from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
 from database.users import SYSTEM_USER_ID
-from schemas.assertions import Assertion, AssertionKind, EntityType
+from schemas.assertions import EntityType
 from shared.utils.statuses import (
     COLLECTION_KINDS,
     ChangeLogType,
@@ -217,36 +217,6 @@ async def _bind_memberships(
     return organization_id
 
 
-async def _accept_published(
-    cur, rows: list[dict], resolved_by_user_id: str | None
-) -> None:
-    """Accept every value in the roster on the publisher's behalf.
-
-    Nothing without a user: an unattended publish read nothing and judged nothing.
-
-    Only for a roster read from a source, which is the caller's guard. A hand edit reached one
-    field, and `stated_from_edit` has already asserted that field — accepting the rest here
-    pinned every untouched value against every future scrape on the strength of one correction.
-    """
-    if not resolved_by_user_id:
-        return
-    await assertions.upsert_all(
-        cur,
-        [
-            Assertion(
-                entity_type=EntityType.PERSON,
-                entity_id=row["id"],
-                field_path=field,
-                kind=AssertionKind.ACCEPT,
-                value=value,
-            )
-            for row in rows
-            for field, value in values_to_accept(row)
-        ],
-        resolved_by_user_id,
-    )
-
-
 async def publish_changeset(
     changeset_id: str,
     jurisdiction_ocdid: str,
@@ -266,18 +236,15 @@ async def publish_changeset(
         await _refuse_if_superseded(cur, changeset_id, jurisdiction_ocdid, last_seen_at)
         await _refuse_if_not_publishable(cur, changeset_id)
 
-        stated = await assertions.stated_values(cur, EntityType.PERSON, incoming_ids)
+        asserted = await assertions.asserted_values(cur, EntityType.PERSON, incoming_ids)
         rows = person_upsert_params(
             [
-                with_stated_values(person, stated.get(str(person["id"]), {}))
+                with_asserted_values(person, asserted.get(str(person["id"]), {}))
                 for person in people
             ]
         )
         if rows:
             await cur.executemany(PERSON_UPSERT, rows)
-
-        if read_from_a_source:
-            await _accept_published(cur, rows, resolved_by_user_id)
 
         await _record_publish(
             cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id

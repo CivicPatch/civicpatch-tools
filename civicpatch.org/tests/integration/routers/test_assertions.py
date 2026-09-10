@@ -159,8 +159,8 @@ async def test_an_accepted_value_carries_its_type_across_the_wire(client):
     assert response.status_code == 200, response.text
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        stated = (await assertions.stated_values(cur, EntityType.PERSON, [person_id])).get(person_id, {})
-    assert stated["name"][AssertionKind.ACCEPT] == ["Jane Q. Clerk"]
+        asserted = (await assertions.asserted_values(cur, EntityType.PERSON, [person_id])).get(person_id, {})
+    assert asserted["name"][AssertionKind.ACCEPT] == ["Jane Q. Clerk"]
 
 
 @pytest.mark.asyncio

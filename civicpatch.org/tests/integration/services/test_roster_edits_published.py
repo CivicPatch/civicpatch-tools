@@ -478,8 +478,8 @@ async def test_a_hand_edit_supersedes_a_pending_scrape():
 async def test_a_post_pick_survives_a_save_and_comes_back_scoped_to_its_organization():
     """A pick is a decision, and it has to outlive the save that recorded it.
 
-    It did not: `post_id` was absent from `EDITABLE_FIELDS`, so `stated_from_edit` wrote no
-    assertion and `with_stated_values` reapplied nothing. A reviewer could pick a post, save for
+    It did not: `post_id` was absent from `EDITABLE_FIELDS`, so `assertions_from_edit` wrote no
+    assertion and `with_asserted_values` reapplied nothing. A reviewer could pick a post, save for
     later, come back, and publish into whatever the labels derived — their answer discarded
     without a word. Nothing covered `roster_edits.save` at all, which is how it survived.
 
