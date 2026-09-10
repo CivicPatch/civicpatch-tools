@@ -228,7 +228,7 @@ async def get_user_by_id(user_id: str) -> dict | None:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT id::text, provider, provider_user_id, email, display_name
+            SELECT id::text, provider, provider_user_id, email, display_name, role, last_login_at
             FROM users
             WHERE id = %s
             """,
@@ -243,6 +243,8 @@ async def get_user_by_id(user_id: str) -> dict | None:
         "provider_user_id": row[2],
         "email": row[3],
         "display_name": row[4],
+        "role": row[5],
+        "last_login_at": row[6].isoformat() if row[6] else None,
     }
 
 

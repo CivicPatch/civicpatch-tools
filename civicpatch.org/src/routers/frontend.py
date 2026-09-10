@@ -210,6 +210,40 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/admin.html", {"request": request, "user": user})
 
+    @router.get("/users/{target_user_id}", response_class=HTMLResponse, include_in_schema=False)
+    async def user_profile_page(
+        request: Request,
+        target_user_id: str,
+        identity: Optional[Identity] = Depends(get_optional_user),
+    ):
+        # Same gate as `/admin`: this is a moderation view of someone else's account, not a
+        # self-service profile.
+        user = _build_user_dict(identity)
+        if not user["authenticated"] or not user["permissions"]["can_manage_roles"]:
+            return RedirectResponse("/", status_code=303)
+        return templates.TemplateResponse(
+            "pages/user-profile.html",
+            {"request": request, "user": user, "target_user_id": target_user_id},
+        )
+
+    @router.get(
+        "/users/{target_user_id}/history",
+        response_class=HTMLResponse,
+        include_in_schema=False,
+    )
+    async def user_history_page(
+        request: Request,
+        target_user_id: str,
+        identity: Optional[Identity] = Depends(get_optional_user),
+    ):
+        user = _build_user_dict(identity)
+        if not user["authenticated"] or not user["permissions"]["can_manage_roles"]:
+            return RedirectResponse("/", status_code=303)
+        return templates.TemplateResponse(
+            "pages/user-history.html",
+            {"request": request, "user": user, "target_user_id": target_user_id},
+        )
+
     @router.get("/settings", response_class=HTMLResponse, include_in_schema=False)
     async def settings_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)

@@ -96,6 +96,12 @@
   padding: 0.1em 0.4em;
   vertical-align: middle;
 }
+.admin-users-table__actions {
+  white-space: nowrap;
+}
+.admin-users-table__actions .btn {
+  margin: 0;
+}
 .admin-users-table__roles {
   display: flex;
   flex-wrap: wrap;

@@ -16,7 +16,8 @@ from schemas.common import (
     UserRole,
     UserWithRole,
 )
-from services import entry_sheet
+from schemas.rollback import RollbackRequest
+from services import entry_sheet, rollback
 from supabase import AsyncClient
 
 
@@ -106,6 +107,22 @@ def get_router() -> APIRouter:
         ]
         return {"data": pending}
 
+    # After `/users/pending` and before every other `/users/{user_id}...` route: FastAPI
+    # matches path templates in registration order, and this one has no literal segment to
+    # tell it apart from `/users/pending` — registering it earlier would 422 on "pending"
+    # (an invalid UUID) before ever reaching that handler.
+    @router.get("/users/{user_id}", include_in_schema=False)
+    async def get_user_endpoint(
+        user_id: UUID,
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
+    ):
+        user = await users_db.get_user_by_id(str(user_id))
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        return {"data": UserWithRole(**user)}
+
     @router.post("/users/{user_id}/resend-invite", include_in_schema=False)
     async def resend_invite_endpoint(
         user_id: UUID,
@@ -141,5 +158,44 @@ def get_router() -> APIRouter:
         except Exception as exc:
             raise HTTPException(status_code=400, detail=str(exc))
         return {"data": {"revoked": True}}
+
+    @router.get("/users/{user_id}/rollback-candidates", include_in_schema=False)
+    async def list_rollback_candidates_endpoint(
+        user_id: UUID,
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
+    ):
+        candidates = await rollback.list_rollback_candidates(str(user_id))
+        return {"data": candidates}
+
+    @router.post("/users/{user_id}/rollback", include_in_schema=False)
+    async def rollback_user_endpoint(
+        user_id: UUID,
+        payload: RollbackRequest,
+        identity: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+        ),
+    ):
+        if not identity.user_id:
+            raise HTTPException(
+                status_code=401,
+                detail="Rollbacks must be attributable to a signed-in user.",
+            )
+        # Scoped to this user's own candidates rather than trusting the client's ids
+        # outright — the url names whose edits this is meant to undo, and the ids acted
+        # on must actually be theirs, not whatever a stray or malicious request sent.
+        theirs = {
+            candidate.assertion_id
+            for candidate in await rollback.list_rollback_candidates(str(user_id))
+        }
+        assertion_ids = [aid for aid in payload.assertion_ids if aid in theirs]
+        try:
+            withdrawn = await rollback.rollback_assertions(
+                assertion_ids, identity.user_id, payload.reason
+            )
+        except rollback.NothingToRollBack:
+            raise HTTPException(status_code=409, detail="Nothing to roll back")
+        return {"data": {"withdrawn": withdrawn}}
 
     return router

@@ -80,6 +80,40 @@ async def insert_source_records(
     return len(sightings)
 
 
+async def get_earliest_source_records_for_people(person_ids: list[str]) -> list[dict]:
+    """Each person's sightings from whichever changeset first introduced them — the pristine,
+    pre-assertion base a rollback republish overlays currently-active assertions onto, instead
+    of the live `people` row (which already has every assertion, withdrawn or not, baked in).
+    """
+    if not person_ids:
+        return []
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            WITH ranked AS (
+                SELECT s.id::text, s.changeset_id::text, i.person_id::text, s.jurisdiction_ocdid,
+                       s.name, s.label, s.source_url, s.url, s.phone, s.email,
+                       s.image, s.cdn_image, s.start_date, s.end_date, s.created_at,
+                       FIRST_VALUE(s.changeset_id::text) OVER (
+                           PARTITION BY i.person_id ORDER BY s.created_at ASC, s.id ASC
+                       ) AS origin_changeset_id
+                FROM source_records s
+                JOIN source_record_identities i ON i.source_record_id = s.id
+                WHERE i.person_id = ANY(%s)
+            )
+            SELECT id, changeset_id, person_id, jurisdiction_ocdid, name, label, source_url,
+                   url, phone, email, image, cdn_image, start_date, end_date, created_at
+            FROM ranked
+            WHERE changeset_id = origin_changeset_id
+            ORDER BY created_at, label
+            """,
+            (person_ids,),
+        )
+        columns = [column.name for column in cur.description or []]
+        return [dict(zip(columns, row)) for row in await cur.fetchall()]
+
+
 async def get_source_records_for_changeset(changeset_id: str) -> list[dict]:
     """Every sighting one scrape saw, each with the person it was resolved to."""
     pool = await get_pool()
