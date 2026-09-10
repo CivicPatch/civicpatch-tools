@@ -248,7 +248,7 @@ async def test_commit_jurisdiction_patch_commits_and_syncs_the_row():
             new_callable=AsyncMock,
         ) as mock_patch_entry,
         patch(
-            "services.jurisdiction_pull_request.change_logs.record_jurisdiction_edit",
+            "services.jurisdiction_pull_request.activity_service.record_jurisdiction_edit",
             new_callable=AsyncMock,
         ) as mock_record,
         patch(
@@ -298,7 +298,7 @@ async def test_commit_jurisdiction_patch_writes_nothing_when_unchanged():
             new_callable=AsyncMock,
         ) as mock_patch_entry,
         patch(
-            "services.jurisdiction_pull_request.change_logs.record_jurisdiction_edit",
+            "services.jurisdiction_pull_request.activity_service.record_jurisdiction_edit",
             new_callable=AsyncMock,
         ) as mock_record,
     ):

@@ -17,7 +17,7 @@ import database.dismissals as dismissals_db
 from core.people_edits import with_asserted_values
 from core.post_derivation import DerivedPost
 from database import assertions, memberships, organizations, posts
-from database.change_logs import record_change
+from database.activity import record_change
 from database.changesets import get_updated_at
 from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
@@ -25,7 +25,7 @@ from database.users import SYSTEM_USER_ID
 from schemas.assertions import EntityType
 from shared.utils.statuses import (
     COLLECTION_KINDS,
-    ChangeLogType,
+    ActivityType,
     DismissalReason,
 )
 
@@ -163,7 +163,7 @@ async def _record_publish(
     )
     await record_change(
         cur,
-        ChangeLogType.PUBLISH_REVIEW,
+        ActivityType.PUBLISH_REVIEW,
         resolved_by_user_id,
         jurisdiction_ocdid,
         changeset_id=changeset_id,

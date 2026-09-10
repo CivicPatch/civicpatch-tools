@@ -134,11 +134,11 @@ async def test_reassigning_to_the_same_seat_only_sets_the_label():
         assert await cur.fetchone() == ("Renamed", ["Position 8"])
 
 
-async def _change_log_count() -> int:
+async def _activity_count() -> int:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT count(*) FROM change_logs WHERE jurisdiction_ocdid = %s", (_OCDID,)
+            "SELECT count(*) FROM activity WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         return (await cur.fetchone())[0]
 
@@ -150,12 +150,12 @@ async def test_the_same_seat_under_the_same_label_is_refused():
     a change nobody made, against a membership that did not move."""
     person_id, post_id, _ = await _seed()
     await memberships.assign(person_id, post_id, "Mayor of Testville")
-    logged = await _change_log_count()
+    logged = await _activity_count()
 
     with pytest.raises(memberships.NothingToAssign):
         await memberships.assign(person_id, post_id, "Mayor of Testville")
 
-    assert await _change_log_count() == logged
+    assert await _activity_count() == logged
 
 
 @pytest.mark.asyncio

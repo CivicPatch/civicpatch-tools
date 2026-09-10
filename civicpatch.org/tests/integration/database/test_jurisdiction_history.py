@@ -17,7 +17,7 @@ from database.database import get_pool
 from database.changesets import live_roster_changeset
 from database.publications import dismiss_changeset
 from database.users import SYSTEM_USER_ID
-from shared.utils.statuses import ChangeLogType, DismissalReason
+from shared.utils.statuses import ActivityType, DismissalReason
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_history/government"
 _USER_EMAIL = "zz-history-reviewer@example.test"
@@ -27,7 +27,7 @@ async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (_OCDID,)
+            "DELETE FROM activity WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
@@ -72,12 +72,12 @@ async def _seed_changeset() -> str:
         return (await cur.fetchone())[0]
 
 
-async def _log(changeset_id: str, type_: ChangeLogType, changes: dict) -> None:
+async def _log(changeset_id: str, type_: ActivityType, changes: dict) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO change_logs (type, jurisdiction_ocdid, changeset_id, changes, user_id)
+            INSERT INTO activity (type, jurisdiction_ocdid, changeset_id, changes, user_id)
             VALUES (%s, %s, %s, %s::jsonb, %s)
             """,
             (type_, _OCDID, changeset_id, json.dumps(changes), SYSTEM_USER_ID),
@@ -161,12 +161,12 @@ async def test_roster_changes_are_grouped_under_their_changeset():
     changeset_id = await _seed_resolved()
     await _log(
         changeset_id,
-        ChangeLogType.ADD_PERSON,
+        ActivityType.ADD_PERSON,
         {"entity_type": "person", "entity_id": "p1", "subject": "Ann Lee", "fields": []},
     )
     await _log(
         changeset_id,
-        ChangeLogType.EDIT_PERSON,
+        ActivityType.EDIT_PERSON,
         {
             "entity_type": "person",
             "entity_id": "p1",
@@ -188,8 +188,8 @@ async def test_review_lifecycle_is_not_a_roster_change():
     """`publish_review` and `dismiss_review` say what happened to the review, not to the people.
     They share the changeset, so only the type filter keeps them out."""
     changeset_id = await _seed_resolved()
-    await _log(changeset_id, ChangeLogType.PUBLISH_REVIEW, {})
-    await _log(changeset_id, ChangeLogType.DISMISS_REVIEW, {"reason": "no_longer_valid"})
+    await _log(changeset_id, ActivityType.PUBLISH_REVIEW, {})
+    await _log(changeset_id, ActivityType.DISMISS_REVIEW, {"reason": "no_longer_valid"})
 
     assert await _changes_for(changeset_id) == []
 
@@ -202,7 +202,7 @@ async def test_a_seat_change_reads_as_a_post_field_change():
     changeset_id = await _seed_resolved()
     await _log(
         changeset_id,
-        ChangeLogType.ASSIGN_MEMBERSHIP,
+        ActivityType.ASSIGN_MEMBERSHIP,
         {
             "entity_type": "membership",
             "entity_id": "m1",
@@ -380,7 +380,7 @@ async def test_a_details_edit_shows_what_it_changed():
     changeset_id = await _seed_resolved()
     await _log(
         changeset_id,
-        ChangeLogType.EDIT_JURISDICTION,
+        ActivityType.EDIT_JURISDICTION,
         {
             "entity_type": "jurisdiction",
             "entity_id": _OCDID,

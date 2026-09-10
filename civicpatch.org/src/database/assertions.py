@@ -1,7 +1,10 @@
 """Database queries for `assertions` — the field values a human has accepted or rejected.
 
-Current state, not a log: setting a value again overwrites, withdrawing deletes. `change_logs`
-is the history.
+Append-only: setting a value again inserts, it never overwrites, and withdrawing stamps a row
+rather than deleting it. `created_by`/`created_at` on a row are therefore permanent — nothing
+after the insert ever rewrites them. `current`/`asserted_values` resolve *what applies now* by
+reading, not by the table holding only one row per field; `activity` is the narration, this is
+the evidence.
 
 Two entry points: `upsert` on a caller's cursor, `create` owning its own connection — a label
 edit and the assertion protecting it must commit together.
@@ -13,52 +16,42 @@ from core.people_edits import LIST_FIELDS
 from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType
 
-# Must match the two partial indexes in 137 exactly; a mismatch is an unhandled unique violation.
-# Built from `LIST_FIELDS`, not restated: postgres matches an `ON CONFLICT ... WHERE` predicate
-# against an index's, so this and the partial indexes have to agree exactly. Written out here
-# once, adding a list field raised "there is no unique or exclusion constraint matching the ON
-# CONFLICT specification" — from the one place that never mentions the field. Interpolation is
-# safe because the names are a module constant, never input.
-_LIST_FIELDS_SQL = ", ".join(f"'{field}'" for field in sorted(LIST_FIELDS))
 
-_REPLACES_THE_FIELD = f"""(entity_type, entity_id, field_path)
-    WHERE kind = 'accept'
-      AND field_path NOT IN ({_LIST_FIELDS_SQL})"""
+def _value_keyed(field_path: str, kind: str) -> bool:
+    """Only a scalar accept has one answer for the whole field; a reject (of either field
+    shape) and a list field's accept are per-value, so distinct values coexist.
 
-_REPLACES_THE_VALUE = f"""(entity_type, entity_id, field_path, value)
-    WHERE kind = 'reject'
-       OR field_path IN ({_LIST_FIELDS_SQL})"""
+    Takes raw column values rather than an `Assertion`, so both a claim about to be written and
+    a row already read back from the database can ask the same question the same way."""
+    return kind == AssertionKind.REJECT.value or field_path in LIST_FIELDS
 
 
 def _keyed_by_value(assertion: Assertion) -> bool:
-    """Only a scalar accept replaces the field's one answer; list fields and rejects key on the
-    value."""
-    return assertion.kind is AssertionKind.REJECT or assertion.field_path in LIST_FIELDS
-
-
-_DROP_THE_OPPOSITE = """
-    DELETE FROM assertions
-    WHERE entity_type = %s AND entity_id = %s AND field_path = %s
-      AND kind <> %s AND value = %s
-"""
+    return _value_keyed(assertion.field_path, assertion.kind.value)
 
 
 _INSERT = """
     INSERT INTO assertions
-        (entity_type, entity_id, field_path, kind, value, sources, asserted_by)
-    VALUES (%s, %s, %s, %s, %s, %s, %s)
-    ON CONFLICT {conflict}
-    DO UPDATE SET value = EXCLUDED.value,
-                  sources = EXCLUDED.sources,
-                  asserted_by = EXCLUDED.asserted_by,
-                  asserted_at = now()
+        (entity_type, entity_id, field_path, kind, value, sources, created_by, changeset_id,
+         created_at)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, clock_timestamp())
 """
+# clock_timestamp(), not the column's own `now()` default: `now()` is transaction_timestamp(),
+# frozen for every statement in one transaction. A single save's `executemany` batch (many
+# claims, one transaction) would then insert them all with the SAME created_at, and `id` is
+# gen_random_uuid() — not time-ordered — so "most recent claim per value" would tie-break at
+# random between claims from the same save. clock_timestamp() is the real wall clock, distinct
+# per statement, which is what makes "latest wins" mean anything within a batch.
 
-_INSERT_REPLACING_THE_FIELD = _INSERT.format(conflict=_REPLACES_THE_FIELD)
-_INSERT_REPLACING_THE_VALUE = _INSERT.format(conflict=_REPLACES_THE_VALUE)
+# The one ordering "latest wins" means anywhere in this file — asserted_values, the lookup
+# below, and withdraw's own target all have to rank ties the same way, or they could disagree
+# about which row is current. One constant, so they can't drift apart from each other.
+LATEST_FIRST = "ORDER BY created_at DESC, id DESC"
 
 
 def _conflict_key(claim: Assertion) -> tuple:
+    """Which earlier claim IN THIS SAME BATCH a claim would restate, if any — a save must not
+    ask to insert two rows that would immediately contradict each other."""
     field = (claim.entity_type.value, claim.entity_id, claim.field_path)
     return (*field, json.dumps(claim.value)) if _keyed_by_value(claim) else field
 
@@ -67,13 +60,43 @@ def latest_of_each(claims: list[Assertion]) -> list[Assertion]:
     return list({_conflict_key(claim): claim for claim in claims}.values())
 
 
-async def upsert_all(cur, claims: list[Assertion], asserted_by: str) -> None:
+async def _unchanged(cur, claims: list[Assertion]) -> set[tuple]:
+    """The `_conflict_key`s already true, per `asserted_values` — which is to say: already
+    the current winner, not merely present somewhere in history. A claim restating an old,
+    since-superseded value is a real new claim, not a no-op.
+    """
+    by_entity: dict[str, set[str]] = {}
+    for claim in claims:
+        by_entity.setdefault(claim.entity_type.value, set()).add(claim.entity_id)
+
+    current: dict[str, dict] = {}
+    for entity_type_value, entity_ids in by_entity.items():
+        current.update(
+            await asserted_values(cur, EntityType(entity_type_value), sorted(entity_ids))
+        )
+
+    def already_true(claim: Assertion) -> bool:
+        by_field = current.get(claim.entity_id, {}).get(claim.field_path, {})
+        return claim.value in (by_field.get(claim.kind) or [])
+
+    return {_conflict_key(claim) for claim in claims if already_true(claim)}
+
+
+async def upsert_all(cur, claims: list[Assertion], created_by: str) -> None:
+    """Append a save's worth of claims. Never overwrites: a claim already the current winner
+    is skipped so an unrelated save does not churn a new row for every field
+    `assertions_from_edit` walks past unchanged."""
     claims = latest_of_each(claims)
     if not claims:
         return
 
+    unchanged = await _unchanged(cur, claims)
+    claims = [c for c in claims if _conflict_key(c) not in unchanged]
+    if not claims:
+        return
+
     await cur.executemany(
-        _DROP_THE_OPPOSITE,
+        _INSERT,
         [
             (
                 claim.entity_type.value,
@@ -81,61 +104,45 @@ async def upsert_all(cur, claims: list[Assertion], asserted_by: str) -> None:
                 claim.field_path,
                 claim.kind.value,
                 json.dumps(claim.value),
+                _sources(claim),
+                created_by,
+                claim.changeset_id,
             )
             for claim in claims
         ],
     )
 
-    for statement, keyed_by_value in (
-        (_INSERT_REPLACING_THE_FIELD, False),
-        (_INSERT_REPLACING_THE_VALUE, True),
-    ):
-        group = [c for c in claims if _keyed_by_value(c) is keyed_by_value]
-        if not group:
-            continue
-        await cur.executemany(
-            statement,
-            [
-                (
-                    claim.entity_type.value,
-                    claim.entity_id,
-                    claim.field_path,
-                    claim.kind.value,
-                    json.dumps(claim.value),
-                    _sources(claim),
-                    asserted_by,
-                )
-                for claim in group
-            ],
-        )
+
+_CURRENT_ROW_FOR = f"""
+    SELECT id::text FROM assertions
+    WHERE entity_type = %s AND entity_id = %s AND field_path = %s
+      AND kind = %s AND value = %s AND withdrawn_at IS NULL
+    {LATEST_FIRST}
+    LIMIT 1
+"""
 
 
-async def upsert(cur, assertion: Assertion, asserted_by: str) -> str:
-    """Record one claim on a caller's cursor. Returns its id.
-
-    Re-stating an existing claim refreshes who and when rather than adding a row, which bounds
-    this table by distinct values instead of by publish count.
-    """
+async def upsert(cur, assertion: Assertion, created_by: str) -> str:
+    """Record one claim on a caller's cursor. Returns its id — the new row's, or the existing
+    row's if this only restates the current winner (see `upsert_all`)."""
     entity = (assertion.entity_type.value, assertion.entity_id, assertion.field_path)
     value = json.dumps(assertion.value)
-    conflict = (
-        _REPLACES_THE_VALUE if _keyed_by_value(assertion) else _REPLACES_THE_FIELD
-    )
 
-    await cur.execute(_DROP_THE_OPPOSITE, (*entity, assertion.kind.value, value))
+    if await _unchanged(cur, [assertion]):
+        await cur.execute(_CURRENT_ROW_FOR, (*entity, assertion.kind.value, value))
+        row = await cur.fetchone()
+        return row[0] if row else ""
+
     await cur.execute(
-        f"""
-        INSERT INTO assertions
-            (entity_type, entity_id, field_path, kind, value, sources, asserted_by)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
-        ON CONFLICT {conflict}
-        DO UPDATE SET value = EXCLUDED.value,
-                      sources = EXCLUDED.sources,
-                      asserted_by = EXCLUDED.asserted_by,
-                      asserted_at = now()
-        RETURNING id::text
-        """,
-        (*entity, assertion.kind.value, value, _sources(assertion), asserted_by),
+        f"{_INSERT} RETURNING id::text",
+        (
+            *entity,
+            assertion.kind.value,
+            value,
+            _sources(assertion),
+            created_by,
+            assertion.changeset_id,
+        ),
     )
     row = await cur.fetchone()
     return row[0] if row else ""
@@ -148,35 +155,69 @@ def _sources(assertion: Assertion) -> str | None:
 
 
 async def withdraw(
-    cur, entity_type: EntityType, entity_id: str, field_path: str
+    cur,
+    entity_type: EntityType,
+    entity_id: str,
+    field_path: str,
+    kind: AssertionKind,
+    withdrawn_by: str,
+    reason: str | None = None,
+    withdrawn_by_changeset_id: str | None = None,
 ) -> int:
-    """Stop accepting a field. Returns how many rows went.
+    """Retract the current claim of this kind on a field. Returns how many rows went — 0 if
+    there was nothing live to retract.
 
-    A delete: `value` is NOT NULL, so a withdrawal has no value to carry.
+    `kind` is explicit, not assumed `accept`: a retraction (189) is a REJECT — "this membership
+    never held" — and reject and accept can both be live on the same field_path at once for
+    different values, so the caller has to say which claim it means.
+
+    Only the winning row: a claim already superseded by a later one is not the current answer,
+    so stamping it too would claim a moderator retracted something a later claim had already
+    replaced.
+
+    `withdrawn_by_changeset_id` is the symmetric half of `changeset_id` — set only by a rollback
+    changeset, marking which withdrawals it caused. Ordinary withdrawals (clearing a hand-set
+    label back to derived) leave it NULL.
     """
     await cur.execute(
-        """
-        DELETE FROM assertions
-        WHERE entity_type = %s AND entity_id = %s AND field_path = %s AND kind = 'accept'
+        f"""
+        UPDATE assertions
+           SET withdrawn_at = now(), withdrawn_by = %s, withdrawn_reason = %s,
+               withdrawn_by_changeset_id = %s
+         WHERE id = (
+             SELECT id FROM assertions
+              WHERE entity_type = %s AND entity_id = %s AND field_path = %s
+                AND kind = %s AND withdrawn_at IS NULL
+              {LATEST_FIRST}
+              LIMIT 1
+         )
         """,
-        (entity_type.value, entity_id, field_path),
+        (
+            withdrawn_by,
+            reason,
+            withdrawn_by_changeset_id,
+            entity_type.value,
+            entity_id,
+            field_path,
+            kind.value,
+        ),
     )
     return cur.rowcount
 
 
-async def create(assertion: Assertion, asserted_by: str) -> str:
+async def create(assertion: Assertion, created_by: str) -> str:
     """Set one assertion, owning the connection. Returns its id.
 
-    `asserted_by` is required: an assertion nobody made is not an assertion.
+    `created_by` is required: an assertion nobody made is not an assertion.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        assertion_id = await upsert(cur, assertion, asserted_by)
+        assertion_id = await upsert(cur, assertion, created_by)
         await conn.commit()
     return assertion_id
 
 
-async def create_all(claims: list[Assertion], asserted_by: str) -> None:
+async def create_all(claims: list[Assertion], created_by: str) -> None:
     """Record a whole save's worth of claims, owning the connection.
 
     One transaction: half a reviewer's answer is worse than none, because the half that landed
@@ -186,7 +227,7 @@ async def create_all(claims: list[Assertion], asserted_by: str) -> None:
         return
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await upsert_all(cur, claims, asserted_by)
+        await upsert_all(cur, claims, created_by)
         await conn.commit()
 
 
@@ -203,12 +244,12 @@ async def list_for_entities(
     await cur.execute(
         """
         SELECT a.entity_id::text, a.id::text, a.field_path, a.kind, a.value, a.sources,
-               a.asserted_at, a.asserted_by::text,
-               COALESCE(u.display_name, u.email) AS asserted_by_name
+               a.created_at, a.created_by::text,
+               COALESCE(u.display_name, u.email) AS created_by_name
         FROM assertions a
-        LEFT JOIN users u ON u.id = a.asserted_by
+        LEFT JOIN users u ON u.id = a.created_by
         WHERE a.entity_type = %s AND a.entity_id::text = ANY(%s)
-        ORDER BY a.asserted_at DESC
+        ORDER BY a.created_at DESC
         """,
         (entity_type.value, entity_ids),
     )
@@ -222,23 +263,42 @@ async def list_for_entities(
 async def asserted_values(
     cur, entity_type: EntityType, entity_ids: list[str]
 ) -> dict[str, dict]:
-    """`{entity_id: {field: {"accept": [...], "reject": [...]}}}` for these rows.
+    """`{entity_id: {field: {"accept": [...], "reject": [...]}}}` for these rows — only the
+    claim that currently applies. Both kinds together, because applying them is
+    `(scraped ∪ accepted) − rejected`. A row nobody has judged is absent rather than empty.
 
-    Both kinds together, because applying them is `(scraped ∪ accepted) − rejected`. A row
-    nobody has judged is absent rather than empty.
+    History is append-only, so a field can hold many rows over time. Withdrawn ones never
+    apply. Of what remains: a scalar accept can only have one current answer, so only the most
+    recent counts — an older, superseded value is not returned even though its row still
+    exists. A list field's accept and reject are per *value*, so each value's own most recent
+    claim wins independently of the others: a number can be accepted, then rejected, then
+    accepted again, and only the last of those is live — the same value never appears on both
+    sides at once, which is what makes the merge in `with_asserted_values` sound.
     """
     if not entity_ids:
         return {}
     await cur.execute(
-        """
+        f"""
         SELECT entity_id::text, field_path, kind, value
         FROM assertions
-        WHERE entity_type = %s AND entity_id::text = ANY(%s)
+        WHERE entity_type = %s AND entity_id::text = ANY(%s) AND withdrawn_at IS NULL
+        {LATEST_FIRST}
         """,
         (entity_type.value, entity_ids),
     )
     asserted: dict[str, dict] = {}
+    seen: set[tuple] = set()
     for entity_id, field_path, kind, value in await cur.fetchall():
+        # Rows arrive newest first, so the first time a key is seen is its current winner —
+        # everything after is history a newer claim has already superseded.
+        key = (
+            (entity_id, field_path, value)
+            if _value_keyed(field_path, kind)
+            else (entity_id, field_path)
+        )
+        if key in seen:
+            continue
+        seen.add(key)
         by_kind = asserted.setdefault(entity_id, {}).setdefault(
             field_path, {AssertionKind.ACCEPT: [], AssertionKind.REJECT: []}
         )

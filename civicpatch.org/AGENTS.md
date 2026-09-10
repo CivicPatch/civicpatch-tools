@@ -35,7 +35,7 @@ src/
     membership_label.py      ← what to call a post when nobody has said
     images.py                ← `local://` refs → urls (ingest); artifacts → cdn key (publish)
     jurisdiction_patch.py, jurisdiction_search.py, coverage.py
-    change_logs.py, role_taxonomy.py, temporal_workflow_state.py
+    activity.py, role_taxonomy.py, temporal_workflow_state.py
     output_hash.py           ← the content gate's fingerprint, shared by every sink
     sources/                 ← open_data/ (tree_diff.py, paths.py) — what we READ in
     sinks/                   ← how each outward sink renders its rows

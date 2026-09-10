@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 
-from schemas.change_logs import FieldChange
+from schemas.activity import FieldChange
 
 
 class CreatePostRequest(BaseModel):

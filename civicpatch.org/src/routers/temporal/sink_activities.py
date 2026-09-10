@@ -10,7 +10,7 @@ whole tables. That is why the sinks worker is the one with a concurrency cap.
 Split out of the old single `activities.py` on 2026-09-05.
 """
 
-import database.change_logs as change_logs_db
+import database.activity as activity_db
 import database.jurisdictions as jurisdictions_db
 import database.memberships as memberships_db
 import services.sinks.open_data as open_data_sink
@@ -151,7 +151,7 @@ async def dispatch_open_data_changes_activity() -> None:
     # avoid circular import: the client imports the workflows module, which imports this one
     import lib.temporal.client as temporal_client
 
-    changed = await change_logs_db.jurisdictions_changed_since(_SWEEP_LOOKBACK_MINUTES)
+    changed = await activity_db.jurisdictions_changed_since(_SWEEP_LOOKBACK_MINUTES)
     if not changed:
         return
     await temporal_client.enqueue_write_open_data_batch(
@@ -186,7 +186,7 @@ async def dispatch_sheet_changes_activity() -> None:
 
     if not entry_sheet.is_configured():
         return
-    states = await change_logs_db.states_changed_since(_SWEEP_LOOKBACK_MINUTES)
+    states = await activity_db.states_changed_since(_SWEEP_LOOKBACK_MINUTES)
     for state in states:
         await temporal_client.enqueue_write_sheet_roster(state)
     if states:

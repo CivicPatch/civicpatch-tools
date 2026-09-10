@@ -1,11 +1,11 @@
-"""Pure change-log helpers: the field diff a payload carries, and the formatter that turns a
+"""Pure activity helpers: the field diff a payload carries, and the formatter that turns a
 (type, changes) pair into a human-readable summary string for the activity feed."""
 
 from collections.abc import Mapping
 from datetime import datetime
 
-from schemas.change_logs import MEMBERSHIP_POST_FIELD, FieldChange, RosterChange
-from shared.utils.statuses import ChangeLogType
+from schemas.activity import MEMBERSHIP_POST_FIELD, FieldChange, RosterChange
+from shared.utils.statuses import ActivityType
 
 
 def field_changes(
@@ -31,9 +31,9 @@ def _moved_seat(changes: Mapping) -> bool:
 
 
 def roster_change(
-    type_: ChangeLogType, created_at: datetime, changes: Mapping
+    type_: ActivityType, created_at: datetime, changes: Mapping
 ) -> RosterChange:
-    """One `change_logs` row as a timeline entry.
+    """One `activity` row as a timeline entry.
 
     Every entity payload carries its own subject now, so this no longer has to know which shape
     it is holding. It used to dispatch on `type_` to decide whether the name lived in
@@ -96,7 +96,7 @@ _VERBS: dict[str, str] = {
 }
 
 
-def summarize_change_log(type_: str, changes: dict | None) -> str:
+def summarize_activity(type_: str, changes: dict | None) -> str:
     """Pure: render a one-line summary for an activity-feed row.
     Unknown types fall back to the raw type — never raises."""
     c = changes or {}
@@ -133,7 +133,7 @@ def summarize_change_log(type_: str, changes: dict | None) -> str:
         return f"Edited role '{role}'{_alias_summary(c)}"
     if type_ == "delete_role":
         return f"Removed role '{role}'"
-    # Retired event types — kept so existing change_log rows still render.
+    # Retired event types — kept so existing activity rows still render.
     if type_ == "exclude_role":
         return f"Excluded role '{role}'"
     if type_ == "include_role":

@@ -4,7 +4,7 @@ from typing import Any
 
 from pydantic import BaseModel
 from schemas.assertions import EntityType
-from shared.utils.statuses import ChangeLogType
+from shared.utils.statuses import ActivityType
 
 
 class FieldChange(BaseModel):
@@ -18,7 +18,7 @@ class FieldChange(BaseModel):
 
 
 # The seat a membership points at, named once: written in `database.memberships` and read back
-# in `core.change_logs` to tell a move from a first assignment.
+# in `core.activity` to tell a move from a first assignment.
 MEMBERSHIP_POST_FIELD = "post_id"
 
 
@@ -33,7 +33,7 @@ class Change(BaseModel):
 class PersonChange(BaseModel):
     """A typed change `people_diff` produces: which kind of event, and what it says."""
 
-    type: ChangeLogType
+    type: ActivityType
     payload: Change
 
 
@@ -53,14 +53,14 @@ class RosterChange(BaseModel):
     person and the post's label would otherwise be dropped on the way out.
     """
 
-    type: ChangeLogType
+    type: ActivityType
     created_at: datetime
     name: str
     detail: str | None = None
     fields: list[FieldChange] = []
 
 
-class ChangeLogAuthors(StrEnum):
+class ActivityAuthors(StrEnum):
     """Which authors' changes the feed asks for. One log, narrowed — quarantined changes are
     activity too, so they are marked in place rather than kept in a separate list."""
 
@@ -68,9 +68,9 @@ class ChangeLogAuthors(StrEnum):
     QUARANTINED = "quarantined"  # default-role authors, reviewed for spam or profanity
 
 
-class ChangeLogEntry(BaseModel):
+class ActivityEntry(BaseModel):
     id: str
-    type: ChangeLogType
+    type: ActivityType
     jurisdiction_ocdid: str | None
     jurisdiction_name: str | None
     jurisdiction_path: str | None = None

@@ -1,4 +1,4 @@
-// What one `change_logs` row did to a roster, in the two forms a page needs: a compact badge
+// What one `activity` row did to a roster, in the two forms a page needs: a compact badge
 // for a collapsed summary, and a full row for an expanded list.
 //
 // Shared because more than one page answers "what did this changeset do" — the jurisdiction
@@ -8,7 +8,7 @@
 import { html } from "lit-html";
 import "./roster-change.css";
 
-// Mirrors MEMBERSHIP_POST_FIELD in schemas/change_logs.py. An assignment whose `post_id`
+// Mirrors MEMBERSHIP_POST_FIELD in schemas/activity.py. An assignment whose `post_id`
 // change carries a `before` vacated a seat; one without it is a first assignment.
 const MEMBERSHIP_POST_FIELD = "post_id";
 

@@ -145,12 +145,16 @@ class ChangesetKind(StrEnum):
     Only SCRAPE has a pipeline run behind it, and a CHECK enforces that both ways.
     JURISDICTION_EDIT is kept out of the review pool: it edits a registry civicpatch does
     not own, so there is nothing here to review.
+
+    ROLLBACK (189) is deliberately excluded from `COLLECTION_KINDS`: a rollback reads no
+    source, so `advances_last_seen` must not treat it as a sighting.
     """
 
     SCRAPE = "scrape"
     SHEET_IMPORT = "sheet_import"
     PEOPLE_EDIT = "people_edit"
     JURISDICTION_EDIT = "jurisdiction_edit"
+    ROLLBACK = "rollback"
 
 
 COLLECTION_KINDS = (ChangesetKind.SCRAPE, ChangesetKind.SHEET_IMPORT)
@@ -163,7 +167,7 @@ class DismissalReason(StrEnum):
     SUPERSEDED = "superseded"  # a newer roster for this jurisdiction won
 
 
-class ChangeLogType(StrEnum):
+class ActivityType(StrEnum):
     PUBLISH_REVIEW = "publish_review"
     DISMISS_REVIEW = "dismiss_review"
     ADD_PERSON = "add_person"

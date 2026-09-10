@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 from lib.auth import get_optional_user
 from schemas.common import Identity, UserRole
 
-from routers.api import change_logs as change_logs_router
+from routers.api import activity as change_logs_router
 
 _IDENTITY = Identity(
     type="cookie",
@@ -65,7 +65,7 @@ def anonymous_client() -> TestClient:
 def test_quarantined_queries_default_role(client):
     # Every signed-in user may see quarantined changes — the router mount already requires
     # that, so there is no further role check here.
-    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(0, [])) as mock_get:
+    with patch("database.activity.get_activity_for_roles", new_callable=AsyncMock, return_value=(0, [])) as mock_get:
         response = client.get("/change_logs", params={"authors": "quarantined"})
 
     assert response.status_code == 200
@@ -74,7 +74,7 @@ def test_quarantined_queries_default_role(client):
 
 @pytest.mark.unit
 def test_all_applies_no_role_filter(client):
-    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(0, [])) as mock_get:
+    with patch("database.activity.get_activity_for_roles", new_callable=AsyncMock, return_value=(0, [])) as mock_get:
         response = client.get("/change_logs", params={"authors": "all"})
 
     assert response.status_code == 200
@@ -83,7 +83,7 @@ def test_all_applies_no_role_filter(client):
 
 @pytest.mark.unit
 def test_all_is_the_default_filter(client):
-    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(0, [])) as mock_get:
+    with patch("database.activity.get_activity_for_roles", new_callable=AsyncMock, return_value=(0, [])) as mock_get:
         response = client.get("/change_logs")
 
     assert response.status_code == 200
@@ -92,7 +92,7 @@ def test_all_is_the_default_filter(client):
 
 @pytest.mark.unit
 def test_pagination_offset_computed_from_page(client):
-    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(45, [])) as mock_get:
+    with patch("database.activity.get_activity_for_roles", new_callable=AsyncMock, return_value=(45, [])) as mock_get:
         response = client.get("/change_logs", params={"authors": "all", "page": 3, "per_page": 10})
 
     assert response.status_code == 200
@@ -111,7 +111,7 @@ def test_unknown_authors_filter_rejected(client):
 
 @pytest.mark.unit
 def test_row_maps_to_entry(client):
-    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
+    with patch("database.activity.get_activity_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
         response = client.get("/change_logs", params={"authors": "all"})
 
     assert response.status_code == 200
@@ -123,7 +123,7 @@ def test_row_maps_to_entry(client):
 
 @pytest.mark.unit
 def test_pull_request_url_maps_to_entry(client):
-    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
+    with patch("database.activity.get_activity_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
         response = client.get("/change_logs", params={"authors": "all"})
 
     assert response.json()["data"][0]["pull_request_url"] == "https://github.com/org/repo/pull/42"
@@ -132,7 +132,7 @@ def test_pull_request_url_maps_to_entry(client):
 @pytest.mark.unit
 def test_pull_request_url_null_when_no_pr(client):
     row = {**ROW, "pull_request_url": None}
-    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [row])):
+    with patch("database.activity.get_activity_for_roles", new_callable=AsyncMock, return_value=(1, [row])):
         response = client.get("/change_logs", params={"authors": "all"})
 
     assert response.json()["data"][0]["pull_request_url"] is None
@@ -147,7 +147,7 @@ def test_jurisdiction_path_is_the_ocdid(client):
     directory layout — deriving a URL from it meant two encoders, one Python and one
     JavaScript, that had to agree.
     """
-    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
+    with patch("database.activity.get_activity_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
         response = client.get("/change_logs", params={"authors": "all"})
 
     entry = response.json()["data"][0]
@@ -157,14 +157,14 @@ def test_jurisdiction_path_is_the_ocdid(client):
 @pytest.mark.unit
 def test_jurisdiction_path_null_when_no_ocdid(client):
     row = {**ROW, "jurisdiction_ocdid": None}
-    with patch("database.change_logs.get_change_logs_for_roles", new_callable=AsyncMock, return_value=(1, [row])):
+    with patch("database.activity.get_activity_for_roles", new_callable=AsyncMock, return_value=(1, [row])):
         response = client.get("/change_logs", params={"authors": "all"})
 
     assert response.json()["data"][0]["jurisdiction_path"] is None
 
 
 @pytest.mark.unit
-def test_change_logs_rejects_anonymous_visitor(anonymous_client):
+def test_activity_endpoint_rejects_anonymous_visitor(anonymous_client):
     response = anonymous_client.get("/change_logs")
     assert response.status_code == 403
 
@@ -175,7 +175,7 @@ def test_change_logs_rejects_anonymous_visitor(anonymous_client):
 @pytest.mark.unit
 def test_recent_publications_is_open_to_an_anonymous_visitor(anonymous_client):
     with patch(
-        "database.change_logs.get_recent_publications",
+        "database.activity.get_recent_publications",
         new_callable=AsyncMock,
         return_value=[PUBLICATION_ROW],
     ):
@@ -192,7 +192,7 @@ def test_recent_publications_carries_no_review_detail(anonymous_client):
     """The public feed must never leak the raw diff or the internal summary text — only
     the fields `PublicPublication` declares reach the response."""
     with patch(
-        "database.change_logs.get_recent_publications",
+        "database.activity.get_recent_publications",
         new_callable=AsyncMock,
         return_value=[PUBLICATION_ROW],
     ):
@@ -206,7 +206,7 @@ def test_recent_publications_carries_no_review_detail(anonymous_client):
 @pytest.mark.unit
 def test_recent_publications_uses_the_requested_limit(anonymous_client):
     with patch(
-        "database.change_logs.get_recent_publications", new_callable=AsyncMock, return_value=[]
+        "database.activity.get_recent_publications", new_callable=AsyncMock, return_value=[]
     ) as mock_get:
         anonymous_client.get("/change_logs/recent-publications", params={"limit": 5})
 
@@ -216,7 +216,7 @@ def test_recent_publications_uses_the_requested_limit(anonymous_client):
 @pytest.mark.unit
 def test_recent_publications_defaults_to_a_small_limit(anonymous_client):
     with patch(
-        "database.change_logs.get_recent_publications", new_callable=AsyncMock, return_value=[]
+        "database.activity.get_recent_publications", new_callable=AsyncMock, return_value=[]
     ) as mock_get:
         anonymous_client.get("/change_logs/recent-publications")
 
@@ -230,7 +230,7 @@ def test_recent_publications_carries_a_review_count(anonymous_client):
     one town filled several of the feed's slots."""
     row = {**PUBLICATION_ROW, "review_count": 3}
     with patch(
-        "database.change_logs.get_recent_publications",
+        "database.activity.get_recent_publications",
         new_callable=AsyncMock,
         return_value=[row],
     ):

@@ -1,7 +1,7 @@
 """Integration tests for the role taxonomy SQL layer (database.roles).
 
 These run against the real test DB so the case-insensitive label index, the
-slug-derived primary key, the upsert-not-replace semantics, and change_logs
+slug-derived primary key, the upsert-not-replace semantics, and activity
 emission are actually exercised — not mocked.
 
 Run with:
@@ -10,7 +10,7 @@ Run with:
 Isolation: there is no per-test rollback, and migration 109 leaves 29 seeded
 roles in place, so the table cannot simply be wiped. Instead every test confines
 its writes to sentinel labels under _SENTINEL_PREFIX, and clean_roles removes
-those rows, wipes role change_logs, and restores the seeded rows' priorities
+those rows, wipes role activity, and restores the seeded rows' priorities
 (which the reorder tests necessarily disturb) before and after each test.
 """
 import pytest
@@ -30,7 +30,7 @@ from shared.schemas import RoleStatus
 
 _SENTINEL_PREFIX = "ZZ Test "
 _SENTINEL_ID_PATTERN = "zz-test-%"
-_ROLE_LOG_TYPES = ("add_role", "edit_role", "delete_role", "reorder_roles")
+_ROLE_ACTIVITY_TYPES = ("add_role", "edit_role", "delete_role", "reorder_roles")
 
 
 def _label(name: str) -> str:
@@ -50,7 +50,7 @@ async def _restore(snapshot):
         # role_aliases cascades on role delete, so the sentinel rows take their
         # aliases with them.
         await cur.execute("DELETE FROM roles WHERE id LIKE %s", (_SENTINEL_ID_PATTERN,))
-        await cur.execute("DELETE FROM change_logs WHERE type = ANY(%s)", (list(_ROLE_LOG_TYPES),))
+        await cur.execute("DELETE FROM activity WHERE type = ANY(%s)", (list(_ROLE_ACTIVITY_TYPES),))
         for role_id, priority in snapshot:
             await cur.execute("UPDATE roles SET priority = %s WHERE id = %s", (priority, role_id))
         await conn.commit()
@@ -77,11 +77,11 @@ async def _sentinel_roles():
     return [r for r in await get_roles() if r.label.startswith(_SENTINEL_PREFIX)]
 
 
-async def _change_log_types():
+async def _role_activity_types():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT type, user_id FROM change_logs WHERE type = ANY(%s)", (list(_ROLE_LOG_TYPES),)
+            "SELECT type, user_id FROM activity WHERE type = ANY(%s)", (list(_ROLE_ACTIVITY_TYPES),)
         )
         return await cur.fetchall()
 
@@ -89,14 +89,14 @@ async def _change_log_types():
 async def _reorder_logs():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("SELECT type, changes FROM change_logs WHERE type = 'reorder_roles'")
+        await cur.execute("SELECT type, changes FROM activity WHERE type = 'reorder_roles'")
         return await cur.fetchall()
 
 
-async def _wipe_change_logs():
+async def _wipe_role_activity():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("DELETE FROM change_logs WHERE type = ANY(%s)", (list(_ROLE_LOG_TYPES),))
+        await cur.execute("DELETE FROM activity WHERE type = ANY(%s)", (list(_ROLE_ACTIVITY_TYPES),))
         await conn.commit()
 
 
@@ -105,7 +105,7 @@ async def _current_order():
 
 
 async def _current_ids():
-    """reorder_roles keys on id; the change_log it writes is in labels."""
+    """reorder_roles keys on id; the activity row it writes is in labels."""
     return [r.id for r in await get_roles()]
 
 
@@ -141,7 +141,7 @@ async def test_add_emits_one_event_with_aliases_in_payload():
     160 it is attributed to the system user rather than left null."""
     await upsert_roles([_entry("Mayor", ["zz mayor"])], None)
 
-    rows = await _change_log_types()
+    rows = await _role_activity_types()
     assert len(rows) == 1, "expected one event per term, not one per alias"
     assert rows[0][0] == "add_role"
     assert str(rows[0][1]) == SYSTEM_USER_ID
@@ -158,7 +158,7 @@ async def test_absent_role_is_left_alone():
     labels = {r.label for r in await _sentinel_roles()}
     assert _label("Mayor") in labels
     assert _label("Clerk") in labels
-    assert "delete_role" not in {r[0] for r in await _change_log_types()}
+    assert "delete_role" not in {r[0] for r in await _role_activity_types()}
 
 
 @pytest.mark.asyncio
@@ -175,18 +175,18 @@ async def test_alias_sync_adds_and_disables():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_alias_change_log_records_the_right_direction():
+async def test_alias_activity_records_the_right_direction():
     """Pins the payload direction. `diff_aliases` once returned (removed, added)
     while its caller destructured added-first, so every event had the two lists
     swapped. Both are added-first now; this test is what would catch a re-flip."""
     await upsert_roles([_entry("Mayor", ["zz keep", "zz drop"])], None)
-    await _wipe_change_logs()
+    await _wipe_role_activity()
 
     await upsert_roles([_entry("Mayor", ["zz keep", "zz new"])], None)
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("SELECT changes FROM change_logs WHERE type = 'edit_role'")
+        await cur.execute("SELECT changes FROM activity WHERE type = 'edit_role'")
         changes = (await cur.fetchone())[0]
 
     assert changes["aliases_added"] == ["zz new"]
@@ -266,9 +266,9 @@ async def test_labels_reducing_to_one_slug_are_rejected():
 @pytest.mark.integration
 async def test_conflicting_payload_writes_nothing():
     """The check is pre-flight, so a rejected PUT leaves no partial write behind
-    — not the valid role ahead of the conflict, and no change_log."""
+    — not the valid role ahead of the conflict, and no activity row."""
     await upsert_roles([_entry("Mayor")], None)
-    await _wipe_change_logs()
+    await _wipe_role_activity()
 
     with pytest.raises(RuntimeError):
         await upsert_roles(
@@ -276,7 +276,7 @@ async def test_conflicting_payload_writes_nothing():
         )
 
     assert {r.label for r in await _sentinel_roles()} == {_label("Mayor")}
-    assert await _change_log_types() == []
+    assert await _role_activity_types() == []
 
 
 @pytest.mark.asyncio
@@ -284,7 +284,7 @@ async def test_conflicting_payload_writes_nothing():
 async def test_upsert_handles_add_and_edit_in_one_call():
     """One PUT can leave a role untouched, edit another, and add a third."""
     await upsert_roles([_entry("Mayor", ["zz mayor"]), _entry("Clerk")], None)
-    await _wipe_change_logs()
+    await _wipe_role_activity()
 
     await upsert_roles(
         [
@@ -299,7 +299,7 @@ async def test_upsert_handles_add_and_edit_in_one_call():
     assert by_label[_label("Clerk")].is_unique is True
     assert "zz the sheriff" in by_label[_label("Sheriff")].aliases
 
-    types = {r[0] for r in await _change_log_types()}
+    types = {r[0] for r in await _role_activity_types()}
     assert types == {"edit_role", "add_role"}
 
 
@@ -319,23 +319,23 @@ async def test_added_role_sorts_last_on_unranked_priority():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_deactivate_sets_inactive_and_emits_log():
-    """Removal is soft: the row survives so seat history can, and the change_log
+    """Removal is soft: the row survives so seat history can, and the activity row
     still records the user's action as delete_role."""
     await upsert_roles([_entry("Mayor")], None)
-    await _wipe_change_logs()
+    await _wipe_role_activity()
 
     assert await deactivate_role("zz-test-mayor", None) is True
 
     mayor = next(r for r in await _sentinel_roles() if r.label == _label("Mayor"))
     assert mayor.status == RoleStatus.INACTIVE
-    assert "delete_role" in {r[0] for r in await _change_log_types()}
+    assert "delete_role" in {r[0] for r in await _role_activity_types()}
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_deactivate_unknown_role_is_false_and_logs_nothing():
     assert await deactivate_role("zz-test-nonexistent", None) is False
-    assert await _change_log_types() == []
+    assert await _role_activity_types() == []
 
 
 @pytest.mark.asyncio
@@ -344,10 +344,10 @@ async def test_deactivate_twice_is_false():
     """Idempotent, and the second call must not emit a duplicate event."""
     await upsert_roles([_entry("Mayor")], None)
     await deactivate_role("zz-test-mayor", None)
-    await _wipe_change_logs()
+    await _wipe_role_activity()
 
     assert await deactivate_role("zz-test-mayor", None) is False
-    assert await _change_log_types() == []
+    assert await _role_activity_types() == []
 
 
 # ── reorder_roles ───────────────────────────────────────────────────────
@@ -387,12 +387,12 @@ async def test_upsert_without_priority_keeps_the_stored_order():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_reorder_emits_one_event_with_before_after():
-    """Keyed on id, logged in labels: core.change_logs renders this payload
+    """Keyed on id, logged in labels: core.activity renders this payload
     straight into the activity feed, where a slug would not read."""
     await upsert_roles([_entry("Mayor")], None)
     before_ids = await _current_ids()
     before = await _current_order()
-    await _wipe_change_logs()
+    await _wipe_role_activity()
 
     await reorder_roles([before_ids[-1], *before_ids[:-1]], None)
     after = [before[-1], *before[:-1]]
@@ -409,7 +409,7 @@ async def test_reorder_emits_one_event_with_before_after():
 async def test_reorder_unchanged_order_is_noop():
     await upsert_roles([_entry("Mayor")], None)
     current = await _current_ids()
-    await _wipe_change_logs()
+    await _wipe_role_activity()
 
     await reorder_roles(current, None)
 
@@ -432,7 +432,7 @@ async def test_reorder_records_moved_roles_in_payload():
     """moved_roles comes in as ids and is logged as labels, same as before/after."""
     await upsert_roles([_entry("Mayor")], None)
     before = await _current_ids()
-    await _wipe_change_logs()
+    await _wipe_role_activity()
 
     await reorder_roles([before[-1], *before[:-1]], None, ["zz-test-mayor"])
 
@@ -445,7 +445,7 @@ async def test_reorder_records_moved_roles_in_payload():
 async def test_reorder_drops_unknown_moved_roles():
     await upsert_roles([_entry("Mayor")], None)
     before = await _current_ids()
-    await _wipe_change_logs()
+    await _wipe_role_activity()
 
     # "zz-test-sheriff" isn't part of the reorder — it must not leak into the
     # audit payload, and label_by_id has no entry for it to render.

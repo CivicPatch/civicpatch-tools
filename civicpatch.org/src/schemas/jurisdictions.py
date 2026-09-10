@@ -1,7 +1,7 @@
 from typing import List
 
 from pydantic import BaseModel, Field
-from schemas.change_logs import RosterChange
+from schemas.activity import RosterChange
 
 
 class JurisdictionsByOcdidsRequest(BaseModel):

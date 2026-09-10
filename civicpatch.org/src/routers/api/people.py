@@ -57,7 +57,7 @@ def get_router() -> APIRouter:
         """Every assertion on this jurisdiction's seated roster, keyed by person id.
 
         Its own route rather than a field on `GET ""`, which is public: an assertion carries
-        `asserted_by_name`, so folding it in would tell anonymous visitors who edited which
+        `created_by_name`, so folding it in would tell anonymous visitors who edited which
         field of which official. Signed-in only, and the page asks for it only where the
         editor is offered.
         """
@@ -120,8 +120,8 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
         ),
     ):
-        # The changeset and change log this writes are what the outward mirrors read; nothing
-        # here calls out to them.
+        # The activity row this writes is what the outward mirrors sweep on; nothing here calls
+        # out to them.
         await database.delete_person(person_id, user.user_id)
         return {"data": None}
 

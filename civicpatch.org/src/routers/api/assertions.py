@@ -2,15 +2,15 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
 from database import assertions
-from database.change_logs import record_change
+from database.activity import record_change
 from database.changesets import live_roster_changeset
 from database.database import get_pool
 from database.entity_jurisdiction import jurisdiction_for, name_for
 from lib.auth import require_route_access
 from schemas.assertions import Assertion
-from schemas.change_logs import Change, FieldChange
+from schemas.activity import Change, FieldChange
 from schemas.common import Identity, RouteCategory, UserRole
-from shared.utils.statuses import ChangeLogType
+from shared.utils.statuses import ActivityType
 
 
 def get_router() -> APIRouter:
@@ -30,7 +30,7 @@ def get_router() -> APIRouter:
         a superseded request can never be published, so the rows most needing judgement had no
         way to receive it.
 
-        401 rather than a NULL author: `assertions.asserted_by` is NOT NULL, because an
+        401 rather than a NULL author: `assertions.created_by` is NOT NULL, because an
         assertion nobody made is not an assertion.
         """
         if not user.user_id:
@@ -40,22 +40,26 @@ def get_router() -> APIRouter:
             )
         pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
-            assertion_id = await assertions.upsert(cur, body, user.user_id)
             jurisdiction_ocdid = await jurisdiction_for(
                 cur, body.entity_type, body.entity_id
             )
-            # Logged in the same transaction, because an assertion is current state: setting a
-            # field again overwrites it, and this is what keeps the superseded value.
+            # Resolved once, and never taken from the client: `changeset_id` names which
+            # changeset created this claim, so it has to be the server's own answer.
+            changeset_id = (
+                await live_roster_changeset(cur, jurisdiction_ocdid)
+                if jurisdiction_ocdid
+                else None
+            )
+            claim = body.model_copy(update={"changeset_id": changeset_id})
+            assertion_id = await assertions.upsert(cur, claim, user.user_id)
+            # Logged in the same transaction. The assertion row itself is the permanent record
+            # now (187), but the activity feed still wants the narration alongside it.
             await record_change(
                 cur,
-                ChangeLogType.ASSERT_FIELD,
+                ActivityType.ASSERT_FIELD,
                 user.user_id,
                 jurisdiction_ocdid,
-                changeset_id=(
-                    await live_roster_changeset(cur, jurisdiction_ocdid)
-                    if jurisdiction_ocdid
-                    else None
-                ),
+                changeset_id=changeset_id,
                 changes=Change(
                     entity_type=body.entity_type,
                     entity_id=body.entity_id,

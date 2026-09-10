@@ -261,7 +261,7 @@ def test_assertions_are_keyed_by_person_for_the_roster(client):
 @pytest.mark.unit
 def test_assertions_are_not_public_though_the_roster_beside_them_is(client):
     """The reason this is its own route. `GET /people` is public — "the public page's own
-    data" — but an assertion carries `asserted_by_name`, so folding it in would tell an
+    data" — but an assertion carries `created_by_name`, so folding it in would tell an
     anonymous visitor who edited which field of which official."""
     client.app.dependency_overrides[get_optional_user] = lambda: None
 

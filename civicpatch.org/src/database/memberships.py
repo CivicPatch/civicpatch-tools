@@ -20,28 +20,45 @@ from typing import AsyncGenerator
 from core.membership_label import derive_post_label
 from core.post_derivation import DerivedMembership
 from database import assertions, posts
-from database.change_logs import record_change
+from database.assertions import LATEST_FIRST
+from database.activity import record_change
 from database.changesets import get_updated_at, live_roster_changeset
 from database.database import get_pool
-from schemas.assertions import Assertion, AssertionKind, EntityType
-from schemas.change_logs import (
+from schemas.assertions import Assertion, AssertionKind, EntityType, Source
+from schemas.activity import (
     MEMBERSHIP_POST_FIELD,
     Change,
     FieldChange,
 )
 from schemas.posts import AssignmentResult
-from shared.utils.statuses import ChangeLogType
+from shared.utils.statuses import ActivityType
 
 # The field a human can own, named once: it is compared in SQL below and asserted in Python.
 LABEL_FIELD = "label"
 
+# Sentinel field_path for "this membership never held" (189) — a reject assertion about the
+# row itself, not a field of it. `field_path` is NOT NULL and a whole-row claim isn't a field,
+# so this is the one-time ugliness the plan named rather than solved: a `post_id` reject was
+# considered and is structurally impossible (`NOT_REJECTABLE`), and a new `kind` would have
+# meant teaching the fold a third value everywhere it currently only expects two.
+EXISTENCE_FIELD = "exists"
+# The value carried by every retraction claim. Fixed and arbitrary — a reject's dedup key
+# includes its value, so retract/reinstate always targets the same (entity, field, value) row
+# rather than accumulating a new one each cycle.
+_RETRACTED = True
+
+# withdrawn_at IS NULL, added 189: without it this found a withdrawn label assertion just as
+# readily as a live one, since the ORDER BY has no opinion on withdrawal — so clearing a label
+# back to derived (set_label's withdraw call) had no effect here, and the very next scrape
+# would still be refused the field it was just supposed to get back.
 LABEL_IS_HUMAN_SET = f"""COALESCE((
     SELECT assertions.kind = 'accept'
     FROM assertions
     WHERE assertions.entity_type = 'membership'
       AND assertions.entity_id = memberships.id
       AND assertions.field_path = '{LABEL_FIELD}'
-    ORDER BY assertions.asserted_at DESC
+      AND assertions.withdrawn_at IS NULL
+    {LATEST_FIRST}
     LIMIT 1
 ), false)"""
 
@@ -558,7 +575,11 @@ async def open_by_jurisdiction(
 
 
 async def set_label(
-    cur, membership_id: str, label: str | None, user_id: str | None = None
+    cur,
+    membership_id: str,
+    label: str | None,
+    user_id: str | None = None,
+    changeset_id: str | None = None,
 ) -> None:
     """Name this person's post, or clear it back to the derived guess.
 
@@ -573,8 +594,9 @@ async def set_label(
     if user_id is None:
         return
     if label is None:
+        # An ordinary withdrawal, not a rollback's — withdrawn_by_changeset_id stays NULL.
         await assertions.withdraw(
-            cur, EntityType.MEMBERSHIP, membership_id, LABEL_FIELD
+            cur, EntityType.MEMBERSHIP, membership_id, LABEL_FIELD, AssertionKind.ACCEPT, user_id
         )
         return
     await assertions.upsert(
@@ -585,8 +607,51 @@ async def set_label(
             field_path=LABEL_FIELD,
             kind=AssertionKind.ACCEPT,
             value=label,
+            changeset_id=changeset_id,
         ),
         user_id,
+    )
+
+
+async def retract(
+    cur,
+    membership_id: str,
+    user_id: str,
+    reason: str | None = None,
+    changeset_id: str | None = None,
+) -> str:
+    """Say this membership never held — the moderation half of `EXISTENCE_FIELD`. Returns the
+    claim's id.
+
+    An ordinary reject assertion, entity_type='membership': `IS_ON_THE_ROSTER` excludes anyone
+    with a live one, but the membership row, its `first_seen_at`, and the post it pointed at
+    all survive — this is reversible by `reinstate`, unlike closing (`closed_at`) or deleting
+    the row, neither of which this is.
+
+    `reason`, when given, rides as `sources` — the same "phoned the clerk" mechanism every
+    other assertion already has, rather than a new column just for this one.
+    """
+    return await assertions.upsert(
+        cur,
+        Assertion(
+            entity_type=EntityType.MEMBERSHIP,
+            entity_id=membership_id,
+            field_path=EXISTENCE_FIELD,
+            kind=AssertionKind.REJECT,
+            value=_RETRACTED,
+            sources=[Source(note=reason)] if reason else [],
+            changeset_id=changeset_id,
+        ),
+        user_id,
+    )
+
+
+async def reinstate(cur, membership_id: str, user_id: str) -> int:
+    """Undo the most recent `retract` on this membership — an ASSERT, undone by WITHDRAW, same
+    as every other claim. Returns how many rows went — 0 if nothing here is currently
+    retracted."""
+    return await assertions.withdraw(
+        cur, EntityType.MEMBERSHIP, membership_id, EXISTENCE_FIELD, AssertionKind.REJECT, user_id
     )
 
 
@@ -659,11 +724,11 @@ async def assign(
                 field=MEMBERSHIP_POST_FIELD, before=moved_from, after=post_id
             )
 
-        await set_label(cur, membership_id, label, user_id)
+        await set_label(cur, membership_id, label, user_id, changeset_id)
 
         await record_change(
             cur,
-            ChangeLogType.ASSIGN_MEMBERSHIP,
+            ActivityType.ASSIGN_MEMBERSHIP,
             user_id,
             post.jurisdiction_ocdid,
             Change(

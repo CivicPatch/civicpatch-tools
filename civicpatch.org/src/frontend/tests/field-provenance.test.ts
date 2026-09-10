@@ -9,8 +9,8 @@ const assertion = (over: Partial<PersonAssertion> = {}): PersonAssertion => ({
   field_path: "name",
   kind: "accept",
   value: "Jane Doe",
-  asserted_at: "2026-08-24T10:00:00+00:00",
-  asserted_by_name: "Mango-chan",
+  created_at: "2026-08-24T10:00:00+00:00",
+  created_by_name: "Mango-chan",
   ...over,
 });
 
@@ -45,13 +45,13 @@ describe("provenanceLabel", () => {
   it("names the newest, so a list field names the publish and not an arbitrary element", () =>
     expect(
       provenanceLabel([
-        assertion({ asserted_by_name: "Older", asserted_at: "2026-01-01T00:00:00+00:00" }),
-        assertion({ asserted_by_name: "Newer", asserted_at: "2026-08-24T10:00:00+00:00" }),
+        assertion({ created_by_name: "Older", created_at: "2026-01-01T00:00:00+00:00" }),
+        assertion({ created_by_name: "Newer", created_at: "2026-08-24T10:00:00+00:00" }),
       ]),
     ).toMatch(/^Published by Newer, /));
 
   it("still names the act when the user row is gone", () =>
-    expect(provenanceLabel([assertion({ asserted_by_name: null })])).toMatch(
+    expect(provenanceLabel([assertion({ created_by_name: null })])).toMatch(
       /^Published by someone, /,
     ));
 });

@@ -219,7 +219,7 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
-        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
+        patch("services.activity.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
     ):
@@ -279,7 +279,7 @@ def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
-        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock) as mock_change_logs,
+        patch("services.activity.record_manual_edits", new_callable=AsyncMock) as mock_record_manual_edits,
         patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock) as mock_save,
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock) as mock_resolve,
     ):
@@ -292,7 +292,7 @@ def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
     assert response.json()["status"] == "saved"
     # Two claims from one edited field: the new number accepted, the old one rejected.
     assert len(mock_update.await_args.args[0]) == 2
-    mock_change_logs.assert_awaited_once()
+    mock_record_manual_edits.assert_awaited_once()
     mock_save.assert_awaited_once_with(TEST_CHANGESET_ID)
 
     mock_resolve.assert_not_awaited()
@@ -307,7 +307,7 @@ def test_reformatting_a_number_the_scrape_already_found_claims_nothing(client):
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
-        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
+        patch("services.activity.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock),
     ):
         response = client.post(
@@ -330,7 +330,7 @@ def test_save_records_the_edited_field_canonicalized(client):
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
-        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
+        patch("services.activity.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock),
     ):
         response = client.post(
@@ -382,7 +382,7 @@ def test_a_person_added_by_hand_becomes_evidence_and_claims(client):
         patch("services.roster_edits._chosen_post_labels", new_callable=AsyncMock,
               return_value={"p2": "Mayor"}),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_claims,
-        patch("services.change_logs.record_manual_edits", new_callable=AsyncMock),
+        patch("services.activity.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock),
     ):
         response = client.post(

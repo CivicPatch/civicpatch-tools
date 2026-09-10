@@ -10,7 +10,7 @@ from core.jurisdiction_search import (
     build_parent_ocdids,
     build_search_text,
 )
-from core.change_logs import roster_change
+from core.activity import roster_change
 from database.changeset_predicates import (
     CADENCE_JOIN,
     LAST_ATTEMPT_AT,
@@ -35,7 +35,7 @@ from schemas.jurisdictions import (
     TimelineIssue,
 )
 from shared.schemas import Person
-from shared.utils.statuses import ChangeLogType
+from shared.utils.statuses import ActivityType
 
 logger = logging.getLogger(__name__)
 
@@ -619,15 +619,15 @@ PUBLISHED_OUTCOME = "published"
 # Person edits are in, badged like everything else: a hand edit mints its own changeset, so its
 # edits are that changeset's own work rather than a pile accumulating on somebody else's row.
 ROSTER_CHANGE_TYPES = [
-    ChangeLogType.EDIT_JURISDICTION,
-    ChangeLogType.ADD_PERSON,
-    ChangeLogType.EDIT_PERSON,
-    ChangeLogType.DELETE_PERSON,
-    ChangeLogType.ADD_POST,
-    ChangeLogType.EDIT_POST,
-    ChangeLogType.DELETE_POST,
-    ChangeLogType.ASSIGN_MEMBERSHIP,
-    ChangeLogType.ASSERT_FIELD,
+    ActivityType.EDIT_JURISDICTION,
+    ActivityType.ADD_PERSON,
+    ActivityType.EDIT_PERSON,
+    ActivityType.DELETE_PERSON,
+    ActivityType.ADD_POST,
+    ActivityType.EDIT_POST,
+    ActivityType.DELETE_POST,
+    ActivityType.ASSIGN_MEMBERSHIP,
+    ActivityType.ASSERT_FIELD,
 ]
 
 
@@ -643,7 +643,7 @@ async def get_jurisdiction_history(
     limit: int = DEFAULT_HISTORY_LIMIT,
     offset: int = 0,
 ) -> tuple[int, List[JurisdictionHistoryEntry]]:
-    """`(total, page)`, matching `get_change_logs_for_roles` — the caller needs the count to
+    """`(total, page)`, matching `get_activity_for_roles` — the caller needs the count to
     render a pager, and taking it here keeps it on the same connection as the page."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
@@ -657,18 +657,18 @@ async def get_jurisdiction_history(
         await cur.execute(
             f"""
             WITH roster_changes AS (
-                SELECT cl.changeset_id,
+                SELECT a.changeset_id,
                        jsonb_agg(jsonb_build_object(
-                           'type', cl.type,
-                           'created_at', cl.created_at,
-                           'changes', cl.changes
-                       ) ORDER BY cl.created_at) AS changes
-                FROM change_logs cl
-                WHERE cl.type = ANY(%s)
-                  AND cl.changeset_id IN (
+                           'type', a.type,
+                           'created_at', a.created_at,
+                           'changes', a.changes
+                       ) ORDER BY a.created_at) AS changes
+                FROM activity a
+                WHERE a.type = ANY(%s)
+                  AND a.changeset_id IN (
                       SELECT id::text FROM changesets WHERE jurisdiction_ocdid = %s
                   )
-                GROUP BY cl.changeset_id
+                GROUP BY a.changeset_id
             )
             SELECT changesets.id::text AS changeset_id,
                    changesets.created_at,

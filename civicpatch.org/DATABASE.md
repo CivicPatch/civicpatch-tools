@@ -43,11 +43,10 @@ erDiagram
 
     changesets {
         uuid            id                  PK
-        text            kind                "CHECK scrape|sheet_import|people_edit|jurisdiction_edit. No default — a writer that does not say its producer should fail"
+        text            kind                "CHECK scrape|sheet_import|people_edit|jurisdiction_edit|rollback (189). No default — a writer that does not say its producer should fail"
         text_null       jurisdiction_ocdid  FK  "idx"
         uuid_null       organization_id     FK  "idx: which body this review is about"
         uuid_null       created_by_user_id FK  "the system user for a scrape nobody asked for; see Actors"
-        jsonb           arguments_json
         timestamptz_null published_at       "set when a reviewer approves; this is the publish state"
         timestamptz_null dismissed_at       "set when a reviewer rejects. check: not both set"
         timestamptz_null verified_at       "185: when a *person* stood behind it, not when it published. Equal to published_at for every row so far, because nothing has ever auto-published; once the cadence flush lands a changeset can publish with published_at set and this NULL"
@@ -55,8 +54,11 @@ erDiagram
         uuid_null       resolved_by_user_id FK  "whoever published or dismissed it; NULL means not resolved yet"
         text_null       change_url          "where the change landed: a commit URL going forward, a PR URL on backfilled rows"
         timestamptz     created_at
+        timestamptz_null updated_at
         uuid_null       batch_id            FK  "idx. NULL for every changeset made outside a batch, which is most"
         text            changeset_state     "GENERATED — open|published|dismissed. 170 cut it from five: running and failed are states of an attempt, and the attempt has its own table now. 177 renamed it from `state`, which collided with jurisdictions.state and left it with zero readers; 178 settled 'ready' → 'open' — 'pending' is taken by issues.status, and open is what an OSM changeset is"
+        uuid_null       parent_changeset_id FK  "189. idx. ON DELETE SET NULL. The changeset this one layers on — live_roster_changeset (any kind except jurisdiction_edit) at mint time, resolved once rather than re-derived by every reader"
+        uuid_null       base_changeset_id   FK  "189. idx. ON DELETE SET NULL. Set only for scrape/sheet_import: the newest published collection changeset before this one — what a rollback's REBASE reads. NULL for people_edit/jurisdiction_edit, which have no source_records to rebuild a roster from"
     }
 
     pipeline_runs {
@@ -186,13 +188,13 @@ erDiagram
         int             daily_limit
     }
 
-    change_log_types {
+    activity_types {
         text            type                PK
     }
 
-    change_logs {
+    activity {
         uuid            id                  PK
-        text            type                FK  "references change_log_types(type)"
+        text            type                FK  "references activity_types(type)"
         text_null       jurisdiction_ocdid  "idx"
         text_null       changeset_id        "the changeset the change belongs to; NULL for non-review changes"
         jsonb_null      changes             "type-specific payload; {field,from,to} diff for edit_person"
@@ -291,12 +293,17 @@ erDiagram
         uuid            id                  PK
         text            entity_type         "CHECK post|membership|person|jurisdiction|organization; no FK — heterogeneous subjects, the price of an event log"
         uuid            entity_id           "no FK; deletes are refused rather than cascaded"
-        text_null       field_path          "NULL = the entity itself, not a field. UNIQUE NULLS NOT DISTINCT, so no sentinel. List fields (incl. post_id since 159) key on the value, scalars on the field — two partial indexes from 137"
+        text            field_path          "NOT NULL — every assertion here is about a field. List fields (incl. post_id since 159) key on the value, scalars on the field; the two partial indexes from 137 that enforced this were DROPPED in 187, since history means several rows can now exist per key"
         text            kind                "CHECK accept|reject"
         jsonb_null      value               "corrections only; NULL = deliberately empty, which is why kind exists"
         jsonb_null      sources             "[{note, url}] — note may stand alone: 'phoned the clerk'"
-        uuid            asserted_by         FK "NOT NULL — an assertion nobody made is not an assertion"
-        timestamptz     asserted_at         "idx: (entity_type, entity_id, asserted_at DESC). APPEND-ONLY — history is only trustworthy if rows never change"
+        uuid            created_by          FK "NOT NULL — an assertion nobody made is not an assertion. Permanent since 187: a re-assert inserts, it never overwrites this. Renamed from asserted_by in 191, same reasoning as created_at below"
+        timestamptz     created_at          "idx: (entity_type, entity_id, field_path, created_at DESC), widened in 187 to serve `asserted_values`. APPEND-ONLY since 187 — history is only trustworthy if rows never change. Renamed from asserted_at in 191: the table is insert-only, so there is no separate created/asserted moment, and this matches every other table's naming"
+        timestamptz_null withdrawn_at       "187. Set together with withdrawn_by (CHECK). NULL = still applies"
+        uuid_null       withdrawn_by        FK "187. Who retracted this claim — distinct from created_by, the one who made it"
+        text_null       withdrawn_reason    "187"
+        uuid_null       changeset_id        FK "188. idx. Which changeset CREATED this claim — write-once, nothing updates it after insert. NULL for a direct field assert or an edit outside any review"
+        uuid_null       withdrawn_by_changeset_id  FK "188. idx. Which ROLLBACK changeset withdrew this claim — symmetric to changeset_id. NULL for an ordinary withdrawal (e.g. clearing a hand-set label back to derived)"
     }
 
     state_settings {
@@ -328,7 +335,12 @@ erDiagram
     people ||--o{ memberships : "person_id"
     roles ||--o{ membership_roles : "role_id"
     memberships ||--o{ membership_roles : "membership_id"
-    users ||--o{ assertions : "asserted_by"
+    users ||--o{ assertions : "created_by"
+    users ||--o{ assertions : "withdrawn_by"
+    changesets ||--o{ assertions : "changeset_id"
+    changesets ||--o{ assertions : "withdrawn_by_changeset_id"
+    changesets ||--o{ changesets : "parent_changeset_id"
+    changesets ||--o{ changesets : "base_changeset_id"
     users ||--o{ changeset_batches : "started_by_user_id"
     changeset_batches ||--o{ changesets : "batch_id"
     changesets ||--o{ source_records : "changeset_id"
@@ -345,12 +357,12 @@ erDiagram
     users ||--o{ changesets : "created_by_user_id"
     users ||--o{ api_keys : "user_id (ON DELETE CASCADE)"
     users ||--o| api_usage_limits : "user_id (ON DELETE CASCADE)"
-    change_log_types ||--o{ change_logs : "type"
-    users ||--o{ change_logs : "user_id (ON DELETE SET NULL)"
+    activity_types ||--o{ activity : "type"
+    users ||--o{ activity : "user_id (ON DELETE SET NULL)"
     users ||--o{ state_settings : "updated_by_user_id"
     users ||--o{ global_settings : "updated_by_user_id"
-    jurisdictions ||--o{ change_logs : "jurisdiction_ocdid"
-    roles ||--o{ change_logs : "jurisdiction_ocdid"
+    jurisdictions ||--o{ activity : "jurisdiction_ocdid"
+    roles ||--o{ activity : "jurisdiction_ocdid"
     review_sessions ||--o{ review_session_entries : "review_session_id"
 ```
 
@@ -359,6 +371,12 @@ erDiagram
 - `jurisdictions.data` — jurisdiction metadata (name, geoid, etc.)
 - `pipeline_runs` was folded into `requests` in migration 147: `changeset_id` was UNIQUE NOT NULL and every request had exactly one run, so the two tables were a vertical partition of one entity that 21 queries had to join. **Undone by 169 and 170 (2026-09-04)** — the premise stopped holding once a changeset was minted at ingest rather than at dispatch, so a run that fails has no changeset and the relationship became one-to-zero-or-one. `status`, `progress` and `arguments_json` went back to `pipeline_runs`, and `changesets.changeset_state` (then `state`) lost `running` and `failed` — those describe an attempt, not a proposal. `pull_requests` went the same way in 141 — nothing opens a pull request for a scrape any more, and every column it held either lived on `requests` already or died with the merge queue.
 - **`requests` became `changesets` in migration 152**, with `request_batches` → `changeset_batches`, `source_records.request_id` → `changeset_id`, and `change_logs.request_id` → `changeset_id`. Pure rename, including every index and constraint name — a rename that leaves `requests_pkey` on `changesets` puts the old vocabulary back into the schema in a dozen places. The table grew from "a job someone asked for" and that fits only the oldest of its four producers: nobody _requests_ a sheet import, and both hand-edit kinds are born published. What all four are is a bundle of proposed changes to one jurisdiction, by one producer, at one time, awaiting a decision. `submissions` was rejected as past tense — it misnames the whole dispatched-and-running phase of a scrape, which exists at `status = PENDING, progress = 0` before it has any `source_records`, exactly the state an OSM changeset models as open-and-empty. **Migration 156 finished the job**: `issues.request_ids` and `review_session_entries.request_ids` — plural arrays 152 did not touch — became `changeset_ids`, and `requested_by_user_id` became `created_by_user_id`, matching its neighbour `resolved_by_user_id` and `changeset_batches.started_by_user_id`. It stays nullable, and the null _was_ load-bearing: a changeset with no user was machine-triggered — **superseded by migration 160**, which gives the machine a user instead. `issues.pull_request_url` kept its name at the time — it was a genuine GitHub pull request — but **migration 174 dropped it along with the `pr_opened` status**: `open_issue_pull_request` was the only writer of either and had zero callers, so nothing could set them and the webhook that looked an issue up by that url could never match. Both were vestiges of resolving an issue via a `resolve/` PR against open-data.
+- **`change_logs` became `activity`, and `change_log_types` became `activity_types`, in
+  migration 190.** Pure rename, same idiom as 152 above (every index and constraint name moves
+  too). The table started as a log of edits, then grew to carry pipeline-run events as well, and
+  the home page's live feed — the reason for this rename — reads it as neither logs nor changes
+  but the thing a user watches happen. The API route stays `/api/v1/change_logs`; that is a
+  contract, not a mirror of the table name.
 - **`issues` split in two in migration 186.** One table held two different things behind one
   polymorphic reference: `changeset_ids text[]` carried a changeset id — or a *pipeline-run* id
   when the scrape died before minting a changeset — as text, with no foreign key either way.
@@ -409,7 +427,7 @@ erDiagram
 - **Slugging is lossy, so the PK is a stricter constraint than `unique (lower(label))`.** Same lowercase label ⟹ same slug, but not the reverse: `Council/Member` and `Council Member` are two distinct labels that reduce to one id. The label index therefore catches nothing the PK doesn't — it is kept as documentation of intent, not for coverage. `core.role_taxonomy.slug_conflict_error` rejects such a pair before the write so the message can name both labels; the PK is the concurrency backstop.
 - `roles_id_not_empty` exists because `NOT NULL` does not cover `''`: a label of pure punctuation slugs to the empty string, which would otherwise insert silently as published identity. `schemas.roles.RoleInput` rejects such a label at the API boundary; the check covers any other writer.
 - **Labels and aliases share one case-insensitive namespace, and no index can enforce it.** `roles_label_lower_uq` spans `roles`, `role_aliases_label_lower_uq` spans `role_aliases`, and a unique index cannot span both — so nothing at the schema level stops one role claiming another's _label_ as an alias. That matters because `get_role_alias_map` lets the last role written win, making the owner depend on priority order (a reorder could silently flip it). `core.role_taxonomy.name_conflict_error` enforces the cross-table half before the write. A role restating _its own_ label as an alias is allowed: it resolves to itself, and seeded rows do it (`Select Board Member`, `Deputy Mayor Pro Tempore`).
-- `roles.status`: each value is a distinct matcher behaviour — `active` matches; `candidate` matches and flags for #2471's triage; `excluded` matches so the label can be _knowingly dropped_ (an exclusion like `Webmaster`, dormant since `/config/exclude` and `/config/include` were removed); `inactive` is not matched at all, and is what removal sets, so the row and any seat history survive. `active` is the only value in use today. **`shared.utils.config_utils.get_role_configs` filters to `active` and is the only reader** — before it, `status` had zero readers, which was not harmless: an `excluded` role was matched as an ordinary one. The filter is blunter than the design above, though: it makes `excluded` invisible rather than match-then-drop, so an excluded label falls through to `unrecognized_role`. The vocabulary went `kind: canonical|exclusion` → `status: …|rejected` → `status: …|excluded`; the last step realigns it with the `exclude_role` / `include_role` change-log types, which are permanent because existing `change_logs` rows FK to them.
+- `roles.status`: each value is a distinct matcher behaviour — `active` matches; `candidate` matches and flags for #2471's triage; `excluded` matches so the label can be _knowingly dropped_ (an exclusion like `Webmaster`, dormant since `/config/exclude` and `/config/include` were removed); `inactive` is not matched at all, and is what removal sets, so the row and any seat history survive. `active` is the only value in use today. **`shared.utils.config_utils.get_role_configs` filters to `active` and is the only reader** — before it, `status` had zero readers, which was not harmless: an `excluded` role was matched as an ordinary one. The filter is blunter than the design above, though: it makes `excluded` invisible rather than match-then-drop, so an excluded label falls through to `unrecognized_role`. The vocabulary went `kind: canonical|exclusion` → `status: …|rejected` → `status: …|excluded`; the last step realigns it with the `exclude_role` / `include_role` activity types, which are permanent because existing `activity` rows FK to them.
 - `role_aliases` was a `roles.aliases text[]` between migrations 106 and 110. The array could not express either thing the table exists for: a per-alias approval state (an alias must not match until approved), and uniqueness _across_ roles — nothing stopped one string aliasing two roles, which makes the matcher's answer arbitrary. `role_aliases_label_lower_uq` is deliberately global, not per-role.
 - `role_aliases.status` defaults to `candidate`, but every alias written through `PUT /api/v1/roles` is set `active`: a maintainer typing one _is_ the approval. The default is aimed at a future auto-mint path, which is the case approval was designed for. `get_roles` returns only `active` aliases, so the wire shape stays `aliases: ["…"]` and the pipeline cannot accidentally match an unapproved one.
 - `roles.priority` stays nullable on purpose: `ORDER BY priority NULLS LAST` treats NULL as a real state (unranked, sorts to the end), which `NOT NULL DEFAULT 0` would collapse into "ranked first". **`PUT /api/v1/roles/reorder` is its only writer**, and it keys on `id`; `RoleInput` deliberately has no `priority` field. Two reasons: reorder is ADMINS-only while the upsert is MAINTAINERS, so accepting it on the upsert would bypass that gate — and an omitted field would read as "clear it", which flattened every role's ordering on any save.

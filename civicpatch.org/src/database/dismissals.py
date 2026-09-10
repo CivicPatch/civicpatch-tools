@@ -12,7 +12,7 @@ import logging
 from datetime import timedelta
 
 from core.changeset_lifecycle import ChangesetEvent, states_accepting
-from database.change_logs import record_dismissal
+from database.activity import record_dismissal
 from database.changeset_predicates import HELD_BY_REVIEWER, SWEEPABLE
 from database.database import get_pool
 from database.review_sessions import SESSION_IDLE_TIMEOUT_MINUTES

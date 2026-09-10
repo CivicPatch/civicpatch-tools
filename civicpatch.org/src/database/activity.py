@@ -1,13 +1,13 @@
 import json
 
-from core.change_logs import summarize_change_log
+from core.activity import summarize_activity
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
-from schemas.change_logs import Change, ChangedJurisdiction
-from shared.utils.statuses import ChangeLogType, DismissalReason
+from schemas.activity import Change, ChangedJurisdiction
+from shared.utils.statuses import ActivityType, DismissalReason
 
 
-async def get_change_logs_for_roles(
+async def get_activity_for_roles(
     roles: list[str] | None, limit: int, offset: int
 ) -> tuple[int, list[dict]]:
     """`roles=None` is no filter at all — every author. A list narrows to just those roles."""
@@ -18,8 +18,8 @@ async def get_change_logs_for_roles(
         await cur.execute(
             f"""
             SELECT COUNT(*)
-            FROM change_logs cl
-            JOIN users u ON u.id = cl.user_id
+            FROM activity a
+            JOIN users u ON u.id = a.user_id
             WHERE true {role_filter}
             """,
             params,
@@ -29,17 +29,17 @@ async def get_change_logs_for_roles(
 
         await cur.execute(
             f"""
-            SELECT cl.id::text, cl.type, cl.jurisdiction_ocdid, cl.changeset_id,
-                   cl.changes, cl.created_at,
+            SELECT a.id::text, a.type, a.jurisdiction_ocdid, a.changeset_id,
+                   a.changes, a.created_at,
                    COALESCE(u.display_name, 'Anonymous') AS author_name, u.role AS author_role,
-                   COALESCE(j.data->>'name', cl.jurisdiction_ocdid) AS jurisdiction_name,
+                   COALESCE(j.data->>'name', a.jurisdiction_ocdid) AS jurisdiction_name,
                    changesets.change_url AS pull_request_url
-            FROM change_logs cl
-            JOIN users u ON u.id = cl.user_id
-            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = cl.jurisdiction_ocdid
-            LEFT JOIN changesets ON changesets.id::text = cl.changeset_id
+            FROM activity a
+            JOIN users u ON u.id = a.user_id
+            LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = a.jurisdiction_ocdid
+            LEFT JOIN changesets ON changesets.id::text = a.changeset_id
             WHERE true {role_filter}
-            ORDER BY cl.created_at DESC
+            ORDER BY a.created_at DESC
             LIMIT %s OFFSET %s
             """,
             (*params, limit, offset),
@@ -57,7 +57,7 @@ async def get_change_logs_for_roles(
             "author_role": r[7],
             "jurisdiction_name": r[8],
             "pull_request_url": r[9],
-            "summary": summarize_change_log(r[1], r[4]),
+            "summary": summarize_activity(r[1], r[4]),
         }
         for r in rows
     ]
@@ -75,16 +75,16 @@ async def get_recent_publications(limit: int) -> list[dict]:
         await cur.execute(
             """
             WITH publish_events AS (
-                SELECT cl.jurisdiction_ocdid,
-                       cl.created_at,
-                       cl.user_id,
+                SELECT a.jurisdiction_ocdid,
+                       a.created_at,
+                       a.user_id,
                        changesets.change_url AS commit_url,
                        COUNT(*) OVER (
-                           PARTITION BY cl.jurisdiction_ocdid, date_trunc('day', cl.created_at)
+                           PARTITION BY a.jurisdiction_ocdid, date_trunc('day', a.created_at)
                        ) AS review_count
-                FROM change_logs cl
-                LEFT JOIN changesets ON changesets.id::text = cl.changeset_id
-                WHERE cl.type = 'publish_review'
+                FROM activity a
+                LEFT JOIN changesets ON changesets.id::text = a.changeset_id
+                WHERE a.type = 'publish_review'
             ),
             latest_per_group AS (
                 SELECT DISTINCT ON (jurisdiction_ocdid, date_trunc('day', created_at))
@@ -124,8 +124,8 @@ async def get_recent_publications(limit: int) -> list[dict]:
     ]
 
 
-async def create_change_log(
-    change_type: ChangeLogType,
+async def create_activity_row(
+    change_type: ActivityType,
     user_id: str | None,
     jurisdiction_ocdid: str | None = None,
     changeset_id: str | None = None,
@@ -136,22 +136,22 @@ async def create_change_log(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO change_logs (type, jurisdiction_ocdid, changeset_id, changes, user_id)
+            INSERT INTO activity (type, jurisdiction_ocdid, changeset_id, changes, user_id)
             VALUES (%s, %s, %s, %s, %s)
             """,
             (change_type, jurisdiction_ocdid, changeset_id, payload, user_id or SYSTEM_USER_ID),
         )
 
 
-async def create_change_logs(
-    entries: list[tuple[ChangeLogType, Change | None]],
+async def create_activity_rows(
+    entries: list[tuple[ActivityType, Change | None]],
     user_id: str | None,
     jurisdiction_ocdid: str | None = None,
     changeset_id: str | None = None,
 ) -> None:
-    """A whole save's worth of change logs, on one connection.
+    """A whole save's worth of activity rows, on one connection.
 
-    `create_change_log` above takes a connection *per row* — a reviewer's edit to five people
+    `create_activity_row` above takes a connection *per row* — a reviewer's edit to five people
     checked five out of a pool of twenty, one after another, which costs more than the insert
     it wraps. One `executemany` here instead.
 
@@ -164,7 +164,7 @@ async def create_change_logs(
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.executemany(
             """
-            INSERT INTO change_logs (type, jurisdiction_ocdid, changeset_id, changes, user_id)
+            INSERT INTO activity (type, jurisdiction_ocdid, changeset_id, changes, user_id)
             VALUES (%s, %s, %s, %s, %s)
             """,
             [
@@ -182,15 +182,15 @@ async def create_change_logs(
 
 async def record_change(
     cur,
-    change_type: ChangeLogType,
+    change_type: ActivityType,
     user_id: str | None,
     jurisdiction_ocdid: str | None = None,
     changes: Change | None = None,
     changeset_id: str | None = None,
 ) -> None:
-    """Write a change log on an existing cursor, so it commits with what it describes.
+    """Write an activity row on an existing cursor, so it commits with what it describes.
 
-    `create_change_log` above opens its own connection and cannot do that. Callers already
+    `create_activity_row` above opens its own connection and cannot do that. Callers already
     inside a transaction use this one.
 
     `changeset_id` names the scrape responsible, for the events no person asked for — a post
@@ -199,7 +199,7 @@ async def record_change(
     """
     await cur.execute(
         """
-        INSERT INTO change_logs (type, jurisdiction_ocdid, changes, user_id, changeset_id)
+        INSERT INTO activity (type, jurisdiction_ocdid, changes, user_id, changeset_id)
         VALUES (%s, %s, %s, %s, %s)
         """,
         (
@@ -234,7 +234,7 @@ async def record_dismissal(
     """
     await record_change(
         cur,
-        ChangeLogType.DISMISS_REVIEW,
+        ActivityType.DISMISS_REVIEW,
         user_id,
         jurisdiction_ocdid,
         changeset_id=changeset_id,
@@ -258,14 +258,14 @@ async def jurisdictions_changed_since(minutes: int) -> list[ChangedJurisdiction]
             SELECT jurisdiction_ocdid,
                    array_agg(DISTINCT type) AS types,
                    array_remove(array_agg(DISTINCT changeset_id), NULL) AS changeset_ids
-            FROM change_logs
+            FROM activity
             WHERE created_at > now() - make_interval(mins => %s)
               AND jurisdiction_ocdid IS NOT NULL
               AND type <> %s
             GROUP BY jurisdiction_ocdid
             ORDER BY jurisdiction_ocdid
             """,
-            (minutes, ChangeLogType.DISMISS_REVIEW),
+            (minutes, ActivityType.DISMISS_REVIEW),
         )
         rows = await cur.fetchall()
     return [
@@ -298,12 +298,12 @@ async def states_changed_since(minutes: int) -> list[str]:
         await cur.execute(
             """
             SELECT DISTINCT substring(jurisdiction_ocdid from 'state:([a-z]{2})') AS state
-            FROM change_logs
+            FROM activity
             WHERE created_at > now() - make_interval(mins => %s)
               AND jurisdiction_ocdid IS NOT NULL
               AND type <> %s
             """,
-            (minutes, ChangeLogType.DISMISS_REVIEW),
+            (minutes, ActivityType.DISMISS_REVIEW),
         )
         rows = await cur.fetchall()
     return sorted(row[0] for row in rows if row[0])

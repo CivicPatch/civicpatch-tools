@@ -3,11 +3,15 @@ import uuid
 from typing import Any, AsyncGenerator, List, LiteralString
 
 from core.membership_label import derive_post_label
-from database.change_logs import record_change
+from database.activity import record_change
+from database.changesets import register_people_edit_changeset
 from database.database import get_pool
-from schemas.assertions import EntityType
-from schemas.change_logs import Change
-from shared.utils.statuses import ChangeLogType
+from database.memberships import EXISTENCE_FIELD
+from database.users import SYSTEM_USER_ID
+from schemas.assertions import AssertionKind, EntityType
+from schemas.activity import Change
+from shared.utils.id_utils import make_id
+from shared.utils.statuses import ActivityType
 from psycopg import sql
 from shared.schemas import Person
 
@@ -180,9 +184,22 @@ def labelled(person: dict) -> dict:
 # as a column, set by `PERSON_UPSERT` and cleared by whoever noticed an absence — a cache of
 # exactly this, and one that could drift from it. Measured before removing: `inactive` matched
 # "no open membership" for 48 of 48, and `active` for 20,644 of 20,664.
-IS_ON_THE_ROSTER = """EXISTS (
+#
+# The NOT EXISTS (189): a retracted membership (memberships.retract — a reject assertion,
+# entity_type='membership') is not closed and its row is not deleted, so `closed_at IS NULL`
+# alone would still count it. Alias-free throughout, per CLAUDE.md, so any caller that already
+# does `FROM people`/`FROM memberships` unaliased can splice this in unchanged.
+IS_ON_THE_ROSTER = f"""EXISTS (
     SELECT 1 FROM memberships
     WHERE memberships.person_id = people.id AND memberships.closed_at IS NULL
+      AND NOT EXISTS (
+          SELECT 1 FROM assertions
+          WHERE assertions.entity_type = 'membership'
+            AND assertions.entity_id = memberships.id
+            AND assertions.field_path = '{EXISTENCE_FIELD}'
+            AND assertions.kind = '{AssertionKind.REJECT.value}'
+            AND assertions.withdrawn_at IS NULL
+      )
 )"""
 
 
@@ -448,9 +465,10 @@ async def delete_person(person_id: str, user_id: str | None = None) -> str | Non
     Returned rather than discarded because the caller mirrors the removal outward, and once
     the row is gone there is nothing left to ask.
 
-    Records a change log in the same transaction. It used to record none: `DELETE_PERSON`
-    logs came only from `people_diff`, the reviewer's edit path, so a deletion through this
-    route left no trace in the feed and no outward mirror could see it.
+    Mints a `PEOPLE_EDIT` changeset, born published — the same shape `edit_published` uses for
+    any other synchronous hand edit to the live roster. It used to mint none: the activity row
+    carried `changeset_id=NULL`, which is what let a deletion through this route slip past
+    step 9's changeset-scoped rollback surface with nothing to roll back from.
 
     `RETURNING name` too, because after the delete there is nobody left to name in the log.
     """
@@ -465,12 +483,17 @@ async def delete_person(person_id: str, user_id: str | None = None) -> str | Non
             return None
         jurisdiction_ocdid, name = row
 
+        changeset_id = make_id()
+        await register_people_edit_changeset(
+            changeset_id, jurisdiction_ocdid, user_id or SYSTEM_USER_ID
+        )
         await record_change(
             cur,
-            ChangeLogType.DELETE_PERSON,
+            ActivityType.DELETE_PERSON,
             user_id,
             jurisdiction_ocdid,
             Change(entity_type=EntityType.PERSON, entity_id=person_id, subject=name),
+            changeset_id=changeset_id,
         )
     return jurisdiction_ocdid
 

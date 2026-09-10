@@ -23,9 +23,9 @@ class EntityType(StrEnum):
 class AssertionKind(StrEnum):
     """What the human did. Verbs, to match.
 
-    Neither is a button. `accept` is written at publish for each non-null value the reviewer
-    saw, `reject` when they remove one — which is what retired `confirm`, a valueless kind that
-    existed so somebody could say "I looked".
+    Neither is a button. `accept` is written when a reviewer's edit states a value, `reject`
+    when they remove one — which is what retired `confirm`, a valueless kind that existed so
+    somebody could say "I looked".
     """
 
     # "This value stands." One per scalar field; one per element on a list field.
@@ -56,3 +56,6 @@ class Assertion(BaseModel):
     kind: AssertionKind
     value: Any
     sources: list[Source] = []
+    # Which changeset this claim was made under, if any — a direct field assert or an edit
+    # outside review has none. Write-once in practice; nothing updates it after insert.
+    changeset_id: str | None = None

@@ -1,7 +1,7 @@
-import database.change_logs as database
+import database.activity as database
 from fastapi import APIRouter, Depends, Query
 from lib.auth import require_route_access
-from schemas.change_logs import ChangeLogAuthors, ChangeLogEntry, PublicPublication
+from schemas.activity import ActivityAuthors, ActivityEntry, PublicPublication
 from schemas.common import RouteCategory, UserRole
 from schemas.pagination import paginated_response, pagination_offset
 
@@ -17,22 +17,22 @@ def get_router() -> APIRouter:
     router = APIRouter()
 
     @router.get("")
-    async def get_change_logs_endpoint(
-        authors: ChangeLogAuthors = Query(ChangeLogAuthors.ALL),
+    async def get_activity_endpoint(
+        authors: ActivityAuthors = Query(ActivityAuthors.ALL),
         page: int = Query(1, ge=1),
         per_page: int = Query(20, ge=1, le=100),
         _user=Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         roles = (
             [UserRole.DEFAULT.value]
-            if authors == ChangeLogAuthors.QUARANTINED
+            if authors == ActivityAuthors.QUARANTINED
             else None
         )
-        total, rows = await database.get_change_logs_for_roles(
+        total, rows = await database.get_activity_for_roles(
             roles, per_page, pagination_offset(page, per_page)
         )
         entries = [
-            ChangeLogEntry(**row, jurisdiction_path=_safe_path(row["jurisdiction_ocdid"]))
+            ActivityEntry(**row, jurisdiction_path=_safe_path(row["jurisdiction_ocdid"]))
             for row in rows
         ]
         return paginated_response(total, page, per_page, entries)

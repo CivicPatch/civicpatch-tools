@@ -16,7 +16,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from core.post_derivation import DerivedMembership
-from database import change_logs, divisions, memberships, organizations, posts
+from database import activity, divisions, memberships, organizations, posts
 from database.database import get_pool
 from lib.auth import get_optional_user
 from routers.api import memberships as memberships_router
@@ -66,7 +66,7 @@ async def _wipe():
             (_OCDID,),
         )
         await cur.execute(
-            "DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (_OCDID,)
+            "DELETE FROM activity WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         for table in ("posts", "divisions", "organizations", "people"):
             await cur.execute(
@@ -150,7 +150,7 @@ async def test_assigning_puts_the_jurisdiction_on_the_sync_feed(client):
 
     client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
 
-    changed = await change_logs.jurisdictions_changed_since(15)
+    changed = await activity.jurisdictions_changed_since(15)
     assert _OCDID in [row.jurisdiction_ocdid for row in changed]
 
 
@@ -161,12 +161,12 @@ async def test_a_refused_assignment_logs_nothing(client):
     unchanged roster into open-data's history as a no-op commit."""
     person_id, mayor, _ = await _seed()
     client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
-    before = await _change_logs()
+    before = await _activity_rows()
 
     repeated = client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
 
     assert repeated.status_code == 409, repeated.text
-    assert await _change_logs() == before
+    assert await _activity_rows() == before
 
 
 @pytest.mark.asyncio
@@ -221,11 +221,11 @@ async def test_unmatched_text_reaches_the_wire_with_its_counts(client):
     assert row["examples"] == [_OCDID]
 
 
-async def _change_logs() -> list[dict]:
+async def _activity_rows() -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT type, changes FROM change_logs WHERE jurisdiction_ocdid = %s "
+            "SELECT type, changes FROM activity WHERE jurisdiction_ocdid = %s "
             "ORDER BY created_at",
             (_OCDID,),
         )
@@ -243,7 +243,7 @@ async def test_an_assignment_and_a_move_are_one_type_told_apart_by_the_payload(c
     client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
     client.put(_PREFIX, json={"person_id": person_id, "post_id": ward})
 
-    logs = await _change_logs()
+    logs = await _activity_rows()
 
     assert [log["type"] for log in logs] == ["assign_membership"] * 2
     # `sources` is empty on everything but an assertion — "phoned the clerk" is a field-level
@@ -265,7 +265,7 @@ async def test_a_failed_assignment_leaves_no_trace(client):
 
     client.put(_PREFIX, json={"person_id": person_id, "post_id": str(uuid.uuid4())})
 
-    assert await _change_logs() == []
+    assert await _activity_rows() == []
 
 
 @pytest.mark.asyncio

@@ -14,7 +14,7 @@ Isolation: everything hangs off one sentinel jurisdiction, removed before and af
 import uuid
 
 import pytest
-from shared.utils.statuses import ChangeLogType, DismissalReason
+from shared.utils.statuses import ActivityType, DismissalReason
 import pytest_asyncio
 from psycopg.errors import NotNullViolation
 
@@ -40,7 +40,7 @@ async def _cleanup():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "DELETE FROM assertions WHERE asserted_by IN "
+            "DELETE FROM assertions WHERE created_by IN "
             "(SELECT id FROM users WHERE email = %s)",
             (_CURATOR,),
         )
@@ -70,7 +70,7 @@ async def _cleanup():
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
         )
         await cur.execute(
-            "DELETE FROM change_logs WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
+            "DELETE FROM activity WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
         )
         await conn.commit()
 
@@ -235,7 +235,7 @@ async def test_a_failed_publish_writes_nothing(sentinel_request):
 
     # Bob was in the same executemany as the rejected row, so he must not have landed.
     assert await _people_by_status() == {"active": ["Ann"]}
-    # Nor did a log. The outward mirrors read `change_logs` to learn a roster changed, so a
+    # Nor did a log. The outward mirrors read `activity` to learn a roster changed, so a
     # log for a publish that did not happen would sync a jurisdiction to a state the database
     # never held.
     assert await _publish_logs() == logged
@@ -245,7 +245,7 @@ async def _publish_logs() -> list[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT type FROM change_logs WHERE jurisdiction_ocdid = %s ORDER BY created_at",
+            "SELECT type FROM activity WHERE jurisdiction_ocdid = %s ORDER BY created_at",
             (_SENTINEL_OCDID,),
         )
         return [row[0] for row in await cur.fetchall()]
@@ -258,12 +258,12 @@ async def test_a_publish_logs_that_the_roster_changed(sentinel_request):
     best-effort afterwards, so it cannot be lost while the publish stands."""
     await publish_changeset(sentinel_request, _SENTINEL_OCDID, [_person("Ann")])
 
-    assert await _publish_logs() == [ChangeLogType.PUBLISH_REVIEW.value]
+    assert await _publish_logs() == [ActivityType.PUBLISH_REVIEW.value]
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT changeset_id FROM change_logs WHERE jurisdiction_ocdid = %s",
+            "SELECT changeset_id FROM activity WHERE jurisdiction_ocdid = %s",
             (_SENTINEL_OCDID,),
         )
         assert (await cur.fetchone())[0] == sentinel_request
@@ -367,9 +367,9 @@ async def test_publish_does_not_blank_an_existing_resolver(sentinel_request):
     finally:
         async with pool.connection() as conn, conn.cursor() as cur:
             # Defensive: nothing in a clean publish asserts on this user's behalf, but
-            # `asserted_by` is NOT NULL REFERENCES users — clear first in case that ever
+            # `created_by` is NOT NULL REFERENCES users — clear first in case that ever
             # changes, since no production path deletes a user.
-            await cur.execute("DELETE FROM assertions WHERE asserted_by = %s", (user_id,))
+            await cur.execute("DELETE FROM assertions WHERE created_by = %s", (user_id,))
             await cur.execute("DELETE FROM users WHERE id = %s", (user_id,))
             await conn.commit()
 
