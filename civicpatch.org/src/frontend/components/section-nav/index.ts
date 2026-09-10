@@ -58,6 +58,13 @@ export function manageSection(permissions: object, openPrCount?: number): Sectio
   return items;
 }
 
+export function userSection(targetUserId: string): SectionNavItem[] {
+  return [
+    { label: "Profile", href: `/users/${targetUserId}` },
+    { label: "History", href: `/users/${targetUserId}/history` },
+  ];
+}
+
 export function adminSection(permissions: object): SectionNavItem[] {
   const items: SectionNavItem[] = [{ label: "Users", href: "/admin" }];
   if (perm(permissions, "can_edit_spend")) items.push({ label: "Spend", href: "/spend" });

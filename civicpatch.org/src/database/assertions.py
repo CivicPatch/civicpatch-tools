@@ -205,6 +205,117 @@ async def withdraw(
     return cur.rowcount
 
 
+# The same "which row currently wins" comparison `LATEST_FIRST`/`asserted_values` make by
+# reading newest-first and taking the first unseen key — spelled as a predicate instead of a
+# fold, because a bulk rollback needs to touch exactly these rows in one statement rather than
+# rank a whole table in Python. Matches `core.assertion_lifecycle.AssertionState.ACTIVE`
+# exactly: not withdrawn, and no newer non-withdrawn claim exists for the same key. Requires
+# the caller's query to alias the table `a` — an exception to the alias-free rule for shared
+# predicates, unavoidable for a self-join.
+_IS_ACTIVE = """
+    a.withdrawn_at IS NULL
+    AND a.id = (
+        SELECT a2.id FROM assertions a2
+         WHERE a2.entity_type = a.entity_type AND a2.entity_id = a.entity_id
+           AND a2.field_path = a.field_path AND a2.kind = a.kind
+           AND a2.withdrawn_at IS NULL
+         ORDER BY a2.created_at DESC, a2.id DESC LIMIT 1
+    )
+"""
+
+
+async def get_active_assertions_by_creator(
+    cur, created_by: str, entity_type: EntityType
+) -> list[dict]:
+    """Every currently-ACTIVE claim of one entity type this user made, anywhere — the flat
+    candidate list a "roll back this user" UI shows and selects from. Not scoped to one
+    jurisdiction: nothing about picking what to undo needs a jurisdiction chosen up front, only
+    execution does, and that's answered per selected id (`get_jurisdictions_for_assertions`),
+    not by the listing.
+
+    Joined through `people`, not `changesets` — an assertion's jurisdiction is a fact about the
+    entity it's about, same source `entity_jurisdiction.jurisdiction_for` reads for one row at a
+    time; `changeset_id` is nullable (pre-188 rows, direct asserts) and would silently drop
+    them. PERSON-specific, matching every other PERSON-only assumption in this feature.
+    """
+    await cur.execute(
+        f"""
+        SELECT a.id::text, a.entity_id::text, a.field_path, a.value, p.jurisdiction_ocdid
+        FROM assertions a
+        JOIN people p ON p.id = a.entity_id
+        WHERE a.entity_type = %s AND a.created_by = %s AND {_IS_ACTIVE}
+        ORDER BY a.created_at DESC
+        """,
+        (entity_type.value, created_by),
+    )
+    columns = [column.name for column in cur.description or []]
+    return [dict(zip(columns, row)) for row in await cur.fetchall()]
+
+
+async def get_jurisdictions_for_assertions(
+    cur, assertion_ids: list[str]
+) -> dict[str, list[str]]:
+    """These assertion ids, grouped by which jurisdiction each one's entity belongs to — what
+    lets a rollback selection spanning more than one jurisdiction execute as several
+    single-jurisdiction rollbacks without the caller ever needing to group them itself.
+    PERSON-specific, same reasoning as `get_active_assertions_by_creator`."""
+    await cur.execute(
+        """
+        SELECT p.jurisdiction_ocdid, a.id::text
+        FROM assertions a
+        JOIN people p ON p.id = a.entity_id
+        WHERE a.id = ANY(%s)
+        """,
+        (assertion_ids,),
+    )
+    grouped: dict[str, list[str]] = {}
+    for jurisdiction_ocdid, assertion_id in await cur.fetchall():
+        grouped.setdefault(jurisdiction_ocdid, []).append(assertion_id)
+    return grouped
+
+
+async def get_entity_ids_for_assertions(
+    cur, entity_type: EntityType, assertion_ids: list[str]
+) -> list[str]:
+    """Which distinct entities these assertions are about — what a rollback republish needs to
+    know whose derived state to recompute, having only a list of withdrawn assertion ids."""
+    await cur.execute(
+        "SELECT DISTINCT entity_id::text FROM assertions "
+        "WHERE entity_type = %s AND id = ANY(%s)",
+        (entity_type.value, assertion_ids),
+    )
+    rows = await cur.fetchall()
+    return [row[0] for row in rows]
+
+
+async def withdraw_assertions(
+    cur,
+    assertion_ids: list[str],
+    withdrawn_by: str,
+    withdrawn_by_changeset_id: str,
+    reason: str | None = None,
+) -> int:
+    """Withdraw exactly these assertions, whichever are still ACTIVE. Returns how many went.
+
+    The one primitive a bulk rollback (every id a listing query just returned) and a selective
+    one (whichever ids a reviewer checked) share — bulk is the unfiltered case of selective, not
+    a separate code path. Re-checks `_IS_ACTIVE` rather than trusting the caller's list is still
+    current, since it may have been read moments earlier.
+    """
+    await cur.execute(
+        f"""
+        UPDATE assertions a
+           SET withdrawn_at = now(), withdrawn_by = %s, withdrawn_reason = %s,
+               withdrawn_by_changeset_id = %s
+         WHERE a.id = ANY(%s) AND {_IS_ACTIVE}
+        """,
+        (withdrawn_by, reason, withdrawn_by_changeset_id, assertion_ids),
+    )
+    return cur.rowcount
+
+
+
+
 async def create(assertion: Assertion, created_by: str) -> str:
     """Set one assertion, owning the connection. Returns its id.
 

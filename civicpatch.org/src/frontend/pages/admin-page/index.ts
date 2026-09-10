@@ -309,6 +309,7 @@ function AdminPage() {
                     <th>Provider</th>
                     <th>Last login</th>
                     <th>Role</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -351,6 +352,11 @@ function AdminPage() {
                               `;
                             })}
                           </div>
+                        </td>
+                        <td class="admin-users-table__actions">
+                          <a class="btn btn-sm secondary" href="/users/${user.id}">
+                            View
+                          </a>
                         </td>
                       </tr>
                     `;

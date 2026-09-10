@@ -12,7 +12,7 @@ erDiagram
         text            provider        "unique: (provider, provider_user_id)"
         text            provider_user_id
         text            email
-        text_null       display_name    "unique (NULLs distinct)"
+        text            username        "unique, not null; backfilled from id (192)"
         text            role            "default: 'default', CHECK IN ('default','contributors','maintainers','admins')"
         timestamptz_null last_login_at  "set by upsert_user on every successful sign-in"
         timestamptz_null created_at
@@ -58,7 +58,6 @@ erDiagram
         uuid_null       batch_id            FK  "idx. NULL for every changeset made outside a batch, which is most"
         text            changeset_state     "GENERATED — open|published|dismissed. 170 cut it from five: running and failed are states of an attempt, and the attempt has its own table now. 177 renamed it from `state`, which collided with jurisdictions.state and left it with zero readers; 178 settled 'ready' → 'open' — 'pending' is taken by issues.status, and open is what an OSM changeset is"
         uuid_null       parent_changeset_id FK  "189. idx. ON DELETE SET NULL. The changeset this one layers on — live_roster_changeset (any kind except jurisdiction_edit) at mint time, resolved once rather than re-derived by every reader"
-        uuid_null       base_changeset_id   FK  "189. idx. ON DELETE SET NULL. Set only for scrape/sheet_import: the newest published collection changeset before this one — what a rollback's REBASE reads. NULL for people_edit/jurisdiction_edit, which have no source_records to rebuild a roster from"
     }
 
     pipeline_runs {
@@ -340,7 +339,6 @@ erDiagram
     changesets ||--o{ assertions : "changeset_id"
     changesets ||--o{ assertions : "withdrawn_by_changeset_id"
     changesets ||--o{ changesets : "parent_changeset_id"
-    changesets ||--o{ changesets : "base_changeset_id"
     users ||--o{ changeset_batches : "started_by_user_id"
     changeset_batches ||--o{ changesets : "batch_id"
     changesets ||--o{ source_records : "changeset_id"

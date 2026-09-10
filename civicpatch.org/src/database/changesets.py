@@ -11,7 +11,6 @@ from typing import Optional
 
 from database.changeset_predicates import (
     AVAILABLE_FOR_REVIEW,
-    COLLECTION_KIND_VALUES_SQL,
     RUN_IN_FLIGHT,
     RUN_PROGRESS,
     RUN_STATUS,
@@ -42,18 +41,18 @@ async def register_scrape_changeset(run_id: str) -> str:
         )
         row = await cur.fetchone()
         jurisdiction_ocdid, created_by_user_id = row if row else (None, None)
-        parent_changeset_id, base_changeset_id = (
-            await _resolve_collection_lineage(cur, jurisdiction_ocdid)
+        parent_changeset_id = (
+            await live_roster_changeset(cur, jurisdiction_ocdid)
             if jurisdiction_ocdid
-            else (None, None)
+            else None
         )
         await cur.execute(
             """
             INSERT INTO changesets (
                 id, kind, jurisdiction_ocdid, created_by_user_id,
-                created_at, updated_at, parent_changeset_id, base_changeset_id
+                created_at, updated_at, parent_changeset_id
             )
-            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, %s, %s)
+            VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, %s)
             """,
             (
                 changeset_id,
@@ -61,7 +60,6 @@ async def register_scrape_changeset(run_id: str) -> str:
                 jurisdiction_ocdid,
                 created_by_user_id,
                 parent_changeset_id,
-                base_changeset_id,
             ),
         )
         await cur.execute(
@@ -87,6 +85,37 @@ async def mark_published(cur, changeset_id: str) -> None:
     )
 
 
+async def _register_born_published_changeset(
+    cur,
+    changeset_id: str,
+    kind: ChangesetKind,
+    jurisdiction_ocdid: str,
+    created_by_user_id: str,
+) -> str | None:
+    # Before the insert: this changeset must not find itself.
+    parent_changeset_id = await live_roster_changeset(cur, jurisdiction_ocdid)
+    await cur.execute(
+        """
+        INSERT INTO changesets (
+            id, kind, jurisdiction_ocdid, created_by_user_id,
+            resolved_by_user_id, created_at, updated_at,
+            parent_changeset_id
+        )
+        VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, %s)
+        """,
+        (
+            changeset_id,
+            kind,
+            jurisdiction_ocdid,
+            created_by_user_id,
+            created_by_user_id,
+            parent_changeset_id,
+        ),
+    )
+    await mark_published(cur, changeset_id)
+    return parent_changeset_id
+
+
 async def register_people_edit_changeset(
     changeset_id: str,
     jurisdiction_ocdid: str,
@@ -95,33 +124,44 @@ async def register_people_edit_changeset(
     """A maintainer's hand edit of a live roster. Nothing ran, so no run.
 
     Born published: the edit writes sightings for anyone added, and a pending changeset holding
-    those would land straight in the review pool. Inserted unpublished and published
-    immediately after, in the same transaction — the same shape every changeset kind uses,
-    rather than a second INSERT column list that bakes the stamp in.
+    those would land straight in the review pool.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        # Before the insert: this changeset must not find itself.
-        parent_changeset_id = await live_roster_changeset(cur, jurisdiction_ocdid)
-        await cur.execute(
-            """
-            INSERT INTO changesets (
-                id, kind, jurisdiction_ocdid, created_by_user_id,
-                resolved_by_user_id, created_at, updated_at,
-                parent_changeset_id
-            )
-            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, %s)
-            """,
-            (
-                changeset_id,
-                ChangesetKind.PEOPLE_EDIT,
-                jurisdiction_ocdid,
-                created_by_user_id,
-                created_by_user_id,
-                parent_changeset_id,
-            ),
+        await _register_born_published_changeset(
+            cur,
+            changeset_id,
+            ChangesetKind.PEOPLE_EDIT,
+            jurisdiction_ocdid,
+            created_by_user_id,
         )
-        await mark_published(cur, changeset_id)
+
+
+async def register_rollback_changeset(
+    cur,
+    changeset_id: str,
+    jurisdiction_ocdid: str,
+    created_by_user_id: str,
+) -> str | None:
+    """A rollback, undoing whatever is currently live. Born published — a rollback is decided
+    the instant it runs, not proposed for review.
+
+    Takes a caller's cursor rather than owning a connection: the rollback service withdraws
+    (or restores) assertions in the same breath it mints this, and the two must commit
+    together or not at all — a published rollback changeset with nothing actually withdrawn
+    would be a rollback that changed nothing while claiming it had.
+
+    Returns the id of the changeset being rolled back (see `_register_born_published_changeset`)
+    — the caller needs it to know what to withdraw or rebase from, and this is the same lookup
+    rollback-eligibility already required, not a second one.
+    """
+    return await _register_born_published_changeset(
+        cur,
+        changeset_id,
+        ChangesetKind.ROLLBACK,
+        jurisdiction_ocdid,
+        created_by_user_id,
+    )
 
 
 async def register_sheet_import_changeset(
@@ -137,16 +177,14 @@ async def register_sheet_import_changeset(
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        parent_changeset_id, base_changeset_id = await _resolve_collection_lineage(
-            cur, jurisdiction_ocdid
-        )
+        parent_changeset_id = await live_roster_changeset(cur, jurisdiction_ocdid)
         await cur.execute(
             """
             INSERT INTO changesets (
                 id, kind, jurisdiction_ocdid, created_by_user_id, batch_id,
-                created_at, updated_at, parent_changeset_id, base_changeset_id
+                created_at, updated_at, parent_changeset_id
             )
-            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, %s)
             """,
             (
                 changeset_id,
@@ -155,7 +193,6 @@ async def register_sheet_import_changeset(
                 created_by_user_id,
                 batch_id,
                 parent_changeset_id,
-                base_changeset_id,
             ),
         )
 
@@ -208,34 +245,6 @@ async def live_roster_changeset(cur, jurisdiction_ocdid: str) -> str | None:
     )
     row = await cur.fetchone()
     return row[0] if row else None
-
-
-async def _newest_collection_changeset(cur, jurisdiction_ocdid: str) -> str | None:
-    """The newest published scrape or sheet import — a new collection changeset's own
-    `base_changeset_id`, and what a rollback rebases a scrape/import back TO (189)."""
-    await cur.execute(
-        f"""
-        SELECT id::text FROM changesets
-        WHERE jurisdiction_ocdid = %s AND published_at IS NOT NULL
-          AND kind IN ({COLLECTION_KIND_VALUES_SQL})
-        ORDER BY published_at DESC
-        LIMIT 1
-        """,
-        (jurisdiction_ocdid,),
-    )
-    row = await cur.fetchone()
-    return row[0] if row else None
-
-
-async def _resolve_collection_lineage(
-    cur, jurisdiction_ocdid: str
-) -> tuple[str | None, str | None]:
-    """`(parent_changeset_id, base_changeset_id)` for a new scrape or sheet import — the two
-    lineage lookups a collection-kind mint always makes together (189)."""
-    return (
-        await live_roster_changeset(cur, jurisdiction_ocdid),
-        await _newest_collection_changeset(cur, jurisdiction_ocdid),
-    )
 
 
 # Two lanes, rooted apart: before ingest there is no changeset row to reach a run through. They
@@ -388,8 +397,6 @@ async def get_issue_changeset_details(changeset_ids: list[str]) -> list[dict]:
         }
         for r in rows
     ]
-
-
 
 
 async def get_updated_at(cur, changeset_id: str) -> datetime:

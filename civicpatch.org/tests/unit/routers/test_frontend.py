@@ -378,6 +378,44 @@ def test_the_pipelines_page_is_closed_to_signed_out_visitors(permissions_client)
     assert response.headers["location"] == "/"
 
 
+# ── GET /users/{id} ──────────────────────────────────────────────────────────
+# A moderation view of someone else's account (rollback, currently) — gated the same as
+# `/admin` (`can_manage_roles`), not self-service.
+
+_TARGET_USER_ID = "10000000-0000-0000-0000-000000000001"
+
+
+@pytest.mark.unit
+def test_the_user_profile_page_renders_for_an_admin(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = lambda: ADMIN
+    client = TestClient(permissions_client)
+    response = client.get(f"/users/{_TARGET_USER_ID}")
+
+    assert response.status_code == 200
+    assert "user-profile-page" in response.text
+    assert _TARGET_USER_ID in response.text
+
+
+@pytest.mark.unit
+def test_the_user_profile_page_is_closed_to_a_maintainer(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = _maintainer
+    client = TestClient(permissions_client, follow_redirects=False)
+    response = client.get(f"/users/{_TARGET_USER_ID}")
+
+    assert response.status_code == 303
+    assert response.headers["location"] == "/"
+
+
+@pytest.mark.unit
+def test_the_user_profile_page_is_closed_to_signed_out_visitors(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = lambda: None
+    client = TestClient(permissions_client, follow_redirects=False)
+    response = client.get(f"/users/{_TARGET_USER_ID}")
+
+    assert response.status_code == 303
+    assert response.headers["location"] == "/"
+
+
 # ── GET /gallery ───────────────────────────────────────────────────────────────
 # A component catalog for design review, not a data page — gated the same as the rest of
 # the Admin menu (`can_view_gallery_page`).

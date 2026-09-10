@@ -636,6 +636,14 @@ export const fetchAdminUsers = async () => {
   return res.json();
 };
 
+export const fetchAdminUser = async (userId) => {
+  const res = await fetch(`${API_URL}/api/admin/users/${userId}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const setUserRole = async (userId, role) => {
   const res = await fetch(`${API_URL}/api/admin/users/${userId}/role`, {
     credentials: "include",
@@ -698,6 +706,31 @@ export const revokeInvite = async (userId) => {
     credentials: "include",
     method: "DELETE",
     headers: { "X-CSRF-Token": getCsrfCookie() },
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.detail || `HTTP ${res.status}`);
+  }
+  return res.json();
+};
+
+export const fetchRollbackCandidates = async (userId) => {
+  const res = await fetch(`${API_URL}/api/admin/users/${userId}/rollback-candidates`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const rollbackUserAssertions = async (userId, assertionIds, reason) => {
+  const res = await fetch(`${API_URL}/api/admin/users/${userId}/rollback`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({ assertion_ids: assertionIds, reason: reason || null }),
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));

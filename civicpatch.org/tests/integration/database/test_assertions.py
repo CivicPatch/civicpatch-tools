@@ -409,6 +409,141 @@ async def test_withdrawing_falls_back_to_the_earlier_claim_not_the_scrape():
         assert len(rows) == 2
 
 
+async def _mint_rollback_changeset(cur) -> str:
+    """A bare changeset row, standing in for `register_rollback_changeset` (9c, not yet built)
+    — all this needs is something real for `withdrawn_by_changeset_id`'s FK to point at."""
+    await cur.execute(
+        "INSERT INTO changesets (kind) VALUES ('rollback') RETURNING id::text"
+    )
+    row = await cur.fetchone()
+    assert row is not None
+    return row[0]
+
+
+_OTHER_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_assert_other/government"
+
+
+async def _mint_changeset(cur, jurisdiction_ocdid: str, created_by_user_id: str) -> str:
+    """A bare `people_edit` changeset with a real jurisdiction — what 9d's rollback service
+    mints assertions under, minimal enough not to need the full register function's lineage
+    lookups."""
+    await cur.execute(
+        "INSERT INTO changesets (kind, jurisdiction_ocdid, created_by_user_id) "
+        "VALUES ('people_edit', %s, %s) RETURNING id::text",
+        (jurisdiction_ocdid, created_by_user_id),
+    )
+    row = await cur.fetchone()
+    assert row is not None
+    return row[0]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_active_assertions_by_creator_scopes_to_the_user_not_a_place():
+    """Must list every one of a user's active claims, spanning however many changesets *and*
+    jurisdictions — deliberately not scoped to one place (2026-09-10: no jurisdiction picker
+    anywhere in the rollback UI) — and nothing that belongs to a different user."""
+    user_id, _ = await _seed()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level) "
+            "VALUES (%s, 'zz', 'local')",
+            (_OTHER_OCDID,),
+        )
+        await cur.execute(
+            "INSERT INTO users (email, provider, provider_user_id, role) "
+            "VALUES ('zz-assert-other-user@example.com', 'email', "
+            "'zz-assert-other-user@example.com', 'admins') RETURNING id::text"
+        )
+        row = await cur.fetchone()
+        assert row is not None
+        other_user_id = row[0]
+
+        here_first = await _mint_changeset(cur, _OCDID, user_id)
+        here_second = await _mint_changeset(cur, _OCDID, user_id)
+        elsewhere = await _mint_changeset(cur, _OTHER_OCDID, user_id)
+        also_here = await _mint_changeset(cur, _OCDID, other_user_id)
+        await conn.commit()
+
+    mine_here_a, mine_here_b, mine_elsewhere, someone_elses = (
+        str(uuid.uuid4()) for _ in range(4)
+    )
+    async with pool.connection() as conn, conn.cursor() as cur:
+        # Jurisdiction is now read off the person, not the changeset — a real row per entity,
+        # in the jurisdiction each case is actually about.
+        for entity_id, jurisdiction_ocdid in (
+            (mine_here_a, _OCDID),
+            (mine_here_b, _OCDID),
+            (mine_elsewhere, _OTHER_OCDID),
+            (someone_elses, _OCDID),
+        ):
+            await cur.execute(
+                "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, 'Test')",
+                (entity_id, jurisdiction_ocdid),
+            )
+        await conn.commit()
+
+    for entity_id, changeset_id, asserted_by, value in (
+        (mine_here_a, here_first, user_id, "A"),
+        (mine_here_b, here_second, user_id, "B"),
+        (mine_elsewhere, elsewhere, user_id, "Elsewhere"),
+        (someone_elses, also_here, other_user_id, "Not Mine"),
+    ):
+        await assertions.create(
+            Assertion(
+                entity_type=EntityType.PERSON,
+                entity_id=entity_id,
+                field_path="name",
+                kind=AssertionKind.ACCEPT,
+                value=value,
+                changeset_id=changeset_id,
+            ),
+            asserted_by,
+        )
+
+    try:
+        async with pool.connection() as conn, conn.cursor() as cur:
+            candidates = await assertions.get_active_assertions_by_creator(
+                cur, user_id, EntityType.PERSON
+            )
+            assert len(candidates) == 3, "this user's three active claims, across two places"
+            assert {c["jurisdiction_ocdid"] for c in candidates} == {_OCDID, _OTHER_OCDID}
+
+            candidate_ids = [c["id"] for c in candidates]
+            rollback_id = await _mint_rollback_changeset(cur)
+            withdrawn = await assertions.withdraw_assertions(
+                cur, candidate_ids, user_id, rollback_id
+            )
+            assert withdrawn == 3
+            await conn.commit()
+
+        async with pool.connection() as conn, conn.cursor() as cur:
+            asserted = await assertions.asserted_values(
+                cur,
+                EntityType.PERSON,
+                [mine_here_a, mine_here_b, mine_elsewhere, someone_elses],
+            )
+        assert mine_here_a not in asserted
+        assert mine_here_b not in asserted
+        assert mine_elsewhere not in asserted, "this user's claim elsewhere must roll back too"
+        assert asserted[someone_elses]["name"][AssertionKind.ACCEPT] == ["Not Mine"]
+    finally:
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute(
+                "DELETE FROM assertions WHERE entity_id::text = ANY(%s)",
+                ([mine_here_a, mine_here_b, mine_elsewhere, someone_elses],),
+            )
+            await cur.execute(
+                "DELETE FROM people WHERE id::text = ANY(%s)",
+                ([mine_here_a, mine_here_b, mine_elsewhere, someone_elses],),
+            )
+            await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OTHER_OCDID,))
+            await cur.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OTHER_OCDID,))
+            await cur.execute("DELETE FROM users WHERE id::text = %s", (other_user_id,))
+            await conn.commit()
+
+
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_an_assertion_nobody_made_is_refused():

@@ -1,0 +1,8 @@
+{% extends "layouts/base.html" %}
+{% block scripts %}<script type="module" src="{{ vite_asset('assets/user-profile.ts') }}"></script>{% endblock %}
+{% block styles %}{% for href in vite_css('assets/user-profile.ts') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %} {% block title %}User{% endblock %}
+{% block content %}
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
+
+<user-profile-page target_user_id="{{ target_user_id }}"></user-profile-page>
+{% endblock %}

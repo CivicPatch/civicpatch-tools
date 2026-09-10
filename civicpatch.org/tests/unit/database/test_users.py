@@ -192,7 +192,7 @@ async def test_list_users_populated():
 @pytest.mark.asyncio
 @pytest.mark.unit
 async def test_get_user_by_id_found():
-    row = ("uuid-1", "supabase", "sb-1", "alice@example.com", "Alice")
+    row = ("uuid-1", "supabase", "sb-1", "alice@example.com", "Alice", "maintainers", None)
     cur = _make_cursor(returning_row=row)
     with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
         result = await get_user_by_id("uuid-1")
@@ -203,6 +203,8 @@ async def test_get_user_by_id_found():
         "provider_user_id": "sb-1",
         "email": "alice@example.com",
         "display_name": "Alice",
+        "role": "maintainers",
+        "last_login_at": None,
     }
 
 

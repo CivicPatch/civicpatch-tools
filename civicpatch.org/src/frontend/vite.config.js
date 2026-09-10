@@ -27,6 +27,8 @@ export default defineConfig(({ command }) => ({
         spend: "./assets/spend.ts",
         pipelines: "./assets/pipelines.ts",
         gallery: "./assets/gallery.ts",
+        "user-profile": "./assets/user-profile.ts",
+        "user-history": "./assets/user-history.ts",
       },
     },
   },

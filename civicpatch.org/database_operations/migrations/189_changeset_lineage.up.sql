@@ -6,28 +6,25 @@
 -- reader — the same "store the answer instead of re-guessing it" as this whole plan's
 -- assertions work.
 --
--- `base_changeset_id` — set only on the two COLLECTION kinds (scrape, sheet_import): the newest
--- published collection changeset before this one. This is what a rollback's REBASE reads —
--- `proposed_roster` can only reconstruct a roster from a changeset with `source_records`, and
--- only collection kinds have any, so a `people_edit`/`jurisdiction_edit` changeset would answer
--- `[]` or worse if asked for its own base. Left NULL for those two kinds rather than inheriting
--- a value nothing reads.
---
--- Both `ON DELETE SET NULL`, same reasoning as `assertions.changeset_id` (188): provenance, not
+-- `ON DELETE SET NULL`, same reasoning as `assertions.changeset_id` (188): provenance, not
 -- identity.
 --
 -- `'rollback'` joins `kind`'s CHECK — a changeset in its own right (it publishes, it can be
 -- undone, it needs an audit trail), deliberately excluded from `COLLECTION_KINDS` so
 -- `advances_last_seen` never treats it as a sighting.
+--
+-- No `base_changeset_id` here: an earlier draft of this migration added one, for a rollback
+-- "rebase" (reconstruct a scrape/import's roster from an earlier collection changeset's
+-- `source_records`) that never got built — rollback ended up scoped to withdrawing individual
+-- assertions, grouped by jurisdiction at execute time, never a changeset-level target. Cut
+-- before this migration ever shipped rather than added-then-dropped later.
 
 BEGIN;
 
 ALTER TABLE changesets
-    ADD COLUMN IF NOT EXISTS parent_changeset_id uuid REFERENCES changesets(id) ON DELETE SET NULL,
-    ADD COLUMN IF NOT EXISTS base_changeset_id uuid REFERENCES changesets(id) ON DELETE SET NULL;
+    ADD COLUMN IF NOT EXISTS parent_changeset_id uuid REFERENCES changesets(id) ON DELETE SET NULL;
 
 CREATE INDEX IF NOT EXISTS changesets_parent_changeset_id_idx ON changesets (parent_changeset_id);
-CREATE INDEX IF NOT EXISTS changesets_base_changeset_id_idx ON changesets (base_changeset_id);
 
 ALTER TABLE changesets DROP CONSTRAINT IF EXISTS changesets_kind_check;
 ALTER TABLE changesets ADD CONSTRAINT changesets_kind_check
