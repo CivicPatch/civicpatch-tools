@@ -13,8 +13,11 @@
   word-break: break-word;
 }
 .user-profile-page__meta {
+  /* `max-content`, not `auto`: with `auto` tracks, grid's default `justify-content: normal`
+     stretches the leftover row width across both columns instead of leaving it unclaimed,
+     which is what pushed dt/dd apart across the whole row. */
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: max-content max-content;
   gap: 0.2rem 0.75rem;
   font-size: 0.85rem;
   margin: 0;
@@ -29,11 +32,26 @@
   color: var(--text);
 }
 .history-widget {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   padding: 0.85rem 1rem;
   text-decoration: none;
+  color: inherit;
+}
+.history-widget:hover {
+  background: var(--surface-2);
+}
+.history-widget__icon {
+  flex: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+.history-widget__text {
+  flex: 1;
+  min-width: 0;
 }
 .history-widget__title {
   display: block;
@@ -47,6 +65,11 @@
   font-size: 0.85rem;
   color: var(--text-muted);
   margin-top: 0.2rem;
+}
+.history-widget__arrow {
+  flex: none;
+  color: var(--text-muted);
+  font-size: 0.85rem;
 }
 .user-profile-page__status {
   font-size: 0.9rem;

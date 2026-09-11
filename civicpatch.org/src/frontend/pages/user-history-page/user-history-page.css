@@ -1,5 +1,5 @@
 @layer components {
-.candidate-list__select-all {
+.candidate-row-list__select-all {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -7,44 +7,41 @@
   color: var(--text-muted);
   margin: 1rem 0 0.5rem;
 }
-.candidate-list {
-  list-style: none;
+
+/* The real `/activity` feed's own row (imported above) is the visual reference — this adds
+   only what that row doesn't have: a leading checkbox, so `.activity-row`'s own padding,
+   border and grid stay exactly as `/activity` renders them. */
+.candidate-row-list {
   margin: 0 0 1rem;
-  padding: 0;
 }
-.candidate-list__item {
+
+.candidate-row {
+  /* Overrides controls.css's `label:has([type="checkbox"]) { width: fit-content }` —
+     without an explicit width here, that base-layer default wins since this rule never
+     otherwise conflicts with it, shrinking the row to its content instead of the full row. */
+  width: 100%;
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.5rem 0.2rem;
-  border-bottom: 1px solid var(--border-subtle);
-}
-.candidate-list__item:last-child {
-  border-bottom: none;
-}
-.candidate-list__item label {
-  display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   gap: 0.5rem;
-  flex-wrap: wrap;
+  cursor: pointer;
 }
-.candidate-list__entity {
-  font-weight: 700;
+
+.candidate-row__checkbox {
+  flex: none;
+  margin-top: 0.5rem;
 }
-.candidate-list__field {
-  color: var(--text-muted);
-  font-size: 0.85rem;
+
+.candidate-row .activity-row__head {
+  flex: 1;
+  min-width: 0;
 }
-.candidate-list__value {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
+
+/* activity-page.css's own quarantine marker includes a left inset border — history drops it,
+   keeping only the tinted background to flag superseded/withdrawn rows. */
+.candidate-row.activity-row--quarantined {
+  box-shadow: none;
 }
-.candidate-list__jurisdiction {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
+
 .candidate-list__reason-label {
   display: block;
   font-size: 0.85rem;

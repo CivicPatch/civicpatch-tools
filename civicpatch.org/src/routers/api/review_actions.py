@@ -100,7 +100,7 @@ def get_router(api_key_header):
     ):
         if not user.user_id:
             raise HTTPException(status_code=401, detail="User ID not available")
-        reported_by = user.display_name or user.email or user.provider_user_id
+        reported_by = user.username or user.email or user.provider_user_id
         try:
             result = await review_issue_report_service.report_review_issue(
                 changeset_id, body.description, user.user_id, reported_by

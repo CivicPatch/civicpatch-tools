@@ -6,6 +6,7 @@ import lib.supabase_auth as supabase_auth_service
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse, RedirectResponse
 from lib.auth import get_optional_user
+from psycopg.errors import UniqueViolation
 from schemas.common import (
     Identity,
     RequestOtpRequest,
@@ -99,9 +100,12 @@ def get_router(is_production: bool) -> APIRouter:
             raise HTTPException(status_code=401, detail="No user in verify response")
 
         identity = supabase_auth_service.to_supabase_user(auth_response.user)
-        await database.upsert_user(
-            identity.provider, identity.id, identity.email
-        )
+        try:
+            await database.upsert_user(
+                identity.provider, identity.id, identity.email, body.username
+            )
+        except UniqueViolation:
+            raise HTTPException(status_code=409, detail="That username is already taken")
 
         response = JSONResponse(content={"data": {"authenticated": True}})
         await session_service.create_session_cookies(response, identity, teams=[])

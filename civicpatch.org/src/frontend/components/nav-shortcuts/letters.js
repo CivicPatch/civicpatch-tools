@@ -13,11 +13,3 @@ export function assignLetters(items) {
     return { ...item, letter };
   });
 }
-
-// Bolds the bound letter in place, as lit-html parts — brackets read as noise in a
-// nav link, so the letter is just emphasized where it already sits in the word.
-export function markLetterParts(label, letter) {
-  const i = label.toLowerCase().indexOf(letter);
-  if (i === -1) return [label, "", ""];
-  return [label.slice(0, i), label[i], label.slice(i + 1)];
-}

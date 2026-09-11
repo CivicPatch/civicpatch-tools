@@ -12,7 +12,6 @@ export default defineConfig(({ command }) => ({
         review: "./assets/review.ts",
         "review-session": "./assets/review-session.ts",
         "bulk-review": "./assets/bulk-review.js",
-        "pipeline-runs": "./assets/pipeline-runs.ts",
         issues: "./assets/issues.js",
         jurisdiction: "./assets/jurisdiction.js",
         "jurisdiction-history": "./assets/jurisdiction-history.ts",

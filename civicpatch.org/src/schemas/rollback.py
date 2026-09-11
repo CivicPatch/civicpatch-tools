@@ -1,12 +1,14 @@
+from datetime import datetime
 from typing import Any
 
 from pydantic import BaseModel, Field
 
 
 class RollbackCandidate(BaseModel):
-    """One assertion a user could roll back — what a UI lists and checks boxes against.
+    """One assertion in a user's history — what a UI lists and checks boxes against.
     `jurisdiction_ocdid` rides along for display only; selecting and executing never requires
-    picking one first."""
+    picking one first. `status` is the assertion's `AssertionState` value ("active",
+    "superseded", "withdrawn"); only "active" rows are real rollback candidates."""
 
     assertion_id: str
     entity_id: str
@@ -14,6 +16,8 @@ class RollbackCandidate(BaseModel):
     field_path: str
     value: Any
     jurisdiction_ocdid: str
+    status: str
+    created_at: datetime
 
 
 class RollbackRequest(BaseModel):

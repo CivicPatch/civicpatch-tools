@@ -12,13 +12,15 @@
 
 /* .blog-list width/centering comes from the shared .page-content rail */
 
+.blog-list__index {
+  max-width: 70ch;
+}
+
 .blog-list__item {
-  display: grid;
-  grid-template-columns: 6rem 1fr;
-  gap: 0.75rem;
-  padding: 0.625rem 0;
-  border-bottom: 1px solid var(--border);
-  align-items: baseline;
+  position: relative;
+  display: block;
+  padding: 1.3rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
   /* Reset the base article card styles */
   background: none;
   box-shadow: none;
@@ -26,37 +28,54 @@
   margin-bottom: 0;
 }
 
-.blog-list__item:last-child {
-  border-bottom: none;
+.blog-list__item:first-child {
+  border-top: 1px solid var(--border-subtle);
 }
 
-.blog-list__date {
-  font-family: var(--font-mono);
-  font-size: var(--font-size-sm);
-  color: var(--text-muted);
-  white-space: nowrap;
+.blog-list__item:hover {
+  background: color-mix(in srgb, var(--action) 8%, transparent);
+}
+
+/* Stretched-link pattern (see .review-row__open) — the title stays the only
+   real link in the row, its hit area just grows to cover the whole item. */
+.blog-list__item:has(.blog-list__title:focus-visible) {
+  outline: var(--focus-ring-width) solid var(--action-focus);
+  outline-offset: 2px;
 }
 
 .blog-list__title {
-  font-family: var(--font-display);
-  font-size: var(--font-size-base);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  display: block;
+  font-size: var(--font-size-lg);
   color: var(--text-default);
   text-decoration: none;
-  display: block;
-  line-height: 1.2;
 }
 
 .blog-list__title:hover {
   text-decoration: underline;
 }
 
-.blog-list__lead {
+.blog-list__title:focus-visible {
+  outline: none;
+}
+
+.blog-list__title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.blog-list__meta {
+  font-family: var(--font-mono);
   font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  margin: 0.2rem 0 0;
-  line-height: 1.55;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+.blog-list__desc {
+  font-size: var(--font-size-md);
+  color: var(--text-muted);
+  margin: 0.5rem 0 0;
+  max-width: 70ch;
 }
 
 /* ── Blog post page ──────────────────────────────────────────────────────── */
@@ -73,8 +92,7 @@
 .blog-header {
   background: none;
   margin: 0 0 0.75rem;
-  padding: 0 0 0.3rem;
-  border-bottom: 2px solid var(--border-strong);
+  padding: 0;
 }
 
 .blog-breadcrumb {
@@ -101,24 +119,10 @@
   opacity: 0.5;
 }
 
-.blog-breadcrumb a {
-  color: var(--text-muted);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-}
-
-.blog-breadcrumb a:hover {
+/* The current (non-link) crumb reads as full-strength text; the ancestors it
+   trails are plain links and pick up the default link color on their own. */
+.blog-breadcrumb li[aria-current] {
   color: var(--text-default);
-  border-bottom-color: var(--border);
-}
-
-.blog-page-title {
-  font-family: var(--font-display);
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
 }
 
 .blog-meta {
@@ -141,33 +145,35 @@
 }
 
 .blog-lead {
-  font-size: var(--font-size-md);
-  color: var(--text-secondary);
-  line-height: 1.65;
+  font-size: var(--font-size-base);
+  color: var(--text-muted);
+  line-height: 1.55;
   margin-bottom: 1.5rem;
 }
 
 .blog-post__lead {
+  max-width: 68ch;
   margin-bottom: 0.5rem;
 }
 
 .blog-post__body {
   font-size: var(--font-size-base);
   line-height: 1.75;
-  max-width: 72ch;
 }
 
-/* No TOC: center the lone reading column instead of leaving a right gutter */
-.blog-post__body:only-child {
-  margin-inline: auto;
+.blog-post__body h1,
+.blog-post__body h2,
+.blog-post__body h3 {
+  font-weight: 500;
+  line-height: 1.3;
 }
 
 .blog-post__body h2 {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
 }
 
 .blog-post__body h3 {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-base);
 }
 
 .blog-post__body li {
@@ -177,18 +183,20 @@
 /* ── Blog post layout ────────────────────────────────────────────────────────*/
 
 .blog-post__layout {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 68ch) 14rem;
+  gap: 3.5rem;
+  align-items: start;
+}
+
+/* No TOC: the lone reading column doesn't need the TOC's grid track */
+.blog-post__layout:has(.blog-post__body:only-child) {
+  grid-template-columns: minmax(0, 68ch);
 }
 
 .blog-post__toc {
-  width: 160px;
-  flex-shrink: 0;
   position: sticky;
   top: 1.5rem;
-  order: 1;
-  margin-left: auto;
 }
 
 .blog-post__discuss {
@@ -208,9 +216,6 @@
 .blog-post__toc-label {
   font-family: var(--font-mono);
   font-size: var(--font-size-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--text-muted);
   margin-bottom: 0.5rem;
   cursor: default;
@@ -234,33 +239,31 @@
 
 .blog-post__toc nav a {
   display: block;
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  padding: 0.25rem 0;
+  font-size: var(--font-size-md);
+  color: var(--text-muted);
+  padding: 0.3rem 0.5rem;
   text-decoration: none;
-  border-bottom: 1px solid transparent;
   line-height: 1.4;
-  transition:
-    color 0.1s,
-    border-bottom-color 0.1s;
+}
+
+/* python-markdown's TOC extension nests sub-headings in a second <ul> — give
+   that level the demo's depth-3 indent so the hierarchy reads visually. */
+.blog-post__toc nav ul ul a {
+  padding-left: 1.4rem;
 }
 
 .blog-post__toc nav a:hover {
   color: var(--text-default);
-  border-bottom-color: var(--border);
+  background: var(--surface-stripe);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .blog-post__layout {
-    flex-direction: column;
-    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .blog-post__toc {
-    width: 100%;
     position: static;
-    order: 0;
-    margin-left: 0;
   }
 
   .blog-post__toc-mobile {
@@ -271,10 +274,6 @@
 
   .blog-post__toc-mobile[open] .blog-post__toc-label {
     margin-bottom: 0.5rem;
-  }
-
-  .blog-post__toc nav a {
-    padding-block: 0.35rem;
   }
 }
 

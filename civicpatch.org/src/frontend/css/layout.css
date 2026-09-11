@@ -42,16 +42,6 @@
   top: 1rem;
 }
 
-.secnav__label {
-  font-family: var(--font-display);
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-  color: var(--text-muted);
-  padding: 0 0 0.4rem 0.8rem;
-  margin-bottom: 0.3rem;
-  border-bottom: 1px solid var(--border-subtle);
-}
-
 .secnav__item {
   display: flex;
   align-items: center;
@@ -102,10 +92,6 @@
     position: static;
     padding-bottom: 0.4rem;
     border-bottom: 1px solid var(--border-subtle);
-  }
-
-  .secnav__label {
-    display: none;
   }
 
   .secnav__item {

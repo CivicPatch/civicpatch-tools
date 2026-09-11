@@ -30,9 +30,9 @@ async def _seed() -> tuple[str, str]:
     async with pool.connection() as conn, conn.cursor() as cur:
         for email, role in ((_DEFAULT_EMAIL, "default"), (_ADMIN_EMAIL, "admins")):
             await cur.execute(
-                "INSERT INTO users (email, provider, provider_user_id, role) "
-                "VALUES (%s, 'email', %s, %s) RETURNING id::text",
-                (email, email, role),
+                "INSERT INTO users (email, provider, provider_user_id, username, role) "
+                "VALUES (%s, 'email', %s, %s, %s) RETURNING id::text",
+                (email, email, email.replace("@", "-"), role),
             )
             row = await cur.fetchone()
             assert row is not None

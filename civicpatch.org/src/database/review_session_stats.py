@@ -21,7 +21,7 @@ async def get_leaderboard(period: LeaderboardPeriod = LeaderboardPeriod.ALL_TIME
             await cur.execute(
                 f"""
                 SELECT
-                    COALESCE(u.display_name, 'Anonymous') AS display_name,
+                    u.username,
                     u.provider,
                     u.provider_user_id,
                     COUNT(*) AS resolved_count
@@ -30,7 +30,7 @@ async def get_leaderboard(period: LeaderboardPeriod = LeaderboardPeriod.ALL_TIME
                 JOIN users u ON u.id = rs.user_id
                 WHERE rse.status = 'resolved'
                 {period_filter}
-                GROUP BY u.id, u.display_name, u.provider, u.provider_user_id
+                GROUP BY u.id, u.username, u.provider, u.provider_user_id
                 ORDER BY resolved_count DESC
                 LIMIT %s
                 """,
@@ -39,7 +39,7 @@ async def get_leaderboard(period: LeaderboardPeriod = LeaderboardPeriod.ALL_TIME
             rows = await cur.fetchall()
     return [
         {
-            "display_name": row.display_name,  # type: ignore[union-attr]
+            "username": row.username,  # type: ignore[union-attr]
             "provider": row.provider,  # type: ignore[union-attr]
             "provider_user_id": row.provider_user_id,  # type: ignore[union-attr]
             "resolved_count": row.resolved_count,  # type: ignore[union-attr]

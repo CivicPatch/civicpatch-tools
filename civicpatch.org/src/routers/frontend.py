@@ -7,6 +7,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from database.jurisdictions import get_jurisdiction
+from database.users import get_user_by_username
 from shared.utils.id_utils import OCDID_PREFIX, folder_to_jurisdiction_ocdid
 
 from schemas.common import Identity, UserRole, has_at_least
@@ -38,7 +39,7 @@ def _build_user_dict(identity: Optional[Identity]) -> dict:
         "user_id": identity.user_id,
         "role": identity.role,
         "permissions": build_permissions(identity),
-        "display_name": identity.display_name,
+        "username": identity.username,
         "avatar_url": None,
     }
 
@@ -113,16 +114,6 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         if not user["authenticated"] or not user["permissions"]["can_view_queue_page"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/bulk-review.html", {"request": request, "user": user})
-
-    # Split from /queue 2026-09-07: watching runs and reviewing rosters are different
-    # jobs at different tempos. Same gate — a contributor who can see the queue can see
-    # what is feeding it; cancelling stays behind can_cancel_pipeline_run.
-    @router.get("/pipeline-runs", response_class=HTMLResponse, include_in_schema=False)
-    async def pipeline_runs_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
-        user = _build_user_dict(identity)
-        if not user["authenticated"] or not user["permissions"]["can_view_queue_page"]:
-            return RedirectResponse("/", status_code=303)
-        return templates.TemplateResponse("pages/pipeline-runs.html", {"request": request, "user": user})
 
     @router.get("/review", response_class=HTMLResponse, include_in_schema=False)
     async def review_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
@@ -210,10 +201,10 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/admin.html", {"request": request, "user": user})
 
-    @router.get("/users/{target_user_id}", response_class=HTMLResponse, include_in_schema=False)
+    @router.get("/~{username}", response_class=HTMLResponse, include_in_schema=False)
     async def user_profile_page(
         request: Request,
-        target_user_id: str,
+        username: str,
         identity: Optional[Identity] = Depends(get_optional_user),
     ):
         # Same gate as `/admin`: this is a moderation view of someone else's account, not a
@@ -221,27 +212,43 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         user = _build_user_dict(identity)
         if not user["authenticated"] or not user["permissions"]["can_manage_roles"]:
             return RedirectResponse("/", status_code=303)
+        target_user = await get_user_by_username(username)
+        if not target_user:
+            raise HTTPException(status_code=404, detail="User not found")
         return templates.TemplateResponse(
             "pages/user-profile.html",
-            {"request": request, "user": user, "target_user_id": target_user_id},
+            {
+                "request": request,
+                "user": user,
+                "target_user_id": target_user["id"],
+                "username": username,
+            },
         )
 
     @router.get(
-        "/users/{target_user_id}/history",
+        "/~{username}/history",
         response_class=HTMLResponse,
         include_in_schema=False,
     )
     async def user_history_page(
         request: Request,
-        target_user_id: str,
+        username: str,
         identity: Optional[Identity] = Depends(get_optional_user),
     ):
         user = _build_user_dict(identity)
         if not user["authenticated"] or not user["permissions"]["can_manage_roles"]:
             return RedirectResponse("/", status_code=303)
+        target_user = await get_user_by_username(username)
+        if not target_user:
+            raise HTTPException(status_code=404, detail="User not found")
         return templates.TemplateResponse(
             "pages/user-history.html",
-            {"request": request, "user": user, "target_user_id": target_user_id},
+            {
+                "request": request,
+                "user": user,
+                "target_user_id": target_user["id"],
+                "username": username,
+            },
         )
 
     @router.get("/settings", response_class=HTMLResponse, include_in_schema=False)

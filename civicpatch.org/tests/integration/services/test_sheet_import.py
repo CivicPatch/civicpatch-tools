@@ -105,9 +105,9 @@ async def user_id():
             (_OCDIDS,),
         )
         await cur.execute(
-            "INSERT INTO users (email, provider, provider_user_id, role) "
-            "VALUES (%s, 'email', %s, 'maintainers') RETURNING id::text",
-            (_EMAIL, _EMAIL),
+            "INSERT INTO users (email, provider, provider_user_id, username, role) "
+            "VALUES (%s, 'email', %s, %s, 'maintainers') RETURNING id::text",
+            (_EMAIL, _EMAIL, _EMAIL.replace("@", "-")),
         )
         row = await cur.fetchone()
         assert row is not None

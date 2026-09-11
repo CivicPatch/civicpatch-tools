@@ -143,18 +143,10 @@ async def register_rollback_changeset(
     jurisdiction_ocdid: str,
     created_by_user_id: str,
 ) -> str | None:
-    """A rollback, undoing whatever is currently live. Born published — a rollback is decided
-    the instant it runs, not proposed for review.
-
-    Takes a caller's cursor rather than owning a connection: the rollback service withdraws
-    (or restores) assertions in the same breath it mints this, and the two must commit
-    together or not at all — a published rollback changeset with nothing actually withdrawn
-    would be a rollback that changed nothing while claiming it had.
-
-    Returns the id of the changeset being rolled back (see `_register_born_published_changeset`)
-    — the caller needs it to know what to withdraw or rebase from, and this is the same lookup
-    rollback-eligibility already required, not a second one.
-    """
+    """A rollback, undoing whatever is currently live. Born published, and takes a caller's
+    cursor rather than owning a connection — it must commit in the same transaction as the
+    withdraw it accompanies, or a published rollback could end up changing nothing while
+    claiming it had. Returns the id of the changeset being rolled back."""
     return await _register_born_published_changeset(
         cur,
         changeset_id,

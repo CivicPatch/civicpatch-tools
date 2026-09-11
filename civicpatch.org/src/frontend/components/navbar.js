@@ -8,7 +8,6 @@ import {
 import { STORAGE_KEYS } from "../utils/storage-keys.js";
 import { useStorageSweep } from "../hooks/use-storage-sweep.js";
 import "./nav-shortcuts/index.js";
-import { assignLetters, markLetterParts } from "./nav-shortcuts/letters.js";
 import { manageSection, adminSection } from "./section-nav/index.ts";
 import "./nav-group/index.js";
 import "./navbar.css";
@@ -45,11 +44,6 @@ function renderPublicLinks(currentPath) {
   `;
 }
 
-// The nav's own direct links (including "manage"/"admin", which land on a group
-// rather than a single page) get one letter each, bolded in place — a second,
-// independent assignment from the shortcut menu's own (which lists every individual
-// page instead). Built from whichever links this user actually has, so the letters
-// stay stable per-user rather than reserving one for a link nobody sees.
 function directNavItems(permissions) {
   const items = [
     { label: "home", href: "/" },
@@ -64,11 +58,6 @@ function directNavItems(permissions) {
   if (permissions?.can_manage_roles)
     items.push({ label: "admin", href: "/admin" });
   return items;
-}
-
-function renderLabel(label, letter) {
-  const [before, bolded, after] = markLetterParts(label, letter);
-  return bolded ? html`${before}<b>${bolded}</b>${after}` : label;
 }
 
 // Everything the ? menu can jump to: the direct links plus each group's real pages,
@@ -96,28 +85,20 @@ function shortcutSections(permissions) {
 // the rest of the group (see nav-group/index.js for the hover/click split).
 function renderAuthedLinks(user, currentPath) {
   const active = (href) => activeClass(currentPath, href);
-  const navLetters = assignLetters(directNavItems(user.permissions));
-  const letterOf = (label) => navLetters.find((i) => i.label === label).letter;
   return html`
-    <a href="/" class="${active("/")}"
-      >${renderLabel("home", letterOf("home"))}</a
-    >
-    <a href="/blog" class="${active("/blog")}"
-      >${renderLabel("blog", letterOf("blog"))}</a
-    >
+    <a href="/" class="${active("/")}">home</a>
+    <a href="/blog" class="${active("/blog")}">blog</a>
     ${user.permissions?.can_view_reviews_page
-      ? html`<a href="/review" class="${active("/review")}"
-          >${renderLabel("overview", letterOf("overview"))}</a
-        >`
+      ? html`<a href="/review" class="${active("/review")}">overview</a>`
       : ""}
     ${user.permissions?.can_view_activity_page
       ? html`<a href="/activity/changelogs" class="${active("/activity")}"
-          >${renderLabel("activity", letterOf("activity"))}</a
+          >activity</a
         >`
       : ""}
     ${user.permissions?.can_view_queue_page
       ? html`<civ-nav-group
-          .label=${renderLabel("manage", letterOf("manage"))}
+          .label=${"manage"}
           .href=${"/bulk-review"}
           .active=${isActivePath(currentPath, "/bulk-review")}
           .items=${manageSection(user.permissions)}
@@ -125,7 +106,7 @@ function renderAuthedLinks(user, currentPath) {
       : ""}
     ${user.permissions?.can_manage_roles
       ? html`<civ-nav-group
-          .label=${renderLabel("admin", letterOf("admin"))}
+          .label=${"admin"}
           .href=${"/admin"}
           .active=${isActivePath(currentPath, "/admin")}
           .items=${adminSection(user.permissions)}
@@ -173,7 +154,7 @@ function renderAuthedControls(user) {
         ? html`<img class="user-avatar" src="${user.avatar_url}" alt="" />`
         : html`<span class="user-dot"></span>`}
       <span class="user-name"
-        >${user.display_name || user.email || "User"}</span
+        >${user.username || user.email || "User"}</span
       >
     </span>
     <civ-nav-shortcuts

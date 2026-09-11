@@ -166,7 +166,7 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
         ),
     ):
-        candidates = await rollback.list_rollback_candidates(str(user_id))
+        candidates = await rollback.list_user_assertions(str(user_id))
         return {"data": candidates}
 
     @router.post("/users/{user_id}/rollback", include_in_schema=False)
@@ -187,7 +187,7 @@ def get_router() -> APIRouter:
         # on must actually be theirs, not whatever a stray or malicious request sent.
         theirs = {
             candidate.assertion_id
-            for candidate in await rollback.list_rollback_candidates(str(user_id))
+            for candidate in await rollback.list_user_assertions(str(user_id))
         }
         assertion_ids = [aid for aid in payload.assertion_ids if aid in theirs]
         try:

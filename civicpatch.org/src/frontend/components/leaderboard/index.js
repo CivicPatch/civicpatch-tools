@@ -2,6 +2,7 @@ import "./leaderboard.css";
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { fetchLeaderboard } from "../../api.js";
+import { shortenIfUuid } from "../username-utils.ts";
 
 export const LEADERBOARD_PERIOD_WEEK = "week";
 export const LEADERBOARD_PERIOD_ALL_TIME = "all_time";
@@ -39,8 +40,8 @@ function Leaderboard({ title, period = LEADERBOARD_PERIOD_ALL_TIME }) {
             <span class="leaderboard__rank">${i + 1}</span>
             <span class="leaderboard__contributor">
               ${entry.provider === "github"
-                ? html`<a href="https://github.com/${entry.display_name}" target="_blank" rel="noopener noreferrer">${entry.display_name}</a>`
-                : entry.display_name}
+                ? html`<a href="https://github.com/${entry.username}" target="_blank" rel="noopener noreferrer">${shortenIfUuid(entry.username)}</a>`
+                : shortenIfUuid(entry.username)}
             </span>
             <span class="leaderboard__count">${entry.resolved_count} reviews</span>
           </div>

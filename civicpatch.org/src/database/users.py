@@ -11,23 +11,22 @@ from environment import get_env_vars
 import lib.hash as hash_utils
 
 
-async def upsert_user(provider, provider_user_id, email) -> str:
-    # display_name is intentionally not written here. Users pick their own via
-    # /settings on first login; OAuth-supplied names are ignored to keep the
-    # handle under user control and prevent surprise overwrites on re-login.
+async def upsert_user(provider, provider_user_id, email, username: str) -> str:
+    # `username` is only picked up on the INSERT branch — a re-login must never clobber the
+    # one chosen at sign-up, so the conflict path leaves it out of its SET list entirely.
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO users (provider, provider_user_id, email, last_login_at)
-            VALUES (%s, %s, %s, NOW())
+            INSERT INTO users (provider, provider_user_id, email, username, last_login_at)
+            VALUES (%s, %s, %s, %s, NOW())
             ON CONFLICT (provider, provider_user_id)
             DO UPDATE SET
                 email = EXCLUDED.email,
                 last_login_at = NOW()
             RETURNING id::text
             """,
-            (provider, provider_user_id, email),
+            (provider, provider_user_id, email, username),
         )
         row = await cur.fetchone()
     assert row, "upsert_user RETURNING returned no row"
@@ -43,22 +42,12 @@ async def set_user_role(user_id: str, role: str) -> None:
         )
 
 
-async def display_name_in_use(display_name: str) -> bool:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT 1 FROM users WHERE display_name = %s LIMIT 1",
-            (display_name,),
-        )
-        return await cur.fetchone() is not None
-
-
-async def set_user_display_name(user_id: str, display_name: str) -> None:
+async def set_username(user_id: str, username: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
-            "UPDATE users SET display_name = %s WHERE id = %s",
-            (display_name, user_id),
+            "UPDATE users SET username = %s WHERE id = %s",
+            (username, user_id),
         )
 
 
@@ -121,7 +110,7 @@ async def list_users(limit: int = 100, offset: int = 0) -> list[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT id::text, email, display_name, provider, provider_user_id, role, last_login_at
+            SELECT id::text, email, username, provider, provider_user_id, role, last_login_at
             FROM users
             ORDER BY created_at ASC
             LIMIT %s OFFSET %s
@@ -133,7 +122,7 @@ async def list_users(limit: int = 100, offset: int = 0) -> list[dict]:
         {
             "id": r[0],
             "email": r[1],
-            "display_name": r[2],
+            "username": r[2],
             "provider": r[3],
             "provider_user_id": r[4],
             "role": r[5],
@@ -148,7 +137,7 @@ async def get_user(provider, provider_user_id):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT id::text, email, created_at, role, display_name
+            SELECT id::text, email, created_at, role, username
             FROM users
             WHERE provider_user_id = %s AND provider = %s
             """,
@@ -162,7 +151,7 @@ async def get_user(provider, provider_user_id):
         "email": row[1],
         "created_at": row[2],
         "role": row[3],
-        "display_name": row[4],
+        "username": row[4],
     }
 
 
@@ -228,7 +217,7 @@ async def get_user_by_id(user_id: str) -> dict | None:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT id::text, provider, provider_user_id, email, display_name, role, last_login_at
+            SELECT id::text, provider, provider_user_id, email, username, role, last_login_at
             FROM users
             WHERE id = %s
             """,
@@ -242,7 +231,32 @@ async def get_user_by_id(user_id: str) -> dict | None:
         "provider": row[1],
         "provider_user_id": row[2],
         "email": row[3],
-        "display_name": row[4],
+        "username": row[4],
+        "role": row[5],
+        "last_login_at": row[6].isoformat() if row[6] else None,
+    }
+
+
+async def get_user_by_username(username: str) -> dict | None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT id::text, provider, provider_user_id, email, username, role, last_login_at
+            FROM users
+            WHERE username = %s
+            """,
+            (username,),
+        )
+        row = await cur.fetchone()
+    if not row:
+        return None
+    return {
+        "id": row[0],
+        "provider": row[1],
+        "provider_user_id": row[2],
+        "email": row[3],
+        "username": row[4],
         "role": row[5],
         "last_login_at": row[6].isoformat() if row[6] else None,
     }

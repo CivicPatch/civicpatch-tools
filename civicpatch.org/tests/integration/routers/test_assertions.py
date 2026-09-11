@@ -90,9 +90,9 @@ async def _seed() -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO users (email, provider, provider_user_id, role) "
-            "VALUES (%s, 'email', %s, 'admins') RETURNING id::text",
-            (_EMAIL, _EMAIL),
+            "INSERT INTO users (email, provider, provider_user_id, username, role) "
+            "VALUES (%s, 'email', %s, %s, 'admins') RETURNING id::text",
+            (_EMAIL, _EMAIL, _EMAIL.replace("@", "-")),
         )
         _USER_ID = (await cur.fetchone())[0]
         await cur.execute(

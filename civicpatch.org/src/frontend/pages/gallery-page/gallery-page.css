@@ -17,8 +17,4 @@
 .gallery-page__sectioned-demo {
   max-width: 24rem;
 }
-
-.gallery-page__sectioned-demo .secnav__label {
-  display: none;
-}
 }

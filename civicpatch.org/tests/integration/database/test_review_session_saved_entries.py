@@ -31,8 +31,8 @@ async def _create_user(prefix: str) -> tuple[uuid.UUID, str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO users (provider, provider_user_id, email) VALUES ('test', %s, %s) RETURNING id",
-            (provider_id, f"{provider_id}@test.com"),
+            "INSERT INTO users (provider, provider_user_id, email, username) VALUES ('test', %s, %s, %s) RETURNING id",
+            (provider_id, f"{provider_id}@test.com", provider_id),
         )
         row = await cur.fetchone()
     return row[0], provider_id  # type: ignore[index]

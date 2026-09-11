@@ -14,7 +14,6 @@ export function SectionNav(
 ): TemplateResult {
   return html`
     <nav class="secnav" aria-label="${label}">
-      <span class="secnav__label">${label}</span>
       ${items.map(
         (item) => html`<a
           class="secnav__item ${item.href === currentPath ? "secnav__item--on" : ""}"
@@ -49,7 +48,6 @@ function perm(permissions: object, key: string): boolean {
 export function manageSection(permissions: object, openPrCount?: number): SectionNavItem[] {
   const items: SectionNavItem[] = [
     { label: "Bulk review", href: "/bulk-review", ...(openPrCount != null ? { count: openPrCount } : {}) },
-    { label: "Pipeline runs", href: "/pipeline-runs" },
   ];
   if (perm(permissions, "can_write_config")) {
     items.push({ label: "Roles", href: "/roles" });
@@ -58,10 +56,10 @@ export function manageSection(permissions: object, openPrCount?: number): Sectio
   return items;
 }
 
-export function userSection(targetUserId: string): SectionNavItem[] {
+export function userSection(username: string): SectionNavItem[] {
   return [
-    { label: "Profile", href: `/users/${targetUserId}` },
-    { label: "History", href: `/users/${targetUserId}/history` },
+    { label: "Profile", href: `/~${username}` },
+    { label: "History", href: `/~${username}/history` },
   ];
 }
 

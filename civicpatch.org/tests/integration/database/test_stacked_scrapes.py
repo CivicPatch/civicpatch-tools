@@ -133,15 +133,16 @@ async def _dismissed_at(changeset_id: str):
 
 async def _hold(changeset_id: str, status: str, ocdid: str = _OCDID) -> None:
     """Put a request in a reviewer's hands."""
+    reviewer_id = str(uuid.uuid4())
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO users (provider, provider_user_id, email)
-            VALUES ('test', %s, 'zz-stacked@example.test')
+            INSERT INTO users (provider, provider_user_id, email, username)
+            VALUES ('test', %s, 'zz-stacked@example.test', %s)
             RETURNING id::text
             """,
-            (str(uuid.uuid4()),),
+            (reviewer_id, reviewer_id),
         )
         user_id = (await cur.fetchone())[0]
         await cur.execute(

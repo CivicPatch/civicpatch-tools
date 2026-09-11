@@ -584,9 +584,9 @@ async def _human_sets_label(cur, membership_id: str, label: str) -> None:
     assertion saying somebody chose it, which is what survives the next scrape."""
     # `assertions.created_by` is a foreign key, so an assertion needs somebody to have made it.
     await cur.execute(
-        "INSERT INTO users (email, provider, provider_user_id, role) "
-        "VALUES (%s, 'email', %s, 'admins') RETURNING id::text",
-        (_CURATOR, _CURATOR),
+        "INSERT INTO users (email, provider, provider_user_id, username, role) "
+        "VALUES (%s, 'email', %s, %s, 'admins') RETURNING id::text",
+        (_CURATOR, _CURATOR, _CURATOR.replace("@", "-")),
     )
     curator_id = (await cur.fetchone())[0]
 

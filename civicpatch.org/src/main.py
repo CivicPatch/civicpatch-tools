@@ -47,7 +47,6 @@ from fastapi.templating import Jinja2Templates
 from frontend.static import HashedAssetStaticFiles
 from frontend.vite import vite_asset, vite_css
 from lib.auth import get_optional_user, get_ws_user, require_route_access
-from lib.middleware import require_display_name
 from lib.supabase_auth import create_supabase_admin_client, create_supabase_client
 from routers.frontend import get_router as frontend_router
 from routers.sso import get_router as auth_router
@@ -127,9 +126,6 @@ app.add_middleware(
     allow_credentials=True,
     allow_headers=["*"],
 )
-
-app.middleware("http")(require_display_name)
-
 
 app.include_router(
     api_admin_router.get_router(),
@@ -337,7 +333,7 @@ async def get_me(user: Identity = Depends(get_optional_user)):
         "provider_user_id": user.provider_user_id,
         "email": user.email,
         "teams": getattr(user, "teams", None),
-        "display_name": user.display_name,
+        "username": user.username,
         "avatar_url": None,
     }
 

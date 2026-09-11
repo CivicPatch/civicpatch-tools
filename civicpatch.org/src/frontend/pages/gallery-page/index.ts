@@ -9,6 +9,8 @@ import "./gallery-page.css";
 import "../../components/panel/panel.css";
 import "../../components/status-badge.js";
 import "../../components/confirm-modal/confirm-modal.ts";
+import "../../components/status-toast/status-toast.js";
+import "../../components/status-toast/status-toast.css";
 import { Pagination } from "../../components/pagination/index.js";
 import { SectionNav, adminSection } from "../../components/section-nav/index.js";
 import { useAuth } from "../../hooks/useAuth.js";
@@ -109,6 +111,22 @@ function renderDiffChips() {
   );
 }
 
+function renderStatusToast() {
+  const [visible, setVisible] = useState(false);
+  return renderSection(
+    "Status toast",
+    html`
+      <button class="btn btn-sm" @click=${() => setVisible(true)}>Show toast</button>
+      ${visible
+        ? html`<status-toast
+            .message=${"Rollback applied."}
+            .onDismiss=${() => setVisible(false)}
+          ></status-toast>`
+        : ""}
+    `,
+  );
+}
+
 function renderConfirmModal() {
   const [open, setOpen] = useState(false);
   return renderSection(
@@ -144,6 +162,7 @@ function GalleryPage() {
       ${renderPagination()}
       ${renderStatusBadges()}
       ${renderDiffChips()}
+      ${renderStatusToast()}
       ${renderConfirmModal()}
       </div>
       </div>

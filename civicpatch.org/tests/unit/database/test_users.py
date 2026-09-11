@@ -6,8 +6,7 @@ from database.users import (
     set_user_role,
     list_users,
     get_user_by_id,
-    display_name_in_use,
-    set_user_display_name,
+    set_username,
 )
 
 
@@ -46,14 +45,14 @@ def _make_conn_pool():
 async def test_upsert_user_returns_uuid_string():
     cur = _make_cursor(returning_row=("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",))
     with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await upsert_user("supabase", "supabase-uuid", "alice@example.com")
+        result = await upsert_user("supabase", "supabase-uuid", "alice@example.com", "apple-witch")
 
     assert result == "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
     cur.execute.assert_awaited_once()
     args, _ = cur.execute.await_args
     assert "INSERT INTO users" in args[0]
     assert "RETURNING id::text" in args[0]
-    assert args[1] == ("supabase", "supabase-uuid", "alice@example.com")
+    assert args[1] == ("supabase", "supabase-uuid", "alice@example.com", "apple-witch")
 
 
 @pytest.mark.asyncio
@@ -61,7 +60,7 @@ async def test_upsert_user_returns_uuid_string():
 async def test_upsert_user_does_not_touch_user_roles():
     cur = _make_cursor(returning_row=("any-uuid",))
     with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        await upsert_user("supabase", "id", "x@example.com")
+        await upsert_user("supabase", "id", "x@example.com", "apple-witch")
 
     # Only one execute call — no role mutation
     assert cur.execute.await_count == 1
@@ -71,51 +70,29 @@ async def test_upsert_user_does_not_touch_user_roles():
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_upsert_user_does_not_write_display_name():
-    # display_name belongs to the user, set via /settings — upsert_user must
-    # never insert or update it (no clobbering on re-login, no OAuth import).
+async def test_upsert_user_does_not_overwrite_username_on_conflict():
+    # username is only picked up on INSERT — the ON CONFLICT branch must never
+    # clobber the one chosen at sign-up on a later re-login.
     cur = _make_cursor(returning_row=("any-uuid",))
     with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        await upsert_user("supabase", "id", "x@example.com")
+        await upsert_user("supabase", "id", "x@example.com", "apple-witch")
 
     args, _ = cur.execute.await_args
     sql = args[0]
-    assert "display_name" not in sql
+    do_update = sql[sql.index("DO UPDATE SET") :]
+    assert "username" not in do_update
 
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_display_name_in_use_true_when_row_returned():
-    cur = _make_cursor(returning_row=(1,))
-    with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await display_name_in_use("apple-witch")
-
-    assert result is True
-    args, _ = cur.execute.await_args
-    assert "WHERE display_name = %s" in args[0]
-    assert args[1] == ("apple-witch",)
-
-
-@pytest.mark.asyncio
-@pytest.mark.unit
-async def test_display_name_in_use_false_when_no_row():
-    cur = _make_cursor(returning_row=None)
-    with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await display_name_in_use("free-name")
-
-    assert result is False
-
-
-@pytest.mark.asyncio
-@pytest.mark.unit
-async def test_set_user_display_name_runs_update():
+async def test_set_username_runs_update():
     pool, conn = _make_conn_pool()
     with patch("database.users.get_pool", AsyncMock(return_value=pool)):
-        await set_user_display_name("user-uuid", "apple-witch")
+        await set_username("user-uuid", "apple-witch")
 
     assert conn.execute.await_count == 1
     args, _ = conn.execute.await_args_list[0]
-    assert "UPDATE users SET display_name = %s WHERE id = %s" in args[0]
+    assert "UPDATE users SET username = %s WHERE id = %s" in args[0]
     assert args[1] == ("apple-witch", "user-uuid")
 
 
@@ -140,7 +117,7 @@ async def test_set_user_role_with_default_resets_level():
         await set_user_role("user-uuid", "default")
 
     assert conn.execute.await_count == 1
-    args, _ = conn.execute.await_args_list[0]
+    args, _ = conn.execute.await_args
     assert args[1] == ("default", "user-uuid")
 
 
@@ -161,7 +138,7 @@ async def test_list_users_populated():
     login_ts = datetime(2024, 6, 1, 12, 0, tzinfo=timezone.utc)
     rows = [
         ("uuid-1", "alice@example.com", "Alice", "supabase", "sb-1", "admins", login_ts),
-        ("uuid-2", "bob@example.com", None, "supabase", "sb-2", "default", None),
+        ("uuid-2", "bob@example.com", "uuid-2", "supabase", "sb-2", "default", None),
     ]
     cur = _make_cursor(returning_rows=rows)
     with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
@@ -171,7 +148,7 @@ async def test_list_users_populated():
         {
             "id": "uuid-1",
             "email": "alice@example.com",
-            "display_name": "Alice",
+            "username": "Alice",
             "provider": "supabase",
             "provider_user_id": "sb-1",
             "role": "admins",
@@ -180,7 +157,7 @@ async def test_list_users_populated():
         {
             "id": "uuid-2",
             "email": "bob@example.com",
-            "display_name": None,
+            "username": "uuid-2",
             "provider": "supabase",
             "provider_user_id": "sb-2",
             "role": "default",
@@ -202,7 +179,7 @@ async def test_get_user_by_id_found():
         "provider": "supabase",
         "provider_user_id": "sb-1",
         "email": "alice@example.com",
-        "display_name": "Alice",
+        "username": "Alice",
         "role": "maintainers",
         "last_login_at": None,
     }

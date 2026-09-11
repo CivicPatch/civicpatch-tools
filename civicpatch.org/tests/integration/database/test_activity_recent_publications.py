@@ -43,9 +43,9 @@ async def _seed():
         user_ids = {}
         for email in (_EARLY_EMAIL, _LATE_EMAIL):
             await cur.execute(
-                "INSERT INTO users (email, provider, provider_user_id, role, display_name) "
+                "INSERT INTO users (email, provider, provider_user_id, role, username) "
                 "VALUES (%s, 'email', %s, 'admins', %s) RETURNING id::text",
-                (email, email, email),
+                (email, email, email.replace("@", "-")),
             )
             row = await cur.fetchone()
             assert row is not None
@@ -92,7 +92,7 @@ async def test_collapsed_row_counts_every_review_and_keeps_the_latest(seeded):
         and r["created_at"].date() == _DAY_ONE_LATE.date()
     )
     assert day_one["review_count"] == 2
-    assert day_one["author_name"] == _LATE_EMAIL
+    assert day_one["author_name"] == _LATE_EMAIL.replace("@", "-")
     assert day_one["created_at"] == _DAY_ONE_LATE
 
 

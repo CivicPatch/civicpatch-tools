@@ -350,10 +350,10 @@ async def test_publish_does_not_blank_an_existing_resolver(sentinel_request):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO users (provider, provider_user_id, email)
-            VALUES ('system', %s, %s) RETURNING id::text
+            INSERT INTO users (provider, provider_user_id, email, username)
+            VALUES ('system', %s, %s, %s) RETURNING id::text
             """,
-            (_SENTINEL_USER, f"{_SENTINEL_USER}@example.test"),
+            (_SENTINEL_USER, f"{_SENTINEL_USER}@example.test", _SENTINEL_USER),
         )
         user_id = (await cur.fetchone())[0]
         await conn.commit()
@@ -406,11 +406,11 @@ async def _seed_publisher() -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO users (email, provider, provider_user_id, role) "
-            "VALUES (%s, 'email', %s, 'admins') "
+            "INSERT INTO users (email, provider, provider_user_id, username, role) "
+            "VALUES (%s, 'email', %s, %s, 'admins') "
             "ON CONFLICT (provider, provider_user_id) DO UPDATE SET email = EXCLUDED.email "
             "RETURNING id::text",
-            (_CURATOR, _CURATOR),
+            (_CURATOR, _CURATOR, _CURATOR.replace("@", "-")),
         )
         user_id = (await cur.fetchone())[0]
         await conn.commit()
@@ -422,11 +422,11 @@ async def _assert_field(person_id: str, field: str, value, kind: AssertionKind) 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO users (email, provider, provider_user_id, role) "
-            "VALUES (%s, 'email', %s, 'admins') "
+            "INSERT INTO users (email, provider, provider_user_id, username, role) "
+            "VALUES (%s, 'email', %s, %s, 'admins') "
             "ON CONFLICT (provider, provider_user_id) DO UPDATE SET email = EXCLUDED.email "
             "RETURNING id::text",
-            (_CURATOR, _CURATOR),
+            (_CURATOR, _CURATOR, _CURATOR.replace("@", "-")),
         )
         curator_id = (await cur.fetchone())[0]
         await assertions.upsert(

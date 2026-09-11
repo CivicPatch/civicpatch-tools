@@ -68,9 +68,9 @@ async def _seed() -> tuple[str, str, str, str]:
             (_OCDID,),
         )
         await cur.execute(
-            "INSERT INTO users (email, provider, provider_user_id, role) "
-            "VALUES (%s, 'email', %s, 'admins') RETURNING id::text",
-            (_USER_EMAIL, _USER_EMAIL),
+            "INSERT INTO users (email, provider, provider_user_id, username, role) "
+            "VALUES (%s, 'email', %s, %s, 'admins') RETURNING id::text",
+            (_USER_EMAIL, _USER_EMAIL, _USER_EMAIL.replace("@", "-")),
         )
         user_id = (await cur.fetchone())[0]
         await cur.execute(

@@ -17,14 +17,14 @@ CivicPatch{% endblock %} {% block scripts %}
   <header class="blog-header">
     <nav class="blog-breadcrumb" aria-label="Breadcrumb">
       <ol>
+        <li><a href="/">Home</a></li>
         <li><a href="/blog">Blog</a></li>
         <li aria-current="page">{{ post.title }}</li>
       </ol>
     </nav>
-    <h1 class="blog-page-title">{{ post.title }}</h1>
-    {% if post.description %}
-    <p class="blog-post__lead">{{ post.description }}</p>
-    {% endif %}
+    <div class="page-focal">
+      <h1 class="page-focal__title">{{ post.title }}</h1>
+    </div>
     <div class="blog-post__meta">
       <span>
         <time datetime="{{ post.date.isoformat() }}" aria-label="Published">{{ post.date.strftime('%B %-d, %Y') }}</time>
@@ -44,9 +44,14 @@ CivicPatch{% endblock %} {% block scripts %}
       </a>
       {% endif %}
     </div>
+    {% if post.description %}
+    <p class="blog-post__lead">{{ post.description }}</p>
+    {% endif %}
   </header>
 
   <div class="blog-post__layout">
+    <div class="blog-post__body">{{ post.content_html | safe }}</div>
+
     {% if post.toc_html %}
     <aside class="blog-post__toc">
       <details class="blog-post__toc-mobile" open>
@@ -55,8 +60,6 @@ CivicPatch{% endblock %} {% block scripts %}
       </details>
     </aside>
     {% endif %}
-
-    <div class="blog-post__body">{{ post.content_html | safe }}</div>
   </div>
 </article>
 {% endblock %}

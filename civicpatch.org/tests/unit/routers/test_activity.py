@@ -23,6 +23,7 @@ PUBLICATION_ROW = {
     "author_name": "michelle@civicpatch.org",
     "author_role": "admins",
     "commit_url": "https://github.com/org/open-data/commit/abc123",
+    "kind": "scrape",
     "created_at": "2026-05-24T13:27:00+00:00",
     "review_count": 1,
 }
