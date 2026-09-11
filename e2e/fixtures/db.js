@@ -515,7 +515,7 @@ export async function seedE2eFixtures() {
     // and PR-merge e2e tests still work — those write routes were bumped to
     // a Contributor floor when the trust ladder landed (migration 087).
     await client.query(
-      `INSERT INTO users (provider, provider_user_id, email, display_name, role)
+      `INSERT INTO users (provider, provider_user_id, email, username, role)
        VALUES ($1, $2, $3, $4, 'contributors')
        ON CONFLICT (provider, provider_user_id)
        DO UPDATE SET email = EXCLUDED.email, role = EXCLUDED.role`,
@@ -523,7 +523,7 @@ export async function seedE2eFixtures() {
         TEST_USER_PROVIDER,
         TEST_USER_PROVIDER_ID,
         "e2e@civicpatch.org",
-        "E2E Test User",
+        "e2e-test-user",
       ],
     );
 

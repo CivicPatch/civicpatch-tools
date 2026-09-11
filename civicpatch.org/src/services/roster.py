@@ -8,7 +8,6 @@ from database import changesets as changesets_db
 from database.database import get_pool
 from database.people import get_people_by_ids
 from database.roles import get_roles
-from database import changesets as changesets_db
 from database import posts as posts_db
 from database.source_records import (
     get_earliest_source_records_for_people,
@@ -45,18 +44,10 @@ async def _roster(changeset_id: str, jurisdiction_ocdid: str) -> tuple[list[dict
 
 async def origin_roster_for(entity_ids: list[str], jurisdiction_ocdid: str) -> list[dict]:
     """These people's fields as their earliest sighting recorded them — the pristine base a
-    rollback overlays currently-active assertions onto, for exactly the people a rollback
-    withdrew a claim about. Not the live roster: that already has every assertion (withdrawn
-    ones included) baked in, so it has nothing left to fall back to once one is withdrawn.
-
-    Scoped to a handful of entities rather than the whole jurisdiction: everyone else's row is
-    untouched by whichever rollback triggered this, so there is nothing to recompute for them.
-
-    `published={}`, deliberately: `canonical_name` keeps a name we already published even when
-    a sighting spells it differently, which is right for an ordinary re-scrape but wrong here —
-    "already published" is exactly the value this is trying to get out from under, so nothing
-    about the live row may anchor it.
-    """
+    rollback overlays currently-active assertions onto. Not the live roster: that already has
+    every assertion (withdrawn ones included) baked in, so there's nothing left to fall back to.
+    `published={}` deliberately — `canonical_name` would otherwise keep the live name over the
+    sighting's, defeating the whole point."""
     sightings = await get_earliest_source_records_for_people(entity_ids)
     if not sightings:
         return []

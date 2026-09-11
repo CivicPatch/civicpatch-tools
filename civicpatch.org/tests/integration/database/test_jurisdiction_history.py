@@ -123,8 +123,8 @@ async def _seed_user() -> str:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO users (email, provider, provider_user_id, display_name, role)
-            VALUES (%s, 'test', %s, 'Ada Reviewer', 'maintainers')
+            INSERT INTO users (email, provider, provider_user_id, username, role)
+            VALUES (%s, 'test', %s, 'ada-reviewer', 'maintainers')
             RETURNING id::text
             """,
             (_USER_EMAIL, _USER_EMAIL),
@@ -245,7 +245,7 @@ async def test_publishing_is_its_own_outcome_and_names_who_did_it():
     entry = await _entry_for(changeset_id)
 
     assert entry.outcome == "published"
-    assert entry.resolved_by == "Ada Reviewer"
+    assert entry.resolved_by == "ada-reviewer"
 
 
 @pytest.mark.asyncio

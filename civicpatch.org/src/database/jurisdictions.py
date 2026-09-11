@@ -686,7 +686,7 @@ async def get_jurisdiction_history(
                    -- work that took minutes.
                    run.created_at AS pipeline_run_started_at,
                    run.finished_at AS pipeline_run_finished_at,
-                   resolver.display_name AS resolved_by,
+                   resolver.username AS resolved_by,
                    -- Why it ended the way it did. `dismissed_reason` was stored and never
                    -- shown, so a dismissal read as motiveless.
                    changesets.dismissed_reason,

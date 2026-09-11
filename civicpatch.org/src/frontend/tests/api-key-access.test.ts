@@ -3,7 +3,7 @@ import { canManageApiKeys } from "../pages/settings-page/api-key-access.js";
 
 const maintainer = {
   authenticated: true,
-  display_name: "wandering-meadow",
+  username: "wandering-meadow",
   permissions: { can_write_config: true },
 };
 
@@ -24,10 +24,6 @@ describe("canManageApiKeys", () => {
 
   it("hides it from a signed-out visitor", () => {
     expect(canManageApiKeys({ ...maintainer, authenticated: false })).toBe(false);
-  });
-
-  it("hides it until a display name is set", () => {
-    expect(canManageApiKeys({ ...maintainer, display_name: null })).toBe(false);
   });
 
   it("fails closed when the user blob could not be parsed", () => {

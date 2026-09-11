@@ -67,9 +67,9 @@ async def _create_user(email: str) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO users (email, provider, provider_user_id, role) "
-            "VALUES (%s, 'github', %s, %s) RETURNING id::text",
-            (email, email, UserRole.MAINTAINERS.value),
+            "INSERT INTO users (email, provider, provider_user_id, username, role) "
+            "VALUES (%s, 'github', %s, %s, %s) RETURNING id::text",
+            (email, email, email.replace("@", "-"), UserRole.MAINTAINERS.value),
         )
         row = await cur.fetchone()
         assert row is not None
@@ -155,7 +155,7 @@ async def _rollback_user(created_by: str, user_id: str) -> int:
     """What a UI offering "roll back everything shown" does: list the user's candidates
     (flat, no jurisdiction chosen), then hand every id to the one executor — the same shape a
     selective call would use too, just with the full list rather than a hand-picked subset."""
-    candidates = await rollback.list_rollback_candidates(created_by)
+    candidates = await rollback.list_user_assertions(created_by)
     return await rollback.rollback_assertions(
         [candidate.assertion_id for candidate in candidates], user_id
     )
@@ -271,7 +271,7 @@ async def test_rollback_user_in_jurisdiction_raises_when_nothing_to_roll_back():
 @pytest.mark.integration
 async def test_rollback_spans_multiple_jurisdictions_in_one_call():
     """No jurisdiction picker anywhere: a user's edits in two different places both revert from
-    a single `list_rollback_candidates` + `rollback_assertions` call, each getting its own
+    a single `list_user_assertions` + `rollback_assertions` call, each getting its own
     rollback changeset since a changeset belongs to exactly one jurisdiction."""
     user_id = await _create_user(_EMAIL)
     user = _identity(_EMAIL, user_id)
@@ -293,7 +293,7 @@ async def test_rollback_spans_multiple_jurisdictions_in_one_call():
         _OTHER_OCDID, [PersonPatch(id=there_id, fields={"name": "Cy A. Okonkwo"})], user
     )
 
-    candidates = await rollback.list_rollback_candidates(user_id)
+    candidates = await rollback.list_user_assertions(user_id)
     assert {c.jurisdiction_ocdid for c in candidates} == {_OCDID, _OTHER_OCDID}
 
     withdrawn = await rollback.rollback_assertions(

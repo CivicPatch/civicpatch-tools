@@ -1,8 +1,0 @@
-{% extends "layouts/base.html" %}
-{% block scripts %}<script type="module" src="{{ vite_asset('assets/pipeline-runs.ts') }}"></script>{% endblock %}
-{% block styles %}{% for href in vite_css('assets/pipeline-runs.ts') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %} {% block title %}Pipeline runs{% endblock %}
-{% block content %}
-<civ-navbar user='{{ user | tojson }}'></civ-navbar>
-
-<pipeline-runs-page></pipeline-runs-page>
-{% endblock %}

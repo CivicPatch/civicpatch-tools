@@ -118,9 +118,9 @@ async def _seed() -> tuple[str, Identity]:
             datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc),
         )
         await cur.execute(
-            "INSERT INTO users (email, provider, provider_user_id, role) "
-            "VALUES (%s, 'github', 'zz-maint', %s) RETURNING id::text",
-            (_EMAIL, UserRole.MAINTAINERS.value),
+            "INSERT INTO users (email, provider, provider_user_id, username, role) "
+            "VALUES (%s, 'github', 'zz-maint', %s, %s) RETURNING id::text",
+            (_EMAIL, _EMAIL.replace("@", "-"), UserRole.MAINTAINERS.value),
         )
         row = await cur.fetchone()
         assert row is not None

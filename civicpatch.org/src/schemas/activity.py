@@ -96,6 +96,7 @@ class PublicPublication(BaseModel):
     author_name: str
     author_role: str
     commit_url: str | None
+    kind: str | None
     created_at: datetime
     review_count: int
 

@@ -187,6 +187,7 @@ function HomePage() {
                   : ""}
                 ${renderRecentPublications({
                   publications: recentPublications,
+                  canViewProfiles: !!permissions?.can_manage_roles,
                 })}
               </div>
             `
@@ -194,6 +195,7 @@ function HomePage() {
               <div class="home-page__second-col">
                 ${renderRecentPublications({
                   publications: recentPublications,
+                  canViewProfiles: !!permissions?.can_manage_roles,
                 })}
               </div>
             `}

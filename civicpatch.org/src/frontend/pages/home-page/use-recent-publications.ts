@@ -8,6 +8,7 @@ export interface RecentPublication {
   author_name: string;
   author_role: string;
   commit_url: string | null;
+  kind: string | null;
   created_at: string;
   review_count: number;
 }

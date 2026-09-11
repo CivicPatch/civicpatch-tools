@@ -4,5 +4,5 @@
 {% block content %}
 <civ-navbar user='{{ user | tojson }}'></civ-navbar>
 
-<user-profile-page target_user_id="{{ target_user_id }}"></user-profile-page>
+<user-profile-page target_user_id="{{ target_user_id }}" username="{{ username }}"></user-profile-page>
 {% endblock %}

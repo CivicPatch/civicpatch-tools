@@ -17,8 +17,8 @@ MOCK_IDENTITY = Identity(
 )
 
 MOCK_ENTRIES = [
-    {"display_name": "alice_reviews", "provider": "github", "provider_user_id": "seed-1", "resolved_count": 142},
-    {"display_name": "bob_patch", "provider": "github", "provider_user_id": "seed-2", "resolved_count": 38},
+    {"username": "alice_reviews", "provider": "github", "provider_user_id": "seed-1", "resolved_count": 142},
+    {"username": "bob_patch", "provider": "github", "provider_user_id": "seed-2", "resolved_count": 38},
 ]
 
 

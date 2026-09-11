@@ -1,10 +1,31 @@
+import re
 from datetime import datetime
 from enum import Enum
-from typing import Optional
+from typing import Annotated, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import AfterValidator, BaseModel, Field
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
+
+MAX_USERNAME_LENGTH = 50
+# Letters, digits, and the three separators common to handles elsewhere (GitHub, email
+# local-parts) — no spaces or anything that needs escaping in a URL or a shell.
+_USERNAME_PATTERN = re.compile(r"^[A-Za-z0-9._-]+$")
+
+
+def _validate_username(value: str) -> str:
+    value = value.strip()
+    if not value:
+        raise ValueError("username cannot be empty")
+    if len(value) > MAX_USERNAME_LENGTH:
+        raise ValueError(f"username too long (max {MAX_USERNAME_LENGTH})")
+    if not _USERNAME_PATTERN.fullmatch(value):
+        raise ValueError("username may only contain letters, numbers, '.', '_', and '-'")
+    return value
+
+
+# Shared by every request that sets a username, so the rule lives in one place.
+Username = Annotated[str, AfterValidator(_validate_username)]
 
 
 class RouteCategory(str, Enum):
@@ -78,13 +99,13 @@ class Identity(BaseModel):
     # via `require_route_access`'s type-based short-circuit, not via the ladder.
     role: str | None = None
     user_id: str | None = None
-    display_name: str | None = None
+    username: str | None = None
 
 
 class UserWithRole(BaseModel):
     id: str
     email: str | None
-    display_name: str | None
+    username: str
     provider: str
     provider_user_id: str
     role: str
@@ -116,6 +137,7 @@ class RequestOtpRequest(BaseModel):
 class VerifyOtpRequest(BaseModel):
     email: str
     code: str
+    username: Username
 
 
 class InFlightEntryType(str, Enum):

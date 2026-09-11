@@ -48,9 +48,9 @@ async def _seed_user_and_jurisdiction() -> str:
             (_OCDID,),
         )
         await cur.execute(
-            "INSERT INTO users (email, provider, provider_user_id, role) "
-            "VALUES (%s, 'email', %s, 'admins') RETURNING id::text",
-            (_USER_EMAIL, _USER_EMAIL),
+            "INSERT INTO users (email, provider, provider_user_id, username, role) "
+            "VALUES (%s, 'email', %s, %s, 'admins') RETURNING id::text",
+            (_USER_EMAIL, _USER_EMAIL, _USER_EMAIL.replace("@", "-")),
         )
         row = await cur.fetchone()
         assert row is not None

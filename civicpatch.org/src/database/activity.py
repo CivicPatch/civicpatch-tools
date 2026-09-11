@@ -31,7 +31,7 @@ async def get_activity_for_roles(
             f"""
             SELECT a.id::text, a.type, a.jurisdiction_ocdid, a.changeset_id,
                    a.changes, a.created_at,
-                   COALESCE(u.display_name, 'Anonymous') AS author_name, u.role AS author_role,
+                   u.username AS author_name, u.role AS author_role,
                    COALESCE(j.data->>'name', a.jurisdiction_ocdid) AS jurisdiction_name,
                    changesets.change_url AS pull_request_url
             FROM activity a
@@ -66,9 +66,14 @@ async def get_activity_for_roles(
 async def get_recent_publications(limit: int) -> list[dict]:
     """Public proof-of-life feed: publish events only, no author diff or review detail.
 
-    Grouped by jurisdiction + day — several review passes on the same town in one day
-    collapse to a single row (the latest one), with `review_count` saying how many. Without
-    this, one actively-reviewed town could fill the whole feed and crowd out everything else.
+    Grouped by jurisdiction + day — several publishes on the same town in one day collapse to
+    a single row (the latest one), with `review_count` saying how many. Without this, one
+    actively-touched town could fill the whole feed and crowd out everything else.
+
+    `kind` names the changeset that went live (`scrape`, `people_edit`, `sheet_import`,
+    `rollback`) — every publish writes the *same* `publish_review` activity type regardless of
+    what actually produced it (a scrape a reviewer approved, a maintainer's hand edit, a
+    rollback), so `kind` is the only column that tells them apart for display.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -79,6 +84,7 @@ async def get_recent_publications(limit: int) -> list[dict]:
                        a.created_at,
                        a.user_id,
                        changesets.change_url AS commit_url,
+                       changesets.kind,
                        COUNT(*) OVER (
                            PARTITION BY a.jurisdiction_ocdid, date_trunc('day', a.created_at)
                        ) AS review_count
@@ -88,16 +94,17 @@ async def get_recent_publications(limit: int) -> list[dict]:
             ),
             latest_per_group AS (
                 SELECT DISTINCT ON (jurisdiction_ocdid, date_trunc('day', created_at))
-                       jurisdiction_ocdid, created_at, user_id, commit_url, review_count
+                       jurisdiction_ocdid, created_at, user_id, commit_url, kind, review_count
                 FROM publish_events
                 ORDER BY jurisdiction_ocdid, date_trunc('day', created_at), created_at DESC
             )
             SELECT g.jurisdiction_ocdid,
                    COALESCE(j.data->>'name', g.jurisdiction_ocdid) AS jurisdiction_name,
                    j.state,
-                   COALESCE(u.display_name, 'Anonymous') AS author_name,
+                   u.username AS author_name,
                    u.role AS author_role,
                    g.commit_url,
+                   g.kind,
                    g.created_at,
                    g.review_count
             FROM latest_per_group g
@@ -117,8 +124,9 @@ async def get_recent_publications(limit: int) -> list[dict]:
             "author_name": r[3],
             "author_role": r[4],
             "commit_url": r[5],
-            "created_at": r[6],
-            "review_count": r[7],
+            "kind": r[6],
+            "created_at": r[7],
+            "review_count": r[8],
         }
         for r in rows
     ]

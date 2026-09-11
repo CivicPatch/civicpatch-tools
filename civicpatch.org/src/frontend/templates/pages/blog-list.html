@@ -10,27 +10,29 @@
 {% include "partials/navbar-logged-out.html" %}
 {% endif %}
 <div class="blog-list page-content">
-    <header class="blog-header">
-        <nav class="blog-breadcrumb" aria-label="Breadcrumb">
-            <ol>
-                <li><a href="/">Home</a></li>
-                <li aria-current="page">Blog</li>
-            </ol>
-        </nav>
-        <h1 class="blog-page-title">Blog</h1>
-    </header>
+    <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+        <ol>
+            <li><a href="/">Home</a></li>
+            <li aria-current="page">Blog</li>
+        </ol>
+    </nav>
+    <div class="page-focal">
+        <h1 class="page-focal__title">Blog.</h1>
+    </div>
     {% if posts %}
+        <div class="blog-list__index">
         {% for post in posts %}
-        <article class="blog-list__item">
-            <time class="blog-list__date">{{ post.date.strftime('%b %-d, %Y') }}</time>
-            <div class="blog-list__body">
+            <article class="blog-list__item">
                 <a href="/blog/{{ post.slug }}" class="blog-list__title">{{ post.title }}</a>
+                <div class="blog-list__meta">
+                    <time>{{ post.date.strftime('%b %-d, %Y') }}</time> by {{ post.author }}
+                </div>
                 {% if post.description %}
-                <p class="blog-list__lead">{{ post.description }}</p>
+                <p class="blog-list__desc">{{ post.description }}</p>
                 {% endif %}
-            </div>
-        </article>
+            </article>
         {% endfor %}
+        </div>
     {% else %}
         <p>No posts yet.</p>
     {% endif %}

@@ -12,7 +12,7 @@ erDiagram
         text            provider        "unique: (provider, provider_user_id)"
         text            provider_user_id
         text            email
-        text            username        "unique, not null; backfilled from id (192)"
+        text            username        "unique, not null; backfilled from id (192); CHECK letters/digits/./_/- only, <=50 chars (193)"
         text            role            "default: 'default', CHECK IN ('default','contributors','maintainers','admins')"
         timestamptz_null last_login_at  "set by upsert_user on every successful sign-in"
         timestamptz_null created_at
@@ -403,7 +403,7 @@ erDiagram
   "no person did this" — so a supersede sweep or an auto-publish was indistinguishable from an
   unattributed write, and every reader had to know the convention. `assertions.asserted_by` had
   already refused nulls for the same reason. A fixed row
-  (`00000000-0000-4000-8000-000000000001`, display name **CivicPatch**) is now that actor;
+  (`00000000-0000-4000-8000-000000000001`, username **CivicPatch**) is now that actor;
   `database.users.SYSTEM_USER_ID` names it, and the write paths coalesce onto it.
   **Nothing can log in as it**: `upsert_user` is the auth path's only writer of `users` and
   always passes provider `supabase` (a hardcoded property), so provider `system` is unreachable

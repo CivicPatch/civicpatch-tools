@@ -49,7 +49,7 @@ def test_list_users_happy_path():
         {
             "id": "uuid-1",
             "email": "alice@example.com",
-            "display_name": "Alice",
+            "username": "Alice",
             "provider": "supabase",
             "provider_user_id": "sb-1",
             "role": "admins",
@@ -68,7 +68,7 @@ def test_list_users_happy_path():
         {
             "id": "uuid-1",
             "email": "alice@example.com",
-            "display_name": "Alice",
+            "username": "Alice",
             "provider": "supabase",
             "provider_user_id": "sb-1",
             "role": "admins",
@@ -92,7 +92,7 @@ def test_set_user_role_happy_path():
         "provider": "supabase",
         "provider_user_id": "sb-target",
         "email": "target@example.com",
-        "display_name": None,
+        "username": "target-user",
     }
     with (
         patch(
@@ -205,7 +205,7 @@ def test_set_user_role_allows_service_api_key_against_any_user():
         "provider": "supabase",
         "provider_user_id": "sb-target",
         "email": "target@example.com",
-        "display_name": None,
+        "username": "target-user",
     }
     with (
         patch(
@@ -343,7 +343,7 @@ def test_get_user_happy_path():
     user_row = {
         "id": TARGET_USER_ID,
         "email": "target@example.com",
-        "display_name": "Target User",
+        "username": "Target User",
         "provider": "supabase",
         "provider_user_id": "sb-target",
         "role": "maintainers",
@@ -458,13 +458,15 @@ _CANDIDATE = RollbackCandidate(
     field_path="name",
     value="Ada M. Chen",
     jurisdiction_ocdid="ocd-jurisdiction/country:us/state:zz/place:x/government",
+    status="active",
+    created_at="2026-09-10T12:00:00+00:00",
 )
 
 
 @pytest.mark.unit
-def test_list_rollback_candidates_happy_path():
+def test_list_user_assertions_happy_path():
     with patch(
-        "services.rollback.list_rollback_candidates",
+        "services.rollback.list_user_assertions",
         new_callable=AsyncMock,
         return_value=[_CANDIDATE],
     ) as mock_list:
@@ -472,12 +474,12 @@ def test_list_rollback_candidates_happy_path():
         response = client.get(f"/api/admin/users/{TARGET_USER_ID}/rollback-candidates")
 
     assert response.status_code == 200
-    assert response.json() == {"data": [_CANDIDATE.model_dump()]}
+    assert response.json() == {"data": [_CANDIDATE.model_dump(mode="json")]}
     mock_list.assert_awaited_once_with(TARGET_USER_ID)
 
 
 @pytest.mark.unit
-def test_list_rollback_candidates_forbidden_without_admins_role():
+def test_list_user_assertions_forbidden_without_admins_role():
     client = _client(NON_ADMIN_IDENTITY)
     response = client.get(f"/api/admin/users/{TARGET_USER_ID}/rollback-candidates")
 
@@ -488,7 +490,7 @@ def test_list_rollback_candidates_forbidden_without_admins_role():
 def test_rollback_user_happy_path():
     with (
         patch(
-            "services.rollback.list_rollback_candidates",
+            "services.rollback.list_user_assertions",
             new_callable=AsyncMock,
             return_value=[_CANDIDATE],
         ),
@@ -515,7 +517,7 @@ def test_rollback_user_happy_path():
 def test_rollback_user_filters_out_ids_not_belonging_to_the_user():
     with (
         patch(
-            "services.rollback.list_rollback_candidates",
+            "services.rollback.list_user_assertions",
             new_callable=AsyncMock,
             return_value=[_CANDIDATE],
         ),
@@ -541,7 +543,7 @@ def test_rollback_user_filters_out_ids_not_belonging_to_the_user():
 def test_rollback_user_returns_409_when_nothing_to_roll_back():
     with (
         patch(
-            "services.rollback.list_rollback_candidates",
+            "services.rollback.list_user_assertions",
             new_callable=AsyncMock,
             return_value=[_CANDIDATE],
         ),

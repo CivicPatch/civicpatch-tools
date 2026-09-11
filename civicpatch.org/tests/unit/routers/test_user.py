@@ -1,4 +1,3 @@
-import re
 from unittest.mock import AsyncMock, patch
 
 import pytest
@@ -29,61 +28,16 @@ def _client(identity: Identity = USER_IDENTITY) -> TestClient:
 
 
 @pytest.mark.unit
-def test_suggest_returns_two_word_when_no_collision():
-    with patch(
-        "database.users.display_name_in_use",
-        new_callable=AsyncMock,
-        return_value=False,
-    ) as mock_in_use:
-        response = _client().get("/display-name/suggestion")
-
-    assert response.status_code == 200
-    name = response.json()["data"]
-    assert re.fullmatch(r"[a-z]+-[a-z]+", name)
-    mock_in_use.assert_awaited_once()
-
-
-@pytest.mark.unit
-def test_suggest_falls_back_to_three_word_on_first_collision():
-    with patch(
-        "database.users.display_name_in_use",
-        new_callable=AsyncMock,
-        side_effect=[True, False],
-    ) as mock_in_use:
-        response = _client().get("/display-name/suggestion")
-
-    assert response.status_code == 200
-    name = response.json()["data"]
-    assert re.fullmatch(r"[a-z]+-[a-z]+-[a-z]+", name)
-    assert mock_in_use.await_count == 2
-
-
-@pytest.mark.unit
-def test_suggest_appends_numeric_suffix_on_deep_collision():
-    with patch(
-        "database.users.display_name_in_use",
-        new_callable=AsyncMock,
-        side_effect=[True, True],
-    ) as mock_in_use:
-        response = _client().get("/display-name/suggestion")
-
-    assert response.status_code == 200
-    name = response.json()["data"]
-    assert re.fullmatch(r"[a-z]+-[a-z]+-[a-z]+-\d{4}", name)
-    assert mock_in_use.await_count == 2
-
-
-@pytest.mark.unit
 def test_save_happy_path():
     with patch(
-        "database.users.set_user_display_name", new_callable=AsyncMock
+        "database.users.set_username", new_callable=AsyncMock
     ) as mock_set:
         response = _client().post(
-            "/display-name", json={"display_name": "apple-witch"}
+            "/username", json={"username": "apple-witch"}
         )
 
     assert response.status_code == 200
-    assert response.json() == {"data": {"display_name": "apple-witch"}}
+    assert response.json() == {"data": {"username": "apple-witch"}}
     mock_set.assert_awaited_once_with(
         "11111111-2222-3333-4444-555555555555", "apple-witch"
     )
@@ -92,10 +46,10 @@ def test_save_happy_path():
 @pytest.mark.unit
 def test_save_strips_whitespace_before_writing():
     with patch(
-        "database.users.set_user_display_name", new_callable=AsyncMock
+        "database.users.set_username", new_callable=AsyncMock
     ) as mock_set:
         response = _client().post(
-            "/display-name", json={"display_name": "  apple-witch  "}
+            "/username", json={"username": "  apple-witch  "}
         )
 
     assert response.status_code == 200
@@ -106,27 +60,48 @@ def test_save_strips_whitespace_before_writing():
 
 @pytest.mark.unit
 def test_save_rejects_empty():
-    response = _client().post("/display-name", json={"display_name": "   "})
-    assert response.status_code == 400
+    response = _client().post("/username", json={"username": "   "})
+    assert response.status_code == 422
 
 
 @pytest.mark.unit
 def test_save_rejects_too_long():
     response = _client().post(
-        "/display-name", json={"display_name": "x" * 51}
+        "/username", json={"username": "x" * 51}
     )
-    assert response.status_code == 400
+    assert response.status_code == 422
+
+
+@pytest.mark.unit
+def test_save_rejects_a_space():
+    response = _client().post("/username", json={"username": "apple witch"})
+    assert response.status_code == 422
+
+
+@pytest.mark.unit
+def test_save_allows_dots_underscores_and_hyphens():
+    with patch(
+        "database.users.set_username", new_callable=AsyncMock
+    ) as mock_set:
+        response = _client().post(
+            "/username", json={"username": "apple_witch-9.dev"}
+        )
+
+    assert response.status_code == 200
+    mock_set.assert_awaited_once_with(
+        "11111111-2222-3333-4444-555555555555", "apple_witch-9.dev"
+    )
 
 
 @pytest.mark.unit
 def test_save_returns_409_on_unique_violation():
     with patch(
-        "database.users.set_user_display_name",
+        "database.users.set_username",
         new_callable=AsyncMock,
         side_effect=UniqueViolation("duplicate"),
     ):
         response = _client().post(
-            "/display-name", json={"display_name": "apple-witch"}
+            "/username", json={"username": "apple-witch"}
         )
 
     assert response.status_code == 409

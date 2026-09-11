@@ -4,11 +4,15 @@
 export type AdminUser = {
   id: string;
   email: string | null;
-  display_name: string | null;
+  username: string | null;
   provider: string;
   role: string;
   last_login_at: string | null;
 };
+
+// Mirrors `AssertionState` (core/assertion_lifecycle.py) — only "active" is a real rollback
+// candidate; "superseded"/"withdrawn" are history the row shows but can't be selected.
+export const ASSERTION_STATUS_ACTIVE = "active";
 
 export type RollbackCandidate = {
   assertion_id: string;
@@ -17,6 +21,8 @@ export type RollbackCandidate = {
   field_path: string;
   value: unknown;
   jurisdiction_ocdid: string;
+  status: string;
+  created_at: string;
 };
 
 const FIELD_LABELS: Record<string, string> = {
@@ -43,5 +49,5 @@ export function formatValue(value: unknown): string {
 }
 
 export function userLabel(user: AdminUser | null, fallback: string): string {
-  return user ? (user.email ?? user.display_name ?? fallback) : fallback;
+  return user ? (user.email ?? user.username ?? fallback) : fallback;
 }

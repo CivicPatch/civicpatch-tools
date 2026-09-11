@@ -1,6 +1,6 @@
 import { html } from "lit-html";
-import { component, useState, useEffect } from "haunted";
-import { fetchDisplayNameSuggestion, setDisplayName } from "../../api.js";
+import { component, useState } from "haunted";
+import { setUsername } from "../../api.js";
 import "./api-keys.js";
 import { canManageApiKeys } from "./api-key-access.js";
 import "../../components/civ-tab-bar/civ-tab-bar.js";
@@ -13,40 +13,30 @@ const TABS = [{ label: "Profile" }, { label: "API keys" }];
 
 type User = {
   authenticated: boolean;
-  display_name: string | null;
+  username: string | null;
   permissions?: { can_write_config?: boolean };
 };
 
 function SettingsPage({ user }: { user: string }) {
-  let userData: User = { authenticated: false, display_name: null };
+  let userData: User = { authenticated: false, username: null };
   try {
     userData = user ? JSON.parse(user) : userData;
   } catch (_e) {
     /* fall through with default */
   }
-  const needsDisplayName = !userData.display_name;
   const canHoldKeys = canManageApiKeys(userData);
 
-  const [value, setValue] = useState(userData.display_name || "");
+  const [value, setValue] = useState(userData.username || "");
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [tab, setTab] = useState(PROFILE_TAB);
-
-  useEffect(() => {
-    if (!needsDisplayName) return;
-    fetchDisplayNameSuggestion()
-      .then((suggestion) => setValue(suggestion))
-      .catch(() => {
-        /* leave input empty; user can type */
-      });
-  }, []);
 
   const onSubmit = async (e: Event) => {
     e.preventDefault();
     setError(null);
     setSaving(true);
     try {
-      await setDisplayName(value.trim());
+      await setUsername(value.trim());
       window.location.href = "/";
     } catch (err: unknown) {
       const e = err as { message?: string };
@@ -57,12 +47,6 @@ function SettingsPage({ user }: { user: string }) {
 
   return html`
     <main class="settings-page page-content">
-      ${needsDisplayName
-        ? html`<div class="settings-page__banner" role="alert">
-            Before you can continue, pick a public display name. This is what
-            other contributors will see on your edits.
-          </div>`
-        : ""}
       <div class="page-focal">
         <h1 class="page-focal__title">Settings</h1>
       </div>
@@ -77,12 +61,12 @@ function SettingsPage({ user }: { user: string }) {
 
       ${tab === PROFILE_TAB || !canHoldKeys
         ? html`<section class="panel">
-            <div class="panel__cap"><b>display name</b></div>
+            <div class="panel__cap"><b>username</b></div>
             <form class="settings-page__form" @submit=${onSubmit}>
-              <label class="settings-page__label" for="display-name">Display name</label>
+              <label class="settings-page__label" for="username">Username</label>
               <input
                 class="settings-page__input"
-                id="display-name"
+                id="username"
                 type="text"
                 .value=${value}
                 @input=${(e: Event) => setValue((e.target as HTMLInputElement).value)}

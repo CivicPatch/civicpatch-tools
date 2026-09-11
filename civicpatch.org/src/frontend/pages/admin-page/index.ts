@@ -20,7 +20,8 @@ import {
 } from "./roles-meta.js";
 import type { ConfirmRoleContext } from "./confirm-role-modal.js";
 import "./role-chip.js";
-import "./status-toast.js";
+import "../../components/status-toast/status-toast.js";
+import "../../components/status-toast/status-toast.css";
 import "./confirm-role-modal.js";
 import "./invite-user-modal.js";
 import "./admin-page.css";
@@ -31,7 +32,7 @@ const TOAST_TIMEOUT_MS = 10_000;
 type AdminUser = {
   id: string;
   email: string | null;
-  display_name: string | null;
+  username: string | null;
   provider: string;
   provider_user_id: string;
   role: string;
@@ -67,7 +68,7 @@ function changedMessage(
   fromRole: string,
   toRole: string,
 ): string {
-  const who = user.email ?? user.display_name ?? "user";
+  const who = user.email ?? user.username ?? "user";
   const fromLabel = getRoleMeta(fromRole)?.label ?? "default";
   const toLabel = getRoleMeta(toRole)?.label ?? "default";
   if (roleRank(toRole) > roleRank(fromRole)) {
@@ -169,7 +170,7 @@ function AdminPage() {
     if (isHigh) {
       setPendingConfirm({
         userId: user.id,
-        userLabel: user.email ?? user.display_name ?? "user",
+        userLabel: user.email ?? user.username ?? "user",
         fromRole,
         toRole,
       });
@@ -304,12 +305,11 @@ function AdminPage() {
               <table class="admin-users-table">
                 <thead>
                   <tr>
+                    <th>Username</th>
                     <th>Email</th>
-                    <th>Display name</th>
                     <th>Provider</th>
                     <th>Last login</th>
                     <th>Role</th>
-                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -319,14 +319,16 @@ function AdminPage() {
                     return html`
                       <tr>
                         <td>
-                          ${user.email ?? "—"}
+                          ${user.username
+                            ? html`<a href="/~${user.username}">${user.username}</a>`
+                            : "—"}
                           ${isSelf
                             ? html`<span class="admin-users-table__self-tag"
                                 >you</span
                               >`
                             : null}
                         </td>
-                        <td>${user.display_name ?? "—"}</td>
+                        <td>${user.email ?? "—"}</td>
                         <td>${user.provider}</td>
                         <td>
                           ${user.last_login_at
@@ -352,11 +354,6 @@ function AdminPage() {
                               `;
                             })}
                           </div>
-                        </td>
-                        <td class="admin-users-table__actions">
-                          <a class="btn btn-sm secondary" href="/users/${user.id}">
-                            View
-                          </a>
                         </td>
                       </tr>
                     `;

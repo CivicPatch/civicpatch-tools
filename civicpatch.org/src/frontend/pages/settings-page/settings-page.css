@@ -4,15 +4,6 @@
   max-width: 36rem;
 }
 
-.settings-page__banner {
-  background: var(--mark-bg);
-  color: var(--mark-text);
-  padding: 0.75rem 1rem;
-  border-radius: var(--radius);
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
-}
-
 .settings-page .panel,
 .settings-page .api-keys {
   border-top-left-radius: 0;

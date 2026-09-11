@@ -63,9 +63,9 @@ async def _seed() -> tuple[str, str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO users (email, provider, provider_user_id, role) "
-            "VALUES (%s, 'email', %s, 'admins') RETURNING id::text",
-            (_USER, _USER),
+            "INSERT INTO users (email, provider, provider_user_id, username, role) "
+            "VALUES (%s, 'email', %s, %s, 'admins') RETURNING id::text",
+            (_USER, _USER, _USER.replace("@", "-")),
         )
         user_id = (await cur.fetchone())[0]
         await cur.execute(
@@ -209,7 +209,7 @@ async def test_the_evidence_survives():
 
     assert len(rows) == 1
     assert rows[0]["sources"][0]["note"].startswith("phoned the clerk")
-    assert rows[0]["created_by_name"] == _USER
+    assert rows[0]["created_by_name"] == _USER.replace("@", "-")
 
 
 @pytest.mark.asyncio
@@ -439,8 +439,8 @@ async def _mint_changeset(cur, jurisdiction_ocdid: str, created_by_user_id: str)
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_active_assertions_by_creator_scopes_to_the_user_not_a_place():
-    """Must list every one of a user's active claims, spanning however many changesets *and*
+async def test_get_assertions_by_creator_scopes_to_the_user_not_a_place():
+    """Must list every one of a user's claims, spanning however many changesets *and*
     jurisdictions — deliberately not scoped to one place (2026-09-10: no jurisdiction picker
     anywhere in the rollback UI) — and nothing that belongs to a different user."""
     user_id, _ = await _seed()
@@ -452,9 +452,9 @@ async def test_get_active_assertions_by_creator_scopes_to_the_user_not_a_place()
             (_OTHER_OCDID,),
         )
         await cur.execute(
-            "INSERT INTO users (email, provider, provider_user_id, role) "
+            "INSERT INTO users (email, provider, provider_user_id, username, role) "
             "VALUES ('zz-assert-other-user@example.com', 'email', "
-            "'zz-assert-other-user@example.com', 'admins') RETURNING id::text"
+            "'zz-assert-other-user@example.com', 'zz-assert-other-user', 'admins') RETURNING id::text"
         )
         row = await cur.fetchone()
         assert row is not None
@@ -504,11 +504,12 @@ async def test_get_active_assertions_by_creator_scopes_to_the_user_not_a_place()
 
     try:
         async with pool.connection() as conn, conn.cursor() as cur:
-            candidates = await assertions.get_active_assertions_by_creator(
+            candidates = await assertions.get_assertions_by_creator(
                 cur, user_id, EntityType.PERSON
             )
             assert len(candidates) == 3, "this user's three active claims, across two places"
             assert {c["jurisdiction_ocdid"] for c in candidates} == {_OCDID, _OTHER_OCDID}
+            assert all(not c["withdrawn"] and not c["superseded"] for c in candidates)
 
             candidate_ids = [c["id"] for c in candidates]
             rollback_id = await _mint_rollback_changeset(cur)
@@ -541,6 +542,60 @@ async def test_get_active_assertions_by_creator_scopes_to_the_user_not_a_place()
             await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OTHER_OCDID,))
             await cur.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OTHER_OCDID,))
             await cur.execute("DELETE FROM users WHERE id::text = %s", (other_user_id,))
+            await conn.commit()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_assertions_by_creator_reports_withdrawn_and_superseded():
+    """Three claims on the same field, oldest to newest, then the newest withdrawn: the
+    withdrawn one reports `withdrawn`, the once-superseded-now-current one reports neither,
+    and the still-superseded oldest reports `superseded` — `state_of` reads both flags to
+    turn them into "active"/"superseded"/"withdrawn" for the UI."""
+    user_id, _ = await _seed()
+    person_id = str(uuid.uuid4())
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, 'Test')",
+            (person_id, _OCDID),
+        )
+        await conn.commit()
+
+    ids = []
+    for value in ("first@town.gov", "second@town.gov", "third@town.gov"):
+        ids.append(
+            await assertions.create(
+                Assertion(
+                    entity_type=EntityType.PERSON,
+                    entity_id=person_id,
+                    field_path="name",
+                    kind=AssertionKind.ACCEPT,
+                    value=value,
+                ),
+                user_id,
+            )
+        )
+    oldest_id, middle_id, newest_id = ids
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await assertions.withdraw(
+            cur, EntityType.PERSON, person_id, "name", AssertionKind.ACCEPT, user_id
+        )
+        await conn.commit()
+
+    try:
+        async with pool.connection() as conn, conn.cursor() as cur:
+            rows = await assertions.get_assertions_by_creator(cur, user_id, EntityType.PERSON)
+        by_id = {row["id"]: row for row in rows}
+
+        assert (by_id[oldest_id]["withdrawn"], by_id[oldest_id]["superseded"]) == (False, True)
+        assert (by_id[middle_id]["withdrawn"], by_id[middle_id]["superseded"]) == (False, False)
+        assert by_id[newest_id]["withdrawn"] is True
+    finally:
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute("DELETE FROM assertions WHERE entity_id::text = %s", (person_id,))
+            await cur.execute("DELETE FROM people WHERE id::text = %s", (person_id,))
             await conn.commit()
 
 

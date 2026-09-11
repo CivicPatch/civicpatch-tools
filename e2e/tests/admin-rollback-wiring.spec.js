@@ -1,31 +1,33 @@
 /**
- * User story: an admin rolls back a user's hand-made edits, from that user's own page
+ * User story: an admin rolls back a user's hand-made edits, from that user's history page
  *
- * Given I open a user's page (/users/{id})
- * Then their currently-active claims load into a list, all pre-selected
- * When I click "Roll back N selected"
+ * Given I open a user's history page (/~{username}/history)
+ * Then their currently-active claims load into a list, none pre-selected
+ * When I select some and click "Roll back N selected"
  * Then a confirm step appears first — rollback has no built-in undo, so this is one-way
  * And only on confirming are exactly the selected ids sent to the rollback endpoint
  * But if there's nothing left to roll back, the failure is shown, not silently dropped
  *
- * The user, candidates and rollback endpoints all touch real assertions/roster state, which
- * the e2e stack has no seeded fixtures for, so all three are stubbed: this tests the client
- * wiring — that the page reaches the right endpoints with the right payloads and drives the
- * right UI state — not the rollback mechanics themselves (covered by the backend's own
- * integration tests).
+ * The page itself does a real, unstubbable server-side username lookup (`/~{username}` resolves
+ * against the DB, not the API), so it targets the seeded e2e test user rather than a fake one.
+ * The user, candidates and rollback endpoints still touch real assertions/roster state the e2e
+ * stack has no fixtures for, so those three stay stubbed (wildcarded on user id, since the
+ * seeded user's id is DB-assigned, not fixed): this tests the client wiring — that the page
+ * reaches the right endpoints with the right payloads and drives the right UI state — not the
+ * rollback mechanics themselves (covered by the backend's own integration tests).
  */
 
 import { test, expect } from "../fixtures/index.js";
 
-const TARGET_USER_ID = "10000000-0000-0000-0000-000000000001";
-const USER_ENDPOINT = `**/api/admin/users/${TARGET_USER_ID}`;
-const CANDIDATES_ENDPOINT = `**/api/admin/users/${TARGET_USER_ID}/rollback-candidates`;
-const ROLLBACK_ENDPOINT = `**/api/admin/users/${TARGET_USER_ID}/rollback`;
+const TARGET_USERNAME = "e2e-test-user";
+const USER_ENDPOINT = "**/api/admin/users/*";
+const CANDIDATES_ENDPOINT = "**/api/admin/users/*/rollback-candidates";
+const ROLLBACK_ENDPOINT = "**/api/admin/users/*/rollback";
 
 const TARGET_USER = {
-  id: TARGET_USER_ID,
+  id: "10000000-0000-0000-0000-000000000001",
   email: "target@example.com",
-  display_name: "Target User",
+  username: TARGET_USERNAME,
   provider: "supabase",
   role: "maintainers",
   last_login_at: null,
@@ -39,6 +41,8 @@ const CANDIDATES = [
     field_path: "name",
     value: "Ada M. Chen",
     jurisdiction_ocdid: "ocd-jurisdiction/country:us/state:nj/place:e2e/government",
+    status: "active",
+    created_at: "2026-09-01T12:00:00+00:00",
   },
   {
     assertion_id: "a2",
@@ -47,6 +51,8 @@ const CANDIDATES = [
     field_path: "phones",
     value: "555-0100",
     jurisdiction_ocdid: "ocd-jurisdiction/country:us/state:nj/place:e2e/government",
+    status: "active",
+    created_at: "2026-09-02T12:00:00+00:00",
   },
 ];
 
@@ -70,21 +76,32 @@ async function stubCandidates(page, candidates = CANDIDATES) {
   );
 }
 
-async function openUserPage(page) {
-  await page.goto(`/users/${TARGET_USER_ID}`);
-  await expect(page.locator(".candidate-list__item")).toHaveCount(CANDIDATES.length);
+async function openHistoryPage(page) {
+  await page.goto(`/~${TARGET_USERNAME}/history`);
+  await expect(page.locator(".candidate-row")).toHaveCount(CANDIDATES.length);
 }
 
-test.describe("User page rollback", () => {
-  test("loads a user's candidates, pre-selected", async ({ adminPage: page }) => {
+async function selectAll(page) {
+  await page.locator(".candidate-row-list__select-all input[type=checkbox]").check();
+}
+
+test.describe("User history page rollback", () => {
+  test("loads a user's candidates, unselected", async ({ adminPage: page }) => {
     await stubUser(page);
     await stubCandidates(page);
 
-    await openUserPage(page);
+    await openHistoryPage(page);
 
-    await expect(page.locator(".candidate-list__item input[type=checkbox]").nth(0)).toBeChecked();
-    await expect(page.locator(".candidate-list__item input[type=checkbox]").nth(1)).toBeChecked();
-    await expect(page.getByRole("button", { name: "Roll back 2 selected" })).toBeVisible();
+    await expect(page.locator(".candidate-row input[type=checkbox]").nth(0)).not.toBeChecked();
+    await expect(page.locator(".candidate-row input[type=checkbox]").nth(1)).not.toBeChecked();
+    await expect(page.getByText("Select all (2)")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Roll back 0 selected" })).toBeDisabled();
+
+    await selectAll(page);
+
+    await expect(page.locator(".candidate-row input[type=checkbox]").nth(0)).toBeChecked();
+    await expect(page.locator(".candidate-row input[type=checkbox]").nth(1)).toBeChecked();
+    await expect(page.getByRole("button", { name: "Roll back 2 selected" })).toBeEnabled();
   });
 
   test("rolling back asks for confirmation before sending anything", async ({
@@ -102,7 +119,8 @@ test.describe("User page rollback", () => {
       });
     });
 
-    await openUserPage(page);
+    await openHistoryPage(page);
+    await selectAll(page);
     await page.getByRole("button", { name: "Roll back 2 selected" }).click();
 
     // Not `.toBeVisible()` on the wrapper itself: `<dialog>` opened via `showModal()` renders
@@ -131,9 +149,9 @@ test.describe("User page rollback", () => {
       });
     });
 
-    await openUserPage(page);
-    // Uncheck the second candidate — only the first should be sent.
-    await page.locator(".candidate-list__item input[type=checkbox]").nth(1).uncheck();
+    await openHistoryPage(page);
+    // Check only the first candidate — only it should be sent.
+    await page.locator(".candidate-row input[type=checkbox]").nth(0).check();
     await page.getByRole("button", { name: "Roll back 1 selected" }).click();
     await page
       .locator("confirm-rollback-modal")
@@ -160,7 +178,8 @@ test.describe("User page rollback", () => {
       }),
     );
 
-    await openUserPage(page);
+    await openHistoryPage(page);
+    await selectAll(page);
     await page.getByRole("button", { name: "Roll back 2 selected" }).click();
     await page
       .locator("confirm-rollback-modal")

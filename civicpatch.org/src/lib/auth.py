@@ -123,7 +123,7 @@ async def get_user_by_cookie(request, token: str) -> Identity:
         email=session.get("email"),
         role=role,
         user_id=user_row.get("id") if user_row else None,
-        display_name=user_row.get("display_name") if user_row else None,
+        username=user_row.get("username") if user_row else None,
     )
 
 

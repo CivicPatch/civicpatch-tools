@@ -32,11 +32,11 @@ async def test_user():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO users (provider, provider_user_id, email)
-            VALUES ('test', %s, %s)
+            INSERT INTO users (provider, provider_user_id, email, username)
+            VALUES ('test', %s, %s, %s)
             RETURNING id
             """,
-            (provider_id, f"{provider_id}@test.com"),
+            (provider_id, f"{provider_id}@test.com", provider_id),
         )
         row = await cur.fetchone()
         user_id = row[0]  # uuid.UUID object — works with UUID columns
@@ -365,8 +365,8 @@ async def test_concurrent_sessions_cannot_claim_same_jurisdiction(test_user):
     provider_id = f"concurrent-{uuid.uuid4().hex[:8]}"
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO users (provider, provider_user_id, email) VALUES ('test', %s, %s) RETURNING id",
-            (provider_id, f"{provider_id}@test.com"),
+            "INSERT INTO users (provider, provider_user_id, email, username) VALUES ('test', %s, %s, %s) RETURNING id",
+            (provider_id, f"{provider_id}@test.com", provider_id),
         )
         user_b = (await cur.fetchone())[0]
 
@@ -508,8 +508,8 @@ async def test_available_count_excludes_jurisdiction_claimed_by_another_user(tes
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO users (provider, provider_user_id, email) VALUES ('test', %s, %s) RETURNING id",
-            (provider_id, f"{provider_id}@test.com"),
+            "INSERT INTO users (provider, provider_user_id, email, username) VALUES ('test', %s, %s, %s) RETURNING id",
+            (provider_id, f"{provider_id}@test.com", provider_id),
         )
         row = await cur.fetchone()
         other_user = row[0]  # type: ignore[index]

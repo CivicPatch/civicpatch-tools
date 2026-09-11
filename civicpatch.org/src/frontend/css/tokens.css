@@ -177,9 +177,9 @@
   --diff-added-bg: rgba(10, 107, 65, 0.12);
   --diff-removed: #c23321;
   --diff-removed-bg: rgba(194, 51, 33, 0.12);
-  --info: #17706b;
+  --info: #1f8c86;
   --info-bg: rgba(31, 140, 134, 0.12);
-  --warning: #a85c14;
+  --warning: #c9701f;
   --success: #0a6b41;
   --error: #c23321;
 

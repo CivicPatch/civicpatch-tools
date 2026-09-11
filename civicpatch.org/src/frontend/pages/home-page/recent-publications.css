@@ -1,42 +1,43 @@
 @layer components {
+/* A compact, single-line feed: a timestamp column and a flowing narrative sentence,
+   told apart by a zebra stripe rather than borders between rows. */
 .recent-publications__list {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
 }
 
 .recent-publications__row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  column-gap: 0.6rem;
-  row-gap: 0.1rem;
-}
-
-.recent-publications__name {
-  /* Grid items stretch to fill their cell by default — without this, the anchor's
-     hit box covers the whole 1fr column, not just the visible text. */
-  justify-self: start;
-  font-weight: 600;
-  color: var(--text-default);
-}
-
-/* The global link rule (elements.css) can't reach this — it sets `color`, and this
-   class's own `color: var(--text-default)` above wins at equal specificity by coming
-   later. Every other link in the app gets hover feedback; this needs its own copy. */
-.recent-publications__name:hover {
-  color: var(--action-hover);
-  text-decoration: underline;
-}
-
-.recent-publications__state {
-  color: var(--text-muted);
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  padding: 0.2rem 0.3rem;
   font-size: var(--font-size-sm);
-  text-align: right;
+}
+
+.recent-publications__row:nth-child(even) {
+  background: var(--surface-stripe);
+}
+
+.recent-publications__at {
+  flex: none;
+  width: 3.2rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+}
+
+.recent-publications__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.recent-publications__verb {
+  font-style: normal;
+  color: var(--accent);
 }
 
 .recent-publications__meta {
-  grid-column: 1 / -1;
   color: var(--text-muted);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
 }
 }

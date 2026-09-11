@@ -7,6 +7,7 @@ sighting re-seats them via their own label regardless of withdrawn assertions, s
 addition needs the sighting invalidated, which nothing here does.
 """
 
+from core.assertion_lifecycle import state_of
 from core.people_edits import with_asserted_values
 from database import assertions, changesets as changesets_db
 from database.database import get_pool
@@ -28,12 +29,14 @@ def _entity_label(entity_id: str, people: dict) -> str:
     return person.name if person else entity_id
 
 
-async def list_rollback_candidates(created_by: str) -> list[RollbackCandidate]:
-    """Every currently-active `PERSON` claim this user made, anywhere. Empty means nothing to
-    show, not an error — `rollback_assertions` is what raises once a selection is acted on."""
+async def list_user_assertions(created_by: str) -> list[RollbackCandidate]:
+    """Every `PERSON` claim this user ever made, anywhere — active or not, each tagged with its
+    `AssertionState` so the UI can tell a real rollback candidate (ACTIVE) from history it can
+    only show (SUPERSEDED/WITHDRAWN). Empty means nothing to show, not an error —
+    `rollback_assertions` is what raises once a selection is acted on."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await assertions.get_active_assertions_by_creator(cur, created_by, EntityType.PERSON)
+        rows = await assertions.get_assertions_by_creator(cur, created_by, EntityType.PERSON)
     people = await get_people_by_ids(list({row["entity_id"] for row in rows}))
     return [
         RollbackCandidate(
@@ -43,6 +46,8 @@ async def list_rollback_candidates(created_by: str) -> list[RollbackCandidate]:
             field_path=row["field_path"],
             value=row["value"],
             jurisdiction_ocdid=row["jurisdiction_ocdid"],
+            status=state_of(row["withdrawn"], row["superseded"]).value,
+            created_at=row["created_at"],
         )
         for row in rows
     ]
@@ -76,14 +81,9 @@ async def _republish(
 async def _rollback_in_jurisdiction(
     assertion_ids: list[str], jurisdiction_ocdid: str, user_id: str, reason: str | None
 ) -> int:
-    """Withdraw exactly these assertions (all in one jurisdiction — a rollback changeset
-    belongs to exactly one), then republish. Returns how many were withdrawn.
-
-    Raises `NothingToRollBack` if none of them are still ACTIVE — checked by the withdraw's own
-    rowcount rather than trusting the caller's list is still current, so the rollback changeset
-    this mints is never left published with nothing behind it: the `raise` happens before
-    `commit()`, so Postgres rolls the whole attempt back, mint included.
-    """
+    """Withdraw exactly these assertions (one jurisdiction — a rollback changeset belongs to
+    exactly one), then republish. Raises `NothingToRollBack` before `commit()` if none are
+    still ACTIVE, so the minted changeset is never left published with nothing behind it."""
     pool = await get_pool()
     rollback_id = make_id()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -107,16 +107,10 @@ async def _rollback_in_jurisdiction(
 async def rollback_assertions(
     assertion_ids: list[str], user_id: str, reason: str | None = None
 ) -> int:
-    """Withdraw exactly these assertions, then republish. Returns how many were withdrawn.
-
-    The one executor — a bulk rollback (every id `list_rollback_candidates` returned) and a
-    selective one (whichever ids a reviewer checked in the UI) are both just callers choosing
-    what to pass; nothing here tells them apart, and neither has to pick a jurisdiction first.
-    Grouped by jurisdiction internally (`get_jurisdictions_for_assertions`) since a rollback
-    changeset belongs to exactly one, and minted once per group that still has anything active.
-
-    Raises `NothingToRollBack` if nothing across the whole selection was still active to undo.
-    """
+    """Withdraw exactly these assertions, then republish — the one executor for both a bulk
+    rollback and a hand-picked selection. Groups ids by jurisdiction internally since a rollback
+    changeset belongs to exactly one; raises `NothingToRollBack` only if nothing in the whole
+    selection was still active."""
     if not assertion_ids:
         raise NothingToRollBack(assertion_ids)
     pool = await get_pool()

@@ -5,9 +5,15 @@
 import { component, useEffect, useState } from "haunted";
 import { html, nothing } from "lit-html";
 import "./pipelines-page.css";
-import { fetchJurisdictionStates, fetchStateScrapeSettings, startStateScrape } from "../../api.js";
+import {
+  fetchActivePipelineRuns,
+  fetchJurisdictionStates,
+  fetchStateScrapeSettings,
+  startStateScrape,
+} from "../../api.js";
 import "../../components/confirm-modal/confirm-modal.ts";
 import "./scrape-settings-modal.ts";
+import "./active-runs/index.js";
 import {
   describeAnchor,
   describeBudget,
@@ -20,7 +26,30 @@ import {
 // a fraction of a cent should not read as "$0.00".
 import { formatUsd } from "../spend-page/spend.js";
 import { useAuth } from "../../hooks/useAuth.js";
+import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
+import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { SectionNav, adminSection } from "../../components/section-nav/index.js";
+
+const RUNS_PER_PAGE_CHOICES = [10, 25, 50];
+
+function getIntParam(key: string, fallback: number, allowed: number[] | null = null): number {
+  const val = parseInt(new URLSearchParams(window.location.search).get(key) ?? "", 10);
+  if (isNaN(val) || val < 1) return fallback;
+  if (allowed && !allowed.includes(val)) return fallback;
+  return val;
+}
+
+function setRunsParamsInUrl(page: number, perPage: number): void {
+  const params = new URLSearchParams(window.location.search);
+  params.set("runs_page", String(page));
+  params.set("runs_per_page", String(perPage));
+  window.history.pushState({}, "", `${window.location.pathname}?${params}`);
+}
+
+function getStateFromUrl(): string {
+  const val = new URLSearchParams(window.location.search).get("state");
+  return val ? val.toLowerCase() : "";
+}
 
 const COLS = [
   { key: "cadence", label: "cadence" },
@@ -113,6 +142,16 @@ function PipelinesPage() {
   const [starting, setStarting] = useState<string | null>(null);
   const [scrapeErrors, setScrapeErrors] = useState<Record<string, string>>({});
 
+  const [defaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", { ttl: PERSIST_FOREVER });
+  const runsStateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
+  const [runs, setRuns] = useState<any[]>([]);
+  const [runsPage, setRunsPage] = useState(getIntParam("runs_page", 1));
+  const [runsPerPage, setRunsPerPage] = useState(
+    getIntParam("runs_per_page", 25, RUNS_PER_PAGE_CHOICES),
+  );
+  const [runsTotalPages, setRunsTotalPages] = useState(1);
+  const [runsLoaded, setRunsLoaded] = useState(false);
+
   const load = () => {
     fetchAllPanels()
       .then(setPanels)
@@ -120,6 +159,32 @@ function PipelinesPage() {
   };
 
   useEffect(load, []);
+
+  useEffect(() => {
+    const onPopState = () => {
+      setRunsPage(getIntParam("runs_page", 1));
+      setRunsPerPage(getIntParam("runs_per_page", 25, RUNS_PER_PAGE_CHOICES));
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
+  useEffect(() => {
+    fetchActivePipelineRuns(runsStateCode || undefined, runsPage, runsPerPage)
+      .then((result: any) => {
+        setRuns(result.data || []);
+        setRunsTotalPages(result.total_pages || 1);
+      })
+      .catch(() => setRuns([]))
+      .finally(() => setRunsLoaded(true));
+  }, [runsStateCode, runsPage, runsPerPage]);
+
+  const handleRunsPerPageChange = (e: Event) => {
+    const n = parseInt((e.target as HTMLSelectElement).value, 10);
+    setRunsParamsInUrl(1, n);
+    setRunsPerPage(n);
+    setRunsPage(1);
+  };
 
   const editingPanel = panels?.find((p) => p.state === editingState) ?? null;
 
@@ -153,6 +218,23 @@ function PipelinesPage() {
           renderRow(panel, setEditingState, setConfirmingState, starting, scrapeErrors[panel.state] || null),
         )}
       </div>
+
+      ${runsLoaded && runs.length === 0
+        ? html`<p class="pipelines-page__empty">No runs in progress.</p>`
+        : html`<pipeline-runs-list
+            .jobs=${runs}
+            .page=${runsPage}
+            .totalPages=${runsTotalPages}
+            .perPage=${runsPerPage}
+            .onPageChange=${(p: number) => {
+              setRunsParamsInUrl(p, runsPerPage);
+              setRunsPage(p);
+            }}
+            .onPerPageChange=${handleRunsPerPageChange}
+            .canCancel=${permissions.can_cancel_pipeline_run}
+            .onCancel=${(pipelineRunId: string) =>
+              setRuns((prev) => prev.filter((j) => j.pipeline_run_id !== pipelineRunId))}
+          ></pipeline-runs-list>`}
 
       ${editingPanel
         ? html`<civ-scrape-settings-modal
