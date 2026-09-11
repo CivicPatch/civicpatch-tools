@@ -8,6 +8,7 @@ export default defineConfig(({ command }) => ({
     manifest: true,
     rollupOptions: {
       input: {
+        "global-styles": "./assets/global-styles.js",
         index: "./assets/index.js",
         review: "./assets/review.ts",
         "review-session": "./assets/review-session.ts",
