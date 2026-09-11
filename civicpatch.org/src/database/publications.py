@@ -22,6 +22,7 @@ from database.changesets import get_updated_at
 from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
 from database.users import SYSTEM_USER_ID
+from schemas.activity import Change
 from schemas.assertions import EntityType
 from shared.utils.statuses import (
     COLLECTION_KINDS,
@@ -138,7 +139,11 @@ async def _refuse_if_not_publishable(cur, changeset_id: str) -> None:
 
 
 async def _record_publish(
-    cur, changeset_id: str, jurisdiction_ocdid: str, resolved_by_user_id: str | None
+    cur,
+    changeset_id: str,
+    jurisdiction_ocdid: str,
+    resolved_by_user_id: str | None,
+    changes: Change | None = None,
 ) -> None:
     # No `jurisdictions.scraped_at` stamp any more. It was written here on *every* publish
     # with no filter, so ten hand edits had dated a "scrape" for jurisdictions where nothing
@@ -166,6 +171,7 @@ async def _record_publish(
         ActivityType.PUBLISH_REVIEW,
         resolved_by_user_id,
         jurisdiction_ocdid,
+        changes=changes,
         changeset_id=changeset_id,
     )
 
@@ -223,6 +229,7 @@ async def publish_changeset(
     people: list[dict],
     resolved_by_user_id: str | None = None,
     derived: list[DerivedPost] | None = None,
+    changes: Change | None = None,
 ) -> int:
     incoming_ids = [str(person["id"]) for person in people]
 
@@ -247,7 +254,7 @@ async def publish_changeset(
             await cur.executemany(PERSON_UPSERT, rows)
 
         await _record_publish(
-            cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id
+            cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id, changes
         )
         # The body that seats people is the body that retires them, so the close reuses the
         # scope the binding chose. Looked up rather than created when there is nothing to bind:

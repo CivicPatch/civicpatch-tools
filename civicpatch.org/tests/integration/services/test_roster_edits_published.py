@@ -611,3 +611,54 @@ async def test_only_the_edited_person_gets_a_new_updated_at():
 
     assert after[edited_id] > before[edited_id], "the edited person kept a stale updated_at"
     assert after[untouched_id] == before[untouched_id], "an untouched person was restamped"
+
+
+async def _activity_rows(changeset_id: str) -> list[tuple]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT type, changes FROM activity WHERE changeset_id::text = %s ORDER BY type",
+            (changeset_id,),
+        )
+        return await cur.fetchall()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_single_person_hand_edit_folds_onto_one_publish_review_row():
+    """One reviewer action, one row — not a separate edit_person beside a payload-less
+    publish_review for the same edit. See roster_edits.edit_published."""
+    person_id, user = await _seed()
+
+    changeset_id, _ = await roster_edits.edit_published(
+        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    )
+
+    rows = await _activity_rows(changeset_id)
+    assert [type_ for type_, _ in rows] == ["publish_review"]
+    changes = rows[0][1]
+    assert changes["subject"] == "Ada M. Chen"
+    assert any(f["field"] == "name" for f in changes["fields"])
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_editing_two_people_at_once_keeps_their_own_rows():
+    """More than one person has no single Change to fold onto the publish row, so this keeps
+    today's shape: one edit_person row per person, plus the plain publish_review."""
+    edited_id, user = await _seed()
+    other_id = await _seed_second_person()
+
+    changeset_id, _ = await roster_edits.edit_published(
+        _OCDID,
+        [
+            PersonPatch(id=edited_id, fields={"name": "Ada M. Chen"}),
+            PersonPatch(id=other_id, fields={"name": "Bo T. Nguyen"}),
+        ],
+        user,
+    )
+
+    rows = await _activity_rows(changeset_id)
+    assert [type_ for type_, _ in rows] == ["edit_person", "edit_person", "publish_review"]
+    publish_changes = next(changes for type_, changes in rows if type_ == "publish_review")
+    assert publish_changes is None

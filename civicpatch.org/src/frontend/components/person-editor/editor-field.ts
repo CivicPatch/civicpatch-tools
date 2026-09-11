@@ -32,7 +32,7 @@ import {
   type Save,
 } from "../fields/field-controls.js";
 import { multiValueDiff } from "../fields/field-model.js";
-import { LOCK_OVERRODE, type FieldLock } from "./field-provenance.js";
+import { type FieldAnnouncement, type FieldLock } from "./field-provenance.js";
 import {
   heldPost,
   postLabelFor,
@@ -80,6 +80,7 @@ export interface EditorFieldProps {
   focusRef: FocusRef | null;
   onAddPost: () => void;
   lock: FieldLock | null;
+  announcement: FieldAnnouncement | null;
 }
 
 function renderControl(props: EditorFieldProps, record: PresentRecord) {
@@ -186,22 +187,66 @@ function renderWas(props: EditorFieldProps) {
   </div>`;
 }
 
-function renderLock(lock: FieldLock) {
-  return html`<span
-    class="person-editor__lock person-editor__lock--${lock.state}"
-    aria-label=${lock.label}
-  >
-    <i class="fa-solid fa-lock" aria-hidden="true"></i>
-  </span>`;
+function renderLockIcon(lock: FieldLock, title: string) {
+  return html`<i
+    class="fa-solid fa-lock person-editor__lock person-editor__lock--${lock.state}"
+    aria-hidden="true"
+    title=${title}
+  ></i>`;
 }
 
-function renderDisclosure(lock: FieldLock | null) {
-  if (!lock || lock.state !== LOCK_OVERRODE || !lock.disclosure) return nothing;
-  return html`<div class="person-editor__disclosure">
-    <i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>
-    <span class="person-editor__disclosure-said">${lock.disclosure}</span>
-    <span class="person-editor__disclosure-who">${lock.label}</span>
-  </div>`;
+// To the right of the field: just the lock. The accept/reject values themselves live in the
+// popover, not inline — a row's provenance is detail a reviewer opts into, not something that
+// needs to compete with the field's own value for space.
+function renderAnnouncement(
+  announcement: FieldAnnouncement | null,
+  lock: FieldLock | null,
+) {
+  if (!lock) return nothing;
+  const chip = (kind: "accept" | "reject", value: string | null) =>
+    value
+      ? html`<span class="person-editor__announce-chip person-editor__announce-chip--${kind}">
+          <i
+            class="fa-solid fa-${kind === "accept" ? "check" : "xmark"}"
+            aria-hidden="true"
+          ></i>
+          ${value}
+        </span>`
+      : nothing;
+  const summaryTitle = [
+    announcement?.accept ? `Accepted: ${announcement.accept}` : null,
+    announcement?.reject ? `Rejected: ${announcement.reject}` : null,
+    lock.label,
+  ]
+    .filter(Boolean)
+    .join(". ");
+  // A plain button + a sibling toggled via `hidden`, not <details> — no chevron, no marker
+  // box, no open/closed rendering quirks to fight; just a button that shows and hides a peer.
+  const toggle = (e: Event) => {
+    const list = (e.currentTarget as HTMLElement).nextElementSibling as HTMLElement | null;
+    if (list) list.hidden = !list.hidden;
+  };
+  return html`
+    <div class="person-editor__announce">
+      <button
+        type="button"
+        class="person-editor__announce-toggle"
+        title=${summaryTitle}
+        @click=${toggle}
+      >
+        ${renderLockIcon(lock, "")}
+      </button>
+      <div class="person-editor__announce-list" hidden>
+        ${announcement?.accept
+          ? html`<div>${chip("accept", announcement.accept)}</div>`
+          : nothing}
+        ${announcement?.reject
+          ? html`<div>${chip("reject", announcement.reject)}</div>`
+          : nothing}
+        <div class="person-editor__announce-who">${lock.label}</div>
+      </div>
+    </div>
+  `;
 }
 
 function renderAttention(props: EditorFieldProps) {
@@ -224,9 +269,6 @@ function renderAttention(props: EditorFieldProps) {
       <i class="fa-solid fa-circle-check"></i><span>Resolved</span>
     </div>`;
   }
-  if (props.lock) {
-    return renderLock(props.lock);
-  }
   return nothing;
 }
 
@@ -245,8 +287,8 @@ export function renderEditorField(props: EditorFieldProps) {
       >
         ${newRecord ? renderControl(props, newRecord) : DASH}
       </div>
+      ${renderAnnouncement(props.announcement, props.lock)}
       ${renderWas(props)} ${renderAttention(props)}
-      ${renderDisclosure(props.lock)}
     </div>
   `;
 }

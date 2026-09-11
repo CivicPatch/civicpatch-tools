@@ -673,7 +673,7 @@ export const inviteUser = async (email) => {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    const err = new Error(body.detail || `HTTP ${res.status}`);
+    const err = new Error(parseSaveError(body, res.status));
     err.status = res.status;
     throw err;
   }
@@ -696,7 +696,7 @@ export const resendInvite = async (userId) => {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body.detail || `HTTP ${res.status}`);
+    throw new Error(parseSaveError(body, res.status));
   }
   return res.json();
 };
@@ -709,7 +709,7 @@ export const revokeInvite = async (userId) => {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body.detail || `HTTP ${res.status}`);
+    throw new Error(parseSaveError(body, res.status));
   }
   return res.json();
 };
@@ -734,7 +734,7 @@ export const rollbackUserAssertions = async (userId, assertionIds, reason) => {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body.detail || `HTTP ${res.status}`);
+    throw new Error(parseSaveError(body, res.status));
   }
   return res.json();
 };
@@ -751,7 +751,7 @@ export const setUsername = async (username) => {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    const err = new Error(body.detail || `HTTP ${res.status}`);
+    const err = new Error(parseSaveError(body, res.status));
     err.status = res.status;
     throw err;
   }
@@ -839,7 +839,7 @@ async function apiKeysRequest(path, method) {
     headers: { "X-CSRF-Token": getCsrfCookie() },
   });
   const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(body.detail || `HTTP ${res.status}`);
+  if (!res.ok) throw new Error(parseSaveError(body, res.status));
   return body;
 }
 
@@ -858,7 +858,7 @@ const SUMMARIES_URL = `${API_URL}/api/v1/changeset_summaries`;
 const summariesRequest = async (path) => {
   const res = await fetch(`${SUMMARIES_URL}${path}`, { credentials: "include" });
   const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(body.detail || `HTTP ${res.status}`);
+  if (!res.ok) throw new Error(parseSaveError(body, res.status));
   return body.data;
 };
 
@@ -874,7 +874,7 @@ export const fetchStateSpend = async (windowDays) => {
     { credentials: "include" },
   );
   const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(body.detail || `HTTP ${res.status}`);
+  if (!res.ok) throw new Error(parseSaveError(body, res.status));
   return body.data;
 };
 
@@ -887,7 +887,7 @@ const scrapeSettingsRequest = async (path, options = {}) => {
     ...options,
   });
   const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(body.detail || `HTTP ${res.status}`);
+  if (!res.ok) throw new Error(parseSaveError(body, res.status));
   return body.data;
 };
 
@@ -931,6 +931,6 @@ export const startStateScrape = async (state, numJurisdictions = null) => {
     body: JSON.stringify({ state, num_jurisdictions: numJurisdictions }),
   });
   const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(body.detail || `HTTP ${res.status}`);
+  if (!res.ok) throw new Error(parseSaveError(body, res.status));
   return body;
 };

@@ -456,6 +456,7 @@ _CANDIDATE = RollbackCandidate(
     entity_id="person-1",
     entity_label="Ada M. Chen",
     field_path="name",
+    kind="accept",
     value="Ada M. Chen",
     jurisdiction_ocdid="ocd-jurisdiction/country:us/state:zz/place:x/government",
     status="active",

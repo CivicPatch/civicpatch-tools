@@ -1,11 +1,50 @@
 """Pure activity helpers: the field diff a payload carries, and the formatter that turns a
 (type, changes) pair into a human-readable summary string for the activity feed."""
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from datetime import datetime
 
 from schemas.activity import MEMBERSHIP_POST_FIELD, FieldChange, RosterChange
-from shared.utils.statuses import ActivityType
+from shared.utils.statuses import GROUPABLE_ACTIVITY_TYPES, LIVE_ACTIVITY_TYPES, ActivityType
+
+# Below this, grouping buys nothing — a lone pipeline_run_start reads better as itself than as
+# "1 scrape started".
+MIN_GROUP_SIZE = 3
+
+
+def is_live_activity(activity_type: ActivityType) -> bool:
+    """Whether this activity type is worth a live push, as opposed to audit trail only."""
+    return activity_type in LIVE_ACTIVITY_TYPES
+
+
+def group_live_activity(rows: Sequence[Mapping[str, object]]) -> list[dict]:
+    """Collapse one sweep's live activity rows into counts, where doing so makes sense.
+
+    Only `GROUPABLE_ACTIVITY_TYPES` are eligible at all, and only once there are at least
+    `MIN_GROUP_SIZE` of the same type in this sweep — a state batch starting fifty runs
+    collapses to one message, but two unrelated manual triggers landing in the same minute, or a
+    single publish, each still announce as themselves.
+    """
+    counts: dict[object, int] = {}
+    for row in rows:
+        type_ = row["type"]
+        counts[type_] = counts.get(type_, 0) + 1
+
+    grouped_types = {
+        type_
+        for type_, count in counts.items()
+        if type_ in GROUPABLE_ACTIVITY_TYPES and count >= MIN_GROUP_SIZE
+    }
+
+    result = [
+        {"type": type_, "count": count}
+        for type_, count in counts.items()
+        if type_ in grouped_types
+    ]
+    result.extend(
+        {"type": row["type"], "count": 1} for row in rows if row["type"] not in grouped_types
+    )
+    return result
 
 
 def field_changes(
@@ -96,13 +135,28 @@ _VERBS: dict[str, str] = {
 }
 
 
+def _field_part(fields: list) -> str:
+    return f" ({len(fields)} field{'s' if len(fields) != 1 else ''})" if fields else ""
+
+
 def summarize_activity(type_: str, changes: dict | None) -> str:
     """Pure: render a one-line summary for an activity-feed row.
     Unknown types fall back to the raw type — never raises."""
     c = changes or {}
 
-    if type_ in ("publish_review", "dismiss_review"):
-        return "Published review" if type_ == "publish_review" else "Dismissed review"
+    if type_ == "publish_review":
+        # A hand edit to an already-live roster folds its own diff onto this row instead of a
+        # separate edit_person one — see roster_edits.edit_published — so a payload here means
+        # this publish *is* that edit, not a plain scrape-review approval.
+        if c:
+            name = c.get("subject") or "record"
+            return f"Published — hand edit: {name}{_field_part(c.get('fields') or [])}"
+        return "Published review"
+    if type_ == "dismiss_review":
+        return "Dismissed review"
+
+    if type_ in ("pipeline_run_start", "pipeline_run_end"):
+        return "Started a scrape" if type_ == "pipeline_run_start" else "Finished a scrape"
 
     if type_ == "reorder_roles":
         return _reorder_summary(c)
@@ -118,11 +172,7 @@ def summarize_activity(type_: str, changes: dict | None) -> str:
 
     if verb := _VERBS.get(type_):
         name = c.get("subject") or "record"
-        fields = c.get("fields") or []
-        field_part = (
-            f" ({len(fields)} field{'s' if len(fields) != 1 else ''})" if fields else ""
-        )
-        return f"{verb} {name}{field_part}"
+        return f"{verb} {name}{_field_part(c.get('fields') or [])}"
 
     # ── Role taxonomy events ────────────────────────────────────────────
     role = c.get("role", "?")

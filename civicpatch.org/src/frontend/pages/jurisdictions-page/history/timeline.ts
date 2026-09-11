@@ -51,7 +51,7 @@ function renderAwaiting(entry: InFlightEntry, ocdid: string, isSignedIn: boolean
     : LOGIN_PATH;
 
   return html`
-    <div class="pr-row">
+    <div class="tl-awaiting-row">
       <div class="pr-row__main">
         <span class="pr-row__title">
           ${entry.kind === "sheet_import" ? "Import" : "Scrape"} of

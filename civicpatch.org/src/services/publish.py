@@ -29,6 +29,7 @@ from lib.temporal.types import (
     OpenDataBatchCommitRequest,
     OpenDataCommitItem,
 )
+from schemas.activity import Change
 from shared.schemas import DerivedPerson, OpenStatesPersonRecord, RoleConfig
 from shared.utils.people_utils import person_sort_key
 from shared.utils.statuses import DismissalReason
@@ -129,14 +130,19 @@ async def publish_people(
     jurisdiction_ocdid: str,
     people: list[dict],
     resolved_by_user_id: str | None = None,
+    changes: Change | None = None,
 ) -> int:
-    """Publish one scrape's roster. Returns the number of people written."""
+    """Publish one scrape's roster. Returns the number of people written.
+
+    `changes`, when given, rides on the publish's own activity row — see `roster_edits.publish`.
+    """
     written = await publish_changeset(
         changeset_id,
         jurisdiction_ocdid,
         people,
         resolved_by_user_id,
         derived=await _get_derived_posts(people),
+        changes=changes,
     )
     logger.info(f"[{changeset_id}] Published {written} people for {jurisdiction_ocdid}")
     return written

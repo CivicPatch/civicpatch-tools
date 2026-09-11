@@ -11,6 +11,7 @@ import {
 import {
   type AdminUser,
   type RollbackCandidate,
+  ASSERTION_KIND_REJECT,
   ASSERTION_STATUS_ACTIVE,
   fieldLabel,
   formatValue,
@@ -177,6 +178,8 @@ function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
                         class="activity-row candidate-row ${candidate.status !==
                         ASSERTION_STATUS_ACTIVE
                           ? "activity-row--quarantined"
+                          : ""} ${candidate.kind === ASSERTION_KIND_REJECT
+                          ? "candidate-row--reject"
                           : ""}"
                       >
                         <input
@@ -187,7 +190,9 @@ function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
                           @change=${() => toggleOne(candidate.assertion_id)}
                         />
                         <div class="activity-row__head">
-                          <span class="activity-row__type">${fieldLabel(candidate.field_path)}</span>
+                          <span class="activity-row__type"
+                            >${fieldLabel(candidate.field_path)} (${candidate.kind})</span
+                          >
                           <span class="activity-row__who">
                             ${candidate.entity_label}
                             <span class="activity-row__role">${candidate.status}</span>

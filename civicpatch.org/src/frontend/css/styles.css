@@ -100,7 +100,7 @@ tbody td:first-child {
 }
 
 tbody tr:hover td {
-  background: color-mix(in srgb, var(--action) 8%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
 /* Diff row semantics — shared by all diff tables.

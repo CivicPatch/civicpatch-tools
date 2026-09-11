@@ -174,12 +174,6 @@ a.btn:focus-visible {
   box-shadow: 0 0 0 var(--focus-ring-width) var(--action-focus);
 }
 
-a {
-  border-radius: var(--radius);
-  padding: 0.1em 0.2em;
-  margin: 0 -0.2em;
-}
-
 a:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--focus-ring-width) var(--action-focus);

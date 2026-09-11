@@ -1,18 +1,23 @@
 import json
+import logging
 from datetime import timedelta
 from typing import Optional
 
 import database.changesets as changesets_db
 import database.dismissals as dismissals_db
+from database.activity import create_activity_row
 from database.database import get_pool, to_iso
 from psycopg import sql
 from schemas.pipeline_runs import ExpiredRun, JurisdictionPipelineRun
 from shared.utils.statuses import (
     RUN_LEVEL_ISSUE_TYPES,
+    ActivityType,
     DismissalReason,
     PipelineRunStatus,
     TERMINAL_PIPELINE_RUN_STATUSES,
 )
+
+logger = logging.getLogger(__name__)
 
 _TERMINAL = TERMINAL_PIPELINE_RUN_STATUSES
 
@@ -25,7 +30,7 @@ async def register_run(
     status: PipelineRunStatus = PipelineRunStatus.PENDING,
     progress: int = 0,
     if_not_exists: bool = False,
-) -> None:
+) -> bool:
     """Start an attempt. No changeset — one is minted at ingest, and only if the run succeeds.
 
     The spend cap is resolved here, in the INSERT, rather than passed in: two paths register
@@ -34,11 +39,14 @@ async def register_run(
 
     It yields NULL for a state with no row, a state that set no cap, and an unknown
     jurisdiction. All three mean the same thing: inherit `pipeline.yml`'s default.
+
+    Returns whether a new run was actually registered — `False` for an idempotent retry of one
+    already running.
     """
     pool = await get_pool()
     conflict = "ON CONFLICT (id) DO NOTHING" if if_not_exists else ""
     async with pool.connection() as conn:
-        await conn.execute(
+        cur = await conn.execute(
             sql.SQL(f"""
             INSERT INTO pipeline_runs (
                 id, jurisdiction_ocdid, arguments_json, created_by_user_id, status, progress,
@@ -62,6 +70,24 @@ async def register_run(
                 jurisdiction_ocdid,
             ),
         )
+        registered = bool(cur.rowcount)
+
+    # Its own connection and best-effort, same as every other activity write: a Postgres error
+    # mid-statement aborts the whole transaction it is in, so sharing the run's own connection
+    # would let a broken activity write take the run registration down with it. Skipped by ON
+    # CONFLICT DO NOTHING means this call registered no new run — an idempotent retry of one
+    # already running must not log a second start.
+    if registered:
+        try:
+            await create_activity_row(
+                ActivityType.PIPELINE_RUN_START,
+                user_id=created_by_user_id,
+                jurisdiction_ocdid=jurisdiction_ocdid,
+            )
+        except Exception:
+            logger.exception(f"[{run_id}] Failed to log pipeline_run_start activity")
+
+    return registered
 
 
 async def get_pipeline_runs_for_jurisdiction(

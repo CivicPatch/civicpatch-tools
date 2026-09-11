@@ -24,11 +24,16 @@
   align-items: flex-start;
   gap: 0.5rem;
   cursor: pointer;
+  /* controls.css's base `label` rule gives every label a bottom margin — invisible between
+     plain white rows, but a stray gap once a tint reveals the row's actual box edge. */
+  margin-bottom: 0;
 }
 
 .candidate-row__checkbox {
   flex: none;
-  margin-top: 0.5rem;
+  /* Was 0.5rem — measured 2.4px low of .activity-row__type's own vertical center on every
+     row (getBoundingClientRect, not eyeballed). */
+  margin-top: 0.35rem;
 }
 
 .candidate-row .activity-row__head {
@@ -40,6 +45,12 @@
    keeping only the tinted background to flag superseded/withdrawn rows. */
 .candidate-row.activity-row--quarantined {
   box-shadow: none;
+}
+
+/* A reject row isn't a competing claim — it's paired with an accept elsewhere in the list —
+   but it still reads as "this value is wrong," so it gets the same tint-only treatment. */
+.candidate-row--reject {
+  background: var(--error-tint);
 }
 
 .candidate-list__reason-label {

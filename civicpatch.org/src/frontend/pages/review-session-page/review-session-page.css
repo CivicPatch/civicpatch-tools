@@ -248,11 +248,11 @@
   }
   .review-session__status-banner--merged {
     background: var(--diff-added);
-    color: #fff;
+    color: var(--bg);
   }
   .review-session__status-banner--closed {
     background: var(--diff-removed);
-    color: #fff;
+    color: var(--bg);
   }
   .review-session__baseline-banner {
     max-width: var(--page-width);

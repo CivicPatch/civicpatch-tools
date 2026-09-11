@@ -9,6 +9,7 @@ export interface PersonAssertion {
 }
 
 export const ACCEPT = "accept";
+export const REJECT = "reject";
 
 const UNNAMED = "someone";
 
@@ -98,5 +99,51 @@ export function fieldLock(
     state: LOCK_OVERRODE,
     label,
     disclosure: disclose(sourceValue, publishedValue),
+  };
+}
+
+// ── the announcement ─────────────────────────────────────────────────────────
+
+export interface FieldAnnouncement {
+  accept: string | null;
+  reject: string | null;
+}
+
+function latestOfKind(
+  assertions: PersonAssertion[],
+  kind: string,
+): PersonAssertion | null {
+  const matches = assertions.filter((assertion) => assertion.kind === kind);
+  if (!matches.length) return null;
+  return matches.reduce((latest, next) =>
+    next.created_at > latest.created_at ? next : latest,
+  );
+}
+
+function formatAssertionValue(value: unknown): string {
+  return typeof value === "string" ? value : JSON.stringify(value);
+}
+
+/** The latest accepted and rejected value on one field, when either exists — an accept and a
+ * reject from the same edit are two claims about two different values, not a contradiction,
+ * so both need to show, not just whichever the lock's single label happens to describe.
+ *
+ * The accept is dropped when it just restates `currentValue`: that's the common case (the
+ * field already shows what was accepted), and announcing it would be noise. A reject always
+ * announces — by definition it names a value that isn't the current one. */
+export function announcementFor(
+  assertions: PersonAssertion[],
+  fieldPath: string,
+  currentValue: unknown,
+): FieldAnnouncement | null {
+  const relevant = assertions.filter((a) => a.field_path === fieldPath);
+  const accept = latestOfKind(relevant, ACCEPT);
+  const reject = latestOfKind(relevant, REJECT);
+  if (!accept && !reject) return null;
+  const acceptValue = accept ? formatAssertionValue(accept.value) : null;
+  const currentText = formatAssertionValue(currentValue);
+  return {
+    accept: acceptValue && acceptValue !== currentText ? acceptValue : null,
+    reject: reject ? formatAssertionValue(reject.value) : null,
   };
 }

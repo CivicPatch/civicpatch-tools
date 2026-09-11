@@ -47,6 +47,9 @@ async def test_sync_jurisdictions_upserts_deactivates_and_returns_synced():
         bulk = _patch(
             stack, "jurisdictions_db.bulk_update_jurisdictions", new_callable=AsyncMock
         )
+        _patch(
+            stack, "organizations_db.ensure_defaults_exist", new_callable=AsyncMock
+        )
         deact = _patch(
             stack,
             "jurisdictions_db.deactivate_jurisdictions_not_in",
@@ -88,6 +91,9 @@ async def test_sync_jurisdictions_scopes_deactivation_per_level():
         )
         bulk = _patch(
             stack, "jurisdictions_db.bulk_update_jurisdictions", new_callable=AsyncMock
+        )
+        _patch(
+            stack, "organizations_db.ensure_defaults_exist", new_callable=AsyncMock
         )
         deact = _patch(
             stack,
@@ -144,6 +150,9 @@ async def test_sync_jurisdictions_writes_state_level_before_dependent_levels():
             stack, "jurisdictions_db.bulk_update_jurisdictions", new_callable=AsyncMock
         )
         _patch(
+            stack, "organizations_db.ensure_defaults_exist", new_callable=AsyncMock
+        )
+        _patch(
             stack,
             "jurisdictions_db.deactivate_jurisdictions_not_in",
             new_callable=AsyncMock,
@@ -177,6 +186,7 @@ def _patch_sync_all(stack, tree, stored, contents):
         return_value={},
     )
     _patch(stack, "jurisdictions_db.bulk_update_jurisdictions", new_callable=AsyncMock)
+    _patch(stack, "organizations_db.ensure_defaults_exist", new_callable=AsyncMock)
     _patch(
         stack,
         "jurisdictions_db.deactivate_jurisdictions_not_in",

@@ -9,6 +9,15 @@ logger = logging.getLogger(__name__)
 
 HEARTBEAT_INTERVAL = 15  # seconds
 
+# Global, not per-jurisdiction: every live-worthy activity (see LIVE_ACTIVITY_TYPES), across
+# every state, on one feed — today that's just publishes, so every subscriber is really
+# listening for "a publish happened," but the name doesn't bake that in.
+ACTIVITY_CHANNEL = "activity"
+
+
+def pipeline_run_status_channel(jurisdiction_ocdid: str) -> str:
+    return f"pipeline_run_status:{jurisdiction_ocdid}"
+
 
 async def publish(channel: str, message: str) -> None:
     """Publish a message to a Redis pub/sub channel."""

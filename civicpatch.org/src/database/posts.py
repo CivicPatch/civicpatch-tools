@@ -478,7 +478,7 @@ async def create(
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await organizations.find_or_create(cur, jurisdiction_ocdid)
+        organization_id = await organizations.get_default(cur, jurisdiction_ocdid)
         await divisions.find_or_create(cur, division_ocdid, jurisdiction_ocdid)
         post_id = await create_if_absent(
             cur,

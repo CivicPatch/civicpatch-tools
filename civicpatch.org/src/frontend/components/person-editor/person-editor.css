@@ -164,12 +164,22 @@
 }
 .person-editor__field {
   display: grid;
-  grid-template-columns: 7rem minmax(0, 22rem) auto;
+  /* Plain 2 columns by default — jurisdiction-details.ts reuses this exact row shape for
+     plain label/control rows that never have a third (lock) column, and a fixed-width
+     column 3 would steal space from column 2 there for nothing. The real person-editor
+     field list adds the third column itself, scoped below. */
+  grid-template-columns: 7rem minmax(0, 1fr);
   justify-content: start;
   gap: 0.5rem;
   align-items: start;
   padding: 0.1rem var(--ring-space);
   border-radius: var(--radius);
+}
+.person-editor__fields .person-editor__field {
+  /* Column 3 is fixed, not `minmax` — each field row is its own independent grid, so a
+     content-sized track would size to that one row's content and the lock would land at a
+     different x-offset on every row instead of lining up down the list. */
+  grid-template-columns: 7rem minmax(0, 22rem) 1.5rem;
 }
 .person-editor :is(input, select, button, a):focus-visible {
   outline: var(--ring-width) solid var(--action);
@@ -265,6 +275,63 @@
 .person-editor__lock--overrode {
   color: var(--editor-lock);
   opacity: 1;
+}
+.person-editor__announce {
+  grid-column: 3;
+  /* Fixed height, not content-sized — a content-sized box's own auto height (and so the
+     whole row's) would change when the popover toggles open, shifting every row below it
+     down a few px. `align-self: center` (against the row's real height, set by the taller
+     label/control) is what lines the icon up with the field's content, rather than pinning
+     it to the row's top edge the way .person-editor__field's own `align-items: start` would. */
+  height: 1.3em;
+  align-self: center;
+  position: relative;
+}
+.person-editor__announce-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.person-editor__announce-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+}
+.person-editor__announce-chip--accept {
+  color: var(--editor-added);
+}
+.person-editor__announce-chip--reject {
+  color: var(--editor-cleared);
+}
+.person-editor__announce-list {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 5;
+  margin-top: 0.25rem;
+  min-width: 10rem;
+  padding: 0.4rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  white-space: nowrap;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  font-size: var(--font-size-xs);
+}
+.person-editor__announce-list[hidden] {
+  display: none;
+}
+.person-editor__announce-who {
+  color: var(--text-muted);
 }
 .person-editor__disclosure {
   grid-column: 1 / -1;
@@ -392,5 +459,56 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.2rem 0.7rem;
+}
+
+/* In-place expansion under a clicked row (review overview, jurisdiction roster) */
+.person-editor-inline {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-rows: 1fr;
+  outline: none;
+}
+@starting-style {
+  .person-editor-inline {
+    grid-template-rows: 0fr;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .person-editor-inline {
+    transition: grid-template-rows 200ms ease;
+  }
+}
+.person-editor-inline__inner {
+  overflow: hidden;
+  min-height: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.person-editor-inline__summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.person-editor-inline__summary .editor-summary {
+  margin-right: auto;
+}
+.person-editor-inline__inner .person-editor {
+  grid-template-columns: 1fr;
+  border: none;
+  border-radius: 0;
+}
+.person-editor-inline__inner .person-editor__identity {
+  display: none;
+}
+.person-editor-inline__inner .person-editor__fields {
+  padding: 0.6rem 0.75rem 0.75rem;
+}
+.person-editor-inline__inner .person-editor--strip person-image,
+.person-editor-inline__inner .person-editor--strip .person-editor__name,
+.person-editor-inline__inner .person-editor--strip .person-editor__office {
+  display: none;
 }
 }

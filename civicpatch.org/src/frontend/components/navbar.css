@@ -1,303 +1,312 @@
 @layer components {
-civ-navbar {
-  display: block;
-  z-index: 100;
-}
-/* Base flex/width layout lives in layout.css, on `civ-navbar nav, nav.nav--logged-out` —
+  civ-navbar {
+    display: block;
+    z-index: 100;
+  }
+  /* Base flex/width layout lives in layout.css, on `civ-navbar nav, nav.nav--logged-out` —
    shared with the static logged-out nav, which never loads this stylesheet's JS path. */
-civ-navbar nav {
-  background: transparent;
-}
-.nav-logout {
-  font-size: var(--font-size-sm);
-  font-weight: 400;
-  color: var(--text-muted);
-  text-decoration: none;
-  opacity: 0.7;
-  transition: opacity 0.15s ease;
-  white-space: nowrap;
-}
-.nav-logout:hover {
-  opacity: 1;
-  color: var(--text-muted);
-  text-decoration: none;
-}
-nav.nav--logged-out {
-  position: relative;
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
-}
-nav.nav--logged-out .nav-brand {
-  font-size: 2.25rem;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.nav-brand {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.125rem;
-  text-decoration: none;
-  color: var(--control-text);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  letter-spacing: -0.01em;
-  transition: opacity 0.15s ease;
-}
-.nav-brand:hover {
-  opacity: 0.7;
-  color: var(--control-text);
-  text-decoration: none;
-}
-.nav-brand-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--action);
-  font-size: 1rem;
-  flex-shrink: 0;
-}
-.nav-beta-badge {
-  font-size: 0.6rem;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  line-height: 1;
-  color: var(--warning);
-  border: 1px solid var(--warning);
-  border-radius: var(--radius);
-  padding: 0.2em 0.35em;
-  opacity: 0.7;
-  position: relative;
-  bottom: 0.35em;
-}
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-}
-.nav-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  margin-left: auto;
-}
-.user-info {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  font-weight: 400;
-  color: var(--text);
-  cursor: default;
-  max-width: 220px;
-  text-decoration: none;
-}
-.user-avatar {
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  flex-shrink: 0;
-  display: block;
-}
-.user-dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: var(--action);
-  flex-shrink: 0;
-}
-.user-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.nav-link {
-  font-size: var(--font-size-md);
-  font-weight: 400;
-  color: var(--action);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  opacity: 1;
-  transition: opacity 0.15s ease;
-  white-space: nowrap;
-}
-.nav-link:hover {
-  opacity: 0.65;
-  color: var(--action);
-  text-decoration: underline;
-}
-.nav-link--active::before {
-  content: "> ";
-}
-.nav-link--active {
-  background: var(--surface-2);
-  border-radius: var(--radius);
-  padding: 0.1rem 0.4rem;
-}
-.btn-outline {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--control-text);
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 0.4rem 1.1rem;
-  cursor: pointer;
-  text-decoration: none;
-  transition:
-    border-color 0.15s ease,
-    background 0.15s ease;
-  white-space: nowrap;
-}
-.btn-outline:hover {
-  border-color: var(--control-text);
-  background: transparent;
-  color: var(--control-text);
-  text-decoration: none;
-}
-.btn-outline:active {
-  background: var(--surface-2);
-}
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--accent-text);
-  background: var(--accent);
-  border: 1px solid var(--accent-border);
-  border-radius: var(--radius);
-  padding: 0.4rem 1.1rem;
-  cursor: pointer;
-  text-decoration: none;
-  transition: opacity 0.15s ease;
-  white-space: nowrap;
-}
-.btn-primary:hover {
-  opacity: 0.85;
-  color: var(--accent-text);
-  text-decoration: none;
-}
-.btn-primary:active {
-  opacity: 0.95;
-}
-.loading-skeleton {
-  display: inline-block;
-  width: 7em;
-  height: 0.75em;
-  background: linear-gradient(
-    90deg,
-    var(--surface-2) 25%,
-    color-mix(in srgb, var(--surface-2) 60%, transparent) 50%,
-    var(--surface-2) 75%
-  );
-  background-size: 200% 100%;
-  border-radius: var(--radius);
-  vertical-align: middle;
-  animation: skeleton-shimmer 1.4s infinite ease-in-out;
-}
-@keyframes skeleton-shimmer {
-  0% {
-    background-position: 200% 0;
+  civ-navbar nav {
+    background: transparent;
   }
-  100% {
-    background-position: -200% 0;
+  .nav-logout {
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    color: var(--text-muted);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+    white-space: nowrap;
   }
-}
-.theme-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  padding: 0.25rem;
-  display: inline-flex;
-  align-items: center;
-  opacity: 0.6;
-  transition: opacity 0.15s ease;
-}
-.theme-toggle:hover {
-  opacity: 1;
-}
-.nav-brand:focus-visible,
-.nav-link:focus-visible,
-.btn-primary:focus-visible,
-.btn-outline:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--action-focus);
-}
-.login-link {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  transition: color 0.15s ease;
-}
-.login-link:hover {
-  color: var(--control-text);
-  text-decoration: none;
-}
-.nav-mobile-links {
-  display: none;
-}
-@media (max-width: 640px) {
-  .user-info {
-    display: none;
-  }
-  nav {
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-inline: 0.5rem;
+  .nav-logout:hover {
+    opacity: 1;
+    color: var(--text-muted);
+    text-decoration: none;
   }
   nav.nav--logged-out {
-    flex-direction: column;
-    align-items: center;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    position: relative;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
   }
   nav.nav--logged-out .nav-brand {
-    position: static;
-    transform: none;
+    font-size: 2.25rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
-  nav:not(.nav--logged-out) .nav-links {
-    display: none;
-  }
-  nav:not(.nav--logged-out) .nav-mobile-links {
+  .nav-brand {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.125rem;
+    text-decoration: none;
+    color: var(--control-text);
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    gap: 0.6rem;
-    padding-top: 0.9rem;
-    border-top: 1px solid var(--border-subtle);
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: -0.01em;
+    transition: opacity 0.15s ease;
   }
-  .nav-mobile-links__label {
-    margin-top: 0.5rem;
+  .nav-brand:hover {
+    opacity: 0.7;
+    color: var(--control-text);
+    text-decoration: none;
+  }
+  .nav-brand-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--action);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .nav-beta-badge {
+    font-size: 0.6rem;
     font-family: var(--font-mono);
-    font-size: var(--font-size-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--text-muted);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    color: var(--warning);
+    border: 1px solid var(--warning);
+    border-radius: var(--radius);
+    padding: 0.2em 0.35em;
+    opacity: 0.7;
+    position: relative;
+    bottom: 0.35em;
   }
-  .nav-mobile-links__item--grouped {
-    padding-left: 1rem;
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
   }
   .nav-controls {
-    width: 100%;
-    margin-left: 0;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-left: auto;
   }
-}
+  .user-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text);
+    cursor: default;
+    max-width: 220px;
+    text-decoration: none;
+  }
+  .user-avatar {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: block;
+  }
+  .user-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--action);
+    flex-shrink: 0;
+  }
+  .user-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .nav-link {
+    font-size: var(--font-size-md);
+    font-weight: 400;
+    color: var(--action);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    opacity: 1;
+    transition: opacity 0.15s ease;
+    white-space: nowrap;
+  }
+  .nav-link:hover {
+    opacity: 0.65;
+    color: var(--action);
+    text-decoration: underline;
+  }
+  .nav-link--active::before {
+    content: "> ";
+  }
+  .nav-link--active {
+    background: var(--surface-2);
+    border-radius: var(--radius);
+    padding: 0.1rem 0.4rem;
+  }
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--control-text);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.4rem 1.1rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      border-color 0.15s ease,
+      background 0.15s ease;
+    white-space: nowrap;
+  }
+  .btn-outline:hover {
+    border-color: var(--control-text);
+    background: transparent;
+    color: var(--control-text);
+    text-decoration: none;
+  }
+  .btn-outline:active {
+    background: var(--surface-2);
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-text);
+    background: var(--accent-fill);
+    border: 1px solid var(--accent-border);
+    border-radius: var(--radius);
+    padding: 0.4rem 1.1rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+    white-space: nowrap;
+  }
+  .btn-primary:hover {
+    opacity: 0.85;
+    color: var(--accent-text);
+    text-decoration: none;
+  }
+  .btn-primary:active {
+    opacity: 0.95;
+  }
+  .loading-skeleton {
+    display: inline-block;
+    width: 7em;
+    height: 0.75em;
+    background: linear-gradient(
+      90deg,
+      var(--surface-2) 25%,
+      color-mix(in srgb, var(--surface-2) 60%, transparent) 50%,
+      var(--surface-2) 75%
+    );
+    background-size: 200% 100%;
+    border-radius: var(--radius);
+    vertical-align: middle;
+    animation: skeleton-shimmer 1.4s infinite ease-in-out;
+  }
+  @keyframes skeleton-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  .theme-select {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    opacity: 0.6;
+    transition: opacity 0.15s ease;
+  }
+  .theme-select:hover,
+  .theme-select:focus-within {
+    opacity: 1;
+  }
+  .theme-select__control {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    padding: 0.15em 0.5em;
+    height: auto;
+    /* controls.css gives every select a bottom margin for stacked form fields —
+       wrong here, where it sits inline next to shortcuts/logout in a flex row. */
+    margin: 0;
+    cursor: pointer;
+  }
+  .nav-brand:focus-visible,
+  .nav-link:focus-visible,
+  .btn-primary:focus-visible,
+  .btn-outline:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 var(--focus-ring-width) var(--action-focus);
+  }
+  .login-link {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: color 0.15s ease;
+  }
+  .login-link:hover {
+    color: var(--control-text);
+    text-decoration: none;
+  }
+  .nav-mobile-links {
+    display: none;
+  }
+  @media (max-width: 640px) {
+    .user-info {
+      display: none;
+    }
+    nav {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      padding-inline: 0.5rem;
+    }
+    nav.nav--logged-out {
+      flex-direction: column;
+      align-items: center;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+    nav.nav--logged-out .nav-brand {
+      position: static;
+      transform: none;
+    }
+    nav:not(.nav--logged-out) .nav-links {
+      display: none;
+    }
+    nav:not(.nav--logged-out) .nav-mobile-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      gap: 0.6rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .nav-mobile-links__label {
+      margin-top: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: var(--font-size-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+    .nav-mobile-links__item--grouped {
+      padding-left: 1rem;
+    }
+    .nav-controls {
+      width: 100%;
+      margin-left: 0;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+  }
 }

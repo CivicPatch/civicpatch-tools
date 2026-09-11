@@ -44,6 +44,7 @@ async def list_user_assertions(created_by: str) -> list[RollbackCandidate]:
             entity_id=row["entity_id"],
             entity_label=_entity_label(row["entity_id"], people),
             field_path=row["field_path"],
+            kind=row["kind"],
             value=row["value"],
             jurisdiction_ocdid=row["jurisdiction_ocdid"],
             status=state_of(row["withdrawn"], row["superseded"]).value,

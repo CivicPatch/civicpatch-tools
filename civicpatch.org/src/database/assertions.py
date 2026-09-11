@@ -210,7 +210,7 @@ async def get_assertions_by_creator(
     PERSON-specific."""
     await cur.execute(
         f"""
-        SELECT a.id::text, a.entity_id::text, a.field_path, a.value, p.jurisdiction_ocdid,
+        SELECT a.id::text, a.entity_id::text, a.field_path, a.kind, a.value, p.jurisdiction_ocdid,
                a.created_at,
                a.withdrawn_at IS NOT NULL AS withdrawn,
                NOT ({_IS_ACTIVE}) AS superseded

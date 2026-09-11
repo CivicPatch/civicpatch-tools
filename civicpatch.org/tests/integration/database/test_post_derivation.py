@@ -92,6 +92,15 @@ async def _seed_person(name: str = "Test Person", urls: list[str] | None = None)
             """,
             (_OCDID, json.dumps({})),
         )
+        # Real jurisdictions get their default organization at sync time (open_data.py); this
+        # raw insert bypasses that, so it has to do the pairing itself.
+        await cur.execute(
+            """
+            INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, 'Government')
+            ON CONFLICT (jurisdiction_ocdid, name) DO NOTHING
+            """,
+            (_OCDID,),
+        )
         await cur.execute(
             "INSERT INTO people (id, jurisdiction_ocdid, name, urls) "
             "VALUES (%s, %s, %s, %s)",
@@ -834,6 +843,15 @@ async def _seed_request() -> str:
             ON CONFLICT (jurisdiction_ocdid) DO NOTHING
             """,
             (_OCDID, json.dumps({})),
+        )
+        # Real jurisdictions get their default organization at sync time (open_data.py); this
+        # raw insert bypasses that, so it has to do the pairing itself.
+        await cur.execute(
+            """
+            INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, 'Government')
+            ON CONFLICT (jurisdiction_ocdid, name) DO NOTHING
+            """,
+            (_OCDID,),
         )
         await cur.execute(
             "INSERT INTO changesets (id, jurisdiction_ocdid, kind) "

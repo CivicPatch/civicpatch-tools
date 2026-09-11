@@ -1,7 +1,15 @@
 @layer components {
+/* The custom element is inline by default — without `display: block` the
+   width below has nothing to fill. */
+username-page {
+  display: block;
+  width: 100%;
+}
+
 .username-page {
+  width: 100%;
   margin-inline: auto;
-  max-width: 28rem;
+  max-width: 36rem;
   text-align: left;
 }
 

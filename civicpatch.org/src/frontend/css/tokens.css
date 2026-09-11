@@ -94,6 +94,7 @@
   --warning-tint: color-mix(in srgb, var(--warning) 15%, transparent);
   --error-tint: color-mix(in srgb, var(--error) 15%, transparent);
   --info-tint: color-mix(in srgb, var(--info) 15%, transparent);
+  --text-muted-tint: color-mix(in srgb, var(--text-muted) 15%, transparent);
 
   --border-subtle: color-mix(in srgb, var(--border) 55%, var(--bg));
 
@@ -122,7 +123,11 @@
 
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
-  /* ── Editorial palette tokens (Lemon light) ──────────────────────────── */
+  /* Without this, native form controls (checkbox/radio) paint with the OS's light theme
+     regardless of the page's own palette — harmless here since this block already is
+     light, but declared for symmetry with the dark block below, where it is not harmless. */
+  color-scheme: light;
+  /* ── Editorial palette tokens (civic) ─────────────────────────────────── */
   --bg: #ffffff;
   --surface: #f1f2f3;
   --surface-2: #e8e9ea;
@@ -133,6 +138,10 @@
   --border: #b8bcbe;
   --border-strong: #28292a;
   --accent: #17639f;
+  /* Solid-fill backgrounds (buttons, calendar segments) — same as --accent here, but the
+     dark theme needs a dimmer value than its link-text --accent, so this stays a distinct
+     token rather than every fill site assuming the two always match. */
+  --accent-fill: var(--accent);
   --level-note: #4a3390;
   --accent-border: #154e7c;
   --accent-text: #ffffff; /* text on top of accent bg */
@@ -212,62 +221,90 @@
 /* ── Dark theme ──────────────────────────────────────────────────────────── */
 
 :root[data-theme="dark"] {
-  /* ── Editorial palette tokens (Graphite dark) ────────────────────────── */
-  --bg: #161821;
-  --surface: #1e2132;
-  --surface-2: #212537;
-  --surface-stripe: #1d202f;
-  --text-default: #c6c8d1;
-  --text-secondary: #9fa1aa;
-  --text-muted: #91939c;
-  --border: #303548;
-  --border-strong: #b4b6bf;
-  --accent: #84a0c6;
-  --level-note: #a093c7;
-  --accent-border: #94aac9;
-  --accent-text: #161821;
+  /* This was never set anywhere, on either theme. Every native form control (checkbox,
+     radio) was rendering with the OS's light widget theme regardless of the page's own
+     dark palette — a bright white box with no relation to --surface/--border, which is
+     what actually read as "checkboxes have poor contrast / look misaligned": nothing
+     about their box model was wrong, they just didn't belong to this theme at all. */
+  color-scheme: dark;
+  /* ── Editorial palette tokens (solaris dark) ──────────────────────────
+     Built from Solarized Dark's canonical swatches (base03/02/01/00/0/1,
+     blue/violet/cyan/orange/green/red) — see .scratch/2026-09-10-plan-civic-
+     solaris-dark-themes.md for the full swatch → token mapping. Structural
+     relationships (surface lighter than bg, accent-border lighter than
+     accent, etc.) are kept identical to the palette this replaced. */
+  --bg: #002b36;
+  --surface: #073642;
+  --surface-2: #0a4552;
+  --surface-stripe: #063440;
+  --text-default: #93a1a1;
+  --text-secondary: #839496;
+  /* Was #586e75 — 2.79:1 on --bg, 2.42:1 on --surface, 1.96:1 on --surface-2, all under
+     the 3:1 floor. This clears 4.5:1 on --bg and 3:1+ everywhere else while staying below
+     --text-secondary's luminance, matching the light theme's muted tier (5.7/5.1/4.7:1). */
+  --text-muted: #7a9291;
+  --border: #0d4a57;
+  --border-strong: #93a1a1;
+  /* Was #268bd2 — 4.08:1 on --bg, short of the 4.5:1 normal-text threshold for link color. */
+  --accent: #3d9adf;
+  /* --accent brightened above for link-text contrast; a solid fill (button, calendar
+     segment) needs the original, more muted tone instead — the brighter value both reads
+     louder than the rest of this palette and drops --accent-text's contrast against it
+     (3.41:1 -> 2.83:1). This is #268bd2, --accent's pre-fix value. */
+  --accent-fill: #268bd2;
+  /* Was #6c71c4 — 3.43:1 on --bg, under 4.5:1. */
+  --level-note: #8b8fd6;
+  --accent-border: #4f9fdb;
+  --accent-text: #fdf6e3;
 
   /* ── Tones — see the light block for the format note ─────────────────── */
-  --tone-bg: 30, 30, 46;
-  --tone-bg-deep: 17, 17, 27;
-  --tone-ink: 205, 214, 244;
-  --tone-line: 49, 50, 68;
-  --tone-line-mid: 69, 71, 90;
-  --tone-line-strong: 88, 91, 112;
-  --tone-blue: 137, 180, 250;
-  --tone-red: 243, 139, 168;
-  --tone-green: 166, 227, 161;
-  --tone-yellow: 249, 226, 175;
-  --tone-pink: 245, 194, 231;
-  --tone-mauve: 203, 166, 247;
-  --tone-sky: 137, 220, 235;
-  --tone-teal: 148, 226, 213;
-  --tone-sapphire: 116, 199, 236;
-  --tone-lavender: 180, 190, 254;
+  --tone-bg: 7, 54, 66;
+  --tone-bg-deep: 0, 43, 54;
+  --tone-ink: 147, 161, 161;
+  --tone-line: 13, 74, 87;
+  --tone-line-mid: 45, 90, 100;
+  --tone-line-strong: 88, 110, 117;
+  --tone-blue: 38, 139, 210;
+  --tone-red: 220, 50, 47;
+  --tone-green: 133, 153, 0;
+  --tone-yellow: 181, 137, 0;
+  --tone-pink: 211, 54, 130;
+  --tone-mauve: 108, 113, 196;
+  --tone-sky: 42, 161, 152;
+  --tone-teal: 88, 181, 172;
+  --tone-sapphire: 70, 160, 220;
+  --tone-lavender: 150, 155, 215;
 
   /* Base-layer roles — dark */
   --text: var(--text-default);
-  --selection-bg: rgba(132, 160, 198, 0.25);
+  --selection-bg: rgba(38, 139, 210, 0.25);
 
-  --action: #c6c8d1;
-  --action-hover: #9fa1aa;
-  --action-focus: rgba(198, 200, 209, 0.25);
-  --action-text: #161821;
+  --action: #93a1a1;
+  --action-hover: #839496;
+  --action-focus: rgba(147, 161, 161, 0.25);
+  --action-text: #002b36;
 
-  --muted-action-bg: #4c5270;
-  --muted-action-text: #161821;
+  --muted-action-bg: #35606b;
+  /* Was #002b36 (this theme's own --bg) — 2.17:1 on --muted-action-bg. The light theme
+     uses light text (white) on its similarly-toned muted button; this had kept dark text
+     instead of flipping it. --accent-text is already the light/cream tone used elsewhere
+     for text on a colored surface — reused here rather than a new value. 6.41:1. */
+  --muted-action-text: var(--accent-text);
 
   --field-border: var(--text-muted);
 
-  --diff-added: #b4be82;
-  --diff-added-bg: rgba(180, 190, 130, 0.12);
-  --diff-removed: #e27878;
-  --diff-removed-bg: rgba(226, 120, 120, 0.12);
-  --info: #89b8c2;
-  --info-bg: rgba(137, 184, 194, 0.12);
-  --warning: #e2a478;
-  --success: #b4be82;
-  --error: #e27878;
+  --diff-added: #859900;
+  --diff-added-bg: rgba(133, 153, 0, 0.12);
+  /* Was #dc322f (shared with --error below) — 3.25:1 on --bg, under 4.5:1. */
+  --diff-removed: #ea6560;
+  --diff-removed-bg: rgba(220, 50, 47, 0.12);
+  --info: #2aa198;
+  --info-bg: rgba(42, 161, 152, 0.12);
+  /* Was #cb4b16 — 3.26:1 on --bg, under 4.5:1. */
+  --warning: #e07030;
+  --success: #859900;
+  /* Was #dc322f — 3.25:1 on --bg, under 4.5:1. */
+  --error: #ea6560;
 
   --status-fresh: var(--success);
   --status-stale: var(--warning);
@@ -280,17 +317,19 @@
   --status-selected: var(--accent);
 
   /* Inherited framework tokens — theme-dependent half. */
-  --contrast: #c6c8d1;
-  --placeholder: #424862;
-  --option-selected-bg: #2a303f;
-  --mark-bg: rgba(226, 164, 120, 0.28);
-  --mark-text: #c6c8d1;
-  --muted-action: #91939c;
-  --muted-action-hover: #80828b;
-  --muted-action-underline: rgba(85, 92, 126, 0.5);
+  --contrast: #93a1a1;
+  --placeholder: #2d4f5c;
+  --option-selected-bg: #0d3d47;
+  --mark-bg: rgba(203, 75, 22, 0.28);
+  --mark-text: #93a1a1;
+  /* Was #586e75 — the same broken value --text-muted had (2.79:1 on --bg), independently
+     duplicated here and never caught by that fix since it's a separate token. */
+  --muted-action: var(--text-muted);
+  --muted-action-hover: #6e838a;
+  --muted-action-underline: rgba(88, 110, 117, 0.5);
   --card-border: var(--border);
-  --contrast-hover: #9fa1aa;
-  --contrast-underline: rgba(198, 200, 209, 0.5);
+  --contrast-hover: #839496;
+  --contrast-underline: rgba(147, 161, 161, 0.5);
 
-  --surface-hover: rgba(198, 200, 209, 0.05);
+  --surface-hover: rgba(147, 161, 161, 0.05);
 }

@@ -1,10 +1,11 @@
 import json
+from datetime import datetime
 
 from core.activity import summarize_activity
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
 from schemas.activity import Change, ChangedJurisdiction
-from shared.utils.statuses import ActivityType, DismissalReason
+from shared.utils.statuses import LIVE_ACTIVITY_TYPES, ActivityType, DismissalReason
 
 
 async def get_activity_for_roles(
@@ -310,3 +311,28 @@ async def states_changed_since(minutes: int) -> list[str]:
         )
         rows = await cur.fetchall()
     return sorted(row[0] for row in rows if row[0])
+
+
+async def get_live_activity_since(since: datetime) -> list[dict]:
+    """Live-worthy activity (see `LIVE_ACTIVITY_TYPES`) written after `since`, oldest first.
+
+    An absolute timestamp rather than a lookback window: the caller holds the cursor (in Redis,
+    for the activity feed sweep), so unlike `states_changed_since` there is no need to widen the
+    window and tolerate re-processing.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT type, jurisdiction_ocdid, created_at
+            FROM activity
+            WHERE type = ANY(%s) AND created_at > %s
+            ORDER BY created_at
+            """,
+            (list(LIVE_ACTIVITY_TYPES), since),
+        )
+        rows = await cur.fetchall()
+    return [
+        {"type": row[0], "jurisdiction_ocdid": row[1], "created_at": row[2]}
+        for row in rows
+    ]

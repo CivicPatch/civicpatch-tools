@@ -3,6 +3,7 @@ import logging
 from datetime import datetime, timezone
 
 import database.jurisdictions as jurisdictions_db
+import database.organizations as organizations_db
 import database.synced_files as synced_files_db
 import environment
 import lib.github.api as github_service
@@ -61,6 +62,7 @@ async def _read_jurisdiction_level(paths: list[str], now, fetch) -> list[str]:
         ]  # the authoritative list for this (state, level) file
         synced.append(path)
     await jurisdictions_db.bulk_update_jurisdictions(rows)
+    await organizations_db.ensure_defaults_exist([row[0] for row in rows])
 
     # within-list removal: a jurisdiction no longer in a synced file's (state, level) list
     for (state, level), keep in slice_keep.items():

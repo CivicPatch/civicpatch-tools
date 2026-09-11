@@ -8,12 +8,15 @@ class RollbackCandidate(BaseModel):
     """One assertion in a user's history — what a UI lists and checks boxes against.
     `jurisdiction_ocdid` rides along for display only; selecting and executing never requires
     picking one first. `status` is the assertion's `AssertionState` value ("active",
-    "superseded", "withdrawn"); only "active" rows are real rollback candidates."""
+    "superseded", "withdrawn"); only "active" rows are real rollback candidates. `kind`
+    ("accept"/"reject") is what makes an accept-new-value row and a reject-old-value row on
+    the same field both legitimately "active" at once — without it they read as duplicates."""
 
     assertion_id: str
     entity_id: str
     entity_label: str
     field_path: str
+    kind: str
     value: Any
     jurisdiction_ocdid: str
     status: str

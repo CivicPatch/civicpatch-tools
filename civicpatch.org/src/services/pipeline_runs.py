@@ -10,9 +10,11 @@ from typing import Optional
 
 import lib.pubsub as pubsub_service
 from core.pipeline_runs import dismissal_for, is_final
+from database.activity import create_activity_row
 from database.issues import supersede_prior_jurisdiction_issues
 from database.pipeline_runs import get_pipeline_run, update_pipeline_run_status
 from database.publications import dismiss_changeset
+from shared.utils.statuses import ActivityType
 
 logger = logging.getLogger(__name__)
 
@@ -76,22 +78,41 @@ async def apply_pipeline_run_status(
         )
 
     if final:
-        await finalize_pipeline_run(
-            pipeline_run.get("changeset_id") if pipeline_run else None,
-            status,
-            jurisdiction_ocdid,
-        )
+        changeset_id = pipeline_run.get("changeset_id") if pipeline_run else None
+        await finalize_pipeline_run(changeset_id, status, jurisdiction_ocdid)
+        # Best-effort, its own connection: this settles beside a report that already committed
+        # above, not inside it. `changeset_id` is set only when the run reached ingest — a
+        # failed or cancelled run mints none. Caught rather than left to propagate: the report
+        # itself already succeeded, so a broken activity write must not read back as a failed
+        # status update.
+        try:
+            await create_activity_row(
+                ActivityType.PIPELINE_RUN_END,
+                user_id=None,
+                jurisdiction_ocdid=jurisdiction_ocdid,
+                changeset_id=changeset_id,
+            )
+        except Exception:
+            logger.exception(f"[{pipeline_run_id}] Failed to log pipeline_run_end activity")
 
     if jurisdiction_ocdid:
-        await pubsub_service.publish(
-            f"pipeline_run_status:{jurisdiction_ocdid}",
-            json.dumps(
-                {
-                    "pipeline_run_id": pipeline_run_id,
-                    "status": status,
-                    "progress": progress,
-                    # Derived here so a live update and a fetched row cannot disagree.
-                    "is_running": not final,
-                }
-            ),
-        )
+        # Best-effort: the status update above already committed, so a Redis hiccup here must
+        # not make an otherwise-successful report look like a failure to the caller.
+        try:
+            await pubsub_service.publish(
+                pubsub_service.pipeline_run_status_channel(jurisdiction_ocdid),
+                json.dumps(
+                    {
+                        "pipeline_run_id": pipeline_run_id,
+                        "status": status,
+                        "progress": progress,
+                        # Derived here so a live update and a fetched row cannot disagree.
+                        "is_running": not final,
+                    }
+                ),
+            )
+        except Exception:
+            logger.exception(
+                f"[{pipeline_run_id}] Failed to announce "
+                f"{pubsub_service.pipeline_run_status_channel(jurisdiction_ocdid)}"
+            )

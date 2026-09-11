@@ -83,6 +83,7 @@ export function personEditorPropsFor(
     subtitle: postsFor(card, ctx.proposals, ctx.posts),
     derivedPost: derivedPostFor(card, ctx.proposals),
     accepts: acceptsByField(ctx.assertions[card.personId] ?? []),
+    assertions: ctx.assertions[card.personId] ?? [],
     overriddenSourceValues: ctx.overriddenSourceValues[card.personId] ?? {},
     posts: ctx.posts,
     onAddPost: () => ctx.onAddPost(card.personId),
