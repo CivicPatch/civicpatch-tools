@@ -155,7 +155,7 @@ civicpatch.org uses Supabase email-OTP. Locally, no real email is sent — Mailp
 
 4. Enter the code on the verify screen
 
-To grant your local user a role (e.g. for `/admin` access):
+To grant your local user a role (e.g. for `/admin/users` access):
 
 ```sh
 mise run grant_role you@example.com admins

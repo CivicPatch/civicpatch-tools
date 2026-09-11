@@ -116,18 +116,8 @@ class SetRoleRequest(BaseModel):
     role: UserRole
 
 
-class InviteUserRequest(BaseModel):
-    email: str
-
-
 class ReportReviewIssueRequest(BaseModel):
     description: str = Field(min_length=1, max_length=10000)
-
-
-class PendingInvite(BaseModel):
-    id: str
-    email: str | None
-    invited_at: str | None
 
 
 class RequestOtpRequest(BaseModel):

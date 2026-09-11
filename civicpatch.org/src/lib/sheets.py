@@ -289,6 +289,25 @@ def ensure_tab(
     return max(rows, existing)
 
 
+def clear_row(spreadsheet_id: str, tab: str, row: int, column_count: int) -> None:
+    """Blank one row, bounded to `column_count` columns. Unlike `clear_rows_from`, this never
+    reaches the rows below it — for a header that can shrink without leaving stale trailing
+    cells from a wider one it used to be.
+    """
+    last_column = _column_letter(column_count - 1)
+    (
+        get_service()
+        .spreadsheets()
+        .values()
+        .clear(
+            spreadsheetId=spreadsheet_id,
+            range=f"{quote_tab(tab)}!A{row}:{last_column}{row}",
+            body={},
+        )
+        .execute()
+    )
+
+
 def write_rows(spreadsheet_id: str, tab: str, rows: list[list], start_row: int) -> int:
     """Write a block of rows at `start_row` (1-based). Returns how many cells were written.
 

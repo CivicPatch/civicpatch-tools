@@ -4,13 +4,10 @@ import database.jurisdictions as jurisdictions_db
 import database.users as users_db
 import lib.auth_session as auth_session
 import lib.cache as cache_service
-import lib.supabase_auth as supabase_auth_service
 from fastapi import APIRouter, Depends, HTTPException
 from lib.auth import require_route_access
 from schemas.common import (
     Identity,
-    InviteUserRequest,
-    PendingInvite,
     RouteCategory,
     SetRoleRequest,
     UserRole,
@@ -18,7 +15,6 @@ from schemas.common import (
 )
 from schemas.rollback import RollbackRequest
 from services import entry_sheet, rollback
-from supabase import AsyncClient
 
 
 def get_router() -> APIRouter:
@@ -66,51 +62,6 @@ def get_router() -> APIRouter:
         )
         return {"data": {"id": user_id_str, "role": payload.role.value}}
 
-    @router.post("/users/invite", include_in_schema=False)
-    async def invite_user_endpoint(
-        payload: InviteUserRequest,
-        client: AsyncClient = Depends(supabase_auth_service.get_supabase_admin_client),
-        _: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
-        ),
-    ):
-        try:
-            await client.auth.admin.invite_user_by_email(payload.email)
-        except Exception as exc:
-            message = str(exc)
-            if "already" in message.lower():
-                raise HTTPException(status_code=409, detail="User already exists")
-            raise HTTPException(status_code=400, detail=message)
-        return {"data": {"sent": True}}
-
-    @router.get("/users/pending", include_in_schema=False)
-    async def list_pending_invites_endpoint(
-        client: AsyncClient = Depends(supabase_auth_service.get_supabase_admin_client),
-        _: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
-        ),
-    ):
-        # per_page=100 fits our scale (small team); revisit if total users grows past that.
-        try:
-            users = await client.auth.admin.list_users(per_page=100)
-        except Exception as exc:
-            raise HTTPException(status_code=500, detail=str(exc))
-
-        pending = [
-            PendingInvite(
-                id=str(user.id),
-                email=getattr(user, "email", None),
-                invited_at=user.invited_at.isoformat() if user.invited_at else None,
-            )
-            for user in users
-            if user.invited_at and not user.last_sign_in_at
-        ]
-        return {"data": pending}
-
-    # After `/users/pending` and before every other `/users/{user_id}...` route: FastAPI
-    # matches path templates in registration order, and this one has no literal segment to
-    # tell it apart from `/users/pending` — registering it earlier would 422 on "pending"
-    # (an invalid UUID) before ever reaching that handler.
     @router.get("/users/{user_id}", include_in_schema=False)
     async def get_user_endpoint(
         user_id: UUID,
@@ -122,42 +73,6 @@ def get_router() -> APIRouter:
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         return {"data": UserWithRole(**user)}
-
-    @router.post("/users/{user_id}/resend-invite", include_in_schema=False)
-    async def resend_invite_endpoint(
-        user_id: UUID,
-        client: AsyncClient = Depends(supabase_auth_service.get_supabase_admin_client),
-        _: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
-        ),
-    ):
-        try:
-            user_response = await client.auth.admin.get_user_by_id(str(user_id))
-        except Exception:
-            raise HTTPException(status_code=404, detail="User not found")
-        user_obj = getattr(user_response, "user", user_response)
-        email = getattr(user_obj, "email", None)
-        if not email:
-            raise HTTPException(status_code=404, detail="User has no email on file")
-        try:
-            await client.auth.admin.invite_user_by_email(email)
-        except Exception as exc:
-            raise HTTPException(status_code=400, detail=str(exc))
-        return {"data": {"sent": True}}
-
-    @router.delete("/users/{user_id}/invite", include_in_schema=False)
-    async def revoke_invite_endpoint(
-        user_id: UUID,
-        client: AsyncClient = Depends(supabase_auth_service.get_supabase_admin_client),
-        _: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
-        ),
-    ):
-        try:
-            await client.auth.admin.delete_user(str(user_id))
-        except Exception as exc:
-            raise HTTPException(status_code=400, detail=str(exc))
-        return {"data": {"revoked": True}}
 
     @router.get("/users/{user_id}/rollback-candidates", include_in_schema=False)
     async def list_rollback_candidates_endpoint(

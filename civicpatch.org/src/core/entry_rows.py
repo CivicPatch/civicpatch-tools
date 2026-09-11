@@ -9,10 +9,13 @@ Pure either way — the Sheets calls are the caller's. Which sheet and which tab
 The sheet carries no ids — matching is ingest's job, so there is nowhere to paste a uuid wrong.
 One row is one sighting; `roster_from_rows` groups by name, so two rows for one person would
 invite "Bob Smith" and "Robert Smith" to become two people.
+
+`jurisdiction_ocdid` is typed or pasted directly — never a geoid. A geoid needs a database read
+to resolve, which makes it exact but also a guess-and-check step for anything that does not
+already have one; an ocdid a source cannot spell correctly fails the same way a typo always
+did, at import, per jurisdiction, same as a hand-typed one always has.
 """
 
-import re
-from datetime import date, timedelta
 from enum import StrEnum
 
 from pydantic import BaseModel
@@ -44,20 +47,8 @@ class ImportStatus(StrEnum):
     UNCHANGED = "unchanged"
 
 
-_OPTIONAL = ("url", "phone", "email", "image", "start_date", "end_date")
-_REQUIRED = (JURISDICTION, "name", "label")
-
-# Partial dates allowed: `source_records.start_date` is text for that reason.
-_DATE = re.compile(r"^\d{4}(-\d{2}(-\d{2})?)?$")
-
-# Sheets stores a date as days since this, and the import reads UNFORMATTED_VALUE so a phone
-# number survives as typed — which means a full date arrives as its serial instead.
-_SHEETS_EPOCH = date(1899, 12, 30)
-# A bare year is also an integer, so the two are told apart by range: years run to 2200, and
-# serials do not start until 1854. Nothing valid falls in both.
-_YEAR_MAX = 2200
-_SERIAL_MIN = 20000
-_SERIAL_MAX = 80000
+_REQUIRED = (JURISDICTION, "name", "source_url")
+_OPTIONAL = ("email", "phone", "image", "label")
 
 
 class RowError(BaseModel):
@@ -104,27 +95,10 @@ def _optional(value) -> str | None:
     return _clean(value) or None
 
 
-def _date(value) -> str:
-    """A date cell as text, converting the serial Sheets hands back for a real date.
-
-    `2024` stays `2024` — a bare year is an integer too, and the ranges do not overlap.
-    """
-    text = _clean(value)
-    if not text.isdigit():
-        return text
-    number = int(text)
-    if _SERIAL_MIN <= number <= _SERIAL_MAX:
-        return (_SHEETS_EPOCH + timedelta(days=number)).isoformat()
-    return text
-
-
-def parse_rows(
-    rows: list[dict], source_url: str
-) -> tuple[list[ImportRow], list[RowError]]:
+def parse_rows(rows: list[dict]) -> tuple[list[ImportRow], list[RowError]]:
     """Every row that parsed, and every reason one did not.
 
-    `source_url` is the sheet, not a cell — Sheets gives a row no durable url of its own. Line
-    numbers count the header, so they match the row gutter a volunteer sees.
+    Line numbers count the header, so they match the row gutter a volunteer sees.
     """
     parsed: list[ImportRow] = []
     errors: list[RowError] = []
@@ -140,13 +114,17 @@ def parse_rows(
         if row_errors:
             errors.extend(row_errors)
         else:
-            parsed.append(_import_row(row, line, source_url))
+            parsed.append(_import_row(row, line))
 
     return parsed, errors + _duplicate_errors(parsed)
 
 
 # What a volunteer fills in. `STATUS_COLUMNS` are ours and deliberately excluded below.
 _VOLUNTEER_COLUMNS = _REQUIRED + _OPTIONAL
+
+# The header row in full — the single source of truth `services.sheet_import` writes to the
+# sheet itself, so the contract can never drift from what this module actually reads.
+ROSTER_HEADERS = _REQUIRED + _OPTIONAL + STATUS_COLUMNS
 
 
 def _is_blank(row: dict) -> bool:
@@ -174,17 +152,12 @@ def _row_errors(row: dict, line: int) -> list[RowError]:
         for column in _REQUIRED
         if not _clean(row.get(column))
     ]
-    errors.extend(
-        _error(row, line, column, f"not YYYY, YYYY-MM or YYYY-MM-DD: {value!r}")
-        for column in ("start_date", "end_date")
-        if (value := _date(row.get(column))) and not _DATE.match(value)
-    )
     # The same checks `SubmittedPersonRecord` applies, run here so a bad cell is a rejected row
     # the volunteer sees in the sheet rather than a record that fails further down.
     for column, ok, expected in (
         ("phone", lambda v: normalize_phone_number(v) is not None, "not a phone number"),
         ("email", is_valid_email, "not an email address"),
-        ("url", is_web_url, "not an http(s) url with a domain"),
+        ("source_url", is_web_url, "not an http(s) url with a domain"),
     ):
         value = _clean(row.get(column))
         if value and not ok(value):
@@ -192,23 +165,18 @@ def _row_errors(row: dict, line: int) -> list[RowError]:
     return errors
 
 
-def _import_row(row: dict, line: int, source_url: str) -> ImportRow:
+def _import_row(row: dict, line: int) -> ImportRow:
     return ImportRow(
         line=line,
         jurisdiction_ocdid=_clean(row[JURISDICTION]),
         status=_clean(row.get("status")),
         sighting=Sighting(
             name=_clean(row["name"]),
-            label=_clean(row["label"]),
-            source_url=source_url,
-            **{
-                column: (
-                    _date(row.get(column)) or None
-                    if column in ("start_date", "end_date")
-                    else _optional(row.get(column))
-                )
-                for column in _OPTIONAL
-            },
+            label=_clean(row.get("label")),
+            source_url=_clean(row["source_url"]),
+            email=_optional(row.get("email")),
+            phone=_optional(row.get("phone")),
+            image=_optional(row.get("image")),
         ),
     )
 

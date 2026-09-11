@@ -61,7 +61,7 @@ function directNavItems(permissions) {
   if (permissions?.can_view_queue_page)
     items.push({ label: "manage", href: "/bulk-review" });
   if (permissions?.can_manage_roles)
-    items.push({ label: "admin", href: "/admin" });
+    items.push({ label: "admin", href: "/admin/users" });
   return items;
 }
 
@@ -112,8 +112,8 @@ function renderAuthedLinks(user, currentPath) {
     ${user.permissions?.can_manage_roles
       ? html`<civ-nav-group
           .label=${"admin"}
-          .href=${"/admin"}
-          .active=${isActivePath(currentPath, "/admin")}
+          .href=${"/admin/users"}
+          .active=${isActivePath(currentPath, "/admin/users")}
           .items=${adminSection(user.permissions)}
         ></civ-nav-group>`
       : ""}

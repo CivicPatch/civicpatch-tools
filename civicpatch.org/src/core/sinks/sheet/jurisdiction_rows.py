@@ -1,10 +1,10 @@
-"""Every jurisdiction we hold — the roster tab's dropdown source.
+"""Every jurisdiction we hold — reference for whoever is filling in `Entry[Roster]` by hand.
 
-Column A is the raw ocdid: it is what the importer wants, and Sheets filters a dropdown by
-substring, so typing `sherborn` still finds it.
+Column A is the ocdid: it is what the importer wants, and it is what `Entry[Roster]`'s own
+`jurisdiction_ocdid` column is filled in with. `geoid` trails as a reference column for cross
+checking against a source that only supplies one.
 
-One flat tab, not one per state, because a validation rule points at a single contiguous range.
-That is what lets `Entry[Roster]` accept any state.
+One flat tab, not one per state, so any state's jurisdiction can be looked up in the same place.
 """
 
 HEADERS = [
@@ -13,6 +13,7 @@ HEADERS = [
     "url",
     "population",
     "level",
+    "geoid",
 ]
 
 

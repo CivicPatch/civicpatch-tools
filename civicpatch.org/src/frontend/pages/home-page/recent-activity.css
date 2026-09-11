@@ -95,7 +95,8 @@
    reflow depending on whether this entry has a PR. */
 .recent-activity__commit {
   flex: none;
-  width: 2.2rem;
+  width: 3.4rem;
+  text-align: right;
   color: var(--text-muted);
   font-size: var(--font-size-xs);
 }

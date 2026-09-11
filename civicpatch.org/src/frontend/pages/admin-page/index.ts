@@ -1,13 +1,6 @@
 import { html } from "lit-html";
 import { component, useState, useEffect, useRef } from "haunted";
-import {
-  fetchAdminUsers,
-  setUserRole,
-  inviteUser,
-  fetchPendingInvites,
-  resendInvite,
-  revokeInvite,
-} from "../../api.js";
+import { fetchAdminUsers, setUserRole } from "../../api.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { SectionNav, adminSection } from "../../components/section-nav/index.js";
 import {
@@ -23,7 +16,6 @@ import "./role-chip.js";
 import "../../components/status-toast/status-toast.js";
 import "../../components/status-toast/status-toast.css";
 import "./confirm-role-modal.js";
-import "./invite-user-modal.js";
 import "./admin-page.css";
 
 const SELF_LOCK_TOOLTIP = "To change your own role, use `mise run grant_role`.";
@@ -37,12 +29,6 @@ type AdminUser = {
   provider_user_id: string;
   role: string;
   last_login_at: string | null;
-};
-
-type PendingInvite = {
-  id: string;
-  email: string | null;
-  invited_at: string | null;
 };
 
 // Only the chip matching the user's exact current role is filled.
@@ -91,19 +77,6 @@ function AdminPage() {
   const [pendingConfirm, setPendingConfirm] =
     useState<ConfirmRoleContext | null>(null);
 
-  const [inviteOpen, setInviteOpen] = useState(false);
-  const [inviteSubmitting, setInviteSubmitting] = useState(false);
-
-  const [pendingInvites, setPendingInvites] = useState<PendingInvite[]>([]);
-
-  const refreshPendingInvites = () => {
-    fetchPendingInvites()
-      .then((result: { data: PendingInvite[] }) =>
-        setPendingInvites(result.data),
-      )
-      .catch(() => setPendingInvites([]));
-  };
-
   useEffect(() => {
     setLoading(true);
     setLoadError(null);
@@ -111,7 +84,6 @@ function AdminPage() {
       .then((result: { data: AdminUser[] }) => setUsers(result.data))
       .catch((err: Error) => setLoadError(err.message))
       .finally(() => setLoading(false));
-    refreshPendingInvites();
   }, []);
 
   useEffect(() => {
@@ -179,49 +151,6 @@ function AdminPage() {
     }
   };
 
-  const handleInviteConfirmed = async (ev: CustomEvent) => {
-    const { email } = ev.detail as { email: string };
-    if (!email || inviteSubmitting) return;
-    setInviteSubmitting(true);
-    try {
-      await inviteUser(email);
-      showToast(`Invite sent to ${email}`);
-      setInviteOpen(false);
-      refreshPendingInvites();
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Unknown error";
-      showToast(`Invite failed: ${message}`);
-    } finally {
-      setInviteSubmitting(false);
-    }
-  };
-
-  const handleInviteClose = () => {
-    if (inviteSubmitting) return;
-    setInviteOpen(false);
-  };
-
-  const handleResendInvite = async (invite: PendingInvite) => {
-    try {
-      await resendInvite(invite.id);
-      showToast(`Invite resent to ${invite.email}`);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Unknown error";
-      showToast(`Resend failed: ${message}`);
-    }
-  };
-
-  const handleRevokeInvite = async (invite: PendingInvite) => {
-    try {
-      await revokeInvite(invite.id);
-      showToast(`Revoked invite for ${invite.email}`);
-      refreshPendingInvites();
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Unknown error";
-      showToast(`Revoke failed: ${message}`);
-    }
-  };
-
   const handleConfirmCancel = () => setPendingConfirm(null);
 
   const handleConfirmRoleConfirmed = async (ev: CustomEvent) => {
@@ -236,62 +165,10 @@ function AdminPage() {
     <main class="admin-page page-content">
       <div class="admin-page__header">
         <h1 class="admin-page__title">Users</h1>
-        <button
-          class="btn btn-sm admin-page__invite-button"
-          @click=${() => setInviteOpen(true)}
-        >
-          Invite user
-        </button>
       </div>
       <div class="sectioned">
-      ${SectionNav("admin", adminSection(permissions), "/admin")}
+      ${SectionNav("admin", adminSection(permissions), "/admin/users")}
       <div class="secbody">
-      ${pendingInvites.length > 0
-        ? html`
-            <section class="admin-page__pending">
-              <h2 class="admin-page__subtitle">Pending invites</h2>
-              <div class="admin-table-scroll">
-                <table class="admin-users-table">
-                  <thead>
-                    <tr>
-                      <th>Email</th>
-                      <th>Invited</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${pendingInvites.map(
-                      (invite) => html`
-                        <tr>
-                          <td>${invite.email ?? "—"}</td>
-                          <td>
-                            ${invite.invited_at
-                              ? new Date(invite.invited_at).toLocaleString()
-                              : "—"}
-                          </td>
-                          <td class="admin-page__pending-actions">
-                            <button
-                              class="btn btn-sm secondary"
-                              @click=${() => handleResendInvite(invite)}
-                            >
-                              Resend
-                            </button>
-                            <button
-                              class="btn btn-sm destructive"
-                              @click=${() => handleRevokeInvite(invite)}
-                            >
-                              Revoke
-                            </button>
-                          </td>
-                        </tr>
-                      `,
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </section>
-          `
-        : null}
       ${loading ? html`<p class="admin-page__status">Loading…</p>` : null}
       ${loadError
         ? html`<p class="admin-page__status admin-page__error">${loadError}</p>`
@@ -378,15 +255,6 @@ function AdminPage() {
               @modal-close=${handleConfirmCancel}
               @role-confirmed=${handleConfirmRoleConfirmed}
             ></confirm-role-modal>
-          `
-        : null}
-      ${inviteOpen
-        ? html`
-            <invite-user-modal
-              .submitting=${inviteSubmitting}
-              @modal-close=${handleInviteClose}
-              @invite-confirmed=${handleInviteConfirmed}
-            ></invite-user-modal>
           `
         : null}
       </div>
