@@ -17,13 +17,13 @@ from unittest.mock import AsyncMock, patch
 import pytest
 import pytest_asyncio
 
-from core.entry_rows import ImportStatus, parse_rows
+from core.entry_rows import ImportRow, ImportStatus, Sighting
 from lib.csv import parse_csv
 from database import changeset_batches
 from database.database import get_pool
 from services.batch_review import batch_review, publish_selected
 from services.sinks.open_data import reviewed_file_path
-from services.sheet_import import import_rows
+from services.sheet_import import import_rows, read_rows
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_sheet_test/government"
 # A second town, so "one commit for the whole batch" is a claim a test can actually falsify.
@@ -134,17 +134,19 @@ async def batch_id(user_id):
     )
 
 
-def _sheet_rows(*people, ocdid: str = _OCDID) -> list[dict]:
+def _rows(*people, ocdid: str = _OCDID) -> list[ImportRow]:
     return [
-        {"jurisdiction_ocdid": ocdid, "name": name, "label": label}
+        ImportRow(
+            line=0,
+            jurisdiction_ocdid=ocdid,
+            sighting=Sighting(name=name, label=label, source_url=_SHEET),
+        )
         for name, label in people
     ]
 
 
 async def _parsed(*people):
-    rows, errors = parse_rows(_sheet_rows(*people), _SHEET)
-    assert errors == []
-    return rows
+    return _rows(*people)
 
 
 async def _scalar(sql: LiteralString, params: tuple):
@@ -255,14 +257,9 @@ async def test_the_batch_is_recorded_on_the_request(user_id, batch_id):
 async def test_one_jurisdiction_failing_does_not_cost_the_others(user_id, batch_id):
     """Jurisdictions are independent — own request, own sightings. An unknown ocdid violates
     the requests foreign key, and the good one must still import."""
-    good, errors = parse_rows(
-        _sheet_rows(("Ana Reyes", "Select Board Chair")), _SHEET
-    )
-    assert errors == []
+    good = _rows(("Ana Reyes", "Select Board Chair"))
     missing = "ocd-jurisdiction/country:us/state:zz/place:zz_not_registered/government"
-    bad, _ = parse_rows(
-        [{"jurisdiction_ocdid": missing, "name": "Cy Diaz", "label": "Chair"}], _SHEET
-    )
+    bad = _rows(("Cy Diaz", "Chair"), ocdid=missing)
 
     results = await import_rows(good + bad, user_id, batch_id)
     by_ocdid = {result.jurisdiction_ocdid: result for result in results}
@@ -278,21 +275,25 @@ async def test_end_to_end_from_csv_text(user_id, batch_id):
     """The whole chain a volunteer's sheet actually takes: two tabs of CSV in, a review card out.
 
     Deliberately includes what a real sheet carries — a header a human typed in mixed case, a
-    quoted comma in a name, a jurisdiction nobody ticked, and a row missing its label.
+    quoted comma in a name, and a row missing its name. That bad row is in its own jurisdiction,
+    not `_OCDID`'s — "blocked whole, never partly" would otherwise take the two good rows down
+    with it, which is `test_sheet_read.py`'s claim, not this one's.
     """
     roster_csv = (
-        "Jurisdiction_OCDID,name,label,email\n"
-        f'{_OCDID},"Reyes, Ana",Select Board Chair,ana@zz.gov\n'
-        f"{_OCDID},Bo Chen,Select Board Member,bo@zz.gov\n"
-        f"{_OCDID},Cy Diaz,,cy@zz.gov\n"
+        "Jurisdiction_OCDID,name,source_url,label,email\n"
+        f'{_OCDID},"Reyes, Ana",https://zz.gov/roster,Select Board Chair,ana@zz.gov\n'
+        f"{_OCDID},Bo Chen,https://zz.gov/roster,Select Board Member,bo@zz.gov\n"
+        f"{_OCDID_2},,https://zz.gov/roster,Select Board Clerk,cy@zz.gov\n"
     )
-    rows, errors = parse_rows(parse_csv(roster_csv), _SHEET)
+    read = read_rows(parse_csv(roster_csv))
 
-    # The label-less row is rejected, and takes nobody else with it.
-    assert [(error.line, error.column) for error in errors] == [(4, "label")]
-    assert len(rows) == 2
+    # The name-less row is rejected, and takes nobody else with it.
+    assert [(error.line, error.column) for error in read.preview.errors] == [
+        (4, "name")
+    ]
+    assert len(read.rows) == 2
 
-    [result] = await import_rows(rows, user_id, batch_id)
+    [result] = await import_rows(read.rows, user_id, batch_id)
 
     assert result.status is ImportStatus.IMPORTED
     assert result.people == 2
@@ -385,12 +386,9 @@ async def test_publishing_two_towns_queues_one_commit(user_id, batch_id, batch_c
     Asserted at the enqueue because that is the only place the batching is observable: below it
     is Temporal, above it is a per-jurisdiction loop that looks the same either way.
     """
-    rows, errors = parse_rows(
-        _sheet_rows(("Ana Reyes", "Select Board Chair"))
-        + _sheet_rows(("Bo Nunez", "Town Clerk"), ocdid=_OCDID_2),
-        _SHEET,
+    rows = _rows(("Ana Reyes", "Select Board Chair")) + _rows(
+        ("Bo Nunez", "Town Clerk"), ocdid=_OCDID_2
     )
-    assert errors == []
     await import_rows(rows, user_id, batch_id)
 
     results = await publish_selected(batch_id, set(_OCDIDS), user_id)
@@ -413,12 +411,9 @@ async def test_a_town_that_refused_to_publish_stays_out_of_the_commit(
 ):
     """One jurisdiction failing must not keep the others out of open-data, and must not put
     itself in — the commit covers what reached the database, not what was selected."""
-    rows, errors = parse_rows(
-        _sheet_rows(("Ana Reyes", "Select Board Chair"))
-        + _sheet_rows(("Bo Nunez", "Town Clerk"), ocdid=_OCDID_2),
-        _SHEET,
+    rows = _rows(("Ana Reyes", "Select Board Chair")) + _rows(
+        ("Bo Nunez", "Town Clerk"), ocdid=_OCDID_2
     )
-    assert errors == []
     await import_rows(rows, user_id, batch_id)
 
     with patch(
@@ -535,10 +530,7 @@ async def test_a_locality_the_sheet_says_is_handled_raises_no_second_card(
     """Re-reading a sheet nobody has touched should do nothing. It used to raise a duplicate
     card per locality per run and lean on supersede to tidy up: six runs on dev left Centralia
     with five cards, four swept and one published."""
-    rows, errors = parse_rows(
-        _sheet_rows(("Ana Reyes", "Select Board Chair")), _SHEET
-    )
-    assert errors == []
+    rows = _rows(("Ana Reyes", "Select Board Chair"))
     for row in rows:
         row.status = ImportStatus.IMPORTED
 
@@ -559,11 +551,7 @@ async def test_a_locality_the_sheet_says_is_handled_raises_no_second_card(
 async def test_clearing_one_row_brings_the_whole_roster_back(user_id, batch_id):
     """Whole, not just the cleared row: a card carrying one of two people would propose closing
     the other's membership when published."""
-    rows, errors = parse_rows(
-        _sheet_rows(("Ana Reyes", "Select Board Chair"), ("Bo Chen", "Town Clerk")),
-        _SHEET,
-    )
-    assert errors == []
+    rows = _rows(("Ana Reyes", "Select Board Chair"), ("Bo Chen", "Town Clerk"))
     rows[0].status = ImportStatus.IMPORTED
     rows[1].status = ""
 

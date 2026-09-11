@@ -1,6 +1,5 @@
 @layer components {
-/* ── Wrapper — horizontal scroll on narrow viewports, matching civ-table's
-   established pattern, without pulling in its editable-grid machinery ──────── */
+/* ── Wrapper — horizontal scroll on narrow viewports ──────── */
 
 .municipalities-table__wrapper {
   border: 1px solid var(--border);

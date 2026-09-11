@@ -33,6 +33,11 @@ def parse_csv(text: str) -> list[dict]:
     return rows_from_table(list(csv.reader(io.StringIO(text))))
 
 
+def parse_tsv(text: str) -> list[dict]:
+    """A tab-separated file's data rows, keyed by its header. Same contract as `parse_csv`."""
+    return rows_from_table(list(csv.reader(io.StringIO(text), delimiter="\t")))
+
+
 def _unsanitize(value) -> str:
     if not isinstance(value, str):
         return "" if value is None else str(value)

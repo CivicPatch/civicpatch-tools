@@ -13,6 +13,7 @@ import uuid
 from datetime import datetime, timezone
 
 from core.entry_rows import (
+    ROSTER_HEADERS,
     ImportRow,
     ImportStatus,
     already_handled,
@@ -162,14 +163,14 @@ async def _derive_posts(
         return 0, f"people imported, but posts could not be derived: {e}"
 
 
-def read_rows(rows: list[dict], source_url: str) -> SheetRead:
+def read_rows(rows: list[dict]) -> SheetRead:
     """Raw roster rows, parsed, with a preview of what importing them would do.
 
     Pure, and the only place that decides what "ready" and "blocked" mean. Both callers reach
     it: the one that opens the spreadsheet and the one that is handed rows over HTTP, so the two
     cannot come to different conclusions about the same rows.
     """
-    parsed, errors = parse_rows(rows, source_url)
+    parsed, errors = parse_rows(rows)
 
     seen = {row.jurisdiction_ocdid for row in parsed}
     # Blocked whole, never partly: importing six rows of seven proposes a roster missing
@@ -188,20 +189,39 @@ def read_rows(rows: list[dict], source_url: str) -> SheetRead:
     )
 
 
+async def ensure_roster_header(spreadsheet_id: str) -> None:
+    """Assert the roster tab's header row matches `ROSTER_HEADERS`, so a contract change never
+    needs a human to retype it — only row 1: data rows are the volunteer's, never rewritten.
+
+    Cleared first, bounded to a generous width: a header that shrank must not leave a stale
+    trailing cell from a wider one it used to be.
+    """
+    await asyncio.to_thread(
+        sheets.clear_row, spreadsheet_id, entry_sheet.ROSTER_TAB, 1, 26
+    )
+    await asyncio.to_thread(
+        sheets.write_rows,
+        spreadsheet_id,
+        entry_sheet.ROSTER_TAB,
+        [list(ROSTER_HEADERS)],
+        1,
+    )
+
+
 async def read_sheet(spreadsheet_id: str) -> SheetRead:
     """The roster tab, read and previewed.
 
-    Cheap enough to run on every "Check": after the read it is `read_rows`, which is pure. There
-    is no deeper dry run — the importer stops at ingest, so the real preview is the review card
-    it raises.
+    There is no deeper dry run — the importer stops at ingest, so the real preview is the review
+    card it raises.
 
     The read goes to a thread: `googleapiclient` is synchronous, and calling it straight from a
     handler would block the event loop for the round trip — the whole API, not just this request.
     """
+    await ensure_roster_header(spreadsheet_id)
     roster_rows = await asyncio.to_thread(
         sheets.read_tab, spreadsheet_id, entry_sheet.ROSTER_TAB
     )
-    return read_rows(roster_rows, entry_sheet.spreadsheet_url())
+    return read_rows(roster_rows)
 
 
 async def run_import(
@@ -243,7 +263,7 @@ async def write_back(results: list[JurisdictionResult]) -> None:
         roster = await asyncio.to_thread(
             sheets.read_tab, spreadsheet_id, entry_sheet.ROSTER_TAB
         )
-        parsed, errors = parse_rows(roster, "")
+        parsed, errors = parse_rows(roster)
 
         by_ocdid = {result.jurisdiction_ocdid: result for result in results}
         imported = {

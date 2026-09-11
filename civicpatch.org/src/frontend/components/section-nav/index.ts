@@ -47,11 +47,11 @@ function perm(permissions: object, key: string): boolean {
 // from useAuth(), same as every page that calls this already destructures it.
 export function manageSection(permissions: object, openPrCount?: number): SectionNavItem[] {
   const items: SectionNavItem[] = [
-    { label: "Bulk review", href: "/bulk-review", ...(openPrCount != null ? { count: openPrCount } : {}) },
+    { label: "bulk review", href: "/bulk-review", ...(openPrCount != null ? { count: openPrCount } : {}) },
   ];
   if (perm(permissions, "can_write_config")) {
-    items.push({ label: "Roles", href: "/roles" });
-    items.push({ label: "Sheet import", href: "/imports" });
+    items.push({ label: "roles", href: "/roles" });
+    items.push({ label: "sheet import", href: "/imports" });
   }
   return items;
 }
@@ -71,10 +71,10 @@ export function jurisdictionSection(jurisdictionPath: string, historyHref: strin
 }
 
 export function adminSection(permissions: object): SectionNavItem[] {
-  const items: SectionNavItem[] = [{ label: "Users", href: "/admin" }];
-  if (perm(permissions, "can_edit_spend")) items.push({ label: "Spend", href: "/spend" });
-  if (perm(permissions, "can_batch_scrape")) items.push({ label: "Pipelines", href: "/pipelines" });
-  if (perm(permissions, "can_view_issues_page")) items.push({ label: "Issues", href: "/issues" });
-  if (perm(permissions, "can_view_gallery_page")) items.push({ label: "Components", href: "/gallery" });
+  const items: SectionNavItem[] = [{ label: "users", href: "/admin/users" }];
+  if (perm(permissions, "can_edit_spend")) items.push({ label: "spend", href: "/spend" });
+  if (perm(permissions, "can_batch_scrape")) items.push({ label: "pipelines", href: "/pipelines" });
+  if (perm(permissions, "can_view_issues_page")) items.push({ label: "issues", href: "/issues" });
+  if (perm(permissions, "can_view_gallery_page")) items.push({ label: "components", href: "/gallery" });
   return items;
 }

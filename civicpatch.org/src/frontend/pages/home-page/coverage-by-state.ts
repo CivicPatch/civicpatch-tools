@@ -53,7 +53,7 @@ export function renderCoverageByState({
                   style="width:${(row.stale / row.known) * 100}%"
                 ></i>
               </span>
-              ${isLoggedIn
+              ${isLoggedIn && row.needsReview > 0
                 ? html`<span class="coverage-by-state__count"
                     >${row.needsReview} needs review</span
                   >`

@@ -373,7 +373,7 @@ def test_the_pipelines_page_is_closed_to_signed_out_visitors(permissions_client)
 
 # ── GET /~{username} ─────────────────────────────────────────────────────────
 # A moderation view of someone else's account (rollback, currently) — gated the same as
-# `/admin` (`can_manage_roles`), not self-service.
+# `/admin/users` (`can_manage_roles`), not self-service.
 
 _TARGET_USER_ID = "10000000-0000-0000-0000-000000000001"
 _TARGET_USERNAME = "target-user"

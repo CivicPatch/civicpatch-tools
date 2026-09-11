@@ -243,7 +243,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/changesets.html", {"request": request, "user": user})
 
-    @router.get("/admin", response_class=HTMLResponse, include_in_schema=False)
+    @router.get("/admin/users", response_class=HTMLResponse, include_in_schema=False)
     async def admin_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
         if needs_username(user):
@@ -258,7 +258,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         username: str,
         identity: Optional[Identity] = Depends(get_optional_user),
     ):
-        # Same gate as `/admin`: this is a moderation view of someone else's account, not a
+        # Same gate as `/admin/users`: this is a moderation view of someone else's account, not a
         # self-service profile.
         user = _build_user_dict(identity)
         if needs_username(user):

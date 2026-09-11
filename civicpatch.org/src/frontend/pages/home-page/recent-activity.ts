@@ -118,7 +118,7 @@ export function renderRecentActivity({
                       href=${entry.pull_request_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      >PR</a
+                      >commit</a
                     >`
                   : ""}
               </span>

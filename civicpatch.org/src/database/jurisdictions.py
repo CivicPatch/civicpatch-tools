@@ -548,7 +548,8 @@ async def stream_active(
         async with conn.cursor(name=f"jurisdictions_{uuid.uuid4().hex}") as cur:
             await cur.execute(
                 """
-                SELECT jurisdiction_ocdid,
+                SELECT data->>'geoid'      AS geoid,
+                       jurisdiction_ocdid,
                        data->>'name'       AS name,
                        data->>'url'        AS url,
                        data->>'population' AS population,

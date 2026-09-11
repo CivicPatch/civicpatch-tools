@@ -391,8 +391,10 @@ async def test_the_jurisdiction_tab_covers_every_state_in_one_flat_tab():
     tab = roster_sheet.JURISDICTIONS_TAB
     assert written >= 1
     assert recorder.updates[0]["body"]["values"] == [jurisdiction_rows.HEADERS]
-    # Column A is the ocdid, because that is the range the dropdown points at.
-    assert _ZZ in [row[0] for row in recorder.rows_for(tab)]
+    # Column A is the geoid now, because that is the range the dropdown points at — the ocdid
+    # moved to its own named column.
+    ocdid_column = jurisdiction_rows.HEADERS.index("jurisdiction_ocdid")
+    assert _ZZ in [row[ocdid_column] for row in recorder.rows_for(tab)]
     # A fresh grid is sized to fit exactly, so there is nothing below to trim.
     assert recorder.clears_for(tab) == []
 
@@ -422,7 +424,8 @@ async def test_every_county_is_listed_before_any_municipality():
     levels = [row[level] for row in recorder.rows_for(roster_sheet.JURISDICTIONS_TAB)]
     assert levels == sorted(levels, key=roster_sheet.ENTRY_LEVELS.index)
     # The pair that ocdid ordering alone would have put the other way round.
-    ocdids = [row[0] for row in recorder.rows_for(roster_sheet.JURISDICTIONS_TAB)]
+    ocdid_column = jurisdiction_rows.HEADERS.index("jurisdiction_ocdid")
+    ocdids = [row[ocdid_column] for row in recorder.rows_for(roster_sheet.JURISDICTIONS_TAB)]
     assert ocdids.index(_ZZ_COUNTY) < ocdids.index(_ZY_LOCAL)
 
 
