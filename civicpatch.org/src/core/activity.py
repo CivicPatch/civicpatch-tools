@@ -157,6 +157,8 @@ def summarize_activity(type_: str, changes: dict | None) -> str:
 
     if type_ in ("pipeline_run_start", "pipeline_run_end"):
         return "Started a scrape" if type_ == "pipeline_run_start" else "Finished a scrape"
+    if type_ == "sheet_import":
+        return "Imported from sheet"
 
     if type_ == "reorder_roles":
         return _reorder_summary(c)

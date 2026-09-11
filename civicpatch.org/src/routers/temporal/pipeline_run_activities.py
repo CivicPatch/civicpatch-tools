@@ -205,12 +205,12 @@ async def claim_jurisdictions_to_scrape(
         return resp.json()["data"]["jurisdictions"]
 
 
-# Which monthly cap this state has reached, or None if it may keep spending.
+# Which monthly cap this state has reached, or None if it may keep spending. Over HTTP, like
+# every other activity in this file — see workers/pipeline_runs.py: this queue's worker keeps a
+# narrow secret scope and never opens a database connection of its own.
 @activity.defn
 async def budget_cap_reached(state: str) -> Optional[str]:
-    # Imported here: `pipeline_run_workflows` imports this module, and Temporal re-imports it inside
-    # the workflow sandbox, which cannot load the database layer.
-    from services.spend_budget import cap_reached_for_state
-
-    cap = await cap_reached_for_state(state)
-    return cap.value if cap else None
+    async with httpx.AsyncClient(headers=_API_HEADERS, timeout=15) as client:
+        resp = await client.get(f"{API_URL}/api/v1/pipeline_runs/budget_cap", params={"state": state})
+        resp.raise_for_status()
+        return resp.json()["data"]["cap"]

@@ -30,6 +30,10 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   --editor-state: var(--border);
+  /* Lets the assertions popover size itself off the real panel width (see its `cqw` use)
+     instead of guessing a fixed value that's either too narrow on a wide panel or
+     overflows — and still clipped — on a narrow one. */
+  container-type: inline-size;
 }
 .person-editor--changed {
   --editor-state: var(--editor-changed);
@@ -276,7 +280,13 @@
   color: var(--editor-lock);
   opacity: 1;
 }
-.person-editor__announce {
+/* The custom element wraps .person-editor__assertions, which needs to be the direct grid
+   item (`grid-column: 3` below) — without this the element itself (inline by default) would
+   sit in that slot instead, the same trap a plain page-level custom element hits. */
+civ-assertions-popover {
+  display: contents;
+}
+.person-editor__assertions {
   grid-column: 3;
   /* Fixed height, not content-sized — a content-sized box's own auto height (and so the
      whole row's) would change when the popover toggles open, shifting every row below it
@@ -287,7 +297,7 @@
   align-self: center;
   position: relative;
 }
-.person-editor__announce-toggle {
+.person-editor__assertions-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -298,39 +308,53 @@
   background: none;
   cursor: pointer;
 }
-.person-editor__announce-chip {
+.person-editor__assertions-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.2em;
 }
-.person-editor__announce-chip--accept {
+.person-editor__assertions-chip--accept {
   color: var(--editor-added);
 }
-.person-editor__announce-chip--reject {
+.person-editor__assertions-chip--reject {
   color: var(--editor-cleared);
 }
-.person-editor__announce-list {
+.person-editor__assertions-list {
+  /* Opens to the right of the lock rather than below it — this is the last column, so
+     nothing sits to its right, and popping sideways means it never covers the row below. */
   position: absolute;
-  right: 0;
-  top: 100%;
+  left: 100%;
+  top: 0;
   z-index: 5;
-  margin-top: 0.25rem;
+  margin-left: 0.25rem;
   min-width: 10rem;
+  /* `44rem` is roughly everything to the left of this column (identity + label + control at
+     their own maximum widths) — subtracting it from the panel's own inline size (via the
+     `container-type` on .person-editor) approximates the room actually left to its right,
+     without measuring anything in JS. `clamp` keeps it from going below a usable floor or
+     above a value wider than the list's own content ever needs. */
+  max-width: clamp(8rem, calc(100cqw - 44rem), 20rem);
   padding: 0.4rem 0.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   font-size: var(--font-size-xs);
+  opacity: 1;
+  transition: opacity 400ms ease;
 }
-.person-editor__announce-list[hidden] {
+.person-editor__assertions-list--fading {
+  opacity: 0;
+}
+.person-editor__assertions-list[hidden] {
   display: none;
 }
-.person-editor__announce-who {
+.person-editor__assertions-who {
   color: var(--text-muted);
 }
 .person-editor__disclosure {

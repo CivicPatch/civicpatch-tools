@@ -97,6 +97,10 @@ def test_pipeline_run_events():
     assert summarize_activity("pipeline_run_end", None) == "Finished a scrape"
 
 
+def test_sheet_import_event():
+    assert summarize_activity("sheet_import", None) == "Imported from sheet"
+
+
 # ── Role taxonomy ───────────────────────────────────────────────────────
 
 

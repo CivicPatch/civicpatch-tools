@@ -194,6 +194,9 @@ class ActivityType(StrEnum):
     # only when the run succeeded far enough to mint one — a failed or cancelled run has none.
     PIPELINE_RUN_START = "pipeline_run_start"
     PIPELINE_RUN_END = "pipeline_run_end"
+    # A curated sheet's rows landing in the review queue — the sheet-import counterpart to a
+    # pipeline run raising a card. Publishing that card is a separate, later `PUBLISH_REVIEW`.
+    SHEET_IMPORT = "sheet_import"
 
 
 # Nearly every activity type is audit trail only — read from the table, never watched — so this
@@ -202,6 +205,7 @@ LIVE_ACTIVITY_TYPES = frozenset({
     ActivityType.PUBLISH_REVIEW,
     ActivityType.PIPELINE_RUN_START,
     ActivityType.PIPELINE_RUN_END,
+    ActivityType.SHEET_IMPORT,
 })
 
 # Fungible among LIVE_ACTIVITY_TYPES: interchangeable events where a listener only cares "how
@@ -211,4 +215,5 @@ LIVE_ACTIVITY_TYPES = frozenset({
 GROUPABLE_ACTIVITY_TYPES = frozenset({
     ActivityType.PIPELINE_RUN_START,
     ActivityType.PIPELINE_RUN_END,
+    ActivityType.SHEET_IMPORT,
 })

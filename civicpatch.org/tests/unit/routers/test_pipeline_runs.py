@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
 
+from core.spend_limits import Cap
 from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
 from routers.api import pipeline_runs as pipeline_runs_router
@@ -367,6 +368,32 @@ def test_claim_404s_for_an_unknown_state(client):
         response = client.post("/pipeline_runs/batch/claim", json={"state": "zz"})
 
     assert response.status_code == 404
+
+
+@pytest.mark.unit
+def test_budget_cap_reports_none_when_nothing_is_reached(client):
+    with patch(
+        "routers.api.pipeline_runs.spend_budget_service.cap_reached_for_state",
+        new_callable=AsyncMock,
+        return_value=None,
+    ):
+        response = client.get("/pipeline_runs/budget_cap", params={"state": "wa"})
+
+    assert response.status_code == 200
+    assert response.json()["data"]["cap"] is None
+
+
+@pytest.mark.unit
+def test_budget_cap_names_which_cap_was_reached(client):
+    with patch(
+        "routers.api.pipeline_runs.spend_budget_service.cap_reached_for_state",
+        new_callable=AsyncMock,
+        return_value=Cap.STATE_MONTH,
+    ):
+        response = client.get("/pipeline_runs/budget_cap", params={"state": "wa"})
+
+    assert response.status_code == 200
+    assert response.json()["data"]["cap"] == Cap.STATE_MONTH.value
 
 
 # --- Spend: the one route on this router that is not open to every signed-in user ---

@@ -11,6 +11,7 @@ import lib.storage as storage_service
 import lib.temporal.client as temporal_service
 import services.jurisdiction_scrape_candidate as candidate_service
 import services.pipeline_runs as pipeline_run_service
+import services.spend_budget as spend_budget_service
 import shared.utils.id_utils
 from database.issue_listings import (
     get_changeset_issue_counts,
@@ -255,6 +256,17 @@ def get_router(api_key_header):
         except ValueError as e:
             raise HTTPException(status_code=404, detail=str(e))
         return {"data": {"jurisdictions": items}}
+
+    @router.get("/budget_cap", include_in_schema=False)
+    async def budget_cap_endpoint(
+        state: str,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        """Which monthly cap this state has reached, if any — what the scrape workflow polls
+        before dispatching another slice. Over HTTP rather than a shared pool: see
+        workers/pipeline_runs.py, this queue's worker never opens its own database connection."""
+        cap = await spend_budget_service.cap_reached_for_state(state)
+        return {"data": {"cap": cap.value if cap else None}}
 
     @router.post("/register", include_in_schema=False)
     async def register_pipeline_run_endpoint(
