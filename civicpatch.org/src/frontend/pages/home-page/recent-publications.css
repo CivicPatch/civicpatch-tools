@@ -7,15 +7,51 @@
 }
 
 .recent-publications__row {
+  /* Positioning context for .recent-publications__jurisdiction's stretched ::after
+     below — same pattern as .review-row / .blog-list__item. */
+  position: relative;
   display: flex;
   gap: 0.6rem;
   align-items: baseline;
   padding: 0.2rem 0.3rem;
   font-size: var(--font-size-sm);
+  cursor: pointer;
 }
 
 .recent-publications__row:nth-child(even) {
   background: var(--surface-stripe);
+}
+
+/* --accent (the app's blue), same fix as .blog-updates__row — --action would tint
+   this grey instead. Layers over the zebra stripe on even rows, same as any hover
+   tint would. */
+.recent-publications__row:hover {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.recent-publications__row:has(.recent-publications__jurisdiction:focus-visible) {
+  outline: var(--focus-ring-width) solid var(--action-focus);
+  outline-offset: 2px;
+}
+
+/* The jurisdiction link's hit area grows to cover the whole row (stretched-link
+   pattern, see .review-row__open). */
+.recent-publications__jurisdiction::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.recent-publications__jurisdiction:focus-visible {
+  outline: none;
+}
+
+/* The commit link is its own real destination, so it escapes the row-wide overlay
+   the same way .review-row__source does — lifted into the same stacking context
+   and placed above it. */
+.recent-publications__commit {
+  position: relative;
+  z-index: 1;
 }
 
 .recent-publications__at {
@@ -39,5 +75,14 @@
 .recent-publications__meta {
   color: var(--text-muted);
   font-size: var(--font-size-xs);
+}
+
+/* Pinned to the far right — a sibling of .recent-publications__body, not one of its
+   children, so body's flex:1 pushes it there regardless of sentence length. */
+.recent-publications__state {
+  flex: none;
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
 }
 }

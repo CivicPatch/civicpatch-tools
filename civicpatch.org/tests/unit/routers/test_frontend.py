@@ -7,7 +7,7 @@ from fastapi.testclient import TestClient
 from fastapi.templating import Jinja2Templates
 
 from frontend.vite import vite_asset, vite_css
-from routers.frontend import build_permissions, get_router
+from routers.frontend import build_permissions, get_router, needs_username
 from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
 
@@ -48,7 +48,6 @@ ADMIN = _identity(UserRole.ADMINS, UserRole.DEFAULT)
 def test_permissions_unauthenticated():
     p = build_permissions(None)
     assert p["can_view_queue_page"] is False
-    assert p["can_view_queue_page_errors"] is False
     assert p["can_scrape"] is False
     assert p["can_view_reviews_page"] is False
     assert p["can_view_issues_page"] is False
@@ -60,7 +59,6 @@ def test_permissions_unauthenticated():
 def test_permissions_default_role():
     p = build_permissions(DEFAULT)
     assert p["can_view_queue_page"] is False  # Contributors+ only
-    assert p["can_view_queue_page_errors"] is False
     assert p["can_scrape"] is False
     assert p["can_view_reviews_page"] is True
     assert p["can_view_issues_page"] is False
@@ -72,7 +70,6 @@ def test_permissions_default_role():
 def test_permissions_contributor_role():
     p = build_permissions(CONTRIBUTOR)
     assert p["can_view_queue_page"] is True  # introduced at Contributor
-    assert p["can_view_queue_page_errors"] is False
     assert p["can_scrape"] is False
     assert p["can_view_reviews_page"] is True
     assert p["can_view_issues_page"] is False
@@ -86,7 +83,6 @@ def test_permissions_maintainer_role():
     Issues page is now Admin-only — Maintainer does not see it."""
     p = build_permissions(MAINTAINER)
     assert p["can_view_queue_page"] is True
-    assert p["can_view_queue_page_errors"] is False
     # One permission: whether you may scrape. Which mode it dispatches is the environment's
     # decision, made server side, not a capability a role carries.
     assert p["can_scrape"] is True
@@ -101,10 +97,9 @@ def test_permissions_maintainer_role():
 @pytest.mark.unit
 def test_permissions_admin_role():
     """Admin inherits Maintainer + Contributor powers under the ladder, and
-    gains the Issues page + queue-error visibility on top."""
+    gains the Issues page on top."""
     p = build_permissions(ADMIN)
     assert p["can_view_queue_page"] is True
-    assert p["can_view_queue_page_errors"] is True
     # One permission: whether you may scrape. Which mode it dispatches is the environment's
     # decision, made server side, not a capability a role carries.
     assert p["can_scrape"] is True
@@ -177,7 +172,6 @@ def test_permissions_endpoint_maintainer(permissions_client):
     assert data["data"]["permissions"]["can_view_queue_page"] is True
     assert data["data"]["permissions"]["can_scrape"] is True
     assert data["data"]["permissions"]["can_view_issues_page"] is False  # Admin-only
-    assert data["data"]["permissions"]["can_view_queue_page_errors"] is False
 
 
 @pytest.mark.unit
@@ -188,7 +182,6 @@ def test_permissions_endpoint_admin(permissions_client):
     assert response.status_code == 200
     data = response.json()
     assert data["authenticated"] is True
-    assert data["data"]["permissions"]["can_view_queue_page_errors"] is True
     # Under the ladder, admin >= maintainer, so scrape_remote is now True.
     assert data["data"]["permissions"]["can_scrape"] is True
 
@@ -454,3 +447,94 @@ def test_the_gallery_page_is_closed_to_signed_out_visitors(permissions_client):
 
     assert response.status_code == 303
     assert response.headers["location"] == "/"
+
+
+# ── needs_username ────────────────────────────────────────────────────────────
+# A fresh account's username is its own id (`database.users.create_user`) — that
+# equality is the only signal that sign-up hasn't finished yet.
+
+@pytest.mark.unit
+def test_needs_username_is_false_when_signed_out():
+    assert needs_username({"authenticated": False, "user_id": None, "username": None}) is False
+
+
+@pytest.mark.unit
+def test_needs_username_is_false_without_a_real_username_mismatch():
+    assert (
+        needs_username({"authenticated": True, "user_id": "u1", "username": "orchard-fox"})
+        is False
+    )
+
+
+@pytest.mark.unit
+def test_needs_username_is_false_when_user_id_is_missing():
+    # Matches every other fixture in this file: an Identity built without user_id/username
+    # (both default None) must not be mistaken for a placeholder-username account.
+    assert needs_username({"authenticated": True, "user_id": None, "username": None}) is False
+
+
+@pytest.mark.unit
+def test_needs_username_is_true_when_username_equals_user_id():
+    assert needs_username({"authenticated": True, "user_id": "u1", "username": "u1"}) is True
+
+
+# ── GET /login/username ────────────────────────────────────────────────────────
+
+def _pending_user():
+    return Identity(
+        type="session",
+        provider="supabase",
+        provider_user_id="p1",
+        email="new@x.com",
+        role=UserRole.DEFAULT,
+        user_id="pending-id",
+        username="pending-id",
+    )
+
+
+@pytest.mark.unit
+def test_login_username_page_renders_for_an_account_awaiting_a_username(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = _pending_user
+    client = TestClient(permissions_client)
+    response = client.get("/login/username")
+
+    assert response.status_code == 200
+    assert "username-page" in response.text
+
+
+@pytest.mark.unit
+def test_login_username_page_redirects_home_once_a_real_username_is_set(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = lambda: Identity(
+        type="session",
+        provider="supabase",
+        provider_user_id="p1",
+        email="onboarded@x.com",
+        role=UserRole.DEFAULT,
+        user_id="user-id",
+        username="orchard-fox",
+    )
+    client = TestClient(permissions_client, follow_redirects=False)
+    response = client.get("/login/username")
+
+    assert response.status_code == 303
+    assert response.headers["location"] == "/"
+
+
+@pytest.mark.unit
+def test_login_username_page_redirects_signed_out_visitors_to_login(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = lambda: None
+    client = TestClient(permissions_client, follow_redirects=False)
+    response = client.get("/login/username")
+
+    assert response.status_code == 303
+    assert response.headers["location"] == "/login"
+
+
+@pytest.mark.unit
+def test_index_redirects_an_account_awaiting_a_username(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = _pending_user
+    client = TestClient(permissions_client, follow_redirects=False)
+    response = client.get("/")
+
+    assert response.status_code == 303
+    assert response.headers["location"] == "/login/username"

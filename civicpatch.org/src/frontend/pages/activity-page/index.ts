@@ -3,7 +3,10 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { fetchChangeLogs } from "../../api.js";
 import { Pagination } from "../../components/pagination/index.js";
-import { SectionNav, ACTIVITY_SECTION } from "../../components/section-nav/index.js";
+import {
+  SectionNav,
+  ACTIVITY_SECTION,
+} from "../../components/section-nav/index.js";
 import { FIELD_SCHEMA } from "../../components/fields/field-schema.js";
 import "./activity-page.css";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
@@ -55,7 +58,9 @@ function renderScalarDiff(f) {
   return html`
     <span class="activity-row__diff">
       <span class="activity-row__before">${formatValue(f.before)}</span>
-      <span class="activity-row__arrow"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+      <span class="activity-row__arrow"
+        ><i class="fa-solid fa-arrow-right" aria-hidden="true"></i
+      ></span>
       <span class="activity-row__after">${formatValue(f.after)}</span>
     </span>
   `;
@@ -65,8 +70,18 @@ function renderListDiff(f) {
   const { removed, added } = diffListItems(f.before, f.after);
   return html`
     <span class="activity-row__diff">
-      ${removed.map((v) => html`<span class="activity-row__chip activity-row__chip--removed">${v}</span>`)}
-      ${added.map((v) => html`<span class="activity-row__chip activity-row__chip--added">${v}</span>`)}
+      ${removed.map(
+        (v) =>
+          html`<span class="activity-row__chip activity-row__chip--removed"
+            >${v}</span
+          >`,
+      )}
+      ${added.map(
+        (v) =>
+          html`<span class="activity-row__chip activity-row__chip--added"
+            >${v}</span
+          >`,
+      )}
     </span>
   `;
 }
@@ -74,14 +89,14 @@ function renderListDiff(f) {
 // Person edits get a field-level diff under the summary line; everything else
 // relies on the server-rendered `summary` string alone.
 function renderChange(entry) {
-  if (entry.type !== "edit_person" || !entry.changes?.fields?.length) return null;
+  if (entry.type !== "edit_person" || !entry.changes?.fields?.length)
+    return null;
   return entry.changes.fields.map((f) => {
     const isList = Array.isArray(f.before) || Array.isArray(f.after);
-    return html`
-      <div class="activity-row__field">
-        <span class="activity-row__field-name">${fieldLabel(f.field)}</span>
-        ${isList ? renderListDiff(f) : renderScalarDiff(f)}
-      </div>`;
+    return html` <div class="activity-row__field">
+      <span class="activity-row__field-name">${fieldLabel(f.field)}</span>
+      ${isList ? renderListDiff(f) : renderScalarDiff(f)}
+    </div>`;
   });
 }
 
@@ -99,16 +114,29 @@ function renderRow(entry, markQuarantined: boolean) {
         </span>
         <span class="activity-row__what">
           ${entry.jurisdiction_path
-            ? html`<a href="/${jurisdictionOcdidToPath(entry.jurisdiction_path)}" target="_blank" rel="noopener">${entry.jurisdiction_name}</a>`
+            ? html`<a
+                href="/${jurisdictionOcdidToPath(entry.jurisdiction_path)}"
+                target="_blank"
+                rel="noopener"
+                >${entry.jurisdiction_name}</a
+              >`
             : (entry.jurisdiction_name ?? "")}
           <span class="activity-row__summary">${entry.summary}</span>
         </span>
         ${entry.pull_request_url
-          ? html`<a class="activity-row__pr" href=${entry.pull_request_url} target="_blank" rel="noopener">PR</a>`
+          ? html`<a
+              class="activity-row__pr"
+              href=${entry.pull_request_url}
+              target="_blank"
+              rel="noopener"
+              >PR</a
+            >`
           : html`<span></span>`}
         <!-- Masked in the visual suite: seeded with NOW(), so it renders the day
              the run happens on and would rot the baseline overnight. -->
-        <span class="activity-row__at" data-visual-volatile>${formatDate(entry.created_at)}</span>
+        <span class="activity-row__at" data-visual-volatile
+          >${formatDate(entry.created_at)}</span
+        >
       </div>
       ${renderChange(entry)}
     </div>
@@ -136,7 +164,11 @@ function ActivityPage() {
   const [quarantinedOnly, setQuarantinedOnly] = useState(false);
 
   useEffect(() => {
-    fetchChangeLogs(quarantinedOnly ? AUTHORS_QUARANTINED : AUTHORS_ALL, page, PER_PAGE)
+    fetchChangeLogs(
+      quarantinedOnly ? AUTHORS_QUARANTINED : AUTHORS_ALL,
+      page,
+      PER_PAGE,
+    )
       .then((r) => {
         setEntries(r.data || []);
         setTotal(r.total_items || 0);
@@ -157,33 +189,40 @@ function ActivityPage() {
       </div>
 
       <div class="sectioned">
-      ${SectionNav("activity", ACTIVITY_SECTION, "/activity/changelogs")}
-      <div class="secbody">
-      <section class="panel activity-page__section">
-        <div class="panel__cap">
-          <b>change log</b>
-          <span class="panel__cap-right">
-            <label class="activity-page__filter">
-              <input type="checkbox" .checked=${quarantinedOnly} @change=${toggleQuarantinedOnly} />
-              quarantined only
-            </label>
-            ${total || ""}
-          </span>
+        ${SectionNav("activity", ACTIVITY_SECTION, "/activity/changelogs")}
+        <div class="secbody">
+          <section class="panel activity-page__section">
+            <div class="panel__cap">
+              <b>activity</b>
+              <span class="panel__cap-right">
+                <label class="activity-page__filter">
+                  <input
+                    type="checkbox"
+                    .checked=${quarantinedOnly}
+                    @change=${toggleQuarantinedOnly}
+                  />
+                  quarantined only
+                </label>
+                ${total || ""}
+              </span>
+            </div>
+            ${renderList(entries, !quarantinedOnly)}
+            ${Pagination({
+              page,
+              totalPages,
+              onPrevious: () => setPage(page - 1),
+              onNext: () => setPage(page + 1),
+              perPage: PER_PAGE,
+              onPerPageChange: undefined,
+            })}
+          </section>
         </div>
-        ${renderList(entries, !quarantinedOnly)}
-        ${Pagination({
-          page,
-          totalPages,
-          onPrevious: () => setPage(page - 1),
-          onNext: () => setPage(page + 1),
-          perPage: PER_PAGE,
-          onPerPageChange: undefined,
-        })}
-      </section>
-      </div>
       </div>
     </main>
   `;
 }
 
-customElements.define("activity-page", component(ActivityPage, { useShadowDOM: false }));
+customElements.define(
+  "activity-page",
+  component(ActivityPage, { useShadowDOM: false }),
+);

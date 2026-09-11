@@ -1,28 +1,12 @@
 import "./posts-list.css";
 import "./post-edit.js";
 import "./post-add.js";
-import "./membership-assign.js";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { fetchPosts, fetchMemberships, fetchRoles } from "../../api.js";
 import { useAsyncData } from "../../hooks/use-async-data.js";
-import {
-  groupPostsByRole,
-  groupMembershipsByPerson,
-  divisionName,
-  divisionKey,
-  postName,
-  decompose,
-  postOptions,
-} from "./posts-model.js";
-import type {
-  RoleGroup,
-  PostRow,
-  PersonRow,
-  Membership,
-  RoleOption,
-  PostOption,
-} from "./posts-model.js";
+import { groupPostsByRole, divisionName } from "./posts-model.js";
+import type { RoleGroup, PostRow, RoleOption } from "./posts-model.js";
 
 type PostsListHost = HTMLElement & {
   jurisdictionOcdid?: string;
@@ -31,43 +15,27 @@ type PostsListHost = HTMLElement & {
   canEdit?: boolean;
 };
 
-const HOLDER_SEPARATOR = ", ";
-
-// "The same rows" — one dataset, two axes. A toggle rather than separate screens, because the
-// question ("who holds what") is identical and only the grouping differs.
-const BY_POST = "post";
-const BY_PERSON = "person";
-type Axis = typeof BY_POST | typeof BY_PERSON;
-
-// Which entity the screen has open, and only ever one — two booleans would allow editing and
-// adding at once, which the layout has no room for and the user never means.
-//
 // Named for the entity, not the action: adding and editing a post are the same entity with and
 // without an id, so `id: null` is "this post does not exist yet" rather than a third case.
-//
-// There is deliberately no equivalent for membership. Posts are CRUD — POST mints an identity
-// (organization, role, division) that did not exist. A membership is asserted, not created:
-// the route is a single idempotent PUT that says where a person is, and opens or closes rows
-// to make that true. So "a new membership" is not a thing a caller can ask for.
-type Editing =
-  | { entity: "post"; id: string | null }
-  | { entity: "membership"; membership: Membership }
-  | null;
+type Editing = { entity: "post"; id: string | null } | null;
 
+// Who holds it is the Officials panel's job — this row says only how many hold the seat,
+// not by whom, so it stays a count rather than a name.
 const renderPost = (post: PostRow, canEdit: boolean, onEdit: (id: string) => void) => html`
   <li class="posts-list__post">
     <span class="posts-list__division">${divisionName(post.division_ocdid)}</span>
-    <span class="posts-list__key">${divisionKey(post.division_ocdid)}</span>
-    ${post.holder_names.length
-      ? html`<span class="posts-list__holders">
-          ${post.holder_names.join(HOLDER_SEPARATOR)}
-        </span>`
-      : html`<span class="posts-list__vacant">nobody</span>`}
-    ${post.over_headcount ? html`<span class="posts-list__over">over headcount</span>` : ""}
-    ${post._is_verified ? "" : html`<span class="posts-list__unverified">unverified</span>`}
-    ${post._is_tracked
-      ? ""
-      : html`<span class="posts-list__untracked" title="Recorded, but a roster that stops naming its holder will not ask for review">untracked</span>`}
+    <span class="posts-list__status">
+      ${post.holder_names.length
+        ? html`<span class="posts-list__held"
+            >${post.holder_names.length} held</span
+          >`
+        : html`<span class="posts-list__vacant">vacant</span>`}
+      ${post.over_headcount ? html`<span class="posts-list__over">over headcount</span>` : ""}
+      ${post._is_verified ? "" : html`<span class="posts-list__unverified">unverified</span>`}
+      ${post._is_tracked
+        ? ""
+        : html`<span class="posts-list__untracked" title="Recorded, but a roster that stops naming its holder will not ask for review">untracked</span>`}
+    </span>
     ${canEdit
       ? html`<button class="posts-list__edit" @click=${() => onEdit(post.id)}>Edit</button>`
       : ""}
@@ -101,67 +69,19 @@ const renderRole = (group: RoleGroup, context: RoleContext) => html`
   </section>
 `;
 
-// What the source said, and what the parser made of every piece of it. Shown together
-// because the derived name alone cannot be judged — it says where the person landed, not why.
-const renderMembership = (
-  membership: Membership,
-  canEdit: boolean,
-  onAssign: (membership: Membership) => void,
-) => html`
-  <li class="posts-list__post posts-list__post--stacked">
-    <span class="posts-list__holders">${postName(membership)}</span>
-    ${canEdit
-      ? html`<button class="posts-list__edit" @click=${() => onAssign(membership)}>
-          Change post
-        </button>`
-      : ""}
-    ${membership.source_labels.map(
-      (label) => html`<p class="posts-list__source">“${label}”</p>`,
-    )}
-    <p class="posts-list__parts">
-      ${decompose(membership).map(
-        (part) => html`<span class="posts-list__part posts-list__part--${part.kind}">
-          <span class="posts-list__part-kind">${part.kind}</span>${part.value}
-        </span>`,
-      )}
-    </p>
-  </li>
-`;
-
-const renderPerson = (
-  row: PersonRow,
-  canEdit: boolean,
-  onAssign: (membership: Membership) => void,
-) => html`
-  <section class="posts-list__role">
-    <h3 class="posts-list__role-name">${row.person_name}</h3>
-    <ul class="posts-list__posts">
-      ${row.posts.map((membership) => renderMembership(membership, canEdit, onAssign))}
-    </ul>
-  </section>
-`;
-
 function PostsList(host: PostsListHost) {
   const [editing, setEditing] = useState<Editing>(null);
-  const [axis, setAxis] = useState<Axis>(BY_POST);
-  // Empty means now. Held as the raw input value so the field and the query cannot disagree.
-  const [asOf, setAsOf] = useState("");
   const ocdid = host.jurisdictionOcdid;
   const canEdit = !!host.canEdit;
 
-  // Two reads because the screen is post-shaped but lists people: posts carry capacity,
-  // memberships carry who is in them.
   const { data, error, reload } = useAsyncData<{
     byRole: RoleGroup[];
-    byPerson: PersonRow[];
     roles: RoleOption[];
-    postOptions: PostOption[];
   }>(async () => {
-    if (!ocdid) return { byRole: [], byPerson: [], roles: [], postOptions: [] };
-    const on = asOf || null;
+    if (!ocdid) return { byRole: [], roles: [] };
     const [postsBody, membershipsBody, rolesBody] = await Promise.all([
       fetchPosts(ocdid),
-      fetchMemberships(ocdid, on),
+      fetchMemberships(ocdid),
       fetchRoles(),
     ]);
     // Kept whole as well as reduced: the groups need a label lookup, the add form needs every
@@ -176,11 +96,9 @@ function PostsList(host: PostsListHost) {
     const memberships = membershipsBody.data.memberships;
     return {
       byRole: groupPostsByRole(posts, memberships, roleLabels),
-      byPerson: groupMembershipsByPerson(memberships),
       roles,
-      postOptions: postOptions(posts, memberships, roleLabels),
     };
-  }, [ocdid, asOf]);
+  }, [ocdid]);
 
   const closeAndReload = () => {
     setEditing(null);
@@ -188,42 +106,14 @@ function PostsList(host: PostsListHost) {
   };
   const close = () => setEditing(null);
 
-  const handleAxis = (next: Axis) => () => {
-    setEditing(null);
-    setAxis(next);
-  };
-  const handleAsOf = (e: Event) => setAsOf((e.target as HTMLInputElement).value);
-  const handleNow = () => setAsOf("");
   const handleAddPost = () => setEditing({ entity: "post", id: null });
-
-  // Editing is off while looking at the past: the forms write to the present, so a Save from
-  // a dated view would silently apply to now.
-  const dated = asOf !== "";
-  const tab = (which: Axis) =>
-    axis === which ? "posts-list__tab posts-list__tab--on" : "posts-list__tab";
 
   const controls = html`
     <div class="posts-list__controls">
-      <div class="posts-list__axis">
-        <button class=${tab(BY_POST)} @click=${handleAxis(BY_POST)}>By post</button>
-        <button class=${tab(BY_PERSON)} @click=${handleAxis(BY_PERSON)}>By person</button>
-      </div>
-      <label class="posts-list__as-of">
-        <span>Showing</span>
-        <input type="date" .value=${asOf} @input=${handleAsOf} />
-        ${dated
-          ? html`<button class="posts-list__edit" @click=${handleNow}>back to today</button>`
-          : html`<span class="posts-list__today">today</span>`}
-      </label>
-      ${canEdit && !dated
+      ${canEdit
         ? html`<button class="posts-list__add" @click=${handleAddPost}>Add post</button>`
         : ""}
     </div>
-    ${dated
-      ? html`<p class="posts-list__dated-note">
-          Editing is off while viewing a past date — the forms write to today.
-        </p>`
-      : ""}
   `;
 
   if (error) {
@@ -236,7 +126,7 @@ function PostsList(host: PostsListHost) {
   const groups = data.byRole;
 
   const context: RoleContext = {
-    canEdit: canEdit && !dated,
+    canEdit,
     editing,
     jurisdictionOcdid: ocdid ?? "",
     onEditPost: (id) => setEditing({ entity: "post", id }),
@@ -254,17 +144,10 @@ function PostsList(host: PostsListHost) {
   const renderRows = () => {
     if (groups.length === 0) {
       return html`<p class="posts-list__empty">
-        ${dated
-          ? "No posts on that date."
-          : "No posts yet — they are derived when a scrape is published."}
+        No posts yet — they are derived when a scrape is published.
       </p>`;
     }
-    if (axis === BY_POST) return groups.map((group) => renderRole(group, context));
-    return data.byPerson.map((row) =>
-      renderPerson(row, context.canEdit, (membership) =>
-        setEditing({ entity: "membership", membership }),
-      ),
-    );
+    return groups.map((group) => renderRole(group, context));
   };
 
   return html`
@@ -276,18 +159,6 @@ function PostsList(host: PostsListHost) {
             .jurisdictionOcdid=${ocdid ?? ""}
             .roles=${data.roles}
           ></civ-post-add>`
-        : ""}
-      ${editing?.entity === "membership"
-        ? html`<civ-membership-assign
-            .personId=${editing.membership.person_id}
-            .personName=${editing.membership.person_name}
-            .jurisdictionOcdid=${ocdid ?? ""}
-            .roles=${data.roles}
-            .options=${data.postOptions}
-            .currentRoleId=${editing.membership.role_id}
-            .currentDivisionOcdid=${editing.membership.division_ocdid}
-            .currentLabel=${editing.membership.label}
-          ></civ-membership-assign>`
         : ""}
       ${renderRows()}
     </div>

@@ -16,6 +16,7 @@ export default defineConfig(({ command }) => ({
         jurisdiction: "./assets/jurisdiction.js",
         "jurisdiction-history": "./assets/jurisdiction-history.ts",
         login: "./assets/login.ts",
+        "login-username": "./assets/login-username.ts",
         admin: "./assets/admin.ts",
         activity: "./assets/activity.ts",
         roles: "./assets/roles.js",

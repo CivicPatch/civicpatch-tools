@@ -5,6 +5,7 @@
 // and the read-only case are expressed — not a second kind of card.
 
 import { html, nothing } from "lit-html";
+import "../../components/panel/panel.css";
 import "../../components/person-image.js";
 import "../../components/people/person-row.css";
 import {
@@ -55,18 +56,18 @@ export function renderRosterCards(props: RosterCardsProps) {
   const sources = sourceMapFor(cards.map((card) => card.newRecord));
 
   return html`
-    <section class="jurisdiction-section">
-      <div class="jurisdiction-section__head">
-        <div class="jurisdiction-section__heading">
-          <h2 class="jurisdiction-section__title">Officials</h2>
-          <span class="jurisdiction-section__meta">
-            ${isLoading
-              ? "Loading…"
-              : `${cards.length} ${cards.length === 1 ? "person" : "people"}`}
-          </span>
-        </div>
+    <section class="panel">
+      <div class="panel__cap">
+        <b>Officials</b>
+        <span class="jurisdiction-section__meta">
+          ${isLoading
+            ? "Loading…"
+            : `${cards.length} ${cards.length === 1 ? "person" : "people"}`}
+        </span>
         ${actions
-          ? html`<span class="jurisdiction-section__actions">${actions}</span>`
+          ? html`<span class="jurisdiction-section__actions panel__cap-right"
+              >${actions}</span
+            >`
           : nothing}
       </div>
 

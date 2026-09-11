@@ -17,6 +17,8 @@ import { useStateCoverage } from "./use-state-coverage.ts";
 import { useReviewProgress } from "./use-review-progress.ts";
 import { useRecentPublications } from "./use-recent-publications.ts";
 import { renderRecentPublications } from "./recent-publications.ts";
+import { useRecentActivity } from "./use-recent-activity.ts";
+import { renderRecentActivity } from "./recent-activity.ts";
 import { renderCoverageByState } from "./coverage-by-state.ts";
 import { useBlogUpdates } from "./use-blog-updates.ts";
 import { renderBlogUpdates } from "./blog-updates.ts";
@@ -43,6 +45,7 @@ function HomePage() {
   const { localStatus, toReviewCount } = useStateCoverage(selectedState);
   const { reviewStats, activeSession } = useReviewProgress(user, selectedState);
   const { recentPublications } = useRecentPublications();
+  const { entries: recentActivity } = useRecentActivity();
   const { blogUpdates } = useBlogUpdates();
 
   useEffect(() => {
@@ -96,79 +99,82 @@ function HomePage() {
     window.location.href = `/${jurisdictionOcdidToPath(event.detail.jurisdiction_ocdid)}`;
   };
 
+  // Shared between both layouts below: boxed in a panel for the logged-in grid,
+  // unboxed in the logged-out hero — the search itself doesn't change.
+  const finder = html`
+    <div class="home-page__finder-search">
+      <div class="home-page__example-chips">
+        ${EXAMPLE_LOCATIONS.map(
+          (location) => html`
+            <button
+              type="button"
+              class="civ-badge civ-badge--secondary"
+              @click=${() => setExampleQuery(location)}
+            >
+              ${location}
+            </button>
+          `,
+        )}
+      </div>
+
+      <civ-jurisdiction-search
+        .seedQuery=${exampleQuery}
+        @jurisdiction-select=${handleSearchSelect}
+      ></civ-jurisdiction-search>
+    </div>
+
+    <div class="home-page__finder-divider"><span>or</span></div>
+
+    <div class="home-page__finder-browse">
+      <civ-select-state
+        .selected=${selectedState}
+        @state-change=${handleStateChange}
+      ></civ-select-state>
+
+      ${selectedState && dashboardData?.states?.[selectedState]
+        ? html`
+            <a
+              class="home-page__browse-link"
+              role="button"
+              href="/${selectedState}/local"
+            >
+              Browse
+              ${dashboardData.states[selectedState].civicpatch.localities.known}
+              municipalities <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          `
+        : html`
+            <span
+              class="home-page__browse-link home-page__browse-link--disabled"
+              aria-disabled="true"
+            >
+              Browse <i class="fa-solid fa-arrow-right"></i>
+            </span>
+          `}
+    </div>
+  `;
+
   return html`
     <div class="home-page">
-      <div class="home-page__grid home-page__grid--3col">
-        <div class="home-page__select-col">
-          <div class="panel home-page__finder">
-            <div class="panel__cap"><b>search</b></div>
+      ${user
+        ? html`
+            <div class="home-page__grid home-page__grid--3col">
+              <div class="home-page__select-col">
+                <div class="panel home-page__finder">
+                  <div class="panel__cap"><b>search</b></div>
+                  ${finder}
+                </div>
 
-            <div class="home-page__finder-search">
-              <div class="home-page__example-chips">
-                ${EXAMPLE_LOCATIONS.map(
-                  (location) => html`
-                    <button
-                      type="button"
-                      class="civ-badge civ-badge--secondary"
-                      @click=${() => setExampleQuery(location)}
-                    >
-                      ${location}
-                    </button>
-                  `,
-                )}
+                ${renderCoverageByState({
+                  statesData: dashboardData?.states ?? {},
+                  onSelectState: handleCoverageStateSelect,
+                  selectedState,
+                  isLoggedIn: true,
+                  toReviewCount: reviewStats?.available_count ?? 0,
+                  hasActiveSession: activeSession != null,
+                })}
               </div>
 
-              <civ-jurisdiction-search
-                .seedQuery=${exampleQuery}
-                @jurisdiction-select=${handleSearchSelect}
-              ></civ-jurisdiction-search>
-            </div>
-
-            <div class="home-page__finder-divider"><span>or</span></div>
-
-            <div class="home-page__finder-browse">
-              <civ-select-state
-                .selected=${selectedState}
-                @state-change=${handleStateChange}
-              ></civ-select-state>
-
-              ${selectedState && dashboardData?.states?.[selectedState]
-                ? html`
-                    <a
-                      class="home-page__browse-link"
-                      href="/${selectedState}/local"
-                    >
-                      Browse
-                      ${dashboardData.states[selectedState].civicpatch
-                        .localities.known}
-                      municipalities <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                  `
-                : html`
-                    <span
-                      class="home-page__browse-link home-page__browse-link--disabled"
-                      aria-disabled="true"
-                    >
-                      Browse <i class="fa-solid fa-arrow-right"></i>
-                    </span>
-                  `}
-            </div>
-          </div>
-
-          ${renderCoverageByState({
-            statesData: dashboardData?.states ?? {},
-            onSelectState: handleCoverageStateSelect,
-            selectedState,
-            isLoggedIn: !!user,
-            toReviewCount: user
-              ? (reviewStats?.available_count ?? 0)
-              : toReviewCount,
-            hasActiveSession: activeSession != null,
-          })}
-        </div>
-
-        ${user
-          ? html`
               <div class="home-page__second-col">
                 <browse-map
                   .state=${selectedState || ""}
@@ -185,25 +191,39 @@ function HomePage() {
                       state: selectedState,
                     })
                   : ""}
-                ${renderRecentPublications({
-                  publications: recentPublications,
+                ${renderRecentActivity({
+                  entries: recentActivity,
                   canViewProfiles: !!permissions?.can_manage_roles,
                 })}
               </div>
-            `
-          : html`
+
+              <div class="home-page__third-col">
+                ${renderBlogUpdates({ updates: blogUpdates })}
+              </div>
+            </div>
+          `
+        : html`
+            <div class="home-hero">${finder}</div>
+
+            <div class="home-page__grid">
+              <div class="home-page__select-col">
+                ${renderCoverageByState({
+                  statesData: dashboardData?.states ?? {},
+                  onSelectState: handleCoverageStateSelect,
+                  selectedState,
+                  isLoggedIn: false,
+                  toReviewCount,
+                  hasActiveSession: false,
+                })}
+              </div>
+
               <div class="home-page__second-col">
                 ${renderRecentPublications({
                   publications: recentPublications,
-                  canViewProfiles: !!permissions?.can_manage_roles,
                 })}
               </div>
-            `}
-
-        <div class="home-page__third-col">
-          ${renderBlogUpdates({ updates: blogUpdates })}
-        </div>
-      </div>
+            </div>
+          `}
 
       <div class="home-page__below">
         <civ-people-directory

@@ -1,0 +1,138 @@
+@layer components {
+.recent-activity__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.recent-activity__row {
+  position: relative;
+  display: flex;
+  gap: 0.625rem;
+  align-items: baseline;
+  padding: 0.2rem 0.35rem;
+  font-size: var(--font-size-md);
+}
+
+.recent-activity__row:nth-child(even) {
+  background: var(--surface-stripe);
+}
+
+/* Only rows with somewhere to go read as clickable — a role/taxonomy entry has no
+   jurisdiction, so it stays a plain row. */
+.recent-activity__row--linked {
+  cursor: pointer;
+}
+
+.recent-activity__row--linked:hover {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.recent-activity__row:has(.recent-activity__jurisdiction:focus-visible) {
+  outline: var(--focus-ring-width) solid var(--action-focus);
+  outline-offset: 2px;
+}
+
+/* is_system (schemas/activity.py::ActivityEntry) marks the seeded system account,
+   not a person — mono, smaller, and muted throughout the row. */
+.recent-activity__row--system {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+}
+
+.recent-activity__row--system .recent-activity__author,
+.recent-activity__row--system .recent-activity__jurisdiction,
+.recent-activity__row--system .recent-activity__summary {
+  color: var(--text-muted);
+}
+
+/* Stretched-link pattern (see .review-row__open / .recent-publications__jurisdiction)
+   — the jurisdiction link's hit area grows to cover the whole row. */
+.recent-activity__jurisdiction::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.recent-activity__jurisdiction:focus-visible {
+  outline: none;
+}
+
+/* The author link and the PR link are their own real destinations, so they escape
+   the row-wide overlay the same way .review-row__source / .recent-publications__commit
+   does — lifted into the same stacking context and placed above it. */
+.recent-activity__author,
+.recent-activity__pr {
+  position: relative;
+  z-index: 1;
+}
+
+/* Full-strength text, not the app's default link color. */
+.recent-activity__author,
+.recent-activity__jurisdiction {
+  color: var(--text-default);
+}
+
+/* No underline — the whole row is already the click target, so this one word
+   looking like "the link" would be misleading. */
+.recent-activity__jurisdiction {
+  text-decoration: none;
+}
+
+.recent-activity__at {
+  flex: none;
+  width: 4rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+}
+
+.recent-activity__body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Its own column, not inline in the sentence — a fixed width so the row doesn't
+   reflow depending on whether this entry has a PR. */
+.recent-activity__commit {
+  flex: none;
+  width: 2.2rem;
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
+}
+
+/* Pinned to the far right — a sibling of .recent-activity__body, not one of its
+   children, so body's flex:1 pushes it there (same as .recent-publications__state).
+   Shortcode, not the readable name — this row already carries more columns than
+   .recent-publications, so the compact form keeps it from crowding the row. */
+.recent-activity__state {
+  flex: none;
+  width: 1.6rem;
+  text-align: right;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+}
+
+/* No font-family override — inherits sans normally, mono under
+   .recent-activity__row--system. "main" is the default, no color rule needed. */
+.recent-activity__summary {
+  color: var(--accent);
+}
+
+.recent-activity__summary--chg {
+  color: var(--warning);
+}
+
+.recent-activity__summary--error {
+  color: var(--error);
+}
+
+.recent-activity__summary--note {
+  color: var(--level-note);
+}
+
+.recent-activity__meta {
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
+}
+}

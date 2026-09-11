@@ -82,19 +82,22 @@ class ActivityEntry(BaseModel):
     changes: dict[str, Any] | None
     author_name: str | None
     author_role: str | None
+    # True when the actor is the seeded system account (database.users.SYSTEM_USER_ID)
+    # rather than a person — computed from the user id, not the display name, since a
+    # username is editable and a string match on it would silently stop working.
+    is_system: bool
     created_at: datetime
     summary: str
 
 
 class PublicPublication(BaseModel):
-    """A publish event, stripped to what an anonymous visitor may see: no author diff, no
-    internal review detail. `commit_url` is a link to the open-data commit, already public."""
+    """A publish event, stripped to what an anonymous visitor may see: which jurisdiction
+    changed, not who changed it, no internal review detail. `commit_url` is a link to the
+    open-data commit, already public."""
 
     jurisdiction_ocdid: str
     jurisdiction_name: str | None
     state: str | None
-    author_name: str
-    author_role: str
     commit_url: str | None
     kind: str | None
     created_at: datetime

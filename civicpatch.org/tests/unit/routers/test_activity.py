@@ -20,8 +20,6 @@ PUBLICATION_ROW = {
     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
     "jurisdiction_name": "Seattle city",
     "state": "wa",
-    "author_name": "michelle@civicpatch.org",
-    "author_role": "admins",
     "commit_url": "https://github.com/org/open-data/commit/abc123",
     "kind": "scrape",
     "created_at": "2026-05-24T13:27:00+00:00",
@@ -41,6 +39,7 @@ ROW = {
     "created_at": "2026-05-24T13:27:00+00:00",
     "author_name": "michelle@civicpatch.org",
     "author_role": "admins",
+    "is_system": False,
     "jurisdiction_name": "Seattle city",
     "pull_request_url": "https://github.com/org/repo/pull/42",
     "summary": "Edited Jane Doe (1 field)",
@@ -123,6 +122,15 @@ def test_row_maps_to_entry(client):
 
 
 @pytest.mark.unit
+def test_system_actor_is_flagged(client):
+    row = {**ROW, "author_name": "CivicPatch", "is_system": True}
+    with patch("database.activity.get_activity_for_roles", new_callable=AsyncMock, return_value=(1, [row])):
+        response = client.get("/change_logs", params={"authors": "all"})
+
+    assert response.json()["data"][0]["is_system"] is True
+
+
+@pytest.mark.unit
 def test_pull_request_url_maps_to_entry(client):
     with patch("database.activity.get_activity_for_roles", new_callable=AsyncMock, return_value=(1, [ROW])):
         response = client.get("/change_logs", params={"authors": "all"})
@@ -202,6 +210,24 @@ def test_recent_publications_carries_no_review_detail(anonymous_client):
     entry = response.json()["data"][0]
     assert "changes" not in entry
     assert "summary" not in entry
+
+
+@pytest.mark.unit
+def test_recent_publications_carries_no_author_info(anonymous_client):
+    """The public feed says which jurisdiction changed, not who changed it — even if the
+    DB layer's row happened to carry author fields, PublicPublication doesn't declare them,
+    so they must never reach the response."""
+    row = {**PUBLICATION_ROW, "author_name": "michelle@civicpatch.org", "author_role": "admins"}
+    with patch(
+        "database.activity.get_recent_publications",
+        new_callable=AsyncMock,
+        return_value=[row],
+    ):
+        response = anonymous_client.get("/change_logs/recent-publications")
+
+    entry = response.json()["data"][0]
+    assert "author_name" not in entry
+    assert "author_role" not in entry
 
 
 @pytest.mark.unit

@@ -68,7 +68,7 @@
   inset: 0;
 }
 .review-row__name {
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.2;
   overflow-wrap: anywhere;
 }

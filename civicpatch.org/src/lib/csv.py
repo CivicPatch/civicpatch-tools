@@ -1,16 +1,5 @@
 import csv
 import io
-from typing import Generator, Iterable
-
-# Characters that spreadsheet applications (Excel, Sheets) interpret as formula prefixes
-_FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r")
-
-
-def sanitize(val: str) -> str:
-    """Prevent CSV formula injection by prefixing dangerous values with a single quote."""
-    if val and val[0] in _FORMULA_PREFIXES:
-        return "'" + val
-    return val
 
 
 def rows_from_table(table: list[list]) -> list[dict]:
@@ -19,8 +8,8 @@ def rows_from_table(table: list[list]) -> list[dict]:
 
     Headers are lowercased and stripped — a header row is typed by a human. Short rows are
     padded, because Sheets omits trailing empty cells and a blank optional field is an empty
-    value, not a missing column. A leading `'` is stripped: that is `sanitize`'s guard, and
-    Sheets applies the same escape.
+    value, not a missing column. A leading `'` is stripped: Sheets prefixes a value with it to
+    force text formatting (e.g. keeping a leading `=` from being read as a formula).
     """
     if not table:
         return []
@@ -48,16 +37,3 @@ def _unsanitize(value) -> str:
     if not isinstance(value, str):
         return "" if value is None else str(value)
     return value[1:] if value[:1] == "'" else value
-
-
-def generate_csv(rows: Iterable[dict], fieldnames: list[str]) -> Generator[str, None, None]:
-    buf = io.StringIO()
-    writer = csv.DictWriter(buf, fieldnames=fieldnames, lineterminator="\n")
-    writer.writeheader()
-    yield buf.getvalue()
-
-    for row in rows:
-        buf = io.StringIO()
-        writer = csv.DictWriter(buf, fieldnames=fieldnames, lineterminator="\n")
-        writer.writerow(row)
-        yield buf.getvalue()

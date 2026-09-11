@@ -44,11 +44,17 @@ def _build_user_dict(identity: Optional[Identity]) -> dict:
     }
 
 
+def needs_username(user: dict) -> bool:
+    # A freshly created account's username is its own id (see `database.users.create_user`) —
+    # that equality is the signal that sign-up hasn't finished, gating every page until
+    # `/login/username` clears it via `POST /api/v1/user/username`.
+    return bool(user["authenticated"] and user["user_id"] and user["username"] == user["user_id"])
+
+
 def build_permissions(identity: Optional[Identity]) -> dict:
     role = identity.role if identity else None
     return {
         "can_view_queue_page": has_at_least(role, UserRole.CONTRIBUTORS),
-        "can_view_queue_page_errors": has_at_least(role, UserRole.ADMINS),
         # One key, because the caller no longer picks a mode: the environment does, server
         # side. Whether you may scrape is a role question; how it dispatches is not.
         "can_scrape": has_at_least(role, UserRole.MAINTAINERS),
@@ -93,6 +99,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/", response_class=HTMLResponse, include_in_schema=False)
     async def index(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         return templates.TemplateResponse("pages/index.html", {"request": request, "user": user})
 
     @router.get("/login", response_class=HTMLResponse, include_in_schema=False)
@@ -100,8 +108,27 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         request: Request, identity: Optional[Identity] = Depends(get_optional_user)
     ):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         return templates.TemplateResponse(
             "pages/login.html",
+            {
+                "request": request,
+                "user": user,
+            },
+        )
+
+    @router.get("/login/username", response_class=HTMLResponse, include_in_schema=False)
+    async def login_username_page(
+        request: Request, identity: Optional[Identity] = Depends(get_optional_user)
+    ):
+        user = _build_user_dict(identity)
+        if not user["authenticated"]:
+            return RedirectResponse("/login", status_code=303)
+        if not needs_username(user):
+            return RedirectResponse("/", status_code=303)
+        return templates.TemplateResponse(
+            "pages/login-username.html",
             {
                 "request": request,
                 "user": user,
@@ -111,6 +138,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/bulk-review", response_class=HTMLResponse, include_in_schema=False)
     async def bulk_review_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_view_queue_page"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/bulk-review.html", {"request": request, "user": user})
@@ -118,6 +147,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/review", response_class=HTMLResponse, include_in_schema=False)
     async def review_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_view_reviews_page"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/review.html", {"request": request, "user": user})
@@ -125,6 +156,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/review/session", response_class=HTMLResponse, include_in_schema=False)
     async def review_session_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_view_reviews_page"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/review-session.html", {"request": request, "user": user})
@@ -132,6 +165,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/issues", response_class=HTMLResponse, include_in_schema=False)
     async def issues_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_view_issues_page"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/issues.html", {"request": request, "user": user})
@@ -139,6 +174,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/spend", response_class=HTMLResponse, include_in_schema=False)
     async def spend_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_edit_spend"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/spend.html", {"request": request, "user": user})
@@ -146,6 +183,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/pipelines", response_class=HTMLResponse, include_in_schema=False)
     async def pipelines_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_batch_scrape"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/pipelines.html", {"request": request, "user": user})
@@ -153,6 +192,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/gallery", response_class=HTMLResponse, include_in_schema=False)
     async def gallery_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_view_gallery_page"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/gallery.html", {"request": request, "user": user})
@@ -167,6 +208,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/activity/changelogs", response_class=HTMLResponse, include_in_schema=False)
     async def activity_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_view_activity_page"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/activity.html", {"request": request, "user": user})
@@ -174,6 +217,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/roles", response_class=HTMLResponse, include_in_schema=False)
     async def roles_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_write_config"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/roles.html", {"request": request, "user": user})
@@ -181,6 +226,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/imports", response_class=HTMLResponse, include_in_schema=False)
     async def imports_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_write_config"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/imports.html", {"request": request, "user": user})
@@ -190,6 +237,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         # Same gate as the change log beside it — the section is one thing. The scrape control
         # this page carries is gated separately, on `can_scrape`.
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_view_activity_page"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/changesets.html", {"request": request, "user": user})
@@ -197,6 +246,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/admin", response_class=HTMLResponse, include_in_schema=False)
     async def admin_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_manage_roles"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/admin.html", {"request": request, "user": user})
@@ -210,6 +261,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         # Same gate as `/admin`: this is a moderation view of someone else's account, not a
         # self-service profile.
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_manage_roles"]:
             return RedirectResponse("/", status_code=303)
         target_user = await get_user_by_username(username)
@@ -236,6 +289,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         identity: Optional[Identity] = Depends(get_optional_user),
     ):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"] or not user["permissions"]["can_manage_roles"]:
             return RedirectResponse("/", status_code=303)
         target_user = await get_user_by_username(username)
@@ -254,6 +309,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/settings", response_class=HTMLResponse, include_in_schema=False)
     async def settings_page(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         if not user["authenticated"]:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/settings.html", {"request": request, "user": user})
@@ -261,6 +318,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/blog", response_class=HTMLResponse, include_in_schema=False)
     async def blog_list(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         return templates.TemplateResponse(
             "pages/blog-list.html",
             {"request": request, "user": user, "posts": await get_all_posts()},
@@ -269,6 +328,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     @router.get("/blog/{slug}", response_class=HTMLResponse, include_in_schema=False)
     async def blog_post(request: Request, slug: str, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         post = await get_post(slug)
         if not post:
             raise HTTPException(status_code=404, detail="Post not found")
@@ -286,6 +347,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         # would otherwise 404 there instead of reaching this page. Page content lands
         # in a later commit; this just claims the route.
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         return templates.TemplateResponse(
             "pages/municipalities.html", {"request": request, "user": user, "state": state}
         )
@@ -309,6 +372,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         if not jurisdiction:
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         return templates.TemplateResponse(
             "pages/jurisdiction-history.html",
             {
@@ -333,6 +398,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         if not jurisdiction:
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
         user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
         return templates.TemplateResponse(
             "pages/jurisdiction.html",
             {

@@ -1,36 +1,48 @@
 import secrets
+import uuid
 from typing import cast
 
 from database.database import get_pool
 
 # The actor for anything no person did — a supersede sweep, an auto-publish, a backfill.
-# Seeded by migration 160. Nothing can log in as it: `upsert_user` is the auth path's only
+# Seeded by migration 160. Nothing can log in as it: `create_user` is the auth path's only
 # writer and always passes provider 'supabase', so 'system' is unreachable there.
 SYSTEM_USER_ID = "00000000-0000-4000-8000-000000000001"
 from environment import get_env_vars
 import lib.hash as hash_utils
 
 
-async def upsert_user(provider, provider_user_id, email, username: str) -> str:
-    # `username` is only picked up on the INSERT branch — a re-login must never clobber the
-    # one chosen at sign-up, so the conflict path leaves it out of its SET list entirely.
+async def create_user(provider, provider_user_id, email) -> str:
+    # A brand-new sign-in has no chosen name yet. Migration 192 established that this column
+    # is never NULL — a user who hasn't picked one gets their own id as a placeholder, same
+    # shape as every other value in the column. `username == id` is exactly the signal
+    # `routers.frontend.needs_username` uses to route them to `/login/username`.
+    user_id = str(uuid.uuid4())
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO users (provider, provider_user_id, email, username, last_login_at)
-            VALUES (%s, %s, %s, %s, NOW())
-            ON CONFLICT (provider, provider_user_id)
-            DO UPDATE SET
-                email = EXCLUDED.email,
-                last_login_at = NOW()
+            INSERT INTO users (id, provider, provider_user_id, email, username, last_login_at)
+            VALUES (%s, %s, %s, %s, %s, NOW())
             RETURNING id::text
             """,
-            (provider, provider_user_id, email, username),
+            (user_id, provider, provider_user_id, email, user_id),
         )
         row = await cur.fetchone()
-    assert row, "upsert_user RETURNING returned no row"
+    assert row, "create_user RETURNING returned no row"
     return cast(str, row[0])
+
+
+async def touch_last_login(provider, provider_user_id, email) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE users SET email = %s, last_login_at = NOW()
+            WHERE provider = %s AND provider_user_id = %s
+            """,
+            (email, provider, provider_user_id),
+        )
 
 
 async def set_user_role(user_id: str, role: str) -> None:

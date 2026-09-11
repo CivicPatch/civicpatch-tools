@@ -108,7 +108,7 @@
   /* ── Type scale ──────────────────────────────────────────────────────── */
   /* Monospace: tables, badges, metadata, IDs, pagination, counters        */
   /* Sans-serif: all other UI text                                         */
-  --font-size-xs: 0.65rem; /* tiny labels, diff metadata, table headers */
+  --font-size-xs: 0.7rem; /* tiny labels, diff metadata, table headers */
   --font-size-sm: 0.75rem; /* small metadata, badges, btn-sm */
   --font-size-md: 0.875rem; /* body text, card content, items */
   --font-size-base: 1rem; /* default paragraph, modal headers */

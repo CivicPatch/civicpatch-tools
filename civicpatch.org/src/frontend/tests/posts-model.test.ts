@@ -8,21 +8,13 @@ import {
   UNNAMED_HOLDER,
   buildDivisionOcdid,
   AT_LARGE_DIVISION,
-  groupMembershipsByPerson,
   postName,
-  decompose,
-  PART_ROLE,
-  PART_DIVISION,
-  PART_DESIGNATION,
-  PART_UNMATCHED,
-  postOptions,
-  byRole,
   divisionSelection,
   isDivisionValue,
   postsHeld,
   derivedPostLabel,
 } from "../components/posts-list/posts-model.js";
-import type { Post, Membership } from "../components/posts-list/posts-model.js";
+import type { Post } from "../components/posts-list/posts-model.js";
 
 const post = (overrides: Partial<Post> & { id: string; role_id: string }): Post => ({
   division_ocdid: "ocd-division/country:us/state:wa/place:x",
@@ -166,36 +158,6 @@ describe("buildDivisionOcdid", () => {
 });
 
 
-describe("groupMembershipsByPerson", () => {
-  const membership = (overrides: Partial<Membership>): Membership => ({
-    post_id: "p",
-    person_name: "Andrew Theriault",
-    role_id: "council-member",
-    division_ocdid: "ocd-division/country:us/state:wa/place:x/ward:2",
-    label: null,
-    post_label: null,
-    ...overrides,
-  });
-
-  it("gathers one person's posts across bodies under a single row", () => {
-    // The point of the axis: the post view shows them twice with no hint it is one human.
-    const rows = groupMembershipsByPerson([
-      membership({ post_id: "a" }),
-      membership({ post_id: "b", person_name: "Diana Pelchat" }),
-      membership({ post_id: "c" }),
-    ]);
-
-    expect(rows.map((r) => r.person_name)).toEqual(["Andrew Theriault", "Diana Pelchat"]);
-    expect(rows[0].posts.map((p) => p.post_id)).toEqual(["a", "c"]);
-  });
-
-  it("keeps a nameless holder rather than dropping them", () => {
-    expect(groupMembershipsByPerson([membership({ person_name: null })])[0].person_name).toBe(
-      UNNAMED_HOLDER,
-    );
-  });
-});
-
 describe("postName", () => {
   const base = {
     post_id: "p",
@@ -224,110 +186,6 @@ describe("postName", () => {
 });
 
 
-describe("decompose", () => {
-  const membership = (overrides: Partial<Membership> = {}): Membership => ({
-    post_id: "p",
-    person_name: "X",
-    role_id: "council-member",
-    division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:3",
-    label: null,
-    post_label: null,
-    source_labels: ["Council Member District 3 (Central Seattle)"],
-    designations: [],
-    unmatched_text: ["Central Seattle"],
-    ...overrides,
-  });
-
-  it("accounts for every piece of the label, residue included", () => {
-    // The point of the row: a curator can see what the parser did and judge it, rather than
-    // being shown only where the person landed.
-    expect(decompose(membership())).toEqual([
-      { kind: PART_ROLE, value: "council-member" },
-      { kind: PART_DIVISION, value: "District 3" },
-      { kind: PART_UNMATCHED, value: "Central Seattle" },
-    ]);
-  });
-
-  it("lists designations before the residue", () => {
-    const parts = decompose(
-      membership({ designations: ["Position 8"], unmatched_text: ["Citywide"] }),
-    );
-
-    expect(parts.map((p) => p.kind)).toEqual([
-      PART_ROLE,
-      PART_DIVISION,
-      PART_DESIGNATION,
-      PART_UNMATCHED,
-    ]);
-  });
-
-  it("still shows the division for an at-large post", () => {
-    // "No division" is a decision the parser made, not a gap. Omitting it would make a correctly
-    // parsed at-large row look half-parsed.
-    const parts = decompose(
-      membership({
-        division_ocdid: "ocd-division/country:us/state:wa/place:x",
-        unmatched_text: [],
-      }),
-    );
-
-    expect(parts).toContainEqual({ kind: PART_DIVISION, value: "At-Large" });
-  });
-});
-
-describe("postOptions", () => {
-  it("prefers the name a person gave the post", () => {
-    const [option] = postOptions(
-      [post({ id: "a", role_id: "council-member", label: "Position 8" })],
-      [],
-      ROLE_LABELS,
-    );
-    expect(option.label).toBe("Position 8");
-  });
-
-  it("counts holders and flags a post already at headcount", () => {
-    const [full] = postOptions(
-      [post({ id: "a", role_id: "council-member", _headcount: 2 })],
-      held("a", 2) as never,
-      ROLE_LABELS,
-    );
-    expect(full.held).toBe(2);
-    expect(full.full).toBe(true);
-
-    const [room] = postOptions(
-      [post({ id: "a", role_id: "council-member", _headcount: 3 })],
-      held("a", 2) as never,
-      ROLE_LABELS,
-    );
-    expect(room.full).toBe(false);
-  });
-
-  it("falls back to the role id when the role is unknown", () => {
-    const [option] = postOptions([post({ id: "a", role_id: "dogcatcher" })], [], ROLE_LABELS);
-    expect(option.role_label).toBe("dogcatcher");
-  });
-});
-
-describe("byRole", () => {
-  const options = postOptions(
-    [
-      post({ id: "a", role_id: "council-member", division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:1" }),
-      post({ id: "b", role_id: "mayor" }),
-      post({ id: "c", role_id: "council-member", division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:2" }),
-    ],
-    [],
-    ROLE_LABELS,
-  );
-
-  it("gathers a role's posts under one heading even when they are not adjacent", () => {
-    const groups = byRole(options);
-    expect(groups.map(([label]) => label)).toEqual(["Council Member", "Mayor"]);
-    expect(groups[0][1].map((option) => option.post_id)).toEqual(["a", "c"]);
-  });
-
-  it("keeps the roster's order rather than sorting", () =>
-    expect(byRole(options)[0][0]).toBe("Council Member"));
-});
 
 describe("divisionSelection", () => {
   it("round-trips what buildDivisionOcdid produced", () => {

@@ -116,19 +116,31 @@
 
   /* Always rendered, enabled or not, so picking a state never shifts anything below it. */
   .home-page__browse-link {
-    display: block;
+    /* A fixed height, not padding alone — so enabled and disabled render pixel-identical
+       regardless of label length or whether the icon font has painted yet. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.75rem;
     align-self: stretch;
     text-align: center;
-    padding: 0.6rem 1.3rem;
+    /* Same box regardless of label length ("Browse" vs "Browse 42 municipalities") —
+       clip instead of wrapping into a taller box than the disabled sibling. (Not
+       text-overflow: ellipsis — unreliable once the container itself is the flex box.) */
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 1.3rem;
     border-radius: var(--radius-sm);
-    background: var(--action);
-    color: var(--action-text);
-    font-weight: 700;
+    /* --accent (the app's blue), not --action (a near-black text color) — this is a
+       primary call-to-action, same fix as the hover tints elsewhere on this page. */
+    background: var(--accent);
+    color: var(--accent-text);
+    font-weight: 500;
     font-size: var(--font-size-md);
   }
 
   .home-page__browse-link:not(.home-page__browse-link--disabled):hover {
-    background: var(--action-hover);
+    background: var(--accent-border);
   }
 
   .home-page__browse-link--disabled {
