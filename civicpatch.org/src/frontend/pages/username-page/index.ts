@@ -35,11 +35,14 @@ function UsernamePage(): TemplateResult {
           type="text"
           autocomplete="username"
           maxlength="50"
+          pattern="[A-Za-z0-9._-]+"
+          title="Letters, numbers, '.', '_', and '-' only"
           required
           autofocus
           .value=${value}
           @input=${(e: Event) => setValue((e.target as HTMLInputElement).value)}
         />
+        <p class="username-page__hint">Letters, numbers, ".", "_", and "-" only.</p>
         ${error
           ? html`<p role="alert" class="username-page__error">${error}</p>`
           : ""}

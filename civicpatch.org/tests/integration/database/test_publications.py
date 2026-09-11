@@ -84,6 +84,12 @@ async def sentinel_request():
         await cur.execute(
             "INSERT INTO jurisdictions (jurisdiction_ocdid) VALUES (%s)", (_SENTINEL_OCDID,)
         )
+        # Real jurisdictions get their default organization at sync time (open_data.py); this
+        # raw insert bypasses that, so it has to do the pairing itself.
+        await cur.execute(
+            "INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, 'Government')",
+            (_SENTINEL_OCDID,),
+        )
         await cur.execute(
             """
             INSERT INTO changesets (kind, jurisdiction_ocdid)
@@ -496,6 +502,10 @@ async def sentinel_hand_edit():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "INSERT INTO jurisdictions (jurisdiction_ocdid) VALUES (%s)", (_SENTINEL_OCDID,)
+        )
+        await cur.execute(
+            "INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, 'Government')",
+            (_SENTINEL_OCDID,),
         )
         await cur.execute(
             """

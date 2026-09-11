@@ -43,6 +43,50 @@ async def test_apply_pipeline_run_status_skips_publish_when_no_jurisdiction():
 
 @pytest.mark.unit
 @pytest.mark.asyncio
+async def test_apply_pipeline_run_status_survives_a_redis_outage():
+    """The status update above already committed — a subscriber missing one live update is
+    fine; a caller seeing a successful report come back as an error is not."""
+    with (
+        patch("services.pipeline_runs.update_pipeline_run_status", new_callable=AsyncMock),
+        patch(
+            "services.pipeline_runs.pubsub_service.publish",
+            new_callable=AsyncMock,
+            side_effect=RuntimeError("redis unreachable"),
+        ),
+    ):
+        await run_lifecycle.apply_pipeline_run_status(
+            TEST_CHANGESET_ID, "running", 50, "ocd-division/country:us/state:ca/place:oakland"
+        )
+        # No exception means it survived — nothing further to assert.
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_a_final_status_logs_pipeline_run_end_and_survives_the_write_failing():
+    with (
+        patch("services.pipeline_runs.update_pipeline_run_status", new_callable=AsyncMock),
+        patch(
+            "services.pipeline_runs.get_pipeline_run",
+            new_callable=AsyncMock,
+            return_value={"changeset_id": None},
+        ),
+        patch("services.pipeline_runs.dismiss_changeset", new_callable=AsyncMock),
+        patch("services.pipeline_runs.supersede_prior_jurisdiction_issues", new_callable=AsyncMock),
+        patch("services.pipeline_runs.pubsub_service.publish", new_callable=AsyncMock),
+        patch(
+            "services.pipeline_runs.create_activity_row",
+            new_callable=AsyncMock,
+            side_effect=RuntimeError("db hiccup"),
+        ) as mock_create,
+    ):
+        await run_lifecycle.apply_pipeline_run_status(TEST_CHANGESET_ID, "ERROR", None, TEST_OCDID)
+
+        mock_create.assert_awaited_once()
+        # No exception propagated past the failing write — see the docstring on the test above.
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "status,reason",
     [

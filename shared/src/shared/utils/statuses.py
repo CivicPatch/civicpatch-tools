@@ -189,3 +189,26 @@ class ActivityType(StrEnum):
     EDIT_ROLE = "edit_role"
     DELETE_ROLE = "delete_role"
     REORDER_ROLES = "reorder_roles"
+    # Not a roster change — a run beginning or settling, not a change to what the roster is.
+    # `changeset_id` is always null on start (nothing has been minted yet); on end it is set
+    # only when the run succeeded far enough to mint one — a failed or cancelled run has none.
+    PIPELINE_RUN_START = "pipeline_run_start"
+    PIPELINE_RUN_END = "pipeline_run_end"
+
+
+# Nearly every activity type is audit trail only — read from the table, never watched — so this
+# names the ones actually worth a live push.
+LIVE_ACTIVITY_TYPES = frozenset({
+    ActivityType.PUBLISH_REVIEW,
+    ActivityType.PIPELINE_RUN_START,
+    ActivityType.PIPELINE_RUN_END,
+})
+
+# Fungible among LIVE_ACTIVITY_TYPES: interchangeable events where a listener only cares "how
+# many, of what kind" happened, not which specific one — a state batch starting fifty runs is
+# the case this exists for. `PUBLISH_REVIEW` is deliberately absent: each publish is its own
+# notable thing, and collapsing it into a count would be a real loss, not tidying.
+GROUPABLE_ACTIVITY_TYPES = frozenset({
+    ActivityType.PIPELINE_RUN_START,
+    ActivityType.PIPELINE_RUN_END,
+})

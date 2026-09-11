@@ -121,7 +121,12 @@ input:not(
     [type="file"],
     [readonly]
   ):focus {
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--border-strong);
+  /* --border-strong is opaque and theme-neutral (a border color); every other focus ring
+     in the app (elements.css, utilities.css, styles.css, blog.css) uses --action-focus, a
+     translucent tint of the theme's own action color. This was the one outlier — on the
+     light theme --border-strong is #28292a, which read as a flat near-black ring rather
+     than a themed focus indicator. */
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--action-focus);
 }
 input::placeholder,
 textarea::placeholder,

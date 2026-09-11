@@ -195,7 +195,9 @@ def test_publish_returns_200_and_queues_no_merge(client):
     assert response.status_code == 200
     assert response.json()["status"] == "published"
     mock_resolve.assert_awaited_once_with(TEST_CHANGESET_ID)
-    mock_publish.assert_awaited_once_with(TEST_CHANGESET_ID, TEST_OCDID, [BASE_PERSON], "user-id-123")
+    mock_publish.assert_awaited_once_with(
+        TEST_CHANGESET_ID, TEST_OCDID, [BASE_PERSON], "user-id-123", None
+    )
 
 
 # An Official-valid person in the scrape's stored roster, in on-disk field order. A patch

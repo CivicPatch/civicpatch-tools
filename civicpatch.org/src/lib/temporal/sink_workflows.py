@@ -22,6 +22,7 @@ with workflow.unsafe.imports_passed_through():
         write_sheet_jurisdictions_activity,
         write_parquet_roster_activity,
         write_sheet_roster_activity,
+        write_activity_feed_activity,
     )
 
 # Long enough to collapse a state scrape's town-by-town publishing into one tab rewrite.
@@ -119,6 +120,23 @@ class WriteRecentChangesWorkflow:
         await workflow.execute_activity(
             dispatch_open_data_changes_activity,
             start_to_close_timeout=timedelta(minutes=5),
+        )
+
+
+@workflow.defn
+class WriteActivityFeedWorkflow:
+    """Every minute: what `activity` saw since the last sweep, to the live activity channel.
+
+    Its own schedule rather than folded into `WriteRecentChangesWorkflow`: that one's 5-minute
+    cadence exists for the mirrors' API quotas, not freshness, and slowing this down to match
+    would work against the point of a live feed.
+    """
+
+    @workflow.run
+    async def run(self) -> None:
+        await workflow.execute_activity(
+            write_activity_feed_activity,
+            start_to_close_timeout=timedelta(minutes=1),
         )
 
 

@@ -20,6 +20,7 @@ from lib.temporal.sink_workflows import (
     WriteSheetRosterWorkflow,
     WriteRecentChangesWorkflow,
     WriteEverythingWorkflow,
+    WriteActivityFeedWorkflow,
 )
 from lib.temporal.types import SINKS_TASK_QUEUE
 from routers.temporal.sink_activities import (
@@ -31,6 +32,7 @@ from routers.temporal.sink_activities import (
     write_sheet_jurisdictions_activity,
     write_parquet_roster_activity,
     write_sheet_roster_activity,
+    write_activity_feed_activity,
 )
 from temporalio.client import Client
 from temporalio.worker import Worker
@@ -47,6 +49,7 @@ WORKFLOWS = [
     WriteSheetRosterWorkflow,
     WriteRecentChangesWorkflow,
     WriteEverythingWorkflow,
+    WriteActivityFeedWorkflow,
 ]
 
 ACTIVITIES = [
@@ -58,6 +61,7 @@ ACTIVITIES = [
     write_sheet_jurisdictions_activity,
     write_parquet_roster_activity,
     write_sheet_roster_activity,
+    write_activity_feed_activity,
 ]
 
 

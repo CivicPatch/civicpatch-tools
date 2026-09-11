@@ -83,6 +83,14 @@ _SCHEDULES = {
         SINKS_TASK_QUEUE,
         "0 9 * * *",
     ),
+    # Every minute — the finest a cron Schedule gives us — so the home page's activity widget
+    # feels live. Its own watermark in Redis, not this lookback pattern's usual wider window.
+    ScheduleId.SINK_WRITE_ACTIVITY_FEED: (
+        "WriteActivityFeedWorkflow",
+        WorkflowInstanceId.SINK_WRITE_ACTIVITY_FEED,
+        SINKS_TASK_QUEUE,
+        "* * * * *",
+    ),
 }
 
 

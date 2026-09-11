@@ -29,6 +29,7 @@ from database.changesets import register_people_edit_changeset
 from database.database import get_pool
 from database.people import get_roster
 from database.source_records import insert_source_records
+from schemas.activity import Change
 from schemas.common import Identity
 from services.publish import promote_images, publish_people
 from services.roster import proposed_roster, scraped_roster
@@ -68,6 +69,9 @@ async def save(
     await _record_edits(
         changeset_id, jurisdiction_ocdid, scraped, patched, labels, user.user_id
     )
+    await activity_service.record_manual_edits(
+        changeset_id, jurisdiction_ocdid, user.user_id, scraped, patched
+    )
     return patched
 
 
@@ -96,7 +100,26 @@ async def edit_published(
     await _record_edits(
         changeset_id, jurisdiction_ocdid, base, patched, labels, user.user_id
     )
-    await publish(changeset_id, jurisdiction_ocdid, patched, user.user_id)
+
+    # A hand edit to an already-live roster publishes in the same beat it happens, unlike a
+    # scrape review — so when it touched exactly one person, its own row carries the publish
+    # rather than sitting beside a second, generic "Published review" for the same action.
+    # More than one person has no single Change to fold onto that row, so those keep today's
+    # per-person rows instead.
+    try:
+        changes = await activity_service.diff_manual_edits(base, patched)
+    except Exception:
+        logger.exception("Failed to diff manual edits for %s", changeset_id)
+        changes = []
+    publish_change = changes[0].payload if len(changes) == 1 else None
+    if publish_change is None:
+        await activity_service.write_person_changes(
+            changeset_id, jurisdiction_ocdid, user.user_id, changes
+        )
+
+    await publish(
+        changeset_id, jurisdiction_ocdid, patched, user.user_id, changes=publish_change
+    )
     return changeset_id, patched
 
 
@@ -178,9 +201,6 @@ async def _record_edits(
         )
     ]
     await assertions.create_all(claims, user_id)
-    await activity_service.record_manual_edits(
-        changeset_id, jurisdiction_ocdid, user_id, base, patched
-    )
 
 
 async def publish(
@@ -188,12 +208,16 @@ async def publish(
     jurisdiction_ocdid: str,
     edited: List[dict] | None,
     resolved_by_user_id: str | None,
+    changes: Change | None = None,
 ) -> None:
     """Make this scrape's roster live.
 
     Nothing here commits: `WriteRecentChangesWorkflow` mirrors to open-data and the sheets from
     `activity`. The old `publish` / `publish_to_database` split named a choice that
     disappeared when mirroring moved to the sweep, and left the two identical.
+
+    `changes`, when given, rides on the publish's own activity row instead of a separate one —
+    see `edit_published`, the only caller that passes it.
     """
     roster = edited
     if roster is None:
@@ -210,4 +234,5 @@ async def publish(
         jurisdiction_ocdid,
         await promote_images(roster),
         resolved_by_user_id,
+        changes,
     )

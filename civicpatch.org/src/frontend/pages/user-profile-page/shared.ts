@@ -14,11 +14,16 @@ export type AdminUser = {
 // candidate; "superseded"/"withdrawn" are history the row shows but can't be selected.
 export const ASSERTION_STATUS_ACTIVE = "active";
 
+// Mirrors the `kind` check constraint on `assertions` (database/assertions.py) — a "reject"
+// row pairs with an "accept" row on the same field rather than competing with it.
+export const ASSERTION_KIND_REJECT = "reject";
+
 export type RollbackCandidate = {
   assertion_id: string;
   entity_id: string;
   entity_label: string;
   field_path: string;
+  kind: string;
   value: unknown;
   jurisdiction_ocdid: string;
   status: string;

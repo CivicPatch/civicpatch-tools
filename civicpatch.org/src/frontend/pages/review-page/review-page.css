@@ -133,9 +133,9 @@
       color 0.15s;
   }
   .review-page__state-chip--active {
-    --control-text: var(--action);
-    --control-bg: color-mix(in srgb, var(--action) 12%, transparent);
-    border-color: var(--action);
+    --control-text: var(--accent);
+    --control-bg: color-mix(in srgb, var(--accent) 12%, transparent);
+    border-color: var(--accent);
   }
   .review-page__state-chip-count {
     font-family: var(--font-mono);
@@ -197,9 +197,9 @@
       color 0.15s;
   }
   .review-page__goal-chip--active {
-    --control-text: var(--action);
-    --control-bg: color-mix(in srgb, var(--action) 12%, transparent);
-    border-color: var(--action);
+    --control-text: var(--accent);
+    --control-bg: color-mix(in srgb, var(--accent) 12%, transparent);
+    border-color: var(--accent);
   }
   .review-page__goal-chip:disabled {
     opacity: 0.4;

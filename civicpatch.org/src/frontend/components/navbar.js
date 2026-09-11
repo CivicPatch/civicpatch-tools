@@ -23,6 +23,11 @@ import "../generated/fontawesome/icons.css";
 
 const API_URL = config.apiUrl;
 
+// Display names for the two data-theme values — the attribute itself stays
+// "light"/"dark" (every theme-scoped CSS selector keys on that), these are only
+// what the picker shows.
+const THEME_NAMES = { light: "civic", dark: "solaris dark" };
+
 function getRoleTooltip(role) {
   if (!role) return "No role assigned";
   return `Role: ${role}`;
@@ -186,8 +191,7 @@ function Navbar(host) {
       ? "dark"
       : "light");
   document.documentElement.dataset.theme = resolvedTheme;
-  const toggleTheme = () =>
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  const handleThemeChange = (e) => setTheme(e.target.value);
   const onLogoutClick = () =>
     localStorage.removeItem(STORAGE_KEYS.DEFAULT_STATE);
   const currentPath = window.location.pathname;
@@ -217,18 +221,21 @@ function Navbar(host) {
           : html`<a class="login-link" href="/login"
               ><i class="fa-solid fa-envelope"></i> sign in</a
             >`}
-        <button
-          class="theme-toggle"
-          @click=${toggleTheme}
-          aria-label="Toggle theme"
-          title="${resolvedTheme === "dark"
-            ? "Switch to light mode"
-            : "Switch to dark mode"}"
-        >
-          <i
-            class="fa-solid ${resolvedTheme === "dark" ? "fa-sun" : "fa-moon"}"
-          ></i>
-        </button>
+        <span class="theme-select">
+          <select
+            id="theme-picker"
+            class="theme-select__control"
+            aria-label="theme"
+            @change=${handleThemeChange}
+          >
+            <option value="light" ?selected=${resolvedTheme === "light"}>
+              ${THEME_NAMES.light}
+            </option>
+            <option value="dark" ?selected=${resolvedTheme === "dark"}>
+              ${THEME_NAMES.dark}
+            </option>
+          </select>
+        </span>
         ${isAuthed
           ? html`<a
               href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(

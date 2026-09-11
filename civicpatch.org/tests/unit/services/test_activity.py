@@ -49,3 +49,42 @@ async def test_record_manual_edits_swallows_errors(mock_create):
     before = []
     after = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
     await activity.record_manual_edits(CHANGESET_ID, JURISDICTION_OCDID, USER_ID, before, after)  # must not raise
+
+
+# ── diff_manual_edits / write_person_changes (the split roster_edits.edit_published uses) ────
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_diff_manual_edits_returns_the_typed_changes():
+    before = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
+    after = [{"id": "p1", "name": "Jane Doe", "office": {"name": "Mayor"}}]
+    changes = await activity.diff_manual_edits(before, after)
+    assert [c.type for c in changes] == [ActivityType.EDIT_PERSON]
+    assert changes[0].payload.subject == "Jane Doe"
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+@patch("services.activity.create_activity_rows", new_callable=AsyncMock)
+async def test_write_person_changes_forwards_type_and_payload(mock_create):
+    before = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
+    after = [{"id": "p1", "name": "Jane Doe", "office": {"name": "Mayor"}}]
+    changes = await activity.diff_manual_edits(before, after)
+
+    await activity.write_person_changes(CHANGESET_ID, JURISDICTION_OCDID, USER_ID, changes)
+
+    mock_create.assert_awaited_once_with(
+        [(ActivityType.EDIT_PERSON, changes[0].payload)],
+        USER_ID,
+        JURISDICTION_OCDID,
+        CHANGESET_ID,
+    )
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+@patch("services.activity.create_activity_rows", new_callable=AsyncMock)
+async def test_write_person_changes_swallows_errors(mock_create):
+    mock_create.side_effect = RuntimeError("db down")
+    await activity.write_person_changes(CHANGESET_ID, JURISDICTION_OCDID, USER_ID, [])  # must not raise

@@ -2,11 +2,55 @@ from datetime import datetime, timezone
 
 import pytest
 
-from core.activity import roster_change, summarize_activity
+from core.activity import group_live_activity, is_live_activity, roster_change, summarize_activity
 from shared.utils.statuses import ActivityType
 
 
 pytestmark = pytest.mark.unit
+
+
+# ── Live activity gate ─────────────────────────────────────────────────
+
+
+def test_a_publish_is_live():
+    assert is_live_activity(ActivityType.PUBLISH_REVIEW) is True
+
+
+def test_an_edit_is_not_live():
+    assert is_live_activity(ActivityType.EDIT_PERSON) is False
+
+
+# ── Grouping a sweep ─────────────────────────────────────────────────────
+
+
+def test_a_burst_of_groupable_types_collapses_to_one_count():
+    rows = [{"type": "pipeline_run_start"}] * 3
+    assert group_live_activity(rows) == [{"type": "pipeline_run_start", "count": 3}]
+
+
+def test_below_the_threshold_groupable_types_stay_individual():
+    rows = [{"type": "pipeline_run_start"}, {"type": "pipeline_run_start"}]
+    assert group_live_activity(rows) == [
+        {"type": "pipeline_run_start", "count": 1},
+        {"type": "pipeline_run_start", "count": 1},
+    ]
+
+
+def test_publish_review_is_never_grouped_even_in_a_burst():
+    rows = [{"type": "publish_review"}] * 5
+    assert group_live_activity(rows) == [{"type": "publish_review", "count": 1}] * 5
+
+
+def test_a_mixed_sweep_groups_only_the_eligible_type():
+    rows = [{"type": "pipeline_run_start"}] * 3 + [{"type": "publish_review"}]
+    assert group_live_activity(rows) == [
+        {"type": "pipeline_run_start", "count": 3},
+        {"type": "publish_review", "count": 1},
+    ]
+
+
+def test_group_live_activity_empty_sweep():
+    assert group_live_activity([]) == []
 
 
 # ── Person events ───────────────────────────────────────────────────────
@@ -38,6 +82,19 @@ def test_person_missing_name_falls_back():
 def test_review_events():
     assert summarize_activity("publish_review", None) == "Published review"
     assert summarize_activity("dismiss_review", None) == "Dismissed review"
+
+
+def test_a_publish_carrying_a_hand_edits_diff_reads_as_one():
+    payload = {"subject": "Carmen Sørensen", "fields": [{"field": "phones"}]}
+    assert (
+        summarize_activity("publish_review", payload)
+        == "Published — hand edit: Carmen Sørensen (1 field)"
+    )
+
+
+def test_pipeline_run_events():
+    assert summarize_activity("pipeline_run_start", None) == "Started a scrape"
+    assert summarize_activity("pipeline_run_end", None) == "Finished a scrape"
 
 
 # ── Role taxonomy ───────────────────────────────────────────────────────

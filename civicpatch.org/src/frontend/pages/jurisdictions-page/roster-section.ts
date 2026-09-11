@@ -10,8 +10,11 @@ import "../../components/person-image.js";
 import "../../components/people/person-row.css";
 import {
   renderPersonGrid,
+  renderPersonRow,
   type PersonRowProps,
 } from "../../components/people/person-row.js";
+import { renderInlinePersonEditor } from "../../components/person-editor/inline-editor.js";
+import { type PersonEditorProps } from "../../components/person-editor/person-editor.js";
 import {
   renderValues,
   sourceMapFor,
@@ -20,18 +23,23 @@ import {
 import { type PersonCard } from "../../components/people/person-cards.js";
 import { postsHeld } from "../../components/posts-list/posts-model.js";
 
+const ROSTER_PERSON_ID_PREFIX = "roster-person-";
+
 export interface RosterCardsProps {
   cards: PersonCard[];
   isLoading: boolean;
   blockedReason: string | null;
   actions?: unknown;
-  onOpenPerson: ((personId: string) => void) | null;
+  onOpenPerson: ((personId: string, fieldKey: string | null) => void) | null;
+  openPersonId: string | null;
+  editorFor: ((card: PersonCard) => PersonEditorProps) | null;
 }
 
 function rowFor(
   card: PersonCard,
   sources: SourceMap,
-  onOpenPerson: ((personId: string) => void) | null,
+  onOpenPerson: ((personId: string, fieldKey: string | null) => void) | null,
+  openPersonId: string | null,
 ): PersonRowProps {
   const record = card.newRecord;
   // Post label, then membership label. Not `office.name` plus a division badge: that read
@@ -39,6 +47,7 @@ function rowFor(
   // joined by us, then the district a third time.
   const office = postsHeld(record?.memberships ?? []);
   const name = record?.name || "(unnamed)";
+  const firstField = card.surviving[0]?.field.key ?? null;
 
   return {
     record,
@@ -46,13 +55,16 @@ function rowFor(
     subtitle: office,
     ariaLabel: `Edit ${name}`,
     modifier: card.status,
-    onOpen: onOpenPerson ? () => onOpenPerson(card.personId) : null,
+    onOpen: onOpenPerson ? () => onOpenPerson(card.personId, firstField) : null,
+    isOpen: card.personId === openPersonId,
+    controlsId: `${ROSTER_PERSON_ID_PREFIX}${card.personId}`,
     meta: renderValues(record, sources),
   };
 }
 
 export function renderRosterCards(props: RosterCardsProps) {
-  const { cards, isLoading, blockedReason, actions, onOpenPerson } = props;
+  const { cards, isLoading, blockedReason, actions, onOpenPerson, openPersonId, editorFor } =
+    props;
   const sources = sourceMapFor(cards.map((card) => card.newRecord));
 
   return html`
@@ -80,9 +92,21 @@ export function renderRosterCards(props: RosterCardsProps) {
       ${isLoading
         ? nothing
         : cards.length
-          ? renderPersonGrid(
-              cards.map((card) => rowFor(card, sources, onOpenPerson)),
-            )
+          ? editorFor
+            ? html`<div class="review-preview__grid">
+                ${cards.flatMap((card) => [
+                  renderPersonRow(rowFor(card, sources, onOpenPerson, openPersonId)),
+                  renderInlinePersonEditor({
+                    card,
+                    openPersonId,
+                    editorFor,
+                    idPrefix: ROSTER_PERSON_ID_PREFIX,
+                  }),
+                ])}
+              </div>`
+            : renderPersonGrid(
+                cards.map((card) => rowFor(card, sources, onOpenPerson, openPersonId)),
+              )
           : html`<p class="jurisdiction-section__meta">
               No people published for this jurisdiction yet.
             </p>`}

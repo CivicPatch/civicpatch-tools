@@ -10,12 +10,18 @@ whole tables. That is why the sinks worker is the one with a concurrency cap.
 Split out of the old single `activities.py` on 2026-09-05.
 """
 
+import json
+from datetime import datetime, timedelta, timezone
+
 import database.activity as activity_db
 import database.jurisdictions as jurisdictions_db
 import database.memberships as memberships_db
+import lib.pubsub as pubsub_service
+import lib.redis as redis_store
 import services.sinks.open_data as open_data_sink
 import services.sinks.parquet as parquet_sink
 import services.sinks.sheet as sheet_sink
+from core.activity import group_live_activity
 from lib.temporal.types import (
     OpenDataBatchCommitRequest,
     OpenDataCommitItem,
@@ -191,3 +197,36 @@ async def dispatch_sheet_changes_activity() -> None:
         await temporal_client.enqueue_write_sheet_roster(state)
     if states:
         activity.logger.info("Swept %s into sheet syncs", ", ".join(states))
+
+
+# Where the last sweep left off. Redis, not a lookback window like the sweeps above: those
+# tolerate re-seeing a change because their targets (a sheet tab, a commit) render idempotently
+# from current truth, but announcing the same burst twice would just nudge a listener to
+# refetch twice for nothing new.
+_ACTIVITY_FEED_WATERMARK_KEY = "activity_feed:swept_until"
+
+# No watermark yet — first run, or one that expired — looks back one schedule interval rather
+# than the dawn of the table, so a fresh deploy doesn't replay all of history as one giant burst.
+_ACTIVITY_FEED_INITIAL_LOOKBACK = timedelta(minutes=1)
+
+
+@activity.defn
+async def write_activity_feed_activity() -> None:
+    """Every minute: live-worthy `activity` since the last sweep, grouped by type, announced.
+
+    The only consumer today just refetches on any message, so the group's `count` is unused for
+    now — but it means a future one can show "12 scrapes started" without a second round trip.
+    """
+    now = datetime.now(timezone.utc)
+    watermark = await redis_store.get(_ACTIVITY_FEED_WATERMARK_KEY)
+    since = (
+        datetime.fromisoformat(watermark) if watermark else now - _ACTIVITY_FEED_INITIAL_LOOKBACK
+    )
+
+    rows = await activity_db.get_live_activity_since(since)
+    for group in group_live_activity(rows):
+        await pubsub_service.publish(pubsub_service.ACTIVITY_CHANNEL, json.dumps(group))
+    if rows:
+        activity.logger.info("Swept %d live activity row(s) into the activity feed", len(rows))
+
+    await redis_store.set(_ACTIVITY_FEED_WATERMARK_KEY, now.isoformat())

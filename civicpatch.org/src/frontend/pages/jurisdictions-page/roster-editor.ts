@@ -1,7 +1,6 @@
 
 import { html, nothing } from "lit-html";
 import { component, useState, useEffect, useCallback } from "haunted";
-import "../../components/review/review-modal.js";
 import "./jurisdiction-page.css";
 import {
   patchPeopleData,
@@ -32,11 +31,6 @@ interface RosterEditorProps {
   isLoading: boolean;
   blockedReason: string | null;
   onPublished: () => void;
-}
-
-interface OpenPerson {
-  id: string;
-  field: string | null;
 }
 
 type PublishStage = "idle" | "publishing";
@@ -73,9 +67,11 @@ function RosterEditor({
     handleRemove,
     handleUnremove,
     handleRestore,
+    handleReset,
     handleResetAll,
   } = state;
-  const [openPerson, setOpenPerson] = useState<OpenPerson | null>(null);
+  const [openPersonId, setOpenPersonId] = useState<string | null>(null);
+  const [focusFieldKey, setFocusFieldKey] = useState<string | null>(null);
   const [collapsedIds, setCollapsedIds] = useState<Set<string>>(new Set());
   const [publishStage, setPublishStage] = useState<PublishStage>("idle");
   const [publishError, setPublishError] = useState<string | null>(null);
@@ -101,18 +97,24 @@ function RosterEditor({
   const blockerTitle = blockers
     .map((blocker) => `${blocker.name}, ${blocker.fieldLabel}: ${blocker.message}`)
     .join("\n");
-  // Same mechanism as review-session.ts's modal: alt-arrow steps to the next/previous card
-  // while one is open, and the opened field autofocuses once the modal has mounted.
-  useAltArrowPeerNav(openPerson?.id ?? null, cards, (next) =>
-    setOpenPerson({ id: next.personId, field: null }),
-  );
-  const focusOnOpen = useCallback(focusOnMount, [openPerson?.field]);
+  // Same mechanism as review-session.ts: alt-arrow steps to the next/previous card while
+  // one is open, and the opened field autofocuses once the inline editor has mounted.
+  const handleOpenPerson = (personId: string, fieldKey: string | null) => {
+    const opening = openPersonId !== personId;
+    setOpenPersonId(opening ? personId : null);
+    setFocusFieldKey(opening ? fieldKey : null);
+  };
+  useAltArrowPeerNav(openPersonId, cards, (next) => {
+    setOpenPersonId(next.personId);
+    setFocusFieldKey(null);
+  });
+  const focusOnOpen = useCallback(focusOnMount, [focusFieldKey]);
   const handlePersonSave = (id: string, updates: Record<string, unknown>) =>
     updatePerson(id, updates);
   const handleAdd = async () => {
     const personId = await generatePersonId();
     addPerson(emptyPerson(personId, jurisdictionOcdid));
-    setOpenPerson({ id: personId, field: null });
+    handleOpenPerson(personId, null);
   };
   const handlePublish = async () => {
     setPublishStage("publishing");
@@ -146,7 +148,7 @@ function RosterEditor({
       onRemovePerson: (id: string) => handleRemove([id]),
       onUnremovePerson: handleUnremove,
       onRestorePerson: handleRestore,
-      onResetPerson: (id: string) => updatePerson(id, published.find((p) => p.id === id) ?? {}),
+      onResetPerson: handleReset,
       cards: [],
       candidatesOpenFor: false,
       onToggleCandidates: () => {},
@@ -156,8 +158,8 @@ function RosterEditor({
       ...base,
       navHint: navHintFor(cards, card.personId),
       focusField:
-        card.personId === openPerson?.id && openPerson.field
-          ? { key: openPerson.field, attach: focusOnOpen }
+        card.personId === openPersonId && focusFieldKey
+          ? { key: focusFieldKey, attach: focusOnOpen }
           : null,
     };
   };
@@ -201,20 +203,13 @@ function RosterEditor({
       isLoading,
       blockedReason,
       actions,
-      onOpenPerson: canEdit ? (id: string) => setOpenPerson({ id, field: null }) : null,
+      onOpenPerson: canEdit ? handleOpenPerson : null,
+      openPersonId: canEdit ? openPersonId : null,
+      editorFor: canEdit ? editorFor : null,
     })}
     ${publishError
       ? html`<p style="color: var(--diff-removed);">${publishError}</p>`
       : nothing}
-    <review-modal
-      .cards=${cards}
-      .posts=${posts}
-      .openPersonId=${openPerson?.id ?? null}
-      .focusFieldKey=${openPerson?.field ?? null}
-      .editor=${editorFor}
-      .isReadOnly=${!canEdit}
-      .onClose=${() => setOpenPerson(null)}
-    ></review-modal>
   `;
 }
 

@@ -97,9 +97,9 @@
 }
 
 .spend-page__chip--active {
-  background: color-mix(in srgb, var(--action) 12%, transparent);
-  border-color: var(--action);
-  color: var(--action);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 /* Rows */

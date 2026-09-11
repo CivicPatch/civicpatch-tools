@@ -1,5 +1,5 @@
 import "../../components/panel/panel.css";
-import { html } from "lit-html";
+import { html, nothing } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { fetchChangeLogs } from "../../api.js";
 import { Pagination } from "../../components/pagination/index.js";
@@ -10,6 +10,8 @@ import {
 import { FIELD_SCHEMA } from "../../components/fields/field-schema.js";
 import "./activity-page.css";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
+import { useAuth } from "../../hooks/useAuth.js";
+import { authorDisplayMode } from "../home-page/recent-activity.js";
 
 const PER_PAGE = 20;
 
@@ -87,10 +89,13 @@ function renderListDiff(f) {
 }
 
 // Person edits get a field-level diff under the summary line; everything else
-// relies on the server-rendered `summary` string alone.
+// relies on the server-rendered `summary` string alone. A publish_review row carries one too
+// when it's a hand edit's own publish (see roster_edits.edit_published) rather than a plain
+// scrape-review approval, which never has a payload.
+const FIELD_DIFF_TYPES = new Set(["edit_person", "publish_review"]);
+
 function renderChange(entry) {
-  if (entry.type !== "edit_person" || !entry.changes?.fields?.length)
-    return null;
+  if (!FIELD_DIFF_TYPES.has(entry.type) || !entry.changes?.fields?.length) return nothing;
   return entry.changes.fields.map((f) => {
     const isList = Array.isArray(f.before) || Array.isArray(f.after);
     return html` <div class="activity-row__field">
@@ -102,14 +107,19 @@ function renderChange(entry) {
 
 // A row, not a table row: every column but the summary is a fixed width, and the
 // field diff needs to sit under the head rather than inside a cell.
-function renderRow(entry, markQuarantined: boolean) {
+function renderRow(entry, markQuarantined: boolean, canViewProfiles: boolean) {
   const quarantined = markQuarantined && entry.author_role === QUARANTINED_ROLE;
+  const authorMode = authorDisplayMode(entry.is_system, canViewProfiles);
   return html`
     <div class="activity-row ${quarantined ? "activity-row--quarantined" : ""}">
       <div class="activity-row__head">
         <span class="activity-row__type">${formatType(entry.type)}</span>
         <span class="activity-row__who">
-          ${entry.author_name}
+          ${authorMode === "link"
+            ? html`<a href="/~${entry.author_name}">${entry.author_name}</a>`
+            : authorMode === "text"
+              ? entry.author_name
+              : ""}
           <span class="activity-row__role">${entry.author_role}</span>
         </span>
         <span class="activity-row__what">
@@ -145,18 +155,20 @@ function renderRow(entry, markQuarantined: boolean) {
 
 // No header row: with five columns, four of which are self-evident from their own
 // formatting, a header costs a line and tells the reader nothing they cannot see.
-function renderList(entries, markQuarantined: boolean) {
+function renderList(entries, markQuarantined: boolean, canViewProfiles: boolean) {
   // A wrapper of its own — not just mapped siblings — so `.activity-row:last-child` in CSS
   // actually lands on the last row: Pagination sits after this in the DOM, and without a
   // wrapper it would be the true last child instead, so no row's own border ever cleared.
   return entries.length === 0
     ? html`<p class="activity-page__empty">No changes yet.</p>`
     : html`<div class="activity-row-list">
-        ${entries.map((entry) => renderRow(entry, markQuarantined))}
+        ${entries.map((entry) => renderRow(entry, markQuarantined, canViewProfiles))}
       </div>`;
 }
 
 function ActivityPage() {
+  const { permissions } = useAuth();
+  const canViewProfiles = !!permissions?.can_manage_roles;
   const [entries, setEntries] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -206,7 +218,7 @@ function ActivityPage() {
                 ${total || ""}
               </span>
             </div>
-            ${renderList(entries, !quarantinedOnly)}
+            ${renderList(entries, !quarantinedOnly, canViewProfiles)}
             ${Pagination({
               page,
               totalPages,

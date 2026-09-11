@@ -150,6 +150,9 @@ export function usePeopleState({ people }) {
   // Otherwise it restores the baseline record, which never carried a removal,
   // so it un-removes too. That was implicit when the flag lived on the row (the
   // baseline copy simply had no flag); with a Set it has to be said.
+  //
+  // A person with no baseline record at all was added this session, not loaded
+  // from the server — resetting them means undoing the add.
   function handleReset(key) {
     if (restoredIds.has(key)) {
       handleUndoRestore(key);
@@ -159,7 +162,9 @@ export function usePeopleState({ people }) {
     if (original) {
       setCurrentPeople(current => current.map(p => p.id === key ? { ...original } : p));
       handleUnremove(key);
+      return;
     }
+    setCurrentPeople(current => current.filter(p => p.id !== key));
   }
 
   function handleResetAll() {

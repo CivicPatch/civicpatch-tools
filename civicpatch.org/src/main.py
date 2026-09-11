@@ -35,12 +35,10 @@ from database.database import (
 from fastapi import (
     Depends,
     FastAPI,
-    Request,
     WebSocket,
     WebSocketDisconnect,
 )
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
 from fastapi.security import APIKeyHeader
 from fastapi.templating import Jinja2Templates
 from frontend.static import HashedAssetStaticFiles
@@ -329,30 +327,6 @@ async def get_me(user: Identity = Depends(get_optional_user)):
         "username": user.username,
         "avatar_url": None,
     }
-
-
-@app.get("/api/v1/sse/pipeline_runs/status", include_in_schema=False)
-async def sse_pipeline_run_status(jurisdiction_ocdid: str, request: Request):
-    key = f"pipeline_run_status:{jurisdiction_ocdid}"
-
-    async def event_generator():
-        try:
-            async for message in pubsub_service.subscribe(key):
-                if await request.is_disconnected():
-                    break
-                yield f"data: {message}\n\n"
-        except asyncio.CancelledError:
-            pass
-
-    return StreamingResponse(
-        event_generator(),
-        media_type="text/event-stream",
-        headers={
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-            "X-Accel-Buffering": "no",
-        },
-    )
 
 
 @app.websocket("/ws")

@@ -124,11 +124,6 @@
   color: var(--text-default);
   font-weight: 600;
 }
-.review-modal__person--changed { border-left-color: var(--warning); }
-.review-modal__person--added { border-left-color: var(--diff-added); }
-.review-modal__person--removed,
-.review-modal__person--deleted { border-left-color: var(--diff-removed); }
-.review-modal__person--restored { border-left-color: var(--text-muted); }
 .review-modal__person--changed .review-modal__person-name {
   color: var(--warning);
 }

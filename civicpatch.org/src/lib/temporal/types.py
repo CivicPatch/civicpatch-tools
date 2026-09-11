@@ -36,6 +36,7 @@ class ScheduleId(StrEnum):
     CLEANUP_REVIEW_SESSIONS = "cleanup-review-sessions"
     SINK_WRITE_RECENT_CHANGES = "sink-write-recent-changes"
     SINK_WRITE_EVERYTHING = "sink-write-everything"
+    SINK_WRITE_ACTIVITY_FEED = "sink-write-activity-feed"
 
 
 # `source:` and `sink:` are the direction, so no verb has to carry it. Depth then carries scope:
@@ -47,6 +48,8 @@ class WorkflowInstanceId(StrEnum):
     CLEANUP_REVIEW_SESSIONS = "cleanup:review-sessions"
     SINK_WRITE_RECENT_CHANGES = "sink:write-recent-changes"
     SINK_WRITE_EVERYTHING = "sink:write-everything"
+    SINK_WRITE_ACTIVITY_FEED = "sink:write-activity-feed"
+    SINK_DISPATCH_ACTIVITY_FEED = "sink:dispatch-activity-feed"
 
 
 @dataclass

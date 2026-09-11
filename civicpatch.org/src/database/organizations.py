@@ -1,17 +1,56 @@
 """Database queries for `organizations` — the body a post belongs to.
 
-Populated lazily: a row is minted the first time a post needs one, never synced ahead from
-`jurisdictions`. There is no 7,104-row sync path to keep correct, and the table then holds
-exactly the bodies that are published.
+Every jurisdiction has a default organization unconditionally: migration 195 backfilled the
+9,524 that predate it, and `services/sources/open_data.py` creates one the moment a jurisdiction
+is synced in, active or not. `get_default` below relies on that — it looks up, it does not
+create — so a jurisdiction with no organization is a bug in the sync path, not a normal case to
+absorb quietly.
 
-Every function takes a cursor rather than opening its own connection: post derivation runs
-inside the caller's transaction, and a body minted for a post that then fails to write would
-be a body nothing points at.
+`find_or_create` still creates: a jurisdiction can also have named, non-default bodies (Council,
+School Board) once something can tell them apart, and that path stays create-or-get.
+
+Every function takes a cursor rather than opening its own connection, except `ensure_defaults_exist`
+(no caller-held transaction at sync time): post derivation runs inside the caller's transaction,
+and a body minted for a post that then fails to write would be a body nothing points at.
 """
+
+from database.database import get_pool
 
 # Until a jurisdiction has more than one body, every post lands here. The name is generic
 # because the ocdid is: `…/place:berlin/government` says nothing about city vs township.
 DEFAULT_ORGANIZATION_NAME = "Government"
+
+
+async def ensure_defaults_exist(jurisdiction_ocdids: list[str]) -> None:
+    """Create each jurisdiction's default organization if it doesn't already have one.
+
+    Called from the open-data sync as jurisdictions are upserted, so `get_default` never has to
+    create one lazily afterward.
+    """
+    if not jurisdiction_ocdids:
+        return
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.executemany(
+            """
+            INSERT INTO organizations (jurisdiction_ocdid, name)
+            VALUES (%s, %s)
+            ON CONFLICT (jurisdiction_ocdid, name) DO NOTHING
+            """,
+            [(ocdid, DEFAULT_ORGANIZATION_NAME) for ocdid in jurisdiction_ocdids],
+        )
+
+
+async def get_default(cur, jurisdiction_ocdid: str) -> str:
+    """The jurisdiction's default organization. Guaranteed to exist — see module docstring."""
+    await cur.execute(
+        "SELECT id::text FROM organizations WHERE jurisdiction_ocdid = %s AND name = %s",
+        (jurisdiction_ocdid, DEFAULT_ORGANIZATION_NAME),
+    )
+    row = await cur.fetchone()
+    if row is None:
+        raise RuntimeError(f"jurisdiction {jurisdiction_ocdid!r} has no default organization")
+    return row[0]
 
 
 async def find_or_create(
@@ -94,7 +133,7 @@ async def find_or_create_for_changeset(cur, changeset_id: str, jurisdiction_ocdi
     if row and row[0]:
         return row[0]
 
-    organization_id = await find_or_create(cur, jurisdiction_ocdid)
+    organization_id = await get_default(cur, jurisdiction_ocdid)
     await cur.execute(
         "UPDATE changesets SET organization_id = %s WHERE id = %s",
         (organization_id, changeset_id),

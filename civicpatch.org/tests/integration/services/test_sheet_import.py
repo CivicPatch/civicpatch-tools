@@ -104,6 +104,13 @@ async def user_id():
             "SELECT unnest(%s::text[]), 'zz'",
             (_OCDIDS,),
         )
+        # Real jurisdictions get their default organization at sync time (open_data.py); this
+        # raw insert bypasses that, so it has to do the pairing itself.
+        await cur.execute(
+            "INSERT INTO organizations (jurisdiction_ocdid, name) "
+            "SELECT unnest(%s::text[]), 'Government'",
+            (_OCDIDS,),
+        )
         await cur.execute(
             "INSERT INTO users (email, provider, provider_user_id, username, role) "
             "VALUES (%s, 'email', %s, %s, 'maintainers') RETURNING id::text",

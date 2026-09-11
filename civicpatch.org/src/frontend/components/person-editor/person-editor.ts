@@ -4,6 +4,7 @@ import "../person-image.js";
 import "./person-editor.css";
 import type { DerivedPost, Post } from "../posts-list/posts-model.js";
 import {
+  announcementFor,
   fieldLock,
   type PersonAssertion,
 } from "./field-provenance.js";
@@ -51,6 +52,7 @@ export interface PersonEditorProps {
   jurisdictionOcdid: string | null | undefined;
   subtitle: string;
   accepts: Map<string, PersonAssertion[]>;
+  assertions: PersonAssertion[];
   overriddenSourceValues: Record<string, unknown>;
   posts: Post[];
   derivedPost: DerivedPost | null;
@@ -196,6 +198,11 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
       lock: fieldLock(
         props.accepts.get(field.key),
         props.overriddenSourceValues[field.key],
+        diffValue(newRecord ?? oldRecord, field),
+      ),
+      announcement: announcementFor(
+        props.assertions,
+        field.key,
         diffValue(newRecord ?? oldRecord, field),
       ),
       isReadOnly,

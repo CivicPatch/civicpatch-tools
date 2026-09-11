@@ -1,16 +1,10 @@
 import { html, nothing } from "lit-html";
 import { component } from "haunted";
-import { ref } from "lit-html/directives/ref.js";
-import { focusOnMount } from "../../utils/focus-on-mount.js";
 import "../person-image.js";
 import "./review-overview.css";
 import { renderPersonRow } from "../people/person-row.js";
-import "../person-editor/person-editor.css";
-import {
-  renderPersonEditor,
-  renderPersonSummary,
-  type PersonEditorProps,
-} from "../person-editor/person-editor.js";
+import { renderInlinePersonEditor } from "../person-editor/inline-editor.js";
+import { type PersonEditorProps } from "../person-editor/person-editor.js";
 import { type Post } from "../posts-list/posts-model.js";
 import { ensureUrl, withDisplayImage } from "../fields/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
@@ -175,27 +169,12 @@ function renderRow(
 }
 
 function renderInlineEditor(card: PersonCard, props: ReviewOverviewProps) {
-  if (card.personId !== props.openPersonId) return nothing;
-  const editorProps = props.editorFor(card);
-  const focusWrapper = (el?: Element) => {
-    el?.scrollIntoView({ block: "center", behavior: "smooth" });
-    if (!editorProps.focusField) focusOnMount(el);
-  };
-  return html`
-    <div
-      class="review-overview__editor"
-      id="review-person-${card.personId}"
-      tabindex="-1"
-      ${ref(focusWrapper)}
-    >
-      <div class="review-overview__editor-inner person-editor-list">
-        <div class="review-overview__editor-summary">
-          ${renderPersonSummary(editorProps)}
-        </div>
-        ${renderPersonEditor(editorProps)}
-      </div>
-    </div>
-  `;
+  return renderInlinePersonEditor({
+    card,
+    openPersonId: props.openPersonId,
+    editorFor: props.editorFor,
+    idPrefix: "review-person-",
+  });
 }
 
 function renderFold(

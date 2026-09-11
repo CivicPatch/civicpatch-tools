@@ -20,6 +20,9 @@
   border-color: var(--border);
   user-select: text;
 }
+.review-row--open {
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--action-focus);
+}
 .review-row__photo {
   grid-column: 1;
   grid-row: 1 / 3;

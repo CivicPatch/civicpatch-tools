@@ -45,7 +45,7 @@ function HomePage() {
   const { localStatus, toReviewCount } = useStateCoverage(selectedState);
   const { reviewStats, activeSession } = useReviewProgress(user, selectedState);
   const { recentPublications } = useRecentPublications();
-  const { entries: recentActivity } = useRecentActivity();
+  const { entries: recentActivity } = useRecentActivity(!!user);
   const { blogUpdates } = useBlogUpdates();
 
   useEffect(() => {

@@ -33,7 +33,7 @@
 }
 
 .blog-list__item:hover {
-  background: color-mix(in srgb, var(--action) 8%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
 /* Stretched-link pattern (see .review-row__open) — the title stays the only
@@ -247,10 +247,14 @@
   padding: 0;
 }
 
+/* elements.css's `nav li :where(a)` rule offsets its expanded padding with an
+   equal negative margin (a hover-hitbox trick for the horizontal navbar) —
+   reset it here so that margin doesn't collapse these rows into each other. */
 .blog-post__toc nav a {
   display: block;
   font-size: var(--font-size-md);
   color: var(--text-muted);
+  margin: 0;
   padding: 0.3rem 0.5rem;
   text-decoration: none;
   line-height: 1.4;
@@ -271,7 +275,7 @@
    Matches .blog-post__toc nav a's own specificity so it actually wins. */
 .blog-post__toc nav a.blog-post__toc-link--active {
   color: var(--text-default);
-  background: color-mix(in srgb, var(--action) 8%, var(--surface-stripe));
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface-stripe));
 }
 
 @media (max-width: 900px) {

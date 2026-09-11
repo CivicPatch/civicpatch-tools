@@ -34,6 +34,30 @@ export function roleForType(type: string): "main" | "error" | "chg" | "note" {
   return "main";
 }
 
+// Whoever did it always shows, matching /activity's own convention — /~{username} is a
+// moderation view (see routers/frontend.py's comment on that route), so only the link to it is
+// admin-gated, not the name itself.
+export function authorDisplayMode(
+  isSystem: boolean,
+  canViewProfiles: boolean,
+): "link" | "text" | "none" {
+  if (isSystem) return "none";
+  return canViewProfiles ? "link" : "text";
+}
+
+// `previouslySeen: null` means the reader hasn't loaded the list yet — nothing on a first load
+// is "fresh," there being nothing prior to be new against. Lives here, not in
+// use-recent-activity.ts, so it can be unit-tested without pulling in haunted.
+export function markFreshEntries<T extends { id: string }>(
+  fetched: T[],
+  previouslySeen: Set<string> | null,
+): (T & { isFresh: boolean })[] {
+  return fetched.map((entry) => ({
+    ...entry,
+    isFresh: previouslySeen !== null && !previouslySeen.has(entry.id),
+  }));
+}
+
 // Logged-in only. Renders entry.summary as-is (core/activity.py::summarize_activity
 // already computed it), so there's no verb mapping to duplicate here.
 export function renderRecentActivity({
@@ -52,23 +76,28 @@ export function renderRecentActivity({
         <a class="panel__cap-right" href="/activity">all activity</a>
       </div>
       <div class="recent-activity__list">
-        ${entries.map(
-          (entry) => html`
+        ${entries.map((entry) => {
+          const authorMode = authorDisplayMode(entry.is_system, canViewProfiles);
+          return html`
             <div
               class="recent-activity__row${entry.jurisdiction_path
                 ? " recent-activity__row--linked"
-                : ""}${entry.is_system ? " recent-activity__row--system" : ""}"
+                : ""}${entry.is_system ? " recent-activity__row--system" : ""}${entry.isFresh
+                ? " recent-activity__row--fresh"
+                : ""}"
             >
               <span class="recent-activity__at">${formatDate(entry.created_at)}</span>
               <span class="recent-activity__body">
                 <!-- Actor first, unlike .recent-publications' passive phrasing —
                      that feed has no author at all, this one does. A system actor
                      names nobody: "edited Jane Doe", not "CivicPatch edited". -->
-                ${canViewProfiles && !entry.is_system
+                ${authorMode === "link"
                   ? html`<a class="recent-activity__author" href="/~${entry.author_name}"
                       >${entry.author_name}</a
                     >`
-                  : ""}
+                  : authorMode === "text"
+                    ? html`<span class="recent-activity__author">${entry.author_name}</span>`
+                    : ""}
                 <span class="recent-activity__summary recent-activity__summary--${roleForType(entry.type)}"
                   >${entry.summary}</span
                 >
@@ -97,8 +126,8 @@ export function renderRecentActivity({
                 >${jurisdictionOcdidToState(entry.jurisdiction_ocdid).toUpperCase()}</span
               >
             </div>
-          `,
-        )}
+          `;
+        })}
       </div>
     </div>
   `;

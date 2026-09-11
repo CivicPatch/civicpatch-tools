@@ -131,9 +131,11 @@
     overflow: hidden;
     padding: 0 1.3rem;
     border-radius: var(--radius-sm);
-    /* --accent (the app's blue), not --action (a near-black text color) — this is a
-       primary call-to-action, same fix as the hover tints elsewhere on this page. */
-    background: var(--accent);
+    /* --accent-fill (the app's blue), not --action (a near-black text color) — this is a
+       primary call-to-action, same fix as the hover tints elsewhere on this page.
+       --accent-fill rather than --accent: the latter is tuned for link-text contrast on
+       dark, which is too bright/loud as a solid button fill. */
+    background: var(--accent-fill);
     color: var(--accent-text);
     font-weight: 500;
     font-size: var(--font-size-md);
@@ -174,6 +176,9 @@
 
   civ-select-state select {
     width: 100%;
+    /* controls.css gives every select a bottom margin for stacked form fields — this
+       picker already sits in the finder's own `gap`, so it doubles up unreset. */
+    margin-bottom: 0;
   }
 
   /* ── About footer ────────────────────────────────────────────────────────────*/

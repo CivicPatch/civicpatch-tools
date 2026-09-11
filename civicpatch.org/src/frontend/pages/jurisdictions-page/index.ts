@@ -8,6 +8,7 @@ import { buildIdentitiesMap } from "../../utils/people.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 import { historyUrl } from "./history/history-routes.js";
 import { SectionNav, jurisdictionSection } from "../../components/section-nav/index.js";
+import { pipelineRunStatusChannel } from "../../utils/pubsub-channels.js";
 
 import "../../components/panel/panel.css";
 import "./jurisdiction-page.css";
@@ -114,7 +115,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
       .catch(() => setInFlight([]));
   }, [jurisdiction_ocdid]);
 
-  const wsTopic = jurisdiction_ocdid ? `pipeline_run_status:${jurisdiction_ocdid}` : null;
+  const wsTopic = jurisdiction_ocdid ? pipelineRunStatusChannel(jurisdiction_ocdid) : null;
   const { data: pipelineRunStatus } = useWebSocket(wsTopic, {
     autoConnect: !!wsTopic,
   });

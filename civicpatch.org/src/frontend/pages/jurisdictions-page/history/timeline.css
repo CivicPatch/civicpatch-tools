@@ -10,6 +10,22 @@
   margin-bottom: 0.85rem;
 }
 
+/* A divided row, not a bordered card like .pr-row (jurisdiction-page.css) — this
+   list already sits inside the "In progress" panel's own border, so a card border
+   per row doubles up. Own class, not a .pr-row override: that class is shared with
+   the jurisdiction page's own awaiting-review widget, which keeps its card look. */
+.tl-awaiting-row {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.7rem 0.2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tl-awaiting-row:last-child {
+  border-bottom: none;
+}
+
 /* Entries */
 
 .tl-entry {
@@ -149,7 +165,7 @@
 
 .runs-pill--superseded,
 .runs-pill--cancelled {
-  background: var(--border-strong);
+  background: var(--text-muted-tint);
   color: var(--text-muted);
 }
 

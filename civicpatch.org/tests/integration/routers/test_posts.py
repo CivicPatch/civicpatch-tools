@@ -88,6 +88,12 @@ async def clean_sentinels():
             "VALUES (%s, 'zz', 'local')",
             (_OCDID,),
         )
+        # Real jurisdictions get their default organization at sync time (open_data.py); this
+        # raw insert bypasses that, so it has to do the pairing itself.
+        await cur.execute(
+            "INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, 'Government')",
+            (_OCDID,),
+        )
         await conn.commit()
     yield
     await _wipe()
