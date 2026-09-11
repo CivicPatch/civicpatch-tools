@@ -1,0 +1,24 @@
+@layer components {
+.username-page {
+  margin-inline: auto;
+  max-width: 28rem;
+  text-align: left;
+}
+
+.username-page__hint {
+  margin: 0 0 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.username-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.username-page__error {
+  color: var(--diff-removed, #c0392b);
+  font-size: 0.85rem;
+}
+}

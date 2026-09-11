@@ -366,3 +366,14 @@ export function adjacentPeer(
   const index = cards.findIndex((c) => c.personId === currentId);
   return index === -1 ? undefined : cards[index + direction];
 }
+
+// Whether a modal open on `personId` should show a prev/next affordance — shared by every
+// caller that opens one PersonCard at a time out of a list (review session, roster editor).
+export function navHintFor(
+  peers: PersonCard[],
+  personId: string,
+): { hasPrev: boolean; hasNext: boolean } | undefined {
+  if (peers.length <= 1) return undefined;
+  const index = peers.findIndex((c) => c.personId === personId);
+  return { hasPrev: index > 0, hasNext: index < peers.length - 1 };
+}

@@ -63,6 +63,13 @@ export function userSection(username: string): SectionNavItem[] {
   ];
 }
 
+export function jurisdictionSection(jurisdictionPath: string, historyHref: string): SectionNavItem[] {
+  return [
+    { label: "Details", href: `/${jurisdictionPath}` },
+    { label: "History", href: historyHref },
+  ];
+}
+
 export function adminSection(permissions: object): SectionNavItem[] {
   const items: SectionNavItem[] = [{ label: "Users", href: "/admin" }];
   if (perm(permissions, "can_edit_spend")) items.push({ label: "Spend", href: "/spend" });

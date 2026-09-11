@@ -169,9 +169,9 @@ nav.nav--logged-out .nav-brand {
   gap: 0.4rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--action-text);
-  background: var(--action);
-  border: none;
+  color: var(--accent-text);
+  background: var(--accent);
+  border: 1px solid var(--accent-border);
   border-radius: var(--radius);
   padding: 0.4rem 1.1rem;
   cursor: pointer;
@@ -181,7 +181,7 @@ nav.nav--logged-out .nav-brand {
 }
 .btn-primary:hover {
   opacity: 0.85;
-  color: var(--action-text);
+  color: var(--accent-text);
   text-decoration: none;
 }
 .btn-primary:active {

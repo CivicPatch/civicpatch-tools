@@ -100,12 +100,17 @@ def get_router(is_production: bool) -> APIRouter:
             raise HTTPException(status_code=401, detail="No user in verify response")
 
         identity = supabase_auth_service.to_supabase_user(auth_response.user)
-        try:
-            await database.upsert_user(
-                identity.provider, identity.id, identity.email, body.username
-            )
-        except UniqueViolation:
-            raise HTTPException(status_code=409, detail="That username is already taken")
+        existing_user = await database.get_user(identity.provider, identity.id)
+        if existing_user:
+            await database.touch_last_login(identity.provider, identity.id, identity.email)
+        else:
+            try:
+                await database.create_user(identity.provider, identity.id, identity.email)
+            except UniqueViolation:
+                # Lost a create-vs-create race (e.g. a double-submitted verify): the
+                # concurrent request already created the account, so this one just
+                # logs in rather than 500ing.
+                await database.touch_last_login(identity.provider, identity.id, identity.email)
 
         response = JSONResponse(content={"data": {"authenticated": True}})
         await session_service.create_session_cookies(response, identity, teams=[])

@@ -21,7 +21,6 @@ import routers.api.posts as api_posts_router
 import routers.api.pipeline_runs as api_pipeline_runs_router
 import routers.api.review_actions as api_review_actions_router
 import routers.api.review_cards as api_review_cards_router
-import routers.api.requests as api_requests_router
 import routers.api.review_sessions as api_review_sessions_router
 import routers.api.roles as api_roles_router
 import routers.api.scrape_settings as api_scrape_settings_router
@@ -249,12 +248,6 @@ app.include_router(
     prefix="/api/v1/change_logs",
     tags=["change_logs"],
     # Dependencies set within router — recent-publications is public
-)
-
-app.include_router(
-    api_requests_router.get_router(api_key_header),
-    prefix="/api/v1/requests",
-    tags=["requests"],
 )
 
 app.include_router(

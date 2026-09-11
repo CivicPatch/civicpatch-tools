@@ -64,7 +64,7 @@ def test_request_otp_rejects_missing_email(client):
 
 
 @pytest.mark.unit
-def test_verify_otp_happy_path_mints_session():
+def test_verify_otp_creates_a_new_user_when_none_exists():
     supabase_user = MagicMock()
     supabase_user.id = "user-uuid"
     supabase_user.email = "alice@example.com"
@@ -76,12 +76,14 @@ def test_verify_otp_happy_path_mints_session():
     tc = _client_with_supabase(supabase_mock)
 
     with (
-        patch("database.users.upsert_user", new_callable=AsyncMock, return_value="u") as mock_upsert,
+        patch("database.users.get_user", new_callable=AsyncMock, return_value=None),
+        patch("database.users.create_user", new_callable=AsyncMock, return_value="u") as mock_create,
+        patch("database.users.touch_last_login", new_callable=AsyncMock) as mock_touch,
         patch("lib.auth_session.create_session_cookies", new_callable=AsyncMock) as mock_cookies,
     ):
         response = tc.post(
             "/api/v1/auth/supabase/verify-otp",
-            json={"email": "alice@example.com", "code": "123456", "username": "apple-witch"},
+            json={"email": "alice@example.com", "code": "123456"},
         )
 
     assert response.status_code == 200
@@ -89,10 +91,72 @@ def test_verify_otp_happy_path_mints_session():
     supabase_mock.auth.verify_otp.assert_awaited_once_with(
         {"email": "alice@example.com", "token": "123456", "type": "email"}
     )
-    mock_upsert.assert_awaited_once_with(
-        "supabase", "user-uuid", "alice@example.com", "apple-witch"
-    )
+    mock_create.assert_awaited_once_with("supabase", "user-uuid", "alice@example.com")
+    mock_touch.assert_not_awaited()
     mock_cookies.assert_awaited_once()
+
+
+@pytest.mark.unit
+def test_verify_otp_recovers_from_a_lost_create_race():
+    # Two concurrent verify-otp calls for the same brand-new account can both see
+    # "no existing user" before either commits. The loser's create_user hits the
+    # (provider, provider_user_id) unique constraint — this must log in rather than 500.
+    supabase_user = MagicMock()
+    supabase_user.id = "user-uuid"
+    supabase_user.email = "alice@example.com"
+    supabase_user.user_metadata = {}
+    auth_response = MagicMock(user=supabase_user)
+
+    supabase_mock = MagicMock()
+    supabase_mock.auth.verify_otp = AsyncMock(return_value=auth_response)
+    tc = _client_with_supabase(supabase_mock)
+
+    with (
+        patch("database.users.get_user", new_callable=AsyncMock, return_value=None),
+        patch(
+            "database.users.create_user",
+            new_callable=AsyncMock,
+            side_effect=UniqueViolation("duplicate"),
+        ),
+        patch("database.users.touch_last_login", new_callable=AsyncMock) as mock_touch,
+        patch("lib.auth_session.create_session_cookies", new_callable=AsyncMock),
+    ):
+        response = tc.post(
+            "/api/v1/auth/supabase/verify-otp",
+            json={"email": "alice@example.com", "code": "123456"},
+        )
+
+    assert response.status_code == 200
+    assert response.json() == {"data": {"authenticated": True}}
+    mock_touch.assert_awaited_once_with("supabase", "user-uuid", "alice@example.com")
+
+
+@pytest.mark.unit
+def test_verify_otp_touches_last_login_for_an_existing_user():
+    supabase_user = MagicMock()
+    supabase_user.id = "user-uuid"
+    supabase_user.email = "alice@example.com"
+    supabase_user.user_metadata = {}
+    auth_response = MagicMock(user=supabase_user)
+
+    supabase_mock = MagicMock()
+    supabase_mock.auth.verify_otp = AsyncMock(return_value=auth_response)
+    tc = _client_with_supabase(supabase_mock)
+
+    with (
+        patch("database.users.get_user", new_callable=AsyncMock, return_value={"id": "u"}),
+        patch("database.users.create_user", new_callable=AsyncMock) as mock_create,
+        patch("database.users.touch_last_login", new_callable=AsyncMock) as mock_touch,
+        patch("lib.auth_session.create_session_cookies", new_callable=AsyncMock),
+    ):
+        response = tc.post(
+            "/api/v1/auth/supabase/verify-otp",
+            json={"email": "alice@example.com", "code": "123456"},
+        )
+
+    assert response.status_code == 200
+    mock_touch.assert_awaited_once_with("supabase", "user-uuid", "alice@example.com")
+    mock_create.assert_not_awaited()
 
 
 @pytest.mark.unit
@@ -103,7 +167,7 @@ def test_verify_otp_returns_401_when_supabase_raises():
 
     response = tc.post(
         "/api/v1/auth/supabase/verify-otp",
-        json={"email": "a@example.com", "code": "000000", "username": "apple-witch"},
+        json={"email": "a@example.com", "code": "000000"},
     )
 
     assert response.status_code == 401
@@ -118,7 +182,7 @@ def test_verify_otp_returns_401_when_no_user_in_response():
 
     response = tc.post(
         "/api/v1/auth/supabase/verify-otp",
-        json={"email": "a@example.com", "code": "123456", "username": "apple-witch"},
+        json={"email": "a@example.com", "code": "123456"},
     )
 
     assert response.status_code == 401
@@ -128,61 +192,11 @@ def test_verify_otp_returns_401_when_no_user_in_response():
 def test_verify_otp_rejects_missing_fields(client):
     r1 = client.post(
         "/api/v1/auth/supabase/verify-otp",
-        json={"email": "a@example.com", "username": "apple-witch"},
+        json={"code": "123456"},
     )
     r2 = client.post(
         "/api/v1/auth/supabase/verify-otp",
-        json={"code": "123456", "username": "apple-witch"},
-    )
-    r3 = client.post(
-        "/api/v1/auth/supabase/verify-otp",
-        json={"email": "a@example.com", "code": "123456"},
+        json={"email": "a@example.com"},
     )
     assert r1.status_code == 422
     assert r2.status_code == 422
-    assert r3.status_code == 422
-
-
-@pytest.mark.unit
-def test_verify_otp_rejects_empty_username():
-    response = _client_with_supabase(MagicMock()).post(
-        "/api/v1/auth/supabase/verify-otp",
-        json={"email": "alice@example.com", "code": "123456", "username": "   "},
-    )
-
-    assert response.status_code == 422
-
-
-@pytest.mark.unit
-def test_verify_otp_rejects_a_space_in_username():
-    response = _client_with_supabase(MagicMock()).post(
-        "/api/v1/auth/supabase/verify-otp",
-        json={"email": "alice@example.com", "code": "123456", "username": "apple witch"},
-    )
-
-    assert response.status_code == 422
-
-
-@pytest.mark.unit
-def test_verify_otp_returns_409_when_username_taken():
-    supabase_user = MagicMock()
-    supabase_user.id = "user-uuid"
-    supabase_user.email = "alice@example.com"
-    supabase_user.user_metadata = {}
-    auth_response = MagicMock(user=supabase_user)
-
-    supabase_mock = MagicMock()
-    supabase_mock.auth.verify_otp = AsyncMock(return_value=auth_response)
-    tc = _client_with_supabase(supabase_mock)
-
-    with patch(
-        "database.users.upsert_user",
-        new_callable=AsyncMock,
-        side_effect=UniqueViolation("duplicate"),
-    ):
-        response = tc.post(
-            "/api/v1/auth/supabase/verify-otp",
-            json={"email": "alice@example.com", "code": "123456", "username": "apple-witch"},
-        )
-
-    assert response.status_code == 409

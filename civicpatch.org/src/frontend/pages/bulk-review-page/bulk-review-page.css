@@ -1,8 +1,4 @@
 @layer components {
-.page-focal .stat-cards {
-    margin-bottom: 0;
-}
-
 /* ── Cards ── */
 
 .bulk-review__pager-top {

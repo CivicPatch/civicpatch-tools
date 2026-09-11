@@ -1,12 +1,12 @@
 import { html, nothing } from "lit-html";
-import { component, useState, useEffect, useCallback } from "haunted";
+import { component, useState, useCallback } from "haunted";
 import "../../components/review-overview/review-overview.js";
 import "../../components/review-preview/review-preview.js";
 import "../../components/review/review-modal.js";
 import "../../components/review-sidebar/review-sidebar.js";
 import { checkedCount } from "../../components/review-sidebar/sidebar-model.js";
 import { focusOnMount } from "../../utils/focus-on-mount.js";
-import { altArrowDirection, isTyping } from "../../utils/keyboard.js";
+import { useAltArrowPeerNav } from "../../hooks/use-alt-arrow-peer-nav.js";
 import "../../components/source-content/source-content-debug-modal.js";
 import { type Progress } from "./review-session-controls.js";
 import "./review-session-controls.js";
@@ -25,11 +25,11 @@ import {
 import { useFrozenFields } from "./use-frozen-fields.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
 import {
-  adjacentPeer,
   blockingErrors,
   buildPersonCards,
   cardFields,
   duplicateIdsFor,
+  navHintFor,
   needsReview,
   proposalsByPersonId,
   type PersonCard,
@@ -178,20 +178,10 @@ function ReviewSession(host: ReviewSessionHost) {
     setOpenPersonId(opening ? personId : null);
     setFocusFieldKey(opening ? fieldKey : null);
   };
-  useEffect(() => {
-    if (!openPersonId) return;
-    const onKey = (e: KeyboardEvent) => {
-      const direction = altArrowDirection(e);
-      if (!direction || isTyping(document.activeElement)) return;
-      const nextCard = adjacentPeer(openPeers, openPersonId, direction);
-      if (!nextCard) return;
-      e.preventDefault();
-      setOpenPersonId(nextCard.personId);
-      setFocusFieldKey(null);
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [openPersonId, openPeers]);
+  useAltArrowPeerNav(openPersonId, openPeers, (next) => {
+    setOpenPersonId(next.personId);
+    setFocusFieldKey(null);
+  });
   const focusOnOpen = useCallback(focusOnMount, [focusFieldKey]);
   const editorFor = (card: (typeof cards)[number]) => {
     const base = personEditorPropsFor(card, {
@@ -206,13 +196,9 @@ function ReviewSession(host: ReviewSessionHost) {
       },
     });
     const peers = card.personId === openPersonId ? openPeers : peersOf(card, cards);
-    const peerIndex = peers.findIndex((c) => c.personId === card.personId);
     return {
       ...base,
-      navHint:
-        peers.length > 1
-          ? { hasPrev: peerIndex > 0, hasNext: peerIndex < peers.length - 1 }
-          : undefined,
+      navHint: navHintFor(peers, card.personId),
       focusField:
         card.personId === openPersonId && focusFieldKey
           ? { key: focusFieldKey, attach: focusOnOpen }

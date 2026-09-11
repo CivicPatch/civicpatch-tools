@@ -5,13 +5,15 @@ export interface RecentPublication {
   jurisdiction_ocdid: string;
   jurisdiction_name: string | null;
   state: string | null;
-  author_name: string;
-  author_role: string;
   commit_url: string | null;
   kind: string | null;
   created_at: string;
   review_count: number;
 }
+
+// 20, not the default 10 — closer (doesn't have to be exact) to how many rows
+// coverage-by-state renders beside it, so the two panels read as roughly the same size.
+const RECENT_PUBLICATIONS_LIMIT = 20;
 
 export function useRecentPublications() {
   const [recentPublications, setRecentPublications] = useState<
@@ -19,7 +21,7 @@ export function useRecentPublications() {
   >([]);
 
   useEffect(() => {
-    fetchRecentPublications()
+    fetchRecentPublications(RECENT_PUBLICATIONS_LIMIT)
       .then((d: any) => setRecentPublications(d.data ?? []))
       .catch(() => {});
   }, []);

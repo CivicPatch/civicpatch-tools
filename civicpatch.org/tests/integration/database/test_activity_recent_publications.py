@@ -91,8 +91,9 @@ async def test_collapsed_row_counts_every_review_and_keeps_the_latest(seeded):
         if r["jurisdiction_ocdid"] == _JURISDICTION_OCDID
         and r["created_at"].date() == _DAY_ONE_LATE.date()
     )
+    # "Keeps the latest" is proven by created_at alone now — the public feed dropped
+    # author_name entirely (schemas.activity.PublicPublication no longer carries it).
     assert day_one["review_count"] == 2
-    assert day_one["author_name"] == _LATE_EMAIL.replace("@", "-")
     assert day_one["created_at"] == _DAY_ONE_LATE
 
 

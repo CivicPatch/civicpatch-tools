@@ -20,6 +20,7 @@ import {
   parseMunicipalitiesParams,
   buildMunicipalitiesSearch,
 } from "./url-params.js";
+import "../../components/panel/panel.css";
 import "./municipalities-page.css";
 
 // Large enough that even the biggest tracked state (MI, ~1,773 municipalities)
@@ -130,50 +131,52 @@ function MunicipalitiesPage({ state = "" }: MunicipalitiesPageProps) {
 
   return html`
     <main class="municipalities-page page-content">
-      <div class="municipalities-page__title-row">
-        <div>
-          <h1 class="municipalities-page__h1">${stateLabel} municipalities</h1>
-        </div>
+      <div class="page-focal">
+        <h1 class="page-focal__title">${stateLabel} municipalities</h1>
         ${cutoff
-          ? html`<p class="municipalities-page__cutoff">
+          ? html`<p class="page-focal__end municipalities-page__cutoff">
               Fresh = scraped after ${dateStringToFriendly(cutoff)}
             </p>`
           : ""}
       </div>
-      <hr class="municipalities-page__hairline" />
 
       ${municipalities === null
         ? html`<p>Loading…</p>`
         : html`
-            ${renderControls({
-              query,
-              onQueryChange: handleQueryChange,
-              status,
-              onStatusChange: handleStatusChange,
-              statusPillCounts,
-              needsReviewOnly,
-              onNeedsReviewToggle: handleNeedsReviewToggle,
-              needsReviewCount,
-            })}
+            <section class="panel municipalities-page__panel">
+              <div class="panel__cap">
+                <b>municipalities</b>
+                <span class="panel__cap-right">
+                  ${isUnfiltered
+                    ? `${sorted.length}`
+                    : `${sorted.length} of ${all.length}`}
+                </span>
+              </div>
 
-            <p class="municipalities-page__count">
-              ${isUnfiltered
-                ? `${sorted.length} municipalities`
-                : `Showing ${sorted.length} of ${all.length} municipalities`}
-            </p>
+              ${renderControls({
+                query,
+                onQueryChange: handleQueryChange,
+                status,
+                onStatusChange: handleStatusChange,
+                statusPillCounts,
+                needsReviewOnly,
+                onNeedsReviewToggle: handleNeedsReviewToggle,
+                needsReviewCount,
+              })}
 
-            ${renderMunicipalitiesTable({
-              municipalities: pageInfo.pageItems,
-              onClearFilters: handleClearFilters,
-              sortKey,
-              sortDir,
-              onSortChange: handleSortChange,
-            })}
-            ${renderPaginationControls({
-              page,
-              pageInfo,
-              onPageChange: setPage,
-            })}
+              ${renderMunicipalitiesTable({
+                municipalities: pageInfo.pageItems,
+                onClearFilters: handleClearFilters,
+                sortKey,
+                sortDir,
+                onSortChange: handleSortChange,
+              })}
+              ${renderPaginationControls({
+                page,
+                pageInfo,
+                onPageChange: setPage,
+              })}
+            </section>
           `}
     </main>
   `;

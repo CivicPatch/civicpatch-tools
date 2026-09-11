@@ -31,7 +31,7 @@ async def get_activity_for_roles(
             f"""
             SELECT a.id::text, a.type, a.jurisdiction_ocdid, a.changeset_id,
                    a.changes, a.created_at,
-                   u.username AS author_name, u.role AS author_role,
+                   u.username AS author_name, u.role AS author_role, a.user_id::text,
                    COALESCE(j.data->>'name', a.jurisdiction_ocdid) AS jurisdiction_name,
                    changesets.change_url AS pull_request_url
             FROM activity a
@@ -55,8 +55,9 @@ async def get_activity_for_roles(
             "created_at": r[5],
             "author_name": r[6],
             "author_role": r[7],
-            "jurisdiction_name": r[8],
-            "pull_request_url": r[9],
+            "is_system": r[8] == SYSTEM_USER_ID,
+            "jurisdiction_name": r[9],
+            "pull_request_url": r[10],
             "summary": summarize_activity(r[1], r[4]),
         }
         for r in rows
@@ -82,7 +83,6 @@ async def get_recent_publications(limit: int) -> list[dict]:
             WITH publish_events AS (
                 SELECT a.jurisdiction_ocdid,
                        a.created_at,
-                       a.user_id,
                        changesets.change_url AS commit_url,
                        changesets.kind,
                        COUNT(*) OVER (
@@ -94,21 +94,18 @@ async def get_recent_publications(limit: int) -> list[dict]:
             ),
             latest_per_group AS (
                 SELECT DISTINCT ON (jurisdiction_ocdid, date_trunc('day', created_at))
-                       jurisdiction_ocdid, created_at, user_id, commit_url, kind, review_count
+                       jurisdiction_ocdid, created_at, commit_url, kind, review_count
                 FROM publish_events
                 ORDER BY jurisdiction_ocdid, date_trunc('day', created_at), created_at DESC
             )
             SELECT g.jurisdiction_ocdid,
                    COALESCE(j.data->>'name', g.jurisdiction_ocdid) AS jurisdiction_name,
                    j.state,
-                   u.username AS author_name,
-                   u.role AS author_role,
                    g.commit_url,
                    g.kind,
                    g.created_at,
                    g.review_count
             FROM latest_per_group g
-            JOIN users u ON u.id = g.user_id
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = g.jurisdiction_ocdid
             ORDER BY g.created_at DESC
             LIMIT %s
@@ -121,12 +118,10 @@ async def get_recent_publications(limit: int) -> list[dict]:
             "jurisdiction_ocdid": r[0],
             "jurisdiction_name": r[1],
             "state": r[2],
-            "author_name": r[3],
-            "author_role": r[4],
-            "commit_url": r[5],
-            "kind": r[6],
-            "created_at": r[7],
-            "review_count": r[8],
+            "commit_url": r[3],
+            "kind": r[4],
+            "created_at": r[5],
+            "review_count": r[6],
         }
         for r in rows
     ]

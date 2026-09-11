@@ -119,8 +119,14 @@
   opacity: 0.5;
 }
 
-/* The current (non-link) crumb reads as full-strength text; the ancestors it
-   trails are plain links and pick up the default link color on their own. */
+/* This theme's --action equals --text-default, so a plain link and the
+   current crumb are the same color — the underline is the only thing that
+   tells them apart. elements.css's `nav li a` reset strips it by default
+   (this breadcrumb sits inside a <nav><ol><li>), so put it back explicitly. */
+.blog-breadcrumb a {
+  text-decoration: underline;
+}
+
 .blog-breadcrumb li[aria-current] {
   color: var(--text-default);
 }
@@ -233,8 +239,12 @@
   padding: 0;
 }
 
+/* elements.css's `nav li` rule adds nav-bar padding (--nav-element-pad-*) to
+   every <li> in any <nav> — reset it here so only the link's own padding below
+   controls row spacing. */
 .blog-post__toc nav li {
   margin: 0;
+  padding: 0;
 }
 
 .blog-post__toc nav a {
@@ -255,6 +265,13 @@
 .blog-post__toc nav a:hover {
   color: var(--text-default);
   background: var(--surface-stripe);
+}
+
+/* Toggled by blog-toc-scrollspy.ts as the reader scrolls past each heading.
+   Matches .blog-post__toc nav a's own specificity so it actually wins. */
+.blog-post__toc nav a.blog-post__toc-link--active {
+  color: var(--text-default);
+  background: color-mix(in srgb, var(--action) 8%, var(--surface-stripe));
 }
 
 @media (max-width: 900px) {

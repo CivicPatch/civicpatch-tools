@@ -13,7 +13,9 @@ import { html, nothing } from "lit-html";
 import "../jurisdiction-page.css";
 import "./timeline.css";
 import "./timeline-entry.ts";
-import { IN_PROGRESS_ANCHOR } from "./history-routes.js";
+import { IN_PROGRESS_ANCHOR, historyUrl } from "./history-routes.js";
+import { SectionNav, jurisdictionSection } from "../../../components/section-nav/index.js";
+import "../../../components/panel/panel.css";
 import type { InFlightEntry } from "../awaiting-review.js";
 import "./scrape-in-progress.ts";
 import { Pagination } from "../../../components/pagination/index.js";
@@ -23,7 +25,7 @@ import {
   fetchJurisdictionInFlight,
 } from "../../../api.js";
 import { dateStringToFriendly } from "../../../utils/date-utils.js";
-import { jurisdictionOcdidToState } from "../../../components/ocdid-utils.js";
+import { jurisdictionOcdidToState, jurisdictionOcdidToPath } from "../../../components/ocdid-utils.js";
 import { LOGIN_PATH, reviewSessionUrl } from "../../review-routes.js";
 import type { TimelineEntry } from "./timeline-entry.ts";
 
@@ -137,73 +139,80 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
   const running = inFlight.filter((entry) => entry.is_running);
   const awaiting = inFlight.filter((entry) => entry.awaiting_review);
 
+  const jurisdictionPath = jurisdictionOcdidToPath(jurisdictionOcdid);
+
   return html`
     <main class="jurisdiction-page page-content">
-      <div class="jurisdiction-page__title-row">
-        <div class="jurisdiction-page__heading">
-          <h1 class="jurisdiction-page__h1">History</h1>
-          <span class="jurisdiction-page__published">
-            ${jurisdictionName}, ${totalChangesets}
-            ${totalChangesets === 1 ? "changeset" : "changesets"}
-          </span>
-        </div>
+      <div class="page-focal">
+        <h1 class="page-focal__title">History</h1>
+        <span class="page-focal__end jurisdiction-page__published">
+          ${jurisdictionName}, ${totalChangesets}
+          ${totalChangesets === 1 ? "changeset" : "changesets"}
+        </span>
       </div>
 
-      <hr class="jurisdiction-page__hairline" />
-
-      ${running.length || awaiting.length
-        ? html`
-            <section class="jurisdiction-section" id="${IN_PROGRESS_ANCHOR}">
-              <h2 class="jurisdiction-section__title">In progress</h2>
-              ${running.map(
-                (entry) => html`<civ-scrape-in-progress
-                  .scrape=${entry}
-                  .canCancel=${permissions.can_cancel_pipeline_run}
-                  .canViewTemporalWorkflowState=${permissions.can_view_temporal_workflow_state}
-                  .onCancel=${handleCancel}
-                  .cancelRequested=${cancelRequested.includes(entry.id)}
-                  .temporalUrl=${null}
-                ></civ-scrape-in-progress>`,
-              )}
-              <div class="pr-list">
-                ${awaiting.map((entry) =>
-                  renderAwaiting(entry, jurisdictionOcdid, isSignedIn),
-                )}
-              </div>
-            </section>
-          `
-        : nothing}
-
-      <section class="jurisdiction-section">
-        <h2 class="jurisdiction-section__title">Past</h2>
-        ${loadFailed
-          ? html`<p class="tl-empty">That history could not be loaded.</p>`
-          : entries.length
+      <div class="sectioned">
+        ${SectionNav(
+          "jurisdiction",
+          jurisdictionSection(jurisdictionPath, historyUrl(jurisdictionPath)),
+          historyUrl(jurisdictionPath),
+        )}
+        <div class="secbody">
+          ${running.length || awaiting.length
             ? html`
-                ${entries.map(
-                  (entry) => html`<civ-timeline-entry
-                    .entry=${entry}
-                    .isAdmin=${isAdmin}
-                    .isSignedIn=${isSignedIn}
-                    .jurisdictionOcdid=${jurisdictionOcdid}
-                  ></civ-timeline-entry>`,
-                )}
-                ${totalPages > 1
-                  ? Pagination({
-                      page,
-                      totalPages,
-                      onPrevious: () => setPage(Math.max(1, page - 1)),
-                      onNext: () => setPage(Math.min(totalPages, page + 1)),
-                      // Fixed page size: `null` is what hides the per-page selector.
-                      perPage: PER_PAGE,
-                      onPerPageChange: null,
-                    })
-                  : nothing}
+                <section class="panel" id="${IN_PROGRESS_ANCHOR}">
+                  <div class="panel__cap"><b>In progress</b></div>
+                  ${running.map(
+                    (entry) => html`<civ-scrape-in-progress
+                      .scrape=${entry}
+                      .canCancel=${permissions.can_cancel_pipeline_run}
+                      .canViewTemporalWorkflowState=${permissions.can_view_temporal_workflow_state}
+                      .onCancel=${handleCancel}
+                      .cancelRequested=${cancelRequested.includes(entry.id)}
+                      .temporalUrl=${null}
+                    ></civ-scrape-in-progress>`,
+                  )}
+                  <div class="pr-list">
+                    ${awaiting.map((entry) =>
+                      renderAwaiting(entry, jurisdictionOcdid, isSignedIn),
+                    )}
+                  </div>
+                </section>
               `
-            : html`<p class="tl-empty">
-                Nothing has been scraped, imported or edited here yet.
-              </p>`}
-      </section>
+            : nothing}
+
+          <section class="panel">
+            <div class="panel__cap"><b>Past</b></div>
+            ${loadFailed
+              ? html`<p class="tl-empty">That history could not be loaded.</p>`
+              : entries.length
+                ? html`
+                    ${entries.map(
+                      (entry) => html`<civ-timeline-entry
+                        .entry=${entry}
+                        .isAdmin=${isAdmin}
+                        .isSignedIn=${isSignedIn}
+                        .jurisdictionOcdid=${jurisdictionOcdid}
+                      ></civ-timeline-entry>`,
+                    )}
+                    ${totalPages > 1
+                      ? Pagination({
+                          page,
+                          totalPages,
+                          onPrevious: () => setPage(Math.max(1, page - 1)),
+                          onNext: () => setPage(Math.min(totalPages, page + 1)),
+                          // Fixed page size: `null` is what hides the per-page selector.
+                          perPage: PER_PAGE,
+                          onPerPageChange: null,
+                        })
+                      : nothing}
+                  `
+                : html`<p class="tl-empty">
+                    Nothing has been scraped, imported or edited here yet.
+                  </p>`}
+          </section>
+        </div>
+      </div>
     </main>
   `;
 }

@@ -7,7 +7,9 @@ import { usePeople } from "../../hooks/usePeople.js";
 import { buildIdentitiesMap } from "../../utils/people.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 import { historyUrl } from "./history/history-routes.js";
+import { SectionNav, jurisdictionSection } from "../../components/section-nav/index.js";
 
+import "../../components/panel/panel.css";
 import "./jurisdiction-page.css";
 import "./jurisdiction-details.js";
 import "./scrape-modal/scrape-modal.js";
@@ -70,29 +72,20 @@ function renderDetailsSection(
   const data = jurisdictionData?.data;
 
   return html`
-    <section class="jurisdiction-section">
-      <div class="jurisdiction-section__head">
-        <h2 class="jurisdiction-section__title">Jurisdiction details</h2>
+    <section class="panel">
+      <div class="panel__cap">
+        <b>Jurisdiction details</b>
       </div>
       ${blockedReason
         ? html`<p class="jurisdiction-section__blocked">
             <i class="fa-solid fa-lock" aria-hidden="true"></i> ${blockedReason}
           </p>`
         : nothing}
-      <div class="jurisdiction-details">
-        <civ-jurisdiction-details
-          .data=${data}
-          .canEdit=${canEdit}
-          .onSave=${onSave}
-        ></civ-jurisdiction-details>
-        <civ-map
-          canmove="false"
-          .latlng=${jurisdictionData?.geo_center
-            ? { lat: jurisdictionData.geo_center.lat, lng: jurisdictionData.geo_center.lng }
-            : null}
-          .height=${"9rem"}
-        ></civ-map>
-      </div>
+      <civ-jurisdiction-details
+        .data=${data}
+        .canEdit=${canEdit}
+        .onSave=${onSave}
+      ></civ-jurisdiction-details>
     </section>
   `;
 }
@@ -198,31 +191,45 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
       ${renderDataFlag(jurisdictionData?.data)}
       ${scrapeError ? html`<p style="color: var(--diff-removed);">${scrapeError}</p>` : nothing}
 
-      ${renderPendingReviews(awaitingReview, jurisdiction_ocdid, isSignedIn)}
+      <div class="sectioned">
+        ${SectionNav(
+          "jurisdiction",
+          jurisdictionSection(jurisdictionOcdidToPath(jurisdiction_ocdid), historyHref),
+          `/${jurisdictionOcdidToPath(jurisdiction_ocdid)}`,
+        )}
+        <div class="secbody">
+          <div class="jurisdiction-page__cols">
+            <div>
+              ${renderDetailsSection(
+                jurisdictionData,
+                !!permissions.can_edit_jurisdiction_data && !jurisdictionBlockers.length,
+                handleJurisdictionSave,
+                jurisdictionEditBlockedReason(jurisdictionBlockers),
+              )}
+            </div>
+            <div class="jurisdiction-page__col-main">
+              ${renderPendingReviews(awaitingReview, jurisdiction_ocdid, isSignedIn)}
 
-      <civ-roster-editor
-        .people=${people}
-        .jurisdictionOcdid=${jurisdiction_ocdid}
-        .canEdit=${!!permissions.can_edit_jurisdiction_data && !peopleBlockers.length}
-        .isLoading=${peopleLoading}
-        .blockedReason=${editingBlockedReason(peopleBlockers)}
-        .onPublished=${() => window.location.reload()}
-      ></civ-roster-editor>
+              <civ-roster-editor
+                .people=${people}
+                .jurisdictionOcdid=${jurisdiction_ocdid}
+                .canEdit=${!!permissions.can_edit_jurisdiction_data && !peopleBlockers.length}
+                .isLoading=${peopleLoading}
+                .blockedReason=${editingBlockedReason(peopleBlockers)}
+                .onPublished=${() => window.location.reload()}
+              ></civ-roster-editor>
 
-      <section class="jurisdiction-section">
-        <h2>Posts</h2>
-        <civ-posts-list
-          .jurisdictionOcdid=${jurisdiction_ocdid}
-          .canEdit=${!!permissions.can_edit_jurisdiction_data && !peopleBlockers.length}
-        ></civ-posts-list>
-      </section>
-
-      ${renderDetailsSection(
-        jurisdictionData,
-        !!permissions.can_edit_jurisdiction_data && !jurisdictionBlockers.length,
-        handleJurisdictionSave,
-        jurisdictionEditBlockedReason(jurisdictionBlockers),
-      )}
+              <section class="panel">
+                <div class="panel__cap"><b>Posts</b></div>
+                <civ-posts-list
+                  .jurisdictionOcdid=${jurisdiction_ocdid}
+                  .canEdit=${!!permissions.can_edit_jurisdiction_data && !peopleBlockers.length}
+                ></civ-posts-list>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
 
       ${jurisdictionData
         ? html`<civ-scrape-modal

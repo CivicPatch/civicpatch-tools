@@ -5,6 +5,7 @@
 // rather than leaving the disabled roster unexplained.
 
 import { html, nothing } from "lit-html";
+import "../../components/panel/panel.css";
 import { dateStringToFriendly } from "../../utils/date-utils.js";
 import { jurisdictionOcdidToState } from "../../components/ocdid-utils.js";
 import { LOGIN_PATH, reviewSessionUrl } from "../review-routes.js";
@@ -148,10 +149,10 @@ export function renderPendingReviews(entries: InFlightEntry[], ocdid: string, is
   if (!entries.length) return nothing;
 
   return html`
-    <section class="jurisdiction-section">
-      <div class="jurisdiction-section__head">
-        <h2 class="jurisdiction-section__title">Awaiting review</h2>
-        <span class="jurisdiction-section__meta">${entries.length} pending</span>
+    <section class="panel">
+      <div class="panel__cap">
+        <b>Awaiting review</b>
+        <span class="panel__cap-right">${entries.length} pending</span>
       </div>
       <div class="pr-list">
         ${entries.map((entry) => renderRow(entry, ocdid, isSignedIn))}

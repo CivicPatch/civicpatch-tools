@@ -28,7 +28,6 @@ async function errorDetail(response: Response, fallback: string): Promise<string
 function EmailLogin(): TemplateResult {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
-  const [username, setUsername] = useState("");
   const [step, setStep] = useState<Step>("enter-email");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -55,13 +54,12 @@ function EmailLogin(): TemplateResult {
   async function verifyCode(event: Event) {
     event.preventDefault();
     setErrorMessage(null);
-    if (!code || !username) return;
+    if (!code) return;
     setBusy(true);
     try {
       const response = await postJson("/api/v1/auth/supabase/verify-otp", {
         email,
         code,
-        username,
       });
       if (!response.ok) {
         setErrorMessage(
@@ -82,7 +80,6 @@ function EmailLogin(): TemplateResult {
     setStep("enter-email");
     setEmail("");
     setCode("");
-    setUsername("");
     setErrorMessage(null);
   }
 
@@ -126,20 +123,6 @@ function EmailLogin(): TemplateResult {
               .value=${code}
               @input=${(e: InputEvent) =>
                 setCode((e.target as HTMLInputElement).value)}
-            />
-            <label for="email-login-username">Username</label>
-            <p class="email-login__hint">
-              Only used if this is your first time signing in.
-            </p>
-            <input
-              id="email-login-username"
-              type="text"
-              autocomplete="username"
-              maxlength="50"
-              required
-              .value=${username}
-              @input=${(e: InputEvent) =>
-                setUsername((e.target as HTMLInputElement).value)}
             />
           `
         : ""}

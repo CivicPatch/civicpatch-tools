@@ -137,7 +137,6 @@ class RequestOtpRequest(BaseModel):
 class VerifyOtpRequest(BaseModel):
     email: str
     code: str
-    username: Username
 
 
 class InFlightEntryType(str, Enum):

@@ -163,38 +163,36 @@
   margin: 0;
 }
 
-/* ── Sections ─────────────────────────────────────────────────────────────── */
+/* ── Two-column layout ────────────────────────────────────────────────────── */
+/* Narrow side column for the record's own facts, wide main column for what
+   changes over time (awaiting review, roster, posts) — same split as the
+   demo's jz-cols, minus the map it shows there (this page has none). */
 
-.jurisdiction-section {
-  margin-bottom: 2rem;
+.jurisdiction-page__cols {
+  display: grid;
+  grid-template-columns: 24rem minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
 }
 
-.jurisdiction-section__head {
+@media (max-width: 60rem) {
+  .jurisdiction-page__cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.jurisdiction-page__col-main {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 0.75rem;
+  flex-direction: column;
+  gap: 2rem;
+  min-width: 0;
 }
 
-.jurisdiction-section__title {
-  font-size: var(--font-size-base);
-  font-weight: 700;
-  color: var(--text-default);
-  margin: 0;
-}
+/* ── Sections ─────────────────────────────────────────────────────────────── */
 
 .jurisdiction-section__meta {
   font-size: var(--font-size-sm);
   color: var(--text-muted);
-}
-
-/* The count belongs to the heading, not the button row — sitting among the
-   buttons it read as a fourth control. */
-.jurisdiction-section__heading {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
 }
 
 .jurisdiction-section__actions {
@@ -318,21 +316,6 @@
   margin: 0.5rem 0 0 0;
 }
 
-/* ── Details layout ───────────────────────────────────────────────────────── */
-
-.jurisdiction-details {
-  display: grid;
-  grid-template-columns: 1fr 18rem;
-  gap: 1.5rem;
-  align-items: start;
-}
-
-@media (max-width: 60rem) {
-  .jurisdiction-details {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* ── Buttons ──────────────────────────────────────────────────────────────── */
 
 /* One height and one type size for every button on the page. Quiet and primary
@@ -352,6 +335,7 @@
   width: auto;
   margin: 0;
   white-space: nowrap;
+  text-decoration: none;
 }
 
 .btn-quiet {
@@ -367,17 +351,9 @@
   background: transparent;
 }
 
-.btn-primary {
-  border: 1px solid var(--action);
-  background: var(--action);
-  color: var(--action-text);
-  font-weight: 600;
-}
-
-.btn-primary:hover {
-  background: var(--action-hover);
-}
-
+/* Color comes from the shared .btn-primary (navbar.css) — this page only keeps it the
+   same height/padding as .btn-quiet, so a row mixing the two (Add, Discard, Publish)
+   reads as one row of controls, not three sizes of thing. */
 .btn-primary:disabled {
   opacity: 0.55;
   cursor: not-allowed;

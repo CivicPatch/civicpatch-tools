@@ -5,18 +5,14 @@ import { useAuth } from "../../hooks/useAuth.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { useReviewActions } from "../../hooks/use-review-actions.js";
-import { config } from "../../assets/config.js";
 import {
   fetchPullRequestsWithData,
 } from "../../api.js";
 import "../../components/review-log/index.js";
-import "./summary/index.js";
 import "./review-card-list/index.js";
 import { SectionNav, manageSection } from "../../components/section-nav/index.js";
 import "../../components/select-state/select-state.js";
 import { useSummary } from "../../hooks/useSummary.js";
-
-const API_URL = config.apiUrl;
 
 type PrItem = {
   changeset_id: string;
@@ -75,7 +71,6 @@ function BulkReviewPage() {
     setStateCode(code);
     setStateInUrl(code);
   };
-  const [summary, setSummary] = useState<any>(null);
   // Global, not scoped to this page's own state filter — the sidebar badge is a
   // constant "how much is waiting overall" figure, the same wherever it appears.
   const globalSummary = useSummary(true, "");
@@ -104,7 +99,6 @@ function BulkReviewPage() {
     fetchPullRequestsWithData(stateCode, page, perPage, viewMode)
       .then((result: any) => {
         setPullRequests(result.data || []);
-        setSummary(result.summary || null);
         setTotalPages(result.total_pages || 1);
       })
       .catch((err: any) => setError(err.message))
@@ -147,12 +141,6 @@ function BulkReviewPage() {
     <main class="bulk-review page-content">
       <div class="page-focal">
         <h1 class="page-focal__title">Bulk review</h1>
-        ${summary
-          ? html`<bulk-review-summary .summary=${summary}></bulk-review-summary>`
-          : null}
-        ${permissions.can_view_queue_page_errors
-          ? html`<a class="page-focal__end btn btn-sm" href="${API_URL}/api/v1/requests/people-export.csv${stateCode ? `?state=${stateCode}` : ""}" download>Export people</a>`
-          : null}
       </div>
 
       <div class="sectioned">

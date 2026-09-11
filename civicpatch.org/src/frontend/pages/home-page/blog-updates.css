@@ -2,20 +2,58 @@
 .blog-updates__list {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
 }
 
+/* Same card/stretched-link treatment as .blog-list__item (css/blog.css) — matched
+   deliberately, not shared: that file is linked only on the blog pages, and this
+   widget's own header comment already says the homepage's preview belongs here,
+   not there. */
 .blog-updates__row {
+  /* Reset the base article card styles (elements.css) — same reset .blog-list__item
+     applies for the same reason: this row wants the list-row look, not the card one. */
+  margin-bottom: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  position: relative;
   display: flex;
   flex-direction: column;
+  /* Padding-top only, not both sides — symmetric padding on every row doubles the
+     gap at each boundary (this row's bottom padding plus the next row's top). One
+     side plus the border is the whole gap. */
+  padding-top: 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
+.blog-updates__row:first-child {
+  padding-top: 0;
+}
+
+.blog-updates__row:last-child {
+  border-bottom: none;
+}
+
+.blog-updates__row:hover {
+  /* --accent (the app's actual blue), not --action (a near-black text/link color in
+     the light theme) — --action here would tint the row grey, not blue. */
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.blog-updates__row:has(.blog-updates__title:focus-visible) {
+  outline: var(--focus-ring-width) solid var(--action-focus);
+  outline-offset: 2px;
+}
+
+/* Same size/weight as .blog-list__title (css/blog.css): larger, not heavier — it
+   inherits the ambient --font-weight (400) rather than setting its own, same as the
+   real blog page's title does. */
 .blog-updates__title {
   /* Flex items stretch to fill the cross axis by default — without this, the anchor's
      hit box covers the row's full width, not just the visible title text. */
   align-self: flex-start;
-  font-weight: 600;
+  font-size: var(--font-size-lg);
   color: var(--text-default);
+  text-decoration: none;
 }
 
 /* The global link rule (elements.css) can't reach this — it sets `color`, and this
@@ -26,8 +64,28 @@
   text-decoration: underline;
 }
 
+.blog-updates__title:focus-visible {
+  outline: none;
+}
+
+/* Stretched-link pattern (see .review-row__open, .blog-list__title) — the title
+   stays the only real link in the row, its hit area just grows to cover the row. */
+.blog-updates__title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
 .blog-updates__meta {
   color: var(--text-muted);
   font-size: var(--font-size-sm);
+  font-family: var(--font-mono);
+  margin-top: 0.3rem;
+}
+
+.blog-updates__desc {
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  margin: 0.4rem 0 0;
 }
 }

@@ -108,28 +108,23 @@ export function renderJurisdictionHeader(props: JurisdictionHeaderProps) {
       </div>
 
       <div class="jurisdiction-page__actions">
-        <a href=${historyHref} style="font-size: var(--font-size-sm); white-space: nowrap;">
-          <i class="fa-solid fa-clock-rotate-left"></i> History
-        </a>
         ${name && ocdid
           ? html`<a
+              class="btn-quiet"
               href=${issueUrl(name, ocdid)}
               target="_blank"
               rel="noopener noreferrer"
-              style="font-size: var(--font-size-sm); white-space: nowrap;"
-            >
-              <i class="fa-solid fa-flag"></i> Report an issue
-            </a>`
+              ><i class="fa-solid fa-flag"></i><span>Report an issue</span></a
+            >`
           : nothing}
         ${canStartScrape
           ? html`<button
               class="btn-primary"
               ?disabled=${isRunInProgress || isScrapeBlocked}
               @click=${onScrapeClick}
-            >
-              <i class="fa-solid fa-rotate ${isRunInProgress ? "fa-spin" : ""}"></i>
-              ${isRunInProgress ? "Scraping…" : "Re-scrape"}
-            </button>`
+              ><i class="fa-solid fa-rotate ${isRunInProgress ? "fa-spin" : ""}"></i
+              ><span>${isRunInProgress ? "Scraping…" : "Re-scrape"}</span></button
+            >`
           : nothing}
       </div>
     </div>

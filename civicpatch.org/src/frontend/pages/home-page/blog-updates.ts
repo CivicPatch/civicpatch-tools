@@ -23,12 +23,17 @@ export function renderBlogUpdates({ updates }: { updates: BlogUpdate[] }) {
       <div class="blog-updates__list">
         ${updates.map(
           (post) => html`
-            <div class="blog-updates__row">
+            <article class="blog-updates__row">
               <a class="blog-updates__title" href="/blog/${post.slug}"
                 >${post.title}</a
               >
-              <span class="blog-updates__meta">${formatDate(post.date)}</span>
-            </div>
+              <div class="blog-updates__meta">
+                ${formatDate(post.date)} by ${post.author}
+              </div>
+              ${post.description
+                ? html`<p class="blog-updates__desc">${post.description}</p>`
+                : ""}
+            </article>
           `,
         )}
       </div>

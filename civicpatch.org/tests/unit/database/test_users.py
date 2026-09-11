@@ -2,7 +2,8 @@ import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
 from database.users import (
-    upsert_user,
+    create_user,
+    touch_last_login,
     set_user_role,
     list_users,
     get_user_by_id,
@@ -42,25 +43,40 @@ def _make_conn_pool():
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_upsert_user_returns_uuid_string():
+async def test_create_user_returns_uuid_string():
     cur = _make_cursor(returning_row=("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",))
     with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await upsert_user("supabase", "supabase-uuid", "alice@example.com", "apple-witch")
+        result = await create_user("supabase", "supabase-uuid", "alice@example.com")
 
     assert result == "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
     cur.execute.assert_awaited_once()
     args, _ = cur.execute.await_args
     assert "INSERT INTO users" in args[0]
     assert "RETURNING id::text" in args[0]
-    assert args[1] == ("supabase", "supabase-uuid", "alice@example.com", "apple-witch")
 
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_upsert_user_does_not_touch_user_roles():
+async def test_create_user_uses_its_own_id_as_the_placeholder_username():
+    # Migration 192's convention: a user with no chosen name gets their own id as
+    # username rather than a NULL special case. `routers.frontend.needs_username`
+    # relies on that equality to know sign-up hasn't finished.
     cur = _make_cursor(returning_row=("any-uuid",))
     with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        await upsert_user("supabase", "id", "x@example.com", "apple-witch")
+        await create_user("supabase", "id", "x@example.com")
+
+    args, _ = cur.execute.await_args
+    bound_id, bound_provider, bound_provider_user_id, bound_email, bound_username = args[1]
+    assert bound_id == bound_username
+    assert (bound_provider, bound_provider_user_id, bound_email) == ("supabase", "id", "x@example.com")
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_create_user_does_not_touch_user_roles():
+    cur = _make_cursor(returning_row=("any-uuid",))
+    with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
+        await create_user("supabase", "id", "x@example.com")
 
     # Only one execute call — no role mutation
     assert cur.execute.await_count == 1
@@ -70,17 +86,17 @@ async def test_upsert_user_does_not_touch_user_roles():
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_upsert_user_does_not_overwrite_username_on_conflict():
-    # username is only picked up on INSERT — the ON CONFLICT branch must never
-    # clobber the one chosen at sign-up on a later re-login.
-    cur = _make_cursor(returning_row=("any-uuid",))
-    with patch("database.users.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        await upsert_user("supabase", "id", "x@example.com", "apple-witch")
+async def test_touch_last_login_never_mentions_username():
+    # A re-login must never clobber the username chosen at sign-up (or set via
+    # /settings) — touch_last_login's SQL doesn't have a username column to touch.
+    pool, conn = _make_conn_pool()
+    with patch("database.users.get_pool", AsyncMock(return_value=pool)):
+        await touch_last_login("supabase", "id", "x@example.com")
 
-    args, _ = cur.execute.await_args
-    sql = args[0]
-    do_update = sql[sql.index("DO UPDATE SET") :]
-    assert "username" not in do_update
+    assert conn.execute.await_count == 1
+    args, _ = conn.execute.await_args
+    assert "username" not in args[0]
+    assert args[1] == ("x@example.com", "supabase", "id")
 
 
 @pytest.mark.asyncio

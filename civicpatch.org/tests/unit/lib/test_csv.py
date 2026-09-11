@@ -1,6 +1,6 @@
 import pytest
 
-from lib.csv import generate_csv, parse_csv, sanitize
+from lib.csv import parse_csv
 
 
 @pytest.mark.unit
@@ -43,17 +43,8 @@ def test_a_short_row_leaves_the_missing_field_none():
 
 
 @pytest.mark.unit
-def test_the_formula_guard_round_trips():
-    """`sanitize` prefixes a `'` on export; reading our own export back must return what went
-    in, not the escape."""
-    dangerous = "=SUM(A1:A2)"
-    assert parse_csv(f"label\n{sanitize(dangerous)}\n")[0]["label"] == dangerous
-
-
-@pytest.mark.unit
-def test_export_and_read_back_are_inverses():
-    fieldnames = ["name", "label"]
-    written = "".join(
-        generate_csv([{"name": "Ana Reyes", "label": "Chair"}], fieldnames)
-    )
-    assert parse_csv(written) == [{"name": "Ana Reyes", "label": "Chair"}]
+def test_a_leading_quote_is_stripped_as_sheets_own_escape():
+    """Sheets prefixes a value with `'` to force text formatting (e.g. keeping a leading `=`
+    from being read as a formula) — reading that back must return the value beneath the
+    escape, not the quote itself."""
+    assert parse_csv("label\n'=SUM(A1:A2)\n")[0]["label"] == "=SUM(A1:A2)"

@@ -38,27 +38,6 @@ export interface Membership {
   unmatched_text: string[];
 }
 
-export const PART_ROLE = "role";
-export const PART_DIVISION = "division";
-export const PART_DESIGNATION = "designation";
-export const PART_UNMATCHED = "unmatched";
-
-export type PartKind =
-  | typeof PART_ROLE
-  | typeof PART_DIVISION
-  | typeof PART_DESIGNATION
-  | typeof PART_UNMATCHED;
-
-export interface ParsePart {
-  kind: PartKind;
-  value: string;
-}
-
-export interface PersonRow {
-  person_name: string;
-  posts: Membership[];
-}
-
 export interface PostRow extends Post {
   holder_names: string[];
   over_headcount: boolean;
@@ -227,39 +206,6 @@ export function heldPost(
   return { post_id: held[0].post_id, label: held[0].post_label };
 }
 
-export interface PostOption {
-  post_id: string;
-  role_id: string;
-  role_label: string;
-  division_ocdid: string;
-  label: string;
-  held: number;
-  headcount: number;
-  // Not disabled: a real body can seat an extra member, and refusing the truth is worse.
-  full: boolean;
-}
-
-export function postOptions(
-  posts: Post[],
-  memberships: Membership[],
-  roleLabels: Map<string, string>,
-): PostOption[] {
-  return posts.map((post) => {
-    const roleLabel = roleLabels.get(post.role_id) ?? post.role_id;
-    const held = holderNames(memberships, post.id).length;
-    return {
-      post_id: post.id,
-      role_id: post.role_id,
-      role_label: roleLabel,
-      division_ocdid: post.division_ocdid,
-      label: post.label,
-      held,
-      headcount: post._headcount,
-      full: held >= post._headcount,
-    };
-  });
-}
-
 /** The backend's `derive_label` shape. At-large adds nothing — `_division_phrase` returns None
  * for it, so saying it here would promise a label the server would not produce. */
 export function derivedPostLabel(
@@ -269,19 +215,6 @@ export function derivedPostLabel(
   if (!roleLabel) return "";
   const division = divisionName(division_ocdid);
   return division === AT_LARGE ? roleLabel : `${roleLabel}, ${division}`;
-}
-
-/** Lives here rather than beside the picker so it stays testable: importing a component pulls
- * in haunted, which the unit tests cannot resolve. */
-export function byRole(options: PostOption[]): [string, PostOption[]][] {
-  const groups = new Map<string, PostOption[]>();
-  for (const option of options) {
-    groups.set(option.role_label, [
-      ...(groups.get(option.role_label) ?? []),
-      option,
-    ]);
-  }
-  return [...groups.entries()];
 }
 
 /** A post is stored by id and never displayed as one — every path rendering the Post field
@@ -311,39 +244,7 @@ export function divisionOf(memberships: { division_ocdid: string }[]): string {
   return memberships[0]?.division_ocdid ?? "";
 }
 
-/** A real regrouping, not a re-sort: the post axis shows one person once per post, with no
- * hint the rows are the same human. */
-export function groupMembershipsByPerson(
-  memberships: Membership[],
-): PersonRow[] {
-  const groups = new Map<string, Membership[]>();
-  for (const membership of memberships) {
-    const name = membership.person_name ?? UNNAMED_HOLDER;
-    groups.set(name, [...(groups.get(name) ?? []), membership]);
-  }
-  return [...groups.entries()].map(([person_name, posts]) => ({
-    person_name,
-    posts,
-  }));
-}
-
 /** The seat itself, as the server composed it. Not `membership.label`: that is what the source
  * called this *person* beyond the post. */
 export const postName = (membership: { post_label: string }): string =>
   membership.post_label;
-
-/** Everything the parser made of a source label, in the order it decides them: designations
- * before roles (closed vocabulary, hardest to be wrong about), residue last. An at-large post
- * still lists its division — "no division" is a decision, not a gap. */
-export function decompose(membership: Membership): ParsePart[] {
-  return [
-    { kind: PART_ROLE, value: membership.role_id },
-    { kind: PART_DIVISION, value: divisionName(membership.division_ocdid) },
-    ...membership.designations.map(
-      (value) => ({ kind: PART_DESIGNATION, value }) as ParsePart,
-    ),
-    ...membership.unmatched_text.map(
-      (value) => ({ kind: PART_UNMATCHED, value }) as ParsePart,
-    ),
-  ];
-}

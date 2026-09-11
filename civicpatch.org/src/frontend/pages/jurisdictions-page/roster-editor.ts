@@ -1,6 +1,6 @@
 
 import { html, nothing } from "lit-html";
-import { component, useState, useEffect } from "haunted";
+import { component, useState, useEffect, useCallback } from "haunted";
 import "../../components/review/review-modal.js";
 import "./jurisdiction-page.css";
 import {
@@ -10,12 +10,19 @@ import {
 import { fetchPeopleAssertions } from "../../api.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
 import { emptyPerson } from "../../components/edit-people/people-editing.js";
-import { blockingErrors, buildPersonCards, type PersonCard } from "../../components/people/person-cards.js";
+import {
+  blockingErrors,
+  buildPersonCards,
+  navHintFor,
+  type PersonCard,
+} from "../../components/people/person-cards.js";
 import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
+import { focusOnMount } from "../../utils/focus-on-mount.js";
 import { EMPTY_FROZEN } from "../review-session-page/frozen-fields.js";
 import { renderRosterCards } from "./roster-section.js";
 import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
 import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
+import { useAltArrowPeerNav } from "../../hooks/use-alt-arrow-peer-nav.js";
 import "../../components/posts-list/post-add.js";
 
 interface RosterEditorProps {
@@ -94,6 +101,12 @@ function RosterEditor({
   const blockerTitle = blockers
     .map((blocker) => `${blocker.name}, ${blocker.fieldLabel}: ${blocker.message}`)
     .join("\n");
+  // Same mechanism as review-session.ts's modal: alt-arrow steps to the next/previous card
+  // while one is open, and the opened field autofocuses once the modal has mounted.
+  useAltArrowPeerNav(openPerson?.id ?? null, cards, (next) =>
+    setOpenPerson({ id: next.personId, field: null }),
+  );
+  const focusOnOpen = useCallback(focusOnMount, [openPerson?.field]);
   const handlePersonSave = (id: string, updates: Record<string, unknown>) =>
     updatePerson(id, updates);
   const handleAdd = async () => {
@@ -112,8 +125,8 @@ function RosterEditor({
       setPublishStage("idle");
     }
   };
-  const editorFor = (card: PersonCard) =>
-    personEditorPropsFor(card, {
+  const editorFor = (card: PersonCard) => {
+    const base = personEditorPropsFor(card, {
       frozen: EMPTY_FROZEN,
       dirtyIds,
       isReadOnly: !canEdit,
@@ -139,6 +152,15 @@ function RosterEditor({
       onToggleCandidates: () => {},
       onPickPartner: () => {},
     });
+    return {
+      ...base,
+      navHint: navHintFor(cards, card.personId),
+      focusField:
+        card.personId === openPerson?.id && openPerson.field
+          ? { key: openPerson.field, attach: focusOnOpen }
+          : null,
+    };
+  };
   const actions = canEdit
     ? html`
         <button class="btn-quiet" ?disabled=${isPublishing} @click=${handleAdd}>
