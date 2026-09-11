@@ -9,6 +9,7 @@ import logging
 from datetime import datetime
 from typing import Optional
 
+from database.activity import create_activity_row
 from database.changeset_predicates import (
     AVAILABLE_FOR_REVIEW,
     RUN_IN_FLIGHT,
@@ -19,7 +20,7 @@ from database.changeset_predicates import (
 from database.database import get_pool, to_iso
 from schemas.common import InFlightEntry, InFlightEntryType, JurisdictionInFlight
 from shared.utils.id_utils import make_id
-from shared.utils.statuses import ChangesetKind
+from shared.utils.statuses import ActivityType, ChangesetKind
 
 logger = logging.getLogger(__name__)
 
@@ -187,6 +188,18 @@ async def register_sheet_import_changeset(
                 parent_changeset_id,
             ),
         )
+
+    # Its own connection and best-effort, same as pipeline_runs.register_run: a broken activity
+    # write must not take the changeset registration — and the sheet's write-back — down with it.
+    try:
+        await create_activity_row(
+            ActivityType.SHEET_IMPORT,
+            user_id=created_by_user_id,
+            jurisdiction_ocdid=jurisdiction_ocdid,
+            changeset_id=changeset_id,
+        )
+    except Exception:
+        logger.exception(f"[{changeset_id}] Failed to log sheet_import activity")
 
 
 async def register_jurisdiction_edit_changeset(

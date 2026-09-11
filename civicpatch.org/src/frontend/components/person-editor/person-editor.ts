@@ -4,7 +4,7 @@ import "../person-image.js";
 import "./person-editor.css";
 import type { DerivedPost, Post } from "../posts-list/posts-model.js";
 import {
-  announcementFor,
+  assertionSummaryFor,
   fieldLock,
   type PersonAssertion,
 } from "./field-provenance.js";
@@ -200,11 +200,7 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
         props.overriddenSourceValues[field.key],
         diffValue(newRecord ?? oldRecord, field),
       ),
-      announcement: announcementFor(
-        props.assertions,
-        field.key,
-        diffValue(newRecord ?? oldRecord, field),
-      ),
+      assertionSummary: assertionSummaryFor(props.assertions, field.key),
       isReadOnly,
       jurisdictionOcdid,
       posts,
