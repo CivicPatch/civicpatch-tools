@@ -44,35 +44,18 @@
             href="{{ url_for('frontend', path='/css/fonts.css') }}"
             rel="stylesheet"
         />
-        <link
-            href="{{ url_for('frontend', path='/css/tokens.css') }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{ url_for('frontend', path='/css/elements.css') }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{ url_for('frontend', path='/css/typography.css') }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{ url_for('frontend', path='/css/controls.css') }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{ url_for('frontend', path='/css/layout.css') }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{ url_for('frontend', path='/css/styles.css') }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{ url_for('frontend', path='/css/utilities.css') }}"
-            rel="stylesheet"
-        />
 
+        <!-- Bundled via the global-styles Vite entry (see assets/global-styles.js) so these get
+        content-hashed, immutable-cacheable URLs in production instead of the CDN indefinitely
+        caching whatever bytes happened to be at a fixed, unversioned path. In dev, Vite's own
+        client injects the CSS from the script tag instead — vite_css() returns nothing there. -->
+        {% if is_production %}
+        {% for href in vite_css('assets/global-styles.js') %}
+        <link href="{{ href }}" rel="stylesheet" />
+        {% endfor %}
+        {% else %}
+        <script type="module" src="{{ vite_asset('assets/global-styles.js') }}"></script>
+        {% endif %}
 
         {% block styles %}{% endblock %}
         {% block head %}{% endblock %}
