@@ -26,7 +26,7 @@ const API_URL = config.apiUrl;
 // Display names for the two data-theme values — the attribute itself stays
 // "light"/"dark" (every theme-scoped CSS selector keys on that), these are only
 // what the picker shows.
-const THEME_NAMES = { light: "civic", dark: "solaris dark" };
+const THEME_NAMES = { light: "civic", dark: "ember dark" };
 
 function getRoleTooltip(role) {
   if (!role) return "No role assigned";

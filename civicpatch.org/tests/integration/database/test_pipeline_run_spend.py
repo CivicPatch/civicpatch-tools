@@ -45,6 +45,11 @@ async def _wipe():
             await cur.execute(
                 "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,)
             )
+            # register_run() (via factories._register_run) writes a pipeline_run_start row here —
+            # left uncleaned, it collides with any other test reading the activity feed for 'zx'.
+            await cur.execute(
+                "DELETE FROM activity WHERE jurisdiction_ocdid = %s", (ocdid,)
+            )
 
 
 @pytest_asyncio.fixture(autouse=True)

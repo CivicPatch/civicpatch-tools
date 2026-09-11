@@ -227,43 +227,46 @@
      what actually read as "checkboxes have poor contrast / look misaligned": nothing
      about their box model was wrong, they just didn't belong to this theme at all. */
   color-scheme: dark;
-  /* ── Editorial palette tokens (solaris dark) ──────────────────────────
-     Built from Solarized Dark's canonical swatches (base03/02/01/00/0/1,
-     blue/violet/cyan/orange/green/red) — see .scratch/2026-09-10-plan-civic-
-     solaris-dark-themes.md for the full swatch → token mapping. Structural
-     relationships (surface lighter than bg, accent-border lighter than
-     accent, etc.) are kept identical to the palette this replaced. */
-  --bg: #002b36;
-  --surface: #073642;
-  --surface-2: #0a4552;
-  --surface-stripe: #063440;
-  --text-default: #93a1a1;
-  --text-secondary: #839496;
-  /* Was #586e75 — 2.79:1 on --bg, 2.42:1 on --surface, 1.96:1 on --surface-2, all under
-     the 3:1 floor. This clears 4.5:1 on --bg and 3:1+ everywhere else while staying below
-     --text-secondary's luminance, matching the light theme's muted tier (5.7/5.1/4.7:1). */
-  --text-muted: #7a9291;
-  --border: #0d4a57;
-  --border-strong: #93a1a1;
-  /* Was #268bd2 — 4.08:1 on --bg, short of the 4.5:1 normal-text threshold for link color. */
-  --accent: #3d9adf;
-  /* --accent brightened above for link-text contrast; a solid fill (button, calendar
-     segment) needs the original, more muted tone instead — the brighter value both reads
-     louder than the rest of this palette and drops --accent-text's contrast against it
-     (3.41:1 -> 2.83:1). This is #268bd2, --accent's pre-fix value. */
-  --accent-fill: #268bd2;
-  /* Was #6c71c4 — 3.43:1 on --bg, under 4.5:1. */
-  --level-note: #8b8fd6;
-  --accent-border: #4f9fdb;
-  --accent-text: #fdf6e3;
+  /* ── Editorial palette tokens (ember dark) ─────────────────────────────
+     Replaces the Solarized-derived "solaris dark" theme — see .scratch/2026-09-10-
+     plan-civic-solaris-dark-themes.md for that palette's history. Warm charcoal-brown
+     instead of Solarized's teal-black, terracotta/amber accent instead of cyan; kept
+     deliberately distinct from --accent's blue family in the civic light theme.
+     Structural relationships (surface lighter than bg, accent-border lighter than
+     accent, etc.) are kept identical to the palette this replaced. Every value below
+     clears 4.5:1 against every surface it is used on (verified pairwise), 3:1+ for
+     --text-muted on --surface-2. */
+  --bg: #1b1512;
+  --surface: #261e19;
+  --surface-2: #332821;
+  --surface-stripe: #211a16;
+  --text-default: #e8dccc;
+  --text-secondary: #c7b6a4;
+  --text-muted: #a89480;
+  /* Was #3f3128 — 1.31:1 on --surface, 1.45:1 on --bg. Solaris dark's own --border (#0d4a57)
+     carried the identical flaw (1.32:1 / 1.53:1), unnoticed since nobody had looked at input/
+     card borders in isolation. This clears WCAG 1.4.11's 3:1 floor for UI component boundaries
+     on both surfaces (3.60:1 / 3.97:1). */
+  --border: #8a7161;
+  --border-strong: #e8dccc;
+  /* Link-text accent, brightened above --accent-fill for 4.5:1 on --bg (7.53:1). */
+  --accent: #e8935a;
+  /* Solid-fill backgrounds (buttons, calendar segments). Dimmer than --accent since it's a
+     large-area fill rather than small text, and --accent-text needs contrast against it. */
+  --accent-fill: #d9822b;
+  --level-note: #c08bd6;
+  --accent-border: #cf7a42;
+  /* Reuses --bg: --accent-fill is bright enough that dark text clears 4.5:1 (6.17:1) — the
+     opposite pairing from solaris dark, whose accent-fill was a mid-blue needing light text. */
+  --accent-text: #1b1512;
 
   /* ── Tones — see the light block for the format note ─────────────────── */
-  --tone-bg: 7, 54, 66;
-  --tone-bg-deep: 0, 43, 54;
-  --tone-ink: 147, 161, 161;
-  --tone-line: 13, 74, 87;
-  --tone-line-mid: 45, 90, 100;
-  --tone-line-strong: 88, 110, 117;
+  --tone-bg: 38, 30, 25;
+  --tone-bg-deep: 27, 21, 18;
+  --tone-ink: 232, 220, 204;
+  --tone-line: 63, 49, 40;
+  --tone-line-mid: 77, 60, 48;
+  --tone-line-strong: 122, 98, 82;
   --tone-blue: 38, 139, 210;
   --tone-red: 220, 50, 47;
   --tone-green: 133, 153, 0;
@@ -277,34 +280,29 @@
 
   /* Base-layer roles — dark */
   --text: var(--text-default);
-  --selection-bg: rgba(38, 139, 210, 0.25);
+  --selection-bg: rgba(217, 130, 43, 0.25);
 
-  --action: #93a1a1;
-  --action-hover: #839496;
-  --action-focus: rgba(147, 161, 161, 0.25);
-  --action-text: #002b36;
+  --action: #e8dccc;
+  --action-hover: #c7b6a4;
+  --action-focus: rgba(232, 220, 204, 0.25);
+  --action-text: #1b1512;
 
-  --muted-action-bg: #35606b;
-  /* Was #002b36 (this theme's own --bg) — 2.17:1 on --muted-action-bg. The light theme
-     uses light text (white) on its similarly-toned muted button; this had kept dark text
-     instead of flipping it. --accent-text is already the light/cream tone used elsewhere
-     for text on a colored surface — reused here rather than a new value. 6.41:1. */
-  --muted-action-text: var(--accent-text);
+  --muted-action-bg: #5a4636;
+  /* --muted-action-bg is dark enough to need light text, unlike --accent-text above —
+     reuses --text-default rather than a new value. 6.57:1. */
+  --muted-action-text: var(--text-default);
 
   --field-border: var(--text-muted);
 
-  --diff-added: #859900;
-  --diff-added-bg: rgba(133, 153, 0, 0.12);
-  /* Was #dc322f (shared with --error below) — 3.25:1 on --bg, under 4.5:1. */
-  --diff-removed: #ea6560;
-  --diff-removed-bg: rgba(220, 50, 47, 0.12);
-  --info: #2aa198;
-  --info-bg: rgba(42, 161, 152, 0.12);
-  /* Was #cb4b16 — 3.26:1 on --bg, under 4.5:1. */
-  --warning: #e07030;
-  --success: #859900;
-  /* Was #dc322f — 3.25:1 on --bg, under 4.5:1. */
-  --error: #ea6560;
+  --diff-added: #9caa4a;
+  --diff-added-bg: rgba(156, 170, 74, 0.12);
+  --diff-removed: #e86a56;
+  --diff-removed-bg: rgba(232, 106, 86, 0.12);
+  --info: #5aa39a;
+  --info-bg: rgba(90, 163, 154, 0.12);
+  --warning: #d9ab3f;
+  --success: #9caa4a;
+  --error: #e86a56;
 
   --status-fresh: var(--success);
   --status-stale: var(--warning);
@@ -317,19 +315,23 @@
   --status-selected: var(--accent);
 
   /* Inherited framework tokens — theme-dependent half. */
-  --contrast: #93a1a1;
-  --placeholder: #2d4f5c;
-  --option-selected-bg: #0d3d47;
-  --mark-bg: rgba(203, 75, 22, 0.28);
-  --mark-text: #93a1a1;
-  /* Was #586e75 — the same broken value --text-muted had (2.79:1 on --bg), independently
-     duplicated here and never caught by that fix since it's a separate token. */
+  --contrast: #e8dccc;
+  /* Was #4a3a2f — 1.51:1 on --surface, same fix as --border above and for the same reason:
+     the search input's hint text ("Try 'Seattle, WA'...") was effectively invisible. 4.83:1 on
+     --surface / 5.33:1 on --bg — close to --text-muted's own visibility rather than barely
+     legible, since a placeholder a user can't read isn't doing its job. */
+  --placeholder: #9c8875;
+  --option-selected-bg: #3a2a1e;
+  /* Based on --warning rather than --accent/--accent-fill, which are already orange —
+     a highlight in the same hue as the accent would read as unstyled link text. */
+  --mark-bg: rgba(217, 171, 63, 0.28);
+  --mark-text: #e8dccc;
   --muted-action: var(--text-muted);
-  --muted-action-hover: #6e838a;
-  --muted-action-underline: rgba(88, 110, 117, 0.5);
+  --muted-action-hover: #6e5847;
+  --muted-action-underline: rgba(122, 98, 82, 0.5);
   --card-border: var(--border);
-  --contrast-hover: #839496;
-  --contrast-underline: rgba(147, 161, 161, 0.5);
+  --contrast-hover: #c7b6a4;
+  --contrast-underline: rgba(232, 220, 204, 0.5);
 
-  --surface-hover: rgba(147, 161, 161, 0.05);
+  --surface-hover: rgba(232, 220, 204, 0.05);
 }
