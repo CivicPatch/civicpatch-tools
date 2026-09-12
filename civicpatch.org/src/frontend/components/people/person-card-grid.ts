@@ -14,7 +14,6 @@ import "./person-card-grid.css";
 import { type PersonCard, personOf } from "./person-cards.js";
 import { type RoleOption } from "../posts-list/posts-model.js";
 import { postsHeld } from "../posts-list/posts-model.js";
-import { withDisplayImage } from "../fields/field-controls.js";
 import { type DiffRecord, type FieldSpec } from "../fields/field-model.js";
 import { PERSON_LINK_TARGET } from "../../utils/source-links.js";
 import {
@@ -59,7 +58,7 @@ function renderCard(card: PersonCard, sources: SourceMap, isLead: boolean) {
     <div class="person-card-grid__card">
       <div class="person-card-grid__body">
         <span class="person-card-grid__avatar">
-          <person-image .person=${withDisplayImage(record ?? {})} .size=${AVATAR_SIZE}></person-image>
+          <person-image .person=${record ?? {}} .size=${AVATAR_SIZE}></person-image>
         </span>
         <div class="person-card-grid__name">${name}</div>
         ${office

@@ -2,7 +2,6 @@
 import { html, nothing } from "lit-html";
 import "../person-image.js";
 import "./person-row.css";
-import { withDisplayImage } from "../fields/field-controls.js";
 import { type DiffRecord } from "../fields/field-model.js";
 
 export interface PersonRowProps {
@@ -51,7 +50,7 @@ export function renderPersonRow({
     >
       <span class="review-row__photo">
         <person-image
-          .person=${withDisplayImage(record)}
+          .person=${record}
           .size=${"6rem"}
         ></person-image>
       </span>

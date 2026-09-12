@@ -22,7 +22,6 @@ import {
 import {
   buildFieldUpdate,
   displayScalar,
-  withDisplayImage,
   renderScalarNewSide,
   renderDateNewSide,
   renderPostNewSide,
@@ -106,7 +105,7 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
     }
     if (isImage(field)) {
       return html`<person-image
-        .person=${withDisplayImage(record)}
+        .person=${record}
         .size=${"2.75rem"}
       ></person-image>`;
     }

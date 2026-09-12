@@ -28,10 +28,18 @@ import "../generated/fontawesome/icons.css";
 
 const API_URL = config.apiUrl;
 
-// Display names for the two data-theme values — the attribute itself stays
-// "light"/"dark" (every theme-scoped CSS selector keys on that), these are only
-// what the picker shows.
-const THEME_NAMES = { light: "civic", dark: "ember dark" };
+// Named palettes, grouped by mode. `<html data-theme>` stays "light"/"dark" — every
+// mode-scoped CSS selector across the app keys on that — while `<html data-palette>`
+// carries the specific id below, which is all tokens.css's colour blocks key on. Adding a
+// theme means one more entry here and one more `[data-palette="..."]` block in tokens.css;
+// nothing that reads `data-theme` for light/dark-specific styling needs to change.
+const THEMES = [
+  { id: "one-light", name: "one light", mode: "light" },
+  { id: "nord-light", name: "nord light", mode: "light" },
+  { id: "nord-dark", name: "nord dark", mode: "dark" },
+  { id: "terminal", name: "terminal", mode: "dark" },
+];
+const DEFAULT_PALETTE = { light: "one-light", dark: "nord-dark" };
 
 function getRoleTooltip(role) {
   if (!role) return "No role assigned";
@@ -204,12 +212,15 @@ function Navbar(host) {
   const [theme, setTheme] = useLocalStorage(STORAGE_KEYS.THEME, "", {
     ttl: PERSIST_FOREVER,
   });
-  const resolvedTheme =
-    theme ||
-    (window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light");
-  document.documentElement.dataset.theme = resolvedTheme;
+  const systemMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+  const resolvedPalette = THEMES.some((t) => t.id === theme)
+    ? theme
+    : DEFAULT_PALETTE[systemMode];
+  const resolvedMode = THEMES.find((t) => t.id === resolvedPalette).mode;
+  document.documentElement.dataset.theme = resolvedMode;
+  document.documentElement.dataset.palette = resolvedPalette;
   const handleThemeChange = (e) => setTheme(e.target.value);
   const onLogoutClick = () =>
     localStorage.removeItem(STORAGE_KEYS.DEFAULT_STATE);
@@ -247,12 +258,22 @@ function Navbar(host) {
             aria-label="theme"
             @change=${handleThemeChange}
           >
-            <option value="light" ?selected=${resolvedTheme === "light"}>
-              ${THEME_NAMES.light}
-            </option>
-            <option value="dark" ?selected=${resolvedTheme === "dark"}>
-              ${THEME_NAMES.dark}
-            </option>
+            ${["dark", "light"].map(
+              (mode) => html`
+                <optgroup label="${mode}">
+                  ${THEMES.filter((t) => t.mode === mode).map(
+                    (t) => html`
+                      <option
+                        value="${t.id}"
+                        ?selected=${resolvedPalette === t.id}
+                      >
+                        ${t.name}
+                      </option>
+                    `,
+                  )}
+                </optgroup>
+              `,
+            )}
           </select>
         </span>
         ${isAuthed

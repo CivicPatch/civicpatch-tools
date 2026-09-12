@@ -18,7 +18,7 @@ import {
   type SurvivingField,
 } from "../fields/field-model.js";
 import { focusedKey } from "./editor-focus.js";
-import { withDisplayImage, type FieldFocus, type Save } from "../fields/field-controls.js";
+import { type FieldFocus, type Save } from "../fields/field-controls.js";
 import { renderEditorField } from "./editor-field.js";
 import {
   DEPARTING,
@@ -82,7 +82,7 @@ function renderIdentity(props: PersonEditorProps) {
   return html`
     <div class="person-editor__identity">
       <person-image
-        .person=${withDisplayImage(record)}
+        .person=${record}
         .size=${PHOTO_SIZE}
       ></person-image>
       <div class="person-editor__name">${name}</div>
@@ -217,7 +217,7 @@ function renderStrip(props: PersonEditorProps) {
   return html`
     <div class="person-editor person-editor--strip person-editor--${status}">
       <person-image
-        .person=${withDisplayImage(record)}
+        .person=${record}
         .size=${"2.75rem"}
       ></person-image>
       <span class="person-editor__name">${record?.name || "(unnamed)"}</span>
