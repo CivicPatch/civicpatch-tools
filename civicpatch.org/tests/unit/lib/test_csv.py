@@ -18,6 +18,14 @@ def test_headers_are_stripped_and_lowercased():
 
 
 @pytest.mark.unit
+def test_a_trailing_asterisk_is_stripped_from_the_header():
+    """`entry_rows.ROSTER_HEADERS` marks a required column with `*` on the sheet itself — the
+    marker is for the human reading the header, not a character to match a cell against."""
+    rows = parse_csv("name*,label\nAna Reyes,Chair\n")
+    assert rows == [{"name": "Ana Reyes", "label": "Chair"}]
+
+
+@pytest.mark.unit
 def test_a_header_only_file_has_no_rows():
     assert parse_csv("name,label\n") == []
 

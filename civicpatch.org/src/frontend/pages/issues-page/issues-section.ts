@@ -1,8 +1,10 @@
 import "../../components/panel/panel.css";
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
+import { ref } from "lit/directives/ref.js";
 import { fetchJobIssues, fetchIssueCounts, flagIssue, dismissIssues } from "../../api.js";
 import { Pagination } from "../../components/pagination/index.js";
+import { usePagerRef } from "../../hooks/use-pager-ref.js";
 import { KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
 import { DANGER_VARIANT } from "../../components/confirm-modal/confirm-modal.js";
 import { IssueRow, PENDING, type Issue } from "./issue-row.js";
@@ -59,6 +61,7 @@ function IssuesSection(host: SectionHost) {
   const [confirmingBulk, setConfirmingBulk] = useState(false);
   const [detailsIssue, setDetailsIssue] = useState<Issue | null>(null);
   const [dismissIssue, setDismissIssue] = useState<Issue | null>(null);
+  const { listRef: sectionRef, scrollToTop } = usePagerRef<HTMLElement>();
 
   useEffect(() => {
     if (!config.typeFilters) return;
@@ -125,6 +128,7 @@ function IssuesSection(host: SectionHost) {
   const goToPage = (next: number) => {
     setPage(next);
     setParams({ [key(PAGE)]: String(next) });
+    scrollToTop();
   };
 
   const applyFilters = (next: { tags?: string[]; sort?: boolean; perPage?: number }) => {
@@ -172,7 +176,29 @@ function IssuesSection(host: SectionHost) {
       : null}
   `;
 
+  // Built once so Next/Previous re-orients to the top of the table either way — clicking
+  // the bottom pager most often leaves the reader below what just changed above them.
+  const pagerControls = html`
+    <div class="issues-page__top-controls">
+      <div class="issues-page__pagination">
+        ${Pagination({
+          page,
+          totalPages: Math.ceil(total / perPage),
+          onPrevious: () => goToPage(page - 1),
+          onNext: () => goToPage(page + 1),
+        })}
+      </div>
+      <label class="issues-page__per-page">
+        Per page
+        <select @change=${(e: Event) => applyFilters({ perPage: parseInt((e.target as HTMLSelectElement).value, 10) })}>
+          ${PER_PAGE_OPTIONS.map((n) => html`<option value=${n} ?selected=${n === perPage}>${n}</option>`)}
+        </select>
+      </label>
+    </div>
+  `;
+
   const table = html`
+    ${pagerControls}
     <table class="issues-page__issues-table">
       <thead>
         <tr>
@@ -244,7 +270,7 @@ function IssuesSection(host: SectionHost) {
   `;
 
   return html`
-    <section class="panel issues-page__section">
+    <section class="panel issues-page__section" ${ref(sectionRef)}>
       <div class="panel__cap issues-page__cap" @click=${() => host.dispatchEvent(new CustomEvent(SECTION_TOGGLE_EVENT, { bubbles: true, composed: true }))}>
         <b>${showArchived ? config.archivedTitle : config.title}</b>
         <span>${total || ""}</span>

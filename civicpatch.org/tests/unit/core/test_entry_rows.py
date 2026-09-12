@@ -1,6 +1,7 @@
 import pytest
 
 from core.entry_rows import (
+    INHERIT,
     ImportRow,
     RowError,
     Sighting,
@@ -22,7 +23,7 @@ def _row(**overrides) -> dict:
         "email": "",
         "phone": "",
         "image": "",
-        "label": "",
+        "label": "Select Board Chair",
     }
     row.update(overrides)
     return row
@@ -45,11 +46,26 @@ def test_a_row_becomes_a_sighting():
 
 
 @pytest.mark.unit
-def test_label_is_optional():
-    """A source with no label column still parses — it just derives no post."""
-    rows, errors = parse_rows([_row(label="")])
+def test_a_blank_label_is_required():
+    """A blank cell is a caught mistake now, not silent — a source with no title has to say so
+    on purpose, with `inherit`."""
+    _, errors = parse_rows([_row(label="")])
+    assert _flags(errors) == {(2, "label")}
+
+
+@pytest.mark.unit
+def test_inherit_passes_through_as_a_marker():
+    """Resolving it needs a database read — `services.sheet_import`'s job, not this pure
+    module's. This only has to not mangle it on the way through."""
+    rows, errors = parse_rows([_row(label=INHERIT)])
     assert errors == []
-    assert rows[0].sighting.label == ""
+    assert rows[0].sighting.label == INHERIT
+
+
+@pytest.mark.unit
+def test_inherit_is_case_insensitive():
+    rows, _ = parse_rows([_row(label="Inherit")])
+    assert rows[0].sighting.label == INHERIT
 
 
 @pytest.mark.unit
@@ -86,8 +102,8 @@ def test_the_sheet_carries_no_ids():
 
 
 @pytest.mark.unit
-@pytest.mark.parametrize("column", ["jurisdiction_ocdid", "name", "source_url"])
-def test_the_three_required_columns(column):
+@pytest.mark.parametrize("column", ["jurisdiction_ocdid", "name", "source_url", "label"])
+def test_the_required_columns(column):
     _, errors = parse_rows([_row(**{column: ""})])
     assert _flags(errors) == {(2, column)}
 
@@ -173,16 +189,40 @@ def test_rows_group_by_jurisdiction():
     assert len(grouped[_OCDID]) == 2
 
 
+# --- already-handled jurisdictions are skipped before validation ---
+
+
+@pytest.mark.unit
+def test_a_fully_handled_jurisdiction_is_skipped_even_if_invalid_now():
+    """A contract change made after a row was accepted (a new required column, say) must not
+    re-reject it forever — clearing its status is the only thing that should ask for it again."""
+    rows, errors = parse_rows([_row(label="", status="imported")])
+    assert rows == []
+    assert errors == []
+
+
+@pytest.mark.unit
+def test_a_mixed_jurisdiction_is_not_skipped():
+    """One cleared row brings the whole town back — including rows still carrying a status, so
+    the roster submitted together is complete, not missing whoever already had one."""
+    rows, errors = parse_rows([_row(status="imported"), _row(name="Bo Chen", status="")])
+    assert [row.sighting.name for row in rows] == ["Ana Reyes", "Bo Chen"]
+    assert errors == []
+
+
 # ── Columns out ──────────────────────────────────────────────────────────────
 
 _STAMP = "2026-08-27 14:02"
 
 
-def _parsed_row(line: int, ocdid: str = _OCDID, name: str = "Ana Reyes") -> ImportRow:
+def _parsed_row(
+    line: int, ocdid: str = _OCDID, name: str = "Ana Reyes", status: str = ""
+) -> ImportRow:
     return ImportRow(
         line=line,
         jurisdiction_ocdid=ocdid,
         sighting=Sighting(name=name, label="Chair", source_url="s"),
+        status=status,
     )
 
 
@@ -190,19 +230,28 @@ def _row_error(line: int, ocdid: str = _OCDID, column: str | None = "name") -> R
     return RowError(line=line, jurisdiction_ocdid=ocdid, column=column, message="required")
 
 
+def _raw_rows(count: int, overrides: dict[int, dict] | None = None) -> list[dict]:
+    """`count` raw sheet rows, line 2..count+1 — the shape `roster_columns` reads its "keep
+    whatever this line already said" fallback from, independent of what parsed this run."""
+    rows: list[dict] = [{} for _ in range(count)]
+    for line, values in (overrides or {}).items():
+        rows[line - 2] = values
+    return rows
+
+
 # --- roster tab ---
 
 
 @pytest.mark.unit
 def test_an_imported_row_says_so_and_carries_no_error():
-    columns = roster_columns([_parsed_row(2)], [], 1, {_OCDID}, _STAMP)
+    columns = roster_columns(_raw_rows(1), [_parsed_row(2)], [], {_OCDID}, _STAMP)
     assert columns["status"] == ["imported"]
     assert columns["error"] == [""]
 
 
 @pytest.mark.unit
 def test_a_rejected_row_names_its_column():
-    columns = roster_columns([], [_row_error(2)], 1, set(), _STAMP)
+    columns = roster_columns(_raw_rows(1), [], [_row_error(2)], set(), _STAMP)
     assert columns["status"] == ["error"]
     assert columns["error"] == ["name: required"]
 
@@ -211,7 +260,7 @@ def test_a_rejected_row_names_its_column():
 def test_a_good_row_in_a_blocked_town_points_elsewhere():
     """Most of a blocked town is rows that are perfectly fine. Saying 'error' against them would
     have the volunteer hunting for a fault that is on somebody else's line."""
-    columns = roster_columns([_parsed_row(2)], [_row_error(3)], 2, set(), _STAMP)
+    columns = roster_columns(_raw_rows(2), [_parsed_row(2)], [_row_error(3)], set(), _STAMP)
     assert columns["status"] == ["blocked", "error"]
     assert columns["error"][0] == "another row in this town was rejected"
 
@@ -221,13 +270,19 @@ def test_every_row_gets_a_value_so_stale_errors_clear():
     """A row that failed last run and is fine now must not keep last run's message — the
     volunteer would chase a problem they already fixed."""
     rows = [_parsed_row(2), _parsed_row(3, name="Bo Chen")]
-    columns = roster_columns(rows, [], 2, {_OCDID}, _STAMP)
+    columns = roster_columns(_raw_rows(2), rows, [], {_OCDID}, _STAMP)
     assert columns["error"] == ["", ""]
     assert len(columns["status"]) == 2
     assert columns["last_import_at"] == [_STAMP, _STAMP]
 
 
 # --- the status column decides whether a locality is re-imported ---
+#
+# Tested directly on `ImportRow`s, not through `parse_rows`: a fully-handled jurisdiction is
+# now skipped before parsing even runs (`_handled_jurisdictions`, tested above), so building
+# these through `parse_rows` would just hand `already_handled` an empty list and pass on that
+# vacuous truth instead of exercising it. `import_rows` still calls `already_handled` directly
+# as a second, defensive check, so it stays worth testing on its own.
 
 
 def _parsed(*rows: dict):
@@ -238,36 +293,40 @@ def _parsed(*rows: dict):
 
 @pytest.mark.unit
 def test_a_locality_whose_rows_all_say_imported_is_done():
-    assert already_handled(_parsed(_row(status="imported"), _row(name="Bo", status="imported")))
+    rows = [_parsed_row(2, status="imported"), _parsed_row(3, name="Bo", status="imported")]
+    assert already_handled(rows)
 
 
 @pytest.mark.unit
 def test_a_blank_status_brings_the_locality_back():
     """What a volunteer does after fixing a row: clear the cell, press Import."""
-    assert not already_handled(_parsed(_row(status="imported"), _row(name="Bo", status="")))
+    rows = [_parsed_row(2, status="imported"), _parsed_row(3, name="Bo", status="")]
+    assert not already_handled(rows)
 
 
 @pytest.mark.unit
 def test_any_status_counts_as_handled_not_just_imported():
     """The column is the app's account of what it did. `error` and `blocked` have been answered
     for too — the volunteer clears the cell to ask again."""
-    assert already_handled(_parsed(_row(status="error")))
-    assert already_handled(_parsed(_row(status="blocked")))
+    assert already_handled([_parsed_row(2, status="error")])
+    assert already_handled([_parsed_row(2, status="blocked")])
 
 
 @pytest.mark.unit
 def test_a_row_this_run_did_not_touch_keeps_its_status():
-    """The loop this closes: the write-back blanked every row it had not just imported, so the
-    next run saw a blank, re-imported, and the run after skipped again — unchanged, imported,
-    unchanged, on a sheet nobody edited."""
-    rows = _parsed(_row(status="imported"))
-    columns = roster_columns(rows, [], len(rows), set(), _STAMP)
+    """A jurisdiction already fully handled is skipped before parsing even runs
+    (`_handled_jurisdictions`), so this row never becomes an `ImportRow` this pass — and still
+    must not be blanked. Status and timestamp both have to come from the sheet's own current
+    cells, not from the parse, which saw nothing here at all."""
+    raw_rows = _raw_rows(1, {2: {"status": "imported", "last_import_at": "2026-08-01 09:00"}})
+    columns = roster_columns(raw_rows, [], [], set(), _STAMP)
     assert columns["status"] == ["imported"]
+    assert columns["last_import_at"] == ["2026-08-01 09:00"]
 
 
 @pytest.mark.unit
 def test_a_never_imported_locality_has_no_status_at_all():
-    assert not already_handled(_parsed(_row()))
+    assert not already_handled([_parsed_row(2, status="")])
 
 
 @pytest.mark.unit
@@ -296,7 +355,7 @@ def test_a_half_filled_row_is_still_an_error():
     started = {column: "" for column in _row()}
     started["jurisdiction_ocdid"] = _OCDID
     _, errors = parse_rows([started])
-    assert {column for _, column in _flags(errors)} == {"name", "source_url"}
+    assert {column for _, column in _flags(errors)} == {"name", "source_url", "label"}
 
 
 @pytest.mark.unit
@@ -324,12 +383,12 @@ def test_a_stamped_but_untyped_row_is_still_blank():
 def test_spare_lines_are_not_stamped():
     """The other half: stop creating the condition. A line the parse produced nothing for gets
     no timestamp, so it stays a line nobody wrote."""
-    columns = roster_columns([], [], 3, set(), _STAMP)
+    columns = roster_columns(_raw_rows(3), [], [], set(), _STAMP)
     assert columns["last_import_at"] == ["", "", ""]
 
 
 @pytest.mark.unit
 def test_rows_the_run_saw_are_still_stamped():
     parsed, errors = parse_rows([_row()])
-    columns = roster_columns(parsed, errors, 1, {_OCDID}, _STAMP)
+    columns = roster_columns(_raw_rows(1), parsed, errors, {_OCDID}, _STAMP)
     assert columns["last_import_at"] == [_STAMP]

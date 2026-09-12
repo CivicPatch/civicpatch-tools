@@ -15,7 +15,9 @@ class ImportPreview(BaseModel):
 
 
 class StartImportResponse(BaseModel):
-    batch_id: str
+    # None when there was nothing to ingest — every row already handled or blocked. No batch
+    # gets minted for that, so there is no id to carry.
+    batch_id: str | None
     preview: ImportPreview
 
 

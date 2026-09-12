@@ -13,6 +13,8 @@ import uuid
 from datetime import datetime, timezone
 
 from core.entry_rows import (
+    INHERIT,
+    REQUIRED_COLUMNS,
     ROSTER_HEADERS,
     ImportRow,
     ImportStatus,
@@ -23,6 +25,8 @@ from core.entry_rows import (
 )
 from database.changesets import register_sheet_import_changeset
 from database import changeset_batches
+from database import memberships
+from database.database import get_pool
 from database.roles import get_roles
 from database.source_records import insert_source_records
 from pydantic import BaseModel
@@ -92,6 +96,54 @@ async def import_rows(
     return results
 
 
+async def _resolve_inherited_labels(
+    jurisdiction_ocdid: str, roster: list[dict], records_by_person: dict[str, list[dict]]
+) -> tuple[list[dict], dict[str, list[dict]]]:
+    """Swap `inherit` for the real label text of the resolved person's current open
+    membership, so everything downstream sees it exactly as if the source had sent it —
+    ingest's own role/post derivation, and `source_records`, which the review card re-derives
+    from on every future view, not only this one.
+
+    By resolved person id, after identity linking (`reconcile_roster` already ran) — not by
+    name, which might not match the published spelling.
+
+    A person nothing is found for — new to this import, or between seats — falls back to
+    blank, same as never having inherited anything.
+    """
+    inheriting = [
+        person["id"]
+        for person in roster
+        if any(
+            record.get("label") == INHERIT
+            for record in records_by_person.get(person["id"], [])
+        )
+    ]
+    if not inheriting:
+        return roster, records_by_person
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        found = await memberships.open_source_labels_by_person(
+            cur, jurisdiction_ocdid, inheriting
+        )
+
+    resolved_roster = [
+        {**person, "labels": [found.get(person["id"], "")]}
+        if person["id"] in inheriting
+        else person
+        for person in roster
+    ]
+    resolved_records = {
+        person_id: (
+            [{**record, "label": found.get(person_id, "")} for record in records]
+            if person_id in inheriting
+            else records
+        )
+        for person_id, records in records_by_person.items()
+    }
+    return resolved_roster, resolved_records
+
+
 async def _import_jurisdiction(
     jurisdiction_ocdid: str,
     rows: list[ImportRow],
@@ -108,6 +160,9 @@ async def _import_jurisdiction(
             [row.sighting.model_dump() for row in rows],
             identities,
             taxonomy,
+        )
+        roster, records_by_person = await _resolve_inherited_labels(
+            jurisdiction_ocdid, roster, records_by_person
         )
         await register_sheet_import_changeset(
             changeset_id, jurisdiction_ocdid, user_id, batch_id
@@ -189,6 +244,13 @@ def read_rows(rows: list[dict]) -> SheetRead:
     )
 
 
+def _header_text(column: str) -> str:
+    """A required column reads as required on the sheet itself — `*`, the same convention a
+    form uses — without anyone having to already know the contract. `lib.csv.rows_from_table`
+    strips it back off before matching a cell to this name."""
+    return f"{column}*" if column in REQUIRED_COLUMNS else column
+
+
 async def ensure_roster_header(spreadsheet_id: str) -> None:
     """Assert the roster tab's header row matches `ROSTER_HEADERS`, so a contract change never
     needs a human to retype it — only row 1: data rows are the volunteer's, never rewritten.
@@ -203,7 +265,7 @@ async def ensure_roster_header(spreadsheet_id: str) -> None:
         sheets.write_rows,
         spreadsheet_id,
         entry_sheet.ROSTER_TAB,
-        [list(ROSTER_HEADERS)],
+        [[_header_text(column) for column in ROSTER_HEADERS]],
         1,
     )
 
@@ -236,6 +298,17 @@ async def run_import(
     error = None
     try:
         results = await import_rows(rows, user_id, batch_id)
+        # A jurisdiction failing is not an exception here — `_import_jurisdiction` catches its
+        # own and reports it in the result — so without this the batch reads `succeeded` with
+        # no hint that a town silently failed to import at all.
+        failed = [
+            result for result in results if result.status is ImportStatus.FAILED
+        ]
+        if failed:
+            status = changeset_batches.BatchStatus.FAILED
+            error = "; ".join(
+                f"{result.jurisdiction_ocdid}: {result.error}" for result in failed
+            )
         await write_back(results)
     except Exception as e:
         logger.error(f"[{batch_id}] import failed: {e}", exc_info=True)
@@ -275,7 +348,7 @@ async def write_back(results: list[JurisdictionResult]) -> None:
             sheets.write_columns,
             spreadsheet_id,
             entry_sheet.ROSTER_TAB,
-            roster_columns(parsed, errors, len(roster), imported, stamp),
+            roster_columns(roster, parsed, errors, imported, stamp),
         )
     except Exception as e:
         logger.error(f"Failed to write results back to the sheet: {e}", exc_info=True)

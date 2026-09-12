@@ -1,8 +1,10 @@
 import "../../components/panel/panel.css";
 import { html, nothing } from "lit-html";
 import { component, useState, useEffect } from "haunted";
+import { ref } from "lit/directives/ref.js";
 import { fetchChangeLogs } from "../../api.js";
 import { Pagination } from "../../components/pagination/index.js";
+import { usePagerRef } from "../../hooks/use-pager-ref.js";
 import {
   SectionNav,
   ACTIVITY_SECTION,
@@ -12,6 +14,7 @@ import "./activity-page.css";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { authorDisplayMode } from "../home-page/recent-activity.js";
+import { formatDateTime } from "../../utils/date-utils.js";
 
 const PER_PAGE = 20;
 
@@ -25,10 +28,6 @@ const QUARANTINED_ROLE = "default";
 
 function formatType(type) {
   return type.replace(/_/g, " ");
-}
-
-function formatDate(iso) {
-  return new Date(iso).toLocaleString();
 }
 
 function formatValue(value) {
@@ -145,7 +144,7 @@ function renderRow(entry, markQuarantined: boolean, canViewProfiles: boolean) {
         <!-- Masked in the visual suite: seeded with NOW(), so it renders the day
              the run happens on and would rot the baseline overnight. -->
         <span class="activity-row__at" data-visual-volatile
-          >${formatDate(entry.created_at)}</span
+          >${formatDateTime(entry.created_at)}</span
         >
       </div>
       ${renderChange(entry)}
@@ -174,6 +173,7 @@ function ActivityPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [quarantinedOnly, setQuarantinedOnly] = useState(false);
+  const { listRef, scrollToTop } = usePagerRef<HTMLElement>();
 
   useEffect(() => {
     fetchChangeLogs(
@@ -194,6 +194,23 @@ function ActivityPage() {
     setPage(1);
   };
 
+  // Built once so Next/Previous re-orients to the top of the panel either way — clicking
+  // the bottom pager most often leaves the reader below what just changed above them.
+  const pager = Pagination({
+    page,
+    totalPages,
+    onPrevious: () => {
+      setPage(page - 1);
+      scrollToTop();
+    },
+    onNext: () => {
+      setPage(page + 1);
+      scrollToTop();
+    },
+    perPage: PER_PAGE,
+    onPerPageChange: undefined,
+  });
+
   return html`
     <main class="activity-page page-content">
       <div class="page-focal">
@@ -203,7 +220,7 @@ function ActivityPage() {
       <div class="sectioned">
         ${SectionNav("activity", ACTIVITY_SECTION, "/activity/changelogs")}
         <div class="secbody">
-          <section class="panel activity-page__section">
+          <section class="panel activity-page__section" ${ref(listRef)}>
             <div class="panel__cap">
               <b>activity</b>
               <span class="panel__cap-right">
@@ -218,15 +235,9 @@ function ActivityPage() {
                 ${total || ""}
               </span>
             </div>
+            ${pager}
             ${renderList(entries, !quarantinedOnly, canViewProfiles)}
-            ${Pagination({
-              page,
-              totalPages,
-              onPrevious: () => setPage(page - 1),
-              onNext: () => setPage(page + 1),
-              perPage: PER_PAGE,
-              onPerPageChange: undefined,
-            })}
+            ${pager}
           </section>
         </div>
       </div>

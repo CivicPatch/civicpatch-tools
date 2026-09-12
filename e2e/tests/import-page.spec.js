@@ -9,8 +9,9 @@
  * Everything the importer does crosses into Google Sheets, which the e2e stack has no
  * credentials for, so the endpoints are stubbed: this tests the client wiring — that each
  * button reaches the right endpoint and the page moves through import → progress → review →
- * publish — not the import itself. A finished import switches to the History tab on its own,
- * which is where the review panel lives.
+ * publish — not the import itself. The review panel for a finished batch is rendered inline,
+ * grouped under "Past imports" on the same page, once that batch appears in the paged
+ * `/imports/history` response.
  *
  * Note what that does NOT cover: the stubs are a hand-written copy of the API's shape, so they
  * cannot catch the backend changing it. A field removed server-side still breaks the page and
@@ -21,6 +22,7 @@ import { test, expect } from "../fixtures/index.js";
 
 const SHEET = "**/api/v1/imports/sheet";
 const LATEST = "**/api/v1/imports/latest";
+const HISTORY = "**/api/v1/imports/history**";
 const START = "**/api/v1/imports";
 const PROGRESS = "**/api/v1/imports/batch-e2e";
 const REVIEW = "**/api/v1/imports/batch-e2e/review";
@@ -93,12 +95,26 @@ async function json(route, body) {
   });
 }
 
+function historyPage(batches) {
+  return { data: batches, total_items: batches.length, page: 1, total_pages: 1 };
+}
+
+/** The `/history` response has siblings next to `data`, so it can't reuse `json`'s shape. */
+async function historyRoute(route, batches) {
+  await route.fulfill({
+    status: 200,
+    contentType: "application/json",
+    body: JSON.stringify(historyPage(batches)),
+  });
+}
+
 /** Every route the page touches on load, so nothing reaches Google. */
 async function stubIdle(page) {
   await page.route(SHEET, (route) =>
     json(route, { url: "https://docs.google.com/spreadsheets/d/e2e" }),
   );
   await page.route(LATEST, (route) => json(route, null));
+  await page.route(HISTORY, (route) => historyRoute(route, []));
 }
 
 test.describe("Import from the sheet", () => {
@@ -150,6 +166,9 @@ test.describe("Import from the sheet", () => {
   }) => {
     await stubIdle(page);
     await page.route(REVIEW, (route) => json(route, reviewBody([person()])));
+    await page.route(HISTORY, (route) =>
+      historyRoute(route, [progress("succeeded")]),
+    );
 
     // Running on the first poll, finished on the next: the page has to keep asking.
     let polls = 0;
@@ -178,6 +197,9 @@ test.describe("Import from the sheet", () => {
     await stubIdle(page);
     await page.route(LATEST, (route) => json(route, progress("succeeded")));
     await page.route(PROGRESS, (route) => json(route, progress("succeeded")));
+    await page.route(HISTORY, (route) =>
+      historyRoute(route, [progress("succeeded")]),
+    );
     await page.route(REVIEW, (route) =>
       json(
         route,
@@ -198,6 +220,9 @@ test.describe("Import from the sheet", () => {
     await stubIdle(page);
     await page.route(LATEST, (route) => json(route, progress("succeeded")));
     await page.route(PROGRESS, (route) => json(route, progress("succeeded")));
+    await page.route(HISTORY, (route) =>
+      historyRoute(route, [progress("succeeded")]),
+    );
     await page.route(REVIEW, (route) => json(route, reviewBody([person()])));
 
     let published = null;

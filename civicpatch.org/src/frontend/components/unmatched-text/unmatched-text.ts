@@ -1,9 +1,11 @@
 import "./unmatched-text.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
+import { ref } from "lit/directives/ref.js";
 import { useAsyncData } from "../../hooks/use-async-data.js";
 import { fetchUnmatchedText } from "../../api.js";
 import { Pagination } from "../pagination/index.js";
+import { usePagerRef } from "../../hooks/use-pager-ref.js";
 
 // What the triage endpoint returns per row. `text` is the source's own spelling — the most
 // common one where a term appears several ways — because that is what a curator searches the
@@ -42,6 +44,7 @@ const countLabel = (count: number, noun: string) =>
 function UnmatchedText() {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(DEFAULT_PER_PAGE);
+  const { listRef, scrollToTop } = usePagerRef<HTMLElement>();
 
   const { data, error } = useAsyncData<TriagePage>(
     () =>
@@ -52,8 +55,14 @@ function UnmatchedText() {
     [page, perPage],
   );
 
-  const handlePrevious = () => setPage((current: number) => Math.max(1, current - 1));
-  const handleNext = () => setPage((current: number) => current + 1);
+  const handlePrevious = () => {
+    setPage((current: number) => Math.max(1, current - 1));
+    scrollToTop();
+  };
+  const handleNext = () => {
+    setPage((current: number) => current + 1);
+    scrollToTop();
+  };
   // Back to the first page: the row that was at offset 40 is not at offset 40 of a
   // differently sized page, so holding the number would land somewhere arbitrary.
   const handlePerPage = (e: Event) => {
@@ -75,12 +84,24 @@ function UnmatchedText() {
     </p>`;
   }
 
+  // Built once so Next/Previous re-orients to the top of the list either way — clicking
+  // the bottom pager most often leaves the reader below what just changed above them.
+  const pager = Pagination({
+    page,
+    totalPages: data.totalPages,
+    onPrevious: handlePrevious,
+    onNext: handleNext,
+    perPage,
+    onPerPageChange: handlePerPage,
+  });
+
   return html`
-    <div class="unmatched-text">
+    <div class="unmatched-text" ${ref(listRef)}>
       <p class="unmatched-text__hint">
         Label text that matched neither a role nor a designation. Ordered by how many
         jurisdictions it appears in: a term in many towns is one rule that fixes them all.
       </p>
+      ${pager}
       <ul class="unmatched-text__list">
         ${terms.map(
           (term) => html`
@@ -102,14 +123,7 @@ function UnmatchedText() {
           `,
         )}
       </ul>
-      ${Pagination({
-        page,
-        totalPages: data.totalPages,
-        onPrevious: handlePrevious,
-        onNext: handleNext,
-        perPage,
-        onPerPageChange: handlePerPage,
-      })}
+      ${pager}
     </div>
   `;
 }

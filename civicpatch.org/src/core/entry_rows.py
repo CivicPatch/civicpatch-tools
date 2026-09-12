@@ -47,8 +47,18 @@ class ImportStatus(StrEnum):
     UNCHANGED = "unchanged"
 
 
-_REQUIRED = (JURISDICTION, "name", "source_url")
-_OPTIONAL = ("email", "phone", "image", "label")
+_REQUIRED = (JURISDICTION, "name", "source_url", "label")
+_OPTIONAL = ("email", "phone", "image")
+
+# `label` is required so a blank cell is a caught mistake, not silent — a source with no title
+# says so deliberately, with `inherit`, rather than leaving the cell empty.
+#
+# Cannot be resolved here — it needs the person's current open membership, a database read.
+# `services.sheet_import` looks it up by name and substitutes the real label text before
+# parsing continues, so everything downstream sees this exactly as if the source had sent it.
+# A name holding nothing open degrades to blank — the same shape a blank cell would be, if
+# blank were still allowed — so there is no separate "no title at all" sentinel to also support.
+INHERIT = "inherit"
 
 
 class RowError(BaseModel):
@@ -95,6 +105,27 @@ def _optional(value) -> str | None:
     return _clean(value) or None
 
 
+def _handled_jurisdictions(rows: list[dict]) -> set[str]:
+    """Every jurisdiction whose rows all already carry a status — on the raw, unvalidated
+    jurisdiction cell, since this runs before a row is known to parse at all.
+
+    Whole, not row by row: a town where every row already says `imported` is genuinely
+    unchanged, but a town with one cleared row among ten `imported` ones is not — clearing one
+    row is how a volunteer asks for the whole town again (`ImportRow`-level `already_handled`
+    documents the same rule downstream, on rows that did parse).
+    """
+    by_jurisdiction: dict[str, list[dict]] = {}
+    for row in rows:
+        if _is_blank(row):
+            continue
+        by_jurisdiction.setdefault(_clean(row.get(JURISDICTION)), []).append(row)
+    return {
+        jurisdiction
+        for jurisdiction, jurisdiction_rows in by_jurisdiction.items()
+        if all(_clean(row.get("status")) for row in jurisdiction_rows)
+    }
+
+
 def parse_rows(rows: list[dict]) -> tuple[list[ImportRow], list[RowError]]:
     """Every row that parsed, and every reason one did not.
 
@@ -103,12 +134,22 @@ def parse_rows(rows: list[dict]) -> tuple[list[ImportRow], list[RowError]]:
     parsed: list[ImportRow] = []
     errors: list[RowError] = []
 
+    handled = _handled_jurisdictions(rows)
     for offset, row in enumerate(rows):
         line = offset + 2
         # A row with nothing in it is grid, not a row somebody wrote. Sheets returns every line
         # in the used range, so a tab with 4 entries and 140 spare lines otherwise reports 420
         # "required" errors and blocks the import on rows nobody typed.
         if _is_blank(row):
+            continue
+        # Already handled — clearing a row's status is how a volunteer asks for it again, and
+        # doing that on any one row brings the whole town back (see `_handled_jurisdictions`).
+        # Skipped before validation, not just before import: a row that fails validation never
+        # becomes an `ImportRow`, so the existing jurisdiction-level "all handled" check
+        # (`already_handled`, in `services.sheet_import`) never even sees it — and a contract
+        # change made after the row was accepted (a new required column, say) would otherwise
+        # re-reject a row nothing is wrong with, forever, on every run.
+        if _clean(row.get(JURISDICTION)) in handled:
             continue
         row_errors = _row_errors(row, line)
         if row_errors:
@@ -121,6 +162,10 @@ def parse_rows(rows: list[dict]) -> tuple[list[ImportRow], list[RowError]]:
 
 # What a volunteer fills in. `STATUS_COLUMNS` are ours and deliberately excluded below.
 _VOLUNTEER_COLUMNS = _REQUIRED + _OPTIONAL
+
+# Public: `services.sheet_import` marks these on the sheet itself, so a required column reads
+# as required without anyone having to already know the contract.
+REQUIRED_COLUMNS = _REQUIRED
 
 # The header row in full — the single source of truth `services.sheet_import` writes to the
 # sheet itself, so the contract can never drift from what this module actually reads.
@@ -165,6 +210,11 @@ def _row_errors(row: dict, line: int) -> list[RowError]:
     return errors
 
 
+def _label(value: str) -> str:
+    """`inherit` passes through verbatim; resolving it is `services.sheet_import`'s job."""
+    return INHERIT if value.lower() == INHERIT else value
+
+
 def _import_row(row: dict, line: int) -> ImportRow:
     return ImportRow(
         line=line,
@@ -172,7 +222,7 @@ def _import_row(row: dict, line: int) -> ImportRow:
         status=_clean(row.get("status")),
         sighting=Sighting(
             name=_clean(row["name"]),
-            label=_clean(row.get("label")),
+            label=_label(_clean(row["label"])),
             source_url=_clean(row["source_url"]),
             email=_optional(row.get("email")),
             phone=_optional(row.get("phone")),
@@ -217,9 +267,9 @@ def rows_by_jurisdiction(rows: list[ImportRow]) -> dict[str, list[ImportRow]]:
 
 
 def roster_columns(
+    raw_rows: list[dict],
     rows: list[ImportRow],
     errors: list[RowError],
-    row_count: int,
     imported: set[str],
     stamp: str,
 ) -> dict[str, list]:
@@ -232,22 +282,30 @@ def roster_columns(
     which is most of a blocked town, and the reason has to point elsewhere or it reads as a
     fault in a row that is perfectly fine.
 
-    **A row this run did not touch keeps what it already said.** Blanking it would erase the
-    very thing the next run reads to decide it has already been handled — which is a loop: the
-    skip blanks the status, the blank asks for a re-import, the re-import writes it back.
+    **A row this run did not touch keeps what it already said — status *and* timestamp.**
+    `raw_rows` is the fallback source for both, not `rows`: an already-handled jurisdiction is
+    now skipped before parsing even runs (`_handled_jurisdictions`), so its rows never become
+    `ImportRow`s at all, and reading "what it already said" from the parse would just find
+    nothing — the same as a blank cell — and blank it. Reading the sheet's own current cells
+    instead is what keeps status and timestamp from decaying to blank purely because a
+    jurisdiction was skipped, not because a volunteer cleared anything.
     """
-    previous = {row.line: row.status for row in rows}
+    previous_status = {offset + 2: _clean(row.get("status")) for offset, row in enumerate(raw_rows)}
+    previous_stamp = {
+        offset + 2: _clean(row.get("last_import_at")) for offset, row in enumerate(raw_rows)
+    }
     error_by_line = {error.line: error for error in errors}
     jurisdiction_by_line = {row.line: row.jurisdiction_ocdid for row in rows}
     blocked = {error.jurisdiction_ocdid for error in errors}
 
-    # A line the parse produced nothing for is a spare line. Stamping it writes app data into
-    # a row nobody used, and the next run then reads that row as occupied.
-    written = set(previous) | set(error_by_line)
+    # Only a line the parse actually reached this run — imported, blocked, or rejected — gets a
+    # fresh stamp. Anything else (a spare line, or a row skipped as already handled) keeps
+    # whatever timestamp the sheet already had, same as its status.
+    written = {row.line for row in rows} | set(error_by_line)
 
     status, message, stamps = [], [], []
-    for line in range(2, row_count + 2):
-        stamps.append(stamp if line in written else "")
+    for line in range(2, len(raw_rows) + 2):
+        stamps.append(stamp if line in written else previous_stamp.get(line, ""))
         error = error_by_line.get(line)
         jurisdiction = jurisdiction_by_line.get(line) or (
             error.jurisdiction_ocdid if error else ""
@@ -264,8 +322,9 @@ def roster_columns(
             status.append(BLOCKED)
             message.append("another row in this town was rejected")
         else:
-            # Untouched this run — a skipped locality, or a row the parse never reached.
-            status.append(previous.get(line, ""))
+            # Untouched this run — a skipped locality, a row the parse never reached, or a
+            # spare line.
+            status.append(previous_status.get(line, ""))
             message.append("")
 
     return {

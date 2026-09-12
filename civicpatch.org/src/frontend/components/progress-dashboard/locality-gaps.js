@@ -1,14 +1,17 @@
 import { html } from 'lit-html';
 import { component, useState, useEffect } from 'haunted';
+import { ref } from 'lit/directives/ref.js';
 import { fetchJurisdictionsByOcdids } from '../../api.js';
 import { Pagination } from '../pagination/index.js';
 import { jurisdictionOcdidToPath } from "../ocdid-utils.js";
+import { usePagerRef } from "../../hooks/use-pager-ref.ts";
 
 const PAGE_SIZE = 25;
 
 function LocalityGaps({ stats, state }) {
   const [page, setPage] = useState(1);
   const [jurisdictions, setJurisdictions] = useState([]);
+  const { listRef, scrollToTop } = usePagerRef();
 
   if (!stats || !stats.states || !stats.states[state]) return html``;
 
@@ -25,9 +28,30 @@ function LocalityGaps({ stats, state }) {
 
   const nameMap = Object.fromEntries(jurisdictions.map(j => [j.ocdid, j]));
 
+  // Built once so Next/Previous re-orients to the top of the list either way — clicking
+  // the bottom pager most often leaves the reader below what just changed above them.
+  const pager = totalPages > 1 ? html`
+    <nav style="display:flex; gap:0.5rem; align-items:center; margin-top:1rem;">
+      ${Pagination({
+        page,
+        totalPages,
+        onPrevious: () => {
+          setPage(p => p - 1);
+          scrollToTop();
+        },
+        onNext: () => {
+          setPage(p => p + 1);
+          scrollToTop();
+        },
+        onGoToPage: (n) => setPage(n),
+      })}
+    </nav>
+  ` : '';
+
   return html`
-    <div>
+    <div ${ref(listRef)}>
       <small>${notScraped.length} jurisdictions</small>
+      ${pager}
       <ul>
         ${pageOcdids.map(ocdid => {
           const j = nameMap[ocdid];
@@ -36,17 +60,7 @@ function LocalityGaps({ stats, state }) {
             : html`<li>${ocdid}</li>`;
         })}
       </ul>
-      ${totalPages > 1 ? html`
-        <nav style="display:flex; gap:0.5rem; align-items:center; margin-top:1rem;">
-          ${Pagination({
-            page,
-            totalPages,
-            onPrevious: () => setPage(p => p - 1),
-            onNext: () => setPage(p => p + 1),
-            onGoToPage: (n) => setPage(n),
-          })}
-        </nav>
-      ` : ''}
+      ${pager}
     </div>
   `;
 }

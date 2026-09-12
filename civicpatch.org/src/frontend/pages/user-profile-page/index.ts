@@ -8,6 +8,7 @@ import { fetchAdminUser } from "../../api.js";
 import { type AdminUser, userLabel } from "./shared.js";
 import { SectionNav, userSection } from "../../components/section-nav/index.js";
 import "./user-profile-page.css";
+import { formatDateTime } from "../../utils/date-utils.js";
 
 interface UserProfilePageProps {
   target_user_id: string;
@@ -44,7 +45,7 @@ function UserProfilePage({ target_user_id, username }: UserProfilePageProps) {
                     <dt>Last login</dt>
                     <dd>
                       ${user.last_login_at
-                        ? new Date(user.last_login_at).toLocaleString()
+                        ? formatDateTime(user.last_login_at)
                         : "—"}
                     </dd>
                   </dl>

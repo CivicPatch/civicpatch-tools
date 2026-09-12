@@ -6,9 +6,11 @@ full-stack in tests/integration/services/test_sheet_import.py — re-testing it 
 say nothing new and would need five mocks to say it.
 """
 
+from datetime import datetime, timezone
 from unittest.mock import AsyncMock, patch
 
 import pytest
+from core.entry_rows import ImportRow, Sighting
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from lib.auth import get_optional_user
@@ -23,6 +25,18 @@ _EMPTY_PREVIEW = ImportPreview(
     jurisdictions_ready=[],
     jurisdictions_blocked=[],
     rows=0,
+    errors=[],
+)
+_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_test/government"
+_ROW = ImportRow(
+    line=2,
+    jurisdiction_ocdid=_OCDID,
+    sighting=Sighting(name="Ana Reyes", label="Chair", source_url="https://example.gov"),
+)
+_READY_PREVIEW = ImportPreview(
+    jurisdictions_ready=[_OCDID],
+    jurisdictions_blocked=[],
+    rows=1,
     errors=[],
 )
 
@@ -79,7 +93,7 @@ def test_a_second_import_over_one_sheet_is_a_409():
         patch("routers.api.imports.entry_sheet.spreadsheet_id", return_value="abc"),
         patch(
             "routers.api.imports.sheet_import.read_sheet",
-            return_value=SheetRead(rows=[], preview=_EMPTY_PREVIEW),
+            return_value=SheetRead(rows=[_ROW], preview=_READY_PREVIEW),
         ),
         patch(
             "routers.api.imports.changeset_batches.start",
@@ -98,7 +112,7 @@ def test_starting_returns_the_batch_and_defers_the_work():
         patch("routers.api.imports.entry_sheet.spreadsheet_id", return_value="abc"),
         patch(
             "routers.api.imports.sheet_import.read_sheet",
-            return_value=SheetRead(rows=[], preview=_EMPTY_PREVIEW),
+            return_value=SheetRead(rows=[_ROW], preview=_READY_PREVIEW),
         ),
         patch(
             "routers.api.imports.changeset_batches.start",
@@ -114,6 +128,31 @@ def test_starting_returns_the_batch_and_defers_the_work():
     assert response.status_code == 200
     assert response.json()["data"]["batch_id"] == "batch-1"
     task.assert_awaited_once()
+
+
+@pytest.mark.unit
+def test_nothing_to_ingest_creates_no_batch():
+    """Every row already handled or blocked — no batch gets minted, so history stays a record
+    of imports that did something rather than one entry per click."""
+    with (
+        patch("routers.api.imports.entry_sheet.spreadsheet_id", return_value="abc"),
+        patch(
+            "routers.api.imports.sheet_import.read_sheet",
+            return_value=SheetRead(rows=[], preview=_EMPTY_PREVIEW),
+        ),
+        patch(
+            "routers.api.imports.changeset_batches.start", new_callable=AsyncMock
+        ) as start,
+        patch(
+            "routers.api.imports.run_import_task", new_callable=AsyncMock
+        ) as task,
+    ):
+        response = _client().post(_PREFIX)
+
+    assert response.status_code == 200
+    assert response.json()["data"]["batch_id"] is None
+    start.assert_not_awaited()
+    task.assert_not_awaited()
 
 
 @pytest.mark.unit
@@ -185,5 +224,43 @@ def test_latest_is_not_read_as_a_batch_id():
 
     assert response.status_code == 200
     by_id.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_history_is_paged():
+    """The house pagination shape — `page`/`per_page` in, `total_items`/`total_pages` out —
+    not just the raw list `list_recent` returns."""
+    batch = {
+        "id": "batch-1",
+        "status": "succeeded",
+        "items_total": 3,
+        "items_done": 3,
+        "error": None,
+        "started_at": datetime(2026, 1, 1, tzinfo=timezone.utc),
+        "finished_at": datetime(2026, 1, 1, 0, 5, tzinfo=timezone.utc),
+    }
+    with (
+        patch(
+            "routers.api.imports.changeset_batches.count_by_kind",
+            new_callable=AsyncMock,
+            return_value=15,
+        ),
+        patch(
+            "routers.api.imports.changeset_batches.list_recent",
+            new_callable=AsyncMock,
+            return_value=[batch],
+        ) as list_recent,
+    ):
+        response = _client().get(f"{_PREFIX}/history?page=2&per_page=5")
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["total_items"] == 15
+    assert body["page"] == 2
+    assert body["total_pages"] == 3
+    assert body["data"][0]["batch_id"] == "batch-1"
+    list_recent.assert_awaited_once()
+    assert list_recent.await_args.kwargs["limit"] == 5
+    assert list_recent.await_args.kwargs["offset"] == 5
 
 
