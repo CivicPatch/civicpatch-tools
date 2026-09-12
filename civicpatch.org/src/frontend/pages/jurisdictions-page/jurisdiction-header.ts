@@ -27,6 +27,10 @@ const STATUS = Object.freeze({
 const daysSince = (iso: string) =>
   (Date.now() - new Date(iso).getTime()) / 86_400_000;
 
+export const MODE_READ = "read";
+export const MODE_EDIT = "edit";
+export type PageMode = typeof MODE_READ | typeof MODE_EDIT;
+
 // An inactive jurisdiction never reaches this page — `get_jurisdiction` filters on it and the
 // route 404s — so untracked here means the one remaining case: no site to scrape.
 function statusOf(hasUrl: boolean, isScraped: boolean, publishedAt?: string | null) {
@@ -47,6 +51,24 @@ export interface JurisdictionHeaderProps {
   isScrapeBlocked: boolean;
   isRunInProgress: boolean;
   onScrapeClick: () => void;
+  canToggleMode: boolean;
+  mode: PageMode;
+  onModeChange: (mode: PageMode) => void;
+}
+
+function renderModeToggle(mode: PageMode, onModeChange: (mode: PageMode) => void) {
+  return html`
+    <span class="jurisdiction-page__mode-toggle">
+      <button
+        class="jurisdiction-page__mode-toggle-btn ${mode === MODE_READ ? "jurisdiction-page__mode-toggle-btn--active" : ""}"
+        @click=${() => onModeChange(MODE_READ)}
+      >View</button>
+      <button
+        class="jurisdiction-page__mode-toggle-btn ${mode === MODE_EDIT ? "jurisdiction-page__mode-toggle-btn--active" : ""}"
+        @click=${() => onModeChange(MODE_EDIT)}
+      >Edit</button>
+    </span>
+  `;
 }
 
 function issueUrl(name: string, ocdid: string) {
@@ -81,6 +103,9 @@ export function renderJurisdictionHeader(props: JurisdictionHeaderProps) {
     isScrapeBlocked,
     isRunInProgress,
     onScrapeClick,
+    canToggleMode,
+    mode,
+    onModeChange,
   } = props;
 
   const status = statusOf(hasUrl, isScraped, publishedAt);
@@ -109,6 +134,7 @@ export function renderJurisdictionHeader(props: JurisdictionHeaderProps) {
       </div>
 
       <div class="jurisdiction-page__actions">
+        ${canToggleMode ? renderModeToggle(mode, onModeChange) : nothing}
         ${name && ocdid
           ? html`<a
               class="btn-quiet"

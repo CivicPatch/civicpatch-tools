@@ -10,6 +10,8 @@ async def get_maps_coverage() -> dict:
 
     County counts come from parent_ocdids stored in jurisdictions.data; the array
     contains all OCD ancestors (county, state, etc.) so we filter to county OCDs.
+    A county with no local jurisdictions beneath it (e.g. Hawaii) counts itself as the
+    coverage unit instead — otherwise it never appears, since nothing lists it as a parent.
     State counts are computed directly from j.state.
 
     - `covered`       = has ≥1 current people row (has-data)
@@ -50,6 +52,27 @@ async def get_maps_coverage() -> dict:
         """)
         county_rows = await cur.fetchall()
 
+        # Every county's own row, as a coverage unit of one. Used as a fallback below for
+        # counties with no local jurisdictions beneath them (e.g. Hawaii, where the county
+        # itself is the unit of government) — those never appear in county_rows above,
+        # since nothing lists them as a parent_ocdid. Mirrors dashboard.py's "'counties' is
+        # a real local tier" fix.
+        await cur.execute(f"""
+            SELECT
+                j.state,
+                j.jurisdiction_ocdid AS county_ocdid,
+                1 AS total,
+                (p.jurisdiction_ocdid IS NOT NULL)::int AS covered,
+                (p.jurisdiction_ocdid IS NOT NULL
+                 AND {LAST_COLLECTED_AT} >= {FRESH_SINCE_SQL})::int AS covered_fresh
+            FROM jurisdictions j
+            {LAST_COLLECTED_JOIN}
+            LEFT JOIN ({has_people_subquery}) p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
+            WHERE j.status = 'active'
+              AND j.level = 'counties'
+        """)
+        own_county_rows = await cur.fetchall()
+
         # State-level counts (derived from j.state — no need to store in county_ocdids)
         await cur.execute(f"""
             SELECT
@@ -81,6 +104,16 @@ async def get_maps_coverage() -> dict:
 
     for state, county_ocdid, total, covered, covered_fresh in county_rows:
         if state in result:
+            result[state]["counties"][county_ocdid] = {
+                "total": total,
+                "covered": covered,
+                "covered_fresh": covered_fresh,
+            }
+
+    # Fallback only — a county with local children keeps the rollup above, which already
+    # counts each one; a childless county (no entry yet) uses its own row instead.
+    for state, county_ocdid, total, covered, covered_fresh in own_county_rows:
+        if state in result and county_ocdid not in result[state]["counties"]:
             result[state]["counties"][county_ocdid] = {
                 "total": total,
                 "covered": covered,
@@ -160,6 +193,7 @@ async def get_local_status_for_state(state: str) -> dict[str, str]:
         FROM jurisdictions j
         {LAST_COLLECTED_JOIN}
         WHERE j.status = 'active'
+          AND j.level = 'local'
           AND j.state = %s
     """
     pool = await get_pool()

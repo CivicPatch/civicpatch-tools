@@ -29,14 +29,20 @@ import { sortByRoleRank, computeLeadIds } from "./person-card-grid-model.js";
 
 const AVATAR_SIZE = "4rem";
 
+function renderFieldValue(field: FieldSpec, list: string[]) {
+  if (field.key === "urls")
+    return list.map((url, i) => html`${i > 0 ? ", " : ""}${renderLink(url, url, PERSON_LINK_TARGET)}`);
+  if (field.key === "emails")
+    return list.map((email, i) => html`${i > 0 ? ", " : ""}<a class="review-preview__link" href="mailto:${email}">${email}</a>`);
+  if (field.key === "phones")
+    return list.map((phone, i) => html`${i > 0 ? ", " : ""}<a class="review-preview__link" href="tel:${phone}">${phone}</a>`);
+  return list.join(", ");
+}
+
 function renderFieldRow(field: FieldSpec, list: string[]) {
   return html`<div class="person-card-grid__field">
     <span class="person-card-grid__field-label">${field.label}</span>
-    <span class="person-card-grid__field-value">
-      ${field.key === "urls"
-        ? list.map((url, i) => html`${i > 0 ? ", " : ""}${renderLink(url, url, PERSON_LINK_TARGET)}`)
-        : list.join(", ")}
-    </span>
+    <span class="person-card-grid__field-value">${renderFieldValue(field, list)}</span>
   </div>`;
 }
 

@@ -150,6 +150,76 @@ def test_navigate_to_done_auto_ends_session(client):
 
 
 @pytest.mark.unit
+def test_navigate_to_open_entry_returns_card(client):
+    # Regression: navigate_to_entry's dict was previously read via a stale
+    # "goal" key after a rename to "session_length", 500ing every real
+    # navigation. This exercises the success branch instead of short-
+    # circuiting through "done", so a future key mismatch fails here.
+    test_changeset_id = "changeset-id-789"
+    test_ocdid = "ocd-jurisdiction/country:us/state:ca/place:oakland/government"
+    with (
+        patch(
+            "database.review_session_navigation.navigate_to_entry",
+            new_callable=AsyncMock,
+            return_value={
+                "changeset_id": test_changeset_id,
+                "jurisdiction_ocdid": test_ocdid,
+                "entry_number": 1,
+                "resolved_count": 0,
+                "session_length": 10,
+                "total": 10,
+                "has_next": True,
+            },
+        ),
+        patch(
+            "database.review_pool.get_changeset_for_review",
+            new_callable=AsyncMock,
+            return_value={
+                "changeset_id": test_changeset_id,
+                "jurisdiction": {
+                    "ocdid": test_ocdid,
+                    "name": "Oakland",
+                    "path": test_ocdid,
+                    "website_url": "https://oaklandca.gov",
+                },
+                "pr": {"url": "https://github.com/org/repo/pull/42", "status": "open"},
+            },
+        ),
+        patch(
+            "database.people.get_roster",
+            new_callable=AsyncMock,
+            return_value=[],
+        ),
+        patch(
+            "routers.api.review_sessions.proposed_roster_and_source_values",
+            new_callable=AsyncMock,
+            return_value=([], {}),
+        ),
+        patch(
+            "database.jurisdictions.has_ever_collected",
+            new_callable=AsyncMock,
+            return_value=None,
+        ),
+        patch(
+            "routers.api.review_sessions.proposals_for_requests",
+            new_callable=AsyncMock,
+            return_value={},
+        ),
+    ):
+        response = client.post(
+            f"/review-sessions/{TEST_SESSION_ID}/navigate",
+            json={"entry_number": 1},
+        )
+
+    assert response.status_code == 200
+    data = response.json()["data"]
+    assert data["changeset_id"] == test_changeset_id
+    assert data["total"] == 10
+    assert data["has_next"] is True
+    assert "goal" not in data
+
+
+@pytest.mark.unit
 def test_get_active_session_returns_null_when_none(client):
     with patch(
         "database.review_sessions.get_active_review_session",

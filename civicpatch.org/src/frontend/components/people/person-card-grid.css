@@ -16,7 +16,7 @@
 }
 
 .person-card-grid__name {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-base);
   line-height: 1.2;
   overflow-wrap: anywhere;
   margin-bottom: 0.35rem;
@@ -47,7 +47,7 @@
    throughout the app; only the name stays on the ambient sans/display face. */
 .person-card-grid__role {
   font-family: var(--font-mono);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   color: var(--text-muted);
   line-height: 1.25;
   margin-bottom: 0.3rem;
@@ -61,7 +61,7 @@
 }
 
 .person-card-grid__fields {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
 }
 
 .person-card-grid__field {
@@ -72,9 +72,9 @@
 
 .person-card-grid__field-label {
   flex: none;
-  width: 4.5rem;
+  width: 5.25rem;
   font-family: var(--font-mono);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   color: var(--text-muted);
   text-transform: lowercase;
 }

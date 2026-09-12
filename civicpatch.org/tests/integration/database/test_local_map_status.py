@@ -58,7 +58,7 @@ async def clean_sentinels():
     await _wipe()
 
 
-async def _insert_jurisdiction(ocdid, *, url=None, collected_at=None):
+async def _insert_jurisdiction(ocdid, *, url=None, collected_at=None, level="local"):
     data = json.dumps({"url": url} if url else {})
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -66,9 +66,9 @@ async def _insert_jurisdiction(ocdid, *, url=None, collected_at=None):
             """
             INSERT INTO jurisdictions
                 (jurisdiction_ocdid, state, level, data, updated_at, status)
-            VALUES (%s, 'zz', 'local', %s, now(), 'active')
+            VALUES (%s, 'zz', %s, %s, now(), 'active')
             """,
-            (ocdid, data),
+            (ocdid, level, data),
         )
         await conn.commit()
 
@@ -153,3 +153,16 @@ async def test_no_people_no_url_is_untracked():
     status = await get_local_status_for_state("zz")
 
     assert status["zz-untracked"] == MapStatus.UNTRACKED
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_excludes_county_level_jurisdictions():
+    # This endpoint only ever colors the map's 'local' source-layer (see api.js's
+    # fetchLocalStatus / map-base.ts's q()) — a county-level row here would just be
+    # dead weight in the response, never a rendered feature.
+    await _insert_jurisdiction("zz-county", url="https://c", level="counties")
+
+    status = await get_local_status_for_state("zz")
+
+    assert "zz-county" not in status

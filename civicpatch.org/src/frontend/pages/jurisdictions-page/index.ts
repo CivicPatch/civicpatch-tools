@@ -17,7 +17,7 @@ import "./scrape-modal/scrape-modal.js";
 import "./scrape-modal/name-config-form.js";
 
 import { triggerPipelineRun, fetchJurisdictionInFlight, patchJurisdictionData } from "../../api.js";
-import { renderJurisdictionHeader } from "./jurisdiction-header.js";
+import { renderJurisdictionHeader, MODE_READ, MODE_EDIT, type PageMode } from "./jurisdiction-header.js";
 import "./roster-editor.js";
 import {
   pendingReviews,
@@ -99,6 +99,9 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
   const isSignedIn = !!user?.authenticated;
   const { people, isLoading: peopleLoading } = usePeople(jurisdiction_ocdid);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
+  const [mode, setMode] = useState<PageMode>(MODE_READ);
+  const hasEditPermission = !!permissions.can_edit_jurisdiction_data;
+  const editModeActive = hasEditPermission && mode === MODE_EDIT;
   // Only what is still in flight, plus two scalars. This used to fetch every changeset the
   // jurisdiction has ever had in order to derive four things from the array.
   const [inFlight, setInFlight] = useState<InFlightEntry[]>([]);
@@ -188,6 +191,9 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
         isScrapeBlocked: peopleBlockers.length > 0,
         isRunInProgress: !!isRunInProgress || isTriggering,
         onScrapeClick: () => setScrapeModalOpen(true),
+        canToggleMode: hasEditPermission,
+        mode,
+        onModeChange: setMode,
       })}
 
       ${renderDataFlag(jurisdictionData?.data)}
@@ -204,7 +210,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
             <div>
               ${renderDetailsSection(
                 jurisdictionData,
-                !!permissions.can_edit_jurisdiction_data && !jurisdictionBlockers.length,
+                editModeActive && !jurisdictionBlockers.length,
                 handleJurisdictionSave,
                 jurisdictionEditBlockedReason(jurisdictionBlockers),
               )}
@@ -215,7 +221,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
               <civ-roster-editor
                 .people=${people}
                 .jurisdictionOcdid=${jurisdiction_ocdid}
-                .canEdit=${!!permissions.can_edit_jurisdiction_data && !peopleBlockers.length}
+                .canEdit=${editModeActive && !peopleBlockers.length}
                 .isLoading=${peopleLoading}
                 .blockedReason=${editingBlockedReason(peopleBlockers)}
                 .onPublished=${() => window.location.reload()}
@@ -225,7 +231,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
                 <div class="panel__cap"><b>Posts</b></div>
                 <civ-posts-list
                   .jurisdictionOcdid=${jurisdiction_ocdid}
-                  .canEdit=${!!permissions.can_edit_jurisdiction_data && !peopleBlockers.length}
+                  .canEdit=${editModeActive && !peopleBlockers.length}
                 ></civ-posts-list>
               </section>
             </div>

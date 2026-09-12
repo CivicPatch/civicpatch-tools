@@ -64,6 +64,14 @@
   color: var(--text-muted);
   margin-right: auto;
 }
+/* --text-muted on the --editor-state-tinted head fails WCAG AA in every theme (as low as
+   1.91:1 in nord-dark) — the tint pushes the background luminance toward the muted text's
+   own, unlike the plain --surface --text-muted was tuned against. --text-default clears
+   4.5:1 everywhere the tint appears. */
+.person-editor__head .editor-summary,
+.person-editor__head .person-editor__action-btn {
+  color: var(--text-default);
+}
 .person-editor__head-main .person-editor__actions {
   margin-top: 0;
   margin-left: auto;
