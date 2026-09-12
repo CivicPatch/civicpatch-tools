@@ -98,32 +98,6 @@
     text-align: right;
 }
 
-.run-row__cancel {
-    font-family: var(--font-mono);
-    font-size: var(--font-size-xs);
-    padding: 0.1rem 0.4rem;
-    width: auto;
-    margin: 0;
-    border: 1px solid transparent;
-    border-radius: 0;
-    background: none;
-    box-shadow: none;
-    color: var(--error);
-    cursor: pointer;
-}
-
-.run-row__cancel:hover:not([disabled]) {
-    background: var(--error);
-    color: var(--bg);
-    border-color: var(--error);
-}
-
-.run-row__cancel[disabled] {
-    color: var(--text-muted);
-    cursor: not-allowed;
-    opacity: 0.5;
-}
-
 @media (max-width: 720px) {
     .run-row {
         grid-template-columns: 1fr auto;

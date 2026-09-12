@@ -12,7 +12,7 @@ import {
   type FieldSpec,
 } from "../fields/field-model.js";
 
-const DETAIL_FIELDS = FIELD_SCHEMA.filter(
+export const DETAIL_FIELDS = FIELD_SCHEMA.filter(
   (field) =>
     !["image", "name", "labels", POST_FIELD].includes(field.key),
 );
@@ -26,7 +26,7 @@ const FIELD_ICON: Record<string, string> = {
   urls: "link",
 };
 
-const SOURCES_KEY = "source_urls";
+export const SOURCES_KEY = "source_urls";
 
 export type SourceMap = Map<string, { number: number; colorClass: string }>;
 
@@ -44,14 +44,14 @@ export function sourceMapFor(records: DiffRecord[]): SourceMap {
   return buildSourceUrlMap(seen);
 }
 
-function values(record: DiffRecord, field: FieldSpec): string[] {
+export function values(record: DiffRecord, field: FieldSpec): string[] {
   const value = diffValue(record, field);
   if (Array.isArray(value)) return value.filter(Boolean).map(String);
   const text = String(value ?? "").trim();
   return text ? [text] : [];
 }
 
-function renderLink(url: string, label: unknown, target: string, extraClass = "") {
+export function renderLink(url: string, label: unknown, target: string, extraClass = "") {
   return html`<a
     class="review-preview__link ${extraClass}"
     href=${ensureUrl(url)}
@@ -61,7 +61,7 @@ function renderLink(url: string, label: unknown, target: string, extraClass = ""
   >`;
 }
 
-function renderSources(record: DiffRecord, sources: SourceMap) {
+export function renderSources(record: DiffRecord, sources: SourceMap) {
   const urls = (record?.source_urls ?? []).filter(Boolean);
   if (!urls.length) return nothing;
   return html`<span class="review-preview__value review-preview__value--sources">
@@ -94,7 +94,7 @@ export function renderValues(record: DiffRecord, sources: SourceMap) {
         <span class="visually-hidden">${field.label}</span>
         <span class="review-preview__value-text">
           ${field.key === "urls"
-            ? list.map((url) => renderLink(url, url, PERSON_LINK_TARGET))
+            ? list.map((url, i) => html`${i > 0 ? ", " : ""}${renderLink(url, url, PERSON_LINK_TARGET)}`)
             : list.join(", ")}
         </span>
       </span>`,

@@ -1,6 +1,7 @@
 import "./posts-list.css";
 import "./post-edit.js";
 import "./post-add.js";
+import "../action-btn/action-btn.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { fetchPosts, fetchMemberships, fetchRoles } from "../../api.js";
@@ -37,7 +38,7 @@ const renderPost = (post: PostRow, canEdit: boolean, onEdit: (id: string) => voi
         : html`<span class="posts-list__untracked" title="Recorded, but a roster that stops naming its holder will not ask for review">untracked</span>`}
     </span>
     ${canEdit
-      ? html`<button class="posts-list__edit" @click=${() => onEdit(post.id)}>Edit</button>`
+      ? html`<button class="civ-action-btn" @click=${() => onEdit(post.id)}>Edit</button>`
       : ""}
   </li>
 `;
@@ -111,7 +112,7 @@ function PostsList(host: PostsListHost) {
   const controls = html`
     <div class="posts-list__controls">
       ${canEdit
-        ? html`<button class="posts-list__add" @click=${handleAddPost}>Add post</button>`
+        ? html`<button class="civ-action-btn" @click=${handleAddPost}>Add post</button>`
         : ""}
     </div>
   `;

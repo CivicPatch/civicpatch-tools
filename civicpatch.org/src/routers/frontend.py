@@ -209,9 +209,9 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     # 404ing, because it was the change log's own URL until this split.
     @router.get("/activity", response_class=HTMLResponse, include_in_schema=False)
     async def activity_index(request: Request):
-        return RedirectResponse("/activity/changelogs", status_code=303)
+        return RedirectResponse("/activity/all-activity", status_code=303)
 
-    @router.get("/activity/changelogs", response_class=HTMLResponse, include_in_schema=False)
+    @router.get("/activity/all-activity", response_class=HTMLResponse, include_in_schema=False)
     async def activity_page(
         request: Request, user: dict = Depends(require_page_permission("can_view_activity_page"))
     ):
@@ -229,7 +229,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     ):
         return templates.TemplateResponse("pages/imports.html", {"request": request, "user": user})
 
-    @router.get("/activity/changesets", response_class=HTMLResponse, include_in_schema=False)
+    @router.get("/activity/calendar", response_class=HTMLResponse, include_in_schema=False)
     async def changesets_page(
         request: Request, user: dict = Depends(require_page_permission("can_view_activity_page"))
     ):

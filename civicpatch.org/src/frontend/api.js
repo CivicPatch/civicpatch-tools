@@ -815,6 +815,13 @@ export const fetchStateRollup = async (windowDays) =>
 export const fetchStateCalendar = async (windowDays) =>
   summariesRequest(`/calendar?window_days=${windowDays}`);
 
+export const fetchElections = async () => {
+  const res = await fetch(`${API_URL}/api/v1/elections`, { credentials: "include" });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(parseSaveError(body, res.status));
+  return body.data;
+};
+
 export const fetchStateSpend = async (windowDays) => {
   const res = await fetch(
     `${API_URL}/api/v1/pipeline_runs/spend?window_days=${windowDays}`,

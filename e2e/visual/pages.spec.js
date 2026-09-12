@@ -67,12 +67,12 @@ const PAGES = [
       await page.locator("dialog[open]").waitFor();
     },
   },
-  { name: "activity", path: "/activity/changelogs" },
+  { name: "activity", path: "/activity/all-activity" },
   // Maintainer, so the capture includes the scrape control the page carries; a default-role
   // reader sees the same page without it.
   {
     name: "changesets",
-    path: "/activity/changesets",
+    path: "/activity/calendar",
     role: "maintainer",
   },
   { name: "settings", path: "/settings" },

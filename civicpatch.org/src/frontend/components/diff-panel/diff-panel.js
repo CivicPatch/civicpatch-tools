@@ -30,7 +30,7 @@ const DiffPanel = ({ data }) => {
           <span class="diff-person__name">${person.name || "—"}</span>
           ${renderSourceLinks(person)}
         </div>
-        <table class="diff-person__fields">
+        <table class="diff-person__fields striped">
           ${FIELDS.filter(({ key }) => key !== "name").map(({ key, label }) => {
             const val = getFieldValue(person, key);
             if (!val) return "";
@@ -52,7 +52,7 @@ const DiffPanel = ({ data }) => {
           <span class="diff-person__name">${person.name || "—"}</span>
           ${renderSourceLinks(person)}
         </div>
-        <table class="diff-person__fields">
+        <table class="diff-person__fields striped">
           ${FIELDS.filter(({ key }) => key !== "name").map(({ key, label }) => {
             const val = getFieldValue(person, key);
             if (!val) return "";
@@ -75,7 +75,7 @@ const DiffPanel = ({ data }) => {
           <span class="diff-person__name">${person.name || from?.name || "—"}</span>
           ${renderSourceLinks(person)}
         </div>
-        <table class="diff-person__fields">
+        <table class="diff-person__fields striped">
           ${fields.map(({ key, label }) => html`<tr>
             <td class="diff-field__label">${label}</td>
             <td class="diff-field__before"><del>${displayValue(key, getFieldValue(from, key))}</del></td>

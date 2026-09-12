@@ -24,7 +24,7 @@ function PeopleBySource(host: PeopleBySourceHost) {
   }
 
   return html`
-    <table class="people-by-source" role="grid">
+    <table class="people-by-source striped" role="grid">
       <thead>
         <tr>
           <th>Name</th>

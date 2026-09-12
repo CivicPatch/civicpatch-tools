@@ -122,7 +122,7 @@ const DataPanel = ({ entry }) => {
             >${showUnchanged ? "Hide" : `Show ${unchangedRows.length}`} unchanged</button>`
           : ""}
       </div>
-      <div class="diff-table__wrapper"><table class="diff-table">
+      <div class="diff-table__wrapper"><table class="diff-table striped">
         <colgroup>
           <col class="col-name" />
           <col class="col-before" />

@@ -41,7 +41,7 @@
    add an icon of your own. */
 .tl-entry__summary {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.6rem;
   padding: 0.55rem 0.2rem;
   line-height: 1.5;

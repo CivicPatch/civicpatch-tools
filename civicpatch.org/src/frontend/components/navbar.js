@@ -62,7 +62,7 @@ function directNavItems(permissions) {
   if (permissions?.can_view_reviews_page)
     items.push({ label: "overview", href: "/review" });
   if (permissions?.can_view_activity_page)
-    items.push({ label: "activity", href: "/activity/changelogs" });
+    items.push({ label: "activity", href: "/activity/all-activity" });
   if (permissions?.can_view_queue_page)
     items.push({ label: "manage", href: "/bulk-review" });
   if (permissions?.can_manage_roles)
@@ -117,7 +117,7 @@ function renderAuthedLinks(user, currentPath) {
     ${user.permissions?.can_view_activity_page
       ? html`<civ-nav-group
           .label=${"activity"}
-          .href=${"/activity/changelogs"}
+          .href=${"/activity/all-activity"}
           .active=${isActivePath(currentPath, "/activity")}
           .items=${ACTIVITY_SECTION}
         ></civ-nav-group>`

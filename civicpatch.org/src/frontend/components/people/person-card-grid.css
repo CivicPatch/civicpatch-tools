@@ -1,0 +1,86 @@
+@layer components {
+.person-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr));
+  gap: 0.6rem;
+}
+
+.person-card-grid__card {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.7rem;
+}
+
+.person-card-grid__card:hover {
+  border-color: var(--text-default);
+}
+
+.person-card-grid__name {
+  font-size: var(--font-size-md);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  margin-bottom: 0.35rem;
+}
+
+/* The avatar floats so the role line and field rows below it wrap around it, rather than
+   avatar and text living in two separate fixed columns. */
+.person-card-grid__body::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Rounded square, not a circle — the same --radius every other card/button in the app uses,
+   not a bespoke value. Mono: person-image's initials fallback sets no font of its own, and
+   every other avatar-initials/chrome element in this panel (.panel__cap above it) is mono. */
+.person-card-grid__avatar {
+  float: left;
+  display: block;
+  margin: 0 0.5rem 0.3rem 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  font-family: var(--font-mono);
+}
+
+/* Mono, like every other role/label line in this panel (.posts-list__role-name,
+   .panel__cap) — the name is content, the role is metadata, and metadata is mono
+   throughout the app; only the name stays on the ambient sans/display face. */
+.person-card-grid__role {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  line-height: 1.25;
+  margin-bottom: 0.3rem;
+}
+
+/* A role that outranks the page's plurality role (person-card-grid-model.ts) is called out in
+   accent, so it reads at a glance instead of only on a second pass through the text. */
+.person-card-grid__role--lead {
+  color: var(--action);
+  font-weight: 600;
+}
+
+.person-card-grid__fields {
+  font-size: var(--font-size-sm);
+}
+
+.person-card-grid__field {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.person-card-grid__field-label {
+  flex: none;
+  width: 4.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  text-transform: lowercase;
+}
+
+.person-card-grid__field-value {
+  color: var(--text-default);
+  overflow-wrap: anywhere;
+}
+}

@@ -103,26 +103,6 @@ tbody tr:hover td {
   background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
-/* Diff row semantics — shared by all diff tables.
-   The ins/del backgrounds are 10% alpha, which reads as almost nothing across a
-   full table row; mixed at 22% the row is scannable while the text on top stays
-   legible. Same hues as everywhere else, so green and red keep their meaning. */
-tr.row--added td,
-.row--added td {
-  background: color-mix(in srgb, var(--diff-added) 22%, transparent);
-}
-tr.row--removed td,
-.row--removed td {
-  background: color-mix(in srgb, var(--diff-removed) 22%, transparent);
-}
-tr.row--unchanged,
-.row--unchanged {
-  opacity: 0.5;
-}
-td.cell--changed {
-  background: var(--info-bg);
-}
-
 ins {
   text-decoration: none;
   color: var(--text);

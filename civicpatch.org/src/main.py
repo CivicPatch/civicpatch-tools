@@ -10,6 +10,7 @@ import routers.api.blog as api_blog_router
 import routers.api.activity as api_activity_router
 import routers.api.coverage as api_coverage_router
 import routers.api.data as api_data_router
+import routers.api.elections as api_elections_router
 import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.leaderboard as api_leaderboard_router
 import routers.api.assertions as api_assertions_router
@@ -272,6 +273,13 @@ app.include_router(
     api_blog_router.get_router(),
     prefix="/api/v1/blog",
     tags=["blog"],
+    dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
+)
+
+app.include_router(
+    api_elections_router.get_router(),
+    prefix="/api/v1/elections",
+    tags=["elections"],
     dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
 )
 

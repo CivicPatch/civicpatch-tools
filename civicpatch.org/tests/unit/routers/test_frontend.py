@@ -271,14 +271,14 @@ def test_activity_redirects_to_the_change_log(permissions_client):
     response = client.get("/activity")
 
     assert response.status_code == 303
-    assert response.headers["location"] == "/activity/changelogs"
+    assert response.headers["location"] == "/activity/all-activity"
 
 
 @pytest.mark.unit
 def test_the_changesets_page_renders_for_a_maintainer(permissions_client):
     permissions_client.dependency_overrides[get_optional_user] = _maintainer
     client = TestClient(permissions_client)
-    response = client.get("/activity/changesets")
+    response = client.get("/activity/calendar")
 
     assert response.status_code == 200
     assert "civ-changeset-summaries" in response.text
@@ -296,7 +296,7 @@ def test_the_changesets_page_is_open_to_any_signed_in_user(permissions_client):
         user_id="user-d1",
     )
     client = TestClient(permissions_client)
-    response = client.get("/activity/changesets")
+    response = client.get("/activity/calendar")
 
     assert response.status_code == 200
 
@@ -305,7 +305,7 @@ def test_the_changesets_page_is_open_to_any_signed_in_user(permissions_client):
 def test_the_changesets_page_is_closed_to_signed_out_visitors(permissions_client):
     permissions_client.dependency_overrides[get_optional_user] = lambda: None
     client = TestClient(permissions_client, follow_redirects=False)
-    response = client.get("/activity/changesets")
+    response = client.get("/activity/calendar")
 
     assert response.status_code == 303
     assert response.headers["location"] == "/"

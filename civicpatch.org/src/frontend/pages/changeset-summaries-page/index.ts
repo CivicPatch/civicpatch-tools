@@ -7,14 +7,16 @@
 import { component, useEffect, useState } from "haunted";
 import { html, nothing } from "lit-html";
 import "./changeset-summaries.css";
-import { fetchStateCalendar, fetchStateRollup } from "../../api.js";
+import { fetchElections, fetchStateCalendar, fetchStateRollup } from "../../api.js";
 import {
   dayKey,
+  maxDailyTotal,
   renderDay,
   renderScale,
   windowDays,
   type CalendarDay,
 } from "./calendar.js";
+import { renderElections, type Election } from "./elections.js";
 import { SectionNav, ACTIVITY_SECTION } from "../../components/section-nav/index.js";
 import { hasPickedEverything, isShown, toggle } from "./selection.js";
 
@@ -109,12 +111,15 @@ function renderFigure(value: number, label: string, tone = "", title = label) {
 
 function renderRow(row: StateRollup, calendar: Map<string, CalendarDay>, days: string[]) {
   const stale = row.oldest_days >= STALE_DAYS ? "cs-figure--alert" : "";
+  const maxTotal = maxDailyTotal(calendar, row.state, days);
   return html`
     <div class="cs-row">
       <span class="cs-row__state">${row.state}</span>
       ${renderFigure(row.to_review, "to review", stale, queueTitle(row))}
       <span class="cs-cal">
-        ${days.map((date) => renderDay(calendar.get(dayKey(row.state, date)), date, row.state))}
+        ${days.map((date) =>
+          renderDay(calendar.get(dayKey(row.state, date)), date, row.state, maxTotal),
+        )}
       </span>
       ${renderFigure(row.published, "published")}
       ${renderFigure(row.dismissed, "dismissed", row.dismissed ? "cs-figure--alert" : "")}
@@ -218,6 +223,7 @@ function CivChangesetSummaries() {
   // Independent of `sortBy`, which is what makes a selection survive a sort change.
   const [picked, setPicked] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [elections, setElections] = useState<Election[]>([]);
 
   useEffect(() => {
     Promise.all([fetchStateRollup(WINDOW_DAYS), fetchStateCalendar(WINDOW_DAYS)])
@@ -226,6 +232,14 @@ function CivChangesetSummaries() {
         setCalendar(new Map(days.map((d) => [dayKey(d.state, d.day), d])));
       })
       .catch((err: Error) => setError(err.message));
+  }, []);
+
+  // Independent of the rollup/calendar fetch above and its own error state — a broken
+  // elections.yaml shouldn't take down the rest of the page, this section just disappears.
+  useEffect(() => {
+    fetchElections()
+      .then(setElections)
+      .catch(() => setElections([]));
   }, []);
 
   if (error) return html`<main class="cs-page page-content"><p class="cs-empty">${error}</p></main>`;
@@ -243,7 +257,7 @@ function CivChangesetSummaries() {
       </div>
 
       <div class="sectioned">
-      ${SectionNav("activity", ACTIVITY_SECTION, "/activity/changesets")}
+      ${SectionNav("activity", ACTIVITY_SECTION, "/activity/calendar")}
       <div class="secbody">
 
       ${renderLifecycle(shown)}
@@ -285,6 +299,8 @@ function CivChangesetSummaries() {
 
       ${renderScale(days)}
       <div>${shown.map((row) => renderRow(row, calendar, days))}</div>
+
+      ${renderElections(elections.filter((e) => isShown(picked, e.state)))}
       </div>
       </div>
     </main>

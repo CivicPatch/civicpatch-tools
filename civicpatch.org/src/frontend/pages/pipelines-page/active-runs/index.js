@@ -1,5 +1,6 @@
 import "../../../components/panel/panel.css";
 import "./active-runs.css";
+import "../../../components/action-btn/action-btn.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { ref } from "lit/directives/ref.js";
@@ -53,7 +54,7 @@ function ActiveRuns({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange
         <span class="run-row__pct">${job.progress ?? 0}%</span>
         <span class="run-row__age">${durationBetween(job.created_at, job.updated_at)}</span>
         ${canCancel
-          ? html`<button class="run-row__cancel" ?disabled=${cancelling}
+          ? html`<button class="civ-action-btn civ-action-btn--danger" ?disabled=${cancelling}
               @click=${() => handleCancel(job.pipeline_run_id)}
             >${cancelling ? "cancelling" : "cancel"}</button>`
           : html`<span></span>`}

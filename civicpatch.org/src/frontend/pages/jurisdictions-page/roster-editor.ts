@@ -206,6 +206,7 @@ function RosterEditor({
       onOpenPerson: canEdit ? handleOpenPerson : null,
       openPersonId: canEdit ? openPersonId : null,
       editorFor: canEdit ? editorFor : null,
+      roles,
     })}
     ${publishError
       ? html`<p style="color: var(--diff-removed);">${publishError}</p>`

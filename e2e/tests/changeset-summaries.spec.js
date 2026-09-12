@@ -19,7 +19,7 @@
 
 import { test, expect } from "../fixtures/index.js";
 
-const PAGE = "/activity/changesets";
+const PAGE = "/activity/calendar";
 const BATCH = "**/api/v1/pipeline_runs/batch";
 
 test("the page lists a row per state, and sorting reorders them", async ({

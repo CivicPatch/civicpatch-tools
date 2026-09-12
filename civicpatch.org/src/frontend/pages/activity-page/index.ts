@@ -16,7 +16,7 @@ import { useAuth } from "../../hooks/useAuth.js";
 import { authorDisplayMode } from "../home-page/recent-activity.js";
 import { formatDateTime } from "../../utils/date-utils.js";
 
-const PER_PAGE = 20;
+const PER_PAGE = 50;
 
 // Mirrors ActivityAuthors on the API.
 const AUTHORS_ALL = "all";
@@ -73,15 +73,10 @@ function renderListDiff(f) {
     <span class="activity-row__diff">
       ${removed.map(
         (v) =>
-          html`<span class="activity-row__chip activity-row__chip--removed"
-            >${v}</span
-          >`,
+          html`<span class="chip activity-row__chip--removed">${v}</span>`,
       )}
       ${added.map(
-        (v) =>
-          html`<span class="activity-row__chip activity-row__chip--added"
-            >${v}</span
-          >`,
+        (v) => html`<span class="chip activity-row__chip--added">${v}</span>`,
       )}
     </span>
   `;
@@ -153,8 +148,18 @@ function renderRow(entry, markQuarantined: boolean, canViewProfiles: boolean) {
   `;
 }
 
-// No header row: with five columns, four of which are self-evident from their own
-// formatting, a header costs a line and tells the reader nothing they cannot see.
+// A sibling of the row list, not its first child: `.activity-row:nth-child(even)` stripes
+// by position within `.activity-row-list`, so a header sharing that parent would shift every
+// row's parity and flip the stripe.
+function renderHeader() {
+  return html`
+    <div class="activity-row-list__head">
+      <span>type</span><span>who</span><span>what</span><span></span
+      ><span>at</span>
+    </div>
+  `;
+}
+
 function renderList(
   entries,
   markQuarantined: boolean,
@@ -225,11 +230,10 @@ function ActivityPage() {
       </div>
 
       <div class="sectioned">
-        ${SectionNav("activity", ACTIVITY_SECTION, "/activity/changelogs")}
+        ${SectionNav("activity", ACTIVITY_SECTION, "/activity/all-activity")}
         <div class="secbody">
           <section class="panel activity-page__section" ${ref(listRef)}>
             <div class="panel__cap">
-              <b>all activity</b>
               <span class="panel__cap-right">
                 <label class="activity-page__filter">
                   <input
@@ -242,7 +246,9 @@ function ActivityPage() {
                 ${total || ""}
               </span>
             </div>
-            ${pager} ${renderList(entries, !quarantinedOnly, canViewProfiles)}
+            ${pager}
+            ${entries.length > 0 ? renderHeader() : ""}
+            ${renderList(entries, !quarantinedOnly, canViewProfiles)}
             ${pager}
           </section>
         </div>
