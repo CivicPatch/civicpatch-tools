@@ -58,12 +58,19 @@
 }
 
 .activity-row__who {
+  min-width: 0;
+}
+
+.activity-row__who a {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: block;
+  max-width: 100%;
 }
 
 .activity-row__role {
+  display: block;
   font-family: var(--font-mono);
   font-size: var(--font-size-xs);
   color: var(--text-muted);
@@ -123,8 +130,6 @@
 .activity-row__before,
 .activity-row__after {
   min-width: 0;
-  padding: 0.05rem 0.35rem;
-  border-radius: var(--radius-sm);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -132,13 +137,11 @@
 
 .activity-row__before {
   color: var(--diff-removed);
-  background: var(--diff-removed-bg);
   text-decoration: line-through;
 }
 
 .activity-row__after {
   color: var(--diff-added);
-  background: var(--diff-added-bg);
 }
 
 .activity-row__arrow {

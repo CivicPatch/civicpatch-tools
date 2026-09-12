@@ -51,8 +51,12 @@ async def get_dashboard() -> dict:
                 WHERE {IS_ON_THE_ROSTER}
                 GROUP BY jurisdiction_ocdid
             ) pc ON pc.jurisdiction_ocdid = j.jurisdiction_ocdid
+            -- 'counties' is a real local tier, not a rollup of 'local' — Hawaii has no
+            -- municipal governments at all, so excluding it left Hawaii with zero rows
+            -- and no entry in the response, not just an undercount like every other
+            -- state with a 'counties' tier.
             WHERE j.status = 'active'
-              AND j.level = 'local'
+              AND j.level IN ('local', 'counties')
         ),
         review_counts AS (
             SELECT j.state, COUNT(*)::int AS needs_review

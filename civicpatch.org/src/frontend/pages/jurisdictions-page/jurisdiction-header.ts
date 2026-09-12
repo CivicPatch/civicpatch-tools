@@ -7,6 +7,7 @@ import { html, nothing } from "lit-html";
 import { dateStringToFriendly } from "../../utils/date-utils.js";
 import { jurisdictionOcdidToState } from "../../components/ocdid-utils.js";
 import { IN_PROGRESS_ANCHOR } from "./history/history-routes.js";
+import { municipalitiesUrl } from "../municipalities-page/municipalities-routes.js";
 
 // Mirrors FRESH_SINCE_SQL in database/jurisdictions.py, which is what actually decides
 // whether a jurisdiction is offered up for re-scraping. Two copies of one number: if the
@@ -61,7 +62,7 @@ function renderBreadcrumb(name: string, ocdid: string) {
   if (!state) return nothing;
   return html`
     <nav class="jurisdiction-page__breadcrumb" aria-label="Breadcrumb">
-      <a href="/${state}/local">${state.toUpperCase()} municipalities</a>
+      <a href="${municipalitiesUrl(state)}">${state.toUpperCase()} municipalities</a>
       <span aria-hidden="true">/</span>
       <span aria-current="page">${name}</span>
     </nav>

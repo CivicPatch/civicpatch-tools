@@ -7,11 +7,23 @@ import {
 } from "../../components/ocdid-utils.js";
 import type { RecentActivityEntry } from "./use-recent-activity.ts";
 
+const MINUTE_MS = 60 * 1000;
+const HOUR_MS = 60 * MINUTE_MS;
+const DAY_MS = 24 * HOUR_MS;
+const RELATIVE_TIME_CUTOFF_MS = 7 * DAY_MS;
+
+// Past a week a relative count stops being intuitive, so it falls back to a real date —
+// same threshold GitHub/Twitter use. Compact form (no "ago") matches this app's own
+// durationBetween() convention (date-utils.js), not a generic library format.
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString(undefined, {
-    month: "short",
-    day: "numeric",
-  });
+  const date = new Date(iso);
+  const elapsed = Date.now() - date.getTime();
+  if (elapsed >= RELATIVE_TIME_CUTOFF_MS) {
+    return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  }
+  if (elapsed < HOUR_MS) return `${Math.max(1, Math.floor(elapsed / MINUTE_MS))}m`;
+  if (elapsed < DAY_MS) return `${Math.floor(elapsed / HOUR_MS)}h`;
+  return `${Math.floor(elapsed / DAY_MS)}d`;
 }
 
 // Color-codes by outcome, not by type name, so a glance at the list tells

@@ -45,7 +45,7 @@ from frontend.static import HashedAssetStaticFiles
 from frontend.vite import vite_asset, vite_css
 from lib.auth import get_optional_user, get_ws_user, require_route_access
 from lib.supabase_auth import create_supabase_admin_client, create_supabase_client
-from routers.frontend import get_router as frontend_router
+from routers.frontend import get_router as frontend_router, register_page_redirects
 from routers.sso import get_router as auth_router
 from schemas.common import Identity, UserRole, RouteCategory
 from schemas.ws import SubscribeMessage
@@ -367,3 +367,4 @@ async def websocket_endpoint(websocket: WebSocket):
 
 # Must be last: contains a /{path:path} catch-all for jurisdiction pages
 app.include_router(frontend_router(templates))
+register_page_redirects(app)

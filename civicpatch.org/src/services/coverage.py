@@ -26,12 +26,13 @@ async def get_state_coverage(state: str) -> StateCoverage:
     )
 
 
-async def get_municipality_list(state: str) -> list[dict]:
-    """Municipality list for the browsable page (§8) — combines per-jurisdiction map status
-    (database.coverage) with `needs_review`, sourced from open PRs (database.review_pool) —
-    the same to_review signal get_state_coverage above already uses for its bucket count.
+async def get_municipality_list(state: str, level: str = "local") -> list[dict]:
+    """Municipality (or county, at `level="counties"`) list for the browsable page (§8) —
+    combines per-jurisdiction map status (database.coverage) with `needs_review`, sourced
+    from open PRs (database.review_pool) — the same to_review signal get_state_coverage
+    above already uses for its bucket count.
     """
-    rows = await coverage_db.get_municipality_rows_for_state(state)
+    rows = await coverage_db.get_municipality_rows_for_state(state, level)
     open_pr_ocdids = await review_pool_db.jurisdiction_ocdids_with_open_changesets(state)
     return [
         {**row, "needs_review": row["jurisdiction_ocdid"] in open_pr_ocdids}

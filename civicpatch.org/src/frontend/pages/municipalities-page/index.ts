@@ -20,6 +20,9 @@ import {
   parseMunicipalitiesParams,
   buildMunicipalitiesSearch,
 } from "./url-params.js";
+import { municipalitiesUrl, countiesUrl } from "./municipalities-routes.js";
+import { SectionNav, type SectionNavItem } from "../../components/section-nav/index.js";
+import { stateNameForCode } from "../../components/ocdid-utils.js";
 import "../../components/panel/panel.css";
 import "./municipalities-page.css";
 
@@ -27,11 +30,24 @@ import "./municipalities-page.css";
 // is only ~18 pages — small enough to list every page number, no ellipsis needed.
 const PAGE_SIZE = 100;
 
+const COUNTIES_LEVEL = "counties";
+
 interface MunicipalitiesPageProps {
   state?: string;
+  level?: string;
 }
 
-function MunicipalitiesPage({ state = "" }: MunicipalitiesPageProps) {
+function MunicipalitiesPage({ state = "", level = "local" }: MunicipalitiesPageProps) {
+  const isCounties = level === COUNTIES_LEVEL;
+  const sectionLabel = isCounties ? "counties" : "municipalities";
+  // Municipalities first — it's the bare state URL, the default section a browse
+  // link lands on.
+  const sections: SectionNavItem[] = [
+    { label: "Municipalities", href: municipalitiesUrl(state) },
+    { label: "Counties", href: countiesUrl(state) },
+  ];
+  const currentPath = isCounties ? countiesUrl(state) : municipalitiesUrl(state);
+
   const [municipalities, setMunicipalities] = useState<Municipality[] | null>(
     null,
   );
@@ -49,7 +65,7 @@ function MunicipalitiesPage({ state = "" }: MunicipalitiesPageProps) {
   // operate on this same in-memory list, no per-interaction network round-trip.
   useEffect(() => {
     if (!state) return;
-    fetchMunicipalityList(state)
+    fetchMunicipalityList(state, level)
       .then((d) => setMunicipalities(d.data ?? []))
       .catch(() => setMunicipalities([]));
     fetchDashboard()
@@ -57,7 +73,7 @@ function MunicipalitiesPage({ state = "" }: MunicipalitiesPageProps) {
         setCutoff(d.data?.states?.[state]?.civicpatch?.cutoff ?? null),
       )
       .catch(() => {});
-  }, [state]);
+  }, [state, level]);
 
   // Keep the URL in sync with view state (§8.5). replaceState, not pushState —
   // filter/sort/page changes shouldn't spam browser history one entry per click.
@@ -102,7 +118,7 @@ function MunicipalitiesPage({ state = "" }: MunicipalitiesPageProps) {
       setNeedsReviewOnly(false);
     });
 
-  const stateLabel = state.toUpperCase();
+  const stateLabel = stateNameForCode(state) || state.toUpperCase();
   const all = municipalities ?? [];
   const filtered = filterMunicipalities(all, {
     query,
@@ -132,7 +148,7 @@ function MunicipalitiesPage({ state = "" }: MunicipalitiesPageProps) {
   return html`
     <main class="municipalities-page page-content">
       <div class="page-focal">
-        <h1 class="page-focal__title">${stateLabel} municipalities</h1>
+        <h1 class="page-focal__title">${stateLabel} ${sectionLabel}</h1>
         ${cutoff
           ? html`<p class="page-focal__end municipalities-page__cutoff">
               Fresh = scraped after ${dateStringToFriendly(cutoff)}
@@ -140,44 +156,51 @@ function MunicipalitiesPage({ state = "" }: MunicipalitiesPageProps) {
           : ""}
       </div>
 
-      ${municipalities === null
-        ? html`<p>Loading…</p>`
-        : html`
-            <section class="panel municipalities-page__panel">
-              <div class="panel__cap">
-                <b>municipalities</b>
-                <span class="panel__cap-right">
-                  ${isUnfiltered
-                    ? `${sorted.length}`
-                    : `${sorted.length} of ${all.length}`}
-                </span>
-              </div>
+      <div class="sectioned">
+        ${SectionNav(sectionLabel, sections, currentPath)}
+        <div class="secbody">
+          ${municipalities === null
+            ? html`<p>Loading…</p>`
+            : html`
+                <section class="panel municipalities-page__panel">
+                  <div class="panel__cap">
+                    <b>${sectionLabel}</b>
+                    <span class="panel__cap-right">
+                      ${isUnfiltered
+                        ? `${sorted.length}`
+                        : `${sorted.length} of ${all.length}`}
+                    </span>
+                  </div>
 
-              ${renderControls({
-                query,
-                onQueryChange: handleQueryChange,
-                status,
-                onStatusChange: handleStatusChange,
-                statusPillCounts,
-                needsReviewOnly,
-                onNeedsReviewToggle: handleNeedsReviewToggle,
-                needsReviewCount,
-              })}
+                  ${renderControls({
+                    query,
+                    onQueryChange: handleQueryChange,
+                    status,
+                    onStatusChange: handleStatusChange,
+                    statusPillCounts,
+                    needsReviewOnly,
+                    onNeedsReviewToggle: handleNeedsReviewToggle,
+                    needsReviewCount,
+                    sectionLabel,
+                  })}
 
-              ${renderMunicipalitiesTable({
-                municipalities: pageInfo.pageItems,
-                onClearFilters: handleClearFilters,
-                sortKey,
-                sortDir,
-                onSortChange: handleSortChange,
-              })}
-              ${renderPaginationControls({
-                page,
-                pageInfo,
-                onPageChange: setPage,
-              })}
-            </section>
-          `}
+                  ${renderMunicipalitiesTable({
+                    municipalities: pageInfo.pageItems,
+                    sectionLabel,
+                    onClearFilters: handleClearFilters,
+                    sortKey,
+                    sortDir,
+                    onSortChange: handleSortChange,
+                  })}
+                  ${renderPaginationControls({
+                    page,
+                    pageInfo,
+                    onPageChange: setPage,
+                  })}
+                </section>
+              `}
+        </div>
+      </div>
     </main>
   `;
 }
@@ -186,6 +209,6 @@ customElements.define(
   "municipalities-page",
   component(MunicipalitiesPage as any, {
     useShadowDOM: false,
-    observedAttributes: ["state"],
+    observedAttributes: ["state", "level"],
   }),
 );

@@ -128,15 +128,22 @@ async def test_the_type_filter_keeps_only_that_type():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_sort_order_reverses():
-    """The `ORDER BY` direction branch, which nothing observed before."""
+    """The `ORDER BY` direction branch, which nothing observed before.
+
+    per_page is generous, not 50: the integration DB is left up between runs (see
+    tcp-integration in mise.toml) and other state='zz' pending issues can outlive their
+    own test's cleanup. Page 1 of DESC and page 1 of ASC are only guaranteed to be exact
+    reverses of each other when the page holds every matching row — otherwise they are
+    two different windows of a larger set, which looks like a broken ORDER BY but isn't.
+    """
     run_id, _ = await _seed_both()
     await issues_db.upsert_issue(run_id, PipelineIssueType.COST_CAP_REACHED, [{}])
 
     newest, _ = await listings_db.get_pipeline_run_issues_page(
-        [], page=1, per_page=50, state_code=_STATE, sort_desc=True
+        [], page=1, per_page=1000, state_code=_STATE, sort_desc=True
     )
     oldest, _ = await listings_db.get_pipeline_run_issues_page(
-        [], page=1, per_page=50, state_code=_STATE, sort_desc=False
+        [], page=1, per_page=1000, state_code=_STATE, sort_desc=False
     )
 
     # Two rows at minimum, or `reversed` of a one-item list would pass trivially.

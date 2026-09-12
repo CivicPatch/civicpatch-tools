@@ -15,6 +15,7 @@ export interface ControlsProps {
   needsReviewOnly: boolean;
   onNeedsReviewToggle: () => void;
   needsReviewCount: number;
+  sectionLabel: string;
 }
 
 export function renderControls({
@@ -26,6 +27,7 @@ export function renderControls({
   needsReviewOnly,
   onNeedsReviewToggle,
   needsReviewCount,
+  sectionLabel,
 }: ControlsProps) {
   const pillClass = (active: boolean) =>
     `municipalities-controls__pill${active ? " municipalities-controls__pill--active" : ""}`;
@@ -35,7 +37,7 @@ export function renderControls({
       <input
         type="search"
         class="municipalities-controls__search"
-        placeholder="Search municipalities…"
+        placeholder="Search ${sectionLabel}…"
         .value=${query}
         @input=${(e: Event) =>
           onQueryChange((e.target as HTMLInputElement).value)}

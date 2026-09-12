@@ -90,10 +90,11 @@ async def get_maps_coverage() -> dict:
     return result
 
 
-async def get_municipality_rows_for_state(state: str) -> list[dict]:
-    """Name, map status, officials count, and last-verified date for every local jurisdiction
-    in `state` — feeds the municipalities list page. Reuses classify_map_status, same as
-    get_local_status_for_state, so the two stay consistent by construction.
+async def get_municipality_rows_for_state(state: str, level: str = "local") -> list[dict]:
+    """Name, map status, officials count, and last-verified date for every jurisdiction at
+    `level` ('local' or 'counties') in `state` — feeds the municipalities/counties list page.
+    Reuses classify_map_status, same as get_local_status_for_state, so the two stay
+    consistent by construction.
 
     `needs_review` isn't included here — it requires the pull_requests domain, which this
     file doesn't own. See services.coverage.get_municipality_list, which composes this with
@@ -117,13 +118,13 @@ async def get_municipality_rows_for_state(state: str) -> list[dict]:
             GROUP BY jurisdiction_ocdid
         ) pc ON pc.jurisdiction_ocdid = j.jurisdiction_ocdid
         WHERE j.status = 'active'
-          AND j.level = 'local'
+          AND j.level = %s
           AND j.state = %s
         ORDER BY j.data->>'name'
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(query, (state,))
+        await cur.execute(query, (level, state))
         rows = await cur.fetchall()
     return [
         {

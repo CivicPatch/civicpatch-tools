@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% block scripts %}<script type="module" src="{{ vite_asset('assets/municipalities.ts') }}"></script>{% endblock %}
 {% block styles %}{% for href in vite_css('assets/municipalities.ts') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %}
-{% block title %}{{ state.upper() }} municipalities{% endblock %}
+{% block title %}{{ state.upper() }} {{ level }}{% endblock %}
 {% block content %}
 {% if user.authenticated %}
 <civ-navbar user='{{ user | tojson }}'></civ-navbar>
@@ -9,5 +9,5 @@
 {% include "partials/navbar-logged-out.html" %}
 {% endif %}
 
-<municipalities-page state="{{ state }}"></municipalities-page>
+<municipalities-page state="{{ state }}" level="{{ level }}"></municipalities-page>
 {% endblock %}
