@@ -34,8 +34,8 @@ def _make_pool(cursor):
 
 
 def _upsert_row():
-    Row = namedtuple("Row", ["id", "state_code", "daily_goal", "created_at"])
-    return Row(id=SESSION_ID, state_code=STATE_CODE, daily_goal=10, created_at=_NOW)
+    Row = namedtuple("Row", ["id", "state_code", "session_length", "created_at"])
+    return Row(id=SESSION_ID, state_code=STATE_CODE, session_length=10, created_at=_NOW)
 
 
 def _next_entry_row(n=1):
@@ -88,8 +88,8 @@ async def test_get_active_review_session_filters_by_state_code():
 async def test_get_active_review_session_returns_session_when_active():
     # Was: returns session when status == ACTIVE and timestamp is recent.
     # Now: returns session when updated_at is within the idle window. Same outcome.
-    Row = namedtuple("Row", ["session_id", "state_code", "daily_goal", "current_entry_number", "resolved_entry_numbers", "session_changeset_ids"])
-    row = Row(session_id=SESSION_ID, state_code=STATE_CODE, daily_goal=10, current_entry_number=3, resolved_entry_numbers=[1, 2], session_changeset_ids=["req-1", "req-2"])
+    Row = namedtuple("Row", ["session_id", "state_code", "session_length", "current_entry_number", "resolved_entry_numbers", "session_changeset_ids"])
+    row = Row(session_id=SESSION_ID, state_code=STATE_CODE, session_length=10, current_entry_number=3, resolved_entry_numbers=[1, 2], session_changeset_ids=["req-1", "req-2"])
     cur = _make_cursor(fetchone_side_effect=[row])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
         result = await get_active_review_session(USER_ID, STATE_CODE)
@@ -104,7 +104,7 @@ async def test_get_active_review_session_returns_session_when_active():
 @pytest.mark.unit
 async def test_create_or_get_resumes_when_session_is_recent():
     # Was: ACTIVE + recent → no DELETE; the same row was returned via ON CONFLICT DO UPDATE.
-    # Now: existing non-ended session with is_active=True → UPDATE daily_goal on the same row,
+    # Now: existing non-ended session with is_active=True → UPDATE session_length on the same row,
     # no DELETE and no INSERT. Same behavioral guarantee: a recent session is preserved
     # without purging the in-flight queue.
     Existing = namedtuple("Existing", ["id", "is_active"])
@@ -114,7 +114,7 @@ async def test_create_or_get_resumes_when_session_is_recent():
         _next_entry_row(),
     ])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        await create_or_get_review_session(USER_ID, STATE_CODE, daily_goal=10)
+        await create_or_get_review_session(USER_ID, STATE_CODE, session_length=10)
 
     executed_sql = [str(c.args[0]) for c in cur.execute.call_args_list]
     assert not any("DELETE" in sql for sql in executed_sql)
@@ -135,7 +135,7 @@ async def test_create_or_get_auto_ends_and_inserts_when_session_is_stale():
         _next_entry_row(),
     ])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        await create_or_get_review_session(USER_ID, STATE_CODE, daily_goal=10)
+        await create_or_get_review_session(USER_ID, STATE_CODE, session_length=10)
 
     executed_sql = [str(c.args[0]) for c in cur.execute.call_args_list]
     assert any("DELETE FROM review_session_entries" in sql for sql in executed_sql)
@@ -155,7 +155,7 @@ async def test_create_or_get_inserts_new_row_when_no_prior_session():
         _next_entry_row(1),
     ])
     with patch("database.review_sessions.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await create_or_get_review_session(USER_ID, STATE_CODE, daily_goal=10)
+        result = await create_or_get_review_session(USER_ID, STATE_CODE, session_length=10)
 
     executed_sql = [str(c.args[0]) for c in cur.execute.call_args_list]
     assert not any("DELETE" in sql for sql in executed_sql)

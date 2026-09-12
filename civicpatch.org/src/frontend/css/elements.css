@@ -4,7 +4,7 @@
    Loaded after tokens.css, before styles.css. */
 
 /* ── Tables ──────────────────────────────────────────────────────────────────
- * Skipped as unused: .striped, tfoot. The header rule overrides two variables the
+ * Skipped as unused: tfoot. The header rule overrides two variables the
  * cell rule reads, so a component can restyle a header row in one line. */
 
 table {
@@ -37,6 +37,19 @@ th {
   font-weight: var(--font-weight);
   text-align: left;
   text-align: start;
+}
+
+/* A data table with no row actions — the stripe is the row separator, so body cells
+   drop the per-row border-bottom the base rule above gives every table; the header
+   keeps its own (from `thead td, thead th` above). The specificity here (table.striped
+   tbody tr td) has to beat both the bare `td` rules above, which it does by a wide
+   margin, so no `!important` or cascade-order fragility either way. */
+table.striped tbody tr td {
+  border-bottom: none;
+}
+
+table.striped tbody tr:nth-child(even) td {
+  background-color: var(--surface-stripe);
 }
 
 /* ── Links ───────────────────────────────────────────────────────────────────

@@ -147,7 +147,7 @@ async def _hold(changeset_id: str, status: str, ocdid: str = _OCDID) -> None:
         user_id = (await cur.fetchone())[0]
         await cur.execute(
             """
-            INSERT INTO review_sessions (user_id, state_code, daily_goal)
+            INSERT INTO review_sessions (user_id, state_code, session_length)
             VALUES (%s, 'zz', 10) RETURNING id::text
             """,
             (user_id,),

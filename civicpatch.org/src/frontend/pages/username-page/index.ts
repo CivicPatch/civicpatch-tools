@@ -2,6 +2,7 @@ import { html } from "lit-html";
 import type { TemplateResult } from "lit-html";
 import { component, useState } from "haunted";
 import { setUsername } from "../../api.js";
+import { usernameError } from "../../components/username-utils.js";
 import "../../components/panel/panel.css";
 import "./username-page.css";
 
@@ -12,6 +13,11 @@ function UsernamePage(): TemplateResult {
 
   const onSubmit = async (e: Event) => {
     e.preventDefault();
+    const validationError = usernameError(value);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
     setError(null);
     setSaving(true);
     try {
@@ -46,7 +52,7 @@ function UsernamePage(): TemplateResult {
         ${error
           ? html`<p role="alert" class="username-page__error">${error}</p>`
           : ""}
-        <button type="submit" ?disabled=${saving || !value.trim()}>
+        <button type="submit" ?disabled=${saving || !!usernameError(value)}>
           ${saving ? "Saving…" : "Continue"}
         </button>
       </form>

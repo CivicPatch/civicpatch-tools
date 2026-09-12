@@ -1,15 +1,10 @@
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { setUsername } from "../../api.js";
-import "./api-keys.js";
-import { canManageApiKeys } from "./api-key-access.js";
-import "../../components/civ-tab-bar/civ-tab-bar.js";
+import { usernameError } from "../../components/username-utils.js";
+import { SectionNav, overviewSection } from "../../components/section-nav/index.js";
 import "../../components/panel/panel.css";
 import "./settings-page.css";
-
-const PROFILE_TAB = 0;
-const API_KEYS_TAB = 1;
-const TABS = [{ label: "Profile" }, { label: "API keys" }];
 
 type User = {
   authenticated: boolean;
@@ -24,15 +19,18 @@ function SettingsPage({ user }: { user: string }) {
   } catch (_e) {
     /* fall through with default */
   }
-  const canHoldKeys = canManageApiKeys(userData);
 
   const [value, setValue] = useState(userData.username || "");
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
-  const [tab, setTab] = useState(PROFILE_TAB);
 
   const onSubmit = async (e: Event) => {
     e.preventDefault();
+    const validationError = usernameError(value);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
     setError(null);
     setSaving(true);
     try {
@@ -51,16 +49,10 @@ function SettingsPage({ user }: { user: string }) {
         <h1 class="page-focal__title">Settings</h1>
       </div>
 
-      ${canHoldKeys
-        ? html`<civ-tab-bar
-            .tabs=${TABS}
-            .selectedIndex=${tab}
-            .onTabClick=${(index: number) => setTab(index)}
-          ></civ-tab-bar>`
-        : null}
-
-      ${tab === PROFILE_TAB || !canHoldKeys
-        ? html`<section class="panel">
+      <div class="sectioned">
+        ${SectionNav("overview", overviewSection(), "/settings")}
+        <div class="secbody">
+          <section class="panel">
             <div class="panel__cap"><b>username</b></div>
             <form class="settings-page__form" @submit=${onSubmit}>
               <label class="settings-page__label" for="username">Username</label>
@@ -71,6 +63,8 @@ function SettingsPage({ user }: { user: string }) {
                 .value=${value}
                 @input=${(e: Event) => setValue((e.target as HTMLInputElement).value)}
                 maxlength="50"
+                pattern="[A-Za-z0-9._-]+"
+                title="Letters, numbers, '.', '_', and '-' only"
                 required
               />
               ${error
@@ -79,17 +73,14 @@ function SettingsPage({ user }: { user: string }) {
               <button
                 class="settings-page__submit"
                 type="submit"
-                ?disabled=${saving || !value.trim()}
+                ?disabled=${saving || !!usernameError(value)}
               >
                 ${saving ? "Saving…" : "Save"}
               </button>
             </form>
-          </section>`
-        : null}
-
-      ${canHoldKeys && tab === API_KEYS_TAB
-        ? html`<api-keys></api-keys>`
-        : null}
+          </section>
+        </div>
+      </div>
     </main>
   `;
 }

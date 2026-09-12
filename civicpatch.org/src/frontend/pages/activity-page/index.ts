@@ -94,7 +94,8 @@ function renderListDiff(f) {
 const FIELD_DIFF_TYPES = new Set(["edit_person", "publish_review"]);
 
 function renderChange(entry) {
-  if (!FIELD_DIFF_TYPES.has(entry.type) || !entry.changes?.fields?.length) return nothing;
+  if (!FIELD_DIFF_TYPES.has(entry.type) || !entry.changes?.fields?.length)
+    return nothing;
   return entry.changes.fields.map((f) => {
     const isList = Array.isArray(f.before) || Array.isArray(f.after);
     return html` <div class="activity-row__field">
@@ -138,7 +139,7 @@ function renderRow(entry, markQuarantined: boolean, canViewProfiles: boolean) {
               href=${entry.pull_request_url}
               target="_blank"
               rel="noopener"
-              >PR</a
+              >commit</a
             >`
           : html`<span></span>`}
         <!-- Masked in the visual suite: seeded with NOW(), so it renders the day
@@ -154,14 +155,20 @@ function renderRow(entry, markQuarantined: boolean, canViewProfiles: boolean) {
 
 // No header row: with five columns, four of which are self-evident from their own
 // formatting, a header costs a line and tells the reader nothing they cannot see.
-function renderList(entries, markQuarantined: boolean, canViewProfiles: boolean) {
+function renderList(
+  entries,
+  markQuarantined: boolean,
+  canViewProfiles: boolean,
+) {
   // A wrapper of its own — not just mapped siblings — so `.activity-row:last-child` in CSS
   // actually lands on the last row: Pagination sits after this in the DOM, and without a
   // wrapper it would be the true last child instead, so no row's own border ever cleared.
   return entries.length === 0
     ? html`<p class="activity-page__empty">No changes yet.</p>`
     : html`<div class="activity-row-list">
-        ${entries.map((entry) => renderRow(entry, markQuarantined, canViewProfiles))}
+        ${entries.map((entry) =>
+          renderRow(entry, markQuarantined, canViewProfiles),
+        )}
       </div>`;
 }
 
@@ -235,8 +242,7 @@ function ActivityPage() {
                 ${total || ""}
               </span>
             </div>
-            ${pager}
-            ${renderList(entries, !quarantinedOnly, canViewProfiles)}
+            ${pager} ${renderList(entries, !quarantinedOnly, canViewProfiles)}
             ${pager}
           </section>
         </div>

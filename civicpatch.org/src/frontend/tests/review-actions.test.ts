@@ -56,7 +56,7 @@ function cardData(overrides = {}) {
 function activeSession(overrides = {}) {
   return {
     session_id: "s1",
-    daily_goal: 10,
+    session_length: 10,
     current_entry_number: 2,
     resolved_entry_numbers: [1],
     session_changeset_ids: ["req-1"],
@@ -80,7 +80,7 @@ describe("boot", () => {
     expect(e.navigate).not.toHaveBeenCalled();
     const action = lastAction(e);
     expect(action.type).toBe(ActionType.SESSION_LOADED);
-    expect(action.payload.session).toEqual({ id: "s1", daily_goal: 10 });
+    expect(action.payload.session).toEqual({ id: "s1", session_length: 10 });
     expect(action.payload.entry_number).toBe(2);
     expect(action.payload.total).toBe(5);
     expect(e.setRequestIdParam).toHaveBeenCalledWith("req-1");
@@ -95,7 +95,7 @@ describe("boot", () => {
     await boot(STATE, "req-1", e);
 
     expect(api.fetchPullRequestByRequestId).not.toHaveBeenCalled();
-    expect(lastAction(e).payload.session).toEqual({ id: "s1", daily_goal: 10 });
+    expect(lastAction(e).payload.session).toEqual({ id: "s1", session_length: 10 });
   });
 
   // The jurisdiction page's Review button names a card. It used to open detached, because
@@ -117,7 +117,7 @@ describe("boot", () => {
     // Entry 2, because `session_changeset_ids` is ordered by entry number — parked at 1.
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 2);
     expect(lastAction(e).payload.current_entry.changeset_id).toBe("req-7");
-    expect(lastAction(e).payload.session).toEqual({ id: "s1", daily_goal: 10 });
+    expect(lastAction(e).payload.session).toEqual({ id: "s1", session_length: 10 });
     expect(api.fetchPullRequestByRequestId).not.toHaveBeenCalled();
   });
 

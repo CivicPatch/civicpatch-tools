@@ -52,7 +52,7 @@ export type CurrentEntry = {
   has_next: boolean;
 };
 
-export type SessionMeta = { id: string; daily_goal: number };
+export type SessionMeta = { id: string; session_length: number };
 
 export type RecentActivityEntry = {
   type: string;

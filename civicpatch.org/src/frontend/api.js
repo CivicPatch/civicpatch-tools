@@ -565,12 +565,12 @@ export const fetchActiveReviewSession = async (stateCode) => {
   return res.json();
 };
 
-export const createReviewSession = async (stateCode, dailyGoal) => {
+export const createReviewSession = async (stateCode, sessionLength) => {
   const res = await fetch(`${API_URL}/api/v1/review-sessions`, {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    body: JSON.stringify({ state_code: stateCode, daily_goal: dailyGoal }),
+    body: JSON.stringify({ state_code: stateCode, session_length: sessionLength }),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();

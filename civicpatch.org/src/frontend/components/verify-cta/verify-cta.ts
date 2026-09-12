@@ -5,13 +5,9 @@ import { shouldRenderVerifyCta } from "./verify-cta-visibility.js";
 import {
   landingUrl,
   sessionUrl,
-  DEFAULT_DAILY_GOAL,
+  DEFAULT_SESSION_LENGTH,
 } from "../../pages/review-routes.js";
-import {
-  useLocalStorage,
-  PERSIST_FOREVER,
-} from "../../hooks/use-local-storage.js";
-import { STORAGE_KEYS } from "../../utils/storage-keys.js";
+import { SESSION_COUNTS } from "../../pages/review-page/review-landing.js";
 import { createReviewSession, navigateToEntry } from "../../api.js";
 
 interface VerifyCtaProps {
@@ -27,9 +23,11 @@ function VerifyCta({
   state = "",
   hasActiveSession = false,
 }: VerifyCtaProps) {
-  const [dailyGoal] = useLocalStorage(STORAGE_KEYS.DAILY_GOAL, DEFAULT_DAILY_GOAL, {
-    ttl: PERSIST_FOREVER,
-  });
+  // Not persisted — the backend already remembers the length from this user's last
+  // session (create_or_get_review_session falls back to it when none is passed), so
+  // caching a second copy here would just be a weaker, device-scoped duplicate of
+  // that. This is only what the reader has explicitly picked in this page view.
+  const [sessionLength, setSessionLength] = useState<number | undefined>(undefined);
   const [starting, setStarting] = useState(false);
 
   if (!shouldRenderVerifyCta({ toReviewCount })) return html``;
@@ -45,7 +43,7 @@ function VerifyCta({
     }
     setStarting(true);
     try {
-      const session = (await createReviewSession(state, dailyGoal)).data;
+      const session = (await createReviewSession(state, sessionLength)).data;
       await navigateToEntry(session.id, session.next_entry_number);
       window.location.href = sessionUrl(state);
     } catch {
@@ -53,15 +51,37 @@ function VerifyCta({
     }
   };
 
+  // No picker at all once a session is already resumable — length was decided when
+  // that session started, so offering to change it here would change nothing.
+  const lengthPicker = isLoggedIn && !hasActiveSession
+    ? html`
+        <span class="verify-cta__lengths">
+          ${SESSION_COUNTS.map(
+            (n) => html`
+              <button
+                type="button"
+                class="verify-cta__length ${n === sessionLength ? "verify-cta__length--active" : ""}"
+                ?disabled=${n > toReviewCount}
+                @click=${() => setSessionLength(n)}
+              >
+                ${n}
+              </button>
+            `,
+          )}
+        </span>
+      `
+    : "";
+
   return isLoggedIn
     ? html`
+        ${lengthPicker}
         <button
           class="verify-cta"
           type="button"
           ?disabled=${starting}
           @click=${handleVerifyClick}
         >
-          review ${toReviewCount}${state ? html` in #${state}` : ""}
+          review ${hasActiveSession ? toReviewCount : (sessionLength ?? DEFAULT_SESSION_LENGTH)}${state ? html` in #${state}` : ""}
         </button>
       `
     : html`

@@ -80,7 +80,7 @@ function ImportPreviewPanel(host: ImportPreviewHost) {
             <h3 class="import-section__title">
               Rejected rows <span>[${preview.errors.length}]</span>
             </h3>
-            <table class="import-errors__table">
+            <table class="import-errors__table striped">
               <thead>
                 <tr>
                   <th>Line</th>

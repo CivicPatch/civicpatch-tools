@@ -21,4 +21,36 @@
   opacity: 0.6;
   cursor: default;
 }
+
+/* Dense form of /review's own goal-chip picker (review-page.css) — that one is a row
+   of full-width buttons sized for a whole page; this is a few characters next to a
+   text link, so it shrinks to match rather than reusing the same class. */
+.verify-cta__lengths {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin-right: 0.5rem;
+}
+
+.verify-cta__length {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  padding: 0.05em 0.4em;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: auto;
+  min-height: unset;
+}
+
+.verify-cta__length--active {
+  color: var(--action);
+  border-color: var(--action);
+}
+
+.verify-cta__length:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 }
