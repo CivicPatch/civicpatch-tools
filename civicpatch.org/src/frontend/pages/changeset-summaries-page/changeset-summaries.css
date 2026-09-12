@@ -30,6 +30,7 @@
 }
 
 .cs-ledger__label {
+  font-family: var(--font-mono);
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   text-transform: lowercase;
@@ -46,6 +47,7 @@
 }
 
 .cs-chips__label {
+  font-family: var(--font-mono);
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   text-transform: lowercase;
@@ -130,7 +132,7 @@
   align-items: center;
   gap: var(--cs-gap);
   padding: 0.5rem 0.2rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .cs-row:last-child {
@@ -139,6 +141,7 @@
 
 .cs-row__state {
   flex: 0 0 var(--cs-state-w);
+  font-family: var(--font-mono);
   font-weight: 700;
   text-transform: lowercase;
 }
@@ -158,6 +161,7 @@
 }
 
 .cs-figure__label {
+  font-family: var(--font-mono);
   color: var(--text-muted);
   font-size: var(--font-size-xs);
 }
@@ -178,7 +182,10 @@
   flex: 1 1 auto;
   display: flex;
   gap: 2px;
-  align-items: stretch;
+  /* Cells carry their own height (renderDay computes it from that day's volume, sqrt-scaled
+     against the state's busiest day in the window) rather than stretching to fill — a day of
+     1 and a day of 50 used to render as the same solid bar. */
+  align-items: flex-end;
   height: 1.9rem;
 }
 
@@ -208,10 +215,26 @@
   background: var(--border);
 }
 
+/* Square between segments, rounded only on the outer edges of the stacked bar — a day with
+   all three outcomes shouldn't show two rounded seams in the middle of one bar. `renderDay`
+   always emits segments in a fixed order (dismissed, review, published) followed by the
+   popover span, so the first child is always the top edge and the *second-to-last* child
+   (skipping the trailing popover) is always the bottom edge — true regardless of how many
+   segments a given day actually has. */
 .cs-cal__seg--published,
 .cs-cal__seg--review,
 .cs-cal__seg--dismissed {
-  border-radius: 1px;
+  border-radius: 0;
+}
+
+.cs-cal__cell > span:first-child {
+  border-top-left-radius: var(--radius-sm);
+  border-top-right-radius: var(--radius-sm);
+}
+
+.cs-cal__cell > span:nth-last-child(2) {
+  border-bottom-left-radius: var(--radius-sm);
+  border-bottom-right-radius: var(--radius-sm);
 }
 
 .cs-cal__seg--published {
@@ -249,6 +272,7 @@
    they label the columns rather than competing with them. */
 .cs-scale__lead,
 .cs-scale__tail {
+  font-family: var(--font-mono);
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   text-transform: lowercase;
@@ -447,6 +471,7 @@
 }
 
 .cs-flow__label {
+  font-family: var(--font-mono);
   font-size: var(--font-size-xs);
   color: var(--text-muted);
 }
@@ -480,5 +505,64 @@
   font-size: var(--font-size-xs);
   color: var(--text-muted);
   text-align: right;
+}
+
+/* Elections — a hand-maintained list of upcoming election dates, grouped by state like the
+   rows above, but a row of chips rather than a day-per-cell strip: dates here are sparse and
+   spread over months, not one value per day in a fixed window. */
+
+.cs-elections {
+  margin-top: 1.25rem;
+}
+
+.cs-echips {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* <button>, not a plain chip span — no click handler yet, but this is the natural place to
+   hang a later action (open/edit this entry), and a button costs nothing now while a span
+   would need to change tag later anyway. Hover follows the same convention every other
+   row-level control on this page already uses. */
+.cs-echip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: none;
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  color: var(--text-default);
+  cursor: pointer;
+}
+
+.cs-echip:hover {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border-color: var(--accent);
+}
+
+.cs-echip__date {
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.cs-echip__title {
+  color: var(--text-muted);
+}
+
+.cs-echip--alert {
+  border-color: var(--error);
+}
+
+.cs-echip--alert .cs-echip__date {
+  color: var(--error);
+}
+
+.cs-echip--alert:hover {
+  background: color-mix(in srgb, var(--error) 8%, transparent);
 }
 }

@@ -93,8 +93,33 @@ const KINDS = [
 
 const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
+const dayTotal = (day: CalendarDay | undefined): number =>
+  day ? day.published + day.to_review + day.dismissed : 0;
+
+// A day's bar never reads shorter than this, even at zero volume — short enough that a quiet
+// day still reads as quiet, tall enough that its (empty) segments would stay legible if it had
+// any. Sqrt-scaled below rather than linear, so a day of 1 and a day of 4 don't both collapse
+// to the floor next to a day of 40.
+const CAL_HEIGHT_FLOOR_PCT = 32;
+
+// The tallest bar in a state's own window, so height reads as "busy for this state" rather
+// than against some fixed cross-state constant that would make a quiet state look uniformly
+// short no matter what.
+export function maxDailyTotal(
+  calendar: Map<string, CalendarDay>,
+  state: string,
+  days: string[],
+): number {
+  let max = 0;
+  for (const date of days) {
+    const day = calendar.get(dayKey(state, date));
+    if (day) max = Math.max(max, dayTotal(day));
+  }
+  return max;
+}
+
 function renderPopover(day: CalendarDay | undefined, date: string, state: string) {
-  const total = day ? day.published + day.to_review + day.dismissed : 0;
+  const total = dayTotal(day);
   return html`
     <span class="cs-pop">
       <span class="cs-pop__head">${state.toUpperCase()} — ${shortDate(date)}</span>
@@ -121,7 +146,12 @@ function renderPopover(day: CalendarDay | undefined, date: string, state: string
   `;
 }
 
-export function renderDay(day: CalendarDay | undefined, date: string, state: string) {
+export function renderDay(
+  day: CalendarDay | undefined,
+  date: string,
+  state: string,
+  maxTotal: number,
+) {
   const seg = (count: number, kind: string) =>
     count
       ? html`<span
@@ -129,8 +159,12 @@ export function renderDay(day: CalendarDay | undefined, date: string, state: str
           style="flex: ${count} 1 0; min-height: 2px"
         ></span>`
       : nothing;
+  const heightPct =
+    maxTotal > 0
+      ? Math.max(CAL_HEIGHT_FLOOR_PCT, Math.round(Math.sqrt(dayTotal(day) / maxTotal) * 100))
+      : CAL_HEIGHT_FLOOR_PCT;
   return html`
-    <button class="cs-cal__cell ${day ? "" : "cs-cal__cell--idle"}">
+    <button class="cs-cal__cell ${day ? "" : "cs-cal__cell--idle"}" style="height:${heightPct}%">
       ${day ? html`${seg(day.dismissed, "dismissed")} ${seg(day.to_review, "review")} ${seg(day.published, "published")}` : nothing}
       ${renderPopover(day, date, state)}
     </button>

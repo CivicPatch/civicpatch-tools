@@ -110,10 +110,6 @@
     font-size: var(--font-size-sm);
 }
 
-.diff-person__fields tr + tr {
-    border-top: 1px solid var(--border);
-}
-
 .diff-field__label {
     padding: 0.3rem 0.6rem;
     color: var(--text-muted);
@@ -178,12 +174,32 @@
     white-space: nowrap;
     vertical-align: middle;
     color: var(--text-muted);
-    border-bottom: 1px solid var(--field-border);
-    background: transparent;
 }
 
-.diff-table tbody tr:last-child td {
-    border-bottom: none;
+/* Row tint has to win over the base .striped even-row background regardless of
+   selector specificity — both would otherwise live in the same @layer base and
+   the stripe's longer selector would win by specificity alone. Living here in
+   @layer components settles it unconditionally instead, same fix as
+   municipalities-page/table's hover override. */
+.diff-table tbody tr:hover td {
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+/* Diff row semantics, scoped to .diff-table: the only current consumer.
+   The ins/del backgrounds are 10% alpha, which reads as almost nothing across a
+   full table row; mixed at 22% the row is scannable while the text on top stays
+   legible. Same hues as everywhere else, so green and red keep their meaning. */
+.diff-table tr.row--added td {
+    background: color-mix(in srgb, var(--diff-added) 22%, transparent);
+}
+.diff-table tr.row--removed td {
+    background: color-mix(in srgb, var(--diff-removed) 22%, transparent);
+}
+.diff-table tr.row--unchanged {
+    opacity: 0.5;
+}
+.diff-table td.cell--changed {
+    background: var(--info-bg);
 }
 
 .diff-table td:first-child {

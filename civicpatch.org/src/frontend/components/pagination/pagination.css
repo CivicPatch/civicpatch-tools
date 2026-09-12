@@ -9,6 +9,15 @@
     border-top: 1px solid var(--border-subtle);
 }
 
+/* A pager placed right under a panel caption (a "top" pager, for pages that repeat
+   pagination above and below the list) would otherwise double .panel__cap's own
+   border-bottom with this border-top. */
+.panel__cap + .civ-pagination {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
 .civ-pagination__btn {
     font-family: var(--font-mono);
     font-size: var(--font-size-sm);

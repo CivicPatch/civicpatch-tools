@@ -27,15 +27,11 @@ function renderRow(m: Municipality, jurisdictionHref: string) {
   return html`
     <tr class="municipalities-table__row">
       <td>
-        <span
-          class="municipalities-table__dot"
-          style="background:var(--status-${m.status})"
-        ></span>
         <a href="${jurisdictionHref}">${m.name}</a>
       </td>
       <td>
         <span
-          class="municipalities-table__status-pill"
+          class="chip"
           style="background:var(--status-${m.status}); color:var(--bg)"
         >
           ${STATUS_LABELS[m.status] ?? m.status}

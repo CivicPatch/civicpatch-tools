@@ -2,8 +2,6 @@
 /* ── Wrapper — horizontal scroll on narrow viewports ──────── */
 
 .municipalities-table__wrapper {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
   overflow-x: auto;
 }
 
@@ -69,22 +67,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.municipalities-table__dot {
-  display: inline-block;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  margin-right: 0.4rem;
-}
-
-.municipalities-table__status-pill {
-  display: inline-block;
-  padding: 0.15rem 0.5rem;
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-xs);
-  font-weight: 700;
 }
 
 .municipalities-table__needs-review-badge {

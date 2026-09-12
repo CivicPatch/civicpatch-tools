@@ -1,0 +1,9 @@
+# Upcoming election dates. Hand-maintained for now — a Google Calendar sync is a possible
+# later step, not this one (see .scratch/wire-demo/calendar-page-demo.html for that
+# discussion). One entry per election date; `note` is optional.
+#
+# - date: 2026-11-03
+#   state: wa
+#   title: General Election
+#   note: Mayor, 3 Council seats
+[]

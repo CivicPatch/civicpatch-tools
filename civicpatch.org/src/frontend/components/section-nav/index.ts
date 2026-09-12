@@ -29,8 +29,8 @@ export function SectionNav(
 }
 
 export const ACTIVITY_SECTION: SectionNavItem[] = [
-  { label: "all activity", href: "/activity/changelogs" },
-  { label: "calendar", href: "/activity/changesets" },
+  { label: "all activity", href: "/activity/all-activity" },
+  { label: "calendar", href: "/activity/calendar" },
 ];
 
 // useAuth() is plain JS with no return type, so TS infers its `permissions` as the

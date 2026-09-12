@@ -99,20 +99,6 @@
   justify-content: flex-end;
 }
 
-.api-key__link {
-  background: none;
-  border: none;
-  color: var(--text);
-  font-size: var(--font-size-sm);
-  padding: 0;
-  text-decoration: underline;
-  width: auto;
-}
-
-.api-key__link--danger {
-  color: var(--diff-removed);
-}
-
 .api-keys__create {
   margin: 0;
   width: auto;

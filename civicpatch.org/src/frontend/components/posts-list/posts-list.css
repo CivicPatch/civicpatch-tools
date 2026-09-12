@@ -16,9 +16,8 @@
     gap: 0.75rem;
 }
 
-/* The only way into the add form — a role with no posts has no group to hang a button on. */
-.posts-list__add,
-.posts-list__edit,
+/* A count badge, not a button — held/vacant read as plain state. Edit/Add post are
+   real row actions and use the shared .civ-action-btn instead. */
 .posts-list__held {
     font-size: var(--font-size-sm);
     background: var(--surface);
@@ -27,17 +26,6 @@
     padding: 0.15rem 0.5rem;
     color: var(--text-muted);
     white-space: nowrap;
-}
-
-.posts-list__add,
-.posts-list__edit {
-    cursor: pointer;
-}
-
-.posts-list__add:hover,
-.posts-list__edit:hover {
-    border-color: var(--text-muted);
-    color: var(--text-default);
 }
 
 /* Role groups */

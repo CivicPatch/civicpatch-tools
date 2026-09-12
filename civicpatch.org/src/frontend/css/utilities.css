@@ -146,6 +146,14 @@ a.btn:active {
   background: var(--surface-2);
 }
 
+/* ── Chip ──────────────────────────────────────────────────────────────────── */
+
+.chip {
+  padding: 0.05rem 0.35rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+}
+
 /* ── Action buttons toolbar ── */
 
 .action-buttons {

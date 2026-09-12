@@ -9,10 +9,10 @@ import "../../components/panel/panel.css";
 import "../../components/person-image.js";
 import "../../components/people/person-row.css";
 import {
-  renderPersonGrid,
   renderPersonRow,
   type PersonRowProps,
 } from "../../components/people/person-row.js";
+import { renderPersonCardGrid } from "../../components/people/person-card-grid.js";
 import { renderInlinePersonEditor } from "../../components/person-editor/inline-editor.js";
 import { type PersonEditorProps } from "../../components/person-editor/person-editor.js";
 import {
@@ -22,6 +22,7 @@ import {
 } from "../../components/review-preview/preview-values.js";
 import { type PersonCard } from "../../components/people/person-cards.js";
 import { postsHeld } from "../../components/posts-list/posts-model.js";
+import { type RoleOption } from "../../components/posts-list/posts-model.js";
 
 const ROSTER_PERSON_ID_PREFIX = "roster-person-";
 
@@ -33,6 +34,9 @@ export interface RosterCardsProps {
   onOpenPerson: ((personId: string, fieldKey: string | null) => void) | null;
   openPersonId: string | null;
   editorFor: ((card: PersonCard) => PersonEditorProps) | null;
+  // Global role vocabulary, in canonical priority order — the read-only card grid uses it to
+  // sort by role rank and to call out roles that outrank the page's plurality role.
+  roles: RoleOption[];
 }
 
 function rowFor(
@@ -63,7 +67,7 @@ function rowFor(
 }
 
 export function renderRosterCards(props: RosterCardsProps) {
-  const { cards, isLoading, blockedReason, actions, onOpenPerson, openPersonId, editorFor } =
+  const { cards, isLoading, blockedReason, actions, onOpenPerson, openPersonId, editorFor, roles } =
     props;
   const sources = sourceMapFor(cards.map((card) => card.newRecord));
 
@@ -104,9 +108,7 @@ export function renderRosterCards(props: RosterCardsProps) {
                   }),
                 ])}
               </div>`
-            : renderPersonGrid(
-                cards.map((card) => rowFor(card, sources, onOpenPerson, openPersonId)),
-              )
+            : renderPersonCardGrid(cards, roles)
           : html`<p class="jurisdiction-section__meta">
               No people published for this jurisdiction yet.
             </p>`}

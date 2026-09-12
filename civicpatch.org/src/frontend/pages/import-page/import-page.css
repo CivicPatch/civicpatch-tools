@@ -92,18 +92,6 @@
   margin: 0;
 }
 
-/* `btn-ghost` in the markup opts out of the global filled-button rule, which sets
-   --control-text to the inverse and made these render white on white. */
-.import-link {
-  background: none;
-  border: none;
-  color: var(--control-text);
-  font-size: 0.9rem;
-  padding: 0;
-  text-decoration: underline;
-  width: auto;
-}
-
 .import-action {
   font-size: 0.9rem;
   margin: 1.5rem 0 0;

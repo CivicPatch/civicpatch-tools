@@ -6,6 +6,7 @@ import {
   revokeApiKey,
   deleteApiKey,
 } from "../../api.js";
+import "../../components/action-btn/action-btn.css";
 
 type ApiKey = {
   id: number;
@@ -87,7 +88,7 @@ function ApiKeys() {
           ? null
           : html`<button
               type="button"
-              class="api-key__link"
+              class="civ-action-btn"
               ?disabled=${busy}
               @click=${() => handleRevoke(key.id)}
             >
@@ -95,7 +96,7 @@ function ApiKeys() {
             </button>`}
         <button
           type="button"
-          class="api-key__link api-key__link--danger"
+          class="civ-action-btn civ-action-btn--danger"
           ?disabled=${busy}
           @click=${() => handleDelete(key.id)}
         >
