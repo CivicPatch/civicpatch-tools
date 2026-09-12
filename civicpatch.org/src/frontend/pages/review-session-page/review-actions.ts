@@ -92,7 +92,7 @@ async function resumeSession(
   const entryNumber = entryNumberOf(active, changesetId) ?? active.current_entry_number;
   const data = (await e.api.navigateToEntry(active.session_id, entryNumber))?.data;
   if (!data) return e.navigate(landingUrl(stateCode));
-  await loadFirstEntry(data, { id: active.session_id, daily_goal: active.daily_goal }, active.resolved_entry_numbers ?? [], e);
+  await loadFirstEntry(data, { id: active.session_id, session_length: active.session_length }, active.resolved_entry_numbers ?? [], e);
 }
 
 // A standalone deeplink may point at a stale/missing PR; treat a 404 as "no PR".

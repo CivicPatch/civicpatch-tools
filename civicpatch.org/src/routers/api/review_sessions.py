@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 class CreateReviewSessionRequest(BaseModel):
     state_code: str
-    daily_goal: Optional[int] = None
+    session_length: Optional[int] = None
 
 
 class NavigateToEntryRequest(BaseModel):
@@ -71,7 +71,7 @@ def get_router() -> APIRouter:
         session = await review_sessions_db.create_or_get_review_session(
             user.user_id,
             body.state_code,
-            body.daily_goal,
+            body.session_length,
         )
         return {"data": session}
 

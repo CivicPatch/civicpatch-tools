@@ -101,7 +101,7 @@ async def open_pr():
 
 
 async def _create_session(user_id: uuid.UUID) -> str:
-    result = await create_or_get_review_session(str(user_id), _STATE_CODE, daily_goal=10)
+    result = await create_or_get_review_session(str(user_id), _STATE_CODE, session_length=10)
     return result["id"]
 
 

@@ -315,6 +315,17 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             return RedirectResponse("/", status_code=303)
         return templates.TemplateResponse("pages/settings.html", {"request": request, "user": user})
 
+    @router.get("/settings/api-keys", response_class=HTMLResponse, include_in_schema=False)
+    async def settings_api_keys_page(
+        request: Request, identity: Optional[Identity] = Depends(get_optional_user)
+    ):
+        user = _build_user_dict(identity)
+        if needs_username(user):
+            return RedirectResponse("/login/username", status_code=303)
+        if not user["authenticated"]:
+            return RedirectResponse("/", status_code=303)
+        return templates.TemplateResponse("pages/settings-api-keys.html", {"request": request, "user": user})
+
     @router.get("/blog", response_class=HTMLResponse, include_in_schema=False)
     async def blog_list(request: Request, identity: Optional[Identity] = Depends(get_optional_user)):
         user = _build_user_dict(identity)

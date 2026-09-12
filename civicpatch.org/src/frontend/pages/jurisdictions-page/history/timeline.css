@@ -30,11 +30,10 @@
 
 .tl-entry {
   margin: 0;
-  border-bottom: 1px solid var(--border);
 }
 
-.tl-entry:last-child {
-  border-bottom: none;
+.tl-entry:nth-child(even) {
+  background: var(--surface-stripe);
 }
 
 /* elements.css already draws the chevron via `details summary::after` and floats it right.
@@ -49,7 +48,7 @@
 }
 
 .tl-entry__summary:hover {
-  background: var(--surface-2);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
 /* Fixed widths so the columns line up into lanes a reader can scan down without reading any

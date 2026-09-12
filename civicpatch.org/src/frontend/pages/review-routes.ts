@@ -18,7 +18,7 @@ export const REVIEW_SESSION_PATH = "/review/session";
 
 // Shared by anywhere that can start a review session (the /review landing page,
 // and the homepage's Verify CTA). The key itself lives in STORAGE_KEYS.
-export const DEFAULT_DAILY_GOAL = 10;
+export const DEFAULT_SESSION_LENGTH = 10;
 
 export const landingUrl = (stateCode: string) => `${REVIEW_PATH}?${STATE_PARAM}=${encodeURIComponent(stateCode)}`;
 export const sessionUrl = (stateCode: string) => `${REVIEW_SESSION_PATH}?${STATE_PARAM}=${encodeURIComponent(stateCode)}`;

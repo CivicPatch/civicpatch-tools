@@ -28,11 +28,10 @@
 
 .activity-row {
   padding: 0.4rem 0.3rem;
-  border-bottom: 1px solid var(--border-subtle);
 }
 
-.activity-row:last-child {
-  border-bottom: none;
+.activity-row:not(.activity-row--quarantined):nth-child(even) {
+  background: var(--surface-stripe);
 }
 
 .activity-row--quarantined {

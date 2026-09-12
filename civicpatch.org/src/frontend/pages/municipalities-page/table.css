@@ -49,7 +49,6 @@
 
 .municipalities-table td {
   padding: 0.6rem 0.8rem;
-  border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
 
@@ -57,8 +56,8 @@
   animation: municipalities-table-fade-up 0.15s ease;
 }
 
-.municipalities-table__row:hover {
-  background: var(--surface-hover);
+.municipalities-table__row:hover td {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
 @keyframes municipalities-table-fade-up {

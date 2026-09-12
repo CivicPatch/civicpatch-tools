@@ -3,7 +3,7 @@ import { component, useState, useEffect } from "haunted";
 import { createReviewSession, navigateToEntry, fetchReviewStats, fetchActiveReviewSession, fetchAvailableReviewStates } from "../../api.js";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { STORAGE_KEYS } from "../../utils/storage-keys.js";
-import { landingUrl, sessionUrl, STATE_PARAM, DEFAULT_DAILY_GOAL } from "../review-routes.js";
+import { landingUrl, sessionUrl, STATE_PARAM } from "../review-routes.js";
 import { DEFAULT_STATS } from "../review-session-page/review-state.js";
 import { SESSION_COUNTS } from "./review-landing.js";
 import "../../components/panel/panel.css";
@@ -16,10 +16,11 @@ function getStateFromUrl() {
 function ReviewPage() {
   const [defaultState, setDefaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", { ttl: PERSIST_FOREVER });
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
-  // Same storage key verify-cta.ts reads for its own one-click "start a review"
-  // button — that CTA has no picker of its own, so it just wants the size you
-  // picked last.
-  const [storedCount, setStoredCount] = useLocalStorage(STORAGE_KEYS.DAILY_GOAL, DEFAULT_DAILY_GOAL, { ttl: PERSIST_FOREVER });
+  // Not persisted — the backend already remembers the length from this user's last
+  // session (create_or_get_review_session falls back to it when none is passed), so
+  // caching a second copy here would just be a weaker, device-scoped duplicate of
+  // that. This is only what the reader has explicitly picked in this page view.
+  const [chosenCount, setChosenCount] = useState<number | undefined>(undefined);
 
   const [stats, setStats] = useState(DEFAULT_STATS);
   const [error, setError] = useState(null);
@@ -44,14 +45,19 @@ function ReviewPage() {
     window.location.href = landingUrl(code);
   };
 
-  // The stored pick is never clamped to what's on the page — it's just the last
-  // thing you chose. What can actually be picked (and submitted) is capped to
-  // what's available right now, same as the picker's own disabled options.
+  // What can actually be picked (and submitted) is capped to what's available right
+  // now, same as the picker's own disabled options. No explicit pick yet, or the
+  // picked one is no longer valid, falls back to the smallest valid option — always
+  // a concrete, visible value, since whatever the picker highlights is exactly what
+  // gets submitted, never a different number silently substituted underneath it.
   const validCounts = SESSION_COUNTS.filter((n) => n <= (stats.available_count ?? 0));
-  const sessionCount = validCounts.includes(storedCount) ? storedCount : (validCounts[0] ?? storedCount);
+  const sessionCount =
+    chosenCount !== undefined && validCounts.includes(chosenCount)
+      ? chosenCount
+      : (validCounts[0] ?? chosenCount);
 
   const handleSessionCountChange = (n) => {
-    setStoredCount(n);
+    setChosenCount(n);
   };
 
   // With an active session, just hand off to the session route, which resumes

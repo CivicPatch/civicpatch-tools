@@ -149,7 +149,7 @@ async def _allocate_next_entry(cur, review_session_id: str, entry_number: int, s
         (STREAK_TIMEZONE, STREAK_TIMEZONE, review_session_id),
     )
     counts_row = await cur.fetchone()
-    if counts_row.resolved >= session_row.daily_goal:  # type: ignore[union-attr]
+    if counts_row.resolved >= session_row.session_length:  # type: ignore[union-attr]
         return {"done": AdvanceDoneReason.GOAL_REACHED}
 
     # Exclude any card currently claimed in this session so an in-flight one isn't re-offered.
@@ -178,7 +178,7 @@ async def navigate_to_entry(
     async with pool.connection() as conn:
         async with conn.cursor(row_factory=namedtuple_row) as cur:
             await cur.execute(
-                "SELECT state_code, daily_goal FROM review_sessions WHERE id = %s FOR UPDATE",
+                "SELECT state_code, session_length FROM review_sessions WHERE id = %s FOR UPDATE",
                 (review_session_id,),
             )
             session_row = await cur.fetchone()
@@ -233,12 +233,12 @@ async def navigate_to_entry(
             avail = await cur.fetchone()
 
     resolved_count = counts.resolved_count  # type: ignore[union-attr]
-    daily_goal = session_row.daily_goal  # type: ignore[union-attr]
-    # Session length = the goal, capped by what's actually reviewable (done +
-    # still-available), and never fewer than where we already are.
-    total = max(entry_number, min(daily_goal, resolved_count + avail.available))  # type: ignore[union-attr]
+    session_length = session_row.session_length  # type: ignore[union-attr]
+    # The session length, capped by what's actually reviewable (done + still-available),
+    # and never fewer than where we already are.
+    total = max(entry_number, min(session_length, resolved_count + avail.available))  # type: ignore[union-attr]
     # A next entry exists only if the pool can offer one AND we're not already at the end of
-    # the session. total encodes the daily_goal cap that the pool-availability check ignores.
+    # the session. total encodes the session_length cap that the pool-availability check ignores.
     has_next = has_next and entry_number < total
 
     return {
@@ -246,7 +246,7 @@ async def navigate_to_entry(
         "jurisdiction_ocdid": jurisdiction_ocdid,
         "entry_number": entry_number,
         "resolved_count": resolved_count,
-        "goal": daily_goal,
+        "session_length": session_length,
         "total": total,
         "has_next": has_next,
     }

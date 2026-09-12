@@ -102,7 +102,7 @@ def test_create_review_session_returns_session(client):
     ):
         response = client.post(
             "/review-sessions",
-            json={"state_code": "ca", "daily_goal": 20},
+            json={"state_code": "ca", "session_length": 20},
         )
 
     assert response.status_code == 200
@@ -164,7 +164,7 @@ def test_get_active_session_returns_null_when_none(client):
 
 @pytest.mark.unit
 def test_get_active_session_returns_session_when_active(client):
-    active = {"session_id": TEST_SESSION_ID, "daily_goal": 10, "current_entry_number": 3}
+    active = {"session_id": TEST_SESSION_ID, "session_length": 10, "current_entry_number": 3}
     with patch(
         "database.review_sessions.get_active_review_session",
         new_callable=AsyncMock,
@@ -211,7 +211,7 @@ def test_get_active_session_requires_state_code(client):
 @pytest.mark.parametrize(
     "method,url,body",
     [
-        ("post", "/review-sessions", {"state_code": "ca", "daily_goal": 5}),
+        ("post", "/review-sessions", {"state_code": "ca", "session_length": 5}),
         ("post", f"/review-sessions/{TEST_SESSION_ID}/navigate", {"entry_number": 1}),
         ("post", f"/review-sessions/{TEST_SESSION_ID}/pass", {"entry_number": 1}),
         ("post", f"/review-sessions/{TEST_SESSION_ID}/end", None),

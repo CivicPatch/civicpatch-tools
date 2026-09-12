@@ -43,7 +43,7 @@ async def get_active_review_session(user_id: str, state_code: str) -> dict[str, 
                 """
                 SELECT rs.id AS session_id,
                        rs.state_code,
-                       rs.daily_goal,
+                       rs.session_length,
                        rs.current_entry_number,
                        ARRAY_AGG(rse.entry_number ORDER BY rse.entry_number)
                            FILTER (WHERE rse.status = 'resolved') AS resolved_entry_numbers,
@@ -66,7 +66,7 @@ async def get_active_review_session(user_id: str, state_code: str) -> dict[str, 
                       WHERE rse2.review_session_id = rs.id
                         AND rse2.status = 'claimed'
                   )
-                GROUP BY rs.id, rs.state_code, rs.daily_goal, rs.current_entry_number
+                GROUP BY rs.id, rs.state_code, rs.session_length, rs.current_entry_number
                 """,
                 (user_id, state_code, timedelta(minutes=SESSION_IDLE_TIMEOUT_MINUTES)),
             )
@@ -77,7 +77,7 @@ async def get_active_review_session(user_id: str, state_code: str) -> dict[str, 
     return {
         "session_id": str(row.session_id),  # type: ignore[union-attr]
         "state_code": row.state_code,  # type: ignore[union-attr]
-        "daily_goal": row.daily_goal,  # type: ignore[union-attr]
+        "session_length": row.session_length,  # type: ignore[union-attr]
         "current_entry_number": row.current_entry_number,  # type: ignore[union-attr]
         "resolved_entry_numbers": row.resolved_entry_numbers or [],  # type: ignore[union-attr]
         "session_changeset_ids": row.session_changeset_ids or [],  # type: ignore[union-attr]
@@ -97,16 +97,16 @@ async def _purge_session_queue(cur, review_session_id: str) -> None:
 async def create_or_get_review_session(
     user_id: str,
     state_code: str,
-    daily_goal: int | None = None,
+    session_length: int | None = None,
 ) -> dict[str, Any]:
     from datetime import timedelta
     pool = await get_pool()
     async with pool.connection() as conn:
         async with conn.cursor(row_factory=namedtuple_row) as cur:
-            if daily_goal is None:
+            if session_length is None:
                 await cur.execute(
                     """
-                    SELECT daily_goal FROM review_sessions
+                    SELECT session_length FROM review_sessions
                     WHERE user_id = %s
                     ORDER BY created_at DESC
                     LIMIT 1
@@ -114,7 +114,7 @@ async def create_or_get_review_session(
                     (user_id,),
                 )
                 row = await cur.fetchone()
-                daily_goal = row.daily_goal if row else 10  # type: ignore[union-attr]
+                session_length = row.session_length if row else 10  # type: ignore[union-attr]
 
             await cur.execute(
                 """
@@ -132,11 +132,11 @@ async def create_or_get_review_session(
                 await cur.execute(
                     """
                     UPDATE review_sessions
-                    SET daily_goal = %s
+                    SET session_length = %s
                     WHERE id = %s
-                    RETURNING id, state_code, daily_goal, created_at
+                    RETURNING id, state_code, session_length, created_at
                     """,
-                    (daily_goal, str(existing.id)),  # type: ignore[union-attr]
+                    (session_length, str(existing.id)),  # type: ignore[union-attr]
                 )
                 row = await cur.fetchone()
             else:
@@ -153,11 +153,11 @@ async def create_or_get_review_session(
 
                 await cur.execute(
                     """
-                    INSERT INTO review_sessions (user_id, state_code, daily_goal)
+                    INSERT INTO review_sessions (user_id, state_code, session_length)
                     VALUES (%s, %s, %s)
-                    RETURNING id, state_code, daily_goal, created_at
+                    RETURNING id, state_code, session_length, created_at
                     """,
-                    (user_id, state_code, daily_goal),
+                    (user_id, state_code, session_length),
                 )
                 row = await cur.fetchone()
 
@@ -174,7 +174,7 @@ async def create_or_get_review_session(
     return {
         "id": str(row.id),  # type: ignore[union-attr]
         "state_code": row.state_code,  # type: ignore[union-attr]
-        "daily_goal": row.daily_goal,  # type: ignore[union-attr]
+        "session_length": row.session_length,  # type: ignore[union-attr]
         "created_at": row.created_at.isoformat(),  # type: ignore[union-attr]
         "next_entry_number": next_entry_row.next_entry_number if next_entry_row else 1,  # type: ignore[union-attr]
     }

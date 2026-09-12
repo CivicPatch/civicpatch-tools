@@ -70,6 +70,15 @@ export function jurisdictionSection(jurisdictionPath: string, historyHref: strin
   ];
 }
 
+// API keys is disabled for now — deliberately not an item here, so it isn't reachable from
+// either the navbar's overview group or the settings page's own sidebar.
+export function overviewSection(): SectionNavItem[] {
+  return [
+    { label: "review", href: "/review" },
+    { label: "settings", href: "/settings" },
+  ];
+}
+
 export function adminSection(permissions: object): SectionNavItem[] {
   const items: SectionNavItem[] = [{ label: "users", href: "/admin/users" }];
   if (perm(permissions, "can_edit_spend")) items.push({ label: "spend", href: "/spend" });

@@ -99,7 +99,7 @@ async def _count_entries(session_id: uuid.UUID, status: str | None = None) -> in
 
 
 async def _create_session(user_id: uuid.UUID) -> uuid.UUID:
-    result = await create_or_get_review_session(str(user_id), _STATE_CODE, daily_goal=10)
+    result = await create_or_get_review_session(str(user_id), _STATE_CODE, session_length=10)
     return uuid.UUID(result["id"])
 
 
@@ -204,7 +204,7 @@ async def test_fresh_start_after_resolved_entries_uses_next_entry_number(test_us
     await _insert_entry(session_id, entry_number=2, status="resolved")
     await _insert_entry(session_id, entry_number=3, status="resolved")
 
-    result = await create_or_get_review_session(str(test_user), _STATE_CODE, daily_goal=10)
+    result = await create_or_get_review_session(str(test_user), _STATE_CODE, session_length=10)
 
     assert result["next_entry_number"] == 4, (
         f"After 3 resolved entries, next_entry_number must be 4, got {result['next_entry_number']}"
@@ -215,7 +215,7 @@ async def test_fresh_start_after_resolved_entries_uses_next_entry_number(test_us
 @pytest.mark.integration
 async def test_fresh_session_with_no_history_starts_at_entry_1(test_user):
     """Brand new session with no prior entries must start at entry 1."""
-    result = await create_or_get_review_session(str(test_user), _STATE_CODE, daily_goal=10)
+    result = await create_or_get_review_session(str(test_user), _STATE_CODE, session_length=10)
 
     assert result["next_entry_number"] == 1
 
@@ -236,7 +236,7 @@ async def test_end_session_then_create_starts_fresh_session(test_user):
 
     await end_review_session(str(session_a_id))
 
-    session_b = await create_or_get_review_session(str(test_user), _STATE_CODE, daily_goal=10)
+    session_b = await create_or_get_review_session(str(test_user), _STATE_CODE, session_length=10)
     assert session_b["id"] != str(session_a_id), "End must force a brand-new session row"
     assert session_b["next_entry_number"] == 1, "Fresh session must start at entry 1"
 
@@ -276,7 +276,7 @@ async def test_resumes_when_session_updated_at_is_recent(test_user):
             (session_id,),
         )
 
-    await create_or_get_review_session(str(test_user), _STATE_CODE, daily_goal=10)
+    await create_or_get_review_session(str(test_user), _STATE_CODE, session_length=10)
 
     assert await _count_entries(session_id, "claimed") == 1, (
         "Claimed entry must survive when session updated_at is within idle window"
@@ -301,7 +301,7 @@ async def test_purges_when_session_updated_at_is_stale(test_user):
             (session_id,),
         )
 
-    await create_or_get_review_session(str(test_user), _STATE_CODE, daily_goal=10)
+    await create_or_get_review_session(str(test_user), _STATE_CODE, session_length=10)
 
     assert await _count_entries(session_id, "claimed") == 0, (
         "Claimed entry must be purged when session updated_at is past idle window"
@@ -475,14 +475,14 @@ async def test_reported_pr_leaves_pool_until_issue_resolved():
 @pytest.mark.integration
 async def test_has_next_false_at_last_entry_within_goal(test_user):
     """
-    With daily_goal=1 and spare reviewable PRs still in the pool, the only session entry must
+    With session_length=1 and spare reviewable PRs still in the pool, the only session entry must
     report has_next=False. Regression: has_next tracked pool availability and ignored the goal
     cap, so the Next button stayed enabled past the single dot.
     """
     req_a, ocdid_a = await _seed_open_pr("goal1a")
     req_b, ocdid_b = await _seed_open_pr("goal1b")
     try:
-        session = await create_or_get_review_session(str(test_user), _STATE_CODE, daily_goal=1)
+        session = await create_or_get_review_session(str(test_user), _STATE_CODE, session_length=1)
         result = await navigate_to_entry(session["id"], 1)
         assert result["total"] == 1, "a goal of 1 yields a single dot"
         assert result["has_next"] is False, "no next entry past the only slot in the session"

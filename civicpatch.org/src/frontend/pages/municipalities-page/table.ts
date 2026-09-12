@@ -94,7 +94,7 @@ export function renderMunicipalitiesTable({
 
   return html`
     <div class="municipalities-table__wrapper">
-      <table class="municipalities-table">
+      <table class="municipalities-table striped">
         <thead>
           <tr>
             ${SORT_HEADERS.map((h) => renderSortHeader(h, sortKey, sortDir, onSortChange))}

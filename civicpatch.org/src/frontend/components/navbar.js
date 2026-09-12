@@ -8,7 +8,11 @@ import {
 import { STORAGE_KEYS } from "../utils/storage-keys.js";
 import { useStorageSweep } from "../hooks/use-storage-sweep.js";
 import "./nav-shortcuts/index.js";
-import { manageSection, adminSection } from "./section-nav/index.ts";
+import {
+  manageSection,
+  adminSection,
+  overviewSection,
+} from "./section-nav/index.ts";
 import "./nav-group/index.js";
 import "./navbar.css";
 // Font Awesome, self-hosted. It was a CDN kit until that kit started returning
@@ -54,10 +58,10 @@ function directNavItems(permissions) {
     { label: "home", href: "/" },
     { label: "blog", href: "/blog" },
   ];
-  if (permissions?.can_view_reviews_page)
-    items.push({ label: "overview", href: "/review" });
   if (permissions?.can_view_activity_page)
     items.push({ label: "activity", href: "/activity/changelogs" });
+  if (permissions?.can_view_reviews_page)
+    items.push({ label: "overview", href: "/review" });
   if (permissions?.can_view_queue_page)
     items.push({ label: "manage", href: "/bulk-review" });
   if (permissions?.can_manage_roles)
@@ -73,10 +77,13 @@ function shortcutSections(permissions) {
     {
       label: "pages",
       items: directNavItems(permissions).filter(
-        (i) => i.label !== "manage" && i.label !== "admin",
+        (i) =>
+          i.label !== "overview" && i.label !== "manage" && i.label !== "admin",
       ),
     },
   ];
+  if (permissions?.can_view_reviews_page)
+    sections.push({ label: "overview", items: overviewSection() });
   if (permissions?.can_view_queue_page)
     sections.push({ label: "manage", items: manageSection(permissions) });
   if (permissions?.can_manage_roles)
@@ -93,13 +100,18 @@ function renderAuthedLinks(user, currentPath) {
   return html`
     <a href="/" class="${active("/")}">home</a>
     <a href="/blog" class="${active("/blog")}">blog</a>
-    ${user.permissions?.can_view_reviews_page
-      ? html`<a href="/review" class="${active("/review")}">overview</a>`
-      : ""}
     ${user.permissions?.can_view_activity_page
       ? html`<a href="/activity/changelogs" class="${active("/activity")}"
           >activity</a
         >`
+      : ""}
+    ${user.permissions?.can_view_reviews_page
+      ? html`<civ-nav-group
+          .label=${"overview"}
+          .href=${"/review"}
+          .active=${isActivePath(currentPath, "/review")}
+          .items=${overviewSection()}
+        ></civ-nav-group>`
       : ""}
     ${user.permissions?.can_view_queue_page
       ? html`<civ-nav-group
@@ -158,9 +170,7 @@ function renderAuthedControls(user) {
       ${user.avatar_url
         ? html`<img class="user-avatar" src="${user.avatar_url}" alt="" />`
         : html`<span class="user-dot"></span>`}
-      <span class="user-name"
-        >${user.username || user.email || "User"}</span
-      >
+      <span class="user-name">${user.username || user.email || "User"}</span>
     </span>
     <civ-nav-shortcuts
       .sections=${shortcutSections(user.permissions)}

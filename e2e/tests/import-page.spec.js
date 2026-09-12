@@ -166,14 +166,19 @@ test.describe("Import from the sheet", () => {
   }) => {
     await stubIdle(page);
     await page.route(REVIEW, (route) => json(route, reviewBody([person()])));
-    await page.route(HISTORY, (route) =>
-      historyRoute(route, [progress("succeeded")]),
-    );
 
-    // Running on the first poll, finished on the next: the page has to keep asking.
+    // Running on the first poll, finished on the next: the page has to keep asking. History
+    // only picks up the batch once it is finished, same as a real backend would — otherwise
+    // the review would appear regardless of whether the poll ever resolved.
     let polls = 0;
-    await page.route(PROGRESS, (route) =>
-      json(route, progress(polls++ === 0 ? "running" : "succeeded")),
+    let finished = false;
+    await page.route(PROGRESS, (route) => {
+      const status = polls++ === 0 ? "running" : "succeeded";
+      if (status === "succeeded") finished = true;
+      return json(route, progress(status));
+    });
+    await page.route(HISTORY, (route) =>
+      historyRoute(route, finished ? [progress("succeeded")] : []),
     );
     await page.route(START, (route) =>
       route.request().method() === "POST"
@@ -182,7 +187,9 @@ test.describe("Import from the sheet", () => {
     );
 
     await page.goto("/imports");
-    await page.locator(".import-action").click();
+    // Not `.import-action` — a past batch's own Publish buttons share that class and are
+    // already on the page, grouped under "Past imports" alongside the Import button.
+    await page.getByRole("button", { name: "Import" }).click();
 
     await expect(page.getByText("Importing…")).toBeVisible();
     // Arrives on its own — the poll used to die before the first batch existed, leaving this

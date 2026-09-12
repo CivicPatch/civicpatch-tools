@@ -8,7 +8,7 @@ import {
   type SessionMeta,
 } from "../pages/review-session-page/review-state.ts";
 
-const SESSION: SessionMeta = { id: "session-1", daily_goal: 10 };
+const SESSION: SessionMeta = { id: "session-1", session_length: 10 };
 
 function entry(changesetId = "req-1"): CurrentEntry {
   return {

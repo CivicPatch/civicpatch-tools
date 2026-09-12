@@ -61,7 +61,7 @@
 }
 
 .coverage-by-state__count {
-  color: var(--status-needs-review);
+  color: var(--text-muted);
   font-size: var(--font-size-sm);
   font-variant-numeric: tabular-nums;
   text-align: right;
