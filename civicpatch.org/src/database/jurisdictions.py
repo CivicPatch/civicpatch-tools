@@ -220,6 +220,24 @@ async def get_state_names() -> dict[str, str]:
     return {state: name for state, name in results if state and name}
 
 
+async def get_geoid_to_ocdid_lookup(state: str) -> dict[str, str]:
+    # One query for all three levels (state/counties/local) — Census GEOIDs don't collide
+    # across levels, so a single geoid->ocdid map covers map-tile feature enrichment.
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT data->>'geoid', jurisdiction_ocdid
+            FROM jurisdictions
+            WHERE state = %s AND status = 'active' AND data->>'geoid' IS NOT NULL;
+            """,
+            (state,),
+        )
+        results = await cur.fetchall()
+
+    return {geoid: ocdid for geoid, ocdid in results}
+
+
 async def get_states() -> List[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

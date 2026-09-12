@@ -23,8 +23,8 @@ def get_router() -> APIRouter:
         return {"data": data}
 
     @router.get("/{state}/municipalities")
-    async def get_municipalities(state: str):
-        data = await coverage_service.get_municipality_list(state)
+    async def get_municipalities(state: str, level: str = "local"):
+        data = await coverage_service.get_municipality_list(state, level)
         return {"data": data}
 
     return router

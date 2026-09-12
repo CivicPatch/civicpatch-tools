@@ -1,40 +1,19 @@
-from database.people import IS_ON_THE_ROSTER
-from database.database import get_pool
 from database.changeset_predicates import (
     AVAILABLE_FOR_REVIEW,
     LAST_COLLECTED_AT,
     LAST_COLLECTED_JOIN,
 )
+from database.database import get_pool
 from database.jurisdictions import FRESH_SINCE_SQL
+from database.people import IS_ON_THE_ROSTER
 
 
 async def get_dashboard() -> dict:
-    """Per-state counts of local jurisdictions and CivicPatch coverage.
-
-    Shape matches the legacy dashboard.json contract consumed by the
-    progress-dashboard frontend components, minus the deprecated external/*
-    fields. `covered` = covered_fresh + covered_stale; the fresh/stale split powers the
-    new bar + staleness-aware map color.
-
-    `status_counts` mirrors `classify_map_status` (core/coverage.py) and the homepage
-    status taxonomy (fresh/stale/gap/untracked). `cutoff` is the start of the rolling
-    freshness window — the same for every state, kept per-state in the response shape
-    for the frontend's sake. `covered_fresh`/`covered_stale`
-    additionally require `has_url` (the "legacy" coverage view is scrapeable-only);
-    `status_fresh`/`status_stale` don't, matching `classify_map_status`'s actual branches —
-    these two families genuinely diverge on jurisdictions with people but no URL on file
-    (10 rows in prod as of writing), so both are real, not just aliases of each other.
-    `has_url`/`has_people`/`is_fresh` are computed once per jurisdiction in `local_flags`;
-    every count below is just a combination of those three booleans, not a re-derivation.
-
-    People are joined pre-aggregated (one GROUP BY over people, hash-joined) rather
-    than a per-row correlated subquery — this scans all states once, so it stays a
-    couple of passes even at tens of thousands of jurisdictions.
-    """
     query = f"""
         WITH local_flags AS (
             SELECT
                 j.state,
+                j.level,
                 COALESCE(pc.people_count, 0)                                      AS people_count,
                 NULLIF(j.data->>'url', '') IS NOT NULL                            AS has_url,
                 COALESCE(pc.people_count, 0) > 0                                  AS has_people,
@@ -79,7 +58,30 @@ async def get_dashboard() -> dict:
             COUNT(*) FILTER (WHERE NOT has_people AND has_url)::int           AS status_gap,
             COUNT(*) FILTER (WHERE NOT has_people AND NOT has_url)::int       AS status_untracked,
             COALESCE(MAX(rc.needs_review), 0)                                 AS needs_review,
-            {FRESH_SINCE_SQL}                                                 AS cutoff
+            {FRESH_SINCE_SQL}                                                 AS cutoff,
+            -- Split out by level too, for the freshness widget's separate municipalities/
+            -- counties bars — the merged columns above stay as-is for the map and the
+            -- home-page leaderboard, which deliberately don't distinguish the two tiers.
+            COUNT(*) FILTER (WHERE level = 'local')::int                        AS muni_known,
+            COUNT(*) FILTER (WHERE level = 'local' AND has_people AND is_fresh)::int
+                                                                               AS muni_fresh,
+            COUNT(*) FILTER (WHERE level = 'local' AND has_people AND NOT is_fresh)::int
+                                                                               AS muni_stale,
+            COUNT(*) FILTER (WHERE level = 'local' AND NOT has_people AND has_url)::int
+                                                                               AS muni_gap,
+            COUNT(*) FILTER (
+                WHERE level = 'local' AND NOT has_people AND NOT has_url
+            )::int                                                            AS muni_untracked,
+            COUNT(*) FILTER (WHERE level = 'counties')::int                     AS county_known,
+            COUNT(*) FILTER (WHERE level = 'counties' AND has_people AND is_fresh)::int
+                                                                               AS county_fresh,
+            COUNT(*) FILTER (WHERE level = 'counties' AND has_people AND NOT is_fresh)::int
+                                                                               AS county_stale,
+            COUNT(*) FILTER (WHERE level = 'counties' AND NOT has_people AND has_url)::int
+                                                                               AS county_gap,
+            COUNT(*) FILTER (
+                WHERE level = 'counties' AND NOT has_people AND NOT has_url
+            )::int                                                            AS county_untracked
         FROM local_flags lf
         LEFT JOIN review_counts rc ON rc.state = lf.state
         GROUP BY lf.state
@@ -92,8 +94,28 @@ async def get_dashboard() -> dict:
 
     states: dict = {}
     for (
-        state, known, scrapeable, covered_fresh, covered_stale, officials,
-        status_fresh, status_stale, status_gap, status_untracked, needs_review, cutoff,
+        state,
+        known,
+        scrapeable,
+        covered_fresh,
+        covered_stale,
+        officials,
+        status_fresh,
+        status_stale,
+        status_gap,
+        status_untracked,
+        needs_review,
+        cutoff,
+        muni_known,
+        muni_fresh,
+        muni_stale,
+        muni_gap,
+        muni_untracked,
+        county_known,
+        county_fresh,
+        county_stale,
+        county_gap,
+        county_untracked,
     ) in rows:
         states[state] = {
             "state": state,
@@ -114,6 +136,24 @@ async def get_dashboard() -> dict:
                     "untracked": status_untracked,
                 },
                 "needs_review": needs_review,
+                "municipalities": {
+                    "known": muni_known,
+                    "status_counts": {
+                        "fresh": muni_fresh,
+                        "stale": muni_stale,
+                        "gap": muni_gap,
+                        "untracked": muni_untracked,
+                    },
+                },
+                "counties": {
+                    "known": county_known,
+                    "status_counts": {
+                        "fresh": county_fresh,
+                        "stale": county_stale,
+                        "gap": county_gap,
+                        "untracked": county_untracked,
+                    },
+                },
             },
         }
     return {"states": states}

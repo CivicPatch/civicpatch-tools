@@ -58,17 +58,20 @@ async def clean_sentinels():
     await _wipe()
 
 
-async def _insert(ocdid, *, collected_at, people):
-    data = json.dumps({"url": "https://x", "parent_ocdids": [_COUNTY]})
+async def _insert(ocdid, *, collected_at, people, level="local"):
+    fields: dict[str, object] = {"url": "https://x"}
+    if level == "local":
+        fields["parent_ocdids"] = [_COUNTY]
+    data = json.dumps(fields)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             INSERT INTO jurisdictions
                 (jurisdiction_ocdid, state, level, data, updated_at, status)
-            VALUES (%s, 'zz', 'local', %s, now(), 'active')
+            VALUES (%s, 'zz', %s, %s, now(), 'active')
             """,
-            (ocdid, data),
+            (ocdid, level, data),
         )
         if people:
             # Seated, not merely present: "has people" is an open membership now, so a person
@@ -122,4 +125,22 @@ async def test_fresh_sits_alongside_scraped_and_total():
     county = coverage["zz"]["counties"][_COUNTY]
     assert county["total"] == 3
     assert county["covered"] == 2
+    assert county["covered_fresh"] == 1
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_county_with_no_locals_counts_itself():
+    # Hawaii: the county itself is the unit of government, not a rollup of municipalities.
+    # Without this, a state with no local jurisdictions never gets a "counties" entry at all.
+    # A short id, like the other fixtures here — not the full OCD-ID `_COUNTY`, which is
+    # reserved for the value other rows point at via parent_ocdids, not a row's own id.
+    standalone_county = "zz-standalone-county"
+    await _insert(standalone_county, collected_at=_FRESH_SCRAPE, people=True, level="counties")
+
+    coverage = await get_maps_coverage()
+
+    county = coverage["zz"]["counties"][standalone_county]
+    assert county["total"] == 1
+    assert county["covered"] == 1
     assert county["covered_fresh"] == 1

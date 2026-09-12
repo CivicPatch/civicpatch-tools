@@ -71,6 +71,38 @@
   white-space: nowrap;
 }
 
+/* Same idiom as .bulk-review__view-toggle: underline for the active state, no boxes. */
+.jurisdiction-page__mode-toggle {
+  display: flex;
+  gap: 0.9rem;
+}
+
+.jurisdiction-page__mode-toggle-btn {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  text-transform: lowercase;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: auto;
+  margin: 0;
+}
+
+.jurisdiction-page__mode-toggle-btn:hover {
+  color: var(--text);
+}
+
+.jurisdiction-page__mode-toggle-btn--active {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 4px;
+}
+
 .jurisdiction-page__hairline {
   border: none;
   border-top: 1px solid var(--border);

@@ -1,20 +1,23 @@
 @layer components {
-/* Plain text link, not a card — matches the demo's "review 10 in #washington" button
-   sitting right under the state list, rather than a separate boxed CTA. */
+/* A real button, sized and colored to match this widget's own idiom (row hover fill,
+   chip border/muted text) rather than the generic global button reset. */
 .verify-cta {
-  display: inline-block;
+  display: block;
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   background: none;
-  border: none;
-  padding: 0;
-  color: var(--action);
+  color: var(--text-muted);
   font-size: var(--font-size-sm);
   font-family: var(--font-mono);
-  text-decoration: underline;
-  cursor: pointer;
+  text-align: center;
 }
 
 .verify-cta:hover:not(:disabled) {
-  color: var(--action-hover);
+  border-color: var(--action);
+  color: var(--action);
+  background: var(--surface-2);
 }
 
 .verify-cta:disabled {
@@ -23,12 +26,12 @@
 }
 
 /* Dense form of /review's own goal-chip picker (review-page.css) — that one is a row
-   of full-width buttons sized for a whole page; this is a few characters next to a
-   text link, so it shrinks to match rather than reusing the same class. */
+   of full-width buttons sized for a whole page; this is a few characters above a
+   compact widget's CTA, so it shrinks to match rather than reusing the same class. */
 .verify-cta__lengths {
-  display: inline-flex;
+  display: flex;
   gap: 0.25rem;
-  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .verify-cta__length {

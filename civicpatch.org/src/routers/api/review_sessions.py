@@ -164,7 +164,6 @@ async def _navigate_response(session_id: str, entry_number: int):
             "changeset_id": changeset_id,
             "entry_number": result["entry_number"],
             "total": result["total"],
-            "goal": result["goal"],
             "resolved_count": result["resolved_count"],
             "has_next": result.get("has_next", False),
             "jurisdiction": pr_meta["jurisdiction"],

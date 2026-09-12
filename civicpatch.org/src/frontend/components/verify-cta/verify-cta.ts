@@ -1,12 +1,7 @@
 import "./verify-cta.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
-import { shouldRenderVerifyCta } from "./verify-cta-visibility.js";
-import {
-  landingUrl,
-  sessionUrl,
-  DEFAULT_SESSION_LENGTH,
-} from "../../pages/review-routes.js";
+import { landingUrl, sessionUrl } from "../../pages/review-routes.js";
 import { SESSION_COUNTS } from "../../pages/review-page/review-landing.js";
 import { createReviewSession, navigateToEntry } from "../../api.js";
 
@@ -29,8 +24,6 @@ function VerifyCta({
   // that. This is only what the reader has explicitly picked in this page view.
   const [sessionLength, setSessionLength] = useState<number | undefined>(undefined);
   const [starting, setStarting] = useState(false);
-
-  if (!shouldRenderVerifyCta({ toReviewCount })) return html``;
 
   // A resumable session can jump straight to it. Otherwise, start one the same
   // way the /review landing page's own button does (createReviewSession, then
@@ -78,15 +71,15 @@ function VerifyCta({
         <button
           class="verify-cta"
           type="button"
-          ?disabled=${starting}
+          ?disabled=${starting || (!hasActiveSession && toReviewCount === 0)}
           @click=${handleVerifyClick}
         >
-          review ${hasActiveSession ? toReviewCount : (sessionLength ?? DEFAULT_SESSION_LENGTH)}${state ? html` in #${state}` : ""}
+          ${hasActiveSession ? "resume" : "review"}${state ? html` in #${state}` : ""}
         </button>
       `
     : html`
-        <a class="verify-cta" href="/login">
-          sign in to review ${toReviewCount}${state ? html` in #${state}` : ""}
+        <a class="verify-cta" role="button" href="/login">
+          sign in to review${state ? html` in #${state}` : ""}
         </a>
       `;
 }

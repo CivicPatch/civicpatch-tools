@@ -1,13 +1,20 @@
+import '../panel/panel.css';
 import './freshness-widget.css';
 import { html } from 'lit-html';
 import { computeStatusSegments, STATUS_LABELS } from './status-segments.js';
 import { dateStringToFriendly } from '../../utils/date-utils.js';
+import { stateNameForCode } from '../ocdid-utils.js';
+
+interface Tier {
+  known: number;
+  status_counts: Record<string, number>;
+}
 
 interface DashboardState {
   civicpatch: {
     cutoff: string | null;
-    status_counts: Record<string, number>;
-    localities: { known: number };
+    municipalities: Tier;
+    counties: Tier;
   };
 }
 
@@ -16,21 +23,18 @@ export interface FreshnessWidgetProps {
   state: string;
 }
 
-export function renderFreshnessWidget({ stats, state }: FreshnessWidgetProps) {
-  const stateStats = stats?.states?.[state];
-  if (!stateStats) return html``;
+// A tier with no scraped/collected officials at all is one this state doesn't treat as
+// a scrape target (e.g. counties, in every state but Hawaii) — showing it would just be
+// a permanent wall of "no data".
+export function hasAnyCoverage(tier: Tier): boolean {
+  return tier.status_counts.fresh + tier.status_counts.stale > 0;
+}
 
-  const { cutoff, status_counts: statusCounts, localities } = stateStats.civicpatch;
-  const segments = computeStatusSegments(statusCounts);
-
+function renderTierBar(tier: Tier, label: string) {
+  const segments = computeStatusSegments(tier.status_counts);
   return html`
-    <div class="freshness-widget">
-      <p class="freshness-widget__title">
-        Progress — ${state.toUpperCase()} — ${localities.known} municipalities
-      </p>
-      ${cutoff
-        ? html`<p class="freshness-widget__cutoff">Fresh = scraped after ${dateStringToFriendly(cutoff)}</p>`
-        : ''}
+    <div class="freshness-widget__tier">
+      <p class="freshness-widget__tier-title">${tier.known} ${label}</p>
       <div class="freshness-widget__bar">
         ${segments.map(
           (s) => html`<div
@@ -49,6 +53,27 @@ export function renderFreshnessWidget({ stats, state }: FreshnessWidgetProps) {
           </span>`,
         )}
       </div>
+    </div>
+  `;
+}
+
+export function renderFreshnessWidget({ stats, state }: FreshnessWidgetProps) {
+  const stateStats = stats?.states?.[state];
+  if (!stateStats) return html``;
+
+  const { cutoff, municipalities, counties } = stateStats.civicpatch;
+  const stateLabel = stateNameForCode(state) || state.toUpperCase();
+
+  return html`
+    <div class="panel">
+      <div class="panel__cap">
+        <b>${stateLabel} progress</b>
+        ${cutoff
+          ? html`<span class="panel__cap-right">Fresh = scraped after ${dateStringToFriendly(cutoff)}</span>`
+          : ''}
+      </div>
+      ${renderTierBar(municipalities, 'municipalities')}
+      ${hasAnyCoverage(counties) ? renderTierBar(counties, 'counties') : ''}
     </div>
   `;
 }

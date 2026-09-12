@@ -1,23 +1,14 @@
 @layer components {
-.freshness-widget {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem;
+.freshness-widget__tier {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-top: 0.7rem;
 }
 
-.freshness-widget__title {
+.freshness-widget__tier-title {
   margin: 0;
-  font-weight: 700;
-  color: var(--text-default);
-}
-
-.freshness-widget__cutoff {
-  margin: 0;
-  text-align: right;
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   color: var(--text-muted);
 }
 

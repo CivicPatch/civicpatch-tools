@@ -58,7 +58,7 @@ async def clean_sentinels():
     await _wipe()
 
 
-async def _insert(ocdid, *, url, collected_at, people=False):
+async def _insert(ocdid, *, url, collected_at, people=False, level="local"):
     data = json.dumps({"url": url} if url else {})
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -66,9 +66,9 @@ async def _insert(ocdid, *, url, collected_at, people=False):
             """
             INSERT INTO jurisdictions
                 (jurisdiction_ocdid, state, level, data, updated_at, status)
-            VALUES (%s, 'zz', 'local', %s, now(), 'active')
+            VALUES (%s, 'zz', %s, %s, now(), 'active')
             """,
-            (ocdid, data),
+            (ocdid, level, data),
         )
         if people:
             # Seated, not merely present: "has people" is an open membership now, so a person
@@ -186,6 +186,33 @@ async def test_needs_review_counts_open_review_pool_changesets():
 
     civicpatch = (await get_dashboard())["states"]["zz"]["civicpatch"]
     assert civicpatch["needs_review"] == 1
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_municipalities_and_counties_split():
+    # Hawaii-shaped: a state with county-level jurisdictions as the real government unit
+    # alongside (in general) municipalities — the split must key strictly off level, not
+    # just "whichever level this state happens to use".
+    await _insert("zz-muni-fresh", url="https://m", collected_at=_FRESH_SCRAPE, people=True)
+    await _insert(
+        "zz-county-fresh", url="https://c", collected_at=_FRESH_SCRAPE, people=True,
+        level="counties",
+    )
+    await _insert("zz-county-gap", url="https://n", collected_at=None, level="counties")
+
+    civicpatch = (await get_dashboard())["states"]["zz"]["civicpatch"]
+
+    assert civicpatch["municipalities"] == {
+        "known": 1,
+        "status_counts": {"fresh": 1, "stale": 0, "gap": 0, "untracked": 0},
+    }
+    assert civicpatch["counties"] == {
+        "known": 2,
+        "status_counts": {"fresh": 1, "stale": 0, "gap": 1, "untracked": 0},
+    }
+    # The merged top-level fields stay level-agnostic, for the map/leaderboard.
+    assert civicpatch["localities"]["known"] == 3
 
 
 @pytest.mark.asyncio

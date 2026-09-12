@@ -102,8 +102,24 @@ def test_get_municipalities_returns_service_data(client):
         "services.coverage.get_municipality_list",
         new_callable=AsyncMock,
         return_value=MOCK_MUNICIPALITY_LIST,
-    ):
+    ) as mock_list:
         response = client.get("/coverage/co/municipalities")
 
     assert response.status_code == 200
     assert response.json() == {"data": MOCK_MUNICIPALITY_LIST}
+    mock_list.assert_called_once_with("co", "local")
+
+
+@pytest.mark.unit
+def test_get_municipalities_passes_through_level(client):
+    # The frontend's /{state}/counties page relies on this: dropping the query param
+    # silently falls back to "local" and the counties page shows the wrong list.
+    with patch(
+        "services.coverage.get_municipality_list",
+        new_callable=AsyncMock,
+        return_value=MOCK_MUNICIPALITY_LIST,
+    ) as mock_list:
+        response = client.get("/coverage/co/municipalities?level=counties")
+
+    assert response.status_code == 200
+    mock_list.assert_called_once_with("co", "counties")
