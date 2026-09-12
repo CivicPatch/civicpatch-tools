@@ -8,6 +8,10 @@ source's `jurisdiction_id` (e.g. "jurisdiction-ca-menlo-park") becomes the ocdid
 alone — the same thing a hand-typed ocdid always was, right or wrong, is checked at import,
 per jurisdiction, not here.
 
+The payload carries no title, so every row's `label` is written as `inherit` — the app looks
+up whatever this person's current seat already says and reuses it, or leaves it blank if this
+is someone new. `label` is required, so this can't just be left empty.
+
 Usage:
     python3 convert_roster_payload.py payload.tsv
     python3 convert_roster_payload.py payload.tsv roster.tsv
@@ -39,6 +43,10 @@ SOURCE_COLUMNS = [
 ]
 
 ROSTER_COLUMNS = ["jurisdiction_ocdid", "name", "source_url", "email", "phone", "image", "label"]
+
+# Matches core.entry_rows.INHERIT — kept as a literal, not an import, since this script is
+# standalone by design and must not need the app's package on the path.
+INHERIT = "inherit"
 
 
 def _ocdid_from_jurisdiction_id(jurisdiction_id: str) -> str | None:
@@ -72,7 +80,7 @@ def main() -> None:
             print(f"skipped row {line}: bad jurisdiction_id {row['jurisdiction_id']!r}", file=sys.stderr)
             continue
         writer.writerow(
-            [ocdid, row["name"], row["source_url"], row["email"], row["phone"], row["image"], ""]
+            [ocdid, row["name"], row["source_url"], row["email"], row["phone"], row["image"], INHERIT]
         )
         written += 1
 

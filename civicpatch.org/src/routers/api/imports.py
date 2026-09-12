@@ -4,7 +4,7 @@
 import logging
 
 from database import changeset_batches
-from fastapi import APIRouter, BackgroundTasks, Depends
+from fastapi import APIRouter, BackgroundTasks, Depends, Query
 from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
 from lib.sheets import SheetsNotConfigured
@@ -14,6 +14,7 @@ from schemas.imports import (
     PublishSelectionRequest,
     StartImportResponse,
 )
+from schemas.pagination import pagination_offset, pagination_total_pages
 from services import batch_review as batch_review_service
 from services import entry_sheet, sheet_import
 
@@ -67,6 +68,11 @@ def get_router() -> APIRouter:
         except Exception as e:
             return JSONResponse({"error": _sharing_hint(e)}, status_code=502)
 
+        # Nothing to ingest — every row was already handled or blocked. No batch, so the
+        # history stays a record of imports that did something, not one entry per click.
+        if not read.rows:
+            return {"data": StartImportResponse(batch_id=None, preview=read.preview)}
+
         try:
             batch_id = await changeset_batches.start(
                 changeset_batches.BatchKind.SHEET_IMPORT,
@@ -85,15 +91,27 @@ def get_router() -> APIRouter:
     # Declared before `/{batch_id}` or the path parameter swallows it.
     @router.get("/history")
     async def history_endpoint(
+        page: int = Query(1, ge=1),
+        per_page: int = Query(10, ge=1, le=50),
         _: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
-        """Recent imports, newest first. Each row deep-links to its own review."""
-        batches = await changeset_batches.list_recent(
+        """Every past import, newest first, paged — the page's own record of what came in."""
+        total = await changeset_batches.count_by_kind(
             changeset_batches.BatchKind.SHEET_IMPORT
         )
-        return {"data": [_progress(batch) for batch in batches]}
+        batches = await changeset_batches.list_recent(
+            changeset_batches.BatchKind.SHEET_IMPORT,
+            limit=per_page,
+            offset=pagination_offset(page, per_page),
+        )
+        return {
+            "data": [_progress(batch) for batch in batches],
+            "total_items": total,
+            "page": page,
+            "total_pages": pagination_total_pages(total, per_page),
+        }
 
     @router.get("/sheet")
     async def sheet_endpoint(

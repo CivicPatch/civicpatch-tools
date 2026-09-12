@@ -6,8 +6,10 @@
 // happened. That is deliberate, not a duplicate to be filtered.
 
 import { component, useState, useEffect } from "haunted";
+import { ref } from "lit/directives/ref.js";
 import { useAuth } from "../../../hooks/useAuth.js";
 import { html, nothing } from "lit-html";
+import { usePagerRef } from "../../../hooks/use-pager-ref.js";
 // `.jurisdiction-section`, `.pr-row` and the page shell live there; this page reuses them
 // rather than growing a second set that would drift from the jurisdiction page's.
 import "../jurisdiction-page.css";
@@ -85,6 +87,7 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
   const [page, setPage] = useState(1);
   const [loadFailed, setLoadFailed] = useState(false);
   const [cancelRequested, setCancelRequested] = useState<string[]>([]);
+  const { listRef: pastRef, scrollToTop } = usePagerRef<HTMLElement>();
 
   useEffect(() => {
     if (!jurisdictionOcdid) return;
@@ -141,6 +144,24 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
 
   const jurisdictionPath = jurisdictionOcdidToPath(jurisdictionOcdid);
 
+  // Built once so Next/Previous re-orients to the top of the section either way — clicking
+  // the bottom pager most often leaves the reader below what just changed above them.
+  const pastPager = Pagination({
+    page,
+    totalPages,
+    onPrevious: () => {
+      setPage(Math.max(1, page - 1));
+      scrollToTop();
+    },
+    onNext: () => {
+      setPage(Math.min(totalPages, page + 1));
+      scrollToTop();
+    },
+    // Fixed page size: `null` is what hides the per-page selector.
+    perPage: PER_PAGE,
+    onPerPageChange: null,
+  });
+
   return html`
     <main class="jurisdiction-page page-content">
       <div class="page-focal">
@@ -181,12 +202,13 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
               `
             : nothing}
 
-          <section class="panel">
+          <section class="panel" ${ref(pastRef)}>
             <div class="panel__cap"><b>Past</b></div>
             ${loadFailed
               ? html`<p class="tl-empty">That history could not be loaded.</p>`
               : entries.length
                 ? html`
+                    ${totalPages > 1 ? pastPager : nothing}
                     ${entries.map(
                       (entry) => html`<civ-timeline-entry
                         .entry=${entry}
@@ -195,17 +217,7 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
                         .jurisdictionOcdid=${jurisdictionOcdid}
                       ></civ-timeline-entry>`,
                     )}
-                    ${totalPages > 1
-                      ? Pagination({
-                          page,
-                          totalPages,
-                          onPrevious: () => setPage(Math.max(1, page - 1)),
-                          onNext: () => setPage(Math.min(totalPages, page + 1)),
-                          // Fixed page size: `null` is what hides the per-page selector.
-                          perPage: PER_PAGE,
-                          onPerPageChange: null,
-                        })
-                      : nothing}
+                    ${totalPages > 1 ? pastPager : nothing}
                   `
                 : html`<p class="tl-empty">
                     Nothing has been scraped, imported or edited here yet.

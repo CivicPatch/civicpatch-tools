@@ -79,7 +79,7 @@
 
 .run-row__bar {
     height: 5px;
-    background: var(--surface-stripe);
+    background: var(--surface-2);
     border: 1px solid var(--border-subtle);
 }
 

@@ -574,6 +574,47 @@ async def open_by_jurisdiction(
     return grouped
 
 
+async def open_source_labels_by_person(
+    cur, jurisdiction_ocdid: str, person_ids: list[str]
+) -> dict[str, str]:
+    """Each person's current open membership in the jurisdiction's default organization, as
+    the source's own words for it — verbatim text that re-parses to the same role.
+
+    By resolved person id, not name: this runs after identity linking, so it can reach exactly
+    who the sighting resolved to rather than matching on a name that might not be the
+    published spelling.
+
+    "Default" is the earliest-created organization. Every jurisdiction gets exactly one,
+    unconditionally, at sync (migration 195); a jurisdiction that ever grows a second, named
+    body must not have `inherit` pick between them arbitrarily.
+
+    Several source labels join back into one string — `parse_label` already treats ` / ` as a
+    segment boundary, so this re-parses exactly as the original multi-part label did.
+    """
+    if not person_ids:
+        return {}
+    await cur.execute(
+        """
+        SELECT m.person_id::text, m.source_labels
+        FROM memberships m
+        WHERE m.organization_id = (
+            SELECT id FROM organizations
+            WHERE jurisdiction_ocdid = %s
+            ORDER BY created_at ASC
+            LIMIT 1
+        )
+          AND m.closed_at IS NULL
+          AND m.person_id::text = ANY(%s)
+        """,
+        (jurisdiction_ocdid, person_ids),
+    )
+    return {
+        person_id: " / ".join(source_labels)
+        for person_id, source_labels in await cur.fetchall()
+        if source_labels
+    }
+
+
 async def set_label(
     cur,
     membership_id: str,

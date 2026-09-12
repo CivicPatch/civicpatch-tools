@@ -2,16 +2,19 @@ import "../../../components/panel/panel.css";
 import "./active-runs.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
+import { ref } from "lit/directives/ref.js";
 import { durationBetween } from "../../../utils/date-utils.js";
 import { Pagination } from "../../../components/pagination/index.js";
 import { cancelPipelineRun } from "../../../api.js";
 import { jurisdictionOcdidToPath } from "../../../components/ocdid-utils.js";
+import { usePagerRef } from "../../../hooks/use-pager-ref.ts";
 
 // Rows, not a table: every column but the name is fixed width, so a grid keeps them
 // aligned down the page without a <table>'s header furniture. Follows the demo's
 // in-flight row — status, who, how far, how long, and the one control.
 function ActiveRuns({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange, onPerPageChange, onCancel, canCancel }) {
   const [cancellingIds, setCancellingIds] = useState(new Set());
+  const { listRef, scrollToTop } = usePagerRef();
 
   if (!jobs || jobs.length === 0) return null;
 
@@ -58,14 +61,32 @@ function ActiveRuns({ jobs, page = 1, totalPages = 1, perPage = 25, onPageChange
     `;
   };
 
+  // Built once so Next/Previous re-orients to the top of the list either way — clicking
+  // the bottom pager most often leaves the reader below what just changed above them.
+  const pager = Pagination({
+    page,
+    totalPages,
+    onPrevious: () => {
+      onPageChange(page - 1);
+      scrollToTop();
+    },
+    onNext: () => {
+      onPageChange(page + 1);
+      scrollToTop();
+    },
+    perPage,
+    onPerPageChange,
+  });
+
   return html`
-    <section class="panel">
+    <section class="panel" ${ref(listRef)}>
       <div class="panel__cap">
         <b>runs</b>
         <span class="panel__cap-right">${jobs.length} on this page</span>
       </div>
+      ${pager}
       ${jobs.map(row)}
-      ${Pagination({ page, totalPages, onPrevious: () => onPageChange(page - 1), onNext: () => onPageChange(page + 1), perPage, onPerPageChange })}
+      ${pager}
     </section>
   `;
 }

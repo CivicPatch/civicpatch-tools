@@ -11,15 +11,16 @@ Isolation: everything is written under one sentinel jurisdiction, removed before
 test. `requests` cascades to `source_records`, so the rows go with it.
 """
 
+import uuid
 from typing import LiteralString
 from unittest.mock import AsyncMock, patch
 
 import pytest
 import pytest_asyncio
 
-from core.entry_rows import ImportRow, ImportStatus, Sighting
+from core.entry_rows import INHERIT, ImportRow, ImportStatus, Sighting
 from lib.csv import parse_csv
-from database import changeset_batches
+from database import changeset_batches, divisions, organizations, posts
 from database.database import get_pool
 from services.batch_review import batch_review, publish_selected
 from services.sinks.open_data import reviewed_file_path
@@ -149,6 +150,30 @@ async def _parsed(*people):
     return _rows(*people)
 
 
+async def _seed_open_membership(name: str, source_labels: list[str]) -> None:
+    """A currently-held seat, for `inherit` to find by name."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        person_id = str(uuid.uuid4())
+        await cur.execute(
+            "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
+            (person_id, _OCDID, name),
+        )
+        org = await organizations.find_or_create(cur, _OCDID)
+        division = f"ocd-division/country:us/state:zz/place:zz_sheet_test"
+        await divisions.find_or_create(cur, division, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "select-board-chair", division)
+        await cur.execute(
+            """
+            INSERT INTO memberships
+                (post_id, organization_id, person_id, source_labels, first_seen_at, last_seen_at)
+            VALUES (%s, %s, %s, %s, now(), now())
+            """,
+            (post_id, org, person_id, source_labels),
+        )
+        await conn.commit()
+
+
 async def _scalar(sql: LiteralString, params: tuple):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -232,6 +257,47 @@ async def test_a_label_mints_the_post_it_implies(user_id, batch_id):
         )
         == 0
     ), "ingest minted a seat; only publishing should"
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_inherit_reuses_the_current_source_labels(user_id, batch_id):
+    """`inherit` is resolved by resolved person id, after identity linking, against the
+    person's currently open membership — and the real label text is substituted before
+    parsing, into `source_records` too, so it lands exactly as if the source had sent it, on
+    every future view of the card, not as some separate `chosen_posts`-style shortcut."""
+    await _seed_open_membership("Ana Reyes", ["Select Board Chair"])
+    rows = _rows(("Ana Reyes", INHERIT))
+
+    [result] = await import_rows(rows, user_id, batch_id)
+
+    assert result.status is ImportStatus.IMPORTED
+    assert (
+        await _scalar(
+            "SELECT label FROM source_records WHERE changeset_id = %s::uuid",
+            (result.changeset_id,),
+        )
+        == "Select Board Chair"
+    )
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_inherit_with_nothing_to_inherit_falls_back_to_blank(user_id, batch_id):
+    """A name nobody currently holds a seat under — `inherit` degrades to blank, not to the
+    literal word being parsed as an unmatched label."""
+    rows = _rows(("Nobody Yet", INHERIT))
+
+    [result] = await import_rows(rows, user_id, batch_id)
+
+    assert result.status is ImportStatus.IMPORTED
+    assert (
+        await _scalar(
+            "SELECT label FROM source_records WHERE changeset_id = %s::uuid",
+            (result.changeset_id,),
+        )
+        == ""
+    )
 
 
 @pytest.mark.integration

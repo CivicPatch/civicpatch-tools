@@ -1,5 +1,8 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
+import { ref } from "lit/directives/ref.js";
+import { usePagerRef } from "../../hooks/use-pager-ref.js";
+import { formatDateTime } from "../../utils/date-utils.js";
 import {
   startImport,
   fetchLatestImport,
@@ -17,8 +20,7 @@ import {
   type ImportProgress,
   type PublishResult,
 } from "./import-types.js";
-import "../../components/civ-tab-bar/civ-tab-bar.js";
-import "./import-history.js";
+import { Pagination } from "../../components/pagination/index.js";
 import "./import-preview.js";
 import "./batch-review.js";
 import "../../components/panel/panel.css";
@@ -28,9 +30,7 @@ import { SectionNav, manageSection } from "../../components/section-nav/index.js
 import { useSummary } from "../../hooks/useSummary.js";
 
 const POLL_INTERVAL_MS = 2000;
-const TABS = [{ label: "Import" }, { label: "History" }];
-const IMPORT_TAB = 0;
-const HISTORY_TAB = 1;
+const HISTORY_PER_PAGE = 10;
 
 function progressPanel(batch: ImportProgress | null) {
   // Null for the moment between starting and the first poll returning.
@@ -72,6 +72,18 @@ function resultsPanel(results: PublishResult[]) {
   `;
 }
 
+function batchHeader(batch: ImportProgress) {
+  return html`
+    <header class="import-batch__header">
+      <span>${formatDateTime(batch.started_at)}</span>
+      <span>${batch.status}</span>
+      ${batch.status === BATCH_FAILED && batch.error
+        ? html`<span class="import-batch__error">${batch.error}</span>`
+        : null}
+    </header>
+  `;
+}
+
 function ImportPage() {
   const { permissions } = useAuth();
   // Global, not scoped to any page's own state — the sidebar badge is a constant
@@ -83,23 +95,57 @@ function ImportPage() {
   // to sit on "Importing…" until a reload.
   const [batchId, setBatchId] = useState<string | null>(null);
   const [batch, setBatch] = useState<ImportProgress | null>(null);
-  const [review, setReview] = useState<BatchReview | null>(null);
-  const [results, setResults] = useState<PublishResult[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sheetUrl, setSheetUrl] = useState<string | null>(null);
-  const [tab, setTab] = useState(IMPORT_TAB);
+  const [historyPage, setHistoryPage] = useState(1);
+  const [historyTotalPages, setHistoryTotalPages] = useState(1);
   const [history, setHistory] = useState<ImportProgress[]>([]);
+  const { listRef: historyRef, scrollToTop } = usePagerRef<HTMLElement>();
+  // Keyed by batch id: every batch on the current page gets its own review, its own publish
+  // results, and its own busy flag, rather than one page-wide set that only ever tracked the
+  // single most recently started batch.
+  const [reviews, setReviews] = useState<Record<string, BatchReview>>({});
+  const [resultsByBatch, setResultsByBatch] = useState<
+    Record<string, PublishResult[]>
+  >({});
+  const [publishingBatchId, setPublishingBatchId] = useState<string | null>(null);
 
-  // Refreshed whenever a batch changes, so finishing an import updates the list behind the tab
-  // rather than leaving it stale until a reload.
+  // Refreshed whenever a batch changes or the page turns, so finishing an import updates the
+  // list in place rather than leaving it stale until a reload.
   useEffect(() => {
-    fetchImportHistory()
-      .then(({ data }) => setHistory(data))
+    fetchImportHistory(historyPage, HISTORY_PER_PAGE)
+      .then(({ data, total_pages }) => {
+        setHistory(data);
+        setHistoryTotalPages(total_pages || 1);
+      })
       .catch(() => {
         // A missing history is not worth an error banner over the import itself.
       });
-  }, [batch?.batch_id, batch?.status]);
+  }, [historyPage, batch?.batch_id, batch?.status]);
+
+  // One review per finished batch on the current page. A batch still running has none yet —
+  // the progress panel above already covers that one.
+  useEffect(() => {
+    const finished = history.filter((b) => isFinished(b.status));
+    if (!finished.length) return;
+    let stopped = false;
+    Promise.all(
+      finished.map((b) =>
+        fetchBatchReview(b.batch_id).then((r) => [b.batch_id, r.data] as const),
+      ),
+    )
+      .then((pairs) => {
+        if (stopped) return;
+        setReviews(Object.fromEntries(pairs));
+      })
+      .catch(() => {
+        // A missing review reads as "nothing to show" for that batch, not a page-wide error.
+      });
+    return () => {
+      stopped = true;
+    };
+  }, [history]);
 
   useEffect(() => {
     fetchSheetUrl()
@@ -127,7 +173,8 @@ function ImportPage() {
     };
   }, []);
 
-  // Poll whichever batch is being tracked until it finishes, then read its review.
+  // Poll whichever batch is being tracked until it finishes. Its review arrives through the
+  // history-and-reviews effects above once it shows up there — not fetched here directly.
   useEffect(() => {
     if (!batchId) return;
     let stopped = false;
@@ -144,12 +191,6 @@ function ImportPage() {
           return;
         }
         if (data.status === BATCH_FAILED && data.error) setError(data.error);
-        const reviewBody = await fetchBatchReview(batchId);
-        if (stopped) return;
-        setReview(reviewBody.data);
-        // Deliberately no tab change. Moving somebody off the tab they are reading — the one
-        // holding the rejected rows they just asked about — to reveal a panel we could simply
-        // render in place is a jump that reads as a bug.
       } catch (e) {
         if (!stopped) setError(String(e));
       }
@@ -170,8 +211,6 @@ function ImportPage() {
   const handleStart = async () => {
     setBusy(true);
     setError(null);
-    setReview(null);
-    setResults([]);
     try {
       const { data } = await startImport();
       setPreview(data.preview);
@@ -184,38 +223,40 @@ function ImportPage() {
     }
   };
 
-  // Opening a past batch swaps which one the page is following: the poll effect keys on the
-  // id, so setting it is enough to load that batch's review instead of the latest one's.
-  const handleOpenBatch = (e: CustomEvent) => {
-    // Already following this one, and the effect keys on the id — so clearing the review here
-    // blanks a panel nothing will refill. The newest history row is usually the tracked batch.
-    if (e.detail.batch_id === batchId) return;
-    setReview(null);
-    setResults([]);
-    setError(null);
-    setBatchId(e.detail.batch_id);
-  };
-
-  const handlePublish = async (e: CustomEvent) => {
-    if (!batch) return;
-    setBusy(true);
+  const handlePublish = (targetBatchId: string) => async (e: CustomEvent) => {
+    setPublishingBatchId(targetBatchId);
     setError(null);
     try {
       const { data } = await publishBatch(
-        batch.batch_id,
+        targetBatchId,
         e.detail.jurisdiction_ocdids,
       );
-      setResults(data);
+      setResultsByBatch((prev) => ({ ...prev, [targetBatchId]: data }));
       // Re-read rather than patching locally: publishing is what decides the review status,
       // and a locality that refused must still show as pending.
-      const reviewBody = await fetchBatchReview(batch.batch_id);
-      setReview(reviewBody.data);
+      const reviewBody = await fetchBatchReview(targetBatchId);
+      setReviews((prev) => ({ ...prev, [targetBatchId]: reviewBody.data }));
     } catch (err) {
       setError(String(err));
     } finally {
-      setBusy(false);
+      setPublishingBatchId(null);
     }
   };
+
+  // Built once so Next/Previous re-orients to the top of the history section either way —
+  // clicking the bottom pager most often leaves the reader below what just changed above them.
+  const historyPager = Pagination({
+    page: historyPage,
+    totalPages: historyTotalPages,
+    onPrevious: () => {
+      setHistoryPage(Math.max(historyPage - 1, 1));
+      scrollToTop();
+    },
+    onNext: () => {
+      setHistoryPage(Math.min(historyPage + 1, historyTotalPages));
+      scrollToTop();
+    },
+  });
 
   return html`
     <main class="import-page page-content">
@@ -230,59 +271,61 @@ function ImportPage() {
         card per locality. Publishing stays your decision.
       </p>
 
-      <civ-tab-bar
-        .tabs=${TABS}
-        .selectedIndex=${tab}
-        .onTabClick=${(index: number) => setTab(index)}
-      ></civ-tab-bar>
-
       ${error ? html`<p class="import-error">${error}</p>` : null}
-      ${resultsPanel(results)}
-      ${tab === HISTORY_TAB
-        ? html`<section class="panel import-panel">
-            <h2 class="import-panel__title">Past imports</h2>
-            <import-history
-              .batches=${history}
-              .currentBatchId=${batchId}
-              @open-batch=${handleOpenBatch}
-            ></import-history>
-          </section>`
-        : html`${running
-            ? progressPanel(batch)
-            : html`
-                <section class="panel import-panel">
-                  <h2 class="import-panel__title">Import from the sheet</h2>
-                  ${sheetUrl
-                    ? html`<p class="import-hint">
-                        <a href=${sheetUrl} target="_blank" rel="noreferrer"
-                          >Open the sheet</a
-                        >
-                      </p>`
-                    : null}
-                  <button
-                    type="button"
-                    class="import-action"
-                    ?disabled=${busy}
-                    @click=${handleStart}
-                  >
-                    ${busy ? "Importing…" : "Import"}
-                  </button>
-                </section>
-              `}`}
+
+      ${running
+        ? progressPanel(batch)
+        : html`
+            <section class="panel import-panel">
+              <h2 class="import-panel__title">Import from the sheet</h2>
+              ${sheetUrl
+                ? html`<p class="import-hint">
+                    <a href=${sheetUrl} target="_blank" rel="noreferrer"
+                      >Open the sheet</a
+                    >
+                  </p>`
+                : null}
+              <button
+                type="button"
+                class="import-action"
+                ?disabled=${busy}
+                @click=${handleStart}
+              >
+                ${busy ? "Importing…" : "Import"}
+              </button>
+            </section>
+          `}
+
       ${preview
         ? html`<section class="panel import-panel">
             <import-preview .preview=${preview}></import-preview>
           </section>`
         : null}
-      ${review
-        ? html`<section class="panel import-panel">
-            <batch-review
-              .review=${review}
-              .importedAt=${batch?.started_at ?? null}
-              .busy=${busy}
-              @publish-selection=${handlePublish}
-            ></batch-review>
-          </section>`
+
+      ${history.length
+        ? html`
+            <div ${ref(historyRef)}>
+            <h2 class="import-panel__title">Past imports</h2>
+            ${historyPager}
+            ${history.map(
+              (b) => html`
+                <section class="panel import-panel">
+                  ${batchHeader(b)}
+                  ${resultsPanel(resultsByBatch[b.batch_id] ?? [])}
+                  ${reviews[b.batch_id]
+                    ? html`<batch-review
+                        .review=${reviews[b.batch_id]}
+                        .importedAt=${b.started_at}
+                        .busy=${publishingBatchId === b.batch_id}
+                        @publish-selection=${handlePublish(b.batch_id)}
+                      ></batch-review>`
+                    : null}
+                </section>
+              `,
+            )}
+            ${historyPager}
+            </div>
+          `
         : null}
       </div>
       </div>

@@ -35,10 +35,11 @@ interface JurisdictionPageProps {
   jurisdiction_data: string;
 }
 
-// Issues nobody acts on from this page. A missing wikipedia link is upstream
-// matching noise, not something a maintainer fixes here — and it is 92 of the
-// 2,499 flags in the dev data, so surfacing it is pure cost.
-const SUPPRESSED_ISSUES = new Set(["no_wiki_match"]);
+// Issues nobody acts on from this page. A missing wikipedia link and a GEOID
+// suffix-fallback match are both upstream matching noise, not something a
+// maintainer fixes here, so surfacing them as a warning is pure cost. The
+// GEOID case still explains itself — see the "Notes" row in the details panel.
+const SUPPRESSED_ISSUES = new Set(["no_wiki_match", "geoid_mismatch"]);
 
 // data.issues names a problem the scrape already detected; generated_comments
 // explains it. Neither has ever been rendered, so both surface here.

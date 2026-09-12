@@ -6,6 +6,7 @@ import {
   LEADERBOARD_PERIOD_WEEK,
   LEADERBOARD_PERIOD_ALL_TIME,
 } from "../../components/leaderboard/index.js";
+import { formatDateTime } from "../../utils/date-utils.js";
 
 function formatDuration(seconds) {
   if (seconds == null) return "—";
@@ -13,10 +14,6 @@ function formatDuration(seconds) {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
   return s > 0 ? `${m}m ${s}s` : `${m}m`;
-}
-
-function formatDate(iso) {
-  return new Date(iso).toLocaleString();
 }
 
 export const SESSION_COUNTS = [5, 10, 25, 50];
@@ -135,7 +132,7 @@ function ReviewLanding({
                               ? html`<span>${entry.jurisdiction_name}</span>`
                               : ""}
                             <span data-visual-volatile
-                              >${formatDate(entry.created_at)}</span
+                              >${formatDateTime(entry.created_at)}</span
                             >
                           </span>
                         </div>

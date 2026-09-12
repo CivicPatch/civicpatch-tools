@@ -38,6 +38,7 @@ function readOnlyRows(data: any): ReadOnlyRow[] {
     { label: "GEOID", value: data?.geoid },
     { label: "Classification", value: data?.classification },
     { label: "OCD ID", value: data?.id },
+    { label: "Notes", value: data?.generated_comments },
   ];
 }
 

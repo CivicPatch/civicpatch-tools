@@ -753,8 +753,8 @@ export const fetchLatestImport = async () => importsRequest("/latest", "GET");
 
 export const fetchSheetUrl = async () => importsRequest("/sheet", "GET");
 
-export const fetchImportHistory = async () =>
-  importsRequest("/history", "GET");
+export const fetchImportHistory = async (page = 1, perPage = 10) =>
+  importsRequest(`/history?page=${page}&per_page=${perPage}`, "GET");
 
 export const fetchImportProgress = async (batchId) =>
   importsRequest(`/${batchId}`, "GET");

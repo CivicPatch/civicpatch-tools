@@ -7,6 +7,8 @@ import {
 } from "./import-types.js";
 import { Pagination } from "../../components/pagination/index.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
+import { scrollListTop } from "../../utils/scroll-list-top.js";
+import { formatDateTime } from "../../utils/date-utils.js";
 import { renderReviewPerson } from "./review-person.js";
 import {
   pageCount,
@@ -32,7 +34,7 @@ function BatchReviewPanel(host: BatchReviewHost) {
 
   const importedNote = host.importedAt
     ? html`<p class="import-hint">
-        Imported ${new Date(host.importedAt).toLocaleString()}
+        Imported ${formatDateTime(host.importedAt)}
       </p>`
     : null;
 
@@ -68,8 +70,14 @@ function BatchReviewPanel(host: BatchReviewHost) {
       ? Pagination({
           page: page + 1,
           totalPages: pages,
-          onPrevious: () => setPage(Math.max(page - 1, 0)),
-          onNext: () => setPage(Math.min(page + 1, pages - 1)),
+          onPrevious: () => {
+            setPage(Math.max(page - 1, 0));
+            scrollListTop(host);
+          },
+          onNext: () => {
+            setPage(Math.min(page + 1, pages - 1));
+            scrollListTop(host);
+          },
           // No per-page control here: the size is fixed, and the component hides the selector
           // when there is nothing to call.
           perPage: undefined,

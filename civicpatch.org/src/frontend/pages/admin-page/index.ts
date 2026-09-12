@@ -17,6 +17,7 @@ import "../../components/status-toast/status-toast.js";
 import "../../components/status-toast/status-toast.css";
 import "./confirm-role-modal.js";
 import "./admin-page.css";
+import { formatDateTime } from "../../utils/date-utils.js";
 
 const SELF_LOCK_TOOLTIP = "To change your own role, use `mise run grant_role`.";
 const TOAST_TIMEOUT_MS = 10_000;
@@ -209,7 +210,7 @@ function AdminPage() {
                         <td>${user.provider}</td>
                         <td>
                           ${user.last_login_at
-                            ? new Date(user.last_login_at).toLocaleString()
+                            ? formatDateTime(user.last_login_at)
                             : "—"}
                         </td>
                         <td>

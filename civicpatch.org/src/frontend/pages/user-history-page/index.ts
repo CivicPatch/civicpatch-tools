@@ -3,6 +3,8 @@
 
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
+import { ref } from "lit/directives/ref.js";
+import { usePagerRef } from "../../hooks/use-pager-ref.js";
 import {
   fetchAdminUser,
   fetchRollbackCandidates,
@@ -31,13 +33,10 @@ import "../user-profile-page/user-profile-page.css";
 import "../activity-page/activity-page.css";
 import "./confirm-rollback-modal.js";
 import "./user-history-page.css";
+import { formatDateTime } from "../../utils/date-utils.js";
 
 const TOAST_TIMEOUT_MS = 10_000;
 const PER_PAGE = 20;
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleString();
-}
 
 interface UserHistoryPageProps {
   target_user_id: string;
@@ -57,6 +56,7 @@ function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const { listRef, scrollToTop } = usePagerRef<HTMLElement>();
 
   useEffect(() => {
     if (!target_user_id) return;
@@ -117,6 +117,21 @@ function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
 
   const label = userLabel(user, username);
 
+  // Built once so Next/Previous re-orients to the top of the list either way — clicking
+  // the bottom pager most often leaves the reader below what just changed above them.
+  const pager = Pagination({
+    page,
+    totalPages,
+    onPrevious: () => {
+      setPage(page - 1);
+      scrollToTop();
+    },
+    onNext: () => {
+      setPage(page + 1);
+      scrollToTop();
+    },
+  });
+
   const handleRollbackClick = () => {
     if (selected.size === 0) return;
     setConfirmOpen(true);
@@ -171,7 +186,8 @@ function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
                   />
                   Select all (${pageActiveIds.length})
                 </label>
-                <div class="activity-row-list candidate-row-list">
+                ${pager}
+                <div class="activity-row-list candidate-row-list" ${ref(listRef)}>
                   ${pageCandidates.map(
                     (candidate) => html`
                       <label
@@ -209,18 +225,13 @@ function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
                             >
                           </span>
                           <span></span>
-                          <span class="activity-row__at">${formatDate(candidate.created_at)}</span>
+                          <span class="activity-row__at">${formatDateTime(candidate.created_at)}</span>
                         </div>
                       </label>
                     `,
                   )}
                 </div>
-                ${Pagination({
-                  page,
-                  totalPages,
-                  onPrevious: () => setPage(page - 1),
-                  onNext: () => setPage(page + 1),
-                })}
+                ${pager}
                 <label class="candidate-list__reason-label" for="user-history-reason">
                   Reason (optional)
                 </label>

@@ -136,26 +136,20 @@
   text-align: left;
 }
 
-/* History */
+/* Past-imports batches */
 
-.import-history {
+.import-batch__header {
+  align-items: center;
+  color: var(--text-muted);
+  display: flex;
   font-size: 0.9rem;
-  margin: 0;
+  gap: 0.75rem;
+  margin: 0 0 0.75rem;
 }
 
-.import-history__count {
-  font-variant-numeric: tabular-nums;
-}
-
-.import-history__error {
+.import-batch__error {
   color: var(--diff-removed);
-  display: block;
   font-size: var(--font-size-xs);
-}
-
-/* The batch the page is currently following. */
-.import-history--current td {
-  font-weight: 600;
 }
 
 /* Rejected rows */

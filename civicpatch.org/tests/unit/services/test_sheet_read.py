@@ -16,7 +16,7 @@ def _row(**overrides) -> dict:
         "jurisdiction_ocdid": _TOWN,
         "name": "Jennifer Powers",
         "source_url": "https://example.gov",
-        "label": "",
+        "label": "Mayor",
     }
     row.update(overrides)
     return row
