@@ -104,7 +104,8 @@ async def get_pipeline_run_issues_page(
             JOIN pipeline_runs run ON run.id = issue.pipeline_run_id
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = run.jurisdiction_ocdid
             {where}
-            ORDER BY issue.created_at {order}
+            -- id tiebreaks created_at ties so paging is stable and ASC is a true reverse of DESC.
+            ORDER BY issue.created_at {order}, issue.id {order}
             LIMIT %s OFFSET %s
             """).format(
                 columns=sql.SQL(_ISSUE_COLUMNS),
@@ -149,7 +150,8 @@ async def get_changeset_issues_page(
             LEFT JOIN jurisdictions j
                    ON j.jurisdiction_ocdid = changesets.jurisdiction_ocdid
             {where}
-            ORDER BY issue.created_at {order}
+            -- id tiebreaks created_at ties so paging is stable and ASC is a true reverse of DESC.
+            ORDER BY issue.created_at {order}, issue.id {order}
             LIMIT %s OFFSET %s
             """).format(
                 columns=sql.SQL(_ISSUE_COLUMNS),

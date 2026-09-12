@@ -5,15 +5,18 @@ import { dateStringToFriendly } from '../../utils/date-utils.js';
 import { jurisdictionOcdidToPath } from '../../components/ocdid-utils.js';
 import { Municipality, SortKey, SortDir } from './municipalities-filter.js';
 
-const SORT_HEADERS: { key: SortKey; label: string; class?: string }[] = [
-  { key: 'name', label: 'Municipality' },
-  { key: 'status', label: 'Status' },
-  { key: 'officials', label: 'Officials', class: 'municipalities-table__officials' },
-  { key: 'last_collected', label: 'Last collected' },
-];
+function sortHeaders(sectionLabel: string): { key: SortKey; label: string; class?: string }[] {
+  return [
+    { key: 'name', label: sectionLabel === 'counties' ? 'County' : 'Municipality' },
+    { key: 'status', label: 'Status' },
+    { key: 'officials', label: 'Officials', class: 'municipalities-table__officials' },
+    { key: 'last_collected', label: 'Last collected' },
+  ];
+}
 
 export interface MunicipalitiesTableProps {
   municipalities: Municipality[];
+  sectionLabel: string;
   onClearFilters: () => void;
   sortKey: SortKey;
   sortDir: SortDir;
@@ -55,7 +58,7 @@ function renderRow(m: Municipality, jurisdictionHref: string) {
 }
 
 function renderSortHeader(
-  header: (typeof SORT_HEADERS)[number],
+  header: ReturnType<typeof sortHeaders>[number],
   sortKey: SortKey,
   sortDir: SortDir,
   onSortChange: (key: SortKey) => void,
@@ -78,6 +81,7 @@ function renderSortHeader(
 
 export function renderMunicipalitiesTable({
   municipalities,
+  sectionLabel,
   onClearFilters,
   sortKey,
   sortDir,
@@ -86,7 +90,7 @@ export function renderMunicipalitiesTable({
   if (municipalities.length === 0) {
     return html`
       <div class="municipalities-table__empty">
-        <p>No municipalities match your search and filters.</p>
+        <p>No ${sectionLabel} match your search and filters.</p>
         <button type="button" @click=${onClearFilters}>Clear filters</button>
       </div>
     `;
@@ -97,7 +101,7 @@ export function renderMunicipalitiesTable({
       <table class="municipalities-table striped">
         <thead>
           <tr>
-            ${SORT_HEADERS.map((h) => renderSortHeader(h, sortKey, sortDir, onSortChange))}
+            ${sortHeaders(sectionLabel).map((h) => renderSortHeader(h, sortKey, sortDir, onSortChange))}
             <th>Action</th>
           </tr>
         </thead>

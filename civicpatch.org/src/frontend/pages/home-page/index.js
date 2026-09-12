@@ -22,6 +22,7 @@ import { renderRecentActivity } from "./recent-activity.ts";
 import { renderCoverageByState } from "./coverage-by-state.ts";
 import { useBlogUpdates } from "./use-blog-updates.ts";
 import { renderBlogUpdates } from "./blog-updates.ts";
+import { municipalitiesUrl } from "../municipalities-page/municipalities-routes.ts";
 
 // A handful of recognizable towns across different states, each confirmed to already
 // have a published roster — a chip that returns nothing undercuts the point of showing one.
@@ -136,11 +137,9 @@ function HomePage() {
             <a
               class="home-page__browse-link"
               role="button"
-              href="/${selectedState}/local"
+              href="${municipalitiesUrl(selectedState)}"
             >
-              Browse
-              ${dashboardData.states[selectedState].civicpatch.localities.known}
-              municipalities <i class="fa-solid fa-arrow-right"></i>
+              Browse <i class="fa-solid fa-arrow-right"></i>
             </a>
           `
         : html`

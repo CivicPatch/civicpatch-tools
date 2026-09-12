@@ -12,6 +12,7 @@ import {
   manageSection,
   adminSection,
   overviewSection,
+  ACTIVITY_SECTION,
 } from "./section-nav/index.ts";
 import "./nav-group/index.js";
 import "./navbar.css";
@@ -58,10 +59,10 @@ function directNavItems(permissions) {
     { label: "home", href: "/" },
     { label: "blog", href: "/blog" },
   ];
-  if (permissions?.can_view_activity_page)
-    items.push({ label: "activity", href: "/activity/changelogs" });
   if (permissions?.can_view_reviews_page)
     items.push({ label: "overview", href: "/review" });
+  if (permissions?.can_view_activity_page)
+    items.push({ label: "activity", href: "/activity/changelogs" });
   if (permissions?.can_view_queue_page)
     items.push({ label: "manage", href: "/bulk-review" });
   if (permissions?.can_manage_roles)
@@ -70,20 +71,25 @@ function directNavItems(permissions) {
 }
 
 // Everything the ? menu can jump to: the direct links plus each group's real pages,
-// same grouping as the nav bar (Manage/Admin land on the group's first page; this is
-// where their siblings show up).
+// same grouping as the nav bar (Overview/Activity/Manage/Admin land on the group's
+// first page; this is where their siblings show up).
 function shortcutSections(permissions) {
   const sections = [
     {
       label: "pages",
       items: directNavItems(permissions).filter(
         (i) =>
-          i.label !== "overview" && i.label !== "manage" && i.label !== "admin",
+          i.label !== "overview" &&
+          i.label !== "activity" &&
+          i.label !== "manage" &&
+          i.label !== "admin",
       ),
     },
   ];
   if (permissions?.can_view_reviews_page)
     sections.push({ label: "overview", items: overviewSection() });
+  if (permissions?.can_view_activity_page)
+    sections.push({ label: "activity", items: ACTIVITY_SECTION });
   if (permissions?.can_view_queue_page)
     sections.push({ label: "manage", items: manageSection(permissions) });
   if (permissions?.can_manage_roles)
@@ -100,17 +106,20 @@ function renderAuthedLinks(user, currentPath) {
   return html`
     <a href="/" class="${active("/")}">home</a>
     <a href="/blog" class="${active("/blog")}">blog</a>
-    ${user.permissions?.can_view_activity_page
-      ? html`<a href="/activity/changelogs" class="${active("/activity")}"
-          >activity</a
-        >`
-      : ""}
     ${user.permissions?.can_view_reviews_page
       ? html`<civ-nav-group
           .label=${"overview"}
           .href=${"/review"}
           .active=${isActivePath(currentPath, "/review")}
           .items=${overviewSection()}
+        ></civ-nav-group>`
+      : ""}
+    ${user.permissions?.can_view_activity_page
+      ? html`<civ-nav-group
+          .label=${"activity"}
+          .href=${"/activity/changelogs"}
+          .active=${isActivePath(currentPath, "/activity")}
+          .items=${ACTIVITY_SECTION}
         ></civ-nav-group>`
       : ""}
     ${user.permissions?.can_view_queue_page

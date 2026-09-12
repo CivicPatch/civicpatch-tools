@@ -7,7 +7,7 @@ from fastapi.testclient import TestClient
 from fastapi.templating import Jinja2Templates
 
 from frontend.vite import vite_asset, vite_css
-from routers.frontend import build_permissions, get_router, needs_username
+from routers.frontend import build_permissions, get_router, needs_username, register_page_redirects
 from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
 
@@ -142,6 +142,7 @@ def permissions_client():
     templates.env.globals["vite_asset"] = lambda path: vite_asset(path, False)
     templates.env.globals["vite_css"] = lambda path: vite_css(path, False)
     app.include_router(get_router(templates))
+    register_page_redirects(app)
     # layouts/base.html resolves CSS/JS via url_for('frontend', path=...) — mount matches
     # main.py's real one so any test rendering a full page template (extends base.html)
     # doesn't 500/NoMatchFound on assets it never actually requests in a unit test.
@@ -186,15 +187,22 @@ def test_permissions_endpoint_admin(permissions_client):
     assert data["data"]["permissions"]["can_scrape"] is True
 
 
-# ── GET /{state}/local ────────────────────────────────────────────────────────
-# Must be registered ahead of the /{path:path} catch-all (jurisdiction_page), which
-# requires >=3 path segments and would otherwise 404 on a bare "{state}/local".
+# ── GET /{state}/municipalities, GET /{state}/counties ──────────────────────
 
 @pytest.mark.unit
-def test_municipalities_page_takes_priority_over_catch_all(permissions_client):
+def test_municipalities_page_renders(permissions_client):
     permissions_client.dependency_overrides[get_optional_user] = lambda: None
     client = TestClient(permissions_client)
-    response = client.get("/nc/local")
+    response = client.get("/nc/municipalities")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+
+
+@pytest.mark.unit
+def test_counties_page_renders(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = lambda: None
+    client = TestClient(permissions_client)
+    response = client.get("/nc/counties")
     assert response.status_code == 200
     assert "text/html" in response.headers["content-type"]
 
@@ -203,8 +211,8 @@ def test_municipalities_page_takes_priority_over_catch_all(permissions_client):
 def test_catch_all_still_handles_three_segment_jurisdiction_paths(permissions_client):
     permissions_client.dependency_overrides[get_optional_user] = lambda: None
     client = TestClient(permissions_client)
-    # Unrelated to the new route: a well-formed 3-segment path should still reach
-    # jurisdiction_page (mocked here as "not found"), not the new /{state}/local route.
+    # Unrelated to the routes above (neither is "{state}/local"): a well-formed
+    # 3-segment path should still reach jurisdiction_page (mocked here as "not found").
     with patch("routers.frontend.get_jurisdiction", new_callable=AsyncMock, return_value=None):
         response = client.get("/nc/local/place_does_not_exist")
     assert response.status_code == 404

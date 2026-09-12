@@ -221,7 +221,7 @@ function ActivityPage() {
   return html`
     <main class="activity-page page-content">
       <div class="page-focal">
-        <h1 class="page-focal__title">Activity</h1>
+        <h1 class="page-focal__title">All activity</h1>
       </div>
 
       <div class="sectioned">
@@ -229,7 +229,7 @@ function ActivityPage() {
         <div class="secbody">
           <section class="panel activity-page__section" ${ref(listRef)}>
             <div class="panel__cap">
-              <b>activity</b>
+              <b>all activity</b>
               <span class="panel__cap-right">
                 <label class="activity-page__filter">
                   <input

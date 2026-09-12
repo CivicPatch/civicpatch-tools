@@ -472,8 +472,8 @@ export const fetchStateCoverageSummary = async (state) => {
   return res.json();
 };
 
-export const fetchMunicipalityList = async (state) => {
-  const res = await fetch(`${API_URL}/api/v1/coverage/${state}/municipalities`, { credentials: "include" });
+export const fetchMunicipalityList = async (state, level = "local") => {
+  const res = await fetch(`${API_URL}/api/v1/coverage/${state}/municipalities?level=${level}`, { credentials: "include" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
