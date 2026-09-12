@@ -6,7 +6,7 @@ import { renderPersonRow } from "../people/person-row.js";
 import { renderInlinePersonEditor } from "../person-editor/inline-editor.js";
 import { type PersonEditorProps } from "../person-editor/person-editor.js";
 import { type Post } from "../posts-list/posts-model.js";
-import { ensureUrl, withDisplayImage } from "../fields/field-controls.js";
+import { ensureUrl } from "../fields/field-controls.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
@@ -191,7 +191,7 @@ function renderFold(
         @click=${() => props.onOpenPerson(card.personId, null)}
       >
         <person-image
-          .person=${withDisplayImage(record)}
+          .person=${record}
           .size=${"2.1rem"}
         ></person-image>
         <span class="review-fold__who">

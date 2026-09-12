@@ -9,7 +9,6 @@ import { html } from "lit-html";
 import "./person-face.css";
 import "../person-image.js";
 import { personOf, type PersonCard } from "../people/person-cards.js";
-import { withDisplayImage } from "../fields/field-controls.js";
 
 export function renderPersonFace(
   card: PersonCard,
@@ -18,7 +17,7 @@ export function renderPersonFace(
 ) {
   const record = personOf(card);
   return html`<button class="review-face" @click=${() => onPick(card.personId)}>
-    <person-image .person=${withDisplayImage(record)} .size=${size}></person-image>
+    <person-image .person=${record} .size=${size}></person-image>
     <span>${record?.name || "(unnamed)"}</span>
   </button>`;
 }

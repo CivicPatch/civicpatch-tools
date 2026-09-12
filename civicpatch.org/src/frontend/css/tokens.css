@@ -119,38 +119,49 @@
   --font-size-3xl: 2.45rem;
 }
 
-/* ── Light theme ─────────────────────────────────────────────────────────── */
+/* ── Palettes ─────────────────────────────────────────────────────────────
+   `<html data-theme>` carries the mode ("light"/"dark") — every mode-scoped selector
+   elsewhere in the app (component CSS that just wants "is this a dark background")
+   keys on that, and it stays exactly those two values no matter how many palettes exist.
+   `<html data-palette>` carries the specific theme id below; that is what every block
+   here keys on. Adding a theme means one more `[data-palette="..."]` block — nothing
+   that reads `data-theme` needs to change. See navbar.js's THEMES/DEFAULT_PALETTE for
+   the id ↔ mode ↔ display-name mapping and the picker that sets `data-palette`. */
 
-[data-theme="light"],
-:root:not([data-theme="dark"]) {
+[data-palette="one-light"] {
   /* Without this, native form controls (checkbox/radio) paint with the OS's light theme
-     regardless of the page's own palette — harmless here since this block already is
-     light, but declared for symmetry with the dark block below, where it is not harmless. */
+     regardless of the page's own palette — harmless here since this is a light palette,
+     but declared for symmetry with the dark palettes below, where it is not harmless. */
   color-scheme: light;
-  /* ── Editorial palette tokens (civic) ─────────────────────────────────── */
-  --bg: #ffffff;
-  --surface: #f1f2f3;
-  --surface-2: #e8e9ea;
-  --surface-stripe: #f3f4f5;
-  --text-default: #101112;
-  --text-secondary: #454546;
-  --text-muted: #666767;
-  --border: #b8bcbe;
-  --border-strong: #28292a;
-  --accent: #17639f;
-  /* Solid-fill backgrounds (buttons, calendar segments) — same as --accent here, but the
-     dark theme needs a dimmer value than its link-text --accent, so this stays a distinct
-     token rather than every fill site assuming the two always match. */
+  /* ── Editorial palette tokens (one light) ──────────────────────────────
+     Replaces civic — see .scratch/2026-09-10-plan-civic-solaris-dark-themes.md for that
+     lineage. One Light's own editor colors, each nudged for contrast where the raw
+     syntax-highlighting value didn't clear 4.5:1 against this app's --bg (which One Light,
+     tuned for a code editor, was never designed against). */
+  --bg: #fafafa;
+  --surface: #f0f0f0;
+  --surface-2: #e9e9e9;
+  --surface-stripe: #f2f2f2;
+  --text-default: #383a42;
+  --text-secondary: #616269;
+  --text-muted: #71727a;
+  --border: #888991;
+  --border-strong: #383a42;
+  --accent: #2d6af1;
+  /* Solid-fill backgrounds (buttons, calendar segments) — kept distinct from --accent since
+     some themes need a dimmer fill than their link-text accent; this theme's fill matches
+     --accent exactly. */
   --accent-fill: var(--accent);
-  --level-note: #4a3390;
-  --accent-border: #154e7c;
+  --level-note: #a626a4;
+  --accent-border: #0e4bd3;
   --accent-text: #ffffff; /* text on top of accent bg */
 
   /* ── Tones ─────────────────────────────────────────────────────────────
      Primitives, as `R, G, B` triples so callers can add an alpha:
      `rgb(var(--tone-red))` / `rgba(var(--tone-red), 0.1)`. Values inherited
      from the palette these replaced; they are due to be re-picked against
-     contrast requirements, which is why nothing here claims a role. */
+     contrast requirements, which is why nothing here claims a role. Shared
+     as-is across every light palette below — not themed, see above. */
   --tone-bg: 239, 241, 245;
   --tone-bg-deep: 220, 224, 232;
   --tone-ink: 76, 79, 105;
@@ -168,99 +179,118 @@
   --tone-sapphire: 32, 159, 181;
   --tone-lavender: 114, 135, 253;
 
-  /* Base-layer roles — light */
-  --text: var(--text-default);
-  --selection-bg: rgba(23, 99, 159, 0.25);
+  /* Base-layer roles — light.
+     Everything derivable from the tokens above (aliases, and tints via color-mix) lives once
+     in the shared "Derived tokens" block after the last palette below, not repeated per
+     theme — see that block's header comment for why. What's left here is only what
+     genuinely varies by theme: primitives, and the handful of roles whose light/dark
+     relationship isn't the same formula both ways (call those out inline, don't just add
+     them quietly). */
+  --selection-bg: color-mix(in srgb, var(--accent) 25%, transparent);
 
-  --action: #101112;
-  --action-hover: #454546;
-  --action-focus: rgba(16, 17, 18, 0.25);
-  --action-text: #ffffff;
-
-  --muted-action-bg: #70777b;
-  --muted-action-text: #ffffff;
+  --muted-action-bg: #bfbfc2;
+  --muted-action-text: #383a42;
 
   --field-border: var(--border);
 
-  --diff-added: #0a6b41;
-  --diff-added-bg: rgba(10, 107, 65, 0.12);
-  --diff-removed: #c23321;
-  --diff-removed-bg: rgba(194, 51, 33, 0.12);
-  --info: #1f8c86;
-  --info-bg: rgba(31, 140, 134, 0.12);
-  --warning: #c9701f;
-  --success: #0a6b41;
-  --error: #c23321;
-
-  --status-fresh: var(--success);
-  --status-stale: var(--warning);
-  /* untracked (never attempted) is the concerning one; gap (attempted, found nothing)
-     just reads as neutral "no data yet" — swapped from the original fresh/stale/error/
-     muted mapping, which had that backwards. */
-  --status-gap: var(--text-muted);
-  --status-untracked: var(--error);
-  --status-needs-review: var(--info);
-  --status-selected: var(--accent);
+  --info: #0179ad;
+  --warning: #986801;
+  --success: #3f7f3e;
+  --error: #da3020;
 
   /* Inherited framework tokens — theme-dependent half. */
-  --contrast: #101112;
-  --placeholder: #898f92;
-  --option-selected-bg: #d5e3ee;
-  --mark-bg: rgba(201, 112, 31, 0.28);
-  --mark-text: #101112;
-  --muted-action: #666767;
-  --muted-action-hover: #707071;
-  --muted-action-underline: rgba(87, 95, 100, 0.5);
+  --placeholder: #888991;
+  --option-selected-bg: #d5e0f8;
+  --muted-action: #71727a;
+  --muted-action-hover: #686a72;
+  --muted-action-underline: color-mix(in srgb, var(--muted-action) 50%, transparent);
   --card-border: var(--surface);
-  --contrast-hover: #454546;
-  --contrast-underline: rgba(16, 17, 18, 0.5);
-
-  --surface-hover: rgba(16, 17, 18, 0.05);
 }
 
-/* ── Dark theme ──────────────────────────────────────────────────────────── */
+[data-palette="nord-light"] {
+  color-scheme: light;
+  /* ── Editorial palette tokens (nord light) ──────────────────────────────
+     Nord's own editor colors, same contrast-nudging approach as one-light above. */
+  --bg: #eceff4;
+  --surface: #e5e9f0;
+  --surface-2: #e0e5ed;
+  --surface-stripe: #e6eaf1;
+  --text-default: #2e3440;
+  --text-secondary: #565b66;
+  --text-muted: #626d82;
+  --border: #7b869c;
+  --border-strong: #2e3440;
+  --accent: #4d6d95;
+  --accent-fill: var(--accent);
+  --level-note: #885d83;
+  --accent-border: #384f6d;
+  --accent-text: #ffffff;
 
-:root[data-theme="dark"] {
-  /* This was never set anywhere, on either theme. Every native form control (checkbox,
-     radio) was rendering with the OS's light widget theme regardless of the page's own
-     dark palette — a bright white box with no relation to --surface/--border, which is
-     what actually read as "checkboxes have poor contrast / look misaligned": nothing
-     about their box model was wrong, they just didn't belong to this theme at all. */
+  /* ── Tones — see one-light for the format note; shared as-is ──────────── */
+  --tone-bg: 239, 241, 245;
+  --tone-bg-deep: 220, 224, 232;
+  --tone-ink: 76, 79, 105;
+  --tone-line: 204, 208, 218;
+  --tone-line-mid: 188, 192, 204;
+  --tone-line-strong: 172, 176, 190;
+  --tone-blue: 30, 102, 245;
+  --tone-red: 210, 15, 57;
+  --tone-green: 64, 160, 43;
+  --tone-yellow: 223, 142, 29;
+  --tone-pink: 234, 118, 203;
+  --tone-mauve: 136, 57, 239;
+  --tone-sky: 4, 165, 229;
+  --tone-teal: 23, 146, 153;
+  --tone-sapphire: 32, 159, 181;
+  --tone-lavender: 114, 135, 253;
+
+  --selection-bg: color-mix(in srgb, var(--accent) 25%, transparent);
+
+  --muted-action-bg: #b4bbc8;
+  --muted-action-text: #2e3440;
+
+  --field-border: var(--border);
+
+  --info: #41707f;
+  --warning: #826727;
+  --success: #5a7446;
+  --error: #a5424b;
+
+  --placeholder: #78839a;
+  --option-selected-bg: #cfd8e3;
+  --muted-action: #626d82;
+  --muted-action-hover: #5a6478;
+  --muted-action-underline: color-mix(in srgb, var(--muted-action) 50%, transparent);
+  --card-border: var(--surface);
+}
+
+[data-palette="nord-dark"] {
+  /* This was never set anywhere, on any dark palette. Every native form control
+     (checkbox, radio) was rendering with the OS's light widget theme regardless of the
+     page's own dark palette — a bright white box with no relation to --surface/--border,
+     which is what actually read as "checkboxes have poor contrast / look misaligned":
+     nothing about their box model was wrong, they just didn't belong to this theme at all. */
   color-scheme: dark;
-  /* ── Editorial palette tokens (ember dark) ─────────────────────────────
-     Replaces the Solarized-derived "solaris dark" theme — see .scratch/2026-09-10-
-     plan-civic-solaris-dark-themes.md for that palette's history. Warm charcoal-brown
-     instead of Solarized's teal-black, terracotta/amber accent instead of cyan; kept
-     deliberately distinct from --accent's blue family in the civic light theme.
-     Structural relationships (surface lighter than bg, accent-border lighter than
-     accent, etc.) are kept identical to the palette this replaced. Every value below
-     clears 4.5:1 against every surface it is used on (verified pairwise), 3:1+ for
-     --text-muted on --surface-2. */
-  --bg: #1b1512;
-  --surface: #261e19;
-  --surface-2: #332821;
-  --surface-stripe: #211a16;
-  --text-default: #e8dccc;
-  --text-secondary: #c7b6a4;
-  --text-muted: #a89480;
-  /* Was #3f3128 — 1.31:1 on --surface, 1.45:1 on --bg. Solaris dark's own --border (#0d4a57)
-     carried the identical flaw (1.32:1 / 1.53:1), unnoticed since nobody had looked at input/
-     card borders in isolation. This clears WCAG 1.4.11's 3:1 floor for UI component boundaries
-     on both surfaces (3.60:1 / 3.97:1). */
-  --border: #8a7161;
-  --border-strong: #e8dccc;
-  /* Link-text accent, brightened above --accent-fill for 4.5:1 on --bg (7.53:1). */
-  --accent: #e8935a;
-  /* Solid-fill backgrounds (buttons, calendar segments). Dimmer than --accent since it's a
-     large-area fill rather than small text, and --accent-text needs contrast against it. */
-  --accent-fill: #d9822b;
-  --level-note: #c08bd6;
-  --accent-border: #cf7a42;
-  /* Reuses --bg: --accent-fill is bright enough that dark text clears 4.5:1 (6.17:1) — the
-     opposite pairing from solaris dark, whose accent-fill was a mid-blue needing light text. */
-  --accent-text: #1b1512;
+  /* ── Editorial palette tokens (nord dark) ───────────────────────────────
+     Nord's own editor colors, same contrast-nudging approach as the light palettes above.
+     The default dark palette — see navbar.js's DEFAULT_PALETTE. */
+  --bg: #242933;
+  --surface: #2e3440;
+  --surface-2: #39414f;
+  --surface-stripe: #2a2f3a;
+  --text-default: #d8dee9;
+  --text-secondary: #9da2ad;
+  --text-muted: #8490a7;
+  --border: #6f7d98;
+  --border-strong: #d8dee9;
+  --accent: #88c0d0;
+  --accent-fill: var(--accent);
+  --level-note: #b48ead;
+  --accent-border: #63adc2;
+  /* Reuses --bg: --accent-fill is bright enough that dark text clears 4.5:1 (7.29:1). */
+  --accent-text: #242933;
 
-  /* ── Tones — see the light block for the format note ─────────────────── */
+  /* ── Tones — see one-light for the format note; shared as-is ──────────── */
   --tone-bg: 38, 30, 25;
   --tone-bg-deep: 27, 21, 18;
   --tone-ink: 232, 220, 204;
@@ -278,60 +308,129 @@
   --tone-sapphire: 70, 160, 220;
   --tone-lavender: 150, 155, 215;
 
-  /* Base-layer roles — dark */
-  --text: var(--text-default);
-  --selection-bg: rgba(217, 130, 43, 0.25);
+  --selection-bg: color-mix(in srgb, var(--accent-fill) 25%, transparent);
 
-  --action: #e8dccc;
-  --action-hover: #c7b6a4;
-  --action-focus: rgba(232, 220, 204, 0.25);
-  --action-text: #1b1512;
-
-  --muted-action-bg: #5a4636;
+  --muted-action-bg: #535d6e;
   /* --muted-action-bg is dark enough to need light text, unlike --accent-text above —
-     reuses --text-default rather than a new value. 6.57:1. */
+     reuses --text-default rather than a new value. 4.92:1. */
   --muted-action-text: var(--text-default);
 
   --field-border: var(--text-muted);
 
-  --diff-added: #9caa4a;
-  --diff-added-bg: rgba(156, 170, 74, 0.12);
-  --diff-removed: #e86a56;
-  --diff-removed-bg: rgba(232, 106, 86, 0.12);
-  --info: #5aa39a;
-  --info-bg: rgba(90, 163, 154, 0.12);
-  --warning: #d9ab3f;
-  --success: #9caa4a;
-  --error: #e86a56;
+  --info: #81a1c1;
+  --warning: #ebcb8b;
+  --success: #a3be8c;
+  --error: #c97a82;
 
-  --status-fresh: var(--success);
-  --status-stale: var(--warning);
+  --placeholder: #8a95ab;
+  --option-selected-bg: #36444f;
+  --muted-action: var(--text-muted);
+  --muted-action-hover: #95a0b4;
+  --muted-action-underline: color-mix(in srgb, var(--muted-action) 50%, transparent);
+  --card-border: var(--border);
+}
+
+[data-palette="terminal"] {
+  color-scheme: dark;
+  /* ── Editorial palette tokens (terminal) ────────────────────────────────
+     Replaces iceberg dark. A green-phosphor monochrome editor theme — its only defined
+     color is --accent, reused as --success (a terminal's "good" reads as green anyway).
+     --warning/--info/--level-note have no equivalent in the source theme (deliberately
+     monochrome); picked here as legible, terminal-adjacent amber/cyan/violet rather than
+     more shades of the same green, since two status roles the same hue defeats the point
+     of a status color. */
+  --bg: #0f1310;
+  --surface: #161b17;
+  --surface-2: #1e251f;
+  --surface-stripe: #131714;
+  --text-default: #c8d3c8;
+  --text-secondary: #858e86;
+  --text-muted: #6f8373;
+  --border: #5a6b5e;
+  --border-strong: #c8d3c8;
+  --accent: #8ec07c;
+  --accent-fill: var(--accent);
+  --level-note: #a97fd1;
+  --accent-border: #70af5a;
+  /* Reuses --bg: --accent-fill is bright enough that dark text clears 4.5:1 (8.90:1). */
+  --accent-text: #0f1310;
+
+  /* ── Tones — see one-light for the format note; shared as-is ──────────── */
+  --tone-bg: 38, 30, 25;
+  --tone-bg-deep: 27, 21, 18;
+  --tone-ink: 232, 220, 204;
+  --tone-line: 63, 49, 40;
+  --tone-line-mid: 77, 60, 48;
+  --tone-line-strong: 122, 98, 82;
+  --tone-blue: 38, 139, 210;
+  --tone-red: 220, 50, 47;
+  --tone-green: 133, 153, 0;
+  --tone-yellow: 181, 137, 0;
+  --tone-pink: 211, 54, 130;
+  --tone-mauve: 108, 113, 196;
+  --tone-sky: 42, 161, 152;
+  --tone-teal: 88, 181, 172;
+  --tone-sapphire: 70, 160, 220;
+  --tone-lavender: 150, 155, 215;
+
+  --selection-bg: color-mix(in srgb, var(--accent-fill) 25%, transparent);
+
+  --muted-action-bg: #3a463c;
+  /* --muted-action-bg is dark enough to need light text, unlike --accent-text above —
+     reuses --text-default rather than a new value. 6.41:1. */
+  --muted-action-text: var(--text-default);
+
+  --field-border: var(--text-muted);
+
+  --info: #5aa8c2;
+  --warning: #cc9c3a;
+  --success: var(--accent);
+  --error: #d75f5f;
+
+  --placeholder: #748978;
+  --option-selected-bg: #263223;
+  --muted-action: var(--text-muted);
+  --muted-action-hover: #819384;
+  --muted-action-underline: color-mix(in srgb, var(--muted-action) 50%, transparent);
+  --card-border: var(--border);
+}
+
+/* ── Derived tokens ──────────────────────────────────────────────────────────
+   Same formula in every theme, so a new theme only has to set the primitives above it —
+   not restate these too. Two shapes:
+     alias    one token is always exactly another (--text is always --text-default, etc.)
+     tint     an alpha-blended variant of another token, expressed as color-mix() instead of
+              a hand-picked rgba() triple that has to be kept in sync by hand if the base
+              color ever changes.
+   Verified byte-identical against the civic/ember-dark values this architecture replaced
+   (computed getComputedStyle() dump, before and after, diffed to zero) when it was
+   introduced. If a new theme's derived value needs to differ from what these formulas
+   produce, that's a sign the token belongs back in that theme's own primitives block as
+   an explicit override — not a reason to change the shared formula for everyone. */
+:root {
+  --text: var(--text-default);
+  --action: var(--text-default);
+  --action-hover: var(--text-secondary);
+  --action-text: var(--bg);
+  --action-focus: color-mix(in srgb, var(--action) 25%, transparent);
+  --contrast: var(--text-default);
+  --contrast-hover: var(--text-secondary);
+  --contrast-underline: color-mix(in srgb, var(--contrast) 50%, transparent);
+  --mark-text: var(--text-default);
+  --mark-bg: color-mix(in srgb, var(--warning) 28%, transparent);
+  --diff-added: var(--success);
+  --diff-added-bg: color-mix(in srgb, var(--diff-added) 12%, transparent);
+  --diff-removed: var(--error);
+  --diff-removed-bg: color-mix(in srgb, var(--diff-removed) 12%, transparent);
+  --info-bg: color-mix(in srgb, var(--info) 12%, transparent);
+  --surface-hover: color-mix(in srgb, var(--text-default) 5%, transparent);
   /* untracked (never attempted) is the concerning one; gap (attempted, found nothing)
      just reads as neutral "no data yet" — swapped from the original fresh/stale/error/
      muted mapping, which had that backwards. */
+  --status-fresh: var(--success);
+  --status-stale: var(--warning);
   --status-gap: var(--text-muted);
   --status-untracked: var(--error);
   --status-needs-review: var(--info);
   --status-selected: var(--accent);
-
-  /* Inherited framework tokens — theme-dependent half. */
-  --contrast: #e8dccc;
-  /* Was #4a3a2f — 1.51:1 on --surface, same fix as --border above and for the same reason:
-     the search input's hint text ("Try 'Seattle, WA'...") was effectively invisible. 4.83:1 on
-     --surface / 5.33:1 on --bg — close to --text-muted's own visibility rather than barely
-     legible, since a placeholder a user can't read isn't doing its job. */
-  --placeholder: #9c8875;
-  --option-selected-bg: #3a2a1e;
-  /* Based on --warning rather than --accent/--accent-fill, which are already orange —
-     a highlight in the same hue as the accent would read as unstyled link text. */
-  --mark-bg: rgba(217, 171, 63, 0.28);
-  --mark-text: #e8dccc;
-  --muted-action: var(--text-muted);
-  --muted-action-hover: #6e5847;
-  --muted-action-underline: rgba(122, 98, 82, 0.5);
-  --card-border: var(--border);
-  --contrast-hover: #c7b6a4;
-  --contrast-underline: rgba(232, 220, 204, 0.5);
-
-  --surface-hover: rgba(232, 220, 204, 0.05);
 }

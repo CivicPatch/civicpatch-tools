@@ -3,33 +3,43 @@
 <html>
     <head>
         <script>
-            // Theme before first paint. Must mirror useLocalStorage's read: it
-            // stores {__value, __expiresAt}, so taking the raw string here puts
-            // JSON into data-theme, matches no selector, and paints the default
-            // theme until the navbar hydrates — a flash of the wrong theme,
-            // which is the one thing this script exists to prevent. On pages
-            // where the navbar never upgrades (unauthorized), it never corrects.
+            // Theme before first paint. Must mirror useLocalStorage's read (the
+            // {__value, __expiresAt} envelope) and navbar.js's THEMES/DEFAULT_PALETTE —
+            // taking the raw stored string as-is, or using a stale/unknown palette id,
+            // matches no tokens.css block and paints unstyled until the navbar hydrates,
+            // which is the one thing this script exists to prevent. On pages where the
+            // navbar never upgrades (unauthorized), it never corrects.
             (function () {
+                var PALETTE_MODE = {
+                    "one-light": "light",
+                    "nord-light": "light",
+                    "nord-dark": "dark",
+                    terminal: "dark",
+                };
+                var DEFAULT_PALETTE = { light: "one-light", dark: "nord-dark" };
                 var stored = localStorage.getItem("app:theme");
-                var theme = "";
+                var palette = "";
                 if (stored) {
                     try {
                         var parsed = JSON.parse(stored);
-                        theme =
+                        palette =
                             parsed && typeof parsed === "object"
                                 ? parsed.__value
                                 : parsed;
                     } catch (e) {
-                        theme = stored; // written before the envelope existed
+                        palette = stored; // written before the envelope existed
                     }
                 }
-                if (theme !== "dark" && theme !== "light") {
-                    theme = window.matchMedia("(prefers-color-scheme: dark)")
+                var mode = PALETTE_MODE[palette];
+                if (!mode) {
+                    mode = window.matchMedia("(prefers-color-scheme: dark)")
                         .matches
                         ? "dark"
                         : "light";
+                    palette = DEFAULT_PALETTE[mode];
                 }
-                document.documentElement.dataset.theme = theme;
+                document.documentElement.dataset.theme = mode;
+                document.documentElement.dataset.palette = palette;
             })();
         </script>
         <meta name="viewport" content="width=device-width, initial-scale=1">

@@ -268,14 +268,6 @@ export function sourceLinks(urls: string[]) {
   </div>`;
 }
 
-// person-image reads `cdn_image`, but a freshly scraped record only carries
-// `image` — so anything showing a person's photo has to resolve the effective
-// one first, or a scraped photo silently falls back to initials.
-export const withDisplayImage = (person: PresentRecord) => ({
-  ...person,
-  cdn_image: person?.cdn_image || person?.image,
-});
-
 export function renderPhotoNewSide(
   newRecord: PresentRecord,
   save: Save,
@@ -283,7 +275,7 @@ export function renderPhotoNewSide(
 ) {
   return html`<div class="field-control__photo">
     <person-image
-      .person=${withDisplayImage(newRecord)}
+      .person=${newRecord}
       .size=${"2.75rem"}
     ></person-image>
     ${newRecord.image && !isReadOnly
