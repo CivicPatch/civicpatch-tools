@@ -7,14 +7,13 @@ review-card {
     border-radius: var(--radius);
     overflow: hidden;
     position: relative;
-    border-left-width: 3px;
 }
 
-/* The 3px left edge is currently just --border at triple width. It was meant to be
-   coloured by state via `:has(.review-card__state--open)`, but nothing in the repo has
-   ever rendered .review-card__state, so that rule and its three modifiers were dead and
-   are gone. Colouring the edge by change kind — the demo's idiom — is a structural
-   decision, not a restyle, so it is left for the per-page pass. */
+/* The 3px-left-edge idea (colouring it by change kind) was left as dead, uncoloured
+   scaffolding here. The wire-demo's own bucket-2 note explicitly rejects it — "an accent
+   rail is the generic AI diff-card tell... this matches [plain 1px boxes] instead and lets
+   the background tint + .bdg badge alone carry the status signal" — so the per-page pass
+   this comment used to defer to is: don't build the rail at all. */
 
 .review-card__overlay {
     position: absolute;

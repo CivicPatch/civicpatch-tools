@@ -51,33 +51,6 @@ def moved_person_issues(
     ]
 
 
-def disputed_post_issues(
-    changes: list[ProposedChange], picked: Mapping[str, str]
-) -> list[Issue]:
-    """A pick the derivation no longer agrees with.
-
-    An accepted post outlives the scrape that prompted it — that is the point of recording a
-    human's answer. But it also means a parser fix can no longer move that person, so a
-    disagreement has to be said out loud rather than silently resolved either way.
-
-    A pick names an existing post, so if the derivation reached the same identity
-    `ids_by_identity` would have returned the same id. Anything else is a real difference,
-    including a derived identity that has no post row yet.
-    """
-    return [
-        Issue(
-            code=IssueCode.DISPUTED_POST,
-            message=f"Picked a different post — this scrape says {change.post_label}",
-            person_ids=[change.person_id],
-            field=POST_FIELD,
-        )
-        for change in changes
-        if change.disposition is not Disposition.ABSENT
-        and (pick := picked.get(change.person_id))
-        and pick != change.post_id
-    ]
-
-
 def append_post_issues(summary: dict, posts: list[Issue]) -> dict:
     """One issue list for the card, the roster checks first.
 

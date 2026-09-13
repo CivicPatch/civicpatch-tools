@@ -1,6 +1,11 @@
 @layer components {
+/* Horizontal scroll on narrow viewports — same pattern as municipalities-page/table.css. */
+.config-editor__table-wrapper {
+    overflow-x: auto;
+}
 .config-editor__table {
-    width: 100%;
+    width: max-content;
+    min-width: 100%;
     border-collapse: collapse;
     font-size: var(--font-size-sm);
     margin: 0;

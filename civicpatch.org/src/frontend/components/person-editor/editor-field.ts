@@ -24,7 +24,8 @@ import {
   displayScalar,
   renderScalarNewSide,
   renderDateNewSide,
-  renderPostNewSide,
+  renderPostPickNewSide,
+  renderOfficeNewSide,
   renderPhotoNewSide,
   renderMultiList,
   type FocusRef,
@@ -35,9 +36,11 @@ import { type FieldAssertionSummary, type FieldLock } from "./field-provenance.j
 import "./assertions-popover.js";
 import {
   heldPost,
+  heldMembershipLabel,
   postLabelFor,
   type DerivedPost,
   type Post,
+  type RoleOption,
 } from "../posts-list/posts-model.js";
 
 export const DASH = "—";
@@ -76,11 +79,50 @@ export interface EditorFieldProps {
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
   posts: Post[];
+  roles: RoleOption[];
   derivedPost: DerivedPost | null;
   focusRef: FocusRef | null;
-  onAddPost: () => void;
+  canAssignMembership: boolean;
   lock: FieldLock | null;
   assertionSummary: FieldAssertionSummary | null;
+}
+
+// A person already on the roster has a real membership `memberships.assign` can move — a
+// not-yet-saved addition has none, so it keeps the plain local pick instead. `oldRecord` is
+// the signal: `apply_people_patch` gives a brand-new person no base entry. Either way the
+// pick stays local until save/publish; see `renderOfficeNewSide`.
+function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
+  const {
+    field,
+    oldRecord,
+    save,
+    isReadOnly,
+    posts,
+    roles,
+    derivedPost,
+    focusRef,
+    canAssignMembership,
+  } = props;
+  if (!oldRecord) {
+    return isReadOnly
+      ? html`<span class="person-editor__readonly"
+          >${postLabelFor(diffValue(record, field), posts)}</span
+        >`
+      : renderPostPickNewSide(field, record, save, posts, derivedPost, focusRef);
+  }
+  const current = heldPost(oldRecord.memberships);
+  if (!canAssignMembership) {
+    return html`<span class="person-editor__readonly">${current?.label ?? DASH}</span>`;
+  }
+  return renderOfficeNewSide(
+    record,
+    save,
+    posts,
+    roles,
+    current?.post_id ?? null,
+    heldMembershipLabel(oldRecord.memberships),
+    focusRef,
+  );
 }
 
 function renderControl(props: EditorFieldProps, record: PresentRecord) {
@@ -92,17 +134,10 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
     save,
     isReadOnly,
     jurisdictionOcdid,
-    posts,
-    derivedPost,
     focusRef,
-    onAddPost,
   } = props;
+  if (field.key === POST_FIELD) return renderOfficeControl(props, record);
   if (isReadOnly) {
-    if (field.key === POST_FIELD) {
-      return html`<span class="person-editor__readonly"
-        >${postLabelFor(diffValue(record, field), posts)}</span
-      >`;
-    }
     if (isImage(field)) {
       return html`<person-image
         .person=${record}
@@ -124,10 +159,6 @@ function renderControl(props: EditorFieldProps, record: PresentRecord) {
       >${displayScalar(field, record) || DASH}</span
     >`;
   }
-  if (field.key === POST_FIELD)
-    return renderPostNewSide(
-      field, record, save, posts, derivedPost, focusRef, onAddPost,
-    );
   if (isImage(field)) return renderPhotoNewSide(record, save, isReadOnly);
   if (isMulti(field)) {
     const diff = multiValueDiff(

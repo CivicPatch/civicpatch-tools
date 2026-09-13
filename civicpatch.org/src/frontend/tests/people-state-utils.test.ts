@@ -81,6 +81,20 @@ describe("buildPeoplePatch", () => {
     ]);
   });
 
+  it("excludes an existing person's office pick — it's applied via memberships.assign, never this patch", () => {
+    const people = [{ id: "a", name: "Alice", post_id: "p2", membership_label: "Ward 2" }];
+    expect(
+      buildPeoplePatch(people, changes([["a", ["post_id", "membership_label"]]]), deleted()),
+    ).toEqual([{ id: "a", fields: {} }]);
+  });
+
+  it("still sends a new person's office pick — edit_published needs it for their first sighting", () => {
+    const person = { id: "new1", name: "Bob", post_id: "p1", _isNew: true };
+    expect(buildPeoplePatch([person], changes([["new1", []]]), deleted())).toEqual([
+      { id: "new1", fields: { id: "new1", name: "Bob", post_id: "p1" } },
+    ]);
+  });
+
   it("sends the whole entry when the id changed (re-id)", () => {
     const person = { id: "canonical", name: "Bob" };
     expect(buildPeoplePatch([person], changes([["canonical", ["id", "name"]]]), deleted())).toEqual([

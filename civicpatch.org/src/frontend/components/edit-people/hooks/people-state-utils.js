@@ -1,7 +1,9 @@
 export const PERSON_FIELDS = {
-  // `post_id` is the post a reviewer picked. A scalar like any other here, so a merge takes
-  // the first non-empty and a survivor with no pick inherits one instead of losing it.
-  single: ["name", "post_id", "image", "cdn_image", "start_date", "end_date", "updated_at"],
+  // `post_id` is the post a reviewer picked, `membership_label` the office label beside it —
+  // both scalars like any other here, so a merge takes the first non-empty and a survivor
+  // with no pick inherits one instead of losing it. Neither is sent to `patchPeopleData`/
+  // `merge`/`save` for an existing person, though — see `toPatchItem` below.
+  single: ["name", "post_id", "membership_label", "image", "cdn_image", "start_date", "end_date", "updated_at"],
   array:  ["other_names", "phones", "emails", "urls", "source_urls"],
 };
 
@@ -73,6 +75,13 @@ export function buildPeoplePatch(currentPeople, changesById, removedIds) {
     .map(p => toPatchItem(p, changesById.get(p.id)));
 }
 
+// An existing person's post/office pick is applied via `memberships.assign`
+// (office-changes.ts), never through this patch — including it here would let the
+// backend's assertion pipeline durably pin it, which is exactly what that direct write
+// is for avoiding. A brand-new person still needs `post_id` in their patch: nothing else
+// tells `edit_published` which post their first sighting belongs to.
+const OFFICE_ONLY_FIELDS = ["post_id", "membership_label"];
+
 function toPatchItem(person, changes) {
   const { _selected, _isNew, ...entry } = person;
   if (_isNew || changes.includes("id")) {
@@ -80,6 +89,7 @@ function toPatchItem(person, changes) {
   }
   const fields = {};
   for (const field of changes) {
+    if (OFFICE_ONLY_FIELDS.includes(field)) continue;
     fields[field] = entry[field];
   }
   return { id: entry.id, fields };

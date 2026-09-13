@@ -1,86 +1,180 @@
 @layer components {
-.person-card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr));
-  gap: 0.6rem;
+/* Sizes below are the mock's literal px (jurisdiction.js/app.css), converted to rem against
+   this app's actual 14px root — not mapped onto the --font-size-* scale, which starts above
+   every one of these. 1a's cards were bumped off that scale for readability; 1b is a
+   deliberately denser, different design point the mock itself sizes small on purpose. */
+
+.rgroup {
+  margin-bottom: 1rem;
 }
 
-.person-card-grid__card {
+.rgroup:last-child {
+  margin-bottom: 0;
+}
+
+.rgrouphead {
+  font-family: var(--font-mono);
+  font-size: 0.714rem; /* 10px */
+  color: var(--text-muted);
+  text-transform: lowercase;
+  padding-bottom: 0.286rem; /* 4px */
+  margin-bottom: 0.357rem; /* 5px */
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.rgrouphead .sub {
+  color: var(--text-muted);
+}
+
+.rgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: 0.286rem; /* 4px */
+}
+
+.rperson {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: 0.643rem; /* 9px */
+  align-items: start;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius);
-  padding: 0.6rem 0.7rem;
+  padding: 0.429rem 0.5rem; /* 6px 7px */
+  position: relative;
+  /* `role="button"` (for keyboard access) pulls in css/controls.css's generic button
+     look from @layer base — reset it back to a plain card. */
+  text-align: left;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
 }
 
-.person-card-grid__card:hover {
+/* The whole card opens the editor — `.rperson--interactive` only, so a read-only card (no
+   `onOpenPerson`) never implies it does something on hover. */
+.rperson--interactive:hover,
+.rperson--open {
   border-color: var(--text-default);
 }
 
-.person-card-grid__name {
-  font-size: var(--font-size-base);
-  line-height: 1.2;
-  overflow-wrap: anywhere;
-  margin-bottom: 0.35rem;
-}
-
-/* The avatar floats so the role line and field rows below it wrap around it, rather than
-   avatar and text living in two separate fixed columns. */
-.person-card-grid__body::after {
-  content: "";
-  display: table;
-  clear: both;
+.rperson--interactive {
+  cursor: pointer;
 }
 
 /* Rounded square, not a circle — the same --radius every other card/button in the app uses,
    not a bespoke value. Mono: person-image's initials fallback sets no font of its own, and
    every other avatar-initials/chrome element in this panel (.panel__cap above it) is mono. */
-.person-card-grid__avatar {
-  float: left;
+.pc-av {
   display: block;
-  margin: 0 0.5rem 0.3rem 0;
   border-radius: var(--radius);
   overflow: hidden;
   font-family: var(--font-mono);
 }
 
-/* Mono, like every other role/label line in this panel (.posts-list__role-name,
-   .panel__cap) — the name is content, the role is metadata, and metadata is mono
-   throughout the app; only the name stays on the ambient sans/display face. */
-.person-card-grid__role {
+.pc-ident {
+  display: block;
+  min-width: 0;
+}
+
+.pc-open {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.rperson--interactive:focus-visible {
+  outline: var(--focus-ring-width) solid var(--action-focus);
+  outline-offset: 2px;
+}
+
+.pc-name {
+  font-size: 1rem; /* 14px */
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.pc-sub {
   font-family: var(--font-mono);
-  font-size: var(--font-size-md);
+  font-size: 0.786rem; /* 11px, same tier as .pc-vals — the mock has no per-person subtitle
+                           of its own, this is the nearest sibling size */
   color: var(--text-muted);
   line-height: 1.25;
-  margin-bottom: 0.3rem;
 }
 
-/* A role that outranks the page's plurality role (person-card-grid-model.ts) is called out in
-   accent, so it reads at a glance instead of only on a second pass through the text. */
-.person-card-grid__role--lead {
-  color: var(--action);
-  font-weight: 600;
+.pc-hint {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  font-size: 0.5rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  pointer-events: none;
+  transform: rotate(-90deg);
 }
 
-.person-card-grid__fields {
-  font-size: var(--font-size-md);
+@media (prefers-reduced-motion: no-preference) {
+  .pc-hint {
+    transition:
+      transform 150ms ease,
+      opacity 150ms ease,
+      color 150ms ease;
+  }
 }
 
-.person-card-grid__field {
+.rperson--interactive:hover .pc-hint {
+  opacity: 1;
+  color: var(--text-default);
+}
+
+.rperson[aria-expanded="true"] .pc-hint {
+  transform: rotate(0deg);
+}
+
+.pc-vals {
+  display: block;
+  margin-top: 0.286rem; /* 4px */
+  font-size: 0.786rem; /* 11px */
+  line-height: 1.5;
+}
+
+/* The mock aligns nothing into columns — .pvk is an inline label directly before its value,
+   not a fixed-width track (that was a 1a-era choice, not 1b's). */
+.pv {
   display: flex;
   align-items: baseline;
-  gap: 0.4rem;
+  flex-wrap: wrap;
 }
 
-.person-card-grid__field-label {
+.pvk {
   flex: none;
-  width: 5.25rem;
+  margin-right: 0.429rem; /* 6px */
   font-family: var(--font-mono);
-  font-size: var(--font-size-sm);
+  font-size: 0.643rem; /* 9px */
   color: var(--text-muted);
   text-transform: lowercase;
 }
 
-.person-card-grid__field-value {
+/* A flex item's default min-width is auto, not 0 — without this, unbroken text (a raw URL)
+   refuses to shrink below its own content width and overflows the card instead of letting
+   .pc-url's ellipsis do anything. A wrapping span, not raw text: the mock's fields only ever
+   held one value, but phones/emails/urls here can hold several, and they need to stack as
+   one flex item rather than laying out side by side as siblings of .pvk. Mono, per Mango-chan:
+   field values (emails, phones, dates) read as data, not prose. */
+.pvv {
+  min-width: 0;
+  font-family: var(--font-mono);
   color: var(--text-default);
   overflow-wrap: anywhere;
+}
+
+/* One link per line, truncated rather than wrapped character-by-character — a raw URL is
+   long enough on its own to blow out the card's width otherwise. Full address still lives
+   in the href and the title tooltip. */
+.pc-url {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 }

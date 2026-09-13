@@ -57,6 +57,47 @@ def anonymous_client():
     return TestClient(app)
 
 
+def _fake_default_user() -> Identity:
+    return Identity(
+        type="session",
+        provider="email",
+        provider_user_id="route-test-default",
+        email="route-test-default@example.com",
+        role="default",
+        user_id=None,
+    )
+
+
+@pytest.fixture
+def default_role_client():
+    """Signed in, no elevated role — too low a tier to create or edit a post (maintainer+)."""
+    app = FastAPI()
+    app.include_router(posts_router.get_router(), prefix=_PREFIX)
+    app.dependency_overrides[get_optional_user] = lambda: _fake_default_user()
+    return TestClient(app)
+
+
+def _fake_contributor() -> Identity:
+    return Identity(
+        type="session",
+        provider="email",
+        provider_user_id="route-test-contributor",
+        email="route-test-contributor@example.com",
+        role="contributors",
+        user_id=None,
+    )
+
+
+@pytest.fixture
+def contributor_client():
+    """Contributor — still one tier short of creating or editing a post, unlike assigning an
+    existing one to someone (test_memberships.py, any signed-in user)."""
+    app = FastAPI()
+    app.include_router(posts_router.get_router(), prefix=_PREFIX)
+    app.dependency_overrides[get_optional_user] = lambda: _fake_contributor()
+    return TestClient(app)
+
+
 async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -320,3 +361,17 @@ async def test_the_roster_reads_without_signing_in(client, anonymous_client):
     assert [p["role_id"] for p in read.json()["data"]["organizations"][0]["posts"]] == ["mayor"]
 
     assert _create(anonymous_client, division=_WARD_3).status_code == 403
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_creating_a_post_requires_maintainer_or_above(default_role_client):
+    assert _create(default_role_client, division=_WARD_3).status_code == 403
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_contributor_still_cannot_create_a_post(contributor_client):
+    """Same tier as editing a jurisdiction's data — assigning an *existing* post to someone is
+    the one that opened up to any signed-in user (test_memberships.py), not this."""
+    assert _create(contributor_client, division=_WARD_3).status_code == 403

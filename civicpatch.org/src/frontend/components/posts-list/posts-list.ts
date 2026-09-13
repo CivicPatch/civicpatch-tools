@@ -11,9 +11,12 @@ import type { RoleGroup, PostRow, RoleOption } from "./posts-model.js";
 
 type PostsListHost = HTMLElement & {
   jurisdictionOcdid?: string;
-  // Same gate as people editing on this page: a scrape still awaiting review blocks both, so
-  // the roster and the posts describing it cannot drift while a change is in flight.
+  // Same gate as people editing on this page: a scrape still awaiting review blocks editing
+  // an *existing* post, so it cannot drift while a change is in flight.
   canEdit?: boolean;
+  // Creating a new post names a role/division, not a person — unrelated to what a pending
+  // review will publish, so it stays open even while one is in flight.
+  canCreate?: boolean;
 };
 
 // Named for the entity, not the action: adding and editing a post are the same entity with and
@@ -74,6 +77,7 @@ function PostsList(host: PostsListHost) {
   const [editing, setEditing] = useState<Editing>(null);
   const ocdid = host.jurisdictionOcdid;
   const canEdit = !!host.canEdit;
+  const canCreate = !!host.canCreate;
 
   const { data, error, reload } = useAsyncData<{
     byRole: RoleGroup[];
@@ -111,7 +115,7 @@ function PostsList(host: PostsListHost) {
 
   const controls = html`
     <div class="posts-list__controls">
-      ${canEdit
+      ${canCreate
         ? html`<button class="civ-action-btn" @click=${handleAddPost}>Add post</button>`
         : ""}
     </div>

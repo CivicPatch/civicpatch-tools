@@ -81,7 +81,11 @@
 
 @media (max-width: 820px) {
   .sectioned {
-    grid-template-columns: 1fr;
+    /* Not `1fr` alone — a bare 1fr track's implicit minimum is its content's min-content
+       size, so a wide child (.secnav's tab row) still forces the track wider than the
+       viewport regardless of the child's own min-width. minmax(0, 1fr) is what actually
+       lets the track shrink below that. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 1rem;
   }
 
@@ -92,6 +96,17 @@
     position: static;
     padding-bottom: 0.4rem;
     border-bottom: 1px solid var(--border-subtle);
+    /* More tabs than fit a phone width (Roles, Overview) must scroll inside their own row,
+       not push the page wider. min-width: 0 is what actually lets it shrink to its grid
+       track first — overflow-x: auto alone does nothing while the box is still free to
+       grow to fit its content. */
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .secnav__item {
+    white-space: nowrap;
   }
 
   .secnav__item {

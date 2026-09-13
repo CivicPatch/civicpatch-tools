@@ -42,7 +42,7 @@ import {
 } from "../review-routes.js";
 import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
 import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
-import "../../components/posts-list/post-add.js";
+import { officeChangesIn } from "../../components/person-editor/office-changes.js";
 import type { ProposedChange } from "../../components/people/person-cards.js";
 import type { PersonAssertion } from "../../components/person-editor/field-provenance.js";
 import {
@@ -83,6 +83,7 @@ type ReviewSessionHost = HTMLElement & {
   error: string | null;
   canReject: boolean;
   isRejecting: boolean;
+  canAssignMembership: boolean;
 };
 
 const peersOf = (
@@ -94,7 +95,7 @@ const peersOf = (
     : [];
 
 function ReviewSession(host: ReviewSessionHost) {
-  const { progress, hasSession, currentEntry, error, canReject, isRejecting } =
+  const { progress, hasSession, currentEntry, error, canReject, isRejecting, canAssignMembership } =
     host;
   const {
     jurisdiction,
@@ -120,9 +121,8 @@ function ReviewSession(host: ReviewSessionHost) {
   const jurisdictionTitle = jurisdictionStateName
     ? `${jurisdictionName}, ${jurisdictionStateName}`
     : jurisdictionName;
-  const { posts, reload: reloadPosts } = useJurisdictionPosts(jurisdictionOcdid);
+  const { posts } = useJurisdictionPosts(jurisdictionOcdid);
   const roles = useJurisdictionRoles();
-  const [addingPostFor, setAddingPostFor] = useState<string | null>(null);
   const { url: publishedUrl, status: reviewStatus = null } = pr ?? {};
   const isBaseline = mode === ReviewMode.BASELINE;
   const {
@@ -207,6 +207,9 @@ function ReviewSession(host: ReviewSessionHost) {
   };
   const handlePersonSave = (id: string, updates: Record<string, unknown>) =>
     updatePerson(id, updates);
+  // Handed to `review-session-actions`, which folds it into the same `publish`/`save` event
+  // that already carries `peoplePatch` — the page applies both under one action.
+  const officeChanges = officeChangesIn(cards);
   const [candidatesOpen, setCandidatesOpen] = useState(false);
   const handleToggleCandidates = () => setCandidatesOpen((open) => !open);
   const [pendingMerge, setPendingMerge] = useState<{
@@ -240,6 +243,8 @@ function ReviewSession(host: ReviewSessionHost) {
     isReadOnly: !!is_read_only,
     jurisdictionOcdid,
     posts,
+    roles,
+    canAssignMembership,
     proposals: proposalsByPersonId(changes ?? []),
     assertions: assertions ?? {},
     overriddenSourceValues: overriddenSourceValues ?? {},
@@ -252,24 +257,9 @@ function ReviewSession(host: ReviewSessionHost) {
     candidatesOpenFor: candidatesOpen,
     onToggleCandidates: handleToggleCandidates,
     onPickPartner: handlePickPartner,
-    onAddPost: setAddingPostFor,
-  };
-  const handlePostAdded = (e: CustomEvent) => {
-    const postId = e.detail?.post_id;
-    if (addingPostFor && postId) handlePersonSave(addingPostFor, { post_id: postId });
-    setAddingPostFor(null);
-    reloadPosts();
   };
   return html`
     <main class="review-session page-content">
-      ${addingPostFor
-        ? html`<civ-post-add
-            .jurisdictionOcdid=${jurisdictionOcdid ?? ""}
-            .roles=${roles}
-            @added=${handlePostAdded}
-            @cancel=${() => setAddingPostFor(null)}
-          ></civ-post-add>`
-        : ""}
       <div class="review-session__header">
         <review-session-controls
           .progress=${progress}
@@ -287,6 +277,7 @@ function ReviewSession(host: ReviewSessionHost) {
           .canReject=${canReject}
           .isRejecting=${isRejecting}
           .hasSession=${hasSession}
+          .officeChanges=${officeChanges}
         ></review-session-actions>
         <div class="review-session__header-tools">
           ${hasSourceContent
@@ -382,10 +373,8 @@ function ReviewSession(host: ReviewSessionHost) {
       <section class="review-session__publishing" aria-label="Preview">
         <h2 class="review-session__section-title">Preview</h2>
         <review-preview
-          .changes=${changes}
           .cards=${cards}
-          .jurisdictionOcdid=${jurisdictionOcdid}
-          .posts=${posts}
+          .roles=${roles}
         ></review-preview>
       </section>
       <review-sidebar

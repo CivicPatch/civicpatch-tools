@@ -23,7 +23,6 @@ from shared.schemas import IssueCode
 _ISSUE_WEIGHT = {
     IssueCode.TOO_FEW_PEOPLE: 10,        # the roster is incomplete; publishing retires people
     IssueCode.DUPLICATE_UNIQUE_ROLE: 8,  # two mayors is a contradiction, not a judgement call
-    IssueCode.DISPUTED_POST: 6,          # a human answered and the scrape disagrees
     IssueCode.ABSENT_PERSON: 5,          # someone we hold is gone
     IssueCode.MOVED_PERSON: 4,           # someone we hold is in a different seat
     IssueCode.NEW_PERSON: 3,             # someone arrived

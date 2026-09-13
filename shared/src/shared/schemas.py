@@ -392,7 +392,6 @@ class IssueCode(str, Enum):
     ABSENT_PERSON = "absent_person"
     NEW_PERSON = "new_person"
     MOVED_PERSON = "moved_person"
-    DISPUTED_POST = "disputed_post"
     TOO_FEW_PEOPLE = "too_few_people"
     DUPLICATE_UNIQUE_ROLE = "duplicate_unique_role"
     DIVISION_NUMBERING_GAP = "division_numbering_gap"

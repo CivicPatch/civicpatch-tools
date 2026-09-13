@@ -8,7 +8,8 @@
 import { html, nothing } from "lit-html";
 import { ref } from "lit-html/directives/ref.js";
 import "./field-controls.css";
-import type { DerivedPost, Post } from "../posts-list/posts-model.js";
+import { groupPostsByRole } from "../posts-list/posts-model.js";
+import type { DerivedPost, Post, RoleOption } from "../posts-list/posts-model.js";
 import {
   PERSON_LINK_TARGET,
   SOURCE_LINK_TARGET,
@@ -182,21 +183,19 @@ export function renderDateNewSide(
   `;
 }
 
-// Not a post id, so it can never collide with one: picking it opens the add form instead of
-// saving. The select is the only place to offer this — a reviewer who knows the post does not
-// exist has nowhere else to say so.
-export const ADD_POST_OPTION = "add-post";
-
 // Picked, never typed: the written value is `post_id`, the decision itself. `labels` stay as
 // the source said them — a pick says where someone serves, not what the page called them.
-export function renderPostNewSide(
+//
+// A brand-new, not-yet-saved person: there is no membership yet for `renderOfficeNewSide`'s
+// immediate `memberships.assign` to move, so the pick stays a local field like every other,
+// applied when the addition itself is saved.
+export function renderPostPickNewSide(
   field: FieldSpec,
   newRecord: PresentRecord,
   save: Save,
   posts: Post[],
   derivedPost: DerivedPost | null,
   focusRef: FocusRef | null,
-  onAddPost: () => void,
 ) {
   const picked = (diffValue(newRecord, field) as string | null) ?? "";
   // The derivation's post when nobody has picked — shown, never saved, so a parser fix can
@@ -211,17 +210,7 @@ export function renderPostNewSide(
       ${attachFocus(focusRef)}
       class="field-control__office"
       aria-label=${field.label}
-      @change=${(e: Event) => {
-        const chosen = inputValue(e);
-        if (chosen === ADD_POST_OPTION) {
-          // Put the select back where it was: the form may be cancelled, and a select left
-          // reading "Add a post…" would say the person holds one.
-          (e.target as HTMLSelectElement).value = current;
-          onAddPost();
-          return;
-        }
-        save({ post_id: chosen || null });
-      }}
+      @change=${(e: Event) => save({ post_id: inputValue(e) || null })}
     >
       ${projected
         ? html`<option value="" .selected=${!picked}>
@@ -236,8 +225,61 @@ export function renderPostNewSide(
             ${post.label}
           </option>`,
       )}
-      <option value=${ADD_POST_OPTION}>Add a post</option>
     </select>
+  `;
+}
+
+// An existing person: a local pick like every other field, applied via `memberships.assign`
+// — never an assertion — when the card is saved/published, so a scrape stays free to move or
+// end the membership again. Grouped by role, mirroring `posts-list.ts`'s own picker.
+export function renderOfficeNewSide(
+  record: PresentRecord,
+  save: Save,
+  posts: Post[],
+  roles: RoleOption[],
+  currentPostId: string | null,
+  currentLabel: string | null,
+  focusRef: FocusRef | null,
+) {
+  const picked = (record.post_id as string | null | undefined) ?? null;
+  const current = picked ?? currentPostId;
+  const pickedLabel = (record.membership_label as string | null | undefined) ?? currentLabel;
+  const roleLabels = new Map(roles.map((role) => [role.id, role.label]));
+  const groups = groupPostsByRole(posts, [], roleLabels);
+  return html`
+    <div class="field-control__office-group">
+      <select
+        ${attachFocus(focusRef)}
+        class="field-control__office"
+        aria-label="Office"
+        @change=${(e: Event) => save({ post_id: inputValue(e) || null })}
+      >
+        ${current
+          ? nothing
+          : html`<option value="" selected disabled>Choose a post</option>`}
+        ${groups.map(
+          (group) => html`
+            <optgroup label=${group.role_label}>
+              ${group.posts.map(
+                (post) => html`<option value=${post.id} .selected=${post.id === current}>
+                  ${post.label}
+                </option>`,
+              )}
+            </optgroup>
+          `,
+        )}
+      </select>
+      ${current
+        ? html`<input
+            type="text"
+            class="field-control__input"
+            placeholder="Label (optional)"
+            aria-label="Membership label"
+            .value=${pickedLabel ?? ""}
+            @input=${(e: Event) => save({ membership_label: inputValue(e) || null })}
+          />`
+        : nothing}
+    </div>
   `;
 }
 

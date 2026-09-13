@@ -3,10 +3,9 @@ from schemas.assertions import Assertion, AssertionKind, EntityType
 from shared.schemas import SubmittedPersonRecord
 from shared.utils.person_fields import order_person_fields
 
-# Every field a reviewer can edit on a person, which is exactly what the change log diffs: a
-# field missing here is a field whose edit goes unrecorded.
-#
-# Not `cdn_image`: publish writes it from `image`.
+# Fields a reviewer can edit — a missing one goes unrecorded in the change log. Not
+# cdn_image; publish derives it from image. Not post_id — a scrape must always stay free
+# to move/end a membership, so a post pick is never asserted (see memberships.assign).
 EDITABLE_FIELDS = (
     "name",
     "other_names",
@@ -17,65 +16,28 @@ EDITABLE_FIELDS = (
     "image",
     "start_date",
     "end_date",
-    "post_id",
 )
 
-# What a scrape changing a value should *stop for review*. Not what the card shows: a field
-# whose value moved is rendered as changed either way, because `survivingFields` keeps anything
-# that differs. This list is only about raising a checklist issue.
-#
-# The others are out for their own reasons, none of them "it moves a lot":
-#   image        adjudicated on the card during review, so a change needs no separate stop
-#   other_names  merged forward, so a scrape only ever adds
-#   urls         a guess at the person's page, falling back to source_urls
-#   source_urls  must change between scrapes; it is where we looked
-#   start_date   changes between scrapes
-#   end_date     changes between scrapes
-#   post_id      already raises `moved_person` or `disputed_post`, which say more
+# Fields whose change during a scrape raises a review issue — not what the diff shows,
+# which is anything that differs.
 SURFACED_FIELDS = ("name",)
 
-# Of those, the ones holding several values: a list field is a set, so `phones` carries many
-# accepts where `name` carries one. Mirrors the two partial unique indexes in 137.
-#
-# `post_id` is here despite the reviewer picking one, because a person can hold one post per
-# organization and a scalar assertion is unique per `(person, field)` — a second body's pick
-# would overwrite the first. A post names its own organization, so the list is self-scoping,
-# and one-per-organization stays enforced by `memberships_one_open_per_organization`.
-LIST_FIELDS = frozenset(
-    {"other_names", "phones", "emails", "urls", "source_urls", "post_id"}
-)
+# Multi-valued fields. Mirrors the two partial unique indexes in migration 137.
+LIST_FIELDS = frozenset({"other_names", "phones", "emails", "urls", "source_urls"})
 # Derived from the sightings now, so editing it states nothing about the world.
 NOT_ASSERTABLE = frozenset({"source_urls"})
 
-# A date left blank means "unknown" or "still serving", never "that date is wrong". Editing one
-# still states something, so this suppresses the reject only — not the field.
-# `post_id` joins them for a different reason: a pick is an answer, never a correction. The
-# scrape proposes labels, not posts, so there is no proposed post for a reviewer to reject.
-NOT_REJECTABLE = frozenset({"start_date", "end_date", "post_id"})
-
-# Stored as a list, held as one value. A person accumulates one accepted post per organization,
-# but a record carries the single post the review in front of them is about — so the two list
-# readers below wrap it rather than iterating it. Without this a uuid iterates into one
-# assertion per character, which is what a bare `for item in value` does to a string.
-SCALAR_ON_THE_RECORD = frozenset({"post_id"})
+# A blank date means unknown/still-serving, not wrong — suppress the reject only.
+NOT_REJECTABLE = frozenset({"start_date", "end_date"})
 
 
-def _values_of(field: str, value: object) -> list:
-    if field in SCALAR_ON_THE_RECORD:
-        return [value] if value not in (None, "") else []
-    # Anything that is not a sequence yields nothing rather than iterating: a bare string under
-    # a list field would otherwise come apart into characters.
+def _values_of(value: object) -> list:
+    # A bare string under a list field must not iterate into characters.
     return list(value) if isinstance(value, (list, tuple, set)) else []
 
 
 def source_values_overridden(person: dict, asserted: dict) -> dict:
-    """What the source said, for each field an assertion then changed.
-
-    The card shows the *published* value — `with_asserted_values` has already overlaid it — and a
-    lock saying somebody stood behind it. This is what the lock hides, revealed on hover, and it
-    is only the fields where the two actually differ: a lock over a value the scrape agrees with
-    has nothing to disclose.
-    """
+    """What the source said, for fields an assertion overrode — only where they differ."""
     published = with_asserted_values(person, asserted)
     return {
         field: person.get(field)
@@ -85,13 +47,8 @@ def source_values_overridden(person: dict, asserted: dict) -> dict:
 
 
 def with_asserted_values(person: dict, asserted: dict) -> dict:
-    """`published = (scraped ∪ accepted) − rejected`, per field.
-
-    A reject suppresses one *value*, never the field, so the scraper keeps looking and something
-    it has never found still reaches a reviewer. Scraped order first, then accepted.
-
-    A scalar cannot union, so an accept replaces it and a reject empties it.
-    """
+    """`published = (scraped ∪ accepted) − rejected`, per field. A scalar accept replaces
+    it; a reject empties it."""
     published = dict(person)
     for field, by_kind in asserted.items():
         if field not in EDITABLE_FIELDS:
@@ -102,7 +59,7 @@ def with_asserted_values(person: dict, asserted: dict) -> dict:
         if field in LIST_FIELDS:
             kept = [
                 value
-                for value in _values_of(field, person.get(field))
+                for value in _values_of(person.get(field))
                 if value not in rejected
             ]
             published[field] = kept + [
@@ -118,10 +75,7 @@ def with_asserted_values(person: dict, asserted: dict) -> dict:
 
 
 class PersonPatch(BaseModel):
-    # Every person carries a backend-assigned id: existing people from the data they were
-    # loaded with, new people from the Add action. The id is the lookup key — if it matches a
-    # base entry we overlay only `fields`; if it doesn't, the person is new and `fields` is
-    # the whole entry.
+    # id matches an existing person (overlay `fields`) or is new (`fields` is the whole entry).
     id: str
     fields: dict
 
@@ -132,9 +86,7 @@ class PeopleValidationError(Exception):
         self.failures = failures
 
 
-# Overlay per-person field edits onto the authoritative `base` entries, in `edits` order.
-# id in base → overlay only `fields` (everything else untouched); id not in base → new person,
-# `fields` inserted whole; base entries absent from `edits` are dropped (deletions). Nothing is
+# Overlay edits onto base by id; an id absent from edits is a deletion. Nothing is
 # re-serialized, so untouched fields keep their exact representation.
 def apply_people_patch(base: list[dict], edits: list[PersonPatch]) -> list[dict]:
     base_by_id = {entry["id"]: entry for entry in base}
@@ -142,22 +94,14 @@ def apply_people_patch(base: list[dict], edits: list[PersonPatch]) -> list[dict]
     for edit in edits:
         base_entry = base_by_id.get(edit.id)
         if base_entry is None:
-            # `id` first: `fields` may re-id, but an addition need not carry one.
             result.append({"id": edit.id, **edit.fields})
         else:
             result.append({**base_entry, **edit.fields})
     return result
 
 
-# Validate each patched person through `SubmittedPersonRecord` (which also canonicalizes phones and drops
-# blank urls), then write the normalized values back — but only for the fields the user
-# actually edited (`edit.fields`), so untouched fields keep their exact base representation.
-# Raises `PeopleValidationError` (failures keyed by person id) if any person is invalid.
-# `patched[i]` corresponds to `edits[i]`.
-# The one place that touches pydantic's error encoding. `loc` is the path to the bad value
-# — ("phones",), ("phones", 0), ("start_date",) — and its first element is the top-level
-# field we surface (loc[-1] would be a list index for list fields).
 def _field_errors(exc: ValidationError) -> list[dict]:
+    # loc[0] is the field key; loc[-1] would be a list index for list fields.
     return [
         {"field": str(e["loc"][0]) if e["loc"] else "", "message": e["msg"]}
         for e in exc.errors()
@@ -168,9 +112,7 @@ def _person_errors(edit: PersonPatch, entry: dict, errors: list[dict]) -> list[d
     return [{"id": edit.id, "name": entry.get("name"), **err} for err in errors]
 
 
-# A submission rule, not a data-model one: a scrape that saw the same email on two pages has
-# no user to alert and must not fail, so this is checked here rather than on the model.
-# Blank keys are falsy, so two empty rows are not a duplicate.
+# Submission-only rule: a scrape reusing one email across pages has no user to alert.
 def _duplicate_errors(entry: dict) -> list[dict]:
     errors = []
     for field, values in entry.items():
@@ -185,15 +127,15 @@ def _duplicate_errors(entry: dict) -> list[dict]:
     return errors
 
 
-# Also a submission rule rather than a data-model one, and for the same reason: a scrape
-# that found no source must still produce a record, but a person published through the
-# editor is unverifiable without one. FIELD_SCHEMA marks it required on the client.
+# Submission-only: a person published through the editor is unverifiable without a source.
 def _missing_source_errors(entry: dict) -> list[dict]:
     if any(str(url).strip() for url in entry.get("source_urls") or []):
         return []
     return [{"field": "source_urls", "message": "At least one source url is required"}]
 
 
+# Validates each patched person, then writes normalized values back for only the fields
+# actually edited, so untouched fields keep their exact base representation.
 def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> list[dict]:
     people = []
     failures = []
@@ -204,8 +146,7 @@ def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> lis
             failures.extend(_person_errors(edit, entry, _field_errors(exc)))
             people.append(entry)
             continue
-        # Against the normalized entry, so two spellings of one phone number are caught
-        # after canonicalization rather than read as two numbers.
+        # Against the normalized entry, so two spellings of one phone aren't read as two.
         errors = _duplicate_errors(normalized) + _missing_source_errors(normalized)
         if errors:
             failures.extend(_person_errors(edit, entry, errors))
@@ -218,9 +159,8 @@ def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> lis
     return people
 
 
-# Produce the people to write from a base file and a set of edits: overlay, validate,
-# normalize, order. Pure — the caller (router) owns fetching the base and writing the result.
-# Raises PeopleValidationError if any edited person is invalid.
+# Pure: overlay, validate, normalize, order. The caller owns fetching the base and
+# writing the result.
 def patch_people(base: list[dict], edits: list[PersonPatch]) -> list[dict]:
     patched = validate_and_normalize(apply_people_patch(base, edits), edits)
     return [order_person_fields(person) for person in patched]
@@ -229,12 +169,8 @@ def patch_people(base: list[dict], edits: list[PersonPatch]) -> list[dict]:
 def assertions_from_edit(
     person_id: str, scraped: dict, edited: dict, changeset_id: str | None = None
 ) -> list[Assertion]:
-    """What a reviewer's save claims about one person.
-
-    Diffed against the **scrape**, not against what was displayed: displayed already folds in
-    the reviewer's earlier answers, so diffing that would re-derive nothing on a second save.
-    Recomputing the whole set each time is what makes the save idempotent.
-    """
+    """A reviewer's save as assertions, diffed against the scrape so repeat saves stay
+    idempotent."""
 
     def assertion(field: str, kind: AssertionKind, value: object) -> Assertion:
         return Assertion(
@@ -254,7 +190,7 @@ def assertions_from_edit(
         rejectable = field not in NOT_REJECTABLE
 
         if field in LIST_FIELDS:
-            was, now = set(_values_of(field, was)), set(_values_of(field, now))
+            was, now = set(_values_of(was)), set(_values_of(now))
             claims.extend(
                 assertion(field, AssertionKind.ACCEPT, v) for v in sorted(now - was)
             )

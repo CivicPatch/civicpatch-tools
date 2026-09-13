@@ -290,6 +290,7 @@ function TermTable({ terms, editable, editor, onSave, onDelete }) {
   const formTitle = editing ? `Edit: ${editingValue}` : "Add role";
 
   return html`
+    <div class="config-editor__table-wrapper">
     <table class="config-editor__table">
       <thead>
         <tr>
@@ -344,6 +345,7 @@ function TermTable({ terms, editable, editor, onSave, onDelete }) {
             )}
       </tbody>
     </table>
+    </div>
     ${editable
       ? html`<button class="config-editor__add-btn" @click=${() => openAdd()}>
           + Add role

@@ -197,12 +197,17 @@ export const fetchMemberships = async (jurisdictionOcdid, asOf = null) => {
   return res.json();
 };
 
-export const assignMembership = async (personId, postId, label = null) => {
+export const assignMembership = async (personId, postId, label = null, changesetId = null) => {
   const res = await fetch(`${API_URL}/api/v1/memberships`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
     credentials: "include",
-    body: JSON.stringify({ person_id: personId, post_id: postId, label }),
+    body: JSON.stringify({
+      person_id: personId,
+      post_id: postId,
+      label,
+      changeset_id: changesetId,
+    }),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();

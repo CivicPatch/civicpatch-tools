@@ -85,7 +85,7 @@ def test_only_who_this_is_stops_a_scrape_for_review():
 
     Everything else is out for its own reason: `image` is adjudicated on the card anyway,
     `other_names` is merged forward so a scrape only adds, `urls`/`source_urls`/the dates change
-    between scrapes by design, and `post_id` already raises `moved_person`/`disputed_post`."""
+    between scrapes by design, and `post_id` already raises `moved_person`."""
     from core.people_edits import EDITABLE_FIELDS, SURFACED_FIELDS
 
     assert set(SURFACED_FIELDS) == {"name"}

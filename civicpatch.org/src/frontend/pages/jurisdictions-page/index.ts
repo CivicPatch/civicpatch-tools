@@ -222,6 +222,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
                 .people=${people}
                 .jurisdictionOcdid=${jurisdiction_ocdid}
                 .canEdit=${editModeActive && !peopleBlockers.length}
+                .canAssignMembership=${editModeActive && !peopleBlockers.length}
                 .isLoading=${peopleLoading}
                 .blockedReason=${editingBlockedReason(peopleBlockers)}
                 .onPublished=${() => window.location.reload()}
@@ -232,6 +233,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
                 <civ-posts-list
                   .jurisdictionOcdid=${jurisdiction_ocdid}
                   .canEdit=${editModeActive && !peopleBlockers.length}
+                  .canCreate=${editModeActive}
                 ></civ-posts-list>
               </section>
             </div>

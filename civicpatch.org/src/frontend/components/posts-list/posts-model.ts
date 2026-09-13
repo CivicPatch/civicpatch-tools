@@ -206,6 +206,16 @@ export function heldPost(
   return { post_id: held[0].post_id, label: held[0].post_label };
 }
 
+/** The human label on the one post someone holds — what `memberships.assign` would send
+ * back, as opposed to `heldPost`'s post-derived label. Same one-membership rule as `heldPost`. */
+export function heldMembershipLabel(
+  memberships: { post_id: string; label: string | null }[] | null | undefined,
+): string | null {
+  const held = memberships ?? [];
+  if (held.length !== 1 || !held[0].post_id) return null;
+  return held[0].label ?? null;
+}
+
 /** The backend's `derive_label` shape. At-large adds nothing — `_division_phrase` returns None
  * for it, so saying it here would promise a label the server would not produce. */
 export function derivedPostLabel(
