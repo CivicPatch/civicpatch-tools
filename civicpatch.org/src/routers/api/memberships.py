@@ -4,7 +4,7 @@ from database import memberships
 from fastapi import APIRouter, Depends, Query
 from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
-from schemas.common import Identity, RouteCategory, UserRole
+from schemas.common import Identity, RouteCategory
 from schemas.pagination import pagination_offset, pagination_total_pages
 from schemas.posts import AssignMembershipRequest
 
@@ -15,13 +15,15 @@ def get_router() -> APIRouter:
     @router.put("")
     async def assign_membership_endpoint(
         body: AssignMembershipRequest,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
-        ),
+        # Any signed-in user: moving a membership to a different post is a direct write,
+        # never an assertion, so a scrape stays free to move/end it again — and the label
+        # only ever asserts when given. Creating/editing the *post itself* is a separate,
+        # stricter capability (routers/api/posts.py, maintainers).
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         try:
             result = await memberships.assign(
-                body.person_id, body.post_id, body.label, user.user_id
+                body.person_id, body.post_id, body.label, user.user_id, body.changeset_id
             )
         except memberships.UnknownPost:
             return JSONResponse({"error": "No such post."}, status_code=404)

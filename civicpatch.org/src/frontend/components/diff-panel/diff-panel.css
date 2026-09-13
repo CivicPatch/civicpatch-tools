@@ -77,57 +77,89 @@
     background: var(--bg);
 }
 
+/* Whole-card tint, not just the header — same idiom as person-row.css's status colouring:
+   the tint plus the word badge below carry the signal, not an accent rail. */
+.diff-person--added    { background: var(--diff-added-bg); }
+.diff-person--removed  { background: var(--diff-removed-bg); }
+.diff-person--changed  { background: var(--info-bg); }
+
 .diff-person__header {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.35rem 0.6rem;
-    font-family: var(--font-mono);
-    font-size: var(--font-size-md);
-    font-weight: 600;
+    padding: 0.4rem 0.6rem;
 }
 
-.diff-person--added .diff-person__header    { background: var(--diff-added-bg); }
-.diff-person--removed .diff-person__header  { background: var(--diff-removed-bg); }
-.diff-person--changed .diff-person__header  { background: var(--info-bg); }
-.diff-person--unchanged .diff-person__header { background: transparent; color: var(--text-muted); }
+.diff-person__name {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.diff-person--unchanged .diff-person__name {
+    color: var(--text-muted);
+    font-weight: 400;
+}
 
 .diff-person__badge {
-    font-weight: 700;
-    font-size: var(--font-size-md);
-    width: 1rem;
-    text-align: center;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    text-transform: lowercase;
+    padding: 0.05em 0.45em;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
 }
 
-.diff-person__badge--added   { color: var(--diff-added); }
-.diff-person__badge--removed { color: var(--diff-removed); }
-.diff-person__badge--changed { color: var(--info); }
+.diff-person__badge--added   { background: var(--diff-added-bg); color: var(--diff-added); }
+.diff-person__badge--removed { background: var(--diff-removed-bg); color: var(--diff-removed); }
+.diff-person__badge--changed { background: var(--info-bg); color: var(--info); }
+
+.diff-person__src {
+    margin-left: auto;
+    flex: none;
+}
 
 .diff-person__fields {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: var(--font-mono);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0 0.6rem 0.5rem;
+}
+
+.diff-person__field {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
     font-size: var(--font-size-sm);
 }
 
 .diff-field__label {
-    padding: 0.3rem 0.6rem;
+    flex: none;
+    width: 4.5rem;
     color: var(--text-muted);
-    white-space: nowrap;
-    width: 6rem;
     font-size: var(--font-size-xs);
     text-transform: lowercase;
     font-family: var(--font-mono);
 }
 
-.diff-field__before,
-.diff-field__after {
-    padding: 0.3rem 0.5rem;
-    width: 50%;
+.diff-field__value {
+    color: var(--text-muted);
+    overflow-wrap: anywhere;
 }
 
-.diff-person__fields td:last-child:not(.diff-field__label) {
-    padding: 0.3rem 0.6rem;
+/* Post is the substance of a diff review — full weight, not muted small text. */
+.diff-person__field--post .diff-field__value {
+    color: var(--text-default);
+    font-size: var(--font-size-md);
+}
+
+.diff-field__value ins {
+    color: var(--diff-added);
+    text-decoration: none;
+}
+
+.diff-field__value del {
+    color: var(--diff-removed);
+    text-decoration: line-through;
 }
 
 .diff-panel__empty {

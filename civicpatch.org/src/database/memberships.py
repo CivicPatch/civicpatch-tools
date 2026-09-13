@@ -721,8 +721,19 @@ async def _person_name(cur, person_id: str) -> str:
 
 
 async def assign(
-    person_id: str, post_id: str, label: str | None, user_id: str | None = None
+    person_id: str,
+    post_id: str,
+    label: str | None,
+    user_id: str | None = None,
+    changeset_id: str | None = None,
 ) -> AssignmentResult:
+    """Assign a person to a post, direct and unasserted — a scrape stays free to move or end
+    this membership again.
+
+    `changeset_id`, when given, is the caller's own in-progress review — the activity entry and
+    any label assertion are filed under it instead of the live roster's, so a pick made mid-
+    review shows up as part of that review rather than as an unrelated jurisdiction edit.
+    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         post = await posts.get(cur, post_id)
@@ -730,9 +741,9 @@ async def assign(
             raise UnknownPost(post_id)
 
         # Same changeset, same date. The seat is dated by the changeset this edit is filed
-        # under — the live roster's — so a hand edit cannot advance `last_seen_at`: `upsert`
-        # takes GREATEST, and that date is already the seat's. Nobody read a source here.
-        changeset_id = await live_roster_changeset(cur, post.jurisdiction_ocdid)
+        # under — so a hand edit cannot advance `last_seen_at`: `upsert` takes GREATEST, and
+        # that date is already the seat's. Nobody read a source here.
+        changeset_id = changeset_id or await live_roster_changeset(cur, post.jurisdiction_ocdid)
         seen_at = (
             await get_updated_at(cur, changeset_id)
             if changeset_id

@@ -23,7 +23,6 @@ from database.database import get_pool
 from database.changeset_predicates import DISMISSED_SUPERSEDED
 from database.dismissals import supersede_stacked_changesets
 from database.source_records import insert_source_records
-from services.roster import proposed_roster
 from schemas.assertions import EntityType
 from schemas.common import Identity, UserRole
 
@@ -475,33 +474,23 @@ async def test_a_hand_edit_supersedes_a_pending_scrape():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_post_pick_survives_a_save_and_comes_back_scoped_to_its_organization():
-    """A pick is a decision, and it has to outlive the save that recorded it.
+async def test_a_post_pick_via_save_is_never_asserted():
+    """`post_id` is not in `EDITABLE_FIELDS`: a scrape must always stay free to move or end a
+    membership, so a pick made through `roster_edits.save` must never durably override it.
+    Moving an existing person to a post now goes through `memberships.assign` instead, which
+    writes the move directly (never an assertion) and logs its own `ASSIGN_MEMBERSHIP` entry.
 
-    It did not: `post_id` was absent from `EDITABLE_FIELDS`, so `assertions_from_edit` wrote no
-    assertion and `with_asserted_values` reapplied nothing. A reviewer could pick a post, save for
-    later, come back, and publish into whatever the labels derived — their answer discarded
-    without a word. Nothing covered `roster_edits.save` at all, which is how it survived.
-
-    Picks are stored per post rather than per person, because a person holds one per
-    organization. This seeds two bodies and asserts the roster reads back only the one the
-    changeset is about, still as a single value: the reviewer is choosing one membership.
+    This test only pins the negative: a save carrying `post_id` in its fields writes no
+    assertion for it, so nothing here can outlive the changeset it was made on.
     """
-    # The seeded person, not a fresh uuid: the wipe reaches assertions through `people`, so a
-    # person who was never inserted leaves rows that block the user delete in teardown.
     person_id, user = await _seed()
     changeset_id = str(uuid.uuid4())
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         council = await organizations.find_or_create(cur, _OCDID, "Council")
-        school_board = await organizations.find_or_create(cur, _OCDID, "School Board")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         council_seat = await posts.find_or_create(cur, _OCDID, council, "clerk", _BASE)
-        board_seat = await posts.find_or_create(cur, _OCDID, school_board, "clerk", _BASE)
-        await conn.commit()
-
-    async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "INSERT INTO changesets "
             "  (id, kind, jurisdiction_ocdid, updated_at, organization_id) "
@@ -523,26 +512,19 @@ async def test_a_post_pick_survives_a_save_and_comes_back_scoped_to_its_organiza
         },
     )
 
-    for seat in (council_seat, board_seat):
-        await roster_edits.save(
-            changeset_id,
-            _OCDID,
-            [PersonPatch(id=person_id, fields={"post_id": seat})],
-            user,
-        )
+    await roster_edits.save(
+        changeset_id,
+        _OCDID,
+        [PersonPatch(id=person_id, fields={"post_id": council_seat})],
+        user,
+    )
 
-    # Both picks are kept — one per body, neither overwriting the other.
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT value #>> '{}' FROM assertions "
-            "WHERE entity_id = %s AND field_path = 'post_id' AND kind = 'accept'",
+            "SELECT 1 FROM assertions WHERE entity_id = %s AND field_path = 'post_id'",
             (person_id,),
         )
-        assert {row[0] for row in await cur.fetchall()} == {council_seat, board_seat}
-
-    # The roster shows the one this changeset is about, as a single value.
-    roster = await proposed_roster(changeset_id, _OCDID)
-    assert [person["post_id"] for person in roster] == [council_seat]
+        assert await cur.fetchone() is None
 
 
 @pytest.mark.asyncio

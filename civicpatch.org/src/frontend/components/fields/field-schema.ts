@@ -51,13 +51,13 @@ export const FIELD_SCHEMA: FieldSpec[] = [
   { key: "image", label: "Photo", type: "image", diff: false },
   { key: "name", label: "Name", type: "text", required: true },
   { key: "other_names", label: "Other names", type: "multi" },
-  // A post is picked, not typed. Not `required: true` — the pipeline never sets `post_id`;
-  // `fieldError` asks only when nothing can derive one.
+  // Not `required: true` — the pipeline never sets `post_id`; `fieldError` asks only when
+  // nothing can derive one.
   //
   // NOT `labels`. Those are what the source said — evidence, never edited — and putting them
-  // here showed a person named twice by one page as two entries in the Post field, which reads
-  // as a duplicate because it is two spellings of one answer.
-  { key: "post_id", label: "Post", type: "text" },
+  // here showed a person named twice by one page as two entries in the Office field, which
+  // reads as a duplicate because it is two spellings of one answer.
+  { key: "post_id", label: "Office", type: "text" },
   { key: "start_date", label: "Term start", type: "date" },
   { key: "end_date", label: "Term end", type: "date" },
   { key: "emails", label: "Email", type: "multi" },

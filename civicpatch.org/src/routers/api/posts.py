@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 
 from database import posts
 from lib.auth import require_route_access
-from schemas.common import Identity, RouteCategory
+from schemas.common import Identity, RouteCategory, UserRole
 from schemas.pagination import paginated_response, pagination_offset
 from schemas.posts import CreatePostRequest, UpdatePostRequest
 
@@ -17,10 +17,12 @@ def get_router() -> APIRouter:
     async def create_post_endpoint(
         jurisdiction_ocdid: str,
         body: CreatePostRequest,
-        # Any signed-in user: a reviewer who knows somebody sits in District 4 cannot say so
-        # unless that post exists, and the post select offers only what already does. Their
-        # changes are marked quarantined in the change log like every other default-role write.
-        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+        # Maintainer+, same tier as editing a jurisdiction's published data — minting or
+        # reshaping a post is a structural change, unlike assigning someone to an existing one
+        # (routers/api/memberships.py, any signed-in user).
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+        ),
     ):
         """Create a post. 409 if the triple is taken — silently returning the existing id
         would make "created" and "already there" indistinguishable."""
@@ -42,7 +44,9 @@ def get_router() -> APIRouter:
     async def update_post_endpoint(
         post_id: str,
         body: UpdatePostRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+        ),
     ):
         jurisdiction_ocdid = await posts.update(
             post_id, body.headcount, body.is_tracked, user.user_id

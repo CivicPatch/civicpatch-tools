@@ -63,13 +63,6 @@
   padding-left: 1.1rem;
 }
 
-/* Same track as Overview: one definition, so the two views cannot drift apart. */
-.review-preview__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(26rem, 100%), 1fr));
-  gap: 0.6rem;
-}
-
 /* Icon, then value. No label: it is the value a reader came for, and the label
    repeated down a column is noise. The name stays for screen readers. */
 .review-preview__value {
@@ -102,8 +95,6 @@
    fields it stands behind. */
 .review-preview__value--sources {
   gap: 0.3rem;
-  padding-left: 0.35rem;
-  border-left: 1px solid var(--border);
 }
 
 .review-preview__sources-label {

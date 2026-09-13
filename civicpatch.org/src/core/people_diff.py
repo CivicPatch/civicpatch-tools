@@ -30,16 +30,15 @@ def _comparable(person: dict, post_labels: Mapping[str, str] = {}) -> dict[str, 
 
 
 def _held_post(person: dict) -> str | None:
-    """The seat this person already holds, for a snapshot that has no flat `post_id`.
+    """The seat this person already holds, read off `get_roster`'s shape — a seat is
+    `memberships[].post_id`, not a flat `post_id` on the person.
 
-    The two sides of the diff arrive shaped differently: the *after* person comes from the
-    editor, which writes `post_id` directly, while the *before* comes from `get_roster`, which
-    has no such key — a seat is `memberships[].post_id` there. Without this every post change
-    read `∅ → Mayor`, including a move from another seat, because the before side could not
-    carry one.
+    `post_id` is not in `EDITABLE_FIELDS`: a manual edit never changes which post someone
+    holds (that goes through `memberships.assign`, logged as its own `ASSIGN_MEMBERSHIP`
+    entry), so both sides of this diff resolve the same way and a move never surfaces here.
 
-    First membership: an editor picks one post, so a person with several has no single
-    "current" one to compare against, and the first is the one `get_roster` orders to the top.
+    First membership: a person can hold more than one, so there is no single "current" one to
+    compare against, and the first is the one `get_roster` orders to the top.
     """
     seats = person.get("memberships") or []
     for seat in seats:

@@ -66,3 +66,55 @@ export function computeLeadIds<T extends { id: string; memberships?: PersonMembe
   }
   return leadIds;
 }
+
+const UNRANKED_GROUP_LABEL = "Other";
+
+/** The membership that gives a person their best (lowest) rank — same tie-break as
+ * roleRank, just returning the membership itself instead of its position. */
+function bestMembership(
+  memberships: PersonMembership[] | undefined,
+  roleOrder: string[],
+): PersonMembership | null {
+  let best: PersonMembership | null = null;
+  let bestRank = UNRANKED;
+  for (const membership of memberships ?? []) {
+    const index = roleOrder.indexOf(membership.role_id);
+    if (index !== -1 && index < bestRank) {
+      bestRank = index;
+      best = membership;
+    }
+  }
+  return best;
+}
+
+export interface RoleGroup<T> {
+  roleId: string | null;
+  roleLabel: string;
+  people: T[];
+}
+
+/** People bucketed by their best-ranked role, in rank order — the .rgroup/.rperson pattern:
+ * one heading per role, rather than a role line repeated on every card. A person with no
+ * ranked role (unmatched labels) lands in one trailing "Other" group. */
+export function groupByRole<T extends { id: string; memberships?: PersonMembership[] }>(
+  people: T[],
+  roleOrder: string[],
+): RoleGroup<T>[] {
+  const ranked = sortByRoleRank(people, roleOrder);
+  const groups = new Map<string, RoleGroup<T>>();
+  const order: string[] = [];
+  for (const person of ranked) {
+    const membership = bestMembership(person.memberships, roleOrder);
+    const key = membership?.role_id ?? UNRANKED_GROUP_LABEL;
+    if (!groups.has(key)) {
+      groups.set(key, {
+        roleId: membership?.role_id ?? null,
+        roleLabel: membership?.role_label ?? UNRANKED_GROUP_LABEL,
+        people: [],
+      });
+      order.push(key);
+    }
+    groups.get(key)!.people.push(person);
+  }
+  return order.map((key) => groups.get(key)!);
+}

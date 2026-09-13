@@ -14,7 +14,6 @@ from core.membership_proposal import ExistingMembership, ProposedChange, propose
 from core.post_derivation import RosterEntry, derived_posts
 from core.post_issues import (
     append_post_issues,
-    disputed_post_issues,
     moved_person_issues,
     unverified_post_issues,
 )
@@ -72,7 +71,6 @@ async def review_summary_for_changeset(changeset_id: str) -> dict:
         [
             *posts,
             *moved_person_issues(changes, picked),
-            *disputed_post_issues(changes, picked),
         ],
     )
 

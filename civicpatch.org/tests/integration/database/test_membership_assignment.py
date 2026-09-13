@@ -179,3 +179,46 @@ async def test_an_unknown_post_raises_rather_than_seating_nobody():
         await memberships.assign(
             person_id, "00000000-0000-0000-0000-000000000000", None
         )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_pick_made_mid_review_files_under_that_review():
+    """Without an explicit `changeset_id`, an assignment always files under the live roster's
+    changeset — wrong for a pick made from inside an in-progress review, which should show up
+    as part of that review rather than as an unrelated jurisdiction edit."""
+    person_id, post_id, _ = await _seed()
+    review_changeset_id = str(uuid.uuid4())
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        await cur.execute(
+            "INSERT INTO changesets "
+            "  (id, kind, jurisdiction_ocdid, updated_at, organization_id) "
+            "VALUES (%s, 'scrape', %s, now(), %s)",
+            (review_changeset_id, _OCDID, org),
+        )
+        await conn.commit()
+
+    try:
+        await memberships.assign(
+            person_id, post_id, "Mayor of Testville", changeset_id=review_changeset_id
+        )
+
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute(
+                "SELECT 1 FROM activity WHERE changeset_id = %s AND type = 'assign_membership'",
+                (review_changeset_id,),
+            )
+            assert await cur.fetchone() is not None
+    finally:
+        # `_wipe()` doesn't know about `changesets`/`activity` — clean up ourselves, or the
+        # next test's teardown fails deleting the `organizations` row this still references.
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute(
+                "DELETE FROM activity WHERE changeset_id = %s", (review_changeset_id,)
+            )
+            await cur.execute(
+                "DELETE FROM changesets WHERE id::text = %s", (review_changeset_id,)
+            )
+            await conn.commit()

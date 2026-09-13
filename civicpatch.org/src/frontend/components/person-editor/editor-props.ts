@@ -20,6 +20,7 @@ import {
   heldPost,
   type DerivedPost,
   type Post,
+  type RoleOption,
 } from "../posts-list/posts-model.js";
 
 export type EditorContextBase = Omit<
@@ -33,13 +34,14 @@ export interface EditorContext {
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
   posts: Post[];
+  roles: RoleOption[];
+  canAssignMembership: boolean;
   proposals: Map<string, ProposedChange[]>;
   assertions: Record<string, PersonAssertion[]>;
   overriddenSourceValues: Record<string, Record<string, unknown>>;
   isExpanded: (personId: string) => boolean;
   onToggleExpand: (personId: string) => void;
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
-  onAddPost: (personId: string) => void;
   onRemovePerson: (id: string) => void;
   onUnremovePerson: (id: string) => void;
   onRestorePerson: (person: any) => void;
@@ -86,7 +88,8 @@ export function personEditorPropsFor(
     assertions: ctx.assertions[card.personId] ?? [],
     overriddenSourceValues: ctx.overriddenSourceValues[card.personId] ?? {},
     posts: ctx.posts,
-    onAddPost: () => ctx.onAddPost(card.personId),
+    roles: ctx.roles,
+    canAssignMembership: ctx.canAssignMembership,
     isDirty: ctx.dirtyIds.has(card.personId),
     isExpanded: ctx.isExpanded(card.personId),
     onToggleExpand: () => ctx.onToggleExpand(card.personId),

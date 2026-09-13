@@ -51,7 +51,7 @@ export function renderPersonRow({
       <span class="review-row__photo">
         <person-image
           .person=${record}
-          .size=${"6rem"}
+          .size=${"4rem"}
         ></person-image>
       </span>
       ${identity}
@@ -60,11 +60,5 @@ export function renderPersonRow({
         ? html`<i class="fa-solid fa-chevron-down review-row__hint" aria-hidden="true"></i>`
         : nothing}
     </div>
-  `;
-}
-
-export function renderPersonGrid(rows: PersonRowProps[]) {
-  return html`
-    <div class="review-preview__grid">${rows.map(renderPersonRow)}</div>
   `;
 }

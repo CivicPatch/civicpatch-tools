@@ -1,5 +1,6 @@
 import { html } from "lit-html";
 import { component } from "haunted";
+import { type OfficeChange } from "../../components/person-editor/office-changes.js";
 
 // What the reviewer can do with the card in front of them. The card owns the
 // edits, so approving and saving carry the patch out in the event and the page
@@ -31,25 +32,36 @@ type ReviewSessionActionsHost = HTMLElement & {
   canReject: boolean;
   isRejecting: boolean;
   hasSession: boolean;
+  officeChanges: OfficeChange[];
 };
 
 function ReviewSessionActions(host: ReviewSessionActionsHost) {
-  const { isReadOnly, dirty, peoplePatch, blockers, canReject, isRejecting, hasSession } = host;
+  const { isReadOnly, dirty, peoplePatch, blockers, canReject, isRejecting, hasSession, officeChanges } = host;
 
   const blockerTitle = blockers
     .map((b) => `${b.name} — ${b.fieldLabel}: ${b.message}`)
     .join("\n");
 
   // A clean card publishes what the server already has; only send a patch when
-  // the reviewer actually changed something.
+  // the reviewer actually changed something. Office picks ride along either way — they are
+  // direct membership writes, not part of `peoplePatch`, so `dirty` (a `peoplePatch` question)
+  // has no bearing on whether there are any to apply.
   const handleApprove = () =>
     host.dispatchEvent(
-      new CustomEvent(APPROVE_EVENT, { detail: { people: dirty ? peoplePatch : null }, bubbles: true, composed: true }),
+      new CustomEvent(APPROVE_EVENT, {
+        detail: { people: dirty ? peoplePatch : null, officeChanges },
+        bubbles: true,
+        composed: true,
+      }),
     );
 
   const handleSave = () =>
     host.dispatchEvent(
-      new CustomEvent(SAVE_EVENT, { detail: { people: peoplePatch }, bubbles: true, composed: true }),
+      new CustomEvent(SAVE_EVENT, {
+        detail: { people: peoplePatch, officeChanges },
+        bubbles: true,
+        composed: true,
+      }),
     );
 
   const handleReject = () =>

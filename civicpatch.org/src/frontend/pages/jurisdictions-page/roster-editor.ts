@@ -5,6 +5,7 @@ import "./jurisdiction-page.css";
 import {
   patchPeopleData,
   generatePersonId,
+  assignMembership,
 } from "../../api.js";
 import { fetchPeopleAssertions } from "../../api.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
@@ -22,12 +23,13 @@ import { renderRosterCards } from "./roster-section.js";
 import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
 import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
 import { useAltArrowPeerNav } from "../../hooks/use-alt-arrow-peer-nav.js";
-import "../../components/posts-list/post-add.js";
+import { officeChangesIn } from "../../components/person-editor/office-changes.js";
 
 interface RosterEditorProps {
   people: any[];
   jurisdictionOcdid: string;
   canEdit: boolean;
+  canAssignMembership: boolean;
   isLoading: boolean;
   blockedReason: string | null;
   onPublished: () => void;
@@ -45,13 +47,13 @@ function RosterEditor({
   people,
   jurisdictionOcdid,
   canEdit,
+  canAssignMembership,
   isLoading,
   blockedReason,
   onPublished,
 }: RosterEditorProps) {
-  const { posts, reload: reloadPosts } = useJurisdictionPosts(jurisdictionOcdid);
+  const { posts } = useJurisdictionPosts(jurisdictionOcdid);
   const roles = useJurisdictionRoles();
-  const [addingPostFor, setAddingPostFor] = useState<string | null>(null);
   const published = people ?? [];
   const state = usePeopleState({ people: published });
   const {
@@ -120,6 +122,11 @@ function RosterEditor({
     setPublishStage("publishing");
     setPublishError(null);
     try {
+      // Office picks first: direct writes, unrelated to the PR this patch opens, but both
+      // are "make what's on screen real" and belong behind the one button that says so.
+      for (const change of officeChangesIn(cards)) {
+        await assignMembership(change.personId, change.postId, change.label);
+      }
       await patchPeopleData(jurisdictionOcdid, peoplePatch);
       onPublished();
     } catch (err: any) {
@@ -134,6 +141,8 @@ function RosterEditor({
       isReadOnly: !canEdit,
       jurisdictionOcdid,
       posts,
+      roles,
+      canAssignMembership,
       proposals: new Map(),
       assertions,
       overriddenSourceValues: {},
@@ -144,7 +153,6 @@ function RosterEditor({
         setCollapsedIds(next);
       },
       onPersonSave: handlePersonSave,
-      onAddPost: setAddingPostFor,
       onRemovePerson: (id: string) => handleRemove([id]),
       onUnremovePerson: handleUnremove,
       onRestorePerson: handleRestore,
@@ -183,21 +191,7 @@ function RosterEditor({
           : nothing}
       `
     : nothing;
-  const handlePostAdded = (e: CustomEvent) => {
-    const postId = e.detail?.post_id;
-    if (addingPostFor && postId) handlePersonSave(addingPostFor, { post_id: postId });
-    setAddingPostFor(null);
-    reloadPosts();
-  };
   return html`
-    ${addingPostFor
-      ? html`<civ-post-add
-          .jurisdictionOcdid=${jurisdictionOcdid ?? ""}
-          .roles=${roles}
-          @added=${handlePostAdded}
-          @cancel=${() => setAddingPostFor(null)}
-        ></civ-post-add>`
-      : ""}
     ${renderRosterCards({
       cards,
       isLoading,

@@ -6,4 +6,490 @@
 #   state: wa
 #   title: General Election
 #   note: Mayor, 3 Council seats
-[]
+- date: 2026-05-19
+  state: al
+  title: "2026 Alabama (most offices) Primary"
+- date: 2026-08-11
+  state: al
+  title: "2026 Alabama U.S. House CDs 1,2,6,7 Primary"
+- date: 2026-08-18
+  state: ak
+  title: "2026 Alaska Primary"
+- date: 2026-07-21
+  state: az
+  title: "2026 Arizona Primary"
+- date: 2026-03-03
+  state: ar
+  title: "2026 Arkansas Primary"
+- date: 2026-06-02
+  state: ca
+  title: "2026 California Primary"
+- date: 2026-06-30
+  state: co
+  title: "2026 Colorado Primary"
+- date: 2026-08-11
+  state: ct
+  title: "2026 Connecticut Primary"
+- date: 2026-09-15
+  state: de
+  title: "2026 Delaware Primary"
+- date: 2026-08-18
+  state: fl
+  title: "2026 Florida Primary"
+- date: 2026-05-19
+  state: ga
+  title: "2026 Georgia Primary"
+- date: 2026-08-08
+  state: hi
+  title: "2026 Hawaii Primary"
+- date: 2026-05-19
+  state: id
+  title: "2026 Idaho Primary"
+- date: 2026-03-17
+  state: il
+  title: "2026 Illinois Primary"
+- date: 2026-05-05
+  state: in
+  title: "2026 Indiana Primary"
+- date: 2026-06-02
+  state: ia
+  title: "2026 Iowa Primary"
+- date: 2026-08-04
+  state: ks
+  title: "2026 Kansas Primary"
+- date: 2026-05-19
+  state: ky
+  title: "2026 Kentucky Primary"
+- date: 2026-05-16
+  state: la
+  title: "2026 Louisiana Closed-Party / Municipal Primary"
+- date: 2026-11-03
+  state: la
+  title: "2026 Louisiana U.S. House / Open Primary Election"
+- date: 2026-06-09
+  state: me
+  title: "2026 Maine Primary"
+- date: 2026-06-23
+  state: md
+  title: "2026 Maryland Primary"
+- date: 2026-09-01
+  state: ma
+  title: "2026 Massachusetts Primary"
+- date: 2026-08-04
+  state: mi
+  title: "2026 Michigan Primary"
+- date: 2026-08-11
+  state: mn
+  title: "2026 Minnesota Primary"
+- date: 2026-03-10
+  state: ms
+  title: "2026 Mississippi congressional Primary"
+- date: 2026-08-04
+  state: mo
+  title: "2026 Missouri Primary"
+- date: 2026-06-02
+  state: mt
+  title: "2026 Montana Primary"
+- date: 2026-05-12
+  state: ne
+  title: "2026 Nebraska Primary"
+- date: 2026-06-09
+  state: nv
+  title: "2026 Nevada Primary"
+- date: 2026-09-08
+  state: nh
+  title: "2026 New Hampshire Primary"
+- date: 2026-06-02
+  state: nj
+  title: "2026 New Jersey congressional Primary"
+- date: 2026-06-02
+  state: nm
+  title: "2026 New Mexico Primary"
+- date: 2026-06-23
+  state: ny
+  title: "2026 New York Primary"
+- date: 2026-03-03
+  state: nc
+  title: "2026 North Carolina Primary"
+- date: 2026-06-09
+  state: nd
+  title: "2026 North Dakota Primary"
+- date: 2026-05-05
+  state: oh
+  title: "2026 Ohio Primary"
+- date: 2026-06-16
+  state: ok
+  title: "2026 Oklahoma Primary"
+- date: 2026-05-19
+  state: or
+  title: "2026 Oregon Primary"
+- date: 2026-05-19
+  state: pa
+  title: "2026 Pennsylvania Primary"
+- date: 2026-09-09
+  state: ri
+  title: "2026 Rhode Island Primary"
+- date: 2026-06-09
+  state: sc
+  title: "2026 South Carolina Primary"
+- date: 2026-06-02
+  state: sd
+  title: "2026 South Dakota Primary"
+- date: 2026-08-06
+  state: tn
+  title: "2026 Tennessee Primary"
+- date: 2026-03-03
+  state: tx
+  title: "2026 Texas Primary"
+- date: 2026-06-23
+  state: ut
+  title: "2026 Utah Primary"
+- date: 2026-08-11
+  state: vt
+  title: "2026 Vermont Primary"
+- date: 2026-06-16
+  state: va
+  title: "2026 Virginia congressional Primary"
+- date: 2026-08-04
+  state: wa
+  title: "2026 Washington Primary"
+- date: 2026-05-12
+  state: wv
+  title: "2026 West Virginia Primary"
+- date: 2026-08-11
+  state: wi
+  title: "2026 Wisconsin Primary"
+- date: 2026-08-18
+  state: wy
+  title: "2026 Wyoming Primary"
+- date: 2026-06-16
+  state: dc
+  title: "2026 District of Columbia Primary"
+- date: 2026-08-01
+  state: gu
+  title: "2026 Guam Primary"
+- date: 2026-08-01
+  state: vi
+  title: "2026 U.S. Virgin Islands Primary"
+- date: 2026-11-03
+  state: al
+  title: "2026 Alabama General Election"
+- date: 2026-11-03
+  state: ak
+  title: "2026 Alaska General Election"
+- date: 2026-11-03
+  state: az
+  title: "2026 Arizona General Election"
+- date: 2026-11-03
+  state: ar
+  title: "2026 Arkansas General Election"
+- date: 2026-11-03
+  state: ca
+  title: "2026 California General Election"
+- date: 2026-11-03
+  state: co
+  title: "2026 Colorado General Election"
+- date: 2026-11-03
+  state: ct
+  title: "2026 Connecticut General Election"
+- date: 2026-11-03
+  state: de
+  title: "2026 Delaware General Election"
+- date: 2026-11-03
+  state: fl
+  title: "2026 Florida General Election"
+- date: 2026-11-03
+  state: ga
+  title: "2026 Georgia General Election"
+- date: 2026-11-03
+  state: hi
+  title: "2026 Hawaii General Election"
+- date: 2026-11-03
+  state: id
+  title: "2026 Idaho General Election"
+- date: 2026-11-03
+  state: il
+  title: "2026 Illinois General Election"
+- date: 2026-11-03
+  state: in
+  title: "2026 Indiana General Election"
+- date: 2026-11-03
+  state: ia
+  title: "2026 Iowa General Election"
+- date: 2026-11-03
+  state: ks
+  title: "2026 Kansas General Election"
+- date: 2026-11-03
+  state: ky
+  title: "2026 Kentucky General Election"
+- date: 2026-11-03
+  state: la
+  title: "2026 Louisiana U.S. Senate General / U.S. House Open Primary / Open Primary Election"
+- date: 2026-11-03
+  state: me
+  title: "2026 Maine General Election"
+- date: 2026-11-03
+  state: md
+  title: "2026 Maryland General Election"
+- date: 2026-11-03
+  state: ma
+  title: "2026 Massachusetts General Election"
+- date: 2026-11-03
+  state: mi
+  title: "2026 Michigan General Election"
+- date: 2026-11-03
+  state: mn
+  title: "2026 Minnesota General Election"
+- date: 2026-11-03
+  state: ms
+  title: "2026 Mississippi General Election"
+- date: 2026-11-03
+  state: mo
+  title: "2026 Missouri General Election"
+- date: 2026-11-03
+  state: mt
+  title: "2026 Montana General Election"
+- date: 2026-11-03
+  state: ne
+  title: "2026 Nebraska General Election"
+- date: 2026-11-03
+  state: nv
+  title: "2026 Nevada General Election"
+- date: 2026-11-03
+  state: nh
+  title: "2026 New Hampshire General Election"
+- date: 2026-11-03
+  state: nj
+  title: "2026 New Jersey General Election"
+- date: 2026-11-03
+  state: nm
+  title: "2026 New Mexico General Election"
+- date: 2026-11-03
+  state: ny
+  title: "2026 New York General Election"
+- date: 2026-11-03
+  state: nc
+  title: "2026 North Carolina General Election"
+- date: 2026-11-03
+  state: nd
+  title: "2026 North Dakota General Election"
+- date: 2026-11-03
+  state: oh
+  title: "2026 Ohio General Election"
+- date: 2026-11-03
+  state: ok
+  title: "2026 Oklahoma General Election"
+- date: 2026-11-03
+  state: or
+  title: "2026 Oregon General Election"
+- date: 2026-11-03
+  state: pa
+  title: "2026 Pennsylvania General Election"
+- date: 2026-11-03
+  state: ri
+  title: "2026 Rhode Island General Election"
+- date: 2026-11-03
+  state: sc
+  title: "2026 South Carolina General Election"
+- date: 2026-11-03
+  state: sd
+  title: "2026 South Dakota General Election"
+- date: 2026-11-03
+  state: tn
+  title: "2026 Tennessee General Election"
+- date: 2026-11-03
+  state: tx
+  title: "2026 Texas General Election"
+- date: 2026-11-03
+  state: ut
+  title: "2026 Utah General Election"
+- date: 2026-11-03
+  state: vt
+  title: "2026 Vermont General Election"
+- date: 2026-11-03
+  state: va
+  title: "2026 Virginia General Election"
+- date: 2026-11-03
+  state: wa
+  title: "2026 Washington General Election"
+- date: 2026-11-03
+  state: wv
+  title: "2026 West Virginia General Election"
+- date: 2026-11-03
+  state: wi
+  title: "2026 Wisconsin General Election"
+- date: 2026-11-03
+  state: wy
+  title: "2026 Wyoming General Election"
+- date: 2026-11-03
+  state: dc
+  title: "2026 District of Columbia General Election"
+- date: 2026-11-03
+  state: as
+  title: "2026 American Samoa General Election"
+- date: 2026-11-03
+  state: gu
+  title: "2026 Guam General Election"
+- date: 2026-11-03
+  state: mp
+  title: "2026 Northern Mariana Islands General Election"
+- date: 2026-11-03
+  state: vi
+  title: "2026 U.S. Virgin Islands General Election"
+- date: 2026-12-12
+  state: la
+  title: "2026 Louisiana U.S. House Open General Election (if necessary)"
+- date: 2026-01-13
+  state: al
+  title: "2026 Alabama Special General Election — House District 63"
+- date: 2026-02-03
+  state: al
+  title: "2026 Alabama Special General Election — House District 38"
+- date: 2026-06-16
+  state: al
+  title: "2026 Alabama Primary Runoff Election"
+- date: 2026-08-11
+  state: al
+  title: "2026 Alabama Special Primary — State Senate Districts 25 and 26"
+- date: 2026-08-25
+  state: al
+  title: "2026 Alabama Municipal Elections — Auburn, Bessemer, Gadsden, Huntsville"
+- date: 2026-03-31
+  state: ar
+  title: "2026 Arkansas General Primary Election"
+- date: 2026-12-01
+  state: ar
+  title: "2026 Arkansas General Runoff Election"
+- date: 2026-01-06
+  state: ct
+  title: "2026 Connecticut Special Election — 25th Assembly District"
+- date: 2026-01-13
+  state: ct
+  title: "2026 Connecticut Special Election — 139th Assembly District"
+- date: 2026-02-03
+  state: ct
+  title: "2026 Connecticut Special Election — Fairfield Selectman"
+- date: 2026-02-17
+  state: ct
+  title: "2026 Connecticut Special Election — New Haven 7th Ward"
+- date: 2026-06-23
+  state: ct
+  title: "2026 Connecticut Special Election — Middlebury Board of Selectman"
+- date: 2026-09-15
+  state: ct
+  title: "2026 Connecticut Special Election — New Haven 9th Ward"
+- date: 2026-03-17
+  state: ga
+  title: "2026 Georgia Special Election"
+- date: 2026-04-14
+  state: ga
+  title: "2026 Georgia Special Election Runoff"
+- date: 2026-06-16
+  state: ga
+  title: "2026 Georgia General Primary / Nonpartisan Runoff"
+- date: 2026-12-01
+  state: ga
+  title: "2026 Georgia General / Special Election Runoff"
+- date: 2026-08-08
+  state: hi
+  title: "2026 Hawaii Vacancy Election — State Senate District 19"
+- date: 2026-02-07
+  state: la
+  title: "2026 Louisiana Special Legislative Primary"
+- date: 2026-03-14
+  state: la
+  title: "2026 Louisiana Special Legislative General / HD69 Special Primary"
+- date: 2026-06-27
+  state: la
+  title: "2026 Louisiana Second Party Primary / Municipal General"
+- date: 2026-11-03
+  state: me
+  title: "2026 Maine Special County Election — Piscataquis County Commissioner District 3"
+- date: 2026-11-03
+  state: me
+  title: "2026 Maine Special County Election — Sagadahoc County Register of Probate"
+- date: 2026-02-03
+  state: mi
+  title: "2026 Michigan Special Primary — State Senate District 35"
+- date: 2026-05-05
+  state: mi
+  title: "2026 Michigan Special General — State Senate District 35"
+- date: 2026-05-05
+  state: mi
+  title: "2026 Michigan May Regular/Local Elections"
+- date: 2026-04-07
+  state: ms
+  title: "2026 Mississippi Congressional Primary Runoff"
+- date: 2026-12-01
+  state: ms
+  title: "2026 Mississippi General Runoff Election"
+- date: 2026-02-03
+  state: mo
+  title: "2026 Missouri February Bond Election Date"
+- date: 2026-03-03
+  state: mo
+  title: "2026 Missouri Charter City/County Election Date"
+- date: 2026-04-07
+  state: mo
+  title: "2026 Missouri General Municipal Election"
+- date: 2026-03-10
+  state: nh
+  title: "2026 New Hampshire Town / SB2 Town Election"
+- date: 2026-04-14
+  state: nh
+  title: "2026 New Hampshire SB2 Town Election Date"
+- date: 2026-05-12
+  state: nh
+  title: "2026 New Hampshire Alternate Town / SB2 Election Date"
+- date: 2026-03-03
+  state: nm
+  title: "2026 New Mexico Municipal Officer Election"
+- date: 2026-08-04
+  state: oh
+  title: "2026 Ohio Statutory Special Election Date"
+- date: 2026-02-10
+  state: ok
+  title: "2026 Oklahoma Board of Education Primary Elections"
+- date: 2026-04-07
+  state: ok
+  title: "2026 Oklahoma Board of Education General Elections"
+- date: 2026-08-25
+  state: ok
+  title: "2026 Oklahoma Runoff Primary Election"
+- date: 2026-02-24
+  state: pa
+  title: "2026 Pennsylvania Special Elections — House Districts 22 and 42"
+- date: 2026-03-17
+  state: pa
+  title: "2026 Pennsylvania Special Elections — House Districts 79 and 193"
+- date: 2026-05-19
+  state: pa
+  title: "2026 Pennsylvania Special Election — House District 196"
+- date: 2026-08-18
+  state: pa
+  title: "2026 Pennsylvania Special Election — House District 12"
+- date: 2026-06-23
+  state: sc
+  title: "2026 South Carolina Primary Runoff"
+- date: 2026-07-28
+  state: sd
+  title: "2026 South Dakota Runoff Election"
+- date: 2026-05-02
+  state: tx
+  title: "2026 Texas Uniform Election Date — Local Political Subdivisions"
+- date: 2026-05-26
+  state: tx
+  title: "2026 Texas Primary Runoff Election"
+- date: 2026-06-02
+  state: wv
+  title: "2026 West Virginia Municipal Elections — June 2 Calendar"
+- date: 2026-06-09
+  state: wv
+  title: "2026 West Virginia Municipal Elections — June 9 Calendar"
+- date: 2026-06-16
+  state: dc
+  title: "2026 District of Columbia Special Election"
+- date: 2026-11-17
+  state: vi
+  title: "2026 U.S. Virgin Islands General Runoff Election (if necessary)"
+

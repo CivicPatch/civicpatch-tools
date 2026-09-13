@@ -23,6 +23,8 @@ const context = (over = {}) =>
     isReadOnly: false,
     jurisdictionOcdid: "ocd-jurisdiction/country:us/state:wa/place:x/government",
     posts: [],
+    roles: [],
+    canAssignMembership: false,
     proposals: proposalsByPersonId([]),
     assertions: {},
     overriddenSourceValues: {},
@@ -37,7 +39,6 @@ const context = (over = {}) =>
     candidatesOpenFor: null,
     onToggleCandidates: () => {},
     onPickPartner: () => {},
-    onAddPost: () => {},
     ...over,
   }) as never;
 
@@ -207,16 +208,14 @@ describe("personEditorPropsFor — derivedPost from a held membership", () => {
 });
 
 
-describe("personEditorPropsFor — onAddPost", () => {
-  it("binds the person, because the field control has no id to pass back", () => {
-    const asked: string[] = [];
-    const props = personEditorPropsFor(
-      card({ personId: "p7" }),
-      context({ onAddPost: (id: string) => asked.push(id) }),
-    );
+describe("personEditorPropsFor — office assignment", () => {
+  it("passes canAssignMembership through from context unchanged", () =>
+    expect(
+      personEditorPropsFor(card(), context({ canAssignMembership: true })).canAssignMembership,
+    ).toBe(true));
 
-    props.onAddPost();
-
-    expect(asked).toEqual(["p7"]);
+  it("passes roles through from context unchanged, for the office picker's grouping", () => {
+    const roles = [{ id: "mayor", label: "Mayor" }];
+    expect(personEditorPropsFor(card(), context({ roles })).roles).toBe(roles);
   });
 });

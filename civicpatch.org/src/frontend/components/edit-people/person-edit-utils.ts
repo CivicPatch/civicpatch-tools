@@ -129,6 +129,10 @@ export type Person = {
   emails?: string[];
   urls?: string[];
   source_urls?: string[];
+  // The Office field's local pick, applied via `memberships.assign` at save/publish rather
+  // than asserted — see components/fields/field-controls.ts's renderOfficeNewSide.
+  post_id?: string | null;
+  membership_label?: string | null;
   jurisdiction_ocdid?: string;
   // The diff reads both: a stored record carries cdn_image, a freshly scraped
   // one only image (see diffValue in diff-model).

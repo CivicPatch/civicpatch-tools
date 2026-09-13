@@ -40,11 +40,32 @@ def _fake_admin() -> Identity:
     )
 
 
+def _fake_default_user() -> Identity:
+    return Identity(
+        type="session",
+        provider="email",
+        provider_user_id="route-test-default",
+        email="route-test-default@example.com",
+        role="default",
+        user_id=None,
+    )
+
+
 @pytest.fixture
 def client():
     app = FastAPI()
     app.include_router(memberships_router.get_router(), prefix=_PREFIX)
     app.dependency_overrides[get_optional_user] = lambda: _fake_admin()
+    return TestClient(app)
+
+
+@pytest.fixture
+def default_role_client():
+    """Any signed-in user, no elevated role — assigning a membership is open at this tier,
+    unlike `/unmatched` or creating/editing the post itself, both maintainer-only."""
+    app = FastAPI()
+    app.include_router(memberships_router.get_router(), prefix=_PREFIX)
+    app.dependency_overrides[get_optional_user] = lambda: _fake_default_user()
     return TestClient(app)
 
 
@@ -374,6 +395,31 @@ async def _seat_seen_at(person_id: str):
             (person_id,),
         )
         return await cur.fetchone()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_any_signed_in_user_can_assign_a_membership(default_role_client):
+    """Looser than creating or editing the post itself (test_posts.py, maintainer+): moving a
+    membership to an existing post is a direct write, never an assertion, so a scrape stays
+    free to move or end it again — only the label can ever be asserted, and only when given."""
+    person_id, mayor, _ = await _seed()
+
+    response = default_role_client.put(
+        _PREFIX, json={"person_id": person_id, "post_id": mayor, "label": "Mayor"}
+    )
+
+    assert response.status_code == 200, response.text
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_assigning_a_membership_requires_signing_in(anonymous_client):
+    person_id, mayor, _ = await _seed()
+
+    response = anonymous_client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
+
+    assert response.status_code == 403, response.text
 
 
 @pytest.mark.asyncio

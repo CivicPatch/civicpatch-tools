@@ -64,6 +64,8 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         "can_view_reviews_page": has_at_least(role, UserRole.DEFAULT),
         "can_view_issues_page": has_at_least(role, UserRole.ADMINS),
         "can_view_activity_page": has_at_least(role, UserRole.DEFAULT),
+        # Also creating/editing a post (routers/api/posts.py) — the same tier as editing a
+        # jurisdiction's published data, so this one flag covers both.
         "can_edit_jurisdiction_data": has_at_least(role, UserRole.MAINTAINERS),
         "can_delete_directory_person": has_at_least(role, UserRole.CONTRIBUTORS),
         "can_reject_scrape": has_at_least(role, UserRole.CONTRIBUTORS),

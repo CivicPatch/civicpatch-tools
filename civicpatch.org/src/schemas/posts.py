@@ -56,6 +56,9 @@ class AssignMembershipRequest(BaseModel):
     person_id: str
     post_id: str
     label: str | None = None
+    # The caller's own in-progress review, when called from one — otherwise this files under
+    # the live roster's changeset instead.
+    changeset_id: str | None = None
 
 
 class AssignmentResult(BaseModel):

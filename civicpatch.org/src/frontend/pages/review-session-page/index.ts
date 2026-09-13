@@ -3,6 +3,7 @@ import { component } from "haunted";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { useAuth } from "../../hooks/useAuth.js";
+import { assignMembership } from "../../api.js";
 import { useReviewActions } from "../../hooks/use-review-actions.js";
 import { REVIEW_ACTION } from "../../components/review-card/review-action.js";
 import { useReviewSession } from "./use-review-session.js";
@@ -20,7 +21,7 @@ function ReviewSessionPage() {
   const [defaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", { ttl: PERSIST_FOREVER });
   const stateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
 
-  const { permissions } = useAuth();
+  const { user, permissions } = useAuth();
   const { actionState, entries: reviewLogEntries, trackApprove, trackReject } = useReviewActions();
   const { fsm, advance, back, navigateTo, merge, save, rejectScrape, endSession } = useReviewSession(stateCode, {
     trackApprove,
@@ -31,14 +32,37 @@ function ReviewSessionPage() {
   const currentEntry = reviewing?.current_entry ?? null;
   const session = reviewing?.session ?? null;
 
-  // The card owns the reviewer's edits and hands them over when it asks to
-  // publish or save; the page only decides what that does to the session.
-  const handlePublish = (e: CustomEvent) => merge(e.detail.people);
-  const handleSave = (e: CustomEvent) => save(e.detail.people);
-  const handleNavigateTo = (e: CustomEvent) => navigateTo(e.detail.entry_number);
-
   const changesetId = currentEntry?.changeset_id;
   const isRejecting = changesetId != null && actionState[changesetId]?.status === REVIEW_ACTION.REJECTING;
+  // Any signed-in user — assigning an existing post is looser than reviewer-only actions
+  // like rejecting a scrape (see routers/api/memberships.py).
+  const canAssignMembership = !!user?.authenticated;
+
+  // Office picks are direct membership writes, not part of the `peoplePatch` this hands to
+  // `merge`/`save` — apply them first, under this review's own changeset (see
+  // `memberships.assign`). A failure here stops before `merge`/`save` runs, rather than
+  // leaving a half-applied publish with no word to the reviewer.
+  const applyOfficeChanges = async (e: CustomEvent): Promise<boolean> => {
+    try {
+      for (const change of e.detail.officeChanges ?? []) {
+        await assignMembership(change.personId, change.postId, change.label, changesetId);
+      }
+      return true;
+    } catch (err: any) {
+      window.alert(err.message ?? "Failed to update an office.");
+      return false;
+    }
+  };
+
+  // The card owns the reviewer's edits and hands them over when it asks to
+  // publish or save; the page only decides what that does to the session.
+  const handlePublish = async (e: CustomEvent) => {
+    if (await applyOfficeChanges(e)) merge(e.detail.people);
+  };
+  const handleSave = async (e: CustomEvent) => {
+    if (await applyOfficeChanges(e)) save(e.detail.people);
+  };
+  const handleNavigateTo = (e: CustomEvent) => navigateTo(e.detail.entry_number);
 
   const progress = reviewing
     ? {
@@ -73,6 +97,7 @@ function ReviewSessionPage() {
       .error=${publishError}
       .canReject=${permissions.can_reject_scrape}
       .isRejecting=${isRejecting}
+      .canAssignMembership=${canAssignMembership}
       @back=${back}
       @advance=${advance}
       @navigate-to=${handleNavigateTo}

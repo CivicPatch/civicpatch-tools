@@ -38,8 +38,8 @@ def test_changed_field_emits_edit_person():
 
 @pytest.mark.unit
 def test_office_is_not_diffed_since_the_editor_stopped_writing_it():
-    """The reviewer picks a `post_id` now, so `office` is the same on both sides of every edit
-    and diffing it only ever reported nothing."""
+    """`office` is not in `EDITABLE_FIELDS`, so it is the same on both sides of every manual
+    edit and diffing it only ever reported nothing."""
     result = diff_people([_person("1", office_name="Mayor")], [_person("1", office_name="Council Member")])
     assert result == []
 
@@ -114,11 +114,11 @@ def test_distinct_people_still_add_and_delete():
 
 
 @pytest.mark.unit
-def test_a_move_between_seats_names_the_one_they_left():
-    """The two sides arrive shaped differently: `after` comes from the editor and carries a flat
-    `post_id`, `before` comes from `get_roster` where the seat is `memberships[].post_id`. Until
-    this was handled every post change logged `∅ → Mayor`, so a move read as an appointment from
-    nothing — which is what the Seattle timeline showed for a councillor becoming mayor."""
+def test_a_move_between_seats_is_not_diffed_here():
+    """`post_id` is no longer something a manual edit ever carries — moving someone to a
+    different post goes through `memberships.assign`, which logs its own `ASSIGN_MEMBERSHIP`
+    activity entry rather than surfacing here. Both sides read the same seat off `memberships`,
+    the shape `get_roster` gives every person, so this diff reports nothing for a move."""
     before = [
         {
             "id": "p1",
@@ -126,22 +126,11 @@ def test_a_move_between_seats_names_the_one_they_left():
             "memberships": [{"post_id": "council-uuid"}],
         }
     ]
-    after = [{"id": "p1", "name": "Alexis Mercedes Rinck", "post_id": "mayor-uuid"}]
-    labels = {"council-uuid": "Council Member", "mayor-uuid": "Mayor"}
-
-    fields = diff_people(before, after, labels)[0].payload.fields
-    moved = next(f for f in fields if f.field == "post_id")
-
-    assert (moved.before, moved.after) == ("Council Member", "Mayor")
-
-
-@pytest.mark.unit
-def test_someone_who_held_nothing_still_reads_as_nothing():
-    """The `∅ →` rendering is right when it is true — a person with no seat taking one."""
-    before = [{"id": "p1", "name": "New Person", "memberships": []}]
-    after = [{"id": "p1", "name": "New Person", "post_id": "mayor-uuid"}]
-
-    fields = diff_people(before, after, {"mayor-uuid": "Mayor"})[0].payload.fields
-    moved = next(f for f in fields if f.field == "post_id")
-
-    assert (moved.before, moved.after) == (None, "Mayor")
+    after = [
+        {
+            "id": "p1",
+            "name": "Alexis Mercedes Rinck",
+            "memberships": [{"post_id": "council-uuid"}],
+        }
+    ]
+    assert diff_people(before, after, {"council-uuid": "Council Member"}) == []

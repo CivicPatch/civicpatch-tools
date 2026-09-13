@@ -9,7 +9,7 @@
     background: transparent;
   }
   .nav-logout {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-md);
     font-weight: 400;
     color: var(--text-muted);
     text-decoration: none;
@@ -242,7 +242,7 @@
     box-shadow: 0 0 0 var(--focus-ring-width) var(--action-focus);
   }
   .login-link {
-    font-size: 0.85rem;
+    font-size: var(--font-size-md);
     color: var(--text-muted);
     text-decoration: none;
     display: inline-flex;
