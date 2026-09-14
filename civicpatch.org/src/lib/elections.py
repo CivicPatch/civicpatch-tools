@@ -1,8 +1,10 @@
+from datetime import datetime, timezone
 from functools import lru_cache
 from pathlib import Path
 
 import yaml
 
+from core.elections import filter_upcoming
 from schemas.elections import Election
 
 _ELECTIONS_PATH = Path("src/elections.yaml")
@@ -16,4 +18,5 @@ def _load_elections() -> list[Election]:
 
 
 async def get_upcoming_elections() -> list[Election]:
-    return _load_elections()
+    today = datetime.now(timezone.utc).date()
+    return filter_upcoming(_load_elections(), today)
