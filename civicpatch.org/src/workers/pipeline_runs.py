@@ -16,6 +16,7 @@ import os
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+from lib.temporal.connection import connect_with_retry, run_worker
 from lib.temporal.pipeline_run_workflows import (
     PeopleCollectorWorkflow,
     StateScrapeWorkflow,
@@ -30,8 +31,6 @@ from routers.temporal.pipeline_run_activities import (
     trigger_local,
     update_pipeline_run_status,
 )
-from temporalio.client import Client
-from temporalio.worker import Worker
 
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
@@ -56,32 +55,9 @@ ACTIVITIES = [
 # a scrape into 35-minute batches. These activities are sleeping HTTP clients, not memory.
 
 
-async def connect_with_retry(
-    host: str, namespace: str, retries: int = 10, delay: float = 3.0
-) -> Client:
-    for attempt in range(1, retries + 1):
-        try:
-            return await Client.connect(host, namespace=namespace)
-        except Exception as e:
-            if attempt == retries:
-                raise
-            print(
-                f"Temporal not ready (attempt {attempt}/{retries}): {e} — retrying in {delay}s"
-            )
-            await asyncio.sleep(delay)
-    raise RuntimeError("unreachable")
-
-
 async def main() -> None:
     client = await connect_with_retry(TEMPORAL_HOST, TEMPORAL_NAMESPACE)
-    async with Worker(
-        client,
-        task_queue=PIPELINE_RUNS_TASK_QUEUE,
-        workflows=WORKFLOWS,
-        activities=ACTIVITIES,
-    ):
-        print(f"Worker started on task queue: {PIPELINE_RUNS_TASK_QUEUE}")
-        await asyncio.Event().wait()
+    await run_worker(client, PIPELINE_RUNS_TASK_QUEUE, WORKFLOWS, ACTIVITIES)
 
 
 if __name__ == "__main__":

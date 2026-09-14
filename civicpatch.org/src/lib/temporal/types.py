@@ -11,6 +11,7 @@ SOURCE_TASK_QUEUE = "civicpatch-source"  # inbound: open-data -> database
 SINKS_TASK_QUEUE = "civicpatch-sinks"  # outbound: the sheet, open-data, parquet
 CLEANUP_TASK_QUEUE = "civicpatch-cleanup"  # retiring work time or a newer arrival made irrelevant
 PIPELINE_RUNS_TASK_QUEUE = "civicpatch-pipeline-runs"  # dispatching and polling scrape runs
+MAPS_TASK_QUEUE = "civicpatch-maps"  # building and uploading pmtiles
 
 # The whitelist. Running work on any other queue is work whose worker is gone: nothing polls it,
 # and `terminate_undeclared_workflows` is scoped per queue, so nothing sweeps it either. Dropping
@@ -21,6 +22,7 @@ TASK_QUEUES = frozenset(
         SINKS_TASK_QUEUE,
         CLEANUP_TASK_QUEUE,
         PIPELINE_RUNS_TASK_QUEUE,
+        MAPS_TASK_QUEUE,
     }
 )
 

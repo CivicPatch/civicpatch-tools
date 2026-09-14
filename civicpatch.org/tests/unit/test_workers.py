@@ -16,6 +16,7 @@ import pytest
 import lib.temporal.schedules as schedules
 from lib.temporal.types import (
     CLEANUP_TASK_QUEUE,
+    MAPS_TASK_QUEUE,
     PIPELINE_RUNS_TASK_QUEUE,
     SINKS_TASK_QUEUE,
     SOURCE_TASK_QUEUE,
@@ -29,6 +30,7 @@ WORKERS = {
     "workers.sinks": (SINKS_TASK_QUEUE, "routers.temporal.sink_activities"),
     "workers.cleanup": (CLEANUP_TASK_QUEUE, "routers.temporal.cleanup_activities"),
     "workers.pipeline_runs": (PIPELINE_RUNS_TASK_QUEUE, "routers.temporal.pipeline_run_activities"),
+    "workers.maps": (MAPS_TASK_QUEUE, "routers.temporal.map_generation_activities"),
 }
 
 

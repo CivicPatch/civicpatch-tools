@@ -21,35 +21,11 @@ import re
 
 SEARCH_TEXT_FIELDS = ("name", "display_name")
 
-# Mirrors JurisdictionLevel.STATE without importing it — core stays dependency-light and
-# this module only needs the one value.
-LEVEL_STATE = "state"
-
 # Two characters before searching: a single letter matches most of the corpus and the
 # result set is meaningless until the second keystroke.
 MIN_QUERY_LENGTH = 2
 
 _TOKEN_SEPARATOR = re.compile(r"[^0-9a-z]+")
-
-
-def state_jurisdiction_ocdid(state: str) -> str:
-    return f"ocd-jurisdiction/country:us/state:{state}/government"
-
-
-def build_parent_ocdids(entry: dict, state: str, level: str) -> list[str]:
-    # Ancestry, most specific first. Ocdids rather than names because ocdids are stable:
-    # names are resolved at read time, so a renamed parent is correct immediately.
-    # Must stay equivalent to migration 105's backfill, for the same reason
-    # build_search_text must match 104's — otherwise a row's value depends on whether it
-    # was backfilled or synced.
-    parents = list(entry.get("parent_ocdids") or [])
-
-    # The state is always a parent but is not always recorded: county rows carry no
-    # parent_ocdids at all, and NC/TN carry none anywhere. A state is not its own parent.
-    state_ocdid = state_jurisdiction_ocdid(state)
-    if level != LEVEL_STATE and state_ocdid not in parents:
-        parents.append(state_ocdid)
-    return parents
 
 
 def _tokenize(query: str) -> list[str]:

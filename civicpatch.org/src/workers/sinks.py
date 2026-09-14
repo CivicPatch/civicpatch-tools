@@ -13,6 +13,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 from database.database import get_pool
+from lib.temporal.connection import connect_with_retry, run_worker
 from lib.temporal.schedules import terminate_undeclared_workflows
 from lib.temporal.sink_workflows import (
     WriteSheetJurisdictionsWorkflow,
@@ -34,9 +35,6 @@ from routers.temporal.sink_activities import (
     write_sheet_roster_activity,
     write_activity_feed_activity,
 )
-from temporalio.client import Client
-from temporalio.worker import Worker
-
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
 
@@ -68,19 +66,11 @@ ACTIVITIES = [
 async def main() -> None:
     await get_pool()
 
-    client = await Client.connect(TEMPORAL_HOST, namespace=TEMPORAL_NAMESPACE)
+    client = await connect_with_retry(TEMPORAL_HOST, TEMPORAL_NAMESPACE)
     await terminate_undeclared_workflows(
         client, SINKS_TASK_QUEUE, {workflow.__name__ for workflow in WORKFLOWS}
     )
-    async with Worker(
-        client,
-        task_queue=SINKS_TASK_QUEUE,
-        workflows=WORKFLOWS,
-        activities=ACTIVITIES,
-        max_concurrent_activities=MAX_CONCURRENT_ACTIVITIES,
-    ):
-        print(f"Worker started on task queue: {SINKS_TASK_QUEUE}")
-        await asyncio.Event().wait()
+    await run_worker(client, SINKS_TASK_QUEUE, WORKFLOWS, ACTIVITIES, MAX_CONCURRENT_ACTIVITIES)
 
 
 if __name__ == "__main__":

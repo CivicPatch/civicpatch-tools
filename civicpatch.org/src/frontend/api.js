@@ -1,7 +1,4 @@
-import { config } from "./assets/config.js";
 import { parseSaveError } from "./api-errors.js";
-
-const API_URL = config.apiUrl;
 
 function getCsrfCookie() {
   const name = "csrf_token=";
@@ -16,7 +13,7 @@ function getCsrfCookie() {
 
 export const fetchPullRequests = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
-  const res = await fetch(`${API_URL}/api/v1/reviews/with-data?${params}`, {
+  const res = await fetch(`/api/v1/reviews/with-data?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -28,25 +25,38 @@ export const fetchIssueCounts = async (stateCode, kind) => {
   if (stateCode) params.set("state_code", stateCode);
   if (kind) params.set("kind", kind);
   const query = params.toString() ? `?${params}` : "";
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/counts${query}`, { credentials: "include" });
+  const res = await fetch(
+    `/api/v1/pipeline_runs/issues/counts${query}`,
+    { credentials: "include" },
+  );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const fetchChangeLogs = async (authors, page = 1, perPage = 20) => {
   const params = new URLSearchParams({ authors, page, per_page: perPage });
-  const res = await fetch(`${API_URL}/api/v1/change_logs?${params}`, { credentials: "include" });
+  const res = await fetch(`/api/v1/change_logs?${params}`, {
+    credentials: "include",
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
-export const fetchJobIssues = async (tags, page, perPage, sort, stateCode, showArchived = false, kind) => {
+export const fetchJobIssues = async (
+  tags,
+  page,
+  perPage,
+  sort,
+  stateCode,
+  showArchived = false,
+  kind,
+) => {
   const params = new URLSearchParams({ page, per_page: perPage, sort });
   if (tags && tags.length) params.set("tags", tags.join(","));
   if (stateCode) params.set("state_code", stateCode);
   if (showArchived) params.set("show_archived", "true");
   if (kind) params.set("kind", kind);
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues?${params}`, {
+  const res = await fetch(`/api/v1/pipeline_runs/issues?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -54,67 +64,98 @@ export const fetchJobIssues = async (tags, page, perPage, sort, stateCode, showA
 };
 
 export const fetchIssueDetails = async (issueId) => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/${issueId}/details`, {
-    credentials: "include",
-  });
+  const res = await fetch(
+    `/api/v1/pipeline_runs/issues/${issueId}/details`,
+    {
+      credentials: "include",
+    },
+  );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const flagIssue = async (issueId, is_flagged) => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/${issueId}/flag`, {
-    credentials: "include",
-    method: "PATCH",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    body: JSON.stringify({ is_flagged }),
-  });
+  const res = await fetch(
+    `/api/v1/pipeline_runs/issues/${issueId}/flag`,
+    {
+      credentials: "include",
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": getCsrfCookie(),
+      },
+      body: JSON.stringify({ is_flagged }),
+    },
+  );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const dismissIssue = async (issueId) => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/${issueId}/dismiss`, {
-    credentials: "include",
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-  });
+  const res = await fetch(
+    `/api/v1/pipeline_runs/issues/${issueId}/dismiss`,
+    {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": getCsrfCookie(),
+      },
+    },
+  );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const dismissIssues = async (issueIds) => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/issues/dismiss`, {
-    credentials: "include",
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    body: JSON.stringify({ issue_ids: issueIds }),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const fetchPullRequestsWithData = async (stateCode, page = 1, perPage = 10, view = "quick") => {
-  const params = new URLSearchParams();
-  if (stateCode) params.set("state_code", stateCode);
-  params.set("page", page);
-  params.set("per_page", perPage);
-  params.set("view", view);
-  const res = await fetch(`${API_URL}/api/v1/reviews/with-data?${params}`, {
-    credentials: "include",
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const publishReview = async (changeset_id, jurisdiction_ocdid, people) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/${changeset_id}/publish`, {
+  const res = await fetch(`/api/v1/pipeline_runs/issues/dismiss`, {
     credentials: "include",
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-CSRF-Token": getCsrfCookie(),
     },
-    body: JSON.stringify({ changeset_id, jurisdiction_ocdid, ...(people ? { data: people } : {}) }),
+    body: JSON.stringify({ issue_ids: issueIds }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchPullRequestsWithData = async (
+  stateCode,
+  page = 1,
+  perPage = 10,
+  view = "quick",
+) => {
+  const params = new URLSearchParams();
+  if (stateCode) params.set("state_code", stateCode);
+  params.set("page", page);
+  params.set("per_page", perPage);
+  params.set("view", view);
+  const res = await fetch(`/api/v1/reviews/with-data?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const publishReview = async (
+  changeset_id,
+  jurisdiction_ocdid,
+  people,
+) => {
+  const res = await fetch(`/api/v1/reviews/${changeset_id}/publish`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({
+      changeset_id,
+      jurisdiction_ocdid,
+      ...(people ? { data: people } : {}),
+    }),
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
@@ -125,8 +166,12 @@ export const publishReview = async (changeset_id, jurisdiction_ocdid, people) =>
   return res.json();
 };
 
-export const saveReviewData = async (changeset_id, jurisdiction_ocdid, people) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/${changeset_id}/save`, {
+export const saveReviewData = async (
+  changeset_id,
+  jurisdiction_ocdid,
+  people,
+) => {
+  const res = await fetch(`/api/v1/reviews/${changeset_id}/save`, {
     credentials: "include",
     method: "POST",
     headers: {
@@ -145,7 +190,7 @@ export const saveReviewData = async (changeset_id, jurisdiction_ocdid, people) =
 };
 
 export const batchResolvePeople = async (jurisdictionOcdid, people) => {
-  const res = await fetch(`${API_URL}/api/v1/people/batch-resolve`, {
+  const res = await fetch(`/api/v1/people/batch-resolve`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -154,7 +199,11 @@ export const batchResolvePeople = async (jurisdictionOcdid, people) => {
     },
     body: JSON.stringify({
       jurisdiction_ocdid: jurisdictionOcdid,
-      people: people.map(p => ({ id: p.id, name: p.name, email: p.emails?.[0] ?? null })),
+      people: people.map((p) => ({
+        id: p.id,
+        name: p.name,
+        email: p.emails?.[0] ?? null,
+      })),
       with_data: true,
     }),
   });
@@ -167,7 +216,7 @@ export const fetchPullRequestData = async (jurisdictionOcdid, changesetId) => {
     jurisdiction_ocdid: jurisdictionOcdid,
     changeset_id: changesetId,
   });
-  const res = await fetch(`${API_URL}/api/v1/reviews/data?${params}`, {
+  const res = await fetch(`/api/v1/reviews/data?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -175,13 +224,15 @@ export const fetchPullRequestData = async (jurisdictionOcdid, changesetId) => {
 };
 
 export const fetchRoles = async () => {
-  const res = await fetch(`${API_URL}/api/v1/roles`, { credentials: "include" });
+  const res = await fetch(`/api/v1/roles`, {
+    credentials: "include",
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const fetchPosts = async (jurisdictionOcdid) => {
-  const res = await fetch(`${API_URL}/api/v1/posts/${jurisdictionOcdid}`, {
+  const res = await fetch(`/api/v1/posts/${jurisdictionOcdid}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -190,17 +241,28 @@ export const fetchPosts = async (jurisdictionOcdid) => {
 
 export const fetchMemberships = async (jurisdictionOcdid, asOf = null) => {
   const query = asOf ? `?as_of=${asOf}` : "";
-  const res = await fetch(`${API_URL}/api/v1/memberships/${jurisdictionOcdid}${query}`, {
-    credentials: "include",
-  });
+  const res = await fetch(
+    `/api/v1/memberships/${jurisdictionOcdid}${query}`,
+    {
+      credentials: "include",
+    },
+  );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
-export const assignMembership = async (personId, postId, label = null, changesetId = null) => {
-  const res = await fetch(`${API_URL}/api/v1/memberships`, {
+export const assignMembership = async (
+  personId,
+  postId,
+  label = null,
+  changesetId = null,
+) => {
+  const res = await fetch(`/api/v1/memberships`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
     credentials: "include",
     body: JSON.stringify({
       person_id: personId,
@@ -214,22 +276,29 @@ export const assignMembership = async (personId, postId, label = null, changeset
 };
 
 export const createPost = async (jurisdictionOcdid, body) => {
-  const res = await fetch(`${API_URL}/api/v1/posts/${jurisdictionOcdid}`, {
+  const res = await fetch(`/api/v1/posts/${jurisdictionOcdid}`, {
     method: "POST",
     credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
     body: JSON.stringify(body),
   });
-  if (res.status === 409) throw new Error("That role and division already has a post.");
+  if (res.status === 409)
+    throw new Error("That role and division already has a post.");
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const updatePost = async (postId, { headcount, isTracked }) => {
-  const res = await fetch(`${API_URL}/api/v1/posts/${postId}`, {
+  const res = await fetch(`/api/v1/posts/${postId}`, {
     method: "PATCH",
     credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
     body: JSON.stringify({
       _headcount: headcount,
       _is_tracked: isTracked,
@@ -241,7 +310,7 @@ export const updatePost = async (postId, { headcount, isTracked }) => {
 
 export const fetchUnmatchedText = async (page = 1, perPage = 20) => {
   const query = new URLSearchParams({ page, per_page: perPage });
-  const res = await fetch(`${API_URL}/api/v1/memberships/unmatched?${query}`, {
+  const res = await fetch(`/api/v1/memberships/unmatched?${query}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -249,10 +318,13 @@ export const fetchUnmatchedText = async (page = 1, perPage = 20) => {
 };
 
 export const putRoles = async (body) => {
-  const res = await fetch(`${API_URL}/api/v1/roles`, {
+  const res = await fetch(`/api/v1/roles`, {
     method: "PUT",
     credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
     body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -260,10 +332,13 @@ export const putRoles = async (body) => {
 };
 
 export const reorderRoles = async ({ roleOrder, movedRoles }) => {
-  const res = await fetch(`${API_URL}/api/v1/roles/reorder`, {
+  const res = await fetch(`/api/v1/roles/reorder`, {
     method: "PUT",
     credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
     body: JSON.stringify({ role_order: roleOrder, moved_roles: movedRoles }),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -271,17 +346,28 @@ export const reorderRoles = async ({ roleOrder, movedRoles }) => {
 };
 
 export const deleteRole = async (roleId) => {
-  const res = await fetch(`${API_URL}/api/v1/roles/${encodeURIComponent(roleId)}`, {
-    method: "DELETE",
-    credentials: "include",
-    headers: { "X-CSRF-Token": getCsrfCookie() },
-  });
+  const res = await fetch(
+    `/api/v1/roles/${encodeURIComponent(roleId)}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+      headers: { "X-CSRF-Token": getCsrfCookie() },
+    },
+  );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
-export const fetchJurisdictionHistory = async (jurisdictionOcdid, page = 1, perPage = 25) => {
-  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid, page, per_page: perPage });
+export const fetchJurisdictionHistory = async (
+  jurisdictionOcdid,
+  page = 1,
+  perPage = 25,
+) => {
+  const params = new URLSearchParams({
+    jurisdiction_ocdid: jurisdictionOcdid,
+    page,
+    per_page: perPage,
+  });
   const res = await fetch(`/api/v1/jurisdictions/history?${params}`, {
     credentials: "include",
   });
@@ -299,7 +385,7 @@ export const fetchJurisdictionInFlight = async (jurisdictionOcdid) => {
 };
 
 export const generatePersonId = async () => {
-  const res = await fetch(`${API_URL}/api/v1/people/generate-id`, {
+  const res = await fetch(`/api/v1/people/generate-id`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -313,7 +399,7 @@ export const generatePersonId = async () => {
 };
 
 export const fetchReview = async (changesetId) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/${changesetId}/review`, {
+  const res = await fetch(`/api/v1/reviews/${changesetId}/review`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -321,7 +407,7 @@ export const fetchReview = async (changesetId) => {
 };
 
 export const fetchReportedIssues = async (changesetId) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/${changesetId}/issues`, {
+  const res = await fetch(`/api/v1/reviews/${changesetId}/issues`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -329,10 +415,13 @@ export const fetchReportedIssues = async (changesetId) => {
 };
 
 export const reportReviewIssue = async (changesetId, description) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/${changesetId}/issues`, {
+  const res = await fetch(`/api/v1/reviews/${changesetId}/issues`, {
     credentials: "include",
     method: "POST",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
     body: JSON.stringify({ description }),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -340,7 +429,7 @@ export const reportReviewIssue = async (changesetId, description) => {
 };
 
 export const dismissReview = async (changeset_id) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/${changeset_id}`, {
+  const res = await fetch(`/api/v1/reviews/${changeset_id}`, {
     credentials: "include",
     method: "DELETE",
     headers: {
@@ -351,15 +440,25 @@ export const dismissReview = async (changeset_id) => {
   return res.json();
 };
 
-export const fetchPeopleDirectory = async (jurisdictionOcdid, page = 1, perPage = 20) => {
-  const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid, page, per_page: perPage });
-  const res = await fetch(`${API_URL}/api/v1/people/directory?${params}`, { credentials: "include" });
+export const fetchPeopleDirectory = async (
+  jurisdictionOcdid,
+  page = 1,
+  perPage = 20,
+) => {
+  const params = new URLSearchParams({
+    jurisdiction_ocdid: jurisdictionOcdid,
+    page,
+    per_page: perPage,
+  });
+  const res = await fetch(`/api/v1/people/directory?${params}`, {
+    credentials: "include",
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const patchPeopleData = async (jurisdictionOcdid, data) => {
-  const res = await fetch(`${API_URL}/api/v1/people/data`, {
+  const res = await fetch(`/api/v1/people/data`, {
     method: "PATCH",
     credentials: "include",
     headers: {
@@ -392,7 +491,7 @@ const jurisdictionPatchBody = (jurisdictionOcdid, data) => {
 };
 
 export const patchJurisdictionData = async (jurisdictionOcdid, data) => {
-  const res = await fetch(`${API_URL}/api/v1/jurisdictions/data`, {
+  const res = await fetch(`/api/v1/jurisdictions/data`, {
     method: "PATCH",
     credentials: "include",
     headers: {
@@ -410,7 +509,7 @@ export const patchJurisdictionData = async (jurisdictionOcdid, data) => {
 
 export const fetchPeopleAssertions = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
-  const res = await fetch(`${API_URL}/api/v1/people/assertions?${params}`, {
+  const res = await fetch(`/api/v1/people/assertions?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -419,7 +518,9 @@ export const fetchPeopleAssertions = async (jurisdictionOcdid) => {
 
 export const fetchPeople = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
-  const res = await fetch(`/api/v1/people?${params}`, { credentials: "include" });
+  const res = await fetch(`/api/v1/people?${params}`, {
+    credentials: "include",
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
@@ -437,7 +538,7 @@ export const fetchJurisdictionsByOcdids = async (ocdids) => {
 
 export const fetchBlogPosts = async (limit = 3) => {
   const params = new URLSearchParams({ limit });
-  const res = await fetch(`${API_URL}/api/v1/blog/posts?${params}`, {
+  const res = await fetch(`/api/v1/blog/posts?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -445,40 +546,54 @@ export const fetchBlogPosts = async (limit = 3) => {
 };
 
 export const fetchDashboard = async () => {
-  const res = await fetch(`${API_URL}/api/v1/data/dashboard`, { credentials: "include" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const fetchMapsCoverage = async () => {
-  const res = await fetch(`${API_URL}/api/v1/coverage`, { credentials: "include" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const fetchRecentPublications = async (limit = 10) => {
-  const params = new URLSearchParams({ limit });
-  const res = await fetch(`${API_URL}/api/v1/change_logs/recent-publications?${params}`, {
+  const res = await fetch(`/api/v1/data/dashboard`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
+export const fetchMapsCoverage = async () => {
+  const res = await fetch(`/api/v1/coverage`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchRecentPublications = async (limit = 10) => {
+  const params = new URLSearchParams({ limit });
+  const res = await fetch(
+    `/api/v1/change_logs/recent-publications?${params}`,
+    {
+      credentials: "include",
+    },
+  );
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchLocalStatus = async (state) => {
-  const res = await fetch(`${API_URL}/api/v1/coverage/${state}/local`, { credentials: "include" });
+  const res = await fetch(`/api/v1/coverage/${state}/local`, {
+    credentials: "include",
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const fetchStateCoverageSummary = async (state) => {
-  const res = await fetch(`${API_URL}/api/v1/coverage/${state}/summary`, { credentials: "include" });
+  const res = await fetch(`/api/v1/coverage/${state}/summary`, {
+    credentials: "include",
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const fetchMunicipalityList = async (state, level = "local") => {
-  const res = await fetch(`${API_URL}/api/v1/coverage/${state}/municipalities?level=${level}`, { credentials: "include" });
+  const res = await fetch(
+    `/api/v1/coverage/${state}/municipalities?level=${level}`,
+    { credentials: "include" },
+  );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
@@ -487,13 +602,20 @@ export const fetchLeaderboard = async (period) => {
   const params = new URLSearchParams();
   if (period) params.set("period", period);
   const query = params.toString() ? `?${params}` : "";
-  const res = await fetch(`${API_URL}/api/v1/leaderboard${query}`, { credentials: "include" });
+  const res = await fetch(`/api/v1/leaderboard${query}`, {
+    credentials: "include",
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
-export const triggerPipelineRun = async (jurisdictionOcdid, name, url, sourceUrls) => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs`, {
+export const triggerPipelineRun = async (
+  jurisdictionOcdid,
+  name,
+  url,
+  sourceUrls,
+) => {
+  const res = await fetch(`/api/v1/pipeline_runs`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -514,56 +636,75 @@ export const triggerPipelineRun = async (jurisdictionOcdid, name, url, sourceUrl
   return res.json();
 };
 
-export const fetchActivePipelineRuns = async (stateCode, page = 1, perPage = 25) => {
+export const fetchActivePipelineRuns = async (
+  stateCode,
+  page = 1,
+  perPage = 25,
+) => {
   const params = new URLSearchParams({ page, per_page: perPage });
   if (stateCode) params.set("state_code", stateCode);
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/active?${params}`, { credentials: "include" });
+  const res = await fetch(`/api/v1/pipeline_runs/active?${params}`, {
+    credentials: "include",
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const fetchTemporalWorkflowState = async (changesetId) => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/${changesetId}/temporal-workflow-state`, {
-    credentials: "include",
-  });
+  const res = await fetch(
+    `/api/v1/pipeline_runs/${changesetId}/temporal-workflow-state`,
+    {
+      credentials: "include",
+    },
+  );
   if (!res.ok) return null;
   const body = await res.json().catch(() => ({}));
   return body.data ?? null;
 };
 
 export const cancelPipelineRun = async (pipelineRunId) => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/${pipelineRunId}/cancel`, {
-    method: "POST",
-    credentials: "include",
-    headers: { "X-CSRF-Token": getCsrfCookie() },
-  });
+  const res = await fetch(
+    `/api/v1/pipeline_runs/${pipelineRunId}/cancel`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: { "X-CSRF-Token": getCsrfCookie() },
+    },
+  );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const fetchJurisdictionsGeojson = async (lat, lng, zoom) => {
   const params = new URLSearchParams({ lat, long: lng, zoom });
-  const res = await fetch(`/api/v1/jurisdictions/geojson?${params}`, { credentials: "include" });
+  const res = await fetch(`/api/v1/jurisdictions/geojson?${params}`, {
+    credentials: "include",
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const fetchReviewStats = async (stateCode) => {
   const params = new URLSearchParams({ state_code: stateCode });
-  const res = await fetch(`${API_URL}/api/v1/review-sessions/stats?${params}`, { credentials: "include" });
+  const res = await fetch(`/api/v1/review-sessions/stats?${params}`, {
+    credentials: "include",
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const fetchAvailableReviewStates = async () => {
-  const res = await fetch(`${API_URL}/api/v1/review-sessions/available-states`, { credentials: "include" });
+  const res = await fetch(
+    `/api/v1/review-sessions/available-states`,
+    { credentials: "include" },
+  );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const fetchActiveReviewSession = async (stateCode) => {
   const res = await fetch(
-    `${API_URL}/api/v1/review-sessions/active?state_code=${encodeURIComponent(stateCode)}`,
+    `/api/v1/review-sessions/active?state_code=${encodeURIComponent(stateCode)}`,
     { credentials: "include" },
   );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -571,33 +712,48 @@ export const fetchActiveReviewSession = async (stateCode) => {
 };
 
 export const createReviewSession = async (stateCode, sessionLength) => {
-  const res = await fetch(`${API_URL}/api/v1/review-sessions`, {
+  const res = await fetch(`/api/v1/review-sessions`, {
     method: "POST",
     credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    body: JSON.stringify({ state_code: stateCode, session_length: sessionLength }),
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({
+      state_code: stateCode,
+      session_length: sessionLength,
+    }),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const navigateToEntry = async (sessionId, entryNumber) => {
-  const res = await fetch(`${API_URL}/api/v1/review-sessions/${sessionId}/navigate`, {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
-    body: JSON.stringify({ entry_number: entryNumber }),
-  });
+  const res = await fetch(
+    `/api/v1/review-sessions/${sessionId}/navigate`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": getCsrfCookie(),
+      },
+      body: JSON.stringify({ entry_number: entryNumber }),
+    },
+  );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const endReviewSession = async (sessionId) => {
-  const res = await fetch(`${API_URL}/api/v1/review-sessions/${sessionId}/end`, {
-    method: "POST",
-    credentials: "include",
-    headers: { "X-CSRF-Token": getCsrfCookie() },
-  });
+  const res = await fetch(
+    `/api/v1/review-sessions/${sessionId}/end`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: { "X-CSRF-Token": getCsrfCookie() },
+    },
+  );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
@@ -606,35 +762,44 @@ export const fetchSummary = async (stateCode) => {
   const params = new URLSearchParams();
   if (stateCode) params.set("state_code", stateCode);
   const query = params.toString() ? `?${params}` : "";
-  const res = await fetch(`${API_URL}/api/v1/summary${query}`, { credentials: "include" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const fetchJurisdictionForState = async (stateCode) => {
-  const params = new URLSearchParams({ limit: 1, state: stateCode });
-  const res = await fetch(`${API_URL}/api/v1/jurisdictions/search?${params}`, { credentials: "include" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const fetchAllJurisdictionsForState = async (stateCode) => {
-  const params = new URLSearchParams({ state: stateCode });
-  const res = await fetch(`${API_URL}/api/v1/jurisdictions/search?${params}`, { credentials: "include" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const fetchPullRequestByRequestId = async (changesetId) => {
-  const res = await fetch(`${API_URL}/api/v1/reviews/by-request/${changesetId}`, {
+  const res = await fetch(`/api/v1/summary${query}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
+export const fetchJurisdictionForState = async (stateCode) => {
+  const params = new URLSearchParams({ limit: 1, state: stateCode });
+  const res = await fetch(`/api/v1/jurisdictions/search?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchAllJurisdictionsForState = async (stateCode) => {
+  const params = new URLSearchParams({ state: stateCode });
+  const res = await fetch(`/api/v1/jurisdictions/search?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+export const fetchPullRequestByRequestId = async (changesetId) => {
+  const res = await fetch(
+    `/api/v1/reviews/by-request/${changesetId}`,
+    {
+      credentials: "include",
+    },
+  );
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchAdminUsers = async () => {
-  const res = await fetch(`${API_URL}/api/admin/users`, {
+  const res = await fetch(`/api/admin/users`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -642,7 +807,7 @@ export const fetchAdminUsers = async () => {
 };
 
 export const fetchAdminUser = async (userId) => {
-  const res = await fetch(`${API_URL}/api/admin/users/${userId}`, {
+  const res = await fetch(`/api/admin/users/${userId}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -650,7 +815,7 @@ export const fetchAdminUser = async (userId) => {
 };
 
 export const setUserRole = async (userId, role) => {
-  const res = await fetch(`${API_URL}/api/admin/users/${userId}/role`, {
+  const res = await fetch(`/api/admin/users/${userId}/role`, {
     credentials: "include",
     method: "PUT",
     headers: {
@@ -667,22 +832,28 @@ export const setUserRole = async (userId, role) => {
 };
 
 export const fetchRollbackCandidates = async (userId) => {
-  const res = await fetch(`${API_URL}/api/admin/users/${userId}/rollback-candidates`, {
-    credentials: "include",
-  });
+  const res = await fetch(
+    `/api/admin/users/${userId}/rollback-candidates`,
+    {
+      credentials: "include",
+    },
+  );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
 export const rollbackUserAssertions = async (userId, assertionIds, reason) => {
-  const res = await fetch(`${API_URL}/api/admin/users/${userId}/rollback`, {
+  const res = await fetch(`/api/admin/users/${userId}/rollback`, {
     credentials: "include",
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-CSRF-Token": getCsrfCookie(),
     },
-    body: JSON.stringify({ assertion_ids: assertionIds, reason: reason || null }),
+    body: JSON.stringify({
+      assertion_ids: assertionIds,
+      reason: reason || null,
+    }),
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
@@ -692,7 +863,7 @@ export const rollbackUserAssertions = async (userId, assertionIds, reason) => {
 };
 
 export const setUsername = async (username) => {
-  const res = await fetch(`${API_URL}/api/v1/user/username`, {
+  const res = await fetch(`/api/v1/user/username`, {
     credentials: "include",
     method: "POST",
     headers: {
@@ -716,13 +887,16 @@ let jurisdictionSearchController = null;
  * @param {string} query
  * @param {{ page?: number; limit?: number; state?: string; level?: string }} [opts]
  */
-export const searchJurisdictions = async (query, { page = 1, limit = 10, state, level } = {}) => {
+export const searchJurisdictions = async (
+  query,
+  { page = 1, limit = 10, state, level } = {},
+) => {
   jurisdictionSearchController?.abort();
   jurisdictionSearchController = new AbortController();
   const params = new URLSearchParams({ q: query, page, limit });
   if (state) params.set("state", state);
   if (level) params.set("level", level);
-  const res = await fetch(`${API_URL}/api/v1/jurisdictions/search?${params}`, {
+  const res = await fetch(`/api/v1/jurisdictions/search?${params}`, {
     credentials: "include",
     signal: jurisdictionSearchController.signal,
   });
@@ -732,14 +906,14 @@ export const searchJurisdictions = async (query, { page = 1, limit = 10, state, 
 
 export const fetchJurisdiction = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
-  const res = await fetch(`${API_URL}/api/v1/jurisdictions?${params}`, {
+  const res = await fetch(`/api/v1/jurisdictions?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };
 
-const IMPORTS_URL = `${API_URL}/api/v1/imports`;
+const IMPORTS_URL = `/api/v1/imports`;
 
 async function importsRequest(path, method) {
   const res = await fetch(`${IMPORTS_URL}${path}`, {
@@ -782,7 +956,7 @@ export const publishBatch = async (batchId, jurisdictionOcdids) => {
   return body;
 };
 
-const API_KEYS_URL = `${API_URL}/api/v1/api_keys`;
+const API_KEYS_URL = `/api/v1/api_keys`;
 
 async function apiKeysRequest(path, method) {
   const res = await fetch(`${API_KEYS_URL}${path}`, {
@@ -805,10 +979,12 @@ export const revokeApiKey = async (apiKeyId) =>
 export const deleteApiKey = async (apiKeyId) =>
   apiKeysRequest(`/${apiKeyId}`, "DELETE");
 
-const SUMMARIES_URL = `${API_URL}/api/v1/changeset_summaries`;
+const SUMMARIES_URL = `/api/v1/changeset_summaries`;
 
 const summariesRequest = async (path) => {
-  const res = await fetch(`${SUMMARIES_URL}${path}`, { credentials: "include" });
+  const res = await fetch(`${SUMMARIES_URL}${path}`, {
+    credentials: "include",
+  });
   const body = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(parseSaveError(body, res.status));
   return body.data;
@@ -821,7 +997,9 @@ export const fetchStateCalendar = async (windowDays) =>
   summariesRequest(`/calendar?window_days=${windowDays}`);
 
 export const fetchElections = async () => {
-  const res = await fetch(`${API_URL}/api/v1/elections`, { credentials: "include" });
+  const res = await fetch(`/api/v1/elections`, {
+    credentials: "include",
+  });
   const body = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(parseSaveError(body, res.status));
   return body.data;
@@ -829,7 +1007,7 @@ export const fetchElections = async () => {
 
 export const fetchStateSpend = async (windowDays) => {
   const res = await fetch(
-    `${API_URL}/api/v1/pipeline_runs/spend?window_days=${windowDays}`,
+    `/api/v1/pipeline_runs/spend?window_days=${windowDays}`,
     { credentials: "include" },
   );
   const body = await res.json().catch(() => ({}));
@@ -837,12 +1015,15 @@ export const fetchStateSpend = async (windowDays) => {
   return body.data;
 };
 
-const SCRAPE_SETTINGS_URL = `${API_URL}/api/v1/scrape_settings`;
+const SCRAPE_SETTINGS_URL = `/api/v1/scrape_settings`;
 
 const scrapeSettingsRequest = async (path, options = {}) => {
   const res = await fetch(`${SCRAPE_SETTINGS_URL}${path}`, {
     credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
     ...options,
   });
   const body = await res.json().catch(() => ({}));
@@ -853,7 +1034,8 @@ const scrapeSettingsRequest = async (path, options = {}) => {
 export const fetchStateScrapeSettings = async (state) =>
   scrapeSettingsRequest(`/${encodeURIComponent(state)}`);
 
-export const fetchGlobalScrapeSettings = async () => scrapeSettingsRequest("/global");
+export const fetchGlobalScrapeSettings = async () =>
+  scrapeSettingsRequest("/global");
 
 export const saveGlobalCap = async (monthlyCapUsd) =>
   scrapeSettingsRequest("/global", {
@@ -864,7 +1046,10 @@ export const saveGlobalCap = async (monthlyCapUsd) =>
 export const saveCadence = async (state, cadenceDays, cadenceAnchor) =>
   scrapeSettingsRequest(`/${encodeURIComponent(state)}/cadence`, {
     method: "PUT",
-    body: JSON.stringify({ cadence_days: cadenceDays, cadence_anchor: cadenceAnchor }),
+    body: JSON.stringify({
+      cadence_days: cadenceDays,
+      cadence_anchor: cadenceAnchor,
+    }),
   });
 
 export const saveCaps = async (state, pipelineRunCapUsd, monthlyCapUsd) =>
@@ -877,16 +1062,19 @@ export const saveCaps = async (state, pipelineRunCapUsd, monthlyCapUsd) =>
   });
 
 export const fetchJurisdictionStates = async () => {
-  const res = await fetch(`${API_URL}/api/v1/jurisdictions/states`);
+  const res = await fetch(`/api/v1/jurisdictions/states`);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return (await res.json()).data;
 };
 
 export const startStateScrape = async (state, numJurisdictions = null) => {
-  const res = await fetch(`${API_URL}/api/v1/pipeline_runs/batch`, {
+  const res = await fetch(`/api/v1/pipeline_runs/batch`, {
     method: "POST",
     credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
     body: JSON.stringify({ state, num_jurisdictions: numJurisdictions }),
   });
   const body = await res.json().catch(() => ({}));

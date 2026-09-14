@@ -16,6 +16,7 @@ from lib.temporal.cleanup_workflows import (
     CleanupPipelineRunsWorkflow,
     CleanupReviewSessionsWorkflow,
 )
+from lib.temporal.connection import connect_with_retry, run_worker
 from lib.temporal.schedules import terminate_undeclared_workflows
 from lib.temporal.types import CLEANUP_TASK_QUEUE
 from routers.temporal.cleanup_activities import (
@@ -23,8 +24,6 @@ from routers.temporal.cleanup_activities import (
     expire_stale_pipeline_runs_activity,
     supersede_stacked_requests_activity,
 )
-from temporalio.client import Client
-from temporalio.worker import Worker
 
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
@@ -41,18 +40,11 @@ ACTIVITIES = [
 async def main() -> None:
     await get_pool()
 
-    client = await Client.connect(TEMPORAL_HOST, namespace=TEMPORAL_NAMESPACE)
+    client = await connect_with_retry(TEMPORAL_HOST, TEMPORAL_NAMESPACE)
     await terminate_undeclared_workflows(
         client, CLEANUP_TASK_QUEUE, {workflow.__name__ for workflow in WORKFLOWS}
     )
-    async with Worker(
-        client,
-        task_queue=CLEANUP_TASK_QUEUE,
-        workflows=WORKFLOWS,
-        activities=ACTIVITIES,
-    ):
-        print(f"Worker started on task queue: {CLEANUP_TASK_QUEUE}")
-        await asyncio.Event().wait()
+    await run_worker(client, CLEANUP_TASK_QUEUE, WORKFLOWS, ACTIVITIES)
 
 
 if __name__ == "__main__":

@@ -1,7 +1,10 @@
 import asyncio
+import json
 import logging
 import os
 from contextlib import asynccontextmanager
+
+import environment
 
 import lib.pubsub as pubsub_service
 import routers.api.admin as api_admin_router
@@ -106,6 +109,13 @@ templates = Jinja2Templates(directory="src/frontend/templates")
 templates.env.globals["vite_asset"] = lambda path: vite_asset(path, is_production)
 templates.env.globals["vite_css"] = lambda path: vite_css(path, is_production)
 templates.env.globals["is_production"] = is_production
+# JSON-encoded, not interpolated as a bare string: Jinja's autoescape HTML-escapes for an
+# HTML/attribute context, not a JS one, so `"` inside the value would corrupt the script
+# rather than break it. json.dumps produces a valid JS literal directly; escaping `<` stops
+# a value that happened to contain "</script>" from closing the tag early.
+templates.env.globals["env_json"] = json.dumps(
+    {"FRIENDLY_STORAGE_HOST": environment.get_env_vars()["FRIENDLY_STORAGE_HOST"]}
+).replace("<", "\\u003c")
 
 if is_production:
     allowed_origins = [

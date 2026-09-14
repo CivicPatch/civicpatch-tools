@@ -6,11 +6,9 @@ import uuid
 from collections.abc import Mapping
 from typing import AsyncGenerator, List
 
-from core.jurisdiction_search import (
-    build_parent_ocdids,
-    build_search_text,
-)
 from core.activity import roster_change
+from core.jurisdiction_search import build_search_text
+from core.map_enrichment import GeoidEntry
 from database.changeset_predicates import (
     CADENCE_JOIN,
     LAST_ATTEMPT_AT,
@@ -60,7 +58,6 @@ def jurisdiction_rows(
             json.dumps(entry),
             updated_at,
             build_search_text(entry, state, state_name),
-            build_parent_ocdids(entry, state, level),
         )
         for entry in entries
     ]
@@ -220,14 +217,51 @@ async def get_state_names() -> dict[str, str]:
     return {state: name for state, name in results if state and name}
 
 
-async def get_geoid_to_ocdid_lookup(state: str) -> dict[str, str]:
-    # One query for all three levels (state/counties/local) — Census GEOIDs don't collide
-    # across levels, so a single geoid->ocdid map covers map-tile feature enrichment.
+async def get_state_fips(state: str) -> str | None:
+    # The state's own jurisdiction row carries its FIPS code as `geoid` — no need for a
+    # separate state-config table to look this up.
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT data->>'geoid', jurisdiction_ocdid
+            SELECT data->>'geoid'
+            FROM jurisdictions
+            WHERE state = %s AND level = 'state' AND status = 'active'
+            LIMIT 1;
+            """,
+            (state,),
+        )
+        row = await cur.fetchone()
+        return row[0] if row else None
+
+
+async def get_all_states_geoid_lookup() -> dict[str, GeoidEntry]:
+    # Every active state, not scoped to one — feeds the national overview's coverage
+    # picker, which shows all onboarded states at once (see the map pipeline plan).
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT data->>'geoid', jurisdiction_ocdid, data->>'name'
+            FROM jurisdictions
+            WHERE level = 'state' AND status = 'active' AND data->>'geoid' IS NOT NULL;
+            """,
+        )
+        results = await cur.fetchall()
+
+    return {geoid: GeoidEntry(ocdid, name) for geoid, ocdid, name in results}
+
+
+async def get_geoid_lookup(state: str) -> dict[str, GeoidEntry]:
+    # One query for all three levels (state/counties/local) — Census GEOIDs don't collide
+    # across levels, so a single geoid->entry map covers map-tile feature enrichment.
+    # `name` rides along for local features, which take their display name from here
+    # rather than TIGER's raw place name (formatting/suffix conventions differ).
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT data->>'geoid', jurisdiction_ocdid, data->>'name'
             FROM jurisdictions
             WHERE state = %s AND status = 'active' AND data->>'geoid' IS NOT NULL;
             """,
@@ -235,7 +269,27 @@ async def get_geoid_to_ocdid_lookup(state: str) -> dict[str, str]:
         )
         results = await cur.fetchall()
 
-    return {geoid: ocdid for geoid, ocdid in results}
+    return {geoid: GeoidEntry(ocdid, name) for geoid, ocdid, name in results}
+
+
+async def set_parent_ocdids(
+    parent_ocdids_by_jurisdiction: dict[str, list[str]],
+) -> None:
+    """Overwrite parent_ocdids for each given jurisdiction. One round trip regardless of
+    how many rows — the map-generation county overlay is the only writer, and it always
+    recomputes the whole state's set from scratch, so there's nothing to merge."""
+    if not parent_ocdids_by_jurisdiction:
+        return
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.executemany(
+            "UPDATE jurisdictions SET parent_ocdids = %s WHERE jurisdiction_ocdid = %s",
+            [
+                (parents, ocdid)
+                for ocdid, parents in parent_ocdids_by_jurisdiction.items()
+            ],
+        )
+        await conn.commit()
 
 
 async def get_states() -> List[str]:
@@ -650,7 +704,6 @@ ROSTER_CHANGE_TYPES = [
 ]
 
 
-
 # A jurisdiction scraped weekly for a few years, plus imports and hand edits, runs to the
 # hundreds. Dev's max is 24, which is why an earlier pass concluded no pager was needed — but
 # dev holds 400 changesets in total, so it is the wrong place to measure this.
@@ -768,9 +821,7 @@ async def get_jurisdiction_history(
                 issues=[TimelineIssue(**issue) for issue in row["issues"]],
                 resolved_by=row["resolved_by"],
                 changes=[
-                    roster_change(
-                        log["type"], log["created_at"], log["changes"] or {}
-                    )
+                    roster_change(log["type"], log["created_at"], log["changes"] or {})
                     for log in row["changes"]
                 ],
             )
@@ -849,15 +900,14 @@ async def mark_jurisdictions_inactive(jurisdiction_ocdids: list):
 async def bulk_update_jurisdictions(jurisdiction_records: list):
     query = """
         INSERT INTO jurisdictions
-            (jurisdiction_ocdid, state, level, data, updated_at, search_text, parent_ocdids)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+            (jurisdiction_ocdid, state, level, data, updated_at, search_text)
+        VALUES (%s, %s, %s, %s, %s, %s)
         ON CONFLICT (jurisdiction_ocdid)
         DO UPDATE SET
             level = EXCLUDED.level,
             data = EXCLUDED.data,
             updated_at = EXCLUDED.updated_at,
             search_text = EXCLUDED.search_text,
-            parent_ocdids = EXCLUDED.parent_ocdids,
             status = 'active'
     """
     pool = await get_pool()

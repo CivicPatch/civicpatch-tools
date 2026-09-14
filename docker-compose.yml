@@ -97,6 +97,24 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  civicpatch-org-maps:
+    extends:
+      file: civicpatch.org/docker-compose.yml
+      service: civicpatch-org-maps
+    networks:
+      - civicpatch_net
+    # These workers connect to the DB at startup (get_pool) and Temporal — wait for both to be
+    # healthy, else main() wedges on a dead pool and never starts polling the task queue.
+    # extends does not merge depends_on, so every dependency must be listed here.
+    depends_on:
+      civicpatch-org-db:
+        condition: service_healthy
+      civicpatch-org-redis:
+        condition: service_started
+      temporal:
+        condition: service_healthy
+    restart: unless-stopped
+
   # ── Scrape worker ──────────────────────────────────────────────────────────
   # The civicpatch-org image, second entrypoint. Its own service rather than a second Worker
   # inside another worker so it keeps the environment below — which is the whole of it.

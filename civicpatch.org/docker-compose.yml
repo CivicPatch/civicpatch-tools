@@ -135,26 +135,28 @@ services:
       # doesn't call Supabase. Values mirror the civicpatch-org service.
       SUPABASE_URL: "http://host.docker.internal:54321"
       SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY:-local-dev-secret-key}
-      GITHUB_APP_ID: ${GITHUB_APP_ID:-NO_KEY_PROVIDED}
-      GITHUB_APP_PRIVATE_KEY_BASE64: ${GITHUB_APP_PRIVATE_KEY_BASE64:-NO_KEY_PROVIDED}
-      GITHUB_APP_INSTALLATION_ID: ${GITHUB_APP_INSTALLATION_ID:-NO_KEY_PROVIDED}
+      GITHUB_APP_ID: ${GITHUB_APP_ID}
+      GITHUB_APP_PRIVATE_KEY_BASE64: ${GITHUB_APP_PRIVATE_KEY_BASE64}
+      GITHUB_APP_INSTALLATION_ID: ${GITHUB_APP_INSTALLATION_ID}
       CIVICPATCH_API_DB_URL: ${CIVICPATCH_API_DB_URL:-postgres://civicpatch:development_password@civicpatch-org-db:5432/development_db}
       CIVICPATCH_API_DB_PASSWORD: ${CIVICPATCH_API_DB_PASSWORD:-development_password}
       REDIS_HOST: civicpatch-org-redis
       OPEN_DATA_REPO_URL: ${OPEN_DATA_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
       JURISDICTIONS_REPO_URL: "https://api.github.com/repos/openstates/jurisdictions"
-      JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID:-NO_KEY_PROVIDED}
-      JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64: ${JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64:-NO_KEY_PROVIDED}
-      JURISDICTIONS_SYNC_APP_INSTALLATION_ID: ${JURISDICTIONS_SYNC_APP_INSTALLATION_ID:-NO_KEY_PROVIDED}
+      JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID}
+      JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64: ${JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64}
+      JURISDICTIONS_SYNC_APP_INSTALLATION_ID: ${JURISDICTIONS_SYNC_APP_INSTALLATION_ID}
       INSTANCE_URL: "http://localhost:8000"
       COOKIE_INSTANCE_URL: ".civicpatch.org"
       MAINTAINER_EMAIL: ${MAINTAINER_EMAIL:-admin@civicpatch.org}
       DATABASE_HASH_KEY: ${DATABASE_HASH_KEY:-development_hash_key}
       SERVICE_API_KEY: "service-api-key"
-      STORAGE_ENDPOINT: ${STORAGE_ENDPOINT:-NO_KEY_PROVIDED}
-      STORAGE_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY_ID:-NO_KEY_PROVIDED}
-      STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY:-NO_KEY_PROVIDED}
-      FRIENDLY_STORAGE_HOST: ${FRIENDLY_STORAGE_HOST:-https://cdn.civicpatch.org}
+      STORAGE_ENDPOINT: ${STORAGE_ENDPOINT}
+      STORAGE_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY_ID}
+      STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY}
+      # Must match the civicpatch-org service above — pointing dev workers at cdn.civicpatch.org
+      # would upload to (and read from) production's bucket.
+      FRIENDLY_STORAGE_HOST: ${FRIENDLY_STORAGE_HOST:-https://civicpatch-nonprod.civicpatch.org}
       # The worker is what writes the sheet — the sync activities run here, not in the API.
       # Defaults must match the civicpatch-org service above or the two disagree about which
       # spreadsheet they are talking about.
@@ -195,6 +197,19 @@ services:
     container_name: civicpatch-org-cleanup
     build: *worker-build
     entrypoint: ["python", "src/workers/cleanup.py"]
+    depends_on: *worker-depends
+    environment: *worker-env
+    volumes: *worker-volumes
+    networks:
+      - civicpatch_net
+    develop: *worker-watch
+
+  # Building and uploading pmtiles. Own container so tippecanoe/geopandas/pyogrio don't
+  # ride along on the other three workers, and a wedged map build can't take them down.
+  civicpatch-org-maps:
+    container_name: civicpatch-org-maps
+    build: *worker-build
+    entrypoint: ["python", "src/workers/maps.py"]
     depends_on: *worker-depends
     environment: *worker-env
     volumes: *worker-volumes
