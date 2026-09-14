@@ -1,6 +1,5 @@
 import { component } from "haunted";
 import { html } from "lit";
-import { config } from "../assets/config.js";
 import {
   useLocalStorage,
   PERSIST_FOREVER,
@@ -25,8 +24,6 @@ import "./navbar.css";
 // for the fifty the app uses, and woff2 is already compressed so nothing downstream can
 // recover that. Run `npm run build` (or `npm run icons`) after adding an icon.
 import "../generated/fontawesome/icons.css";
-
-const API_URL = config.apiUrl;
 
 // Named palettes, grouped by mode. `<html data-theme>` stays "light"/"dark" — every
 // mode-scoped CSS selector across the app keys on that — while `<html data-palette>`
@@ -278,7 +275,7 @@ function Navbar(host) {
         </span>
         ${isAuthed
           ? html`<a
-              href="${API_URL}/api/v1/auth/logout?redirect=${encodeURIComponent(
+              href="/api/v1/auth/logout?redirect=${encodeURIComponent(
                 window.location.href,
               )}"
               class="nav-logout"

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "haunted";
-import { config } from "../assets/config.js";
 
-const WS_URL = config.apiUrl.replace(/^http/, "ws") + "/ws";
+// A relative path resolves against the page's own origin/scheme (http->ws, https->wss)
+// automatically — same reasoning as api.js's API_URL.
+const WS_URL = "/ws";
 
 // Exponential backoff, capped, with jitter so many tabs reconnecting after one server
 // restart don't all retry on the same tick.

@@ -43,7 +43,7 @@
             })();
         </script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}civicpatch tool{% endblock %}</title>
+        <title>{% block title %}civicpatch{% endblock %}</title>
 
         <!-- tokens.css declares the layer order: base, layout, components, utilities. -->
         <link rel="preload" as="font" type="font/woff2" crossorigin
@@ -80,7 +80,9 @@
 
         {% block footer %}{% endblock %}
 
-        <script src="{{ url_for('frontend', path='/assets/env.js') }}"></script>
+        <script>
+            window.ENV = {{ env_json | safe }};
+        </script>
 
         {% if not is_production %}
         <script type="module" src="{{ vite_asset('@vite/client') }}"></script>

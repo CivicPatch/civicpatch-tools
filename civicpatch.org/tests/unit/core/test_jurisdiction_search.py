@@ -8,7 +8,6 @@ carries the code AND the state name. Pure function, no mocks.
 import pytest
 from core.jurisdiction_search import (
     build_fuzzy_tokens,
-    build_parent_ocdids,
     build_search_text,
     build_tsquery,
 )
@@ -139,32 +138,3 @@ def test_fuzzy_tokens_share_the_tier_one_tokenizer():
 def test_fuzzy_tokens_below_the_minimum_are_empty():
     assert build_fuzzy_tokens("s") == []
     assert build_fuzzy_tokens("  ") == []
-
-
-# ── build_parent_ocdids ──────────────────────────────────────────────────────
-
-_WA_STATE = "ocd-jurisdiction/country:us/state:wa/government"
-_KING = "ocd-jurisdiction/country:us/state:wa/county:king/government"
-
-
-@pytest.mark.unit
-def test_recorded_parents_keep_their_order_most_specific_first():
-    entry = {"id": "x", "parent_ocdids": [_KING, _WA_STATE]}
-    assert build_parent_ocdids(entry, "wa", "local") == [_KING, _WA_STATE]
-
-
-@pytest.mark.unit
-def test_the_state_is_appended_when_upstream_omits_it():
-    # County rows carry no parent_ocdids at all; NC and TN carry none anywhere.
-    assert build_parent_ocdids({"id": _KING}, "wa", "counties") == [_WA_STATE]
-
-
-@pytest.mark.unit
-def test_the_state_is_not_duplicated_when_already_recorded():
-    entry = {"id": "x", "parent_ocdids": [_KING, _WA_STATE]}
-    assert build_parent_ocdids(entry, "wa", "local").count(_WA_STATE) == 1
-
-
-@pytest.mark.unit
-def test_a_state_is_not_its_own_parent():
-    assert build_parent_ocdids({"id": _WA_STATE}, "wa", "state") == []

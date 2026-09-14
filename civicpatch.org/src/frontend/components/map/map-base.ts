@@ -2,9 +2,13 @@
 // function here takes the Map it operates on, so nothing in this file needs maplibre
 // at runtime except createMap, which is handed the engine.
 import type * as maplibregl from 'maplibre-gl';
+import { config } from '../../assets/config.js';
 import type { MapEngine } from './map-engine.js';
 
-export const PMTILES_BASE = 'https://cdn.civicpatch.org/maps';
+// config.storageHost comes from the backend's own FRIENDLY_STORAGE_HOST, so dev/staging
+// map tiles come from the same bucket the map-generation pipeline uploaded them to —
+// hardcoding cdn.civicpatch.org here would show prod's tiles in every environment.
+const PMTILES_BASE = `${config.storageHost}/maps`;
 export const NATIONAL_SOURCE_ID = 'national';
 export const STATE_SOURCE_ID = 'state';
 

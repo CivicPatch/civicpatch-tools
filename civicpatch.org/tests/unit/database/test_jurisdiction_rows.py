@@ -37,7 +37,7 @@ _UPDATED_AT = "2026-06-18T00:00:00+00:00"
 def test_one_entry_returns_one_row():
     rows = jurisdiction_rows([_ENTRY], "tx", "local", _UPDATED_AT)
     assert len(rows) == 1
-    ocdid, _state, _level, _data, updated_at, _search, _parents = rows[0]
+    ocdid, _state, _level, _data, updated_at, _search = rows[0]
     assert ocdid == _ENTRY["id"]
     assert updated_at == _UPDATED_AT
 
@@ -45,7 +45,7 @@ def test_one_entry_returns_one_row():
 @pytest.mark.unit
 def test_state_and_level_arg_returns_in_row():
     rows = jurisdiction_rows([_ENTRY], "tx", "local", _UPDATED_AT)
-    _ocdid, state, level, _data, _updated, _search, _parents = rows[0]
+    _ocdid, state, level, _data, _updated, _search = rows[0]
     assert state == "tx"  # from the arg, not the entry (the entry has no state/level)
     assert level == "local"
 

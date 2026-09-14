@@ -6,7 +6,8 @@
 freshness window. Real Postgres because it's the pre-aggregated people join + FILTERs.
 
 Run with: mise run tcp-integration
-Isolation: sentinel state 'zz', cleaned before/after.
+Isolation: sentinel state 'zt', its own state code so another suite's fixtures cannot leak
+into get_dashboard()'s whole-state totals; cleaned before/after.
 """
 
 from tests.integration import factories
@@ -34,20 +35,20 @@ async def _wipe():
         # their people now.
         await cur.execute(
             "DELETE FROM memberships m USING posts p "
-            "WHERE m.post_id = p.id AND p.jurisdiction_ocdid LIKE 'zz-%'"
+            "WHERE m.post_id = p.id AND p.jurisdiction_ocdid LIKE 'zt-%'"
         )
         for table in ("posts", "divisions", "organizations", "people"):
             await cur.execute(
-                f"DELETE FROM {table} WHERE jurisdiction_ocdid LIKE 'zz-%'"
+                f"DELETE FROM {table} WHERE jurisdiction_ocdid LIKE 'zt-%'"
             )
         # `collect_and_publish` mints a run and a changeset per fresh fixture, and
         # `fk_changesets_jurisdiction_ocdid` is ON DELETE RESTRICT — without these the
         # jurisdiction delete below raises and the teardown silently leaves rows behind.
         for _table in ("changesets", "pipeline_runs"):
             await cur.execute(
-                f"DELETE FROM {_table} WHERE jurisdiction_ocdid LIKE 'zz%'"
+                f"DELETE FROM {_table} WHERE jurisdiction_ocdid LIKE 'zt%'"
             )
-        await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
+        await cur.execute("DELETE FROM jurisdictions WHERE state = 'zt'")
         await conn.commit()
 
 
@@ -66,7 +67,7 @@ async def _insert(ocdid, *, url, collected_at, people=False, level="local"):
             """
             INSERT INTO jurisdictions
                 (jurisdiction_ocdid, state, level, data, updated_at, status)
-            VALUES (%s, 'zz', %s, %s, now(), 'active')
+            VALUES (%s, 'zt', %s, %s, now(), 'active')
             """,
             (ocdid, level, data),
         )
@@ -81,7 +82,7 @@ async def _insert(ocdid, *, url, collected_at, people=False, level="local"):
                     RETURNING id
                 ), o AS (
                     INSERT INTO organizations (jurisdiction_ocdid, name)
-                    VALUES (%(ocdid)s, 'zz') RETURNING id
+                    VALUES (%(ocdid)s, 'zt') RETURNING id
                 ), d AS (
                     INSERT INTO divisions (ocdid, jurisdiction_ocdid)
                     VALUES (%(division)s, %(ocdid)s) RETURNING ocdid
@@ -108,30 +109,30 @@ async def _insert(ocdid, *, url, collected_at, people=False, level="local"):
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_localities_split_fresh_stale_and_coverage():
-    await _insert("zz-fresh", url="https://f", collected_at=_FRESH_SCRAPE, people=True)
-    await _insert("zz-stale", url="https://s", collected_at=_STALE_SCRAPE, people=True)
-    await _insert("zz-gap", url="https://n", collected_at=None, people=False)
+    await _insert("zt-fresh", url="https://f", collected_at=_FRESH_SCRAPE, people=True)
+    await _insert("zt-stale", url="https://s", collected_at=_STALE_SCRAPE, people=True)
+    await _insert("zt-gap", url="https://n", collected_at=None, people=False)
 
     data = await get_dashboard()
 
-    localities = data["states"]["zz"]["civicpatch"]["localities"]
+    localities = data["states"]["zt"]["civicpatch"]["localities"]
     assert localities["known"] == 3
     assert localities["scrapeable"] == 3
-    assert localities["covered_fresh"] == 1  # zz-fresh
-    assert localities["covered_stale"] == 1  # zz-stale
-    assert localities["covered"] == 2  # covered_fresh + covered_stale (zz-gap excluded)
+    assert localities["covered_fresh"] == 1  # zt-fresh
+    assert localities["covered_stale"] == 1  # zt-stale
+    assert localities["covered"] == 2  # covered_fresh + covered_stale (zt-gap excluded)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_never_scraped_with_people_counts_as_stale():
     # Never collected = officials arrived via sync, never scraped by us.
-    await _insert("zz-fresh", url="https://f", collected_at=_FRESH_SCRAPE, people=True)
-    await _insert("zz-null", url="https://n", collected_at=None, people=True)
+    await _insert("zt-fresh", url="https://f", collected_at=_FRESH_SCRAPE, people=True)
+    await _insert("zt-null", url="https://n", collected_at=None, people=True)
 
-    civicpatch = (await get_dashboard())["states"]["zz"]["civicpatch"]
+    civicpatch = (await get_dashboard())["states"]["zt"]["civicpatch"]
 
-    assert civicpatch["localities"]["covered_stale"] == 1  # zz-null
+    assert civicpatch["localities"]["covered_stale"] == 1  # zt-null
     assert civicpatch["status_counts"]["stale"] == 1
     # every known jurisdiction lands in exactly one status bucket
     assert sum(civicpatch["status_counts"].values()) == civicpatch["localities"]["known"]
@@ -140,19 +141,19 @@ async def test_never_scraped_with_people_counts_as_stale():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_status_counts_and_cutoff():
-    await _insert("zz-fresh", url="https://f", collected_at=_FRESH_SCRAPE, people=True)
-    await _insert("zz-stale", url="https://s", collected_at=_STALE_SCRAPE, people=True)
-    await _insert("zz-gap", url="https://n", collected_at=None, people=False)
-    await _insert("zz-untracked", url=None, collected_at=None, people=False)
+    await _insert("zt-fresh", url="https://f", collected_at=_FRESH_SCRAPE, people=True)
+    await _insert("zt-stale", url="https://s", collected_at=_STALE_SCRAPE, people=True)
+    await _insert("zt-gap", url="https://n", collected_at=None, people=False)
+    await _insert("zt-untracked", url=None, collected_at=None, people=False)
 
     data = await get_dashboard()
 
-    civicpatch = data["states"]["zz"]["civicpatch"]
+    civicpatch = data["states"]["zt"]["civicpatch"]
     assert civicpatch["status_counts"] == {
-        "fresh": 1,       # zz-fresh
-        "stale": 1,       # zz-stale
-        "gap": 1,         # zz-gap: has a url, no people
-        "untracked": 1,   # zz-untracked: no url, no people
+        "fresh": 1,       # zt-fresh
+        "stale": 1,       # zt-stale
+        "gap": 1,         # zt-gap: has a url, no people
+        "untracked": 1,   # zt-untracked: no url, no people
     }
     # The reported cutoff is what the frontend renders as "Fresh = scraped after X", so it
     # has to be the same boundary that produced the split above — assert that relationship
@@ -168,8 +169,8 @@ async def test_needs_review_counts_open_review_pool_changesets():
     # publish step collect_and_publish takes — is exactly AVAILABLE_FOR_REVIEW's pool.
     # register_scrape_changeset mints the changeset alone; AVAILABLE_FOR_REVIEW also
     # requires a source_records row, which only ingest's own writer produces.
-    await _insert("zz-awaiting", url="https://a", collected_at=None, people=False)
-    run_id = await factories.start_run("zz-awaiting")
+    await _insert("zt-awaiting", url="https://a", collected_at=None, people=False)
+    run_id = await factories.start_run("zt-awaiting")
     changeset_id = await factories.complete_run(run_id)
 
     pool = await get_pool()
@@ -178,13 +179,13 @@ async def test_needs_review_counts_open_review_pool_changesets():
             """
             INSERT INTO source_records
                 (changeset_id, jurisdiction_ocdid, name, label, source_url)
-            VALUES (%s, 'zz-awaiting', 'A Name', 'Mayor', 'https://a')
+            VALUES (%s, 'zt-awaiting', 'A Name', 'Mayor', 'https://a')
             """,
             (changeset_id,),
         )
         await conn.commit()
 
-    civicpatch = (await get_dashboard())["states"]["zz"]["civicpatch"]
+    civicpatch = (await get_dashboard())["states"]["zt"]["civicpatch"]
     assert civicpatch["needs_review"] == 1
 
 
@@ -194,14 +195,14 @@ async def test_municipalities_and_counties_split():
     # Hawaii-shaped: a state with county-level jurisdictions as the real government unit
     # alongside (in general) municipalities — the split must key strictly off level, not
     # just "whichever level this state happens to use".
-    await _insert("zz-muni-fresh", url="https://m", collected_at=_FRESH_SCRAPE, people=True)
+    await _insert("zt-muni-fresh", url="https://m", collected_at=_FRESH_SCRAPE, people=True)
     await _insert(
-        "zz-county-fresh", url="https://c", collected_at=_FRESH_SCRAPE, people=True,
+        "zt-county-fresh", url="https://c", collected_at=_FRESH_SCRAPE, people=True,
         level="counties",
     )
-    await _insert("zz-county-gap", url="https://n", collected_at=None, level="counties")
+    await _insert("zt-county-gap", url="https://n", collected_at=None, level="counties")
 
-    civicpatch = (await get_dashboard())["states"]["zz"]["civicpatch"]
+    civicpatch = (await get_dashboard())["states"]["zt"]["civicpatch"]
 
     assert civicpatch["municipalities"] == {
         "known": 1,
@@ -220,7 +221,7 @@ async def test_municipalities_and_counties_split():
 async def test_needs_review_excludes_published_changesets():
     # collect_and_publish's changeset is resolved (published), so it never enters the
     # pool — needs_review must stay 0, not double-count what covered_fresh already counts.
-    await _insert("zz-fresh", url="https://f", collected_at=_FRESH_SCRAPE, people=True)
+    await _insert("zt-fresh", url="https://f", collected_at=_FRESH_SCRAPE, people=True)
 
-    civicpatch = (await get_dashboard())["states"]["zz"]["civicpatch"]
+    civicpatch = (await get_dashboard())["states"]["zt"]["civicpatch"]
     assert civicpatch["needs_review"] == 0

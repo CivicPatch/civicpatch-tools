@@ -1,13 +1,12 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
 import type { TemplateResult } from "lit-html";
-import { config } from "../../assets/config.js";
 import "./email-login.css";
 
 type Step = "enter-email" | "enter-code";
 
 async function postJson(path: string, body: unknown): Promise<Response> {
-  return fetch(`${config.apiUrl}${path}`, {
+  return fetch(path, {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
