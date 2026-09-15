@@ -21,8 +21,11 @@ const WEBSITE_FIELD: FieldSpec = { key: "url", label: "Website", type: "text" };
 
 interface JurisdictionDetailsProps {
   data: any;
-  canEdit: boolean;
+  // The permission, not a page-wide edit mode — this widget owns its own Edit button and
+  // decides on its own when to show the field as editable.
+  canEditPermission: boolean;
   onSave: (form: any) => Promise<any>;
+  blockedReason: string | null;
 }
 
 interface ReadOnlyRow {
@@ -79,19 +82,50 @@ function renderList(title: string, rows: [string, unknown][][]) {
   `;
 }
 
-function JurisdictionDetails({ data, canEdit, onSave }: JurisdictionDetailsProps) {
+function JurisdictionDetails({
+  data,
+  canEditPermission,
+  onSave,
+  blockedReason,
+}: JurisdictionDetailsProps) {
   const [url, setUrl] = useState<string>(data?.url ?? "");
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [prResult, setPrResult] = useState<any>(null);
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     setUrl(data?.url ?? "");
   }, [data?.url]);
 
-  if (!data) return html`<p>Loading jurisdiction data…</p>`;
+  const dirty = (url ?? "") !== (data?.url ?? "");
+  const handleDiscard = () => {
+    setUrl(data?.url ?? "");
+    setEditing(false);
+  };
+  const cap = html`
+    <div class="panel__cap">
+      <b>Jurisdiction details</b>
+      ${canEditPermission
+        ? html`<span class="panel__cap-right">
+            ${editing
+              ? html`<button class="btn-quiet" @click=${handleDiscard}>
+                  ${dirty ? "Cancel" : "Done"}
+                </button>`
+              : html`<button class="btn-quiet" @click=${() => setEditing(true)}>Edit</button>`}
+          </span>`
+        : nothing}
+    </div>
+    ${blockedReason
+      ? html`<p class="jurisdiction-section__blocked">
+          <i class="fa-solid fa-lock" aria-hidden="true"></i> ${blockedReason}
+        </p>`
+      : nothing}
+  `;
 
-  const dirty = (url ?? "") !== (data.url ?? "");
+  if (!data) return html`${cap}<p>Loading jurisdiction data…</p>`;
+
+  const canEdit = canEditPermission && editing;
   // Clearing the website is allowed, so only a non-empty value is judged. Same
   // rule the person editor applies to a person's urls.
   const websiteError = url.trim() ? urlError(url.trim()) : null;
@@ -104,13 +138,13 @@ function JurisdictionDetails({ data, canEdit, onSave }: JurisdictionDetailsProps
       // current values, which is a write the user did not ask for — and once null means
       // "cleared", resending is how untouched fields get clobbered.
       setPrResult(await onSave({ url }));
+      setEditing(false);
     } catch (e: any) {
       setError(e.message ?? "Failed to save.");
     } finally {
       setIsSaving(false);
     }
   };
-
   // The editor's scalar control saves on input; here that would open a PR per
   // keystroke, so it edits local state and Save commits.
   const website = canEdit
@@ -145,6 +179,7 @@ function JurisdictionDetails({ data, canEdit, onSave }: JurisdictionDetailsProps
   const metadata = (data.metadata?.urls ?? []).map((u: string) => [["URL", u]] as [string, unknown][]);
 
   return html`
+    ${cap}
     <div class="jurisdiction-details__fields">
       ${renderRow("Website", website)}
       ${readOnlyRows(data).map(renderReadOnly)}
@@ -154,7 +189,7 @@ function JurisdictionDetails({ data, canEdit, onSave }: JurisdictionDetailsProps
 
       ${canEdit && dirty
         ? html`<div class="jurisdiction-details__actions">
-            <button class="btn-quiet" @click=${() => setUrl(data.url ?? "")}>Discard</button>
+            <button class="btn-quiet" @click=${handleDiscard}>Discard</button>
             <button
               class="btn-primary"
               ?disabled=${isSaving || !!websiteError}

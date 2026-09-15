@@ -55,6 +55,7 @@ export const SOLID = [
   "right-to-bracket",
   "rotate",
   "rotate-left",
+  "sitemap",
   "sun",
   "triangle-exclamation",
   "up-right-from-square",

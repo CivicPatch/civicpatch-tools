@@ -25,7 +25,6 @@ import {
   displayScalar,
   renderScalarNewSide,
   renderDateNewSide,
-  renderPostPickNewSide,
   renderOfficeNewSide,
   renderPhotoNewSide,
   renderMultiList,
@@ -47,6 +46,7 @@ import {
   postLabelFor,
   type DerivedPost,
   type Post,
+  type ProposedPost,
   type RoleOption,
 } from "../posts-list/posts-model.js";
 
@@ -91,8 +91,10 @@ export interface EditorFieldProps {
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
   posts: Post[];
+  organizationId: string;
   roles: RoleOption[];
   derivedPost: DerivedPost | null;
+  proposedPosts: ProposedPost[];
   focusRef: FocusRef | null;
   canAssignMembership: boolean;
   canCreatePost: boolean;
@@ -112,8 +114,10 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
     isReadOnly,
     jurisdictionOcdid,
     posts,
+    organizationId,
     roles,
     derivedPost,
+    proposedPosts,
     focusRef,
     canAssignMembership,
     canCreatePost,
@@ -121,11 +125,28 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
     assertions,
   } = props;
   if (!oldRecord) {
-    return isReadOnly
-      ? html`<span class="person-editor__readonly"
-          >${postLabelFor(diffValue(record, field), posts)}</span
-        >`
-      : renderPostPickNewSide(field, record, save, posts, derivedPost, focusRef);
+    if (isReadOnly) {
+      return html`<span class="person-editor__readonly"
+        >${postLabelFor(diffValue(record, field), posts)}</span
+      >`;
+    }
+    return renderOfficeNewSide(
+      record,
+      save,
+      posts,
+      roles,
+      derivedPost?.post_id ?? null,
+      derivedPost?.membershipLabel ?? null,
+      focusRef,
+      fieldLock(accepts.get(LABEL_FIELD), undefined, undefined),
+      assertionSummaryFor(assertions, LABEL_FIELD),
+      jurisdictionOcdid,
+      organizationId,
+      canCreatePost,
+      derivedPost?.post_id ? undefined : derivedPost?.role_id,
+      derivedPost?.post_id ? undefined : derivedPost?.division_ocdid,
+      proposedPosts,
+    );
   }
   // Prefer the proposal over the held membership: a scrape's detected move is the newer
   // claim, and defaulting the picker to it is what keeps this control from contradicting
@@ -148,7 +169,14 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
     fieldLock(accepts.get(LABEL_FIELD), undefined, undefined),
     assertionSummaryFor(assertions, LABEL_FIELD),
     jurisdictionOcdid,
+    organizationId,
     canCreatePost,
+    // A proposal naming a role/division with no post yet — nothing for the picker to look up
+    // by `post_id` above, so this is the only way it can show what's actually proposed instead
+    // of a blank "Choose a role…".
+    current?.post_id ? undefined : current?.role_id,
+    current?.post_id ? undefined : current?.division_ocdid,
+    proposedPosts,
   );
 }
 

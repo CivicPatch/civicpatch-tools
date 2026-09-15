@@ -4,11 +4,7 @@ from schemas.activity import FieldChange
 
 
 class CreatePostRequest(BaseModel):
-    """A post a person is asserting exists.
-
-    No `organization_id`: a jurisdiction has one body today, and accepting one would let a
-    caller file a post under another jurisdiction's organization. It is resolved server-side
-    from the jurisdiction, the same way the derivation does.
+    """A post a person is asserting exists, under the organization named by the route.
 
     `division_ocdid` is required and creates the division if it is new — a division is minted
     exactly when a post needs one, so folding it in here avoids an endpoint whose only purpose

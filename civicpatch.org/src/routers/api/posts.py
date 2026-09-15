@@ -7,36 +7,11 @@ from database import posts
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory, UserRole
 from schemas.pagination import paginated_response, pagination_offset
-from schemas.posts import CreatePostRequest, UpdatePostRequest
+from schemas.posts import UpdatePostRequest
 
 
 def get_router() -> APIRouter:
     router = APIRouter()
-
-    @router.post("/{jurisdiction_ocdid:path}")
-    async def create_post_endpoint(
-        jurisdiction_ocdid: str,
-        body: CreatePostRequest,
-        # Any signed-in user, same tier as assigning someone to an existing post
-        # (routers/api/memberships.py) — its own flag (`can_create_post`), not
-        # `can_edit_jurisdiction_data` reused, so lowering this didn't touch that one.
-        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
-    ):
-        """Create a post. 409 if the triple is taken — silently returning the existing id
-        would make "created" and "already there" indistinguishable."""
-        post_id = await posts.create(
-            jurisdiction_ocdid,
-            body.role_id,
-            body.division_ocdid,
-            body.headcount,
-            user.user_id,
-        )
-        if post_id is None:
-            return JSONResponse(
-                {"error": "A post already exists for that role and division."},
-                status_code=409,
-            )
-        return {"data": {"id": post_id}}
 
     @router.patch("/{post_id}")
     async def update_post_endpoint(

@@ -5,7 +5,7 @@
 // editable) rather than a second creation flow.
 import "../posts-list/post-add.js";
 import { html } from "lit-html";
-import { component, useState } from "haunted";
+import { component, useEffect, useState } from "haunted";
 import { attachFocus, inputValue, type FocusRef } from "../fields/field-utils.js";
 import { hostDispatch } from "../../utils/host-dispatch.js";
 import {
@@ -13,6 +13,7 @@ import {
   buildDivisionOcdid,
   divisionName,
   type Post,
+  type ProposedPost,
   type RoleOption,
 } from "../posts-list/posts-model.js";
 
@@ -22,8 +23,20 @@ type OfficePickerHost = HTMLElement & {
   posts?: Post[];
   roles?: RoleOption[];
   jurisdictionOcdid?: string | null;
+  organizationId?: string;
   canCreatePost?: boolean;
   postId?: string | null;
+  // Fallback initial pick when `postId` doesn't resolve to a real post — a proposal naming a
+  // role/division nobody holds yet, so there's no row to look up. Ignored once `postId` does
+  // resolve, or once the reviewer picks something themselves.
+  initialRoleId?: string;
+  initialDivisionOcdid?: string;
+  // This person's own proposed role(s)/division(s) — a scrape's claim, whether or not any
+  // established post matches it yet. Folded into the role/division options below so a
+  // proposal naming a role nobody holds (or a second role, alongside one already held) is
+  // still something a reviewer can pick, not just a "Moved from X to Y" note beside a picker
+  // that has no way to select what it's describing.
+  proposedPosts?: ProposedPost[];
   focusRef?: FocusRef | null;
 };
 
@@ -33,32 +46,62 @@ const NO_DIVISION = "";
 const byLabel = (a: RoleOption, b: RoleOption) => a.label.localeCompare(b.label);
 
 function OfficePicker(host: OfficePickerHost) {
-  const posts = host.posts ?? [];
   const roles = host.roles ?? [];
   const jurisdictionOcdid = host.jurisdictionOcdid ?? "";
   const atLarge = buildDivisionOcdid(jurisdictionOcdid, AT_LARGE_DIVISION, "");
+  // The post `civ-post-add` just minted, until the parent's own `posts` prop catches up with a
+  // refetch — without this, a role/division nobody had before `handleAdded`'s own pick doesn't
+  // match anything in `posts` yet, so the select it just set shows nothing selected at all.
+  const [justAdded, setJustAdded] = useState<Post | null>(null);
+  const posts = justAdded ? [...(host.posts ?? []), justAdded] : (host.posts ?? []);
   const currentPost = posts.find((post) => post.id === host.postId) ?? null;
 
-  const [roleId, setRoleId] = useState(currentPost?.role_id ?? NO_ROLE);
-  const [divisionOcdid, setDivisionOcdid] = useState(
-    currentPost && currentPost.division_ocdid !== atLarge
+  const initialRoleId = currentPost?.role_id ?? host.initialRoleId ?? NO_ROLE;
+  const initialDivisionOcdid = currentPost
+    ? currentPost.division_ocdid !== atLarge
       ? currentPost.division_ocdid
-      : NO_DIVISION,
-  );
+      : NO_DIVISION
+    : host.initialDivisionOcdid && host.initialDivisionOcdid !== atLarge
+      ? host.initialDivisionOcdid
+      : NO_DIVISION;
+  const [roleId, setRoleId] = useState(initialRoleId);
+  const [divisionOcdid, setDivisionOcdid] = useState(initialDivisionOcdid);
+  // `useState`'s own initializer only ever runs once — if this element's identity doesn't
+  // change when the reviewer moves to a different person (the inline editor slot getting
+  // reused rather than a fresh mount, however exactly that happens), the seeded value above
+  // can go stale. Resyncing here whenever the actual identity — which post, or which proposed
+  // role/division — changes is what makes that not matter either way. Skips a same-person
+  // re-render (these stay `===` across it), so a reviewer's own in-progress pick is never
+  // clobbered.
+  useEffect(() => {
+    setRoleId(initialRoleId);
+    setDivisionOcdid(initialDivisionOcdid);
+  }, [host.postId, host.initialRoleId, host.initialDivisionOcdid]);
   const [addOpen, setAddOpen] = useState(false);
 
-  const roleOptions = [...new Set(posts.map((post) => post.role_id))]
-    .map((id) => ({ id, label: roles.find((role) => role.id === id)?.label ?? id }))
+  const proposedPosts = host.proposedPosts ?? [];
+  const roleOptions = [
+    ...new Set([...posts.map((post) => post.role_id), ...proposedPosts.map((p) => p.role_id)]),
+  ]
+    .map((id) => ({
+      id,
+      label:
+        roles.find((role) => role.id === id)?.label ??
+        proposedPosts.find((p) => p.role_id === id)?.role_label ??
+        id,
+    }))
     .sort(byLabel);
   const divisionOptions = [
-    ...new Set(posts.filter((post) => post.role_id === roleId).map((post) => post.division_ocdid)),
+    ...new Set([
+      ...posts.filter((post) => post.role_id === roleId).map((post) => post.division_ocdid),
+      ...proposedPosts.filter((p) => p.role_id === roleId).map((p) => p.division_ocdid),
+    ]),
   ]
     .filter((ocdid) => ocdid !== atLarge)
     .sort((a, b) => divisionName(a).localeCompare(divisionName(b)));
 
   const matchFor = (role: string, division: string) =>
     role ? posts.find((post) => post.role_id === role && post.division_ocdid === division) ?? null : null;
-  const matchedPost = matchFor(roleId, divisionOcdid || atLarge);
 
   const notifyPicked = (post_id: string, membership_label?: string) =>
     hostDispatch(
@@ -83,6 +126,16 @@ function OfficePicker(host: OfficePickerHost) {
   const handleAdded = (e: CustomEvent) => {
     const { post_id, role_id, division_ocdid, label } = e.detail;
     setAddOpen(false);
+    setJustAdded({
+      id: post_id,
+      organization_id: host.organizationId ?? "",
+      role_id,
+      division_ocdid,
+      label: label ?? roles.find((role) => role.id === role_id)?.label ?? role_id,
+      _headcount: 1,
+      _is_tracked: true,
+      _is_verified: true,
+    });
     setRoleId(role_id);
     setDivisionOcdid(division_ocdid === atLarge ? NO_DIVISION : division_ocdid);
     notifyPicked(post_id, label ?? undefined);
@@ -119,8 +172,8 @@ function OfficePicker(host: OfficePickerHost) {
             )}
           </select>`
         : ""}
-      ${roleId && !matchedPost && host.canCreatePost
-        ? html`<button type="button" class="btn-quiet" @click=${() => setAddOpen(true)}>
+      ${host.canCreatePost
+        ? html`<button type="button" class="btn btn-sm" @click=${() => setAddOpen(true)}>
             Add a new office
           </button>`
         : ""}
@@ -128,6 +181,7 @@ function OfficePicker(host: OfficePickerHost) {
     ${addOpen
       ? html`<civ-post-add
           .jurisdictionOcdid=${jurisdictionOcdid}
+          .organizationId=${host.organizationId ?? ""}
           .roles=${roles}
           .initialRoleId=${roleId}
           .initialDivisionOcdid=${divisionOcdid || atLarge}

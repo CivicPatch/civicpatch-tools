@@ -5,6 +5,7 @@ import "../people/person-card-grid.css";
 import "./review-overview.css";
 import { type PersonEditorProps } from "../person-editor/person-editor.js";
 import { type Post, type RoleOption } from "../posts-list/posts-model.js";
+import { renderRoleGroup } from "../people/person-card-grid.js";
 import {
   proposalsByPersonId,
   personOf,
@@ -62,10 +63,9 @@ function renderTally(cards: PersonCard[]) {
   `;
 }
 
-// The editor for a card that isn't open renders nothing (renderInlineEditor gates on
-// openPersonId), so interleaving one after every card costs nothing except for the one
-// that's actually open — which then lands as the very next grid item after its own card,
-// `grid-column: 1/-1` breaking the row right there instead of at the bottom of the group.
+// No editor slots interleaved here — `renderRoleGroup` (person-card-grid.ts) owns where the
+// group breaks for the open card; this only owns how a given subset of cards renders inside
+// whichever box it lands in — runs of folded strips and full diff cards, same as always.
 function renderCardRuns(
   cards: PersonCard[],
   props: ReviewOverviewProps,
@@ -75,13 +75,9 @@ function renderCardRuns(
   return runsOf(cards).map((run) =>
     run.folded
       ? html`<div class="review-overview__strip">
-            ${run.cards.map((card) => renderFold(card, props, proposals))}
-          </div>
-          ${run.cards.map((card) => renderInlineEditor(card, props))}`
-      : run.cards.flatMap((card) => [
-          renderDiffCard(card, props, sources, proposals),
-          renderInlineEditor(card, props),
-        ]),
+          ${run.cards.map((card) => renderFold(card, props, proposals))}
+        </div>`
+      : run.cards.map((card) => renderDiffCard(card, props, sources, proposals)),
   );
 }
 
@@ -92,15 +88,14 @@ function renderSection(
   sources: SourceMap,
   proposals: Map<string, ProposedChange[]>,
 ) {
-  if (!cards.length) return nothing;
-  return html`
-    <div class="rgroup" style="--group-cards: ${cards.length}">
-      <div class="rgrouphead">
-        ${heading} <span class="sub">${cards.length}</span>
-      </div>
-      <div class="rgrid">${renderCardRuns(cards, props, sources, proposals)}</div>
-    </div>
-  `;
+  return renderRoleGroup(
+    heading,
+    cards,
+    (card: PersonCard) => card.personId,
+    (subset: PersonCard[]) => renderCardRuns(subset, props, sources, proposals),
+    props.openPersonId,
+    (card: PersonCard) => renderInlineEditor(card, props),
+  );
 }
 
 // A long "dropped" list shows the same way a long unchanged run does elsewhere — a couple in
@@ -120,6 +115,11 @@ function renderDepartingChips(cards: PersonCard[], props: ReviewOverviewProps) {
   </p>`;
 }
 
+// Shaped like `renderRoleGroup`'s split, but by hand: departing has its own hybrid layout
+// (full cards, then collapsed chips) that doesn't fit the plain "list of cards" shape
+// `renderRoleGroup` expects. Only `shown` has real positions worth preserving around the open
+// card — a chip in `rest` has no row of its own to protect, so opening one just adds the
+// editor after everything instead.
 function renderDepartingSection(
   cards: PersonCard[],
   props: ReviewOverviewProps,
@@ -129,20 +129,49 @@ function renderDepartingSection(
   if (!cards.length) return nothing;
   const shown = cards.slice(0, DEPARTING_SHOWN);
   const rest = cards.slice(DEPARTING_SHOWN);
+  const head = html`<div class="rgrouphead">
+    ${DEPARTING_SECTION_LABEL} <span class="sub">${cards.length}</span>
+  </div>`;
+  const openIndex = props.openPersonId
+    ? shown.findIndex((card) => card.personId === props.openPersonId)
+    : -1;
+
+  if (openIndex === -1) {
+    const openInRest = cards.find(
+      (card) => card.personId === props.openPersonId && rest.includes(card),
+    );
+    return html`
+      <div class="rgroup" style="--group-cards: ${shown.length}">
+        ${head}
+        <div class="rgrid">
+          ${shown.map((card) => renderDiffCard(card, props, sources, proposals))}
+        </div>
+        ${rest.length ? renderDepartingChips(rest, props) : nothing}
+      </div>
+      ${openInRest ? renderInlineEditor(openInRest, props) : nothing}
+    `;
+  }
+
+  const upToOpen = shown.slice(0, openIndex + 1);
+  const after = shown.slice(openIndex + 1);
   return html`
-    <div class="rgroup" style="--group-cards: ${shown.length}">
-      <div class="rgrouphead">
-        ${DEPARTING_SECTION_LABEL} <span class="sub">${cards.length}</span>
-      </div>
+    <div class="rgroup" style="--group-cards: ${upToOpen.length}">
+      ${head}
       <div class="rgrid">
-        ${shown.flatMap((card) => [
-          renderDiffCard(card, props, sources, proposals),
-          renderInlineEditor(card, props),
-        ])}
+        ${upToOpen.map((card) => renderDiffCard(card, props, sources, proposals))}
       </div>
-      ${rest.length ? renderDepartingChips(rest, props) : nothing}
-      ${rest.map((card) => renderInlineEditor(card, props))}
     </div>
+    ${renderInlineEditor(shown[openIndex], props)}
+    ${after.length || rest.length
+      ? html`
+          <div class="rgroup" style="--group-cards: ${after.length}">
+            <div class="rgrid">
+              ${after.map((card) => renderDiffCard(card, props, sources, proposals))}
+            </div>
+            ${rest.length ? renderDepartingChips(rest, props) : nothing}
+          </div>
+        `
+      : nothing}
   `;
 }
 

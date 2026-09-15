@@ -2,7 +2,7 @@
 import { html, nothing } from "lit-html";
 import "../person-image.js";
 import "./person-editor.css";
-import type { DerivedPost, Post, RoleOption } from "../posts-list/posts-model.js";
+import type { DerivedPost, Post, ProposedPost, RoleOption } from "../posts-list/posts-model.js";
 import {
   assertionSummaryFor,
   fieldLock,
@@ -55,8 +55,10 @@ export interface PersonEditorProps {
   assertions: PersonAssertion[];
   overriddenSourceValues: Record<string, unknown>;
   posts: Post[];
+  organizationId: string;
   roles: RoleOption[];
   derivedPost: DerivedPost | null;
+  proposedPosts: ProposedPost[];
   canAssignMembership: boolean;
   canCreatePost: boolean;
   isDirty: boolean;
@@ -176,8 +178,10 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
     isReadOnly,
     jurisdictionOcdid,
     posts,
+    organizationId,
     roles,
     derivedPost,
+    proposedPosts,
     canAssignMembership,
     canCreatePost,
     onSave,
@@ -210,8 +214,10 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
       isReadOnly,
       jurisdictionOcdid,
       posts,
+      organizationId,
       roles,
       derivedPost,
+      proposedPosts,
       canAssignMembership,
       canCreatePost,
       focusRef: focus && field.key === focusKey ? focus.attach : null,

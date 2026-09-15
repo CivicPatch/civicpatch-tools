@@ -1,4 +1,4 @@
-import { fetchOrganizations } from "../api.js";
+import { fetchOrganizations } from "../api-organizations.js";
 import type { Post } from "../components/posts-list/posts-model.js";
 import { useAsyncData } from "./use-async-data.js";
 

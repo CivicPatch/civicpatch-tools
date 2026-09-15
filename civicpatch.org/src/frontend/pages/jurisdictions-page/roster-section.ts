@@ -27,16 +27,19 @@ export interface RosterCardsProps {
   // Global role vocabulary, in canonical priority order — the card grid uses it to group
   // people under their best-ranked role.
   roles: RoleOption[];
+  // The organization this panel is scoped to — one call per body, so the heading says whose
+  // roster it is.
+  title: string;
 }
 
 export function renderRosterCards(props: RosterCardsProps) {
-  const { cards, isLoading, blockedReason, actions, onOpenPerson, openPersonId, editorFor, roles } =
+  const { cards, isLoading, blockedReason, actions, onOpenPerson, openPersonId, editorFor, roles, title } =
     props;
 
   return html`
     <section class="panel">
       <div class="panel__cap">
-        <b>Officials</b>
+        <b>${title}</b>
         <span class="jurisdiction-section__meta">
           ${isLoading
             ? "Loading…"
@@ -63,6 +66,7 @@ export function renderRosterCards(props: RosterCardsProps) {
                 ? (card) => onOpenPerson(card.personId, card.surviving[0]?.field.key ?? null)
                 : null,
               openPersonId,
+              idPrefix: ROSTER_PERSON_ID_PREFIX,
               renderEditor: editorFor
                 ? (card) =>
                     renderInlinePersonEditor({
@@ -73,9 +77,7 @@ export function renderRosterCards(props: RosterCardsProps) {
                     })
                 : null,
             })
-          : html`<p class="jurisdiction-section__meta">
-              No people published for this jurisdiction yet.
-            </p>`}
+          : html`<p class="jurisdiction-section__meta">No one published here yet.</p>`}
     </section>
   `;
 }

@@ -238,6 +238,11 @@
   color: var(--text-muted);
 }
 .person-editor__was {
+  /* Same explicit placement as .person-editor__error/.person-editor__issue just below —
+     without it, this fell to implicit grid auto-placement and could land in whatever single
+     leftover track was free (as narrow as the 1.5rem lock column), wrapping its text one
+     character per line instead of getting the row's real remaining width. */
+  grid-column: 2 / -1;
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
@@ -493,9 +498,11 @@ civ-assertions-popover {
   gap: 0.2rem 0.7rem;
 }
 
-/* In-place expansion under a clicked row (review overview, jurisdiction roster) */
+/* In-place expansion under a clicked row (review overview, jurisdiction roster). Both render
+   this as a `.rgroup-list` flex child, not nested in a group's own grid — `flex: 1 0 100%`
+   (person-card-grid.css) is what gives it a full line there; `display: grid` below is only
+   this element's own open/close collapse animation, unrelated to its parent's layout. */
 .person-editor-inline {
-  grid-column: 1 / -1;
   display: grid;
   grid-template-rows: 1fr;
   outline: none;

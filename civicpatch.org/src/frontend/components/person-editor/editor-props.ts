@@ -21,6 +21,7 @@ import {
   heldMembershipLabel,
   type DerivedPost,
   type Post,
+  type ProposedPost,
   type RoleOption,
 } from "../posts-list/posts-model.js";
 
@@ -35,6 +36,7 @@ export interface EditorContext {
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
   posts: Post[];
+  organizationId: string;
   roles: RoleOption[];
   canAssignMembership: boolean;
   canCreatePost: boolean;
@@ -61,6 +63,10 @@ function derivedPostFromProposal(proposal: ProposedChange): DerivedPost | null {
     post_id: proposal.post_id ?? null,
     label: proposal.post_label,
     membershipLabel: proposal.label ?? null,
+    // Only meaningful when there's no `post_id` for the picker to look up instead (see
+    // `DerivedPost`'s own comment) — carried regardless, since it costs nothing unused.
+    role_id: proposal.role_id,
+    division_ocdid: proposal.division_ocdid,
   };
 }
 
@@ -85,6 +91,24 @@ function derivedPostFor(
     : derivedPostFromHeld(personOf(card)?.memberships);
 }
 
+// Every role/division this person has proposed, regardless of how many — unlike
+// `derivedPostFor` above, which gives up entirely once there's more than one (there's no
+// single answer to auto-pick), this hands all of them to the office picker as options, so a
+// person proposed for two seats at once is something a reviewer can actually choose between
+// rather than a picker showing neither.
+function proposedPostsFor(
+  card: PersonCard,
+  proposals: Map<string, ProposedChange[]>,
+): ProposedPost[] {
+  return (proposals.get(card.personId) ?? [])
+    .filter((proposal) => proposal.role_id !== UNMATCHED_ROLE_ID)
+    .map((proposal) => ({
+      role_id: proposal.role_id,
+      role_label: proposal.role_label,
+      division_ocdid: proposal.division_ocdid,
+    }));
+}
+
 export function personEditorPropsFor(
   card: PersonCard,
   ctx: EditorContext,
@@ -101,10 +125,12 @@ export function personEditorPropsFor(
     jurisdictionOcdid: ctx.jurisdictionOcdid,
     subtitle: postsFor(card, ctx.proposals, ctx.posts),
     derivedPost: derivedPostFor(card, ctx.proposals),
+    proposedPosts: proposedPostsFor(card, ctx.proposals),
     accepts: acceptsByField(ctx.assertions[card.personId] ?? []),
     assertions: ctx.assertions[card.personId] ?? [],
     overriddenSourceValues: ctx.overriddenSourceValues[card.personId] ?? {},
     posts: ctx.posts,
+    organizationId: ctx.organizationId,
     roles: ctx.roles,
     canAssignMembership: ctx.canAssignMembership,
     canCreatePost: ctx.canCreatePost,

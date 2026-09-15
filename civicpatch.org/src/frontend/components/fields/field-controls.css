@@ -99,11 +99,20 @@
   flex-direction: column;
   gap: 0.3rem;
 }
-/* Role select, division select, and "Add a new office" side by side within civ-office-picker. */
+/* Role select, division select, and "Add a new office" — each its own row, matching
+   .field-control__office-group's stack, since side by side (an earlier version of this rule)
+   squeezed all three into too little width each. */
 .office-picker {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   gap: 0.3rem;
+}
+/* Same height/padding as .field-control__office, so the button lines up with the selects
+   above it instead of sizing to its own text like a bare .btn-sm normally does. */
+.office-picker .btn-sm {
+  padding: 0.48rem 0.75rem;
+  height: auto;
 }
 
 /* One tint recipe for all four states: the state names a colour, and the tint is

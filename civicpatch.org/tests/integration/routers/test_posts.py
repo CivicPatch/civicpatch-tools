@@ -24,9 +24,9 @@ from routers.api import posts as posts_router
 from schemas.common import Identity
 
 _PREFIX = "/api/v1/posts"
-# The per-jurisdiction read (organizations nested with their posts) moved to this router
-# entirely — see routers/api/organizations.py. Mounted alongside posts on every client here
-# so a test can create through one router and read back through the other, like the real app.
+# The per-jurisdiction read and post creation both moved to this router — see
+# routers/api/organizations.py. Mounted alongside posts on every client here so a test can
+# create through one router and patch through the other, like the real app.
 _ORG_PREFIX = "/api/v1/organizations"
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_route/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_route"
@@ -148,9 +148,19 @@ async def clean_sentinels():
     await _wipe()
 
 
-def _create(client, role_id: str = "mayor", division: str = _BASE, **body):
+async def _default_org_id() -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        return await organizations.get_default(cur, _OCDID)
+
+
+async def _create(
+    client, role_id: str = "mayor", division: str = _BASE, organization_id: str | None = None, **body
+):
+    if organization_id is None:
+        organization_id = await _default_org_id()
     return client.post(
-        f"{_PREFIX}/{_OCDID}",
+        f"{_ORG_PREFIX}/{organization_id}/posts",
         json={"role_id": role_id, "division_ocdid": division, **body},
     )
 
@@ -187,7 +197,7 @@ async def _seat_someone(post_id: str) -> None:
 async def test_an_ocdid_survives_the_round_trip(client):
     """`:path` is what lets the ocdid's slashes through, and it carries colons too. A plain
     `{jurisdiction_ocdid}` would 404 every real id."""
-    assert _create(client).status_code == 200
+    assert (await _create(client)).status_code == 200
 
     response = client.get(f"{_ORG_PREFIX}/{_OCDID}")
 
@@ -202,20 +212,32 @@ async def test_an_ocdid_survives_the_round_trip(client):
 async def test_creating_the_same_seat_twice_is_a_conflict(client):
     """409 rather than a second row: the identity triple is the whole key, so a duplicate is
     the caller wanting a post that exists, not a new one."""
-    assert _create(client).status_code == 200
+    assert (await _create(client)).status_code == 200
 
-    duplicate = _create(client)
+    duplicate = await _create(client)
 
     assert duplicate.status_code == 409, duplicate.text
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_creating_a_post_under_an_unknown_organization_is_404(client):
+    """The organization comes from the route (`/organizations/{organization_id}/posts`), not
+    the caller's own say-so about a jurisdiction — so one that doesn't exist has to 404 rather
+    than the create silently going through under nothing."""
+    response = await _create(client, organization_id=str(uuid.uuid4()))
+
+    assert response.status_code == 404, response.text
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_patch_reaches_a_post_not_the_jurisdiction_route(client):
-    """`/{post_id}` and `/{jurisdiction_ocdid:path}` share a prefix. A path converter matches
-    greedily, so if this ever lands on the wrong handler it happens silently — a 200 from the
-    wrong route looks exactly like success."""
-    post_id = _create(client).json()["data"]["id"]
+    """This test verified `/{post_id}` and `/{jurisdiction_ocdid:path}` shared a prefix and a
+    greedy path converter could silently swallow one into the other — true when both routes
+    lived on this router. Create moved to the organizations router since, so that specific
+    collision is gone; this now just locks down the patch-then-read round trip."""
+    post_id = (await _create(client)).json()["data"]["id"]
 
     patched = client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 2, "_is_tracked": True})
     assert patched.status_code == 200, patched.text
@@ -239,8 +261,8 @@ async def test_patching_a_post_that_is_not_there_is_404(client):
 async def test_verified_is_on_the_wire_both_ways(client):
     """The flag is only useful if it survives serialisation, and absence must never be how a
     consumer infers it."""
-    unheld = _create(client).json()["data"]["id"]
-    held = _create(client, role_id="clerk").json()["data"]["id"]
+    unheld = (await _create(client)).json()["data"]["id"]
+    held = (await _create(client, role_id="clerk")).json()["data"]["id"]
     await _seat_someone(held)
 
     posts_out = client.get(f"{_ORG_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"]
@@ -261,7 +283,7 @@ async def test_create_reads_headcount_under_its_wire_name(client):
     error, it is silently the default — so only asserting the stored value catches a
     regression here.
     """
-    created = _create(client, division=_WARD_3, _headcount=4)
+    created = await _create(client, division=_WARD_3, _headcount=4)
     assert created.status_code == 200, created.text
 
     listed = client.get(f"{_ORG_PREFIX}/{_OCDID}").json()["data"]["organizations"]
@@ -275,7 +297,7 @@ async def test_create_reads_headcount_under_its_wire_name(client):
 async def test_a_seat_for_nobody_is_rejected(client):
     """`headcount` is `gt=0`. Validation lives in the model, so the route never sees a zero —
     but nothing had ever sent one to find out."""
-    rejected = _create(client, division=_WARD_3, _headcount=0)
+    rejected = await _create(client, division=_WARD_3, _headcount=0)
 
     assert rejected.status_code == 422, rejected.text
 
@@ -285,7 +307,7 @@ async def test_a_seat_for_nobody_is_rejected(client):
 async def test_the_identity_triple_is_not_patchable(client):
     """`role_id` and `division_ocdid` are the key. Accepting either here would let a rename
     fork the post — the next scrape would mint a second rather than match this one."""
-    post_id = _create(client).json()["data"]["id"]
+    post_id = (await _create(client)).json()["data"]["id"]
 
     client.patch(f"{_PREFIX}/{post_id}", json={"label": "x", "_headcount": 1, "_is_tracked": True, "role_id": "clerk"})
 
@@ -299,7 +321,7 @@ async def test_the_identity_triple_is_not_patchable(client):
 async def test_every_write_leaves_a_trace(client):
     """Who created a seat and who edited it. `roles.py`, `people.py` and `pull_requests.py`
     all log; posts did not, so a curator's edits were unattributable."""
-    post_id = _create(client).json()["data"]["id"]
+    post_id = (await _create(client)).json()["data"]["id"]
     client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 2, "_is_tracked": True})
 
     logs = await _activity_rows()
@@ -316,8 +338,8 @@ async def test_every_write_leaves_a_trace(client):
 async def test_a_rejected_create_leaves_no_trace(client):
     """409 means no seat was created. Logging it would put an event in the feed for something
     that never happened."""
-    _create(client)
-    _create(client)
+    await _create(client)
+    await _create(client)
 
     assert [log["type"] for log in await _activity_rows()] == ["add_post"]
 
@@ -334,7 +356,7 @@ async def _is_tracked(post_id: str) -> bool:
 async def test_a_post_can_be_untracked_and_tracked_again(client):
     """Mint seeds tracking from whether the role was recognised, which is a guess. This is
     where somebody corrects it."""
-    post_id = _create(client).json()["data"]["id"]
+    post_id = (await _create(client)).json()["data"]["id"]
     assert await _is_tracked(post_id) is True
 
     client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 1, "_is_tracked": False})
@@ -349,7 +371,7 @@ async def test_a_post_can_be_untracked_and_tracked_again(client):
 async def test_a_patch_must_state_whether_the_post_is_tracked(client):
     """No default. This route replaces what it is given, so an omission would silently
     re-track a post somebody turned off."""
-    post_id = _create(client).json()["data"]["id"]
+    post_id = (await _create(client)).json()["data"]["id"]
     response = client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 2})
     assert response.status_code == 422
 
@@ -362,13 +384,13 @@ async def test_the_roster_reads_without_signing_in(client, anonymous_client):
     Both halves are asserted together because they are one policy: opening the whole router is
     the plausible way this breaks, and a read-only assertion would not notice.
     """
-    _create(client)
+    await _create(client)
 
     read = anonymous_client.get(f"{_ORG_PREFIX}/{_OCDID}")
     assert read.status_code == 200, read.text
     assert [p["role_id"] for p in read.json()["data"]["organizations"][0]["posts"]] == ["mayor"]
 
-    assert _create(anonymous_client, division=_WARD_3).status_code == 403
+    assert (await _create(anonymous_client, division=_WARD_3)).status_code == 403
 
 
 @pytest.mark.asyncio
@@ -380,7 +402,7 @@ async def test_creating_a_post_is_open_to_any_signed_in_user(default_role_client
     somebody sits in a seat that does not exist yet should not need a maintainer to mint it.
     This is its own flag (`can_create_post`), not `can_edit_jurisdiction_data` reused — editing
     a post's headcount/tracked state (`update_post_endpoint`) stays maintainer+, unchanged."""
-    assert _create(default_role_client, division=_WARD_3).status_code == 200
+    assert (await _create(default_role_client, division=_WARD_3)).status_code == 200
 
 
 @pytest.mark.asyncio
@@ -388,4 +410,4 @@ async def test_creating_a_post_is_open_to_any_signed_in_user(default_role_client
 async def test_a_contributor_can_create_a_post(contributor_client):
     """This test verified a contributor still cannot create a post (403). It now verifies they
     can (200), for the same 2026-09-15 tier change as the default-role case above."""
-    assert _create(contributor_client, division=_WARD_3).status_code == 200
+    assert (await _create(contributor_client, division=_WARD_3)).status_code == 200

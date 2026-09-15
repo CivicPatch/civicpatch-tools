@@ -6,6 +6,7 @@
 import { html, nothing } from "lit-html";
 import "../person-image.js";
 import { renderInlinePersonEditor } from "../person-editor/inline-editor.js";
+import { renderCardShell } from "../people/person-card-grid.js";
 import { ensureUrl } from "../fields/field-controls.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
@@ -142,22 +143,17 @@ export function renderDiffCard(
   const moved = movedNote(card, proposals, props.posts);
   const fields = visibleFields(card);
   const isOpen = card.personId === props.openPersonId;
-  const openThisPerson = () =>
-    props.onOpenPerson(card.personId, fields[0]?.field.key ?? null);
-  return html`
-    <div
-      class="rperson rperson--interactive review-row--${card.status} ${isOpen
-        ? "rperson--open"
-        : ""}"
-    >
-      <button
-        type="button"
-        class="rperson__open"
-        aria-label=${rowLabel(card)}
-        aria-expanded=${isOpen}
-        aria-controls="review-person-${card.personId}"
-        @click=${openThisPerson}
-      ></button>
+  return renderCardShell(
+    {
+      card,
+      ariaLabel: rowLabel(card),
+      isOpen,
+      onOpenPerson: (c: PersonCard) =>
+        props.onOpenPerson(c.personId, fields[0]?.field.key ?? null),
+      editorId: `review-person-${card.personId}`,
+      extraClass: `review-row--${card.status}`,
+    },
+    html`
       <span class="pc-av">
         <person-image .person=${record ?? {}} .size=${"4rem"}></person-image>
       </span>
@@ -173,8 +169,8 @@ export function renderDiffCard(
         <span class="review-row__sources">${renderSources(card, sources)}</span>
       </span>
       <i class="fa-solid fa-chevron-down pc-hint" aria-hidden="true"></i>
-    </div>
-  `;
+    `,
+  );
 }
 
 export function renderInlineEditor(card: PersonCard, props: ReviewOverviewProps) {
@@ -192,11 +188,13 @@ export function renderFold(
   proposals: Map<string, ProposedChange[]>,
 ) {
   const record = personOf(card);
+  const isOpen = card.personId === props.openPersonId;
   return html`
-    <span class="review-fold">
+    <span class="review-fold ${isOpen ? "review-fold--open" : ""}">
       <button
         class="review-fold__open"
         aria-label=${rowLabel(card)}
+        aria-expanded=${isOpen}
         @click=${() => props.onOpenPerson(card.personId, null)}
       >
         <person-image
