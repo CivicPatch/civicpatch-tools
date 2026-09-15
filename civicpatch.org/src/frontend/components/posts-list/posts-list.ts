@@ -4,7 +4,7 @@ import "./post-add.js";
 import "../action-btn/action-btn.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
-import { fetchPosts, fetchMemberships, fetchRoles } from "../../api.js";
+import { fetchOrganizations, fetchMemberships, fetchRoles } from "../../api.js";
 import { useAsyncData } from "../../hooks/use-async-data.js";
 import { groupPostsByRole, divisionName } from "./posts-model.js";
 import type { RoleGroup, PostRow, RoleOption } from "./posts-model.js";
@@ -85,7 +85,7 @@ function PostsList(host: PostsListHost) {
   }>(async () => {
     if (!ocdid) return { byRole: [], roles: [] };
     const [postsBody, membershipsBody, rolesBody] = await Promise.all([
-      fetchPosts(ocdid),
+      fetchOrganizations(ocdid),
       fetchMemberships(ocdid),
       fetchRoles(),
     ]);

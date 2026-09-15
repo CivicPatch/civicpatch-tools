@@ -231,8 +231,8 @@ export const fetchRoles = async () => {
   return res.json();
 };
 
-export const fetchPosts = async (jurisdictionOcdid) => {
-  const res = await fetch(`/api/v1/posts/${jurisdictionOcdid}`, {
+export const fetchOrganizations = async (jurisdictionOcdid) => {
+  const res = await fetch(`/api/v1/organizations/${jurisdictionOcdid}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

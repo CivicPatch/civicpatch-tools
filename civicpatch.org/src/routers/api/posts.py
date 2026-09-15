@@ -17,12 +17,10 @@ def get_router() -> APIRouter:
     async def create_post_endpoint(
         jurisdiction_ocdid: str,
         body: CreatePostRequest,
-        # Maintainer+, same tier as editing a jurisdiction's published data — minting or
-        # reshaping a post is a structural change, unlike assigning someone to an existing one
-        # (routers/api/memberships.py, any signed-in user).
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
-        ),
+        # Any signed-in user, same tier as assigning someone to an existing post
+        # (routers/api/memberships.py) — its own flag (`can_create_post`), not
+        # `can_edit_jurisdiction_data` reused, so lowering this didn't touch that one.
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         """Create a post. 409 if the triple is taken — silently returning the existing id
         would make "created" and "already there" indistinguishable."""
@@ -76,22 +74,5 @@ def get_router() -> APIRouter:
             state.lower(), per_page, pagination_offset(page, per_page)
         )
         return paginated_response(total, page, per_page, rows)
-
-    @router.get("/{jurisdiction_ocdid:path}")
-    async def get_posts_endpoint(jurisdiction_ocdid: str):
-        """Every body in a jurisdiction with its posts, grouped for the roster screen.
-
-        Unauthenticated, like the people and role reads: this is the jurisdiction page's own
-        data, and that page is public. Every write below is gated on its own.
-
-        `:path` because an ocdid contains slashes. **Declared last** so `/{post_id}` routes
-        match before this swallows them.
-
-        Undated: a post is not a temporal fact, and who holds one at a given moment is the
-        memberships read. `_is_verified` on each row says whether a person vouched for it.
-        """
-        return {
-            "data": {"organizations": await posts.list_by_organization(jurisdiction_ocdid)}
-        }
 
     return router

@@ -30,6 +30,7 @@ interface RosterEditorProps {
   jurisdictionOcdid: string;
   canEdit: boolean;
   canAssignMembership: boolean;
+  canCreatePost: boolean;
   isLoading: boolean;
   blockedReason: string | null;
   onPublished: () => void;
@@ -48,6 +49,7 @@ function RosterEditor({
   jurisdictionOcdid,
   canEdit,
   canAssignMembership,
+  canCreatePost,
   isLoading,
   blockedReason,
   onPublished,
@@ -143,6 +145,7 @@ function RosterEditor({
       posts,
       roles,
       canAssignMembership,
+      canCreatePost,
       proposals: new Map(),
       assertions,
       overriddenSourceValues: {},

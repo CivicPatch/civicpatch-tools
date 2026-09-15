@@ -66,8 +66,8 @@ export const urlError = (text: string) => {
 // iterates a key that is not in the schema — the check could never have run.
 //
 // The rule itself is not gone, it moved to where typing still happens: `isDivisionValue` in
-// posts-model guards the add-post and assign forms, and is stricter (a value must be a number,
-// a cardinal direction, or a single letter, so empty and whitespace both fail).
+// utils/division-utils guards the add-post and assign forms, and is stricter (a value must be
+// a number, a cardinal direction, or a single letter, so empty and whitespace both fail).
 
 // Per-value format checks, by field. Deliberately permissive: the backend
 // canonicalises and is the authority (shared/schemas.py), so this catches only

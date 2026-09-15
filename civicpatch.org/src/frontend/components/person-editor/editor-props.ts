@@ -37,6 +37,7 @@ export interface EditorContext {
   posts: Post[];
   roles: RoleOption[];
   canAssignMembership: boolean;
+  canCreatePost: boolean;
   proposals: Map<string, ProposedChange[]>;
   assertions: Record<string, PersonAssertion[]>;
   overriddenSourceValues: Record<string, Record<string, unknown>>;
@@ -106,6 +107,7 @@ export function personEditorPropsFor(
     posts: ctx.posts,
     roles: ctx.roles,
     canAssignMembership: ctx.canAssignMembership,
+    canCreatePost: ctx.canCreatePost,
     isDirty: ctx.dirtyIds.has(card.personId),
     isExpanded: ctx.isExpanded(card.personId),
     onToggleExpand: () => ctx.onToggleExpand(card.personId),

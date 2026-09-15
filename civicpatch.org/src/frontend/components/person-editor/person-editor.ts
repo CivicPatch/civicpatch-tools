@@ -58,6 +58,7 @@ export interface PersonEditorProps {
   roles: RoleOption[];
   derivedPost: DerivedPost | null;
   canAssignMembership: boolean;
+  canCreatePost: boolean;
   isDirty: boolean;
   isExpanded: boolean;
   onToggleExpand: () => void;
@@ -178,6 +179,7 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
     roles,
     derivedPost,
     canAssignMembership,
+    canCreatePost,
     onSave,
   } = props;
   const survivingByKey = new Map(surviving.map((s) => [s.field.key, s]));
@@ -211,6 +213,7 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
       roles,
       derivedPost,
       canAssignMembership,
+      canCreatePost,
       focusRef: focus && field.key === focusKey ? focus.attach : null,
     });
   });

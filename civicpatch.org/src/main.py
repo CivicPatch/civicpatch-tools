@@ -21,6 +21,7 @@ import routers.api.memberships as api_memberships_router
 import routers.api.people as api_people_router
 import routers.api.changeset_summaries as api_changeset_summaries_router
 import routers.api.imports as api_imports_router
+import routers.api.organizations as api_organizations_router
 import routers.api.posts as api_posts_router
 import routers.api.pipeline_runs as api_pipeline_runs_router
 import routers.api.review_actions as api_review_actions_router
@@ -204,6 +205,13 @@ app.include_router(
     api_posts_router.get_router(),
     prefix="/api/v1/posts",
     tags=["posts"],
+)
+
+# Create/edit/delete a jurisdiction's non-default bodies (Council, School Board).
+app.include_router(
+    api_organizations_router.get_router(),
+    prefix="/api/v1/organizations",
+    tags=["organizations"],
 )
 
 # Curated-sheet imports: start one, watch it, release a stuck lock.

@@ -3,7 +3,12 @@ import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import "../../../components/basic/modal.js";
 
-function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}, identities = {} }) {
+function ScrapeModal({
+  onStartScrape,
+  url = "",
+  sourceUrls = [],
+  modalProps = {},
+}) {
   const [scrapeScope, setScrapeScope] = useState("top-level-url");
   const [currentUrl, setCurrentUrl] = useState(url);
   const [currentSourceUrls, setCurrentSourceUrls] = useState(sourceUrls);
@@ -115,40 +120,53 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
       <div class="scrape-modal__url-section">
         ${scrapeScope === "top-level-url"
           ? html`
-            <fieldset role="group">
-              <input
-                type="url"
-                .value="${currentUrl}"
-                @input=${handleUrlChange}
-                placeholder="https://…"
-              />
-              <button type="button" class="secondary" @click=${resetUrl}>Reset</button>
-            </fieldset>
-          `
+              <fieldset role="group">
+                <input
+                  type="url"
+                  .value="${currentUrl}"
+                  @input=${handleUrlChange}
+                  placeholder="https://…"
+                />
+                <button type="button" class="secondary" @click=${resetUrl}>
+                  Reset
+                </button>
+              </fieldset>
+            `
           : html`
-            ${currentSourceUrls.map(
-              (url, index) => html`
-                <fieldset role="group">
-                  <input
-                    type="url"
-                    .value="${url}"
-                    @input=${(e) => handleSourceUrlChange(index, e)}
-                    placeholder="https://…"
-                  />
-                  <button type="button" class="secondary destructive" @click=${() => removeSourceUrl(index)}>
-                    Delete
-                  </button>
-                </fieldset>
-              `,
-            )}
-            <button class="btn-ghost scrape-modal__add-url" @click=${addSourceUrl}>+ Add URL</button>
-          `}
+              ${currentSourceUrls.map(
+                (url, index) => html`
+                  <fieldset role="group">
+                    <input
+                      type="url"
+                      .value="${url}"
+                      @input=${(e) => handleSourceUrlChange(index, e)}
+                      placeholder="https://…"
+                    />
+                    <button
+                      type="button"
+                      class="secondary destructive"
+                      @click=${() => removeSourceUrl(index)}
+                    >
+                      Delete
+                    </button>
+                  </fieldset>
+                `,
+              )}
+              <button
+                class="btn-ghost scrape-modal__add-url"
+                @click=${addSourceUrl}
+              >
+                + Add URL
+              </button>
+            `}
       </div>
     </div>
   `;
 
   const footer = html`
-    <button @click=${modalProps.onClose} class="secondary btn-sm">Cancel</button>
+    <button @click=${modalProps.onClose} class="secondary btn-sm">
+      Cancel
+    </button>
     <button
       @click=${() => {
         submitScrape();

@@ -6,11 +6,12 @@
 // Pairing a control with an old value is editor-field.ts's job, not theirs.
 
 import { html, nothing } from "lit-html";
-import { ref } from "lit-html/directives/ref.js";
 import "./field-controls.css";
-import { groupPostsByRole } from "../posts-list/posts-model.js";
 import type { DerivedPost, Post, RoleOption } from "../posts-list/posts-model.js";
 import "../person-editor/assertions-popover.js";
+import "../person-editor/office-picker.js";
+export { inputValue, attachFocus, type FocusRef, type FieldFocus } from "./field-utils.js";
+import { attachFocus, inputValue, type FocusRef } from "./field-utils.js";
 import type { FieldAssertionSummary, FieldLock } from "../person-editor/field-provenance.js";
 import {
   PERSON_LINK_TARGET,
@@ -33,22 +34,6 @@ import {
 } from "../edit-people/person-edit-utils.js";
 
 export type Save = (updates: Record<string, unknown>) => void;
-
-// A callback ref, not a `Ref` object: only the template that renders a control
-// knows when it exists, and the call is that signal.
-export type FocusRef = (el?: Element) => void;
-
-// Which field asked for focus, and the ref that takes it. The editor decides
-// which row it lands on; the control decides which of its elements holds it.
-export interface FieldFocus {
-  key: string;
-  attach: FocusRef;
-}
-
-// `nothing` in an element position is a no-op, so a control that was not asked
-// for gets no ref at all.
-export const attachFocus = (focusRef: FocusRef | null) =>
-  focusRef ? ref(focusRef) : nothing;
 
 // Verdicts the surrounding row already computed, for controls that style
 // themselves by them. Only the plain input does.
@@ -81,9 +66,6 @@ export function buildFieldUpdate(
 export function ensureUrl(value: string): string {
   return /^https?:\/\//i.test(value) ? value : `https://${value}`;
 }
-
-export const inputValue = (e: Event) =>
-  (e.target as HTMLInputElement | HTMLSelectElement).value;
 
 export function displayScalar(field: FieldSpec, person: PresentRecord): string {
   const value = diffValue(person, field);
@@ -246,35 +228,27 @@ export function renderOfficeNewSide(
   focusRef: FocusRef | null,
   labelLock: FieldLock | null,
   labelAssertionSummary: FieldAssertionSummary | null,
+  jurisdictionOcdid: string | null | undefined,
+  canCreatePost: boolean,
 ) {
   const picked = (record.post_id as string | null | undefined) ?? null;
   const current = picked ?? currentPostId;
   const pickedLabel = (record.membership_label as string | null | undefined) ?? currentLabel;
-  const roleLabels = new Map(roles.map((role) => [role.id, role.label]));
-  const groups = groupPostsByRole(posts, [], roleLabels);
+  const handlePicked = (e: CustomEvent) => {
+    const { post_id, membership_label } = e.detail;
+    save(membership_label === undefined ? { post_id } : { post_id, membership_label });
+  };
   return html`
     <div class="field-control__office-group">
-      <select
-        ${attachFocus(focusRef)}
-        class="field-control__office"
-        aria-label="Office"
-        @change=${(e: Event) => save({ post_id: inputValue(e) || null })}
-      >
-        ${current
-          ? nothing
-          : html`<option value="" selected disabled>Choose a post</option>`}
-        ${groups.map(
-          (group) => html`
-            <optgroup label=${group.role_label}>
-              ${group.posts.map(
-                (post) => html`<option value=${post.id} .selected=${post.id === current}>
-                  ${post.label}
-                </option>`,
-              )}
-            </optgroup>
-          `,
-        )}
-      </select>
+      <civ-office-picker
+        .posts=${posts}
+        .roles=${roles}
+        .jurisdictionOcdid=${jurisdictionOcdid}
+        .postId=${current}
+        .canCreatePost=${canCreatePost}
+        .focusRef=${focusRef}
+        @picked=${handlePicked}
+      ></civ-office-picker>
       ${current
         ? html`<input
             type="text"

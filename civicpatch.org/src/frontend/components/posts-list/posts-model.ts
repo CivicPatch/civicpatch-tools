@@ -1,6 +1,7 @@
 import { PLACE_LABEL } from "../edit-people/person-edit-utils.js";
 import { parseDivision } from "../ocdid-utils.js";
 import { jurisdictionToDivisionBase } from "../edit-people/person-edit-utils.js";
+import { DIVISION_LABELS } from "../../utils/division-utils.js";
 
 export interface Post {
   id: string;
@@ -106,16 +107,6 @@ export function groupPostsByRole(
   });
 }
 
-// Mirrors `_DIVISION_LABELS` in `membership_label.py`; a drift shows the same division two
-// ways on one screen.
-const DIVISION_LABELS: Record<string, string> = {
-  ward: "Ward",
-  council_district: "District",
-  district: "District",
-  precinct: "Precinct",
-  subdistrict: "Subdistrict",
-};
-
 export const divisionName = (division_ocdid: string): string => {
   const { key, value } = parseDivision(division_ocdid);
   if (!key || key === PLACE_LABEL) return AT_LARGE;
@@ -142,49 +133,25 @@ export const AT_LARGE_DIVISION: AddableDivision = "at-large";
 
 export function buildDivisionOcdid(
   jurisdictionOcdid: string,
-  designation: AddableDivision,
-  value: string,
+  divisionKind: AddableDivision,
+  divisionValue: string,
 ): string {
   const base = jurisdictionToDivisionBase(jurisdictionOcdid);
-  if (designation === AT_LARGE_DIVISION) return base;
-  return `${base}/${designation}:${value.trim()}`;
-}
-
-// Mirrors `_CARDINALS` in `label_parser.py`.
-const CARDINALS = [
-  "north",
-  "south",
-  "east",
-  "west",
-  "northeast",
-  "northwest",
-  "southeast",
-  "southwest",
-  "central",
-] as const;
-
-/** Mirrors `_is_value` in `label_parser.py`, and must stay the *same* closed set: a post whose
- * ocdid a scrape can never produce sits unverified forever with a duplicate beside it. */
-export function isDivisionValue(value: string): boolean {
-  const key = value.trim().toLowerCase();
-  if (!key) return false;
-  // Ordinals too: the parser normalises "3rd" to "3" before this test.
-  if (/^\d+(st|nd|rd|th)?$/.test(key)) return true;
-  if ((CARDINALS as readonly string[]).includes(key)) return true;
-  return key.length === 1 && /[a-z]/.test(key);
+  if (divisionKind === AT_LARGE_DIVISION) return base;
+  return `${base}/${divisionKind}:${divisionValue.trim()}`;
 }
 
 /** The inverse of `buildDivisionOcdid`. A key we cannot offer reads as at-large rather than
  * becoming a blank select that saves something different from what it shows. */
 export function divisionSelection(division_ocdid: string | null | undefined): {
-  designation: AddableDivision;
-  value: string;
+  divisionKind: AddableDivision;
+  divisionValue: string;
 } {
   const { key, value } = parseDivision(division_ocdid ?? "");
-  const designation = ADDABLE_DIVISIONS.find((option) => option === key);
-  return designation && designation !== AT_LARGE_DIVISION
-    ? { designation, value }
-    : { designation: AT_LARGE_DIVISION, value: "" };
+  const divisionKind = ADDABLE_DIVISIONS.find((option) => option === key);
+  return divisionKind && divisionKind !== AT_LARGE_DIVISION
+    ? { divisionKind, divisionValue: value }
+    : { divisionKind: AT_LARGE_DIVISION, divisionValue: "" };
 }
 
 /** The post the derivation chose for one person. `post_id` is null when no row holds it yet —
