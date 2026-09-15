@@ -5,10 +5,37 @@ from database import organizations, posts
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory, UserRole
 from schemas.organizations import CreateOrganizationRequest, UpdateOrganizationRequest
+from schemas.posts import CreatePostRequest
 
 
 def get_router() -> APIRouter:
     router = APIRouter()
+
+    @router.post("/{organization_id}/posts")
+    async def create_post_endpoint(
+        organization_id: str,
+        body: CreatePostRequest,
+        # Any signed-in user, same tier as assigning someone to an existing post
+        # (routers/api/memberships.py) — its own flag (`can_create_post`), not
+        # `can_edit_jurisdiction_data` reused, so lowering this didn't touch that one.
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+    ):
+        """Create a post under this organization. 409 if the triple is taken — silently
+        returning the existing id would make "created" and "already there" indistinguishable.
+        404 if there's no such organization. Registered ahead of the jurisdiction routes below,
+        which use a greedy `:path` converter that would otherwise swallow this path too."""
+        try:
+            post_id = await posts.create(
+                organization_id, body.role_id, body.division_ocdid, body.headcount, user.user_id
+            )
+        except posts.UnknownOrganization:
+            return JSONResponse({"error": "No such organization."}, status_code=404)
+        if post_id is None:
+            return JSONResponse(
+                {"error": "A post already exists for that role and division."},
+                status_code=409,
+            )
+        return {"data": {"id": post_id}}
 
     @router.get("/{jurisdiction_ocdid:path}")
     async def get_organizations_endpoint(jurisdiction_ocdid: str):

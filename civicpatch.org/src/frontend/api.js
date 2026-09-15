@@ -1,15 +1,5 @@
 import { parseSaveError } from "./api-errors.js";
-
-function getCsrfCookie() {
-  const name = "csrf_token=";
-  const parts = document.cookie.split(";");
-  for (let i = 0; i < parts.length; i++) {
-    let c = parts[i].trim();
-    if (c.indexOf(name) === 0)
-      return decodeURIComponent(c.substring(name.length));
-  }
-  return "";
-}
+import { getCsrfCookie } from "./api-csrf.js";
 
 export const fetchPullRequests = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
@@ -231,14 +221,6 @@ export const fetchRoles = async () => {
   return res.json();
 };
 
-export const fetchOrganizations = async (jurisdictionOcdid) => {
-  const res = await fetch(`/api/v1/organizations/${jurisdictionOcdid}`, {
-    credentials: "include",
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
 export const fetchMemberships = async (jurisdictionOcdid, asOf = null) => {
   const query = asOf ? `?as_of=${asOf}` : "";
   const res = await fetch(
@@ -275,8 +257,8 @@ export const assignMembership = async (
   return res.json();
 };
 
-export const createPost = async (jurisdictionOcdid, body) => {
-  const res = await fetch(`/api/v1/posts/${jurisdictionOcdid}`, {
+export const createPost = async (organizationId, body) => {
+  const res = await fetch(`/api/v1/organizations/${organizationId}/posts`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -287,23 +269,6 @@ export const createPost = async (jurisdictionOcdid, body) => {
   });
   if (res.status === 409)
     throw new Error("That role and division already has a post.");
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const updatePost = async (postId, { headcount, isTracked }) => {
-  const res = await fetch(`/api/v1/posts/${postId}`, {
-    method: "PATCH",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRF-Token": getCsrfCookie(),
-    },
-    body: JSON.stringify({
-      _headcount: headcount,
-      _is_tracked: isTracked,
-    }),
-  });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };

@@ -40,6 +40,7 @@ import {
 import {
 } from "../review-routes.js";
 import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
+import { useOrganizations } from "../../hooks/use-organizations.js";
 import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
 import { officeChangesIn } from "../../components/person-editor/office-changes.js";
 import type { ProposedChange } from "../../components/people/person-cards.js";
@@ -130,6 +131,11 @@ function ReviewSession(host: ReviewSessionHost) {
     ? `${jurisdictionName}, ${jurisdictionStateName}`
     : jurisdictionName;
   const { posts } = useJurisdictionPosts(jurisdictionOcdid);
+  // A scrape-derived changeset always lands in the jurisdiction's default organization
+  // (`find_or_create_for_changeset`'s own fallback) — the first-sorted one, by the same
+  // convention `roster-editor.ts`'s grouping falls back to for an unplaced person.
+  const { organizations } = useOrganizations(jurisdictionOcdid);
+  const organizationId = organizations[0]?.id ?? "";
   const roles = useJurisdictionRoles();
   const { url: publishedUrl, status: reviewStatus = null } = pr ?? {};
   const isBaseline = mode === ReviewMode.BASELINE;
@@ -251,6 +257,7 @@ function ReviewSession(host: ReviewSessionHost) {
     isReadOnly: !!is_read_only,
     jurisdictionOcdid,
     posts,
+    organizationId,
     roles,
     canAssignMembership,
     canCreatePost,

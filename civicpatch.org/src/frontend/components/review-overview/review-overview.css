@@ -215,11 +215,16 @@
     color: var(--text-default);
     text-decoration-style: solid;
   }
+  /* Same fixed track formula `.rgrid` uses (person-card-grid.css) — a folded chip and a full
+     `.rperson` diff card are two different renderers for the same-sized card, not two
+     different card sizes. A `minmax(..., 1fr)` track here (an earlier version of this rule)
+     stretched chips to fill whatever their own group happened to be, so a lone card in a
+     small group and a packed group of eight rendered at visibly different widths. */
   .review-overview__strip {
     grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(17rem, 100%), 1fr));
-    gap: 0.4rem 0.6rem;
+    grid-template-columns: repeat(auto-fill, min(var(--card-w), 100%));
+    gap: var(--card-gap);
   }
   .review-fold {
     position: relative;
@@ -233,6 +238,13 @@
   .review-fold:hover,
   .review-fold:focus-within {
     border-color: var(--text-default);
+  }
+  /* Same treatment as .rperson--open (person-card-grid.css) — an opened card reads as open
+     the same way everywhere, folded chip or full card. */
+  .review-fold:has(.review-fold__open:focus-visible),
+  .review-fold--open {
+    outline: var(--focus-ring-width) solid var(--action-focus);
+    outline-offset: 2px;
   }
   .review-row__hint {
     position: absolute;

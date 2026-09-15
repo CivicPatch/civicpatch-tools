@@ -166,7 +166,7 @@ async def test_a_hand_made_post_is_verified_by_having_been_made():
         )
         await conn.commit()
 
-    by_hand = await posts.create(_OCDID, "treasurer", _BASE, 1, user_id)
+    by_hand = await posts.create(organization_id, "treasurer", _BASE, 1, user_id)
 
     async with pool.connection() as conn, conn.cursor() as cur:
         verified = {
@@ -184,7 +184,11 @@ async def test_looking_again_refreshes_rather_than_accumulating():
     insert entirely (already the current answer) rather than adding a row — which is what keeps
     this table bounded by distinct values rather than by how often anyone looks."""
     user_id, _ = await _seed()
-    post_id = await posts.create(_OCDID, "treasurer", _BASE, 1, user_id)
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        organization_id = await organizations.find_or_create(cur, _OCDID)
+        await conn.commit()
+    post_id = await posts.create(organization_id, "treasurer", _BASE, 1, user_id)
 
     for _ in range(3):
         # `update` returns the jurisdiction its caller mirrors, so success is "not None".

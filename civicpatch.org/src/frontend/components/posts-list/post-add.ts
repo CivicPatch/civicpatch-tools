@@ -18,6 +18,7 @@ import { hostDispatch } from "../../utils/host-dispatch.js";
 
 type PostAddHost = HTMLElement & {
   jurisdictionOcdid?: string;
+  organizationId?: string;
   roles?: RoleOption[];
   // Pre-fill only — every field stays editable, so a caller (civ-office-picker) that already
   // knows the role/division someone picked does not make them re-enter it, but changing it
@@ -81,7 +82,8 @@ function PostAdd(host: PostAddHost) {
   const roles = [...(host.roles ?? [])].sort(byLabel);
 
   const handleSave = async () => {
-    if (!host.jurisdictionOcdid || roleId === NO_ROLE || !validValue) return;
+    if (!host.jurisdictionOcdid || !host.organizationId || roleId === NO_ROLE || !validValue)
+      return;
     setSaving(true);
     setError(null);
     try {
@@ -90,7 +92,7 @@ function PostAdd(host: PostAddHost) {
         divisionKind,
         divisionValue,
       );
-      const created = await createPost(host.jurisdictionOcdid, {
+      const created = await createPost(host.organizationId, {
         role_id: roleId,
         division_ocdid,
         label: labelValue.trim() || null,
@@ -172,7 +174,7 @@ function PostAdd(host: PostAddHost) {
     <button class="btn btn-sm secondary" @click=${handleCancel}>Cancel</button>
     <button
       class="btn btn-sm"
-      ?disabled=${saving || roleId === NO_ROLE || (needsValue && !validValue)}
+      ?disabled=${saving || !host.organizationId || roleId === NO_ROLE || (needsValue && !validValue)}
       @click=${handleSave}
     >
       ${saving ? "Adding…" : "Add"}

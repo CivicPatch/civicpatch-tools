@@ -7,7 +7,7 @@
 
 import { html, nothing } from "lit-html";
 import "./field-controls.css";
-import type { DerivedPost, Post, RoleOption } from "../posts-list/posts-model.js";
+import type { Post, ProposedPost, RoleOption } from "../posts-list/posts-model.js";
 import "../person-editor/assertions-popover.js";
 import "../person-editor/office-picker.js";
 export { inputValue, attachFocus, type FocusRef, type FieldFocus } from "./field-utils.js";
@@ -167,52 +167,6 @@ export function renderDateNewSide(
   `;
 }
 
-// Picked, never typed: the written value is `post_id`, the decision itself. `labels` stay as
-// the source said them — a pick says where someone serves, not what the page called them.
-//
-// A brand-new, not-yet-saved person: there is no membership yet for `renderOfficeNewSide`'s
-// immediate `memberships.assign` to move, so the pick stays a local field like every other,
-// applied when the addition itself is saved.
-export function renderPostPickNewSide(
-  field: FieldSpec,
-  newRecord: PresentRecord,
-  save: Save,
-  posts: Post[],
-  derivedPost: DerivedPost | null,
-  focusRef: FocusRef | null,
-) {
-  const picked = (diffValue(newRecord, field) as string | null) ?? "";
-  // The derivation's post when nobody has picked — shown, never saved, so a parser fix can
-  // still move them. Empty only for a hand-added person, who has no labels to derive from.
-  const current = picked || (derivedPost?.post_id ?? "");
-  // A post the derivation named that no row holds yet: publishing mints it. Offered by label,
-  // valued empty because there is no id to carry — and saving nothing is already what "leave
-  // it as derived" means, so picking it back is the same decision as never having picked.
-  const projected = derivedPost && !derivedPost.post_id ? derivedPost : null;
-  return html`
-    <select
-      ${attachFocus(focusRef)}
-      class="field-control__office"
-      aria-label=${field.label}
-      @change=${(e: Event) => save({ post_id: inputValue(e) || null })}
-    >
-      ${projected
-        ? html`<option value="" .selected=${!picked}>
-            ${projected.label} — new post
-          </option>`
-        : current
-          ? nothing
-          : html`<option value="" selected disabled>Choose a post</option>`}
-      ${posts.map(
-        (post) =>
-          html`<option value=${post.id} .selected=${post.id === current}>
-            ${post.label}
-          </option>`,
-      )}
-    </select>
-  `;
-}
-
 // An existing person: a local pick like every other field, applied via `memberships.assign`
 // when the card is saved/published, so a scrape stays free to move or end the membership
 // again. Grouped by role, mirroring `posts-list.ts`'s own picker. The label *is* an assertion
@@ -229,7 +183,16 @@ export function renderOfficeNewSide(
   labelLock: FieldLock | null,
   labelAssertionSummary: FieldAssertionSummary | null,
   jurisdictionOcdid: string | null | undefined,
+  organizationId: string,
   canCreatePost: boolean,
+  // A proposed role/division with no post yet — see this function's own caller
+  // (editor-field.ts's renderOfficeControl) for why. Ignored once a real post id is picked;
+  // `civ-office-picker` only ever consults them while unset.
+  initialRoleId: string | undefined,
+  initialDivisionOcdid: string | undefined,
+  // Every proposed role/division this person has, whether or not it matches an established
+  // post — folded into the picker's own options (see `civ-office-picker`'s own comment).
+  proposedPosts: ProposedPost[],
 ) {
   const picked = (record.post_id as string | null | undefined) ?? null;
   const current = picked ?? currentPostId;
@@ -244,7 +207,11 @@ export function renderOfficeNewSide(
         .posts=${posts}
         .roles=${roles}
         .jurisdictionOcdid=${jurisdictionOcdid}
+        .organizationId=${organizationId}
         .postId=${current}
+        .initialRoleId=${initialRoleId}
+        .initialDivisionOcdid=${initialDivisionOcdid}
+        .proposedPosts=${proposedPosts}
         .canCreatePost=${canCreatePost}
         .focusRef=${focusRef}
         @picked=${handlePicked}

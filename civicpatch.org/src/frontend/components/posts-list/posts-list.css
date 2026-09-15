@@ -176,10 +176,13 @@
     width: 100%;
 }
 
-/* The pair shares the column: the select takes what the fixed-width value does not. */
+/* The pair shares the column: the select takes what the fixed-width value does not, but never
+   less than fits its own longest option ("council district") — `min-width: 0` (an earlier
+   version of this rule) let it collapse to the browser's bare dropdown arrow with no room for
+   the selected text at all. */
 .post-edit__division select {
     flex: 1;
-    min-width: 0;
+    min-width: 9rem;
 }
 
 /* Sized in ch, not rem: these fields are bounded by how many characters can legally go in

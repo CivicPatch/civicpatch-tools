@@ -46,19 +46,19 @@
   max-width: 100%;
 }
 
-/* A group under --group-max-cards people is normally exactly that many card-widths wide —
-   nesting its open editor there (grid-column: 1/-1) would squeeze it to that same narrow
-   width. `.person-editor-inline` only exists in the DOM while its card is open, so widen
-   the whole group to the full row then, and switch its card(s) from a fixed width to
-   auto-fit/1fr so they fill that width too — otherwise the actual card(s) would sit
-   orphaned in an otherwise-empty box above a full-width editor. */
-.rgroup:has(.person-editor-inline) {
-  flex-basis: calc(
-    var(--group-max-cards) * (var(--card-w) + var(--card-gap)) - var(--card-gap)
-  );
-}
-.rgroup:has(.person-editor-inline) .rgrid {
-  grid-template-columns: repeat(auto-fit, minmax(min(var(--card-w), 100%), 1fr));
+/* A group never resizes for its own open editor — widening `.rgroup` itself (an earlier
+   version of this rule) changed how many groups fit per `.rgroup-list` line, so `flex-wrap`
+   would bump the *next* group down a row even though nothing about its own size changed.
+   Groups have to stay a fixed size, full stop, the same reason cards do.
+   So the editor isn't nested in its own group's `.rgrid` at all — it's a sibling of `.rgroup`
+   in `.rgroup-list` instead (see person-card-grid.ts / review-overview.ts), immediately after
+   whichever group holds the open card. `flex: 1 0 100%` is `.rgroup-list`'s own equivalent of
+   a grid item's `grid-column: 1/-1`: the one thing forces a new flex line the way the other
+   forces a new grid row, so the editor still gets the room person-editor-inline.css assumed
+   `grid-column: 1/-1` alone gave it — full row width, not one group's few card-widths — without
+   the group itself moving from wherever it already was. */
+.rgroup-list > .person-editor-inline {
+  flex: 1 0 100%;
 }
 
 .rgrouphead {
@@ -100,12 +100,15 @@
   border-color: var(--text-default);
 }
 
-/* The stretched-link pattern: a real, empty button covers the whole card (so Enter/Space/
-   click work natively, no keydown handler needed) instead of the card itself being
-   `role="button"` — real `<a>`s (contact/url/source links) can't nest inside a button, so
-   `.rperson a` below lifts them above this overlay instead. No explicit z-index needed here:
-   a positioned element with the default `z-index: auto` already paints above plain in-flow
-   content, which is exactly the layering wanted. */
+/* The stretched-target pattern, without stretching the hit target: a real, empty button covers
+   the whole card so it stays a genuine focusable/labeled element for keyboard and screen-reader
+   users (Enter/Space triggers its own synthetic click, which bubbles to `.rperson`'s own click
+   handler — see person-card-grid.ts). `pointer-events: none` is what makes it not also grab
+   every mouse click: with it, hit-testing skips the button and reaches the real name/field text
+   underneath instead, so that text is selectable and copyable. `.rperson`'s own click handler
+   is what a mouse click actually opens the card through — either directly (bubbled from the
+   real content) or via the button's keyboard-triggered one. Real `<a>`s (contact/url/source
+   links) never needed lifting above this overlay to begin with; the class below is legacy. */
 .rperson__open {
   position: absolute;
   inset: 0;
@@ -117,6 +120,7 @@
   font: inherit;
   text-align: left;
   cursor: pointer;
+  pointer-events: none;
 }
 
 .rperson:has(.rperson__open:focus-visible),

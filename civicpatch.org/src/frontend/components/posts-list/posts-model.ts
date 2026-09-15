@@ -5,6 +5,7 @@ import { DIVISION_LABELS } from "../../utils/division-utils.js";
 
 export interface Post {
   id: string;
+  organization_id: string;
   role_id: string;
   division_ocdid: string;
   label: string;
@@ -19,6 +20,15 @@ export interface Post {
 export interface RoleOption {
   id: string;
   label: string;
+}
+
+// A scrape's claim about a person's post, independent of whether any established post matches
+// it yet — the office picker folds these into its own role/division options (see its own
+// comment) so a proposal is always something a reviewer can select, not just describe.
+export interface ProposedPost {
+  role_id: string;
+  role_label: string;
+  division_ocdid: string;
 }
 
 export interface Membership {
@@ -162,6 +172,12 @@ export interface DerivedPost {
   // Absent from `heldPost`'s return — only `derivedPostFor` (editor-props.ts) attaches it,
   // since a membership label needs the full proposal or membership, not just its post.
   membershipLabel?: string | null;
+  // A proposal's own identity — present exactly when `post_id` is null, since that's the one
+  // case `civ-office-picker` can't pre-select by looking the post up in its own `posts` list:
+  // there is no row yet to find. `heldPost` never sets these; an already-published post is
+  // already in that list, `post_id` alone is enough to find it there.
+  role_id?: string;
+  division_ocdid?: string;
 }
 
 /** The post a person actually holds, which is a memberships question — `post_id` on a record is

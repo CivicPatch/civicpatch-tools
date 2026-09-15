@@ -20,6 +20,10 @@ class PostHasMembers(Exception):
         self.holders = holders
 
 
+class UnknownOrganization(Exception):
+    """No organization with this id on this jurisdiction."""
+
+
 # The fields a human owns. The derivation sets them once at mint and never again.
 _HUMAN_FIELDS = ("_headcount", "_is_tracked")
 
@@ -465,7 +469,7 @@ async def create_all(
 
 
 async def create(
-    jurisdiction_ocdid: str,
+    organization_id: str,
     role_id: str,
     division_ocdid: str,
     headcount: int,
@@ -473,12 +477,15 @@ async def create(
 ) -> str | None:
     """A person asserting a post exists. Returns its id, or None if it already did.
 
-    Organization and division are found-or-created on the way — a division exists because a
-    post needs it, never on its own.
+    The jurisdiction is the organization's own — a post always belongs to one of an
+    organization's existing bodies, never named separately by the caller. The division is
+    found-or-created on the way, since it exists because a post needs it, never on its own.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await organizations.get_default(cur, jurisdiction_ocdid)
+        jurisdiction_ocdid = await organizations.jurisdiction_for(cur, organization_id)
+        if jurisdiction_ocdid is None:
+            raise UnknownOrganization(organization_id)
         await divisions.find_or_create(cur, division_ocdid, jurisdiction_ocdid)
         post_id = await create_if_absent(
             cur,

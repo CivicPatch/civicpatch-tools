@@ -67,6 +67,14 @@ async def find_or_create(
     return existing[0]
 
 
+async def jurisdiction_for(cur, organization_id: str) -> str | None:
+    await cur.execute(
+        "SELECT jurisdiction_ocdid FROM organizations WHERE id = %s", (organization_id,)
+    )
+    row = await cur.fetchone()
+    return row[0] if row else None
+
+
 async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     await cur.execute(
         """

@@ -20,10 +20,14 @@ import { personEditorPropsFor } from "../../components/person-editor/editor-prop
 import { focusOnMount } from "../../utils/focus-on-mount.js";
 import { EMPTY_FROZEN } from "../review-session-page/frozen-fields.js";
 import { renderRosterCards } from "./roster-section.js";
-import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
+import { useOrganizations } from "../../hooks/use-organizations.js";
 import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
 import { useAltArrowPeerNav } from "../../hooks/use-alt-arrow-peer-nav.js";
 import { officeChangesIn } from "../../components/person-editor/office-changes.js";
+import {
+  cardOrganizationsById,
+  groupCardsByOrganization,
+} from "./roster-organization-grouping.js";
 
 interface RosterEditorProps {
   people: any[];
@@ -54,8 +58,11 @@ function RosterEditor({
   blockedReason,
   onPublished,
 }: RosterEditorProps) {
-  const { posts } = useJurisdictionPosts(jurisdictionOcdid);
+  const { organizations } = useOrganizations(jurisdictionOcdid);
   const roles = useJurisdictionRoles();
+  // Where "Add" was clicked for a not-yet-saved person, since they hold no post yet to place
+  // them by. Session-local — once they're given an office their held post takes over.
+  const [addedUnderOrg, setAddedUnderOrg] = useState<Map<string, string>>(new Map());
   const published = people ?? [];
   const state = usePeopleState({ people: published });
   const {
@@ -115,8 +122,9 @@ function RosterEditor({
   const focusOnOpen = useCallback(focusOnMount, [focusFieldKey]);
   const handlePersonSave = (id: string, updates: Record<string, unknown>) =>
     updatePerson(id, updates);
-  const handleAdd = async () => {
+  const handleAdd = async (organizationId: string) => {
     const personId = await generatePersonId();
+    setAddedUnderOrg((current) => new Map(current).set(personId, organizationId));
     addPerson(emptyPerson(personId, jurisdictionOcdid));
     handleOpenPerson(personId, null);
   };
@@ -136,13 +144,17 @@ function RosterEditor({
       setPublishStage("idle");
     }
   };
+  const groups = groupCardsByOrganization(cards, organizations, addedUnderOrg);
+  const cardOrganizations = cardOrganizationsById(groups);
   const editorFor = (card: PersonCard) => {
+    const cardOrganization = cardOrganizations.get(card.personId);
     const base = personEditorPropsFor(card, {
       frozen: EMPTY_FROZEN,
       dirtyIds,
       isReadOnly: !canEdit,
       jurisdictionOcdid,
-      posts,
+      posts: cardOrganization?.posts ?? [],
+      organizationId: cardOrganization?.organizationId ?? "",
       roles,
       canAssignMembership,
       canCreatePost,
@@ -174,37 +186,52 @@ function RosterEditor({
           : null,
     };
   };
-  const actions = canEdit
-    ? html`
-        <button class="btn-quiet" ?disabled=${isPublishing} @click=${handleAdd}>
+  // Add is per-organization — it's the section whose Add button placed a new person that
+  // decides which body they're minted under. Discard/Publish stay shared: one dirty roster,
+  // one PR, across every organization's cards.
+  const addActionFor = (organizationId: string) =>
+    canEdit
+      ? html`<button
+          class="btn-quiet"
+          ?disabled=${isPublishing}
+          @click=${() => handleAdd(organizationId)}
+        >
           <i class="fa-solid fa-plus"></i> Add
-        </button>
-        ${dirty
-          ? html`
-              <button class="btn-quiet" ?disabled=${isPublishing} @click=${handleResetAll}>Discard</button>
-              <button
-                class="btn-primary"
-                ?disabled=${isPublishing || blockers.length > 0}
-                title=${blockers.length ? blockerTitle : ""}
-                @click=${handlePublish}
-              >
-                ${publishLabel(blockers.length, publishStage)}
-              </button>
-            `
-          : nothing}
-      `
-    : nothing;
+        </button>`
+      : nothing;
+  const toolbar =
+    canEdit && dirty
+      ? html`
+          <div class="roster-toolbar">
+            <button class="btn-quiet" ?disabled=${isPublishing} @click=${handleResetAll}>Discard</button>
+            <button
+              class="btn-primary"
+              ?disabled=${isPublishing || blockers.length > 0}
+              title=${blockers.length ? blockerTitle : ""}
+              @click=${handlePublish}
+            >
+              ${publishLabel(blockers.length, publishStage)}
+            </button>
+          </div>
+        `
+      : nothing;
   return html`
-    ${renderRosterCards({
-      cards,
-      isLoading,
-      blockedReason,
-      actions,
-      onOpenPerson: canEdit ? handleOpenPerson : null,
-      openPersonId: canEdit ? openPersonId : null,
-      editorFor: canEdit ? editorFor : null,
-      roles,
-    })}
+    ${toolbar}
+    ${groups.map(
+      (group) => html`
+        ${renderRosterCards({
+          cards: group.cards,
+          isLoading,
+          blockedReason,
+          actions: addActionFor(group.organization.id),
+          onOpenPerson: canEdit ? handleOpenPerson : null,
+          openPersonId: canEdit ? openPersonId : null,
+          editorFor: canEdit ? editorFor : null,
+          roles,
+          title: group.organization.name,
+        })}
+      `,
+    )}
     ${publishError
       ? html`<p style="color: var(--diff-removed);">${publishError}</p>`
       : nothing}

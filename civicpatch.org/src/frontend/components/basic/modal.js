@@ -77,7 +77,7 @@ function Modal({ title = "", content = null, footer = null, modalProps = {} }) {
           ? html` <footer>${footer}</footer> `
           : html`
               <footer>
-                <button @click=${handleClose} class="secondary">Close</button>
+                <button @click=${handleClose} class="btn btn-sm secondary">Close</button>
               </footer>
             `}
       </article>

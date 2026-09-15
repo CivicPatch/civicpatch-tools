@@ -1,5 +1,6 @@
 import { component, useState, useEffect } from "haunted";
-import "../../components/posts-list/posts-list.js";
+import "../../components/organizations-list/organizations-list.js";
+import "../../components/basic/modal.js";
 import { html, nothing } from "lit-html";
 import { useWebSocket } from "../../hooks/use-websocket.js";
 import { useAuth } from "../../hooks/useAuth.js";
@@ -23,12 +24,7 @@ import {
   fetchJurisdictionInFlight,
   patchJurisdictionData,
 } from "../../api.js";
-import {
-  renderJurisdictionHeader,
-  MODE_READ,
-  MODE_EDIT,
-  type PageMode,
-} from "./jurisdiction-header.js";
+import { renderJurisdictionHeader } from "./jurisdiction-header.js";
 import "./roster-editor.js";
 import {
   pendingReviews,
@@ -81,26 +77,17 @@ function renderDataFlag(data: any) {
 // screen. Only scrape history — an archive — stays collapsible.
 function renderDetailsSection(
   jurisdictionData: any,
-  canEdit: boolean,
+  canEditPermission: boolean,
   onSave: (form: any) => Promise<any>,
   blockedReason: string | null,
 ) {
-  const data = jurisdictionData?.data;
-
   return html`
     <section class="panel">
-      <div class="panel__cap">
-        <b>Jurisdiction details</b>
-      </div>
-      ${blockedReason
-        ? html`<p class="jurisdiction-section__blocked">
-            <i class="fa-solid fa-lock" aria-hidden="true"></i> ${blockedReason}
-          </p>`
-        : nothing}
       <civ-jurisdiction-details
-        .data=${data}
-        .canEdit=${canEdit}
+        .data=${jurisdictionData?.data}
+        .canEditPermission=${canEditPermission}
         .onSave=${onSave}
+        .blockedReason=${blockedReason}
       ></civ-jurisdiction-details>
     </section>
   `;
@@ -116,14 +103,12 @@ function JurisdictionPage({
   const isSignedIn = !!user?.authenticated;
   const { people, isLoading: peopleLoading } = usePeople(jurisdiction_ocdid);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
-  const [mode, setMode] = useState<PageMode>(MODE_READ);
+  const [manageOrgsOpen, setManageOrgsOpen] = useState(false);
   const hasEditPermission = !!permissions.can_edit_jurisdiction_data;
-  const editModeActive = hasEditPermission && mode === MODE_EDIT;
   // Its own flag, not `hasEditPermission` reused — creating a post is a distinct capability
   // that happens to sit at the same tier today, not the same permission as editing the
   // jurisdiction's own published data.
-  const canCreatePostActive =
-    !!permissions.can_create_post && mode === MODE_EDIT;
+  const canCreatePost = !!permissions.can_create_post;
   // Only what is still in flight, plus two scalars. This used to fetch every changeset the
   // jurisdiction has ever had in order to derive four things from the array.
   const [inFlight, setInFlight] = useState<InFlightEntry[]>([]);
@@ -215,9 +200,8 @@ function JurisdictionPage({
         isScrapeBlocked: peopleBlockers.length > 0,
         isRunInProgress: !!isRunInProgress || isTriggering,
         onScrapeClick: () => setScrapeModalOpen(true),
-        canToggleMode: hasEditPermission,
-        mode,
-        onModeChange: setMode,
+        canManageOrganizations: !!permissions.can_manage_organizations,
+        onManageOrganizationsClick: () => setManageOrgsOpen(true),
       })}
       ${renderDataFlag(jurisdictionData?.data)}
       ${scrapeError
@@ -238,7 +222,7 @@ function JurisdictionPage({
             <div>
               ${renderDetailsSection(
                 jurisdictionData,
-                editModeActive && !jurisdictionBlockers.length,
+                hasEditPermission && !jurisdictionBlockers.length,
                 handleJurisdictionSave,
                 jurisdictionEditBlockedReason(jurisdictionBlockers),
               )}
@@ -253,22 +237,13 @@ function JurisdictionPage({
               <civ-roster-editor
                 .people=${people}
                 .jurisdictionOcdid=${jurisdiction_ocdid}
-                .canEdit=${editModeActive && !peopleBlockers.length}
-                .canAssignMembership=${editModeActive && !peopleBlockers.length}
-                .canCreatePost=${canCreatePostActive && !peopleBlockers.length}
+                .canEdit=${hasEditPermission && !peopleBlockers.length}
+                .canAssignMembership=${hasEditPermission && !peopleBlockers.length}
+                .canCreatePost=${canCreatePost && !peopleBlockers.length}
                 .isLoading=${peopleLoading}
                 .blockedReason=${editingBlockedReason(peopleBlockers)}
                 .onPublished=${() => window.location.reload()}
               ></civ-roster-editor>
-
-              <section class="panel">
-                <div class="panel__cap"><b>Posts</b></div>
-                <civ-posts-list
-                  .jurisdictionOcdid=${jurisdiction_ocdid}
-                  .canEdit=${editModeActive && !peopleBlockers.length}
-                  .canCreate=${editModeActive}
-                ></civ-posts-list>
-              </section>
             </div>
           </div>
         </div>
@@ -285,6 +260,15 @@ function JurisdictionPage({
             }}
           ></civ-scrape-modal>`
         : nothing}
+
+      <civ-modal
+        .title=${"Manage organizations"}
+        .content=${html`<civ-organizations-list
+          .jurisdictionOcdid=${jurisdiction_ocdid}
+          .canManage=${!!permissions.can_manage_organizations}
+        ></civ-organizations-list>`}
+        .modalProps=${{ open: manageOrgsOpen, onClose: () => setManageOrgsOpen(false) }}
+      ></civ-modal>
     </main>
   `;
 }
