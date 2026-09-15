@@ -12,7 +12,7 @@ from pydantic import BaseModel
 from shared.schemas import Role
 from shared.utils.taxonomy import Taxonomy
 
-from core.membership_label import proposed_membership_label
+from core.membership_label import MembershipLabel, derive_post_label, render
 from core.people_roles import DerivedRoles, derive_roles
 
 # A label resolving to no role still gets a post, so nobody is postless. Seeded by 118.
@@ -68,10 +68,10 @@ class DerivedPost(BaseModel):
     members: list[DerivedMembership]
 
 
-def _demoted_role_ids(
+def _demoted_roles(
     parsed: DerivedRoles, ids_by_label: dict[str, str], post_role_id: str
-) -> list[str]:
-    """Every role the label named except the one the post is defined by.
+) -> list[tuple[str, str]]:
+    """Every role the label named except the one the post is defined by, as (label, id) pairs.
 
     Compared on the post's actual role id, not on the parse's winner: when a human picked the
     post, the role the parse would have chosen is itself demoted, and dropping it would lose
@@ -84,7 +84,7 @@ def _demoted_role_ids(
     them, so a reader sees them as the source wrote them.
     """
     return [
-        ids_by_label[label]
+        (label, ids_by_label[label])
         for label in parsed.roles
         if label in ids_by_label and ids_by_label[label] != post_role_id
     ]
@@ -105,20 +105,44 @@ def _unresolved_text(parsed: DerivedRoles) -> list[str]:
     return list(dict.fromkeys(terms))
 
 
+def _role_label(role_id: str, labels_by_id: dict[str, str]) -> str:
+    """The role's display label, or the id itself when it names no known role
+    (`UNMATCHED_ROLE_ID`, which is never a key in `labels_by_id`)."""
+    return labels_by_id.get(role_id, role_id)
+
+
 def _member(
     record: RosterEntry,
     parsed: DerivedRoles,
     ids_by_label: dict[str, str],
+    labels_by_id: dict[str, str],
     post_role_id: str,
+    post_division_ocdid: str,
 ) -> "DerivedMembership":
-    """One person, and everything their label carried beyond the post's own role."""
+    """One person: designations, demoted roles and residue beyond the post's own role, plus
+    a composed `label` that repeats the post's own name on top of those, so it reads on its
+    own."""
+    demoted = _demoted_roles(parsed, ids_by_label, post_role_id)
     return DerivedMembership(
         person_id=record.id,
         designations=parsed.other_designations,
         unmatched_text=_unresolved_text(parsed),
         source_labels=parsed.labels,
-        role_ids=_demoted_role_ids(parsed, ids_by_label, post_role_id),
-        label=proposed_membership_label(parsed.parts),
+        role_ids=[role_id for _, role_id in demoted],
+        label=render(
+            MembershipLabel(
+                post_label=derive_post_label(
+                    _role_label(post_role_id, labels_by_id), post_division_ocdid
+                ),
+                demoted_roles=[role_label for role_label, _ in demoted],
+                designations=parsed.other_designations,
+                # `parsed.unmatched` (every part's, whether or not that part matched a role),
+                # not `_unresolved_text` — that narrower set is for `unmatched_text` below,
+                # which exists for triage and must not include a residue that already found
+                # its role (`derive_roles`' "Commissioner Of Public Safety" case).
+                unmatched_text=parsed.unmatched,
+            )
+        ),
         start_date=record.start_date,
         end_date=record.end_date,
     )
@@ -145,6 +169,7 @@ def derived_posts(
     says where someone serves, not what the source called them.
     """
     ids_by_label = {role.label: role.id for role in roles}
+    labels_by_id = {role.id: role.label for role in roles}
     chosen_posts = chosen_posts or {}
 
     def role_id_for(parsed: DerivedRoles) -> str:
@@ -166,14 +191,13 @@ def derived_posts(
             else (role_id_for(parsed), parsed.division_ocdid)
         )
         grouped.setdefault(key, []).append(
-            _member(record, parsed, ids_by_label, key[0])
+            _member(record, parsed, ids_by_label, labels_by_id, key[0], key[1])
         )
 
-    labels_by_id = {role.id: role.label for role in roles}
     return [
         DerivedPost(
             role_id=role_id,
-            role_label=labels_by_id.get(role_id, role_id),
+            role_label=_role_label(role_id, labels_by_id),
             division_ocdid=division_ocdid,
             headcount=len(members),
             members=members,

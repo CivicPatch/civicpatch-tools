@@ -10,6 +10,8 @@ import { ref } from "lit-html/directives/ref.js";
 import "./field-controls.css";
 import { groupPostsByRole } from "../posts-list/posts-model.js";
 import type { DerivedPost, Post, RoleOption } from "../posts-list/posts-model.js";
+import "../person-editor/assertions-popover.js";
+import type { FieldAssertionSummary, FieldLock } from "../person-editor/field-provenance.js";
 import {
   PERSON_LINK_TARGET,
   SOURCE_LINK_TARGET,
@@ -230,8 +232,10 @@ export function renderPostPickNewSide(
 }
 
 // An existing person: a local pick like every other field, applied via `memberships.assign`
-// — never an assertion — when the card is saved/published, so a scrape stays free to move or
-// end the membership again. Grouped by role, mirroring `posts-list.ts`'s own picker.
+// when the card is saved/published, so a scrape stays free to move or end the membership
+// again. Grouped by role, mirroring `posts-list.ts`'s own picker. The label *is* an assertion
+// once saved — `memberships.set_label` records it against the membership — `labelLock`/
+// `labelAssertionSummary` are how that comes back to show the lock icon other fields get.
 export function renderOfficeNewSide(
   record: PresentRecord,
   save: Save,
@@ -240,6 +244,8 @@ export function renderOfficeNewSide(
   currentPostId: string | null,
   currentLabel: string | null,
   focusRef: FocusRef | null,
+  labelLock: FieldLock | null,
+  labelAssertionSummary: FieldAssertionSummary | null,
 ) {
   const picked = (record.post_id as string | null | undefined) ?? null;
   const current = picked ?? currentPostId;
@@ -278,6 +284,12 @@ export function renderOfficeNewSide(
             .value=${pickedLabel ?? ""}
             @input=${(e: Event) => save({ membership_label: inputValue(e) || null })}
           />`
+        : nothing}
+      ${labelLock
+        ? html`<civ-assertions-popover
+            .lock=${labelLock}
+            .summary=${labelAssertionSummary}
+          ></civ-assertions-popover>`
         : nothing}
     </div>
   `;

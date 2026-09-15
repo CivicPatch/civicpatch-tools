@@ -2,7 +2,9 @@ import { describe, it, expect } from "vitest";
 import {
   attentionOf,
   byRank,
+  issueTypesOf,
   runsOf,
+  sectionsOf,
   sourceMapFor,
   tallyOf,
   visibleFields,
@@ -92,15 +94,18 @@ describe("attentionOf — the second axis", () => {
   it("is null when nothing needs a person", () => {
     expect(attentionOf(card({ surviving: [surviving("emails")] }))).toBeNull();
   });
-  it("still reports an issue on a card with no changes", () => {
+});
+
+describe("issueTypesOf — what an issue is, in short", () => {
+  it("humanizes the issue code for display", () => {
     expect(
-      attentionOf(
-        card({
-          status: PersonStatus.UNCHANGED,
-          surviving: [surviving("emails", { state: "same", reason: "issue" })],
-        }),
-      ),
-    ).toBe("issue");
+      issueTypesOf(card({ issues: [{ code: "unverified_post", message: "" }] })),
+    ).toEqual(["unverified post"]);
+  });
+  it("drops a code the status badge already says, so it isn't shown twice", () => {
+    expect(
+      issueTypesOf(card({ issues: [{ code: "moved_person", message: "" }] })),
+    ).toEqual([]);
   });
 });
 
@@ -212,7 +217,7 @@ describe("postsFor", () => {
     ]);
     expect(postsFor(card(), proposals)).toBe("Council Member, District 5");
   });
-  it("appends the membership label after the post", () => {
+  it("shows the membership label alone, since it already carries the post label", () => {
     const proposals = proposalsByPersonId([
       {
         person_id: "p1",
@@ -220,7 +225,7 @@ describe("postsFor", () => {
         role_id: "council-member",
         role_label: "Council Member",
         division_ocdid: "ocd-division/country:us/state:wa/place:x",
-        label: "Seat 3",
+        label: "Council Member, At-Large, Seat 3",
         post_label: "Council Member, At-Large",
       },
     ]);
@@ -306,4 +311,71 @@ describe("tallyOf — the roster's shape, at a glance", () => {
     ]);
   });
   it("is empty for an empty roster", () => expect(tallyOf([])).toEqual([]));
+});
+
+describe("sectionsOf — role sections like the jurisdiction grid, plus review's own trailing buckets", () => {
+  const roleOrder = ["mayor", "council-member"];
+  const proposal = (over: Record<string, unknown> = {}) => ({
+    person_id: "p1",
+    disposition: "moved",
+    role_id: "council-member",
+    role_label: "Council Member",
+    division_ocdid: "ocd-division/country:us/state:wa/place:x",
+    label: null,
+    post_label: "Council Member",
+    post_id: "post-1",
+    ...over,
+  });
+  const withRole = (roleId: string, roleLabel: string) =>
+    card({
+      personId: "p1",
+      newRecord: { memberships: [{ role_id: roleId, role_label: roleLabel }] } as never,
+    });
+
+  it("groups a card under its proposed role, not its held one", () => {
+    const sections = sectionsOf(
+      [withRole("mayor", "Mayor")],
+      proposalsByPersonId([proposal()]),
+      roleOrder,
+    );
+    expect(sections.ranked.map((group) => group.roleId)).toEqual(["council-member"]);
+  });
+
+  it("falls back to the held membership when there is no proposal", () => {
+    const sections = sectionsOf(
+      [withRole("mayor", "Mayor")],
+      proposalsByPersonId([]),
+      roleOrder,
+    );
+    expect(sections.ranked.map((group) => group.roleId)).toEqual(["mayor"]);
+  });
+
+  it("puts a seat the scrape couldn't name a role for in its own bucket", () => {
+    const sections = sectionsOf(
+      [card({ personId: "p1" })],
+      proposalsByPersonId([proposal({ role_id: "unmatched", role_label: "" })]),
+      roleOrder,
+    );
+    expect(sections.unmatched.map((c) => c.personId)).toEqual(["p1"]);
+  });
+
+  it("has no separate Other bucket — an unranked role just isn't a case real data can produce", () => {
+    // A real role_id is always in roleOrder: posts.role_id references roles.id, roles are
+    // only ever soft-deleted, and "unmatched" never survives to a persisted post (it's
+    // filtered into `unmatched` above instead). So there is nothing left to special-case here
+    // — groupByRole's own unranked fallback is simply never reached by real data.
+    const sections = sectionsOf([withRole("mayor", "Mayor")], proposalsByPersonId([]), roleOrder);
+    expect(sections.ranked.map((group) => group.roleId)).toEqual(["mayor"]);
+    expect(sections.unmatched).toEqual([]);
+  });
+
+  it("puts departing cards in their own trailing section, never grouped by role", () => {
+    const cards = [
+      card({ personId: "removed", status: PersonStatus.REMOVED }),
+      card({ personId: "deleted", status: PersonStatus.DELETED }),
+    ];
+    const sections = sectionsOf(cards, proposalsByPersonId([]), roleOrder);
+    expect(sections.departing.map((c) => c.personId)).toEqual(["removed", "deleted"]);
+    expect(sections.ranked).toEqual([]);
+  });
 });

@@ -8,8 +8,6 @@ enough to read, never to trust, which is why `memberships.label` can overrule it
 
 from pydantic import BaseModel
 
-from core.people_roles import LabelPart
-
 _DIVISION_LABELS = {
     "ward": "Ward",
     "council_district": "District",
@@ -54,17 +52,3 @@ def render(label: MembershipLabel) -> str:
         *label.unmatched_text,
     ]
     return _SEPARATOR.join(part for part in parts if part)
-
-
-def proposed_membership_label(parts: list[LabelPart]) -> str | None:
-    """`memberships.label` — the source's words for whatever the post label will not say.
-
-    Per label rather than over their union: which designation came off which label is the
-    order a reader expects, and a person named twice on one page keeps both readings apart.
-    """
-    label: list[str] = []
-    for part in parts:
-        for text in part.parsed.other_designations + part.parsed.unmatched:
-            if text not in label:
-                label.append(text)
-    return _SEPARATOR.join(label) or None

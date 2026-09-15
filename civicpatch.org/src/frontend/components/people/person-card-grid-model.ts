@@ -2,13 +2,17 @@
 // canonical priority order (role-reorder.ts writes that order by array position), so rank is
 // just an index lookup — no separate priority field to keep in sync.
 
-import { type PersonMembership } from "../edit-people/person-edit-utils.js";
+// The only two fields this module reads off a membership — a real `PersonMembership` (a
+// published seat) satisfies this, and so does a proposal's role, which has no post yet.
+// Keeping the constraint this narrow is what lets review-session group by proposed role
+// through the same functions the jurisdiction grid groups published people with.
+export type PostRole = { role_id: string; role_label: string };
 
 const UNRANKED = Number.POSITIVE_INFINITY;
 
 /** The best (lowest) rank among a person's roles — the one that would read first. */
 export function roleRank(
-  memberships: PersonMembership[] | undefined,
+  memberships: PostRole[] | undefined,
   roleOrder: string[],
 ): number {
   let best = UNRANKED;
@@ -20,7 +24,7 @@ export function roleRank(
 }
 
 /** Stable sort by role rank — ties (two Council Members) keep their original order. */
-export function sortByRoleRank<T extends { memberships?: PersonMembership[] }>(
+export function sortByRoleRank<T extends { memberships?: PostRole[] }>(
   people: T[],
   roleOrder: string[],
 ): T[] {
@@ -32,7 +36,7 @@ export function sortByRoleRank<T extends { memberships?: PersonMembership[] }>(
 // The role most people on the page hold — the baseline a role has to outrank to earn the
 // accent. Without this, a page that's all Council Members would highlight everyone.
 function pluralityRoleRank(
-  people: { memberships?: PersonMembership[] }[],
+  people: { memberships?: PostRole[] }[],
   roleOrder: string[],
 ): number {
   const counts = new Map<string, number>();
@@ -55,7 +59,7 @@ function pluralityRoleRank(
 }
 
 /** Person ids whose best role outranks the page's plurality role. */
-export function computeLeadIds<T extends { id: string; memberships?: PersonMembership[] }>(
+export function computeLeadIds<T extends { id: string; memberships?: PostRole[] }>(
   people: T[],
   roleOrder: string[],
 ): Set<string> {
@@ -69,13 +73,14 @@ export function computeLeadIds<T extends { id: string; memberships?: PersonMembe
 
 const UNRANKED_GROUP_LABEL = "Other";
 
-/** The membership that gives a person their best (lowest) rank — same tie-break as
- * roleRank, just returning the membership itself instead of its position. */
-function bestMembership(
-  memberships: PersonMembership[] | undefined,
+/** The membership that gives a person their best (lowest) rank, and that rank itself — one
+ * pass over their memberships rather than the separate rank-then-membership scans
+ * `groupByRole` used to run (once to sort, again per person to find the group). */
+function bestMembershipAndRank(
+  memberships: PostRole[] | undefined,
   roleOrder: string[],
-): PersonMembership | null {
-  let best: PersonMembership | null = null;
+): { membership: PostRole | null; rank: number } {
+  let best: PostRole | null = null;
   let bestRank = UNRANKED;
   for (const membership of memberships ?? []) {
     const index = roleOrder.indexOf(membership.role_id);
@@ -84,7 +89,7 @@ function bestMembership(
       best = membership;
     }
   }
-  return best;
+  return { membership: best, rank: bestRank };
 }
 
 export interface RoleGroup<T> {
@@ -96,15 +101,22 @@ export interface RoleGroup<T> {
 /** People bucketed by their best-ranked role, in rank order — the .rgroup/.rperson pattern:
  * one heading per role, rather than a role line repeated on every card. A person with no
  * ranked role (unmatched labels) lands in one trailing "Other" group. */
-export function groupByRole<T extends { id: string; memberships?: PersonMembership[] }>(
+export function groupByRole<T extends { id: string; memberships?: PostRole[] }>(
   people: T[],
   roleOrder: string[],
 ): RoleGroup<T>[] {
-  const ranked = sortByRoleRank(people, roleOrder);
+  // Decorate-sort-undecorate: each person's rank and best membership are computed once here,
+  // rather than once per sort comparison (`sortByRoleRank` re-scans on both sides of every
+  // comparison) and again afterward to find which group they belong to.
+  const decorated = people.map((person) => ({
+    person,
+    ...bestMembershipAndRank(person.memberships, roleOrder),
+  }));
+  decorated.sort((a, b) => a.rank - b.rank);
+
   const groups = new Map<string, RoleGroup<T>>();
   const order: string[] = [];
-  for (const person of ranked) {
-    const membership = bestMembership(person.memberships, roleOrder);
+  for (const { person, membership } of decorated) {
     const key = membership?.role_id ?? UNRANKED_GROUP_LABEL;
     if (!groups.has(key)) {
       groups.set(key, {

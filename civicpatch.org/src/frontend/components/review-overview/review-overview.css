@@ -1,266 +1,307 @@
 @layer components {
-.review-overview {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  width: 100%;
-  max-width: var(--page-width);
-  margin-inline: auto;
-  --tile-changed: var(--warning);
-  --tile-added: var(--diff-added);
-  --tile-cleared: var(--diff-removed);
-  --tile-issue: var(--info);
-  --tint-strength: 12%;
-  --tint-shade: 0%;
-}
-@media (prefers-color-scheme: dark) {
   .review-overview {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    max-width: var(--page-width);
+    margin-inline: auto;
+    --tile-changed: var(--warning);
+    --tile-added: var(--diff-added);
+    --tile-cleared: var(--diff-removed);
+    --tile-issue: var(--info);
+    --tint-strength: 12%;
+    --tint-shade: 0%;
+  }
+  @media (prefers-color-scheme: dark) {
+    .review-overview {
+      --tint-strength: 42%;
+      --tint-shade: 62%;
+    }
+  }
+  :root[data-theme="dark"] .review-overview {
     --tint-strength: 42%;
     --tint-shade: 62%;
   }
-}
-:root[data-theme="dark"] .review-overview {
-  --tint-strength: 42%;
-  --tint-shade: 62%;
-}
-:root[data-theme="light"] .review-overview {
-  --tint-strength: 12%;
-  --tint-shade: 0%;
-}
-.review-overview__list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(26rem, 100%), 1fr));
-  gap: 0.6rem;
-}
-.review-overview__empty {
-  font-size: var(--font-size-sm);
-  color: var(--text-muted);
-  font-style: italic;
-}
-.review-overview .review-row--added {
-  background: color-mix(
-    in srgb,
-    color-mix(in srgb, #000 var(--tint-shade), var(--tile-added))
-      var(--tint-strength),
-    var(--surface)
-  );
-}
-.review-overview .review-row--changed {
-  background: color-mix(
-    in srgb,
-    color-mix(in srgb, #000 var(--tint-shade), var(--tile-changed))
-      var(--tint-strength),
-    var(--surface)
-  );
-}
-.review-overview .review-row--removed,
-.review-overview .review-row--deleted {
-  background: color-mix(
-    in srgb,
-    color-mix(in srgb, #000 var(--tint-shade), var(--tile-cleared))
-      var(--tint-strength),
-    var(--surface)
-  );
-}
-.review-overview .review-row--removed .review-row__name,
-.review-overview .review-row--deleted .review-row__name {
-  text-decoration: line-through;
-  text-decoration-thickness: 1.5px;
-}
-.review-overview .review-row__meta {
-  max-height: 3em;
-  overflow: hidden;
-}
-.review-row__field {
-  font-size: var(--font-size-xs);
-  color: var(--text-muted);
-}
-.review-row__field--changed { color: var(--tile-changed); font-weight: 700; }
-.review-row__field--added { color: var(--tile-added); font-weight: 700; }
-.review-row__field--cleared { color: var(--tile-cleared); font-weight: 700; }
-.review-row__field--issue { color: var(--tile-issue); font-weight: 700; }
-.review-row__field--error { color: var(--tile-cleared); font-weight: 700; }
-.review-row__field-lock {
-  margin-right: 0.2em;
-  font-size: 0.85em;
-  color: var(--text-muted);
-  opacity: 0.6;
-}
-.review-row__field-lock--overrode {
-  color: var(--action);
-  opacity: 1;
-}
-.review-row__more {
-  font-size: var(--font-size-xs);
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-.review-row__sources {
-  position: relative;
-  z-index: 1;
-  margin-left: auto;
-  display: inline-flex;
-  gap: 0.2rem;
-  opacity: 0.6;
-}
-.review-row__sources:hover {
-  opacity: 1;
-}
-.review-row__source {
-  text-decoration: none;
-}
-.review-row__source:hover {
-  text-decoration: underline;
-}
-.review-row__source {
-  font-size: var(--font-size-xs);
-  font-weight: 500;
-  white-space: nowrap;
-}
-.review-row__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0 0.35rem;
-  border-radius: var(--radius);
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-  white-space: nowrap;
-}
-.review-row__badge--added {
-  background: var(--diff-added-bg);
-  color: var(--tile-added);
-}
-.review-row__badge--removed,
-.review-row__badge--deleted {
-  background: var(--diff-removed-bg);
-  color: var(--tile-cleared);
-}
-.review-row__badge--changed {
-  background: color-mix(in srgb, var(--tile-changed) 16%, transparent);
-  color: var(--tile-changed);
-}
-.review-row__badge--restored,
-.review-row__badge--unchanged,
-.review-row__badge--unverified {
-  background: color-mix(in srgb, var(--text-muted) 16%, transparent);
-  color: var(--text-muted);
-}
-.review-row__moved {
-  font-size: var(--font-size-xs);
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-.review-overview__tally {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-.review-row__attn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0 0.35rem;
-  border-radius: var(--radius);
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-  white-space: nowrap;
-  flex: none;
-}
-.review-row__attn--error {
-  background: var(--diff-removed-bg);
-  color: var(--tile-cleared);
-}
-.review-row__attn--issue {
-  background: color-mix(in srgb, var(--tile-issue) 16%, transparent);
-  color: var(--tile-issue);
-}
-.review-overview .review-row--ghost {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  min-height: 4rem;
-  border-style: dashed;
-  background: none;
-  color: var(--text-muted);
-  font: inherit;
-  font-size: var(--font-size-sm);
-  width: 100%;
-}
-.review-overview .review-row--ghost:hover {
-  border-color: var(--text-default);
-  color: var(--text-default);
-}
-.review-overview__strip {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(17rem, 100%), 1fr));
-  gap: 0.4rem 0.6rem;
-}
-.review-fold {
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-width: 0;
-  padding-right: 1.6rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-.review-fold:hover,
-.review-fold:focus-within {
-  border-color: var(--text-default);
-}
-.review-fold:hover .review-row__hint {
-  opacity: 1;
-  color: var(--text-default);
-}
-.review-fold__open {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  flex: 1;
-  min-width: 0;
-  width: auto;
-  padding: 0.3rem 0.2rem 0.3rem 0.3rem;
-  border: none;
-  background: none;
-  font: inherit;
-  color: var(--text-muted);
-  text-align: left;
-  cursor: pointer;
-}
-.review-fold__open:hover {
-  color: var(--text-default);
-}
-.review-fold__open person-image {
-  opacity: 0.75;
-  flex: none;
-}
-.review-fold__who {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-.review-fold__name {
-  font-size: var(--font-size-sm);
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.review-fold__meta {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  min-width: 0;
-}
-.review-fold__sub {
-  font-size: var(--font-size-xs);
-  line-height: 1.2;
-  opacity: 0.8;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  :root[data-theme="light"] .review-overview {
+    --tint-strength: 12%;
+    --tint-shade: 0%;
+  }
+  /* .rgroup-list (person-card-grid.css) carries the packing mechanism itself, shared with the
+     jurisdiction page; these are just review-overview's own (slightly airier) values in place
+     of that file's denser jurisdiction-page defaults. */
+  .review-overview .rgroup-list {
+    --card-min: 18rem;
+    --card-gap: 0.6rem;
+    --group-gap: 1rem;
+  }
+
+  .review-overview__empty {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .review-overview .review-row--added {
+    background: color-mix(
+      in srgb,
+      color-mix(in srgb, #000 var(--tint-shade), var(--tile-added))
+        var(--tint-strength),
+      var(--surface)
+    );
+  }
+  .review-overview .review-row--changed {
+    background: color-mix(
+      in srgb,
+      color-mix(in srgb, #000 var(--tint-shade), var(--tile-changed))
+        var(--tint-strength),
+      var(--surface)
+    );
+  }
+  .review-overview .review-row--removed,
+  .review-overview .review-row--deleted {
+    background: color-mix(
+      in srgb,
+      color-mix(in srgb, #000 var(--tint-shade), var(--tile-cleared))
+        var(--tint-strength),
+      var(--surface)
+    );
+  }
+  .review-overview .review-row--removed .pc-name,
+  .review-overview .review-row--deleted .pc-name {
+    text-decoration: line-through;
+    text-decoration-thickness: 1.5px;
+  }
+  .review-overview .review-row--removed .pv,
+  .review-overview .review-row--deleted .pv {
+    text-decoration: line-through;
+  }
+
+  /* Who and what office is the substance of a diff review, so the post field keeps a stronger
+     text color than the other fields — full-size still (shrinking it left a wide gap between
+     short values and the card's corner icon; the icon's own size is unaffected). */
+  .review-overview .pv:not(.pv--post) .pvv {
+    color: var(--text-muted);
+  }
+  .review-overview .pv del {
+    color: var(--tile-cleared);
+    text-decoration: line-through;
+  }
+  .review-overview .pv ins {
+    color: var(--tile-added);
+    text-decoration: none;
+  }
+  .review-row__field-lock {
+    margin-right: 0.2em;
+    font-size: 0.85em;
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+  .review-row__field-lock--overrode {
+    color: var(--action);
+    opacity: 1;
+  }
+  .review-row__sources {
+    position: relative;
+    z-index: 1;
+    margin-left: auto;
+    display: inline-flex;
+    gap: 0.2rem;
+    opacity: 0.6;
+  }
+  .review-row__sources:hover {
+    opacity: 1;
+  }
+  .review-row__source {
+    text-decoration: none;
+  }
+  .review-row__source:hover {
+    text-decoration: underline;
+  }
+  .review-row__source {
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .review-row__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0 0.35rem;
+    border-radius: var(--radius);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .review-row__badge--added {
+    background: var(--diff-added-bg);
+    color: var(--tile-added);
+  }
+  .review-row__badge--removed,
+  .review-row__badge--deleted {
+    background: var(--diff-removed-bg);
+    color: var(--tile-cleared);
+  }
+  .review-row__badge--changed {
+    background: color-mix(in srgb, var(--tile-changed) 16%, transparent);
+    color: var(--tile-changed);
+  }
+  .review-row__badge--restored,
+  .review-row__badge--unchanged,
+  .review-row__badge--no-term {
+    background: color-mix(in srgb, var(--text-muted) 16%, transparent);
+    color: var(--text-muted);
+  }
+  .review-overview__tally {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .review-row__attn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0 0.35rem;
+    border-radius: var(--radius);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    white-space: nowrap;
+    flex: none;
+  }
+  .review-row__attn--error {
+    background: var(--diff-removed-bg);
+    color: var(--tile-cleared);
+  }
+  .review-row__attn--issue {
+    background: color-mix(in srgb, var(--tile-issue) 16%, transparent);
+    color: var(--tile-issue);
+  }
+  .review-overview .review-row--ghost {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 4rem;
+    border-style: dashed;
+    background: none;
+    color: var(--text-muted);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    width: 100%;
+  }
+  .review-overview .review-row--ghost:hover {
+    border-color: var(--text-default);
+    color: var(--text-default);
+  }
+
+  /* Collapsed still means "not expanded," not "not clickable" — a name here opens the same
+     inline editor a full card would. */
+  .review-overview__more {
+    margin-top: 0.5rem;
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+  }
+  .review-overview__chip {
+    font: inherit;
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    padding: 0;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    cursor: pointer;
+  }
+  .review-overview__chip:hover {
+    color: var(--text-default);
+    text-decoration-style: solid;
+  }
+  .review-overview__strip {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(17rem, 100%), 1fr));
+    gap: 0.4rem 0.6rem;
+  }
+  .review-fold {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    padding-right: 1.6rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .review-fold:hover,
+  .review-fold:focus-within {
+    border-color: var(--text-default);
+  }
+  .review-row__hint {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.4rem;
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    opacity: 0.5;
+    pointer-events: none;
+    transform: rotate(-90deg);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .review-row__hint {
+      transition:
+        transform 150ms ease,
+        opacity 150ms ease,
+        color 150ms ease;
+    }
+  }
+  .review-fold:hover .review-row__hint {
+    opacity: 1;
+    color: var(--text-default);
+  }
+  .review-fold__open {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    padding: 0.3rem 0.2rem 0.3rem 0.3rem;
+    border: none;
+    background: none;
+    font: inherit;
+    color: var(--text-muted);
+    text-align: left;
+    cursor: pointer;
+  }
+  .review-fold__open:hover {
+    color: var(--text-default);
+  }
+  .review-fold__open person-image {
+    opacity: 0.75;
+    flex: none;
+  }
+  .review-fold__who {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .review-fold__name {
+    font-size: var(--font-size-sm);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .review-fold__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+  .review-fold__sub {
+    font-size: var(--font-size-xs);
+    line-height: 1.2;
+    opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

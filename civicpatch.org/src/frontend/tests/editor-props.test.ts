@@ -150,6 +150,7 @@ describe("personEditorPropsFor — derivedPost", () => {
     expect(derivedPostOf([change()])).toEqual({
       post_id: "post-5",
       label: "Council Member, District 5",
+      membershipLabel: null,
     }));
 
   // Ingest stopped minting posts, so this is the ordinary case for a promotion rather than an
@@ -158,6 +159,7 @@ describe("personEditorPropsFor — derivedPost", () => {
     expect(derivedPostOf([change({ post_id: null })])).toEqual({
       post_id: null,
       label: "Council Member, District 5",
+      membershipLabel: null,
     }));
 
   it("offers nothing when nobody is proposed onto a seat", () =>
@@ -190,6 +192,7 @@ describe("personEditorPropsFor — derivedPost from a held membership", () => {
     expect(withMemberships([{ post_id: "post-held", post_label: "Mayor" }])).toEqual({
       post_id: "post-held",
       label: "Mayor",
+      membershipLabel: null,
     }));
 
   it("offers nothing when they hold two seats", () =>
@@ -204,7 +207,19 @@ describe("personEditorPropsFor — derivedPost from a held membership", () => {
         card({ newRecord: { id: "p1", name: "A", memberships: [{ post_id: "old" }] } }),
         context({ proposals: proposalsByPersonId([change()]) }),
       ).derivedPost,
-    ).toEqual({ post_id: "post-5", label: "Council Member, District 5" }));
+    ).toEqual({ post_id: "post-5", label: "Council Member, District 5", membershipLabel: null }));
+
+  it("carries the proposal's membership label, so the picker defaults to the detected move", () =>
+    expect(derivedPostOf([change({ label: "Chair" })])).toEqual({
+      post_id: "post-5",
+      label: "Council Member, District 5",
+      membershipLabel: "Chair",
+    }));
+
+  it("carries the held membership's own label when there is no proposal", () =>
+    expect(
+      withMemberships([{ post_id: "post-held", post_label: "Mayor", label: "Chair" }]),
+    ).toEqual({ post_id: "post-held", label: "Mayor", membershipLabel: "Chair" }));
 });
 
 

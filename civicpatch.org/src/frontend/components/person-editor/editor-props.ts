@@ -11,13 +11,14 @@ import {
   personOf,
   type ProposedChange,
 } from "../people/person-cards.js";
+import { UNMATCHED_ROLE_ID } from "../../utils/role-types.js";
+import { type PersonMembership } from "../edit-people/person-edit-utils.js";
 import { canMerge, mergeCandidates } from "../review/merge-model.js";
 import { acceptsByField, type PersonAssertion } from "./field-provenance.js";
 import { type PersonEditorProps } from "./person-editor.js";
-
-const UNMATCHED_ROLE_ID = "unmatched";
 import {
   heldPost,
+  heldMembershipLabel,
   type DerivedPost,
   type Post,
   type RoleOption,
@@ -52,20 +53,35 @@ export interface EditorContext {
   onPickPartner: (anchorId: string, partnerId: string) => void;
 }
 
+// A proposal with no recognized role is a vocabulary gap, not an answer to show as one.
+function derivedPostFromProposal(proposal: ProposedChange): DerivedPost | null {
+  if (proposal.role_id === UNMATCHED_ROLE_ID) return null;
+  return {
+    post_id: proposal.post_id ?? null,
+    label: proposal.post_label,
+    membershipLabel: proposal.label ?? null,
+  };
+}
+
+function derivedPostFromHeld(
+  memberships: PersonMembership[] | undefined,
+): DerivedPost | null {
+  const held = heldPost(memberships);
+  return held ? { ...held, membershipLabel: heldMembershipLabel(memberships) } : null;
+}
+
 function derivedPostFor(
   card: PersonCard,
   proposals: Map<string, ProposedChange[]>,
 ): DerivedPost | null {
   const proposed = proposals.get(card.personId) ?? [];
-  if (proposed.length) {
-    if (proposed.length > 1) return null;
-    if (proposed[0].role_id === UNMATCHED_ROLE_ID) return null;
-    return {
-      post_id: proposed[0].post_id ?? null,
-      label: proposed[0].post_label,
-    };
-  }
-  return heldPost(personOf(card)?.memberships);
+  // Two or more proposals is no single answer — unlike `soleProposalFor`'s other callers,
+  // this does not fall through to the held membership below the way "no proposal at all"
+  // does: picking either of two would show a decision nobody made.
+  if (proposed.length > 1) return null;
+  return proposed[0]
+    ? derivedPostFromProposal(proposed[0])
+    : derivedPostFromHeld(personOf(card)?.memberships);
 }
 
 export function personEditorPropsFor(

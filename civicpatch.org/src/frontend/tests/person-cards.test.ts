@@ -7,6 +7,7 @@ import {
   publishSet,
   blockingErrors,
   byDivision,
+  proposalsByPersonId,
   PersonStatus,
 } from "../components/people/person-cards.js";
 import { isContextField, type Issue } from "../components/fields/field-model.js";
@@ -158,6 +159,94 @@ describe("buildPersonCards — surviving fields and issues", () => {
       issues: [issue],
     });
     expect(cards.find((c) => c.personId === "b")!.issues).toEqual([]);
+  });
+});
+
+describe("buildPersonCards — office visibility", () => {
+  // `post_id` is never a raw scraped value, so a plain field diff never surfaces it — these
+  // lock down the cases `officeSurvivingField` adds it back for.
+  const proposal = (over: Record<string, unknown> = {}) => ({
+    person_id: "a",
+    disposition: "unchanged",
+    role_id: "council-member",
+    role_label: "Council Member",
+    division_ocdid: "ocd-division/country:us/state:wa/place:x",
+    label: "Council Member",
+    post_label: "Council Member",
+    post_id: "post-1",
+    ...over,
+  });
+  const officeKeys = (cards: ReturnType<typeof buildPersonCards>) =>
+    cards[0].surviving.filter((s) => s.field.key === "post_id").map((s) => s.reason);
+  const officeStates = (cards: ReturnType<typeof buildPersonCards>) =>
+    cards[0].surviving.filter((s) => s.field.key === "post_id").map((s) => s.state);
+
+  it("surfaces a first appearance, which a field diff has nothing to compare", () => {
+    const cards = build({
+      currentPeople: [person("a")],
+      proposals: proposalsByPersonId([proposal({ disposition: "new" })]),
+    });
+    expect(officeKeys(cards)).toEqual(["diff"]);
+    // Matches every other field on a brand-new person, which reads "added" too — not
+    // "changed", which would read as a modification to something that already existed.
+    expect(officeStates(cards)).toEqual(["added"]);
+  });
+
+  it("surfaces a move the same way", () => {
+    const cards = build({
+      existing: [person("a", { memberships: [{ post_id: "old", label: "Mayor" }] })],
+      currentPeople: [person("a")],
+      proposals: proposalsByPersonId([proposal({ disposition: "moved" })]),
+    });
+    expect(officeKeys(cards)).toEqual(["diff"]);
+    expect(officeStates(cards)).toEqual(["changed"]);
+  });
+
+  it("surfaces a recomposed label even though the seat did not move", () => {
+    const cards = build({
+      existing: [
+        person("a", { memberships: [{ post_id: "post-1", label: "Council Member" }] }),
+      ],
+      currentPeople: [person("a")],
+      proposals: proposalsByPersonId([proposal({ label: "Council Member, Deputy" })]),
+    });
+    expect(officeKeys(cards)).toEqual(["diff"]);
+    expect(officeStates(cards)).toEqual(["changed"]);
+  });
+
+  it("stays quiet when the seat and the label both match what was held", () => {
+    const cards = build({
+      existing: [
+        person("a", { memberships: [{ post_id: "post-1", label: "Council Member" }] }),
+      ],
+      currentPeople: [person("a")],
+      proposals: proposalsByPersonId([proposal()]),
+    });
+    expect(officeKeys(cards)).toEqual([]);
+  });
+
+  it("stays quiet with no proposals at all, the jurisdiction page's case", () => {
+    const cards = build({
+      existing: [person("a")],
+      currentPeople: [person("a")],
+    });
+    expect(officeKeys(cards)).toEqual([]);
+  });
+
+  it("does not double up when an issue already anchored post_id", () => {
+    const issue: Issue = {
+      code: "moved_person",
+      message: "…",
+      person_ids: ["a"],
+      field: "post_id",
+    };
+    const cards = build({
+      existing: [person("a", { memberships: [{ post_id: "old", label: "Mayor" }] })],
+      currentPeople: [person("a")],
+      issues: [issue],
+      proposals: proposalsByPersonId([proposal({ disposition: "moved" })]),
+    });
+    expect(officeKeys(cards)).toEqual(["issue"]);
   });
 });
 

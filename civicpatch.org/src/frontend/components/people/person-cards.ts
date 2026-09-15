@@ -1,6 +1,7 @@
 import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
 import {
   divisionOf,
+  heldMembershipLabel,
   postLabelFor,
   postsHeld,
   type Post,
@@ -128,6 +129,18 @@ export interface BuildCardsInput {
   proposals?: Map<string, ProposedChange[]>;
 }
 
+// A card's one unambiguous proposed change, when it has exactly one — two or more is no
+// single answer, so callers fall back to whatever they already hold. The same rule was
+// being re-derived at three call sites (here, the office picker's default, and review's
+// role grouping); this is the one place it is written.
+export function soleProposalFor(
+  personId: string,
+  proposals: Map<string, ProposedChange[]> | undefined,
+): ProposedChange | null {
+  const proposed = proposals?.get(personId) ?? [];
+  return proposed.length === 1 ? proposed[0] : null;
+}
+
 const postMoved = (
   personId: string,
   proposals?: Map<string, ProposedChange[]>,
@@ -135,6 +148,31 @@ const postMoved = (
   (proposals?.get(personId) ?? []).some(
     (change) => change.disposition !== "unchanged",
   );
+
+// `survivingFields` cannot see the office on its own — `post_id` is never a raw scraped
+// value (nothing writes it onto a record until a reviewer picks one), so there is nothing
+// for a field diff to compare. `postMoved` already covers a move or a first appearance via
+// disposition; this adds the one case disposition alone misses: the seat stayed put, but
+// this scrape recomposed the label.
+function officeSurvivingField(
+  personId: string,
+  proposals: Map<string, ProposedChange[]> | undefined,
+  oldMemberships: { post_id: string; label: string | null }[] | undefined,
+): SurvivingField | null {
+  const change = soleProposalFor(personId, proposals);
+  if (!change) return null;
+  const labelChanged =
+    (change.label ?? null) !== (heldMembershipLabel(oldMemberships) ?? null);
+  if (!postMoved(personId, proposals) && !labelChanged) return null;
+  return {
+    field: FIELD_SCHEMA.find((field) => field.key === POST_FIELD)!,
+    // Matches every other field's own state on the same card: "added" for a first
+    // appearance, "changed" for a move or a recomposed label on a seat that stayed put.
+    state: change.disposition === "new" ? "added" : "changed",
+    reason: "diff",
+    error: null,
+  };
+}
 
 export interface MovedNote {
   from: string;
@@ -207,12 +245,17 @@ export function buildPersonCards({
     }
     // Only the scrape dropping someone leaves no new-side record.
     const newRecord = status === PersonStatus.REMOVED ? null : entry.person;
+    const surviving = survivingFields(entry.from, newRecord, cardIssues);
+    const office = officeSurvivingField(personId, proposals, entry.from?.memberships);
     return {
       personId,
       status,
       oldRecord: entry.from,
       newRecord,
-      surviving: survivingFields(entry.from, newRecord, cardIssues),
+      surviving:
+        office && !surviving.some((field) => field.field.key === POST_FIELD)
+          ? [...surviving, office]
+          : surviving,
       issues: cardIssues,
     };
   });

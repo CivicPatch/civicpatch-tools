@@ -265,27 +265,6 @@
     border: 1px solid var(--warning);
     border-radius: var(--radius);
   }
-  .review-session__publishing {
-    max-width: var(--page-width);
-    width: 100%;
-    margin-inline: auto;
-    margin-top: 2.5rem;
-    padding: 1.5rem 1rem 1.25rem;
-    border-top: 3px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface-2);
-  }
-  .review-session__section-title {
-    margin: -1.9rem 0 0.9rem;
-    padding-right: 0.6rem;
-    display: inline-block;
-    font-size: var(--font-size-sm);
-    font-weight: 400;
-    text-transform: lowercase;
-    font-family: var(--font-mono);
-    color: var(--text-muted);
-    background: var(--surface-2);
-  }
   .review-session__duplicate-banner {
     max-width: var(--page-width);
     width: 100%;
