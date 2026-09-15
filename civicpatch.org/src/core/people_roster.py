@@ -41,7 +41,7 @@ def roster_from_rows(
 
     Everyone the scrape saw is in it.
 
-    Whether a post is one we diff against is `posts.is_tracked`, decided when the post is
+    Whether a post is one we diff against is `posts.meta_is_tracked`, decided when the post is
     minted — not here, and not by dropping the person.
 
     Dicts rather than a model, because the roster carries fields no model declares —

@@ -557,7 +557,7 @@ async def open_by_jurisdiction(
     await cur.execute(
         """
         SELECT p.jurisdiction_ocdid, m.person_id::text, m.post_id::text,
-               p.role_id, p.division_ocdid, p._is_tracked AS is_tracked,
+               p.role_id, p.division_ocdid, p.meta_is_tracked,
                r.label AS role_label
         FROM memberships m
         JOIN posts p ON p.id = m.post_id

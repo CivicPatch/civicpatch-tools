@@ -35,7 +35,7 @@ def _held(
     role_id,
     division_ocdid,
     post_id="post-1",
-    is_tracked=True,
+    meta_is_tracked=True,
     role_label="",
 ):
     return ExistingMembership(
@@ -44,7 +44,7 @@ def _held(
         role_id=role_id,
         role_label=role_label,
         division_ocdid=division_ocdid,
-        is_tracked=is_tracked,
+        meta_is_tracked=meta_is_tracked,
     )
 
 
@@ -109,16 +109,16 @@ def test_an_absence_names_the_seat_it_left():
 
 @pytest.mark.unit
 def test_every_absence_surfaces_while_tracked_is_undecided():
-    """`is_tracked` rides along on the change and is deliberately not read. Skipping review on
-    a flag whose meaning is unsettled is the expensive way to discover it was wrong; the
+    """`meta_is_tracked` rides along on the change and is deliberately not read. Skipping review
+    on a flag whose meaning is unsettled is the expensive way to discover it was wrong; the
     absence is closed either way, at ingest."""
     changes = propose(
         [_post("mayor", _BASE, "a")],
-        [_held("b", "city-attorney", _BASE, is_tracked=False)],
+        [_held("b", "city-attorney", _BASE, meta_is_tracked=False)],
     )
 
     absent = next(c for c in changes if c.disposition is Disposition.ABSENT)
-    assert absent.is_tracked is False
+    assert absent.meta_is_tracked is False
     assert surfaces_for_review(absent) is True
 
 

@@ -25,7 +25,7 @@ class UnknownOrganization(Exception):
 
 
 # The fields a human owns. The derivation sets them once at mint and never again.
-_HUMAN_FIELDS = ("_headcount", "_is_tracked")
+_HUMAN_FIELDS = ("meta_headcount", "meta_is_tracked")
 
 
 def _with_label(post: dict) -> dict:
@@ -90,14 +90,14 @@ async def create_if_absent(
     which is why neither is ever recomputed. The label is not among them: it is composed on
     read from the role and the division (148), so there is nothing to seed.
 
-    `_headcount` and `_is_tracked` carry their prefix as column names, because no civic
-    standard defines either. The Python arguments drop it: a leading underscore means
-    something else here.
+    `meta_headcount` and `meta_is_tracked` carry their marker as column names, because no civic
+    standard defines either. The Python arguments drop it — it is a wire/column concern, not a
+    caller concern.
     """
     await cur.execute(
         """
         INSERT INTO posts
-            (jurisdiction_ocdid, organization_id, role_id, division_ocdid, _headcount, _is_tracked)
+            (jurisdiction_ocdid, organization_id, role_id, division_ocdid, meta_headcount, meta_is_tracked)
         VALUES (%s, %s, %s, %s, %s, %s)
         ON CONFLICT (organization_id, role_id, division_ocdid) DO NOTHING
         RETURNING id::text
@@ -163,7 +163,7 @@ async def update_human_fields(
     This is where a person corrects it — the clerk their town elects, the attorney it does not.
     """
     await cur.execute(
-        "UPDATE posts SET _headcount = %s, _is_tracked = %s WHERE id::text = %s",
+        "UPDATE posts SET meta_headcount = %s, meta_is_tracked = %s WHERE id::text = %s",
         (headcount, is_tracked, post_id),
     )
     return cur.rowcount > 0
@@ -225,7 +225,7 @@ async def get_many(cur, post_ids: list[str]) -> dict[str, Post]:
     await cur.execute(
         """
         SELECT posts.id::text, posts.jurisdiction_ocdid, posts.organization_id::text,
-               posts.role_id, posts.division_ocdid, posts._headcount, posts._is_tracked,
+               posts.role_id, posts.division_ocdid, posts.meta_headcount, posts.meta_is_tracked,
                roles.label AS role_label
         FROM posts LEFT JOIN roles ON roles.id = posts.role_id
         WHERE posts.id::text = ANY(%s)
@@ -297,12 +297,12 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     """
     await cur.execute(
         f"""
-        -- `_*` are the fields no civic standard defines: a consumer dropping them is left
-        -- with a conforming Post. Stored ones carry the prefix as their column name; only a
-        -- computed one like `_is_verified` needs an alias to get it.
+        -- `meta_headcount`/`meta_is_tracked`/`meta_is_verified` are the fields no civic standard
+        -- defines. Stored ones carry their marker as their column name; only a computed one
+        -- like `meta_is_verified` needs an alias to get it.
         SELECT posts.id::text, posts.organization_id::text, posts.role_id, posts.division_ocdid,
-               posts._headcount, posts._is_tracked,
-               {POST_IS_VERIFIED} AS _is_verified,
+               posts.meta_headcount, posts.meta_is_tracked,
+               {POST_IS_VERIFIED} AS meta_is_verified,
                roles.label AS role_label
         FROM posts LEFT JOIN roles ON roles.id = posts.role_id
         WHERE posts.jurisdiction_ocdid = %(jurisdiction_ocdid)s
@@ -329,8 +329,8 @@ async def list_page_for_state(
             SELECT COUNT(*) OVER() AS total,
                    posts.jurisdiction_ocdid,
                    posts.id::text, posts.organization_id::text, posts.role_id,
-                   posts.division_ocdid, posts._headcount, posts._is_tracked,
-                   {POST_IS_VERIFIED} AS _is_verified,
+                   posts.division_ocdid, posts.meta_headcount, posts.meta_is_tracked,
+                   {POST_IS_VERIFIED} AS meta_is_verified,
                    roles.label AS role_label
             FROM posts LEFT JOIN roles ON roles.id = posts.role_id
             WHERE posts.jurisdiction_ocdid LIKE %(prefix)s
@@ -500,7 +500,7 @@ async def create(
             # A seat somebody added by hand belongs to the roster they added it to.
             changeset_id = await live_roster_changeset(cur, jurisdiction_ocdid)
             await _accept_fields(
-                cur, post_id, {"_headcount": headcount}, user_id, changeset_id
+                cur, post_id, {"meta_headcount": headcount}, user_id, changeset_id
             )
             minted = await get(cur, post_id)
             await record_change(
@@ -544,7 +544,7 @@ async def update(
         await _accept_fields(
             cur,
             post_id,
-            {"_headcount": headcount, "_is_tracked": is_tracked},
+            {"meta_headcount": headcount, "meta_is_tracked": is_tracked},
             user_id,
             changeset_id,
         )
@@ -558,12 +558,11 @@ async def update(
                 entity_id=post_id,
                 # Derived, and unchanged by this edit: it names the seat for a reader.
                 subject=before.label or before.role_id,
-                # Underscored names, because these are the wire's, not the model's.
                 fields=[
                     FieldChange(field=field, before=was, after=now)
                     for field, was, now in (
-                        ("_headcount", before.headcount, headcount),
-                        ("_is_tracked", before.is_tracked, is_tracked),
+                        ("meta_headcount", before.meta_headcount, headcount),
+                        ("meta_is_tracked", before.meta_is_tracked, is_tracked),
                     )
                     if was != now
                 ],

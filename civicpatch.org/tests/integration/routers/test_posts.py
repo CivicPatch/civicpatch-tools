@@ -239,19 +239,19 @@ async def test_patch_reaches_a_post_not_the_jurisdiction_route(client):
     collision is gone; this now just locks down the patch-then-read round trip."""
     post_id = (await _create(client)).json()["data"]["id"]
 
-    patched = client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 2, "_is_tracked": True})
+    patched = client.patch(f"{_PREFIX}/{post_id}", json={"meta_headcount": 2, "meta_is_tracked": True})
     assert patched.status_code == 200, patched.text
 
     listed = client.get(f"{_ORG_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"][0]
     # Composed from the role and the division since 148, not stored — so it survives the patch.
     assert listed["label"] == "Mayor"
-    assert listed["_headcount"] == 2
+    assert listed["meta_headcount"] == 2
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_patching_a_post_that_is_not_there_is_404(client):
-    missing = client.patch(f"{_PREFIX}/{uuid.uuid4()}", json={"_headcount": 1, "_is_tracked": True})
+    missing = client.patch(f"{_PREFIX}/{uuid.uuid4()}", json={"meta_headcount": 1, "meta_is_tracked": True})
 
     assert missing.status_code == 404, missing.text
 
@@ -268,8 +268,8 @@ async def test_verified_is_on_the_wire_both_ways(client):
     posts_out = client.get(f"{_ORG_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"]
 
     by_id = {p["id"]: p for p in posts_out}
-    assert by_id[held]["_is_verified"] is True
-    assert by_id[unheld]["_is_verified"] is False
+    assert by_id[held]["meta_is_verified"] is True
+    assert by_id[unheld]["meta_is_verified"] is False
     assert "verified" not in by_id[held]
 
 
@@ -277,19 +277,19 @@ async def test_verified_is_on_the_wire_both_ways(client):
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_create_reads_headcount_under_its_wire_name(client):
-    """Create takes `_headcount`, the same name the read returns and the patch accepts.
+    """Create takes `meta_headcount`, the same name the read returns and the patch accepts.
 
     The alias is the whole contract: a body sending bare `headcount` is not a validation
     error, it is silently the default — so only asserting the stored value catches a
     regression here.
     """
-    created = await _create(client, division=_WARD_3, _headcount=4)
+    created = await _create(client, division=_WARD_3, meta_headcount=4)
     assert created.status_code == 200, created.text
 
     listed = client.get(f"{_ORG_PREFIX}/{_OCDID}").json()["data"]["organizations"]
     posts_by_id = {p["id"]: p for org in listed for p in org["posts"]}
 
-    assert posts_by_id[created.json()["data"]["id"]]["_headcount"] == 4
+    assert posts_by_id[created.json()["data"]["id"]]["meta_headcount"] == 4
 
 
 @pytest.mark.asyncio
@@ -297,7 +297,7 @@ async def test_create_reads_headcount_under_its_wire_name(client):
 async def test_a_seat_for_nobody_is_rejected(client):
     """`headcount` is `gt=0`. Validation lives in the model, so the route never sees a zero —
     but nothing had ever sent one to find out."""
-    rejected = await _create(client, division=_WARD_3, _headcount=0)
+    rejected = await _create(client, division=_WARD_3, meta_headcount=0)
 
     assert rejected.status_code == 422, rejected.text
 
@@ -309,7 +309,7 @@ async def test_the_identity_triple_is_not_patchable(client):
     fork the post — the next scrape would mint a second rather than match this one."""
     post_id = (await _create(client)).json()["data"]["id"]
 
-    client.patch(f"{_PREFIX}/{post_id}", json={"label": "x", "_headcount": 1, "_is_tracked": True, "role_id": "clerk"})
+    client.patch(f"{_PREFIX}/{post_id}", json={"label": "x", "meta_headcount": 1, "meta_is_tracked": True, "role_id": "clerk"})
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -322,13 +322,13 @@ async def test_every_write_leaves_a_trace(client):
     """Who created a seat and who edited it. `roles.py`, `people.py` and `pull_requests.py`
     all log; posts did not, so a curator's edits were unattributable."""
     post_id = (await _create(client)).json()["data"]["id"]
-    client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 2, "_is_tracked": True})
+    client.patch(f"{_PREFIX}/{post_id}", json={"meta_headcount": 2, "meta_is_tracked": True})
 
     logs = await _activity_rows()
 
     assert [log["type"] for log in logs] == ["add_post", "edit_post"]
     assert all(log["entity_id"] == post_id for log in logs)
-    assert {f["field"] for f in logs[1]["fields"]} == {"_headcount"}
+    assert {f["field"] for f in logs[1]["fields"]} == {"meta_headcount"}
     # The log names the seat with its composed label — nobody can type one since 148.
     assert logs[1]["subject"] == "Mayor"
 
@@ -347,7 +347,7 @@ async def test_a_rejected_create_leaves_no_trace(client):
 async def _is_tracked(post_id: str) -> bool:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("SELECT _is_tracked FROM posts WHERE id::text = %s", (post_id,))
+        await cur.execute("SELECT meta_is_tracked FROM posts WHERE id::text = %s", (post_id,))
         return (await cur.fetchone())[0]
 
 
@@ -359,10 +359,10 @@ async def test_a_post_can_be_untracked_and_tracked_again(client):
     post_id = (await _create(client)).json()["data"]["id"]
     assert await _is_tracked(post_id) is True
 
-    client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 1, "_is_tracked": False})
+    client.patch(f"{_PREFIX}/{post_id}", json={"meta_headcount": 1, "meta_is_tracked": False})
     assert await _is_tracked(post_id) is False
 
-    client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 1, "_is_tracked": True})
+    client.patch(f"{_PREFIX}/{post_id}", json={"meta_headcount": 1, "meta_is_tracked": True})
     assert await _is_tracked(post_id) is True
 
 
@@ -372,7 +372,7 @@ async def test_a_patch_must_state_whether_the_post_is_tracked(client):
     """No default. This route replaces what it is given, so an omission would silently
     re-track a post somebody turned off."""
     post_id = (await _create(client)).json()["data"]["id"]
-    response = client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 2})
+    response = client.patch(f"{_PREFIX}/{post_id}", json={"meta_headcount": 2})
     assert response.status_code == 422
 
 

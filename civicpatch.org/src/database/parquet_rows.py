@@ -7,7 +7,7 @@ contract, the same job `HEADERS` does for the sheet.
 
 Deliberately left out, and why:
 
-  posts._headcount, posts._is_tracked   internal, underscore-prefixed by their own author
+  posts.meta_headcount, posts.meta_is_tracked   internal, meta_-marked by their own author
   jurisdictions.search_text             a search index, not a fact about the place
   jurisdictions.data                    the raw synced blob; `name` is lifted out of it instead
 

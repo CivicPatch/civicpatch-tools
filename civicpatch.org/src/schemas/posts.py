@@ -13,9 +13,8 @@ class CreatePostRequest(BaseModel):
 
     role_id: str
     division_ocdid: str
-    # Aliased like the update route's, so the field has one name on the wire whichever way it
-    # is crossed. Defaulted, unlike there: a new post is one seat unless someone says otherwise.
-    headcount: int = Field(default=1, alias="_headcount", gt=0)
+    # Defaulted, unlike the update route's: a new post is one seat unless someone says otherwise.
+    meta_headcount: int = Field(default=1, gt=0)
 
 
 class UpdatePostRequest(BaseModel):
@@ -28,14 +27,10 @@ class UpdatePostRequest(BaseModel):
     there is nothing here to set.
     """
 
-    # Underscored on the wire: no civic standard defines either of these, so a consumer
-    # dropping every `_*` key is left with a conforming record. The columns are plain — the
-    # distinction is about what we emit — so the alias is where it gets applied.
-    #
     # Required, like the identity fields on create: this route replaces what it is given, and
     # a default would let an omission silently re-track a post somebody turned off.
-    headcount: int = Field(alias="_headcount", gt=0)
-    is_tracked: bool = Field(alias="_is_tracked")
+    meta_headcount: int = Field(gt=0)
+    meta_is_tracked: bool
 
 
 class AssignMembershipRequest(BaseModel):
