@@ -98,6 +98,7 @@ function ReviewSessionPage() {
       .canReject=${permissions.can_reject_scrape}
       .isRejecting=${isRejecting}
       .canAssignMembership=${canAssignMembership}
+      .canCreatePost=${permissions.can_create_post}
       @back=${back}
       @advance=${advance}
       @navigate-to=${handleNavigateTo}

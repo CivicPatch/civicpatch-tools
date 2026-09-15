@@ -1,19 +1,3 @@
-"""Database queries for `organizations` — the body a post belongs to.
-
-Every jurisdiction has a default organization unconditionally: migration 195 backfilled the
-9,524 that predate it, and `services/sources/open_data.py` creates one the moment a jurisdiction
-is synced in, active or not. `get_default` below relies on that — it looks up, it does not
-create — so a jurisdiction with no organization is a bug in the sync path, not a normal case to
-absorb quietly.
-
-`find_or_create` still creates: a jurisdiction can also have named, non-default bodies (Council,
-School Board) once something can tell them apart, and that path stays create-or-get.
-
-Every function takes a cursor rather than opening its own connection, except `ensure_defaults_exist`
-(no caller-held transaction at sync time): post derivation runs inside the caller's transaction,
-and a body minted for a post that then fails to write would be a body nothing points at.
-"""
-
 from database.database import get_pool
 
 # Until a jurisdiction has more than one body, every post lands here. The name is generic
@@ -49,7 +33,9 @@ async def get_default(cur, jurisdiction_ocdid: str) -> str:
     )
     row = await cur.fetchone()
     if row is None:
-        raise RuntimeError(f"jurisdiction {jurisdiction_ocdid!r} has no default organization")
+        raise RuntimeError(
+            f"jurisdiction {jurisdiction_ocdid!r} has no default organization"
+        )
     return row[0]
 
 
@@ -84,7 +70,7 @@ async def find_or_create(
 async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     await cur.execute(
         """
-        SELECT id::text, name, sort_order
+        SELECT id::text, name, url, sort_order
         FROM organizations
         WHERE jurisdiction_ocdid = %s
         ORDER BY sort_order, name
@@ -95,13 +81,53 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     return [dict(zip(columns, row)) for row in await cur.fetchall()]
 
 
-async def for_changeset(cur, changeset_id: str) -> str | None:
-    """The organization this changeset is about, or None if nothing has assigned one.
+async def create(jurisdiction_ocdid: str, name: str, url: str | None) -> str | None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            INSERT INTO organizations (jurisdiction_ocdid, name, url)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (jurisdiction_ocdid, name) DO NOTHING
+            RETURNING id::text
+            """,
+            (jurisdiction_ocdid, name, url),
+        )
+        row = await cur.fetchone()
+        return row[0] if row else None
 
-    Read-only, unlike `find_or_create_for_changeset` below: a caller that only needs the scope
-    to *close* memberships must not mint a body as a side effect. None is not a gap — a
-    jurisdiction with no organization has no posts, so it has no memberships to close either.
-    """
+
+async def update(organization_id: str, name: str, url: str | None) -> bool:
+    """False if no such organization."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE organizations SET name = %s, url = %s WHERE id = %s",
+            (name, url, organization_id),
+        )
+        return cur.rowcount > 0
+
+
+async def delete(organization_id: str) -> str | None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT jurisdiction_ocdid, name FROM organizations WHERE id = %s",
+            (organization_id,),
+        )
+        row = await cur.fetchone()
+        if row is None or row[1] == DEFAULT_ORGANIZATION_NAME:
+            return None
+        await cur.execute(
+            "SELECT 1 FROM posts WHERE organization_id = %s LIMIT 1", (organization_id,)
+        )
+        if await cur.fetchone():
+            return None
+        await cur.execute("DELETE FROM organizations WHERE id = %s", (organization_id,))
+        return row[0]
+
+
+async def for_changeset(cur, changeset_id: str) -> str | None:
     await cur.execute(
         "SELECT organization_id::text FROM changesets WHERE id = %s", (changeset_id,)
     )
@@ -109,22 +135,9 @@ async def for_changeset(cur, changeset_id: str) -> str | None:
     return row[0] if row else None
 
 
-async def find_or_create_for_changeset(cur, changeset_id: str, jurisdiction_ocdid: str) -> str:
-    """The organization a changeset is about — found on the changeset, or created and written
-    onto it the first time anything asks.
-
-    Parallel to `find_or_create` above, and it writes for the same reason: the answer has to
-    outlast the call, because the changeset is where "which body is this review about" belongs.
-
-    A review is one organization at a time. `posts_identity_uq` is `(organization_id, role_id,
-    division_ocdid)`, so the organization is the scope the rest of a post's identity sits inside.
-    Callers used to work it out themselves with `find_or_create(jurisdiction)`, which is only
-    right while a jurisdiction has one body.
-
-    Writing it back is what makes the column converge: 158 backfilled every changeset whose
-    jurisdiction already had an organization, and this fills the rest as they publish — the ones
-    whose jurisdiction had never published anything at all.
-    """
+async def find_or_create_for_changeset(
+    cur, changeset_id: str, jurisdiction_ocdid: str
+) -> str:
     await cur.execute(
         "SELECT organization_id::text FROM changesets WHERE id = %s",
         (changeset_id,),

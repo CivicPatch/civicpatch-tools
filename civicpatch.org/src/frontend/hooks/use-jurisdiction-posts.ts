@@ -1,4 +1,4 @@
-import { fetchPosts } from "../api.js";
+import { fetchOrganizations } from "../api.js";
 import type { Post } from "../components/posts-list/posts-model.js";
 import { useAsyncData } from "./use-async-data.js";
 
@@ -19,7 +19,7 @@ export function useJurisdictionPosts(
 ): JurisdictionPosts {
   const { data, reload } = useAsyncData<Post[]>(async () => {
     if (!jurisdictionOcdid) return [];
-    const body = await fetchPosts(jurisdictionOcdid);
+    const body = await fetchOrganizations(jurisdictionOcdid);
     return body.data.organizations
       .flatMap((organization: { posts: Post[] }) => organization.posts)
       .sort((a: Post, b: Post) => a.label.localeCompare(b.label));

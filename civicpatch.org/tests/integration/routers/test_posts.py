@@ -19,10 +19,15 @@ from core.post_derivation import DerivedMembership
 from database import memberships, organizations, posts
 from database.database import get_pool
 from lib.auth import get_optional_user
+from routers.api import organizations as organizations_router
 from routers.api import posts as posts_router
 from schemas.common import Identity
 
 _PREFIX = "/api/v1/posts"
+# The per-jurisdiction read (organizations nested with their posts) moved to this router
+# entirely — see routers/api/organizations.py. Mounted alongside posts on every client here
+# so a test can create through one router and read back through the other, like the real app.
+_ORG_PREFIX = "/api/v1/organizations"
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_route/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_route"
 _WARD_3 = f"{_BASE}/ward:3"
@@ -39,10 +44,15 @@ def _fake_admin() -> Identity:
     )
 
 
+def _mounted(app: FastAPI) -> FastAPI:
+    app.include_router(posts_router.get_router(), prefix=_PREFIX)
+    app.include_router(organizations_router.get_router(), prefix=_ORG_PREFIX)
+    return app
+
+
 @pytest.fixture
 def client():
-    app = FastAPI()
-    app.include_router(posts_router.get_router(), prefix=_PREFIX)
+    app = _mounted(FastAPI())
     app.dependency_overrides[get_optional_user] = lambda: _fake_admin()
     return TestClient(app)
 
@@ -51,8 +61,7 @@ def client():
 def anonymous_client():
     """No identity at all — a logged-out visitor. Every other client here is a fake admin, so
     this is the only one that can see an auth gate come back."""
-    app = FastAPI()
-    app.include_router(posts_router.get_router(), prefix=_PREFIX)
+    app = _mounted(FastAPI())
     app.dependency_overrides[get_optional_user] = lambda: None
     return TestClient(app)
 
@@ -70,9 +79,9 @@ def _fake_default_user() -> Identity:
 
 @pytest.fixture
 def default_role_client():
-    """Signed in, no elevated role — too low a tier to create or edit a post (maintainer+)."""
-    app = FastAPI()
-    app.include_router(posts_router.get_router(), prefix=_PREFIX)
+    """Signed in, no elevated role — enough to create a post (lowered 2026-09-15), still too
+    low a tier to edit one (maintainer+)."""
+    app = _mounted(FastAPI())
     app.dependency_overrides[get_optional_user] = lambda: _fake_default_user()
     return TestClient(app)
 
@@ -90,10 +99,9 @@ def _fake_contributor() -> Identity:
 
 @pytest.fixture
 def contributor_client():
-    """Contributor — still one tier short of creating or editing a post, unlike assigning an
-    existing one to someone (test_memberships.py, any signed-in user)."""
-    app = FastAPI()
-    app.include_router(posts_router.get_router(), prefix=_PREFIX)
+    """Contributor — enough to create a post (lowered 2026-09-15, same tier as assigning an
+    existing one to someone, test_memberships.py), still one tier short of editing one."""
+    app = _mounted(FastAPI())
     app.dependency_overrides[get_optional_user] = lambda: _fake_contributor()
     return TestClient(app)
 
@@ -181,7 +189,7 @@ async def test_an_ocdid_survives_the_round_trip(client):
     `{jurisdiction_ocdid}` would 404 every real id."""
     assert _create(client).status_code == 200
 
-    response = client.get(f"{_PREFIX}/{_OCDID}")
+    response = client.get(f"{_ORG_PREFIX}/{_OCDID}")
 
     assert response.status_code == 200, response.text
     organizations_out = response.json()["data"]["organizations"]
@@ -212,7 +220,7 @@ async def test_patch_reaches_a_post_not_the_jurisdiction_route(client):
     patched = client.patch(f"{_PREFIX}/{post_id}", json={"_headcount": 2, "_is_tracked": True})
     assert patched.status_code == 200, patched.text
 
-    listed = client.get(f"{_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"][0]
+    listed = client.get(f"{_ORG_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"][0]
     # Composed from the role and the division since 148, not stored — so it survives the patch.
     assert listed["label"] == "Mayor"
     assert listed["_headcount"] == 2
@@ -235,7 +243,7 @@ async def test_verified_is_on_the_wire_both_ways(client):
     held = _create(client, role_id="clerk").json()["data"]["id"]
     await _seat_someone(held)
 
-    posts_out = client.get(f"{_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"]
+    posts_out = client.get(f"{_ORG_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"]
 
     by_id = {p["id"]: p for p in posts_out}
     assert by_id[held]["_is_verified"] is True
@@ -256,7 +264,7 @@ async def test_create_reads_headcount_under_its_wire_name(client):
     created = _create(client, division=_WARD_3, _headcount=4)
     assert created.status_code == 200, created.text
 
-    listed = client.get(f"{_PREFIX}/{_OCDID}").json()["data"]["organizations"]
+    listed = client.get(f"{_ORG_PREFIX}/{_OCDID}").json()["data"]["organizations"]
     posts_by_id = {p["id"]: p for org in listed for p in org["posts"]}
 
     assert posts_by_id[created.json()["data"]["id"]]["_headcount"] == 4
@@ -356,7 +364,7 @@ async def test_the_roster_reads_without_signing_in(client, anonymous_client):
     """
     _create(client)
 
-    read = anonymous_client.get(f"{_PREFIX}/{_OCDID}")
+    read = anonymous_client.get(f"{_ORG_PREFIX}/{_OCDID}")
     assert read.status_code == 200, read.text
     assert [p["role_id"] for p in read.json()["data"]["organizations"][0]["posts"]] == ["mayor"]
 
@@ -365,13 +373,19 @@ async def test_the_roster_reads_without_signing_in(client, anonymous_client):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_creating_a_post_requires_maintainer_or_above(default_role_client):
-    assert _create(default_role_client, division=_WARD_3).status_code == 403
+async def test_creating_a_post_is_open_to_any_signed_in_user(default_role_client):
+    """This test verified creating a post requires maintainer+ (403 for default role). It now
+    verifies default role can create one (200), because the tier was lowered 2026-09-15 to
+    match assigning an *existing* post to someone (test_memberships.py) — a reviewer who knows
+    somebody sits in a seat that does not exist yet should not need a maintainer to mint it.
+    This is its own flag (`can_create_post`), not `can_edit_jurisdiction_data` reused — editing
+    a post's headcount/tracked state (`update_post_endpoint`) stays maintainer+, unchanged."""
+    assert _create(default_role_client, division=_WARD_3).status_code == 200
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_contributor_still_cannot_create_a_post(contributor_client):
-    """Same tier as editing a jurisdiction's data — assigning an *existing* post to someone is
-    the one that opened up to any signed-in user (test_memberships.py), not this."""
-    assert _create(contributor_client, division=_WARD_3).status_code == 403
+async def test_a_contributor_can_create_a_post(contributor_client):
+    """This test verified a contributor still cannot create a post (403). It now verifies they
+    can (200), for the same 2026-09-15 tier change as the default-role case above."""
+    assert _create(contributor_client, division=_WARD_3).status_code == 200

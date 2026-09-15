@@ -83,6 +83,7 @@ type ReviewSessionHost = HTMLElement & {
   canReject: boolean;
   isRejecting: boolean;
   canAssignMembership: boolean;
+  canCreatePost: boolean;
 };
 
 const peersOf = (
@@ -94,8 +95,16 @@ const peersOf = (
     : [];
 
 function ReviewSession(host: ReviewSessionHost) {
-  const { progress, hasSession, currentEntry, error, canReject, isRejecting, canAssignMembership } =
-    host;
+  const {
+    progress,
+    hasSession,
+    currentEntry,
+    error,
+    canReject,
+    isRejecting,
+    canAssignMembership,
+    canCreatePost,
+  } = host;
   const {
     jurisdiction,
     pr,
@@ -244,6 +253,7 @@ function ReviewSession(host: ReviewSessionHost) {
     posts,
     roles,
     canAssignMembership,
+    canCreatePost,
     proposals: proposalsByPersonId(changes ?? []),
     assertions: assertions ?? {},
     overriddenSourceValues: overriddenSourceValues ?? {},

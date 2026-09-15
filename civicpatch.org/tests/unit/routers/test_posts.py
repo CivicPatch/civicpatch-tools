@@ -52,26 +52,6 @@ def test_bulk_pages_a_whole_state(client):
 
 
 @pytest.mark.unit
-def test_bulk_is_not_read_as_a_jurisdiction_ocdid(client):
-    """`/bulk` is declared before `/{jurisdiction_ocdid:path}`. Swapping them would route it
-    into the per-jurisdiction lookup, which would answer 404 for a state that exists."""
-    with (
-        patch(
-            "routers.api.posts.posts.list_by_organization", new_callable=AsyncMock
-        ) as by_jurisdiction,
-        patch(
-            "routers.api.posts.posts.list_page_for_state",
-            new_callable=AsyncMock,
-            return_value=(0, []),
-        ),
-    ):
-        response = client.get(f"{_PREFIX}/bulk?state=wa")
-
-    assert response.status_code == 200
-    by_jurisdiction.assert_not_awaited()
-
-
-@pytest.mark.unit
 def test_bulk_refuses_a_state_that_is_not_a_code(client):
     """It reaches a LIKE against the ocdid, so it is worth rejecting before the query."""
     assert client.get(f"{_PREFIX}/bulk?state=washington").status_code == 400

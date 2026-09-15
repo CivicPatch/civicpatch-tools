@@ -4,10 +4,12 @@ import { html, nothing } from "lit-html";
 import { useWebSocket } from "../../hooks/use-websocket.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { usePeople } from "../../hooks/usePeople.js";
-import { buildIdentitiesMap } from "../../utils/people.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 import { historyUrl } from "./history/history-routes.js";
-import { SectionNav, jurisdictionSection } from "../../components/section-nav/index.js";
+import {
+  SectionNav,
+  jurisdictionSection,
+} from "../../components/section-nav/index.js";
 import { pipelineRunStatusChannel } from "../../utils/pubsub-channels.js";
 
 import "../../components/panel/panel.css";
@@ -16,8 +18,17 @@ import "./jurisdiction-details.js";
 import "./scrape-modal/scrape-modal.js";
 import "./scrape-modal/name-config-form.js";
 
-import { triggerPipelineRun, fetchJurisdictionInFlight, patchJurisdictionData } from "../../api.js";
-import { renderJurisdictionHeader, MODE_READ, MODE_EDIT, type PageMode } from "./jurisdiction-header.js";
+import {
+  triggerPipelineRun,
+  fetchJurisdictionInFlight,
+  patchJurisdictionData,
+} from "../../api.js";
+import {
+  renderJurisdictionHeader,
+  MODE_READ,
+  MODE_EDIT,
+  type PageMode,
+} from "./jurisdiction-header.js";
 import "./roster-editor.js";
 import {
   pendingReviews,
@@ -52,7 +63,10 @@ function renderDataFlag(data: any) {
 
   return html`
     <div class="data-flag">
-      <i class="fa-solid fa-triangle-exclamation data-flag__icon" aria-hidden="true"></i>
+      <i
+        class="fa-solid fa-triangle-exclamation data-flag__icon"
+        aria-hidden="true"
+      ></i>
       <div>
         <p class="data-flag__title">${title}</p>
         ${data?.generated_comments
@@ -92,7 +106,10 @@ function renderDetailsSection(
   `;
 }
 
-function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: JurisdictionPageProps) {
+function JurisdictionPage({
+  jurisdiction_ocdid,
+  jurisdiction_data,
+}: JurisdictionPageProps) {
   // Public page — nothing waits on permissions; each action gates itself and
   // appears once they land.
   const { user, permissions } = useAuth();
@@ -102,6 +119,11 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
   const [mode, setMode] = useState<PageMode>(MODE_READ);
   const hasEditPermission = !!permissions.can_edit_jurisdiction_data;
   const editModeActive = hasEditPermission && mode === MODE_EDIT;
+  // Its own flag, not `hasEditPermission` reused — creating a post is a distinct capability
+  // that happens to sit at the same tier today, not the same permission as editing the
+  // jurisdiction's own published data.
+  const canCreatePostActive =
+    !!permissions.can_create_post && mode === MODE_EDIT;
   // Only what is still in flight, plus two scalars. This used to fetch every changeset the
   // jurisdiction has ever had in order to derive four things from the array.
   const [inFlight, setInFlight] = useState<InFlightEntry[]>([]);
@@ -119,13 +141,16 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
       .catch(() => setInFlight([]));
   }, [jurisdiction_ocdid]);
 
-  const wsTopic = jurisdiction_ocdid ? pipelineRunStatusChannel(jurisdiction_ocdid) : null;
+  const wsTopic = jurisdiction_ocdid
+    ? pipelineRunStatusChannel(jurisdiction_ocdid)
+    : null;
   const { data: pipelineRunStatus } = useWebSocket(wsTopic, {
     autoConnect: !!wsTopic,
   });
 
-  const jurisdictionData = jurisdiction_data ? JSON.parse(jurisdiction_data) : null;
-  const identities = buildIdentitiesMap(people);
+  const jurisdictionData = jurisdiction_data
+    ? JSON.parse(jurisdiction_data)
+    : null;
   // Split rather than decorate: a scrape in flight is a different thing from one waiting on a
   // reviewer, and only the first has a progress bar to show.
   const liveEntry = inFlight.find((entry) => entry.is_running);
@@ -175,8 +200,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
   const isRunInProgress = pipelineRunStatus?.is_running ?? !!liveEntry;
   const historyHref = historyUrl(jurisdictionOcdidToPath(jurisdiction_ocdid));
 
-  const canStartScrape =
-    permissions.can_scrape;
+  const canStartScrape = permissions.can_scrape;
 
   return html`
     <main class="jurisdiction-page page-content">
@@ -195,14 +219,18 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
         mode,
         onModeChange: setMode,
       })}
-
       ${renderDataFlag(jurisdictionData?.data)}
-      ${scrapeError ? html`<p style="color: var(--diff-removed);">${scrapeError}</p>` : nothing}
+      ${scrapeError
+        ? html`<p style="color: var(--diff-removed);">${scrapeError}</p>`
+        : nothing}
 
       <div class="sectioned">
         ${SectionNav(
           "jurisdiction",
-          jurisdictionSection(jurisdictionOcdidToPath(jurisdiction_ocdid), historyHref),
+          jurisdictionSection(
+            jurisdictionOcdidToPath(jurisdiction_ocdid),
+            historyHref,
+          ),
           `/${jurisdictionOcdidToPath(jurisdiction_ocdid)}`,
         )}
         <div class="secbody">
@@ -216,13 +244,18 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
               )}
             </div>
             <div class="jurisdiction-page__col-main">
-              ${renderPendingReviews(awaitingReview, jurisdiction_ocdid, isSignedIn)}
+              ${renderPendingReviews(
+                awaitingReview,
+                jurisdiction_ocdid,
+                isSignedIn,
+              )}
 
               <civ-roster-editor
                 .people=${people}
                 .jurisdictionOcdid=${jurisdiction_ocdid}
                 .canEdit=${editModeActive && !peopleBlockers.length}
                 .canAssignMembership=${editModeActive && !peopleBlockers.length}
+                .canCreatePost=${canCreatePostActive && !peopleBlockers.length}
                 .isLoading=${peopleLoading}
                 .blockedReason=${editingBlockedReason(peopleBlockers)}
                 .onPublished=${() => window.location.reload()}
@@ -250,7 +283,6 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_data }: Jurisdictio
               onClose: () => setScrapeModalOpen(false),
               closeOnBackdropClick: true,
             }}
-            .identities=${identities}
           ></civ-scrape-modal>`
         : nothing}
     </main>

@@ -99,6 +99,12 @@
   flex-direction: column;
   gap: 0.3rem;
 }
+/* Role select, division select, and "Add a new office" side by side within civ-office-picker. */
+.office-picker {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
 
 /* One tint recipe for all four states: the state names a colour, and the tint is
    that colour at one strength over a stated ground.

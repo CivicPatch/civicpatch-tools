@@ -95,6 +95,7 @@ export interface EditorFieldProps {
   derivedPost: DerivedPost | null;
   focusRef: FocusRef | null;
   canAssignMembership: boolean;
+  canCreatePost: boolean;
   lock: FieldLock | null;
   assertionSummary: FieldAssertionSummary | null;
 }
@@ -109,11 +110,13 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
     oldRecord,
     save,
     isReadOnly,
+    jurisdictionOcdid,
     posts,
     roles,
     derivedPost,
     focusRef,
     canAssignMembership,
+    canCreatePost,
     accepts,
     assertions,
   } = props;
@@ -144,6 +147,8 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
     // "held", never "overrode".
     fieldLock(accepts.get(LABEL_FIELD), undefined, undefined),
     assertionSummaryFor(assertions, LABEL_FIELD),
+    jurisdictionOcdid,
+    canCreatePost,
   );
 }
 
