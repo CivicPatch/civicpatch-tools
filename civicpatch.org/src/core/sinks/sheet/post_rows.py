@@ -17,7 +17,7 @@ HEADERS = [
     "post_headcount",
 ]
 
-# `_is_verified` and `_is_tracked` are absent: review-queue state, not facts about the seat.
+# `meta_is_verified` and `meta_is_tracked` are absent: review-queue state, not facts about the seat.
 
 
 def _text(value) -> str:
@@ -31,7 +31,7 @@ def to_row(post: dict) -> list[str]:
         _text(post.get("label")),
         _text(post.get("role_id")),
         _text(post.get("division_ocdid")),
-        _text(post.get("_headcount")),
+        _text(post.get("meta_headcount")),
     ]
 
 

@@ -103,7 +103,7 @@ def _parts_from_research(
 def _seat_count(posts: List[dict]) -> int:
     """How many people the known posts have room for, headcount included: a five-seat
     at-large council is one post and five officials to find."""
-    return sum(post.get("_headcount", 1) for post in posts)
+    return sum(post.get("meta_headcount", 1) for post in posts)
 
 
 def _can_research() -> bool:

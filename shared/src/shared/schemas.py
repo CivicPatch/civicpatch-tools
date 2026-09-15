@@ -176,9 +176,7 @@ class PersonSourceRecord(ExtractedPersonRecord):
 
 
 class Post(BaseModel):
-    """The `posts` row, plus the label composed on read. No `_is_verified` — that is per-query."""
-
-    model_config = ConfigDict(populate_by_name=True)
+    """The `posts` row, plus the label composed on read. No `meta_is_verified` — that is per-query."""
 
     id: str
     jurisdiction_ocdid: str
@@ -186,8 +184,8 @@ class Post(BaseModel):
     role_id: str
     division_ocdid: str
     label: str
-    headcount: int = Field(default=1, alias="_headcount")
-    is_tracked: bool = Field(default=True, alias="_is_tracked")
+    meta_headcount: int = 1
+    meta_is_tracked: bool = True
 
 
 class Membership(BaseModel):

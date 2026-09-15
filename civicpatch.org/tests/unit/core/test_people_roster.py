@@ -113,7 +113,7 @@ def test_a_label_naming_no_area_gets_the_jurisdictions_own_division():
 @pytest.mark.unit
 def test_a_person_no_role_matches_stays_on_the_roster():
     """This used to drop them. The drop could not tell an out-of-scope title from one the
-    taxonomy is missing, and recorded neither — scope is `posts._is_tracked` now, decided when
+    taxonomy is missing, and recorded neither — scope is `posts.meta_is_tracked` now, decided when
     the post is minted."""
     kept = _reconcile([_record("Ann Lee", "City Attorney")])
     assert [p["name"] for p in kept] == ["Ann Lee"]

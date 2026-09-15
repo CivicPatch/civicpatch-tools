@@ -10,11 +10,10 @@ export interface Post {
   division_ocdid: string;
   label: string;
 
-  // Underscored: no civic standard defines these, so dropping every `_*` key leaves a
-  // conforming Post.
-  _headcount: number;
-  _is_tracked: boolean;
-  _is_verified: boolean;
+  // `meta_`-marked: no civic standard defines these.
+  meta_headcount: number;
+  meta_is_tracked: boolean;
+  meta_is_verified: boolean;
 }
 
 export interface RoleOption {
@@ -95,13 +94,13 @@ export function groupPostsByRole(
     rows.push({
       ...post,
       holder_names: names,
-      over_headcount: names.length > post._headcount,
+      over_headcount: names.length > post.meta_headcount,
     });
     groups.set(post.role_id, rows);
   }
 
   return [...groups.entries()].map(([role_id, rows]) => {
-    const headcount = rows.reduce((total, row) => total + row._headcount, 0);
+    const headcount = rows.reduce((total, row) => total + row.meta_headcount, 0);
     const filled = rows.reduce(
       (total, row) => total + row.holder_names.length,
       0,

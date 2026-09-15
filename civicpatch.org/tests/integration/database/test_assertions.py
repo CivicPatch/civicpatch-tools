@@ -101,11 +101,11 @@ def _verified(rows: list[dict], post_id: str) -> bool:
     """By id, not by position. `_seed` now holds a second seat so the jurisdiction is past its
     first scrape, and `list_for_jurisdiction` orders by role — so `rows[0]` silently became a
     different post than the one under test."""
-    return next(row for row in rows if row["id"] == post_id)["_is_verified"]
+    return next(row for row in rows if row["id"] == post_id)["meta_is_verified"]
 
 
 def _vouch(post_id: str, **overrides) -> Assertion:
-    """"There really are five trustees" — a claim about `_headcount`, with why attached.
+    """"There really are five trustees" — a claim about `meta_headcount`, with why attached.
 
     Vouching has no shape of its own since 137: it is an ordinary field assertion, which is why
     it survived the loss of `confirm`.
@@ -113,7 +113,7 @@ def _vouch(post_id: str, **overrides) -> Assertion:
     return Assertion(
         entity_type=EntityType.POST,
         entity_id=post_id,
-        field_path="_headcount",
+        field_path="meta_headcount",
         value=5,
         kind=AssertionKind.ACCEPT,
         sources=[Source(note="phoned the clerk, there really are five trustees")],
@@ -170,7 +170,7 @@ async def test_a_hand_made_post_is_verified_by_having_been_made():
 
     async with pool.connection() as conn, conn.cursor() as cur:
         verified = {
-            row["id"]: row["_is_verified"]
+            row["id"]: row["meta_is_verified"]
             for row in await posts.list_for_jurisdiction(cur, _OCDID)
         }
     assert verified[by_hand] is True
@@ -198,7 +198,7 @@ async def test_looking_again_refreshes_rather_than_accumulating():
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = (await assertions.list_for_entities(cur, EntityType.POST, [post_id])).get(post_id, [])
 
-    assert sorted(row["field_path"] for row in rows) == ["_headcount", "_is_tracked"]
+    assert sorted(row["field_path"] for row in rows) == ["meta_headcount", "meta_is_tracked"]
 
 
 @pytest.mark.asyncio

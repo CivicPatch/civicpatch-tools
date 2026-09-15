@@ -206,7 +206,7 @@ def derived_people(
 ) -> List[Tuple[DerivedPerson, List[PersonSourceRecord]]]:
     """Group a scrape's sightings into people, each with the records behind it.
 
-    Everyone seen comes back: scope lives on the post, as `posts._is_tracked`, not on whether
+    Everyone seen comes back: scope lives on the post, as `posts.meta_is_tracked`, not on whether
     a label resolved.
     """
     canonical_map = name_utils.build_canonical_map(

@@ -96,7 +96,7 @@ function PostAdd(host: PostAddHost) {
         role_id: roleId,
         division_ocdid,
         label: labelValue.trim() || null,
-        _headcount: Number(headcount),
+        meta_headcount: Number(headcount),
       });
       hostDispatch(host, ADDED_EVENT, {
         post_id: created?.data?.id,

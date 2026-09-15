@@ -114,7 +114,7 @@ async def test_vouching_for_a_post_makes_it_read_verified(client):
     and the roster says so. Previously only a publish could make this true.
 
     An ordinary field assertion since 137 — "there really are five trustees" is a claim about
-    `_headcount`. Vouching has no shape of its own, which is how it outlived `confirm`.
+    `meta_headcount`. Vouching has no shape of its own, which is how it outlived `confirm`.
     """
     post_id = await _seed()
 
@@ -123,7 +123,7 @@ async def test_vouching_for_a_post_makes_it_read_verified(client):
         json={
             "entity_type": "post",
             "entity_id": post_id,
-            "field_path": "_headcount",
+            "field_path": "meta_headcount",
             "value": 5,
             "kind": "accept",
             "sources": [{"note": "phoned the clerk"}],
@@ -134,7 +134,7 @@ async def test_vouching_for_a_post_makes_it_read_verified(client):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = await posts.list_for_jurisdiction(cur, _OCDID)
-    assert rows[0]["_is_verified"] is True
+    assert rows[0]["meta_is_verified"] is True
 
 
 @pytest.mark.asyncio
@@ -174,7 +174,7 @@ async def test_an_unknown_kind_is_rejected_by_the_model(client):
         json={
             "entity_type": "post",
             "entity_id": post_id,
-            "field_path": "_headcount",
+            "field_path": "meta_headcount",
             "value": 5,
             "kind": "vouchsafe",
         },
@@ -197,7 +197,7 @@ async def test_an_unattributable_assertion_is_refused(client):
         json={
             "entity_type": "post",
             "entity_id": post_id,
-            "field_path": "_headcount",
+            "field_path": "meta_headcount",
             "value": 5,
             "kind": "accept",
         },
@@ -249,7 +249,7 @@ async def test_an_assertion_names_its_jurisdiction_and_the_live_roster(client):
         json={
             "entity_type": "post",
             "entity_id": post_id,
-            "field_path": "_headcount",
+            "field_path": "meta_headcount",
             "value": 5,
             "kind": "accept",
         },
@@ -271,7 +271,7 @@ async def test_an_assertion_before_any_publish_still_names_its_jurisdiction(clie
         json={
             "entity_type": "post",
             "entity_id": post_id,
-            "field_path": "_headcount",
+            "field_path": "meta_headcount",
             "value": 5,
             "kind": "accept",
         },
@@ -293,7 +293,7 @@ async def test_an_assertion_is_logged_with_its_sources(client):
             json={
                 "entity_type": "post",
                 "entity_id": post_id,
-                "field_path": "_headcount",
+                "field_path": "meta_headcount",
                 "value": headcount,
                 "kind": "accept",
                 "sources": [{"note": f"clerk said {headcount}"}],

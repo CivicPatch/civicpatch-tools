@@ -29,9 +29,9 @@ class ExistingMembership(BaseModel):
     role_id: str
     role_label: str = ""
     division_ocdid: str
-    # `posts._is_tracked`. A roster omitting an untracked post means nothing, so its holder
+    # `posts.meta_is_tracked`. A roster omitting an untracked post means nothing, so its holder
     # going missing is recorded but never queued for a human.
-    is_tracked: bool = True
+    meta_is_tracked: bool = True
 
 
 class ProposedChange(BaseModel):
@@ -54,7 +54,7 @@ class ProposedChange(BaseModel):
     # carries the role label and division, and the reviewer needs both ends of a move in one
     # sentence — the card no longer annotates the Post field with a `was`.
     from_post_label: str = ""
-    is_tracked: bool = True
+    meta_is_tracked: bool = True
 
 
 def _seat(role_id: str, division_ocdid: str) -> tuple[str, str]:
@@ -118,7 +118,7 @@ def propose(
             division_ocdid=row.division_ocdid,
             post_label=derive_post_label(row.role_label, row.division_ocdid),
             from_post_id=row.post_id,
-            is_tracked=row.is_tracked,
+            meta_is_tracked=row.meta_is_tracked,
         )
         for row in existing
         if row.person_id not in seen

@@ -132,9 +132,9 @@ function OfficePicker(host: OfficePickerHost) {
       role_id,
       division_ocdid,
       label: label ?? roles.find((role) => role.id === role_id)?.label ?? role_id,
-      _headcount: 1,
-      _is_tracked: true,
-      _is_verified: true,
+      meta_headcount: 1,
+      meta_is_tracked: true,
+      meta_is_verified: true,
     });
     setRoleId(role_id);
     setDivisionOcdid(division_ocdid === atLarge ? NO_DIVISION : division_ocdid);

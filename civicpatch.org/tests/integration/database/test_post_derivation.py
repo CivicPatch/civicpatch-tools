@@ -146,13 +146,13 @@ async def test_a_match_never_overwrites_a_human_edit():
         post_id = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE, headcount=1)
 
         await cur.execute(
-            "UPDATE posts SET _headcount = %s, _is_tracked = %s WHERE id = %s",
+            "UPDATE posts SET meta_headcount = %s, meta_is_tracked = %s WHERE id = %s",
             (9, False, post_id),
         )
         await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE, headcount=1)
 
         await cur.execute(
-            "SELECT _headcount, _is_tracked FROM posts WHERE id = %s", (post_id,)
+            "SELECT meta_headcount, meta_is_tracked FROM posts WHERE id = %s", (post_id,)
         )
         assert await cur.fetchone() == (9, False)
         await conn.rollback()
@@ -263,7 +263,7 @@ async def test_close_absent_leaves_another_body_in_the_jurisdiction_alone():
 @pytest.mark.integration
 async def test_close_absent_closes_an_untracked_posts_membership_too():
     """`closed_at` is transaction time — it records that we stopped seeing someone, not that
-    they left, so it is true of an untracked post as much as a tracked one. `_is_tracked`
+    they left, so it is true of an untracked post as much as a tracked one. `meta_is_tracked`
     gates whether anyone is asked to look, which is the review queue, not the record."""
     person_id = await _seed_person()
     pool = await get_pool()
@@ -272,7 +272,7 @@ async def test_close_absent_closes_an_untracked_posts_membership_too():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         await memberships.upsert(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
-        await cur.execute("UPDATE posts SET _is_tracked = false WHERE id = %s", (post_id,))
+        await cur.execute("UPDATE posts SET meta_is_tracked = false WHERE id = %s", (post_id,))
 
         assert await memberships.close_absent(cur, org, [str(uuid.uuid4())], _T1) == 1
         await conn.rollback()
@@ -539,7 +539,7 @@ async def test_a_human_created_post_is_matched_by_a_later_scrape():
         matched = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
 
         assert created == matched
-        await cur.execute("SELECT _headcount FROM posts WHERE id::text = %s", (created,))
+        await cur.execute("SELECT meta_headcount FROM posts WHERE id::text = %s", (created,))
         assert (await cur.fetchone())[0] == 3  # the scrape did not overwrite it
         await conn.rollback()
 
@@ -575,7 +575,7 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
 
         assert await posts.update_human_fields(cur, post_id, 5, False) is True
         await cur.execute(
-            "SELECT _headcount, _is_tracked FROM posts WHERE id::text = %s", (post_id,)
+            "SELECT meta_headcount, meta_is_tracked FROM posts WHERE id::text = %s", (post_id,)
         )
         assert await cur.fetchone() == (5, False)
 

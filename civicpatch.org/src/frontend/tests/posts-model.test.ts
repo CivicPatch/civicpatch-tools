@@ -19,9 +19,9 @@ import type { Post } from "../components/posts-list/posts-model.js";
 const post = (overrides: Partial<Post> & { id: string; role_id: string }): Post => ({
   division_ocdid: "ocd-division/country:us/state:wa/place:x",
   label: null,
-  _headcount: 1,
-  _is_verified: false,
-  _is_tracked: true,
+  meta_headcount: 1,
+  meta_is_verified: false,
+  meta_is_tracked: true,
   ...overrides,
 });
 
@@ -70,8 +70,8 @@ describe("groupPostsByRole", () => {
   it("sums capacity across the role so the header can say how much is unfilled", () => {
     const groups = groupPostsByRole(
       [
-        post({ id: "a", role_id: "council-member", _headcount: 7 }),
-        post({ id: "b", role_id: "council-member", _headcount: 4 }),
+        post({ id: "a", role_id: "council-member", meta_headcount: 7 }),
+        post({ id: "b", role_id: "council-member", meta_headcount: 4 }),
       ],
       [...held("a", 5), ...held("b", 3)],
       ROLE_LABELS,
@@ -84,7 +84,7 @@ describe("groupPostsByRole", () => {
     // An over-subscribed post is a real state — two people found on a one-person office —
     // but "-1 free" on the role heading reads as a counting bug rather than a data problem.
     const groups = groupPostsByRole(
-      [post({ id: "a", role_id: "mayor", _headcount: 1 })],
+      [post({ id: "a", role_id: "mayor", meta_headcount: 1 })],
       held("a", 2),
       ROLE_LABELS,
     );
