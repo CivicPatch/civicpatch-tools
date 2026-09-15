@@ -4,12 +4,61 @@
    every one of these. 1a's cards were bumped off that scale for readability; 1b is a
    deliberately denser, different design point the mock itself sizes small on purpose. */
 
-.rgroup {
-  margin-bottom: 1rem;
+.rgroup-list {
+  --card-min: 17.5rem;
+  --card-gap: 0.286rem;
+  --group-gap: 0.286rem;
+  --group-max-cards: 3;
+  /* container-type makes cqw below resolve against this element's own rendered width, not
+     the viewport — so --card-w tracks the list's actual size, staying correct however it's
+     constrained (page width, a narrower panel, etc). */
+  container-type: inline-size;
+  /* Exactly --group-max-cards card-widths fill the list's own width, so that many packable
+     groups fit a row by construction — no separate max-width cap needed. Below --card-min
+     the fraction can't shrink further, so flex-wrap/auto-fill naturally drop to 2 cards
+     per row, then 1, as the viewport narrows. */
+  --card-w: max(
+    calc(
+      (100cqw - (var(--group-max-cards) - 1) * var(--group-gap)) /
+        var(--group-max-cards)
+    ),
+    var(--card-min)
+  );
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--group-gap);
 }
 
-.rgroup:last-child {
-  margin-bottom: 0;
+/* Fixed card width, fixed gap — every card the same size everywhere, whether it's alone in
+   a one-person group or one of five in a row. A group's own width is derived from that
+   fixed size (cards-worth of card+gap, minus the trailing gap), capped at --group-max-cards
+   cards' worth — at that width the group already fills the row (--card-w is exactly 1/3 of
+   it), so nothing else can pack beside it; it ends up owning the row without needing a
+   separate "full width" rule. */
+.rgroup {
+  flex: 0 1
+    calc(
+      min(var(--group-cards, 1), var(--group-max-cards)) *
+        (var(--card-w) + var(--card-gap)) - var(--card-gap)
+    );
+  min-width: min(var(--card-w), 100%);
+  max-width: 100%;
+}
+
+/* A group under --group-max-cards people is normally exactly that many card-widths wide —
+   nesting its open editor there (grid-column: 1/-1) would squeeze it to that same narrow
+   width. `.person-editor-inline` only exists in the DOM while its card is open, so widen
+   the whole group to the full row then, and switch its card(s) from a fixed width to
+   auto-fit/1fr so they fill that width too — otherwise the actual card(s) would sit
+   orphaned in an otherwise-empty box above a full-width editor. */
+.rgroup:has(.person-editor-inline) {
+  flex-basis: calc(
+    var(--group-max-cards) * (var(--card-w) + var(--card-gap)) - var(--card-gap)
+  );
+}
+.rgroup:has(.person-editor-inline) .rgrid {
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--card-w), 100%), 1fr));
 }
 
 .rgrouphead {
@@ -28,8 +77,8 @@
 
 .rgrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
-  gap: 0.286rem; /* 4px */
+  grid-template-columns: repeat(auto-fill, min(var(--card-w), 100%));
+  gap: var(--card-gap);
 }
 
 .rperson {
@@ -41,24 +90,44 @@
   border-radius: var(--radius);
   padding: 0.429rem 0.5rem; /* 6px 7px */
   position: relative;
-  /* `role="button"` (for keyboard access) pulls in css/controls.css's generic button
-     look from @layer base — reset it back to a plain card. */
-  text-align: left;
-  background-color: transparent;
-  color: inherit;
-  font: inherit;
-  text-decoration: none;
 }
 
 /* The whole card opens the editor — `.rperson--interactive` only, so a read-only card (no
-   `onOpenPerson`) never implies it does something on hover. */
+   `onOpenPerson`) never implies it does something on hover. `:hover` bubbles from any
+   descendant, `.rperson__open` included, up to this ancestor rule. */
 .rperson--interactive:hover,
 .rperson--open {
   border-color: var(--text-default);
 }
 
-.rperson--interactive {
+/* The stretched-link pattern: a real, empty button covers the whole card (so Enter/Space/
+   click work natively, no keydown handler needed) instead of the card itself being
+   `role="button"` — real `<a>`s (contact/url/source links) can't nest inside a button, so
+   `.rperson a` below lifts them above this overlay instead. No explicit z-index needed here:
+   a positioned element with the default `z-index: auto` already paints above plain in-flow
+   content, which is exactly the layering wanted. */
+.rperson__open {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   cursor: pointer;
+}
+
+.rperson:has(.rperson__open:focus-visible),
+.rperson--open {
+  outline: var(--focus-ring-width) solid var(--action-focus);
+  outline-offset: 2px;
+}
+
+.rperson a {
+  position: relative;
+  z-index: 1;
 }
 
 /* Rounded square, not a circle — the same --radius every other card/button in the app uses,
@@ -79,12 +148,10 @@
 .pc-open {
   display: flex;
   flex-direction: column;
+  /* Default cross-axis stretch would otherwise force every child (badges included) to the
+     full card width regardless of its own display type — size each to its own content. */
+  align-items: flex-start;
   width: 100%;
-}
-
-.rperson--interactive:focus-visible {
-  outline: var(--focus-ring-width) solid var(--action-focus);
-  outline-offset: 2px;
 }
 
 .pc-name {

@@ -1,8 +1,19 @@
-
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
-import { personOf, PersonStatus, type PersonCard } from "../people/person-cards.js";
-import { getFieldValue, isContextField, type SurvivingField } from "../fields/field-model.js";
-import { ACCEPT, type PersonAssertion } from "../person-editor/field-provenance.js";
+import {
+  DEPARTING,
+  personOf,
+  PersonStatus,
+  soleProposalFor,
+  type PersonCard,
+  type ProposedChange,
+} from "../people/person-cards.js";
+import { UNMATCHED_ROLE_ID } from "../../utils/role-types.js";
+import { isContextField, type SurvivingField } from "../fields/field-model.js";
+import {
+  groupByRole,
+  type RoleGroup,
+  type PostRole,
+} from "../people/person-card-grid-model.js";
 
 const FIELD_ORDER = [
   "labels",
@@ -23,8 +34,6 @@ const REASON_RANK: Record<string, number> = {
   context: 3,
 };
 
-export const FIELD_CAP = 6;
-
 export const STATUS_BADGE: Partial<Record<string, string>> = {
   [PersonStatus.CHANGED]: "Changed",
   [PersonStatus.ADDED]: "New",
@@ -35,7 +44,6 @@ export const STATUS_BADGE: Partial<Record<string, string>> = {
 
 export const ATTENTION_COPY = {
   error: { icon: "triangle-exclamation", label: "Blocks publishing" },
-  issue: { icon: "circle-exclamation", label: "Has an issue" },
 };
 
 function fieldRank(key: string): number {
@@ -48,24 +56,24 @@ export function byRank(a: SurvivingField, b: SurvivingField): number {
   return reason || fieldRank(a.field.key) - fieldRank(b.field.key);
 }
 
-export function attentionOf(card: PersonCard): "error" | "issue" | null {
-  if (card.surviving.some((field) => field.error)) return "error";
-  if (card.surviving.some((field) => field.reason === "issue")) return "issue";
-  return null;
+export function attentionOf(card: PersonCard): "error" | null {
+  return card.surviving.some((field) => field.error) ? "error" : null;
 }
 
-// Has any human ever stood behind a field on this record?
-export function isVerified(
-  card: PersonCard,
-  assertions: Record<string, PersonAssertion[]>,
-): boolean {
-  return (assertions[card.personId] ?? []).some((a) => a.kind === ACCEPT);
-}
+// Mirrors shared.schemas.IssueCode: these describe exactly what the status badge (or the
+// "Moved" note on the post field) already says, so repeating them as an issue chip too
+// would just say the same thing twice.
+const REDUNDANT_ISSUE_CODES = new Set([
+  "absent_person",
+  "new_person",
+  "moved_person",
+  "changed_field",
+]);
 
-// No term dates on file means we cannot say whether they still hold the seat.
-export function isDated(card: PersonCard): boolean {
-  const record = personOf(card);
-  return Boolean(getFieldValue(record, "start_date") || getFieldValue(record, "end_date"));
+export function issueTypesOf(card: PersonCard): string[] {
+  return card.issues
+    .filter((issue) => !REDUNDANT_ISSUE_CODES.has(issue.code))
+    .map((issue) => issue.code.replace(/_/g, " "));
 }
 
 export interface TallyEntry {
@@ -110,11 +118,6 @@ export function visibleFields(card: PersonCard): SurvivingField[] {
     .sort(byRank);
 }
 
-export function fieldClass(field: SurvivingField): string {
-  if (field.error) return "error";
-  return field.reason === "issue" ? "issue" : field.state;
-}
-
 export type SourceMap = Map<string, { number: number; colorClass: string }>;
 
 export function sourceMapFor(cards: PersonCard[]): SourceMap {
@@ -144,4 +147,55 @@ export function runsOf(cards: PersonCard[]): Run[] {
     else runs.push({ folded, cards: [card] });
     return runs;
   }, []);
+}
+
+export interface ReviewSections {
+  ranked: RoleGroup<PersonCard>[];
+  unmatched: PersonCard[];
+  departing: PersonCard[];
+}
+
+function roleMembershipsFor(
+  proposal: ProposedChange | null,
+  card: PersonCard,
+): PostRole[] | undefined {
+  if (!proposal) return personOf(card)?.memberships;
+  return [{ role_id: proposal.role_id, role_label: proposal.role_label }];
+}
+
+/** Cards grouped for display the way the jurisdiction grid groups people — by role, ranked
+ * groups first — plus the trailing bucket a review needs that a published roster doesn't: a
+ * seat the scrape couldn't name a role for at all. */
+export function sectionsOf(
+  cards: PersonCard[],
+  proposals: Map<string, ProposedChange[]>,
+  roleOrder: string[],
+): ReviewSections {
+  const departing = cards.filter((card) => DEPARTING.has(card.status));
+  // Each staying card's sole proposal, resolved once rather than re-derived by every filter
+  // and the group-membership step below.
+  const staying = cards
+    .filter((card) => !DEPARTING.has(card.status))
+    .map((card) => ({
+      card,
+      proposal: soleProposalFor(card.personId, proposals),
+    }));
+  const isUnmatched = (proposal: ProposedChange | null) =>
+    proposal?.role_id === UNMATCHED_ROLE_ID;
+  const unmatched = staying
+    .filter(({ proposal }) => isUnmatched(proposal))
+    .map(({ card }) => card);
+  const groupable = staying.filter(({ proposal }) => !isUnmatched(proposal));
+  const groups = groupByRole(
+    groupable.map(({ card, proposal }) => ({
+      id: card.personId,
+      memberships: roleMembershipsFor(proposal, card),
+      card,
+    })),
+    roleOrder,
+  ).map((group) => ({
+    ...group,
+    people: group.people.map(({ card }) => card),
+  }));
+  return { ranked: groups, unmatched, departing };
 }

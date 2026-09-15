@@ -7,6 +7,7 @@ import {
   isDate,
   isImage,
   isMulti,
+  LABEL_FIELD,
   POST_FIELD,
   rowError,
   type DiffRecord,
@@ -32,7 +33,13 @@ import {
   type Save,
 } from "../fields/field-controls.js";
 import { multiValueDiff } from "../fields/field-model.js";
-import { type FieldAssertionSummary, type FieldLock } from "./field-provenance.js";
+import {
+  assertionSummaryFor,
+  fieldLock,
+  type FieldAssertionSummary,
+  type FieldLock,
+  type PersonAssertion,
+} from "./field-provenance.js";
 import "./assertions-popover.js";
 import {
   heldPost,
@@ -76,6 +83,11 @@ export interface EditorFieldProps {
   error: string | null;
   issueMessages: string[];
   save: Save;
+  // Raw, not a precomputed lock: every field's `lock` below is derived from the same two —
+  // renderOfficeControl is just the one control that also derives a second lock from them,
+  // for the membership label, which has no `FIELD_SCHEMA` row of its own to carry one on.
+  accepts: Map<string, PersonAssertion[]>;
+  assertions: PersonAssertion[];
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
   posts: Post[];
@@ -102,6 +114,8 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
     derivedPost,
     focusRef,
     canAssignMembership,
+    accepts,
+    assertions,
   } = props;
   if (!oldRecord) {
     return isReadOnly
@@ -110,7 +124,10 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
         >`
       : renderPostPickNewSide(field, record, save, posts, derivedPost, focusRef);
   }
-  const current = heldPost(oldRecord.memberships);
+  // Prefer the proposal over the held membership: a scrape's detected move is the newer
+  // claim, and defaulting the picker to it is what keeps this control from contradicting
+  // the "Moved from X to Y" issue shown alongside it.
+  const current = derivedPost ?? heldPost(oldRecord.memberships);
   if (!canAssignMembership) {
     return html`<span class="person-editor__readonly">${current?.label ?? DASH}</span>`;
   }
@@ -120,8 +137,13 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
     posts,
     roles,
     current?.post_id ?? null,
-    heldMembershipLabel(oldRecord.memberships),
+    current?.membershipLabel ?? heldMembershipLabel(oldRecord.memberships),
     focusRef,
+    // No "overridden source value" concept for a label — it is authored or derived, never
+    // scraped-then-overridden, so there is nothing to disclose; a lock here always reads as
+    // "held", never "overrode".
+    fieldLock(accepts.get(LABEL_FIELD), undefined, undefined),
+    assertionSummaryFor(assertions, LABEL_FIELD),
   );
 }
 

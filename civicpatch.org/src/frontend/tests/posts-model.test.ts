@@ -254,12 +254,23 @@ describe("postsHeld", () => {
     );
   });
 
-  it("adds the membership label after the post label", () =>
+  it("shows the membership label alone, since it already carries the post label", () =>
+    // `label` is composed server-side as post_label first, then everything beyond it
+    // (`render(MembershipLabel(...))`) — prepending `post_label` here again said "Council
+    // Member, District 1" twice on one line.
     expect(
       postsHeld([
-        held({ post_label: "Council Member, At-Large", label: "Seat 3" }),
+        held({
+          post_label: "Council Member, At-Large",
+          label: "Council Member, At-Large, Seat 3",
+        }),
       ]),
     ).toBe("Council Member, At-Large, Seat 3"));
+
+  it("falls back to the post label when there is no membership label", () =>
+    expect(
+      postsHeld([held({ post_label: "Council Member, District 5", label: null })]),
+    ).toBe("Council Member, District 5"));
 
   it("takes the post label as given, never rebuilding it", () =>
     // Every payload carries `post_label` rendered by `derive_label`, including for a post

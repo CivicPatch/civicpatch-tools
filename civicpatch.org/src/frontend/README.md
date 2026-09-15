@@ -82,9 +82,8 @@ thing — this is the map:
 | `components/fields/` | **What a field is.** `field-schema.ts` (`FIELD_SCHEMA`, predicates, `diffValue`), `field-validation.ts` (is a value publishable), `field-model.ts` (how a field compares + the collapse rule), `field-controls.ts` (the input for one field). Pure. The bottom of the stack — it knows nothing about people. |
 | `components/people/` | **A person, composed of fields.** `person-cards.ts` (`PersonCard` — one person's before/after, what moved, what needs attention), `person-row.ts` (a person, compactly). Shared by the review flow *and* the jurisdiction page. |
 | `components/review/` | **Reconciling a scrape proposal** — and only that. `merge-model.ts`, `merge-picker.ts`, `person-face.ts`, `issue-checks.ts`, `review-modal.ts`. Depends on `people/` and `fields/`, never the reverse. |
-| `components/review-overview/` | **Overview tab** — triage a whole card at a glance. One list in seat order; untouched people fold to a compact row. |
+| `components/review-overview/` | **Overview tab** — triage a whole card at a glance. Grouped into role sections like the jurisdiction grid (`sectionsOf`), plus review's own trailing buckets for an unmatched role and people leaving the roster; untouched people fold to a compact row within their section. Absorbed the old Preview tab — grouping by role already showed what would publish. |
 | `components/person-editor/` | **Detail tab** — the editor. `person-editor-list` → `person-editor` → `editor-field`, one field per row as `label │ control │ was … Restore`. Also mounted by the review modal and the jurisdiction page. |
-| `components/review-preview/` | **Preview tab** — the published result, *not* a diff. Deliberately carries no diff vocabulary: no state colours, no strikethrough, no attention icons. |
 | `components/review-checklist/` | The complete index of a card's issues. |
 | `pages/review-page/` | The review **landing** page — pick a jurisdiction, see stats. |
 | `pages/review-session-page/` | The review **session** — owns the card under review, the tab bar, and the frozen-field set the three views must agree on. |

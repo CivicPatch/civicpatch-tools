@@ -713,6 +713,25 @@ async def open_for_person(cur, person_id: str, organization_id: str) -> dict | N
     return dict(zip([c.name for c in cur.description or []], row))
 
 
+async def open_membership_ids_for_persons(cur, person_ids: list[str]) -> list[dict]:
+    """Every open membership id for these people, to look up label assertions by.
+
+    Person id, not entity id: `assertions` is keyed on `membership.id`, which the editor's
+    per-person payload never otherwise carries. One person can hold more than one open
+    membership (`memberships_one_open_per_organization` is per organization, not per
+    person), so this returns a row per membership rather than one per person.
+    """
+    if not person_ids:
+        return []
+    await cur.execute(
+        "SELECT id::text, person_id::text FROM memberships "
+        "WHERE person_id = ANY(%s) AND closed_at IS NULL",
+        (person_ids,),
+    )
+    columns = [column.name for column in cur.description or []]
+    return [dict(zip(columns, row)) for row in await cur.fetchall()]
+
+
 async def _person_name(cur, person_id: str) -> str:
     """What a reader recognises the person by. Ids do not render in an activity feed."""
     await cur.execute("SELECT name FROM people WHERE id = %s", (person_id,))

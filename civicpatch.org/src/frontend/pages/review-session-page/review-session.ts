@@ -1,7 +1,6 @@
 import { html, nothing } from "lit-html";
 import { component, useState, useCallback } from "haunted";
 import "../../components/review-overview/review-overview.js";
-import "../../components/review-preview/review-preview.js";
 import "../../components/review/review-modal.js";
 import "../../components/review-sidebar/review-sidebar.js";
 import { checkedCount } from "../../components/review-sidebar/sidebar-model.js";
@@ -367,16 +366,10 @@ function ReviewSession(host: ReviewSessionHost) {
         .openPersonId=${openPersonId}
         .editorFor=${editorFor}
         .posts=${posts}
+        .roles=${roles}
         .assertions=${assertions ?? {}}
         .overriddenSourceValues=${overriddenSourceValues ?? {}}
       ></review-overview>
-      <section class="review-session__publishing" aria-label="Preview">
-        <h2 class="review-session__section-title">Preview</h2>
-        <review-preview
-          .cards=${cards}
-          .roles=${roles}
-        ></review-preview>
-      </section>
       <review-sidebar
         .issues=${allIssues}
         .checks=${issueChecks}

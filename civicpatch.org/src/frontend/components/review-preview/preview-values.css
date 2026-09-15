@@ -1,0 +1,46 @@
+@layer components {
+/* Icon, then value. No label: it is the value a reader came for, and the label
+   repeated down a column is noise. The name stays for screen readers. */
+.pc-value {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  min-width: 0;
+  color: var(--text-muted);
+}
+
+/* Rows are static, so nothing overlays these — they stay real links. */
+.pc-link {
+  color: var(--text-default);
+  text-decoration: underline;
+  text-underline-offset: 0.1rem;
+  overflow-wrap: anywhere;
+}
+
+.pc-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Provenance, not a value: a word rather than an icon, and set apart from the
+   fields it stands behind. */
+.pc-value--sources {
+  gap: 0.3rem;
+}
+
+.pc-sources-label {
+  text-transform: lowercase;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+/* Number and colour belong to the url, so [2] is the same page on every person. */
+.pc-source {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pc-source:hover {
+  text-decoration: underline;
+}
+}

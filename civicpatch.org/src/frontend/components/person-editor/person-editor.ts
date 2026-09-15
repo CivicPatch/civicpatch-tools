@@ -203,6 +203,8 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
         diffValue(newRecord ?? oldRecord, field),
       ),
       assertionSummary: assertionSummaryFor(props.assertions, field.key),
+      accepts: props.accepts,
+      assertions: props.assertions,
       isReadOnly,
       jurisdictionOcdid,
       posts,

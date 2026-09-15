@@ -16,7 +16,9 @@ from psycopg.errors import CheckViolation, ForeignKeyViolation, NotNullViolation
 from core.post_derivation import DerivedMembership
 from database import assertions, divisions, memberships, organizations, posts
 from database.database import get_pool
+from database.memberships import LABEL_FIELD
 from schemas.assertions import Assertion, AssertionKind, EntityType, Source
+from services.review_proposal import assertions_for_people
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_assert/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_assert"
@@ -686,5 +688,49 @@ async def test_a_post_someone_holds_cannot_be_deleted():
         )
         assert await posts.delete_if_unheld(cur, post_id) is False
         await conn.rollback()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_open_membership_ids_for_persons_finds_an_open_seat():
+    user_id, post_id = await _seed()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
+            (person_id := str(uuid.uuid4()), _OCDID, "Membership Lookup Subject"),
+        )
+        await conn.commit()
+
+    result = await memberships.assign(person_id, post_id, "Mayor Pro Tem", user_id=user_id)
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        rows = await memberships.open_membership_ids_for_persons(cur, [person_id])
+    assert rows == [{"id": result.membership_id, "person_id": person_id}]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_assertions_for_people_includes_a_human_set_membership_label():
+    """The picker needs to know a label was asserted, the same way every other field does.
+    `assertions_for_people` is keyed by person id, but `set_label` files the assertion
+    against the membership — this is the merge that lets the two meet."""
+    user_id, post_id = await _seed()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
+            (person_id := str(uuid.uuid4()), _OCDID, "Assertion Merge Subject"),
+        )
+        await conn.commit()
+    await memberships.assign(person_id, post_id, "Mayor Pro Tem", user_id=user_id)
+
+    result = await assertions_for_people([person_id])
+
+    claims = result[person_id]
+    assert any(
+        claim["field_path"] == LABEL_FIELD and claim["value"] == "Mayor Pro Tem"
+        for claim in claims
+    )
 
 
