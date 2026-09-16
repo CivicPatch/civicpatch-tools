@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eval Dashboard</title>
+<!-- Classic, not a module: it must set the palette before first paint. -->
+<script src="theme.js"></script>
+<!-- tokens.css must come first: it declares the layer order. -->
+<link rel="stylesheet" href="../../../../../../civicpatch.org/src/frontend/css/fonts.css">
+<link rel="stylesheet" href="../../../../../../civicpatch.org/src/frontend/css/tokens.css">
+<link rel="stylesheet" href="../../../../../../civicpatch.org/src/frontend/css/elements.css">
+<link rel="stylesheet" href="../../../../../../civicpatch.org/src/frontend/css/typography.css">
+<link rel="stylesheet" href="../../../../../../civicpatch.org/src/frontend/css/controls.css">
+<link rel="stylesheet" href="../../../../../../civicpatch.org/src/frontend/css/layout.css">
+<link rel="stylesheet" href="../../../../../../civicpatch.org/src/frontend/css/styles.css">
+<link rel="stylesheet" href="../../../../../../civicpatch.org/src/frontend/css/utilities.css">
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="sections.css">
+<link rel="stylesheet" href="trend-chart.css">
+<link rel="stylesheet" href="run-browser.css">
+<script type="importmap">
+{
+  "imports": {
+    "lit-html": "../../../../../../civicpatch.org/src/frontend/node_modules/lit-html/lit-html.js",
+    "lit-html/": "../../../../../../civicpatch.org/src/frontend/node_modules/lit-html/"
+  }
+}
+</script>
+<script type="module" src="main.js"></script>
+</head>
+<body>
+<main class="container-fluid">
+  <div class="page-focal">
+    <h1 class="page-focal__title">Eval dashboard</h1>
+    <span class="page-focal__end">
+      <select id="theme-picker" class="theme-picker" aria-label="theme"></select>
+    </span>
+  </div>
+  <p class="dashboard-intro">Regenerated after every eval run. Read top to bottom: can I ship it &rarr; which model
+  scores best &rarr; what is the trend &rarr; what do I fix &rarr; which prompt produced it.</p>
+  <div id="dashboard"></div>
+</main>
+</body>
+</html>

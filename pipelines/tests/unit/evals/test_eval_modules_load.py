@@ -18,7 +18,6 @@ modules load and their fixtures validate.
 
 import importlib.util
 import pathlib
-import sys
 
 import pytest
 import yaml
@@ -31,22 +30,19 @@ EVAL_MODULES = [
     EVALS / "scoring.py",
     EVALS / "eval_utils.py",
     EVALS / "audit_fixtures.py",
+    EVALS / "aggregation.py",
+    EVALS / "eval_records.py",
+    EVALS / "dashboard_schema.py",
     EVALS / "dashboard_data.py",
+    EVALS / "dashboard_summary.py",
+    EVALS / "dashboard_models.py",
+    EVALS / "dashboard_detail.py",
     EVALS / "visualize.py",
     EVALS / "test_local_municipal_officials_eval.py",
     EVALS / "test_local_relevant_page_eval.py",
     EVALS / "test_find_jurisdiction_url_eval.py",
 ]
 
-
-@pytest.fixture(scope="module", autouse=True)
-def _eval_dir_on_path():
-    """The eval package relies on its own conftest inserting this; unit tests get no such
-    conftest, so do it here rather than making the modules importable some other way."""
-    path = str(EVALS.resolve())
-    sys.path.insert(0, path)
-    yield
-    sys.path.remove(path)
 
 
 @pytest.mark.parametrize("module_path", EVAL_MODULES, ids=lambda p: p.name)

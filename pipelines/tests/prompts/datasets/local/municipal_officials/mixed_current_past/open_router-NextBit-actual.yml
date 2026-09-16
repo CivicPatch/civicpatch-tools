@@ -1,0 +1,49 @@
+people:
+- name: Michael Pye
+  label: Mayor
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
+  url: https://www.cityofleonard.net/page/city_council
+  start_date: null
+  end_date: null
+  image: null
+- name: Al Stephens
+  label: Mayor Pro Tem
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
+  url: https://www.cityofleonard.net/page/city_council
+  start_date: null
+  end_date: null
+  image: null
+- name: Bobby Hanson
+  label: Council Member
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
+  url: https://www.cityofleonard.net/page/city_council
+  start_date: null
+  end_date: null
+  image: null
+- name: Darrell Grintz
+  label: Council Member
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
+  url: https://www.cityofleonard.net/page/city_council
+  start_date: null
+  end_date: null
+  image: null
+- name: Billy Wayne Martin
+  label: Council Member
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
+  url: https://www.cityofleonard.net/page/city_council
+  start_date: null
+  end_date: null
+  image: null
+- name: Charles Wrenn
+  label: Council Member
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
+  url: https://www.cityofleonard.net/page/city_council
+  start_date: null
+  end_date: null
+  image: null

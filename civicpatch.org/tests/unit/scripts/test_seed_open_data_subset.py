@@ -33,7 +33,8 @@ def test_jurisdiction_row_passes_data_through_as_text():
             "data": '{"name": "Seattle", "population": 100}',
             "parent_ocdids": ["ocd-jurisdiction/country:us/state:wa/government"],
             "updated_at": "2026-01-01T00:00:00Z",
-        }
+        },
+        state_names={"wa": "Washington"},
     )
 
     assert row == {
@@ -44,6 +45,7 @@ def test_jurisdiction_row_passes_data_through_as_text():
         "data": '{"name": "Seattle", "population": 100}',
         "parent_ocdids": ["ocd-jurisdiction/country:us/state:wa/government"],
         "updated_at": "2026-01-01T00:00:00Z",
+        "search_text": "seattle wa washington",
     }
 
 
@@ -61,10 +63,33 @@ def test_jurisdiction_row_allows_null_data():
             "data": None,
             "parent_ocdids": [],
             "updated_at": "2026-01-01T00:00:00Z",
-        }
+        },
+        state_names={},
     )
 
     assert row["data"] is None
+
+
+@pytest.mark.unit
+def test_jurisdiction_row_search_text_survives_an_unknown_state_name():
+    """`state_names` comes from whatever `level == "state"` rows this same run fetched — a
+    state missing from that map (state data still null upstream) must not crash the whole
+    table's worth of rows, just fall back to name + code."""
+    row = jurisdiction_row(
+        {
+            "jurisdiction_ocdid": _OCDID,
+            "state": "wa",
+            "level": "local",
+            "status": "active",
+            "name": "Seattle",
+            "data": None,
+            "parent_ocdids": [],
+            "updated_at": "2026-01-01T00:00:00Z",
+        },
+        state_names={},
+    )
+
+    assert row["search_text"] == "seattle wa"
 
 
 @pytest.mark.unit

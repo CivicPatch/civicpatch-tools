@@ -21,7 +21,15 @@ from runners.people_collector.schemas import (
 from services.open_router.llm import run_prompt as run_together_prompt
 from services.open_router.prompts import municipality_officials_prompt
 from utils import cost_utils
-from scoring import EVAL_TAXONOMY, aggregate, failing_people, score_cases
+from scoring import (
+    EVAL_TAXONOMY,
+    aggregate,
+    aggregate_case,
+    case_score,
+    failing_people,
+    person_precision,
+    score_cases,
+)
 from accuracy import (
     GATE_THRESHOLDS as ACCURACY_THRESHOLDS,
     as_report,
@@ -113,25 +121,17 @@ async def _run_single_case(model_client, case, ocdid):
         f.write(yaml_output)
 
     case_scores = score_cases(actual.people, expected)
-    case_aggregate = {}
-    if not expected and actual.people:
-        case_aggregate["hallucination"] = 0.0
-    else:
-        # Same present-keys rule as aggregate(). This used to default a missing key to 0.0
-        # and divide by everyone, so the per-case breakdown in each report diluted the
-        # recall-only dimensions while the overall report did not — the two numbers
-        # disagreed for the same run.
-        all_keys = set()
-        for score in case_scores:
-            all_keys.update(score["scores"].keys())
-        for key in all_keys:
-            present = [s["scores"][key] for s in case_scores if key in s["scores"]]
-            if present:
-                case_aggregate[key] = sum(present) / len(present)
+    case_aggregate = aggregate_case(case_scores)
+    precision = person_precision(actual.people, expected)
+    case_result = {
+        "score": case_score(case_aggregate, precision),
+        "person_precision": precision,
+        "scores": case_aggregate,
+    }
 
     dispositions = case_dispositions(actual.people, expected, EVAL_TAXONOMY)
     mismatches = case_mismatches(actual.people, expected, EVAL_TAXONOMY)
-    return case["id"], case_aggregate, case_scores, dispositions, mismatches
+    return case["id"], case_result, case_scores, dispositions, mismatches
 
 
 @pytest.mark.asyncio
@@ -303,14 +303,9 @@ async def test_provider_comparison(load_eval_cases):
             run,
             {field: counts["f1"] for field, counts in accuracy_report.items()},
             cost_summary,
-            {
-                # An empty aggregate means the case expected nobody and the model returned
-                # nobody — the hallucination cases. That is a perfect result, not a zero.
-                # Scoring it 0.0 made austin_city_manager_staff and nav_links_no_names look
-                # like total failures for every provider in every case-level view.
-                case_id: (sum(agg.values()) / len(agg)) if agg else 1.0
-                for case_id, agg in result["per_case_scores"]
-            },
+            {case_id: case_result["score"] for case_id, case_result in result["per_case_scores"]},
+            accuracy=accuracy_report,
+            mismatches=result["mismatches"],
         )
         report_path = os.path.join(evals_dir, f"{client['name']}-eval-report.yml")
         with open(report_path, "w", encoding="utf-8") as f:
@@ -321,8 +316,8 @@ async def test_provider_comparison(load_eval_cases):
                     "accuracy": accuracy_report,
                     "aggregated_report": result["report"],
                     "per_case_scores": [
-                        {"case_id": case_id, "scores": case_aggregate}
-                        for case_id, case_aggregate in result["per_case_scores"]
+                        {"case_id": case_id, **case_result}
+                        for case_id, case_result in result["per_case_scores"]
                     ],
                     "mismatches": result["mismatches"],
                 },

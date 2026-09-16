@@ -1,42 +1,42 @@
 run:
-  timestamp: '2026-08-16T21:27:45+00:00'
-  prompt_sha256: bc0a307918ed
-  prompt_file: _prompts/bc0a307918ed.txt
+  timestamp: '2026-09-16T20:47:16+00:00'
+  prompt_sha256: 8d1b93961ff5
+  prompt_file: _prompts/8d1b93961ff5.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
   providers:
   - DigitalOcean
-  elapsed_seconds: 78.24
-  total_input_tokens: 99014
-  total_output_tokens: 5530
-  total_cost_usd: 0.00787108
+  elapsed_seconds: 84.15
+  total_input_tokens: 128835
+  total_output_tokens: 6496
+  total_cost_usd: 0.0131363708
 accuracy:
   person:
-    correct: 62
+    correct: 72
     missing: 0
-    spurious: 1
+    spurious: 2
     wrong: 0
-    precision: 0.9841269841269841
+    precision: 0.972972972972973
     recall: 1.0
-    f1: 0.992
+    f1: 0.9863013698630136
   primary_role:
-    correct: 59
-    missing: 3
-    spurious: 3
-    wrong: 0
-    precision: 0.9516129032258065
-    recall: 0.9516129032258065
-    f1: 0.9516129032258065
-  roles:
-    correct: 62
-    missing: 3
+    correct: 72
+    missing: 0
     spurious: 0
     wrong: 0
     precision: 1.0
-    recall: 0.9538461538461539
-    f1: 0.9763779527559056
+    recall: 1.0
+    f1: 1.0
+  roles:
+    correct: 75
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
   district:
-    correct: 21
+    correct: 28
     missing: 0
     spurious: 0
     wrong: 0
@@ -44,7 +44,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   designations_other:
-    correct: 17
+    correct: 19
     missing: 0
     spurious: 0
     wrong: 0
@@ -53,28 +53,28 @@ accuracy:
     f1: 1.0
   email:
     correct: 21
-    missing: 12
+    missing: 21
     spurious: 0
     wrong: 0
     precision: 1.0
-    recall: 0.6363636363636364
-    f1: 0.7777777777777778
+    recall: 0.5
+    f1: 0.6666666666666666
   phone:
-    correct: 30
-    missing: 20
+    correct: 26
+    missing: 34
     spurious: 0
     wrong: 0
     precision: 1.0
-    recall: 0.6
-    f1: 0.75
+    recall: 0.43333333333333335
+    f1: 0.6046511627906976
   url:
-    correct: 47
-    missing: 7
+    correct: 58
+    missing: 5
     spurious: 0
-    wrong: 0
-    precision: 1.0
-    recall: 0.8703703703703703
-    f1: 0.9306930693069307
+    wrong: 1
+    precision: 0.9830508474576272
+    recall: 0.90625
+    f1: 0.943089430894309
   start_date:
     correct: 12
     missing: 0
@@ -92,163 +92,218 @@ accuracy:
     recall: 1.0
     f1: 1.0
   image:
-    correct: 14
-    missing: 0
-    spurious: 1
+    correct: 15
+    missing: 9
+    spurious: 2
     wrong: 0
-    precision: 0.9333333333333333
-    recall: 1.0
-    f1: 0.9655172413793104
+    precision: 0.8823529411764706
+    recall: 0.625
+    f1: 0.7317073170731707
 aggregated_report:
-  image: 1.0
-  roles_precision: 1.0
-  url: 0.8461538461538461
-  designations: 1.0
-  end_date: 1.0
-  phone: 0.7076923076923076
-  name: 1.0
+  roles: 1.0
+  image: 0.8
+  phone: 0.6133333333333333
   designations_precision: 1.0
+  email: 0.8
+  roles_precision: 1.0
+  end_date: 1.0
+  url: 0.8666666666666667
   start_date: 1.0
-  roles: 0.9794871794871796
-  email: 0.8461538461538461
+  name: 1.0
+  designations: 1.0
 per_case_scores:
 - case_id: austin_city_manager_staff
+  score: 1.0
+  person_precision: null
   scores: {}
 - case_id: austin_council
+  score: 1.0
+  person_precision: 1.0
   scores:
+    roles: 1.0
+    phone: 1.0
+    designations_precision: 1.0
+    email: 1.0
     roles_precision: 1.0
     url: 1.0
-    designations: 1.0
-    phone: 1.0
     name: 1.0
-    designations_precision: 1.0
-    roles: 1.0
-    email: 1.0
+    designations: 1.0
 - case_id: austin_district7_council_member
+  score: 1.0
+  person_precision: 1.0
   scores:
-    image: 1.0
-    roles_precision: 1.0
-    url: 1.0
-    designations: 1.0
-    end_date: 1.0
-    designations_precision: 1.0
-    name: 1.0
-    phone: 1.0
-    start_date: 1.0
     roles: 1.0
+    image: 1.0
+    phone: 1.0
+    designations_precision: 1.0
     email: 1.0
+    roles_precision: 1.0
+    end_date: 1.0
+    url: 1.0
+    start_date: 1.0
+    name: 1.0
+    designations: 1.0
 - case_id: board_of_aldermen
+  score: 0.6833333333333333
+  person_precision: 0.8333333333333334
   scores:
+    roles: 1.0
     image: 1.0
-    roles_precision: 1.0
-    url: 1.0
-    designations: 1.0
-    end_date: 1.0
     phone: 0.2
-    name: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    end_date: 1.0
+    url: 0.0
     start_date: 1.0
-    roles: 1.0
-    email: 1.0
+    name: 1.0
+    designations: 1.0
 - case_id: coleman_council
+  score: 0.875
+  person_precision: 1.0
   scores:
-    roles_precision: 1.0
-    url: 1.0
-    designations: 1.0
-    phone: 1.0
-    name: 1.0
-    designations_precision: 1.0
-    roles: 0.9
-    email: 1.0
-- case_id: golinda_mixed_city_county
-  scores:
-    roles_precision: 1.0
-    url: 1.0
-    designations: 1.0
-    phone: 1.0
-    name: 1.0
     roles: 1.0
-    email: 0.0
-- case_id: inverted_name_format
-  scores:
-    roles_precision: 1.0
-    url: 1.0
-    designations: 1.0
-    phone: 1.0
-    name: 1.0
-    designations_precision: 1.0
-    roles: 1.0
-    email: 1.0
-- case_id: la_porte_council
-  scores:
-    image: 1.0
-    roles_precision: 1.0
-    url: 1.0
-    designations: 1.0
     phone: 0.0
-    name: 1.0
     designations_precision: 1.0
-    roles: 1.0
     email: 1.0
-- case_id: mixed_current_past
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: golinda_mixed_city_county
+  score: 0.8571428571428571
+  person_precision: 1.0
   scores:
+    roles: 1.0
+    phone: 1.0
+    email: 0.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: inverted_name_format
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    phone: 1.0
+    designations_precision: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: jackson_mayors_office
+  score: 0.875
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    image: 1.0
+    phone: 1.0
+    email: 1.0
     roles_precision: 1.0
     url: 0.0
-    designations: 1.0
-    phone: 0.0
     name: 1.0
+    designations: 1.0
+- case_id: la_porte_council
+  score: 0.8888888888888888
+  person_precision: 1.0
+  scores:
     roles: 1.0
+    image: 1.0
+    phone: 0.0
+    designations_precision: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: mixed_current_past
+  score: 0.7142857142857143
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    phone: 0.0
     email: 0.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
 - case_id: nav_links_no_names
+  score: 1.0
+  person_precision: null
   scores: {}
 - case_id: placeholder_name_council
+  score: 1.0
+  person_precision: 1.0
   scores:
+    roles: 1.0
+    phone: 1.0
+    designations_precision: 1.0
+    email: 1.0
     roles_precision: 1.0
     url: 1.0
-    designations: 1.0
-    phone: 1.0
     name: 1.0
-    designations_precision: 1.0
-    roles: 1.0
-    email: 1.0
+    designations: 1.0
 - case_id: raisin_township_clerk
+  score: 0.8571428571428571
+  person_precision: 1.0
   scores:
-    roles_precision: 1.0
-    url: 0.0
-    designations: 1.0
+    roles: 1.0
     phone: 0.0
-    name: 1.0
-    roles: 1.0
     email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
 - case_id: raisin_township_supervisor
+  score: 1.0
+  person_precision: 1.0
   scores:
+    roles: 1.0
+    phone: 1.0
+    email: 1.0
     roles_precision: 1.0
     url: 1.0
-    designations: 1.0
-    phone: 1.0
     name: 1.0
-    roles: 1.0
-    email: 1.0
+    designations: 1.0
 - case_id: redundant_place_role
+  score: 1.0
+  person_precision: 1.0
   scores:
-    roles_precision: 1.0
-    url: 1.0
-    designations: 1.0
-    end_date: 1.0
-    phone: 1.0
-    name: 1.0
-    designations_precision: 1.0
-    start_date: 1.0
-    roles: 0.8333333333333334
-    email: 1.0
-- case_id: vacant_positions_council
-  scores:
-    roles_precision: 1.0
-    url: 1.0
-    designations: 1.0
-    phone: 1.0
-    name: 1.0
     roles: 1.0
+    phone: 1.0
+    designations_precision: 1.0
     email: 1.0
+    roles_precision: 1.0
+    end_date: 1.0
+    url: 1.0
+    start_date: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: seattle_council_separate_mayor
+  score: 0.6666666666666666
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    image: 0.0
+    phone: 0.0
+    designations_precision: 1.0
+    email: 0.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: vacant_positions_council
+  score: 0.75
+  person_precision: 0.75
+  scores:
+    roles: 1.0
+    phone: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
 mismatches:
   board_of_aldermen:
   - person: Abelardo Gonzalez
@@ -263,11 +318,23 @@ mismatches:
     actual_label: Alderwoman
     expected: (956) 350-4093
     actual: "\u2014"
+  - person: Christi Burnias
+    field: url
+    expected_label: Alderwoman
+    actual_label: Alderwoman
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    actual: "\u2014"
   - person: Javier Vera
     field: phone
     expected_label: Mayor Pro Tem
     actual_label: Mayor Pro Tem
     expected: (956) 350-4093
+    actual: "\u2014"
+  - person: Javier Vera
+    field: url
+    expected_label: Mayor Pro Tem
+    actual_label: Mayor Pro Tem
+    expected: https://ranchoviejotexas.com/board-of-aldermen
     actual: "\u2014"
   - person: Mark A. Johnson
     field: phone
@@ -275,30 +342,61 @@ mismatches:
     actual_label: Alderman
     expected: (956) 350-4093
     actual: "\u2014"
+  - person: Mark A. Johnson
+    field: url
+    expected_label: Alderman
+    actual_label: Alderman
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    actual: "\u2014"
   - person: Peter Harris
     field: phone
     expected_label: Alderman
     actual_label: Alderman
     expected: (956) 350-4093
     actual: "\u2014"
+  - person: Peter Harris
+    field: url
+    expected_label: Alderman
+    actual_label: Alderman
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    actual: "\u2014"
+  - person: Todd Day
+    field: url
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    actual: "\u2014"
   coleman_council:
+  - person: Beau Brudney
+    field: phone
+    expected_label: Council Member Place 3 (Central Ward)
+    actual_label: Council Member Place 3 (Central Ward)
+    expected: (325) 625-5114
+    actual: "\u2014"
+  - person: Monte Sides
+    field: phone
+    expected_label: Council Member Place 4 (South Ward)
+    actual_label: Council Member Place 4 (South Ward)
+    expected: (325) 625-5114
+    actual: "\u2014"
   - person: Sharlene T. Hetzel
-    field: primary_role
+    field: phone
     expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
-    actual_label: Council Member Place 2 (West Ward)
-    expected:
-    - Mayor Pro Tem
-    actual:
-    - Council Member
-  - person: Sharlene T. Hetzel
-    field: roles
-    expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
-    actual_label: Council Member Place 2 (West Ward)
-    expected:
-    - Council Member
-    - Mayor Pro Tem
-    actual:
-    - Council Member
+    actual_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    expected: (325) 625-5114
+    actual: "\u2014"
+  - person: Tommy Sloan
+    field: phone
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: (325) 625-5114
+    actual: "\u2014"
+  - person: Tracy Rankin
+    field: phone
+    expected_label: Council Member Place 1 (North Ward)
+    actual_label: Council Member Place 1 (North Ward)
+    expected: (325) 625-5114
+    actual: "\u2014"
   golinda_mixed_city_county:
   - person: Billy Elkins
     field: email
@@ -336,6 +434,13 @@ mismatches:
     actual_label: Council
     expected: cityofgolinda@gmail.com
     actual: "\u2014"
+  jackson_mayors_office:
+  - person: Scott Conger
+    field: url
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: https://jacksontn.gov/government/mayorsoffice/aboutmayorconger
+    actual: https://jacksontn.gov/government/mayorsoffice
   la_porte_council:
   - person: Bill Bentley
     field: phone
@@ -404,12 +509,6 @@ mismatches:
     actual_label: Mayor Pro Tem
     expected: (903) 587-3334
     actual: "\u2014"
-  - person: Al Stephens
-    field: url
-    expected_label: Mayor Pro Tem
-    actual_label: Mayor Pro Tem
-    expected: https://cityofleonard.net/page/city_council
-    actual: "\u2014"
   - person: Billy Wayne Martin
     field: email
     expected_label: Council Member
@@ -421,12 +520,6 @@ mismatches:
     expected_label: Council Member
     actual_label: Council Member
     expected: (903) 587-3334
-    actual: "\u2014"
-  - person: Billy Wayne Martin
-    field: url
-    expected_label: Council Member
-    actual_label: Council Member
-    expected: https://cityofleonard.net/page/city_council
     actual: "\u2014"
   - person: Bobby Hanson
     field: email
@@ -440,12 +533,6 @@ mismatches:
     actual_label: Council Member
     expected: (903) 587-3334
     actual: "\u2014"
-  - person: Bobby Hanson
-    field: url
-    expected_label: Council Member
-    actual_label: Council Member
-    expected: https://cityofleonard.net/page/city_council
-    actual: "\u2014"
   - person: Charles Wrenn
     field: email
     expected_label: Council Member
@@ -458,12 +545,6 @@ mismatches:
     actual_label: Council Member
     expected: (903) 587-3334
     actual: "\u2014"
-  - person: Charles Wrenn
-    field: url
-    expected_label: Council Member
-    actual_label: Council Member
-    expected: https://cityofleonard.net/page/city_council
-    actual: "\u2014"
   - person: Darrell Grintz
     field: email
     expected_label: Council Member
@@ -475,12 +556,6 @@ mismatches:
     expected_label: Council Member
     actual_label: Council Member
     expected: (903) 587-3334
-    actual: "\u2014"
-  - person: Darrell Grintz
-    field: url
-    expected_label: Council Member
-    actual_label: Council Member
-    expected: https://cityofleonard.net/page/city_council
     actual: "\u2014"
   - person: Michael Pye
     field: email
@@ -495,11 +570,11 @@ mismatches:
     expected: (903) 587-3334
     actual: "\u2014"
   - person: Michael Pye
-    field: url
+    field: image
     expected_label: Mayor
     actual_label: Mayor
-    expected: https://cityofleonard.net/page/city_council
-    actual: "\u2014"
+    expected: "\u2014"
+    actual: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
   raisin_township_clerk:
   - person: Susan Bunch
     field: phone
@@ -508,49 +583,178 @@ mismatches:
     expected: (517) 423-3162
     actual: "\u2014"
   - person: Susan Bunch
-    field: url
-    expected_label: Clerk
-    actual_label: Clerk
-    expected: https://raisinchartertownship.com/clerk
-    actual: "\u2014"
-  - person: Susan Bunch
     field: image
     expected_label: Clerk
     actual_label: Clerk
     expected: "\u2014"
     actual: local://2105ede652ed.png
-  redundant_place_role:
-  - person: Carolyn Richmond
-    field: primary_role
-    expected_label: Council Member Place 3, Mayor Pro-Tem
-    actual_label: Council Member Place 3
-    expected:
-    - Mayor Pro Tem
-    actual:
-    - Council Member
-  - person: Carolyn Richmond
-    field: roles
-    expected_label: Council Member Place 3, Mayor Pro-Tem
-    actual_label: Council Member Place 3
-    expected:
-    - Council Member
-    - Mayor Pro Tem
-    actual:
-    - Council Member
-  - person: Garrett Wood
-    field: primary_role
-    expected_label: Council Member Place 5, Mayor
-    actual_label: Council Member Place 5
-    expected:
-    - Mayor
-    actual:
-    - Council Member
-  - person: Garrett Wood
-    field: roles
-    expected_label: Council Member Place 5, Mayor
-    actual_label: Council Member Place 5
-    expected:
-    - Council Member
-    - Mayor
-    actual:
-    - Council Member
+  seattle_council_separate_mayor:
+  - person: Alexis Mercedes Rinck
+    field: email
+    expected_label: Councilmember Position 8
+    actual_label: Councilmember Position 8
+    expected: council@seattle.gov
+    actual: "\u2014"
+  - person: Alexis Mercedes Rinck
+    field: phone
+    expected_label: Councilmember Position 8
+    actual_label: Councilmember Position 8
+    expected: (206) 684-8888
+    actual: "\u2014"
+  - person: Alexis Mercedes Rinck
+    field: image
+    expected_label: Councilmember Position 8
+    actual_label: Councilmember Position 8
+    expected: local://ce027a08f3f1.png
+    actual: "\u2014"
+  - person: Bob Kettle
+    field: email
+    expected_label: Councilmember District 7
+    actual_label: Councilmember District 7
+    expected: council@seattle.gov
+    actual: "\u2014"
+  - person: Bob Kettle
+    field: phone
+    expected_label: Councilmember District 7
+    actual_label: Councilmember District 7
+    expected: (206) 684-8888
+    actual: "\u2014"
+  - person: Bob Kettle
+    field: image
+    expected_label: Councilmember District 7
+    actual_label: Councilmember District 7
+    expected: local://f490e8055573.png
+    actual: "\u2014"
+  - person: Dan Strauss
+    field: email
+    expected_label: Councilmember District 6
+    actual_label: Councilmember District 6
+    expected: council@seattle.gov
+    actual: "\u2014"
+  - person: Dan Strauss
+    field: phone
+    expected_label: Councilmember District 6
+    actual_label: Councilmember District 6
+    expected: (206) 684-8888
+    actual: "\u2014"
+  - person: Dan Strauss
+    field: image
+    expected_label: Councilmember District 6
+    actual_label: Councilmember District 6
+    expected: local://ada6b13ec0d1.png
+    actual: "\u2014"
+  - person: Debora Juarez
+    field: email
+    expected_label: Councilmember District 5
+    actual_label: Councilmember District 5
+    expected: council@seattle.gov
+    actual: "\u2014"
+  - person: Debora Juarez
+    field: phone
+    expected_label: Councilmember District 5
+    actual_label: Councilmember District 5
+    expected: (206) 684-8888
+    actual: "\u2014"
+  - person: Debora Juarez
+    field: image
+    expected_label: Councilmember District 5
+    actual_label: Councilmember District 5
+    expected: local://183bf92d4c48.png
+    actual: "\u2014"
+  - person: Dionne Foster
+    field: email
+    expected_label: Councilmember Position 9
+    actual_label: Councilmember Position 9
+    expected: council@seattle.gov
+    actual: "\u2014"
+  - person: Dionne Foster
+    field: phone
+    expected_label: Councilmember Position 9
+    actual_label: Councilmember Position 9
+    expected: (206) 684-8888
+    actual: "\u2014"
+  - person: Dionne Foster
+    field: image
+    expected_label: Councilmember Position 9
+    actual_label: Councilmember Position 9
+    expected: local://f207a4a7733a.png
+    actual: "\u2014"
+  - person: Eddie Lin
+    field: email
+    expected_label: Councilmember District 2
+    actual_label: Councilmember District 2
+    expected: council@seattle.gov
+    actual: "\u2014"
+  - person: Eddie Lin
+    field: phone
+    expected_label: Councilmember District 2
+    actual_label: Councilmember District 2
+    expected: (206) 684-8888
+    actual: "\u2014"
+  - person: Eddie Lin
+    field: image
+    expected_label: Councilmember District 2
+    actual_label: Councilmember District 2
+    expected: local://8518b717839c.png
+    actual: "\u2014"
+  - person: Joy Hollingsworth
+    field: email
+    expected_label: Council President District 3
+    actual_label: Council President District 3
+    expected: council@seattle.gov
+    actual: "\u2014"
+  - person: Joy Hollingsworth
+    field: phone
+    expected_label: Council President District 3
+    actual_label: Council President District 3
+    expected: (206) 684-8888
+    actual: "\u2014"
+  - person: Joy Hollingsworth
+    field: image
+    expected_label: Council President District 3
+    actual_label: Council President District 3
+    expected: local://ef06d9a9e07d.png
+    actual: "\u2014"
+  - person: Maritza Rivera
+    field: email
+    expected_label: Councilmember District 4
+    actual_label: Councilmember District 4
+    expected: council@seattle.gov
+    actual: "\u2014"
+  - person: Maritza Rivera
+    field: phone
+    expected_label: Councilmember District 4
+    actual_label: Councilmember District 4
+    expected: (206) 684-8888
+    actual: "\u2014"
+  - person: Maritza Rivera
+    field: image
+    expected_label: Councilmember District 4
+    actual_label: Councilmember District 4
+    expected: local://ed071cb84224.png
+    actual: "\u2014"
+  - person: Rob Saka
+    field: email
+    expected_label: Councilmember District 1
+    actual_label: Councilmember District 1
+    expected: council@seattle.gov
+    actual: "\u2014"
+  - person: Rob Saka
+    field: phone
+    expected_label: Councilmember District 1
+    actual_label: Councilmember District 1
+    expected: (206) 684-8888
+    actual: "\u2014"
+  - person: Rob Saka
+    field: image
+    expected_label: Councilmember District 1
+    actual_label: Councilmember District 1
+    expected: local://8ac384d14474.png
+    actual: "\u2014"
+  vacant_positions_council:
+  - person: Vacated Alderman
+    field: person
+    expected_label: ''
+    actual_label: Council | Council
+    expected: "\u2014"
+    actual: present

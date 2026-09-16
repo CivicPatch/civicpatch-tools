@@ -1,0 +1,160 @@
+mismatches:
+  board_of_aldermen:
+  - actual: present
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Abelardo Gonzalez
+  jackson_mayors_office:
+  - actual: https://jacksontn.gov/government/mayorsoffice
+    actual_label: Mayor
+    expected: https://jacksontn.gov/government/mayorsoffice/aboutmayorconger
+    expected_label: Mayor
+    field: url
+    person: Scott Conger
+  la_porte_council:
+  - actual: []
+    actual_label: District 3
+    expected:
+    - Council Member
+    expected_label: Council Member District 3
+    field: primary_role
+    person: Bill Bentley
+  - actual: []
+    actual_label: District 3
+    expected:
+    - Council Member
+    expected_label: Council Member District 3
+    field: roles
+    person: Bill Bentley
+  - actual: []
+    actual_label: At-Large A
+    expected:
+    - Council Member
+    expected_label: Council Member At-Large A
+    field: primary_role
+    person: Brandon Lunsford
+  - actual: []
+    actual_label: At-Large A
+    expected:
+    - Council Member
+    expected_label: Council Member At-Large A
+    field: roles
+    person: Brandon Lunsford
+  - actual: []
+    actual_label: At-Large B
+    expected:
+    - Council Member
+    expected_label: Council Member At-Large B
+    field: primary_role
+    person: Brent McCaulley
+  - actual: []
+    actual_label: At-Large B
+    expected:
+    - Council Member
+    expected_label: Council Member At-Large B
+    field: roles
+    person: Brent McCaulley
+  - actual: []
+    actual_label: District 2
+    expected:
+    - Council Member
+    expected_label: Council Member District 2
+    field: primary_role
+    person: Chuck Engelken
+  - actual: []
+    actual_label: District 2
+    expected:
+    - Council Member
+    expected_label: Council Member District 2
+    field: roles
+    person: Chuck Engelken
+  - actual: []
+    actual_label: District 5
+    expected:
+    - Council Member
+    expected_label: Council Member District 5
+    field: primary_role
+    person: Jay Martin
+  - actual: []
+    actual_label: District 5
+    expected:
+    - Council Member
+    expected_label: Council Member District 5
+    field: roles
+    person: Jay Martin
+  - actual: []
+    actual_label: District 1
+    expected:
+    - Council Member
+    expected_label: Council Member District 1
+    field: primary_role
+    person: Mandi Williams
+  - actual: []
+    actual_label: District 1
+    expected:
+    - Council Member
+    expected_label: Council Member District 1
+    field: roles
+    person: Mandi Williams
+  - actual: []
+    actual_label: District 6
+    expected:
+    - Council Member
+    expected_label: Council Member District 6
+    field: primary_role
+    person: Robbie McLarrin
+  - actual: []
+    actual_label: District 6
+    expected:
+    - Council Member
+    expected_label: Council Member District 6
+    field: roles
+    person: Robbie McLarrin
+  - actual: []
+    actual_label: District 4
+    expected:
+    - Council Member
+    expected_label: Council Member District 4
+    field: primary_role
+    person: Robert Guerra
+  - actual: []
+    actual_label: District 4
+    expected:
+    - Council Member
+    expected_label: Council Member District 4
+    field: roles
+    person: Robert Guerra
+  nav_links_no_names:
+  - actual: present
+    actual_label: Councilmember, Place 5
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Edward Zapalac
+  raisin_township_clerk:
+  - actual: local://2105ede652ed.png
+    actual_label: Clerk
+    expected: "\u2014"
+    expected_label: Clerk
+    field: image
+    person: Susan Bunch
+  redundant_place_role:
+  - actual:
+    - Council Member
+    actual_label: Council Member Place 5
+    expected:
+    - Mayor
+    expected_label: Council Member Place 5, Mayor
+    field: primary_role
+    person: Garrett Wood
+  - actual:
+    - Council Member
+    actual_label: Council Member Place 5
+    expected:
+    - Council Member
+    - Mayor
+    expected_label: Council Member Place 5, Mayor
+    field: roles
+    person: Garrett Wood

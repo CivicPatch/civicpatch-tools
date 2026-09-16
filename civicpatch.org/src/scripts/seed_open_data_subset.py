@@ -30,6 +30,7 @@ import httpx
 import pyarrow.parquet as pq
 from psycopg import AsyncConnection
 
+from core.jurisdiction_search import build_search_text
 from database.database import get_pool
 
 logger = logging.getLogger(__name__)
@@ -69,7 +70,7 @@ def role_row(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def jurisdiction_row(row: dict[str, Any]) -> dict[str, Any]:
+def jurisdiction_row(row: dict[str, Any], state_names: dict[str, str]) -> dict[str, Any]:
     return {
         "jurisdiction_ocdid": row["jurisdiction_ocdid"],
         "state": row["state"],
@@ -83,6 +84,12 @@ def jurisdiction_row(row: dict[str, Any]) -> dict[str, Any]:
         "data": row["data"],
         "parent_ocdids": row["parent_ocdids"],
         "updated_at": row["updated_at"],
+        # Not derived by Postgres, not left to its `''` default either: search depends on
+        # this entirely (`WHERE to_tsvector('simple', search_text) @@ ...`), so a row with a
+        # blank one is just unfindable, not merely missing a nice-to-have.
+        "search_text": build_search_text(
+            {"name": row["name"]}, row["state"], state_names.get(row["state"])
+        ),
     }
 
 
@@ -160,10 +167,11 @@ INSERT_SQL: dict[str, LiteralString] = {
         ON CONFLICT (id) DO NOTHING
     """,
     "jurisdictions": """
-        INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, status, data, parent_ocdids, updated_at)
+        INSERT INTO jurisdictions
+            (jurisdiction_ocdid, state, level, status, data, parent_ocdids, updated_at, search_text)
         VALUES
             (%(jurisdiction_ocdid)s, %(state)s, %(level)s, %(status)s, %(data)s, %(parent_ocdids)s,
-             %(updated_at)s)
+             %(updated_at)s, %(search_text)s)
         ON CONFLICT (jurisdiction_ocdid) DO NOTHING
     """,
     "divisions": """
@@ -261,13 +269,21 @@ async def seed(states: list[str] | None, limit: int) -> None:
         logger.info("seed_open_data_subset: roles: %d row(s)", len(role_rows))
 
         raw_jurisdictions = await fetch_table(client, "jurisdictions")
+        # From this same fetch, not a DB lookup: a state's own display name lives on its own
+        # `level == "state"` row, which is right here regardless of what `--states` narrows
+        # everything else to.
+        state_names = {
+            row["state"]: row["name"] for row in raw_jurisdictions if row["level"] == "state"
+        }
         jurisdictions_in_scope = (
             raw_jurisdictions
             if state_set is None
             else [row for row in raw_jurisdictions if row["state"] in state_set]
         )
         jurisdiction_ocdids = {row["jurisdiction_ocdid"] for row in jurisdictions_in_scope}
-        jurisdiction_rows = [jurisdiction_row(row) for row in jurisdictions_in_scope]
+        jurisdiction_rows = [
+            jurisdiction_row(row, state_names) for row in jurisdictions_in_scope
+        ]
         await insert_ignoring_conflicts(conn, "jurisdictions", jurisdiction_rows)
         logger.info("seed_open_data_subset: jurisdictions: %d row(s)", len(jurisdiction_rows))
 

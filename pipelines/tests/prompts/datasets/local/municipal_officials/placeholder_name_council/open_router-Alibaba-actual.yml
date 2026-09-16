@@ -1,0 +1,17 @@
+people:
+- name: Bob Harris
+  label: Mayor
+  phone: null
+  email: bob.harris@anytown.gov
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Dana Ellis
+  label: Councilmember Place 3
+  phone: null
+  email: dana.ellis@anytown.gov
+  url: null
+  start_date: null
+  end_date: null
+  image: null

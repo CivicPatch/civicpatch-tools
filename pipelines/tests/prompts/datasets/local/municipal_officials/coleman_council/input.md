@@ -123,7 +123,7 @@ City Council
 
 The City Council is comprised of a Mayor and 4 Council Members. The city charter divides the city into 4 "Wards".
 Place 1 is known as North Ward; Place 2 is known as West Ward; Place 3 is
-known as East Ward; and Place 4 is known as South Ward. Council members are
+known as Central Ward; and Place 4 is known as South Ward. Council members are
 required to live in the Ward that corresponds to their place on the council. 
 All council members are elected by a popular vote of the City of Coleman as
 a whole.
@@ -134,7 +134,7 @@ For information on elections,
 
 ![City Council, August 2, 2022](https://www.cityofcolemantx.us/council/images/2022%20Council.JPG)
 
-Pictured left to right: Place 3 (East Ward): Beau Brudney; Place 4 (South Ward): Monte Sides; Mayor: Tommy Sloan; Place 2 (West Ward) and Mayor Pro-Tem: Sharlene T. Hetzel; Place 1 (North Ward): Tracy Rankin.
+Pictured left to right: Place 3 (Central Ward): Beau Brudney; Place 4 (South Ward): Monte Sides; Mayor: Tommy Sloan; Place 2 (West Ward) and Mayor Pro-Tem: Sharlene T. Hetzel; Place 1 (North Ward): Tracy Rankin.
 
 Council members may be contacted by mail to the City of Coleman, P.O. Box 592, Coleman, Texas 76834, or by leaving a message at (325) 625-5114.
 You may also address the council directly during the Citizen Presentation

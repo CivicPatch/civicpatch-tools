@@ -1,22 +1,22 @@
 run:
-  timestamp: '2026-08-16T21:35:42+00:00'
+  timestamp: '2026-09-16T19:50:43+00:00'
   prompt_sha256: 962c93a9a841
   prompt_file: _prompts/962c93a9a841.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 69.39
+  elapsed_seconds: 76.26
   total_input_tokens: 79286
-  total_output_tokens: 27060
-  total_cost_usd: 0.01867684
+  total_output_tokens: 20747
+  total_cost_usd: 0.016679824
 accuracy:
   relevant_urls:
     correct: 24
     missing: 0
-    spurious: 24
+    spurious: 32
     wrong: 0
-    precision: 0.5
+    precision: 0.42857142857142855
     recall: 1.0
-    f1: 0.6666666666666666
+    f1: 0.6
   is_relevant:
     correct: 16
     missing: 0

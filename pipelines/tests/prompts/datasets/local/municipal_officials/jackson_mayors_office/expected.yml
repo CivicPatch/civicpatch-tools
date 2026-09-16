@@ -1,0 +1,20 @@
+people:
+- name: Scott Conger
+  label: Mayor
+  phone: 731.425.8240
+  email: null
+  url: https://www.jacksontn.gov/government/mayorsoffice/aboutmayorconger
+  start_date: null
+  end_date: null
+  image: local://35aa4bad0377.png
+thought: 'Jackson runs a strong-mayor government: the Office of the Mayor and the
+  City Council are separate bodies with separate pages, and this is the Mayor''s Office
+  page. It holds exactly one elected official, Scott Conger, named in the welcome
+  heading and again in the letter''s signature, with his own photo and the number
+  he gives in the body. The page is a dedicated page for a single elected official
+  whose heading names the role, so it qualifies even though the body is a welcome
+  letter rather than a biography. Nothing here belongs to the Council: the letter
+  mentions "our city council and staff" but names no member, and the sidebar''s
+  "Past Mayors of Jackson, TN" and "Staff Directory" are links with no names behind
+  them. The companion case is seattle_council_separate_mayor, which covers the other
+  body.'
