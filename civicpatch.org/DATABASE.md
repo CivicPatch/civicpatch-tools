@@ -246,7 +246,8 @@ erDiagram
         text            jurisdiction_ocdid  FK  "unique: (jurisdiction_ocdid, name)"
         text            name                "one body — City Council, Township Board. Every jurisdiction has a default 'Government' one unconditionally (migration 195); named non-default bodies are created explicitly, not yet by any production path"
         text_null       url                 "198: a scrape target of the body's own, distinct from the jurisdiction's site; null for the default org"
-        int             sort_order          "default: 0"
+        int             sort_order          "default: 0; display order only"
+        boolean         meta_is_default     "202: default false; idx: unique (jurisdiction_ocdid) WHERE meta_is_default. Unflagged jurisdictions fall back to the first by (sort_order, name)"
         timestamptz     created_at          "default: now()"
     }
 

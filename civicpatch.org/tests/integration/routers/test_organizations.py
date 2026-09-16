@@ -211,6 +211,36 @@ async def test_updating_a_missing_organization_is_404(client):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_setting_the_default_requires_maintainer(client, default_role_client):
+    org_id = _create(client).json()["data"]["id"]
+
+    response = default_role_client.post(f"{_PREFIX}/{org_id}/default")
+    assert response.status_code == 403
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_setting_the_default_is_not_mistaken_for_creating_an_organization(client):
+    """The create route takes a greedy `:path`; registered first, it would read this as a new
+    body for the jurisdiction `{id}/default`."""
+    org_id = _create(client).json()["data"]["id"]
+
+    response = client.post(f"{_PREFIX}/{org_id}/default")
+    assert response.status_code == 200, response.text
+
+    names = [name for _, name, _ in await _rows()]
+    assert names == [_DEFAULT_ORG_NAME, "School Board"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_setting_a_missing_organization_as_default_is_404(client):
+    response = client.post(f"{_PREFIX}/00000000-0000-0000-0000-000000000000/default")
+    assert response.status_code == 404
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_deleting_requires_maintainer(client, default_role_client):
     org_id = _create(client).json()["data"]["id"]
 

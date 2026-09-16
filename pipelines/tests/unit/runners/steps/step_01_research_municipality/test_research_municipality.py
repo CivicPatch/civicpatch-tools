@@ -13,7 +13,7 @@ from runners.people_collector.steps.step_01_research_municipality.research_munic
     _divisions_from_posts,
 )
 from runners.people_collector.schemas import ResearchedPerson
-from shared.schemas import Role, RoleConfig
+from shared.schemas import Post, Role, RoleConfig
 
 pytestmark = pytest.mark.unit
 
@@ -29,8 +29,15 @@ _OCDID = "ocd-jurisdiction/country:us/state:wa/place:buckley/government"
 _BASE = "ocd-division/country:us/state:wa/place:buckley"
 
 
-def _post(role_id: str, division_ocdid: str = _BASE) -> dict:
-    return {"role_id": role_id, "division_ocdid": division_ocdid}
+def _post(role_id: str, division_ocdid: str = _BASE) -> Post:
+    return Post(
+        id=f"{role_id}:{division_ocdid}",
+        jurisdiction_ocdid=_OCDID,
+        organization_id="org",
+        role_id=role_id,
+        division_ocdid=division_ocdid,
+        label=role_id,
+    )
 
 
 def test_a_posts_role_id_renders_as_its_taxonomy_label():

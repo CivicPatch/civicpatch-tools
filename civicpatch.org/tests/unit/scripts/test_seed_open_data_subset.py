@@ -1,13 +1,17 @@
-"""The pure per-table transforms in `seed_open_data_subset` — a published parquet row in, an
-insert-ready row out. No DB, no network: those are exercised by running the script itself
-(see the module docstring), not by a mock-heavy unit test.
+"""The pure pieces of `seed_open_data_subset`: reading the open-data archive, and the per-table
+transforms from a published parquet row to an insert-ready one. No DB, no network: those are
+exercised by running the script itself (see the module docstring), not by a mock-heavy unit test.
 """
+
+import io
+import tarfile
 
 import pytest
 
 from scripts.seed_open_data_subset import (
     division_row,
-    jurisdiction_row,
+    files_in_states,
+    jurisdiction_files,
     membership_row,
     organization_row,
     person_row,
@@ -19,77 +23,42 @@ from scripts.seed_open_data_subset import (
 _OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
 
 
+def _archive(files: dict[str, str]) -> bytes:
+    buffer = io.BytesIO()
+    with tarfile.open(fileobj=buffer, mode="w:gz") as tar:
+        tar.addfile(tarfile.TarInfo("open-data-main/data_source"))
+        for path, content in files.items():
+            data = content.encode("utf-8")
+            info = tarfile.TarInfo(f"open-data-main/{path}")
+            info.size = len(data)
+            tar.addfile(info, io.BytesIO(data))
+    return buffer.getvalue()
+
+
 @pytest.mark.unit
-def test_jurisdiction_row_passes_data_through_as_text():
-    """`data` travels the export as JSON text, not a nested column (see `parquet_rows.py`) —
-    the transform must not touch it, just carry it through to the jsonb column untouched."""
-    row = jurisdiction_row(
+def test_jurisdiction_files_strips_the_archive_directory_and_keeps_only_jurisdiction_lists():
+    archive = _archive(
         {
-            "jurisdiction_ocdid": _OCDID,
-            "state": "wa",
-            "level": "local",
-            "status": "active",
-            "name": "Seattle",
-            "data": '{"name": "Seattle", "population": 100}',
-            "parent_ocdids": ["ocd-jurisdiction/country:us/state:wa/government"],
-            "updated_at": "2026-01-01T00:00:00Z",
-        },
-        state_names={"wa": "Washington"},
+            "data_source/wa/local/jurisdictions.yml": "jurisdictions: []\n",
+            "data_source/wa/local/other.yml": "ignored\n",
+            "README.md": "ignored\n",
+        }
     )
 
-    assert row == {
-        "jurisdiction_ocdid": _OCDID,
-        "state": "wa",
-        "level": "local",
-        "status": "active",
-        "data": '{"name": "Seattle", "population": 100}',
-        "parent_ocdids": ["ocd-jurisdiction/country:us/state:wa/government"],
-        "updated_at": "2026-01-01T00:00:00Z",
-        "search_text": "seattle wa washington",
+    assert jurisdiction_files(archive) == {
+        "data_source/wa/local/jurisdictions.yml": "jurisdictions: []\n"
     }
 
 
 @pytest.mark.unit
-def test_jurisdiction_row_allows_null_data():
-    """Not every jurisdiction has ever been synced with a `data` blob — NULL must round-trip,
-    not raise."""
-    row = jurisdiction_row(
-        {
-            "jurisdiction_ocdid": _OCDID,
-            "state": "wa",
-            "level": "local",
-            "status": "active",
-            "name": "Seattle",
-            "data": None,
-            "parent_ocdids": [],
-            "updated_at": "2026-01-01T00:00:00Z",
-        },
-        state_names={},
-    )
+def test_files_in_states_narrows_by_the_state_directory():
+    files = {
+        "data_source/wa/local/jurisdictions.yml": "",
+        "data_source/tx/local/jurisdictions.yml": "",
+    }
 
-    assert row["data"] is None
-
-
-@pytest.mark.unit
-def test_jurisdiction_row_search_text_survives_an_unknown_state_name():
-    """`state_names` comes from whatever `level == "state"` rows this same run fetched — a
-    state missing from that map (state data still null upstream) must not crash the whole
-    table's worth of rows, just fall back to name + code."""
-    row = jurisdiction_row(
-        {
-            "jurisdiction_ocdid": _OCDID,
-            "state": "wa",
-            "level": "local",
-            "status": "active",
-            "name": "Seattle",
-            "data": None,
-            "parent_ocdids": [],
-            "updated_at": "2026-01-01T00:00:00Z",
-        },
-        state_names={},
-    )
-
-    assert row["search_text"] == "seattle wa"
+    assert files_in_states(files, {"wa"}) == ["data_source/wa/local/jurisdictions.yml"]
+    assert sorted(files_in_states(files, None)) == sorted(files)
 
 
 @pytest.mark.unit
@@ -141,6 +110,24 @@ def test_organization_row_carries_the_newly_exported_url():
 
     assert "state" not in row
     assert row["url"] == "https://seattle.gov"
+
+
+@pytest.mark.unit
+def test_organization_row_carries_the_default_flag_when_exported():
+    row = organization_row(
+        {
+            "state": "wa",
+            "id": "11111111-1111-1111-1111-111111111111",
+            "jurisdiction_ocdid": _OCDID,
+            "name": "Government",
+            "sort_order": 0,
+            "url": None,
+            "meta_is_default": True,
+            "created_at": "2026-01-01T00:00:00Z",
+        }
+    )
+
+    assert row["meta_is_default"] is True
 
 
 @pytest.mark.unit

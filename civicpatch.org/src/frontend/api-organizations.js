@@ -38,6 +38,16 @@ export const updateOrganization = async (organizationId, { name, url }) => {
   return res.json();
 };
 
+export const setDefaultOrganization = async (organizationId) => {
+  const res = await fetch(`/api/v1/organizations/${organizationId}/default`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "X-CSRF-Token": getCsrfCookie() },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const deleteOrganization = async (organizationId) => {
   const res = await fetch(`/api/v1/organizations/${organizationId}`, {
     method: "DELETE",

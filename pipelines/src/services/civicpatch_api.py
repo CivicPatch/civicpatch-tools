@@ -4,6 +4,7 @@ from typing import List, Optional
 import httpx
 from fastapi import Request
 from pipelines_environment import get_env_vars
+from shared.schemas import KnownOrganization
 from shared.utils.config_utils import (
     RoleConfig,
 )
@@ -175,14 +176,14 @@ async def search_people(
     return response.json().get("data", [])
 
 
-async def get_posts(
+async def get_organizations(
     client: httpx.AsyncClient, jurisdiction_ocdid: str
-) -> List[dict]:
-    """The posts cp.org already holds for this jurisdiction, flattened out of their bodies.
+) -> List[KnownOrganization]:
+    """The bodies cp.org already holds for this jurisdiction, each with its posts.
 
-    What the scrape steers by: which offices to look for and which divisions they sit in. Read
-    rather than researched, because cp.org is where that is already known — asking a model to
-    guess it was only ever a stand-in for having somewhere to ask.
+    What the scrape steers by: which offices to look for, which divisions they sit in, and which
+    body each belongs to. Read rather than researched, because cp.org is where that is already
+    known — asking a model to guess it was only ever a stand-in for having somewhere to ask.
     """
     env = get_env_vars()
     response = await client.get(
@@ -190,7 +191,7 @@ async def get_posts(
     )
     response.raise_for_status()
     organizations = response.json().get("data", {}).get("organizations", [])
-    return [post for organization in organizations for post in organization["posts"]]
+    return [KnownOrganization.model_validate(organization) for organization in organizations]
 
 
 async def fetch_pipeline_run_status(

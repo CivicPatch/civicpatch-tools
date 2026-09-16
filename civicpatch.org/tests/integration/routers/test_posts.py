@@ -22,6 +22,7 @@ from lib.auth import get_optional_user
 from routers.api import organizations as organizations_router
 from routers.api import posts as posts_router
 from schemas.common import Identity
+from shared.schemas import KnownOrganization
 
 _PREFIX = "/api/v1/posts"
 # The per-jurisdiction read and post creation both moved to this router — see
@@ -205,6 +206,19 @@ async def test_an_ocdid_survives_the_round_trip(client):
     organizations_out = response.json()["data"]["organizations"]
     assert len(organizations_out) == 1
     assert [p["role_id"] for p in organizations_out[0]["posts"]] == ["mayor"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_organizations_read_is_what_the_pipeline_parses(client):
+    """The pipeline reads this route as `list[KnownOrganization]` (shared.schemas). A field the
+    model requires going missing here only fails at scrape time otherwise."""
+    assert (await _create(client)).status_code == 200
+
+    organizations_out = client.get(f"{_ORG_PREFIX}/{_OCDID}").json()["data"]["organizations"]
+
+    parsed = [KnownOrganization.model_validate(organization) for organization in organizations_out]
+    assert [post.role_id for post in parsed[0].posts] == ["mayor"]
 
 
 @pytest.mark.asyncio
@@ -411,3 +425,104 @@ async def test_a_contributor_can_create_a_post(contributor_client):
     """This test verified a contributor still cannot create a post (403). It now verifies they
     can (200), for the same 2026-09-15 tier change as the default-role case above."""
     assert (await _create(contributor_client, division=_WARD_3)).status_code == 200
+
+
+async def _organization(name: str, jurisdiction_ocdid: str = _OCDID) -> str:
+    organization_id = await organizations.create(jurisdiction_ocdid, name, None)
+    assert organization_id is not None
+    return organization_id
+
+
+async def _seat(person_id: str, post_id: str, organization_id: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s) "
+            "ON CONFLICT (id) DO NOTHING",
+            (person_id, _OCDID, "Move Test"),
+        )
+        await memberships.upsert(
+            cur, DerivedMembership(person_id=person_id), post_id, organization_id, "2026-06-15T00:00:00Z"
+        )
+        await conn.commit()
+
+
+def _move(client, post_id: str, organization_id: str):
+    return client.put(f"{_PREFIX}/{post_id}/organization", json={"organization_id": organization_id})
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_moving_a_post_carries_its_memberships(client):
+    post_id = (await _create(client)).json()["data"]["id"]
+    await _seat(str(uuid.uuid4()), post_id, await _default_org_id())
+    mayor = await _organization("Office of the Mayor")
+
+    response = _move(client, post_id, mayor)
+    assert response.status_code == 200, response.text
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT organization_id::text FROM posts WHERE id::text = %s", (post_id,))
+        assert await cur.fetchone() == (mayor,)
+        await cur.execute(
+            "SELECT organization_id::text FROM memberships WHERE post_id::text = %s", (post_id,)
+        )
+        assert await cur.fetchall() == [(mayor,)]
+    moved = [row for row in await _activity_rows() if row["type"] == "edit_post"]
+    assert moved[-1]["fields"] == [
+        {"field": "organization", "before": "Government", "after": "Office of the Mayor", "sources": []}
+    ]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_moving_a_post_requires_maintainer(client, default_role_client):
+    post_id = (await _create(client)).json()["data"]["id"]
+    mayor = await _organization("Office of the Mayor")
+
+    assert _move(default_role_client, post_id, mayor).status_code == 403
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_moving_a_missing_post_is_404(client):
+    mayor = await _organization("Office of the Mayor")
+
+    assert _move(client, str(uuid.uuid4()), mayor).status_code == 404
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_moving_into_an_unknown_organization_is_404(client):
+    post_id = (await _create(client)).json()["data"]["id"]
+
+    assert _move(client, str(uuid.uuid4()), str(uuid.uuid4())).status_code == 404
+    assert _move(client, post_id, str(uuid.uuid4())).status_code == 404
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_moving_onto_a_post_the_target_already_has_is_a_conflict(client):
+    post_id = (await _create(client)).json()["data"]["id"]
+    mayor = await _organization("Office of the Mayor")
+    assert (await _create(client, organization_id=mayor)).status_code == 200
+
+    response = _move(client, post_id, mayor)
+    assert response.status_code == 409, response.text
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_moving_a_post_whose_holder_already_sits_in_the_target_is_a_conflict(client):
+    """One open membership per person per body: the mayor who also sits on council cannot
+    have the Mayor post moved into Council."""
+    person_id = str(uuid.uuid4())
+    mayor_post = (await _create(client)).json()["data"]["id"]
+    await _seat(person_id, mayor_post, await _default_org_id())
+    council = await _organization("City Council")
+    council_post = (await _create(client, role_id="council-member", division=_WARD_3, organization_id=council)).json()["data"]["id"]
+    await _seat(person_id, council_post, council)
+
+    response = _move(client, mayor_post, council)
+    assert response.status_code == 409, response.text

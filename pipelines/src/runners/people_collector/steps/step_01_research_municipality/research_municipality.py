@@ -20,7 +20,7 @@ from runners.people_collector.schemas import (
     ResearchedPerson,
     ResearchMunicipalityStep,
 )
-from shared.schemas import Person, RoleConfig
+from shared.schemas import Person, Post, RoleConfig
 from shared.utils import divisions
 from shared.utils.label_parser import parse_label
 from shared.utils.taxonomy import build_taxonomy
@@ -43,7 +43,8 @@ async def research_municipality(
 
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     existing = await civicpatch_api.get_active_people(api_client, jurisdiction_ocdid)
-    posts = await civicpatch_api.get_posts(api_client, jurisdiction_ocdid)
+    organizations = await civicpatch_api.get_organizations(api_client, jurisdiction_ocdid)
+    posts = [post for organization in organizations for post in organization.posts]
 
     researched: List[ResearchedPerson] = []
     if posts:
@@ -63,6 +64,7 @@ async def research_municipality(
     return ResearchMunicipalityStep(
         expected_count=expected_count,
         researched=researched,
+        known_organizations=organizations,
         target_divisions=target_divisions,
         known_roles=known_roles,
         # Whoever cp.org has published, else whoever research named. Separate from the offices
@@ -100,10 +102,10 @@ def _parts_from_research(
     return list(dict.fromkeys(roles)), divisions.filter_divisions(designations)
 
 
-def _seat_count(posts: List[dict]) -> int:
+def _seat_count(posts: List[Post]) -> int:
     """How many people the known posts have room for, headcount included: a five-seat
     at-large council is one post and five officials to find."""
-    return sum(post.get("meta_headcount", 1) for post in posts)
+    return sum(post.meta_headcount for post in posts)
 
 
 def _can_research() -> bool:
@@ -128,7 +130,7 @@ async def _research_roster(
     return await with_retry(logger, func=lambda: _request_roster(context, prompt))
 
 
-def _divisions_from_posts(posts: List[dict], jurisdiction_ocdid: str) -> List[str]:
+def _divisions_from_posts(posts: List[Post], jurisdiction_ocdid: str) -> List[str]:
     """The divisions this jurisdiction's posts sit in, as the designations a label would name.
 
     A post covering the whole jurisdiction yields nothing — there is no ward to go looking for.
@@ -136,14 +138,12 @@ def _divisions_from_posts(posts: List[dict], jurisdiction_ocdid: str) -> List[st
     designations = []
     for post in posts:
         designations.extend(
-            divisions.division_ocdid_to_designation(
-                post.get("division_ocdid"), jurisdiction_ocdid
-            )
+            divisions.division_ocdid_to_designation(post.division_ocdid, jurisdiction_ocdid)
         )
     return divisions.filter_divisions(designations)
 
 
-def _roles_from_posts(posts: List[dict], role_config: RoleConfig | None) -> List[str]:
+def _roles_from_posts(posts: List[Post], role_config: RoleConfig | None) -> List[str]:
     """The offices this jurisdiction is known to have, by their taxonomy label.
 
     A lookup, not a resolution: the post already carries the decided `role_id`, so this only
@@ -152,7 +152,7 @@ def _roles_from_posts(posts: List[dict], role_config: RoleConfig | None) -> List
     labels_by_id: Dict[str, str] = {
         role.id: role.label for role in (role_config.roles if role_config else [])
     }
-    named = [labels_by_id[post["role_id"]] for post in posts if post["role_id"] in labels_by_id]
+    named = [labels_by_id[post.role_id] for post in posts if post.role_id in labels_by_id]
     return list(dict.fromkeys(named))
 
 

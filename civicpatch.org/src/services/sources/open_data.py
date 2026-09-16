@@ -81,9 +81,15 @@ async def read_jurisdictions(diffs: TreeDiff) -> list[str]:
             content = await github_service.get_github_file_contents(path)
         return path, content
 
+    return await read_jurisdiction_files(diffs.changed, now, _fetch)
+
+
+async def read_jurisdiction_files(paths: list[str], now, fetch) -> list[str]:
+    """Store the jurisdictions in these `jurisdictions.yml` files, whatever reads them —
+    GitHub for the sync, a downloaded archive for the dev seed."""
     synced = []
-    for batch in level_ordered_batches(diffs.changed):
-        synced.extend(await _read_jurisdiction_level(batch, now, _fetch))
+    for batch in level_ordered_batches(paths):
+        synced.extend(await _read_jurisdiction_level(batch, now, fetch))
     return synced
 
 

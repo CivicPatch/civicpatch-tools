@@ -79,6 +79,7 @@ SCHEMAS: dict[str, pa.Schema] = {
             ("name", pa.string()),
             ("sort_order", pa.int32()),
             ("url", pa.string()),
+            ("meta_is_default", pa.bool_()),
             ("created_at", _TIMESTAMP),
         ]
     ),

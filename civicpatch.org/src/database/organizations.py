@@ -1,40 +1,51 @@
 from database.database import get_pool
 
-# Until a jurisdiction has more than one body, every post lands here. The name is generic
-# because the ocdid is: `…/place:berlin/government` says nothing about city vs township.
+# The name a jurisdiction's first body is created with. Generic because the ocdid is:
+# `…/place:berlin/government` says nothing about city vs township. Only a starting name —
+# which body is the default is `meta_is_default`, so this one can be renamed.
 DEFAULT_ORGANIZATION_NAME = "Government"
 
 
 async def ensure_defaults_exist(jurisdiction_ocdids: list[str]) -> None:
-    """Create each jurisdiction's default organization if it doesn't already have one.
+    """Give each jurisdiction with no organizations at all its first, default one.
 
     Called from the open-data sync as jurisdictions are upserted, so `get_default` never has to
-    create one lazily afterward.
+    create one lazily afterward. Keyed on "has any organization", not on the name, so renaming
+    the default does not bring a second 'Government' back on the next sync.
     """
     if not jurisdiction_ocdids:
         return
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.executemany(
+        await cur.execute(
             """
-            INSERT INTO organizations (jurisdiction_ocdid, name)
-            VALUES (%s, %s)
-            ON CONFLICT (jurisdiction_ocdid, name) DO NOTHING
+            INSERT INTO organizations (jurisdiction_ocdid, name, meta_is_default)
+            SELECT ocdid, %s, true
+            FROM unnest(%s::text[]) AS ocdid
+            WHERE NOT EXISTS (
+                SELECT 1 FROM organizations WHERE organizations.jurisdiction_ocdid = ocdid
+            )
+            ON CONFLICT DO NOTHING
             """,
-            [(ocdid, DEFAULT_ORGANIZATION_NAME) for ocdid in jurisdiction_ocdids],
+            (DEFAULT_ORGANIZATION_NAME, jurisdiction_ocdids),
         )
 
 
 async def get_default(cur, jurisdiction_ocdid: str) -> str:
-    """The jurisdiction's default organization. Guaranteed to exist — see module docstring."""
+    """The flagged organization, else the first in list order."""
     await cur.execute(
-        "SELECT id::text FROM organizations WHERE jurisdiction_ocdid = %s AND name = %s",
-        (jurisdiction_ocdid, DEFAULT_ORGANIZATION_NAME),
+        """
+        SELECT id::text FROM organizations
+        WHERE jurisdiction_ocdid = %s
+        ORDER BY meta_is_default DESC, sort_order, name
+        LIMIT 1
+        """,
+        (jurisdiction_ocdid,),
     )
     row = await cur.fetchone()
     if row is None:
         raise RuntimeError(
-            f"jurisdiction {jurisdiction_ocdid!r} has no default organization"
+            f"jurisdiction {jurisdiction_ocdid!r} has no organizations"
         )
     return row[0]
 
@@ -75,10 +86,17 @@ async def jurisdiction_for(cur, organization_id: str) -> str | None:
     return row[0] if row else None
 
 
+async def names(cur, organization_ids: list[str]) -> dict[str, str]:
+    await cur.execute(
+        "SELECT id::text, name FROM organizations WHERE id::text = ANY(%s)", (organization_ids,)
+    )
+    return {row[0]: row[1] for row in await cur.fetchall()}
+
+
 async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     await cur.execute(
         """
-        SELECT id::text, name, url, sort_order
+        SELECT id::text, name, url, sort_order, meta_is_default
         FROM organizations
         WHERE jurisdiction_ocdid = %s
         ORDER BY sort_order, name
@@ -116,15 +134,36 @@ async def update(organization_id: str, name: str, url: str | None) -> bool:
         return cur.rowcount > 0
 
 
+async def set_default(organization_id: str) -> bool:
+    """False if no such organization."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        jurisdiction_ocdid = await jurisdiction_for(cur, organization_id)
+        if jurisdiction_ocdid is None:
+            return False
+        # Two concurrent calls would otherwise race into the one-default unique index.
+        await cur.execute(
+            "SELECT 1 FROM organizations WHERE jurisdiction_ocdid = %s FOR UPDATE",
+            (jurisdiction_ocdid,),
+        )
+        await cur.execute(
+            "UPDATE organizations SET meta_is_default = false "
+            "WHERE jurisdiction_ocdid = %s AND meta_is_default AND id <> %s",
+            (jurisdiction_ocdid, organization_id),
+        )
+        await cur.execute(
+            "UPDATE organizations SET meta_is_default = true WHERE id = %s", (organization_id,)
+        )
+        return True
+
+
 async def delete(organization_id: str) -> str | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT jurisdiction_ocdid, name FROM organizations WHERE id = %s",
-            (organization_id,),
-        )
-        row = await cur.fetchone()
-        if row is None or row[1] == DEFAULT_ORGANIZATION_NAME:
+        jurisdiction_ocdid = await jurisdiction_for(cur, organization_id)
+        if jurisdiction_ocdid is None:
+            return None
+        if await get_default(cur, jurisdiction_ocdid) == organization_id:
             return None
         await cur.execute(
             "SELECT 1 FROM posts WHERE organization_id = %s LIMIT 1", (organization_id,)
@@ -132,7 +171,7 @@ async def delete(organization_id: str) -> str | None:
         if await cur.fetchone():
             return None
         await cur.execute("DELETE FROM organizations WHERE id = %s", (organization_id,))
-        return row[0]
+        return jurisdiction_ocdid
 
 
 async def for_changeset(cur, changeset_id: str) -> str | None:
