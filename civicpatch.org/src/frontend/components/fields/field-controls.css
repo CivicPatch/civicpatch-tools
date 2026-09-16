@@ -115,6 +115,16 @@
   height: auto;
 }
 
+.office-picker__status {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.office-picker__error {
+  font-size: var(--font-size-sm);
+  color: var(--diff-removed);
+}
+
 /* One tint recipe for all four states: the state names a colour, and the tint is
    that colour at one strength over a stated ground.
 

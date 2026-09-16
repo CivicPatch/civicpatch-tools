@@ -78,6 +78,7 @@ SCHEMAS: dict[str, pa.Schema] = {
             ("jurisdiction_ocdid", pa.string()),
             ("name", pa.string()),
             ("sort_order", pa.int32()),
+            ("url", pa.string()),
             ("created_at", _TIMESTAMP),
         ]
     ),
@@ -96,6 +97,9 @@ SCHEMAS: dict[str, pa.Schema] = {
             ("level", pa.string()),
             ("status", pa.string()),
             ("name", pa.string()),
+            # Raw JSON text, not a nested struct — see the query's comment in
+            # `database/parquet_rows.py` for why.
+            ("data", pa.string()),
             ("parent_ocdids", _STRINGS),
             ("updated_at", _TIMESTAMP),
         ]

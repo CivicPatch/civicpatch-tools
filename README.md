@@ -139,6 +139,14 @@ join our weekly sync and biweekly hackathon meetings.
 
    Ctrl+C tears both layers down.
 
+5. Populate the database with sample data — real jurisdictions, people, and memberships for one
+   state, pulled from the [public open-data dataset](https://open-data.civicpatch.org/). No
+   GitHub App keys needed for this step:
+
+   ```sh
+   mise run seed-dev-data
+   ```
+
 ### Logging in (local)
 
 civicpatch.org uses Supabase email-OTP. Locally, no real email is sent — Mailpit captures everything.

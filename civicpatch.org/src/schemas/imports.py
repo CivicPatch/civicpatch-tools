@@ -48,10 +48,10 @@ class ReviewPerson(BaseModel):
     emails: list[str] = []
     start_date: str | None = None
     end_date: str | None = None
-    # None when no label resolved to a role. `unmatched_text` is the wording that did not
+    # None when no label resolved to a role. `meta_unmatched_text` is the wording that did not
     # resolve, which is what a curator would need to fix in the sheet.
     role_id: str | None = None
-    unmatched_text: list[str] = []
+    meta_unmatched_text: list[str] = []
 
 
 class ReviewJurisdiction(BaseModel):

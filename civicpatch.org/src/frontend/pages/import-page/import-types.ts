@@ -52,7 +52,7 @@ export type ReviewPerson = {
   start_date: string | null;
   end_date: string | null;
   role_id: string | null;
-  unmatched_text: string[];
+  meta_unmatched_text: string[];
 };
 
 export type ReviewJurisdiction = {

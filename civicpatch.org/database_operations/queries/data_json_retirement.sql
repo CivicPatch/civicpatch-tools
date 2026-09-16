@@ -37,7 +37,7 @@ SELECT
       WHERE raw @> '[{"_reconstructed_from": "requests.data_json"}]')     AS reconstructed_from_data_json,
     (SELECT count(*) FROM memberships)                                   AS memberships_total,
     (SELECT count(*) FROM memberships
-      WHERE unmatched_text <> '{}')                                      AS unparsed_residue,
+      WHERE meta_unmatched_text <> '{}')                                      AS unparsed_residue,
     (SELECT count(*) FROM memberships m
       WHERE EXISTS (SELECT 1 FROM unnest(m.source_labels) l
                     WHERE l LIKE '%/%'))                                 AS slash_labels;

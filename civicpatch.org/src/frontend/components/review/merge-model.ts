@@ -267,7 +267,13 @@ export function applyMergePlan(
   // A seat exists only on the published side. `liveRecord` prefers `newRecord`, which for
   // someone the scrape found is derived and carries no membership — so the spread above drops
   // it, and the merged person reads as never having answered the post question.
-  const seat = (survivor.oldRecord as any)?.memberships;
+  //
+  // The candidate is the fallback, not just the survivor: `chooseSurvivor` picks by database
+  // presence and scrape match, neither of which guarantees the one actually holding the seat
+  // wins — two published duplicates where only the absorbed one is currently seated would
+  // otherwise merge into someone with no office at all.
+  const seat =
+    (survivor.oldRecord as any)?.memberships ?? (candidate.oldRecord as any)?.memberships;
   if (seat) merged.memberships = seat;
 
   return merged as PresentRecord;

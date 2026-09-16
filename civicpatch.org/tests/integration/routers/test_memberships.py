@@ -225,7 +225,7 @@ async def test_unmatched_text_reaches_the_wire_with_its_counts(client):
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await memberships.upsert(
             cur,
-            DerivedMembership(person_id=person_id, unmatched_text=["Zz Route Liaison"]),
+            DerivedMembership(person_id=person_id, meta_unmatched_text=["Zz Route Liaison"]),
             mayor,
             organization_id,
             _SEEN_AT,
@@ -235,7 +235,7 @@ async def test_unmatched_text_reaches_the_wire_with_its_counts(client):
     response = client.get(f"{_PREFIX}/unmatched")
 
     assert response.status_code == 200, response.text
-    rows = response.json()["data"]["unmatched_text"]
+    rows = response.json()["data"]["meta_unmatched_text"]
     row = next(r for r in rows if r["text"] == "Zz Route Liaison")
     assert row["occurrences"] == 1
     assert row["jurisdictions"] == 1
@@ -300,7 +300,7 @@ async def test_unmatched_is_not_swallowed_by_the_jurisdiction_route(client):
     response = client.get(f"{_PREFIX}/unmatched")
 
     assert response.status_code == 200, response.text
-    assert "unmatched_text" in response.json()["data"]
+    assert "meta_unmatched_text" in response.json()["data"]
 
 
 @pytest.mark.asyncio
@@ -352,7 +352,7 @@ async def test_the_person_axis_read_carries_the_whole_parse(client):
                 person_id=person_id,
                 source_labels=["Mayor Position 8 (Zz Route Liaison)"],
                 designations=["Position 8"],
-                unmatched_text=["Zz Route Liaison"],
+                meta_unmatched_text=["Zz Route Liaison"],
             ),
             mayor,
             organization_id,
@@ -364,7 +364,7 @@ async def test_the_person_axis_read_carries_the_whole_parse(client):
 
     assert row["source_labels"] == ["Mayor Position 8 (Zz Route Liaison)"]
     assert row["designations"] == ["Position 8"]
-    assert row["unmatched_text"] == ["Zz Route Liaison"]
+    assert row["meta_unmatched_text"] == ["Zz Route Liaison"]
     assert row["role_id"] == "mayor"
 
 

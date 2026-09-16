@@ -70,7 +70,7 @@ def test_unmatched_text_is_shown_rather_than_hidden():
     """It came off the page. A label that silently omits it looks correct while losing what
     nobody could classify."""
     assert (
-        render(MembershipLabel(unmatched_text=["Zoning Administrator"]))
+        render(MembershipLabel(meta_unmatched_text=["Zoning Administrator"]))
         == "Zoning Administrator"
     )
 

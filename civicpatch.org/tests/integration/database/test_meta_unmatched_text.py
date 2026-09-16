@@ -72,7 +72,7 @@ async def _seed_member(
         cur,
         DerivedMembership(
             person_id=person_id,
-            unmatched_text=unmatched,
+            meta_unmatched_text=unmatched,
             source_labels=source_labels or [],
         ),
         post_id,
@@ -102,7 +102,7 @@ _WHOLE_PAGE = (100, 0)
 
 
 async def _rows() -> list[dict]:
-    _total, rows = await memberships.unmatched_text(*_WHOLE_PAGE)
+    _total, rows = await memberships.meta_unmatched_text(*_WHOLE_PAGE)
     return [row for row in rows if row["text"] in (_WIDESPREAD, _LOCAL)]
 
 
@@ -137,7 +137,7 @@ async def test_examples_name_the_towns_to_go_look_at():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_spelling_variants_are_one_gap_not_three():
-    """`unmatched_text` keeps the source's raw casing and punctuation on purpose. Three towns
+    """`meta_unmatched_text` keeps the source's raw casing and punctuation on purpose. Three towns
     writing the same phrase three ways is still one taxonomy gap, and grouping on the exact
     string would show three rows each looking a third as urgent as the real one.
 
@@ -154,7 +154,7 @@ async def test_spelling_variants_are_one_gap_not_three():
             await _seed_member(cur, ocdid, f"{base}/ward:1", [spelling])
         await conn.commit()
 
-    _total, rows = await memberships.unmatched_text(*_WHOLE_PAGE)
+    _total, rows = await memberships.meta_unmatched_text(*_WHOLE_PAGE)
 
     assert len(rows) == 1
     assert rows[0]["jurisdictions"] == 3
@@ -189,7 +189,7 @@ async def test_the_example_label_is_what_the_term_came_out_of():
     term, not every office the person holds. Storing `parsed.labels` as parts rather than the
     joined `office.name` is what makes that answerable.
 
-    Written beside `unmatched_text` in one statement rather than joined back to
+    Written beside `meta_unmatched_text` in one statement rather than joined back to
     `source_records`, which can disagree — source records land at ingest, memberships are
     written at publish, so a stacked unpublished scrape would show a label that no longer
     produces this term."""
@@ -210,7 +210,7 @@ async def test_the_example_label_is_what_the_term_came_out_of():
         )
         await conn.commit()
 
-    _total, rows = await memberships.unmatched_text(*_WHOLE_PAGE)
+    _total, rows = await memberships.meta_unmatched_text(*_WHOLE_PAGE)
 
     row = next(r for r in rows if r["text"] == "Finance Liaison")
     assert row["example_label"] == "Council Member Ward 1, Finance Liaison"
@@ -225,8 +225,8 @@ async def test_a_page_reports_the_whole_total():
     the answer at every offset and the control would never advance."""
     await _seed_spread()
 
-    total, first = await memberships.unmatched_text(1, 0)
-    _total, second = await memberships.unmatched_text(1, 1)
+    total, first = await memberships.meta_unmatched_text(1, 0)
+    _total, second = await memberships.meta_unmatched_text(1, 1)
 
     assert len(first) == 1 and len(second) == 1
     assert total >= 2
@@ -240,7 +240,7 @@ async def test_an_offset_past_the_end_still_knows_the_total():
     row to read it from once the offset overruns, and the pager would collapse to zero pages."""
     await _seed_spread()
 
-    total, rows = await memberships.unmatched_text(10, 10_000)
+    total, rows = await memberships.meta_unmatched_text(10, 10_000)
 
     assert rows == []
     assert total >= 2

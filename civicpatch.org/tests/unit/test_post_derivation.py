@@ -103,14 +103,14 @@ def test_an_unresolvable_label_lands_on_the_unmatched_role():
     """Nobody is postless — the residue carries what we could not place."""
     derived = derived_posts([_person("a", "Town Moderator")], _TAXONOMY, _ROLES)
     assert derived[0].role_id == UNMATCHED_ROLE_ID
-    assert [(m.person_id, m.unmatched_text) for m in derived[0].members] == [("a", ["Town Moderator"])]
+    assert [(m.person_id, m.meta_unmatched_text) for m in derived[0].members] == [("a", ["Town Moderator"])]
 
 
 @pytest.mark.unit
 def test_at_large_with_no_value_is_swallowed_and_does_not_reach_the_residue():
     derived = derived_posts([_person("a", "Council Member At-Large")], _TAXONOMY, _ROLES)
     assert derived[0].division_ocdid == _BASE
-    assert [(m.person_id, m.designations, m.unmatched_text) for m in derived[0].members] == [("a", [], [])]
+    assert [(m.person_id, m.designations, m.meta_unmatched_text) for m in derived[0].members] == [("a", [], [])]
 
 
 @pytest.mark.unit
@@ -237,14 +237,14 @@ def test_a_single_role_demotes_nothing():
 @pytest.mark.unit
 def test_a_second_role_the_taxonomy_does_not_know_is_not_demoted():
     """`membership_roles.role_id` is a foreign key, so a role with no id has nowhere to go —
-    it stays in `unmatched_text`, where triage can act on it."""
+    it stays in `meta_unmatched_text`, where triage can act on it."""
     derived = derived_posts(
         [_person("p1", "Council Member - Harbormaster")], _TAXONOMY, _ROLES
     )
 
     member = derived[0].members[0]
     assert member.role_ids == []
-    assert "Harbormaster" in member.unmatched_text
+    assert "Harbormaster" in member.meta_unmatched_text
 
 
 @pytest.mark.unit
@@ -275,24 +275,24 @@ def test_a_member_holding_only_the_post_gets_an_empty_label():
 @pytest.mark.unit
 def test_residue_of_a_resolved_label_is_not_unmatched():
     """"Of Public Safety" came out of a label that resolved to Commissioner. There is no rule
-    a curator could add for it, so it must not reach triage (`unmatched_text`) — the label
+    a curator could add for it, so it must not reach triage (`meta_unmatched_text`) — the label
     carries it instead."""
     derived = derived_posts(
         [_person("a", "Commissioner Of Public Safety")], _TAXONOMY, _ROLES
     )
 
     member = derived[0].members[0]
-    assert member.unmatched_text == []
+    assert member.meta_unmatched_text == []
     assert member.label == "Of Public Safety"
 
 
 @pytest.mark.unit
 def test_a_part_that_resolved_to_nothing_still_reaches_triage():
     """The other side of the same rule: "Dogcatcher" names no role we know, which is exactly
-    the vocabulary gap `unmatched_text` exists to collect."""
+    the vocabulary gap `meta_unmatched_text` exists to collect."""
     derived = derived_posts([_person("a", "Mayor - Dogcatcher")], _TAXONOMY, _ROLES)
 
-    assert derived[0].members[0].unmatched_text == ["Dogcatcher"]
+    assert derived[0].members[0].meta_unmatched_text == ["Dogcatcher"]
 
 
 @pytest.mark.unit

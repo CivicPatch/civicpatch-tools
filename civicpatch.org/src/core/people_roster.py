@@ -194,14 +194,14 @@ def _rendered(person: DerivedPerson, records: list[PersonSourceRecord], taxonomy
             derive_post_label(derived.role or "", derived.division_ocdid),
             MembershipLabel(
                 designations=derived.other_designations,
-                unmatched_text=derived.unmatched,
+                meta_unmatched_text=derived.unmatched,
             ),
         ),
         "labels": person.labels,
         # Already computed for the label above; kept so a reviewer can be shown which labels
         # resolved to nothing rather than having to spot it in the rendered text.
         "role_id": derived.role,
-        "unmatched_text": derived.unmatched,
+        "meta_unmatched_text": derived.unmatched,
         "division_ocdid": derived.division_ocdid,
         "phones": person.phones,
         "emails": person.emails,

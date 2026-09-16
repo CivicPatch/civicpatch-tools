@@ -201,16 +201,14 @@
   gap: 0.6rem;
 }
 
-/* Discard/Publish for the whole roster — a full-width row above every organization's own
-   panel (not nested in any one panel__cap, so panel__cap-right's margin-left: auto trick has
-   no flex sibling to push against here). Right-aligned and given its own breathing room
-   instead, rather than sitting flush against the page's left edge. */
+/* Discard/Publish/toast, in the roster's own panel__cap — flex-end for its own children
+   (several items, not the single control panel__cap-right normally holds), combined with
+   panel__cap-right so the whole group still pushes right against the "Roster" caption. */
 .roster-toolbar {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 0.6rem;
-  margin-bottom: 0.75rem;
 }
 
 /* Why editing is off. Never shown without the PR list above it. */

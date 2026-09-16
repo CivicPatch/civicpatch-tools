@@ -5,11 +5,12 @@ hold that week — a consumer's query breaks silently when a column is inserted 
 anything added to a table would be published without anyone deciding to. The list is the
 contract, the same job `HEADERS` does for the sheet.
 
-Deliberately left out, and why:
+Deliberately left out, and why — every one of them meta_-marked (or, for the one exception,
+a query-time index) to say so at the column itself:
 
-  posts.meta_headcount, posts.meta_is_tracked   internal, meta_-marked by their own author
-  jurisdictions.search_text             a search index, not a fact about the place
-  jurisdictions.data                    the raw synced blob; `name` is lifted out of it instead
+  posts.meta_headcount, posts.meta_is_tracked       internal, our own tool state
+  memberships.meta_unmatched_text                   internal, our own parsing residue
+  jurisdictions.search_text                         a search index, not a fact about the place
 
 UUIDs are cast to text here rather than in the writer, per the project's rule that the database
 layer owns the type contract. It also happens to be what parquet wants: pyarrow has no native
@@ -71,7 +72,7 @@ TABLES: dict[str, LiteralString] = {
     """,
     "organizations": f"""
         SELECT {_STATE_OF.format(col="jurisdiction_ocdid")} AS state,
-               id::text, jurisdiction_ocdid, name, sort_order, created_at
+               id::text, jurisdiction_ocdid, name, sort_order, url, created_at
         FROM organizations
         ORDER BY state, id
     """,
@@ -83,8 +84,14 @@ TABLES: dict[str, LiteralString] = {
     """,
     "jurisdictions": """
         -- The one table with a real `state` column; no need to cut it out of the ocdid.
+        -- `data` travels as JSON text, not a nested column: its keys have grown over time
+        -- (population, wiki_url, issues, ...) and a declared pyarrow struct would silently
+        -- drop whichever ones nobody remembered to add. `name` stays alongside it even though
+        -- it now duplicates `data->>'name'` — an already-published column is a contract, and
+        -- dropping it would break a consumer's existing query.
         SELECT state, jurisdiction_ocdid, level, status,
                data->>'name' AS name,
+               data::text AS data,
                parent_ocdids, updated_at
         FROM jurisdictions
         ORDER BY state, jurisdiction_ocdid

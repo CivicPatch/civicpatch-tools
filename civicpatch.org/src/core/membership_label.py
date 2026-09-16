@@ -41,12 +41,12 @@ class MembershipLabel(BaseModel):
 
     demoted_roles: list[str] = []
     designations: list[str] = []
-    unmatched_text: list[str] = []
+    meta_unmatched_text: list[str] = []
 
 
 def render(label: MembershipLabel) -> str:
     """One string, empty when the occupant's labels said nothing beyond the seat itself."""
-    parts = [*label.demoted_roles, *label.designations, *label.unmatched_text]
+    parts = [*label.demoted_roles, *label.designations, *label.meta_unmatched_text]
     return _SEPARATOR.join(part for part in parts if part)
 
 
@@ -57,5 +57,5 @@ def render_with_post_label(post_label: str, label: MembershipLabel) -> str:
     table (`batch_review.py`), not the per-person card, which shows the two beside each other
     and calls `render` directly instead.
     """
-    parts = [post_label, *label.demoted_roles, *label.designations, *label.unmatched_text]
+    parts = [post_label, *label.demoted_roles, *label.designations, *label.meta_unmatched_text]
     return _SEPARATOR.join(part for part in parts if part)
