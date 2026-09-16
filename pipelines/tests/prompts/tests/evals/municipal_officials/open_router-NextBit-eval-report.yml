@@ -1,0 +1,354 @@
+run:
+  timestamp: '2026-09-16T20:47:16+00:00'
+  prompt_sha256: 8d1b93961ff5
+  prompt_file: _prompts/8d1b93961ff5.txt
+cost_summary:
+  model: deepseek/deepseek-v4-flash
+  providers:
+  - NextBit
+  elapsed_seconds: 189.12
+  total_input_tokens: 128869
+  total_output_tokens: 23223
+  total_cost_usd: 0.01615344
+accuracy:
+  person:
+    correct: 72
+    missing: 0
+    spurious: 2
+    wrong: 0
+    precision: 0.972972972972973
+    recall: 1.0
+    f1: 0.9863013698630136
+  primary_role:
+    correct: 72
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
+  roles:
+    correct: 75
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
+  district:
+    correct: 28
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
+  designations_other:
+    correct: 19
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
+  email:
+    correct: 42
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
+  phone:
+    correct: 60
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
+  url:
+    correct: 61
+    missing: 0
+    spurious: 0
+    wrong: 3
+    precision: 0.953125
+    recall: 0.953125
+    f1: 0.953125
+  start_date:
+    correct: 12
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
+  end_date:
+    correct: 12
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
+  image:
+    correct: 24
+    missing: 0
+    spurious: 2
+    wrong: 0
+    precision: 0.9230769230769231
+    recall: 1.0
+    f1: 0.96
+aggregated_report:
+  roles: 1.0
+  image: 1.0
+  phone: 1.0
+  designations_precision: 1.0
+  email: 1.0
+  roles_precision: 1.0
+  end_date: 1.0
+  url: 0.9333333333333333
+  start_date: 1.0
+  name: 1.0
+  designations: 1.0
+per_case_scores:
+- case_id: austin_city_manager_staff
+  score: 1.0
+  person_precision: null
+  scores: {}
+- case_id: austin_council
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    phone: 1.0
+    designations_precision: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: austin_district7_council_member
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    image: 1.0
+    phone: 1.0
+    designations_precision: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    end_date: 1.0
+    url: 1.0
+    start_date: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: board_of_aldermen
+  score: 0.8333333333333334
+  person_precision: 0.8333333333333334
+  scores:
+    roles: 1.0
+    image: 1.0
+    phone: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    end_date: 1.0
+    url: 1.0
+    start_date: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: coleman_council
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    phone: 1.0
+    designations_precision: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: golinda_mixed_city_county
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    phone: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: inverted_name_format
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    phone: 1.0
+    designations_precision: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: jackson_mayors_office
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    image: 1.0
+    phone: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: la_porte_council
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    image: 1.0
+    phone: 1.0
+    designations_precision: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: mixed_current_past
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    phone: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: nav_links_no_names
+  score: 0.0
+  person_precision: 0.0
+  scores: {}
+- case_id: placeholder_name_council
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    phone: 1.0
+    designations_precision: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: raisin_township_clerk
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    phone: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: raisin_township_supervisor
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    phone: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: redundant_place_role
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    phone: 1.0
+    designations_precision: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    end_date: 1.0
+    url: 1.0
+    start_date: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: seattle_council_separate_mayor
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    image: 1.0
+    phone: 1.0
+    designations_precision: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 1.0
+    name: 1.0
+    designations: 1.0
+- case_id: vacant_positions_council
+  score: 0.8571428571428571
+  person_precision: 1.0
+  scores:
+    roles: 1.0
+    phone: 1.0
+    email: 1.0
+    roles_precision: 1.0
+    url: 0.0
+    name: 1.0
+    designations: 1.0
+mismatches:
+  board_of_aldermen:
+  - person: Abelardo Gonzalez
+    field: person
+    expected_label: ''
+    actual_label: Alderman
+    expected: "\u2014"
+    actual: present
+  nav_links_no_names:
+  - person: Edward Zapalac
+    field: person
+    expected_label: ''
+    actual_label: Councilmember Place 5
+    expected: "\u2014"
+    actual: present
+  raisin_township_clerk:
+  - person: Susan Bunch
+    field: image
+    expected_label: Clerk
+    actual_label: Clerk
+    expected: "\u2014"
+    actual: local://2105ede652ed.png
+  raisin_township_supervisor:
+  - person: Deb Brousseau
+    field: image
+    expected_label: Supervisor
+    actual_label: Supervisor
+    expected: "\u2014"
+    actual: local://c487d9c940ad.png
+  vacant_positions_council:
+  - person: Alysa Jarvis
+    field: url
+    expected_label: Council
+    actual_label: Council
+    expected: https://seadrifttx.org/city-council/directory-listing/alysa-jarvis
+    actual: https://seadrifttx.org/email-contact/node/741/field_email
+  - person: Kenneth Reese
+    field: url
+    expected_label: Council
+    actual_label: Council
+    expected: https://seadrifttx.org/city-council/directory-listing/kenneth-reese
+    actual: https://seadrifttx.org/email-contact/node/751/field_email
+  - person: Tracey Johnson
+    field: url
+    expected_label: Council
+    actual_label: Council
+    expected: https://seadrifttx.org/city-council/directory-listing/tracey-johnson
+    actual: https://seadrifttx.org/email-contact/node/756/field_email

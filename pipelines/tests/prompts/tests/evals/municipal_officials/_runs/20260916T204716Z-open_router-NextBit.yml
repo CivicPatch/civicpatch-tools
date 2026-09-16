@@ -1,0 +1,48 @@
+mismatches:
+  board_of_aldermen:
+  - actual: present
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Abelardo Gonzalez
+  nav_links_no_names:
+  - actual: present
+    actual_label: Councilmember Place 5
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Edward Zapalac
+  raisin_township_clerk:
+  - actual: local://2105ede652ed.png
+    actual_label: Clerk
+    expected: "\u2014"
+    expected_label: Clerk
+    field: image
+    person: Susan Bunch
+  raisin_township_supervisor:
+  - actual: local://c487d9c940ad.png
+    actual_label: Supervisor
+    expected: "\u2014"
+    expected_label: Supervisor
+    field: image
+    person: Deb Brousseau
+  vacant_positions_council:
+  - actual: https://seadrifttx.org/email-contact/node/741/field_email
+    actual_label: Council
+    expected: https://seadrifttx.org/city-council/directory-listing/alysa-jarvis
+    expected_label: Council
+    field: url
+    person: Alysa Jarvis
+  - actual: https://seadrifttx.org/email-contact/node/751/field_email
+    actual_label: Council
+    expected: https://seadrifttx.org/city-council/directory-listing/kenneth-reese
+    expected_label: Council
+    field: url
+    person: Kenneth Reese
+  - actual: https://seadrifttx.org/email-contact/node/756/field_email
+    actual_label: Council
+    expected: https://seadrifttx.org/city-council/directory-listing/tracey-johnson
+    expected_label: Council
+    field: url
+    person: Tracey Johnson

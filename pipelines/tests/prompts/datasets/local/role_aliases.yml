@@ -30,6 +30,10 @@ roles:
     - Mayor Pro Tempore
     - Mayor Pro-Tempore
 
+  # Presiding, so above Council Member — the holder is both, and seattle_council_separate_mayor
+  # needs the presiding title to win. Mirrors migration 111, where council-president is 11.
+  Council President: []
+
   Supervisor: []
   Clerk: []
 

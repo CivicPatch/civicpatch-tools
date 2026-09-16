@@ -1,6 +1,7 @@
 runs:
 - timestamp: '2026-08-15T23:42:30+00:00'
   provider: gemini
+  model: gemini-3.1-flash-lite-preview
   prompt_sha256: 2f5553c8a7d9
   cost_usd: 0.000216
   elapsed_seconds: 62.69
@@ -8,8 +9,22 @@ runs:
     cases_passed: 0.6666666666666666
 - timestamp: '2026-08-15T23:42:59+00:00'
   provider: gemini
+  model: gemini-3.1-flash-lite-preview
   prompt_sha256: 2f5553c8a7d9
   cost_usd: 0.000216
   elapsed_seconds: 27.69
   scores:
     cases_passed: 0.6666666666666666
+- timestamp: '2026-09-16T19:51:25+00:00'
+  provider: gemini
+  model: gemini-3.1-flash-lite-preview
+  prompt_sha256: 2f5553c8a7d9
+  cost_usd: 0.0
+  elapsed_seconds: 19.92
+  scores:
+    cases_passed: 1.0
+  cases:
+    harrison_mi: 1.0
+    london_township_mi: 1.0
+    milton_township_mi: 1.0
+  dispositions: {}

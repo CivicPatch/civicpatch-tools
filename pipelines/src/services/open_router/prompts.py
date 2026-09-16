@@ -207,7 +207,10 @@ def municipality_officials_prompt(
             -> "Council Member Place 3 (East Ward)"
         "District 1" on a page describing "one councilperson per district"
             -> "Council Member District 1"
-    - If the page states no title anywhere, give the rest alone: "District 6".
+    - If the person holds more than one office, include every one in the same label, in the
+      page's order. A second office often follows the name rather than preceding it:
+        "Council Member Seat 4: Jane Roe, Vice Mayor"
+            -> "Council Member Seat 4 and Vice Mayor"
     {roles_hint_str}
 
     phone:

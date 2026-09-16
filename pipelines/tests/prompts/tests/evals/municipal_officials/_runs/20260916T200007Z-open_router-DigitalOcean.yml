@@ -1,0 +1,668 @@
+mismatches:
+  board_of_aldermen:
+  - actual: present
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Abelardo Gonzalez
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (956) 350-4093
+    expected_label: Alderwoman
+    field: phone
+    person: Christi Burnias
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Alderwoman
+    field: url
+    person: Christi Burnias
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: (956) 350-4093
+    expected_label: Mayor Pro Tem
+    field: phone
+    person: Javier Vera
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Mayor Pro Tem
+    field: url
+    person: Javier Vera
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (956) 350-4093
+    expected_label: Alderman
+    field: phone
+    person: Mark A. Johnson
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Alderman
+    field: url
+    person: Mark A. Johnson
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (956) 350-4093
+    expected_label: Alderman
+    field: phone
+    person: Peter Harris
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Alderman
+    field: url
+    person: Peter Harris
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Mayor
+    field: url
+    person: Todd Day
+  coleman_council:
+  - actual: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+    actual_label: Council Member Place 3 (East Ward)
+    expected: "\u2014"
+    expected_label: Council Member Place 3 (East Ward)
+    field: image
+    person: Beau Brudney
+  - actual: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+    actual_label: Council Member Place 4 (South Ward)
+    expected: "\u2014"
+    expected_label: Council Member Place 4 (South Ward)
+    field: image
+    person: Monte Sides
+  - actual:
+    - Council Member
+    actual_label: Council Member Place 2 (West Ward)
+    expected:
+    - Mayor Pro Tem
+    expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    field: primary_role
+    person: Sharlene T. Hetzel
+  - actual:
+    - Council Member
+    actual_label: Council Member Place 2 (West Ward)
+    expected:
+    - Council Member
+    - Mayor Pro Tem
+    expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    field: roles
+    person: Sharlene T. Hetzel
+  - actual: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+    actual_label: Council Member Place 2 (West Ward)
+    expected: "\u2014"
+    expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    field: image
+    person: Sharlene T. Hetzel
+  - actual: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Tommy Sloan
+  - actual: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+    actual_label: Council Member Place 1 (North Ward)
+    expected: "\u2014"
+    expected_label: Council Member Place 1 (North Ward)
+    field: image
+    person: Tracy Rankin
+  golinda_mixed_city_county:
+  - actual: "\u2014"
+    actual_label: Council
+    expected: cityofgolinda@gmail.com
+    expected_label: Council
+    field: email
+    person: Billy Elkins
+  - actual: "\u2014"
+    actual_label: Council
+    expected: (254) 881-7333
+    expected_label: Council
+    field: phone
+    person: Billy Elkins
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: cityofgolinda@gmail.com
+    expected_label: Mayor Pro Tem
+    field: email
+    person: Bobby Farney
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: (254) 881-7333
+    expected_label: Mayor Pro Tem
+    field: phone
+    person: Bobby Farney
+  - actual: "\u2014"
+    actual_label: Council
+    expected: cityofgolinda@gmail.com
+    expected_label: Council
+    field: email
+    person: Joe M Farney
+  - actual: "\u2014"
+    actual_label: Council
+    expected: (254) 881-7333
+    expected_label: Council
+    field: phone
+    person: Joe M Farney
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: cityofgolinda@gmail.com
+    expected_label: Mayor
+    field: email
+    person: Joyce Farar
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (254) 881-7333
+    expected_label: Mayor
+    field: phone
+    person: Joyce Farar
+  - actual: "\u2014"
+    actual_label: Council
+    expected: cityofgolinda@gmail.com
+    expected_label: Council
+    field: email
+    person: Michael Reed
+  - actual: "\u2014"
+    actual_label: Council
+    expected: (254) 881-7333
+    expected_label: Council
+    field: phone
+    person: Michael Reed
+  - actual: "\u2014"
+    actual_label: Council
+    expected: cityofgolinda@gmail.com
+    expected_label: Council
+    field: email
+    person: Wanda Ray
+  - actual: "\u2014"
+    actual_label: Council
+    expected: (254) 881-7333
+    expected_label: Council
+    field: phone
+    person: Wanda Ray
+  la_porte_council:
+  - actual: []
+    actual_label: District 3
+    expected:
+    - Council Member
+    expected_label: Council Member District 3
+    field: primary_role
+    person: Bill Bentley
+  - actual: []
+    actual_label: District 3
+    expected:
+    - Council Member
+    expected_label: Council Member District 3
+    field: roles
+    person: Bill Bentley
+  - actual: "\u2014"
+    actual_label: District 3
+    expected: (281) 471-5021
+    expected_label: Council Member District 3
+    field: phone
+    person: Bill Bentley
+  - actual: '2027'
+    actual_label: District 3
+    expected: "\u2014"
+    expected_label: Council Member District 3
+    field: start_date
+    person: Bill Bentley
+  - actual: []
+    actual_label: At-Large A
+    expected:
+    - Council Member
+    expected_label: Council Member At-Large A
+    field: primary_role
+    person: Brandon Lunsford
+  - actual: []
+    actual_label: At-Large A
+    expected:
+    - Council Member
+    expected_label: Council Member At-Large A
+    field: roles
+    person: Brandon Lunsford
+  - actual: "\u2014"
+    actual_label: At-Large A
+    expected: (281) 471-5021
+    expected_label: Council Member At-Large A
+    field: phone
+    person: Brandon Lunsford
+  - actual: '2025'
+    actual_label: At-Large A
+    expected: "\u2014"
+    expected_label: Council Member At-Large A
+    field: start_date
+    person: Brandon Lunsford
+  - actual: []
+    actual_label: At-Large B
+    expected:
+    - Council Member
+    expected_label: Council Member At-Large B
+    field: primary_role
+    person: Brent McCaulley
+  - actual: []
+    actual_label: At-Large B
+    expected:
+    - Council Member
+    expected_label: Council Member At-Large B
+    field: roles
+    person: Brent McCaulley
+  - actual: "\u2014"
+    actual_label: At-Large B
+    expected: (281) 471-5021
+    expected_label: Council Member At-Large B
+    field: phone
+    person: Brent McCaulley
+  - actual: '2026'
+    actual_label: At-Large B
+    expected: "\u2014"
+    expected_label: Council Member At-Large B
+    field: start_date
+    person: Brent McCaulley
+  - actual: []
+    actual_label: District 2
+    expected:
+    - Council Member
+    expected_label: Council Member District 2
+    field: primary_role
+    person: Chuck Engelken
+  - actual: []
+    actual_label: District 2
+    expected:
+    - Council Member
+    expected_label: Council Member District 2
+    field: roles
+    person: Chuck Engelken
+  - actual: "\u2014"
+    actual_label: District 2
+    expected: (281) 471-5021
+    expected_label: Council Member District 2
+    field: phone
+    person: Chuck Engelken
+  - actual: '2027'
+    actual_label: District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: start_date
+    person: Chuck Engelken
+  - actual: []
+    actual_label: District 5
+    expected:
+    - Council Member
+    expected_label: Council Member District 5
+    field: primary_role
+    person: Jay Martin
+  - actual: []
+    actual_label: District 5
+    expected:
+    - Council Member
+    expected_label: Council Member District 5
+    field: roles
+    person: Jay Martin
+  - actual: "\u2014"
+    actual_label: District 5
+    expected: (281) 471-5021
+    expected_label: Council Member District 5
+    field: phone
+    person: Jay Martin
+  - actual: '2025'
+    actual_label: District 5
+    expected: "\u2014"
+    expected_label: Council Member District 5
+    field: start_date
+    person: Jay Martin
+  - actual: []
+    actual_label: District 1
+    expected:
+    - Council Member
+    expected_label: Council Member District 1
+    field: primary_role
+    person: Mandi Williams
+  - actual: []
+    actual_label: District 1
+    expected:
+    - Council Member
+    expected_label: Council Member District 1
+    field: roles
+    person: Mandi Williams
+  - actual: "\u2014"
+    actual_label: District 1
+    expected: (281) 471-5021
+    expected_label: Council Member District 1
+    field: phone
+    person: Mandi Williams
+  - actual: '2026'
+    actual_label: District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: start_date
+    person: Mandi Williams
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (281) 471-5021
+    expected_label: Mayor
+    field: phone
+    person: Rick Helton
+  - actual: '2027'
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: start_date
+    person: Rick Helton
+  - actual: []
+    actual_label: District 6
+    expected:
+    - Council Member
+    expected_label: Council Member District 6
+    field: primary_role
+    person: Robbie McLarrin
+  - actual: []
+    actual_label: District 6
+    expected:
+    - Council Member
+    expected_label: Council Member District 6
+    field: roles
+    person: Robbie McLarrin
+  - actual: "\u2014"
+    actual_label: District 6
+    expected: (281) 471-5021
+    expected_label: Council Member District 6
+    field: phone
+    person: Robbie McLarrin
+  - actual: '2026'
+    actual_label: District 6
+    expected: "\u2014"
+    expected_label: Council Member District 6
+    field: start_date
+    person: Robbie McLarrin
+  - actual: []
+    actual_label: District 4
+    expected:
+    - Council Member
+    expected_label: Council Member District 4
+    field: primary_role
+    person: Robert Guerra
+  - actual: []
+    actual_label: District 4
+    expected:
+    - Council Member
+    expected_label: Council Member District 4
+    field: roles
+    person: Robert Guerra
+  - actual: "\u2014"
+    actual_label: District 4
+    expected: (281) 471-5021
+    expected_label: Council Member District 4
+    field: phone
+    person: Robert Guerra
+  - actual: '2025'
+    actual_label: District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: start_date
+    person: Robert Guerra
+  mixed_current_past:
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: cityadmin@cityofleonard.net
+    expected_label: Mayor Pro Tem
+    field: email
+    person: Al Stephens
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: (903) 587-3334
+    expected_label: Mayor Pro Tem
+    field: phone
+    person: Al Stephens
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    expected_label: Council Member
+    field: email
+    person: Billy Wayne Martin
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (903) 587-3334
+    expected_label: Council Member
+    field: phone
+    person: Billy Wayne Martin
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    expected_label: Council Member
+    field: email
+    person: Bobby Hanson
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (903) 587-3334
+    expected_label: Council Member
+    field: phone
+    person: Bobby Hanson
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    expected_label: Council Member
+    field: email
+    person: Charles Wrenn
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (903) 587-3334
+    expected_label: Council Member
+    field: phone
+    person: Charles Wrenn
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    expected_label: Council Member
+    field: email
+    person: Darrell Grintz
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (903) 587-3334
+    expected_label: Council Member
+    field: phone
+    person: Darrell Grintz
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: cityadmin@cityofleonard.net
+    expected_label: Mayor
+    field: email
+    person: Michael Pye
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (903) 587-3334
+    expected_label: Mayor
+    field: phone
+    person: Michael Pye
+  nav_links_no_names:
+  - actual: present
+    actual_label: Councilmember Place 5
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Edward Zapalac
+  placeholder_name_council:
+  - actual: present
+    actual_label: Councilmember Place 2
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Councilmember 2 Name
+  - actual: present
+    actual_label: Councilmember Place 6
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Councilmember Place 6 Name
+  - actual: present
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Mayor Name
+  raisin_township_clerk:
+  - actual: "\u2014"
+    actual_label: Clerk
+    expected: (517) 423-3162
+    expected_label: Clerk
+    field: phone
+    person: Susan Bunch
+  - actual: local://2105ede652ed.png
+    actual_label: Clerk
+    expected: "\u2014"
+    expected_label: Clerk
+    field: image
+    person: Susan Bunch
+  raisin_township_supervisor:
+  - actual: local://c487d9c940ad.png
+    actual_label: Supervisor
+    expected: "\u2014"
+    expected_label: Supervisor
+    field: image
+    person: Deb Brousseau
+  redundant_place_role:
+  - actual: "\u2014"
+    actual_label: Council Member Place 2
+    expected: '2025'
+    expected_label: Council Member Place 2
+    field: start_date
+    person: Barbara Peskin
+  - actual: "\u2014"
+    actual_label: Council Member Place 2
+    expected: '2027'
+    expected_label: Council Member Place 2
+    field: end_date
+    person: Barbara Peskin
+  - actual: "\u2014"
+    actual_label: Council Member Place 4
+    expected: '2025'
+    expected_label: Council Member Place 4
+    field: start_date
+    person: Bruce Johnson
+  - actual: "\u2014"
+    actual_label: Council Member Place 4
+    expected: '2027'
+    expected_label: Council Member Place 4
+    field: end_date
+    person: Bruce Johnson
+  - actual: "\u2014"
+    actual_label: ''
+    expected: present
+    expected_label: Council Member Place 3, Mayor Pro-Tem
+    field: person
+    person: Carolyn Richmond
+  - actual:
+    - Council Member
+    actual_label: Council Member Place 5
+    expected:
+    - Mayor
+    expected_label: Council Member Place 5, Mayor
+    field: primary_role
+    person: Garrett Wood
+  - actual:
+    - Council Member
+    actual_label: Council Member Place 5
+    expected:
+    - Council Member
+    - Mayor
+    expected_label: Council Member Place 5, Mayor
+    field: roles
+    person: Garrett Wood
+  - actual: "\u2014"
+    actual_label: Council Member Place 5
+    expected: '2025'
+    expected_label: Council Member Place 5, Mayor
+    field: start_date
+    person: Garrett Wood
+  - actual: "\u2014"
+    actual_label: Council Member Place 5
+    expected: '2027'
+    expected_label: Council Member Place 5, Mayor
+    field: end_date
+    person: Garrett Wood
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: '2024'
+    expected_label: Mayor
+    field: start_date
+    person: Mark Bentley
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: '2026'
+    expected_label: Mayor
+    field: end_date
+    person: Mark Bentley
+  - actual: "\u2014"
+    actual_label: Council Member Place 1
+    expected: '2024'
+    expected_label: Council Member Place 1
+    field: start_date
+    person: Mike Shaw
+  - actual: "\u2014"
+    actual_label: Council Member Place 1
+    expected: '2026'
+    expected_label: Council Member Place 1
+    field: end_date
+    person: Mike Shaw
+  - actual: present
+    actual_label: Council Member Place 3
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Carolyn Richmond, Mayor Pro-Tem
+  seattle_council_separate_mayor:
+  - actual: "\u2014"
+    actual_label: Councilmember Position 8
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 8
+    field: phone
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Councilmember District 7
+    expected: (206) 684-8888
+    expected_label: Councilmember District 7
+    field: phone
+    person: Bob Kettle
+  - actual: "\u2014"
+    actual_label: Councilmember District 6
+    expected: (206) 684-8888
+    expected_label: Councilmember District 6
+    field: phone
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Councilmember District 5
+    expected: (206) 684-8888
+    expected_label: Councilmember District 5
+    field: phone
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Councilmember Position 9
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 9
+    field: phone
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Councilmember District 2
+    expected: (206) 684-8888
+    expected_label: Councilmember District 2
+    field: phone
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Council President District 3
+    expected: (206) 684-8888
+    expected_label: Council President District 3
+    field: phone
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Councilmember District 4
+    expected: (206) 684-8888
+    expected_label: Councilmember District 4
+    field: phone
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Councilmember District 1
+    expected: (206) 684-8888
+    expected_label: Councilmember District 1
+    field: phone
+    person: Rob Saka

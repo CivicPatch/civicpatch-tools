@@ -1,0 +1,148 @@
+/* ── Page ── */
+
+main.container-fluid {
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+}
+
+.theme-picker {
+  width: auto;
+  margin: 0;
+}
+
+.dashboard-intro {
+  max-width: 70ch;
+  margin: -0.8rem 0 1rem;
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+}
+
+.eval-label {
+  margin: 0.9rem 0 0.35rem;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.eval-card {
+  padding: 0.35rem 1rem;
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.eval-card--padded {
+  padding: 1rem;
+}
+
+.eval-card details {
+  margin: 0;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.eval-card details:first-child {
+  border-top: 0;
+}
+
+.eval-card summary {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.note {
+  margin: 0.5rem 0 0;
+  font-size: var(--font-size-md);
+  color: var(--text-muted);
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.subtext {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.case-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--text-muted);
+}
+
+button.case-link {
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px dotted var(--text-muted);
+  border-radius: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  /* The app's control styles make button text unselectable, which drops case names from a copy. */
+  user-select: text;
+}
+
+.case-link:hover {
+  color: var(--text);
+  border-bottom-style: solid;
+}
+
+/* ── Tables ── */
+
+table.data-table {
+  margin: 0.7rem 0 0;
+}
+
+table.data-table th {
+  background: transparent;
+}
+
+table.data-table td {
+  vertical-align: top;
+}
+
+table.data-table tbody th {
+  padding: 0.28rem 0.5rem 0.28rem 0.85rem;
+  font-weight: 400;
+  color: var(--text);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+table.data-table tbody tr:last-child th {
+  border-bottom: none;
+}
+
+.empty-cell {
+  color: var(--text-muted);
+}
+
+.score-pill {
+  display: inline-block;
+  min-width: 2.9rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  background: color-mix(
+    in srgb,
+    var(--success) calc(var(--score) * 65%),
+    color-mix(in srgb, var(--error) 50%, transparent)
+  );
+}
+
+.score-pill--best {
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px var(--text);
+}

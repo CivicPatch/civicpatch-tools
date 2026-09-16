@@ -19,6 +19,7 @@ from accuracy import (
     group_by_name,
     normalize_field,
 )
+from aggregation import mean_by_key
 from runners.people_collector.schemas import ExtractedPersonRecord
 from shared.utils.label_parser import ParsedLabel, parse_label
 
@@ -199,46 +200,25 @@ def score_case(
     }
 
 
-def aggregate(scores):
-    """
-    Aggregates the scores from all test cases into a single report.
-    Each key in the score dictionary is averaged across all cases.
-    If there are multiple people in a case, their scores are averaged first.
-    """
-    if not scores:
-        return {}
+def aggregate_case(case_scores) -> dict[str, float]:
+    return mean_by_key(score["scores"] for score in case_scores)
 
-    # Aggregate scores for each case.
-    #
-    # A dimension is averaged over the people that CARRY it, not over everyone. Most fields
-    # are present on every person so nothing changes for them; the recall-only ones
-    # (start_date, end_date, image) are omitted where nothing is expected, and counting
-    # those absences as successes is what let a model extracting zero dates score 0.77.
-    case_aggregates = []
-    for case_scores in scores:
-        if not case_scores:
-            continue
-        case_aggregate = {}
-        all_keys = set()
-        for score in case_scores:
-            all_keys.update(score["scores"].keys())
-        for key in all_keys:
-            present = [s["scores"][key] for s in case_scores if key in s["scores"]]
-            if present:
-                case_aggregate[key] = sum(present) / len(present)
-        case_aggregates.append(case_aggregate)
 
-    # Aggregate across cases — same rule, since a whole case may carry no dates at all.
-    if not case_aggregates:
-        return {}
+def aggregate(scores) -> dict[str, float]:
+    return mean_by_key(aggregate_case(case_scores) for case_scores in scores if case_scores)
 
-    final_aggregate = {}
-    for key in {k for case in case_aggregates for k in case}:
-        present = [case[key] for case in case_aggregates if key in case]
-        final_aggregate[key] = sum(present) / len(present)
 
-    return final_aggregate
+def person_precision(actual: List[ExtractedPersonRecord], expected: List[ExtractedPersonRecord]) -> float | None:
+    returned = group_by_name(actual)
+    if not returned:
+        return None
+    return len(returned.keys() & group_by_name(expected).keys()) / len(returned)
 
+
+def case_score(case_aggregate: dict, precision: float | None) -> float:
+    """Scaled by person precision: score_cases only visits expected people, so invented ones were free."""
+    field_score = sum(case_aggregate.values()) / len(case_aggregate) if case_aggregate else 1.0
+    return field_score if precision is None else field_score * precision
 
 
 def failing_people(case_scores_by_id: dict, thresholds: dict) -> list[dict]:

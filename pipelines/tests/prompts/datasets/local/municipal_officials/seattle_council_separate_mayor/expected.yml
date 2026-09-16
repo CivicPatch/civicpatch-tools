@@ -1,0 +1,87 @@
+people:
+- name: Rob Saka
+  label: Councilmember District 1
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/rob-saka
+  start_date: null
+  end_date: null
+  image: local://8ac384d14474.png
+- name: Eddie Lin
+  label: Councilmember District 2
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/eddie-lin
+  start_date: null
+  end_date: null
+  image: local://8518b717839c.png
+- name: Joy Hollingsworth
+  label: Council President District 3
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/joy-hollingsworth
+  start_date: null
+  end_date: null
+  image: local://ef06d9a9e07d.png
+- name: Maritza Rivera
+  label: Councilmember District 4
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/maritza-rivera
+  start_date: null
+  end_date: null
+  image: local://ed071cb84224.png
+- name: Debora Juarez
+  label: Councilmember District 5
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/debora-juarez
+  start_date: null
+  end_date: null
+  image: local://183bf92d4c48.png
+- name: Dan Strauss
+  label: Councilmember District 6
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/dan-strauss
+  start_date: null
+  end_date: null
+  image: local://ada6b13ec0d1.png
+- name: Bob Kettle
+  label: Councilmember District 7
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/bob-kettle
+  start_date: null
+  end_date: null
+  image: local://f490e8055573.png
+- name: Alexis Mercedes Rinck
+  label: Councilmember Position 8
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/alexis-mercedes-rinck
+  start_date: null
+  end_date: null
+  image: local://ce027a08f3f1.png
+- name: Dionne Foster
+  label: Councilmember Position 9
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/dionne-foster
+  start_date: null
+  end_date: null
+  image: local://f207a4a7733a.png
+thought: 'Seattle splits its elected officials across two bodies with separate pages:
+  the Office of the Mayor at seattle.gov/mayor and the City Council at seattle.gov/council.
+  This is the Council page, so only the nine Councilmembers are extracted. Joy Hollingsworth
+  is Council President, which the member grid states beside her district. Mayor Katie
+  Wilson is named four times — once in the site navigation as a link to the Mayor''s
+  Office, and three times in Council Connection news blurbs about Councilmembers
+  responding to her — but she holds no Council seat and this page never presents her
+  as one of its members. Note that STEP 1''s existing news-mention rule is already enough
+  to exclude her, so this case guards that rule — it does not measure whether people are
+  attributed to the right body. No Councilmember has an individual phone or
+  email here, so all nine carry the Council''s own: the number in the footer contact
+  block and the address the page offers for reaching every member. 206-684-2489, repeated
+  around twenty times near the top, is the citywide Google Translate interpreter line,
+  not an office contact.'

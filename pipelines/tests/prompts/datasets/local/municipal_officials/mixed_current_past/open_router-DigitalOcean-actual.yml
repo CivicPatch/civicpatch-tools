@@ -3,15 +3,15 @@ people:
   label: Mayor
   phone: null
   email: null
-  url: null
+  url: https://www.cityofleonard.net/page/city_council
   start_date: null
   end_date: null
-  image: null
+  image: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
 - name: Al Stephens
   label: Mayor Pro Tem
   phone: null
   email: null
-  url: null
+  url: https://www.cityofleonard.net/page/city_council
   start_date: null
   end_date: null
   image: null
@@ -19,7 +19,7 @@ people:
   label: Council Member
   phone: null
   email: null
-  url: null
+  url: https://www.cityofleonard.net/page/city_council
   start_date: null
   end_date: null
   image: null
@@ -27,7 +27,7 @@ people:
   label: Council Member
   phone: null
   email: null
-  url: null
+  url: https://www.cityofleonard.net/page/city_council
   start_date: null
   end_date: null
   image: null
@@ -35,7 +35,7 @@ people:
   label: Council Member
   phone: null
   email: null
-  url: null
+  url: https://www.cityofleonard.net/page/city_council
   start_date: null
   end_date: null
   image: null
@@ -43,7 +43,7 @@ people:
   label: Council Member
   phone: null
   email: null
-  url: null
+  url: https://www.cityofleonard.net/page/city_council
   start_date: null
   end_date: null
   image: null

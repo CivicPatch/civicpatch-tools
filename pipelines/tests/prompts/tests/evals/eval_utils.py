@@ -5,6 +5,7 @@ import pathlib
 from datetime import datetime, timezone
 
 import yaml
+from services.open_router.llm import MODELS_BY_TYPE
 from services.open_router.llm import run_prompt as run_together_prompt
 
 # Providers must support `structured_outputs`, NOT merely `response_format` — run_prompt
@@ -28,10 +29,26 @@ from services.open_router.llm import run_prompt as run_together_prompt
 # end_dates in the corpus — a capability gap, not variance, reproducing identically every
 # run. It is out of production routing (llm.py) for the same reason, so comparing against it
 # only bought a permanently red gate and a third of the run cost.
-PROVIDER_COMPARISON = [
-    "open_router:DigitalOcean",  # $0.07/$0.17 — cheapest qualifying, uptime_1d 99.1%
-    "open_router:AtlasCloud",    # $0.14/$0.28 — uptime_1d 99.7%
-]
+# Model id -> providers to compare it on. To trial a model, add an entry and run the eval with
+# EVAL_MODEL=<model id>; production keeps routing to MODELS_BY_TYPE["STANDARD"].
+PROVIDERS_BY_MODEL = {
+    "deepseek/deepseek-v4-flash": [
+        "open_router:DigitalOcean",   # $0.07/$0.17 — cheapest qualifying, uptime_1d 99.1%; no seed
+        "open_router:AtlasCloud",     # $0.14/$0.28 — uptime_1d 99.7%
+        "open_router:Alibaba",        # $0.13/$0.27, seed, fp8 — added 2026-09-16
+        "open_router:OpenInference",  # $0.05/$0.14, seed, fp8 — added 2026-09-16
+        "open_router:NextBit",        # $0.15/$0.35, seed, fp8 — added 2026-09-16
+    ],
+    "deepseek/deepseek-v4.1-flash": [
+        "open_router:Morph",      # $0.18/$0.72, seed, fp8 — catalogue read 2026-09-16
+        "open_router:DeepInfra",  # $0.20/$0.60, seed, fp8
+        "open_router:Makora",     # $0.30/$1.20, seed
+        "open_router:Wafer",      # $0.30/$1.20, seed
+        "open_router:Parasail",   # $0.30/$1.20, seed, fp8
+    ],
+}
+EVAL_MODEL = os.environ.get("EVAL_MODEL", MODELS_BY_TYPE["STANDARD"]["model"])
+PROVIDER_COMPARISON = PROVIDERS_BY_MODEL[EVAL_MODEL]
 
 
 # Pinned so a re-run measures the prompt, not the sampler. Two runs of the identical
@@ -53,7 +70,7 @@ def make_provider_client(param, make_prompt_fn):
         "run_prompt": run_together_prompt,
         "make_prompt": make_prompt_fn,
         "extra_kwargs": {
-            "model_type": "STANDARD",
+            "model": EVAL_MODEL,
             "provider_order": [provider],
             "temperature": EVAL_TEMPERATURE,
             "seed": EVAL_SEED,
@@ -150,23 +167,61 @@ def record_run(evals_dir: str, prompt: str) -> dict:
 HISTORY_DEPTH = 5
 
 
-def _prune_prompt_archive(evals_dir: str, runs: list) -> None:
-    """Drop archived prompts that no surviving run points at.
-
-    Retention follows HISTORY_DEPTH rather than a policy of its own — a prompt is worth
-    keeping exactly as long as a run references it. Without this every tweak leaves a file
-    behind: 17 accumulated in one afternoon of iterating on the officials prompt, of which
-    one was live, and `visualize` then diffs against whichever it finds.
-
-    Never prunes on an empty history: that state means "no runs recorded yet", not "nothing
-    is referenced", and deleting the archive there would take the current prompt with it.
-    """
-    referenced = {run.get("prompt_sha256") for run in runs}
-    if not referenced:
-        return
-    for path in (pathlib.Path(evals_dir) / "_prompts").glob("*.txt"):
-        if path.stem not in referenced:
+def _delete_files_not_named(directory: pathlib.Path, pattern: str, keep: set[str]) -> None:
+    for path in directory.glob(pattern):
+        if path.name not in keep:
             path.unlink()
+
+
+def _prune_prompt_archive(evals_dir: str, runs: list) -> None:
+    """An empty history means nothing recorded yet, so it must not delete the current prompt."""
+    if not runs:
+        return
+    keep = {f"{run.get('prompt_sha256')}.txt" for run in runs}
+    _delete_files_not_named(pathlib.Path(evals_dir) / "_prompts", "*.txt", keep)
+
+
+def _lineage(run: dict) -> tuple:
+    return (run.get("model"), run.get("provider"))
+
+
+def _keep_recent(runs: list[dict], entry: dict, depth: int) -> list[dict]:
+    """Per (model, provider): keyed on provider alone, a new model's runs evict the retired one's."""
+    key = _lineage(entry)
+    others = [r for r in runs if _lineage(r) != key]
+    mine = [r for r in runs if _lineage(r) == key] + [entry]
+    return sorted(others + mine[-depth:], key=lambda r: (r.get("provider") or "", r.get("timestamp") or ""))
+
+
+DISPOSITIONS = ("correct", "missing", "spurious", "wrong")
+
+
+def _dispositions(accuracy: dict) -> dict:
+    """f1 alone can't tell a model that started hallucinating from one that started missing."""
+    return {
+        field: {name: counts[name] for name in DISPOSITIONS}
+        for field, counts in sorted(accuracy.items())
+    }
+
+
+def _mismatches_file(timestamp: str, provider: str) -> str:
+    stamp = datetime.fromisoformat(timestamp).astimezone(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    return f"_runs/{stamp}-{provider}.yml"
+
+
+def _write_mismatches(evals_dir: str, entry: dict, mismatches: dict) -> str:
+    relative = _mismatches_file(entry["timestamp"], entry["provider"])
+    path = pathlib.Path(evals_dir) / relative
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(yaml.safe_dump({"mismatches": mismatches}, sort_keys=True), encoding="utf-8")
+    return relative
+
+
+def _prune_run_archive(evals_dir: str, runs: list) -> None:
+    if not runs:
+        return
+    keep = {pathlib.Path(run["mismatches_file"]).name for run in runs if run.get("mismatches_file")}
+    _delete_files_not_named(pathlib.Path(evals_dir) / "_runs", "*.yml", keep)
 
 
 def record_history(
@@ -176,8 +231,11 @@ def record_history(
     scores: dict,
     cost: dict,
     cases: dict | None = None,
+    *,
+    accuracy: dict,
+    mismatches: dict | None,
 ) -> None:
-    """Append this run to `history.yml`, keeping the last HISTORY_DEPTH per provider.
+    """Append this run to `history.yml`, keeping the last HISTORY_DEPTH per (model, provider).
 
     A single run cannot tell you whether a prompt edit helped. Measured 2026-08-15, two
     identical runs of the identical prompt drifted by up to 0.267 (end_date) and 0.154
@@ -191,23 +249,25 @@ def record_history(
 
     Truncated rather than unbounded: the point is the recent trend, and an ever-growing YAML
     committed on every run is its own problem.
+
+    `mismatches` is None for an eval that doesn't record them; `{}` is a run that had none.
     """
     path = pathlib.Path(evals_dir) / "history.yml"
     existing = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}) if path.exists() else {}
-    runs = [r for r in (existing.get("runs") or []) if r.get("provider") != provider]
-    mine = [r for r in (existing.get("runs") or []) if r.get("provider") == provider]
-    mine.append(
-        {
-            "timestamp": run.get("timestamp"),
-            "provider": provider,
-            "prompt_sha256": run.get("prompt_sha256"),
-            "cost_usd": cost.get("total_cost_usd"),
-            "elapsed_seconds": cost.get("elapsed_seconds"),
-            "scores": {k: v for k, v in sorted(scores.items()) if v is not None},
-            "cases": dict(sorted((cases or {}).items())),
-        }
-    )
-    runs.extend(mine[-HISTORY_DEPTH:])
-    runs.sort(key=lambda r: (r.get("provider") or "", r.get("timestamp") or ""))
+    entry = {
+        "timestamp": run.get("timestamp"),
+        "provider": provider,
+        "model": cost.get("model"),
+        "prompt_sha256": run.get("prompt_sha256"),
+        "cost_usd": cost.get("total_cost_usd"),
+        "elapsed_seconds": cost.get("elapsed_seconds"),
+        "scores": {k: v for k, v in sorted(scores.items()) if v is not None},
+        "cases": dict(sorted((cases or {}).items())),
+        "dispositions": _dispositions(accuracy),
+    }
+    if mismatches is not None:
+        entry["mismatches_file"] = _write_mismatches(evals_dir, entry, mismatches)
+    runs = _keep_recent(existing.get("runs") or [], entry, HISTORY_DEPTH)
     path.write_text(yaml.safe_dump({"runs": runs}, sort_keys=False), encoding="utf-8")
+    _prune_run_archive(evals_dir, runs)
     _prune_prompt_archive(evals_dir, runs)

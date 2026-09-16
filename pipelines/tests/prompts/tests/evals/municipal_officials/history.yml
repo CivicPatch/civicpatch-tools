@@ -1,62 +1,310 @@
 runs:
-- timestamp: '2026-08-16T20:40:52+00:00'
-  provider: open_router-AtlasCloud
+- timestamp: '2026-09-16T20:35:14+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
   prompt_sha256: bc0a307918ed
-  cost_usd: 0.019481
-  elapsed_seconds: 73.29
-  scores:
-    designations_other: 1.0
-    district: 1.0
-    email: 0.8181818181818182
-    end_date: 1.0
-    image: 0.9333333333333333
-    person: 0.992
-    phone: 0.9433962264150944
-    primary_role: 1.0
-    roles: 1.0
-    start_date: 1.0
-    url: 1.0
-  cases:
-    austin_city_manager_staff: 1.0
-    austin_council: 1.0
-    austin_district7_council_member: 1.0
-    board_of_aldermen: 1.0
-    coleman_council: 1.0
-    golinda_mixed_city_county: 1.0
-    inverted_name_format: 1.0
-    la_porte_council: 1.0
-    mixed_current_past: 0.8571428571428571
-    nav_links_no_names: 0.0
-    placeholder_name_council: 1.0
-    raisin_township_clerk: 1.0
-    raisin_township_supervisor: 1.0
-    redundant_place_role: 0.9
-    vacant_positions_council: 1.0
-- timestamp: '2026-08-16T20:51:49+00:00'
-  provider: open_router-AtlasCloud
-  prompt_sha256: bc0a307918ed
-  cost_usd: 0.01978032
-  elapsed_seconds: 97.69
+  cost_usd: 0.0207881168
+  elapsed_seconds: 123.8
   scores:
     designations_other: 1.0
     district: 1.0
     email: 1.0
     end_date: 1.0
-    image: 0.9333333333333333
-    person: 0.992
-    phone: 0.9019607843137255
-    primary_role: 0.967741935483871
-    roles: 0.984375
+    image: 0.9795918367346939
+    person: 0.9863013698630136
+    phone: 1.0
+    primary_role: 0.9264705882352942
+    roles: 0.9361702127659575
     start_date: 1.0
-    url: 1.0
+    url: 0.984375
   cases:
     austin_city_manager_staff: 1.0
     austin_council: 1.0
     austin_district7_council_member: 1.0
-    board_of_aldermen: 0.9199999999999999
+    board_of_aldermen: 0.8333333333333334
     coleman_council: 1.0
     golinda_mixed_city_county: 1.0
     inverted_name_format: 1.0
+    jackson_mayors_office: 0.875
+    la_porte_council: 0.9012345679012346
+    mixed_current_past: 1.0
+    nav_links_no_names: 0.0
+    placeholder_name_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    redundant_place_role: 0.9916666666666666
+    seattle_council_separate_mayor: 1.0
+    vacant_positions_council: 1.0
+  dispositions:
+    designations_other:
+      correct: 19
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 42
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 24
+      missing: 0
+      spurious: 1
+      wrong: 0
+    person:
+      correct: 72
+      missing: 0
+      spurious: 2
+      wrong: 0
+    phone:
+      correct: 60
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 63
+      missing: 9
+      spurious: 1
+      wrong: 0
+    roles:
+      correct: 66
+      missing: 9
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 63
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260916T203514Z-open_router-Alibaba.yml
+- timestamp: '2026-09-16T20:47:16+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 8d1b93961ff5
+  cost_usd: 0.021927358
+  elapsed_seconds: 127.76
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    end_date: 1.0
+    image: 0.96
+    person: 0.9863013698630136
+    phone: 0.9180327868852459
+    primary_role: 1.0
+    roles: 1.0
+    start_date: 1.0
+    url: 0.984375
+  cases:
+    austin_city_manager_staff: 1.0
+    austin_council: 1.0
+    austin_district7_council_member: 1.0
+    board_of_aldermen: 0.7666666666666666
+    coleman_council: 1.0
+    golinda_mixed_city_county: 1.0
+    inverted_name_format: 1.0
+    jackson_mayors_office: 0.875
+    la_porte_council: 1.0
+    mixed_current_past: 1.0
+    nav_links_no_names: 0.0
+    placeholder_name_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    redundant_place_role: 0.9
+    seattle_council_separate_mayor: 1.0
+    vacant_positions_council: 1.0
+  dispositions:
+    designations_other:
+      correct: 19
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 42
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 24
+      missing: 0
+      spurious: 2
+      wrong: 0
+    person:
+      correct: 72
+      missing: 0
+      spurious: 2
+      wrong: 0
+    phone:
+      correct: 56
+      missing: 4
+      spurious: 6
+      wrong: 0
+    primary_role:
+      correct: 72
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 75
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 63
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260916T204716Z-open_router-Alibaba.yml
+- timestamp: '2026-09-16T20:00:07+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 1df1d2f171ca
+  cost_usd: 0.022362368
+  elapsed_seconds: 103.09
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    end_date: 1.0
+    image: 0.96
+    person: 0.9863013698630136
+    phone: 0.9655172413793104
+    primary_role: 1.0
+    roles: 1.0
+    start_date: 1.0
+    url: 0.9344262295081968
+  cases:
+    austin_city_manager_staff: 1.0
+    austin_council: 1.0
+    austin_district7_council_member: 1.0
+    board_of_aldermen: 0.7666666666666666
+    coleman_council: 1.0
+    golinda_mixed_city_county: 1.0
+    inverted_name_format: 1.0
+    jackson_mayors_office: 0.875
+    la_porte_council: 1.0
+    mixed_current_past: 1.0
+    nav_links_no_names: 0.0
+    placeholder_name_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    redundant_place_role: 0.9
+    seattle_council_separate_mayor: 1.0
+    vacant_positions_council: 1.0
+  dispositions:
+    designations_other:
+      correct: 19
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 42
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 24
+      missing: 0
+      spurious: 2
+      wrong: 0
+    person:
+      correct: 72
+      missing: 0
+      spurious: 2
+      wrong: 0
+    phone:
+      correct: 56
+      missing: 4
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 72
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 75
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 57
+      missing: 6
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260916T200007Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-16T20:13:00+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: bc0a307918ed
+  cost_usd: 0.011072936
+  elapsed_seconds: 230.56
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    end_date: 0.7272727272727273
+    image: 0.96
+    person: 0.9863013698630136
+    phone: 0.9180327868852459
+    primary_role: 0.9583333333333334
+    roles: 0.9795918367346939
+    start_date: 1.0
+    url: 0.8125
+  cases:
+    austin_city_manager_staff: 1.0
+    austin_council: 0.875
+    austin_district7_council_member: 1.0
+    board_of_aldermen: 0.7666666666666666
+    coleman_council: 0.9875
+    golinda_mixed_city_county: 1.0
+    inverted_name_format: 1.0
+    jackson_mayors_office: 0.875
     la_porte_council: 1.0
     mixed_current_past: 1.0
     nav_links_no_names: 0.0
@@ -64,32 +312,92 @@ runs:
     raisin_township_clerk: 1.0
     raisin_township_supervisor: 1.0
     redundant_place_role: 0.8833333333333334
+    seattle_council_separate_mayor: 1.0
     vacant_positions_council: 1.0
-- timestamp: '2026-08-16T21:21:02+00:00'
+  dispositions:
+    designations_other:
+      correct: 19
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 42
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 12
+      missing: 0
+      spurious: 9
+      wrong: 0
+    image:
+      correct: 24
+      missing: 0
+      spurious: 2
+      wrong: 0
+    person:
+      correct: 72
+      missing: 0
+      spurious: 2
+      wrong: 0
+    phone:
+      correct: 56
+      missing: 4
+      spurious: 6
+      wrong: 0
+    primary_role:
+      correct: 69
+      missing: 3
+      spurious: 3
+      wrong: 0
+    roles:
+      correct: 72
+      missing: 3
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 52
+      missing: 0
+      spurious: 0
+      wrong: 12
+  mismatches_file: _runs/20260916T201300Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-16T20:15:30+00:00'
   provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
   prompt_sha256: bc0a307918ed
-  cost_usd: 0.02043076
-  elapsed_seconds: 104.8
+  cost_usd: 0.011567696
+  elapsed_seconds: 243.58
   scores:
     designations_other: 1.0
     district: 1.0
     email: 1.0
     end_date: 1.0
-    image: 0.9333333333333333
-    person: 0.9841269841269841
-    phone: 0.9583333333333334
-    primary_role: 0.9838709677419355
-    roles: 0.9922480620155039
+    image: 0.9795918367346939
+    person: 0.9863013698630136
+    phone: 1.0
+    primary_role: 0.9722222222222222
+    roles: 0.9864864864864865
     start_date: 1.0
-    url: 1.0
+    url: 0.984375
   cases:
     austin_city_manager_staff: 1.0
     austin_council: 1.0
     austin_district7_council_member: 1.0
-    board_of_aldermen: 0.9199999999999999
-    coleman_council: 1.0
+    board_of_aldermen: 0.8333333333333334
+    coleman_council: 0.9875
     golinda_mixed_city_county: 1.0
     inverted_name_format: 1.0
+    jackson_mayors_office: 0.875
     la_porte_council: 1.0
     mixed_current_past: 1.0
     nav_links_no_names: 0.0
@@ -97,75 +405,254 @@ runs:
     raisin_township_clerk: 1.0
     raisin_township_supervisor: 1.0
     redundant_place_role: 0.9916666666666666
+    seattle_council_separate_mayor: 1.0
     vacant_positions_council: 1.0
-- timestamp: '2026-08-16T21:23:44+00:00'
+  dispositions:
+    designations_other:
+      correct: 19
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 42
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 24
+      missing: 0
+      spurious: 1
+      wrong: 0
+    person:
+      correct: 72
+      missing: 0
+      spurious: 2
+      wrong: 0
+    phone:
+      correct: 60
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 70
+      missing: 2
+      spurious: 2
+      wrong: 0
+    roles:
+      correct: 73
+      missing: 2
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 63
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260916T201530Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-16T20:35:14+00:00'
   provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
   prompt_sha256: bc0a307918ed
-  cost_usd: 0.0197988
-  elapsed_seconds: 70.97
+  cost_usd: 0.012238576
+  elapsed_seconds: 242.05
   scores:
     designations_other: 1.0
     district: 1.0
     email: 1.0
-    end_date: 1.0
-    image: 0.9333333333333333
-    person: 0.992
-    phone: 0.9433962264150944
-    primary_role: 1.0
-    roles: 1.0
+    end_date: 0.7272727272727273
+    image: 0.9795918367346939
+    person: 0.993103448275862
+    phone: 0.9180327868852459
+    primary_role: 0.9117647058823529
+    roles: 0.9285714285714286
     start_date: 1.0
-    url: 1.0
+    url: 0.984375
   cases:
     austin_city_manager_staff: 1.0
     austin_council: 1.0
     austin_district7_council_member: 1.0
-    board_of_aldermen: 1.0
-    coleman_council: 1.0
-    golinda_mixed_city_county: 1.0
-    inverted_name_format: 1.0
-    la_porte_council: 1.0
-    mixed_current_past: 1.0
-    nav_links_no_names: 0.0
-    placeholder_name_council: 1.0
-    raisin_township_clerk: 1.0
-    raisin_township_supervisor: 1.0
-    redundant_place_role: 0.9
-    vacant_positions_council: 1.0
-- timestamp: '2026-08-16T21:27:45+00:00'
-  provider: open_router-AtlasCloud
-  prompt_sha256: bc0a307918ed
-  cost_usd: 0.01999928
-  elapsed_seconds: 110.67
-  scores:
-    designations_other: 1.0
-    district: 1.0
-    email: 1.0
-    end_date: 1.0
-    image: 0.9333333333333333
-    person: 0.9841269841269841
-    phone: 0.845360824742268
-    primary_role: 0.9516129032258065
-    roles: 0.9763779527559056
-    start_date: 1.0
-    url: 1.0
-  cases:
-    austin_city_manager_staff: 1.0
-    austin_council: 1.0
-    austin_district7_council_member: 1.0
-    board_of_aldermen: 1.0
+    board_of_aldermen: 0.9199999999999999
     coleman_council: 0.9875
     golinda_mixed_city_county: 1.0
     inverted_name_format: 1.0
-    la_porte_council: 0.8888888888888888
+    jackson_mayors_office: 0.875
+    la_porte_council: 0.9012345679012346
     mixed_current_past: 1.0
     nav_links_no_names: 0.0
     placeholder_name_council: 1.0
     raisin_township_clerk: 1.0
     raisin_township_supervisor: 1.0
-    redundant_place_role: 0.8833333333333334
+    redundant_place_role: 0.8916666666666666
+    seattle_council_separate_mayor: 1.0
     vacant_positions_council: 1.0
+  dispositions:
+    designations_other:
+      correct: 19
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 42
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 12
+      missing: 0
+      spurious: 9
+      wrong: 0
+    image:
+      correct: 24
+      missing: 0
+      spurious: 1
+      wrong: 0
+    person:
+      correct: 72
+      missing: 0
+      spurious: 1
+      wrong: 0
+    phone:
+      correct: 56
+      missing: 4
+      spurious: 6
+      wrong: 0
+    primary_role:
+      correct: 62
+      missing: 10
+      spurious: 2
+      wrong: 0
+    roles:
+      correct: 65
+      missing: 10
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 63
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260916T203514Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-16T20:47:16+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 8d1b93961ff5
+  cost_usd: 0.021236964
+  elapsed_seconds: 102.32
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    end_date: 1.0
+    image: 0.96
+    person: 0.9863013698630136
+    phone: 0.9655172413793104
+    primary_role: 0.9411764705882353
+    roles: 0.9436619718309859
+    start_date: 1.0
+    url: 0.984375
+  cases:
+    austin_city_manager_staff: 1.0
+    austin_council: 1.0
+    austin_district7_council_member: 1.0
+    board_of_aldermen: 0.7666666666666666
+    coleman_council: 1.0
+    golinda_mixed_city_county: 1.0
+    inverted_name_format: 1.0
+    jackson_mayors_office: 0.875
+    la_porte_council: 0.9012345679012346
+    mixed_current_past: 1.0
+    nav_links_no_names: 0.0
+    placeholder_name_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    redundant_place_role: 1.0
+    seattle_council_separate_mayor: 1.0
+    vacant_positions_council: 1.0
+  dispositions:
+    designations_other:
+      correct: 19
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 42
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 24
+      missing: 0
+      spurious: 2
+      wrong: 0
+    person:
+      correct: 72
+      missing: 0
+      spurious: 2
+      wrong: 0
+    phone:
+      correct: 56
+      missing: 4
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 64
+      missing: 8
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 67
+      missing: 8
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 63
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260916T204716Z-open_router-AtlasCloud.yml
 - timestamp: '2026-08-16T00:15:30+00:00'
   provider: open_router-DeepInfra
+  model: deepseek/deepseek-v4-flash
   prompt_sha256: 89baaf82fad6
   cost_usd: 0.00962028
   elapsed_seconds: 254.74
@@ -199,6 +686,7 @@ runs:
   prompt_file: _prompts/89baaf82fad6.txt
 - timestamp: '2026-08-16T00:23:59+00:00'
   provider: open_router-DeepInfra
+  model: deepseek/deepseek-v4-flash
   prompt_sha256: 89baaf82fad6
   cost_usd: 0.00961488
   elapsed_seconds: 109.95
@@ -232,6 +720,7 @@ runs:
   prompt_file: _prompts/89baaf82fad6.txt
 - timestamp: '2026-08-16T00:26:17+00:00'
   provider: open_router-DeepInfra
+  model: deepseek/deepseek-v4-flash
   prompt_sha256: 89baaf82fad6
   cost_usd: 0.00962802
   elapsed_seconds: 72.43
@@ -263,168 +752,840 @@ runs:
     redundant_place_role: 0.5833333333333333
     vacant_positions_council: 1.0
   prompt_file: _prompts/89baaf82fad6.txt
-- timestamp: '2026-08-16T20:40:52+00:00'
+- timestamp: '2026-09-16T20:00:07+00:00'
   provider: open_router-DigitalOcean
-  prompt_sha256: bc0a307918ed
-  cost_usd: 0.00788638
-  elapsed_seconds: 77.76
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 1df1d2f171ca
+  cost_usd: 0.0130955048
+  elapsed_seconds: 169.87
   scores:
     designations_other: 1.0
     district: 1.0
-    email: 0.7777777777777778
-    end_date: 1.0
-    image: 0.9333333333333333
-    person: 0.9538461538461539
-    phone: 0.7654320987654321
-    primary_role: 0.9516129032258065
-    roles: 0.9763779527559056
-    start_date: 1.0
-    url: 0.7777777777777778
+    email: 0.8285714285714286
+    end_date: 0.7058823529411765
+    image: 0.8727272727272727
+    person: 0.9530201342281879
+    phone: 0.5882352941176471
+    primary_role: 0.9104477611940298
+    roles: 0.9264705882352942
+    start_date: 0.46153846153846156
+    url: 0.9586776859504132
   cases:
-    austin_city_manager_staff: 0.0
+    austin_city_manager_staff: 1.0
     austin_council: 1.0
-    austin_district7_council_member: 0.9090909090909091
-    board_of_aldermen: 0.82
+    austin_district7_council_member: 1.0
+    board_of_aldermen: 0.6833333333333333
     coleman_council: 0.9875
     golinda_mixed_city_county: 0.7142857142857143
     inverted_name_format: 1.0
-    la_porte_council: 0.8888888888888888
-    mixed_current_past: 0.5714285714285714
+    jackson_mayors_office: 1.0
+    la_porte_council: 0.7901234567901234
+    mixed_current_past: 0.7142857142857143
     nav_links_no_names: 0.0
-    placeholder_name_council: 1.0
+    placeholder_name_council: 0.4
     raisin_township_clerk: 0.8571428571428571
     raisin_township_supervisor: 1.0
-    redundant_place_role: 0.9833333333333334
+    redundant_place_role: 0.576388888888889
+    seattle_council_separate_mayor: 0.8888888888888888
     vacant_positions_council: 1.0
-- timestamp: '2026-08-16T20:51:49+00:00'
+  dispositions:
+    designations_other:
+      correct: 18
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 29
+      missing: 12
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 6
+      missing: 5
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 24
+      missing: 0
+      spurious: 7
+      wrong: 0
+    person:
+      correct: 71
+      missing: 1
+      spurious: 6
+      wrong: 0
+    phone:
+      correct: 25
+      missing: 35
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 61
+      missing: 10
+      spurious: 2
+      wrong: 0
+    roles:
+      correct: 63
+      missing: 10
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 6
+      missing: 5
+      spurious: 9
+      wrong: 0
+    url:
+      correct: 58
+      missing: 5
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260916T200007Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-16T20:13:00+00:00'
   provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
   prompt_sha256: bc0a307918ed
-  cost_usd: 0.00800164
-  elapsed_seconds: 82.14
+  cost_usd: 0.0128194976
+  elapsed_seconds: 215.36
   scores:
     designations_other: 1.0
     district: 1.0
-    email: 0.7777777777777778
+    email: 0.6666666666666666
     end_date: 0.6666666666666666
-    image: 0.8
-    person: 0.9323308270676691
-    phone: 0.7654320987654321
-    primary_role: 0.9137931034482759
-    roles: 0.9256198347107438
+    image: 0.8727272727272727
+    person: 0.9863013698630136
+    phone: 0.6046511627906976
+    primary_role: 0.9583333333333334
+    roles: 0.9795918367346939
+    start_date: 1.0
+    url: 0.9508196721311475
+  cases:
+    austin_city_manager_staff: 0.0
+    austin_council: 1.0
+    austin_district7_council_member: 1.0
+    board_of_aldermen: 0.7666666666666666
+    coleman_council: 0.8625
+    golinda_mixed_city_county: 0.8571428571428571
+    inverted_name_format: 1.0
+    jackson_mayors_office: 1.0
+    la_porte_council: 0.8888888888888888
+    mixed_current_past: 0.5714285714285714
+    nav_links_no_names: 1.0
+    placeholder_name_council: 1.0
+    raisin_township_clerk: 0.8571428571428571
+    raisin_township_supervisor: 1.0
+    redundant_place_role: 0.8833333333333334
+    seattle_council_separate_mayor: 0.7777777777777778
+    vacant_positions_council: 1.0
+  dispositions:
+    designations_other:
+      correct: 19
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 21
+      missing: 21
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 6
+      missing: 6
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 24
+      missing: 0
+      spurious: 7
+      wrong: 0
+    person:
+      correct: 72
+      missing: 0
+      spurious: 2
+      wrong: 0
+    phone:
+      correct: 26
+      missing: 34
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 69
+      missing: 3
+      spurious: 3
+      wrong: 0
+    roles:
+      correct: 72
+      missing: 3
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 58
+      missing: 6
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260916T201300Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-16T20:15:30+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: bc0a307918ed
+  cost_usd: 0.0113602384
+  elapsed_seconds: 375.39
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 0.6557377049180327
+    end_date: 1.0
+    image: 0.96
+    person: 0.9726027397260274
+    phone: 0.6813186813186813
+    primary_role: 0.9402985074626866
+    roles: 0.9420289855072463
     start_date: 1.0
     url: 1.0
   cases:
     austin_city_manager_staff: 0.0
     austin_council: 1.0
     austin_district7_council_member: 1.0
-    board_of_aldermen: 0.9199999999999999
+    board_of_aldermen: 0.7666666666666666
     coleman_council: 1.0
     golinda_mixed_city_county: 0.8571428571428571
     inverted_name_format: 1.0
+    jackson_mayors_office: 1.0
     la_porte_council: 0.7901234567901234
     mixed_current_past: 0.7142857142857143
     nav_links_no_names: 1.0
     placeholder_name_council: 1.0
-    raisin_township_clerk: 1.0
+    raisin_township_clerk: 0.8571428571428571
     raisin_township_supervisor: 1.0
-    redundant_place_role: 0.8916666666666666
+    redundant_place_role: 0.7222222222222223
+    seattle_council_separate_mayor: 0.7777777777777778
     vacant_positions_council: 1.0
-- timestamp: '2026-08-16T21:21:02+00:00'
+  dispositions:
+    designations_other:
+      correct: 18
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 20
+      missing: 21
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 11
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 24
+      missing: 0
+      spurious: 2
+      wrong: 0
+    person:
+      correct: 71
+      missing: 1
+      spurious: 3
+      wrong: 0
+    phone:
+      correct: 31
+      missing: 29
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 63
+      missing: 8
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 65
+      missing: 8
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 11
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 63
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260916T201530Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-16T20:35:14+00:00'
   provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
   prompt_sha256: bc0a307918ed
-  cost_usd: 0.00789692
-  elapsed_seconds: 92.92
+  cost_usd: 0.0129977008
+  elapsed_seconds: 213.74
   scores:
     designations_other: 1.0
     district: 1.0
-    email: 0.7777777777777778
-    end_date: 1.0
-    image: 0.9333333333333333
-    person: 0.9841269841269841
-    phone: 0.8235294117647058
-    primary_role: 0.896551724137931
-    roles: 0.9166666666666666
-    start_date: 0.7272727272727273
-    url: 0.9411764705882353
+    email: 0.782608695652174
+    end_date: 0.8
+    image: 0.9795918367346939
+    person: 0.9863013698630136
+    phone: 0.7368421052631579
+    primary_role: 0.9722222222222222
+    roles: 0.9864864864864865
+    start_date: 1.0
+    url: 1.0
   cases:
     austin_city_manager_staff: 0.0
     austin_council: 1.0
     austin_district7_council_member: 1.0
-    board_of_aldermen: 0.9199999999999999
+    board_of_aldermen: 0.7666666666666666
     coleman_council: 0.8625
-    golinda_mixed_city_county: 0.8571428571428571
+    golinda_mixed_city_county: 1.0
     inverted_name_format: 1.0
-    la_porte_council: 0.9012345679012346
-    mixed_current_past: 0.5714285714285714
+    jackson_mayors_office: 1.0
+    la_porte_council: 1.0
+    mixed_current_past: 0.7142857142857143
     nav_links_no_names: 1.0
     placeholder_name_council: 1.0
-    raisin_township_clerk: 1.0
+    raisin_township_clerk: 0.8571428571428571
     raisin_township_supervisor: 1.0
     redundant_place_role: 0.9916666666666666
+    seattle_council_separate_mayor: 0.7777777777777778
     vacant_positions_council: 1.0
-- timestamp: '2026-08-16T21:23:44+00:00'
+  dispositions:
+    designations_other:
+      correct: 19
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 27
+      missing: 15
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 12
+      missing: 0
+      spurious: 6
+      wrong: 0
+    image:
+      correct: 24
+      missing: 0
+      spurious: 1
+      wrong: 0
+    person:
+      correct: 72
+      missing: 0
+      spurious: 2
+      wrong: 0
+    phone:
+      correct: 35
+      missing: 25
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 70
+      missing: 2
+      spurious: 2
+      wrong: 0
+    roles:
+      correct: 73
+      missing: 2
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 64
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260916T203514Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-16T20:47:16+00:00'
   provider: open_router-DigitalOcean
-  prompt_sha256: bc0a307918ed
-  cost_usd: 0.00792497
-  elapsed_seconds: 78.59
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 8d1b93961ff5
+  cost_usd: 0.0131363708
+  elapsed_seconds: 84.15
   scores:
     designations_other: 1.0
     district: 1.0
-    email: 0.9
+    email: 0.6666666666666666
     end_date: 1.0
-    image: 0.9032258064516129
-    person: 0.9841269841269841
-    phone: 0.9010989010989011
-    primary_role: 0.9838709677419355
-    roles: 0.9922480620155039
+    image: 0.7317073170731707
+    person: 0.9863013698630136
+    phone: 0.6046511627906976
+    primary_role: 1.0
+    roles: 1.0
+    start_date: 1.0
+    url: 0.943089430894309
+  cases:
+    austin_city_manager_staff: 1.0
+    austin_council: 1.0
+    austin_district7_council_member: 1.0
+    board_of_aldermen: 0.6833333333333333
+    coleman_council: 0.875
+    golinda_mixed_city_county: 0.8571428571428571
+    inverted_name_format: 1.0
+    jackson_mayors_office: 0.875
+    la_porte_council: 0.8888888888888888
+    mixed_current_past: 0.7142857142857143
+    nav_links_no_names: 1.0
+    placeholder_name_council: 1.0
+    raisin_township_clerk: 0.8571428571428571
+    raisin_township_supervisor: 1.0
+    redundant_place_role: 1.0
+    seattle_council_separate_mayor: 0.6666666666666666
+    vacant_positions_council: 0.75
+  dispositions:
+    designations_other:
+      correct: 19
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 21
+      missing: 21
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 15
+      missing: 9
+      spurious: 2
+      wrong: 0
+    person:
+      correct: 72
+      missing: 0
+      spurious: 2
+      wrong: 0
+    phone:
+      correct: 26
+      missing: 34
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 72
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 75
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 58
+      missing: 5
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260916T204716Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-16T20:35:14+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: bc0a307918ed
+  cost_usd: 0.01930939
+  elapsed_seconds: 185.15
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    end_date: 1.0
+    image: 0.8
+    person: 0.9863013698630136
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
     start_date: 1.0
     url: 1.0
   cases:
     austin_city_manager_staff: 1.0
     austin_council: 1.0
     austin_district7_council_member: 1.0
-    board_of_aldermen: 0.9199999999999999
-    coleman_council: 0.8625
-    golinda_mixed_city_county: 0.8571428571428571
+    board_of_aldermen: 0.75
+    coleman_council: 1.0
+    golinda_mixed_city_county: 1.0
     inverted_name_format: 1.0
+    jackson_mayors_office: 1.0
     la_porte_council: 1.0
     mixed_current_past: 1.0
-    nav_links_no_names: 1.0
+    nav_links_no_names: 0.0
     placeholder_name_council: 1.0
     raisin_township_clerk: 1.0
     raisin_township_supervisor: 1.0
     redundant_place_role: 1.0
+    seattle_council_separate_mayor: 1.0
     vacant_positions_council: 1.0
-- timestamp: '2026-08-16T21:27:45+00:00'
-  provider: open_router-DigitalOcean
-  prompt_sha256: bc0a307918ed
-  cost_usd: 0.00787108
-  elapsed_seconds: 78.24
+  dispositions:
+    designations_other:
+      correct: 19
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 42
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 20
+      missing: 0
+      spurious: 2
+      wrong: 4
+    person:
+      correct: 72
+      missing: 0
+      spurious: 2
+      wrong: 0
+    phone:
+      correct: 60
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 72
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 75
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 64
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260916T203514Z-open_router-NextBit.yml
+- timestamp: '2026-09-16T20:47:16+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 8d1b93961ff5
+  cost_usd: 0.01615344
+  elapsed_seconds: 189.12
   scores:
     designations_other: 1.0
     district: 1.0
-    email: 0.7777777777777778
+    email: 1.0
     end_date: 1.0
-    image: 0.9655172413793104
-    person: 0.992
-    phone: 0.75
-    primary_role: 0.9516129032258065
-    roles: 0.9763779527559056
+    image: 0.96
+    person: 0.9863013698630136
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
     start_date: 1.0
-    url: 0.9306930693069307
+    url: 0.953125
   cases:
     austin_city_manager_staff: 1.0
     austin_council: 1.0
     austin_district7_council_member: 1.0
-    board_of_aldermen: 0.9199999999999999
-    coleman_council: 0.9875
+    board_of_aldermen: 0.8333333333333334
+    coleman_council: 1.0
+    golinda_mixed_city_county: 1.0
+    inverted_name_format: 1.0
+    jackson_mayors_office: 1.0
+    la_porte_council: 1.0
+    mixed_current_past: 1.0
+    nav_links_no_names: 0.0
+    placeholder_name_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    redundant_place_role: 1.0
+    seattle_council_separate_mayor: 1.0
+    vacant_positions_council: 0.8571428571428571
+  dispositions:
+    designations_other:
+      correct: 19
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 28
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 42
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 24
+      missing: 0
+      spurious: 2
+      wrong: 0
+    person:
+      correct: 72
+      missing: 0
+      spurious: 2
+      wrong: 0
+    phone:
+      correct: 60
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 72
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 75
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 61
+      missing: 0
+      spurious: 0
+      wrong: 3
+  mismatches_file: _runs/20260916T204716Z-open_router-NextBit.yml
+- timestamp: '2026-09-16T20:35:14+00:00'
+  provider: open_router-OpenInference
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: bc0a307918ed
+  cost_usd: 0.004293154
+  elapsed_seconds: 165.79
+  scores:
+    designations_other: 0.9230769230769231
+    district: 0.875
+    email: 0.7777777777777778
+    end_date: 0.9090909090909091
+    image: 0.6666666666666666
+    person: 0.84
+    phone: 0.6428571428571429
+    primary_role: 0.9152542372881356
+    roles: 0.9166666666666666
+    start_date: 0.8333333333333334
+    url: 0.7524752475247525
+  cases:
+    austin_city_manager_staff: 1.0
+    austin_council: 1.0
+    austin_district7_council_member: 0.8181818181818182
+    board_of_aldermen: 0.725
+    coleman_council: 0.75
+    golinda_mixed_city_county: 0.35294117647058826
+    inverted_name_format: 1.0
+    jackson_mayors_office: 0.875
+    la_porte_council: 0.7901234567901234
+    mixed_current_past: 0.42857142857142855
+    nav_links_no_names: 0.0
+    placeholder_name_council: 1.0
+    raisin_township_clerk: 0.5
+    raisin_township_supervisor: 1.0
+    redundant_place_role: 0.0
+    seattle_council_separate_mayor: 0.2824074074074074
+    vacant_positions_council: 1.0
+  dispositions:
+    designations_other:
+      correct: 12
+      missing: 2
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 21
+      missing: 6
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 21
+      missing: 12
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 5
+      missing: 1
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 12
+      missing: 10
+      spurious: 0
+      wrong: 1
+    person:
+      correct: 63
+      missing: 9
+      spurious: 15
+      wrong: 0
+    phone:
+      correct: 27
+      missing: 30
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 54
+      missing: 9
+      spurious: 1
+      wrong: 0
+    roles:
+      correct: 55
+      missing: 9
+      spurious: 1
+      wrong: 0
+    start_date:
+      correct: 5
+      missing: 0
+      spurious: 0
+      wrong: 1
+    url:
+      correct: 38
+      missing: 9
+      spurious: 0
+      wrong: 8
+  mismatches_file: _runs/20260916T203514Z-open_router-OpenInference.yml
+- timestamp: '2026-09-16T20:47:16+00:00'
+  provider: open_router-OpenInference
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 8d1b93961ff5
+  cost_usd: 0.004202276
+  elapsed_seconds: 192.16
+  scores:
+    designations_other: 0.9285714285714286
+    district: 0.85
+    email: 0.7407407407407407
+    end_date: 0.9523809523809523
+    image: 0.7222222222222222
+    person: 0.8082191780821918
+    phone: 0.7027027027027027
+    primary_role: 0.9090909090909091
+    roles: 0.9122807017543859
+    start_date: 0.9090909090909091
+    url: 1.0
+  cases:
+    austin_city_manager_staff: 1.0
+    austin_council: 1.0
+    austin_district7_council_member: 0.8181818181818182
+    board_of_aldermen: 0.7458333333333332
+    coleman_council: 0.0
     golinda_mixed_city_county: 0.8571428571428571
     inverted_name_format: 1.0
-    la_porte_council: 0.8888888888888888
-    mixed_current_past: 0.5714285714285714
-    nav_links_no_names: 1.0
+    jackson_mayors_office: 0.875
+    la_porte_council: 0.7901234567901234
+    mixed_current_past: 0.0
+    nav_links_no_names: 0.0
     placeholder_name_council: 1.0
-    raisin_township_clerk: 0.7142857142857143
+    raisin_township_clerk: 0.42857142857142855
     raisin_township_supervisor: 1.0
-    redundant_place_role: 0.9833333333333334
-    vacant_positions_council: 1.0
+    redundant_place_role: 0.8666666666666668
+    seattle_council_separate_mayor: 0.3811728395061728
+    vacant_positions_council: 0.21428571428571427
+  dispositions:
+    designations_other:
+      correct: 13
+      missing: 2
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 17
+      missing: 6
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 20
+      missing: 14
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 10
+      missing: 1
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 13
+      missing: 10
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 59
+      missing: 13
+      spurious: 15
+      wrong: 0
+    phone:
+      correct: 26
+      missing: 22
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 50
+      missing: 9
+      spurious: 1
+      wrong: 0
+    roles:
+      correct: 52
+      missing: 9
+      spurious: 1
+      wrong: 0
+    start_date:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 1
+    url:
+      correct: 51
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260916T204716Z-open_router-OpenInference.yml

@@ -1,0 +1,256 @@
+/* ── Can I ship it ── */
+
+.verdict {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.7rem 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.verdict:first-child {
+  border-top: 0;
+}
+
+.verdict__provider {
+  min-width: 9.5rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+.verdict__badge {
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+}
+
+.verdict--ready .verdict__badge {
+  background: var(--success-tint);
+  color: var(--success);
+}
+
+.verdict--blocked .verdict__badge {
+  background: var(--error-tint);
+  color: var(--error);
+}
+
+.verdict__summary {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+}
+
+.verdict__summary b {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.verdict__cost {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.verdict__ran-at {
+  min-width: 6rem;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.verdict__failures {
+  flex-basis: 100%;
+  padding-left: 10.4rem;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--error);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .verdict__failures {
+    padding-left: 0;
+  }
+}
+
+/* ── Which model scores best ── */
+
+table.model-matrix .subtext {
+  margin-top: 0.15rem;
+}
+
+.comparison {
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.comparison__pickers {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+}
+
+.comparison__pickers select {
+  width: auto;
+  margin: 0;
+}
+
+.comparison__summary {
+  margin: 0.8rem 0 0;
+  font-size: var(--font-size-md);
+}
+
+.delta {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.delta--worse {
+  color: var(--error);
+}
+
+.delta--better {
+  color: var(--success);
+}
+
+/* ── What do I fix ── */
+
+.issue-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.issue {
+  padding: 0.55rem 0.2rem;
+  border-top: 1px solid var(--border-subtle);
+  font-size: var(--font-size-md);
+  list-style: none;
+}
+
+.issue:first-child {
+  border-top: 0;
+}
+
+.issue--blocking b {
+  color: var(--error);
+}
+
+.issue--gap b {
+  color: var(--warning);
+}
+
+.issue--noise {
+  color: var(--text-muted);
+}
+
+/* ── Which prompt produced it ── */
+
+.prompt-version {
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.prompt-version:first-of-type {
+  border-top: 0;
+}
+
+.prompt-version__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.9rem;
+}
+
+.prompt-diff pre {
+  max-height: 22rem;
+  margin: 0.4rem 0 0;
+  padding: 0.6rem 0.7rem;
+  overflow-x: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  background: var(--bg);
+  font-size: var(--font-size-sm);
+  white-space: pre-wrap;
+}
+
+.prompt-diff__line {
+  display: block;
+}
+
+.prompt-diff__line--added {
+  color: var(--success);
+}
+
+.prompt-diff__line--removed {
+  color: var(--error);
+}
+
+.prompt-diff__line--context {
+  color: var(--text-muted);
+}
+
+/* ── Detail ── */
+
+.score-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.score-bar__rail {
+  position: relative;
+  flex: 0 0 5.5rem;
+  height: 0.4rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+
+.score-bar__fill {
+  position: absolute;
+  height: 0.4rem;
+  border-radius: var(--radius-sm);
+  background: var(--success);
+}
+
+.score-bar__fill--low {
+  background: var(--error);
+}
+
+.score-bar__zero {
+  position: absolute;
+  top: -0.12rem;
+  left: 0;
+  width: 2px;
+  height: 0.64rem;
+  background: var(--error);
+}
+
+.score-bar__value {
+  font-variant-numeric: tabular-nums;
+}
+
+.swing-warning {
+  margin-left: 0.4rem;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--warning);
+}
+
+.stability--steady {
+  font-weight: 600;
+  color: var(--success);
+}
+
+.stability--moves {
+  font-weight: 600;
+  color: var(--warning);
+}

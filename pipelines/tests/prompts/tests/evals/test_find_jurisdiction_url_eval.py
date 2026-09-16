@@ -106,6 +106,8 @@ def _write_report(failed_cases, elapsed_seconds, total_cases):
             c["id"]: 0.0 if c["id"] in {f["case_id"] for f in failed_cases} else 1.0
             for c in _eval_cases
         },
+        accuracy={},
+        mismatches=None,
     )
     report_path = os.path.join(EVALS_DIR, f"{MODEL_NAME}-eval-report.yml")
     with open(report_path, "w", encoding="utf-8") as f:

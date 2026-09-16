@@ -31,7 +31,7 @@ people:
   start_date: null
   end_date: null
   image: null
-- name: "Jos\xE9 \u201CChito\u201D Vela"
+- name: "Jos\xE9 \"Chito\" Vela"
   label: District 4 Council Member
   phone: 512-978-2104
   email: null
@@ -71,7 +71,7 @@ people:
   start_date: null
   end_date: null
   image: null
-- name: "Zohaib \u201CZo\u201D Qadri"
+- name: Zohaib "Zo" Qadri
   label: District 9 Council Member
   phone: 512-978-2109
   email: null

@@ -1,0 +1,337 @@
+mismatches:
+  austin_city_manager_staff:
+  - actual: present
+    actual_label: City Manager
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: T.C. Broadnax
+  board_of_aldermen:
+  - actual: present
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Abelardo Gonzalez
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (956) 350-4093
+    expected_label: Alderwoman
+    field: phone
+    person: Christi Burnias
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: (956) 350-4093
+    expected_label: Mayor Pro Tem
+    field: phone
+    person: Javier Vera
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (956) 350-4093
+    expected_label: Alderman
+    field: phone
+    person: Mark A. Johnson
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (956) 350-4093
+    expected_label: Alderman
+    field: phone
+    person: Peter Harris
+  coleman_council:
+  - actual: "\u2014"
+    actual_label: Council Member Place 3 (Central Ward)
+    expected: (325) 625-5114
+    expected_label: Council Member Place 3 (Central Ward)
+    field: phone
+    person: Beau Brudney
+  - actual: "\u2014"
+    actual_label: Council Member Place 4 (South Ward)
+    expected: (325) 625-5114
+    expected_label: Council Member Place 4 (South Ward)
+    field: phone
+    person: Monte Sides
+  - actual:
+    - Council Member
+    actual_label: Council Member Place 2 (West Ward)
+    expected:
+    - Mayor Pro Tem
+    expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    field: primary_role
+    person: Sharlene T. Hetzel
+  - actual:
+    - Council Member
+    actual_label: Council Member Place 2 (West Ward)
+    expected:
+    - Council Member
+    - Mayor Pro Tem
+    expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    field: roles
+    person: Sharlene T. Hetzel
+  - actual: "\u2014"
+    actual_label: Council Member Place 2 (West Ward)
+    expected: (325) 625-5114
+    expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    field: phone
+    person: Sharlene T. Hetzel
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (325) 625-5114
+    expected_label: Mayor
+    field: phone
+    person: Tommy Sloan
+  - actual: "\u2014"
+    actual_label: Council Member Place 1 (North Ward)
+    expected: (325) 625-5114
+    expected_label: Council Member Place 1 (North Ward)
+    field: phone
+    person: Tracy Rankin
+  mixed_current_past:
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: cityadmin@cityofleonard.net
+    expected_label: Mayor Pro Tem
+    field: email
+    person: Al Stephens
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: (903) 587-3334
+    expected_label: Mayor Pro Tem
+    field: phone
+    person: Al Stephens
+  - actual: '2026'
+    actual_label: Mayor Pro Tem
+    expected: "\u2014"
+    expected_label: Mayor Pro Tem
+    field: end_date
+    person: Al Stephens
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    expected_label: Council Member
+    field: email
+    person: Billy Wayne Martin
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (903) 587-3334
+    expected_label: Council Member
+    field: phone
+    person: Billy Wayne Martin
+  - actual: '2027-02-16'
+    actual_label: Council Member
+    expected: "\u2014"
+    expected_label: Council Member
+    field: end_date
+    person: Billy Wayne Martin
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    expected_label: Council Member
+    field: email
+    person: Bobby Hanson
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (903) 587-3334
+    expected_label: Council Member
+    field: phone
+    person: Bobby Hanson
+  - actual: '2026'
+    actual_label: Council Member
+    expected: "\u2014"
+    expected_label: Council Member
+    field: end_date
+    person: Bobby Hanson
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    expected_label: Council Member
+    field: email
+    person: Charles Wrenn
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (903) 587-3334
+    expected_label: Council Member
+    field: phone
+    person: Charles Wrenn
+  - actual: '2027-02-16'
+    actual_label: Council Member
+    expected: "\u2014"
+    expected_label: Council Member
+    field: end_date
+    person: Charles Wrenn
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    expected_label: Council Member
+    field: email
+    person: Darrell Grintz
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (903) 587-3334
+    expected_label: Council Member
+    field: phone
+    person: Darrell Grintz
+  - actual: '2027-02-16'
+    actual_label: Council Member
+    expected: "\u2014"
+    expected_label: Council Member
+    field: end_date
+    person: Darrell Grintz
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: cityadmin@cityofleonard.net
+    expected_label: Mayor
+    field: email
+    person: Michael Pye
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (903) 587-3334
+    expected_label: Mayor
+    field: phone
+    person: Michael Pye
+  - actual: '2026'
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: end_date
+    person: Michael Pye
+  raisin_township_clerk:
+  - actual: "\u2014"
+    actual_label: Clerk
+    expected: (517) 423-3162
+    expected_label: Clerk
+    field: phone
+    person: Susan Bunch
+  raisin_township_supervisor:
+  - actual: local://c487d9c940ad.png
+    actual_label: Supervisor
+    expected: "\u2014"
+    expected_label: Supervisor
+    field: image
+    person: Deb Brousseau
+  redundant_place_role:
+  - actual:
+    - Council Member
+    actual_label: Council Member Place 5
+    expected:
+    - Mayor
+    expected_label: Council Member Place 5, Mayor
+    field: primary_role
+    person: Garrett Wood
+  - actual:
+    - Council Member
+    actual_label: Council Member Place 5
+    expected:
+    - Council Member
+    - Mayor
+    expected_label: Council Member Place 5, Mayor
+    field: roles
+    person: Garrett Wood
+  seattle_council_separate_mayor:
+  - actual: "\u2014"
+    actual_label: Councilmember Position 8
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 8
+    field: email
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Councilmember Position 8
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 8
+    field: phone
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Councilmember District 7
+    expected: council@seattle.gov
+    expected_label: Councilmember District 7
+    field: email
+    person: Bob Kettle
+  - actual: "\u2014"
+    actual_label: Councilmember District 7
+    expected: (206) 684-8888
+    expected_label: Councilmember District 7
+    field: phone
+    person: Bob Kettle
+  - actual: "\u2014"
+    actual_label: Councilmember District 6
+    expected: council@seattle.gov
+    expected_label: Councilmember District 6
+    field: email
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Councilmember District 6
+    expected: (206) 684-8888
+    expected_label: Councilmember District 6
+    field: phone
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Councilmember District 5
+    expected: council@seattle.gov
+    expected_label: Councilmember District 5
+    field: email
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Councilmember District 5
+    expected: (206) 684-8888
+    expected_label: Councilmember District 5
+    field: phone
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Councilmember Position 9
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 9
+    field: email
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Councilmember Position 9
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 9
+    field: phone
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Councilmember District 2
+    expected: council@seattle.gov
+    expected_label: Councilmember District 2
+    field: email
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Councilmember District 2
+    expected: (206) 684-8888
+    expected_label: Councilmember District 2
+    field: phone
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Council President District 3
+    expected: council@seattle.gov
+    expected_label: Council President District 3
+    field: email
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Council President District 3
+    expected: (206) 684-8888
+    expected_label: Council President District 3
+    field: phone
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Councilmember District 4
+    expected: council@seattle.gov
+    expected_label: Councilmember District 4
+    field: email
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Councilmember District 4
+    expected: (206) 684-8888
+    expected_label: Councilmember District 4
+    field: phone
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Councilmember District 1
+    expected: council@seattle.gov
+    expected_label: Councilmember District 1
+    field: email
+    person: Rob Saka
+  - actual: "\u2014"
+    actual_label: Councilmember District 1
+    expected: (206) 684-8888
+    expected_label: Councilmember District 1
+    field: phone
+    person: Rob Saka

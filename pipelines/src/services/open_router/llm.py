@@ -87,6 +87,7 @@ async def run_prompt(
     response_schema=None,
     content="",
     model_type="STANDARD",
+    model: str | None = None,
     provider_order=None,
     seed=None,
     temperature: float = _DEFAULT_TEMPERATURE,
@@ -109,8 +110,7 @@ async def run_prompt(
     if not api_key:
         raise ValueError("OPEN_ROUTER_TOKEN is not set")
 
-    model_config = MODELS_BY_TYPE.get(model_type, MODELS_BY_TYPE["STANDARD"])
-    model = model_config["model"]
+    model = model or MODELS_BY_TYPE.get(model_type, MODELS_BY_TYPE["STANDARD"])["model"]
 
     messages = [{"role": "system", "content": prompt}]
     if content:

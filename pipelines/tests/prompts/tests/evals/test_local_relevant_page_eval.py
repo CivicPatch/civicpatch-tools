@@ -214,6 +214,8 @@ def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), 
         {field: counts["f1"] for field, counts in accuracy.items()},
         cost_summary,
         {cid: 0.0 if cid in {f["case_id"] for f in failed_cases} else 1.0 for cid in case_ids},
+        accuracy=accuracy,
+        mismatches=None,
     )
     report_path = os.path.join(evals_dir, f"{model_client['name']}-eval-report.yml")
     with open(report_path, "w", encoding="utf-8") as f:

@@ -1,0 +1,97 @@
+mismatches:
+  board_of_aldermen:
+  - actual: present
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Abelardo Gonzalez
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (956) 350-4093
+    expected_label: Alderwoman
+    field: phone
+    person: Christi Burnias
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: (956) 350-4093
+    expected_label: Mayor Pro Tem
+    field: phone
+    person: Javier Vera
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (956) 350-4093
+    expected_label: Alderman
+    field: phone
+    person: Mark A. Johnson
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (956) 350-4093
+    expected_label: Alderman
+    field: phone
+    person: Peter Harris
+  jackson_mayors_office:
+  - actual: https://jacksontn.gov/government/mayorsoffice
+    actual_label: Mayor
+    expected: https://jacksontn.gov/government/mayorsoffice/aboutmayorconger
+    expected_label: Mayor
+    field: url
+    person: Scott Conger
+  nav_links_no_names:
+  - actual: present
+    actual_label: Councilmember Place 5
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Edward Zapalac
+  raisin_township_clerk:
+  - actual: local://2105ede652ed.png
+    actual_label: Clerk
+    expected: "\u2014"
+    expected_label: Clerk
+    field: image
+    person: Susan Bunch
+  raisin_township_supervisor:
+  - actual: local://c487d9c940ad.png
+    actual_label: Supervisor
+    expected: "\u2014"
+    expected_label: Supervisor
+    field: image
+    person: Deb Brousseau
+  redundant_place_role:
+  - actual: (830) 693-2951
+    actual_label: Council Member Place 2
+    expected: "\u2014"
+    expected_label: Council Member Place 2
+    field: phone
+    person: Barbara Peskin
+  - actual: (830) 693-2951
+    actual_label: Council Member Place 4
+    expected: "\u2014"
+    expected_label: Council Member Place 4
+    field: phone
+    person: Bruce Johnson
+  - actual: (830) 693-2951
+    actual_label: Council Member Place 3 and Mayor Pro-Tem
+    expected: "\u2014"
+    expected_label: Council Member Place 3, Mayor Pro-Tem
+    field: phone
+    person: Carolyn Richmond
+  - actual: (830) 693-2951
+    actual_label: Council Member Place 5 and Mayor
+    expected: "\u2014"
+    expected_label: Council Member Place 5, Mayor
+    field: phone
+    person: Garrett Wood
+  - actual: (830) 693-2951
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: phone
+    person: Mark Bentley
+  - actual: (830) 693-2951
+    actual_label: Council Member Place 1
+    expected: "\u2014"
+    expected_label: Council Member Place 1
+    field: phone
+    person: Mike Shaw
