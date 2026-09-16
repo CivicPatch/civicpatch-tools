@@ -42,6 +42,19 @@ def get_router() -> APIRouter:
             )
         return {"data": {"id": post_id}}
 
+    @router.post("/{organization_id}/default")
+    async def set_default_organization_endpoint(
+        organization_id: str,
+        _: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+        ),
+    ):
+        """Make this the body unassigned posts land in, clearing the flag on its siblings.
+        Registered ahead of the greedy `:path` routes below, like `/{organization_id}/posts`."""
+        if not await organizations.set_default(organization_id):
+            return JSONResponse({"error": "No such organization."}, status_code=404)
+        return {"data": {"ok": True}}
+
     @router.get("/{jurisdiction_ocdid:path}")
     async def get_organizations_endpoint(jurisdiction_ocdid: str):
         """Every body in a jurisdiction with its posts. Public, like the posts/people/role

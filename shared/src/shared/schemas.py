@@ -188,6 +188,20 @@ class Post(BaseModel):
     meta_is_tracked: bool = True
 
 
+class KnownOrganization(BaseModel):
+    """A body cp.org already holds, with its posts — `GET /api/v1/organizations/{ocdid}`.
+
+    "Known" as against what a scrape finds. The nesting is what the org-scoped prompts need:
+    this body's posts are the pick list, every other body's the exclusion set.
+    """
+
+    id: str
+    name: str
+    url: str | None = None
+    meta_is_default: bool = False
+    posts: list[Post] = []
+
+
 class Membership(BaseModel):
     """One open membership, as `PERSON_MEMBERSHIPS` projects it. Narrower than the frontend's
     `Membership`, which the posts-list page needs for `decompose`."""

@@ -1,3 +1,5 @@
+from enum import StrEnum
+
 from core.membership_label import derive_post_label
 from core.post_derivation import DerivedPost
 from shared.schemas import Post
@@ -348,8 +350,8 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
         -- `meta_headcount`/`meta_is_tracked`/`meta_is_verified` are the fields no civic standard
         -- defines. Stored ones carry their marker as their column name; only a computed one
         -- like `meta_is_verified` needs an alias to get it.
-        SELECT posts.id::text, posts.organization_id::text, posts.role_id, posts.division_ocdid,
-               posts.meta_headcount, posts.meta_is_tracked,
+        SELECT posts.id::text, posts.jurisdiction_ocdid, posts.organization_id::text,
+               posts.role_id, posts.division_ocdid, posts.meta_headcount, posts.meta_is_tracked,
                {POST_IS_VERIFIED} AS meta_is_verified,
                roles.label AS role_label
         FROM posts LEFT JOIN roles ON roles.id = posts.role_id
@@ -625,6 +627,79 @@ async def update(
             changeset_id=changeset_id,
         )
         return before.jurisdiction_ocdid
+
+
+class MoveOutcome(StrEnum):
+    MOVED = "moved"
+    NO_SUCH_POST = "no_such_post"
+    NO_SUCH_ORGANIZATION = "no_such_organization"
+    POST_EXISTS = "post_exists"
+    HOLDER_ALREADY_SEATED = "holder_already_seated"
+
+
+async def move(post_id: str, organization_id: str, user_id: str | None = None) -> MoveOutcome:
+    """Move a post to another body in its jurisdiction. Memberships follow via their
+    `ON UPDATE CASCADE` foreign key, closed ones included.
+
+    Both collisions are checked first so each gets its own answer rather than a 500: the target
+    already has this role and division, or someone holding this post already holds an open seat
+    in the target (one open membership per person per body).
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        before = await get(cur, post_id)
+        if before is None:
+            return MoveOutcome.NO_SUCH_POST
+        if await organizations.jurisdiction_for(cur, organization_id) != before.jurisdiction_ocdid:
+            return MoveOutcome.NO_SUCH_ORGANIZATION
+        if before.organization_id == organization_id:
+            return MoveOutcome.MOVED
+
+        await cur.execute(
+            "SELECT 1 FROM posts WHERE organization_id = %s AND role_id = %s AND division_ocdid = %s",
+            (organization_id, before.role_id, before.division_ocdid),
+        )
+        if await cur.fetchone():
+            return MoveOutcome.POST_EXISTS
+
+        await cur.execute(
+            """
+            SELECT 1
+            FROM memberships moving
+            JOIN memberships seated ON seated.person_id = moving.person_id
+            WHERE moving.post_id::text = %s AND moving.closed_at IS NULL
+              AND seated.organization_id::text = %s AND seated.closed_at IS NULL
+            LIMIT 1
+            """,
+            (post_id, organization_id),
+        )
+        if await cur.fetchone():
+            return MoveOutcome.HOLDER_ALREADY_SEATED
+
+        names = await organizations.names(cur, [before.organization_id, organization_id])
+        await cur.execute(
+            "UPDATE posts SET organization_id = %s WHERE id::text = %s", (organization_id, post_id)
+        )
+        await record_change(
+            cur,
+            ActivityType.EDIT_POST,
+            user_id,
+            before.jurisdiction_ocdid,
+            Change(
+                entity_type=EntityType.POST,
+                entity_id=post_id,
+                subject=before.label or before.role_id,
+                fields=[
+                    FieldChange(
+                        field="organization",
+                        before=names.get(before.organization_id),
+                        after=names.get(organization_id),
+                    )
+                ],
+            ),
+            changeset_id=await live_roster_changeset(cur, before.jurisdiction_ocdid),
+        )
+        return MoveOutcome.MOVED
 
 
 async def delete(post_id: str, user_id: str | None = None) -> bool:

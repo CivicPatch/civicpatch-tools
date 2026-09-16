@@ -1,13 +1,14 @@
 """Populate the local dev database with a small subset of the published open-data dataset.
 
-`civicpatch.org` publishes its entire live entity graph as public, unauthenticated Parquet
-files at `https://cdn.civicpatch.org/parquet/` (the same dataset the open-data.civicpatch.org
-SQL explorer queries). This script loads it into the local dev database with two different
-scopes: `jurisdictions` and `divisions` (pure geography — cheap regardless of size) load in
-full, optionally narrowed to specific states; `organizations` and everything that hangs off one
-(`posts`, `memberships`, and the `people` those memberships reference) are capped by `--limit`,
-since those are the tables that actually grow with real content. No GitHub App credentials, no
-Temporal worker, just real production data to click around in.
+Each table comes from where production gets it. Jurisdictions come from the open-data repo, read
+through the same sync code production runs (which also gives each one its default organization),
+from a single public archive download rather than the authenticated GitHub API. Everything
+`civicpatch.org` itself owns comes from its public Parquet export at
+`https://cdn.civicpatch.org/parquet/` (the dataset the open-data.civicpatch.org SQL explorer
+queries): `divisions` in full, optionally narrowed to specific states, and `organizations` plus
+everything that hangs off one (`posts`, `memberships`, the `people` those reference) capped by
+`--limit`, since those are the tables that actually grow with real content. No GitHub App
+credentials, no Temporal worker, just real production data to click around in.
 
 Run via `mise run seed-dev-data` (see `mise.toml`), which execs this inside the running
 `civicpatch-org` container.
@@ -24,24 +25,55 @@ import argparse
 import asyncio
 import io
 import logging
+import tarfile
+from datetime import datetime, timezone
 from typing import Any, LiteralString
 
 import httpx
 import pyarrow.parquet as pq
 from psycopg import AsyncConnection
 
-from core.jurisdiction_search import build_search_text
+from core.sources.open_data.paths import SyncFileKind, classify_path, jurisdiction_path_parts
 from database.database import get_pool
+from services.sources.open_data import read_jurisdiction_files
 
 logger = logging.getLogger(__name__)
 
 DATA_BASE = "https://cdn.civicpatch.org/parquet/"
+# The whole public repo as one download: the REST API allows 60 unauthenticated requests an hour,
+# and a sync reads one file per (state, level).
+OPEN_DATA_ARCHIVE = "https://codeload.github.com/civicpatch/open-data/tar.gz/refs/heads/main"
 
 
 async def fetch_table(client: httpx.AsyncClient, table: str) -> list[dict[str, Any]]:
     response = await client.get(f"{DATA_BASE}{table}/data.parquet")
     response.raise_for_status()
     return pq.read_table(io.BytesIO(response.content)).to_pylist()
+
+
+async def fetch_open_data_archive(client: httpx.AsyncClient) -> bytes:
+    response = await client.get(OPEN_DATA_ARCHIVE, follow_redirects=True)
+    response.raise_for_status()
+    return response.content
+
+
+def jurisdiction_files(archive: bytes) -> dict[str, str]:
+    """Repo path → contents for every `jurisdictions.yml` the sync would read. The archive nests
+    everything under one `<repo>-<branch>/` directory, which the repo's own paths do not have."""
+    files = {}
+    with tarfile.open(fileobj=io.BytesIO(archive), mode="r:gz") as tar:
+        for member in tar.getmembers():
+            path = member.name.partition("/")[2]
+            extracted = tar.extractfile(member) if member.isfile() else None
+            if extracted and classify_path(path) is SyncFileKind.JURISDICTIONS:
+                files[path] = extracted.read().decode("utf-8")
+    return files
+
+
+def files_in_states(files: dict[str, str], states: set[str] | None) -> list[str]:
+    if states is None:
+        return list(files)
+    return [path for path in files if jurisdiction_path_parts(path)[0] in states]
 
 
 def rows_in_jurisdictions(
@@ -70,29 +102,6 @@ def role_row(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def jurisdiction_row(row: dict[str, Any], state_names: dict[str, str]) -> dict[str, Any]:
-    return {
-        "jurisdiction_ocdid": row["jurisdiction_ocdid"],
-        "state": row["state"],
-        "level": row["level"],
-        "status": row["status"],
-        # The export carries `data` as JSON text rather than a nested parquet column — its
-        # keys (population, wiki_url, issues, ...) grow over time, and a fixed struct schema
-        # would silently drop whichever ones nobody remembered to add there. Passed straight
-        # through as text: Postgres assigns a text literal to a jsonb column without a cast,
-        # the same way `database/jurisdictions.py`'s own writes pass `json.dumps(...)`.
-        "data": row["data"],
-        "parent_ocdids": row["parent_ocdids"],
-        "updated_at": row["updated_at"],
-        # Not derived by Postgres, not left to its `''` default either: search depends on
-        # this entirely (`WHERE to_tsvector('simple', search_text) @@ ...`), so a row with a
-        # blank one is just unfindable, not merely missing a nice-to-have.
-        "search_text": build_search_text(
-            {"name": row["name"]}, row["state"], state_names.get(row["state"])
-        ),
-    }
-
-
 def division_row(row: dict[str, Any]) -> dict[str, Any]:
     return {
         "ocdid": row["ocdid"],
@@ -108,6 +117,8 @@ def organization_row(row: dict[str, Any]) -> dict[str, Any]:
         "name": row["name"],
         "sort_order": row["sort_order"],
         "url": row["url"],
+        # Absent from an export written before migration 202's column was added to it.
+        "meta_is_default": row.get("meta_is_default", False),
         "created_at": row["created_at"],
     }
 
@@ -166,22 +177,17 @@ INSERT_SQL: dict[str, LiteralString] = {
         VALUES (%(id)s, %(label)s, %(status)s, %(is_unique)s, %(priority)s, %(created_at)s)
         ON CONFLICT (id) DO NOTHING
     """,
-    "jurisdictions": """
-        INSERT INTO jurisdictions
-            (jurisdiction_ocdid, state, level, status, data, parent_ocdids, updated_at, search_text)
-        VALUES
-            (%(jurisdiction_ocdid)s, %(state)s, %(level)s, %(status)s, %(data)s, %(parent_ocdids)s,
-             %(updated_at)s, %(search_text)s)
-        ON CONFLICT (jurisdiction_ocdid) DO NOTHING
-    """,
     "divisions": """
         INSERT INTO divisions (ocdid, jurisdiction_ocdid, created_at)
         VALUES (%(ocdid)s, %(jurisdiction_ocdid)s, %(created_at)s)
         ON CONFLICT (ocdid) DO NOTHING
     """,
     "organizations": """
-        INSERT INTO organizations (id, jurisdiction_ocdid, name, sort_order, url, created_at)
-        VALUES (%(id)s, %(jurisdiction_ocdid)s, %(name)s, %(sort_order)s, %(url)s, %(created_at)s)
+        INSERT INTO organizations
+            (id, jurisdiction_ocdid, name, sort_order, url, meta_is_default, created_at)
+        VALUES
+            (%(id)s, %(jurisdiction_ocdid)s, %(name)s, %(sort_order)s, %(url)s,
+             %(meta_is_default)s, %(created_at)s)
         -- No conflict target: `organizations_jurisdiction_ocdid_name_key` (jurisdiction_ocdid,
         -- name) can collide independently of the id PK when a jurisdiction's default org
         -- already exists locally. A bare DO NOTHING guards every unique constraint on the
@@ -253,6 +259,24 @@ async def wipe_existing_data(conn: AsyncConnection) -> None:
     await conn.commit()
 
 
+async def loaded_jurisdiction_ocdids(conn: AsyncConnection) -> set[str]:
+    async with conn.cursor() as cur:
+        await cur.execute("SELECT jurisdiction_ocdid FROM jurisdictions")
+        return {row[0] for row in await cur.fetchall()}
+
+
+async def remove_synced_defaults(conn: AsyncConnection, jurisdiction_ocdids: set[str]) -> None:
+    """The sync gave every jurisdiction an empty 'Government'. Where the export has the real
+    bodies, that placeholder would take the name first and leave the exported one skipped by its
+    conflict clause — and every exported post pointing at that id failing its foreign key."""
+    async with conn.cursor() as cur:
+        await cur.execute(
+            "DELETE FROM organizations WHERE jurisdiction_ocdid = ANY(%s)",
+            (list(jurisdiction_ocdids),),
+        )
+    await conn.commit()
+
+
 async def seed(states: list[str] | None, limit: int) -> None:
     """`jurisdictions` and `divisions` load in full (optionally narrowed by `states`) — pure
     geography, cheap regardless of size. `limit` caps how many `organizations` load, and
@@ -261,31 +285,27 @@ async def seed(states: list[str] | None, limit: int) -> None:
     state_set = {state.lower() for state in states} if states else None
     pool = await get_pool()
 
-    async with httpx.AsyncClient() as client, pool.connection() as conn:
+    async with httpx.AsyncClient(timeout=120) as client, pool.connection() as conn:
         await wipe_existing_data(conn)
 
         role_rows = [role_row(row) for row in await fetch_table(client, "roles")]
         await insert_ignoring_conflicts(conn, "roles", role_rows)
         logger.info("seed_open_data_subset: roles: %d row(s)", len(role_rows))
 
-        raw_jurisdictions = await fetch_table(client, "jurisdictions")
-        # From this same fetch, not a DB lookup: a state's own display name lives on its own
-        # `level == "state"` row, which is right here regardless of what `--states` narrows
-        # everything else to.
-        state_names = {
-            row["state"]: row["name"] for row in raw_jurisdictions if row["level"] == "state"
-        }
-        jurisdictions_in_scope = (
-            raw_jurisdictions
-            if state_set is None
-            else [row for row in raw_jurisdictions if row["state"] in state_set]
+        files = jurisdiction_files(await fetch_open_data_archive(client))
+
+        async def read_file(path: str) -> tuple[str, str]:
+            return path, files[path]
+
+        synced = await read_jurisdiction_files(
+            files_in_states(files, state_set), datetime.now(timezone.utc), read_file
         )
-        jurisdiction_ocdids = {row["jurisdiction_ocdid"] for row in jurisdictions_in_scope}
-        jurisdiction_rows = [
-            jurisdiction_row(row, state_names) for row in jurisdictions_in_scope
-        ]
-        await insert_ignoring_conflicts(conn, "jurisdictions", jurisdiction_rows)
-        logger.info("seed_open_data_subset: jurisdictions: %d row(s)", len(jurisdiction_rows))
+        jurisdiction_ocdids = await loaded_jurisdiction_ocdids(conn)
+        logger.info(
+            "seed_open_data_subset: jurisdictions: %d from %d file(s)",
+            len(jurisdiction_ocdids),
+            len(synced),
+        )
 
         raw_divisions = await fetch_table(client, "divisions")
         division_rows = [
@@ -301,6 +321,9 @@ async def seed(states: list[str] | None, limit: int) -> None:
         ]
         organization_ids = {row["id"] for row in organizations_in_scope}
         organization_rows = [organization_row(row) for row in organizations_in_scope]
+        await remove_synced_defaults(
+            conn, {row["jurisdiction_ocdid"] for row in organizations_in_scope}
+        )
         await insert_ignoring_conflicts(conn, "organizations", organization_rows)
         logger.info("seed_open_data_subset: organizations: %d row(s)", len(organization_rows))
 

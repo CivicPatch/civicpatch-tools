@@ -36,6 +36,12 @@ class UpdatePostRequest(BaseModel):
     meta_is_tracked: bool
 
 
+class MovePostRequest(BaseModel):
+    """The body a post belongs to. Must be in the post's own jurisdiction."""
+
+    organization_id: str
+
+
 class AssignMembershipRequest(BaseModel):
     """Assign a person, moving them off any other post in the same body.
 

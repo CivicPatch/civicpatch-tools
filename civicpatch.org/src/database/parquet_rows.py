@@ -72,7 +72,7 @@ TABLES: dict[str, LiteralString] = {
     """,
     "organizations": f"""
         SELECT {_STATE_OF.format(col="jurisdiction_ocdid")} AS state,
-               id::text, jurisdiction_ocdid, name, sort_order, url, created_at
+               id::text, jurisdiction_ocdid, name, sort_order, url, meta_is_default, created_at
         FROM organizations
         ORDER BY state, id
     """,

@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Dict, List, Optional, TypeAlias
 
-from shared.schemas import Person
+from shared.schemas import KnownOrganization, Person
 from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, ConfigDict, Field
 from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import (
@@ -228,6 +228,8 @@ class ResearchMunicipalityStep(BaseModel):
     # Who research thinks holds which office, labels verbatim. Only the cold-start path fills
     # it: once cp.org has posts, they are the same answer already parsed.
     researched: List[ResearchedPerson] = []
+    # The bodies and their posts; empty on a first scrape. Flat views below are derived from it.
+    known_organizations: List[KnownOrganization] = []
     target_divisions: List[str] = []  # geographic divisions to look for
     known_roles: list[str] = []
     identities: dict[
