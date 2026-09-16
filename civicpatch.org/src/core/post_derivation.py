@@ -12,7 +12,7 @@ from pydantic import BaseModel
 from shared.schemas import Role
 from shared.utils.taxonomy import Taxonomy
 
-from core.membership_label import MembershipLabel, derive_post_label, render
+from core.membership_label import MembershipLabel, render
 from core.people_roles import DerivedRoles, derive_roles
 
 # A label resolving to no role still gets a post, so nobody is postless. Seeded by 118.
@@ -115,13 +115,11 @@ def _member(
     record: RosterEntry,
     parsed: DerivedRoles,
     ids_by_label: dict[str, str],
-    labels_by_id: dict[str, str],
     post_role_id: str,
-    post_division_ocdid: str,
 ) -> "DerivedMembership":
-    """One person: designations, demoted roles and residue beyond the post's own role, plus
-    a composed `label` that repeats the post's own name on top of those, so it reads on its
-    own."""
+    """One person: designations, demoted roles and residue beyond the post's own role — what
+    their labels said that the post's own name (looked up separately, from its role and
+    division) does not."""
     demoted = _demoted_roles(parsed, ids_by_label, post_role_id)
     return DerivedMembership(
         person_id=record.id,
@@ -131,9 +129,6 @@ def _member(
         role_ids=[role_id for _, role_id in demoted],
         label=render(
             MembershipLabel(
-                post_label=derive_post_label(
-                    _role_label(post_role_id, labels_by_id), post_division_ocdid
-                ),
                 demoted_roles=[role_label for role_label, _ in demoted],
                 designations=parsed.other_designations,
                 # `parsed.unmatched` (every part's, whether or not that part matched a role),
@@ -191,7 +186,7 @@ def derived_posts(
             else (role_id_for(parsed), parsed.division_ocdid)
         )
         grouped.setdefault(key, []).append(
-            _member(record, parsed, ids_by_label, labels_by_id, key[0], key[1])
+            _member(record, parsed, ids_by_label, key[0])
         )
 
     return [

@@ -18,6 +18,11 @@ import {
 } from "../posts-list/posts-model.js";
 
 export const PICKED_EVENT = "picked";
+// A new post was minted — distinct from PICKED_EVENT, which fires for an existing one too.
+// `justAdded` only ever patches this one picker's own options; whoever owns the org's real
+// posts list needs this to refetch it, or every other card (and this one, once remounted)
+// keeps not knowing the post exists.
+export const POST_CREATED_EVENT = "post-created";
 
 type OfficePickerHost = HTMLElement & {
   posts?: Post[];
@@ -138,7 +143,11 @@ function OfficePicker(host: OfficePickerHost) {
     });
     setRoleId(role_id);
     setDivisionOcdid(division_ocdid === atLarge ? NO_DIVISION : division_ocdid);
-    notifyPicked(post_id, label ?? undefined);
+    // Not `label` — that's the new post's own name (civ-post-add's own field, ignored by the
+    // API since 148 anyway), never the occupant's membership label. Picking a post never sets
+    // one (see office-changes.ts/field-controls.ts's own comments on this).
+    notifyPicked(post_id);
+    hostDispatch(host, POST_CREATED_EVENT);
   };
 
   return html`

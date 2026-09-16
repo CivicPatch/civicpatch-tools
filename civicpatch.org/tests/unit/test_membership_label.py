@@ -2,10 +2,11 @@
 
 Pure — the fallback used when nobody has set `memberships.label`.
 
-`derive_label` split into two when `MembershipLabel` landed: `derive_post_label` names the
-seat everyone in it shares, and `render(MembershipLabel(...))` adds what one occupant's own
-labels carried past it. Four of the old function's five callers passed empty designations and
-unmatched text — they had always wanted just the seat.
+`derive_post_label` names the seat everyone in it shares; `render(MembershipLabel(...))` names
+what one occupant's own labels said beyond it. The two used to compose into one string here,
+seat first — reversed because every caller already has the seat's name separately (the post it
+belongs to), and every consumer of `render`'s output shows the two beside each other rather
+than needing one glued string.
 """
 
 import pytest
@@ -14,6 +15,7 @@ from core.membership_label import (
     MembershipLabel,
     derive_post_label,
     render,
+    render_with_post_label,
 )
 
 _WHOLE = "ocd-division/country:us/state:wa/place:seattle"
@@ -31,43 +33,35 @@ def test_a_division_is_named_readably():
 
 
 @pytest.mark.unit
-def test_a_designation_follows_the_seat():
-    """Was `test_designations_come_before_the_division`, which asserted the designation was
-    interleaved into the seat's name. It now follows it: the seat is what every holder shares
-    and stays contiguous, and "Position 8" is about one of them.
+def test_a_whole_government_division_adds_nothing():
+    """`place:` and `county:` name a government, not a division of one."""
+    county = "ocd-division/country:us/state:mi/county:chippewa/place:detour"
+    assert derive_post_label("Mayor", county) == "Mayor"
 
-    "Position 8" is still what tells two identical at-large seats apart — dropping it would
-    render Seattle's two at-large councilmembers the same."""
+
+@pytest.mark.unit
+def test_nothing_beyond_the_seat_renders_empty():
+    """The common case: nobody's own labels said anything the post's own name does not
+    already cover."""
+    assert render(MembershipLabel()) == ""
+
+
+@pytest.mark.unit
+def test_a_designation_stands_on_its_own():
+    """ "Position 8" is still what tells two identical at-large seats apart — the seat's own
+    name is shown beside this now, not folded into it, so this is just the designation."""
+    assert render(MembershipLabel(designations=["Position 8"])) == "Position 8"
+
+
+@pytest.mark.unit
+def test_a_demoted_role_comes_before_a_designation():
+    """Someone who is Mayor and also a Council Member holds one seat and is described by
+    both. The losing role belongs to the occupant, so it renders here, not on the seat."""
     assert (
         render(
-            MembershipLabel(post_label="Council Member", designations=["Position 8"])
+            MembershipLabel(demoted_roles=["Council Member"], designations=["Position 8"])
         )
         == "Council Member, Position 8"
-    )
-
-
-@pytest.mark.unit
-def test_the_seat_stays_contiguous_before_the_occupants_own_parts():
-    """The reason the order changed. `Council Member, District 5` is one seat named in two
-    words; splitting a designation between them read as three separate things."""
-    assert (
-        render(
-            MembershipLabel(
-                post_label=derive_post_label("Council Member", _D3),
-                designations=["Place 2"],
-            )
-        )
-        == "Council Member, District 3, Place 2"
-    )
-
-
-@pytest.mark.unit
-def test_a_demoted_role_is_named_after_the_seat():
-    """Someone who is Mayor and also a Council Member holds one seat and is described by
-    both. The losing role belongs to the occupant, not to the seat."""
-    assert (
-        render(MembershipLabel(post_label="Mayor", demoted_roles=["Council Member"]))
-        == "Mayor, Council Member"
     )
 
 
@@ -76,18 +70,24 @@ def test_unmatched_text_is_shown_rather_than_hidden():
     """It came off the page. A label that silently omits it looks correct while losing what
     nobody could classify."""
     assert (
-        render(
-            MembershipLabel(
-                post_label="Trustee", unmatched_text=["Zoning Administrator"]
-            )
-        )
-        == "Trustee, Zoning Administrator"
+        render(MembershipLabel(unmatched_text=["Zoning Administrator"]))
+        == "Zoning Administrator"
     )
 
 
 @pytest.mark.unit
-def test_a_whole_government_division_adds_nothing():
-    """`place:` and `county:` name a government, not a division of one."""
-    county = "ocd-division/country:us/state:mi/county:chippewa/place:detour"
-    assert derive_post_label("Mayor", county) == "Mayor"
+def test_render_with_post_label_puts_the_seat_first():
+    """`batch_review.py`'s only remaining use of the self-contained form: a dense multi-town
+    table with no separate place to show the seat's own name."""
+    assert (
+        render_with_post_label(
+            "Council Member, District 5", MembershipLabel(designations=["Chair"])
+        )
+        == "Council Member, District 5, Chair"
+    )
+
+
+@pytest.mark.unit
+def test_render_with_post_label_is_just_the_seat_when_there_is_nothing_beyond_it():
+    assert render_with_post_label("Mayor", MembershipLabel()) == "Mayor"
 

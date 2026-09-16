@@ -3,7 +3,10 @@
 Pure, and a reconstruction — "Councilmember Pos. 8" yields "Council Member, Position 8". Close
 enough to read, never to trust, which is why `memberships.label` can overrule it.
 
-`derive_post_label` names the seat; `MembershipLabel` names one person in it.
+`derive_post_label` names the seat; `MembershipLabel` names one person in it — and only that:
+the seat's own name is never folded in here, since every caller already has it separately
+(the post it belongs to), and every consumer of `render`'s output shows it beside, not inside,
+whatever this returns.
 """
 
 from pydantic import BaseModel
@@ -34,21 +37,25 @@ def derive_post_label(role_label: str, division_ocdid: str) -> str:
 
 
 class MembershipLabel(BaseModel):
-    """One person in one seat. Everything past `post_label` is about the occupant."""
+    """What one occupant's own labels said beyond their seat's name."""
 
-    post_label: str
     demoted_roles: list[str] = []
     designations: list[str] = []
     unmatched_text: list[str] = []
 
 
 def render(label: MembershipLabel) -> str:
-    """One string, seat first — "Council Member, District 5, Place 2", so the shared part
-    stays contiguous."""
-    parts = [
-        label.post_label,
-        *label.demoted_roles,
-        *label.designations,
-        *label.unmatched_text,
-    ]
+    """One string, empty when the occupant's labels said nothing beyond the seat itself."""
+    parts = [*label.demoted_roles, *label.designations, *label.unmatched_text]
+    return _SEPARATOR.join(part for part in parts if part)
+
+
+def render_with_post_label(post_label: str, label: MembershipLabel) -> str:
+    """The self-contained form: seat first, then whatever `render` adds beyond it.
+
+    For a caller with no separate place to show the seat's own name — a dense multi-town scan
+    table (`batch_review.py`), not the per-person card, which shows the two beside each other
+    and calls `render` directly instead.
+    """
+    parts = [post_label, *label.demoted_roles, *label.designations, *label.unmatched_text]
     return _SEPARATOR.join(part for part in parts if part)

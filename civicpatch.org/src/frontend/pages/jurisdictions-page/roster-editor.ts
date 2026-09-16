@@ -58,7 +58,7 @@ function RosterEditor({
   blockedReason,
   onPublished,
 }: RosterEditorProps) {
-  const { organizations } = useOrganizations(jurisdictionOcdid);
+  const { organizations, reload: reloadOrganizations } = useOrganizations(jurisdictionOcdid);
   const roles = useJurisdictionRoles();
   // Where "Add" was clicked for a not-yet-saved person, since they hold no post yet to place
   // them by. Session-local — once they're given an office their held post takes over.
@@ -216,25 +216,27 @@ function RosterEditor({
         `
       : nothing;
   return html`
-    ${toolbar}
-    ${groups.map(
-      (group) => html`
-        ${renderRosterCards({
-          cards: group.cards,
-          isLoading,
-          blockedReason,
-          actions: addActionFor(group.organization.id),
-          onOpenPerson: canEdit ? handleOpenPerson : null,
-          openPersonId: canEdit ? openPersonId : null,
-          editorFor: canEdit ? editorFor : null,
-          roles,
-          title: group.organization.name,
-        })}
-      `,
-    )}
-    ${publishError
-      ? html`<p style="color: var(--diff-removed);">${publishError}</p>`
-      : nothing}
+    <div @post-created=${reloadOrganizations}>
+      ${toolbar}
+      ${groups.map(
+        (group) => html`
+          ${renderRosterCards({
+            cards: group.cards,
+            isLoading,
+            blockedReason,
+            actions: addActionFor(group.organization.id),
+            onOpenPerson: canEdit ? handleOpenPerson : null,
+            openPersonId: canEdit ? openPersonId : null,
+            editorFor: canEdit ? editorFor : null,
+            roles,
+            title: group.organization.name,
+          })}
+        `,
+      )}
+      ${publishError
+        ? html`<p style="color: var(--diff-removed);">${publishError}</p>`
+        : nothing}
+    </div>
   `;
 }
 

@@ -1,4 +1,3 @@
-
 import {
   visibleFields,
   type FrozenFields,
@@ -74,7 +73,9 @@ function derivedPostFromHeld(
   memberships: PersonMembership[] | undefined,
 ): DerivedPost | null {
   const held = heldPost(memberships);
-  return held ? { ...held, membershipLabel: heldMembershipLabel(memberships) } : null;
+  return held
+    ? { ...held, membershipLabel: heldMembershipLabel(memberships) }
+    : null;
 }
 
 function derivedPostFor(
@@ -91,16 +92,11 @@ function derivedPostFor(
     : derivedPostFromHeld(personOf(card)?.memberships);
 }
 
-// Every role/division this person has proposed, regardless of how many — unlike
-// `derivedPostFor` above, which gives up entirely once there's more than one (there's no
-// single answer to auto-pick), this hands all of them to the office picker as options, so a
-// person proposed for two seats at once is something a reviewer can actually choose between
-// rather than a picker showing neither.
-function proposedPostsFor(
-  card: PersonCard,
+function allProposedPosts(
   proposals: Map<string, ProposedChange[]>,
 ): ProposedPost[] {
-  return (proposals.get(card.personId) ?? [])
+  return Array.from(proposals.values())
+    .flat()
     .filter((proposal) => proposal.role_id !== UNMATCHED_ROLE_ID)
     .map((proposal) => ({
       role_id: proposal.role_id,
@@ -125,7 +121,7 @@ export function personEditorPropsFor(
     jurisdictionOcdid: ctx.jurisdictionOcdid,
     subtitle: postsFor(card, ctx.proposals, ctx.posts),
     derivedPost: derivedPostFor(card, ctx.proposals),
-    proposedPosts: proposedPostsFor(card, ctx.proposals),
+    proposedPosts: allProposedPosts(ctx.proposals),
     accepts: acceptsByField(ctx.assertions[card.personId] ?? []),
     assertions: ctx.assertions[card.personId] ?? [],
     overriddenSourceValues: ctx.overriddenSourceValues[card.personId] ?? {},

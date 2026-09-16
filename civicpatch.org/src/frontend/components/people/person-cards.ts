@@ -3,6 +3,7 @@ import {
   divisionOf,
   heldMembershipLabel,
   postLabelFor,
+  postName,
   postsHeld,
   type Post,
 } from "../posts-list/posts-model.js";
@@ -51,27 +52,69 @@ export const DEPARTING = new Set<string>([
   PersonStatus.DELETED,
 ]);
 
+// The proposal or membership this card's post field currently resolves to — a proposal is the
+// newer claim, so it outranks a held membership. Shared by the three functions below, each of
+// which formats it differently; a reviewer's own explicit pick has no such source (it names an
+// id, not a label pair), which is why each checks for one before ever calling this.
+function heldSourceFor(
+  card: PersonCard,
+  proposedByPersonId?: Map<string, ProposedChange[]>,
+): { post_label: string; label: string | null }[] {
+  const proposed = proposedByPersonId?.get(card.personId) ?? [];
+  if (proposed.length) {
+    return proposed.map((change) => ({ post_label: change.post_label, label: change.label }));
+  }
+  return personOf(card)?.memberships ?? [];
+}
+
+// The post's own label alone, no membership label — for a diff that should only ever compare
+// whether the post itself changed, not two independently-changing pieces of text at once (see
+// diff-card.ts's own comment on `renderPostFieldValue`).
+export function postNameFor(
+  card: PersonCard,
+  proposedByPersonId?: Map<string, ProposedChange[]>,
+  posts: Post[] = [],
+): string {
+  const record = personOf(card);
+  const pickedPostId = record ? getFieldValue(record, POST_FIELD) : null;
+  const pickedLabel = pickedPostId ? postLabelFor(pickedPostId, posts) : "";
+  if (pickedLabel) return pickedLabel;
+
+  const source = heldSourceFor(card, proposedByPersonId);
+  if (source.length) return source.map(postName).join("; ");
+  return record?.labels?.join("; ") ?? "";
+}
+
+// What the occupant's own labels said beyond the post's own name — rendered plainly, on its
+// own line, never diffed against anything.
+export function membershipLabelFor(
+  card: PersonCard,
+  proposedByPersonId?: Map<string, ProposedChange[]>,
+): string {
+  const record = personOf(card);
+  // A reviewer's own explicit pick names a post, not a label — the label input beside the
+  // picker is a separate, later action (office-changes.ts), so there is nothing to show yet.
+  if (record && getFieldValue(record, POST_FIELD)) return "";
+  return heldSourceFor(card, proposedByPersonId)
+    .map((entry) => entry.label || "")
+    .filter(Boolean)
+    .join("; ");
+}
+
+// The two above, combined into one line — for the two remaining spots too tight for a
+// two-line card (review-modal.ts's person switcher, the folded review chip).
 export function postsFor(
   card: PersonCard,
   proposedByPersonId?: Map<string, ProposedChange[]>,
   posts: Post[] = [],
 ): string {
   const record = personOf(card);
-  // A reviewer's own post pick outranks the derivation's guess everywhere this card shows.
   const pickedPostId = record ? getFieldValue(record, POST_FIELD) : null;
   const pickedLabel = pickedPostId ? postLabelFor(pickedPostId, posts) : "";
   if (pickedLabel) return pickedLabel;
 
-  const proposed = proposedByPersonId?.get(card.personId) ?? [];
-  if (proposed.length) {
-    return postsHeld(
-      proposed.map((change) => ({
-        post_label: change.post_label,
-        label: change.label,
-      })),
-    );
-  }
-  if (record?.memberships?.length) return postsHeld(record.memberships);
+  const source = heldSourceFor(card, proposedByPersonId);
+  if (source.length) return postsHeld(source);
   return record?.labels?.join("; ") ?? "";
 }
 
@@ -189,9 +232,9 @@ export function movedNote(
   if (!postMoved(card.personId, proposals)) return null;
   const oldMemberships = card.oldRecord?.memberships;
   const from = oldMemberships?.length
-    ? postsHeld(oldMemberships)
+    ? oldMemberships.map(postName).join("; ")
     : (card.oldRecord?.labels?.join("; ") ?? "");
-  const to = postsFor(card, proposals, posts);
+  const to = postNameFor(card, proposals, posts);
   return from && from !== to ? { from, to } : null;
 }
 

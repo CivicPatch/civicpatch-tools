@@ -11,6 +11,8 @@ import { ensureUrl } from "../fields/field-controls.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
   postsFor,
+  postNameFor,
+  membershipLabelFor,
   movedNote,
   personOf,
   STATUS_LABEL,
@@ -26,6 +28,7 @@ import {
 import {
   acceptsByField,
   fieldLock,
+  type FieldLock,
 } from "../person-editor/field-provenance.js";
 import { renderFieldValueDiff } from "./field-diff.js";
 import {
@@ -87,10 +90,21 @@ function renderStatusBadge(card: PersonCard, moved: MovedNote | null) {
   >`;
 }
 
+function renderFieldLock(lock: FieldLock | null) {
+  return lock
+    ? html`<i
+        class="fa-solid fa-lock review-row__field-lock review-row__field-lock--${lock.state}"
+        title="${lock.label}${lock.disclosure ? `. ${lock.disclosure}` : ""}"
+      ></i>`
+    : nothing;
+}
+
 // The post field is never a raw scraped value (see office-changes.ts/editor-field.ts's own
-// comments on this) — `renderFieldValueDiff`'s generic diffValue-based rendering would show
-// a raw post id, not a label. `movedNote`/`postsFor` already resolve it to one, the same way
-// the picker and the card subtitle do.
+// comments on this) — `renderFieldValueDiff`'s generic diffValue-based rendering would show a
+// raw post id, not a label. `movedNote`/`postNameFor` already resolve it to one, the same way
+// the picker and the card subtitle do. Only the post itself is diffed here — the membership
+// label is a second, independently-changing thing (office-changes.ts) and renders in its own
+// row below, plainly, never compared against an old value.
 function renderPostFieldValue(
   card: PersonCard,
   proposals: Map<string, ProposedChange[]>,
@@ -98,7 +112,19 @@ function renderPostFieldValue(
 ) {
   const moved = movedNote(card, proposals, props.posts);
   if (moved) return html`<del>${moved.from}</del> <ins>${moved.to}</ins>`;
-  return postsFor(card, proposals, props.posts) || nothing;
+  return postNameFor(card, proposals, props.posts) || nothing;
+}
+
+function renderMembershipLabelRow(
+  card: PersonCard,
+  proposals: Map<string, ProposedChange[]>,
+) {
+  const label = membershipLabelFor(card, proposals);
+  if (!label) return nothing;
+  return html`<span class="pv">
+    <span class="pvk">label</span>
+    <span class="pvv">${label}</span>
+  </span>`;
 }
 
 function renderFieldRow(
@@ -116,20 +142,19 @@ function renderFieldRow(
     overrides[field.key],
     diffValue(record, field),
   );
-  const value =
-    field.key === POST_FIELD
-      ? renderPostFieldValue(card, proposals, props)
-      : renderFieldValueDiff(field, surviving.state, card.oldRecord, card.newRecord);
-  return html`<span class="pv ${field.key === POST_FIELD ? "pv--post" : ""}">
+  if (field.key === POST_FIELD) {
+    return html`<span class="pv pv--post">
+        <span class="pvk">${field.label.toLowerCase()}</span>
+        <span class="pvv"
+          >${renderFieldLock(lock)}${renderPostFieldValue(card, proposals, props)}</span
+        >
+      </span>
+      ${renderMembershipLabelRow(card, proposals)}`;
+  }
+  const value = renderFieldValueDiff(field, surviving.state, card.oldRecord, card.newRecord);
+  return html`<span class="pv">
     <span class="pvk">${field.label.toLowerCase()}</span>
-    <span class="pvv"
-      >${lock
-        ? html`<i
-            class="fa-solid fa-lock review-row__field-lock review-row__field-lock--${lock.state}"
-            title="${lock.label}${lock.disclosure ? `. ${lock.disclosure}` : ""}"
-          ></i>`
-        : nothing}${value}</span
-    >
+    <span class="pvv">${renderFieldLock(lock)}${value}</span>
   </span>`;
 }
 

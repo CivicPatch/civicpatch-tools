@@ -217,7 +217,7 @@ describe("postsFor", () => {
     ]);
     expect(postsFor(card(), proposals)).toBe("Council Member, District 5");
   });
-  it("shows the membership label alone, since it already carries the post label", () => {
+  it("composes the post label with the membership's own label", () => {
     const proposals = proposalsByPersonId([
       {
         person_id: "p1",
@@ -225,7 +225,7 @@ describe("postsFor", () => {
         role_id: "council-member",
         role_label: "Council Member",
         division_ocdid: "ocd-division/country:us/state:wa/place:x",
-        label: "Council Member, At-Large, Seat 3",
+        label: "Seat 3",
         post_label: "Council Member, At-Large",
       },
     ]);

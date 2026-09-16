@@ -223,16 +223,18 @@ export function postLabelFor(post_id: unknown, posts: Post[]): string {
  * Not `…Subtitle`: it is a row subtitle, an option label and a card line, and naming a value
  * after one of its slots is how one string ends up computed three ways.
  *
- * `label` already carries the post's own name — `render(MembershipLabel(...))` on the
- * backend composes it as post_label first, then everything beyond it — so this no longer
- * prepends `post_label` itself; doing both said "Council Member, District 1" twice on one
- * line. `post_label` alone is the fallback for the membership with no `label` at all.
+ * `label` is only what the occupant's own labels added beyond the seat (`render` on the
+ * backend no longer folds the post's own name in) — composed here for a caller with no
+ * separate place to show the two. A caller that shows them apart (the card grid's two
+ * lines, the review diff's two rows) reads `post_label`/`label` itself instead of this.
  */
 export function postsHeld(
   memberships: { post_label: string; label: string | null }[],
 ): string {
   return memberships
-    .map((membership) => membership.label || postName(membership))
+    .map((membership) =>
+      membership.label ? `${postName(membership)}, ${membership.label}` : postName(membership),
+    )
     .join("; ");
 }
 

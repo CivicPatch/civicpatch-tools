@@ -15,6 +15,9 @@ class CreatePostRequest(BaseModel):
     division_ocdid: str
     # Defaulted, unlike the update route's: a new post is one seat unless someone says otherwise.
     meta_headcount: int = Field(default=1, gt=0)
+    # Overrides the derived guess ("Position 8" instead of the bare role) — asserted, like
+    # `meta_headcount`, not stored as its own column (148 dropped `posts.label`).
+    label: str | None = None
 
 
 class UpdatePostRequest(BaseModel):

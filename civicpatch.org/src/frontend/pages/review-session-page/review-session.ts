@@ -130,7 +130,7 @@ function ReviewSession(host: ReviewSessionHost) {
   const jurisdictionTitle = jurisdictionStateName
     ? `${jurisdictionName}, ${jurisdictionStateName}`
     : jurisdictionName;
-  const { posts } = useJurisdictionPosts(jurisdictionOcdid);
+  const { posts, reload: reloadPosts } = useJurisdictionPosts(jurisdictionOcdid);
   // A scrape-derived changeset always lands in the jurisdiction's default organization
   // (`find_or_create_for_changeset`'s own fallback) — the first-sorted one, by the same
   // convention `roster-editor.ts`'s grouping falls back to for an unplaced person.
@@ -275,7 +275,7 @@ function ReviewSession(host: ReviewSessionHost) {
     onPickPartner: handlePickPartner,
   };
   return html`
-    <main class="review-session page-content">
+    <main class="review-session page-content" @post-created=${reloadPosts}>
       <div class="review-session__header">
         <review-session-controls
           .progress=${progress}

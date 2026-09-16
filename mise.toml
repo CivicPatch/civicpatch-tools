@@ -281,6 +281,8 @@ env = { BASE_URL = "http://localhost:8100", E2E_DB_URL = "postgres://e2e:e2e_pas
 [tasks.e2e-ci]
 description = "Run Playwright e2e tests headless in a fully isolated Docker stack (for CI)"
 run = """
+export HOST_UID=$(id -u)
+export HOST_GID=$(id -g)
 docker compose -f docker-compose.e2e.yml down -v --remove-orphans || true
 docker compose -f docker-compose.e2e.yml build civicpatch-org-e2e
 # The status is captured rather than piped: a `| grep` makes $? grep's, so this task reported

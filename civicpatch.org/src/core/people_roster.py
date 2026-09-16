@@ -17,7 +17,7 @@ from shared.utils.person_fields import order_person_fields
 from shared.utils.person_id_utils import merge_forward_other_names
 from shared.utils.taxonomy import Taxonomy
 
-from core.membership_label import MembershipLabel, derive_post_label, render
+from core.membership_label import MembershipLabel, derive_post_label, render_with_post_label
 from core.people_derivation import (
     canonical_name,
     derived_people,
@@ -188,14 +188,14 @@ def _rendered(person: DerivedPerson, records: list[PersonSourceRecord], taxonomy
     return {
         "name": person.name,
         "other_names": person.other_names,
-        "label": render(
+        # Self-contained, unlike `post_derivation.py`'s own `label`: `batch_review.py` shows
+        # this alone in a dense multi-town table, with no separate place for the seat's name.
+        "label": render_with_post_label(
+            derive_post_label(derived.role or "", derived.division_ocdid),
             MembershipLabel(
-                post_label=derive_post_label(
-                    derived.role or "", derived.division_ocdid
-                ),
                 designations=derived.other_designations,
                 unmatched_text=derived.unmatched,
-            )
+            ),
         ),
         "labels": person.labels,
         # Already computed for the label above; kept so a reviewer can be shown which labels

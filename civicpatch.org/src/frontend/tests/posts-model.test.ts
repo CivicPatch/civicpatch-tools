@@ -254,15 +254,15 @@ describe("postsHeld", () => {
     );
   });
 
-  it("shows the membership label alone, since it already carries the post label", () =>
-    // `label` is composed server-side as post_label first, then everything beyond it
-    // (`render(MembershipLabel(...))`) — prepending `post_label` here again said "Council
-    // Member, District 1" twice on one line.
+  it("composes the post label with the membership's own label", () =>
+    // `label` is only what the occupant's own labels added beyond the post
+    // (`render(MembershipLabel(...))` no longer folds `post_label` in) — this is the one
+    // caller that still wants both glued into a single display string.
     expect(
       postsHeld([
         held({
           post_label: "Council Member, At-Large",
-          label: "Council Member, At-Large, Seat 3",
+          label: "Seat 3",
         }),
       ]),
     ).toBe("Council Member, At-Large, Seat 3"));

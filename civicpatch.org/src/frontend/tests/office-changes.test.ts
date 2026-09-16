@@ -16,10 +16,19 @@ describe("officeChangesIn", () => {
   it("is empty when nothing was picked", () =>
     expect(officeChangesIn([card()])).toEqual([]));
 
-  it("reports a post pick that differs from what they already hold", () =>
+  // A label never names the post itself (core/membership_label.py's `render` no longer folds
+  // it in), so changing which post someone holds has no bearing on it — it rides along as-is.
+  it("keeps the held label when only the post changed", () =>
     expect(
       officeChangesIn([card({ newRecord: { id: "p1", post_id: "mayor-1" } })]),
     ).toEqual([{ personId: "p1", postId: "mayor-1", label: "District 3" }]));
+
+  it("keeps an explicit label when both the post and the label changed", () =>
+    expect(
+      officeChangesIn([
+        card({ newRecord: { id: "p1", post_id: "mayor-1", membership_label: "Acting" } }),
+      ]),
+    ).toEqual([{ personId: "p1", postId: "mayor-1", label: "Acting" }]));
 
   it("keeps the held post when only the label changed", () =>
     expect(
