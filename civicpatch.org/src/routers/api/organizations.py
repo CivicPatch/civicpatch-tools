@@ -26,7 +26,12 @@ def get_router() -> APIRouter:
         which use a greedy `:path` converter that would otherwise swallow this path too."""
         try:
             post_id = await posts.create(
-                organization_id, body.role_id, body.division_ocdid, body.meta_headcount, user.user_id
+                organization_id,
+                body.role_id,
+                body.division_ocdid,
+                body.meta_headcount,
+                user.user_id,
+                body.label,
             )
         except posts.UnknownOrganization:
             return JSONResponse({"error": "No such organization."}, status_code=404)

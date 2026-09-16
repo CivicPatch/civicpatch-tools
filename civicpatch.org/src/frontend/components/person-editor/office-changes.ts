@@ -26,6 +26,9 @@ function officeChangeFor(card: PersonCard): OfficeChange | null {
   if (!postChanged && !labelChanged) return null;
   const postId = postChanged ? pickedPostId : held?.post_id;
   if (!postId) return null; // a label-only edit needs an existing post to attach to
+  // A label never names the post itself (core/membership_label.py's `render` no longer folds
+  // it in), so it has no reason to change just because the post did — it rides along as-is
+  // unless the reviewer edits it directly.
   return {
     personId: card.personId,
     postId,

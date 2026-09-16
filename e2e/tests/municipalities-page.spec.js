@@ -20,7 +20,7 @@ import { test, expect } from "../fixtures/index.js";
 test.describe("Municipalities page", () => {
   test.beforeEach(async ({ page }) => {
     const responsePromise = page.waitForResponse(/\/api\/v1\/coverage\/nj\/municipalities/);
-    await page.goto("/nj/local");
+    await page.goto("/nj/municipalities");
     const res = await responsePromise;
     expect(res.status()).toBe(200);
   });
@@ -52,7 +52,7 @@ test.describe("Municipalities page", () => {
     await page.locator(".municipalities-table__empty button", { hasText: "Clear filters" }).click();
 
     await expect(page.locator(".municipalities-table__empty")).toHaveCount(0);
-    await expect(page).toHaveURL(/\/nj\/local$/);
+    await expect(page).toHaveURL(/\/nj\/municipalities$/);
   });
 
   test("sort toggles row order and updates the URL", async ({ page }) => {

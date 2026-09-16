@@ -2,7 +2,7 @@ import { html, nothing } from "lit-html";
 import "../person-image.js";
 import "./person-card-grid.css";
 import { type PersonCard, personOf } from "./person-cards.js";
-import { type RoleOption } from "../posts-list/posts-model.js";
+import { postName, type RoleOption } from "../posts-list/posts-model.js";
 import { type DiffRecord, type FieldSpec } from "../fields/field-model.js";
 import { PERSON_LINK_TARGET } from "../../utils/source-links.js";
 import {
@@ -120,14 +120,22 @@ function renderFields(record: DiffRecord, sources: SourceMap) {
   </span>`;
 }
 
-// `label` now repeats the seat (post_label first, per `render(MembershipLabel(...))` on the
-// backend) even though the group heading already names the role — the same duplication the
-// office picker's own label input accepts, for the same reason: it needs to read on its own.
-function subtitleFor(record: DiffRecord): string {
-  return (
-    (record?.memberships as { label: string | null }[] | undefined)?.[0]
-      ?.label ?? ""
-  );
+interface Subtitle {
+  postLabel: string;
+  membershipLabel: string;
+}
+
+// Two lines, not one: `label` used to already include the post's own name (`render
+// (MembershipLabel(...))` on the backend composed it seat-first) — now it is only what the
+// occupant's own labels said beyond it, so the two render separately rather than glued
+// together into a string that repeated the group heading's own role.
+function subtitleFor(record: DiffRecord): Subtitle {
+  const held = (
+    record?.memberships as
+      | { post_label: string; label: string | null }[]
+      | undefined
+  )?.[0];
+  return { postLabel: held ? postName(held) : "", membershipLabel: held?.label ?? "" };
 }
 
 function renderPerson(
@@ -137,15 +145,16 @@ function renderPerson(
 ) {
   const record = personOf(card);
   const name = record?.name || "(unnamed)";
-  const subtitle = subtitleFor(record);
+  const { postLabel, membershipLabel } = subtitleFor(record);
   const isOpen = onOpenPerson ? card.personId === openPersonId : false;
-  const nameBlock = html`<span class="pc-name">${name}</span> ${subtitle
-      ? html`<span class="pc-sub">${subtitle}</span>`
-      : nothing}`;
+  const ariaSubtitle = [postLabel, membershipLabel].filter(Boolean).join(", ");
+  const nameBlock = html`<span class="pc-name">${name}</span>
+    ${postLabel ? html`<span class="pc-sub">${postLabel}</span>` : nothing}
+    ${membershipLabel ? html`<span class="pc-sub">${membershipLabel}</span>` : nothing}`;
   return renderCardShell(
     {
       card,
-      ariaLabel: `${name}${subtitle ? `, ${subtitle}` : ""}`,
+      ariaLabel: `${name}${ariaSubtitle ? `, ${ariaSubtitle}` : ""}`,
       isOpen,
       onOpenPerson,
       editorId: idPrefix ? `${idPrefix}${card.personId}` : undefined,

@@ -179,6 +179,49 @@ async def test_a_hand_made_post_is_verified_by_having_been_made():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_a_hand_made_post_can_override_its_own_derived_label():
+    """148 dropped `posts.label` as a column — a person can still name a post something other
+    than the bare role, the same way `meta_headcount`/`meta_is_tracked` are asserted rather
+    than stored."""
+    user_id, _ = await _seed()
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        organization_id = await organizations.find_or_create(cur, _OCDID)
+        await conn.commit()
+
+    post_id = await posts.create(
+        organization_id, "council-member", _BASE, 1, user_id, label="Position 8"
+    )
+    assert post_id is not None
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        minted = await posts.get(cur, post_id)
+    assert minted is not None
+    assert minted.label == "Position 8"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_hand_made_post_without_a_label_override_keeps_the_derived_one():
+    user_id, _ = await _seed()
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        organization_id = await organizations.find_or_create(cur, _OCDID)
+        await conn.commit()
+
+    post_id = await posts.create(organization_id, "council-member", _BASE, 1, user_id)
+    assert post_id is not None
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        minted = await posts.get(cur, post_id)
+    assert minted is not None
+    assert minted.label == "Council Member"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_looking_again_refreshes_rather_than_accumulating():
     """A no-op edit is somebody saying "I looked and it stands". Saying it again skips the
     insert entirely (already the current answer) rather than adding a row — which is what keeps

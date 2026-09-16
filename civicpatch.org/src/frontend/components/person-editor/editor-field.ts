@@ -124,60 +124,43 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
     accepts,
     assertions,
   } = props;
-  if (!oldRecord) {
-    if (isReadOnly) {
-      return html`<span class="person-editor__readonly"
-        >${postLabelFor(diffValue(record, field), posts)}</span
-      >`;
-    }
-    return renderOfficeNewSide(
-      record,
-      save,
-      posts,
-      roles,
-      derivedPost?.post_id ?? null,
-      derivedPost?.membershipLabel ?? null,
-      focusRef,
-      fieldLock(accepts.get(LABEL_FIELD), undefined, undefined),
-      assertionSummaryFor(assertions, LABEL_FIELD),
-      jurisdictionOcdid,
-      organizationId,
-      canCreatePost,
-      derivedPost?.post_id ? undefined : derivedPost?.role_id,
-      derivedPost?.post_id ? undefined : derivedPost?.division_ocdid,
-      proposedPosts,
-    );
+  const isNewPerson = !oldRecord;
+  if (isNewPerson && isReadOnly) {
+    return html`<span class="person-editor__readonly"
+      >${postLabelFor(diffValue(record, field), posts)}</span
+    >`;
   }
   // Prefer the proposal over the held membership: a scrape's detected move is the newer
   // claim, and defaulting the picker to it is what keeps this control from contradicting
-  // the "Moved from X to Y" issue shown alongside it.
-  const current = derivedPost ?? heldPost(oldRecord.memberships);
-  if (!canAssignMembership) {
+  // the "Moved from X to Y" issue shown alongside it. `heldPost`/`heldMembershipLabel` both
+  // return null for a brand-new person's absent `oldRecord`, so this reads the same either way.
+  const current = derivedPost ?? heldPost(oldRecord?.memberships);
+  if (!isNewPerson && !canAssignMembership) {
     return html`<span class="person-editor__readonly">${current?.label ?? DASH}</span>`;
   }
-  return renderOfficeNewSide(
+  return renderOfficeNewSide({
     record,
     save,
     posts,
     roles,
-    current?.post_id ?? null,
-    current?.membershipLabel ?? heldMembershipLabel(oldRecord.memberships),
+    currentPostId: current?.post_id ?? null,
+    currentLabel: current?.membershipLabel ?? heldMembershipLabel(oldRecord?.memberships),
     focusRef,
     // No "overridden source value" concept for a label — it is authored or derived, never
     // scraped-then-overridden, so there is nothing to disclose; a lock here always reads as
     // "held", never "overrode".
-    fieldLock(accepts.get(LABEL_FIELD), undefined, undefined),
-    assertionSummaryFor(assertions, LABEL_FIELD),
+    labelLock: fieldLock(accepts.get(LABEL_FIELD), undefined, undefined),
+    labelAssertionSummary: assertionSummaryFor(assertions, LABEL_FIELD),
     jurisdictionOcdid,
     organizationId,
     canCreatePost,
     // A proposal naming a role/division with no post yet — nothing for the picker to look up
     // by `post_id` above, so this is the only way it can show what's actually proposed instead
     // of a blank "Choose a role…".
-    current?.post_id ? undefined : current?.role_id,
-    current?.post_id ? undefined : current?.division_ocdid,
+    initialRoleId: current?.post_id ? undefined : current?.role_id,
+    initialDivisionOcdid: current?.post_id ? undefined : current?.division_ocdid,
     proposedPosts,
-  );
+  });
 }
 
 function renderControl(props: EditorFieldProps, record: PresentRecord) {

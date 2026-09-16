@@ -84,6 +84,9 @@ services:
       context: ./e2e
       dockerfile: Dockerfile
     working_dir: /e2e
+    # Runs as the host user so results written into the bind-mounted ./e2e (behaviour-results/,
+    # .last-run.json) come out host-owned instead of root, which would block later local runs.
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
     volumes:
       - ./e2e:/e2e
       - /e2e/node_modules  # keeps the image's baked-in node_modules; host mount won't override
@@ -95,6 +98,7 @@ services:
       E2E_DB_URL: postgres://e2e:e2e_password@db-e2e:5432/e2e_db
       E2E_REDIS_HOST: redis-e2e
       E2E_REDIS_PORT: "6379"
+      HOME: /tmp
     networks:
       - civicpatch_e2e_net
     command: npx playwright test

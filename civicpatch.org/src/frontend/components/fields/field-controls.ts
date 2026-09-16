@@ -7,12 +7,24 @@
 
 import { html, nothing } from "lit-html";
 import "./field-controls.css";
-import type { Post, ProposedPost, RoleOption } from "../posts-list/posts-model.js";
+import type {
+  Post,
+  ProposedPost,
+  RoleOption,
+} from "../posts-list/posts-model.js";
 import "../person-editor/assertions-popover.js";
 import "../person-editor/office-picker.js";
-export { inputValue, attachFocus, type FocusRef, type FieldFocus } from "./field-utils.js";
+export {
+  inputValue,
+  attachFocus,
+  type FocusRef,
+  type FieldFocus,
+} from "./field-utils.js";
 import { attachFocus, inputValue, type FocusRef } from "./field-utils.js";
-import type { FieldAssertionSummary, FieldLock } from "../person-editor/field-provenance.js";
+import type {
+  FieldAssertionSummary,
+  FieldLock,
+} from "../person-editor/field-provenance.js";
 import {
   PERSON_LINK_TARGET,
   SOURCE_LINK_TARGET,
@@ -167,39 +179,64 @@ export function renderDateNewSide(
   `;
 }
 
+export interface OfficeFieldProps {
+  record: PresentRecord;
+  save: Save;
+  posts: Post[];
+  roles: RoleOption[];
+  currentPostId: string | null;
+  currentLabel: string | null;
+  focusRef: FocusRef | null;
+  labelLock: FieldLock | null;
+  labelAssertionSummary: FieldAssertionSummary | null;
+  jurisdictionOcdid: string | null | undefined;
+  organizationId: string;
+  canCreatePost: boolean;
+  // A proposed role/division with no post yet — see this prop's only caller
+  // (editor-field.ts's renderOfficeControl) for why. Ignored once a real post id is picked;
+  // `civ-office-picker` only ever consults them while unset.
+  initialRoleId: string | undefined;
+  initialDivisionOcdid: string | undefined;
+  // Every proposed role/division this person has, whether or not it matches an established
+  // post — folded into the picker's own options (see `civ-office-picker`'s own comment).
+  proposedPosts: ProposedPost[];
+}
+
 // An existing person: a local pick like every other field, applied via `memberships.assign`
 // when the card is saved/published, so a scrape stays free to move or end the membership
 // again. Grouped by role, mirroring `posts-list.ts`'s own picker. The label *is* an assertion
 // once saved — `memberships.set_label` records it against the membership — `labelLock`/
 // `labelAssertionSummary` are how that comes back to show the lock icon other fields get.
-export function renderOfficeNewSide(
-  record: PresentRecord,
-  save: Save,
-  posts: Post[],
-  roles: RoleOption[],
-  currentPostId: string | null,
-  currentLabel: string | null,
-  focusRef: FocusRef | null,
-  labelLock: FieldLock | null,
-  labelAssertionSummary: FieldAssertionSummary | null,
-  jurisdictionOcdid: string | null | undefined,
-  organizationId: string,
-  canCreatePost: boolean,
-  // A proposed role/division with no post yet — see this function's own caller
-  // (editor-field.ts's renderOfficeControl) for why. Ignored once a real post id is picked;
-  // `civ-office-picker` only ever consults them while unset.
-  initialRoleId: string | undefined,
-  initialDivisionOcdid: string | undefined,
-  // Every proposed role/division this person has, whether or not it matches an established
-  // post — folded into the picker's own options (see `civ-office-picker`'s own comment).
-  proposedPosts: ProposedPost[],
-) {
+export function renderOfficeNewSide(props: OfficeFieldProps) {
+  const {
+    record,
+    save,
+    posts,
+    roles,
+    currentPostId,
+    currentLabel,
+    focusRef,
+    labelLock,
+    labelAssertionSummary,
+    jurisdictionOcdid,
+    organizationId,
+    canCreatePost,
+    initialRoleId,
+    initialDivisionOcdid,
+    proposedPosts,
+  } = props;
   const picked = (record.post_id as string | null | undefined) ?? null;
   const current = picked ?? currentPostId;
+  // The label never names the post itself, so picking a different one has no bearing on it
+  // (see office-changes.ts) — it keeps showing whatever it already held.
   const pickedLabel = (record.membership_label as string | null | undefined) ?? currentLabel;
   const handlePicked = (e: CustomEvent) => {
     const { post_id, membership_label } = e.detail;
-    save(membership_label === undefined ? { post_id } : { post_id, membership_label });
+    save(
+      membership_label === undefined
+        ? { post_id }
+        : { post_id, membership_label },
+    );
   };
   return html`
     <div class="field-control__office-group">
@@ -220,10 +257,11 @@ export function renderOfficeNewSide(
         ? html`<input
             type="text"
             class="field-control__input"
-            placeholder="Label (optional)"
+            placeholder="e.g. Fire Department"
             aria-label="Membership label"
             .value=${pickedLabel ?? ""}
-            @input=${(e: Event) => save({ membership_label: inputValue(e) || null })}
+            @input=${(e: Event) =>
+              save({ membership_label: inputValue(e) || null })}
           />`
         : nothing}
       ${labelLock
@@ -269,10 +307,7 @@ export function renderPhotoNewSide(
   isReadOnly: boolean,
 ) {
   return html`<div class="field-control__photo">
-    <person-image
-      .person=${newRecord}
-      .size=${"2.75rem"}
-    ></person-image>
+    <person-image .person=${newRecord} .size=${"2.75rem"}></person-image>
     ${newRecord.image && !isReadOnly
       ? html`<button
           class="field-control__photo-clear"

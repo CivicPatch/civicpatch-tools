@@ -27,10 +27,56 @@ class UnknownOrganization(Exception):
 # The fields a human owns. The derivation sets them once at mint and never again.
 _HUMAN_FIELDS = ("meta_headcount", "meta_is_tracked")
 
+# Not a column — 148 dropped `posts.label` in favor of composing it from role and division on
+# read. A human can still override that guess ("Position 8" instead of the bare role), the same
+# way `memberships.label` overrides its own derivation: as an assertion, read back here.
+LABEL_FIELD = "label"
 
-def _with_label(post: dict) -> dict:
+
+def _with_label(post: dict, asserted_label: str | None = None) -> dict:
     role_label = post.pop("role_label", None) or post["role_id"]
-    return {**post, "label": derive_post_label(role_label, post["division_ocdid"])}
+    return {
+        **post,
+        "label": asserted_label or derive_post_label(role_label, post["division_ocdid"]),
+    }
+
+
+async def _asserted_labels(cur, post_ids: list[str]) -> dict[str, str]:
+    asserted = await assertions.asserted_values(cur, EntityType.POST, post_ids)
+    return {
+        post_id: accepted[0]
+        for post_id, by_field in asserted.items()
+        for accepted in [by_field.get(LABEL_FIELD, {}).get(AssertionKind.ACCEPT) or []]
+        if accepted
+    }
+
+
+async def set_label(
+    cur,
+    post_id: str,
+    label: str | None,
+    user_id: str,
+    changeset_id: str | None = None,
+) -> None:
+    """Name this post, or clear it back to the derived guess. No column to write — this is
+    the whole effect, unlike `update_human_fields`'s pair."""
+    if label is None:
+        await assertions.withdraw(
+            cur, EntityType.POST, post_id, LABEL_FIELD, AssertionKind.ACCEPT, user_id
+        )
+        return
+    await assertions.upsert(
+        cur,
+        Assertion(
+            entity_type=EntityType.POST,
+            entity_id=post_id,
+            field_path=LABEL_FIELD,
+            kind=AssertionKind.ACCEPT,
+            value=label,
+            changeset_id=changeset_id,
+        ),
+        user_id,
+    )
 
 
 def _fields_to_accept(values: dict) -> list[tuple[str, object]]:
@@ -233,7 +279,9 @@ async def get_many(cur, post_ids: list[str]) -> dict[str, Post]:
         (post_ids,),
     )
     columns = [column.name for column in cur.description or []]
-    found = [Post(**_with_label(dict(zip(columns, row)))) for row in await cur.fetchall()]
+    rows = [dict(zip(columns, row)) for row in await cur.fetchall()]
+    labels = await _asserted_labels(cur, [row["id"] for row in rows])
+    found = [Post(**_with_label(row, labels.get(row["id"]))) for row in rows]
     return {post.id: post for post in found}
 
 
@@ -311,7 +359,9 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
         {"jurisdiction_ocdid": jurisdiction_ocdid},
     )
     columns = [column.name for column in cur.description or []]
-    return [_with_label(dict(zip(columns, row))) for row in await cur.fetchall()]
+    rows = [dict(zip(columns, row)) for row in await cur.fetchall()]
+    labels = await _asserted_labels(cur, [row["id"] for row in rows])
+    return [_with_label(row, labels.get(row["id"])) for row in rows]
 
 
 async def list_page_for_state(
@@ -345,13 +395,12 @@ async def list_page_for_state(
         )
         rows = await cur.fetchall()
         columns = [column.name for column in cur.description or []]
-    if not rows:
-        return 0, []
+        if not rows:
+            return 0, []
+        dict_rows = [{k: v for k, v in zip(columns, row) if k != "total"} for row in rows]
+        labels = await _asserted_labels(cur, [row["id"] for row in dict_rows])
     total = rows[0][0]
-    return total, [
-        _with_label({k: v for k, v in zip(columns, row) if k != "total"})
-        for row in rows
-    ]
+    return total, [_with_label(row, labels.get(row["id"])) for row in dict_rows]
 
 
 async def ids_by_identity(
@@ -474,12 +523,16 @@ async def create(
     division_ocdid: str,
     headcount: int,
     user_id: str | None = None,
+    label: str | None = None,
 ) -> str | None:
     """A person asserting a post exists. Returns its id, or None if it already did.
 
     The jurisdiction is the organization's own — a post always belongs to one of an
     organization's existing bodies, never named separately by the caller. The division is
     found-or-created on the way, since it exists because a post needs it, never on its own.
+
+    `label` overrides the derived guess ("Position 8" instead of the bare role) — asserted,
+    like `meta_headcount`, not stored as its own column.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -502,6 +555,8 @@ async def create(
             await _accept_fields(
                 cur, post_id, {"meta_headcount": headcount}, user_id, changeset_id
             )
+            if label and user_id:
+                await set_label(cur, post_id, label, user_id, changeset_id)
             minted = await get(cur, post_id)
             await record_change(
                 cur,

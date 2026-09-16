@@ -248,43 +248,42 @@ def test_a_second_role_the_taxonomy_does_not_know_is_not_demoted():
 
 
 @pytest.mark.unit
-def test_the_member_label_repeats_the_post_label_and_adds_what_it_cannot_say():
-    """Mayor (10) wins the post. The label repeats "Mayor" — the reviewer's picker shows this
-    text beside a post `<select>` that already says "Mayor", and needs a self-contained
-    default rather than making them cross-reference the select to read the rest — then adds
-    the demoted "Commissioner" and the portfolio "Of Public Safety", which the post label
-    alone cannot say."""
+def test_the_member_label_adds_what_the_post_label_cannot_say():
+    """Mayor (10) wins the post. The label used to repeat "Mayor" for a picker that showed it
+    with no post `<select>` beside it — now every caller shows the post's own name separately,
+    so the label is only the demoted "Commissioner" and the portfolio "Of Public Safety"."""
     derived = derived_posts(
         [_person("a", "Commissioner Of Public Safety - Mayor")], _TAXONOMY, _ROLES
     )
 
     member = derived[0].members[0]
     assert derived[0].role_id == "mayor"
-    assert member.label == "Mayor, Commissioner, Of Public Safety"
+    assert member.label == "Commissioner, Of Public Safety"
 
 
 @pytest.mark.unit
-def test_a_member_holding_only_the_post_gets_just_the_post_label():
-    """No extras beyond the post — the label is still the post's own name, not empty. This
-    used to be `None` (only extras counted as a label at all); the picker needs a
-    self-contained default even when there is nothing beyond the seat."""
+def test_a_member_holding_only_the_post_gets_an_empty_label():
+    """No extras beyond the post — the label is empty, not the post's own name. This used to
+    repeat the post's name so a picker with no separate post display had a self-contained
+    default; every caller now shows the post's own name on its own, so there is nothing left
+    to say here."""
     derived = derived_posts([_person("a", "Council Member")], _TAXONOMY, _ROLES)
 
-    assert derived[0].members[0].label == "Council Member"
+    assert derived[0].members[0].label == ""
 
 
 @pytest.mark.unit
 def test_residue_of_a_resolved_label_is_not_unmatched():
     """"Of Public Safety" came out of a label that resolved to Commissioner. There is no rule
     a curator could add for it, so it must not reach triage (`unmatched_text`) — the label
-    carries it instead, alongside the post label it resolved to."""
+    carries it instead."""
     derived = derived_posts(
         [_person("a", "Commissioner Of Public Safety")], _TAXONOMY, _ROLES
     )
 
     member = derived[0].members[0]
     assert member.unmatched_text == []
-    assert member.label == "Commissioner, Of Public Safety"
+    assert member.label == "Of Public Safety"
 
 
 @pytest.mark.unit
@@ -320,9 +319,10 @@ def test_a_chosen_post_does_not_rewrite_what_the_source_said():
     member = derived_posts([person], _TAXONOMY, _ROLES, chosen)[0].members[0]
 
     assert member.source_labels == ["Council Member", "Place 6"]
-    # "Mayor" is the chosen post's own label; "Council Member" is demoted rather than
-    # dropped; "Place 6" is a designation that stays on the membership either way.
-    assert member.label == "Mayor, Council Member, Place 6"
+    # "Council Member" is demoted rather than dropped; "Place 6" is a designation that stays
+    # on the membership either way. The chosen post's own name ("Mayor") is not repeated here
+    # — every caller shows it separately, from the post it picked.
+    assert member.label == "Council Member, Place 6"
 
 
 @pytest.mark.unit

@@ -2,6 +2,8 @@ import { describe, it, expect } from "vitest";
 import {
   buildPersonCards,
   postsFor,
+  postNameFor,
+  membershipLabelFor,
   cardFields,
   needsReview,
   publishSet,
@@ -427,5 +429,47 @@ describe("postsFor — what a card calls the person's post", () => {
         posts,
       ),
     ).toBe("Council Member");
+  });
+  it("composes the post's own name with the membership's own label", () => {
+    expect(
+      postsFor(
+        card({
+          memberships: [{ post_label: "Council Member, District 5", label: "Chair" }],
+        }),
+      ),
+    ).toBe("Council Member, District 5, Chair");
+  });
+});
+
+describe("postNameFor / membershipLabelFor — the two split apart", () => {
+  const card = (record: Record<string, unknown>) =>
+    ({ personId: "p1", newRecord: record, oldRecord: null }) as never;
+  it("postNameFor is just the post, never the membership's own label", () => {
+    expect(
+      postNameFor(
+        card({
+          memberships: [{ post_label: "Council Member, District 5", label: "Chair" }],
+        }),
+      ),
+    ).toBe("Council Member, District 5");
+  });
+  it("membershipLabelFor is just what the occupant's own labels added", () => {
+    expect(
+      membershipLabelFor(
+        card({
+          memberships: [{ post_label: "Council Member, District 5", label: "Chair" }],
+        }),
+      ),
+    ).toBe("Chair");
+  });
+  it("membershipLabelFor is empty once a reviewer has picked a post — that pick names no label", () => {
+    expect(
+      membershipLabelFor(
+        card({
+          post_id: "post-1",
+          memberships: [{ post_label: "Council Member", label: "Chair" }],
+        }),
+      ),
+    ).toBe("");
   });
 });
