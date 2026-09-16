@@ -1,0 +1,540 @@
+mismatches:
+  austin_district7_council_member:
+  - actual: "\u2014"
+    actual_label: ''
+    expected: present
+    expected_label: Council Member District 7
+    field: person
+    person: Mike Siegel
+  board_of_aldermen:
+  - actual: present
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Abelardo Gonzalez
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (956) 350-4093
+    expected_label: Alderwoman
+    field: phone
+    person: Christi Burnias
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Alderwoman
+    field: url
+    person: Christi Burnias
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: (956) 350-4093
+    expected_label: Mayor Pro Tem
+    field: phone
+    person: Javier Vera
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Mayor Pro Tem
+    field: url
+    person: Javier Vera
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (956) 350-4093
+    expected_label: Alderman
+    field: phone
+    person: Mark A. Johnson
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Alderman
+    field: url
+    person: Mark A. Johnson
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (956) 350-4093
+    expected_label: Alderman
+    field: phone
+    person: Peter Harris
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Alderman
+    field: url
+    person: Peter Harris
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Mayor
+    field: url
+    person: Todd Day
+  coleman_council:
+  - actual: "\u2014"
+    actual_label: Council Member Place 3 (Central Ward)
+    expected: (325) 625-5114
+    expected_label: Council Member Place 3 (Central Ward)
+    field: phone
+    person: Beau Brudney
+  - actual: "\u2014"
+    actual_label: Council Member Place 3 (Central Ward)
+    expected: https://cityofcolemantx.us/council/index.html
+    expected_label: Council Member Place 3 (Central Ward)
+    field: url
+    person: Beau Brudney
+  - actual: "\u2014"
+    actual_label: Council Member Place 4 (South Ward)
+    expected: (325) 625-5114
+    expected_label: Council Member Place 4 (South Ward)
+    field: phone
+    person: Monte Sides
+  - actual: "\u2014"
+    actual_label: Council Member Place 4 (South Ward)
+    expected: https://cityofcolemantx.us/council/index.html
+    expected_label: Council Member Place 4 (South Ward)
+    field: url
+    person: Monte Sides
+  - actual: "\u2014"
+    actual_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    expected: (325) 625-5114
+    expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    field: phone
+    person: Sharlene T. Hetzel
+  - actual: "\u2014"
+    actual_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    expected: https://cityofcolemantx.us/council/index.html
+    expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    field: url
+    person: Sharlene T. Hetzel
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (325) 625-5114
+    expected_label: Mayor
+    field: phone
+    person: Tommy Sloan
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: https://cityofcolemantx.us/council/index.html
+    expected_label: Mayor
+    field: url
+    person: Tommy Sloan
+  - actual: "\u2014"
+    actual_label: Council Member Place 1 (North Ward)
+    expected: (325) 625-5114
+    expected_label: Council Member Place 1 (North Ward)
+    field: phone
+    person: Tracy Rankin
+  - actual: "\u2014"
+    actual_label: Council Member Place 1 (North Ward)
+    expected: https://cityofcolemantx.us/council/index.html
+    expected_label: Council Member Place 1 (North Ward)
+    field: url
+    person: Tracy Rankin
+  golinda_mixed_city_county:
+  - actual: present
+    actual_label: Administrative Assistant
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Lisa Faulkner
+  jackson_mayors_office:
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: local://35aa4bad0377.png
+    expected_label: Mayor
+    field: image
+    person: Scott Conger
+  la_porte_council:
+  - actual: "\u2014"
+    actual_label: Council Member District 3
+    expected: (281) 471-5021
+    expected_label: Council Member District 3
+    field: phone
+    person: Bill Bentley
+  - actual: "\u2014"
+    actual_label: Council Member At-Large A
+    expected: (281) 471-5021
+    expected_label: Council Member At-Large A
+    field: phone
+    person: Brandon Lunsford
+  - actual: "\u2014"
+    actual_label: Council Member At-Large B
+    expected: (281) 471-5021
+    expected_label: Council Member At-Large B
+    field: phone
+    person: Brent McCaulley
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: (281) 471-5021
+    expected_label: Council Member District 2
+    field: phone
+    person: Chuck Engelken
+  - actual: "\u2014"
+    actual_label: Council Member District 5
+    expected: (281) 471-5021
+    expected_label: Council Member District 5
+    field: phone
+    person: Jay Martin
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: (281) 471-5021
+    expected_label: Council Member District 1
+    field: phone
+    person: Mandi Williams
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (281) 471-5021
+    expected_label: Mayor
+    field: phone
+    person: Rick Helton
+  - actual: "\u2014"
+    actual_label: Council Member District 6
+    expected: (281) 471-5021
+    expected_label: Council Member District 6
+    field: phone
+    person: Robbie McLarrin
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: (281) 471-5021
+    expected_label: Council Member District 4
+    field: phone
+    person: Robert Guerra
+  mixed_current_past:
+  - actual: "\u2014"
+    actual_label: ''
+    expected: present
+    expected_label: Mayor Pro Tem
+    field: person
+    person: Al Stephens
+  - actual: "\u2014"
+    actual_label: ''
+    expected: present
+    expected_label: Council Member
+    field: person
+    person: Billy Wayne Martin
+  - actual: "\u2014"
+    actual_label: ''
+    expected: present
+    expected_label: Council Member
+    field: person
+    person: Bobby Hanson
+  - actual: "\u2014"
+    actual_label: ''
+    expected: present
+    expected_label: Council Member
+    field: person
+    person: Charles Wrenn
+  - actual: "\u2014"
+    actual_label: ''
+    expected: present
+    expected_label: Council Member
+    field: person
+    person: Darrell Grintz
+  - actual: "\u2014"
+    actual_label: ''
+    expected: present
+    expected_label: Mayor
+    field: person
+    person: Michael Pye
+  nav_links_no_names:
+  - actual: present
+    actual_label: Councilmember Place 5
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Edward Zapalac
+  raisin_township_clerk:
+  - actual: present
+    actual_label: Deputy Clerk
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Sarah Simpkins
+  - actual: "\u2014"
+    actual_label: Clerk
+    expected: (517) 423-3162
+    expected_label: Clerk
+    field: phone
+    person: Susan Bunch
+  redundant_place_role:
+  - actual: "\u2014"
+    actual_label: ''
+    expected: present
+    expected_label: Mayor
+    field: person
+    person: Mark Bentley
+  seattle_council_separate_mayor:
+  - actual: []
+    actual_label: Councilmember
+    expected:
+    - Position 8
+    expected_label: Councilmember Position 8
+    field: designations_other
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 8
+    field: email
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 8
+    field: phone
+    person: Alexis Mercedes Rinck
+  - actual: https://seattle.gov/council/members/alexis-mercedes-rinck/about-alexis
+    actual_label: Councilmember
+    expected: https://seattle.gov/council/members/alexis-mercedes-rinck
+    expected_label: Councilmember Position 8
+    field: url
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: local://ce027a08f3f1.png
+    expected_label: Councilmember Position 8
+    field: image
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: ''
+    expected: present
+    expected_label: Councilmember District 7
+    field: person
+    person: Bob Kettle
+  - actual: []
+    actual_label: Councilmember
+    expected:
+    - district:6
+    expected_label: Councilmember District 6
+    field: district
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: council@seattle.gov
+    expected_label: Councilmember District 6
+    field: email
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: (206) 684-8888
+    expected_label: Councilmember District 6
+    field: phone
+    person: Dan Strauss
+  - actual: https://seattle.gov/council/members/dan-strauss/about-dan
+    actual_label: Councilmember
+    expected: https://seattle.gov/council/members/dan-strauss
+    expected_label: Councilmember District 6
+    field: url
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: local://ada6b13ec0d1.png
+    expected_label: Councilmember District 6
+    field: image
+    person: Dan Strauss
+  - actual: []
+    actual_label: Councilmember
+    expected:
+    - district:5
+    expected_label: Councilmember District 5
+    field: district
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: council@seattle.gov
+    expected_label: Councilmember District 5
+    field: email
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: (206) 684-8888
+    expected_label: Councilmember District 5
+    field: phone
+    person: Debora Juarez
+  - actual: https://seattle.gov/council/members/debora-juarez/about-debora
+    actual_label: Councilmember
+    expected: https://seattle.gov/council/members/debora-juarez
+    expected_label: Councilmember District 5
+    field: url
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: local://183bf92d4c48.png
+    expected_label: Councilmember District 5
+    field: image
+    person: Debora Juarez
+  - actual: []
+    actual_label: Councilmember
+    expected:
+    - Position 9
+    expected_label: Councilmember Position 9
+    field: designations_other
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 9
+    field: email
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 9
+    field: phone
+    person: Dionne Foster
+  - actual: https://seattle.gov/council/members/dionne-foster/about-dionne
+    actual_label: Councilmember
+    expected: https://seattle.gov/council/members/dionne-foster
+    expected_label: Councilmember Position 9
+    field: url
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: local://f207a4a7733a.png
+    expected_label: Councilmember Position 9
+    field: image
+    person: Dionne Foster
+  - actual: []
+    actual_label: Councilmember
+    expected:
+    - district:2
+    expected_label: Councilmember District 2
+    field: district
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: council@seattle.gov
+    expected_label: Councilmember District 2
+    field: email
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: (206) 684-8888
+    expected_label: Councilmember District 2
+    field: phone
+    person: Eddie Lin
+  - actual: https://seattle.gov/council/members/eddie-lin/about-eddie-lin
+    actual_label: Councilmember
+    expected: https://seattle.gov/council/members/eddie-lin
+    expected_label: Councilmember District 2
+    field: url
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: local://8518b717839c.png
+    expected_label: Councilmember District 2
+    field: image
+    person: Eddie Lin
+  - actual:
+    - Council Member
+    actual_label: Councilmember
+    expected:
+    - Council President
+    expected_label: Council President District 3
+    field: primary_role
+    person: Joy Hollingsworth
+  - actual:
+    - Council Member
+    actual_label: Councilmember
+    expected:
+    - Council President
+    expected_label: Council President District 3
+    field: roles
+    person: Joy Hollingsworth
+  - actual: []
+    actual_label: Councilmember
+    expected:
+    - district:3
+    expected_label: Council President District 3
+    field: district
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: council@seattle.gov
+    expected_label: Council President District 3
+    field: email
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: (206) 684-8888
+    expected_label: Council President District 3
+    field: phone
+    person: Joy Hollingsworth
+  - actual: https://seattle.gov/council/members/joy-hollingsworth/about-joy
+    actual_label: Councilmember
+    expected: https://seattle.gov/council/members/joy-hollingsworth
+    expected_label: Council President District 3
+    field: url
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: local://ef06d9a9e07d.png
+    expected_label: Council President District 3
+    field: image
+    person: Joy Hollingsworth
+  - actual: []
+    actual_label: Councilmember
+    expected:
+    - district:4
+    expected_label: Councilmember District 4
+    field: district
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: council@seattle.gov
+    expected_label: Councilmember District 4
+    field: email
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: (206) 684-8888
+    expected_label: Councilmember District 4
+    field: phone
+    person: Maritza Rivera
+  - actual: https://seattle.gov/council/members/maritza-rivera/about-maritza
+    actual_label: Councilmember
+    expected: https://seattle.gov/council/members/maritza-rivera
+    expected_label: Councilmember District 4
+    field: url
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: local://ed071cb84224.png
+    expected_label: Councilmember District 4
+    field: image
+    person: Maritza Rivera
+  - actual: []
+    actual_label: Councilmember
+    expected:
+    - district:1
+    expected_label: Councilmember District 1
+    field: district
+    person: Rob Saka
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: council@seattle.gov
+    expected_label: Councilmember District 1
+    field: email
+    person: Rob Saka
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: (206) 684-8888
+    expected_label: Councilmember District 1
+    field: phone
+    person: Rob Saka
+  - actual: https://seattle.gov/council/members/rob-saka/about-rob
+    actual_label: Councilmember
+    expected: https://seattle.gov/council/members/rob-saka
+    expected_label: Councilmember District 1
+    field: url
+    person: Rob Saka
+  - actual: "\u2014"
+    actual_label: Councilmember
+    expected: local://8ac384d14474.png
+    expected_label: Councilmember District 1
+    field: image
+    person: Rob Saka
+  - actual: present
+    actual_label: Councilmember
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Robert Kettle

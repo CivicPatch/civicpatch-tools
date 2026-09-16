@@ -1,12 +1,4 @@
 people:
-- name: Joy Hollingsworth
-  label: Council President District 3
-  phone: null
-  email: null
-  url: https://seattle.gov/council/members/joy-hollingsworth
-  start_date: null
-  end_date: null
-  image: null
 - name: Rob Saka
   label: Councilmember District 1
   phone: null
@@ -14,7 +6,7 @@ people:
   url: https://seattle.gov/council/members/rob-saka
   start_date: null
   end_date: null
-  image: null
+  image: local://8ac384d14474.png
 - name: Eddie Lin
   label: Councilmember District 2
   phone: null
@@ -22,7 +14,15 @@ people:
   url: https://seattle.gov/council/members/eddie-lin
   start_date: null
   end_date: null
-  image: null
+  image: local://8518b717839c.png
+- name: Joy Hollingsworth
+  label: Council President District 3
+  phone: null
+  email: null
+  url: https://seattle.gov/council/members/joy-hollingsworth
+  start_date: null
+  end_date: null
+  image: local://ef06d9a9e07d.png
 - name: Maritza Rivera
   label: Councilmember District 4
   phone: null
@@ -30,7 +30,7 @@ people:
   url: https://seattle.gov/council/members/maritza-rivera
   start_date: null
   end_date: null
-  image: null
+  image: local://ed071cb84224.png
 - name: Debora Juarez
   label: Councilmember District 5
   phone: null
@@ -38,7 +38,7 @@ people:
   url: https://seattle.gov/council/members/debora-juarez
   start_date: null
   end_date: null
-  image: null
+  image: local://183bf92d4c48.png
 - name: Dan Strauss
   label: Councilmember District 6
   phone: null
@@ -46,7 +46,7 @@ people:
   url: https://seattle.gov/council/members/dan-strauss
   start_date: null
   end_date: null
-  image: null
+  image: local://ada6b13ec0d1.png
 - name: Bob Kettle
   label: Councilmember District 7
   phone: null
@@ -54,7 +54,7 @@ people:
   url: https://seattle.gov/council/members/bob-kettle
   start_date: null
   end_date: null
-  image: null
+  image: local://f490e8055573.png
 - name: Alexis Mercedes Rinck
   label: Councilmember Position 8
   phone: null
@@ -62,7 +62,7 @@ people:
   url: https://seattle.gov/council/members/alexis-mercedes-rinck
   start_date: null
   end_date: null
-  image: null
+  image: local://ce027a08f3f1.png
 - name: Dionne Foster
   label: Councilmember Position 9
   phone: null
@@ -70,4 +70,4 @@ people:
   url: https://seattle.gov/council/members/dionne-foster
   start_date: null
   end_date: null
-  image: null
+  image: local://f207a4a7733a.png

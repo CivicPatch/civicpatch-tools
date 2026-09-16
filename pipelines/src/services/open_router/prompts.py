@@ -154,42 +154,34 @@ def municipality_officials_prompt(
     Only extract officials from:
     - A structured table, list, or directory of officials
     - A dedicated biography, about, or contact section for an official
-    - A contact or position page for a single elected official, where the page or
-      section heading names an elected role and the content includes the person's
-      name and their contact information — even if the body primarily describes
-      the role's duties rather than the person's biography
-    - A page section clearly labeled with a governing body name (e.g. "City Council
-      Members", "Board of Aldermen") that lists names as headings or line items —
-      even if no contact info, roles, or other details are present; infer the role
-      from the section heading
-    Do NOT extract officials mentioned only in news articles, event summaries,
-    meeting notes, or scattered references.
-    Do not extract from content whose primary purpose is to record what officials
-    did (votes, minutes, ordinances, resolutions) — even if it is structured and
-    includes roles and designations.
-    If none of the above valid sources are present in the content, return an empty
-    array for "people".
-    Do NOT treat a list of links whose text is only a role or position label (e.g.,
-    "Mayor", "Councilmember, Place 1", "Alderman") as a structured listing —
-    that is a navigation or index section pointing to pages, not a roster of people.
-    A valid listing must contain actual person names, not just titles.
-    Only extract elected members of the governing body (e.g. Mayor, City Council,
-    Board of Aldermen, Board of Commissioners). Exclude everyone else: appointed staff
-    and officials from other jurisdictions (county, precinct, special district) even
-    when listed alongside governing officials on the same page.
-    Treat officials as currently serving unless the content explicitly states
-    the roster is historical or past.
+    - A contact or position page for a single elected official, where the page or section
+      heading names an elected role and the content includes the person's name and contact
+      information, even if the body mostly describes the role's duties
+    - A section labeled with a governing body name (e.g. "City Council Members", "Board of
+      Aldermen") that lists names as headings or line items, even with no other details;
+      take the role from the section heading
+    Do NOT extract from news, event summaries, meeting notes, scattered mentions, or content
+    recording what officials did (votes, minutes, ordinances, resolutions), even if structured.
+    A list of links whose text is only a role or position label (e.g. "Mayor",
+    "Councilmember, Place 1", "Alderman") is navigation, not a roster, and those labels are
+    not person names.
+    Only extract elected members of the governing body (e.g. Mayor, City Council, Board of
+    Aldermen, Board of Commissioners). Exclude appointed staff and officials from other
+    jurisdictions (county, precinct, special district), even when listed on the same page.
+    Treat officials as currently serving unless the content says the roster is historical.
+    If there are no valid sources, return an empty "people" array.
 
     STEP 2 - FOR EACH OFFICIAL, EXTRACT THE FOLLOWING
+    Use null for any field the content does not give.
 
     name:
-    - The person's name only — include all personal name components (honorifics, suffixes, generational markers: Dr., Hon., Jr., Sr., III, etc.) but exclude role or position labels (Mayor, Council Member, City Secretary, etc.).
-    - Preserve name punctuation as-is (e.g. a "Last, First" comma is part of the name format, not a separator).
-    - Only include an entry if you can see a real person's name. If no name is present, do not add an entry — never invent or infer one. Role or position labels alone (e.g., "Mayor", "Councilmember, Place 1", "Alderman") are not person names, even when they appear as link text; omit them.
+    - The person's name only, with every personal name component (honorifics, suffixes,
+      generational markers: Dr., Hon., Jr., Sr., III) and no role or position labels.
+    - Preserve name punctuation as-is: a "Last, First" comma is part of the name.
+    - Only add an entry for a real person's name you can see. Never invent or infer one.
 
     image:
-    - The image src value for a profile photo, exactly as it appears in the content.
-    - If none found, use null.
+    - The image src of a profile photo, exactly as it appears in the content.
 
     label:
     - Everything the page uses to identify which office this person holds, written as one
@@ -207,55 +199,41 @@ def municipality_officials_prompt(
             -> "Council Member Place 3 (East Ward)"
         "District 1" on a page describing "one councilperson per district"
             -> "Council Member District 1"
+    - Every seat belongs to a body, and its label needs that body's member title. Take the
+      title from anywhere on the page: the page title, a section heading, or a sentence about
+      the body. A heading directly above a person that is only a seat is not the title:
+        "Ward 7" on a page titled "Mayor and Board of Selectmen"
+            -> "Selectman Ward 7"
+      A title naming several offices does not give all of them to everyone: only the person
+      the page names as mayor is the mayor.
     - If the person holds more than one office, include every one in the same label, in the
       page's order. A second office often follows the name rather than preceding it:
         "Council Member Seat 4: Jane Roe, Vice Mayor"
             -> "Council Member Seat 4 and Vice Mayor"
     {roles_hint_str}
 
-    phone:
-    - A phone number explicitly present in the content.
-    - Use in this order: personal number first, then office number, then any
-      general municipal contact number found anywhere in the content.
-    - If none found, use null.
-
-    email:
-    - A valid email address in the format email@domain.tld.
-    - Use in this order: personal email first, then office email, then any
-      general municipal contact email found anywhere in the content.
-    - Contact form URLs (e.g. /email-contact/node/...) are NOT email addresses.
-      Treat them as a URL candidate instead.
-    - If none found, use null.
+    phone, email:
+    - Use in this order: the person's own, then their office's, then any general municipal
+      contact found anywhere in the content.
+    - An email must be a valid address (email@domain.tld). A contact form URL
+      (e.g. /email-contact/node/...) is not an email; treat it as a url candidate.
 
     url:
-    - Use in this order: official profile page, biography page, contact form URL,
-      position listing page, general listing page.
-    - Copy the URL exactly as it appears in the content. Do not normalize, lowercase, or remove subdomains like "www".
-    - If none found, use null.
+    - Use in this order: official profile page, biography page, contact form URL, position
+      listing page, general listing page.
+    - Copy it exactly as it appears. Do not normalize, lowercase, or remove subdomains like "www".
 
-    start_date:
-    - Date of the most recent election or appointment, if present anywhere in the content.
-    - Parse from any written format (e.g. "Jan. 6, 2023", "January 2023", "2023") and normalize.
-    - Output format: "YYYY", "YYYY-MM", or "YYYY-MM-DD" depending on precision available.
-    - If not present, use null.
+    start_date, end_date:
+    - start_date is the most recent election or appointment; end_date is when the current
+      term expires.
+    - Parse any written format (e.g. "Jan. 6, 2023", "January 2023", "2023") into "YYYY",
+      "YYYY-MM", or "YYYY-MM-DD", as precise as the content allows.
 
-    end_date:
-    - Date the current term expires, if present anywhere in the content.
-    - Parse from any written format and normalize.
-    - Output format: "YYYY", "YYYY-MM", or "YYYY-MM-DD" depending on precision available.
-    - If not present, use null.
-
-    STEP 3 - ADDITIONAL RULES
-    - Only extract information explicitly present in the content. Do not guess or fabricate.
-      Exception: inferring a role from a governing body section heading, page title, or description
-      is permitted — this is the one case where inference is required rather than direct extraction.
+    STEP 3 - RULES
+    - Only use information present in the content. The one inference allowed is a title taken
+      from a heading, page title or description, as described under label.
     - One entry per person. If the same person appears more than once, merge into one record.
     - All details must refer to the official's current term.
-
-    STEP 4 - RETURN JSON
-
-    Return a JSON object with exactly this field:
-    - people: array of official objects as described above
     """
 
 

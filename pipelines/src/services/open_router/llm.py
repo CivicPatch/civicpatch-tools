@@ -156,7 +156,7 @@ async def run_prompt(
                     # went stale silently: an unlisted (model, provider) pair reported zero.
                     "usage": {"include": True},
                     "provider": {
-                        "order": provider_order or ["AtlasCloud", "DigitalOcean"],
+                        "order": provider_order or ["DigitalOcean", "Alibaba", "NextBit", "AtlasCloud"],
                         "allow_fallbacks": False,
                         "data_collection": "deny",
                     },

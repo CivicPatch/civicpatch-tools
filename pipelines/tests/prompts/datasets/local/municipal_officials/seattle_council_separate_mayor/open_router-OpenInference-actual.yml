@@ -3,7 +3,7 @@ people:
   label: Councilmember
   phone: null
   email: null
-  url: https://seattle.gov/council/members/rob-saka
+  url: https://seattle.gov/council/members/rob-saka/about-rob
   start_date: null
   end_date: null
   image: null
@@ -11,7 +11,7 @@ people:
   label: Councilmember
   phone: null
   email: null
-  url: https://seattle.gov/council/members/eddie-lin
+  url: https://seattle.gov/council/members/eddie-lin/about-eddie-lin
   start_date: null
   end_date: null
   image: null
@@ -19,7 +19,7 @@ people:
   label: Councilmember
   phone: null
   email: null
-  url: https://seattle.gov/council/members/joy-hollingsworth
+  url: https://seattle.gov/council/members/joy-hollingsworth/about-joy
   start_date: null
   end_date: null
   image: null
@@ -27,7 +27,7 @@ people:
   label: Councilmember
   phone: null
   email: null
-  url: https://seattle.gov/council/members/maritza-rivera
+  url: https://seattle.gov/council/members/maritza-rivera/about-maritza
   start_date: null
   end_date: null
   image: null
@@ -35,7 +35,7 @@ people:
   label: Councilmember
   phone: null
   email: null
-  url: https://seattle.gov/council/members/debora-juarez
+  url: https://seattle.gov/council/members/debora-juarez/about-debora
   start_date: null
   end_date: null
   image: null
@@ -43,7 +43,7 @@ people:
   label: Councilmember
   phone: null
   email: null
-  url: https://seattle.gov/council/members/dan-strauss
+  url: https://seattle.gov/council/members/dan-strauss/about-dan
   start_date: null
   end_date: null
   image: null
@@ -51,7 +51,7 @@ people:
   label: Councilmember
   phone: null
   email: null
-  url: https://seattle.gov/council/members/bob-kettle
+  url: https://seattle.gov/council/members/bob-kettle/about-robert
   start_date: null
   end_date: null
   image: null
@@ -59,7 +59,7 @@ people:
   label: Councilmember
   phone: null
   email: null
-  url: https://seattle.gov/council/members/alexis-mercedes-rinck
+  url: https://seattle.gov/council/members/alexis-mercedes-rinck/staff
   start_date: null
   end_date: null
   image: null
@@ -67,7 +67,7 @@ people:
   label: Councilmember
   phone: null
   email: null
-  url: https://seattle.gov/council/members/dionne-foster
+  url: https://seattle.gov/council/members/dionne-foster/about-dionne
   start_date: null
   end_date: null
   image: null

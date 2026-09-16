@@ -1,82 +1,82 @@
 providers:
   open_router-DigitalOcean:
-    elapsed_seconds: 84.15
-    cost_usd: 0.0131363708
-    f1_primary_role: 1.0
+    elapsed_seconds: 136.69
+    cost_usd: 0.0109651808
+    f1_primary_role: 0.9861111111111112
     f1_district: 1.0
-    roles: 1.0
-    image: 0.8
-    phone: 0.6133333333333333
-    designations_precision: 1.0
-    email: 0.8
-    roles_precision: 1.0
-    end_date: 1.0
+    email: 0.9333333333333333
+    image: 1.0
+    roles_precision: 0.9888888888888889
+    start_date: 1.0
+    phone: 0.68
+    designations: 1.0
+    name: 1.0
+    roles: 0.9888888888888889
     url: 0.8666666666666667
-    start_date: 1.0
-    name: 1.0
-    designations: 1.0
+    designations_precision: 1.0
+    end_date: 1.0
   open_router-AtlasCloud:
-    elapsed_seconds: 102.32
-    cost_usd: 0.021236964
-    f1_primary_role: 0.9411764705882353
+    elapsed_seconds: 130.35
+    cost_usd: 0.009759512
+    f1_primary_role: 1.0
     f1_district: 1.0
-    roles: 0.9407407407407408
+    email: 0.9777777777777777
     image: 1.0
-    phone: 0.9466666666666667
-    designations_precision: 1.0
-    email: 1.0
     roles_precision: 1.0
-    end_date: 1.0
-    url: 0.9333333333333333
     start_date: 1.0
-    name: 1.0
+    phone: 0.8666666666666667
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 0.9333333333333333
+    designations_precision: 1.0
+    end_date: 1.0
   open_router-Alibaba:
-    elapsed_seconds: 127.76
-    cost_usd: 0.021927358
+    elapsed_seconds: 164.46
+    cost_usd: 0.0095767656
     f1_primary_role: 1.0
     f1_district: 1.0
-    roles: 1.0
-    image: 1.0
-    phone: 0.88
-    designations_precision: 1.0
     email: 1.0
-    roles_precision: 1.0
-    end_date: 1.0
-    url: 0.9333333333333333
-    start_date: 1.0
-    name: 1.0
-    designations: 1.0
-  open_router-OpenInference:
-    elapsed_seconds: 192.16
-    cost_usd: 0.004202276
-    f1_primary_role: 0.9090909090909091
-    f1_district: 0.85
-    roles: 0.7814814814814814
-    image: 0.55
-    phone: 0.6022222222222222
-    designations_precision: 1.0
-    email: 0.7222222222222222
-    roles_precision: 0.9903846153846154
-    end_date: 0.6111111111111112
-    url: 0.8481481481481481
-    start_date: 0.6111111111111112
-    name: 0.8481481481481481
-    designations: 0.7888888888888889
-  open_router-NextBit:
-    elapsed_seconds: 189.12
-    cost_usd: 0.01615344
-    f1_primary_role: 1.0
-    f1_district: 1.0
-    roles: 1.0
     image: 1.0
+    roles_precision: 1.0
+    start_date: 1.0
     phone: 1.0
-    designations_precision: 1.0
-    email: 1.0
-    roles_precision: 1.0
-    end_date: 1.0
-    url: 0.9333333333333333
-    start_date: 1.0
-    name: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
+    designations_precision: 1.0
+    end_date: 1.0
+  open_router-OpenInference:
+    elapsed_seconds: 237.76
+    cost_usd: 0.00389361
+    f1_primary_role: 0.9824561403508771
+    f1_district: 0.8421052631578947
+    email: 0.6555555555555556
+    image: 0.35
+    roles_precision: 0.9886363636363636
+    start_date: 0.6111111111111112
+    phone: 0.6022222222222222
+    designations: 0.6555555555555556
+    name: 0.7148148148148148
+    roles: 0.7074074074074074
+    url: 0.5888888888888889
+    designations_precision: 1.0
+    end_date: 0.6111111111111112
+  open_router-NextBit:
+    elapsed_seconds: 229.4
+    cost_usd: 0.01213432
+    f1_primary_role: 1.0
+    f1_district: 1.0
+    email: 0.9333333333333333
+    image: 0.8
+    roles_precision: 1.0
+    start_date: 1.0
+    phone: 0.88
+    designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 0.8666666666666667
+    designations_precision: 1.0
+    end_date: 1.0
 failures: {}

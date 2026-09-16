@@ -1,15 +1,15 @@
 run:
-  timestamp: '2026-09-16T20:47:16+00:00'
-  prompt_sha256: 8d1b93961ff5
-  prompt_file: _prompts/8d1b93961ff5.txt
+  timestamp: '2026-09-16T21:19:41+00:00'
+  prompt_sha256: 5f1ad4c63ce8
+  prompt_file: _prompts/5f1ad4c63ce8.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
   providers:
   - NextBit
-  elapsed_seconds: 189.12
-  total_input_tokens: 128869
-  total_output_tokens: 23223
-  total_cost_usd: 0.01615344
+  elapsed_seconds: 229.4
+  total_input_tokens: 124908
+  total_output_tokens: 21260
+  total_cost_usd: 0.01213432
 accuracy:
   person:
     correct: 72
@@ -52,29 +52,29 @@ accuracy:
     recall: 1.0
     f1: 1.0
   email:
-    correct: 42
-    missing: 0
+    correct: 36
+    missing: 6
     spurious: 0
     wrong: 0
     precision: 1.0
-    recall: 1.0
-    f1: 1.0
+    recall: 0.8571428571428571
+    f1: 0.9230769230769231
   phone:
-    correct: 60
-    missing: 0
+    correct: 50
+    missing: 10
     spurious: 0
     wrong: 0
     precision: 1.0
-    recall: 1.0
-    f1: 1.0
+    recall: 0.8333333333333334
+    f1: 0.9090909090909091
   url:
-    correct: 61
-    missing: 0
+    correct: 57
+    missing: 6
     spurious: 0
-    wrong: 3
-    precision: 0.953125
-    recall: 0.953125
-    f1: 0.953125
+    wrong: 1
+    precision: 0.9827586206896551
+    recall: 0.890625
+    f1: 0.9344262295081968
   start_date:
     correct: 12
     missing: 0
@@ -92,25 +92,25 @@ accuracy:
     recall: 1.0
     f1: 1.0
   image:
-    correct: 24
+    correct: 23
     missing: 0
     spurious: 2
-    wrong: 0
-    precision: 0.9230769230769231
-    recall: 1.0
-    f1: 0.96
+    wrong: 1
+    precision: 0.8846153846153846
+    recall: 0.9583333333333334
+    f1: 0.92
 aggregated_report:
-  roles: 1.0
-  image: 1.0
-  phone: 1.0
-  designations_precision: 1.0
-  email: 1.0
+  email: 0.9333333333333333
+  image: 0.8
   roles_precision: 1.0
-  end_date: 1.0
-  url: 0.9333333333333333
   start_date: 1.0
-  name: 1.0
+  phone: 0.88
   designations: 1.0
+  name: 1.0
+  roles: 1.0
+  url: 0.8666666666666667
+  designations_precision: 1.0
+  end_date: 1.0
 per_case_scores:
 - case_id: austin_city_manager_staff
   score: 1.0
@@ -120,114 +120,114 @@ per_case_scores:
   score: 1.0
   person_precision: 1.0
   scores:
-    roles: 1.0
-    phone: 1.0
-    designations_precision: 1.0
     email: 1.0
     roles_precision: 1.0
-    url: 1.0
-    name: 1.0
+    phone: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
+    designations_precision: 1.0
 - case_id: austin_district7_council_member
   score: 1.0
   person_precision: 1.0
   scores:
-    roles: 1.0
-    image: 1.0
-    phone: 1.0
-    designations_precision: 1.0
     email: 1.0
+    image: 1.0
     roles_precision: 1.0
-    end_date: 1.0
-    url: 1.0
     start_date: 1.0
-    name: 1.0
+    phone: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
+    designations_precision: 1.0
+    end_date: 1.0
 - case_id: board_of_aldermen
-  score: 0.8333333333333334
+  score: 0.7666666666666666
   person_precision: 0.8333333333333334
   scores:
-    roles: 1.0
-    image: 1.0
-    phone: 1.0
     email: 1.0
+    image: 1.0
     roles_precision: 1.0
-    end_date: 1.0
-    url: 1.0
     start_date: 1.0
-    name: 1.0
+    phone: 0.2
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
+    end_date: 1.0
 - case_id: coleman_council
   score: 1.0
   person_precision: 1.0
   scores:
-    roles: 1.0
-    phone: 1.0
-    designations_precision: 1.0
     email: 1.0
     roles_precision: 1.0
-    url: 1.0
-    name: 1.0
+    phone: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
+    designations_precision: 1.0
 - case_id: golinda_mixed_city_county
   score: 1.0
   person_precision: 1.0
   scores:
-    roles: 1.0
-    phone: 1.0
     email: 1.0
     roles_precision: 1.0
-    url: 1.0
-    name: 1.0
+    phone: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
 - case_id: inverted_name_format
   score: 1.0
   person_precision: 1.0
   scores:
-    roles: 1.0
-    phone: 1.0
-    designations_precision: 1.0
     email: 1.0
     roles_precision: 1.0
-    url: 1.0
-    name: 1.0
+    phone: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
+    designations_precision: 1.0
 - case_id: jackson_mayors_office
-  score: 1.0
+  score: 0.75
   person_precision: 1.0
   scores:
-    roles: 1.0
-    image: 1.0
-    phone: 1.0
     email: 1.0
+    image: 0.0
     roles_precision: 1.0
-    url: 1.0
-    name: 1.0
+    phone: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 0.0
 - case_id: la_porte_council
   score: 1.0
   person_precision: 1.0
   scores:
-    roles: 1.0
-    image: 1.0
-    phone: 1.0
-    designations_precision: 1.0
     email: 1.0
+    image: 1.0
     roles_precision: 1.0
-    url: 1.0
-    name: 1.0
+    phone: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
+    designations_precision: 1.0
 - case_id: mixed_current_past
-  score: 1.0
+  score: 0.7142857142857143
   person_precision: 1.0
   scores:
-    roles: 1.0
-    phone: 1.0
-    email: 1.0
+    email: 0.0
     roles_precision: 1.0
-    url: 1.0
-    name: 1.0
+    phone: 0.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
 - case_id: nav_links_no_names
   score: 0.0
   person_precision: 0.0
@@ -236,74 +236,74 @@ per_case_scores:
   score: 1.0
   person_precision: 1.0
   scores:
-    roles: 1.0
-    phone: 1.0
-    designations_precision: 1.0
     email: 1.0
     roles_precision: 1.0
-    url: 1.0
-    name: 1.0
+    phone: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
+    designations_precision: 1.0
 - case_id: raisin_township_clerk
   score: 1.0
   person_precision: 1.0
   scores:
-    roles: 1.0
-    phone: 1.0
     email: 1.0
     roles_precision: 1.0
-    url: 1.0
-    name: 1.0
+    phone: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
 - case_id: raisin_township_supervisor
   score: 1.0
   person_precision: 1.0
   scores:
-    roles: 1.0
-    phone: 1.0
     email: 1.0
     roles_precision: 1.0
-    url: 1.0
-    name: 1.0
+    phone: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
 - case_id: redundant_place_role
-  score: 1.0
+  score: 0.9
   person_precision: 1.0
   scores:
-    roles: 1.0
-    phone: 1.0
-    designations_precision: 1.0
     email: 1.0
     roles_precision: 1.0
-    end_date: 1.0
-    url: 1.0
     start_date: 1.0
-    name: 1.0
+    phone: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 0.0
+    designations_precision: 1.0
+    end_date: 1.0
 - case_id: seattle_council_separate_mayor
   score: 1.0
   person_precision: 1.0
   scores:
-    roles: 1.0
-    image: 1.0
-    phone: 1.0
-    designations_precision: 1.0
     email: 1.0
+    image: 1.0
     roles_precision: 1.0
-    url: 1.0
-    name: 1.0
+    phone: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
+    designations_precision: 1.0
 - case_id: vacant_positions_council
-  score: 0.8571428571428571
+  score: 1.0
   person_precision: 1.0
   scores:
-    roles: 1.0
-    phone: 1.0
     email: 1.0
     roles_precision: 1.0
-    url: 0.0
-    name: 1.0
+    phone: 1.0
     designations: 1.0
+    name: 1.0
+    roles: 1.0
+    url: 1.0
 mismatches:
   board_of_aldermen:
   - person: Abelardo Gonzalez
@@ -312,11 +312,121 @@ mismatches:
     actual_label: Alderman
     expected: "\u2014"
     actual: present
+  - person: Christi Burnias
+    field: phone
+    expected_label: Alderwoman
+    actual_label: Alderwoman
+    expected: (956) 350-4093
+    actual: "\u2014"
+  - person: Javier Vera
+    field: phone
+    expected_label: Mayor Pro Tem
+    actual_label: Mayor Pro Tem
+    expected: (956) 350-4093
+    actual: "\u2014"
+  - person: Mark A. Johnson
+    field: phone
+    expected_label: Alderman
+    actual_label: Alderman
+    expected: (956) 350-4093
+    actual: "\u2014"
+  - person: Peter Harris
+    field: phone
+    expected_label: Alderman
+    actual_label: Alderman
+    expected: (956) 350-4093
+    actual: "\u2014"
+  jackson_mayors_office:
+  - person: Scott Conger
+    field: url
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: https://jacksontn.gov/government/mayorsoffice/aboutmayorconger
+    actual: https://jacksontn.gov/government/mayorsoffice
+  - person: Scott Conger
+    field: image
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: local://35aa4bad0377.png
+    actual: 'local: //35aa4bad0377.png'
+  mixed_current_past:
+  - person: Al Stephens
+    field: email
+    expected_label: Mayor Pro Tem
+    actual_label: Mayor Pro Tem
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Al Stephens
+    field: phone
+    expected_label: Mayor Pro Tem
+    actual_label: Mayor Pro Tem
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Billy Wayne Martin
+    field: email
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Billy Wayne Martin
+    field: phone
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Bobby Hanson
+    field: email
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Bobby Hanson
+    field: phone
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Charles Wrenn
+    field: email
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Charles Wrenn
+    field: phone
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Darrell Grintz
+    field: email
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Darrell Grintz
+    field: phone
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Michael Pye
+    field: email
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Michael Pye
+    field: phone
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: (903) 587-3334
+    actual: "\u2014"
   nav_links_no_names:
   - person: Edward Zapalac
     field: person
     expected_label: ''
-    actual_label: Councilmember Place 5
+    actual_label: Councilmember, Place 5
     expected: "\u2014"
     actual: present
   raisin_township_clerk:
@@ -333,22 +443,40 @@ mismatches:
     actual_label: Supervisor
     expected: "\u2014"
     actual: local://c487d9c940ad.png
-  vacant_positions_council:
-  - person: Alysa Jarvis
+  redundant_place_role:
+  - person: Barbara Peskin
     field: url
-    expected_label: Council
-    actual_label: Council
-    expected: https://seadrifttx.org/city-council/directory-listing/alysa-jarvis
-    actual: https://seadrifttx.org/email-contact/node/741/field_email
-  - person: Kenneth Reese
+    expected_label: Council Member Place 2
+    actual_label: Council Member Place 2
+    expected: https://meadowlakestexas.org/government/city_council.php
+    actual: "\u2014"
+  - person: Bruce Johnson
     field: url
-    expected_label: Council
-    actual_label: Council
-    expected: https://seadrifttx.org/city-council/directory-listing/kenneth-reese
-    actual: https://seadrifttx.org/email-contact/node/751/field_email
-  - person: Tracey Johnson
+    expected_label: Council Member Place 4
+    actual_label: Council Member Place 4
+    expected: https://meadowlakestexas.org/government/city_council.php
+    actual: "\u2014"
+  - person: Carolyn Richmond
     field: url
-    expected_label: Council
-    actual_label: Council
-    expected: https://seadrifttx.org/city-council/directory-listing/tracey-johnson
-    actual: https://seadrifttx.org/email-contact/node/756/field_email
+    expected_label: Council Member Place 3, Mayor Pro-Tem
+    actual_label: Council Member Place 3 and Mayor Pro-Tem
+    expected: https://meadowlakestexas.org/government/city_council.php
+    actual: "\u2014"
+  - person: Garrett Wood
+    field: url
+    expected_label: Council Member Place 5, Mayor
+    actual_label: Council Member Place 5 and Mayor
+    expected: https://meadowlakestexas.org/government/city_council.php
+    actual: "\u2014"
+  - person: Mark Bentley
+    field: url
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: https://meadowlakestexas.org/government/city_council.php
+    actual: "\u2014"
+  - person: Mike Shaw
+    field: url
+    expected_label: Council Member Place 1
+    actual_label: Council Member Place 1
+    expected: https://meadowlakestexas.org/government/city_council.php
+    actual: "\u2014"

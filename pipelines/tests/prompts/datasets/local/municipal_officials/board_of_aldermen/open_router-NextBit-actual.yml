@@ -9,7 +9,7 @@ people:
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/07/Todd-Day-e1720626761286.jpg
 - name: Javier Vera
   label: Mayor Pro Tem
-  phone: (956) 350-4093
+  phone: null
   email: Javier.Vera@RanchoViejoTx.gov
   url: https://www.ranchoviejotexas.com/board-of-aldermen/
   start_date: 2025-05
@@ -17,7 +17,7 @@ people:
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2021/11/Group-1.jpg
 - name: Christi Burnias
   label: Alderwoman
-  phone: (956) 350-4093
+  phone: null
   email: Christi.Burnias@RanchoViejoTx.gov
   url: https://www.ranchoviejotexas.com/board-of-aldermen/
   start_date: 2024-05
@@ -25,7 +25,7 @@ people:
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/05/C-Burnias3-e1716392656796.jpg
 - name: Abelardo Gonzalez
   label: Alderman
-  phone: (956) 350-4093
+  phone: null
   email: Abelardo.Gonzalez@RanchoViejoTx.gov
   url: https://www.ranchoviejotexas.com/board-of-aldermen/
   start_date: 2025-05
@@ -33,7 +33,7 @@ people:
   image: null
 - name: Peter Harris
   label: Alderman
-  phone: (956) 350-4093
+  phone: null
   email: Peter.Harris@RanchoViejoTx.gov
   url: https://www.ranchoviejotexas.com/board-of-aldermen/
   start_date: 2025-05
@@ -41,7 +41,7 @@ people:
   image: null
 - name: Mark A. Johnson
   label: Alderman
-  phone: (956) 350-4093
+  phone: null
   email: Mark.Johnson@RanchoViejoTx.gov
   url: https://www.ranchoviejotexas.com/board-of-aldermen/
   start_date: 2024-05

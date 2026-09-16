@@ -1,7 +1,7 @@
 people:
-- name: Susan Bunch
+- name: Susan bunch
   label: Clerk
-  phone: 517-423-3162
+  phone: null
   email: clerk@raisintownship.com
   url: https://raisinchartertownship.com/clerk
   start_date: null

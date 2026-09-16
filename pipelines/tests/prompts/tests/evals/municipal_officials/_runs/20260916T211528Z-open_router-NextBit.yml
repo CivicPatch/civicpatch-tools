@@ -1,0 +1,84 @@
+mismatches:
+  board_of_aldermen:
+  - actual: present
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Abelardo Gonzalez
+  jackson_mayors_office:
+  - actual: https://jacksontn.gov/government/mayorsoffice
+    actual_label: Mayor
+    expected: https://jacksontn.gov/government/mayorsoffice/aboutmayorconger
+    expected_label: Mayor
+    field: url
+    person: Scott Conger
+  la_porte_council:
+  - actual: '2027'
+    actual_label: Council Member District 3
+    expected: "\u2014"
+    expected_label: Council Member District 3
+    field: end_date
+    person: Bill Bentley
+  - actual: '2025'
+    actual_label: Council Member At-Large A
+    expected: "\u2014"
+    expected_label: Council Member At-Large A
+    field: end_date
+    person: Brandon Lunsford
+  - actual: '2026'
+    actual_label: Council Member At-Large B
+    expected: "\u2014"
+    expected_label: Council Member At-Large B
+    field: end_date
+    person: Brent McCaulley
+  - actual: '2027'
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: end_date
+    person: Chuck Engelken
+  - actual: '2025'
+    actual_label: Council Member District 5
+    expected: "\u2014"
+    expected_label: Council Member District 5
+    field: end_date
+    person: Jay Martin
+  - actual: '2026'
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: end_date
+    person: Mandi Williams
+  - actual: '2027'
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: end_date
+    person: Rick Helton
+  - actual: '2026'
+    actual_label: Council Member District 6
+    expected: "\u2014"
+    expected_label: Council Member District 6
+    field: end_date
+    person: Robbie McLarrin
+  - actual: '2025'
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: end_date
+    person: Robert Guerra
+  nav_links_no_names:
+  - actual: present
+    actual_label: Councilmember, Place 5
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    person: Edward Zapalac
+  raisin_township_clerk:
+  - actual: local://2105ede652ed.png
+    actual_label: Clerk
+    expected: "\u2014"
+    expected_label: Clerk
+    field: image
+    person: Susan Bunch

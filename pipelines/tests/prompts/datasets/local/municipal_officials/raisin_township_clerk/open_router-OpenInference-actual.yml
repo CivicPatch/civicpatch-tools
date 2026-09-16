@@ -1,17 +1,1 @@
-people:
-- name: Susan bunch
-  label: Clerk
-  phone: null
-  email: clerk@raisintownship.com
-  url: https://raisinchartertownship.com/clerk
-  start_date: null
-  end_date: null
-  image: null
-- name: Sarah Simpkins
-  label: Deputy Clerk
-  phone: null
-  email: deputyclerk@raisintownship.com
-  url: https://raisinchartertownship.com/clerk
-  start_date: null
-  end_date: null
-  image: null
+people: []
