@@ -54,7 +54,7 @@ PERSON_MEMBERSHIPS = """COALESCE((
         'label', memberships.label,
         'source_labels', to_jsonb(memberships.source_labels),
         'designations', to_jsonb(memberships.designations),
-        'unmatched_text', to_jsonb(memberships.unmatched_text),
+        'meta_unmatched_text', to_jsonb(memberships.meta_unmatched_text),
         'start_date', memberships.start_date,
         'end_date', memberships.end_date,
         -- When this seat was first and last observed. Both NOT NULL.

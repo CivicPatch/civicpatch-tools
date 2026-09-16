@@ -38,7 +38,7 @@ def _person(person: dict) -> ReviewPerson:
         start_date=person.get("start_date"),
         end_date=person.get("end_date"),
         role_id=person.get("role_id"),
-        unmatched_text=person.get("unmatched_text") or [],
+        meta_unmatched_text=person.get("meta_unmatched_text") or [],
     )
 
 

@@ -129,7 +129,7 @@ async def upsert_all(
     await cur.executemany(
         f"""
         INSERT INTO memberships
-            (post_id, organization_id, person_id, designations, unmatched_text,
+            (post_id, organization_id, person_id, designations, meta_unmatched_text,
              source_labels, start_date, end_date, first_seen_at, last_seen_at, label)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
@@ -138,7 +138,7 @@ async def upsert_all(
                 THEN GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at)
                 ELSE memberships.last_seen_at END,
             designations = EXCLUDED.designations,
-            unmatched_text = EXCLUDED.unmatched_text,
+            meta_unmatched_text = EXCLUDED.meta_unmatched_text,
             source_labels = EXCLUDED.source_labels,
             start_date = EXCLUDED.start_date,
             end_date = EXCLUDED.end_date,
@@ -151,7 +151,7 @@ async def upsert_all(
                 organization_id,
                 member.person_id,
                 member.designations,
-                member.unmatched_text,
+                member.meta_unmatched_text,
                 member.source_labels,
                 member.start_date,
                 member.end_date,
@@ -225,7 +225,7 @@ async def upsert(
     await cur.execute(
         f"""
         INSERT INTO memberships
-            (post_id, organization_id, person_id, designations, unmatched_text,
+            (post_id, organization_id, person_id, designations, meta_unmatched_text,
              source_labels, start_date, end_date, first_seen_at, last_seen_at, label)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
@@ -237,7 +237,7 @@ async def upsert(
                 THEN GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at)
                 ELSE memberships.last_seen_at END,
             designations = EXCLUDED.designations,
-            unmatched_text = EXCLUDED.unmatched_text,
+            meta_unmatched_text = EXCLUDED.meta_unmatched_text,
             source_labels = EXCLUDED.source_labels,
             start_date = EXCLUDED.start_date,
             end_date = EXCLUDED.end_date,
@@ -250,7 +250,7 @@ async def upsert(
             organization_id,
             person_id,
             member.designations,
-            member.unmatched_text,
+            member.meta_unmatched_text,
             member.source_labels,
             member.start_date,
             member.end_date,
@@ -313,7 +313,7 @@ async def list_for_jurisdiction(
                -- it was included.
                m.first_seen_at, m.closed_at, m.last_seen_at,
                pe.name AS person_name,
-               m.source_labels, m.designations, m.unmatched_text,
+               m.source_labels, m.designations, m.meta_unmatched_text,
                p.role_id, p.division_ocdid,
                r.label AS role_label
         FROM memberships m
@@ -496,7 +496,7 @@ async def list_for_state(state: str) -> list[dict]:
 _TRIAGE_POPULATION = """
     FROM memberships m
     JOIN posts p ON p.id = m.post_id
-    CROSS JOIN LATERAL unnest(m.unmatched_text) AS term
+    CROSS JOIN LATERAL unnest(m.meta_unmatched_text) AS term
     WHERE m.closed_at IS NULL
     GROUP BY lower(term)
 """
@@ -532,7 +532,7 @@ async def _triage_page(cur, limit: int, offset: int) -> list[dict]:
     return [dict(zip(columns, row)) for row in await cur.fetchall()]
 
 
-async def unmatched_text(limit: int, offset: int) -> tuple[int, list[dict]]:
+async def meta_unmatched_text(limit: int, offset: int) -> tuple[int, list[dict]]:
     """One page of triage terms, and how many there are in total.
 
     Counted separately rather than with a window function so the total survives an `offset`
@@ -701,7 +701,7 @@ async def open_for_person(cur, person_id: str, organization_id: str) -> dict | N
     `memberships_one_open_per_organization` enforces it."""
     await cur.execute(
         """
-        SELECT id::text, post_id::text, label, designations, unmatched_text
+        SELECT id::text, post_id::text, label, designations, meta_unmatched_text
         FROM memberships
         WHERE person_id = %s AND organization_id = %s AND closed_at IS NULL
         """,

@@ -42,9 +42,9 @@ def get_router() -> APIRouter:
         per_page: int = Query(20, ge=1, le=100),
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED)),
     ):
-        total, rows = await memberships.unmatched_text(per_page, pagination_offset(page, per_page))
+        total, rows = await memberships.meta_unmatched_text(per_page, pagination_offset(page, per_page))
         return {
-            "data": {"unmatched_text": rows},
+            "data": {"meta_unmatched_text": rows},
             "total_items": total,
             "page": page,
             "total_pages": pagination_total_pages(total, per_page),

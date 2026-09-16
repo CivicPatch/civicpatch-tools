@@ -49,7 +49,7 @@ function UnmatchedText() {
   const { data, error } = useAsyncData<TriagePage>(
     () =>
       fetchUnmatchedText(page, perPage).then((body) => ({
-        terms: body.data.unmatched_text,
+        terms: body.data.meta_unmatched_text,
         totalPages: body.total_pages,
       })),
     [page, perPage],

@@ -144,11 +144,10 @@ export function rowError(
   return null;
 }
 
-// A post is answered by a pick, or by labels that name a role. Asking on `role_id` rather than
-// on whether there are labels at all catches both cases at once: somebody added by hand has no
-// labels, and a scraped label that parses to nothing names no role either. Both publish into
-// the `unmatched` post, which is a vocabulary gap rather than an answer — the picker already
-// refuses to offer it.
+// A post is answered by a pick, by labels that name a role, or by a scrape that tried and
+// found no role to name — `unmatched` is a real, publishable resting state (a vocabulary gap,
+// not a question the reviewer owes an answer to), so it does not block. Only a hand-added
+// person, with no labels at all to have resolved one way or the other, must actually pick.
 function isPostUnanswered(record: DiffRecord, field: FieldSpec): boolean {
   if (field.key !== POST_FIELD) return false;
   if (normalizeScalar(diffValue(record, field)) !== "") return false;
@@ -160,6 +159,7 @@ function isPostUnanswered(record: DiffRecord, field: FieldSpec): boolean {
   // Without it there is no derivation to have an opinion about.
   const labels = getFieldValue(record, "labels");
   if (!Array.isArray(labels)) return false;
+  if (labels.length > 0) return false;
   return !getFieldValue(record, "role_id");
 }
 

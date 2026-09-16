@@ -44,14 +44,13 @@
   outline-offset: 2px;
 }
 
-/* Same size/weight as .blog-list__title (css/blog.css): larger, not heavier — it
-   inherits the ambient --font-weight (400) rather than setting its own, same as the
-   real blog page's title does. */
+/* Sized to match recent-activity/recent-publications, not .blog-list__title (css/blog.css)
+   — this is a homepage widget row, not the full blog page. */
 .blog-updates__title {
   /* Flex items stretch to fill the cross axis by default — without this, the anchor's
      hit box covers the row's full width, not just the visible title text. */
   align-self: flex-start;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
   color: var(--text-default);
   text-decoration: none;
 }
@@ -78,14 +77,14 @@
 
 .blog-updates__meta {
   color: var(--text-muted);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   font-family: var(--font-mono);
   margin-top: 0.3rem;
 }
 
 .blog-updates__desc {
   color: var(--text-muted);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   margin: 0.4rem 0 0;
 }
 }

@@ -35,7 +35,7 @@ class DerivedMembership(BaseModel):
 
     person_id: str
     designations: list[str] = []
-    unmatched_text: list[str] = []
+    meta_unmatched_text: list[str] = []
     # The labels the parser consumed
     source_labels: list[str] = []
     role_ids: list[str] = []
@@ -78,7 +78,7 @@ def _demoted_roles(
     that the source ever said it.
 
     Only known ids: `membership_roles.role_id` is a foreign key, so an unrecognised role has
-    nowhere to go and stays in `unmatched_text`, which is where triage can act on it.
+    nowhere to go and stays in `meta_unmatched_text`, which is where triage can act on it.
 
     Order follows `parsed.roles`, which `derive_roles` builds in the order the text gives
     them, so a reader sees them as the source wrote them.
@@ -124,7 +124,7 @@ def _member(
     return DerivedMembership(
         person_id=record.id,
         designations=parsed.other_designations,
-        unmatched_text=_unresolved_text(parsed),
+        meta_unmatched_text=_unresolved_text(parsed),
         source_labels=parsed.labels,
         role_ids=[role_id for _, role_id in demoted],
         label=render(
@@ -132,10 +132,10 @@ def _member(
                 demoted_roles=[role_label for role_label, _ in demoted],
                 designations=parsed.other_designations,
                 # `parsed.unmatched` (every part's, whether or not that part matched a role),
-                # not `_unresolved_text` — that narrower set is for `unmatched_text` below,
+                # not `_unresolved_text` — that narrower set is for `meta_unmatched_text` below,
                 # which exists for triage and must not include a residue that already found
                 # its role (`derive_roles`' "Commissioner Of Public Safety" case).
-                unmatched_text=parsed.unmatched,
+                meta_unmatched_text=parsed.unmatched,
             )
         ),
         start_date=record.start_date,

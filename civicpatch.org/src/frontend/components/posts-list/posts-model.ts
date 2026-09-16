@@ -45,7 +45,7 @@ export interface Membership {
 
   source_labels: string[];
   designations: string[];
-  unmatched_text: string[];
+  meta_unmatched_text: string[];
 }
 
 export interface PostRow extends Post {

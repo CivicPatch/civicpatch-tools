@@ -101,7 +101,7 @@ function JurisdictionPage({
   // appears once they land.
   const { user, permissions } = useAuth();
   const isSignedIn = !!user?.authenticated;
-  const { people, isLoading: peopleLoading } = usePeople(jurisdiction_ocdid);
+  const { people, isLoading: peopleLoading, refetch: refetchPeople } = usePeople(jurisdiction_ocdid);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
   const [manageOrgsOpen, setManageOrgsOpen] = useState(false);
   const hasEditPermission = !!permissions.can_edit_jurisdiction_data;
@@ -242,7 +242,7 @@ function JurisdictionPage({
                 .canCreatePost=${canCreatePost && !peopleBlockers.length}
                 .isLoading=${peopleLoading}
                 .blockedReason=${editingBlockedReason(peopleBlockers)}
-                .onPublished=${() => window.location.reload()}
+                .onPublished=${refetchPeople}
               ></civ-roster-editor>
             </div>
           </div>

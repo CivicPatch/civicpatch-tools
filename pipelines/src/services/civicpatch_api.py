@@ -186,7 +186,7 @@ async def get_posts(
     """
     env = get_env_vars()
     response = await client.get(
-        f"{env['CIVICPATCH_ORG_URL']}/api/v1/posts/{jurisdiction_ocdid}"
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/organizations/{jurisdiction_ocdid}"
     )
     response.raise_for_status()
     organizations = response.json().get("data", {}).get("organizations", [])

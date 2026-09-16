@@ -42,8 +42,8 @@ function term(person: ReviewPerson) {
  * most needs to look at before publishing.
  */
 function unmatched(person: ReviewPerson) {
-  if (person.role_id && !person.unmatched_text.length) return nothing;
-  const wording = person.unmatched_text.join(", ");
+  if (person.role_id && !person.meta_unmatched_text.length) return nothing;
+  const wording = person.meta_unmatched_text.join(", ");
   return html`<span class="review-unmatched"
     >${person.role_id
       ? `unmatched: ${wording}`

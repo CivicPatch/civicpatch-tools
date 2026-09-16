@@ -302,6 +302,28 @@ describe("the survivor's seat", () => {
 
     expect(merged.memberships).toBeUndefined();
   });
+
+  // `chooseSurvivor` picks by database presence and scrape match — neither guarantees the one
+  // actually seated wins. Two published duplicates, only one currently holding the office,
+  // must not merge into someone the picker then shows as "Choose a post".
+  it("falls back to the candidate's seat when the survivor never held one", () => {
+    const survivor = existing("p1");
+    const candidate = existing("p2", { memberships: seat });
+
+    const merged: any = mergeCards(survivor, candidate);
+
+    expect(merged.memberships).toEqual(seat);
+  });
+
+  it("prefers the survivor's own seat when both held one", () => {
+    const otherSeat = [{ ...seat[0], post_id: "post-2" }];
+    const survivor = existing("p1", { memberships: seat });
+    const candidate = existing("p2", { memberships: otherSeat });
+
+    const merged: any = mergeCards(survivor, candidate);
+
+    expect(merged.memberships).toEqual(seat);
+  });
 });
 
 describe("merge candidates", () => {

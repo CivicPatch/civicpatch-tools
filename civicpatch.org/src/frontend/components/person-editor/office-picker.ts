@@ -1,11 +1,14 @@
-// The office field's picker: role (required) + division (optional), scoped to whatever
-// roles/divisions existing posts already use — not the full role taxonomy or every division
-// kind `civ-post-add` can build. Picking a combo with no matching post offers "Add a new
-// office" instead, which opens that same `civ-post-add` modal (pre-filled, still fully
-// editable) rather than a second creation flow.
+// The office field's picker: role (required) + division. Roles come from whatever posts/
+// proposals already use — not the full role taxonomy. Divisions are offered to every role
+// alike, whether or not that specific role has a post there yet: a jurisdiction's divisions
+// are a geographic fact, not a per-role list, and `civ-post-add` already lets any role pair
+// with any division kind. Picking a role+division with no existing post mints one implicitly
+// (see `createAndPick`) — the "Add a new office" modal stays only for a custom label or a
+// headcount above one.
 import "../posts-list/post-add.js";
 import { html } from "lit-html";
 import { component, useEffect, useState } from "haunted";
+import { createPost } from "../../api.js";
 import { attachFocus, inputValue, type FocusRef } from "../fields/field-utils.js";
 import { hostDispatch } from "../../utils/host-dispatch.js";
 import {
@@ -96,17 +99,21 @@ function OfficePicker(host: OfficePickerHost) {
         id,
     }))
     .sort(byLabel);
+  const matchFor = (role: string, division: string) =>
+    role ? posts.find((post) => post.role_id === role && post.division_ocdid === division) ?? null : null;
+
+  // Every division any role uses, not just this one's — a jurisdiction's divisions are a
+  // geographic fact (Council Member minting District 4 means District 4 exists, full stop),
+  // so Mayor offers it too, marked new since no post pairs Mayor with it yet.
   const divisionOptions = [
     ...new Set([
-      ...posts.filter((post) => post.role_id === roleId).map((post) => post.division_ocdid),
-      ...proposedPosts.filter((p) => p.role_id === roleId).map((p) => p.division_ocdid),
+      ...posts.map((post) => post.division_ocdid),
+      ...proposedPosts.map((p) => p.division_ocdid),
     ]),
   ]
     .filter((ocdid) => ocdid !== atLarge)
-    .sort((a, b) => divisionName(a).localeCompare(divisionName(b)));
-
-  const matchFor = (role: string, division: string) =>
-    role ? posts.find((post) => post.role_id === role && post.division_ocdid === division) ?? null : null;
+    .map((ocdid) => ({ ocdid, isNew: !matchFor(roleId, ocdid) }))
+    .sort((a, b) => divisionName(a.ocdid).localeCompare(divisionName(b.ocdid)));
 
   const notifyPicked = (post_id: string, membership_label?: string) =>
     hostDispatch(
@@ -115,18 +122,68 @@ function OfficePicker(host: OfficePickerHost) {
       membership_label === undefined ? { post_id } : { post_id, membership_label },
     );
 
+  const [creating, setCreating] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
+
+  // A role+division with no existing post mints one on the spot — headcount 1, no custom
+  // label, the same defaults `civ-post-add` starts from. That modal stays only for a
+  // reviewer who wants something other than those defaults.
+  const createAndPick = async (role: string, division: string) => {
+    if (!host.organizationId) return;
+    setCreating(true);
+    setCreateError(null);
+    try {
+      const created = await createPost(host.organizationId, {
+        role_id: role,
+        division_ocdid: division,
+        meta_headcount: 1,
+      });
+      const post_id = created?.data?.id;
+      if (!post_id) return;
+      setJustAdded({
+        id: post_id,
+        organization_id: host.organizationId,
+        role_id: role,
+        division_ocdid: division,
+        label: roles.find((r) => r.id === role)?.label ?? role,
+        meta_headcount: 1,
+        meta_is_tracked: true,
+        meta_is_verified: true,
+      });
+      notifyPicked(post_id);
+      hostDispatch(host, POST_CREATED_EVENT);
+    } catch (cause) {
+      const message = String(cause).replace(/^Error:\s*/, "");
+      // Someone else created the same combination in the meantime — it exists now, just not
+      // under an id this picker's own `posts` prop knows yet. Refetch so it shows up as a
+      // normal, already-established option instead of an error with no way forward.
+      if (message === "That role and division already has a post.") {
+        hostDispatch(host, POST_CREATED_EVENT);
+        setCreateError("That combination was just added — pick it again.");
+      } else {
+        setCreateError(message);
+      }
+    } finally {
+      setCreating(false);
+    }
+  };
+
   const handleRole = (e: Event) => {
     const id = inputValue(e);
     setRoleId(id);
     setDivisionOcdid(NO_DIVISION);
+    // Not `createAndPick` here — a role alone does not say whether it needs a division, so
+    // this only ever matches an existing at-large post. `handleDivision` covers the rest,
+    // including at-large, once the reviewer answers that question (even as "none").
     const match = matchFor(id, atLarge);
     if (match) notifyPicked(match.id);
   };
   const handleDivision = (e: Event) => {
-    const division = inputValue(e);
-    setDivisionOcdid(division);
-    const match = matchFor(roleId, division || atLarge);
+    const division = inputValue(e) || atLarge;
+    setDivisionOcdid(division === atLarge ? NO_DIVISION : division);
+    const match = matchFor(roleId, division);
     if (match) notifyPicked(match.id);
+    else if (host.canCreatePost) void createAndPick(roleId, division);
   };
   const handleAdded = (e: CustomEvent) => {
     const { post_id, role_id, division_ocdid, label } = e.detail;
@@ -156,6 +213,7 @@ function OfficePicker(host: OfficePickerHost) {
         ${attachFocus(host.focusRef ?? null)}
         class="field-control__office"
         aria-label="Role"
+        ?disabled=${creating}
         @change=${handleRole}
       >
         <option value=${NO_ROLE} .selected=${roleId === NO_ROLE} disabled>Choose a role…</option>
@@ -169,24 +227,32 @@ function OfficePicker(host: OfficePickerHost) {
         ? html`<select
             class="field-control__office"
             aria-label="Division"
+            ?disabled=${creating}
             @change=${handleDivision}
           >
             <option value=${NO_DIVISION} .selected=${divisionOcdid === NO_DIVISION}>
               ${divisionName("")}
             </option>
             ${divisionOptions.map(
-              (ocdid) => html`<option value=${ocdid} .selected=${ocdid === divisionOcdid}>
-                ${divisionName(ocdid)}
+              ({ ocdid, isNew }) => html`<option
+                value=${ocdid}
+                .selected=${ocdid === divisionOcdid}
+              >
+                ${divisionName(ocdid)}${isNew ? " (New)" : ""}
               </option>`,
             )}
           </select>`
         : ""}
+      ${creating ? html`<span class="office-picker__status">Adding…</span>` : ""}
       ${host.canCreatePost
-        ? html`<button type="button" class="btn btn-sm" @click=${() => setAddOpen(true)}>
+        ? html`<button type="button" class="btn btn-sm" ?disabled=${creating} @click=${() => setAddOpen(true)}>
             Add a new office
           </button>`
         : ""}
     </span>
+    ${createError
+      ? html`<p class="office-picker__error">${createError}</p>`
+      : ""}
     ${addOpen
       ? html`<civ-post-add
           .jurisdictionOcdid=${jurisdictionOcdid}

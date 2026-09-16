@@ -1,7 +1,9 @@
 
 import { html, nothing } from "lit-html";
-import { component, useState, useEffect, useCallback } from "haunted";
+import { component, useState, useEffect, useCallback, useRef } from "haunted";
 import "./jurisdiction-page.css";
+import "../../components/status-toast/status-toast.js";
+import "../../components/status-toast/status-toast.css";
 import {
   patchPeopleData,
   generatePersonId,
@@ -41,6 +43,8 @@ interface RosterEditorProps {
 }
 
 type PublishStage = "idle" | "publishing";
+
+const TOAST_TIMEOUT_MS = 10_000;
 
 function publishLabel(blockerCount: number, stage: PublishStage): string {
   if (blockerCount) return `${blockerCount} to fix before publishing`;
@@ -87,6 +91,28 @@ function RosterEditor({
   const [publishStage, setPublishStage] = useState<PublishStage>("idle");
   const [publishError, setPublishError] = useState<string | null>(null);
   const isPublishing = publishStage !== "idle";
+  const [toast, setToast] = useState<string | null>(null);
+  const toastTimer = useRef<number | null>(null);
+  useEffect(() => {
+    return () => {
+      if (toastTimer.current !== null) window.clearTimeout(toastTimer.current);
+    };
+  }, []);
+  const dismissToast = () => {
+    if (toastTimer.current !== null) {
+      window.clearTimeout(toastTimer.current);
+      toastTimer.current = null;
+    }
+    setToast(null);
+  };
+  const showToast = (message: string) => {
+    if (toastTimer.current !== null) window.clearTimeout(toastTimer.current);
+    setToast(message);
+    toastTimer.current = window.setTimeout(() => {
+      setToast(null);
+      toastTimer.current = null;
+    }, TOAST_TIMEOUT_MS);
+  };
   useEffect(() => {
     assignPeople(published);
   }, [people]);
@@ -138,6 +164,10 @@ function RosterEditor({
         await assignMembership(change.personId, change.postId, change.label);
       }
       await patchPeopleData(jurisdictionOcdid, peoplePatch);
+      setOpenPersonId(null);
+      setFocusFieldKey(null);
+      setPublishStage("idle");
+      showToast("Changes published.");
       onPublished();
     } catch (err: any) {
       setPublishError(err.message ?? "Failed to publish.");
@@ -199,25 +229,46 @@ function RosterEditor({
           <i class="fa-solid fa-plus"></i> Add
         </button>`
       : nothing;
-  const toolbar =
-    canEdit && dirty
-      ? html`
-          <div class="roster-toolbar">
-            <button class="btn-quiet" ?disabled=${isPublishing} @click=${handleResetAll}>Discard</button>
-            <button
-              class="btn-primary"
-              ?disabled=${isPublishing || blockers.length > 0}
-              title=${blockers.length ? blockerTitle : ""}
-              @click=${handlePublish}
-            >
-              ${publishLabel(blockers.length, publishStage)}
-            </button>
+  // Always present once editing is allowed — not just while dirty — so Discard/Publish never
+  // pop in and out of the layout; disabling them says the same thing without the jump.
+  const header = canEdit
+    ? html`
+        <div class="panel">
+          <div class="panel__cap">
+            <b>Roster</b>
+            <span class="panel__cap-right roster-toolbar">
+              ${toast
+                ? html`<status-toast
+                    .message=${toast}
+                    .onDismiss=${dismissToast}
+                  ></status-toast>`
+                : nothing}
+              <button
+                class="btn-quiet"
+                ?disabled=${!dirty || isPublishing}
+                @click=${handleResetAll}
+              >
+                Discard
+              </button>
+              <button
+                class="btn-primary"
+                ?disabled=${!dirty || isPublishing || blockers.length > 0}
+                title=${blockers.length ? blockerTitle : ""}
+                @click=${handlePublish}
+              >
+                ${publishLabel(blockers.length, publishStage)}
+              </button>
+            </span>
           </div>
-        `
-      : nothing;
+          ${publishError
+            ? html`<p style="color: var(--diff-removed);">${publishError}</p>`
+            : nothing}
+        </div>
+      `
+    : nothing;
   return html`
     <div @post-created=${reloadOrganizations}>
-      ${toolbar}
+      ${header}
       ${groups.map(
         (group) => html`
           ${renderRosterCards({
@@ -233,9 +284,6 @@ function RosterEditor({
           })}
         `,
       )}
-      ${publishError
-        ? html`<p style="color: var(--diff-removed);">${publishError}</p>`
-        : nothing}
     </div>
   `;
 }

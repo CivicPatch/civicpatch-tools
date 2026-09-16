@@ -90,7 +90,7 @@ def _projected() -> dict:
                 "label": "Mayor",
                 "source_labels": ["Mayor"],
                 "designations": [],
-                "unmatched_text": [],
+                "meta_unmatched_text": [],
                 "start_date": "2024",
                 "end_date": None,
             }

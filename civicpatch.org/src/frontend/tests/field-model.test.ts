@@ -810,12 +810,15 @@ describe("fieldError — a post nobody has answered", () => {
   it("asks for a post when there are no labels to derive one from", () =>
     expect(fieldError(post, { post_id: null, labels: [] })).toBe("Choose a post"));
 
-  // Was believed unreachable — "a scraped person always derives to a post". They derive to the
-  // `unmatched` post, which is not an answer: 29 of those exist, holding 43 people.
-  it("asks when the labels named no role, however many labels there are", () =>
+  // This test verified that a scraped label naming no role ("Deputy Vice Chair" matching
+  // nothing) blocked publish the same as a truly unanswered post. It now verifies the
+  // opposite: `unmatched` is a real, publishable resting state, not a question owed an
+  // answer — 29 unmatched posts hold 43 real people in production, and forcing a reviewer
+  // to invent a role nobody's source named blocked every one of them from publishing.
+  it("does not ask when the labels named no role — unmatched is a real answer", () =>
     expect(
       fieldError(post, { post_id: null, labels: ["Deputy Vice Chair"], role_id: null }),
-    ).toBe("Choose a post"));
+    ).toBeNull());
 
   it("is satisfied once one is picked", () =>
     expect(fieldError(post, { post_id: "post-1", labels: [] })).toBeNull());
