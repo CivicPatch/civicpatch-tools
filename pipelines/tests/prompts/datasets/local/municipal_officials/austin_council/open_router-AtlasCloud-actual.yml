@@ -8,7 +8,7 @@ people:
   end_date: null
   image: null
 - name: Natasha Harper-Madison
-  label: District 1 Council Member
+  label: Council Member District 1
   phone: 512-978-2101
   email: null
   url: https://www.austintexas.gov/district1
@@ -16,7 +16,7 @@ people:
   end_date: null
   image: null
 - name: Vanessa Fuentes
-  label: District 2 Council Member
+  label: Council Member District 2
   phone: 512-978-2102
   email: null
   url: https://www.austintexas.gov/district2
@@ -24,15 +24,15 @@ people:
   end_date: null
   image: null
 - name: "Jos\xE9 Vel\xE1squez"
-  label: District 3 Council Member
+  label: Council Member District 3
   phone: 512-978-2103
   email: null
   url: https://www.austintexas.gov/district3
   start_date: null
   end_date: null
   image: null
-- name: "Jos\xE9 \"Chito\" Vela"
-  label: District 4 Council Member
+- name: "Jos\xE9 \u201CChito\u201D Vela"
+  label: Council Member District 4
   phone: 512-978-2104
   email: null
   url: https://www.austintexas.gov/district4
@@ -40,7 +40,7 @@ people:
   end_date: null
   image: null
 - name: Ryan Alter
-  label: District 5 Council Member
+  label: Council Member District 5
   phone: 512-978-2105
   email: null
   url: https://www.austintexas.gov/district5
@@ -48,7 +48,7 @@ people:
   end_date: null
   image: null
 - name: Krista Laine
-  label: District 6 Council Member
+  label: Council Member District 6
   phone: 512-978-2106
   email: null
   url: https://www.austintexas.gov/district6
@@ -56,7 +56,7 @@ people:
   end_date: null
   image: null
 - name: Mike Siegel
-  label: District 7 Council Member
+  label: Council Member District 7
   phone: 512-978-2107
   email: null
   url: https://www.austintexas.gov/district7
@@ -64,15 +64,15 @@ people:
   end_date: null
   image: null
 - name: Paige Ellis
-  label: District 8 Council Member
+  label: Council Member District 8
   phone: 512-978-2108
   email: null
   url: https://www.austintexas.gov/district8
   start_date: null
   end_date: null
   image: null
-- name: Zohaib "Zo" Qadri
-  label: District 9 Council Member
+- name: "Zohaib \u201CZo\u201D Qadri"
+  label: Council Member District 9
   phone: 512-978-2109
   email: null
   url: https://www.austintexas.gov/district9
@@ -80,7 +80,7 @@ people:
   end_date: null
   image: null
 - name: Marc Duchen
-  label: District 10 Council Member
+  label: Council Member District 10
   phone: 512-978-2110
   email: null
   url: https://www.austintexas.gov/district10

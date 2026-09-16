@@ -95,6 +95,14 @@ people:
   start_date: null
   end_date: null
   image: null
+- name: Cheyenne Beaver
+  label: Chief of Police
+  phone: 'Work Cell: 361-920-6713'
+  email: null
+  url: https://www.seadrifttx.org/police/directory-listing/cheyenne-beaver
+  start_date: null
+  end_date: null
+  image: null
 - name: Evelyn Eure
   label: Municipal / Police Clerk
   phone: 'Office: (361) 785-2069'
@@ -116,6 +124,14 @@ people:
   phone: 'Office: (361) 250-9277'
   email: null
   url: https://www.seadrifttx.org/public-works/directory-listing/eric-kuykendall
+  start_date: null
+  end_date: null
+  image: null
+- name: Terry Maddux
+  label: Solid Waste Director
+  phone: 'Work Cell: 361-746-0801'
+  email: null
+  url: https://www.seadrifttx.org/solid-waste/directory-listing/terry-maddux
   start_date: null
   end_date: null
   image: null

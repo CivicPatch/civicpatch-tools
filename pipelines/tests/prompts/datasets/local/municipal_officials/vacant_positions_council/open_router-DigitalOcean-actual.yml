@@ -1,20 +1,4 @@
 people:
-- name: Vacated Alderman
-  label: Council
-  phone: null
-  email: null
-  url: https://www.seadrifttx.org/city-council/directory-listing/vacated-alderman-0
-  start_date: null
-  end_date: null
-  image: null
-- name: Vacated Alderman
-  label: Council
-  phone: null
-  email: null
-  url: https://www.seadrifttx.org/city-council/directory-listing/vacated-alderman
-  start_date: null
-  end_date: null
-  image: null
 - name: Alysa Jarvis
   label: Council
   phone: 713-703-8662

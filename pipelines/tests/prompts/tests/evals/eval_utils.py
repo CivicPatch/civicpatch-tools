@@ -33,10 +33,9 @@ from services.open_router.llm import run_prompt as run_together_prompt
 # EVAL_MODEL=<model id>; production keeps routing to MODELS_BY_TYPE["STANDARD"].
 PROVIDERS_BY_MODEL = {
     "deepseek/deepseek-v4-flash": [
-        "open_router:DigitalOcean",   # $0.07/$0.17 — cheapest qualifying, uptime_1d 99.1%; no seed
-        "open_router:AtlasCloud",     # $0.14/$0.28 — uptime_1d 99.7%
+        "open_router:DigitalOcean",   # $0.10/$0.20, no seed — prices read 2026-09-16
+        "open_router:AtlasCloud",     # $0.14/$0.28, seed, fp4
         "open_router:Alibaba",        # $0.13/$0.27, seed, fp8 — added 2026-09-16
-        "open_router:OpenInference",  # $0.05/$0.14, seed, fp8 — added 2026-09-16
         "open_router:NextBit",        # $0.15/$0.35, seed, fp8 — added 2026-09-16
     ],
     "deepseek/deepseek-v4.1-flash": [
