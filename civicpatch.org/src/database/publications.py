@@ -17,7 +17,7 @@ import database.dismissals as dismissals_db
 from core.people_edits import with_asserted_values
 from core.membership_proposal import ids_by_person_and_organization
 from core.post_derivation import DerivedPost, MembershipBinding
-from database import assertions, memberships, organizations, posts
+from database import assertions, memberships, posts, source_records
 from database.activity import record_change
 from database.changesets import get_updated_at
 from database.database import get_pool
@@ -192,15 +192,11 @@ async def _bind_memberships(
     derived: list[DerivedPost],
     last_seen_at,
     advances_last_seen: bool,
-) -> str:
+) -> None:
     """Put this roster's people in their posts, each in the organization its post derived.
 
     A membership is a binding: who holds a seat is only true once the scrape is accepted.
-    Returns the changeset's organization — the scope `close_absent` still closes in until step 9.
     """
-    organization_id = await organizations.find_or_create_for_changeset(
-        cur, changeset_id, jurisdiction_ocdid
-    )
     # Seats are created here, not at ingest: a scrape only proposes them, and publishing is what
     # accepts. `create_all` logs each mint against this changeset.
     post_ids = await posts.create_all(
@@ -220,7 +216,15 @@ async def _bind_memberships(
             await memberships.open_memberships(cur, [jurisdiction_ocdid])
         )
         await memberships.replace_membership_roles(cur, bindings, membership_ids)
-    return organization_id
+
+
+def _people_by_organization(derived: list[DerivedPost]) -> dict[str, list[str]]:
+    """Who this roster puts in each organization."""
+    people: dict[str, list[str]] = {}
+    for post in derived:
+        for member in post.members:
+            people.setdefault(post.organization_id, []).append(member.person_id)
+    return people
 
 
 async def publish_changeset(
@@ -256,11 +260,7 @@ async def publish_changeset(
         await _record_publish(
             cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id, changes
         )
-        # The body that seats people is the body that retires them, so the close reuses the
-        # scope the binding chose. Looked up rather than created when there is nothing to bind:
-        # a publish that seats nobody must not mint an organization as a side effect, and a
-        # jurisdiction without one has no memberships to close.
-        organization_id = (
+        if derived:
             await _bind_memberships(
                 cur,
                 changeset_id,
@@ -269,13 +269,14 @@ async def publish_changeset(
                 last_seen_at,
                 read_from_a_source,
             )
-            if derived
-            else await organizations.for_changeset(cur, changeset_id)
-        )
-        # Outside the guard: who is no longer on the roster is answered by the roster.
-        if organization_id:
+
+        # Only bodies this changeset read a page for: one it never looked at keeps its people, and
+        # one whose extraction returned nobody closes nobody (`close_absent`'s own guard) — an
+        # empty result is a failed scrape more often than a dissolved body.
+        people_here = _people_by_organization(derived or [])
+        for organization_id in await source_records.organizations_for_changeset(cur, changeset_id):
             await memberships.close_absent(
-                cur, organization_id, incoming_ids, last_seen_at
+                cur, organization_id, people_here.get(organization_id, []), last_seen_at
             )
 
         # Same transaction, so a published roster and the cards it obsoletes cannot disagree.

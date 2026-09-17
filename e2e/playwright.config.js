@@ -15,8 +15,10 @@ export default defineConfig({
   outputDir: "./behaviour-results",
   use: {
     baseURL: process.env.BASE_URL ?? "http://localhost:8100",
-    trace: "on",
-    screenshot: "on",
+    // Only what a failure needs: `on` wrote a trace and screenshots for every passing test too,
+    // which is most of them, and this machine runs the suite on a nearly full disk.
+    trace: "retain-on-failure",
+    screenshot: "only-on-failure",
     launchOptions: { slowMo: 300 },
   },
   projects: [

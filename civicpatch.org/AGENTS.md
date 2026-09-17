@@ -198,7 +198,7 @@ Playwright by hand silently downloads a *different* browser build into the share
 |---|---|
 | `mise run e2e-install` | once per machine: npm deps + the pinned chromium |
 | `mise run e2e` | build frontend, start the stack, open the Playwright UI, tear down on exit |
-| `mise run e2e-ci` | headless in a fully isolated docker stack |
+| `mise run e2e-headless` | headless in a fully isolated docker stack (CI runs the same suite from its own workflow) |
 | `mise run visual` | screenshot every page in both themes, diff against the committed baseline |
 | `mise run visual-update` | accept the current rendering as the new baseline — only when intended |
 

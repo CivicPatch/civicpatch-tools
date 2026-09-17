@@ -278,21 +278,23 @@ run = "npx playwright test --reporter=line"
 dir = "e2e"
 env = { BASE_URL = "http://localhost:8100", E2E_DB_URL = "postgres://e2e:e2e_password@localhost:8101/e2e_db", E2E_REDIS_HOST = "localhost", E2E_REDIS_PORT = "8102" }
 
-[tasks.e2e-ci]
-description = "Run Playwright e2e tests headless in a fully isolated Docker stack (for CI)"
+[tasks.e2e-headless]
+description = "Run Playwright e2e tests headless in a fully isolated Docker stack"
+# Not named for CI: `.github/workflows/e2e_civicpatch_org.yml` runs compose itself, streams the
+# output and uploads the report. This is the same suite, locally.
 run = """
 export HOST_UID=$(id -u)
 export HOST_GID=$(id -g)
 docker compose -f docker-compose.e2e.yml down -v --remove-orphans || true
 docker compose -f docker-compose.e2e.yml build civicpatch-org-e2e
-# The status is captured rather than piped: a `| grep` makes $? grep's, so this task reported
-# success on a suite with 24 failures. `set -o pipefail` is not available — mise runs tasks
-# under sh, not bash.
-log=$(mktemp)
+# Streamed, not captured: the status is compose's own (`--exit-code-from`), and a silent terminal
+# through minutes of serial specs reads as a hang. Capturing it to a log also meant `| grep` made
+# $? grep's, which once reported success on a suite with 24 failures.
 status=0
-docker compose -f docker-compose.e2e.yml up --exit-code-from playwright --abort-on-container-exit > "$log" 2>&1 || status=$?
-grep -E "^(playwright-1|ERROR|civicpatch-e2e)" "$log" || true
-rm -f "$log"
+docker compose -f docker-compose.e2e.yml up --exit-code-from playwright --abort-on-container-exit || status=$?
+# Each run rebuilds the app image, and its layers stay in the build cache — 12GB of it on a 77GB
+# disk. Capped rather than cleared, so the next build still hits cache.
+docker builder prune -f --keep-storage 5GB > /dev/null || true
 exit $status
 """
 
@@ -507,3 +509,9 @@ echo ""
 uv run python -m http.server 8201 --bind 127.0.0.1
 """
 dir = "pipelines"
+
+[tasks.docker-image-sizes]
+description = "Image sizes, largest last"
+run = """
+{% raw %}docker image ls --format '{{.Size}}\t{{.Repository}}:{{.Tag}}' | sort -h | tail -20{% endraw %}
+"""
