@@ -25,6 +25,7 @@ from database.dismissals import supersede_stacked_changesets
 from database.source_records import insert_source_records
 from schemas.assertions import EntityType
 from schemas.common import Identity, UserRole
+from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:editville/government"
 _BASE = "ocd-division/country:us/state:zz/place:editville"
@@ -109,7 +110,7 @@ async def _seed() -> tuple[str, Identity]:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.upsert(
+        await factories.bind_membership(
             cur,
             DerivedMembership(person_id=person_id, source_labels=["Mayor"]),
             post_id,
@@ -337,7 +338,7 @@ async def test_leaving_somebody_out_retires_them():
         )
         org = await organizations.find_or_create(cur, _OCDID)
         seat = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        await memberships.upsert(
+        await factories.bind_membership(
             cur,
             DerivedMembership(person_id=other_id, source_labels=["Clerk"]),
             seat,
@@ -412,7 +413,7 @@ async def _seed_second_person() -> str:
         )
         org = await organizations.find_or_create(cur, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        await memberships.upsert(
+        await factories.bind_membership(
             cur,
             DerivedMembership(person_id=person_id, source_labels=["Clerk"]),
             post_id,

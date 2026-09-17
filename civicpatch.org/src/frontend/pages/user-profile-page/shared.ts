@@ -40,7 +40,7 @@ const FIELD_LABELS: Record<string, string> = {
   image: "Photo",
   start_date: "Start date",
   end_date: "End date",
-  post_id: "Seat",
+  post_id: "Post",
 };
 
 export function fieldLabel(fieldPath: string): string {

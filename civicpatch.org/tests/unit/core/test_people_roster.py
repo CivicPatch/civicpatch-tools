@@ -3,12 +3,15 @@ from unittest.mock import MagicMock
 import pytest
 
 from core.people_roster import (
+    UnknownOrganization,
     identified,
+    in_known_organizations,
     named_like_a_person,
     roster_from_rows,
     roster_from_sightings,
     reviewer_source_records,
 )
+from core.post_derivation import RosterEntry
 from shared.schemas import Person, PersonSourceRecord, Role, RoleConfig, RoleStatus
 from shared.utils.taxonomy import build_taxonomy
 
@@ -79,6 +82,24 @@ def test_two_sightings_of_one_person_become_one_official():
     assert kept[0]["phones"] == ["(512) 978-2100"]
     assert kept[0]["emails"] == ["ann@alpha.gov"]
     assert sorted(kept[0]["labels"]) == ["Council Member Place 2", "Mayor Pro-Tem"]
+
+
+@pytest.mark.unit
+def test_each_roster_entry_keeps_its_labels_paired_with_page_and_organization():
+    """The flat `labels` cannot say which organization each came from; publish needs that to
+    put a person who holds posts in two bodies into both."""
+    [entry] = _reconcile(
+        [
+            _record("Ann Lee", "Council Member Place 2", phone="(512) 978-2100", organization_id="council"),
+            {**_record("Ann Lee", "Mayor", organization_id="mayor"), "source_url": "https://alpha.gov/mayor"},
+        ]
+    )
+
+    assert sorted(entry["sightings"], key=lambda s: s["label"]) == [
+        {"label": "Council Member Place 2", "source_url": "https://alpha.gov/council", "organization_id": "council"},
+        {"label": "Mayor", "source_url": "https://alpha.gov/mayor", "organization_id": "mayor"},
+    ]
+    assert RosterEntry(**entry).sightings[0].organization_id in {"council", "mayor"}
 
 
 @pytest.mark.unit
@@ -446,3 +467,29 @@ def test_only_the_identifying_columns_are_evidence():
         "Mayor",
     )[0]
     assert record.phone is None and record.image is None
+
+
+_COUNCIL = "council-org"
+_MAYORS_OFFICE = "mayors-office-org"
+
+
+@pytest.mark.unit
+def test_a_record_in_a_current_organization_keeps_it():
+    stamped = in_known_organizations({"p1": [_record("Ana Reyes", "Mayor", organization_id=_MAYORS_OFFICE)]}, {_COUNCIL, _MAYORS_OFFICE}, _COUNCIL)
+
+    assert stamped["p1"][0]["organization_id"] == _MAYORS_OFFICE
+
+
+@pytest.mark.unit
+def test_an_unstamped_record_lands_in_the_default():
+    stamped = in_known_organizations({"p1": [_record("Ana Reyes", "Mayor")]}, {_COUNCIL}, _COUNCIL)
+
+    assert stamped["p1"][0]["organization_id"] == _COUNCIL
+
+
+@pytest.mark.unit
+def test_an_organization_that_is_no_longer_a_body_here_is_refused():
+    """Deleted mid-scrape, or another jurisdiction's: the run fails rather than guessing a body."""
+    with pytest.raises(UnknownOrganization):
+        in_known_organizations({"p1": [_record("Ana Reyes", "Mayor", organization_id=_MAYORS_OFFICE)]}, {_COUNCIL}, _COUNCIL)
+

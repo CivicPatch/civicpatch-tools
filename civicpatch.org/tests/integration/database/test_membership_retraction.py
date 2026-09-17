@@ -16,6 +16,7 @@ import pytest_asyncio
 from core.post_derivation import DerivedMembership
 from database import divisions, memberships, organizations, people, posts
 from database.database import get_pool
+from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_retract/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_retract"
@@ -80,7 +81,7 @@ async def _seed() -> tuple[str, str, str, str]:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        membership_id = await memberships.upsert(
+        membership_id = await factories.bind_membership(
             cur, DerivedMembership(person_id=person_id), post_id, org, _SEEN_AT
         )
         await conn.commit()
@@ -189,7 +190,7 @@ async def test_a_withdrawn_label_no_longer_protects_the_field_from_a_scrape():
 
     # A re-scrape of the same seat, proposing a different label.
     async with pool.connection() as conn, conn.cursor() as cur:
-        await memberships.upsert(
+        await factories.bind_membership(
             cur,
             DerivedMembership(person_id=person_id, label="Scrape Label"),
             post_id,
@@ -209,7 +210,7 @@ async def test_a_withdrawn_label_no_longer_protects_the_field_from_a_scrape():
 
     # The next scrape must now be free to set its own label.
     async with pool.connection() as conn, conn.cursor() as cur:
-        await memberships.upsert(
+        await factories.bind_membership(
             cur,
             DerivedMembership(person_id=person_id, label="Scrape Label 2"),
             post_id,

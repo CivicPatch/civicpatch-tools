@@ -20,6 +20,7 @@ from database import divisions, memberships, organizations, posts
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from database.review_priority import issue_count, issue_priority
+from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
 _BASE = "ocd-division/country:us/state:zz/place:testville"
@@ -168,8 +169,8 @@ async def test_same_post_advances_the_window_without_a_second_row():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
 
-        first = await memberships.upsert(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
-        second = await memberships.upsert(cur, DerivedMembership(person_id=person_id), post_id, org, _T1)
+        first = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
+        second = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T1)
         assert first == second
 
         await cur.execute(
@@ -192,8 +193,8 @@ async def test_a_different_post_closes_the_old_membership_and_opens_a_new_one():
         mayor = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         ward = await posts.find_or_create(cur, _OCDID, org, "council-member", _WARD_3)
 
-        old = await memberships.upsert(cur, DerivedMembership(person_id=person_id), mayor, org, _T0)
-        new = await memberships.upsert(cur, DerivedMembership(person_id=person_id), ward, org, _T1)
+        old = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), mayor, org, _T0)
+        new = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), ward, org, _T1)
         assert old != new
 
         await cur.execute("SELECT closed_at FROM memberships WHERE id = %s", (old,))
@@ -217,7 +218,7 @@ async def test_close_absent_ignores_an_empty_roster():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.upsert(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
+        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
 
         assert await memberships.close_absent(cur, org, [], _T1) == 0
         assert await memberships.close_absent(cur, org, [str(uuid.uuid4())], _T1) == 1
@@ -241,10 +242,10 @@ async def test_close_absent_leaves_another_body_in_the_jurisdiction_alone():
         board = await organizations.find_or_create(cur, _OCDID, "Testville School Board")
         council_post = await posts.find_or_create(cur, _OCDID, council, "mayor", _BASE)
         board_post = await posts.find_or_create(cur, _OCDID, board, "mayor", _BASE)
-        await memberships.upsert(
+        await factories.bind_membership(
             cur, DerivedMembership(person_id=councillor), council_post, council, _T0
         )
-        await memberships.upsert(
+        await factories.bind_membership(
             cur, DerivedMembership(person_id=trustee), board_post, board, _T0
         )
 
@@ -271,7 +272,7 @@ async def test_close_absent_closes_an_untracked_posts_membership_too():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.upsert(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
+        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
         await cur.execute("UPDATE posts SET meta_is_tracked = false WHERE id = %s", (post_id,))
 
         assert await memberships.close_absent(cur, org, [str(uuid.uuid4())], _T1) == 1
@@ -297,7 +298,7 @@ async def test_a_post_is_unverified_until_a_publish_puts_somebody_in_it():
         unverified = await posts.unverified_by_jurisdiction(cur, [_OCDID])
         assert [post["id"] for post in unverified[_OCDID]] == [post_id]
 
-        await memberships.upsert(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
+        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
         assert await posts.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
         await conn.rollback()
 
@@ -367,10 +368,10 @@ async def test_unmatched_people_share_one_post_per_division():
         again = await posts.find_or_create(cur, _OCDID, org, "unmatched", _BASE)
         assert bucket == again
 
-        await memberships.upsert(
+        await factories.bind_membership(
             cur, DerivedMembership(person_id=first_person, meta_unmatched_text=["Town Moderator"]), bucket, org, _T0
         )
-        await memberships.upsert(
+        await factories.bind_membership(
             cur, DerivedMembership(person_id=second, meta_unmatched_text=["Supervisor of the Checklist"]), bucket, org, _T0
         )
 
@@ -556,7 +557,7 @@ async def test_delete_refuses_a_post_that_has_ever_been_held():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         held = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         unheld = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        await memberships.upsert(cur, DerivedMembership(person_id=person_id), held, org, _T0)
+        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), held, org, _T0)
 
         assert await posts.delete_if_unheld(cur, held) is False
         assert await posts.delete_if_unheld(cur, unheld) is True
@@ -613,13 +614,13 @@ async def test_an_asserted_label_survives_a_re_scrape():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
 
-        membership_id = await memberships.upsert(
+        membership_id = await factories.bind_membership(
             cur, DerivedMembership(person_id=person_id, designations=["Position 8"]), post_id, org, _T0
         )
         await _human_sets_label(cur, membership_id, "Councilmember Pos. 8")
 
         # A later scrape of the same seat, with the designation parsed differently.
-        await memberships.upsert(
+        await factories.bind_membership(
             cur, DerivedMembership(person_id=person_id, designations=["Position 08"]), post_id, org, _T1
         )
 
@@ -645,9 +646,9 @@ async def test_moving_to_another_post_leaves_the_label_behind():
         first = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
         second = await posts.find_or_create(cur, _OCDID, org, "council-member", _WARD_3)
 
-        old = await memberships.upsert(cur, DerivedMembership(person_id=person_id), first, org, _T0)
+        old = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), first, org, _T0)
         await memberships.set_label(cur, old, "Councilmember Pos. 8")
-        new = await memberships.upsert(cur, DerivedMembership(person_id=person_id), second, org, _T1)
+        new = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), second, org, _T1)
 
         await cur.execute(
             "SELECT label FROM memberships WHERE id::text = ANY(%s) ORDER BY first_seen_at",
@@ -667,7 +668,7 @@ async def test_the_membership_read_still_selects_every_column_it_names():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.upsert(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
+        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
 
         rows = await memberships.list_for_jurisdiction(cur, _OCDID)
         assert len(rows) == 1
@@ -688,7 +689,7 @@ async def test_a_label_naming_two_offices_keeps_the_loser_on_the_membership():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        membership_id = await memberships.upsert(
+        membership_id = await factories.bind_membership(
             cur, DerivedMembership(person_id=person_id, role_ids=["treasurer", "assessor"]), post_id, org, _T0
         )
         await cur.execute(
@@ -700,7 +701,7 @@ async def test_a_label_naming_two_offices_keeps_the_loser_on_the_membership():
 
         # Derived from the label, so the newest scrape's answer is the whole answer — a role
         # the page stopped naming must not linger.
-        await memberships.upsert(cur, DerivedMembership(person_id=person_id, role_ids=["treasurer"]), post_id, org, _T0)
+        await factories.bind_membership(cur, DerivedMembership(person_id=person_id, role_ids=["treasurer"]), post_id, org, _T0)
         await cur.execute(
             "SELECT role_id FROM membership_roles WHERE membership_id::text = %s",
             (membership_id,),
@@ -723,7 +724,7 @@ async def test_a_scrape_reworded_by_nobody_is_re_derived():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
 
-        first = await memberships.upsert(
+        first = await factories.bind_membership(
             cur, DerivedMembership(person_id=person_id, label="Commissioner Of Public Safety"), post_id, org, _T0
         )
         await cur.execute("SELECT label FROM memberships WHERE id = %s", (first,))
@@ -731,7 +732,7 @@ async def test_a_scrape_reworded_by_nobody_is_re_derived():
 
         # A later scrape whose parser words it better. Nobody has asserted anything, so the
         # improvement lands.
-        again = await memberships.upsert(
+        again = await factories.bind_membership(
             cur, DerivedMembership(person_id=person_id, label="Public Safety Commissioner"), post_id, org, _T1
         )
         assert again == first
@@ -756,7 +757,7 @@ async def test_advancing_last_seen_leaves_everything_else_alone():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        membership_id = await memberships.upsert(
+        membership_id = await factories.bind_membership(
             cur, DerivedMembership(person_id=person_id, label="Mayor, At-Large"), post_id, org, _T0
         )
 
@@ -786,7 +787,7 @@ async def test_last_seen_never_walks_backwards():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        membership_id = await memberships.upsert(cur, DerivedMembership(person_id=person_id), post_id, org, _T1)
+        membership_id = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T1)
 
         await memberships.advance_last_seen_at(cur, [person_id], _T0)
 
@@ -806,7 +807,7 @@ async def test_a_closed_membership_is_not_reopened_by_being_seen():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        membership_id = await memberships.upsert(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
+        membership_id = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
         await cur.execute(
             "UPDATE memberships SET closed_at = %s WHERE id = %s", (_T0, membership_id)
         )
@@ -828,7 +829,7 @@ async def _already_published() -> None:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         other = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        await memberships.upsert(cur, DerivedMembership(person_id=person_id), other, org, _T0)
+        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), other, org, _T0)
         await conn.commit()
 
 
@@ -1007,7 +1008,7 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.upsert(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
+        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
         await cur.execute(
             "INSERT INTO changesets (id, jurisdiction_ocdid, kind) "
             "VALUES (%s, %s, 'scrape')",
@@ -1090,7 +1091,7 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes_and_moves_last_see
         )
         for person_id, (role_id, role_label) in zip(people, seats):
             post_id = await posts.find_or_create(cur, _OCDID, org, role_id, _BASE)
-            await memberships.upsert(
+            await factories.bind_membership(
                 cur, DerivedMembership(person_id=person_id), post_id, org, _T0
             )
             # The sighting, resolved to the seated person. Publishing renders its roster from
@@ -1160,7 +1161,7 @@ async def test_a_scrape_the_pipeline_reported_an_issue_on_does_not_publish():
         )
         for person_id, (role_id, role_label) in zip(people, seats):
             post_id = await posts.find_or_create(cur, _OCDID, org, role_id, _BASE)
-            await memberships.upsert(
+            await factories.bind_membership(
                 cur, DerivedMembership(person_id=person_id), post_id, org, _T0
             )
             await cur.execute(
@@ -1217,7 +1218,7 @@ async def test_a_partial_term_date_is_stored_as_the_source_gave_it():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
 
-        membership_id = await memberships.upsert(
+        membership_id = await factories.bind_membership(
             cur,
             DerivedMembership(person_id=person_id, start_date="2024", end_date="2028-01"),
             post_id,
@@ -1262,7 +1263,7 @@ async def test_a_pick_is_keyed_on_the_person_not_the_post():
     ]
 
     assert await chosen_posts(picks_in(roster)) == {
-        "p1": ChosenPost(role_id="mayor", division_ocdid=_BASE)
+        "p1": ChosenPost(organization_id=org, role_id="mayor", division_ocdid=_BASE)
     }
 
 
@@ -1297,7 +1298,7 @@ async def test_a_persons_term_is_read_off_the_seat_they_hold():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await memberships.upsert(
+        await factories.bind_membership(
             cur,
             DerivedMembership(person_id=person_id, start_date="2024", end_date="2028-01"),
             post_id,
@@ -1309,3 +1310,100 @@ async def test_a_persons_term_is_read_off_the_seat_they_hold():
     roster = await get_roster(jurisdiction_ocdid=_OCDID)
     seated = next(p for p in roster if p["id"] == person_id)
     assert (seated["start_date"], seated["end_date"]) == ("2024", "2028-01")
+
+
+# --- per organization ------------------------------------------------------------------------
+
+
+async def _published_changeset() -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            # `updated_at` is the clock publish dates memberships by.
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, updated_at) VALUES (%s, %s, 'scrape', clock_timestamp())",
+            (changeset_id := str(uuid.uuid4()), _OCDID),
+        )
+        await conn.commit()
+    return changeset_id
+
+
+def _membership(organization_id: str, role_id: str, division_ocdid: str, person_id: str):
+    from core.post_derivation import DerivedPost
+
+    return DerivedPost(
+        organization_id=organization_id,
+        role_id=role_id,
+        role_label=role_id.title(),
+        division_ocdid=division_ocdid,
+        headcount=1,
+        members=[DerivedMembership(person_id=person_id)],
+    )
+
+
+async def _open_memberships(person_id: str) -> list[tuple[str, str, str]]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT m.organization_id::text, p.role_id, p.division_ocdid
+            FROM memberships m JOIN posts p ON p.id = m.post_id
+            WHERE m.person_id = %s AND m.closed_at IS NULL
+            ORDER BY p.role_id
+            """,
+            (person_id,),
+        )
+        return [tuple(row) for row in await cur.fetchall()]
+
+
+async def _two_bodies() -> tuple[str, str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        council = await organizations.find_or_create(cur, _OCDID)
+        mayors_office = await organizations.find_or_create(cur, _OCDID, "Office of the Mayor")
+        await conn.commit()
+    return council, mayors_office
+
+
+async def _publish(person_id: str, derived) -> None:
+    from database.publications import publish_changeset
+
+    person = {"id": person_id, "name": "Ana Reyes", "jurisdiction_ocdid": _OCDID}
+    await publish_changeset(await _published_changeset(), _OCDID, [person], None, derived=derived)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_person_in_two_bodies_holds_an_open_membership_in_each():
+    person_id = await _seed_person("Ana Reyes")
+    council, mayors_office = await _two_bodies()
+
+    await _publish(
+        person_id,
+        [_membership(council, "council-member", _WARD_3, person_id), _membership(mayors_office, "mayor", _BASE, person_id)],
+    )
+
+    assert await _open_memberships(person_id) == [
+        (council, "council-member", _WARD_3),
+        (mayors_office, "mayor", _BASE),
+    ]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_move_in_one_body_leaves_the_other_bodys_membership_open():
+    person_id = await _seed_person("Ana Reyes")
+    council, mayors_office = await _two_bodies()
+    await _publish(
+        person_id,
+        [_membership(council, "council-member", _WARD_3, person_id), _membership(mayors_office, "mayor", _BASE, person_id)],
+    )
+
+    await _publish(
+        person_id,
+        [_membership(council, "council-member", _BASE, person_id), _membership(mayors_office, "mayor", _BASE, person_id)],
+    )
+
+    assert await _open_memberships(person_id) == [
+        (council, "council-member", _BASE),
+        (mayors_office, "mayor", _BASE),
+    ]

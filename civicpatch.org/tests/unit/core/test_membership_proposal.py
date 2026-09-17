@@ -39,7 +39,10 @@ def _held(
     role_label="",
 ):
     return ExistingMembership(
+        id=f"membership-{person_id}",
+        jurisdiction_ocdid="ocd-jurisdiction/country:us/state:zz/place:testville/government",
         person_id=person_id,
+        organization_id="org-1",
         post_id=post_id,
         role_id=role_id,
         role_label=role_label,

@@ -25,6 +25,7 @@ from core.people_derivation import (
     term_dates,
 )
 from core.people_roles import derive_roles
+from core.post_derivation import SIGHTINGS_FIELD
 
 
 def roster_from_rows(
@@ -212,6 +213,17 @@ def _rendered(person: DerivedPerson, records: list[PersonSourceRecord], taxonomy
         "cdn_image": person.cdn_image,
         "jurisdiction_ocdid": person.jurisdiction_ocdid,
         "source_urls": person.source_urls,
+        # `labels` and `source_urls` flattened, still paired with the organization whose
+        # extraction produced each — what publish needs to derive posts per organization.
+        # Server-owned: `apply_people_patch` never takes it from a client.
+        SIGHTINGS_FIELD: [
+            {
+                "label": sighting.label,
+                "source_url": sighting.source_url,
+                "organization_id": sighting.organization_id,
+            }
+            for sighting in person.sightings
+        ],
         "updated_at": person.updated_at or "",
         "id": person.id,
     }
@@ -245,3 +257,34 @@ def records_by_person(
         for person in roster
         if person["name"] in records_by_name
     }
+
+
+class UnknownOrganization(Exception):
+    """A record names an organization that is not a current body of its jurisdiction."""
+
+
+def _with_organization(record: dict, default_organization_id: str) -> dict:
+    return {**record, "organization_id": record.get("organization_id") or default_organization_id}
+
+
+def in_known_organizations(
+    records_by_person: dict[str, list[dict]],
+    organization_ids: set[str],
+    default_organization_id: str,
+) -> dict[str, list[dict]]:
+    """Every record in a current organization; unstamped ones in the default. Raises on any other id."""
+    stamped = {
+        person_id: [_with_organization(record, default_organization_id) for record in records]
+        for person_id, records in records_by_person.items()
+    }
+    unknown = [
+        record
+        for records in stamped.values()
+        for record in records
+        if record["organization_id"] not in organization_ids
+    ]
+    if unknown:
+        raise UnknownOrganization(
+            f"{unknown[0].get('name')!r} names organization {unknown[0]['organization_id']!r}, not a current body"
+        )
+    return stamped

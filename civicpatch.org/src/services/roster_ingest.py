@@ -12,8 +12,15 @@ sheet has no analogue.
 
 import logging
 
-from core.people_roster import identified, records_by_person, roster_from_rows
+from core.people_roster import (
+    identified,
+    in_known_organizations,
+    records_by_person,
+    roster_from_rows,
+)
 from core.post_derivation import DerivedPost, RosterEntry, derived_posts
+from database import organizations
+from database.database import get_pool
 from database.people import get_person_models
 from services.publish import chosen_posts, picks_in
 from shared.utils.name_utils import person_list_to_identities
@@ -28,6 +35,18 @@ async def published_identities(jurisdiction_ocdid: str) -> dict:
     """The prior reconciliation groups against: our own published people."""
     existing = await get_person_models(jurisdiction_ocdid)
     return person_list_to_identities(existing) if existing else {}
+
+
+async def with_organizations(
+    jurisdiction_ocdid: str, records_by_person: dict[str, list[dict]]
+) -> dict[str, list[dict]]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        current = await organizations.list_for_jurisdiction(cur, jurisdiction_ocdid)
+        default_organization_id = await organizations.get_default(cur, jurisdiction_ocdid)
+    return in_known_organizations(
+        records_by_person, {row["id"] for row in current}, default_organization_id
+    )
 
 
 async def assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]:

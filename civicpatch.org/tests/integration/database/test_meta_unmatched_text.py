@@ -15,6 +15,7 @@ import pytest_asyncio
 from core.post_derivation import DerivedMembership
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
+from tests.integration import factories
 
 _TOWNS = ("zz_alfa", "zz_bravo", "zz_charlie")
 _OCDIDS = [
@@ -68,7 +69,7 @@ async def _seed_member(
     post_id = await posts.find_or_create(
         cur, ocdid, organization_id, "council-member", division
     )
-    return await memberships.upsert(
+    return await factories.bind_membership(
         cur,
         DerivedMembership(
             person_id=person_id,

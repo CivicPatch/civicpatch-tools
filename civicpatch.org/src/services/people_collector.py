@@ -176,6 +176,10 @@ async def _ingest_roster(
     roster, records_by_person = await _reconcile_roster(
         request.jurisdiction_ocdid, data, workflow_context, taxonomy
     )
+    # Before the changeset: an id that is no longer a body fails the run rather than raising a card.
+    records_by_person = await roster_ingest.with_organizations(
+        request.jurisdiction_ocdid, records_by_person
+    )
     source_urls, served = _image_url_maps(dirs.images, filenames_to_urls)
     updated_data, unserved = resolve_images(source_urls, served, roster)
     if unserved:

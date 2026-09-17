@@ -62,6 +62,22 @@ def test_unknown_id_is_inserted_whole_as_new_person():
     assert [p["id"] for p in result] == ["a", "d", "b", "c"]
 
 
+def test_a_client_patch_cannot_set_sightings():
+    """They decide which organization a person is published into, so only the server sets them —
+    on an edit to an existing person and on a person the client adds."""
+    base = [{**BASE[0], "sightings": [{"label": "Mayor", "source_url": "https://a.gov", "organization_id": "mayor"}]}]
+    forged = [{"label": "Mayor", "source_url": "https://a.gov", "organization_id": "council"}]
+
+    result = apply_people_patch(base, [
+        PersonPatch(id="a", fields={"sightings": forged, "phones": ["(202) 555-0143"]}),
+        PersonPatch(id="d", fields={"id": "d", "name": "Dave", "sightings": forged}),
+    ])
+
+    assert result[0]["sightings"] == base[0]["sightings"]
+    assert result[0]["phones"] == ["(202) 555-0143"]
+    assert "sightings" not in result[1]
+
+
 def test_delete_via_omission():
     result = apply_people_patch(BASE, [
         PersonPatch(id="a", fields={}),

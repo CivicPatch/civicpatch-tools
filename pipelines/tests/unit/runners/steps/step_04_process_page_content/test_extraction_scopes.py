@@ -1,4 +1,4 @@
-"""One extraction per body, stamped with its id; unscoped unless there are bodies to tell apart."""
+"""One extraction per organization, stamped with its id; unscoped unless there are organizations to tell apart."""
 
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -30,23 +30,23 @@ _RUN_PROMPT = (
 )
 
 
-def _body(body_id: str, name: str, labels: list[str]) -> KnownOrganization:
+def _organization(organization_id: str, name: str, labels: list[str]) -> KnownOrganization:
     posts = [
         Post(
-            id=f"{body_id}-{label}",
+            id=f"{organization_id}-{label}",
             jurisdiction_ocdid=_OCDID,
-            organization_id=body_id,
+            organization_id=organization_id,
             role_id="role",
             division_ocdid="ocd-division/country:us/state:wa/place:seattle",
             label=label,
         )
         for label in labels
     ]
-    return KnownOrganization(id=body_id, name=name, posts=posts)
+    return KnownOrganization(id=organization_id, name=name, posts=posts)
 
 
-_COUNCIL = _body("council", "City Council", ["Council Member District 1"])
-_MAYOR = _body("mayor", "Office of the Mayor", ["Mayor"])
+_COUNCIL = _organization("council", "City Council", ["Council Member District 1"])
+_MAYOR = _organization("mayor", "Office of the Mayor", ["Mayor"])
 
 
 def _answer(*people: tuple[str, str]) -> PeopleArrayLLMResponseSchema:
@@ -55,8 +55,8 @@ def _answer(*people: tuple[str, str]) -> PeopleArrayLLMResponseSchema:
     )
 
 
-def _by_body(council: PeopleArrayLLMResponseSchema, mayor: PeopleArrayLLMResponseSchema):
-    """A fake LLM that answers according to which body the prompt names."""
+def _by_organization(council: PeopleArrayLLMResponseSchema, mayor: PeopleArrayLLMResponseSchema):
+    """A fake LLM that answers according to which organization the prompt names."""
 
     async def run_prompt(_run_id, _ocdid, prompt, **_kwargs):
         return council if "hold a post in City Council" in prompt else mayor
@@ -81,21 +81,21 @@ def _stamps(records) -> dict[str, str | None]:
     return {name: group[0].organization_id for name, group in records.items()}
 
 
-def test_no_bodies_is_one_unscoped_run():
+def test_no_organizations_is_one_unscoped_run():
     [scope] = extraction_scopes([])
 
     assert scope.organization_id is None
     assert scope.prompt_organization is None
 
 
-def test_one_body_runs_unscoped_but_is_stamped_with_its_id():
+def test_one_organization_runs_unscoped_but_is_stamped_with_its_id():
     [scope] = extraction_scopes([_COUNCIL])
 
     assert scope.organization_id == "council"
     assert scope.prompt_organization is None
 
 
-def test_several_bodies_each_get_a_scoped_run_with_their_post_labels():
+def test_several_organizations_each_get_a_scoped_run_with_their_post_labels():
     scopes = extraction_scopes([_COUNCIL, _MAYOR])
 
     assert [(s.organization_id, s.prompt_organization.name, s.prompt_organization.posts) for s in scopes if s.prompt_organization] == [
@@ -105,8 +105,8 @@ def test_several_bodies_each_get_a_scoped_run_with_their_post_labels():
 
 
 @pytest.mark.asyncio
-async def test_each_bodys_records_are_stamped_with_that_body():
-    fake = _by_body(_answer(("Rob Saka", "Council Member District 1")), _answer(("Katie Wilson", "Mayor")))
+async def test_each_organizations_records_are_stamped_with_that_organization():
+    fake = _by_organization(_answer(("Rob Saka", "Council Member District 1")), _answer(("Katie Wilson", "Mayor")))
 
     with patch(_RUN_PROMPT, new=AsyncMock(side_effect=fake)):
         records, passed = await _collect([_COUNCIL, _MAYOR])
@@ -116,9 +116,9 @@ async def test_each_bodys_records_are_stamped_with_that_body():
 
 
 @pytest.mark.asyncio
-async def test_a_body_failing_the_heuristics_twice_does_not_discard_the_others():
-    """A name that is not on the page fails the heuristics; that body's retry fails too."""
-    fake = _by_body(_answer(("Rob Saka", "Council Member District 1")), _answer(("Not On Page", "Mayor")))
+async def test_an_organization_failing_the_heuristics_twice_does_not_discard_the_others():
+    """A name that is not on the page fails the heuristics; that organization's retry fails too."""
+    fake = _by_organization(_answer(("Rob Saka", "Council Member District 1")), _answer(("Not On Page", "Mayor")))
 
     with patch(_RUN_PROMPT, new=AsyncMock(side_effect=fake)) as run_prompt:
         records, passed = await _collect([_COUNCIL, _MAYOR])
@@ -129,7 +129,7 @@ async def test_a_body_failing_the_heuristics_twice_does_not_discard_the_others()
 
 
 @pytest.mark.asyncio
-async def test_a_single_body_sends_the_unscoped_prompt():
+async def test_a_single_organization_sends_the_unscoped_prompt():
     run_prompt = AsyncMock(return_value=_answer(("Rob Saka", "Council Member District 1")))
 
     with patch(_RUN_PROMPT, new=run_prompt):
@@ -140,7 +140,7 @@ async def test_a_single_body_sends_the_unscoped_prompt():
 
 
 @pytest.mark.asyncio
-async def test_when_every_body_fails_the_page_is_skipped():
+async def test_when_every_organization_fails_the_page_is_skipped():
     with patch(_RUN_PROMPT, new=AsyncMock(return_value=_answer(("Not On Page", "Mayor")))):
         records, passed = await _collect([_COUNCIL, _MAYOR])
 

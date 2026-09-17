@@ -110,6 +110,7 @@ async def chosen_posts(picks: dict[str, str]) -> dict[str, ChosenPost]:
         rows = await posts_db.identities_by_id(cur, list(set(picks.values())))
     return {
         person_id: ChosenPost(
+            organization_id=rows[post_id]["organization_id"],
             role_id=rows[post_id]["role_id"],
             division_ocdid=rows[post_id]["division_ocdid"],
         )

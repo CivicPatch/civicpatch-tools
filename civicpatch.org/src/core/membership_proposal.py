@@ -24,14 +24,26 @@ class Disposition(str, Enum):
 
 
 class ExistingMembership(BaseModel):
+    """One open membership, with its post's role and division."""
+
+    id: str
+    jurisdiction_ocdid: str
     person_id: str
+    organization_id: str
     post_id: str
+    label: str | None = None
+    designations: list[str] = []
+    meta_unmatched_text: list[str] = []
     role_id: str
     role_label: str = ""
     division_ocdid: str
     # `posts.meta_is_tracked`. A roster omitting an untracked post means nothing, so its holder
     # going missing is recorded but never queued for a human.
     meta_is_tracked: bool = True
+
+
+def ids_by_person_and_organization(held: list[ExistingMembership]) -> dict[tuple[str, str], str]:
+    return {(membership.person_id, membership.organization_id): membership.id for membership in held}
 
 
 class ProposedChange(BaseModel):

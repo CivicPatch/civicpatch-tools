@@ -10,14 +10,22 @@ Run with:
 Isolation: every test writes under one sentinel request, and the fixture removes that request
 and its rows (which cascade) before and after each test.
 """
+import pathlib
+
 import pytest
 import pytest_asyncio
 from psycopg.errors import ForeignKeyViolation
 
 from database.database import get_pool
+from database.organizations import delete, set_default
 from database.source_records import (
     get_source_records_for_changeset,
     insert_source_records,
+)
+
+_BACKFILL = (
+    pathlib.Path(__file__).parents[3]
+    / "database_operations/migrations/204_source_records_organization_backfill.up.sql"
 )
 
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_test/government"
@@ -37,9 +45,8 @@ async def _cleanup():
         await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
         )
-        await cur.execute(
-            "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,)
-        )
+        await cur.execute("DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,))
+        await cur.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_SENTINEL_OCDID,))
         await conn.commit()
 
 
@@ -226,3 +233,94 @@ async def test_a_record_is_never_written_without_its_identity(sentinel_request):
             (sentinel_request,),
         )
         assert (await cur.fetchone())[0] == 0
+
+
+async def _organization(jurisdiction_ocdid: str, name: str) -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid) VALUES (%s) ON CONFLICT DO NOTHING",
+            (jurisdiction_ocdid,),
+        )
+        await cur.execute(
+            "INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, %s) RETURNING id::text",
+            (jurisdiction_ocdid, name),
+        )
+        organization_id = (await cur.fetchone())[0]
+        await conn.commit()
+    return organization_id
+
+
+def _stamped(person_id: str, name: str, organization_id: str | None) -> dict:
+    return {
+        person_id: [
+            {
+                "name": name,
+                "label": "Mayor",
+                "source_url": "https://zz.gov/0",
+                "organization_id": organization_id,
+            }
+        ]
+    }
+
+
+async def _stored_organizations(changeset_id: str) -> dict[str, str | None]:
+    return {r["name"]: r["organization_id"] for r in await get_source_records_for_changeset(changeset_id)}
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_current_body_of_the_jurisdiction_is_stored(sentinel_request):
+    council = await _organization(_SENTINEL_OCDID, "City Council")
+
+    await insert_source_records(sentinel_request, _SENTINEL_OCDID, _stamped(_ANN, "Ann", council))
+
+    assert await _stored_organizations(sentinel_request) == {"Ann": council}
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_deleting_a_body_moves_its_evidence_to_the_default(sentinel_request):
+    default = await _organization(_SENTINEL_OCDID, "Government")
+    await set_default(default)
+    mayor = await _organization(_SENTINEL_OCDID, "Office of the Mayor")
+    await insert_source_records(sentinel_request, _SENTINEL_OCDID, _stamped(_ANN, "Ann", mayor))
+
+    assert await delete(mayor) == _SENTINEL_OCDID
+
+    assert await _stored_organizations(sentinel_request) == {"Ann": default}
+
+
+async def _run_backfill(changeset_organization_id: str | None) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE changesets SET organization_id = %s WHERE jurisdiction_ocdid = %s",
+            (changeset_organization_id, _SENTINEL_OCDID),
+        )
+        await cur.execute(_BACKFILL.read_text())
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_the_backfill_files_an_unpublished_changesets_rows_under_the_default(sentinel_request):
+    await _organization(_SENTINEL_OCDID, "City Council")
+    default = await _organization(_SENTINEL_OCDID, "Government")
+    await set_default(default)
+    await insert_source_records(sentinel_request, _SENTINEL_OCDID, _stamped(_ANN, "Ann", None))
+
+    await _run_backfill(None)
+
+    assert await _stored_organizations(sentinel_request) == {"Ann": default}
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_the_backfill_prefers_the_organization_the_changeset_was_published_in(sentinel_request):
+    council = await _organization(_SENTINEL_OCDID, "City Council")
+    await set_default(await _organization(_SENTINEL_OCDID, "Government"))
+    await insert_source_records(sentinel_request, _SENTINEL_OCDID, _stamped(_ANN, "Ann", None))
+
+    await _run_backfill(council)
+
+    assert await _stored_organizations(sentinel_request) == {"Ann": council}

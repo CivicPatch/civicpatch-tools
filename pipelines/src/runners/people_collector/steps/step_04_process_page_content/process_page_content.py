@@ -18,6 +18,9 @@ from runners.people_collector.schemas import (
     ProgressState,
     RelevantPageResponseSchema,
 )
+from runners.people_collector.steps.step_04_process_page_content.organization_progress import (
+    organizations_progress,
+)
 from runners.people_collector.steps.step_04_process_page_content.extraction_scopes import (
     ExtractionScope,
     extraction_scopes,
@@ -53,6 +56,7 @@ class ProcessingSetup:
     target_role: str
     target_divisions: List[str]
     known_roles: List[str]
+    known_organizations: List[KnownOrganization]
 
 
 MINIMUM_NUM_PEOPLE = 5
@@ -161,6 +165,7 @@ async def process_page_content(
         target_role="Mayor",
         target_divisions=research.target_divisions,
         known_roles=known_roles,
+        known_organizations=research.known_organizations,
     )
     current_step = get_or_create_step(context)
     identities = research.identities
@@ -314,8 +319,8 @@ async def collect_page_records(
     identities: Dict,
     logger,
 ) -> Tuple[PeopleByName, bool]:
-    """One extraction per body. A body whose results fail the heuristics twice adds nothing from
-    this page; the others' still count. True if any body's did."""
+    """One extraction per organization. An organization whose results fail the heuristics twice adds nothing from
+    this page; the others' still count. True if any organization's did."""
     found: List[PersonSourceRecord] = []
     any_passed = False
     for scope in extraction_scopes(organizations):
@@ -340,13 +345,13 @@ async def _extract_for_scope(
     scope: ExtractionScope,
     logger,
 ) -> Optional[List[PersonSourceRecord]]:
-    """This body's records, stamped with its id — or None if they failed the heuristics twice."""
+    """This organization's records, stamped with its id — or None if they failed the heuristics twice."""
     prompt = _build_prompt(known_roles, context.data.jurisdiction_ocdid, scope)
-    body = scope.prompt_organization.name if scope.prompt_organization else "unscoped"
+    organization = scope.prompt_organization.name if scope.prompt_organization else "unscoped"
 
     for attempt in range(2):
         seed = attempt or None
-        logger.info(f"Running LLM: openrouter_seed seed={seed} body={body}")
+        logger.info(f"Running LLM: openrouter_seed seed={seed} organization={organization}")
         people_found_in_page = await _process_with_llm_in_chunks(
             page_to_process.url,
             context.pipeline_run_id,
@@ -357,14 +362,14 @@ async def _extract_for_scope(
             logger,
         )
         if check_page_heuristics(logger, page_to_process.url, content, people_found_in_page):
-            logger.info(f"Heuristics passed for LLM: {page_to_process.url} body={body}")
+            logger.info(f"Heuristics passed for LLM: {page_to_process.url} organization={organization}")
             return [
                 record.model_copy(update={"organization_id": scope.organization_id})
                 for record in people_found_in_page
             ]
         if attempt == 0:
             logger.info(
-                f"Heuristics failed for LLM: open_router, retrying: {page_to_process.url} body={body}"
+                f"Heuristics failed for LLM: open_router, retrying: {page_to_process.url} organization={organization}"
             )
     return None
 
@@ -445,6 +450,7 @@ def calculate_progress(
         current_data=max_people_count,
         has_target_role=has_target_role if requires_mayor else True,
         has_target_divisions=has_target_divisions,
+        organizations=organizations_progress(setup_data.known_organizations, records, taxonomy),
     )
 
 

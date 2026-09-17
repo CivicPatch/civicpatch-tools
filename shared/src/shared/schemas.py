@@ -239,6 +239,9 @@ class DerivedPerson(PersonBase):
     # Verbatim, one per office. Decomposition into role + division + unmatched happens later,
     # in `derive_roles`.
     labels: List[str] = []
+    # The records behind `labels` and `source_urls`, each label still paired with its page and the
+    # organization whose extraction produced it — the pairing those flat lists lose.
+    sightings: List[PersonSourceRecord] = []
 
 
 class Person(PersonBase):

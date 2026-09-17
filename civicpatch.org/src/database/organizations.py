@@ -163,13 +163,18 @@ async def delete(organization_id: str) -> str | None:
         jurisdiction_ocdid = await jurisdiction_for(cur, organization_id)
         if jurisdiction_ocdid is None:
             return None
-        if await get_default(cur, jurisdiction_ocdid) == organization_id:
+        default_organization_id = await get_default(cur, jurisdiction_ocdid)
+        if default_organization_id == organization_id:
             return None
         await cur.execute(
             "SELECT 1 FROM posts WHERE organization_id = %s LIMIT 1", (organization_id,)
         )
         if await cur.fetchone():
             return None
+        await cur.execute(
+            "UPDATE source_records SET organization_id = %s WHERE organization_id = %s",
+            (default_organization_id, organization_id),
+        )
         await cur.execute("DELETE FROM organizations WHERE id = %s", (organization_id,))
         return jurisdiction_ocdid
 

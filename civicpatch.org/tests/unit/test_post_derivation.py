@@ -7,12 +7,14 @@ is covered by tests/integration/database/test_post_derivation.py.
 import pytest
 
 from core.post_derivation import UNMATCHED_ROLE_ID, ChosenPost, derived_posts
-from core.post_derivation import RosterEntry
+from core.post_derivation import RosterEntry, RosterSighting
 from shared.schemas import Role, RoleConfig, RoleStatus
 from shared.utils.taxonomy import build_taxonomy
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
 _BASE = "ocd-division/country:us/state:zz/place:testville"
+_COUNCIL = "council-org"
+_MAYORS_OFFICE = "mayors-office-org"
 
 
 def _role(id_, label, aliases=(), priority=500, is_unique=False):
@@ -122,8 +124,8 @@ def test_a_pick_keeps_ward_seats_from_collapsing_onto_one_at_large_post():
         _TAXONOMY,
         _ROLES,
         {
-            "a": ChosenPost(role_id="council-member", division_ocdid=f"{_BASE}/ward:1"),
-            "b": ChosenPost(role_id="council-member", division_ocdid=f"{_BASE}/ward:2"),
+            "a": ChosenPost(organization_id=_COUNCIL, role_id="council-member", division_ocdid=f"{_BASE}/ward:1"),
+            "b": ChosenPost(organization_id=_COUNCIL, role_id="council-member", division_ocdid=f"{_BASE}/ward:2"),
         },
     )
     assert len(derived) == 2
@@ -166,8 +168,8 @@ def test_a_jurisdiction_wide_role_at_an_electoral_division_still_mints_its_own_p
         _TAXONOMY,
         _ROLES,
         {
-            "a": ChosenPost(role_id="mayor", division_ocdid=_WARD_3),
-            "b": ChosenPost(role_id="council-member", division_ocdid=_WARD_5),
+            "a": ChosenPost(organization_id=_COUNCIL, role_id="mayor", division_ocdid=_WARD_3),
+            "b": ChosenPost(organization_id=_COUNCIL, role_id="council-member", division_ocdid=_WARD_5),
         },
     )
     by_role = _by_role(derived)
@@ -301,7 +303,7 @@ def test_a_chosen_post_decides_where_the_person_lands():
     label is what they were correcting."""
     person = _person("a", "Councilmember")
     # Keyed on the person: a pick is a human's answer and no longer rides on the record.
-    chosen = {"a": ChosenPost(role_id="mayor", division_ocdid=_WARD_3)}
+    chosen = {"a": ChosenPost(organization_id=_COUNCIL, role_id="mayor", division_ocdid=_WARD_3)}
 
     derived = derived_posts([person], _TAXONOMY, _ROLES, chosen)
 
@@ -314,7 +316,7 @@ def test_a_chosen_post_does_not_rewrite_what_the_source_said():
     the labels, because a post is not a claim about what the page called them."""
     person = _person("a", "Council Member - Place 6")
     # Picked onto the mayor's post, though the label says council member.
-    chosen = {"a": ChosenPost(role_id="mayor", division_ocdid=_BASE)}
+    chosen = {"a": ChosenPost(organization_id=_COUNCIL, role_id="mayor", division_ocdid=_BASE)}
 
     member = derived_posts([person], _TAXONOMY, _ROLES, chosen)[0].members[0]
 
@@ -336,3 +338,92 @@ def test_an_unknown_post_id_falls_back_to_the_parse():
     derived = derived_posts([person], _TAXONOMY, _ROLES, {})
 
     assert [spec.role_id for spec in derived] == ["mayor"]
+
+
+# --- per organization ------------------------------------------------------------------------
+
+
+def _sighted(person_id, *sightings):
+    """A roster row whose labels came from organization-scoped extractions, as (label, org) pairs."""
+    return RosterEntry(
+        id=person_id,
+        jurisdiction_ocdid=_OCDID,
+        labels=[label for label, _ in sightings],
+        sightings=[RosterSighting(label=label, organization_id=org) for label, org in sightings],
+    )
+
+
+def _memberships(derived):
+    return sorted(
+        (post.organization_id, post.role_id, post.division_ocdid, member.person_id)
+        for post in derived
+        for member in post.members
+    )
+
+
+@pytest.mark.unit
+def test_a_person_sighted_by_two_organizations_holds_a_post_in_each():
+    person = _sighted("a", ("Mayor", _MAYORS_OFFICE), ("Council Member Ward 1", _COUNCIL))
+
+    derived = derived_posts([person], _TAXONOMY, _ROLES)
+
+    assert _memberships(derived) == [
+        (_COUNCIL, "council-member", f"{_BASE}/ward:1", "a"),
+        (_MAYORS_OFFICE, "mayor", _BASE, "a"),
+    ]
+
+
+@pytest.mark.unit
+def test_the_same_role_and_division_in_two_organizations_is_two_posts():
+    derived = derived_posts(
+        [_sighted("a", ("Commissioner", _COUNCIL)), _sighted("b", ("Commissioner", _MAYORS_OFFICE))],
+        _TAXONOMY,
+        _ROLES,
+    )
+
+    assert len(derived) == 2
+    assert {post.organization_id for post in derived} == {_COUNCIL, _MAYORS_OFFICE}
+
+
+@pytest.mark.unit
+def test_labels_without_a_sighting_derive_a_post_with_no_organization():
+    derived = derived_posts([_person("a", "Mayor")], _TAXONOMY, _ROLES)
+
+    assert _memberships(derived) == [(None, "mayor", _BASE, "a")]
+
+
+@pytest.mark.unit
+def test_a_pick_replaces_only_its_own_organizations_derivation():
+    """The council post was picked to Ward 2; the mayor's office post the page gave stays."""
+    person = _sighted("a", ("Mayor", _MAYORS_OFFICE), ("Council Member", _COUNCIL))
+    chosen = {"a": ChosenPost(organization_id=_COUNCIL, role_id="council-member", division_ocdid=f"{_BASE}/ward:2")}
+
+    derived = derived_posts([person], _TAXONOMY, _ROLES, chosen)
+
+    assert _memberships(derived) == [
+        (_COUNCIL, "council-member", f"{_BASE}/ward:2", "a"),
+        (_MAYORS_OFFICE, "mayor", _BASE, "a"),
+    ]
+
+
+@pytest.mark.unit
+def test_a_pick_replaces_the_labels_no_organization_sighted():
+    """A reviewer-added person carries no organization; the pick decides it, as it did before."""
+    chosen = {"a": ChosenPost(organization_id=_MAYORS_OFFICE, role_id="mayor", division_ocdid=_BASE)}
+
+    derived = derived_posts([_person("a", "Council Member")], _TAXONOMY, _ROLES, chosen)
+
+    assert _memberships(derived) == [(_MAYORS_OFFICE, "mayor", _BASE, "a")]
+
+
+@pytest.mark.unit
+def test_a_pick_in_an_organization_that_never_sighted_the_person_is_added():
+    person = _sighted("a", ("Mayor", _MAYORS_OFFICE))
+    chosen = {"a": ChosenPost(organization_id=_COUNCIL, role_id="council-member", division_ocdid=f"{_BASE}/ward:1")}
+
+    derived = derived_posts([person], _TAXONOMY, _ROLES, chosen)
+
+    assert _memberships(derived) == [
+        (_COUNCIL, "council-member", f"{_BASE}/ward:1", "a"),
+        (_MAYORS_OFFICE, "mayor", _BASE, "a"),
+    ]

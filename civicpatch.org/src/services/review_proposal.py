@@ -108,10 +108,14 @@ async def proposals_for_requests(
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         jurisdictions = list(set(ocdids.values()))
-        held = await memberships_db.open_by_jurisdiction(cur, jurisdictions)
+        held = await memberships_db.open_memberships(cur, jurisdictions)
         post_ids = await posts_db.ids_by_identity(
             cur, list(set(organizations.values()))
         )
+
+    held_by_jurisdiction: dict[str, list[ExistingMembership]] = {ocdid: [] for ocdid in jurisdictions}
+    for membership in held:
+        held_by_jurisdiction[membership.jurisdiction_ocdid].append(membership)
 
     proposals: dict[str, list[ProposedChange]] = {}
     for changeset_id, ocdid in ocdids.items():
@@ -138,7 +142,7 @@ async def proposals_for_requests(
                     roles,
                     await chosen_posts(picks_in(people)),
                 ),
-                [ExistingMembership(**row) for row in held[ocdid]],
+                held_by_jurisdiction[ocdid],
             )
         ]
     return proposals
