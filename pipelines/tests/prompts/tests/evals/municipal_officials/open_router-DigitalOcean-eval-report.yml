@@ -1,18 +1,18 @@
 run:
-  timestamp: '2026-09-16T23:40:42+00:00'
-  prompt_sha256: 8cdc56e997db
-  prompt_file: _prompts/8cdc56e997db.txt
+  timestamp: '2026-09-17T00:00:53+00:00'
+  prompt_sha256: aeb59ab46565
+  prompt_file: _prompts/aeb59ab46565.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
   providers:
   - DigitalOcean
-  elapsed_seconds: 70.27
-  total_input_tokens: 16560
-  total_output_tokens: 792
-  total_cost_usd: 0.001778112
+  elapsed_seconds: 8.04
+  total_input_tokens: 6801
+  total_output_tokens: 89
+  total_cost_usd: 0.000683942
 accuracy:
   person:
-    correct: 9
+    correct: 1
     missing: 0
     spurious: 0
     wrong: 0
@@ -20,55 +20,55 @@ accuracy:
     recall: 1.0
     f1: 1.0
   primary_role:
-    correct: 8
-    missing: 1
-    spurious: 1
+    correct: 1
+    missing: 0
+    spurious: 0
     wrong: 0
-    precision: 0.8888888888888888
-    recall: 0.8888888888888888
-    f1: 0.8888888888888888
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
   roles:
-    correct: 8
-    missing: 1
-    spurious: 1
+    correct: 1
+    missing: 0
+    spurious: 0
     wrong: 0
-    precision: 0.8888888888888888
-    recall: 0.8888888888888888
-    f1: 0.8888888888888888
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
   district:
-    correct: 7
+    correct: 0
     missing: 0
     spurious: 0
     wrong: 0
-    precision: 1.0
-    recall: 1.0
-    f1: 1.0
+    precision: null
+    recall: null
+    f1: null
   designations_other:
-    correct: 2
+    correct: 0
     missing: 0
     spurious: 0
     wrong: 0
-    precision: 1.0
-    recall: 1.0
-    f1: 1.0
+    precision: null
+    recall: null
+    f1: null
   email:
     correct: 0
-    missing: 9
+    missing: 0
     spurious: 0
     wrong: 0
     precision: null
-    recall: 0.0
-    f1: 0.0
+    recall: null
+    f1: null
   phone:
-    correct: 0
-    missing: 9
+    correct: 1
+    missing: 0
     spurious: 0
     wrong: 0
-    precision: null
-    recall: 0.0
-    f1: 0.0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
   url:
-    correct: 9
+    correct: 1
     missing: 0
     spurious: 0
     wrong: 0
@@ -92,160 +92,31 @@ accuracy:
     recall: null
     f1: null
   image:
-    correct: 9
+    correct: 0
     missing: 0
     spurious: 0
     wrong: 0
-    precision: 1.0
-    recall: 1.0
-    f1: 1.0
+    precision: null
+    recall: null
+    f1: null
 aggregated_report:
-  phone: 0.0
-  designations_precision: 1.0
   name: 1.0
-  email: 0.0
-  roles_precision: 0.8888888888888888
-  roles: 0.8888888888888888
-  url: 1.0
-  image: 1.0
+  roles: 1.0
+  roles_precision: 1.0
   designations: 1.0
+  phone: 1.0
+  email: 1.0
+  url: 1.0
 per_case_scores:
-- case_id: seattle_council_pick_list_missing_president
-  score: 0.7530864197530864
+- case_id: austin_council_shared_roster_scoped_to_mayor
+  score: 1.0
   person_precision: 1.0
   scores:
-    designations_precision: 1.0
-    roles: 0.8888888888888888
-    url: 1.0
-    email: 0.0
-    roles_precision: 0.8888888888888888
     name: 1.0
-    phone: 0.0
-    image: 1.0
+    roles: 1.0
+    roles_precision: 1.0
     designations: 1.0
-mismatches:
-  seattle_council_pick_list_missing_president:
-  - person: Alexis Mercedes Rinck
-    field: email
-    expected_label: Councilmember Position 8
-    actual_label: Council Member Position 8
-    expected: council@seattle.gov
-    actual: "\u2014"
-  - person: Alexis Mercedes Rinck
-    field: phone
-    expected_label: Councilmember Position 8
-    actual_label: Council Member Position 8
-    expected: (206) 684-8888
-    actual: "\u2014"
-  - person: Bob Kettle
-    field: email
-    expected_label: Councilmember District 7
-    actual_label: Council Member District 7
-    expected: council@seattle.gov
-    actual: "\u2014"
-  - person: Bob Kettle
-    field: phone
-    expected_label: Councilmember District 7
-    actual_label: Council Member District 7
-    expected: (206) 684-8888
-    actual: "\u2014"
-  - person: Dan Strauss
-    field: email
-    expected_label: Councilmember District 6
-    actual_label: Council Member District 6
-    expected: council@seattle.gov
-    actual: "\u2014"
-  - person: Dan Strauss
-    field: phone
-    expected_label: Councilmember District 6
-    actual_label: Council Member District 6
-    expected: (206) 684-8888
-    actual: "\u2014"
-  - person: Debora Juarez
-    field: email
-    expected_label: Councilmember District 5
-    actual_label: Council Member District 5
-    expected: council@seattle.gov
-    actual: "\u2014"
-  - person: Debora Juarez
-    field: phone
-    expected_label: Councilmember District 5
-    actual_label: Council Member District 5
-    expected: (206) 684-8888
-    actual: "\u2014"
-  - person: Dionne Foster
-    field: email
-    expected_label: Councilmember Position 9
-    actual_label: Council Member Position 9
-    expected: council@seattle.gov
-    actual: "\u2014"
-  - person: Dionne Foster
-    field: phone
-    expected_label: Councilmember Position 9
-    actual_label: Council Member Position 9
-    expected: (206) 684-8888
-    actual: "\u2014"
-  - person: Eddie Lin
-    field: email
-    expected_label: Councilmember District 2
-    actual_label: Council Member District 2
-    expected: council@seattle.gov
-    actual: "\u2014"
-  - person: Eddie Lin
-    field: phone
-    expected_label: Councilmember District 2
-    actual_label: Council Member District 2
-    expected: (206) 684-8888
-    actual: "\u2014"
-  - person: Joy Hollingsworth
-    field: primary_role
-    expected_label: Council President District 3
-    actual_label: Council Member District 3
-    expected:
-    - Council President
-    actual:
-    - Council Member
-  - person: Joy Hollingsworth
-    field: roles
-    expected_label: Council President District 3
-    actual_label: Council Member District 3
-    expected:
-    - Council President
-    actual:
-    - Council Member
-  - person: Joy Hollingsworth
-    field: email
-    expected_label: Council President District 3
-    actual_label: Council Member District 3
-    expected: council@seattle.gov
-    actual: "\u2014"
-  - person: Joy Hollingsworth
-    field: phone
-    expected_label: Council President District 3
-    actual_label: Council Member District 3
-    expected: (206) 684-8888
-    actual: "\u2014"
-  - person: Maritza Rivera
-    field: email
-    expected_label: Councilmember District 4
-    actual_label: Council Member District 4
-    expected: council@seattle.gov
-    actual: "\u2014"
-  - person: Maritza Rivera
-    field: phone
-    expected_label: Councilmember District 4
-    actual_label: Council Member District 4
-    expected: (206) 684-8888
-    actual: "\u2014"
-  - person: Rob Saka
-    field: email
-    expected_label: Councilmember District 1
-    actual_label: Council Member District 1
-    expected: council@seattle.gov
-    actual: "\u2014"
-  - person: Rob Saka
-    field: phone
-    expected_label: Councilmember District 1
-    actual_label: Council Member District 1
-    expected: (206) 684-8888
-    actual: "\u2014"
+    phone: 1.0
+    email: 1.0
+    url: 1.0
+mismatches: {}

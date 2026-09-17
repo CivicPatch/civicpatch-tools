@@ -239,8 +239,8 @@ def test_an_eval_without_mismatches_writes_no_archive(tmp_path):
 
 
 def test_run_archive_is_pruned_with_the_history_row_that_referenced_it(tmp_path):
-    for hour in range(HISTORY_DEPTH + 1):
-        _record(tmp_path, f"2026-09-16T0{hour}:00:00+00:00", "Atlas", {})
+    for minute in range(HISTORY_DEPTH + 1):
+        _record(tmp_path, f"2026-09-16T00:{minute:02d}:00+00:00", "Atlas", {})
     assert "20260916T000000Z-Atlas.yml" not in _run_files(tmp_path)
     assert len(_run_files(tmp_path)) == HISTORY_DEPTH
 

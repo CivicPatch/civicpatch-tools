@@ -10,13 +10,9 @@ organization:
   - Council Member District 7
   - Council Member District 8
   - Council Member District 9
-other_organizations:
-- name: Office of the Mayor
-  posts:
-  - Mayor
 people: []
 thought: 'The same Jackson Office of the Mayor page as jackson_mayors_office, extracted for the
   City Council instead. Scott Conger is a real, named, current official on this page with his own
   contact details — which is what makes this case harder than its Seattle counterpart: nothing
-  but the scoping says to leave him out. He holds the Mayor post, which belongs to the exclusion
-  set, and no Council member is named anywhere on the page.'
+  but the scoping says to leave him out. He holds the Mayor post, which is not a City Council
+  post, and no Council member is named anywhere on the page.'

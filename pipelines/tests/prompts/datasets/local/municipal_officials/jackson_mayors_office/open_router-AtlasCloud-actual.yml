@@ -1,9 +1,9 @@
 people:
 - name: Scott Conger
   label: Mayor
-  phone: 731.425.8240
+  phone: '7314258240'
   email: null
-  url: https://www.jacksontn.gov/government/mayorsoffice
+  url: https://www.jacksontn.gov/cms/One.aspx?portalId=16361687&pageId=19642137
   start_date: null
   end_date: null
   image: local://35aa4bad0377.png
