@@ -43,7 +43,7 @@ import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
 import { useOrganizations } from "../../hooks/use-organizations.js";
 import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
 import { officeChangesIn } from "../../components/person-editor/office-changes.js";
-import type { ProposedChange } from "../../components/people/person-cards.js";
+import { type ProposedChange } from "../../schemas/membership-proposal.js";
 import type { PersonAssertion } from "../../components/person-editor/field-provenance.js";
 import {
   jurisdictionOcdidToPath,

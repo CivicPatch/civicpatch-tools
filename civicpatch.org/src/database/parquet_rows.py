@@ -57,7 +57,7 @@ TABLES: dict[str, LiteralString] = {
                p.jurisdiction_ocdid,
                m.label, m.start_date, m.end_date,
                m.first_seen_at, m.last_seen_at, m.closed_at, m.created_at,
-               m.designations, m.source_labels,
+               m.designations, membership_source_labels(m.sources) AS source_labels,
                (m.closed_at IS NULL) AS is_open
         FROM memberships m
         JOIN posts p ON p.id = m.post_id

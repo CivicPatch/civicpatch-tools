@@ -192,7 +192,7 @@ async def test_a_withdrawn_label_no_longer_protects_the_field_from_a_scrape():
     async with pool.connection() as conn, conn.cursor() as cur:
         await factories.bind_membership(
             cur,
-            DerivedMembership(person_id=person_id, label="Scrape Label"),
+            DerivedMembership(person_id=person_id, membership_label="Scrape Label"),
             post_id,
             org,
             _SEEN_AT,
@@ -212,7 +212,7 @@ async def test_a_withdrawn_label_no_longer_protects_the_field_from_a_scrape():
     async with pool.connection() as conn, conn.cursor() as cur:
         await factories.bind_membership(
             cur,
-            DerivedMembership(person_id=person_id, label="Scrape Label 2"),
+            DerivedMembership(person_id=person_id, membership_label="Scrape Label 2"),
             post_id,
             org,
             _SEEN_AT,

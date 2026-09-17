@@ -13,12 +13,17 @@ which is what the roster timeline reads. One *open* membership per person per bo
 gone, not when they went.
 """
 
+import json
 import uuid
 from datetime import date, datetime, timezone
 from typing import AsyncGenerator
 
 from core.membership_label import derive_post_label
-from core.membership_proposal import ExistingMembership, ids_by_person_and_organization
+from core.membership_proposal import (
+    ExistingMembership,
+    MembershipPost,
+    ids_by_person_and_organization,
+)
 from core.post_derivation import DerivedMembership, MembershipBinding
 from database import assertions, posts
 from database.assertions import LATEST_FIRST
@@ -82,8 +87,8 @@ _CLOSE_MOVED_MEMBERSHIPS = """
 _UPSERT_OPEN_MEMBERSHIPS = f"""
     INSERT INTO memberships
         (post_id, organization_id, person_id, designations, meta_unmatched_text,
-         source_labels, start_date, end_date, first_seen_at, last_seen_at, label)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+         sources, start_date, end_date, first_seen_at, last_seen_at, label)
+    VALUES (%s, %s, %s, %s, %s, %s::jsonb, %s, %s, %s, %s, %s)
     ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
     DO UPDATE SET
         last_seen_at = CASE WHEN %s
@@ -91,7 +96,7 @@ _UPSERT_OPEN_MEMBERSHIPS = f"""
             ELSE memberships.last_seen_at END,
         designations = EXCLUDED.designations,
         meta_unmatched_text = EXCLUDED.meta_unmatched_text,
-        source_labels = EXCLUDED.source_labels,
+        sources = EXCLUDED.sources,
         start_date = EXCLUDED.start_date,
         end_date = EXCLUDED.end_date,
         label = CASE WHEN {LABEL_IS_HUMAN_SET}
@@ -114,12 +119,12 @@ def _upsert_params(binding: MembershipBinding, last_seen_at, advances_last_seen:
         member.person_id,
         member.designations,
         member.meta_unmatched_text,
-        member.source_labels,
+        json.dumps([source.model_dump() for source in member.sources]),
         member.start_date,
         member.end_date,
         last_seen_at,
         last_seen_at,
-        member.label,
+        member.membership_label,
         advances_last_seen,
     )
 
@@ -214,7 +219,8 @@ async def list_for_jurisdiction(
                -- it was included.
                m.first_seen_at, m.closed_at, m.last_seen_at,
                pe.name AS person_name,
-               m.source_labels, m.designations, m.meta_unmatched_text,
+               membership_source_labels(m.sources) AS source_labels,
+               m.designations, m.meta_unmatched_text,
                p.role_id, p.division_ocdid,
                r.label AS role_label
         FROM memberships m
@@ -304,7 +310,7 @@ _STATE_ROWS = """
                    m.first_seen_at  AS membership_first_seen_at,
                    m.last_seen_at   AS membership_last_seen_at,
                    m.closed_at      AS membership_closed_at,
-                   m.source_labels  AS membership_source_labels
+                   membership_source_labels(m.sources) AS membership_source_labels
             FROM memberships m
             JOIN posts p ON p.id = m.post_id
             JOIN people pe ON pe.id = m.person_id
@@ -420,7 +426,7 @@ async def _triage_page(cur, limit: int, offset: int) -> list[dict]:
                -- The one label the term came out of, not the whole concatenation. Storing
                -- the parts is what makes this answerable at all.
                mode() WITHIN GROUP (ORDER BY (
-                   SELECT l FROM unnest(m.source_labels) AS l
+                   SELECT l FROM unnest(membership_source_labels(m.sources)) AS l
                    WHERE strpos(lower(l), lower(term)) > 0 LIMIT 1
                )) AS example_label
         {_TRIAGE_POPULATION}
@@ -452,8 +458,7 @@ async def open_memberships(cur, jurisdiction_ocdids: list[str]) -> list[Existing
     await cur.execute(
         """
         SELECT m.id::text, p.jurisdiction_ocdid, m.person_id::text, m.organization_id::text,
-               m.post_id::text, m.label, m.designations, m.meta_unmatched_text,
-               p.role_id, p.division_ocdid, p.meta_is_tracked, r.label AS role_label
+               m.label, m.post_id::text, p.role_id, r.label, p.division_ocdid, p.meta_is_tracked
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
         JOIN roles r ON r.id = p.role_id
@@ -461,8 +466,37 @@ async def open_memberships(cur, jurisdiction_ocdids: list[str]) -> list[Existing
         """,
         (jurisdiction_ocdids,),
     )
-    columns = [column.name for column in cur.description or []]
-    return [ExistingMembership(**dict(zip(columns, row))) for row in await cur.fetchall()]
+    rows = await cur.fetchall()
+    names = await posts.asserted_labels(cur, [row[5] for row in rows])
+    return [
+        ExistingMembership(
+            id=membership_id,
+            jurisdiction_ocdid=jurisdiction_ocdid,
+            person_id=person_id,
+            organization_id=organization_id,
+            membership_label=membership_label,
+            post=MembershipPost(
+                id=post_id,
+                role_id=role_id,
+                role_label=role_label,
+                division_ocdid=division_ocdid,
+                label=names.get(post_id) or derive_post_label(role_label, division_ocdid),
+                meta_is_tracked=meta_is_tracked,
+            ),
+        )
+        for (
+            membership_id,
+            jurisdiction_ocdid,
+            person_id,
+            organization_id,
+            membership_label,
+            post_id,
+            role_id,
+            role_label,
+            division_ocdid,
+            meta_is_tracked,
+        ) in rows
+    ]
 
 
 async def open_source_labels_by_person(
@@ -484,7 +518,7 @@ async def open_source_labels_by_person(
         return {}
     await cur.execute(
         """
-        SELECT m.person_id::text, m.source_labels
+        SELECT m.person_id::text, membership_source_labels(m.sources)
         FROM memberships m
         WHERE m.organization_id = (
             SELECT id FROM organizations
@@ -653,15 +687,15 @@ async def assign(
             None,
         )
 
-        if current and current.post_id == post_id:
-            if (current.label or None) == (label or None):
+        if current and current.post.id == post_id:
+            if (current.membership_label or None) == (label or None):
                 raise NothingToAssign(post_id)
             membership_id = current.id
             change = FieldChange(
-                field=LABEL_FIELD, before=current.label, after=label
+                field=LABEL_FIELD, before=current.membership_label, after=label
             )
         else:
-            moved_from = current.post_id if current else None
+            moved_from = current.post.id if current else None
             # A human states only who and where — the label follows below, and the source's
             # term dates are not theirs to invent.
             bindings = [

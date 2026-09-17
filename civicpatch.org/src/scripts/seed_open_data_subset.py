@@ -24,6 +24,7 @@ from a collision it did not target. Intended only for a local dev database.
 import argparse
 import asyncio
 import io
+import json
 import logging
 import tarfile
 from datetime import datetime, timezone
@@ -164,7 +165,8 @@ def membership_row(row: dict[str, Any]) -> dict[str, Any]:
         "closed_at": row["closed_at"],
         "created_at": row["created_at"],
         "designations": row["designations"],
-        "source_labels": row["source_labels"],
+        # The export has labels without pages; the page is unknown here, as for 206's backfill.
+        "sources": json.dumps([{"url": None, "note": label} for label in row["source_labels"]]),
     }
 
 
@@ -215,11 +217,11 @@ INSERT_SQL: dict[str, LiteralString] = {
     "memberships": """
         INSERT INTO memberships
             (id, post_id, organization_id, person_id, label, start_date, end_date,
-             first_seen_at, last_seen_at, closed_at, created_at, designations, source_labels)
+             first_seen_at, last_seen_at, closed_at, created_at, designations, sources)
         VALUES
             (%(id)s, %(post_id)s, %(organization_id)s, %(person_id)s, %(label)s, %(start_date)s,
              %(end_date)s, %(first_seen_at)s, %(last_seen_at)s, %(closed_at)s, %(created_at)s,
-             %(designations)s, %(source_labels)s)
+             %(designations)s, %(sources)s::jsonb)
         -- No conflict target: `memberships_one_open_per_organization` (person_id,
         -- organization_id) WHERE closed_at IS NULL can collide independently of the id PK —
         -- same reasoning as organizations above.

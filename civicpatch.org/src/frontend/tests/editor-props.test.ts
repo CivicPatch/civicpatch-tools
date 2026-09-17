@@ -54,13 +54,18 @@ describe("personEditorPropsFor — subtitle", () => {
           proposals: proposalsByPersonId([
             {
               person_id: "p1",
+              organization_id: "org-1",
               disposition: "new",
-              role_id: "council-member",
-              role_label: "Council Member",
-              division_ocdid:
-                "ocd-division/country:us/state:wa/place:x/council_district:5",
-              label: null,
-              post_label: "Council Member, District 5",
+              post: {
+                id: null,
+                role_id: "council-member",
+                role_label: "Council Member",
+                division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
+                label: "Council Member, District 5",
+                meta_is_tracked: true,
+              },
+              membership_label: null,
+              from_post: null,
             },
           ]),
         },
@@ -112,12 +117,18 @@ describe("personEditorPropsFor — subtitle", () => {
           proposals: proposalsByPersonId([
             {
               person_id: "p1",
+              organization_id: "org-1",
               disposition: "moved",
-              role_id: "mayor",
-              role_label: "Mayor",
-              division_ocdid: "ocd-division/country:us/state:wa/place:x",
-              label: null,
-              post_label: "Mayor, At-Large",
+              post: {
+                id: null,
+                role_id: "mayor",
+                role_label: "Mayor",
+                division_ocdid: "ocd-division/country:us/state:wa/place:x",
+                label: "Mayor, At-Large",
+                meta_is_tracked: true,
+              },
+              membership_label: null,
+              from_post: null,
             },
           ]),
         },
@@ -128,16 +139,22 @@ describe("personEditorPropsFor — subtitle", () => {
 });
 
 
-const change = (over = {}) =>
+const change = (over = {}, postOver = {}) =>
   ({
     person_id: "p1",
+    organization_id: "org-1",
     disposition: "new",
-    role_id: "council-member",
-    role_label: "Council Member",
-    division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
-    label: null,
-    post_label: "Council Member, District 5",
-    post_id: "post-5",
+    post: {
+      id: "post-5",
+      role_id: "council-member",
+      role_label: "Council Member",
+      division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
+      label: "Council Member, District 5",
+      meta_is_tracked: true,
+      ...postOver,
+    },
+    membership_label: null,
+    from_post: null,
     ...over,
   }) as never;
 
@@ -158,7 +175,7 @@ describe("personEditorPropsFor — derivedPost", () => {
   // Ingest stopped minting posts, so this is the ordinary case for a promotion rather than an
   // edge one: the seat exists only as a proposal until somebody publishes.
   it("offers the seat by label when the scrape would mint the post, since there is no row yet", () =>
-    expect(derivedPostOf([change({ post_id: null })])).toEqual({
+    expect(derivedPostOf([change({}, { id: null })])).toEqual({
       post_id: null,
       label: "Council Member, District 5",
       membershipLabel: null,
@@ -171,14 +188,14 @@ describe("personEditorPropsFor — derivedPost", () => {
 
   // `unmatched` is a vocabulary gap, not an answer.
   it("offers nothing when the derivation could not name the role", () =>
-    expect(derivedPostOf([change({ role_id: "unmatched" })])).toBe(null));
+    expect(derivedPostOf([change({}, { role_id: "unmatched" })])).toBe(null));
 
   // Two seats is no single answer; picking either would show a decision nobody made.
   it("offers nothing when the person is proposed onto two seats", () =>
     expect(
       derivedPostOf([
         change(),
-        change({ role_id: "mayor", post_id: "post-mayor" }),
+        change({}, { role_id: "mayor", id: "post-mayor" }),
       ]),
     ).toBe(null));
 });
@@ -220,7 +237,7 @@ describe("personEditorPropsFor — derivedPost from a held membership", () => {
     }));
 
   it("carries the proposal's membership label, so the picker defaults to the detected move", () =>
-    expect(derivedPostOf([change({ label: "Chair" })])).toEqual({
+    expect(derivedPostOf([change({ membership_label: "Chair" })])).toEqual({
       post_id: "post-5",
       label: "Council Member, District 5",
       membershipLabel: "Chair",

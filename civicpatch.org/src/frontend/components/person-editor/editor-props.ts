@@ -8,9 +8,8 @@ import {
   PersonStatus,
   type PersonCard,
   personOf,
-  type ProposedChange,
 } from "../people/person-cards.js";
-import { UNMATCHED_ROLE_ID } from "../../utils/role-types.js";
+import { UNMATCHED_ROLE_ID } from "../../schemas/role-types.js";
 import { type PersonMembership } from "../edit-people/person-edit-utils.js";
 import { canMerge, mergeCandidates } from "../review/merge-model.js";
 import { acceptsByField, type PersonAssertion } from "./field-provenance.js";
@@ -23,6 +22,7 @@ import {
   type ProposedPost,
   type RoleOption,
 } from "../posts-list/posts-model.js";
+import { type ProposedChange } from "../../schemas/membership-proposal.js";
 
 export type EditorContextBase = Omit<
   EditorContext,
@@ -57,15 +57,15 @@ export interface EditorContext {
 
 // A proposal with no recognized role is a vocabulary gap, not an answer to show as one.
 function derivedPostFromProposal(proposal: ProposedChange): DerivedPost | null {
-  if (proposal.role_id === UNMATCHED_ROLE_ID) return null;
+  if (proposal.post.role_id === UNMATCHED_ROLE_ID) return null;
   return {
-    post_id: proposal.post_id ?? null,
-    label: proposal.post_label,
-    membershipLabel: proposal.label ?? null,
+    post_id: proposal.post.id,
+    label: proposal.post.label,
+    membershipLabel: proposal.membership_label,
     // Only meaningful when there's no `post_id` for the picker to look up instead (see
     // `DerivedPost`'s own comment) — carried regardless, since it costs nothing unused.
-    role_id: proposal.role_id,
-    division_ocdid: proposal.division_ocdid,
+    role_id: proposal.post.role_id,
+    division_ocdid: proposal.post.division_ocdid,
   };
 }
 
@@ -97,11 +97,11 @@ function allProposedPosts(
 ): ProposedPost[] {
   return Array.from(proposals.values())
     .flat()
-    .filter((proposal) => proposal.role_id !== UNMATCHED_ROLE_ID)
+    .filter((proposal) => proposal.post.role_id !== UNMATCHED_ROLE_ID)
     .map((proposal) => ({
-      role_id: proposal.role_id,
-      role_label: proposal.role_label,
-      division_ocdid: proposal.division_ocdid,
+      role_id: proposal.post.role_id,
+      role_label: proposal.post.role_label,
+      division_ocdid: proposal.post.division_ocdid,
     }));
 }
 

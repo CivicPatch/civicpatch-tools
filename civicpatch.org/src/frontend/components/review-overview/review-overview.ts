@@ -9,7 +9,6 @@ import { renderRoleGroup } from "../people/person-card-grid.js";
 import {
   proposalsByPersonId,
   personOf,
-  type ProposedChange,
   type PersonCard,
 } from "../people/person-cards.js";
 import { type PersonAssertion } from "../person-editor/field-provenance.js";
@@ -26,6 +25,7 @@ import {
   tallyOf,
   type SourceMap,
 } from "./overview-model.js";
+import { type ProposedChange } from "../../schemas/membership-proposal.js";
 
 export interface ReviewOverviewProps {
   cards: PersonCard[];

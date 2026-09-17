@@ -18,7 +18,6 @@ import {
   STATUS_LABEL,
   type MovedNote,
   type PersonCard,
-  type ProposedChange,
 } from "../people/person-cards.js";
 import {
   diffValue,
@@ -40,6 +39,7 @@ import {
   type SourceMap,
 } from "./overview-model.js";
 import { type ReviewOverviewProps } from "./review-overview.js";
+import { type ProposedChange } from "../../schemas/membership-proposal.js";
 
 export function rowLabel(card: PersonCard): string {
   const parts = [

@@ -22,6 +22,7 @@ import pytest_asyncio
 
 from database import divisions, organizations, people, posts
 from database.database import get_pool
+from tests.integration import factories
 
 pytestmark = [pytest.mark.asyncio, pytest.mark.integration]
 
@@ -79,10 +80,10 @@ async def _membership(cur, organization_id: str, person_id: str, role_id: str, l
     await cur.execute(
         """
         INSERT INTO memberships
-            (post_id, organization_id, person_id, first_seen_at, last_seen_at, source_labels)
-        VALUES (%s, %s, %s, %s, %s, %s)
+            (post_id, organization_id, person_id, first_seen_at, last_seen_at, sources)
+        VALUES (%s, %s, %s, %s, %s, %s::jsonb)
         """,
-        (post_id, organization_id, person_id, _SEEN_AT, _SEEN_AT, [label]),
+        (post_id, organization_id, person_id, _SEEN_AT, _SEEN_AT, factories.sources_of([label])),
     )
     return post_id
 

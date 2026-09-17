@@ -26,12 +26,12 @@ import {
   proposalsByPersonId,
   STATUS_LABEL,
   type PersonCard,
-  type ProposedChange,
 } from "../people/person-cards.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { focusOnMount } from "../../utils/focus-on-mount.js";
 import { altArrowDirection } from "../../utils/keyboard.js";
 import { type Post } from "../posts-list/posts-model.js";
+import { type ProposedChange } from "../../schemas/membership-proposal.js";
 
 export interface ReviewModalProps {
   cards: PersonCard[];

@@ -1,4 +1,4 @@
-import { KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
+import { KNOWN_ISSUE_TYPES } from "../../schemas/issue-types.js";
 
 export function getIssueTypeConfig(issueType) {
   return KNOWN_ISSUE_TYPES.find((t) => t.value === issueType);

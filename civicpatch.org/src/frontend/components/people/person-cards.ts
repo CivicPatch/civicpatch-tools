@@ -23,6 +23,7 @@ import {
   parseDivision,
   DIVISION_AT_LARGE,
 } from "../edit-people/person-edit-utils.js";
+import { MEMBERSHIP_DISPOSITION, type ProposedChange } from "../../schemas/membership-proposal.js";
 
 // `deleted` and `restored` are reviewer decisions, not diff verdicts — hence not DiffType values.
 export const PersonStatus = Object.freeze({
@@ -62,7 +63,10 @@ function heldSourceFor(
 ): { post_label: string; label: string | null }[] {
   const proposed = proposedByPersonId?.get(card.personId) ?? [];
   if (proposed.length) {
-    return proposed.map((change) => ({ post_label: change.post_label, label: change.label }));
+    return proposed.map((change) => ({
+      post_label: change.post.label,
+      label: change.membership_label,
+    }));
   }
   return personOf(card)?.memberships ?? [];
 }
@@ -139,20 +143,6 @@ export interface CardsResult {
   duplicateIds: string[];
 }
 
-// The only source for "which post would this person land in" — they hold no membership yet.
-export interface ProposedChange {
-  person_id: string;
-  disposition: string;
-  role_id: string;
-  role_label: string;
-  division_ocdid: string;
-  label: string | null;
-  // Rendered by `core.membership_label`, because a proposed post may not exist yet.
-  post_label: string;
-  // The post's row when it exists; null for one this scrape would mint.
-  post_id: string | null;
-}
-
 export interface PersonCard {
   personId: string;
   status: PersonStatusKey;
@@ -189,14 +179,14 @@ const postMoved = (
   proposals?: Map<string, ProposedChange[]>,
 ): boolean =>
   (proposals?.get(personId) ?? []).some(
-    (change) => change.disposition !== "unchanged",
+    (change) => change.disposition !== MEMBERSHIP_DISPOSITION.UNCHANGED,
   );
 
 // `survivingFields` cannot see the office on its own — `post_id` is never a raw scraped
 // value (nothing writes it onto a record until a reviewer picks one), so there is nothing
 // for a field diff to compare. `postMoved` already covers a move or a first appearance via
-// disposition; this adds the one case disposition alone misses: the seat stayed put, but
-// this scrape recomposed the label.
+// its disposition; this adds the one case the disposition alone misses: the post stayed put, but
+// this scrape recomposed the membership label.
 function officeSurvivingField(
   personId: string,
   proposals: Map<string, ProposedChange[]> | undefined,
@@ -205,13 +195,13 @@ function officeSurvivingField(
   const change = soleProposalFor(personId, proposals);
   if (!change) return null;
   const labelChanged =
-    (change.label ?? null) !== (heldMembershipLabel(oldMemberships) ?? null);
+    (change.membership_label ?? null) !== (heldMembershipLabel(oldMemberships) ?? null);
   if (!postMoved(personId, proposals) && !labelChanged) return null;
   return {
     field: FIELD_SCHEMA.find((field) => field.key === POST_FIELD)!,
     // Matches every other field's own state on the same card: "added" for a first
     // appearance, "changed" for a move or a recomposed label on a seat that stayed put.
-    state: change.disposition === "new" ? "added" : "changed",
+    state: change.disposition === MEMBERSHIP_DISPOSITION.NEW ? "added" : "changed",
     reason: "diff",
     error: null,
   };

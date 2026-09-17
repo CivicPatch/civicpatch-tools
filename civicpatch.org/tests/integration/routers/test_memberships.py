@@ -15,7 +15,7 @@ import pytest_asyncio
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from core.post_derivation import DerivedMembership
+from core.post_derivation import DerivedMembership, MembershipSource
 from database import activity, divisions, organizations, posts
 from database.database import get_pool
 from lib.auth import get_optional_user
@@ -351,7 +351,7 @@ async def test_the_person_axis_read_carries_the_whole_parse(client):
             cur,
             DerivedMembership(
                 person_id=person_id,
-                source_labels=["Mayor Position 8 (Zz Route Liaison)"],
+                sources=[MembershipSource(note="Mayor Position 8 (Zz Route Liaison)")],
                 designations=["Position 8"],
                 meta_unmatched_text=["Zz Route Liaison"],
             ),
