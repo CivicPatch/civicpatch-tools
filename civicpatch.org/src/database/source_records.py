@@ -48,6 +48,16 @@ def _record_row(
     )
 
 
+async def organizations_for_changeset(cur, changeset_id: str) -> list[str]:
+    """Which bodies this changeset read a page for. A body with no record here was not looked at,
+    so publishing must not retire anyone in it."""
+    await cur.execute(
+        "SELECT DISTINCT organization_id::text FROM source_records WHERE changeset_id = %s",
+        (changeset_id,),
+    )
+    return [row[0] for row in await cur.fetchall()]
+
+
 async def insert_source_records(
     changeset_id: str, jurisdiction_ocdid: str, records_by_person: dict[str, list[dict]]
 ) -> int:
