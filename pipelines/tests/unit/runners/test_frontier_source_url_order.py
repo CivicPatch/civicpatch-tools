@@ -1,7 +1,7 @@
 """Caller-supplied source URLs are scraped before the jurisdiction's homepage.
 
-The frontier is seeded with `config.url` before research runs, and `next_pending()` is strict
-FIFO on the queue. Appending source URLs therefore put them *behind* the homepage: a run given
+The frontier is seeded with `config.url` before research runs, and before anything is crawled
+`next_pending()` takes queue order. Appending source URLs therefore put them *behind* the homepage: a run given
 `https://www.seattle.gov/council` still scraped `https://seattle.gov` first, spending a fetch
 and an LLM pass on a page of navigation links.
 

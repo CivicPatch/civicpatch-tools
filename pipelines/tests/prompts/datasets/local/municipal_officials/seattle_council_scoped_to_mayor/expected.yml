@@ -1,0 +1,23 @@
+organization:
+  name: Office of the Mayor
+  posts:
+  - Mayor
+other_organizations:
+- name: City Council
+  posts:
+  - Council Member District 1
+  - Council Member District 2
+  - Council Member District 3
+  - Council Member District 4
+  - Council Member District 5
+  - Council Member District 6
+  - Council Member District 7
+  - Council Member Position 8
+  - Council Member Position 9
+  - Council President
+people: []
+thought: 'The same Seattle City Council page as seattle_council_separate_mayor, extracted for the
+  Office of the Mayor instead. Nobody on it belongs to that body: the nine Councilmembers hold
+  City Council posts, which are the exclusion set, and Mayor Katie Wilson appears only in the
+  navigation and in news blurbs, never as an office holder listed on this page. The pair only
+  means something together — a model that returns nobody everywhere fails the companion case.'

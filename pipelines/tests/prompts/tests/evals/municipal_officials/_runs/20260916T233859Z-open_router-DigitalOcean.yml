@@ -1,0 +1,117 @@
+mismatches:
+  seattle_council_separate_mayor:
+  - actual: "\u2014"
+    actual_label: Council Member Position 8
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 8
+    field: email
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Council Member Position 8
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 8
+    field: phone
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Council Member District 7
+    expected: council@seattle.gov
+    expected_label: Councilmember District 7
+    field: email
+    person: Bob Kettle
+  - actual: "\u2014"
+    actual_label: Council Member District 7
+    expected: (206) 684-8888
+    expected_label: Councilmember District 7
+    field: phone
+    person: Bob Kettle
+  - actual: "\u2014"
+    actual_label: Council Member District 6
+    expected: council@seattle.gov
+    expected_label: Councilmember District 6
+    field: email
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Council Member District 6
+    expected: (206) 684-8888
+    expected_label: Councilmember District 6
+    field: phone
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Council Member District 5
+    expected: council@seattle.gov
+    expected_label: Councilmember District 5
+    field: email
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Council Member District 5
+    expected: (206) 684-8888
+    expected_label: Councilmember District 5
+    field: phone
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Council Member Position 9
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 9
+    field: email
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Council Member Position 9
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 9
+    field: phone
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: council@seattle.gov
+    expected_label: Councilmember District 2
+    field: email
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: (206) 684-8888
+    expected_label: Councilmember District 2
+    field: phone
+    person: Eddie Lin
+  - actual: []
+    actual_label: Council President
+    expected:
+    - district:3
+    expected_label: Council President District 3
+    field: district
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Council President
+    expected: council@seattle.gov
+    expected_label: Council President District 3
+    field: email
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Council President
+    expected: (206) 684-8888
+    expected_label: Council President District 3
+    field: phone
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: council@seattle.gov
+    expected_label: Councilmember District 4
+    field: email
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: (206) 684-8888
+    expected_label: Councilmember District 4
+    field: phone
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: council@seattle.gov
+    expected_label: Councilmember District 1
+    field: email
+    person: Rob Saka
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: (206) 684-8888
+    expected_label: Councilmember District 1
+    field: phone
+    person: Rob Saka

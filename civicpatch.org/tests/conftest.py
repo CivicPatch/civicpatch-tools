@@ -17,13 +17,6 @@ for _var, _val in _test_env.items():
     os.environ.setdefault(_var, _val)
 
 
-@pytest.fixture(autouse=True)
-def patch_get_env_vars(monkeypatch):
-    test_env = {var: f"test-{var.lower()}" for var in src.environment.REQUIRED_ENV_VARS + src.environment.OPTIONAL_ENV_VARS}
-    monkeypatch.setattr("src.environment.get_env_vars", lambda: test_env)
-    yield
-
-
 
 @pytest.fixture
 def mock_redis():
