@@ -5,7 +5,7 @@ import { ref } from "lit/directives/ref.js";
 import { fetchJobIssues, fetchIssueCounts, flagIssue, dismissIssues } from "../../api.js";
 import { Pagination } from "../../components/pagination/index.js";
 import { usePagerRef } from "../../hooks/use-pager-ref.js";
-import { KNOWN_ISSUE_TYPES } from "../../utils/issue-types.js";
+import { KNOWN_ISSUE_TYPES } from "../../schemas/issue-types.js";
 import { DANGER_VARIANT } from "../../components/confirm-modal/confirm-modal.js";
 import { IssueRow, PENDING, type Issue } from "./issue-row.js";
 import { SECTIONS } from "./issue-sections.js";

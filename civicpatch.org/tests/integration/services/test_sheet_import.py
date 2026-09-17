@@ -25,6 +25,7 @@ from database.database import get_pool
 from services.batch_review import batch_review, publish_selected
 from services.sinks.open_data import reviewed_file_path
 from services.sheet_import import import_rows, read_rows
+from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_sheet_test/government"
 # A second town, so "one commit for the whole batch" is a claim a test can actually falsify.
@@ -166,10 +167,10 @@ async def _seed_open_membership(name: str, source_labels: list[str]) -> None:
         await cur.execute(
             """
             INSERT INTO memberships
-                (post_id, organization_id, person_id, source_labels, first_seen_at, last_seen_at)
-            VALUES (%s, %s, %s, %s, now(), now())
+                (post_id, organization_id, person_id, sources, first_seen_at, last_seen_at)
+            VALUES (%s, %s, %s, %s::jsonb, now(), now())
             """,
-            (post_id, org, person_id, source_labels),
+            (post_id, org, person_id, factories.sources_of(source_labels)),
         )
         await conn.commit()
 

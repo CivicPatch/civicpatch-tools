@@ -46,17 +46,24 @@ class RosterEntry(BaseModel):
     post_id: str | None = None
 
 
+class MembershipSource(BaseModel):
+    """Popolo's source: a page, and the label it gave. `url` is None only on rows 206 backfilled."""
+
+    url: str | None = None
+    note: str
+
+
 class DerivedMembership(BaseModel):
     """One person a scrape found on a post, and what their label carried besides the role."""
 
     person_id: str
     designations: list[str] = []
     meta_unmatched_text: list[str] = []
-    # The labels the parser consumed
-    source_labels: list[str] = []
+    # Every label a source gave for this membership, with its page.
+    sources: list[MembershipSource] = []
     role_ids: list[str] = []
     # The source's words for whatever the post label will not say.
-    label: str | None = None
+    membership_label: str | None = None
     # The source's claim about the tenure, carried from the record. Not `closed_at`, which is
     # ours: when we stopped seeing them, not when they left.
     start_date: str | None = None
@@ -131,6 +138,7 @@ def _role_label(role_id: str, labels_by_id: dict[str, str]) -> str:
 def _member(
     record: RosterEntry,
     parsed: DerivedRoles,
+    sources: list[MembershipSource],
     ids_by_label: dict[str, str],
     post_role_id: str,
 ) -> "DerivedMembership":
@@ -142,9 +150,9 @@ def _member(
         person_id=record.id,
         designations=parsed.other_designations,
         meta_unmatched_text=_unresolved_text(parsed),
-        source_labels=parsed.labels,
+        sources=sources,
         role_ids=[role_id for _, role_id in demoted],
-        label=render(
+        membership_label=render(
             MembershipLabel(
                 demoted_roles=[role_label for role_label, _ in demoted],
                 designations=parsed.other_designations,
@@ -176,12 +184,13 @@ class ChosenPost(BaseModel):
     division_ocdid: str
 
 
-def _labels_by_organization(record: RosterEntry) -> dict[str, list[str]]:
-    grouped: dict[str, list[str]] = {}
+def _sources_by_organization(record: RosterEntry) -> dict[str, list[MembershipSource]]:
+    grouped: dict[str, list[MembershipSource]] = {}
     for sighting in record.sightings:
-        labels = grouped.setdefault(sighting.organization_id, [])
-        if sighting.label not in labels:
-            labels.append(sighting.label)
+        sources = grouped.setdefault(sighting.organization_id, [])
+        source = MembershipSource(url=sighting.source_url, note=sighting.label)
+        if source not in sources:
+            sources.append(source)
     return grouped
 
 
@@ -214,19 +223,22 @@ def derived_posts(
     grouped: dict[tuple[str, str, str], list[DerivedMembership]] = {}
 
     for record in records:
-        groups = _labels_by_organization(record)
+        groups = _sources_by_organization(record)
         picked = chosen_posts.get(record.id)
         if picked:
             groups.setdefault(picked.organization_id, [])
 
-        for organization_id, labels in groups.items():
+        for organization_id, sources in groups.items():
+            labels = list(dict.fromkeys(source.note for source in sources))
             parsed = derive_roles(labels, record.jurisdiction_ocdid, taxonomy)
             key = (
                 (picked.organization_id, picked.role_id, picked.division_ocdid)
                 if picked and organization_id == picked.organization_id
                 else (organization_id, role_id_for(parsed), parsed.division_ocdid)
             )
-            grouped.setdefault(key, []).append(_member(record, parsed, ids_by_label, key[1]))
+            grouped.setdefault(key, []).append(
+                _member(record, parsed, sources, ids_by_label, key[1])
+            )
 
     return [
         DerivedPost(

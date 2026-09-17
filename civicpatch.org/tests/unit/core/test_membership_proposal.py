@@ -1,8 +1,10 @@
 import pytest
 
+from core.membership_label import derive_post_label
 from core.membership_proposal import (
-    Disposition,
     ExistingMembership,
+    MembershipDisposition,
+    MembershipPost,
     nothing_to_review,
     propose,
     surfaces_for_review,
@@ -10,7 +12,7 @@ from core.membership_proposal import (
 from core.post_derivation import DerivedMembership, DerivedPost
 
 # Pure — a scrape's derivation and what we already hold, in; the difference, out. No taxonomy
-# and no database, because the diff is only about which seat a person is on.
+# and no database, because the diff is only about which post a person is in.
 
 _BASE = "ocd-division/country:us/state:zz/place:testville"
 _COUNCIL = "org-1"
@@ -32,7 +34,7 @@ def _post(role_id, division_ocdid, *person_ids, label=None, organization_id=_COU
         division_ocdid=division_ocdid,
         headcount=len(person_ids),
         members=[
-            DerivedMembership(person_id=person_id, label=label) for person_id in person_ids
+            DerivedMembership(person_id=person_id, membership_label=label) for person_id in person_ids
         ],
     )
 
@@ -51,21 +53,24 @@ def _held(
         jurisdiction_ocdid="ocd-jurisdiction/country:us/state:zz/place:testville/government",
         person_id=person_id,
         organization_id=organization_id,
-        post_id=post_id,
-        role_id=role_id,
-        role_label=role_label,
-        division_ocdid=division_ocdid,
-        meta_is_tracked=meta_is_tracked,
+        post=MembershipPost(
+            id=post_id,
+            role_id=role_id,
+            role_label=role_label,
+            division_ocdid=division_ocdid,
+            label=derive_post_label(role_label, division_ocdid),
+            meta_is_tracked=meta_is_tracked,
+        ),
     )
 
 
 @pytest.mark.unit
-def test_the_same_seat_is_not_a_review_item():
+def test_the_same_post_is_not_a_review_item():
     """The majority case, and the whole reason this is a diff. A roster restating what we
     already hold asks nobody for anything."""
     changes = _propose([_post("mayor", _BASE, "a")], [_held("a", "mayor", _BASE)])
 
-    assert [c.disposition for c in changes] == [Disposition.UNCHANGED]
+    assert [c.disposition for c in changes] == [MembershipDisposition.UNCHANGED]
     assert surfaces_for_review(changes[0]) is False
 
 
@@ -73,13 +78,13 @@ def test_the_same_seat_is_not_a_review_item():
 def test_somebody_we_hold_nothing_for_is_new():
     changes = _propose([_post("mayor", _BASE, "a")], [])
 
-    assert changes[0].disposition is Disposition.NEW
-    assert changes[0].from_post_id is None
+    assert changes[0].disposition is MembershipDisposition.NEW
+    assert changes[0].from_post is None
     assert surfaces_for_review(changes[0]) is True
 
 
 @pytest.mark.unit
-def test_a_different_seat_is_a_move_and_says_where_from():
+def test_a_different_post_is_a_move_and_says_where_from():
     """Both ends matter: a review row reading "now Mayor" without "was Ward 3" cannot be
     judged."""
     changes = _propose(
@@ -87,8 +92,9 @@ def test_a_different_seat_is_a_move_and_says_where_from():
         [_held("a", "council-member", _WARD_3, post_id="old-post")],
     )
 
-    assert changes[0].disposition is Disposition.MOVED
-    assert changes[0].from_post_id == "old-post"
+    assert changes[0].disposition is MembershipDisposition.MOVED
+    assert changes[0].from_post is not None
+    assert changes[0].from_post.id == "old-post"
 
 
 @pytest.mark.unit
@@ -99,13 +105,13 @@ def test_a_holder_the_scrape_did_not_name_is_absent():
         [_post("mayor", _BASE, "a")], [_held("b", "council-member", _WARD_3)]
     )
 
-    absent = [c for c in changes if c.disposition is Disposition.ABSENT]
+    absent = [c for c in changes if c.disposition is MembershipDisposition.ABSENT]
     assert [c.person_id for c in absent] == ["b"]
     assert surfaces_for_review(absent[0]) is True
 
 
 @pytest.mark.unit
-def test_an_absence_names_the_seat_it_left():
+def test_an_absence_names_the_post_it_left():
     """The label is derived, but from the role we held them in — not from the incoming post.
     Deriving without it produced "Ward 3" for a ward and an empty string at-large, which reads
     as though they held nothing."""
@@ -114,8 +120,8 @@ def test_an_absence_names_the_seat_it_left():
         [_held("b", "council-member", _WARD_3, role_label="Council Member")],
     )
 
-    absent = next(c for c in changes if c.disposition is Disposition.ABSENT)
-    assert absent.post_label == "Council Member, Ward 3"
+    absent = next(c for c in changes if c.disposition is MembershipDisposition.ABSENT)
+    assert absent.post.label == "Council Member, Ward 3"
 
 
 @pytest.mark.unit
@@ -128,8 +134,8 @@ def test_every_absence_surfaces_while_tracked_is_undecided():
         [_held("b", "city-attorney", _BASE, meta_is_tracked=False)],
     )
 
-    absent = next(c for c in changes if c.disposition is Disposition.ABSENT)
-    assert absent.meta_is_tracked is False
+    absent = next(c for c in changes if c.disposition is MembershipDisposition.ABSENT)
+    assert absent.post.meta_is_tracked is False
     assert surfaces_for_review(absent) is True
 
 
@@ -148,7 +154,7 @@ def test_the_proposed_label_rides_along():
         [_post("mayor", _BASE, "a", label="Commissioner Of Public Safety")], []
     )
 
-    assert changes[0].label == "Commissioner Of Public Safety"
+    assert changes[0].membership_label == "Commissioner Of Public Safety"
 
 
 # `still_held` and `still_listed` were deleted with the ingest-time observation writes they
@@ -187,7 +193,7 @@ def test_an_empty_proposal_is_a_failed_scrape_not_a_quiet_one():
 
 
 def _dispositions(changes):
-    return sorted((c.organization_id, c.role_id, c.disposition) for c in changes)
+    return sorted((c.organization_id, c.post.role_id, c.disposition) for c in changes)
 
 
 @pytest.mark.unit
@@ -205,8 +211,8 @@ def test_a_person_in_two_bodies_restated_by_the_scrape_is_unchanged_in_both():
     )
 
     assert _dispositions(changes) == [
-        (_COUNCIL, "council-member", Disposition.UNCHANGED),
-        (_MAYORS_OFFICE, "mayor", Disposition.UNCHANGED),
+        (_COUNCIL, "council-member", MembershipDisposition.UNCHANGED),
+        (_MAYORS_OFFICE, "mayor", MembershipDisposition.UNCHANGED),
     ]
 
 
@@ -223,8 +229,9 @@ def test_a_move_in_one_body_names_where_from_in_that_body_only():
         ],
     )
 
-    [moved] = [c for c in changes if c.disposition is Disposition.MOVED]
-    assert (moved.organization_id, moved.from_post_id) == (_COUNCIL, "post-1")
+    [moved] = [c for c in changes if c.disposition is MembershipDisposition.MOVED]
+    assert moved.from_post is not None
+    assert (moved.organization_id, moved.from_post.id) == (_COUNCIL, "post-1")
 
 
 @pytest.mark.unit
@@ -234,4 +241,4 @@ def test_a_post_in_a_body_the_person_holds_nothing_in_is_new():
         [_held("a", "council-member", _WARD_3, organization_id=_COUNCIL)],
     )
 
-    assert _dispositions(changes) == [(_MAYORS_OFFICE, "mayor", Disposition.NEW)]
+    assert _dispositions(changes) == [(_MAYORS_OFFICE, "mayor", MembershipDisposition.NEW)]

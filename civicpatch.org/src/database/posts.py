@@ -43,7 +43,8 @@ def _with_label(post: dict, asserted_label: str | None = None) -> dict:
     }
 
 
-async def _asserted_labels(cur, post_ids: list[str]) -> dict[str, str]:
+async def asserted_labels(cur, post_ids: list[str]) -> dict[str, str]:
+    """The name a human gave each post, where one did."""
     asserted = await assertions.asserted_values(cur, EntityType.POST, post_ids)
     return {
         post_id: accepted[0]
@@ -282,7 +283,7 @@ async def get_many(cur, post_ids: list[str]) -> dict[str, Post]:
     )
     columns = [column.name for column in cur.description or []]
     rows = [dict(zip(columns, row)) for row in await cur.fetchall()]
-    labels = await _asserted_labels(cur, [row["id"] for row in rows])
+    labels = await asserted_labels(cur, [row["id"] for row in rows])
     found = [Post(**_with_label(row, labels.get(row["id"]))) for row in rows]
     return {post.id: post for post in found}
 
@@ -362,7 +363,7 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     )
     columns = [column.name for column in cur.description or []]
     rows = [dict(zip(columns, row)) for row in await cur.fetchall()]
-    labels = await _asserted_labels(cur, [row["id"] for row in rows])
+    labels = await asserted_labels(cur, [row["id"] for row in rows])
     return [_with_label(row, labels.get(row["id"])) for row in rows]
 
 
@@ -400,7 +401,7 @@ async def list_page_for_state(
         if not rows:
             return 0, []
         dict_rows = [{k: v for k, v in zip(columns, row) if k != "total"} for row in rows]
-        labels = await _asserted_labels(cur, [row["id"] for row in dict_rows])
+        labels = await asserted_labels(cur, [row["id"] for row in dict_rows])
     total = rows[0][0]
     return total, [_with_label(row, labels.get(row["id"])) for row in dict_rows]
 

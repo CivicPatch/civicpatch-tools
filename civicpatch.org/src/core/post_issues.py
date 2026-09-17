@@ -13,7 +13,7 @@ from collections.abc import Mapping
 from shared.schemas import POST_FIELD, Issue, IssueCode
 
 from core.membership_label import derive_post_label
-from core.membership_proposal import Disposition, ProposedChange
+from core.membership_proposal import MembershipDisposition, ProposedChange
 
 
 def _post_name(post: dict) -> str:
@@ -39,15 +39,15 @@ def moved_person_issues(
         Issue(
             code=IssueCode.MOVED_PERSON,
             message=(
-                f"Moved from {change.from_post_label} to {change.post_label}"
-                if change.from_post_label
-                else f"Moved to {change.post_label}"
+                f"Moved from {change.from_post.label} to {change.post.label}"
+                if change.from_post
+                else f"Moved to {change.post.label}"
             ),
             person_ids=[change.person_id],
             field=POST_FIELD,
         )
         for change in changes
-        if change.disposition is Disposition.MOVED and change.person_id not in picked
+        if change.disposition is MembershipDisposition.MOVED and change.person_id not in picked
     ]
 
 

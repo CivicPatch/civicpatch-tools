@@ -19,6 +19,7 @@ import pytest_asyncio
 from core.sinks.sheet.people_rows import HEADERS
 from database import activity, divisions, memberships, organizations, posts
 from database.database import get_pool
+from tests.integration import factories
 
 _ZZ = "ocd-jurisdiction/country:us/state:zz/place:zz_sheet/government"
 _ZZ_DIVISION = "ocd-division/country:us/state:zz/place:zz_sheet"
@@ -87,8 +88,8 @@ async def _add_membership(cur, ocdid, division, state, name, stints) -> str:
             """
             INSERT INTO memberships
                 (post_id, organization_id, person_id,
-                 first_seen_at, last_seen_at, closed_at, label, source_labels)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                 first_seen_at, last_seen_at, closed_at, label, sources)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s::jsonb)
             """,
             (
                 post_id,
@@ -98,7 +99,7 @@ async def _add_membership(cur, ocdid, division, state, name, stints) -> str:
                 closed_at or first_seen_at,
                 closed_at,
                 "Acting",
-                ["Mayor", "Acting Mayor"],
+                factories.sources_of(["Mayor", "Acting Mayor"]),
             ),
         )
     return person_id

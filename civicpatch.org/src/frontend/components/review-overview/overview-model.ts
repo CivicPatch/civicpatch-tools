@@ -5,15 +5,15 @@ import {
   PersonStatus,
   soleProposalFor,
   type PersonCard,
-  type ProposedChange,
 } from "../people/person-cards.js";
-import { UNMATCHED_ROLE_ID } from "../../utils/role-types.js";
+import { UNMATCHED_ROLE_ID } from "../../schemas/role-types.js";
 import { isContextField, type SurvivingField } from "../fields/field-model.js";
 import {
   groupByRole,
   type RoleGroup,
   type PostRole,
 } from "../people/person-card-grid-model.js";
+import { type ProposedChange } from "../../schemas/membership-proposal.js";
 
 const FIELD_ORDER = [
   "labels",
@@ -160,7 +160,7 @@ function roleMembershipsFor(
   card: PersonCard,
 ): PostRole[] | undefined {
   if (!proposal) return personOf(card)?.memberships;
-  return [{ role_id: proposal.role_id, role_label: proposal.role_label }];
+  return [{ role_id: proposal.post.role_id, role_label: proposal.post.role_label }];
 }
 
 /** Cards grouped for display the way the jurisdiction grid groups people — by role, ranked
@@ -181,7 +181,7 @@ export function sectionsOf(
       proposal: soleProposalFor(card.personId, proposals),
     }));
   const isUnmatched = (proposal: ProposedChange | null) =>
-    proposal?.role_id === UNMATCHED_ROLE_ID;
+    proposal?.post.role_id === UNMATCHED_ROLE_ID;
   const unmatched = staying
     .filter(({ proposal }) => isUnmatched(proposal))
     .map(({ card }) => card);

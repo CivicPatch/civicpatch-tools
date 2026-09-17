@@ -9,7 +9,7 @@
 // snake_case keys cross the hook → page → component boundary and match the API
 // contract (see CLAUDE.md).
 
-import type { ProposedChange } from "../../components/people/person-cards.js";
+import { type ProposedChange } from "../../schemas/membership-proposal.js";
 
 export const StateKind = {
   LOADING: "loading",

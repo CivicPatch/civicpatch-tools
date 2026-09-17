@@ -15,7 +15,7 @@ import uuid
 import pytest
 import pytest_asyncio
 
-from core.post_derivation import ChosenPost, DerivedMembership
+from core.post_derivation import ChosenPost, DerivedMembership, MembershipSource
 from database import divisions, memberships, organizations, posts
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
@@ -439,7 +439,7 @@ async def test_publish_writes_memberships_for_the_roster():
             members=[
                 DerivedMembership(
                     person_id=person_id,
-                    source_labels=["Mayor"],
+                    sources=[MembershipSource(note="Mayor")],
                     # The source's claim about the tenure. Partial on purpose: `start_date`
                     # was a `date` column until 144 and could not have held a bare year.
                     start_date="2025",
@@ -727,7 +727,7 @@ async def test_a_scrape_reworded_by_nobody_is_re_derived():
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
 
         first = await factories.bind_membership(
-            cur, DerivedMembership(person_id=person_id, label="Commissioner Of Public Safety"), post_id, org, _T0
+            cur, DerivedMembership(person_id=person_id, membership_label="Commissioner Of Public Safety"), post_id, org, _T0
         )
         await cur.execute("SELECT label FROM memberships WHERE id = %s", (first,))
         assert (await cur.fetchone())[0] == "Commissioner Of Public Safety"
@@ -735,7 +735,7 @@ async def test_a_scrape_reworded_by_nobody_is_re_derived():
         # A later scrape whose parser words it better. Nobody has asserted anything, so the
         # improvement lands.
         again = await factories.bind_membership(
-            cur, DerivedMembership(person_id=person_id, label="Public Safety Commissioner"), post_id, org, _T1
+            cur, DerivedMembership(person_id=person_id, membership_label="Public Safety Commissioner"), post_id, org, _T1
         )
         assert again == first
 
@@ -760,7 +760,7 @@ async def test_advancing_last_seen_leaves_everything_else_alone():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         membership_id = await factories.bind_membership(
-            cur, DerivedMembership(person_id=person_id, label="Mayor, At-Large"), post_id, org, _T0
+            cur, DerivedMembership(person_id=person_id, membership_label="Mayor, At-Large"), post_id, org, _T0
         )
 
         assert await memberships.advance_last_seen_at(cur, [person_id], _T1) == 1
@@ -1435,6 +1435,45 @@ async def test_reviewing_a_roster_restating_two_bodies_proposes_no_move():
 
     proposals = await proposals_for_requests([changeset_id], {changeset_id: roster})
 
-    assert sorted((c.organization_id, c.role_id, c.disposition.value) for c in proposals[changeset_id]) == sorted(
+    assert sorted((c.organization_id, c.post.role_id, c.disposition.value) for c in proposals[changeset_id]) == sorted(
         [(council, "council-member", "unchanged"), (mayors_office, "mayor", "unchanged")]
+    )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
+    """Both ends: the post a scrape restates, and the post someone would leave."""
+    from services.review_proposal import proposals_for_requests
+
+    staying = await _seed_person("Ana Reyes")
+    leaving = await _seed_person("Bo Chen")
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        council = await organizations.find_or_create(cur, _OCDID)
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, council, "council-member", _BASE)
+        await cur.execute(
+            "INSERT INTO users (email, provider, provider_user_id, username, role) "
+            "VALUES (%s, 'email', %s, %s, 'admins') RETURNING id::text",
+            (_CURATOR, _CURATOR, _CURATOR.replace("@", "-")),
+        )
+        curator_id = (await cur.fetchone())[0]
+        await posts.set_label(cur, post_id, "Position 8", curator_id)
+        for person_id in (staying, leaving):
+            await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, council, _T0)
+        await conn.commit()
+    changeset_id = await _published_changeset()
+    roster = [
+        {
+            "id": staying,
+            "name": "Ana Reyes",
+            "sightings": [{"label": "Council Member", "organization_id": council}],
+        }
+    ]
+
+    proposals = await proposals_for_requests([changeset_id], {changeset_id: roster})
+
+    assert sorted((c.person_id, c.disposition.value, c.post.label) for c in proposals[changeset_id]) == sorted(
+        [(staying, "unchanged", "Position 8"), (leaving, "absent", "Position 8")]
     )

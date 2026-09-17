@@ -264,7 +264,7 @@ def test_the_member_label_adds_what_the_post_label_cannot_say():
 
     member = derived[0].members[0]
     assert derived[0].role_id == "mayor"
-    assert member.label == "Commissioner, Of Public Safety"
+    assert member.membership_label == "Commissioner, Of Public Safety"
 
 
 @pytest.mark.unit
@@ -275,7 +275,7 @@ def test_a_member_holding_only_the_post_gets_an_empty_label():
     to say here."""
     derived = derived_posts([_person("a", "Council Member")], _TAXONOMY, _ROLES)
 
-    assert derived[0].members[0].label == ""
+    assert derived[0].members[0].membership_label == ""
 
 
 @pytest.mark.unit
@@ -289,7 +289,7 @@ def test_residue_of_a_resolved_label_is_not_unmatched():
 
     member = derived[0].members[0]
     assert member.meta_unmatched_text == []
-    assert member.label == "Of Public Safety"
+    assert member.membership_label == "Of Public Safety"
 
 
 @pytest.mark.unit
@@ -324,11 +324,11 @@ def test_a_chosen_post_does_not_rewrite_what_the_source_said():
 
     member = derived_posts([person], _TAXONOMY, _ROLES, chosen)[0].members[0]
 
-    assert member.source_labels == ["Council Member", "Place 6"]
+    assert [source.note for source in member.sources] == ["Council Member", "Place 6"]
     # "Council Member" is demoted rather than dropped; "Place 6" is a designation that stays
     # on the membership either way. The chosen post's own name ("Mayor") is not repeated here
     # — every caller shows it separately, from the post it picked.
-    assert member.label == "Council Member, Place 6"
+    assert member.membership_label == "Council Member, Place 6"
 
 
 @pytest.mark.unit
@@ -412,4 +412,31 @@ def test_a_pick_in_an_organization_that_never_sighted_the_person_is_added():
     assert _memberships(derived) == [
         (_COUNCIL, "council-member", f"{_BASE}/ward:1", "a"),
         (_MAYORS_OFFICE, "mayor", _BASE, "a"),
+    ]
+
+
+@pytest.mark.unit
+def test_a_membership_keeps_each_page_and_label_its_organization_sighted():
+    """One entry per (page, label): the same label on two pages is two sources, and a label from
+    another organization's extraction belongs to that organization's membership."""
+    person = RosterEntry(
+        id="a",
+        jurisdiction_ocdid=_OCDID,
+        sightings=[
+            RosterSighting(label="Mayor", source_url="https://x.gov/mayor", organization_id=_MAYORS_OFFICE),
+            RosterSighting(label="Mayor", source_url="https://x.gov/directory", organization_id=_MAYORS_OFFICE),
+            RosterSighting(label="Mayor", source_url="https://x.gov/mayor", organization_id=_MAYORS_OFFICE),
+            RosterSighting(label="Council Member Ward 1", source_url="https://x.gov/council", organization_id=_COUNCIL),
+        ],
+    )
+
+    derived = derived_posts([person], _TAXONOMY, _ROLES)
+
+    sources = {post.organization_id: post.members[0].sources for post in derived}
+    assert [(source.url, source.note) for source in sources[_MAYORS_OFFICE]] == [
+        ("https://x.gov/mayor", "Mayor"),
+        ("https://x.gov/directory", "Mayor"),
+    ]
+    assert [(source.url, source.note) for source in sources[_COUNCIL]] == [
+        ("https://x.gov/council", "Council Member Ward 1"),
     ]

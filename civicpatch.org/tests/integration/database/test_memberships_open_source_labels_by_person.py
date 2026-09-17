@@ -14,6 +14,7 @@ import pytest_asyncio
 
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
+from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_inherit/government"
 _DIVISION = "ocd-division/country:us/state:zz/place:zz_inherit"
@@ -60,10 +61,10 @@ async def _seed_open_membership(source_labels: list[str], organization_id: str |
         await cur.execute(
             """
             INSERT INTO memberships
-                (post_id, organization_id, person_id, source_labels, first_seen_at, last_seen_at)
-            VALUES (%s, %s, %s, %s, now(), now())
+                (post_id, organization_id, person_id, sources, first_seen_at, last_seen_at)
+            VALUES (%s, %s, %s, %s::jsonb, now(), now())
             """,
-            (post_id, org, person_id, source_labels),
+            (post_id, org, person_id, factories.sources_of(source_labels)),
         )
         await conn.commit()
     return person_id

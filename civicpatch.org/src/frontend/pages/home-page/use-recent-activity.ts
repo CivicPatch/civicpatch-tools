@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "haunted";
 import { fetchChangeLogs } from "../../api.js";
 import { useWebSocket } from "../../hooks/use-websocket.js";
-import { ACTIVITY_CHANNEL } from "../../utils/pubsub-channels.js";
+import { ACTIVITY_CHANNEL } from "../../schemas/pubsub-channels.js";
 import { markFreshEntries } from "./recent-activity.js";
 
 export interface RecentActivityEntry {

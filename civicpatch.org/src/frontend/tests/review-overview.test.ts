@@ -207,12 +207,18 @@ describe("postsFor", () => {
     const proposals = proposalsByPersonId([
       {
         person_id: "p1",
+        organization_id: "org-1",
         disposition: "new",
-        role_id: "council-member",
-        role_label: "Council Member",
-        division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
-        label: null,
-        post_label: "Council Member, District 5",
+        post: {
+          id: null,
+          role_id: "council-member",
+          role_label: "Council Member",
+          division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
+          label: "Council Member, District 5",
+          meta_is_tracked: true,
+        },
+        membership_label: null,
+        from_post: null,
       },
     ]);
     expect(postsFor(card(), proposals)).toBe("Council Member, District 5");
@@ -221,12 +227,18 @@ describe("postsFor", () => {
     const proposals = proposalsByPersonId([
       {
         person_id: "p1",
+        organization_id: "org-1",
         disposition: "new",
-        role_id: "council-member",
-        role_label: "Council Member",
-        division_ocdid: "ocd-division/country:us/state:wa/place:x",
-        label: "Seat 3",
-        post_label: "Council Member, At-Large",
+        post: {
+          id: null,
+          role_id: "council-member",
+          role_label: "Council Member",
+          division_ocdid: "ocd-division/country:us/state:wa/place:x",
+          label: "Council Member, At-Large",
+          meta_is_tracked: true,
+        },
+        membership_label: "Seat 3",
+        from_post: null,
       },
     ]);
     expect(postsFor(card(), proposals)).toBe("Council Member, At-Large, Seat 3");
@@ -259,15 +271,21 @@ describe("postsFor", () => {
 });
 
 describe("proposalsByPersonId", () => {
-  const change = (over = {}) => ({
+  const change = (postOver = {}) => ({
     person_id: "p1",
-    disposition: "new",
-    role_id: "council-member",
-    role_label: "Council Member",
-    division_ocdid: "ocd-division/country:us/state:wa/place:x",
-    label: null,
-    post_label: "Council Member, At-Large",
-    ...over,
+    organization_id: "org-1",
+    disposition: "new" as const,
+    post: {
+      id: null,
+      role_id: "council-member",
+      role_label: "Council Member",
+      division_ocdid: "ocd-division/country:us/state:wa/place:x",
+      label: "Council Member, At-Large",
+      meta_is_tracked: true,
+      ...postOver,
+    },
+    membership_label: null,
+    from_post: null,
   });
   it("keeps every proposal for a person, not just the last", () => {
     const byPerson = proposalsByPersonId([
@@ -315,16 +333,21 @@ describe("tallyOf — the roster's shape, at a glance", () => {
 
 describe("sectionsOf — role sections like the jurisdiction grid, plus review's own trailing buckets", () => {
   const roleOrder = ["mayor", "council-member"];
-  const proposal = (over: Record<string, unknown> = {}) => ({
+  const proposal = (postOver: Record<string, unknown> = {}) => ({
     person_id: "p1",
-    disposition: "moved",
-    role_id: "council-member",
-    role_label: "Council Member",
-    division_ocdid: "ocd-division/country:us/state:wa/place:x",
-    label: null,
-    post_label: "Council Member",
-    post_id: "post-1",
-    ...over,
+    organization_id: "org-1",
+    disposition: "moved" as const,
+    post: {
+      id: "post-1",
+      role_id: "council-member",
+      role_label: "Council Member",
+      division_ocdid: "ocd-division/country:us/state:wa/place:x",
+      label: "Council Member",
+      meta_is_tracked: true,
+      ...postOver,
+    },
+    membership_label: null,
+    from_post: null,
   });
   const withRole = (roleId: string, roleLabel: string) =>
     card({

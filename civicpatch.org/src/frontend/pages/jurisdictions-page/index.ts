@@ -11,7 +11,7 @@ import {
   SectionNav,
   jurisdictionSection,
 } from "../../components/section-nav/index.js";
-import { pipelineRunStatusChannel } from "../../utils/pubsub-channels.js";
+import { pipelineRunStatusChannel } from "../../schemas/pubsub-channels.js";
 
 import "../../components/panel/panel.css";
 import "./jurisdiction-page.css";

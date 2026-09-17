@@ -14,6 +14,7 @@ Backdating is the one thing done in raw SQL. Windows are a test concern; product
 a row through time.
 """
 
+import json
 import uuid
 
 from core.membership_proposal import ids_by_person_and_organization
@@ -149,4 +150,9 @@ async def default_organization(cur, jurisdiction_ocdid: str) -> str:
     if row:
         return row[0]
     return await organizations.find_or_create(cur, jurisdiction_ocdid)
+
+
+def sources_of(labels: list[str]) -> str:
+    """`memberships.sources` for labels with no page, as jsonb text for a raw insert."""
+    return json.dumps([{"url": None, "note": label} for label in labels])
 

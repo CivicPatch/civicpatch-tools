@@ -1,6 +1,6 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import { KNOWN_ISSUE_TYPES, ISSUE_TYPE } from "../../utils/issue-types.js";
+import { KNOWN_ISSUE_TYPES, ISSUE_TYPE } from "../../schemas/issue-types.js";
 import { fetchIssueDetails } from "../../api.js";
 import { formatIssueType } from "./utils.js";
 import "../../components/basic/modal.js";

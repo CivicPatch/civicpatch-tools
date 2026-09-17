@@ -169,13 +169,18 @@ describe("buildPersonCards — office visibility", () => {
   // lock down the cases `officeSurvivingField` adds it back for.
   const proposal = (over: Record<string, unknown> = {}) => ({
     person_id: "a",
-    disposition: "unchanged",
-    role_id: "council-member",
-    role_label: "Council Member",
-    division_ocdid: "ocd-division/country:us/state:wa/place:x",
-    label: "Council Member",
-    post_label: "Council Member",
-    post_id: "post-1",
+    organization_id: "org-1",
+    disposition: "unchanged" as const,
+    post: {
+      id: "post-1",
+      role_id: "council-member",
+      role_label: "Council Member",
+      division_ocdid: "ocd-division/country:us/state:wa/place:x",
+      label: "Council Member",
+      meta_is_tracked: true,
+    },
+    membership_label: "Council Member",
+    from_post: null,
     ...over,
   });
   const officeKeys = (cards: ReturnType<typeof buildPersonCards>) =>
@@ -210,7 +215,7 @@ describe("buildPersonCards — office visibility", () => {
         person("a", { memberships: [{ post_id: "post-1", label: "Council Member" }] }),
       ],
       currentPeople: [person("a")],
-      proposals: proposalsByPersonId([proposal({ label: "Council Member, Deputy" })]),
+      proposals: proposalsByPersonId([proposal({ membership_label: "Council Member, Deputy" })]),
     });
     expect(officeKeys(cards)).toEqual(["diff"]);
     expect(officeStates(cards)).toEqual(["changed"]);

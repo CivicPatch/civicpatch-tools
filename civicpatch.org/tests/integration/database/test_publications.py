@@ -22,7 +22,7 @@ from database import assertions, organizations
 from database import people as people_db
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
-from core.post_derivation import DerivedMembership, DerivedPost
+from core.post_derivation import DerivedMembership, DerivedPost, MembershipSource
 from database.publications import (
     UnpublishableChangeset,
     dismiss_changeset,
@@ -135,7 +135,7 @@ async def _posts_for(people: list[dict]) -> list[DerivedPost]:
             division_ocdid=_SENTINEL_DIVISION,
             headcount=len(people),
             members=[
-                DerivedMembership(person_id=str(person["id"]), source_labels=["Council Member"])
+                DerivedMembership(person_id=str(person["id"]), sources=[MembershipSource(note="Council Member")])
                 for person in people
             ],
         )

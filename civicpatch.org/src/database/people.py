@@ -52,7 +52,7 @@ PERSON_MEMBERSHIPS = """COALESCE((
         'jurisdiction_ocdid', posts.jurisdiction_ocdid,
         'division_ocdid', posts.division_ocdid,
         'label', memberships.label,
-        'source_labels', to_jsonb(memberships.source_labels),
+        'source_labels', to_jsonb(membership_source_labels(memberships.sources)),
         'designations', to_jsonb(memberships.designations),
         'meta_unmatched_text', to_jsonb(memberships.meta_unmatched_text),
         'start_date', memberships.start_date,
@@ -80,22 +80,21 @@ PERSON_DIVISION = """(
 
 
 PERSON_LABELS = """COALESCE((
-    SELECT jsonb_agg(DISTINCT source_label)
-    FROM memberships, unnest(memberships.source_labels) AS source_label
+    SELECT jsonb_agg(DISTINCT source->>'note')
+    FROM memberships, jsonb_array_elements(memberships.sources) AS source
     WHERE memberships.person_id = people.id AND memberships.closed_at IS NULL
 ), '[]'::jsonb)"""
 
 
-# `PERSON_LABELS` without the pooling: each open membership's labels keep the organization they
+# `PERSON_LABELS` without the pooling: each open membership's sources keep the organization they
 # are held in, so re-deriving a published roster puts a person back into each body separately.
-# No page: a membership does not record one per label.
 PERSON_SIGHTINGS = """COALESCE((
     SELECT jsonb_agg(DISTINCT jsonb_build_object(
-        'label', source_label,
-        'source_url', NULL,
+        'label', source->>'note',
+        'source_url', source->>'url',
         'organization_id', memberships.organization_id::text
     ))
-    FROM memberships, unnest(memberships.source_labels) AS source_label
+    FROM memberships, jsonb_array_elements(memberships.sources) AS source
     WHERE memberships.person_id = people.id AND memberships.closed_at IS NULL
 ), '[]'::jsonb)"""
 

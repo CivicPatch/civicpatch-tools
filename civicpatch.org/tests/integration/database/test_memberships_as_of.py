@@ -18,6 +18,7 @@ import pytest_asyncio
 
 from database import divisions, memberships, organizations, people, posts
 from database.database import get_pool
+from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_asof/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_asof"
@@ -83,8 +84,8 @@ async def _seed_succession() -> str:
                 """
                 INSERT INTO memberships
                     (post_id, organization_id, person_id,
-                     first_seen_at, last_seen_at, closed_at, source_labels)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                     first_seen_at, last_seen_at, closed_at, sources)
+                VALUES (%s, %s, %s, %s, %s, %s, %s::jsonb)
                 """,
                 (
                     post_id,
@@ -93,7 +94,7 @@ async def _seed_succession() -> str:
                     first_seen_at,
                     closed_at or first_seen_at,
                     closed_at,
-                    [_LABEL],
+                    factories.sources_of([_LABEL]),
                 ),
             )
         await conn.commit()

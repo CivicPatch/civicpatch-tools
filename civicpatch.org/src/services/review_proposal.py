@@ -127,20 +127,27 @@ async def proposals_for_requests(
     )
     async with pool.connection() as conn, conn.cursor() as cur:
         post_ids = await posts_db.ids_by_identity(cur, organization_ids)
+        names = await posts_db.asserted_labels(cur, list(post_ids.values()))
 
     return {
-        changeset_id: [
-            change.model_copy(
-                update={
-                    "post_id": post_ids.get(
-                        (change.organization_id, change.role_id, change.division_ocdid)
-                    )
-                }
-            )
-            for change in changes
-        ]
+        changeset_id: [_with_existing_post(change, post_ids, names) for change in changes]
         for changeset_id, changes in changes_by_changeset.items()
     }
+
+
+def _with_existing_post(
+    change: ProposedChange,
+    post_ids: dict[tuple[str, str, str], str],
+    names: dict[str, str],
+) -> ProposedChange:
+    """The proposed post's id and asserted name, when the post already exists."""
+    post_id = post_ids.get((change.organization_id, change.post.role_id, change.post.division_ocdid))
+    if post_id is None:
+        return change
+    label = names.get(post_id) or change.post.label
+    return change.model_copy(
+        update={"post": change.post.model_copy(update={"id": post_id, "label": label})}
+    )
 
 
 async def assertions_for_people(person_ids: list[str]) -> dict[str, list[dict]]:
