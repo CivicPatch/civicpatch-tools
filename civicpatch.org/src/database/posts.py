@@ -736,18 +736,18 @@ async def delete(post_id: str, user_id: str | None = None) -> bool:
         return True
 
 
-async def ids_in_organization(
-    cur, post_ids: list[str], organization_id: str
+async def ids_in_organizations(
+    cur, post_ids: list[str], organization_ids: list[str]
 ) -> set[str]:
-    """Which of these posts belong to that body.
+    """Which of these posts belong to those bodies.
 
-    A person can hold one post per organization, so a reviewer's accepted posts may span
-    several — this is what picks out the one the review in front of them is about.
+    A person can hold one post per organization, so a reviewer's accepted posts may span several:
+    this is what picks out the ones the review in front of them is about.
     """
-    if not post_ids or not organization_id:
+    if not post_ids or not organization_ids:
         return set()
     await cur.execute(
-        "SELECT id::text FROM posts WHERE organization_id::text = %s AND id::text = ANY(%s)",
-        (organization_id, post_ids),
+        "SELECT id::text FROM posts WHERE organization_id::text = ANY(%s) AND id::text = ANY(%s)",
+        (organization_ids, post_ids),
     )
     return {row[0] for row in await cur.fetchall()}

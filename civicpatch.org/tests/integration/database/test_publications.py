@@ -52,8 +52,8 @@ async def _cleanup():
             "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s",
             (_SENTINEL_OCDID,),
         )
-        # Changesets first: `changesets.organization_id` is a FK since 158, so an organization
-        # cannot go while a changeset still names it.
+        # Changesets first: their source records point at organizations (205: ON DELETE RESTRICT),
+        # so a body cannot go while a changeset's evidence still names it.
         await cur.execute(
             "DELETE FROM pipeline_runs WHERE jurisdiction_ocdid = %s",
             (_SENTINEL_OCDID,),

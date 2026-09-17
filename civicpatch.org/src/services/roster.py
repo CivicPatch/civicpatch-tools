@@ -9,6 +9,7 @@ from database.database import get_pool
 from database.people import get_people_by_ids
 from database.roles import get_roles
 from database import posts as posts_db
+from database import source_records
 from database.source_records import (
     get_earliest_source_records_for_people,
     get_source_records_for_changeset,
@@ -102,8 +103,8 @@ async def _one_post_each(changeset_id: str, people: list[dict]) -> list[dict]:
     """Collapse each person's accepted posts to the one this review is about.
 
     Picks are stored per post because a person holds one per organization (see `LIST_FIELDS`).
-    A review is about a single body, so exactly one of them can apply here — and the editor
-    binds one value, because the reviewer is choosing one membership.
+    The ones that apply here are the ones in a body this changeset read a page for; the editor
+    binds a single value, so a person picked in two of them keeps the first.
     """
     accepted = {
         person["id"]: posts
@@ -113,14 +114,12 @@ async def _one_post_each(changeset_id: str, people: list[dict]) -> list[dict]:
     if not accepted:
         return people
 
-    organization_id = (
-        await changesets_db.organizations_for_changesets([changeset_id])
-    ).get(changeset_id)
     every_id = sorted({post_id for posts in accepted.values() for post_id in posts})
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        here = await posts_db.ids_in_organization(cur, every_id, organization_id or "")
+        organization_ids = await source_records.organizations_for_changeset(cur, changeset_id)
+        here = await posts_db.ids_in_organizations(cur, every_id, organization_ids)
 
     return [
         {**person, POST_FIELD: next(

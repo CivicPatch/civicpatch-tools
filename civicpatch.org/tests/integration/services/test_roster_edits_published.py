@@ -41,8 +41,8 @@ async def _wipe():
             (_OCDID,),
         )
         await cur.execute("DELETE FROM posts WHERE jurisdiction_ocdid = %s", (_OCDID,))
-        # Changesets first: `changesets.organization_id` is a FK since 158, so an
-        # organization cannot go while a changeset still names it.
+        # Changesets first: their source records point at organizations (205: ON DELETE RESTRICT),
+        # so a body cannot go while a changeset's evidence still names it.
         await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute(
             "DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_OCDID,)
@@ -494,10 +494,9 @@ async def test_a_post_pick_via_save_is_never_asserted():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         council_seat = await posts.find_or_create(cur, _OCDID, council, "clerk", _BASE)
         await cur.execute(
-            "INSERT INTO changesets "
-            "  (id, kind, jurisdiction_ocdid, updated_at, organization_id) "
-            "VALUES (%s, 'scrape', %s, now(), %s)",
-            (changeset_id, _OCDID, council),
+            "INSERT INTO changesets (id, kind, jurisdiction_ocdid, updated_at) "
+            "VALUES (%s, 'scrape', %s, now())",
+            (changeset_id, _OCDID),
         )
         await conn.commit()
     await insert_source_records(
