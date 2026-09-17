@@ -436,10 +436,11 @@ async def _pending_scrape(updated_at: datetime.datetime) -> str:
         row = await cur.fetchone()
         assert row is not None
         changeset_id = row[0]
+        organization_id = await factories.default_organization(cur, _OCDID)
         await cur.execute(
-            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
-            "VALUES (%s, %s, 'Cy Okonkwo', 'Clerk', 'https://editville.gov/clerk')",
-            (changeset_id, _OCDID),
+            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id) "
+            "VALUES (%s, %s, 'Cy Okonkwo', 'Clerk', 'https://editville.gov/clerk', %s)",
+            (changeset_id, _OCDID, organization_id),
         )
         await conn.commit()
     return changeset_id
@@ -508,6 +509,7 @@ async def test_a_post_pick_via_save_is_never_asserted():
                     "name": "Bo Nguyen",
                     "label": "Clerk",
                     "source_url": "https://editville.gov/clerk",
+                    "organization_id": council,
                 }
             ]
         },

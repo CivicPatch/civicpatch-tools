@@ -136,7 +136,7 @@ async def _seed_person(
     await insert_source_records(
         scrape_id,
         jurisdiction_ocdid,
-        {person_id: [{"name": name, "label": label, "source_url": source_url}]},
+        {person_id: [{"name": name, "label": label, "source_url": source_url, "organization_id": org}]},
     )
     return person_id
 

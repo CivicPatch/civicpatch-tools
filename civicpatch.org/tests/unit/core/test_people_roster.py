@@ -422,16 +422,18 @@ def test_an_added_person_becomes_one_record_per_page():
         "source_urls": ["https://alpha.gov/council", "https://alpha.gov/directory"],
     }
 
-    assert reviewer_source_records(added, "Council Member, District 5") == [
+    assert reviewer_source_records(added, "Council Member, District 5", "council") == [
         PersonSourceRecord(
             name="Ann Lee",
             label="Council Member, District 5",
             source_url="https://alpha.gov/council",
+            organization_id="council",
         ),
         PersonSourceRecord(
             name="Ann Lee",
             label="Council Member, District 5",
             source_url="https://alpha.gov/directory",
+            organization_id="council",
         ),
     ]
 
@@ -442,15 +444,15 @@ def test_one_page_listed_twice_is_still_one_record():
         "name": "Ann Lee",
         "source_urls": ["https://alpha.gov/council", "https://alpha.gov/council"],
     }
-    assert len(reviewer_source_records(added, "Mayor")) == 1
+    assert len(reviewer_source_records(added, "Mayor", "council")) == 1
 
 
 @pytest.mark.unit
 def test_nothing_is_recorded_without_somewhere_it_came_from():
     """`source_url` is NOT NULL because provenance is what a sighting is for. The editor makes
     it required, so this is the last guard rather than the only one."""
-    assert reviewer_source_records({"name": "Ann Lee", "source_urls": []}, "Mayor") == []
-    assert reviewer_source_records({"name": "", "source_urls": ["https://alpha.gov"]}, "Mayor") == []
+    assert reviewer_source_records({"name": "Ann Lee", "source_urls": []}, "Mayor", "council") == []
+    assert reviewer_source_records({"name": "", "source_urls": ["https://alpha.gov"]}, "Mayor", "council") == []
 
 
 @pytest.mark.unit
@@ -465,6 +467,7 @@ def test_only_the_identifying_columns_are_evidence():
             "image": "https://alpha.gov/ann.png",
         },
         "Mayor",
+        "council",
     )[0]
     assert record.phone is None and record.image is None
 
@@ -475,21 +478,21 @@ _MAYORS_OFFICE = "mayors-office-org"
 
 @pytest.mark.unit
 def test_a_record_in_a_current_organization_keeps_it():
-    stamped = in_known_organizations({"p1": [_record("Ana Reyes", "Mayor", organization_id=_MAYORS_OFFICE)]}, {_COUNCIL, _MAYORS_OFFICE}, _COUNCIL)
+    stamped = in_known_organizations([_record("Ana Reyes", "Mayor", organization_id=_MAYORS_OFFICE)], {_COUNCIL, _MAYORS_OFFICE}, _COUNCIL)
 
-    assert stamped["p1"][0]["organization_id"] == _MAYORS_OFFICE
+    assert stamped[0]["organization_id"] == _MAYORS_OFFICE
 
 
 @pytest.mark.unit
 def test_an_unstamped_record_lands_in_the_default():
-    stamped = in_known_organizations({"p1": [_record("Ana Reyes", "Mayor")]}, {_COUNCIL}, _COUNCIL)
+    stamped = in_known_organizations([_record("Ana Reyes", "Mayor")], {_COUNCIL}, _COUNCIL)
 
-    assert stamped["p1"][0]["organization_id"] == _COUNCIL
+    assert stamped[0]["organization_id"] == _COUNCIL
 
 
 @pytest.mark.unit
 def test_an_organization_that_is_no_longer_a_body_here_is_refused():
     """Deleted mid-scrape, or another jurisdiction's: the run fails rather than guessing a body."""
     with pytest.raises(UnknownOrganization):
-        in_known_organizations({"p1": [_record("Ana Reyes", "Mayor", organization_id=_MAYORS_OFFICE)]}, {_COUNCIL}, _COUNCIL)
+        in_known_organizations([_record("Ana Reyes", "Mayor", organization_id=_MAYORS_OFFICE)], {_COUNCIL}, _COUNCIL)
 

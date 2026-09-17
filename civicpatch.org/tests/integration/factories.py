@@ -134,3 +134,19 @@ async def bind_membership(
     )
     await memberships.replace_membership_roles(cur, bindings, membership_ids)
     return membership_ids[(member.person_id, organization_id)]
+
+
+async def default_organization(cur, jurisdiction_ocdid: str) -> str:
+    """The jurisdiction's default organization, created when a raw-inserted jurisdiction has none."""
+    await cur.execute(
+        """
+        SELECT id::text FROM organizations WHERE jurisdiction_ocdid = %s
+        ORDER BY meta_is_default DESC, sort_order, name LIMIT 1
+        """,
+        (jurisdiction_ocdid,),
+    )
+    row = await cur.fetchone()
+    if row:
+        return row[0]
+    return await organizations.find_or_create(cur, jurisdiction_ocdid)
+

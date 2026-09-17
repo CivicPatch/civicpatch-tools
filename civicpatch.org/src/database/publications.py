@@ -16,7 +16,7 @@ import database.changesets as changesets_db
 import database.dismissals as dismissals_db
 from core.people_edits import with_asserted_values
 from core.membership_proposal import ids_by_person_and_organization
-from core.post_derivation import DerivedPost, MembershipBinding, organization_for
+from core.post_derivation import DerivedPost, MembershipBinding
 from database import assertions, memberships, organizations, posts
 from database.activity import record_change
 from database.changesets import get_updated_at
@@ -198,22 +198,20 @@ async def _bind_memberships(
     A membership is a binding: who holds a seat is only true once the scrape is accepted.
     Returns the changeset's organization — the scope `close_absent` still closes in until step 9.
     """
-    # Where a post no organization sighted is filed.
     organization_id = await organizations.find_or_create_for_changeset(
         cur, changeset_id, jurisdiction_ocdid
     )
     # Seats are created here, not at ingest: a scrape only proposes them, and publishing is what
     # accepts. `create_all` logs each mint against this changeset.
     post_ids = await posts.create_all(
-        cur, jurisdiction_ocdid, organization_id, derived, changeset_id
+        cur, jurisdiction_ocdid, derived, changeset_id
     )
     bindings: list[MembershipBinding] = []
     for post in derived:
-        post_organization_id = organization_for(post, organization_id)
-        post_id = post_ids[(post_organization_id, post.role_id, post.division_ocdid)]
+        post_id = post_ids[(post.organization_id, post.role_id, post.division_ocdid)]
         for member in post.members:
             bindings.append(
-                MembershipBinding(member=member, organization_id=post_organization_id, post_id=post_id)
+                MembershipBinding(member=member, organization_id=post.organization_id, post_id=post_id)
             )
     if bindings:
         await memberships.close_moved_memberships(cur, bindings, last_seen_at)

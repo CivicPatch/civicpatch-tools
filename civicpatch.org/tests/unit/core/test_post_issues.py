@@ -44,6 +44,7 @@ def test_nothing_unverified_asks_nothing():
 def _change(disposition: Disposition, **overrides) -> ProposedChange:
     return ProposedChange(
         person_id="p1",
+        organization_id="org-1",
         disposition=disposition,
         role_id="council-president",
         role_label="Council President",

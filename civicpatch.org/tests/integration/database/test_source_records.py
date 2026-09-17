@@ -10,8 +10,6 @@ Run with:
 Isolation: every test writes under one sentinel request, and the fixture removes that request
 and its rows (which cascade) before and after each test.
 """
-import pathlib
-
 import pytest
 import pytest_asyncio
 from psycopg.errors import ForeignKeyViolation
@@ -23,12 +21,8 @@ from database.source_records import (
     insert_source_records,
 )
 
-_BACKFILL = (
-    pathlib.Path(__file__).parents[3]
-    / "database_operations/migrations/204_source_records_organization_backfill.up.sql"
-)
-
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_test/government"
+_SENTINEL_ORGANIZATION = "00000000-0000-4000-8000-0000000000aa"
 
 # Real uuids: `source_record_identities.person_id` is a uuid column since 145, because a
 # cluster id that is not one is `_resolution`'s ambiguous-match sentinel.
@@ -59,6 +53,10 @@ async def sentinel_request():
             "INSERT INTO jurisdictions (jurisdiction_ocdid) VALUES (%s)", (_SENTINEL_OCDID,)
         )
         await cur.execute(
+            "INSERT INTO organizations (id, jurisdiction_ocdid, name) VALUES (%s, %s, 'Sentinel')",
+            (_SENTINEL_ORGANIZATION, _SENTINEL_OCDID),
+        )
+        await cur.execute(
             """
             INSERT INTO changesets (kind, jurisdiction_ocdid)
             VALUES ('scrape', %s) RETURNING id::text
@@ -84,7 +82,12 @@ def _records(name: str, *labels: str) -> dict:
     """One person, one sighting per label. Keyed by the id reconciliation resolved them to."""
     return {
         _IDS[name.lower()]: [
-            {"name": name, "label": label, "source_url": f"https://zz.gov/{i}"}
+            {
+                "name": name,
+                "label": label,
+                "source_url": f"https://zz.gov/{i}",
+                "organization_id": _SENTINEL_ORGANIZATION,
+            }
             for i, label in enumerate(labels)
         ]
     }
@@ -200,6 +203,7 @@ async def test_photo_urls_are_stored_on_the_sighting(sentinel_request):
                 "source_url": "https://zz.gov/0",
                 "image": "https://zz.gov/eve.png",
                 "cdn_image": "https://cdn.example/eve.png",
+                "organization_id": _SENTINEL_ORGANIZATION,
             }
         ]
     }
@@ -251,7 +255,7 @@ async def _organization(jurisdiction_ocdid: str, name: str) -> str:
     return organization_id
 
 
-def _stamped(person_id: str, name: str, organization_id: str | None) -> dict:
+def _stamped(person_id: str, name: str, organization_id: str) -> dict:
     return {
         person_id: [
             {
@@ -289,38 +293,3 @@ async def test_deleting_a_body_moves_its_evidence_to_the_default(sentinel_reques
     assert await delete(mayor) == _SENTINEL_OCDID
 
     assert await _stored_organizations(sentinel_request) == {"Ann": default}
-
-
-async def _run_backfill(changeset_organization_id: str | None) -> None:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "UPDATE changesets SET organization_id = %s WHERE jurisdiction_ocdid = %s",
-            (changeset_organization_id, _SENTINEL_OCDID),
-        )
-        await cur.execute(_BACKFILL.read_text())
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_the_backfill_files_an_unpublished_changesets_rows_under_the_default(sentinel_request):
-    await _organization(_SENTINEL_OCDID, "City Council")
-    default = await _organization(_SENTINEL_OCDID, "Government")
-    await set_default(default)
-    await insert_source_records(sentinel_request, _SENTINEL_OCDID, _stamped(_ANN, "Ann", None))
-
-    await _run_backfill(None)
-
-    assert await _stored_organizations(sentinel_request) == {"Ann": default}
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_the_backfill_prefers_the_organization_the_changeset_was_published_in(sentinel_request):
-    council = await _organization(_SENTINEL_OCDID, "City Council")
-    await set_default(await _organization(_SENTINEL_OCDID, "Government"))
-    await insert_source_records(sentinel_request, _SENTINEL_OCDID, _stamped(_ANN, "Ann", None))
-
-    await _run_backfill(council)
-
-    assert await _stored_organizations(sentinel_request) == {"Ann": council}

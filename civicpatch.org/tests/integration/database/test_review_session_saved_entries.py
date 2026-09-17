@@ -22,6 +22,7 @@ from database.review_session_entries import (
     save_entries_for_changeset,
 )
 from database.review_session_navigation import navigate_to_entry
+from tests.integration import factories
 
 _STATE_CODE = "zz"  # non-existent state, safe for test isolation
 
@@ -83,11 +84,12 @@ async def open_pr():
             (ocdid,),
         )
         changeset_id = (await cur.fetchone())[0]  # type: ignore[index]
+        organization_id = await factories.default_organization(cur, ocdid)
         await cur.execute(
             # The review pool is "this scrape saw somebody" — one sighting is a roster.
-            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
-            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
-            (changeset_id, ocdid),
+            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id) "
+            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council', %s)",
+            (changeset_id, ocdid, organization_id),
         )
         await cur.execute("UPDATE changesets SET "
             "updated_at = CURRENT_TIMESTAMP WHERE id = %s", (changeset_id,))
@@ -97,6 +99,7 @@ async def open_pr():
     async with pool.connection() as conn:
         # The run lives on the request now; deleting the request takes it.
         await conn.execute("DELETE FROM changesets WHERE id::text = %s", (changeset_id,))
+        await conn.execute("DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (ocdid,))
         await conn.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
 
 

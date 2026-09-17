@@ -25,12 +25,13 @@ class RosterSighting(BaseModel):
     label: str
     # None when rebuilt from a published membership, which keeps no page per label.
     source_url: str | None = None
-    organization_id: str | None = None
+    organization_id: str
 
 
-# The roster key `RosterEntry.sightings` is read from; written by `people_roster`, and stripped
-# from client patches by `people_edits` because only the server may set it.
+# Roster keys written by `people_roster` from source records, and stripped from client patches by
+# `people_edits`: a client-sent label would have no organization behind it.
 SIGHTINGS_FIELD = "sightings"
+LABELS_FIELD = "labels"
 
 
 class RosterEntry(BaseModel):
@@ -38,7 +39,6 @@ class RosterEntry(BaseModel):
 
     id: str = ""
     jurisdiction_ocdid: str
-    labels: list[str] = []
     # Empty for a hand-made entry, or a published person whose memberships carry no labels.
     sightings: list[RosterSighting] = []
     start_date: str | None = None
@@ -72,8 +72,7 @@ class DerivedPost(BaseModel):
     produces both; a post does not own its members, memberships do.
     """
 
-    # None: labels no organization's extraction sighted — publish files them under the default.
-    organization_id: str | None = None
+    organization_id: str
     role_id: str
     # The role as a reader says it. Carried rather than looked up downstream: a consumer
     # without the taxonomy would otherwise print the slug, which is how "council-member,
@@ -161,10 +160,6 @@ def _member(
     )
 
 
-def organization_for(post: DerivedPost, fallback_organization_id: str) -> str:
-    return post.organization_id or fallback_organization_id
-
-
 class MembershipBinding(BaseModel):
     """One person bound to one post, in the organization that post belongs to."""
 
@@ -181,28 +176,13 @@ class ChosenPost(BaseModel):
     division_ocdid: str
 
 
-def _labels_by_organization(record: RosterEntry) -> dict[str | None, list[str]]:
-    """Each label under the organization that sighted it; labels no sighting carries go under None."""
-    grouped: dict[str | None, list[str]] = {}
+def _labels_by_organization(record: RosterEntry) -> dict[str, list[str]]:
+    grouped: dict[str, list[str]] = {}
     for sighting in record.sightings:
         labels = grouped.setdefault(sighting.organization_id, [])
         if sighting.label not in labels:
             labels.append(sighting.label)
-    sighted = {sighting.label for sighting in record.sightings}
-    unsighted = [label for label in record.labels if label not in sighted]
-    if unsighted:
-        grouped.setdefault(None, []).extend(unsighted)
-    return grouped or {None: []}
-
-
-def _replaced_by_pick(groups: dict[str | None, list[str]], picked: ChosenPost) -> str | None:
-    """Which organization's derivation a pick replaces: its own, else the unsighted labels, else
-    none (the pick is added). Never all of them, or a membership in another organization would close."""
-    if picked.organization_id in groups:
-        return picked.organization_id
-    if None in groups:
-        return None
-    return picked.organization_id
+    return grouped
 
 
 def derived_posts(
@@ -216,7 +196,9 @@ def derived_posts(
     A person's labels are parsed once per organization that sighted them, so each gets its own
     membership.
 
-    A picked `post_id` skips the parse for *which post* in the organization it replaces: a human
+    A picked `post_id` replaces the parse for *which post* in its own organization only, or adds
+    a membership there if that organization never sighted the person — never all of them, or a
+    membership in another organization would close. A human
     already answered that, and re-deriving it from text could only disagree. What the labels
     carried beyond the post — designations, demoted roles, residue — still comes from them,
     because a pick says where someone serves, not what the source called them.
@@ -229,20 +211,19 @@ def derived_posts(
         label = parsed.role
         return (ids_by_label.get(label) if label else None) or UNMATCHED_ROLE_ID
 
-    grouped: dict[tuple[str | None, str, str], list[DerivedMembership]] = {}
+    grouped: dict[tuple[str, str, str], list[DerivedMembership]] = {}
 
     for record in records:
         groups = _labels_by_organization(record)
         picked = chosen_posts.get(record.id)
-        replaced = _replaced_by_pick(groups, picked) if picked else None
         if picked:
-            groups.setdefault(replaced, [])
+            groups.setdefault(picked.organization_id, [])
 
         for organization_id, labels in groups.items():
             parsed = derive_roles(labels, record.jurisdiction_ocdid, taxonomy)
             key = (
                 (picked.organization_id, picked.role_id, picked.division_ocdid)
-                if picked and organization_id == replaced
+                if picked and organization_id == picked.organization_id
                 else (organization_id, role_id_for(parsed), parsed.division_ocdid)
             )
             grouped.setdefault(key, []).append(_member(record, parsed, ids_by_label, key[1]))

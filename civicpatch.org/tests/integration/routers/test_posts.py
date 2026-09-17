@@ -434,7 +434,7 @@ async def _organization(name: str, jurisdiction_ocdid: str = _OCDID) -> str:
     return organization_id
 
 
-async def _seat(person_id: str, post_id: str, organization_id: str) -> None:
+async def _membership(person_id: str, post_id: str, organization_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -456,7 +456,7 @@ def _move(client, post_id: str, organization_id: str):
 @pytest.mark.integration
 async def test_moving_a_post_carries_its_memberships(client):
     post_id = (await _create(client)).json()["data"]["id"]
-    await _seat(str(uuid.uuid4()), post_id, await _default_org_id())
+    await _membership(str(uuid.uuid4()), post_id, await _default_org_id())
     mayor = await _organization("Office of the Mayor")
 
     response = _move(client, post_id, mayor)
@@ -520,10 +520,10 @@ async def test_moving_a_post_whose_holder_already_sits_in_the_target_is_a_confli
     have the Mayor post moved into Council."""
     person_id = str(uuid.uuid4())
     mayor_post = (await _create(client)).json()["data"]["id"]
-    await _seat(person_id, mayor_post, await _default_org_id())
+    await _membership(person_id, mayor_post, await _default_org_id())
     council = await _organization("City Council")
     council_post = (await _create(client, role_id="council-member", division=_WARD_3, organization_id=council)).json()["data"]["id"]
-    await _seat(person_id, council_post, council)
+    await _membership(person_id, council_post, council)
 
     response = _move(client, mayor_post, council)
     assert response.status_code == 409, response.text

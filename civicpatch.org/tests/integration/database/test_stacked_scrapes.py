@@ -48,6 +48,9 @@ async def _wipe():
         await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid IN (%s, %s)", (_OCDID, _OTHER)
         )
+        await cur.execute(
+            "DELETE FROM organizations WHERE jurisdiction_ocdid IN (%s, %s)", (_OCDID, _OTHER)
+        )
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
         await cur.execute("DELETE FROM users WHERE email = 'zz-stacked@example.test'")
         await conn.commit()
@@ -86,12 +89,13 @@ async def _request(updated_at: str, ocdid: str = _OCDID) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         # One sighting, because `AVAILABLE_FOR_REVIEW` is now "this scrape saw somebody".
+        organization_id = await factories.default_organization(cur, ocdid)
         await cur.execute(
             """
-            INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url)
-            VALUES (%s, %s, 'Ann Lee', 'Mayor', 'https://zz.gov/council')
+            INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id)
+            VALUES (%s, %s, 'Ann Lee', 'Mayor', 'https://zz.gov/council', %s)
             """,
-            (changeset_id, ocdid),
+            (changeset_id, ocdid, organization_id),
         )
         await cur.execute(
             """

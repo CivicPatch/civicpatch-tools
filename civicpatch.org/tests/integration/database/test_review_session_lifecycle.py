@@ -20,6 +20,7 @@ from database.publications import publish_changeset
 from database.review_pool import list_open_changesets
 from database.issues import create_user_reported_issue, resolve_issue
 from database.review_session_navigation import navigate_to_entry
+from tests.integration import factories
 
 _STATE_CODE = "zz"  # non-existent state, safe for test isolation
 
@@ -118,11 +119,12 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
             (ocdid,),
         )
         changeset_id = (await cur.fetchone())[0]
+        organization_id = await factories.default_organization(cur, ocdid)
         await cur.execute(
             # The review pool is "this scrape saw somebody" — one sighting is a roster.
-            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
-            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
-            (changeset_id, ocdid),
+            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id) "
+            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council', %s)",
+            (changeset_id, ocdid, organization_id),
         )
         await cur.execute(
             "UPDATE changesets SET "
@@ -137,6 +139,7 @@ async def _cleanup_open_pr(changeset_id: str, ocdid: str) -> None:
     async with pool.connection() as conn:
         # The run lives on the request now; deleting the request takes it.
         await conn.execute("DELETE FROM changesets WHERE id::text = %s", (changeset_id,))
+        await conn.execute("DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (ocdid,))
         await conn.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
 
 
@@ -617,11 +620,12 @@ async def test_a_dismissal_loses_the_race_to_a_reviewer_publishing():
             (ocdid,),
         )
         changeset_id = (await cur.fetchone())[0]
+        organization_id = await factories.default_organization(cur, ocdid)
         await cur.execute(
             # The review pool is "this scrape saw somebody" — one sighting is a roster.
-            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url) "
-            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council')",
-            (changeset_id, ocdid),
+            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id) "
+            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council', %s)",
+            (changeset_id, ocdid, organization_id),
         )
 
         assert await mark_dismissed(cur, [changeset_id], DismissalReason.SUPERSEDED) == []

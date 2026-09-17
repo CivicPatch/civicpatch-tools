@@ -72,7 +72,7 @@ async def _add_person(cur, name: str) -> str:
     return person_id
 
 
-async def _seat(cur, organization_id: str, person_id: str, role_id: str, label: str) -> str:
+async def _membership(cur, organization_id: str, person_id: str, role_id: str, label: str) -> str:
     post_id = await posts.find_or_create(
         cur, _OCDID, organization_id, role_id, _BASE, headcount=len(_COUNCIL)
     )
@@ -107,15 +107,15 @@ async def _seed() -> dict[str, str]:
 
         for name in _COUNCIL:
             person_id = await _add_person(cur, name)
-            await _seat(cur, council, person_id, "council-member", "Council Member")
+            await _membership(cur, council, person_id, "council-member", "Council Member")
 
         # Same role and division on both seats, so `PERSON_MEMBERSHIPS` ties on the two columns
         # it sorts by before the id — two different bodies is what makes a second open
         # membership legal at all.
         both = await _add_person(cur, _DUAL_ROLE)
         seats = {
-            await _seat(cur, council, both, "council-member", "Council Member"): "Council Member",
-            await _seat(cur, board, both, "council-member", "Board Member"): "Board Member",
+            await _membership(cur, council, both, "council-member", "Council Member"): "Council Member",
+            await _membership(cur, board, both, "council-member", "Board Member"): "Board Member",
         }
         await conn.commit()
     return seats

@@ -18,7 +18,7 @@ from shared.utils.statuses import ActivityType, DismissalReason
 import pytest_asyncio
 from psycopg.errors import NotNullViolation
 
-from database import assertions
+from database import assertions, organizations
 from database import people as people_db
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
@@ -118,15 +118,18 @@ def _person(name: str) -> dict:
     }
 
 
-def _seats(people: list[dict]) -> list[DerivedPost]:
-    """One seat per person, so a publish actually seats them.
+async def _posts_for(people: list[dict]) -> list[DerivedPost]:
+    """One post holding everyone, so a publish actually gives them memberships.
 
-    `publish_changeset` used to set `people.status = 'active'` and these tests passed no
-    `derived` at all. Being on the roster is holding an open membership now, so a publish with
-    no posts seats nobody — which is the behaviour under test, not an artefact of the fixture.
+    Being on the roster is holding an open membership, so a publish with no posts gives nobody
+    one — which is the behaviour under test, not an artefact of the fixture.
     """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        organization_id = await organizations.get_default(cur, _SENTINEL_OCDID)
     return [
         DerivedPost(
+            organization_id=organization_id,
             role_id="council-member",
             role_label="Council Member",
             division_ocdid=_SENTINEL_DIVISION,
@@ -166,7 +169,7 @@ async def _people_by_status() -> dict[str, list[str]]:
 async def test_publish_writes_the_roster_as_current(sentinel_request):
     ann, bob = _person("Ann"), _person("Bob")
     written = await publish_changeset(
-        sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=_seats([ann, bob])
+        sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=await _posts_for([ann, bob])
     )
 
     assert written == 2
@@ -179,11 +182,11 @@ async def test_someone_absent_from_the_roster_becomes_inactive(sentinel_request)
     """`inactive`, not deleted — seat history has to survive a person leaving office."""
     ann, bob = _person("Ann"), _person("Bob")
     await publish_changeset(
-        sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=_seats([ann, bob])
+        sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=await _posts_for([ann, bob])
     )
 
     await publish_changeset(
-        sentinel_request, _SENTINEL_OCDID, [ann], derived=_seats([ann])
+        sentinel_request, _SENTINEL_OCDID, [ann], derived=await _posts_for([ann])
     )
 
     assert await _people_by_status() == {"active": ["Ann"], "inactive": ["Bob"]}
@@ -194,14 +197,14 @@ async def test_someone_absent_from_the_roster_becomes_inactive(sentinel_request)
 async def test_republishing_someone_brings_them_back_to_active(sentinel_request):
     ann, bob = _person("Ann"), _person("Bob")
     await publish_changeset(
-        sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=_seats([ann, bob])
+        sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=await _posts_for([ann, bob])
     )
     await publish_changeset(
-        sentinel_request, _SENTINEL_OCDID, [ann], derived=_seats([ann])
+        sentinel_request, _SENTINEL_OCDID, [ann], derived=await _posts_for([ann])
     )
 
     await publish_changeset(
-        sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=_seats([ann, bob])
+        sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=await _posts_for([ann, bob])
     )
 
     assert await _people_by_status() == {"active": ["Ann", "Bob"]}
@@ -216,7 +219,7 @@ async def test_an_empty_roster_does_not_retire_everyone(sentinel_request):
     same guard inside `close_absent` still makes it true."""
     ann = _person("Ann")
     await publish_changeset(
-        sentinel_request, _SENTINEL_OCDID, [ann], derived=_seats([ann])
+        sentinel_request, _SENTINEL_OCDID, [ann], derived=await _posts_for([ann])
     )
 
     assert await publish_changeset(sentinel_request, _SENTINEL_OCDID, []) == 0
@@ -229,7 +232,7 @@ async def test_a_failed_publish_writes_nothing(sentinel_request):
     """One transaction: a person the table rejects must not leave the roster half-written."""
     ann = _person("Ann")
     await publish_changeset(
-        sentinel_request, _SENTINEL_OCDID, [ann], derived=_seats([ann])
+        sentinel_request, _SENTINEL_OCDID, [ann], derived=await _posts_for([ann])
     )
 
     logged = await _publish_logs()
