@@ -20,6 +20,7 @@ import pytest_asyncio
 from database.database import get_pool
 from database.entity_jurisdiction import name_for
 from schemas.assertions import EntityType
+from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_names/government"
 
@@ -93,7 +94,7 @@ async def test_an_entity_that_is_gone_has_no_name():
 async def test_a_membership_is_named_by_who_holds_it():
     """A seat has no name of its own — it is read as the person in it."""
     from core.post_derivation import DerivedMembership
-    from database import divisions, memberships, organizations, posts
+    from database import divisions, organizations, posts
 
     person_id = await _person("Ada Lovelace")
     pool = await get_pool()
@@ -102,7 +103,7 @@ async def test_a_membership_is_named_by_who_holds_it():
         base = "ocd-division/country:us/state:zz/place:zz_names"
         await divisions.find_or_create(cur, base, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", base)
-        membership_id = await memberships.upsert(
+        membership_id = await factories.bind_membership(
             cur, DerivedMembership(person_id=person_id), post_id, org, "2026-01-01"
         )
         await conn.commit()

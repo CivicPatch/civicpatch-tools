@@ -3,6 +3,12 @@ from schemas.assertions import Assertion, AssertionKind, EntityType
 from shared.schemas import SubmittedPersonRecord
 from shared.utils.person_fields import order_person_fields
 
+from core.post_derivation import SIGHTINGS_FIELD
+
+# Keys a client patch may not set: they come from what the scrape saw, and a client-sent value
+# would decide which organization a person is published into.
+SERVER_OWNED_FIELDS = (SIGHTINGS_FIELD,)
+
 # Fields a reviewer can edit — a missing one goes unrecorded in the change log. Not
 # cdn_image; publish derives it from image. Not post_id — a scrape must always stay free
 # to move/end a membership, so a post pick is never asserted (see memberships.assign).
@@ -92,11 +98,12 @@ def apply_people_patch(base: list[dict], edits: list[PersonPatch]) -> list[dict]
     base_by_id = {entry["id"]: entry for entry in base}
     result = []
     for edit in edits:
+        fields = {key: value for key, value in edit.fields.items() if key not in SERVER_OWNED_FIELDS}
         base_entry = base_by_id.get(edit.id)
         if base_entry is None:
-            result.append({"id": edit.id, **edit.fields})
+            result.append({"id": edit.id, **fields})
         else:
-            result.append({**base_entry, **edit.fields})
+            result.append({**base_entry, **fields})
     return result
 
 

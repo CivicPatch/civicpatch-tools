@@ -19,6 +19,7 @@ from database.database import get_pool
 from database.memberships import LABEL_FIELD
 from schemas.assertions import Assertion, AssertionKind, EntityType, Source
 from services.review_proposal import assertions_for_people
+from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_assert/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_assert"
@@ -92,7 +93,7 @@ async def _seed() -> tuple[str, str]:
         other = await posts.find_or_create(
             cur, _OCDID, organization_id, "assessor", _BASE
         )
-        await memberships.upsert(cur, DerivedMembership(person_id=seated), other, organization_id, _SEEN_AT)
+        await factories.bind_membership(cur, DerivedMembership(person_id=seated), other, organization_id, _SEEN_AT)
         await conn.commit()
     return user_id, post_id
 
@@ -730,7 +731,7 @@ async def test_a_post_someone_holds_cannot_be_deleted():
             "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
             (person_id := str(uuid.uuid4()), _OCDID, "Holder"),
         )
-        await memberships.upsert(
+        await factories.bind_membership(
             cur, DerivedMembership(person_id=person_id), post_id, organization_id, datetime.now(timezone.utc)
         )
         assert await posts.delete_if_unheld(cur, post_id) is False

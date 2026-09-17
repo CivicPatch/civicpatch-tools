@@ -16,11 +16,12 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from core.post_derivation import DerivedMembership
-from database import activity, divisions, memberships, organizations, posts
+from database import activity, divisions, organizations, posts
 from database.database import get_pool
 from lib.auth import get_optional_user
 from routers.api import memberships as memberships_router
 from schemas.common import Identity
+from tests.integration import factories
 
 _PREFIX = "/api/v1/memberships"
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_mroute/government"
@@ -223,7 +224,7 @@ async def test_unmatched_text_reaches_the_wire_with_its_counts(client):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         organization_id = await organizations.find_or_create(cur, _OCDID)
-        await memberships.upsert(
+        await factories.bind_membership(
             cur,
             DerivedMembership(person_id=person_id, meta_unmatched_text=["Zz Route Liaison"]),
             mayor,
@@ -346,7 +347,7 @@ async def test_the_person_axis_read_carries_the_whole_parse(client):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         organization_id = await organizations.find_or_create(cur, _OCDID)
-        await memberships.upsert(
+        await factories.bind_membership(
             cur,
             DerivedMembership(
                 person_id=person_id,

@@ -14,8 +14,8 @@ def least_crawled_section_first(queue: list[str], crawled: list[str]) -> str | N
     """The first url in `queue` whose site section has been crawled least.
 
     `queue` arrives ranked, so ranking still decides between equally crawled sections and within
-    one. Taking sections in turn — Mercator's per-host queues, a section standing in for a body —
-    stops one body's navigation, repeated on every page of it, from starving another body.
+    one. Taking sections in turn — Mercator's per-host queues, a section standing in for an organization —
+    stops one organization's navigation, repeated on every page of it, from starving another organization.
     """
     crawled_per_section = Counter(url_section(url) for url in crawled)
     chosen = None

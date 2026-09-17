@@ -14,6 +14,7 @@ import pytest_asyncio
 from core.post_derivation import DerivedMembership
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
+from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_assign/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_assign"
@@ -113,7 +114,7 @@ async def test_reassigning_to_the_same_seat_only_sets_the_label():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
-        first = await memberships.upsert(
+        first = await factories.bind_membership(
             cur,
             DerivedMembership(person_id=person_id, designations=["Position 8"]),
             post_id,

@@ -84,6 +84,7 @@ def normalize_record(log: Log, record: PersonSourceRecord) -> PersonSourceRecord
         end_date=record.end_date,
         image=record.image,
         source_url=record.source_url,
+        organization_id=record.organization_id,
     )
 
 
@@ -191,6 +192,12 @@ def merge_records_to_person(
         jurisdiction_ocdid=jurisdiction_ocdid,
         source_urls=[],
         updated_at=datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        # Sorted: ingest reads records in page order and the read in row order, and the person must
+        # come out the same either way.
+        sightings=sorted(
+            records,
+            key=lambda r: (r.source_url, r.label, r.organization_id or "", r.name),
+        ),
     )
 
     person.source_urls = get_source_urls(records)

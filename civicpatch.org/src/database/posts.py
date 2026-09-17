@@ -1,7 +1,7 @@
 from enum import StrEnum
 
 from core.membership_label import derive_post_label
-from core.post_derivation import DerivedPost
+from core.post_derivation import DerivedPost, organization_for
 from shared.schemas import Post
 from core.post_grouping import group_by_organization
 from database import assertions, divisions, organizations
@@ -318,8 +318,8 @@ POST_IS_VERIFIED = """(
 
 
 async def identities_by_id(cur, post_ids: list[str]) -> dict[str, dict]:
-    """The `(role_id, division_ocdid)` of each named post — its identity, and all the
-    derivation needs from a post a human picked.
+    """The `(organization_id, role_id, division_ocdid)` of each named post — its identity, and
+    all the derivation needs from a post a human picked.
 
     Batched: a roster is read at once, and one query per picked person would put the number of
     round trips in the reviewer's hands.
@@ -328,7 +328,7 @@ async def identities_by_id(cur, post_ids: list[str]) -> dict[str, dict]:
         return {}
     await cur.execute(
         """
-        SELECT id::text, role_id, division_ocdid
+        SELECT id::text, organization_id::text, role_id, division_ocdid
         FROM posts WHERE id::text = ANY(%s)
         """,
         (post_ids,),
@@ -478,13 +478,14 @@ async def list_by_organization(jurisdiction_ocdid: str) -> list[dict]:
 async def create_all(
     cur,
     jurisdiction_ocdid: str,
-    organization_id: str,
+    fallback_organization_id: str,
     derived: list[DerivedPost],
     changeset_id: str,
-) -> dict[tuple[str, str], str]:
-
-    ids: dict[tuple[str, str], str] = {}
+) -> dict[tuple[str, str, str], str]:
+    """Each derived post's id by `(organization_id, role_id, division_ocdid)`, minting the missing."""
+    ids: dict[tuple[str, str, str], str] = {}
     for post in derived:
+        organization_id = organization_for(post, fallback_organization_id)
         await divisions.find_or_create(cur, post.division_ocdid, jurisdiction_ocdid)
         minted = await create_if_absent(
             cur,
@@ -508,7 +509,7 @@ async def create_all(
                 ),
                 changeset_id=changeset_id,
             )
-        ids[(post.role_id, post.division_ocdid)] = minted or await find_or_create(
+        ids[(organization_id, post.role_id, post.division_ocdid)] = minted or await find_or_create(
             cur,
             jurisdiction_ocdid,
             organization_id,
@@ -634,7 +635,7 @@ class MoveOutcome(StrEnum):
     NO_SUCH_POST = "no_such_post"
     NO_SUCH_ORGANIZATION = "no_such_organization"
     POST_EXISTS = "post_exists"
-    HOLDER_ALREADY_SEATED = "holder_already_seated"
+    HOLDER_ALREADY_A_MEMBER = "holder_already_a_member"
 
 
 async def move(post_id: str, organization_id: str, user_id: str | None = None) -> MoveOutcome:
@@ -642,8 +643,8 @@ async def move(post_id: str, organization_id: str, user_id: str | None = None) -
     `ON UPDATE CASCADE` foreign key, closed ones included.
 
     Both collisions are checked first so each gets its own answer rather than a 500: the target
-    already has this role and division, or someone holding this post already holds an open seat
-    in the target (one open membership per person per body).
+    already has this role and division, or someone holding this post already holds an open
+    membership in the target (one open membership per person per body).
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -666,15 +667,15 @@ async def move(post_id: str, organization_id: str, user_id: str | None = None) -
             """
             SELECT 1
             FROM memberships moving
-            JOIN memberships seated ON seated.person_id = moving.person_id
+            JOIN memberships held ON held.person_id = moving.person_id
             WHERE moving.post_id::text = %s AND moving.closed_at IS NULL
-              AND seated.organization_id::text = %s AND seated.closed_at IS NULL
+              AND held.organization_id::text = %s AND held.closed_at IS NULL
             LIMIT 1
             """,
             (post_id, organization_id),
         )
         if await cur.fetchone():
-            return MoveOutcome.HOLDER_ALREADY_SEATED
+            return MoveOutcome.HOLDER_ALREADY_A_MEMBER
 
         names = await organizations.names(cur, [before.organization_id, organization_id])
         await cur.execute(

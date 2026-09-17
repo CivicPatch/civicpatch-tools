@@ -17,11 +17,21 @@ from runners.people_collector.utils.crawl_order import least_crawled_section_fir
 from shared.utils.statuses import PipelineRunStatus
 
 
+class OrganizationProgress(BaseModel):
+    """How far one organization's roster is along, when a jurisdiction has several."""
+
+    organization_id: str
+    required: int
+    found: int
+
+
 class ProgressState(BaseModel):
     required_data: int
     current_data: int
     has_target_role: bool = False
     has_target_divisions: bool = False
+    # One entry per organization when there are several; empty means the flat fields above decide.
+    organizations: List[OrganizationProgress] = []
 
 
 class LinkStatus(Enum):
@@ -231,7 +241,7 @@ class ResearchMunicipalityStep(BaseModel):
     # Who research thinks holds which office, labels verbatim. Only the cold-start path fills
     # it: once cp.org has posts, they are the same answer already parsed.
     researched: List[ResearchedPerson] = []
-    # The bodies and their posts; empty on a first scrape. Flat views below are derived from it.
+    # The organizations and their posts; empty on a first scrape. Flat views below are derived from it.
     known_organizations: List[KnownOrganization] = []
     target_divisions: List[str] = []  # geographic divisions to look for
     known_roles: list[str] = []

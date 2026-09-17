@@ -164,6 +164,10 @@ async def _import_jurisdiction(
         roster, records_by_person = await _resolve_inherited_labels(
             jurisdiction_ocdid, roster, records_by_person
         )
+        # A sheet has no organization column, so every row lands in the default.
+        records_by_person = await roster_ingest.with_organizations(
+            jurisdiction_ocdid, records_by_person
+        )
         await register_sheet_import_changeset(
             changeset_id, jurisdiction_ocdid, user_id, batch_id
         )

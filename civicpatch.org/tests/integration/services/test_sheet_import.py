@@ -283,6 +283,23 @@ async def test_inherit_reuses_the_current_source_labels(user_id, batch_id):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
+async def test_sightings_belong_to_the_default_organization(user_id, batch_id):
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        default = await organizations.get_default(cur, _OCDID)
+        await organizations.find_or_create(cur, _OCDID, "School Board")
+        await conn.commit()
+
+    [result] = await import_rows(_rows(("Ana Reyes", "Select Board Chair")), user_id, batch_id)
+
+    assert await _scalar(
+        "SELECT array_agg(DISTINCT organization_id::text) FROM source_records WHERE changeset_id = %s",
+        (result.changeset_id,),
+    ) == [default]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
 async def test_inherit_with_nothing_to_inherit_falls_back_to_blank(user_id, batch_id):
     """A name nobody currently holds a seat under — `inherit` degrades to blank, not to the
     literal word being parsed as an unmatched label."""

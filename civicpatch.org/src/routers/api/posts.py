@@ -13,7 +13,7 @@ _MOVE_REFUSALS = {
     posts.MoveOutcome.NO_SUCH_POST: (404, "No such post."),
     posts.MoveOutcome.NO_SUCH_ORGANIZATION: (404, "No such organization in this jurisdiction."),
     posts.MoveOutcome.POST_EXISTS: (409, "That organization already has this post."),
-    posts.MoveOutcome.HOLDER_ALREADY_SEATED: (
+    posts.MoveOutcome.HOLDER_ALREADY_A_MEMBER: (
         409,
         "Someone holding this post already holds a post in that organization.",
     ),

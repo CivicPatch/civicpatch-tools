@@ -15,7 +15,8 @@ import logging
 import database.changesets as changesets_db
 import database.dismissals as dismissals_db
 from core.people_edits import with_asserted_values
-from core.post_derivation import DerivedPost
+from core.membership_proposal import ids_by_person_and_organization
+from core.post_derivation import DerivedPost, MembershipBinding, organization_for
 from database import assertions, memberships, organizations, posts
 from database.activity import record_change
 from database.changesets import get_updated_at
@@ -192,15 +193,12 @@ async def _bind_memberships(
     last_seen_at,
     advances_last_seen: bool,
 ) -> str:
-    """Put this roster's people in their posts, and answer which body they were seated in.
+    """Put this roster's people in their posts, each in the organization its post derived.
 
     A membership is a binding: who holds a seat is only true once the scrape is accepted.
-    Closing absentees is outside — it depends on the roster, not on `derived` — but it has to
-    close within the same body, which is why the organization is returned rather than resolved
-    twice.
+    Returns the changeset's organization — the scope `close_absent` still closes in until step 9.
     """
-    # The changeset's own organization, not "the jurisdiction's one" — a review is about one
-    # body, and `posts_identity_uq` scopes a post's identity to it.
+    # Where a post no organization sighted is filed.
     organization_id = await organizations.find_or_create_for_changeset(
         cur, changeset_id, jurisdiction_ocdid
     )
@@ -209,17 +207,21 @@ async def _bind_memberships(
     post_ids = await posts.create_all(
         cur, jurisdiction_ocdid, organization_id, derived, changeset_id
     )
-    await memberships.upsert_all(
-        cur,
-        [
-            (member, post_ids[(post.role_id, post.division_ocdid)])
-            for post in derived
-            for member in post.members
-        ],
-        organization_id,
-        last_seen_at,
-        advances_last_seen=advances_last_seen,
-    )
+    bindings: list[MembershipBinding] = []
+    for post in derived:
+        post_organization_id = organization_for(post, organization_id)
+        post_id = post_ids[(post_organization_id, post.role_id, post.division_ocdid)]
+        for member in post.members:
+            bindings.append(
+                MembershipBinding(member=member, organization_id=post_organization_id, post_id=post_id)
+            )
+    if bindings:
+        await memberships.close_moved_memberships(cur, bindings, last_seen_at)
+        await memberships.upsert_open_memberships(cur, bindings, last_seen_at, advances_last_seen)
+        membership_ids = ids_by_person_and_organization(
+            await memberships.open_memberships(cur, [jurisdiction_ocdid])
+        )
+        await memberships.replace_membership_roles(cur, bindings, membership_ids)
     return organization_id
 
 

@@ -1,4 +1,4 @@
-"""Which extraction runs a page gets, one per body. Pure: organizations in, scopes out."""
+"""Which extraction runs a page gets, one per organization. Pure: organizations in, scopes out."""
 
 from typing import List
 
@@ -8,7 +8,7 @@ from shared.schemas import KnownOrganization
 
 
 class ExtractionScope(BaseModel):
-    """One extraction run: the body its records are stamped with, and what the prompt is told.
+    """One extraction run: the organization its records are stamped with, and what the prompt is told.
 
     `prompt_organization` is None when the prompt runs unscoped.
     """
@@ -18,11 +18,11 @@ class ExtractionScope(BaseModel):
 
 
 def extraction_scopes(organizations: List[KnownOrganization]) -> List[ExtractionScope]:
-    """One unscoped run unless there are several bodies to tell apart.
+    """One unscoped run unless there are several organizations to tell apart.
 
-    A single body keeps today's unscoped prompt — the scoped prompt and its pick list are only
-    measured on the org-scoped eval cases — but its records still carry the body's id. Scoping
-    turns on once a maintainer has created a second body.
+    A single organization keeps today's unscoped prompt — the scoped prompt and its pick list are only
+    measured on the org-scoped eval cases — but its records still carry the organization's id. Scoping
+    turns on once a maintainer has created a second organization.
     """
     if not organizations:
         return [ExtractionScope()]

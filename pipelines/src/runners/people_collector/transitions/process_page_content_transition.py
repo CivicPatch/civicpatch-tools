@@ -7,6 +7,7 @@ from runners.people_collector.schemas import (
   Link,
   LinkStatus
 )
+from runners.people_collector.steps.step_04_process_page_content.organization_progress import is_done
 from shared.schemas import PipelineRunLimits
 from shared.utils import url_utils
 from shared.utils.statuses import PipelineIssueType
@@ -55,12 +56,17 @@ DATA_REQUIREMENT_TOLERANCE = 2
 
 
 def should_stop_for_data_requirement(progress: ProgressState) -> bool:
+    """With several organizations, each must be done on its own count — a flat total cannot tell
+    "Council complete, Mayor missing" from done, which is how that Seattle run spent its page cap."""
+    if progress.organizations:
+        return all(is_done(organization) for organization in progress.organizations)
     found_enough = progress.current_data >= progress.required_data - DATA_REQUIREMENT_TOLERANCE
     return found_enough and progress.has_target_role and progress.has_target_divisions
 
 def is_short_of_expected(progress: ProgressState) -> bool:
     """Short by more than the tolerance above — the same slack `should_stop_for_data_requirement`
-    allows, so the two readings of "enough" cannot disagree."""
+    allows for a single organization. With several, each one's own rule can be met while this total
+    is still short, and the reviewer is told."""
     return progress.current_data < progress.required_data - DATA_REQUIREMENT_TOLERANCE
 
 

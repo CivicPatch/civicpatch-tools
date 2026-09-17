@@ -18,7 +18,8 @@ from datetime import date, datetime, timezone
 from typing import AsyncGenerator
 
 from core.membership_label import derive_post_label
-from core.post_derivation import DerivedMembership
+from core.membership_proposal import ExistingMembership, ids_by_person_and_organization
+from core.post_derivation import DerivedMembership, MembershipBinding
 from database import assertions, posts
 from database.assertions import LATEST_FIRST
 from database.activity import record_change
@@ -71,198 +72,98 @@ class NothingToAssign(Exception):
     """They already hold that post under that label."""
 
 
-async def _set_membership_roles(cur, membership_id: str, role_ids: list[str]) -> None:
-    """Replace the roles the label named beyond the one defining the post.
+_CLOSE_MOVED_MEMBERSHIPS = """
+    UPDATE memberships SET closed_at = %s
+    WHERE person_id = %s AND organization_id = %s
+      AND closed_at IS NULL AND post_id <> %s
+"""
 
-    Wholesale, not merged: these are derived from the label, so the current scrape's answer is
-    the whole answer and a role dropped from the page must not linger.
-    """
-    await cur.execute(
-        "DELETE FROM membership_roles WHERE membership_id::text = %s", (membership_id,)
+# Only a publish that read a source advances `last_seen_at`; a hand edit still dates a new one.
+_UPSERT_OPEN_MEMBERSHIPS = f"""
+    INSERT INTO memberships
+        (post_id, organization_id, person_id, designations, meta_unmatched_text,
+         source_labels, start_date, end_date, first_seen_at, last_seen_at, label)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
+    DO UPDATE SET
+        last_seen_at = CASE WHEN %s
+            THEN GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at)
+            ELSE memberships.last_seen_at END,
+        designations = EXCLUDED.designations,
+        meta_unmatched_text = EXCLUDED.meta_unmatched_text,
+        source_labels = EXCLUDED.source_labels,
+        start_date = EXCLUDED.start_date,
+        end_date = EXCLUDED.end_date,
+        label = CASE WHEN {LABEL_IS_HUMAN_SET}
+                     THEN memberships.label ELSE EXCLUDED.label END
+"""
+
+_DELETE_MEMBERSHIP_ROLES = "DELETE FROM membership_roles WHERE membership_id::text = %s"
+
+_INSERT_MEMBERSHIP_ROLE = """
+    INSERT INTO membership_roles (membership_id, role_id) VALUES (%s, %s)
+    ON CONFLICT DO NOTHING
+"""
+
+
+def _upsert_params(binding: MembershipBinding, last_seen_at, advances_last_seen: bool) -> tuple:
+    member = binding.member
+    return (
+        binding.post_id,
+        binding.organization_id,
+        member.person_id,
+        member.designations,
+        member.meta_unmatched_text,
+        member.source_labels,
+        member.start_date,
+        member.end_date,
+        last_seen_at,
+        last_seen_at,
+        member.label,
+        advances_last_seen,
     )
-    if not role_ids:
-        return
+
+
+def _open_membership_key(binding: MembershipBinding) -> tuple[str, str]:
+    return (binding.member.person_id, binding.organization_id)
+
+
+async def close_moved_memberships(cur, bindings: list[MembershipBinding], closed_at) -> None:
+    """Close each person's open membership in the organization when it is on a different post."""
     await cur.executemany(
-        "INSERT INTO membership_roles (membership_id, role_id) VALUES (%s, %s) "
-        "ON CONFLICT DO NOTHING",
-        [(membership_id, role_id) for role_id in role_ids],
-    )
-
-
-async def upsert_all(
-    cur,
-    seatings: list[tuple[DerivedMembership, str]],
-    organization_id: str,
-    last_seen_at,
-    *,
-    advances_last_seen: bool = True,
-) -> dict[str, str]:
-    """Seat a whole roster. Returns each person's membership id.
-
-    Five statements whatever the roster's size, where `upsert` is four *per person* — a close,
-    an insert, and the two that replace the membership's roles. Publishing eight people ran
-    thirty-two round trips in series inside the publish transaction.
-
-    `executemany` pipelines under psycopg 3, so each of these costs one round trip rather than
-    one per row, and no SQL has to be composed to get there.
-
-    The ids come back from a `SELECT` rather than `RETURNING`: the partial unique index
-    `(person_id, organization_id) WHERE closed_at IS NULL` means one open membership per person
-    per body, so reading them back is unambiguous and avoids interleaving results with an
-    `executemany`.
-    """
-    if not seatings:
-        return {}
-
-    await cur.executemany(
-        """
-        UPDATE memberships SET closed_at = %s
-        WHERE person_id = %s AND organization_id = %s
-          AND closed_at IS NULL AND post_id <> %s
-        """,
+        _CLOSE_MOVED_MEMBERSHIPS,
         [
-            (last_seen_at, member.person_id, organization_id, post_id)
-            for member, post_id in seatings
+            (closed_at, binding.member.person_id, binding.organization_id, binding.post_id)
+            for binding in bindings
         ],
     )
 
+
+async def upsert_open_memberships(
+    cur, bindings: list[MembershipBinding], last_seen_at, advances_last_seen: bool
+) -> None:
+    """Open each membership, or refresh the open one; a human-set label is kept."""
     await cur.executemany(
-        f"""
-        INSERT INTO memberships
-            (post_id, organization_id, person_id, designations, meta_unmatched_text,
-             source_labels, start_date, end_date, first_seen_at, last_seen_at, label)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
-        DO UPDATE SET
-            last_seen_at = CASE WHEN %s
-                THEN GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at)
-                ELSE memberships.last_seen_at END,
-            designations = EXCLUDED.designations,
-            meta_unmatched_text = EXCLUDED.meta_unmatched_text,
-            source_labels = EXCLUDED.source_labels,
-            start_date = EXCLUDED.start_date,
-            end_date = EXCLUDED.end_date,
-            label = CASE WHEN {LABEL_IS_HUMAN_SET}
-                         THEN memberships.label ELSE EXCLUDED.label END
-        """,
+        _UPSERT_OPEN_MEMBERSHIPS,
+        [_upsert_params(binding, last_seen_at, advances_last_seen) for binding in bindings],
+    )
+
+
+async def replace_membership_roles(
+    cur, bindings: list[MembershipBinding], membership_ids: dict[tuple[str, str], str]
+) -> None:
+    """Replace the open memberships' extra roles (beyond the post's own) with the latest label's."""
+    await cur.executemany(
+        _DELETE_MEMBERSHIP_ROLES, [(membership_ids[_open_membership_key(binding)],) for binding in bindings]
+    )
+    await cur.executemany(
+        _INSERT_MEMBERSHIP_ROLE,
         [
-            (
-                post_id,
-                organization_id,
-                member.person_id,
-                member.designations,
-                member.meta_unmatched_text,
-                member.source_labels,
-                member.start_date,
-                member.end_date,
-                last_seen_at,
-                last_seen_at,
-                member.label,
-                advances_last_seen,
-            )
-            for member, post_id in seatings
+            (membership_ids[_open_membership_key(binding)], role_id)
+            for binding in bindings
+            for role_id in binding.member.role_ids
         ],
     )
-
-    await cur.execute(
-        """
-        SELECT person_id::text, id::text FROM memberships
-        WHERE organization_id = %s AND person_id = ANY(%s) AND closed_at IS NULL
-        """,
-        (organization_id, [member.person_id for member, _ in seatings]),
-    )
-    by_person = {row[0]: row[1] for row in await cur.fetchall()}
-
-    await cur.executemany(
-        "DELETE FROM membership_roles WHERE membership_id::text = %s",
-        [(by_person[member.person_id],) for member, _ in seatings],
-    )
-    await cur.executemany(
-        "INSERT INTO membership_roles (membership_id, role_id) VALUES (%s, %s) "
-        "ON CONFLICT DO NOTHING",
-        [
-            (by_person[member.person_id], role_id)
-            for member, _ in seatings
-            for role_id in member.role_ids
-        ],
-    )
-    return by_person
-
-
-async def upsert(
-    cur,
-    member: DerivedMembership,
-    post_id: str,
-    organization_id: str,
-    last_seen_at,
-    *,
-    advances_last_seen: bool = True,
-) -> str:
-    """Seat one person, closing whatever else they held in this organization.
-
-    Takes the `DerivedMembership` whole: five of the old twelve parameters were its fields,
-    unpacked at the only caller and passed back one at a time.
-
-    `advances_last_seen` is False when the publish read no source — a hand edit. A flag rather
-    than a second function because it toggles one clause of one statement; splitting would mean
-    two copies of this SQL, which is the drift the single statement exists to prevent. A new
-    seat is still dated from `last_seen_at`; only the advance on an existing one is suppressed.
-
-    `start_date` / `end_date` come off the record, via `DerivedMembership`. They used to be
-    parameters nobody passed, so the source's term dates reached `people` and never the
-    membership that is the tenure.
-    """
-    person_id = member.person_id
-    await cur.execute(
-        """
-        UPDATE memberships SET closed_at = %s
-        WHERE person_id = %s AND organization_id = %s
-          AND closed_at IS NULL AND post_id <> %s
-        """,
-        (last_seen_at, person_id, organization_id, post_id),
-    )
-
-    await cur.execute(
-        f"""
-        INSERT INTO memberships
-            (post_id, organization_id, person_id, designations, meta_unmatched_text,
-             source_labels, start_date, end_date, first_seen_at, last_seen_at, label)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
-        DO UPDATE SET
-            -- Only a publish that read a source may advance this. A hand edit still dates a
-            -- *new* seat (the INSERT above), but must not claim the source still lists an
-            -- existing one.
-            last_seen_at = CASE WHEN %s
-                THEN GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at)
-                ELSE memberships.last_seen_at END,
-            designations = EXCLUDED.designations,
-            meta_unmatched_text = EXCLUDED.meta_unmatched_text,
-            source_labels = EXCLUDED.source_labels,
-            start_date = EXCLUDED.start_date,
-            end_date = EXCLUDED.end_date,
-            label = CASE WHEN {LABEL_IS_HUMAN_SET}
-                         THEN memberships.label ELSE EXCLUDED.label END
-        RETURNING id::text
-        """,
-        (
-            post_id,
-            organization_id,
-            person_id,
-            member.designations,
-            member.meta_unmatched_text,
-            member.source_labels,
-            member.start_date,
-            member.end_date,
-            last_seen_at,
-            last_seen_at,
-            member.label,
-            advances_last_seen,
-        ),
-    )
-    membership_id = (await cur.fetchone())[0]
-    await _set_membership_roles(cur, membership_id, member.role_ids)
-    return membership_id
 
 
 async def advance_last_seen_at(cur, person_ids: list[str], last_seen_at) -> int:
@@ -544,21 +445,15 @@ async def meta_unmatched_text(limit: int, offset: int) -> tuple[int, list[dict]]
         return await _count_triage_terms(cur), await _triage_page(cur, limit, offset)
 
 
-async def open_by_jurisdiction(
-    cur, jurisdiction_ocdids: list[str]
-) -> dict[str, list[dict]]:
-    """Open memberships with the seat they sit on, grouped by jurisdiction.
-
-    Takes a list because the review queue asks for hundreds at once; one query per jurisdiction
-    was the whole cost of ordering it.
-    """
+async def open_memberships(cur, jurisdiction_ocdids: list[str]) -> list[ExistingMembership]:
+    """Every open membership in these jurisdictions, with its post's role and division."""
     if not jurisdiction_ocdids:
-        return {}
+        return []
     await cur.execute(
         """
-        SELECT p.jurisdiction_ocdid, m.person_id::text, m.post_id::text,
-               p.role_id, p.division_ocdid, p.meta_is_tracked,
-               r.label AS role_label
+        SELECT m.id::text, p.jurisdiction_ocdid, m.person_id::text, m.organization_id::text,
+               m.post_id::text, m.label, m.designations, m.meta_unmatched_text,
+               p.role_id, p.division_ocdid, p.meta_is_tracked, r.label AS role_label
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
         JOIN roles r ON r.id = p.role_id
@@ -567,11 +462,7 @@ async def open_by_jurisdiction(
         (jurisdiction_ocdids,),
     )
     columns = [column.name for column in cur.description or []]
-    grouped: dict[str, list[dict]] = {ocdid: [] for ocdid in jurisdiction_ocdids}
-    for row in await cur.fetchall():
-        held = dict(zip(columns, row))
-        grouped[held.pop("jurisdiction_ocdid")].append(held)
-    return grouped
+    return [ExistingMembership(**dict(zip(columns, row))) for row in await cur.fetchall()]
 
 
 async def open_source_labels_by_person(
@@ -584,9 +475,7 @@ async def open_source_labels_by_person(
     who the sighting resolved to rather than matching on a name that might not be the
     published spelling.
 
-    "Default" is the earliest-created organization. Every jurisdiction gets exactly one,
-    unconditionally, at sync (migration 195); a jurisdiction that ever grows a second, named
-    body must not have `inherit` pick between them arbitrarily.
+    "Default" as `organizations.get_default` orders it: sheet imports belong to that organization.
 
     Several source labels join back into one string — `parse_label` already treats ` / ` as a
     segment boundary, so this re-parses exactly as the original multi-part label did.
@@ -600,7 +489,7 @@ async def open_source_labels_by_person(
         WHERE m.organization_id = (
             SELECT id FROM organizations
             WHERE jurisdiction_ocdid = %s
-            ORDER BY created_at ASC
+            ORDER BY meta_is_default DESC, sort_order, name
             LIMIT 1
         )
           AND m.closed_at IS NULL
@@ -696,23 +585,6 @@ async def reinstate(cur, membership_id: str, user_id: str) -> int:
     )
 
 
-async def open_for_person(cur, person_id: str, organization_id: str) -> dict | None:
-    """This person's current post in this body. At most one row —
-    `memberships_one_open_per_organization` enforces it."""
-    await cur.execute(
-        """
-        SELECT id::text, post_id::text, label, designations, meta_unmatched_text
-        FROM memberships
-        WHERE person_id = %s AND organization_id = %s AND closed_at IS NULL
-        """,
-        (person_id, organization_id),
-    )
-    row = await cur.fetchone()
-    if row is None:
-        return None
-    return dict(zip([c.name for c in cur.description or []], row))
-
-
 async def open_membership_ids_for_persons(cur, person_ids: list[str]) -> list[dict]:
     """Every open membership id for these people, to look up label assertions by.
 
@@ -760,7 +632,7 @@ async def assign(
             raise UnknownPost(post_id)
 
         # Same changeset, same date. The seat is dated by the changeset this edit is filed
-        # under — so a hand edit cannot advance `last_seen_at`: `upsert` takes GREATEST, and
+        # under — so a hand edit cannot advance `last_seen_at`: `upsert_open_memberships` takes GREATEST, and
         # that date is already the seat's. Nobody read a source here.
         changeset_id = changeset_id or await live_roster_changeset(cur, post.jurisdiction_ocdid)
         seen_at = (
@@ -771,26 +643,41 @@ async def assign(
         )
 
         organization_id = post.organization_id
-        current = await open_for_person(cur, person_id, organization_id)
+        held = await open_memberships(cur, [post.jurisdiction_ocdid])
+        current = next(
+            (
+                membership
+                for membership in held
+                if membership.person_id == person_id and membership.organization_id == organization_id
+            ),
+            None,
+        )
 
-        if current and current["post_id"] == post_id:
-            if (current["label"] or None) == (label or None):
+        if current and current.post_id == post_id:
+            if (current.label or None) == (label or None):
                 raise NothingToAssign(post_id)
-            membership_id = current["id"]
+            membership_id = current.id
             change = FieldChange(
-                field=LABEL_FIELD, before=current["label"], after=label
+                field=LABEL_FIELD, before=current.label, after=label
             )
         else:
-            moved_from = current["post_id"] if current else None
-            membership_id = await upsert(
-                # A human assigning a seat states only who and where — the label follows
-                # below, and the source's term dates are not theirs to invent.
-                cur,
-                DerivedMembership(person_id=person_id),
-                post_id,
-                organization_id,
-                seen_at,
+            moved_from = current.post_id if current else None
+            # A human states only who and where — the label follows below, and the source's
+            # term dates are not theirs to invent.
+            bindings = [
+                MembershipBinding(
+                    member=DerivedMembership(person_id=person_id),
+                    organization_id=organization_id,
+                    post_id=post_id,
+                )
+            ]
+            await close_moved_memberships(cur, bindings, seen_at)
+            await upsert_open_memberships(cur, bindings, seen_at, advances_last_seen=True)
+            membership_ids = ids_by_person_and_organization(
+                await open_memberships(cur, [post.jurisdiction_ocdid])
             )
+            await replace_membership_roles(cur, bindings, membership_ids)
+            membership_id = membership_ids[(person_id, organization_id)]
             change = FieldChange(
                 field=MEMBERSHIP_POST_FIELD, before=moved_from, after=post_id
             )

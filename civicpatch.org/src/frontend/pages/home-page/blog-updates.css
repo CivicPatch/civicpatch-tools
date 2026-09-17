@@ -44,12 +44,12 @@
   outline-offset: 2px;
 }
 
-/* Sizes follow the wire-demo blog widget (.scratch/wire-demo, .bl-item-*). */
+/* One step below the wire-demo blog widget (.scratch/wire-demo, .bl-item-*). */
 .blog-updates__title {
   /* Flex items stretch to fill the cross axis by default — without this, the anchor's
      hit box covers the row's full width, not just the visible title text. */
   align-self: flex-start;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-base);
   color: var(--text-default);
   text-decoration: none;
 }
@@ -76,14 +76,14 @@
 
 .blog-updates__meta {
   color: var(--text-muted);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   font-family: var(--font-mono);
   margin-top: 0.3rem;
 }
 
 .blog-updates__desc {
   color: var(--text-muted);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   margin: 0.4rem 0 0;
 }
 }

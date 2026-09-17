@@ -16,13 +16,14 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from core.post_derivation import DerivedMembership
-from database import memberships, organizations, posts
+from database import organizations, posts
 from database.database import get_pool
 from lib.auth import get_optional_user
 from routers.api import organizations as organizations_router
 from routers.api import posts as posts_router
 from schemas.common import Identity
 from shared.schemas import KnownOrganization
+from tests.integration import factories
 
 _PREFIX = "/api/v1/posts"
 # The per-jurisdiction read and post creation both moved to this router — see
@@ -187,7 +188,7 @@ async def _seat_someone(post_id: str) -> None:
             (person_id, _OCDID, "Post Test"),
         )
         organization_id = await organizations.find_or_create(cur, _OCDID)
-        await memberships.upsert(
+        await factories.bind_membership(
             cur, DerivedMembership(person_id=person_id), post_id, organization_id, "2026-06-15T00:00:00Z"
         )
         await conn.commit()
@@ -441,7 +442,7 @@ async def _seat(person_id: str, post_id: str, organization_id: str) -> None:
             "ON CONFLICT (id) DO NOTHING",
             (person_id, _OCDID, "Move Test"),
         )
-        await memberships.upsert(
+        await factories.bind_membership(
             cur, DerivedMembership(person_id=person_id), post_id, organization_id, "2026-06-15T00:00:00Z"
         )
         await conn.commit()

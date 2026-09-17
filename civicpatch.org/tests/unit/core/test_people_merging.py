@@ -222,6 +222,29 @@ def test_merge_records_to_person():
     assert result.jurisdiction_ocdid == "jurisdiction_id"
 
 
+def test_merge_records_to_person_keeps_each_label_with_its_page_and_organization():
+    """The flat lists cannot say which office came from which page and organization; a person
+    holding posts in two bodies needs exactly that."""
+    council = make_llm_person(name="Eve", label="Council Member Ward 5", source_url="http://council.gov")
+    mayor = make_llm_person(name="Eve", label="Mayor", source_url="http://mayor.gov")
+    council.organization_id = "council-org"
+    mayor.organization_id = "mayor-org"
+
+    result = merge_records_to_person(MagicMock(), "Eve", [council, mayor], "jurisdiction_id", TAXONOMY)
+
+    assert sorted((s.label, s.source_url, s.organization_id) for s in result.sightings) == [
+        ("Council Member Ward 5", "http://council.gov", "council-org"),
+        ("Mayor", "http://mayor.gov", "mayor-org"),
+    ]
+
+
+def test_normalize_record_keeps_the_organization():
+    record = make_llm_person(name="Eve", label="Mayor")
+    record.organization_id = "mayor-org"
+
+    assert _normalize(record).organization_id == "mayor-org"
+
+
 # --- get_source_urls ---
 
 

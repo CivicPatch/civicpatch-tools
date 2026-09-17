@@ -2,7 +2,7 @@ from decimal import Decimal
 
 import pytest
 
-from runners.people_collector.schemas import PipelineStatus, ProgressState
+from runners.people_collector.schemas import OrganizationProgress, PipelineStatus, ProgressState
 from runners.people_collector.transitions.process_page_content_transition import (
     STOP_COST_CAP,
     STOP_MAX_PAGES,
@@ -182,6 +182,41 @@ def test_tolerance_does_not_bypass_the_target_flags():
         ),
     )
     assert state == PipelineStatus.SCRAPE_PAGE
+
+
+# ── several organizations: each is done on its own count ──────────────────────
+
+
+def _organizations_state(council_found: int, mayor_found: int):
+    """Council of 10 and a one-post Office of the Mayor. The flat fields are deliberately far
+    from met — with organizations present, they must not decide."""
+    progress = ProgressState(
+        current_data=0,
+        required_data=50,
+        organizations=[
+            OrganizationProgress(organization_id="council", required=10, found=council_found),
+            OrganizationProgress(organization_id="mayor", required=1, found=mayor_found),
+        ],
+    )
+    state, _ = next_process_content_state(
+        processed_count=3, current_cost=Decimal("0.10"), limits=_limits(), progress=progress
+    )
+    return state
+
+
+def test_every_organization_done_stops_the_crawl():
+    assert _organizations_state(council_found=10, mayor_found=1) == PipelineStatus.CLEANUP
+
+
+def test_a_complete_council_does_not_stop_the_crawl_while_the_mayor_is_missing():
+    """Seattle, 2026-08-17: a flat count read "Council complete, Mayor missing" as nearly done and
+    crawled council pages to the cap looking for someone who was never on one."""
+    assert _organizations_state(council_found=10, mayor_found=0) == PipelineStatus.SCRAPE_PAGE
+
+
+def test_a_large_organization_is_done_short_of_every_member():
+    assert _organizations_state(council_found=8, mayor_found=1) == PipelineStatus.CLEANUP
+    assert _organizations_state(council_found=7, mayor_found=1) == PipelineStatus.SCRAPE_PAGE
 
 
 # ── the cap has to be visible outside the container log ───────────────────────

@@ -111,8 +111,7 @@ async def test_an_empty_person_list_is_not_a_query():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_membership_in_a_second_organization_is_not_the_default():
-    """`inherit` scopes to the earliest-created organization — a jurisdiction that later grows
-    a second, named body must not have a membership there picked arbitrarily."""
+    """`inherit` scopes to the default organization — a membership in another body is not read."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
