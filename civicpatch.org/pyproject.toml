@@ -10,10 +10,7 @@ dependencies = [
     "fastapi[standard] (>=0.116.1,<0.117.0)",
     "python-multipart (>=0.0.20,<0.0.21)",
     "requests (>=2.32.5,<3.0.0)",
-    "pytest (>=9.0.2,<10.0.0)",
-    "pytest-asyncio (>=1.2.0,<2.0.0)",
     "boto3 (>=1.40.35,<2.0.0)",
-    "python-lsp-server[all] (>=1.13.1,<2.0.0)",
     "psycopg[binary,pool] (>=3.2.12,<4.0.0)",
     "asyncio (>=4.0.0,<5.0.0)",
     "aiofiles (>=25.1.0,<26.0.0)",
@@ -24,7 +21,6 @@ dependencies = [
     "fastapi-profiler (>=1.4.1,<2.0.0)",
     "pyjwt>=2.11.0",
     "shared",
-    "githubkit>=0.15.1",
     "temporalio>=1.10.0",
     "pyarrow>=18.0.0",
     "tippecanoe>=2.72.0",
@@ -41,7 +37,10 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "pytest (>=9.0.2,<10.0.0)",
+    "pytest-asyncio (>=1.2.0,<2.0.0)",
     "pytest-mock (>=3.15.1,<4.0.0)",
+    "python-lsp-server[all] (>=1.13.1,<2.0.0)",
     "pytest-xdist (>=3.6.1,<4.0.0)",
     "pyright (>=1.1.0)",
 ]

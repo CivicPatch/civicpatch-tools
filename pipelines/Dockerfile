@@ -22,7 +22,9 @@ ENV PYTHONUNBUFFERED=1 \
     PROJECT_NAME="pipelines" \
     # uv: install packages into /venv
     UV_PROJECT_ENVIRONMENT="/venv" \
-    UV_CACHE_DIR="/tmp/.cache/uv" \
+    # No cache: the downloaded wheels are build scratch, and a cache dir inside the image was
+    # ~930MB of it.
+    UV_NO_CACHE=1 \
     UV_PYTHON_DOWNLOADS=never \
     UV_PYTHON="/usr/local/bin/python3" \
     PATH="/venv/bin:/root/.local/bin:$PATH"
