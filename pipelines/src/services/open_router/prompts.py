@@ -164,11 +164,16 @@ def _organization_scope(organization: PromptOrganization) -> str:
 
 
 def _pick_list_label_rules(organization: PromptOrganization, page_label_rules: str) -> str:
-    return f"""    - Choose the one post below that the page shows this person holds, and copy it exactly
-      as written here — not as the page writes it:
+    return f"""    - Choose every post below that is this person's, and copy each exactly as written here —
+      not as the page writes it:
 {_bullets(organization.posts, "        ")}
-    - If the page shows them holding a {organization.name} post that is not listed, do not pick
-      the nearest one. Write the label from the page instead, as follows:
+    - A person can hold more than one, such as a seat and a presiding title. Put every one in the
+      same label, joined with "and".
+    - If the page gives them a {organization.name} title that is not listed, do not swap it for a
+      listed post. Write that title from the page and join it with any listed posts they hold:
+        "Deputy Mayor, Ward 5" when the list has "Council Member Ward 5" but no Deputy Mayor
+            -> "Council Member Ward 5 and Deputy Mayor"
+      Write a title from the page following these rules:
 {page_label_rules}"""
 
 

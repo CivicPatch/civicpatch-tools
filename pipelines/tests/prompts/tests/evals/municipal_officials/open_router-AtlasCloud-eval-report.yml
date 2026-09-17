@@ -1,18 +1,18 @@
 run:
-  timestamp: '2026-09-17T00:00:54+00:00'
-  prompt_sha256: aeb59ab46565
-  prompt_file: _prompts/aeb59ab46565.txt
+  timestamp: '2026-09-17T00:46:40+00:00'
+  prompt_sha256: dc00bd6f55ed
+  prompt_file: _prompts/dc00bd6f55ed.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
   providers:
   - AtlasCloud
-  elapsed_seconds: 7.85
-  total_input_tokens: 6803
-  total_output_tokens: 867
-  total_cost_usd: 0.00119518
+  elapsed_seconds: 11.43
+  total_input_tokens: 16621
+  total_output_tokens: 1498
+  total_cost_usd: 0.00274638
 accuracy:
   person:
-    correct: 1
+    correct: 9
     missing: 0
     spurious: 0
     wrong: 0
@@ -20,7 +20,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   primary_role:
-    correct: 1
+    correct: 9
     missing: 0
     spurious: 0
     wrong: 0
@@ -28,7 +28,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   roles:
-    correct: 1
+    correct: 10
     missing: 0
     spurious: 0
     wrong: 0
@@ -36,31 +36,31 @@ accuracy:
     recall: 1.0
     f1: 1.0
   district:
-    correct: 0
+    correct: 7
     missing: 0
     spurious: 0
     wrong: 0
-    precision: null
-    recall: null
-    f1: null
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
   designations_other:
-    correct: 0
+    correct: 2
     missing: 0
     spurious: 0
     wrong: 0
-    precision: null
-    recall: null
-    f1: null
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
   email:
-    correct: 0
+    correct: 9
     missing: 0
     spurious: 0
     wrong: 0
-    precision: null
-    recall: null
-    f1: null
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
   phone:
-    correct: 1
+    correct: 9
     missing: 0
     spurious: 0
     wrong: 0
@@ -68,7 +68,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   url:
-    correct: 1
+    correct: 9
     missing: 0
     spurious: 0
     wrong: 0
@@ -92,31 +92,35 @@ accuracy:
     recall: null
     f1: null
   image:
-    correct: 0
+    correct: 9
     missing: 0
     spurious: 0
     wrong: 0
-    precision: null
-    recall: null
-    f1: null
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
 aggregated_report:
-  name: 1.0
-  roles: 1.0
-  roles_precision: 1.0
-  designations: 1.0
+  url: 1.0
+  designations_precision: 1.0
   phone: 1.0
   email: 1.0
-  url: 1.0
+  image: 1.0
+  roles_precision: 1.0
+  name: 1.0
+  roles: 1.0
+  designations: 1.0
 per_case_scores:
-- case_id: austin_council_shared_roster_scoped_to_mayor
+- case_id: seattle_council_pick_list_missing_president
   score: 1.0
   person_precision: 1.0
   scores:
-    name: 1.0
-    roles: 1.0
-    roles_precision: 1.0
-    designations: 1.0
+    url: 1.0
+    designations_precision: 1.0
     phone: 1.0
     email: 1.0
-    url: 1.0
+    image: 1.0
+    roles_precision: 1.0
+    name: 1.0
+    roles: 1.0
+    designations: 1.0
 mismatches: {}

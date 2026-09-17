@@ -18,9 +18,14 @@ from runners.people_collector.schemas import (
     ProgressState,
     RelevantPageResponseSchema,
 )
+from runners.people_collector.steps.step_04_process_page_content.extraction_scopes import (
+    ExtractionScope,
+    extraction_scopes,
+)
 from runners.people_collector.steps.step_04_process_page_content.heuristics import (
     check_page_heuristics,
 )
+from shared.schemas import KnownOrganization
 from runners.people_collector.utils.link_discovery import (
     add_relevant_urls,
     extract_names_and_designations,
@@ -54,10 +59,13 @@ MINIMUM_NUM_PEOPLE = 5
 _CHUNK_OVERLAP_CHARS = 500
 
 
-def _build_prompt(known_roles: list[str], jurisdiction_ocdid: str) -> str:
+def _build_prompt(known_roles: list[str], jurisdiction_ocdid: str, scope: ExtractionScope) -> str:
     ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
     return open_router_prompt.municipality_officials_prompt(
-        known_roles, state=ocdid_parts.state, county=ocdid_parts.county
+        known_roles,
+        state=ocdid_parts.state,
+        county=ocdid_parts.county,
+        organization=scope.prompt_organization,
     )
 
 
@@ -167,7 +175,14 @@ async def process_page_content(
         return frontier, current_step
 
     updated_records, heuristics_passed = await collect_page_records(
-        context, page_to_process, content, known_roles, current_step, identities, logger
+        context,
+        page_to_process,
+        content,
+        known_roles,
+        research.known_organizations,
+        current_step,
+        identities,
+        logger,
     )
 
     updated_progress = calculate_progress(
@@ -294,15 +309,44 @@ async def collect_page_records(
     page_to_process: Link,
     content: str,
     known_roles: list[str],
+    organizations: List[KnownOrganization],
     current_step: ProcessPageContentStep,
     identities: Dict,
     logger,
 ) -> Tuple[PeopleByName, bool]:
-    prompt = _build_prompt(known_roles, context.data.jurisdiction_ocdid)
+    """One extraction per body. A body whose results fail the heuristics twice adds nothing from
+    this page; the others' still count. True if any body's did."""
+    found: List[PersonSourceRecord] = []
+    any_passed = False
+    for scope in extraction_scopes(organizations):
+        scoped = await _extract_for_scope(context, page_to_process, content, known_roles, scope, logger)
+        if scoped is not None:
+            found.extend(scoped)
+            any_passed = True
+
+    if not any_passed:
+        logger.warning(
+            f"Failed heuristics for page after all attempts, skipping page: {page_to_process.url}"
+        )
+        return current_step.records, False
+    return merge_utils.group_people_by_name(identities, current_step.records, found), True
+
+
+async def _extract_for_scope(
+    context: PeopleCollectorContext,
+    page_to_process: Link,
+    content: str,
+    known_roles: list[str],
+    scope: ExtractionScope,
+    logger,
+) -> Optional[List[PersonSourceRecord]]:
+    """This body's records, stamped with its id — or None if they failed the heuristics twice."""
+    prompt = _build_prompt(known_roles, context.data.jurisdiction_ocdid, scope)
+    body = scope.prompt_organization.name if scope.prompt_organization else "unscoped"
 
     for attempt in range(2):
         seed = attempt or None
-        logger.info(f"Running LLM: openrouter_seed seed={seed}")
+        logger.info(f"Running LLM: openrouter_seed seed={seed} body={body}")
         people_found_in_page = await _process_with_llm_in_chunks(
             page_to_process.url,
             context.pipeline_run_id,
@@ -312,26 +356,17 @@ async def collect_page_records(
             seed,
             logger,
         )
-
-        updated_records = merge_utils.group_people_by_name(
-            identities, current_step.records, people_found_in_page
-        )
-
-        if check_page_heuristics(
-            logger, page_to_process.url, content, people_found_in_page
-        ):
-            logger.info(f"Heuristics passed for LLM: {page_to_process.url}")
-            return updated_records, True
-
+        if check_page_heuristics(logger, page_to_process.url, content, people_found_in_page):
+            logger.info(f"Heuristics passed for LLM: {page_to_process.url} body={body}")
+            return [
+                record.model_copy(update={"organization_id": scope.organization_id})
+                for record in people_found_in_page
+            ]
         if attempt == 0:
             logger.info(
-                f"Heuristics failed for LLM: open_router, retrying: {page_to_process.url}"
+                f"Heuristics failed for LLM: open_router, retrying: {page_to_process.url} body={body}"
             )
-
-    logger.warning(
-        f"Failed heuristics for page after all attempts, skipping page: {page_to_process.url}"
-    )
-    return current_step.records, False
+    return None
 
 
 async def process_with_llm(
