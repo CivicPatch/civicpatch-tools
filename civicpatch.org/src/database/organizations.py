@@ -177,30 +177,3 @@ async def delete(organization_id: str) -> str | None:
         )
         await cur.execute("DELETE FROM organizations WHERE id = %s", (organization_id,))
         return jurisdiction_ocdid
-
-
-async def for_changeset(cur, changeset_id: str) -> str | None:
-    await cur.execute(
-        "SELECT organization_id::text FROM changesets WHERE id = %s", (changeset_id,)
-    )
-    row = await cur.fetchone()
-    return row[0] if row else None
-
-
-async def find_or_create_for_changeset(
-    cur, changeset_id: str, jurisdiction_ocdid: str
-) -> str:
-    await cur.execute(
-        "SELECT organization_id::text FROM changesets WHERE id = %s",
-        (changeset_id,),
-    )
-    row = await cur.fetchone()
-    if row and row[0]:
-        return row[0]
-
-    organization_id = await get_default(cur, jurisdiction_ocdid)
-    await cur.execute(
-        "UPDATE changesets SET organization_id = %s WHERE id = %s",
-        (organization_id, changeset_id),
-    )
-    return organization_id

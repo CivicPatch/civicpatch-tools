@@ -60,8 +60,8 @@ async def _cleanup():
         await cur.execute(
             "DELETE FROM posts WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
         )
-        # Changesets first: `changesets.organization_id` is a FK since 158, so an
-        # organization cannot go while a changeset still names it.
+        # Changesets first: their source records point at organizations (205: ON DELETE RESTRICT),
+        # so a body cannot go while a changeset's evidence still names it.
         await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
         )

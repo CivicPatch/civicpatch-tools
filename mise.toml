@@ -291,8 +291,12 @@ docker compose -f docker-compose.e2e.yml build civicpatch-org-e2e
 # through minutes of serial specs reads as a hang. Capturing it to a log also meant `| grep` made
 # $? grep's, which once reported success on a suite with 24 failures.
 status=0
-docker compose -f docker-compose.e2e.yml up --exit-code-from playwright --abort-on-container-exit || status=$?
-# Each run rebuilds the app image, and its layers stay in the build cache — 12GB of it on a 77GB
+# --no-attach on the support services: their request logs interleave with Playwright's output
+# line by line, which makes a failure list unreadable. They still run, and `docker logs` still has
+# them if a failure needs the server's side.
+docker compose -f docker-compose.e2e.yml up --exit-code-from playwright --abort-on-container-exit \
+  --no-attach civicpatch-org-e2e --no-attach db-e2e --no-attach redis-e2e || status=$?
+# Each run rebuilds the app image, and its layers stay in the build cache: 12GB of it on a 77GB
 # disk. Capped rather than cleared, so the next build still hits cache.
 docker builder prune -f --keep-storage 5GB > /dev/null || true
 exit $status

@@ -131,9 +131,8 @@ function ReviewSession(host: ReviewSessionHost) {
     ? `${jurisdictionName}, ${jurisdictionStateName}`
     : jurisdictionName;
   const { posts, reload: reloadPosts } = useJurisdictionPosts(jurisdictionOcdid);
-  // A scrape-derived changeset always lands in the jurisdiction's default organization
-  // (`find_or_create_for_changeset`'s own fallback) — the first-sorted one, by the same
-  // convention `roster-editor.ts`'s grouping falls back to for an unplaced person.
+  // The body a newly created post lands in. A review can span bodies now, so this stays the
+  // first-sorted one until the picker carries its own organization select (step 9's UI half).
   const { organizations } = useOrganizations(jurisdictionOcdid);
   const organizationId = organizations[0]?.id ?? "";
   const roles = useJurisdictionRoles();

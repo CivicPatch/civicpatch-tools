@@ -20,6 +20,7 @@ from database import divisions, memberships, organizations, posts
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from database.review_priority import issue_count, issue_priority
+from database.source_records import insert_source_records
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
@@ -43,8 +44,8 @@ async def _wipe():
         )
         await cur.execute("DELETE FROM posts WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM divisions WHERE jurisdiction_ocdid = %s", (_OCDID,))
-        # Changesets first: `changesets.organization_id` is a FK since 158, so an
-        # organization cannot go while a changeset still names it.
+        # Changesets first: their source records point at organizations (205: ON DELETE RESTRICT),
+        # so a body cannot go while a changeset's evidence still names it.
         await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_OCDID,))
@@ -877,12 +878,12 @@ async def _add_post_logs(changeset_id: str) -> list[dict]:
 
 
 async def _mint(identities: list[tuple[str, str]], changeset_id: str) -> None:
-    """Create posts the way publishing does, as (role_id, division_ocdid) in the changeset's organization."""
+    """Create posts the way publishing does, as (role_id, division_ocdid) in the default body."""
     from core.post_derivation import DerivedPost
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await organizations.find_or_create_for_changeset(cur, changeset_id, _OCDID)
+        organization_id = await organizations.get_default(cur, _OCDID)
         derived = [
             DerivedPost(
                 organization_id=organization_id,
@@ -1477,3 +1478,72 @@ async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
     assert sorted((c.person_id, c.disposition.value, c.post.label) for c in proposals[changeset_id]) == sorted(
         [(staying, "unchanged", "Position 8"), (leaving, "absent", "Position 8")]
     )
+
+
+async def _record_for(changeset_id: str, organization_id: str, person_id: str, label: str) -> None:
+    """What makes a body enumerated: this changeset read a page for it."""
+    await insert_source_records(
+        changeset_id,
+        _OCDID,
+        {
+            person_id: [
+                {
+                    "name": "Ana Reyes",
+                    "label": label,
+                    "source_url": _ROSTER_URL,
+                    "organization_id": organization_id,
+                }
+            ]
+        },
+    )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_body_the_scrape_never_read_keeps_its_people():
+    """The rule step 9 turns on: a run that read one body cannot retire anyone in another.
+
+    The scrape reads the mayor's office only, and names somebody else there. Ana keeps her council
+    membership because no page was read for the council: the old close swept the changeset's own
+    organization instead, which is the council, and would have retired her from it.
+    """
+    person_id = await _seed_person("Ana Reyes")
+    council, mayors_office = await _two_bodies()
+    await _publish(
+        person_id,
+        [_membership(council, "council-member", _WARD_3, person_id),
+         _membership(mayors_office, "mayor", _BASE, person_id)],
+    )
+
+    other_id = await _seed_person("Bo Chen")
+    changeset_id = await _published_changeset()
+    await _record_for(changeset_id, mayors_office, other_id, "Mayor")
+    from database.publications import publish_changeset
+
+    await publish_changeset(
+        changeset_id,
+        _OCDID,
+        [{"id": other_id, "name": "Bo Chen", "jurisdiction_ocdid": _OCDID}],
+        None,
+        derived=[_membership(mayors_office, "mayor", _BASE, other_id)],
+    )
+
+    assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
+    assert await _open_memberships(other_id) == [(mayors_office, "mayor", _BASE)]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_body_whose_extraction_returned_nobody_closes_nobody():
+    """An empty result is a failed scrape more often than a dissolved body."""
+    person_id = await _seed_person("Ana Reyes")
+    council, _ = await _two_bodies()
+    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
+
+    changeset_id = await _published_changeset()
+    await _record_for(changeset_id, council, person_id, "Council Member Ward 3")
+    from database.publications import publish_changeset
+
+    await publish_changeset(changeset_id, _OCDID, [], None, derived=[])
+
+    assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]

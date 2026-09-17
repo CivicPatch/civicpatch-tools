@@ -192,12 +192,10 @@ async def test_a_pick_made_mid_review_files_under_that_review():
     review_changeset_id = str(uuid.uuid4())
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
         await cur.execute(
-            "INSERT INTO changesets "
-            "  (id, kind, jurisdiction_ocdid, updated_at, organization_id) "
-            "VALUES (%s, 'scrape', %s, now(), %s)",
-            (review_changeset_id, _OCDID, org),
+            "INSERT INTO changesets (id, kind, jurisdiction_ocdid, updated_at) "
+            "VALUES (%s, 'scrape', %s, now())",
+            (review_changeset_id, _OCDID),
         )
         await conn.commit()
 

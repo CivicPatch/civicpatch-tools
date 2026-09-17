@@ -227,6 +227,23 @@ def _people_by_organization(derived: list[DerivedPost]) -> dict[str, list[str]]:
     return people
 
 
+async def _organizations_to_close_in(
+    cur, changeset_id: str, people_here: dict[str, list[str]]
+) -> list[str]:
+    """The bodies `close_absent` runs in, one call each.
+
+    The bodies it read a page for: one it never looked at keeps its people, and one whose
+    extraction returned nobody closes nobody (`close_absent`'s own guard), because an empty result
+    is a failed scrape more often than a dissolved body.
+
+    A hand edit records evidence only for the people it adds, so a changeset with none falls back to
+    the bodies its own roster puts people in. Leaving the last person out of a body therefore does
+    not retire them: ending that membership is an explicit act now, not an omission.
+    """
+    read = await source_records.organizations_for_changeset(cur, changeset_id)
+    return read or list(people_here)
+
+
 async def publish_changeset(
     changeset_id: str,
     jurisdiction_ocdid: str,
@@ -270,11 +287,8 @@ async def publish_changeset(
                 read_from_a_source,
             )
 
-        # Only bodies this changeset read a page for: one it never looked at keeps its people, and
-        # one whose extraction returned nobody closes nobody (`close_absent`'s own guard) — an
-        # empty result is a failed scrape more often than a dissolved body.
         people_here = _people_by_organization(derived or [])
-        for organization_id in await source_records.organizations_for_changeset(cur, changeset_id):
+        for organization_id in await _organizations_to_close_in(cur, changeset_id, people_here):
             await memberships.close_absent(
                 cur, organization_id, people_here.get(organization_id, []), last_seen_at
             )
