@@ -13,6 +13,7 @@ from shared.schemas import (
     PipelineRunConfig,
     RoleConfig,
 )
+from runners.people_collector.utils.crawl_order import least_crawled_section_first
 from shared.utils.statuses import PipelineRunStatus
 
 
@@ -80,7 +81,9 @@ class LinkFrontier(BaseModel):
         return LinkStatus(link.status) if link else None
 
     def next_pending(self) -> Optional["Link"]:
-        return self.links[self.queue[0]] if self.queue else None
+        crawled = [key for key, link in self.links.items() if link.status != LinkStatus.PENDING.value]
+        key = least_crawled_section_first(self.queue, crawled)
+        return self.links[key] if key is not None else None
 
     def next_with_status(self, status: "LinkStatus") -> Optional["Link"]:
         if status == LinkStatus.PENDING:

@@ -44,13 +44,12 @@
   outline-offset: 2px;
 }
 
-/* Sized to match recent-activity/recent-publications, not .blog-list__title (css/blog.css)
-   — this is a homepage widget row, not the full blog page. */
+/* Sizes follow the wire-demo blog widget (.scratch/wire-demo, .bl-item-*). */
 .blog-updates__title {
   /* Flex items stretch to fill the cross axis by default — without this, the anchor's
      hit box covers the row's full width, not just the visible title text. */
   align-self: flex-start;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-lg);
   color: var(--text-default);
   text-decoration: none;
 }
@@ -77,14 +76,14 @@
 
 .blog-updates__meta {
   color: var(--text-muted);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   font-family: var(--font-mono);
   margin-top: 0.3rem;
 }
 
 .blog-updates__desc {
   color: var(--text-muted);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-md);
   margin: 0.4rem 0 0;
 }
 }

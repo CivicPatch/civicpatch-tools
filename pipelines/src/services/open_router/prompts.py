@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import List
 
+from pydantic import BaseModel
+
 
 def relevant_page_prompt(
     page_url: str, jurisdiction_name: str = "", known_roles: List[str] = []
@@ -113,12 +115,84 @@ def relevant_page_prompt(
     return prompt
 
 
+class PromptOrganization(BaseModel):
+    """A body as the officials prompt names it: its name and its posts' labels. `posts` may be
+    empty — a body can be named without listing what it holds."""
+
+    name: str
+    posts: List[str] = []
+
+
+_PAGE_LABEL_RULES = """    - Everything the page uses to identify which office this person holds, written as one
+      label. Collect both parts:
+        * the title — what the office is called: "Mayor", "Council Member", "Alderman",
+          "Commissioner", "Supervisor", "Clerk"
+        * which one — the district, ward, place or number, when a body has several:
+          "District 6", "Ward 3", "Place 2", "At-Large A", "Posn. 2"
+    - Write each part exactly as the page writes it. Do not rename, expand, abbreviate or
+      normalize: "Posn. 2" stays "Posn. 2", "Council Ward 3" stays "Council Ward 3".
+    - The two parts are often far apart. The district or place sits beside the name; the
+      title is in the section heading, the page title, or the body's description of itself.
+      Collect the title from wherever the page states it:
+        "Place 3 (East Ward)" under a "City Council" section
+            -> "Council Member Place 3 (East Ward)"
+        "District 1" on a page describing "one councilperson per district"
+            -> "Council Member District 1"
+    - Every seat belongs to a body, and its label needs that body's member title. Take the
+      title from anywhere on the page: the page title, a section heading, or a sentence about
+      the body. A heading directly above a person that is only a seat is not the title:
+        "Ward 7" on a page titled "Mayor and Board of Selectmen"
+            -> "Selectman Ward 7"
+      A title naming several offices does not give all of them to everyone: only the person
+      the page names as mayor is the mayor.
+    - If the person holds more than one office, include every one in the same label, in the
+      page's order. A second office often follows the name rather than preceding it:
+        "Council Member Seat 4: Jane Roe, Vice Mayor"
+            -> "Council Member Seat 4 and Vice Mayor\""""
+
+
+def _bullets(items: List[str], indent: str) -> str:
+    return "\n".join(f"{indent}- {item}" for item in items)
+
+
+def _organization_scope(
+    organization: PromptOrganization, other_organizations: List[PromptOrganization]
+) -> str:
+    """Which body this extraction is for, and — as far as `other_organizations` says — whose
+    people to leave out. How much of the other bodies to show is decided by what is passed in."""
+    others = [
+        f"{other.name}: {', '.join(other.posts)}" if other.posts else other.name
+        for other in other_organizations
+    ]
+    exclusion = (
+        "\n    These posts belong to other bodies. Do not extract a person for holding one of them:\n"
+        + _bullets(others, "    ")
+        if others
+        else ""
+    )
+    return f"""
+    TARGET BODY
+    Only extract people who hold a post in {organization.name}.{exclusion}
+"""
+
+
+def _pick_list_label_rules(organization: PromptOrganization, page_label_rules: str) -> str:
+    return f"""    - Choose the one post below that the page shows this person holds, and copy it exactly
+      as written here — not as the page writes it:
+{_bullets(organization.posts, "        ")}
+    - If the page shows them holding a {organization.name} post that is not listed, do not pick
+      the nearest one. Write the label from the page instead, as follows:
+{page_label_rules}"""
+
+
 # Note: Claude Sonnet 4.6 Generated prompt
 def municipality_officials_prompt(
     known_roles: List[str],
     state: str = "",
     county: str | None = None,
     current_date: str | None = None,
+    organization: PromptOrganization | None = None,
+    other_organizations: List[PromptOrganization] = [],
 ):
     """
     Generate a prompt for extracting municipality officials (Llama-optimized).
@@ -144,12 +218,17 @@ def municipality_officials_prompt(
         f"\n    Jurisdiction: {jurisdiction_context}" if jurisdiction_context else ""
     )
 
+    scope = _organization_scope(organization, other_organizations) if organization else ""
+    label_rules = (
+        _pick_list_label_rules(organization, _PAGE_LABEL_RULES) if organization else _PAGE_LABEL_RULES
+    )
+
     return f"""
     You are a data extraction assistant. Extract information about the currently
     serving elected officials of the target municipality from the provided content.
 
     Current Date: {current_date}{jurisdiction_line}
-
+{scope}
     STEP 1 - FIND OFFICIALS
     Only extract officials from:
     - A structured table, list, or directory of officials
@@ -184,32 +263,7 @@ def municipality_officials_prompt(
     - The image src of a profile photo, exactly as it appears in the content.
 
     label:
-    - Everything the page uses to identify which office this person holds, written as one
-      label. Collect both parts:
-        * the title — what the office is called: "Mayor", "Council Member", "Alderman",
-          "Commissioner", "Supervisor", "Clerk"
-        * which one — the district, ward, place or number, when a body has several:
-          "District 6", "Ward 3", "Place 2", "At-Large A", "Posn. 2"
-    - Write each part exactly as the page writes it. Do not rename, expand, abbreviate or
-      normalize: "Posn. 2" stays "Posn. 2", "Council Ward 3" stays "Council Ward 3".
-    - The two parts are often far apart. The district or place sits beside the name; the
-      title is in the section heading, the page title, or the body's description of itself.
-      Collect the title from wherever the page states it:
-        "Place 3 (East Ward)" under a "City Council" section
-            -> "Council Member Place 3 (East Ward)"
-        "District 1" on a page describing "one councilperson per district"
-            -> "Council Member District 1"
-    - Every seat belongs to a body, and its label needs that body's member title. Take the
-      title from anywhere on the page: the page title, a section heading, or a sentence about
-      the body. A heading directly above a person that is only a seat is not the title:
-        "Ward 7" on a page titled "Mayor and Board of Selectmen"
-            -> "Selectman Ward 7"
-      A title naming several offices does not give all of them to everyone: only the person
-      the page names as mayor is the mayor.
-    - If the person holds more than one office, include every one in the same label, in the
-      page's order. A second office often follows the name rather than preceding it:
-        "Council Member Seat 4: Jane Roe, Vice Mayor"
-            -> "Council Member Seat 4 and Vice Mayor"
+{label_rules}
     {roles_hint_str}
 
     phone, email:

@@ -19,7 +19,7 @@ from runners.people_collector.schemas import (
     ExtractedPersonRecord,
 )
 from services.open_router.llm import run_prompt as run_together_prompt
-from services.open_router.prompts import municipality_officials_prompt
+from services.open_router.prompts import PromptOrganization, municipality_officials_prompt
 from utils import cost_utils
 from scoring import (
     EVAL_TAXONOMY,
@@ -55,8 +55,28 @@ PER_PERSON_THRESHOLDS = {"roles": 1.0, "designations": 1.0}
 EVAL_CURRENT_DATE = "2025-09-01"
 
 
-def make_together_prompt(known_roles):
-    return municipality_officials_prompt(known_roles, current_date=EVAL_CURRENT_DATE)
+# How much of the other bodies a scoped case shows the prompt — the stage 5a comparison:
+# `posts` their names and posts, `names` their names only, `none` nothing.
+EVAL_OTHER_ORGANIZATIONS = os.environ.get("EVAL_OTHER_ORGANIZATIONS", "posts")
+
+
+def _other_organizations(expected: dict) -> list[PromptOrganization]:
+    others = [PromptOrganization(**other) for other in expected.get("other_organizations", [])]
+    if EVAL_OTHER_ORGANIZATIONS == "none":
+        return []
+    if EVAL_OTHER_ORGANIZATIONS == "names":
+        return [PromptOrganization(name=other.name) for other in others]
+    return others
+
+
+def make_together_prompt(expected: dict):
+    organization = expected.get("organization")
+    return municipality_officials_prompt(
+        expected.get("known_roles", []),
+        current_date=EVAL_CURRENT_DATE,
+        organization=PromptOrganization(**organization) if organization else None,
+        other_organizations=_other_organizations(expected),
+    )
 
 
 
@@ -88,8 +108,7 @@ async def _run_single_case(model_client, case, ocdid):
     _progress(name, f"START  {case['id']}")
     started = time.time()
 
-    known_roles = case["expected"].get("known_roles", [])
-    prompt = make_prompt(known_roles)
+    prompt = make_prompt(case["expected"])
     try:
         response = await run_prompt(
             _eval_run_id(name),
@@ -292,11 +311,21 @@ async def test_provider_comparison(load_eval_cases):
             "total_cost_usd": float(cost_utils.sum_cost(llm_costs)),
         }
         accuracy_report = as_report(result["accuracy"])
-        # A placeholder, not an empty list: `known_roles` is injected per case, and passing
-        # [] omitted the line entirely — so the archived text was missing a block that two of
-        # the fifteen cases actually send. Archive the template as structured, marking what
-        # varies, rather than one case's rendering of it.
-        run = record_run(evals_dir, make_together_prompt(["<injected per case>"]))
+        # Placeholders, not empty values: `known_roles` and the organization blocks are injected
+        # per case, and passing nothing omits those blocks entirely — so the archived text would
+        # miss structure real cases send. Archive the template as structured, marking what varies.
+        run = record_run(
+            evals_dir,
+            make_together_prompt(
+                {
+                    "known_roles": ["<injected per case>"],
+                    "organization": {"name": "<body, per case>", "posts": ["<posts, per case>"]},
+                    "other_organizations": [
+                        {"name": "<other bodies, per case>", "posts": ["<posts, per case>"]}
+                    ],
+                }
+            ),
+        )
         record_history(
             evals_dir,
             client["name"],

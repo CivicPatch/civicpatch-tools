@@ -249,7 +249,7 @@ def _leaked_values(people, prompt):
 @pytest.mark.parametrize("case_dir", CASES_WITH_PEOPLE, ids=lambda path: path.name)
 def test_officials_prompt_does_not_contain_expected_people(case_dir):
     expected = _expected(case_dir)
-    prompt = make_together_prompt(expected.get("known_roles", []))
+    prompt = make_together_prompt(expected)
     assert _leaked_values(expected["people"], prompt) == []
 
 

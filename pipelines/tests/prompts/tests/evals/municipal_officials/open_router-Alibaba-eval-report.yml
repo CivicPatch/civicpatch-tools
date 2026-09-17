@@ -1,26 +1,26 @@
 run:
-  timestamp: '2026-09-16T21:19:41+00:00'
-  prompt_sha256: 5f1ad4c63ce8
-  prompt_file: _prompts/5f1ad4c63ce8.txt
+  timestamp: '2026-09-16T23:40:43+00:00'
+  prompt_sha256: 8cdc56e997db
+  prompt_file: _prompts/8cdc56e997db.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
   providers:
   - Alibaba
-  elapsed_seconds: 164.46
-  total_input_tokens: 124908
-  total_output_tokens: 22125
-  total_cost_usd: 0.0095767656
+  elapsed_seconds: 21.94
+  total_input_tokens: 16562
+  total_output_tokens: 2814
+  total_cost_usd: 0.0029185736
 accuracy:
   person:
-    correct: 72
+    correct: 9
     missing: 0
-    spurious: 2
+    spurious: 0
     wrong: 0
-    precision: 0.972972972972973
+    precision: 1.0
     recall: 1.0
-    f1: 0.9863013698630136
+    f1: 1.0
   primary_role:
-    correct: 72
+    correct: 9
     missing: 0
     spurious: 0
     wrong: 0
@@ -28,7 +28,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   roles:
-    correct: 75
+    correct: 9
     missing: 0
     spurious: 0
     wrong: 0
@@ -36,7 +36,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   district:
-    correct: 28
+    correct: 7
     missing: 0
     spurious: 0
     wrong: 0
@@ -44,7 +44,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   designations_other:
-    correct: 19
+    correct: 2
     missing: 0
     spurious: 0
     wrong: 0
@@ -52,7 +52,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   email:
-    correct: 42
+    correct: 9
     missing: 0
     spurious: 0
     wrong: 0
@@ -60,7 +60,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   phone:
-    correct: 60
+    correct: 9
     missing: 0
     spurious: 0
     wrong: 0
@@ -68,7 +68,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   url:
-    correct: 64
+    correct: 9
     missing: 0
     spurious: 0
     wrong: 0
@@ -76,253 +76,51 @@ accuracy:
     recall: 1.0
     f1: 1.0
   start_date:
-    correct: 12
+    correct: 0
     missing: 0
     spurious: 0
     wrong: 0
-    precision: 1.0
-    recall: 1.0
-    f1: 1.0
+    precision: null
+    recall: null
+    f1: null
   end_date:
-    correct: 12
+    correct: 0
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: null
+    recall: null
+    f1: null
+  image:
+    correct: 9
     missing: 0
     spurious: 0
     wrong: 0
     precision: 1.0
     recall: 1.0
     f1: 1.0
-  image:
-    correct: 24
-    missing: 0
-    spurious: 1
-    wrong: 0
-    precision: 0.96
-    recall: 1.0
-    f1: 0.9795918367346939
 aggregated_report:
-  email: 1.0
-  image: 1.0
-  roles_precision: 1.0
-  start_date: 1.0
   phone: 1.0
-  designations: 1.0
+  designations_precision: 1.0
   name: 1.0
+  email: 1.0
+  roles_precision: 1.0
   roles: 1.0
   url: 1.0
-  designations_precision: 1.0
-  end_date: 1.0
+  image: 1.0
+  designations: 1.0
 per_case_scores:
-- case_id: austin_city_manager_staff
-  score: 1.0
-  person_precision: null
-  scores: {}
-- case_id: austin_council
+- case_id: seattle_council_pick_list_missing_president
   score: 1.0
   person_precision: 1.0
   scores:
-    email: 1.0
-    roles_precision: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
+    designations_precision: 1.0
     roles: 1.0
     url: 1.0
-    designations_precision: 1.0
-- case_id: austin_district7_council_member
-  score: 1.0
-  person_precision: 1.0
-  scores:
     email: 1.0
+    roles_precision: 1.0
+    name: 1.0
+    phone: 1.0
     image: 1.0
-    roles_precision: 1.0
-    start_date: 1.0
-    phone: 1.0
     designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-    designations_precision: 1.0
-    end_date: 1.0
-- case_id: board_of_aldermen
-  score: 0.8333333333333334
-  person_precision: 0.8333333333333334
-  scores:
-    email: 1.0
-    image: 1.0
-    roles_precision: 1.0
-    start_date: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-    end_date: 1.0
-- case_id: coleman_council
-  score: 1.0
-  person_precision: 1.0
-  scores:
-    email: 1.0
-    roles_precision: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-    designations_precision: 1.0
-- case_id: golinda_mixed_city_county
-  score: 1.0
-  person_precision: 1.0
-  scores:
-    email: 1.0
-    roles_precision: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-- case_id: inverted_name_format
-  score: 1.0
-  person_precision: 1.0
-  scores:
-    email: 1.0
-    roles_precision: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-    designations_precision: 1.0
-- case_id: jackson_mayors_office
-  score: 1.0
-  person_precision: 1.0
-  scores:
-    email: 1.0
-    image: 1.0
-    roles_precision: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-- case_id: la_porte_council
-  score: 1.0
-  person_precision: 1.0
-  scores:
-    email: 1.0
-    image: 1.0
-    roles_precision: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-    designations_precision: 1.0
-- case_id: mixed_current_past
-  score: 1.0
-  person_precision: 1.0
-  scores:
-    email: 1.0
-    roles_precision: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-- case_id: nav_links_no_names
-  score: 0.0
-  person_precision: 0.0
-  scores: {}
-- case_id: placeholder_name_council
-  score: 1.0
-  person_precision: 1.0
-  scores:
-    email: 1.0
-    roles_precision: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-    designations_precision: 1.0
-- case_id: raisin_township_clerk
-  score: 1.0
-  person_precision: 1.0
-  scores:
-    email: 1.0
-    roles_precision: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-- case_id: raisin_township_supervisor
-  score: 1.0
-  person_precision: 1.0
-  scores:
-    email: 1.0
-    roles_precision: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-- case_id: redundant_place_role
-  score: 1.0
-  person_precision: 1.0
-  scores:
-    email: 1.0
-    roles_precision: 1.0
-    start_date: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-    designations_precision: 1.0
-    end_date: 1.0
-- case_id: seattle_council_separate_mayor
-  score: 1.0
-  person_precision: 1.0
-  scores:
-    email: 1.0
-    image: 1.0
-    roles_precision: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-    designations_precision: 1.0
-- case_id: vacant_positions_council
-  score: 1.0
-  person_precision: 1.0
-  scores:
-    email: 1.0
-    roles_precision: 1.0
-    phone: 1.0
-    designations: 1.0
-    name: 1.0
-    roles: 1.0
-    url: 1.0
-mismatches:
-  board_of_aldermen:
-  - person: Abelardo Gonzalez
-    field: person
-    expected_label: ''
-    actual_label: Alderman
-    expected: "\u2014"
-    actual: present
-  nav_links_no_names:
-  - person: Edward Zapalac
-    field: person
-    expected_label: ''
-    actual_label: Councilmember Place 5
-    expected: "\u2014"
-    actual: present
-  raisin_township_clerk:
-  - person: Susan Bunch
-    field: image
-    expected_label: Clerk
-    actual_label: Clerk
-    expected: "\u2014"
-    actual: local://2105ede652ed.png
+mismatches: {}
