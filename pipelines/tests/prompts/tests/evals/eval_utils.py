@@ -163,7 +163,7 @@ def record_run(evals_dir: str, prompt: str) -> dict:
     }
 
 
-HISTORY_DEPTH = 5
+HISTORY_DEPTH = 30
 
 
 def _delete_files_not_named(directory: pathlib.Path, pattern: str, keep: set[str]) -> None:

@@ -1,0 +1,8 @@
+mismatches:
+  jackson_mayors_office:
+  - actual: https://jacksontn.gov/government/mayorsoffice
+    actual_label: Mayor
+    expected: https://jacksontn.gov/government/mayorsoffice/aboutmayorconger
+    expected_label: Mayor
+    field: url
+    person: Scott Conger

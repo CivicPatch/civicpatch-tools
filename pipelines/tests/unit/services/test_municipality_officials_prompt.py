@@ -1,4 +1,4 @@
-"""The officials prompt's organization scoping: what it names, lists and excludes.
+"""The officials prompt's organization scoping: what it names and lists.
 
 Wording is judged by the evals; these pin what reaches the prompt at all.
 """
@@ -10,7 +10,6 @@ from services.open_router.prompts import PromptOrganization, municipality_offici
 pytestmark = pytest.mark.unit
 
 _COUNCIL = PromptOrganization(name="City Council", posts=["Council Member District 1", "Council President"])
-_MAYOR = PromptOrganization(name="Office of the Mayor", posts=["Mayor"])
 
 
 def _prompt(**kwargs) -> str:
@@ -38,18 +37,3 @@ def test_a_scoped_prompt_still_explains_how_to_write_a_label_for_an_unlisted_pos
     assert "not listed, do not pick" in prompt
     assert "Write each part exactly as the page writes it" in prompt
 
-
-def test_other_bodies_are_excluded_with_their_posts_when_given():
-    prompt = _prompt(organization=_COUNCIL, other_organizations=[_MAYOR])
-
-    assert "- Office of the Mayor: Mayor" in prompt
-
-
-def test_other_bodies_given_without_posts_are_excluded_by_name_only():
-    prompt = _prompt(organization=_COUNCIL, other_organizations=[PromptOrganization(name="Office of the Mayor")])
-
-    assert "- Office of the Mayor\n" in prompt
-
-
-def test_no_other_bodies_means_no_exclusion_block():
-    assert "belong to other bodies" not in _prompt(organization=_COUNCIL)

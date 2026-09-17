@@ -116,8 +116,7 @@ def relevant_page_prompt(
 
 
 class PromptOrganization(BaseModel):
-    """A body as the officials prompt names it: its name and its posts' labels. `posts` may be
-    empty — a body can be named without listing what it holds."""
+    """A body as the officials prompt names it: its name and its posts' labels."""
 
     name: str
     posts: List[str] = []
@@ -155,24 +154,12 @@ def _bullets(items: List[str], indent: str) -> str:
     return "\n".join(f"{indent}- {item}" for item in items)
 
 
-def _organization_scope(
-    organization: PromptOrganization, other_organizations: List[PromptOrganization]
-) -> str:
-    """Which body this extraction is for, and — as far as `other_organizations` says — whose
-    people to leave out. How much of the other bodies to show is decided by what is passed in."""
-    others = [
-        f"{other.name}: {', '.join(other.posts)}" if other.posts else other.name
-        for other in other_organizations
-    ]
-    exclusion = (
-        "\n    These posts belong to other bodies. Do not extract a person for holding one of them:\n"
-        + _bullets(others, "    ")
-        if others
-        else ""
-    )
+def _organization_scope(organization: PromptOrganization) -> str:
+    """Naming the target body is the whole scope. Listing other bodies was tried (stage 5a) and
+    added nothing on pages where each body has its own roster."""
     return f"""
     TARGET BODY
-    Only extract people who hold a post in {organization.name}.{exclusion}
+    Only extract people who hold a post in {organization.name}.
 """
 
 
@@ -192,7 +179,6 @@ def municipality_officials_prompt(
     county: str | None = None,
     current_date: str | None = None,
     organization: PromptOrganization | None = None,
-    other_organizations: List[PromptOrganization] = [],
 ):
     """
     Generate a prompt for extracting municipality officials (Llama-optimized).
@@ -218,7 +204,7 @@ def municipality_officials_prompt(
         f"\n    Jurisdiction: {jurisdiction_context}" if jurisdiction_context else ""
     )
 
-    scope = _organization_scope(organization, other_organizations) if organization else ""
+    scope = _organization_scope(organization) if organization else ""
     label_rules = (
         _pick_list_label_rules(organization, _PAGE_LABEL_RULES) if organization else _PAGE_LABEL_RULES
     )

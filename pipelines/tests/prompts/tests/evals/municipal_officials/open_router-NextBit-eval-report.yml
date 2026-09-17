@@ -1,18 +1,18 @@
 run:
-  timestamp: '2026-09-16T23:40:43+00:00'
-  prompt_sha256: 8cdc56e997db
-  prompt_file: _prompts/8cdc56e997db.txt
+  timestamp: '2026-09-17T00:00:54+00:00'
+  prompt_sha256: aeb59ab46565
+  prompt_file: _prompts/aeb59ab46565.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
   providers:
   - NextBit
-  elapsed_seconds: 22.57
-  total_input_tokens: 16562
-  total_output_tokens: 1981
-  total_cost_usd: 0.00311877
+  elapsed_seconds: 10.0
+  total_input_tokens: 6803
+  total_output_tokens: 525
+  total_cost_usd: 0.0012042
 accuracy:
   person:
-    correct: 9
+    correct: 1
     missing: 0
     spurious: 0
     wrong: 0
@@ -20,7 +20,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   primary_role:
-    correct: 9
+    correct: 1
     missing: 0
     spurious: 0
     wrong: 0
@@ -28,7 +28,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   roles:
-    correct: 9
+    correct: 1
     missing: 0
     spurious: 0
     wrong: 0
@@ -36,31 +36,31 @@ accuracy:
     recall: 1.0
     f1: 1.0
   district:
-    correct: 7
+    correct: 0
     missing: 0
     spurious: 0
     wrong: 0
-    precision: 1.0
-    recall: 1.0
-    f1: 1.0
+    precision: null
+    recall: null
+    f1: null
   designations_other:
-    correct: 2
+    correct: 0
     missing: 0
     spurious: 0
     wrong: 0
-    precision: 1.0
-    recall: 1.0
-    f1: 1.0
+    precision: null
+    recall: null
+    f1: null
   email:
-    correct: 9
+    correct: 0
     missing: 0
     spurious: 0
     wrong: 0
-    precision: 1.0
-    recall: 1.0
-    f1: 1.0
+    precision: null
+    recall: null
+    f1: null
   phone:
-    correct: 9
+    correct: 1
     missing: 0
     spurious: 0
     wrong: 0
@@ -68,13 +68,13 @@ accuracy:
     recall: 1.0
     f1: 1.0
   url:
-    correct: 0
+    correct: 1
     missing: 0
     spurious: 0
-    wrong: 9
-    precision: 0.0
-    recall: 0.0
-    f1: 0.0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
   start_date:
     correct: 0
     missing: 0
@@ -92,90 +92,31 @@ accuracy:
     recall: null
     f1: null
   image:
-    correct: 9
+    correct: 0
     missing: 0
     spurious: 0
     wrong: 0
-    precision: 1.0
-    recall: 1.0
-    f1: 1.0
+    precision: null
+    recall: null
+    f1: null
 aggregated_report:
-  phone: 1.0
-  designations_precision: 1.0
   name: 1.0
-  email: 1.0
-  roles_precision: 1.0
   roles: 1.0
-  url: 0.0
-  image: 1.0
+  roles_precision: 1.0
   designations: 1.0
+  phone: 1.0
+  email: 1.0
+  url: 1.0
 per_case_scores:
-- case_id: seattle_council_pick_list_missing_president
-  score: 0.8888888888888888
+- case_id: austin_council_shared_roster_scoped_to_mayor
+  score: 1.0
   person_precision: 1.0
   scores:
-    designations_precision: 1.0
-    roles: 1.0
-    url: 0.0
-    email: 1.0
-    roles_precision: 1.0
     name: 1.0
-    phone: 1.0
-    image: 1.0
+    roles: 1.0
+    roles_precision: 1.0
     designations: 1.0
-mismatches:
-  seattle_council_pick_list_missing_president:
-  - person: Alexis Mercedes Rinck
-    field: url
-    expected_label: Councilmember Position 8
-    actual_label: Council Member Position 8
-    expected: https://seattle.gov/council/members/alexis-mercedes-rinck
-    actual: https:///council/members/alexis-mercedes-rinck
-  - person: Bob Kettle
-    field: url
-    expected_label: Councilmember District 7
-    actual_label: Council Member District 7
-    expected: https://seattle.gov/council/members/bob-kettle
-    actual: https:///council/members/bob-kettle
-  - person: Dan Strauss
-    field: url
-    expected_label: Councilmember District 6
-    actual_label: Council Member District 6
-    expected: https://seattle.gov/council/members/dan-strauss
-    actual: https:///council/members/dan-strauss
-  - person: Debora Juarez
-    field: url
-    expected_label: Councilmember District 5
-    actual_label: Council Member District 5
-    expected: https://seattle.gov/council/members/debora-juarez
-    actual: https:///council/members/debora-juarez
-  - person: Dionne Foster
-    field: url
-    expected_label: Councilmember Position 9
-    actual_label: Council Member Position 9
-    expected: https://seattle.gov/council/members/dionne-foster
-    actual: https:///council/members/dionne-foster
-  - person: Eddie Lin
-    field: url
-    expected_label: Councilmember District 2
-    actual_label: Council Member District 2
-    expected: https://seattle.gov/council/members/eddie-lin
-    actual: https:///council/members/eddie-lin
-  - person: Joy Hollingsworth
-    field: url
-    expected_label: Council President District 3
-    actual_label: Council President District 3
-    expected: https://seattle.gov/council/members/joy-hollingsworth
-    actual: https:///council/members/joy-hollingsworth
-  - person: Maritza Rivera
-    field: url
-    expected_label: Councilmember District 4
-    actual_label: Council Member District 4
-    expected: https://seattle.gov/council/members/maritza-rivera
-    actual: https:///council/members/maritza-rivera
-  - person: Rob Saka
-    field: url
-    expected_label: Councilmember District 1
-    actual_label: Council Member District 1
-    expected: https://seattle.gov/council/members/rob-saka
-    actual: https:///council/members/rob-saka
+    phone: 1.0
+    email: 1.0
+    url: 1.0
+mismatches: {}
