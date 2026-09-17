@@ -96,56 +96,51 @@ async def proposals_for_requests(
     ocdids = await changesets_db.jurisdictions_for_changesets(changeset_ids)
     if not ocdids:
         return {}
-    # The post lookup is org-scoped, because `posts_identity_uq` is. A changeset naming no
-    # organization has never published, so it has no posts to find either.
-    organizations = await changesets_db.organizations_for_changesets(changeset_ids)
     if rosters is None:
         rosters = await proposed_rosters(changeset_ids)
 
     roles = await get_roles()
     taxonomy = build_taxonomy(RoleConfig(roles=roles))
 
+    jurisdictions = list(set(ocdids.values()))
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        jurisdictions = list(set(ocdids.values()))
         held = await memberships_db.open_memberships(cur, jurisdictions)
-        post_ids = await posts_db.ids_by_identity(
-            cur, list(set(organizations.values()))
-        )
 
     held_by_jurisdiction: dict[str, list[ExistingMembership]] = {ocdid: [] for ocdid in jurisdictions}
     for membership in held:
         held_by_jurisdiction[membership.jurisdiction_ocdid].append(membership)
 
-    proposals: dict[str, list[ProposedChange]] = {}
+    changes_by_changeset: dict[str, list[ProposedChange]] = {}
     for changeset_id, ocdid in ocdids.items():
         people = [
             RosterEntry(**{**person, "jurisdiction_ocdid": ocdid})
             for person in rosters.get(changeset_id, [])
         ]
-        proposals[changeset_id] = [
+        changes_by_changeset[changeset_id] = propose(
+            derived_posts(people, taxonomy, roles, await chosen_posts(picks_in(people))),
+            held_by_jurisdiction[ocdid],
+        )
+
+    organization_ids = list(
+        {change.organization_id for changes in changes_by_changeset.values() for change in changes}
+    )
+    async with pool.connection() as conn, conn.cursor() as cur:
+        post_ids = await posts_db.ids_by_identity(cur, organization_ids)
+
+    return {
+        changeset_id: [
             change.model_copy(
                 update={
-                    "post_id": (
-                        post_ids.get(
-                            (organization_id, change.role_id, change.division_ocdid)
-                        )
-                        if (organization_id := organizations.get(changeset_id))
-                        else None
+                    "post_id": post_ids.get(
+                        (change.organization_id, change.role_id, change.division_ocdid)
                     )
                 }
             )
-            for change in propose(
-                derived_posts(
-                    people,
-                    taxonomy,
-                    roles,
-                    await chosen_posts(picks_in(people)),
-                ),
-                held_by_jurisdiction[ocdid],
-            )
+            for change in changes
         ]
-    return proposals
+        for changeset_id, changes in changes_by_changeset.items()
+    }
 
 
 async def assertions_for_people(person_ids: list[str]) -> dict[str, list[dict]]:

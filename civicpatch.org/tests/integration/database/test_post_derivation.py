@@ -408,6 +408,7 @@ async def test_publish_writes_memberships_for_the_roster():
             """,
             (changeset_id := str(uuid.uuid4()), _OCDID),
         )
+        organization_id = await organizations.get_default(cur, _OCDID)
         # Publish reads `updated_at` as the observation's clock, so this is where `_T0` goes.
         await cur.execute(
             """
@@ -430,6 +431,7 @@ async def test_publish_writes_memberships_for_the_roster():
     ]
     derived = [
         DerivedPost(
+            organization_id=organization_id,
             role_id="mayor",
             role_label="Mayor",
             division_ocdid=_BASE,
@@ -874,28 +876,25 @@ async def _add_post_logs(changeset_id: str) -> list[dict]:
         return [{"changes": row[0], "user_id": row[1]} for row in await cur.fetchall()]
 
 
-def _derived(role_id: str, division_ocdid: str):
+async def _mint(identities: list[tuple[str, str]], changeset_id: str) -> None:
+    """Create posts the way publishing does, as (role_id, division_ocdid) in the changeset's organization."""
     from core.post_derivation import DerivedPost
 
-    return DerivedPost(
-        role_id=role_id,
-        role_label=role_id.title(),
-        division_ocdid=division_ocdid,
-        headcount=1,
-        members=[],
-    )
-
-
-async def _mint(derived_posts_list, changeset_id: str) -> None:
-    """Create seats the way publishing does. Ingest no longer mints — it only projects."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await organizations.find_or_create_for_changeset(
-            cur, changeset_id, _OCDID
-        )
-        await posts.create_all(
-            cur, _OCDID, organization_id, derived_posts_list, changeset_id
-        )
+        organization_id = await organizations.find_or_create_for_changeset(cur, changeset_id, _OCDID)
+        derived = [
+            DerivedPost(
+                organization_id=organization_id,
+                role_id=role_id,
+                role_label=role_id.title(),
+                division_ocdid=division_ocdid,
+                headcount=1,
+                members=[],
+            )
+            for role_id, division_ocdid in identities
+        ]
+        await posts.create_all(cur, _OCDID, derived, changeset_id)
         await conn.commit()
 
 
@@ -907,7 +906,7 @@ async def test_minting_a_post_is_logged_against_the_scrape_that_caused_it():
     changes, so it is an event, not a property of the row."""
     changeset_id = await _seed_request()
 
-    await _mint([_derived("mayor", _BASE)], changeset_id)
+    await _mint([("mayor", _BASE)], changeset_id)
 
     logs = await _add_post_logs(changeset_id)
     assert len(logs) == 1
@@ -923,10 +922,10 @@ async def test_matching_an_existing_post_logs_nothing():
     """Only a mint is news. A second scrape seeing the same seat has invented nothing, and
     logging it would make every re-scrape look like a change."""
     first = await _seed_request()
-    await _mint([_derived("mayor", _BASE)], first)
+    await _mint([("mayor", _BASE)], first)
 
     second = await _seed_request()
-    await _mint([_derived("mayor", _BASE)], second)
+    await _mint([("mayor", _BASE)], second)
 
     assert len(await _add_post_logs(first)) == 1
     assert await _add_post_logs(second) == []
@@ -936,10 +935,10 @@ async def test_matching_an_existing_post_logs_nothing():
 @pytest.mark.integration
 async def test_only_the_new_seat_is_logged_when_a_scrape_mixes_both():
     changeset_id = await _seed_request()
-    await _mint([_derived("mayor", _BASE)], changeset_id)
+    await _mint([("mayor", _BASE)], changeset_id)
 
     later = await _seed_request()
-    await _mint([_derived("mayor", _BASE), _derived("council-member", _WARD_3)], later)
+    await _mint([("mayor", _BASE), ("council-member", _WARD_3)], later)
 
     logs = await _add_post_logs(later)
     assert [log["changes"]["subject"] for log in logs] == ["council-member"]
@@ -1030,11 +1029,12 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
     other_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        organization_id = await factories.default_organization(cur, _OCDID)
         await cur.execute(
             "INSERT INTO source_records "
-            "  (changeset_id, jurisdiction_ocdid, name, label, source_url) "
-            "VALUES (%s, %s, 'Someone Else', 'Clerk', 'https://zz.gov/clerk') RETURNING id",
-            (changeset_id, _OCDID),
+            "  (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id) "
+            "VALUES (%s, %s, 'Someone Else', 'Clerk', 'https://zz.gov/clerk', %s) RETURNING id",
+            (changeset_id, _OCDID, organization_id),
         )
         await cur.execute(
             "INSERT INTO source_record_identities (source_record_id, person_id) "
@@ -1098,9 +1098,9 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes_and_moves_last_see
             # these, so without them `proposed_roster` is empty and the publish refuses.
             await cur.execute(
                 "INSERT INTO source_records "
-                "  (changeset_id, jurisdiction_ocdid, name, label, source_url) "
-                "VALUES (%s, %s, %s, %s, %s) RETURNING id",
-                (changeset_id, _OCDID, f"Seed {role_label}", role_label, _ROSTER_URL),
+                "  (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id) "
+                "VALUES (%s, %s, %s, %s, %s, %s) RETURNING id",
+                (changeset_id, _OCDID, f"Seed {role_label}", role_label, _ROSTER_URL, org),
             )
             await cur.execute(
                 "INSERT INTO source_record_identities (source_record_id, person_id) "
@@ -1166,9 +1166,9 @@ async def test_a_scrape_the_pipeline_reported_an_issue_on_does_not_publish():
             )
             await cur.execute(
                 "INSERT INTO source_records "
-                "  (changeset_id, jurisdiction_ocdid, name, label, source_url) "
-                "VALUES (%s, %s, %s, %s, %s) RETURNING id",
-                (changeset_id, _OCDID, f"Seed {role_label}", role_label, _ROSTER_URL),
+                "  (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id) "
+                "VALUES (%s, %s, %s, %s, %s, %s) RETURNING id",
+                (changeset_id, _OCDID, f"Seed {role_label}", role_label, _ROSTER_URL, org),
             )
             await cur.execute(
                 "INSERT INTO source_record_identities (source_record_id, person_id) "
@@ -1407,3 +1407,34 @@ async def test_a_move_in_one_body_leaves_the_other_bodys_membership_open():
         (council, "council-member", _BASE),
         (mayors_office, "mayor", _BASE),
     ]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_reviewing_a_roster_restating_two_bodies_proposes_no_move():
+    from services.review_proposal import proposals_for_requests
+
+    person_id = await _seed_person("Ana Reyes")
+    council, mayors_office = await _two_bodies()
+    await _publish(
+        person_id,
+        [_membership(council, "council-member", _WARD_3, person_id), _membership(mayors_office, "mayor", _BASE, person_id)],
+    )
+    changeset_id = await _published_changeset()
+    roster = [
+        {
+            "id": person_id,
+            "name": "Ana Reyes",
+            "labels": ["Council Member Ward 3", "Mayor"],
+            "sightings": [
+                {"label": "Council Member Ward 3", "organization_id": council},
+                {"label": "Mayor", "organization_id": mayors_office},
+            ],
+        }
+    ]
+
+    proposals = await proposals_for_requests([changeset_id], {changeset_id: roster})
+
+    assert sorted((c.organization_id, c.role_id, c.disposition.value) for c in proposals[changeset_id]) == sorted(
+        [(council, "council-member", "unchanged"), (mayors_office, "mayor", "unchanged")]
+    )

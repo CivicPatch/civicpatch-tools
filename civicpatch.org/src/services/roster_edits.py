@@ -33,6 +33,7 @@ from schemas.activity import Change
 from schemas.common import Identity
 from services.publish import promote_images, publish_people
 from services.roster import proposed_roster, scraped_roster
+from shared.schemas import Post
 from shared.utils.id_utils import make_id
 
 logger = logging.getLogger(__name__)
@@ -65,9 +66,9 @@ async def save(
         raise MissingRoster(changeset_id)
 
     patched = patch_people(scraped, data)
-    labels = await _seat_labels(_additions(scraped, patched))
+    chosen = await _posts_for_additions(_additions(scraped, patched))
     await _record_edits(
-        changeset_id, jurisdiction_ocdid, scraped, patched, labels, user.user_id
+        changeset_id, jurisdiction_ocdid, scraped, patched, chosen, user.user_id
     )
     await activity_service.record_manual_edits(
         changeset_id, jurisdiction_ocdid, user.user_id, scraped, patched
@@ -89,7 +90,7 @@ async def edit_published(
         raise EmptyEdit(jurisdiction_ocdid)
     # Before the first write: a request row with nothing behind it still counts as a
     # supersedor and would sweep every pending card for the jurisdiction.
-    labels = await _seat_labels(_additions(base, patched))
+    chosen = await _posts_for_additions(_additions(base, patched))
 
     # Its own changeset: the edit is a bundle of changes to one jurisdiction, by one producer,
     # at one time, and it needs to be one — for its own row on the timeline, its own open-data
@@ -98,7 +99,7 @@ async def edit_published(
     changeset_id = make_id()
     await register_people_edit_changeset(changeset_id, jurisdiction_ocdid, user.user_id)
     await _record_edits(
-        changeset_id, jurisdiction_ocdid, base, patched, labels, user.user_id
+        changeset_id, jurisdiction_ocdid, base, patched, chosen, user.user_id
     )
 
     # A hand edit to an already-live roster publishes in the same beat it happens, unlike a
@@ -123,9 +124,8 @@ async def edit_published(
     return changeset_id, patched
 
 
-async def _chosen_post_labels(people: list[dict]) -> dict[str, str]:
-    """The seat each person was put in, by person id — the post's own label, which reads as a
-    source would have written it."""
+async def _chosen_posts(people: list[dict]) -> dict[str, Post]:
+    """The post each person was put in, by person id — posts that no longer exist are absent."""
     wanted = {person["id"]: person.get("post_id") for person in people}
     post_ids = list({post_id for post_id in wanted.values() if post_id})
     if not post_ids:
@@ -134,15 +134,14 @@ async def _chosen_post_labels(people: list[dict]) -> dict[str, str]:
     async with pool.connection() as conn, conn.cursor() as cur:
         found = await posts.get_many(cur, post_ids)
     return {
-        person_id: found[post_id].label if post_id in found else ""
+        person_id: found[post_id]
         for person_id, post_id in wanted.items()
-        if post_id
+        if post_id and post_id in found
     }
 
 
-def _refuse_postless_additions(new_people: list[dict], labels: dict[str, str]) -> None:
-    """An addition with no seat has nothing for its sighting to say and would land on
-    `unmatched`. A `post_id` naming no post fails the same way: it resolves to no label."""
+def _refuse_postless_additions(new_people: list[dict], chosen: dict[str, Post]) -> None:
+    """An addition with no post has nothing for its source record to say, and no organization."""
     failures = [
         {
             "id": person["id"],
@@ -151,7 +150,7 @@ def _refuse_postless_additions(new_people: list[dict], labels: dict[str, str]) -
             "message": "Choose a post",
         }
         for person in new_people
-        if not labels.get(person["id"])
+        if person["id"] not in chosen
     ]
     if failures:
         raise PeopleValidationError(failures)
@@ -162,11 +161,11 @@ def _additions(base: List[dict], patched: List[dict]) -> List[dict]:
     return [person for person in patched if person["id"] not in base_ids]
 
 
-async def _seat_labels(new_people: List[dict]) -> dict[str, str]:
+async def _posts_for_additions(new_people: List[dict]) -> dict[str, Post]:
     """Resolved and refused before any write, so a refused edit leaves no row behind."""
-    labels = await _chosen_post_labels(new_people)
-    _refuse_postless_additions(new_people, labels)
-    return labels
+    chosen = await _chosen_posts(new_people)
+    _refuse_postless_additions(new_people, chosen)
+    return chosen
 
 
 async def _record_edits(
@@ -174,16 +173,18 @@ async def _record_edits(
     jurisdiction_ocdid: str,
     base: List[dict],
     patched: List[dict],
-    labels: dict[str, str],
+    chosen: dict[str, Post],
     user_id: str,
 ) -> None:
     base_by_id = {person["id"]: person for person in base}
 
-    # A human is a source: the sighting says which seat they were given.
+    # A human is a source: the record says which post they were given, in its organization.
     added = {
         person["id"]: [
             record.model_dump()
-            for record in reviewer_source_records(person, labels[person["id"]])
+            for record in reviewer_source_records(
+                person, chosen[person["id"]].label, chosen[person["id"]].organization_id
+            )
         ]
         for person in _additions(base, patched)
     }

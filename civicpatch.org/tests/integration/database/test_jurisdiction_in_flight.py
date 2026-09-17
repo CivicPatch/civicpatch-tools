@@ -30,6 +30,9 @@ async def _wipe():
         await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
+        await cur.execute(
+            "DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
         # This row only — `state = 'zz'` is shared with every other sentinel suite.
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OCDID,)
@@ -76,13 +79,14 @@ async def _add_sighting(changeset_id: str) -> None:
     """What puts a changeset in the review pool — `AVAILABLE_FOR_REVIEW` is an EXISTS on this."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        organization_id = await factories.default_organization(cur, _OCDID)
         await cur.execute(
             """
             INSERT INTO source_records
-                (changeset_id, jurisdiction_ocdid, name, label, source_url)
-            VALUES (%s::uuid, %s, 'Ada Lovelace', 'Mayor', 'https://example.test')
+                (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id)
+            VALUES (%s::uuid, %s, 'Ada Lovelace', 'Mayor', 'https://example.test', %s)
             """,
-            (changeset_id, _OCDID),
+            (changeset_id, _OCDID, organization_id),
         )
 
 

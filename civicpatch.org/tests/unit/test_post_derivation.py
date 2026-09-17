@@ -45,7 +45,11 @@ def _person(person_id, office_name):
     return RosterEntry(
         id=person_id,
         jurisdiction_ocdid=_OCDID,
-        labels=[part.strip() for part in office_name.split(" - ") if part.strip()],
+        sightings=[
+            RosterSighting(label=part.strip(), organization_id=_COUNCIL)
+            for part in office_name.split(" - ")
+            if part.strip()
+        ],
     )
 
 
@@ -348,7 +352,6 @@ def _sighted(person_id, *sightings):
     return RosterEntry(
         id=person_id,
         jurisdiction_ocdid=_OCDID,
-        labels=[label for label, _ in sightings],
         sightings=[RosterSighting(label=label, organization_id=org) for label, org in sightings],
     )
 
@@ -386,13 +389,6 @@ def test_the_same_role_and_division_in_two_organizations_is_two_posts():
 
 
 @pytest.mark.unit
-def test_labels_without_a_sighting_derive_a_post_with_no_organization():
-    derived = derived_posts([_person("a", "Mayor")], _TAXONOMY, _ROLES)
-
-    assert _memberships(derived) == [(None, "mayor", _BASE, "a")]
-
-
-@pytest.mark.unit
 def test_a_pick_replaces_only_its_own_organizations_derivation():
     """The council post was picked to Ward 2; the mayor's office post the page gave stays."""
     person = _sighted("a", ("Mayor", _MAYORS_OFFICE), ("Council Member", _COUNCIL))
@@ -404,16 +400,6 @@ def test_a_pick_replaces_only_its_own_organizations_derivation():
         (_COUNCIL, "council-member", f"{_BASE}/ward:2", "a"),
         (_MAYORS_OFFICE, "mayor", _BASE, "a"),
     ]
-
-
-@pytest.mark.unit
-def test_a_pick_replaces_the_labels_no_organization_sighted():
-    """A reviewer-added person carries no organization; the pick decides it, as it did before."""
-    chosen = {"a": ChosenPost(organization_id=_MAYORS_OFFICE, role_id="mayor", division_ocdid=_BASE)}
-
-    derived = derived_posts([_person("a", "Council Member")], _TAXONOMY, _ROLES, chosen)
-
-    assert _memberships(derived) == [(_MAYORS_OFFICE, "mayor", _BASE, "a")]
 
 
 @pytest.mark.unit

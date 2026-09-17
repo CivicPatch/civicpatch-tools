@@ -6,6 +6,7 @@ from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
 
 from schemas.common import Identity, UserRole
+from shared.schemas import Post
 from lib.auth import get_optional_user
 from routers.api import review_actions as review_actions_router
 from routers.api import review_cards as review_cards_router
@@ -381,8 +382,9 @@ def test_a_person_added_by_hand_becomes_evidence_and_claims(client):
         patch("services.roster_edits.insert_source_records", new_callable=AsyncMock) as mock_records,
         # Stubbed: this test is about the pair of writes; label resolution has its own
         # integration coverage.
-        patch("services.roster_edits._chosen_post_labels", new_callable=AsyncMock,
-              return_value={"p2": "Mayor"}),
+        patch("services.roster_edits._chosen_posts", new_callable=AsyncMock,
+              return_value={"p2": Post(id="post-mayor", jurisdiction_ocdid=TEST_OCDID, organization_id="org-1",
+                                       role_id="mayor", division_ocdid="ocd-division/country:us", label="Mayor")}),
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_claims,
         patch("services.activity.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock),
@@ -396,7 +398,7 @@ def test_a_person_added_by_hand_becomes_evidence_and_claims(client):
     # One record, for the one page the reviewer cited — and only for the added person.
     written = mock_records.await_args.args[2]
     assert list(written) == ["p2"]
-    assert [r["source_url"] for r in written["p2"]] == ["https://x.gov/directory"]
+    assert [(r["source_url"], r["organization_id"]) for r in written["p2"]] == [("https://x.gov/directory", "org-1")]
 
     claims = mock_claims.await_args.args[0]
     theirs = {(c.field_path, c.kind, c.value) for c in claims if c.entity_id == "p2"}

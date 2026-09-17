@@ -37,15 +37,13 @@ async def published_identities(jurisdiction_ocdid: str) -> dict:
     return person_list_to_identities(existing) if existing else {}
 
 
-async def with_organizations(
-    jurisdiction_ocdid: str, records_by_person: dict[str, list[dict]]
-) -> dict[str, list[dict]]:
+async def _with_organizations(jurisdiction_ocdid: str, rows: list[dict]) -> list[dict]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         current = await organizations.list_for_jurisdiction(cur, jurisdiction_ocdid)
         default_organization_id = await organizations.get_default(cur, jurisdiction_ocdid)
     return in_known_organizations(
-        records_by_person, {row["id"] for row in current}, default_organization_id
+        rows, {row["id"] for row in current}, default_organization_id
     )
 
 
@@ -76,8 +74,11 @@ async def reconcile_roster(
 
     Fatal on failure, unlike the writes that follow it: everything downstream consumes this.
     """
+    # Before the roster is built from them, so every sighting carries its organization. An id that
+    # is no longer a body here raises — a scrape run against a deleted organization fails.
+    stamped = await _with_organizations(jurisdiction_ocdid, rows)
     roster, records_by_name = roster_from_rows(
-        rows, identities, taxonomy, jurisdiction_ocdid, logger
+        stamped, identities, taxonomy, jurisdiction_ocdid, logger
     )
     identified_roster = await assign_ids(jurisdiction_ocdid, roster)
     return identified_roster, records_by_person(identified_roster, records_by_name)

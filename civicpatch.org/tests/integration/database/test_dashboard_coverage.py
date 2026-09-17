@@ -37,6 +37,8 @@ async def _wipe():
             "DELETE FROM memberships m USING posts p "
             "WHERE m.post_id = p.id AND p.jurisdiction_ocdid LIKE 'zt-%'"
         )
+        # Before organizations: a source record's organization is ON DELETE RESTRICT (205).
+        await cur.execute("DELETE FROM source_records WHERE jurisdiction_ocdid LIKE 'zt-%'")
         for table in ("posts", "divisions", "organizations", "people"):
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid LIKE 'zt-%'"
@@ -175,13 +177,14 @@ async def test_needs_review_counts_open_review_pool_changesets():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        organization_id = await factories.default_organization(cur, "zt-awaiting")
         await cur.execute(
             """
             INSERT INTO source_records
-                (changeset_id, jurisdiction_ocdid, name, label, source_url)
-            VALUES (%s, 'zt-awaiting', 'A Name', 'Mayor', 'https://a')
+                (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id)
+            VALUES (%s, 'zt-awaiting', 'A Name', 'Mayor', 'https://a', %s)
             """,
-            (changeset_id,),
+            (changeset_id, organization_id),
         )
         await conn.commit()
 

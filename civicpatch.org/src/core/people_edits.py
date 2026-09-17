@@ -3,11 +3,11 @@ from schemas.assertions import Assertion, AssertionKind, EntityType
 from shared.schemas import SubmittedPersonRecord
 from shared.utils.person_fields import order_person_fields
 
-from core.post_derivation import SIGHTINGS_FIELD
+from core.post_derivation import LABELS_FIELD, SIGHTINGS_FIELD
 
-# Keys a client patch may not set: they come from what the scrape saw, and a client-sent value
-# would decide which organization a person is published into.
-SERVER_OWNED_FIELDS = (SIGHTINGS_FIELD,)
+# Keys a client patch may not set: they come from source records, and a client-sent value would
+# decide which organization a person is published into.
+SERVER_OWNED_FIELDS = (SIGHTINGS_FIELD, LABELS_FIELD)
 
 # Fields a reviewer can edit — a missing one goes unrecorded in the change log. Not
 # cdn_image; publish derives it from image. Not post_id — a scrape must always stay free

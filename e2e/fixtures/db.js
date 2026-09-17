@@ -301,6 +301,20 @@ async function seedPriorCollection(client, ocdid) {
   );
 }
 
+// The jurisdiction's organization, made when a seeded jurisdiction has none — every source record
+// and post belongs to one.
+async function organizationFor(client, ocdid) {
+  const { rows } = await client.query(
+    `WITH found AS (SELECT id FROM organizations WHERE jurisdiction_ocdid = $1 LIMIT 1),
+          made AS (INSERT INTO organizations (jurisdiction_ocdid, name)
+                   SELECT $1, 'Council' WHERE NOT EXISTS (SELECT 1 FROM found)
+                   RETURNING id)
+     SELECT id FROM found UNION ALL SELECT id FROM made`,
+    [ocdid],
+  );
+  return rows[0].id;
+}
+
 async function seedReviewCard(
   client,
   { changesetId, ocdid, people = [], publishedAt = null, ageSeconds = 0, changeUrl = null },
@@ -329,11 +343,12 @@ async function seedReviewCard(
   await client.query(`DELETE FROM source_records WHERE changeset_id = $1`, [
     changesetId,
   ]);
+  const organizationId = await organizationFor(client, ocdid);
   for (const person of people) {
     const { rows } = await client.query(
       `INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url,
-                                   url, phone, email, image, start_date, end_date)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+                                   url, phone, email, image, start_date, end_date, organization_id)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
        RETURNING id`,
       [
         changesetId,
@@ -347,6 +362,7 @@ async function seedReviewCard(
         person.image ?? null,
         person.start_date ?? null,
         person.end_date ?? null,
+        organizationId,
       ],
     );
     await client.query(
@@ -372,15 +388,7 @@ const roleSlug = (name) =>
     .replace(/^-|-$/g, "");
 
 async function seatPerson(client, ocdid, person) {
-  const { rows: org } = await client.query(
-    `WITH found AS (SELECT id FROM organizations WHERE jurisdiction_ocdid = $1 LIMIT 1),
-          made AS (INSERT INTO organizations (jurisdiction_ocdid, name)
-                   SELECT $1, 'Council' WHERE NOT EXISTS (SELECT 1 FROM found)
-                   RETURNING id)
-     SELECT id FROM found UNION ALL SELECT id FROM made`,
-    [ocdid],
-  );
-  const organizationId = org[0].id;
+  const organizationId = await organizationFor(client, ocdid);
 
   // The person's own ward when the fixture gave them one, else the jurisdiction itself.
   const division = person.office?.division_ocdid ?? ocdid.replace("/government", "");
@@ -439,6 +447,8 @@ async function clearRoster(client, ocdid) {
     [ocdid],
   );
   await client.query(`DELETE FROM posts WHERE jurisdiction_ocdid = $1`, [ocdid]);
+  // Source records point at the organization (205: RESTRICT); reseeding the card writes them again.
+  await client.query(`DELETE FROM source_records WHERE jurisdiction_ocdid = $1`, [ocdid]);
   await client.query(`DELETE FROM organizations WHERE jurisdiction_ocdid = $1`, [
     ocdid,
   ]);

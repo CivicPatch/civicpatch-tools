@@ -46,6 +46,9 @@ async def _wipe():
                 "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (ocdid,)
             )
             await cur.execute(
+                "DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (ocdid,)
+            )
+            await cur.execute(
                 "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,)
             )
 
@@ -115,13 +118,14 @@ async def _changeset(
                 ),
             )
         if with_records:
+            organization_id = await factories.default_organization(cur, ocdid)
             await cur.execute(
                 """
                 INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label,
-                                            source_url)
-                VALUES (%s, %s, 'Someone', 'Mayor', 'https://example.test')
+                                            source_url, organization_id)
+                VALUES (%s, %s, 'Someone', 'Mayor', 'https://example.test', %s)
                 """,
-                (changeset_id, ocdid),
+                (changeset_id, ocdid, organization_id),
             )
     return changeset_id
 

@@ -1,7 +1,7 @@
 from enum import StrEnum
 
 from core.membership_label import derive_post_label
-from core.post_derivation import DerivedPost, organization_for
+from core.post_derivation import DerivedPost
 from shared.schemas import Post
 from core.post_grouping import group_by_organization
 from database import assertions, divisions, organizations
@@ -478,14 +478,13 @@ async def list_by_organization(jurisdiction_ocdid: str) -> list[dict]:
 async def create_all(
     cur,
     jurisdiction_ocdid: str,
-    fallback_organization_id: str,
     derived: list[DerivedPost],
     changeset_id: str,
 ) -> dict[tuple[str, str, str], str]:
     """Each derived post's id by `(organization_id, role_id, division_ocdid)`, minting the missing."""
     ids: dict[tuple[str, str, str], str] = {}
     for post in derived:
-        organization_id = organization_for(post, fallback_organization_id)
+        organization_id = post.organization_id
         await divisions.find_or_create(cur, post.division_ocdid, jurisdiction_ocdid)
         minted = await create_if_absent(
             cur,

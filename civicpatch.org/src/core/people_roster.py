@@ -25,7 +25,7 @@ from core.people_derivation import (
     term_dates,
 )
 from core.people_roles import derive_roles
-from core.post_derivation import SIGHTINGS_FIELD
+from core.post_derivation import LABELS_FIELD, SIGHTINGS_FIELD
 
 
 def roster_from_rows(
@@ -141,11 +141,13 @@ def _aliases_carried_forward(person: DerivedPerson, published: Person | None) ->
     )
 
 
-def reviewer_source_records(person: dict, label: str) -> list[PersonSourceRecord]:
+def reviewer_source_records(person: dict, label: str, organization_id: str) -> list[PersonSourceRecord]:
     if not person.get("name"):
         return []
     return [
-        PersonSourceRecord(name=person["name"], label=label, source_url=source_url)
+        PersonSourceRecord(
+            name=person["name"], label=label, source_url=source_url, organization_id=organization_id
+        )
         for source_url in dict.fromkeys(person.get("source_urls") or [])
         if source_url
     ]
@@ -198,7 +200,7 @@ def _rendered(person: DerivedPerson, records: list[PersonSourceRecord], taxonomy
                 meta_unmatched_text=derived.unmatched,
             ),
         ),
-        "labels": person.labels,
+        LABELS_FIELD: person.labels,
         # Already computed for the label above; kept so a reviewer can be shown which labels
         # resolved to nothing rather than having to spot it in the rendered text.
         "role_id": derived.role,
@@ -215,7 +217,6 @@ def _rendered(person: DerivedPerson, records: list[PersonSourceRecord], taxonomy
         "source_urls": person.source_urls,
         # `labels` and `source_urls` flattened, still paired with the organization whose
         # extraction produced each — what publish needs to derive posts per organization.
-        # Server-owned: `apply_people_patch` never takes it from a client.
         SIGHTINGS_FIELD: [
             {
                 "label": sighting.label,
@@ -268,21 +269,13 @@ def _with_organization(record: dict, default_organization_id: str) -> dict:
 
 
 def in_known_organizations(
-    records_by_person: dict[str, list[dict]],
+    rows: list[dict],
     organization_ids: set[str],
     default_organization_id: str,
-) -> dict[str, list[dict]]:
-    """Every record in a current organization; unstamped ones in the default. Raises on any other id."""
-    stamped = {
-        person_id: [_with_organization(record, default_organization_id) for record in records]
-        for person_id, records in records_by_person.items()
-    }
-    unknown = [
-        record
-        for records in stamped.values()
-        for record in records
-        if record["organization_id"] not in organization_ids
-    ]
+) -> list[dict]:
+    """Every row in a current organization; unstamped ones in the default. Raises on any other id."""
+    stamped = [_with_organization(row, default_organization_id) for row in rows]
+    unknown = [row for row in stamped if row["organization_id"] not in organization_ids]
     if unknown:
         raise UnknownOrganization(
             f"{unknown[0].get('name')!r} names organization {unknown[0]['organization_id']!r}, not a current body"

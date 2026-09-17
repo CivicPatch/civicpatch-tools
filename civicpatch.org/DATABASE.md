@@ -215,7 +215,7 @@ erDiagram
         text_null       cdn_image           "where we put it (R2). Stored, not composed from a template — where a file lives is a fact"
         text_null       start_date          "text, not date: sources give partial dates (2024, 2024-01)"
         text_null       end_date
-        uuid_null       organization_id     FK "203: idx; ON DELETE SET NULL — which body's extraction produced it; 204 backfilled pre-203 rows (changeset's org, else default); scrapes and sheet imports get the default when unstamped, and a stamp that is not a current body fails ingest; organizations.delete moves a body's rows to the default first; NULL only for reviewer-added people (their pick decides)"
+        uuid            organization_id     FK "203: idx; 205: NOT NULL, ON DELETE RESTRICT (organizations.delete moves a body's rows to the default first) — which body's extraction produced it; 204 backfilled pre-203 rows; ingest stamps unstamped rows with the default and fails on an id that is not a current body"
         timestamptz     created_at          "default: now()"
     }
 
@@ -331,7 +331,7 @@ erDiagram
     jurisdictions ||--o{ posts : "jurisdiction_ocdid"
     organizations ||--o{ posts : "organization_id"
     organizations ||--o{ changesets : "organization_id"
-    organizations |o--o{ source_records : "organization_id"
+    organizations ||--o{ source_records : "organization_id"
     roles ||--o{ posts : "role_id"
     divisions ||--o{ posts : "division_ocdid"
     posts ||--o{ memberships : "post_id"
