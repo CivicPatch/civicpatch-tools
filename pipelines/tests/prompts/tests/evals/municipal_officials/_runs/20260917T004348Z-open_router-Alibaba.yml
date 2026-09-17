@@ -1,0 +1,56 @@
+mismatches:
+  seattle_council_separate_mayor:
+  - actual: https:///council/members/alexis-mercedes-rinck
+    actual_label: Council Member Position 8
+    expected: https://seattle.gov/council/members/alexis-mercedes-rinck
+    expected_label: Councilmember Position 8
+    field: url
+    person: Alexis Mercedes Rinck
+  - actual: https:///council/members/bob-kettle
+    actual_label: Council Member District 7
+    expected: https://seattle.gov/council/members/bob-kettle
+    expected_label: Councilmember District 7
+    field: url
+    person: Bob Kettle
+  - actual: https:///council/members/dan-strauss
+    actual_label: Council Member District 6
+    expected: https://seattle.gov/council/members/dan-strauss
+    expected_label: Councilmember District 6
+    field: url
+    person: Dan Strauss
+  - actual: https:///council/members/debora-juarez
+    actual_label: Council Member District 5
+    expected: https://seattle.gov/council/members/debora-juarez
+    expected_label: Councilmember District 5
+    field: url
+    person: Debora Juarez
+  - actual: https:///council/members/dionne-foster
+    actual_label: Council Member Position 9
+    expected: https://seattle.gov/council/members/dionne-foster
+    expected_label: Councilmember Position 9
+    field: url
+    person: Dionne Foster
+  - actual: https:///council/members/eddie-lin
+    actual_label: Council Member District 2
+    expected: https://seattle.gov/council/members/eddie-lin
+    expected_label: Councilmember District 2
+    field: url
+    person: Eddie Lin
+  - actual: https:///council/members/joy-hollingsworth
+    actual_label: Council Member District 3 and Council President
+    expected: https://seattle.gov/council/members/joy-hollingsworth
+    expected_label: Council President and Council Member District 3
+    field: url
+    person: Joy Hollingsworth
+  - actual: https:///council/members/maritza-rivera
+    actual_label: Council Member District 4
+    expected: https://seattle.gov/council/members/maritza-rivera
+    expected_label: Councilmember District 4
+    field: url
+    person: Maritza Rivera
+  - actual: https:///council/members/rob-saka
+    actual_label: Council Member District 1
+    expected: https://seattle.gov/council/members/rob-saka
+    expected_label: Councilmember District 1
+    field: url
+    person: Rob Saka

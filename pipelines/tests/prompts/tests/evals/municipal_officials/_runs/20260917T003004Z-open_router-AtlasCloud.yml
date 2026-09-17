@@ -1,0 +1,11 @@
+mismatches:
+  seattle_council_separate_mayor:
+  - actual:
+    - Council Member
+    - Council President
+    actual_label: Council President and Council Member District 3
+    expected:
+    - Council President
+    expected_label: Council President District 3
+    field: roles
+    person: Joy Hollingsworth

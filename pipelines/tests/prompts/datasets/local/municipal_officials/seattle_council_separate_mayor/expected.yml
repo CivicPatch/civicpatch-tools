@@ -29,7 +29,7 @@ people:
   end_date: null
   image: local://8518b717839c.png
 - name: Joy Hollingsworth
-  label: Council President District 3
+  label: Council President and Council Member District 3
   phone: (206) 684-8888
   email: council@seattle.gov
   url: https://seattle.gov/council/members/joy-hollingsworth
@@ -87,7 +87,8 @@ people:
 thought: 'Seattle splits its elected officials across two bodies with separate pages:
   the Office of the Mayor at seattle.gov/mayor and the City Council at seattle.gov/council.
   This is the Council page, so only the nine Councilmembers are extracted. Joy Hollingsworth
-  is Council President, which the member grid states beside her district. Mayor Katie
+  is Council President, which the member grid states beside her district; she also holds the
+  District 3 Council Member seat, so her label carries both. Mayor Katie
   Wilson is named four times — once in the site navigation as a link to the Mayor''s
   Office, and three times in Council Connection news blurbs about Councilmembers
   responding to her — but she holds no Council seat and this page never presents her

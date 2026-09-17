@@ -34,6 +34,6 @@ def test_a_scoped_prompt_names_its_body_and_lists_its_posts_to_pick_from():
 def test_a_scoped_prompt_still_explains_how_to_write_a_label_for_an_unlisted_post():
     prompt = _prompt(organization=_COUNCIL)
 
-    assert "not listed, do not pick" in prompt
+    assert "do not swap it for a" in prompt
     assert "Write each part exactly as the page writes it" in prompt
 

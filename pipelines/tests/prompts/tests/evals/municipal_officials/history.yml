@@ -995,6 +995,510 @@ runs:
       spurious: 0
       wrong: 0
   mismatches_file: _runs/20260917T000054Z-open_router-Alibaba.yml
+- timestamp: '2026-09-17T00:28:03+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: b122485569e2
+  cost_usd: 0.002735074
+  elapsed_seconds: 15.4
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 0.8888888888888888
+    roles: 0.8888888888888888
+    url: 0.0
+  cases:
+    seattle_council_pick_list_missing_president: 0.8641975308641975
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 8
+      missing: 1
+      spurious: 1
+      wrong: 0
+    roles:
+      correct: 8
+      missing: 1
+      spurious: 1
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 9
+  mismatches_file: _runs/20260917T002803Z-open_router-Alibaba.yml
+- timestamp: '2026-09-17T00:30:05+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: b122485569e2
+  cost_usd: 0.0028046736
+  elapsed_seconds: 19.35
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 0.9473684210526315
+    url: 1.0
+  cases:
+    seattle_council_separate_mayor: 0.9938271604938271
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 9
+      missing: 0
+      spurious: 1
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T003005Z-open_router-Alibaba.yml
+- timestamp: '2026-09-17T00:43:48+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.002940228
+  elapsed_seconds: 20.82
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 0.0
+  cases:
+    seattle_council_separate_mayor: 0.8888888888888888
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 9
+  mismatches_file: _runs/20260917T004348Z-open_router-Alibaba.yml
+- timestamp: '2026-09-17T00:43:58+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.002265538
+  elapsed_seconds: 2.49
+  scores: {}
+  cases:
+    seattle_council_scoped_to_mayor: 1.0
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004358Z-open_router-Alibaba.yml
+- timestamp: '2026-09-17T00:44:38+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.001615906
+  elapsed_seconds: 3.48
+  scores:
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 0.0
+  cases:
+    jackson_mayors_office: 0.875
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260917T004438Z-open_router-Alibaba.yml
+- timestamp: '2026-09-17T00:44:49+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.001713458
+  elapsed_seconds: 1.97
+  scores: {}
+  cases:
+    jackson_mayors_office_scoped_to_council: 1.0
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004449Z-open_router-Alibaba.yml
+- timestamp: '2026-09-17T00:46:40+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.0029136156
+  elapsed_seconds: 21.27
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 1.0
+  cases:
+    seattle_council_pick_list_missing_president: 1.0
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004640Z-open_router-Alibaba.yml
 - timestamp: '2026-09-16T23:39:23+00:00'
   provider: open_router-AtlasCloud
   model: deepseek/deepseek-v4-flash
@@ -1991,6 +2495,510 @@ runs:
       spurious: 0
       wrong: 0
   mismatches_file: _runs/20260917T000054Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-17T00:28:03+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: b122485569e2
+  cost_usd: 0.00291718
+  elapsed_seconds: 20.66
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 1.0
+  cases:
+    seattle_council_pick_list_missing_president: 1.0
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T002803Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-17T00:30:04+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: b122485569e2
+  cost_usd: 0.003088736
+  elapsed_seconds: 27.38
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 0.9473684210526315
+    url: 1.0
+  cases:
+    seattle_council_separate_mayor: 0.9938271604938271
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 9
+      missing: 0
+      spurious: 1
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T003004Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-17T00:43:48+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.0028798
+  elapsed_seconds: 15.22
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 1.0
+  cases:
+    seattle_council_separate_mayor: 1.0
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004348Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-17T00:43:57+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.0023443
+  elapsed_seconds: 2.01
+  scores: {}
+  cases:
+    seattle_council_scoped_to_mayor: 1.0
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004357Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-17T00:44:38+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.001989372
+  elapsed_seconds: 37.9
+  scores:
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 0.0
+  cases:
+    jackson_mayors_office: 0.875
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260917T004438Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-17T00:44:48+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.00181006
+  elapsed_seconds: 2.74
+  scores: {}
+  cases:
+    jackson_mayors_office_scoped_to_council: 1.0
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004448Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-17T00:46:40+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.00274638
+  elapsed_seconds: 11.43
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 1.0
+  cases:
+    seattle_council_pick_list_missing_president: 1.0
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004640Z-open_router-AtlasCloud.yml
 - timestamp: '2026-08-16T00:15:30+00:00'
   provider: open_router-DeepInfra
   model: deepseek/deepseek-v4-flash
@@ -3089,6 +4097,511 @@ runs:
       spurious: 0
       wrong: 0
   mismatches_file: _runs/20260917T000053Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-17T00:28:03+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: b122485569e2
+  cost_usd: 0.00178507
+  elapsed_seconds: 33.0
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 0.0
+    image: 1.0
+    person: 1.0
+    phone: 0.0
+    primary_role: 0.8888888888888888
+    roles: 0.8888888888888888
+    url: 1.0
+  cases:
+    seattle_council_pick_list_missing_president: 0.7530864197530864
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 9
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 0
+      missing: 9
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 8
+      missing: 1
+      spurious: 1
+      wrong: 0
+    roles:
+      correct: 8
+      missing: 1
+      spurious: 1
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T002803Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-17T00:30:04+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: b122485569e2
+  cost_usd: 0.00178556
+  elapsed_seconds: 118.81
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 0.0
+    image: 1.0
+    person: 1.0
+    phone: 0.0
+    primary_role: 0.8888888888888888
+    roles: 0.8888888888888888
+    url: 1.0
+  cases:
+    seattle_council_separate_mayor: 0.7530864197530864
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 9
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 0
+      missing: 9
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 8
+      missing: 1
+      spurious: 1
+      wrong: 0
+    roles:
+      correct: 8
+      missing: 1
+      spurious: 1
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T003004Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-17T00:43:48+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.001807904
+  elapsed_seconds: 28.02
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 1.0
+  cases:
+    seattle_council_separate_mayor: 1.0
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004348Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-17T00:43:57+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.001623958
+  elapsed_seconds: 2.69
+  scores: {}
+  cases:
+    seattle_council_scoped_to_mayor: 1.0
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004357Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-17T00:44:37+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.001143562
+  elapsed_seconds: 5.01
+  scores:
+    email: 0.0
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 1.0
+  cases:
+    jackson_mayors_office: 0.875
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 0
+      spurious: 1
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004437Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-17T00:44:48+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.001230978
+  elapsed_seconds: 2.56
+  scores: {}
+  cases:
+    jackson_mayors_office_scoped_to_council: 1.0
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004448Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-17T00:46:40+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.0017443412
+  elapsed_seconds: 108.91
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 0.0
+    image: 1.0
+    person: 1.0
+    phone: 0.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 1.0
+  cases:
+    seattle_council_pick_list_missing_president: 0.7777777777777778
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 9
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 0
+      missing: 9
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004640Z-open_router-DigitalOcean.yml
 - timestamp: '2026-09-16T23:39:23+00:00'
   provider: open_router-NextBit
   model: deepseek/deepseek-v4-flash
@@ -4085,6 +5598,510 @@ runs:
       spurious: 0
       wrong: 0
   mismatches_file: _runs/20260917T000054Z-open_router-NextBit.yml
+- timestamp: '2026-09-17T00:28:04+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: b122485569e2
+  cost_usd: 0.00104234
+  elapsed_seconds: 15.8
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 0.0
+    image: 1.0
+    person: 1.0
+    phone: 0.0
+    primary_role: 0.8888888888888888
+    roles: 0.8888888888888888
+    url: 1.0
+  cases:
+    seattle_council_pick_list_missing_president: 0.7530864197530864
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 9
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 0
+      missing: 9
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 8
+      missing: 1
+      spurious: 1
+      wrong: 0
+    roles:
+      correct: 8
+      missing: 1
+      spurious: 1
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T002804Z-open_router-NextBit.yml
+- timestamp: '2026-09-17T00:30:05+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: b122485569e2
+  cost_usd: 0.00143824
+  elapsed_seconds: 25.54
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    image: 0.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 0.9473684210526315
+    url: 1.0
+  cases:
+    seattle_council_separate_mayor: 0.8827160493827161
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 0
+      missing: 9
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 9
+      missing: 0
+      spurious: 1
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T003005Z-open_router-NextBit.yml
+- timestamp: '2026-09-17T00:43:48+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.00310282
+  elapsed_seconds: 25.04
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 1.0
+  cases:
+    seattle_council_separate_mayor: 1.0
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004348Z-open_router-NextBit.yml
+- timestamp: '2026-09-17T00:43:58+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.0025385
+  elapsed_seconds: 6.79
+  scores: {}
+  cases:
+    seattle_council_scoped_to_mayor: 1.0
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004358Z-open_router-NextBit.yml
+- timestamp: '2026-09-17T00:44:38+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.00201355
+  elapsed_seconds: 13.14
+  scores:
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 1.0
+  cases:
+    jackson_mayors_office: 1.0
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 1
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004438Z-open_router-NextBit.yml
+- timestamp: '2026-09-17T00:44:49+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.00192527
+  elapsed_seconds: 8.12
+  scores: {}
+  cases:
+    jackson_mayors_office_scoped_to_council: 1.0
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260917T004449Z-open_router-NextBit.yml
+- timestamp: '2026-09-17T00:46:41+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: dc00bd6f55ed
+  cost_usd: 0.00333552
+  elapsed_seconds: 28.56
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 1.0
+    image: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 0.0
+  cases:
+    seattle_council_pick_list_missing_president: 0.8888888888888888
+  dispositions:
+    designations_other:
+      correct: 2
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 7
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 9
+  mismatches_file: _runs/20260917T004641Z-open_router-NextBit.yml
 - timestamp: '2026-09-16T20:35:14+00:00'
   provider: open_router-OpenInference
   model: deepseek/deepseek-v4-flash

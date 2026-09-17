@@ -173,6 +173,9 @@ class PersonSourceRecord(ExtractedPersonRecord):
     """
 
     source_url: str
+    # Which body's extraction produced it — known from which prompt ran, not read off the page.
+    # None for records that predate bodies: stored `source_records` rows and older artifacts.
+    organization_id: str | None = None
 
 
 class Post(BaseModel):

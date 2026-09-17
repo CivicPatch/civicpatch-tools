@@ -28,7 +28,7 @@ people:
   end_date: null
   image: local://8518b717839c.png
 - name: Joy Hollingsworth
-  label: Council President District 3
+  label: Council President and Council Member District 3
   phone: (206) 684-8888
   email: council@seattle.gov
   url: https://seattle.gov/council/members/joy-hollingsworth
@@ -85,8 +85,7 @@ people:
   image: local://f207a4a7733a.png
 thought: 'The same Seattle City Council page and the same nine people as
   seattle_council_separate_mayor, but the pick list deliberately omits Council President. Joy
-  Hollingsworth holds that post, so no entry on the list fits her, and the prompt must fall back
-  to her title as written — "Council President District 3" — rather than forcing her into the
-  nearest listed post, "Council Member District 3". A forced match reads as a confident, correct
-  answer, which is why this case exists: it is the only one that can tell the escape hatch apart
-  from a shove.'
+  Hollingsworth holds the listed Council Member District 3 seat and the unlisted presiding title,
+  so her label must carry both: the seat picked from the list, Council President written from the
+  page. Dropping the title for the listed seat alone reads as a confident, correct answer, which
+  is why this case exists: it is the only one that can tell the escape hatch apart from a shove.'

@@ -1,0 +1,8 @@
+mismatches:
+  jackson_mayors_office:
+  - actual: 'null'
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: email
+    person: Scott Conger
