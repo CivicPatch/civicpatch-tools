@@ -46,7 +46,16 @@ def preprocess_page_content(
     identities = context.data.research_municipality_step.identities
     known_roles = context.data.research_municipality_step.known_roles
     role_config_names = config_utils.get_role_names(context.data.role_config)
-    extra_keywords = list(dict.fromkeys(known_roles + role_config_names))
+    # Body names too: filtering runs before any prompt sees the page, so a section headed
+    # "Office of the Mayor" or "Board of Aldermen" whose wording matches no role name was
+    # dropped here and nothing downstream could recover it.
+    organization_names = [
+        organization.name
+        for organization in context.data.research_municipality_step.known_organizations
+    ]
+    extra_keywords = list(
+        dict.fromkeys(known_roles + role_config_names + organization_names)
+    )
     logger.debug(f"-> Preprocessing with identities: {identities}")
     cleaned_html = clean_html(logger, output_html)
     preprocessed_html  = filter_content(logger, identities, cleaned_html, extra_keywords=extra_keywords)

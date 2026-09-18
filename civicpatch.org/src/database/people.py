@@ -46,6 +46,7 @@ PERSON_END_DATE = """(
 PERSON_MEMBERSHIPS = """COALESCE((
     SELECT jsonb_agg(jsonb_build_object(
         'post_id', posts.id::text,
+        'organization_id', posts.organization_id::text,
         'role_id', posts.role_id,
         'role_label', roles.label,
         -- Ranking only; never published. Lower wins, as `core.people_roles` has it.
@@ -54,6 +55,13 @@ PERSON_MEMBERSHIPS = """COALESCE((
         'division_ocdid', posts.division_ocdid,
         'label', memberships.label,
         'source_labels', to_jsonb(membership_source_labels(memberships.sources)),
+        -- The pages behind this membership. The pipeline seeds each body's next crawl from
+        -- them, so a body whose roster is one person keeps its page in the frontier.
+        'source_urls', COALESCE((
+            SELECT jsonb_agg(DISTINCT source->>'url')
+            FROM jsonb_array_elements(memberships.sources) AS source
+            WHERE source->>'url' IS NOT NULL
+        ), '[]'::jsonb),
         'designations', to_jsonb(memberships.designations),
         'meta_unmatched_text', to_jsonb(memberships.meta_unmatched_text),
         'start_date', memberships.start_date,

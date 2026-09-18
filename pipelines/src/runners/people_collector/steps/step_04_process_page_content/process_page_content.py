@@ -1,3 +1,4 @@
+import asyncio
 import os
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, cast
@@ -9,6 +10,7 @@ from runners.people_collector.schemas import (
     Link,
     LinkFrontier,
     LinkStatus,
+    OrganizationCoverageResponseSchema,
     PersonSourceRecord,
     PeopleArrayLLMResponseSchema,
     PeopleByName,
@@ -174,7 +176,7 @@ async def process_page_content(
     )
 
     frontier, is_relevant = await check_page_relevance(
-        context, page_to_process, content, known_roles
+        context, page_to_process, content, known_roles, research.known_organizations
     )
     if not is_relevant:
         return frontier, current_step
@@ -263,9 +265,13 @@ async def check_page_relevance(
     page_to_process: Link,
     content: str,
     known_roles: list[str],
+    known_organizations: List[KnownOrganization],
 ) -> Tuple[LinkFrontier, bool]:
     prompt = open_router_prompt.relevant_page_prompt(
-        page_to_process.url, context.data.config.name or "", known_roles
+        page_to_process.url,
+        context.data.config.name or "",
+        known_roles,
+        [organization.name for organization in known_organizations],
     )
     raw_response = await open_router_llm.run_prompt(
         context.pipeline_run_id,
@@ -309,6 +315,44 @@ async def check_page_relevance(
     return frontier, response.is_relevant
 
 
+async def organizations_covered(
+    context: PeopleCollectorContext,
+    page_to_process: Link,
+    content: str,
+    organizations: List[KnownOrganization],
+) -> List[str]:
+    """Which bodies this page carries people for, one narrow question each.
+
+    Only worth asking where there are bodies to tell apart, and only on a page already judged
+    relevant, so the calls land on the minority of pages that are worth extracting from at all.
+    """
+    if len(organizations) < 2:
+        return []
+    answers = await asyncio.gather(
+        *(
+            open_router_llm.run_prompt(
+                context.pipeline_run_id,
+                context.data.jurisdiction_ocdid,
+                open_router_prompt.page_covers_organization_prompt(
+                    organization.name,
+                    [post.label for post in organization.posts],
+                    context.data.config.name or "",
+                ),
+                prompt_name="page_covers_organization",
+                response_schema=OrganizationCoverageResponseSchema,
+                content=content,
+                source_url=page_to_process.url,
+            )
+            for organization in organizations
+        )
+    )
+    return [
+        organization.name
+        for organization, answer in zip(organizations, answers)
+        if OrganizationCoverageResponseSchema.model_validate(answer).covers
+    ]
+
+
 async def collect_page_records(
     context: PeopleCollectorContext,
     page_to_process: Link,
@@ -319,11 +363,12 @@ async def collect_page_records(
     identities: Dict,
     logger,
 ) -> Tuple[PeopleByName, bool]:
-    """One extraction per organization. An organization whose results fail the heuristics twice adds nothing from
-    this page; the others' still count. True if any organization's did."""
+    """One extraction per organization the page covers. An organization whose results fail the
+    heuristics twice adds nothing from this page; the others' still count. True if any did."""
     found: List[PersonSourceRecord] = []
     any_passed = False
-    for scope in extraction_scopes(organizations):
+    covers = await organizations_covered(context, page_to_process, content, organizations)
+    for scope in extraction_scopes(organizations, covers):
         scoped = await _extract_for_scope(context, page_to_process, content, known_roles, scope, logger)
         if scoped is not None:
             found.extend(scoped)

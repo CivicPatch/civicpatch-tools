@@ -5,15 +5,18 @@ each part against the taxonomy. A post carries one decided `role_id`, so there i
 split and nothing to resolve — the test for compound office names went with the splitting.
 """
 
+from types import SimpleNamespace
+
 import pytest
 
 from runners.people_collector.steps.step_01_research_municipality.research_municipality import (
     _roles_from_posts,
     _parts_from_research,
     _divisions_from_posts,
+    _source_urls,
 )
 from runners.people_collector.schemas import ResearchedPerson
-from shared.schemas import Post, Role, RoleConfig
+from shared.schemas import Membership, Person, Post, Role, RoleConfig
 
 pytestmark = pytest.mark.unit
 
@@ -104,3 +107,102 @@ def test_one_role_across_several_researched_people_is_named_once():
 
 def test_research_that_named_no_offices_steers_by_nothing():
     assert _parts_from_research([_researched("")], _ROLE_CONFIG) == ([], [])
+
+
+def _config(source_urls: list[str] | None = None):
+    return SimpleNamespace(source_urls=source_urls or [])
+
+
+def _person(
+    person_id: str = "p",
+    source_urls: list[str] | None = None,
+    memberships: list[Membership] | None = None,
+) -> Person:
+    return Person(
+        id=person_id,
+        name="Someone",
+        jurisdiction_ocdid=_OCDID,
+        source_urls=source_urls or [],
+        memberships=memberships or [],
+    )
+
+
+def _membership(organization_id: str, source_urls: list[str]) -> Membership:
+    return Membership(
+        post_id="post",
+        organization_id=organization_id,
+        role_id="council-member",
+        division_ocdid=_BASE,
+        role_label="Council Member",
+        source_urls=source_urls,
+    )
+
+
+def test_a_page_two_people_share_seeds_the_crawl():
+    """The rule that tells a roster page from a personal one."""
+    seeds = _source_urls(
+        _config(),
+        [
+            _person("a", ["https://zz.gov/council"]),
+            _person("b", ["https://zz.gov/council"]),
+        ],
+    )
+
+    assert seeds == ["https://zz.gov/council"]
+
+
+def test_a_page_only_one_person_is_on_is_not_a_roster_page():
+    seeds = _source_urls(_config(), [_person("a", ["https://zz.gov/staff/ana"])])
+
+    assert seeds == []
+
+
+def test_a_one_person_body_keeps_its_page():
+    """A mayor's office can never clear the shared-page rule, so without this its page would
+    leave the frontier and the body would go unscraped."""
+    seeds = _source_urls(
+        _config(),
+        [_person("a", [], [_membership("mayor", ["https://zz.gov/mayor"])])],
+    )
+
+    assert seeds == ["https://zz.gov/mayor"]
+
+
+def test_the_directory_comes_before_the_bios_it_links_to():
+    """Both are worth fetching; the roster page is worth fetching first."""
+    directory = "https://zz.gov/council"
+    people = [
+        _person(name, [], [_membership("council", [directory, f"https://zz.gov/council/{name}"])])
+        for name in ("ana", "ben", "cal")
+    ]
+
+    seeds = _source_urls(_config(), people)
+
+    assert seeds[0] == directory
+    assert sorted(seeds[1:]) == [f"https://zz.gov/council/{n}" for n in ("ana", "ben", "cal")]
+
+
+def test_a_page_two_bodies_were_read_from_is_seeded_once():
+    """A shared "elected officials" listing belongs to both, and the crawler fetches one page."""
+    shared = "https://zz.gov/elected-officials"
+    people = [
+        _person("a", [], [_membership("council", [shared])]),
+        _person("b", [], [_membership("mayor", [shared])]),
+    ]
+
+    seeds = _source_urls(_config(), people)
+
+    assert seeds == [shared]
+
+
+def test_a_configured_list_wins_over_everything():
+    """A human naming the pages means they know something the last scrape did not."""
+    seeds = _source_urls(
+        _config(["https://zz.gov/only-this"]),
+        [
+            _person("a", ["https://zz.gov/council"]),
+            _person("b", ["https://zz.gov/council"]),
+        ],
+    )
+
+    assert seeds == ["https://zz.gov/only-this"]

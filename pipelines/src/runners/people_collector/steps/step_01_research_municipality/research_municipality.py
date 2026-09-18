@@ -188,10 +188,40 @@ def _as_researched_people(people: List[dict]) -> List[ResearchedPerson]:
 
 
 def _source_urls(config, people: List[Person]) -> List[str]:
+    """Where to start crawling: a configured list wins, else the pages the published roster came
+    from, plus each body's own.
+
+    The count rule keeps a url two or more people share, which is what tells a roster page from a
+    personal one. A one-person body can never satisfy it, so a mayor's office page would fall out
+    of the frontier and the body would go unscraped; `_body_seeds` covers that.
+    """
     if config.source_urls:
         return config.source_urls
     url_counts = {}
     for person in people:
         for url in getattr(person, "source_urls", None) or []:
             url_counts[url] = url_counts.get(url, 0) + 1
-    return [url for url, count in url_counts.items() if count > 1]
+    seeds = [url for url, count in url_counts.items() if count > 1]
+    for url in _body_seeds(people):
+        if url not in seeds:
+            seeds.append(url)
+    return seeds
+
+
+def _body_seeds(people: List[Person]) -> List[str]:
+    """Every page each body was found on, roster pages first.
+
+    Ordered by how many people were read from a page, so a five-member council's directory comes
+    before the five bios it links to. The bios stay: a page that listed one person last time is
+    still where that person was, and dropping it is only correct if the directory really does
+    cover everyone, which is the thing a scrape is running to find out.
+
+    A page can belong to two bodies — a shared "elected officials" listing is where both the
+    council and the mayor were read — so it is counted across bodies and seeded once.
+    """
+    people_by_url: Dict[str, set] = {}
+    for person in people:
+        for membership in person.memberships:
+            for url in membership.source_urls:
+                people_by_url.setdefault(url, set()).add(person.id)
+    return sorted(people_by_url, key=lambda url: -len(people_by_url[url]))

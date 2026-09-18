@@ -70,8 +70,7 @@ export interface PersonEditorProps {
   // Every organization this person sits in, for the removal claims. Not `oldRecord.memberships`:
   // that payload carries no membership id, and a claim has to name the row it is about.
   memberships: RosterMembership[];
-  onSetRemoval: (membershipId: string, assertion: MembershipRemoval) => void;
-  onSetNotAMember: (personId: string, claimed: boolean) => void;
+  onSetRemoval: ((membershipId: string, assertion: MembershipRemoval) => void) | null;
   isDirty: boolean;
   isExpanded: boolean;
   onToggleExpand: () => void;
@@ -298,13 +297,6 @@ export function renderPersonEditor(props: PersonEditorProps) {
           ? renderBanner(props)
           : nothing}
         ${departing && !isExpanded ? nothing : renderFields(props, keys)}
-        ${renderRosterMemberships({
-          personId: props.personId,
-          memberships: props.memberships,
-          isReadOnly: props.isReadOnly,
-          onSetRemoval: props.onSetRemoval,
-          onSetNotAMember: props.onSetNotAMember,
-        })}
         ${!departing && hiddenCount > 0
           ? html`<button class="person-editor__expander" @click=${onToggleExpand}>
               ${isExpanded
@@ -314,6 +306,12 @@ export function renderPersonEditor(props: PersonEditorProps) {
           : nothing}
         ${renderNavHint(props)}
       </div>
+      ${renderRosterMemberships({
+        personId: props.personId,
+        memberships: props.memberships,
+        isReadOnly: props.isReadOnly,
+        onSetRemoval: props.onSetRemoval,
+      })}
     </div>
   `;
 }

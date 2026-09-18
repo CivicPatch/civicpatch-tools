@@ -1,3 +1,4 @@
+import asyncio
 import hashlib
 import os
 import re
@@ -94,6 +95,48 @@ def _prune_provider_reports(evals_dir: str, providers) -> None:
     for path in pathlib.Path(evals_dir).glob("*-eval-report.yml"):
         if path.name.removesuffix("-eval-report.yml") not in keep:
             path.unlink()
+
+
+# How many calls one provider may have in flight. Measured 2026-09-18: the coverage eval fired
+# every body of every case at once across four providers, which is ~40 full-page calls, and
+# OpenRouter returned 504s with `error_type: timeout` — the upstream host queueing, not
+# OpenRouter itself. A slower run that finishes beats a fast one that discards its work.
+PROVIDER_CONCURRENCY = 4
+
+
+async def gather_capped(tasks, limit: int = PROVIDER_CONCURRENCY):
+    """`asyncio.gather` with a ceiling on how many run at once, exceptions returned not raised.
+
+    Takes thunks rather than coroutines so nothing starts before its turn: coroutines passed to
+    `gather` are all scheduled immediately, which is the thing being capped.
+    """
+    semaphore = asyncio.Semaphore(limit)
+
+    async def run(thunk):
+        async with semaphore:
+            return await thunk()
+
+    return await asyncio.gather(*(run(t) for t in tasks), return_exceptions=True)
+
+
+def record_provider_failure(evals_dir: str, provider: str, error: str) -> None:
+    """Append a run that produced no numbers, so the gap is visible as a failure rather than
+    as a provider that quietly stopped appearing.
+
+    `comparison.yml` already names it, but that file is overwritten every run: without this the
+    only record of a provider timing out is whichever run happened last.
+    """
+    path = pathlib.Path(evals_dir) / "history.yml"
+    existing = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}) if path.exists() else {}
+    entry = {
+        "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "provider": provider,
+        "error": error,
+        "scores": {},
+        "cases": {},
+    }
+    runs = _keep_recent(existing.get("runs") or [], entry, HISTORY_DEPTH)
+    path.write_text(yaml.safe_dump({"runs": runs}, sort_keys=False), encoding="utf-8")
 
 
 def write_comparison_report(evals_dir, comparison, failures):

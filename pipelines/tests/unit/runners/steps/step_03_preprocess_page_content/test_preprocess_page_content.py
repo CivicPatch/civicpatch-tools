@@ -4,6 +4,7 @@ from unittest.mock import patch
 from runners.people_collector.schemas import Link, LinkStatus
 from runners.people_collector.steps.step_03_preprocess_page_content.preprocess_page_content import preprocess_page_content
 from shared.utils.url_utils import canonical_url
+from shared.schemas import KnownOrganization
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
 pytestmark = pytest.mark.unit
@@ -76,3 +77,37 @@ def test_preprocess_returns_step_with_elapsed_time(tmp_path):
 def test_preprocess_writes_preprocessed_md(tmp_path):
     _run(tmp_path, "<html><body><p>Mayor John Smith</p></body></html>")
     assert (tmp_path / FOLDER / "preprocessed.md").exists()
+
+
+def test_body_names_are_keywords_for_the_content_filter(tmp_path):
+    """Filtering runs before any prompt sees the page. A section headed "Office of the Mayor"
+    whose wording matches no role name was dropped here, and nothing downstream could recover
+    what preprocessing threw away."""
+    page_dir = tmp_path / FOLDER
+    page_dir.mkdir()
+    (page_dir / "original.html").write_text("<html><body><p>hi</p></body></html>", encoding="utf-8")
+    ctx = _make_context(tmp_path)
+    research = ctx.data.research_municipality_step
+    assert research is not None
+    ctx = ctx.model_copy(update={"data": ctx.data.model_copy(update={
+        "research_municipality_step": research.model_copy(update={
+            "known_organizations": [
+                KnownOrganization(id="mayor", name="Office of the Mayor"),
+                KnownOrganization(id="council", name="Board of Aldermen"),
+            ],
+        }),
+    })})
+    page = ctx.data.frontier.get(PAGE_URL)
+
+    seen = {}
+    with (
+        patch("runners.people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.data_path_utils.get_cache_path", return_value=str(tmp_path)),
+        patch(
+            "runners.people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.filter_content",
+            side_effect=lambda logger, identities, html, **kw: seen.update(kw) or html,
+        ),
+    ):
+        preprocess_page_content(ctx, page)
+
+    assert "Office of the Mayor" in seen["extra_keywords"]
+    assert "Board of Aldermen" in seen["extra_keywords"]

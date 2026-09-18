@@ -32,9 +32,11 @@
   color: var(--text-muted);
   overflow-wrap: anywhere;
 }
-.person-memberships__line--person {
-  padding-top: 0.4rem;
-  border-top: 1px solid var(--border-subtle);
+.person-memberships__meta-key {
+  margin-right: 0.3rem;
+  text-transform: lowercase;
+  color: var(--text-muted);
+  opacity: 0.75;
 }
 .person-memberships__acts {
   display: flex;

@@ -216,13 +216,18 @@ async def run_prompt(
 
         if not choices:
             record("no choices in response")
+            # Named: a retry line with only the body cannot say which prompt, provider or page
+            # it came from, and these arrive interleaved from calls running concurrently.
+            called = f"{prompt_name} via {model or model_type}" + (
+                f" on {source_url}" if source_url else ""
+            )
             logger.warning(
-                f"OpenRouter response missing 'choices'. "
+                f"OpenRouter response missing 'choices' for {called}. "
                 f"Body: {body} | "
                 f"Headers: {dict(resp.headers)}"
             )
             raise ValueError(
-                f"OpenRouter response missing 'choices'. Full body: {body}"
+                f"OpenRouter response missing 'choices' for {called}. Full body: {body}"
             )
         response_text = choices[0]["message"]["content"]
         logger.debug(f"OpenRouter raw response: {response_text}")

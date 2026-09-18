@@ -17,17 +17,25 @@ class ExtractionScope(BaseModel):
     prompt_organization: PromptOrganization | None = None
 
 
-def extraction_scopes(organizations: List[KnownOrganization]) -> List[ExtractionScope]:
+def extraction_scopes(
+    organizations: List[KnownOrganization], covers: List[str] | None = None
+) -> List[ExtractionScope]:
     """One unscoped run unless there are several organizations to tell apart.
 
     A single organization keeps today's unscoped prompt — the scoped prompt and its pick list are only
     measured on the org-scoped eval cases — but its records still carry the organization's id. Scoping
     turns on once a maintainer has created a second organization.
+
+    `covers` is the relevance check's answer about which bodies this page carries people for, and
+    narrows the runs to those. None means it was not asked; an empty list means the page carries
+    somebody who fits no known body, and both fall back to running every organization, because a
+    page we did not ask about is not a page we know nothing is on.
     """
     if not organizations:
         return [ExtractionScope()]
     if len(organizations) == 1:
         return [ExtractionScope(organization_id=organizations[0].id)]
+    named = [organization for organization in organizations if organization.name in (covers or [])]
     return [
         ExtractionScope(
             organization_id=organization.id,
@@ -35,5 +43,5 @@ def extraction_scopes(organizations: List[KnownOrganization]) -> List[Extraction
                 name=organization.name, posts=[post.label for post in organization.posts]
             ),
         )
-        for organization in organizations
+        for organization in (named or organizations)
     ]

@@ -48,7 +48,7 @@ def test_a_verdict_reports_when_the_provider_last_ran():
 
 def test_a_gate_failure_names_the_cases_with_the_most_wrong_values_first():
     def wrong(field):
-        return Mismatch(person="Ann", field=field, expected="Council Member", actual=None)
+        return Mismatch(subject="Ann", field=field, expected="Council Member", actual=None)
 
     failure = gate_failure("primary_role", {
         "coleman_council": [wrong("primary_role"), wrong("phone")],

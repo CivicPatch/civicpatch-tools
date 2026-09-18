@@ -101,7 +101,7 @@ class ValueChange(BaseModel):
     """`actual` is the wrong answer, from whichever side got it wrong."""
 
     case_id: str
-    person: str
+    subject: str
     field: str
     expected: MismatchValue
     actual: MismatchValue

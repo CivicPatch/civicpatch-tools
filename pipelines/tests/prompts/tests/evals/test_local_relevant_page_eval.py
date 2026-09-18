@@ -1,4 +1,5 @@
 import asyncio
+from functools import partial
 import time
 import pytest
 from services.open_router.llm import run_prompt as run_together_prompt
@@ -12,8 +13,10 @@ import os
 from accuracy import as_report
 from eval_utils import (
     PROVIDER_COMPARISON,
+    gather_capped,
     make_provider_client,
     record_history,
+    record_provider_failure,
     record_run,
     write_comparison_report,
 )
@@ -79,9 +82,12 @@ async def run_eval(model_client, case, ocdid="ocd-jurisdiction/country:us/state:
     page_url = expected.get("page_url", "")
     jurisdiction_name = expected.get("jurisdiction_name", "")
     known_roles = expected.get("known_roles", [])
+    # The bodies cp.org holds for this jurisdiction. A case that omits them is asking the
+    # cold-start question, where nothing is known yet.
+    known_organizations = expected.get("known_organizations", [])
     make_prompt = model_client["make_prompt"]
 
-    prompt = make_prompt(page_url, jurisdiction_name, known_roles)
+    prompt = make_prompt(page_url, jurisdiction_name, known_roles, known_organizations)
     extra_kwargs = model_client.get("extra_kwargs", {})
     response = await run_prompt(
         _eval_run_id(model_client["name"]),
@@ -152,21 +158,16 @@ def load_eval_cases():
 
 
 def _score_case(model_client, case, case_scores, actual_output):
-    thresholds = {"relevant_urls": 0.75}
+    """Only `is_relevant` fails a case.
+
+    `relevant_urls` used to gate on 0.75 recall over one to three hand-picked urls while the
+    prompt asks for up to 20, so a run's own dispositions read correct 23, missing 1, spurious 26
+    and case failures came down to which of the expected handful a provider happened to include.
+    Recall and precision are in `accuracy` in every report, which is where a number nobody should
+    gate on belongs.
+    """
     expected_page = case["expected"]["page"]
     failed = []
-
-    actual_urls = set(actual_output.get("relevant_urls", []))
-    expected_urls = set(expected_page.get("relevant_urls", []))
-    score_urls = len(actual_urls & expected_urls) / len(expected_urls) if expected_urls else 1.0
-    if score_urls < thresholds["relevant_urls"]:
-        failed.append({
-            "field": "relevant_urls",
-            "expected": list(expected_urls),
-            "actual": list(actual_urls),
-            "score": score_urls,
-            "threshold": thresholds["relevant_urls"],
-        })
 
     if case_scores.get("is_relevant") != 1.0:
         failed.append({
@@ -180,7 +181,41 @@ def _score_case(model_client, case, case_scores, actual_output):
     return failed
 
 
-def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), case_ids=()):
+def _mismatch_rows(expected_page: dict, actual_output: dict) -> list[dict]:
+    """What the dashboard shows when somebody opens a case.
+
+    Recorded for every case that differs, not only the ones that fail: url recall stopped gating
+    (see `_score_case`) and would otherwise become a number with nothing behind it.
+    """
+    rows = []
+    if "error" in actual_output:
+        return [{
+            "subject": "call",
+            "field": "error",
+            "expected": "an answer",
+            "actual": actual_output["error"],
+        }]
+    if expected_page.get("is_relevant") != actual_output.get("is_relevant"):
+        rows.append({
+            "subject": "page",
+            "field": "is_relevant",
+            "expected": expected_page.get("is_relevant"),
+            "actual": actual_output.get("is_relevant"),
+        })
+    actual_urls = set(actual_output.get("relevant_urls") or [])
+    expected_urls = set(expected_page.get("relevant_urls") or [])
+    rows.extend(
+        {"subject": url, "field": "relevant_urls", "expected": "present", "actual": "—"}
+        for url in sorted(expected_urls - actual_urls)
+    )
+    rows.extend(
+        {"subject": url, "field": "relevant_urls", "expected": "—", "actual": "present"}
+        for url in sorted(actual_urls - expected_urls)
+    )
+    return rows
+
+
+def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), case_ids=(), mismatches=None):
     llm_costs = cost_utils.get_cost_tracker(_eval_run_id(model_client["name"]))
     cost_summary = {
         "model": llm_costs[0].model if llm_costs else None,
@@ -204,7 +239,10 @@ def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), 
     run = record_run(
         evals_dir,
         make_together_prompt(
-            "<page url, per case>", "<jurisdiction, per case>", ["<known roles, per case>"]
+            "<page url, per case>",
+            "<jurisdiction, per case>",
+            ["<known roles, per case>"],
+            ["<governing bodies, per case>"],
         ),
     )
     record_history(
@@ -215,7 +253,7 @@ def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), 
         cost_summary,
         {cid: 0.0 if cid in {f["case_id"] for f in failed_cases} else 1.0 for cid in case_ids},
         accuracy=accuracy,
-        mismatches=None,
+        mismatches=mismatches or {},
     )
     report_path = os.path.join(evals_dir, f"{model_client['name']}-eval-report.yml")
     with open(report_path, "w", encoding="utf-8") as f:
@@ -237,18 +275,31 @@ async def _run_provider(client, cases):
     # Provider in the place slug, not its own segment — see the note in the officials eval.
     ocdid = f"ocd-jurisdiction/country:us/state:tx/place:example_{client['name']}/government"
     start_time = time.time()
-    results = await asyncio.gather(*[run_eval(client, case, ocdid) for case in cases])
+    # A case that fails after its retries is recorded as one, not raised: a provider timing out
+    # on page four should not discard the three pages already paid for, and a run that returns
+    # nothing is the most expensive outcome available.
+    gathered = await gather_capped([partial(run_eval, client, case, ocdid) for case in cases])
+    results = [
+        ({"is_relevant": 0.0, "relevant_urls": 0.0}, {"error": repr(r)})
+        if isinstance(r, BaseException)
+        else r
+        for r in gathered
+    ]
     elapsed_seconds = round(time.time() - start_time, 2)
 
     failed_cases = []
     dispositions = []
+    mismatches: dict[str, list[dict]] = {}
     for case, (case_scores, actual_output) in zip(cases, results):
         dispositions.append(page_dispositions(actual_output, case["expected"]["page"]))
+        rows = _mismatch_rows(case["expected"]["page"], actual_output)
+        if rows:
+            mismatches[case["id"]] = rows
         failed = _score_case(client, case, case_scores, actual_output)
         if failed:
             failed_cases.append({"model_client": client["name"], "case_id": case["id"], "failures": failed})
 
-    return client, failed_cases, ocdid, elapsed_seconds, dispositions
+    return client, failed_cases, ocdid, elapsed_seconds, dispositions, mismatches
 
 
 @pytest.mark.asyncio
@@ -264,11 +315,12 @@ async def test_provider_comparison(load_eval_cases):
     for provider_client, result in zip(clients, results):
         if isinstance(result, Exception):
             failures[provider_client["name"]] = repr(result)
+            record_provider_failure(evals_dir, provider_client["name"], repr(result))
             print(f"PROVIDER FAILED: {provider_client['name']}: {result!r}", flush=True)
             continue
-        client, failed_cases, ocdid, elapsed_seconds, dispositions = result
+        client, failed_cases, ocdid, elapsed_seconds, dispositions, mismatches = result
         cost_summary = _write_report(client, failed_cases, elapsed_seconds, dispositions,
-                                     [c['id'] for c in load_eval_cases])
+                                     [c['id'] for c in load_eval_cases], mismatches)
         all_failed.extend(failed_cases)
         comparison[client["name"]] = {
             "elapsed_seconds": elapsed_seconds,

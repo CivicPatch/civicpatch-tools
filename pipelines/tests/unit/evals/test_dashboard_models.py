@@ -111,19 +111,19 @@ def test_value_detail_needs_archived_mismatches_on_both_sides():
     assert not comparison.has_value_detail
 
 
-def test_values_are_newly_wrong_or_fixed_by_case_person_and_field():
+def test_values_are_newly_wrong_or_fixed_by_case_subject_and_field():
     runs = [
         _run("aaa", "v4", "Atlas", "1", {"x": 1.0}, mismatches_file="base.yml"),
         _run("aaa", "v5", "Atlas", "2", {"x": 1.0}, mismatches_file="cand.yml"),
     ]
-    both = Mismatch(person="Ann", field="phone", expected="1", actual="2")
-    only_baseline = Mismatch(person="Ann", field="email", expected="a@b", actual="—")
-    only_candidate = Mismatch(person="Bo", field="phone", expected="3", actual="4")
+    both = Mismatch(subject="Ann", field="phone", expected="1", actual="2")
+    only_baseline = Mismatch(subject="Ann", field="email", expected="a@b", actual="—")
+    only_candidate = Mismatch(subject="Bo", field="phone", expected="3", actual="4")
     run_mismatches = {"base.yml": {"x": [both, only_baseline]}, "cand.yml": {"x": [both, only_candidate]}}
     comparison = compare_lineages(runs, model_prompt_matrix(runs), run_mismatches, 0, 1)
     assert comparison.has_value_detail
-    assert [(v.person, v.field) for v in comparison.newly_wrong] == [("Bo", "phone")]
-    assert [(v.person, v.field) for v in comparison.fixed] == [("Ann", "email")]
+    assert [(v.subject, v.field) for v in comparison.newly_wrong] == [("Bo", "phone")]
+    assert [(v.subject, v.field) for v in comparison.fixed] == [("Ann", "email")]
 
 
 def test_default_pair_is_the_two_best_on_the_newest_prompt_with_two_scores():

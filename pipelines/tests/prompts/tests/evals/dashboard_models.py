@@ -71,12 +71,12 @@ def case_changes(baseline: dict[str, float], candidate: dict[str, float]) -> tup
 
 
 def _value_changes(wrong_here: CaseMismatches, wrong_there: CaseMismatches) -> list[ValueChange]:
-    there = {(case_id, m.person, m.field) for case_id, rows in wrong_there.items() for m in rows}
+    there = {(case_id, m.subject, m.field) for case_id, rows in wrong_there.items() for m in rows}
     return [
-        ValueChange(case_id=case_id, person=m.person, field=m.field, expected=m.expected, actual=m.actual)
+        ValueChange(case_id=case_id, subject=m.subject, field=m.field, expected=m.expected, actual=m.actual)
         for case_id, rows in sorted(wrong_here.items())
         for m in rows
-        if (case_id, m.person, m.field) not in there
+        if (case_id, m.subject, m.field) not in there
     ]
 
 

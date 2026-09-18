@@ -542,6 +542,64 @@ civ-assertions-popover {
 .person-editor-inline__inner .person-editor__identity {
   display: none;
 }
+/* The membership sections sit under the fields by default, and beside them once there is room:
+   the inline editor's field rows are ~31rem wide inside a full-width card, so one half was empty.
+   Who they are takes the narrower left column, photo and name with the memberships under them,
+   and the form the wider right. Two columns rather than three: the fields are one block, and the
+   left reads as one answer to "who is this, and where do they sit".
+   The component's own root is the grid item — a wrapper would leave an empty cell for a person
+   who holds nothing. */
+.person-editor > .person-memberships {
+  grid-column: 1 / -1;
+  padding: 0 0.75rem 0.75rem;
+}
+@media (min-width: 64rem) {
+  .person-editor-inline__inner .person-editor {
+    /* Not halves: a field row is 7rem label + 22rem control + 1.5rem lock, so an even split
+       squeezed the controls while the membership lines had space to spare. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    /* Head, the merge panel when it is open, photo, then everything left over. Without the
+       explicit `1fr` last row, the form's extra height was shared out across the rows it spans
+       and opened a gap under the photo; here the last row takes all of it and the memberships
+       stay put. The merge row collapses to nothing while the panel is closed. */
+    grid-template-rows: auto auto auto 1fr;
+  }
+  .person-editor-inline__inner .person-editor__merge-with {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 0.5rem 0.75rem 0;
+  }
+  .person-editor-inline__inner .person-editor__identity {
+    display: flex;
+    grid-column: 1;
+    grid-row: 3;
+  }
+  /* Photo only: the Name field sits right beside this and the Office field under it, so the
+     name and the composed office line said everything twice. */
+  .person-editor-inline__inner .person-editor__identity > .person-editor__name,
+  .person-editor-inline__inner .person-editor__identity > .person-editor__office {
+    display: none;
+  }
+  /* `person-image` writes its own width/height from the `size` prop, so overriding it takes
+     `!important` — same as the review modal does to shrink it. The half-width column gives the
+     photo room the one-column editor never had. */
+  .person-editor-inline__inner .person-editor__identity > person-image,
+  .person-editor-inline__inner .person-editor__identity > person-image > * {
+    width: 11rem !important;
+    height: 11rem !important;
+    font-size: 4rem !important;
+  }
+  .person-editor-inline__inner .person-editor > .person-memberships {
+    grid-column: 1;
+    grid-row: 4;
+    align-self: start;
+    padding: 0 0 0.75rem 0.75rem;
+  }
+  .person-editor-inline__inner .person-editor__fields {
+    grid-column: 2;
+    grid-row: 3 / -1;
+  }
+}
 .person-editor-inline__inner .person-editor__fields {
   padding: 0.6rem 0.75rem 0.75rem;
 }
