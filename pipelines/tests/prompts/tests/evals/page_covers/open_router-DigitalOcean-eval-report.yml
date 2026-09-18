@@ -1,20 +1,32 @@
 run:
-  timestamp: '2026-09-18T01:45:28+00:00'
-  prompt_sha256: 0749e3b84f81
-  prompt_file: _prompts/0749e3b84f81.txt
+  timestamp: '2026-09-18T02:51:34+00:00'
+  prompt_sha256: d318f76e0deb
+  prompt_file: _prompts/d318f76e0deb.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 72.91
-  total_input_tokens: 126595
-  total_output_tokens: 70
-  total_cost_usd: 0.01242003
+  elapsed_seconds: 135.43
+  total_input_tokens: 168980
+  total_output_tokens: 126
+  total_cost_usd: 0.0165445952
 accuracy:
   covers:
-    correct: 10
+    correct: 17
     missing: 0
     spurious: 0
-    wrong: 0
-    precision: 1.0
-    recall: 1.0
-    f1: 1.0
-failed_cases: []
+    wrong: 1
+    precision: 0.9444444444444444
+    recall: 0.9444444444444444
+    f1: 0.9444444444444444
+failed_cases:
+- model_client: open_router-DigitalOcean
+  case_id: irvine_council_roster
+  failures:
+  - field: Office of the Mayor
+    expected: true
+    actual: false
+mismatches:
+  irvine_council_roster:
+  - subject: Office of the Mayor
+    field: covers
+    expected: true
+    actual: false

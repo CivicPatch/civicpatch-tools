@@ -649,3 +649,99 @@ async def test_clearing_one_row_brings_the_whole_roster_back(user_id, batch_id):
         )
         == 2
     )
+
+
+async def _age_batch(batch_id: str, interval: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"UPDATE changeset_batches SET started_at = now() - interval '{interval}' "
+            "WHERE id::text = %s",
+            (batch_id,),
+        )
+        await conn.commit()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_second_import_of_the_same_sheet_is_refused(user_id):
+    """The lock doing its job: two runs over one sheet would double every request."""
+    lock_key = f"sheet:{_OCDID}:refused"
+    await changeset_batches.start(
+        changeset_batches.BatchKind.SHEET_IMPORT, lock_key, user_id, {}
+    )
+
+    with pytest.raises(changeset_batches.BatchAlreadyRunning):
+        await changeset_batches.start(
+            changeset_batches.BatchKind.SHEET_IMPORT, lock_key, user_id, {}
+        )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_batch_whose_process_died_does_not_wedge_the_sheet_forever(user_id):
+    """`finish` releases the lock on every path the code takes, but a killed worker takes none
+    of them, and the partial unique index is on `finished_at IS NULL`. Before this, one restart
+    mid-import held that sheet against every future import until somebody ran an UPDATE by hand.
+    """
+    lock_key = f"sheet:{_OCDID}:abandoned"
+    abandoned = await changeset_batches.start(
+        changeset_batches.BatchKind.SHEET_IMPORT, lock_key, user_id, {}
+    )
+    await _age_batch(abandoned, "3 hours")
+
+    taken_over = await changeset_batches.start(
+        changeset_batches.BatchKind.SHEET_IMPORT, lock_key, user_id, {}
+    )
+
+    assert taken_over != abandoned
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT status, error, finished_at IS NOT NULL FROM changeset_batches "
+            "WHERE id::text = %s",
+            (abandoned,),
+        )
+        status, error, finished = await cur.fetchone()
+    assert (status, finished) == (changeset_batches.BatchStatus.FAILED.value, True)
+    # Says why, because the batch page shows it and "failed" with no reason reads as a bug in
+    # the import rather than a process that went away.
+    assert "abandoned" in error
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_slow_import_still_holds_its_lock(user_id):
+    """The takeover is time-bound, not unconditional: a long import is not an abandoned one."""
+    lock_key = f"sheet:{_OCDID}:slow"
+    running = await changeset_batches.start(
+        changeset_batches.BatchKind.SHEET_IMPORT, lock_key, user_id, {}
+    )
+    await _age_batch(running, "20 minutes")
+
+    with pytest.raises(changeset_batches.BatchAlreadyRunning):
+        await changeset_batches.start(
+            changeset_batches.BatchKind.SHEET_IMPORT, lock_key, user_id, {}
+        )
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_abandoned_batch_on_another_sheet_is_left_alone(user_id):
+    """Per key: releasing every stale batch would rewrite history for sheets nobody is importing."""
+    other = await changeset_batches.start(
+        changeset_batches.BatchKind.SHEET_IMPORT, f"sheet:{_OCDID}:other", user_id, {}
+    )
+    await _age_batch(other, "3 hours")
+
+    await changeset_batches.start(
+        changeset_batches.BatchKind.SHEET_IMPORT, f"sheet:{_OCDID}:mine", user_id, {}
+    )
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT finished_at IS NULL FROM changeset_batches WHERE id::text = %s", (other,)
+        )
+        still_open = (await cur.fetchone())[0]
+    assert still_open is True

@@ -1,26 +1,21 @@
 run:
-  timestamp: '2026-09-18T01:45:28+00:00'
-  prompt_sha256: 0749e3b84f81
-  prompt_file: _prompts/0749e3b84f81.txt
+  timestamp: '2026-09-18T02:51:34+00:00'
+  prompt_sha256: d318f76e0deb
+  prompt_file: _prompts/d318f76e0deb.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 368.22
-  total_input_tokens: 126615
-  total_output_tokens: 1805
-  total_cost_usd: 0.01803424
+  elapsed_seconds: 174.04
+  total_input_tokens: 169016
+  total_output_tokens: 2507
+  total_cost_usd: 0.02287369
 accuracy:
   covers:
-    correct: 9
+    correct: 18
     missing: 0
     spurious: 0
-    wrong: 1
-    precision: 0.9
-    recall: 0.9
-    f1: 0.9
-failed_cases:
-- model_client: open_router-NextBit
-  case_id: seattle_home_news_mentions
-  failures:
-  - field: Office of the Mayor
-    expected: false
-    actual: true
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
+failed_cases: []
+mismatches: {}

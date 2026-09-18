@@ -192,18 +192,34 @@ def test_a_different_name_is_not_matched_to_the_expected_person():
     assert (summary["person"].correct, summary["person"].false_negative, summary["person"].false_positive) == (0, 1, 1)
 
 
-def test_extra_urls_are_false_positives():
+def test_an_extra_url_is_not_counted_against_a_provider():
+    """A fixture lists the links that must be followed, not every link that may be.
+
+    Changed 2026-09-18 from counting extras as false positives. On the Jackson case a provider
+    returned `/government` (a hub), `meetthecouncil` (a roster) and `aboutmayorconger` (the
+    mayor's own page), all three exactly what the prompt asks for and none of them in an expected
+    list of two. Scoring them as errors measured the fixture rather than the model.
+    """
     expected = {"is_relevant": True, "relevant_urls": ["https://a.gov/council"]}
     actual = {"is_relevant": True, "relevant_urls": ["https://a.gov/council", "https://a.gov/news", "https://a.gov/parks"]}
     found = [d.value for d in page_dispositions(actual, expected)["relevant_urls"]]
-    assert found.count("false_positive") == 2
+    assert found == ["correct"]
 
 
-def test_urls_returned_when_none_were_expected_are_false_positives():
+def test_a_missing_url_is_still_counted():
+    """The asymmetry that justifies the leniency: an extra link costs one fetch, a missing one
+    costs a page the crawler can never reach."""
+    expected = {"is_relevant": True, "relevant_urls": ["https://a.gov/council", "https://a.gov/mayor"]}
+    actual = {"is_relevant": True, "relevant_urls": ["https://a.gov/council"]}
+    found = [d.value for d in page_dispositions(actual, expected)["relevant_urls"]]
+    assert found == ["correct", "false_negative"]
+
+
+def test_urls_returned_when_none_were_expected_are_not_penalised():
     expected = {"is_relevant": False, "relevant_urls": []}
     actual = {"is_relevant": False, "relevant_urls": ["https://a.gov/news", "https://a.gov/parks"]}
     found = [d.value for d in page_dispositions(actual, expected)["relevant_urls"]]
-    assert found == ["false_positive", "false_positive"]
+    assert found == []
 
 
 def _last_ten_digits(phone):

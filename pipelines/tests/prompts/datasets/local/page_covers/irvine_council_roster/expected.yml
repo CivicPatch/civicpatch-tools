@@ -1,0 +1,22 @@
+page_url: https://cityofirvine.gov/city-council
+jurisdiction_name: Irvine city
+organizations:
+- name: Office of the Mayor
+  posts:
+  - Mayor
+- name: City Council
+  posts:
+  - Vice Mayor
+  - Council Member, District 1
+  - Council Member, District 2
+  - Council Member, District 4
+  - Council Member, District 5
+  - Council Member, At Large
+covers:
+  Office of the Mayor: true
+  City Council: true
+thoughts: >-
+  A page can carry two organizations, and this is that case. Mayor Larry Agran appears with
+  his photo as one of the listed members, above the councilmembers, so the page presents both
+  the council's people and the mayor. Answering only "City Council" here would drop the mayor's
+  extraction on the one page that has him.

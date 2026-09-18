@@ -40,6 +40,96 @@ runs:
       spurious: 0
       wrong: 1
   mismatches_file: _runs/20260918T014528Z-open_router-Alibaba.yml
+- timestamp: '2026-09-18T02:11:48+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 0749e3b84f81
+  cost_usd: 0.013922734
+  elapsed_seconds: 58.36
+  scores:
+    covers: 0.9
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 0.0
+  dispositions:
+    covers:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260918T021148Z-open_router-Alibaba.yml
+- timestamp: '2026-09-18T02:23:43+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 8dd4a1880ce5
+  cost_usd: 0.017426566
+  elapsed_seconds: 65.71
+  scores:
+    covers: 0.9
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 0.0
+  dispositions:
+    covers:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260918T022343Z-open_router-Alibaba.yml
+- timestamp: '2026-09-18T02:39:21+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 8dd4a1880ce5
+  cost_usd: 0.0094610968
+  elapsed_seconds: 221.51
+  scores:
+    covers: 1.0
+  cases:
+    irvine_council_roster: 1.0
+    irvine_councilmember_bio: 1.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 14
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260918T023921Z-open_router-Alibaba.yml
+- timestamp: '2026-09-18T02:51:34+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: d318f76e0deb
+  cost_usd: 0.0230908264
+  elapsed_seconds: 114.07
+  scores:
+    covers: 1.0
+  cases:
+    irvine_council_roster: 1.0
+    irvine_councilmember_bio: 1.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayor_staff_directory: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    quitaque_city_officials: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 18
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260918T025134Z-open_router-Alibaba.yml
 - timestamp: '2026-09-18T01:30:21+00:00'
   provider: open_router-AtlasCloud
   model: deepseek/deepseek-v4-flash
@@ -81,6 +171,96 @@ runs:
       spurious: 0
       wrong: 1
   mismatches_file: _runs/20260918T014528Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-18T02:11:48+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 0749e3b84f81
+  cost_usd: 0.01298206
+  elapsed_seconds: 73.72
+  scores:
+    covers: 0.9
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 0.0
+  dispositions:
+    covers:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260918T021148Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-18T02:23:43+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 8dd4a1880ce5
+  cost_usd: 0.01671838
+  elapsed_seconds: 140.58
+  scores:
+    covers: 0.9
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 0.0
+  dispositions:
+    covers:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260918T022343Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-18T02:39:21+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 8dd4a1880ce5
+  cost_usd: 0.009803024
+  elapsed_seconds: 184.73
+  scores:
+    covers: 1.0
+  cases:
+    irvine_council_roster: 1.0
+    irvine_councilmember_bio: 1.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 14
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260918T023921Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-18T02:51:34+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: d318f76e0deb
+  cost_usd: 0.022829352
+  elapsed_seconds: 149.93
+  scores:
+    covers: 1.0
+  cases:
+    irvine_council_roster: 1.0
+    irvine_councilmember_bio: 1.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayor_staff_directory: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    quitaque_city_officials: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 18
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260918T025134Z-open_router-AtlasCloud.yml
 - timestamp: '2026-09-18T01:30:21+00:00'
   provider: open_router-DigitalOcean
   model: deepseek/deepseek-v4-flash
@@ -122,6 +302,96 @@ runs:
       spurious: 0
       wrong: 0
   mismatches_file: _runs/20260918T014528Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-18T02:11:48+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 0749e3b84f81
+  cost_usd: 0.01242003
+  elapsed_seconds: 76.79
+  scores:
+    covers: 1.0
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 1.0
+  dispositions:
+    covers:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260918T021148Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-18T02:23:43+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 8dd4a1880ce5
+  cost_usd: 0.01252881
+  elapsed_seconds: 141.19
+  scores:
+    covers: 1.0
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 1.0
+  dispositions:
+    covers:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260918T022343Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-18T02:39:21+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 8dd4a1880ce5
+  cost_usd: 0.0140605696
+  elapsed_seconds: 275.31
+  scores:
+    covers: 0.9285714285714286
+  cases:
+    irvine_council_roster: 1.0
+    irvine_councilmember_bio: 0.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 13
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260918T023921Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-18T02:51:34+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: d318f76e0deb
+  cost_usd: 0.0165445952
+  elapsed_seconds: 135.43
+  scores:
+    covers: 0.9444444444444444
+  cases:
+    irvine_council_roster: 0.0
+    irvine_councilmember_bio: 1.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayor_staff_directory: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    quitaque_city_officials: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 17
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260918T025134Z-open_router-DigitalOcean.yml
 - timestamp: '2026-09-18T01:30:21+00:00'
   provider: open_router-NextBit
   model: deepseek/deepseek-v4-flash
@@ -163,3 +433,93 @@ runs:
       spurious: 0
       wrong: 1
   mismatches_file: _runs/20260918T014528Z-open_router-NextBit.yml
+- timestamp: '2026-09-18T02:11:48+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 0749e3b84f81
+  cost_usd: 0.01518957
+  elapsed_seconds: 108.32
+  scores:
+    covers: 0.9
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 0.0
+  dispositions:
+    covers:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260918T021148Z-open_router-NextBit.yml
+- timestamp: '2026-09-18T02:23:43+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 8dd4a1880ce5
+  cost_usd: 0.0123311
+  elapsed_seconds: 69.38
+  scores:
+    covers: 0.9
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 0.0
+  dispositions:
+    covers:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260918T022343Z-open_router-NextBit.yml
+- timestamp: '2026-09-18T02:39:21+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 8dd4a1880ce5
+  cost_usd: 0.01027183
+  elapsed_seconds: 238.94
+  scores:
+    covers: 1.0
+  cases:
+    irvine_council_roster: 1.0
+    irvine_councilmember_bio: 1.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 14
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260918T023921Z-open_router-NextBit.yml
+- timestamp: '2026-09-18T02:51:34+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: d318f76e0deb
+  cost_usd: 0.02287369
+  elapsed_seconds: 174.04
+  scores:
+    covers: 1.0
+  cases:
+    irvine_council_roster: 1.0
+    irvine_councilmember_bio: 1.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayor_staff_directory: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    quitaque_city_officials: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 18
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260918T025134Z-open_router-NextBit.yml

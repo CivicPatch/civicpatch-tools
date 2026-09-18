@@ -1,0 +1,27 @@
+page_url: https://cityofirvine.gov/city-council/councilmember-william-go-district-2
+jurisdiction_name: Irvine city
+organizations:
+- name: Office of the Mayor
+  posts:
+  - Mayor
+- name: City Council
+  posts:
+  - Vice Mayor
+  - Council Member, District 1
+  - Council Member, District 2
+  - Council Member, District 4
+  - Council Member, District 5
+  - Council Member, At Large
+covers:
+  Office of the Mayor: false
+  City Council: true
+thoughts: >-
+  One councilmember's own page, with his district and email, so the council is covered.
+
+  Not the mayor, and this is the case that says why. Mayor Agran appears in the sidebar block
+  headed "Members & Bios", which is identical on every page of Irvine's council section. If that
+  block counted, every page on the site would cover every body and the answer would be constant,
+  which is no answer at all. The page's own content is entirely about William Go.
+
+  Contrast irvine_council_roster, the same sidebar and the opposite answer: there the mayor is
+  also in the body of the page, with his photo, as one of the members it exists to present.

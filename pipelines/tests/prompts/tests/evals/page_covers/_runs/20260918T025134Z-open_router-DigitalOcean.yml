@@ -1,0 +1,6 @@
+mismatches:
+  irvine_council_roster:
+  - actual: false
+    expected: true
+    field: covers
+    subject: Office of the Mayor

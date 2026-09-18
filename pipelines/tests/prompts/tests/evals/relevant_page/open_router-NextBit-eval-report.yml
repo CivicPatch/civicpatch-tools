@@ -1,22 +1,22 @@
 run:
-  timestamp: '2026-09-18T01:47:39+00:00'
-  prompt_sha256: 983a0dfb3b48
-  prompt_file: _prompts/983a0dfb3b48.txt
+  timestamp: '2026-09-18T02:38:43+00:00'
+  prompt_sha256: cb8e073a37f3
+  prompt_file: _prompts/cb8e073a37f3.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 155.35
-  total_input_tokens: 85332
-  total_output_tokens: 19205
-  total_cost_usd: 0.01672475
+  elapsed_seconds: 230.93
+  total_input_tokens: 86624
+  total_output_tokens: 18737
+  total_cost_usd: 0.01810899
 accuracy:
   relevant_urls:
-    correct: 26
-    missing: 0
-    spurious: 27
+    correct: 27
+    missing: 2
+    spurious: 0
     wrong: 0
-    precision: 0.49056603773584906
-    recall: 1.0
-    f1: 0.6582278481012658
+    precision: 1.0
+    recall: 0.9310344827586207
+    f1: 0.9642857142857143
   is_relevant:
     correct: 17
     missing: 0
@@ -26,3 +26,14 @@ accuracy:
     recall: 1.0
     f1: 1.0
 failed_cases: []
+mismatches:
+  quitaque_council:
+  - subject: https://quitaque.us/cityofficials.html
+    field: relevant_urls
+    expected: present
+    actual: "\u2014"
+  san_antonio:
+  - subject: https://www.sa.gov/Directory
+    field: relevant_urls
+    expected: present
+    actual: "\u2014"

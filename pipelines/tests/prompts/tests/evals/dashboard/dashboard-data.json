@@ -8194,55 +8194,46 @@
      "blocked": true,
      "gate_failures": [],
      "failed_case_ids": [
-      "quitaque_council",
-      "san_antonio"
-     ],
-     "cases_passed": 15,
-     "cases_total": 17,
-     "priority_scores": {},
-     "cost_usd": 0.0166052264,
-     "ran_at": "2026-09-18T01:32:43+00:00"
-    },
-    {
-     "provider": "AtlasCloud",
-     "blocked": true,
-     "gate_failures": [],
-     "failed_case_ids": [
-      "mcgregor_city_announcement_irrelevant",
-      "quitaque_council"
-     ],
-     "cases_passed": 15,
-     "cases_total": 17,
-     "priority_scores": {},
-     "cost_usd": 0.016573704,
-     "ran_at": "2026-09-18T01:32:43+00:00"
-    },
-    {
-     "provider": "DigitalOcean",
-     "blocked": true,
-     "gate_failures": [],
-     "failed_case_ids": [
-      "san_saba_airport_advisory_irrelevant"
+      "gatesville_ordinances"
      ],
      "cases_passed": 16,
      "cases_total": 17,
      "priority_scores": {},
-     "cost_usd": 0.009333716,
-     "ran_at": "2026-09-18T01:32:43+00:00"
+     "cost_usd": 0.0166680456,
+     "ran_at": "2026-09-18T02:38:43+00:00"
+    },
+    {
+     "provider": "AtlasCloud",
+     "blocked": false,
+     "gate_failures": [],
+     "failed_case_ids": [],
+     "cases_passed": 17,
+     "cases_total": 17,
+     "priority_scores": {},
+     "cost_usd": 0.016810864,
+     "ran_at": "2026-09-18T02:38:43+00:00"
+    },
+    {
+     "provider": "DigitalOcean",
+     "blocked": false,
+     "gate_failures": [],
+     "failed_case_ids": [],
+     "cases_passed": 17,
+     "cases_total": 17,
+     "priority_scores": {},
+     "cost_usd": 0.008820784,
+     "ran_at": "2026-09-18T02:38:43+00:00"
     },
     {
      "provider": "NextBit",
-     "blocked": true,
+     "blocked": false,
      "gate_failures": [],
-     "failed_case_ids": [
-      "mcgregor_city_announcement_irrelevant",
-      "san_antonio"
-     ],
-     "cases_passed": 15,
+     "failed_case_ids": [],
+     "cases_passed": 17,
      "cases_total": 17,
      "priority_scores": {},
-     "cost_usd": 0.01767064,
-     "ran_at": "2026-09-18T01:32:43+00:00"
+     "cost_usd": 0.01810899,
+     "ran_at": "2026-09-18T02:38:43+00:00"
     }
    ],
    "matrix": {
@@ -8265,6 +8256,56 @@
      }
     ],
     "rows": [
+     {
+      "prompt_sha256": "cb8e073a37f3",
+      "cells": [
+       {
+        "mean_score": 0.9411764705882353,
+        "run_count": 1,
+        "mean_cost_usd": 0.0166680456
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.016810864
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.008820784
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.01810899
+       }
+      ]
+     },
+     {
+      "prompt_sha256": "983a0dfb3b48",
+      "cells": [
+       {
+        "mean_score": 1.0,
+        "run_count": 3,
+        "mean_cost_usd": 0.011730288533333333
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 3,
+        "mean_cost_usd": 0.011546416
+       },
+       {
+        "mean_score": 0.9803921568627451,
+        "run_count": 3,
+        "mean_cost_usd": 0.008695082666666666
+       },
+       {
+        "mean_score": 0.9607843137254902,
+        "run_count": 3,
+        "mean_cost_usd": 0.012139266666666666
+       }
+      ]
+     },
      {
       "prompt_sha256": "2608d81f638d",
       "cells": [
@@ -8335,434 +8376,524 @@
     ]
    },
    "comparison": {
-    "default_baseline_index": 2,
-    "default_candidate_index": 3,
+    "default_baseline_index": 3,
+    "default_candidate_index": 2,
     "pairs": [
      {
       "baseline_index": 0,
       "candidate_index": 1,
-      "prompt_sha256": "2608d81f638d",
+      "prompt_sha256": "cb8e073a37f3",
       "baseline": {
-       "mean_score": 0.8823529411764706,
+       "mean_score": 0.9411764705882353,
        "run_count": 1,
-       "mean_cost_usd": 0.0166052264
+       "mean_cost_usd": 0.0166680456
       },
       "candidate": {
-       "mean_score": 0.8823529411764706,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.016573704
+       "mean_cost_usd": 0.016810864
       },
-      "regressed": [
-       {
-        "case_id": "mcgregor_city_announcement_irrelevant",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
-       }
-      ],
+      "regressed": [],
       "improved": [
        {
-        "case_id": "san_antonio",
+        "case_id": "gatesville_ordinances",
         "baseline_score": 0.0,
         "candidate_score": 1.0
        }
       ],
-      "unchanged_count": 15,
-      "has_value_detail": false,
+      "unchanged_count": 16,
+      "has_value_detail": true,
       "newly_wrong": [],
-      "fixed": []
+      "fixed": [
+       {
+        "case_id": "gatesville_ordinances",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": false,
+        "actual": true
+       }
+      ]
      },
      {
       "baseline_index": 0,
       "candidate_index": 2,
-      "prompt_sha256": "2608d81f638d",
+      "prompt_sha256": "cb8e073a37f3",
       "baseline": {
-       "mean_score": 0.8823529411764706,
-       "run_count": 1,
-       "mean_cost_usd": 0.0166052264
-      },
-      "candidate": {
        "mean_score": 0.9411764705882353,
        "run_count": 1,
-       "mean_cost_usd": 0.009333716
+       "mean_cost_usd": 0.0166680456
       },
-      "regressed": [
-       {
-        "case_id": "san_saba_airport_advisory_irrelevant",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
-       }
-      ],
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.008820784
+      },
+      "regressed": [],
       "improved": [
        {
-        "case_id": "quitaque_council",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
-       },
-       {
-        "case_id": "san_antonio",
+        "case_id": "gatesville_ordinances",
         "baseline_score": 0.0,
         "candidate_score": 1.0
        }
       ],
-      "unchanged_count": 14,
-      "has_value_detail": false,
-      "newly_wrong": [],
-      "fixed": []
+      "unchanged_count": 16,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "https://gatesvilletx.com/government/index.php",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "subject": "https://sansabatexas.com/city-hall/",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       }
+      ],
+      "fixed": [
+       {
+        "case_id": "gatesville_ordinances",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": false,
+        "actual": true
+       }
+      ]
      },
      {
       "baseline_index": 0,
       "candidate_index": 3,
-      "prompt_sha256": "2608d81f638d",
+      "prompt_sha256": "cb8e073a37f3",
       "baseline": {
-       "mean_score": 0.8823529411764706,
+       "mean_score": 0.9411764705882353,
        "run_count": 1,
-       "mean_cost_usd": 0.0166052264
+       "mean_cost_usd": 0.0166680456
       },
       "candidate": {
-       "mean_score": 0.8823529411764706,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01767064
+       "mean_cost_usd": 0.01810899
       },
-      "regressed": [
-       {
-        "case_id": "mcgregor_city_announcement_irrelevant",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
-       }
-      ],
+      "regressed": [],
       "improved": [
        {
-        "case_id": "quitaque_council",
+        "case_id": "gatesville_ordinances",
         "baseline_score": 0.0,
         "candidate_score": 1.0
        }
       ],
-      "unchanged_count": 15,
-      "has_value_detail": false,
-      "newly_wrong": [],
-      "fixed": []
+      "unchanged_count": 16,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "quitaque_council",
+        "subject": "https://quitaque.us/cityofficials.html",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       },
+       {
+        "case_id": "san_antonio",
+        "subject": "https://www.sa.gov/Directory",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       }
+      ],
+      "fixed": [
+       {
+        "case_id": "gatesville_ordinances",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": false,
+        "actual": true
+       }
+      ]
      },
      {
       "baseline_index": 1,
       "candidate_index": 0,
-      "prompt_sha256": "2608d81f638d",
+      "prompt_sha256": "cb8e073a37f3",
       "baseline": {
-       "mean_score": 0.8823529411764706,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.016573704
+       "mean_cost_usd": 0.016810864
       },
       "candidate": {
-       "mean_score": 0.8823529411764706,
+       "mean_score": 0.9411764705882353,
        "run_count": 1,
-       "mean_cost_usd": 0.0166052264
+       "mean_cost_usd": 0.0166680456
       },
       "regressed": [
        {
-        "case_id": "san_antonio",
+        "case_id": "gatesville_ordinances",
         "baseline_score": 1.0,
         "candidate_score": 0.0
        }
       ],
-      "improved": [
+      "improved": [],
+      "unchanged_count": 16,
+      "has_value_detail": true,
+      "newly_wrong": [
        {
-        "case_id": "mcgregor_city_announcement_irrelevant",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
+        "case_id": "gatesville_ordinances",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": false,
+        "actual": true
        }
       ],
-      "unchanged_count": 15,
-      "has_value_detail": false,
-      "newly_wrong": [],
       "fixed": []
      },
      {
       "baseline_index": 1,
       "candidate_index": 2,
-      "prompt_sha256": "2608d81f638d",
+      "prompt_sha256": "cb8e073a37f3",
       "baseline": {
-       "mean_score": 0.8823529411764706,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.016573704
+       "mean_cost_usd": 0.016810864
       },
       "candidate": {
-       "mean_score": 0.9411764705882353,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.009333716
+       "mean_cost_usd": 0.008820784
       },
-      "regressed": [
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 17,
+      "has_value_detail": true,
+      "newly_wrong": [
        {
-        "case_id": "san_saba_airport_advisory_irrelevant",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
-       }
-      ],
-      "improved": [
-       {
-        "case_id": "mcgregor_city_announcement_irrelevant",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "https://gatesvilletx.com/government/index.php",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
        },
        {
-        "case_id": "quitaque_council",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "subject": "https://sansabatexas.com/city-hall/",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
        }
       ],
-      "unchanged_count": 14,
-      "has_value_detail": false,
-      "newly_wrong": [],
       "fixed": []
      },
      {
       "baseline_index": 1,
       "candidate_index": 3,
-      "prompt_sha256": "2608d81f638d",
+      "prompt_sha256": "cb8e073a37f3",
       "baseline": {
-       "mean_score": 0.8823529411764706,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.016573704
+       "mean_cost_usd": 0.016810864
       },
       "candidate": {
-       "mean_score": 0.8823529411764706,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01767064
+       "mean_cost_usd": 0.01810899
       },
-      "regressed": [
-       {
-        "case_id": "san_antonio",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
-       }
-      ],
-      "improved": [
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 17,
+      "has_value_detail": true,
+      "newly_wrong": [
        {
         "case_id": "quitaque_council",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
+        "subject": "https://quitaque.us/cityofficials.html",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       },
+       {
+        "case_id": "san_antonio",
+        "subject": "https://www.sa.gov/Directory",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
        }
       ],
-      "unchanged_count": 15,
-      "has_value_detail": false,
-      "newly_wrong": [],
       "fixed": []
      },
      {
       "baseline_index": 2,
       "candidate_index": 0,
-      "prompt_sha256": "2608d81f638d",
+      "prompt_sha256": "cb8e073a37f3",
       "baseline": {
-       "mean_score": 0.9411764705882353,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.009333716
+       "mean_cost_usd": 0.008820784
       },
       "candidate": {
-       "mean_score": 0.8823529411764706,
+       "mean_score": 0.9411764705882353,
        "run_count": 1,
-       "mean_cost_usd": 0.0166052264
+       "mean_cost_usd": 0.0166680456
       },
       "regressed": [
        {
-        "case_id": "quitaque_council",
+        "case_id": "gatesville_ordinances",
         "baseline_score": 1.0,
         "candidate_score": 0.0
+       }
+      ],
+      "improved": [],
+      "unchanged_count": 16,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "gatesville_ordinances",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": false,
+        "actual": true
+       }
+      ],
+      "fixed": [
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "https://gatesvilletx.com/government/index.php",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
        },
        {
-        "case_id": "san_antonio",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
-       }
-      ],
-      "improved": [
-       {
         "case_id": "san_saba_airport_advisory_irrelevant",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
+        "subject": "https://sansabatexas.com/city-hall/",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
        }
-      ],
-      "unchanged_count": 14,
-      "has_value_detail": false,
-      "newly_wrong": [],
-      "fixed": []
+      ]
      },
      {
       "baseline_index": 2,
       "candidate_index": 1,
-      "prompt_sha256": "2608d81f638d",
+      "prompt_sha256": "cb8e073a37f3",
       "baseline": {
-       "mean_score": 0.9411764705882353,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.009333716
+       "mean_cost_usd": 0.008820784
       },
       "candidate": {
-       "mean_score": 0.8823529411764706,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.016573704
+       "mean_cost_usd": 0.016810864
       },
-      "regressed": [
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 17,
+      "has_value_detail": true,
+      "newly_wrong": [],
+      "fixed": [
        {
-        "case_id": "mcgregor_city_announcement_irrelevant",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "https://gatesvilletx.com/government/index.php",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
        },
        {
-        "case_id": "quitaque_council",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
-       }
-      ],
-      "improved": [
-       {
         "case_id": "san_saba_airport_advisory_irrelevant",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
+        "subject": "https://sansabatexas.com/city-hall/",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
        }
-      ],
-      "unchanged_count": 14,
-      "has_value_detail": false,
-      "newly_wrong": [],
-      "fixed": []
+      ]
      },
      {
       "baseline_index": 2,
       "candidate_index": 3,
-      "prompt_sha256": "2608d81f638d",
+      "prompt_sha256": "cb8e073a37f3",
       "baseline": {
-       "mean_score": 0.9411764705882353,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.009333716
+       "mean_cost_usd": 0.008820784
       },
       "candidate": {
-       "mean_score": 0.8823529411764706,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01767064
+       "mean_cost_usd": 0.01810899
       },
-      "regressed": [
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 17,
+      "has_value_detail": true,
+      "newly_wrong": [
        {
-        "case_id": "mcgregor_city_announcement_irrelevant",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
+        "case_id": "quitaque_council",
+        "subject": "https://quitaque.us/cityofficials.html",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
        },
        {
         "case_id": "san_antonio",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
+        "subject": "https://www.sa.gov/Directory",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
        }
       ],
-      "improved": [
+      "fixed": [
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "https://gatesvilletx.com/government/index.php",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       },
        {
         "case_id": "san_saba_airport_advisory_irrelevant",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
+        "subject": "https://sansabatexas.com/city-hall/",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
        }
-      ],
-      "unchanged_count": 14,
-      "has_value_detail": false,
-      "newly_wrong": [],
-      "fixed": []
+      ]
      },
      {
       "baseline_index": 3,
       "candidate_index": 0,
-      "prompt_sha256": "2608d81f638d",
+      "prompt_sha256": "cb8e073a37f3",
       "baseline": {
-       "mean_score": 0.8823529411764706,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01767064
-      },
-      "candidate": {
-       "mean_score": 0.8823529411764706,
-       "run_count": 1,
-       "mean_cost_usd": 0.0166052264
-      },
-      "regressed": [
-       {
-        "case_id": "quitaque_council",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
-       }
-      ],
-      "improved": [
-       {
-        "case_id": "mcgregor_city_announcement_irrelevant",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
-       }
-      ],
-      "unchanged_count": 15,
-      "has_value_detail": false,
-      "newly_wrong": [],
-      "fixed": []
-     },
-     {
-      "baseline_index": 3,
-      "candidate_index": 1,
-      "prompt_sha256": "2608d81f638d",
-      "baseline": {
-       "mean_score": 0.8823529411764706,
-       "run_count": 1,
-       "mean_cost_usd": 0.01767064
-      },
-      "candidate": {
-       "mean_score": 0.8823529411764706,
-       "run_count": 1,
-       "mean_cost_usd": 0.016573704
-      },
-      "regressed": [
-       {
-        "case_id": "quitaque_council",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
-       }
-      ],
-      "improved": [
-       {
-        "case_id": "san_antonio",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
-       }
-      ],
-      "unchanged_count": 15,
-      "has_value_detail": false,
-      "newly_wrong": [],
-      "fixed": []
-     },
-     {
-      "baseline_index": 3,
-      "candidate_index": 2,
-      "prompt_sha256": "2608d81f638d",
-      "baseline": {
-       "mean_score": 0.8823529411764706,
-       "run_count": 1,
-       "mean_cost_usd": 0.01767064
+       "mean_cost_usd": 0.01810899
       },
       "candidate": {
        "mean_score": 0.9411764705882353,
        "run_count": 1,
-       "mean_cost_usd": 0.009333716
+       "mean_cost_usd": 0.0166680456
       },
       "regressed": [
        {
-        "case_id": "san_saba_airport_advisory_irrelevant",
+        "case_id": "gatesville_ordinances",
         "baseline_score": 1.0,
         "candidate_score": 0.0
        }
       ],
-      "improved": [
+      "improved": [],
+      "unchanged_count": 16,
+      "has_value_detail": true,
+      "newly_wrong": [
        {
-        "case_id": "mcgregor_city_announcement_irrelevant",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
+        "case_id": "gatesville_ordinances",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": false,
+        "actual": true
+       }
+      ],
+      "fixed": [
+       {
+        "case_id": "quitaque_council",
+        "subject": "https://quitaque.us/cityofficials.html",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
        },
        {
         "case_id": "san_antonio",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
+        "subject": "https://www.sa.gov/Directory",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       }
+      ]
+     },
+     {
+      "baseline_index": 3,
+      "candidate_index": 1,
+      "prompt_sha256": "cb8e073a37f3",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.01810899
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.016810864
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 17,
+      "has_value_detail": true,
+      "newly_wrong": [],
+      "fixed": [
+       {
+        "case_id": "quitaque_council",
+        "subject": "https://quitaque.us/cityofficials.html",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       },
+       {
+        "case_id": "san_antonio",
+        "subject": "https://www.sa.gov/Directory",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       }
+      ]
+     },
+     {
+      "baseline_index": 3,
+      "candidate_index": 2,
+      "prompt_sha256": "cb8e073a37f3",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.01810899
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.008820784
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 17,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "https://gatesvilletx.com/government/index.php",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "subject": "https://sansabatexas.com/city-hall/",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
        }
       ],
-      "unchanged_count": 14,
-      "has_value_detail": false,
-      "newly_wrong": [],
-      "fixed": []
+      "fixed": [
+       {
+        "case_id": "quitaque_council",
+        "subject": "https://quitaque.us/cityofficials.html",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       },
+       {
+        "case_id": "san_antonio",
+        "subject": "https://www.sa.gov/Directory",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       }
+      ]
      }
     ]
    },
@@ -8791,6 +8922,26 @@
           "timestamp": "2026-09-18T01:32:43+00:00",
           "prompt_sha256": "2608d81f638d",
           "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T01:47:39+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:18:26+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:25:31+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:38:43+00:00",
+          "prompt_sha256": "cb8e073a37f3",
+          "score": 0.9411764705882353
          }
         ]
        },
@@ -8831,6 +8982,26 @@
           "timestamp": "2026-09-18T01:32:43+00:00",
           "prompt_sha256": "2608d81f638d",
           "score": 0.9411764705882353
+         },
+         {
+          "timestamp": "2026-09-18T01:47:39+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:18:26+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:25:31+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:38:43+00:00",
+          "prompt_sha256": "cb8e073a37f3",
+          "score": 1.0
          }
         ]
        },
@@ -8871,6 +9042,26 @@
           "timestamp": "2026-09-18T01:32:43+00:00",
           "prompt_sha256": "2608d81f638d",
           "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T01:47:39+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.9411764705882353
+         },
+         {
+          "timestamp": "2026-09-18T02:18:26+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:25:31+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:38:43+00:00",
+          "prompt_sha256": "cb8e073a37f3",
+          "score": 1.0
          }
         ]
        },
@@ -8885,6 +9076,26 @@
          {
           "timestamp": "2026-09-18T01:32:43+00:00",
           "prompt_sha256": "2608d81f638d",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T01:47:39+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:18:26+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.9411764705882353
+         },
+         {
+          "timestamp": "2026-09-18T02:25:31+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.9411764705882353
+         },
+         {
+          "timestamp": "2026-09-18T02:38:43+00:00",
+          "prompt_sha256": "cb8e073a37f3",
           "score": 1.0
          }
         ]
@@ -8908,6 +9119,26 @@
           "timestamp": "2026-09-18T01:32:43+00:00",
           "prompt_sha256": "2608d81f638d",
           "score": 0.676056338028169
+         },
+         {
+          "timestamp": "2026-09-18T01:47:39+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.6341463414634146
+         },
+         {
+          "timestamp": "2026-09-18T02:18:26+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.6410256410256411
+         },
+         {
+          "timestamp": "2026-09-18T02:25:31+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:38:43+00:00",
+          "prompt_sha256": "cb8e073a37f3",
+          "score": 1.0
          }
         ]
        },
@@ -8948,6 +9179,26 @@
           "timestamp": "2026-09-18T01:32:43+00:00",
           "prompt_sha256": "2608d81f638d",
           "score": 0.64
+         },
+         {
+          "timestamp": "2026-09-18T01:47:39+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.6329113924050633
+         },
+         {
+          "timestamp": "2026-09-18T02:18:26+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.7027027027027027
+         },
+         {
+          "timestamp": "2026-09-18T02:25:31+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.9824561403508771
+         },
+         {
+          "timestamp": "2026-09-18T02:38:43+00:00",
+          "prompt_sha256": "cb8e073a37f3",
+          "score": 1.0
          }
         ]
        },
@@ -8988,6 +9239,26 @@
           "timestamp": "2026-09-18T01:32:43+00:00",
           "prompt_sha256": "2608d81f638d",
           "score": 0.5208333333333334
+         },
+         {
+          "timestamp": "2026-09-18T01:47:39+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.48484848484848486
+         },
+         {
+          "timestamp": "2026-09-18T02:18:26+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.4339622641509434
+         },
+         {
+          "timestamp": "2026-09-18T02:25:31+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.9824561403508771
+         },
+         {
+          "timestamp": "2026-09-18T02:38:43+00:00",
+          "prompt_sha256": "cb8e073a37f3",
+          "score": 0.9642857142857143
          }
         ]
        },
@@ -9003,15 +9274,821 @@
           "timestamp": "2026-09-18T01:32:43+00:00",
           "prompt_sha256": "2608d81f638d",
           "score": 0.6486486486486487
+         },
+         {
+          "timestamp": "2026-09-18T01:47:39+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.6582278481012658
+         },
+         {
+          "timestamp": "2026-09-18T02:18:26+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.6341463414634146
+         },
+         {
+          "timestamp": "2026-09-18T02:25:31+00:00",
+          "prompt_sha256": "983a0dfb3b48",
+          "score": 0.9824561403508771
+         },
+         {
+          "timestamp": "2026-09-18T02:38:43+00:00",
+          "prompt_sha256": "cb8e073a37f3",
+          "score": 0.9642857142857143
          }
         ]
        }
       ]
      }
     ],
-    "run_count": 18
+    "run_count": 34
    },
    "prompt_versions": [
+    {
+     "prompt_sha256": "cb8e073a37f3",
+     "text": "\n    Decide two things about the page content provided: whether it presents the **currently\n    serving main officials** of the target municipality, and which of its links a crawler should\n    follow to find more of them.\n\n    Main officials are the Mayor, City Council Members, Aldermen, Select Board Members,\n    Commissioners and others who make up the municipality's **primary governing body**.\n\n    Page URL: <page url, per case>\n    Target jurisdiction: <jurisdiction, per case>\n    Known elected roles for this municipality: <known roles, per case>\n    Governing bodies of this municipality: <governing bodies, per case>\n\n    The URL tells you which links share the municipality's domain. It tells you nothing about\n    `is_relevant`, which comes from the page content alone.\n\n    ---\n\n    ## is_relevant\n\n    True when the page exists to show who currently holds a primary governing role: a roster, a\n    directory, or one official's own page. Ask \"does this page exist to show who holds office\n    right now?\" and answer on the page's own heading and body.\n\n    Also true, and these are the ones most often got wrong:\n    - The heading names a known elected role and the page gives a person's name for it. A\n      site-wide navigation menu is not the page's purpose however much of the content it fills,\n      and a non-voting deputy appearing alongside does not change the answer.\n    - The page lists the municipality's own officials and also lists appointed staff. A small\n      town's \"City Officials\" page naming the Mayor and council members alongside the City\n      Manager, Water Supervisor and Fire Chief is the roster. Judge it by whether the governing\n      body's members are presented as such, not by who else shares the page.\n    - A page about a body named under \"Governing bodies of this municipality\" above, whatever its\n      URL or site section suggests. An Office of the Mayor page filed beside the departments is\n      still the mayor's office.\n\n    When a page names a person who holds one of the roles above and you cannot tell whether it is\n    a roster or a department landing page, answer true. The two mistakes do not cost the same: a\n    page wrongly called relevant costs one extraction that returns nobody, while a page wrongly\n    called irrelevant is never read again and its officials are never found.\n\n    False for these, whoever is named in them:\n    - Auxiliary committees, boards and commissions (Planning and Zoning, Parks and Recreation,\n      Airport Advisory), and pages about department heads or other non-elected staff. A Mayor or\n      Alderman sitting on such a body does not make its page relevant.\n    - Special districts, utility boards and other sub-municipal entities (Water Supply District,\n      Fire District, Library Board), which are separate legal entities. A structured roster of\n      their board members is still not this municipality's governing body.\n    - News, announcements and press releases, even a post naming newly elected members by ward.\n    - Meeting minutes, vote records, ordinances and legislative archives, even titled \"City\n      Council\" or living at a city council URL. Read the body, not the title.\n    - Historical rosters (\"Past Mayors\", \"Mayor History\"), even where the most recent entry is\n      the current holder.\n\n    ---\n\n    ## relevant_urls\n\n    These feed the crawler, so populate them whether or not the page itself is relevant: a page\n    already listing officials still links to more of them. Judge each link by its **anchor text\n    and surrounding context**, not by URL structure, since municipal CMS platforms use opaque\n    numeric paths (e.g. /179/Township-Board) where the slug is the only signal.\n\n    Include every link whose anchor text or context refers to:\n    - a governing body or elected role (\"Township Board\", \"City Council\", \"Mayor\", \"City\n      Officials\", \"Board of Trustees\", \"Aldermen\", \"Commissioners\", \"Select Board\")\n    - a government directory or index page likely to link onward to governance pages\n      (\"Government\", \"City Hall\", \"Our Government\", \"Administration\")\n    - a staff or personnel directory that may list elected officials (\"Staff Directory\",\n      \"Directory\", \"Elected Officials\")\n\n    These are not candidates to weigh against each other. A qualifying link left out is the worst\n    outcome here, because the crawler cannot reach a page it was never told about — include every\n    one, however few qualify and however much navigation surrounds them. A small site's menu may\n    offer exactly one, and returning nothing because one felt too few is the failure to avoid.\n    Stop at 20; beyond that you are including noise.\n\n    Leave out municipal services (library, parks, fire, utilities), individual news stories,\n    press releases and event pages, and non-municipal external domains. Copy each URL exactly as\n    it appears in the content, without normalizing or rewriting any part of it, and do not\n    include the current page's own URL.\n\n    ---\n\n    ## Output Format\n\n    Return a JSON object with the following fields:\n    {\n        \"relevant_urls\": [\"https://example.com/council\", \"https://example.com/directory/departments\"],\n        \"is_relevant\": true/false,\n    }\n    ",
+     "first_run_at": "2026-09-18T02:38:43+00:00",
+     "last_run_at": "2026-09-18T02:38:43+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean",
+      "NextBit"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-18T02:38:43+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "is_relevant": 0.9411764705882353,
+        "relevant_urls": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:38:43+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:38:43+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.9642857142857143
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:38:43+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.9642857142857143
+       }
+      }
+     ],
+     "previous_sha256": "983a0dfb3b48",
+     "diff": [
+      {
+       "kind": "context",
+       "text": "       still the mayor's office."
+      },
+      {
+       "kind": "added",
+       "text": "+"
+      },
+      {
+       "kind": "added",
+       "text": "+    When a page names a person who holds one of the roles above and you cannot tell whether it is"
+      },
+      {
+       "kind": "added",
+       "text": "+    a roster or a department landing page, answer true. The two mistakes do not cost the same: a"
+      },
+      {
+       "kind": "added",
+       "text": "+    page wrongly called relevant costs one extraction that returns nobody, while a page wrongly"
+      },
+      {
+       "kind": "added",
+       "text": "+    called irrelevant is never read again and its officials are never found."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      }
+     ]
+    },
+    {
+     "prompt_sha256": "983a0dfb3b48",
+     "text": "\n    Decide two things about the page content provided: whether it presents the **currently\n    serving main officials** of the target municipality, and which of its links a crawler should\n    follow to find more of them.\n\n    Main officials are the Mayor, City Council Members, Aldermen, Select Board Members,\n    Commissioners and others who make up the municipality's **primary governing body**.\n\n    Page URL: <page url, per case>\n    Target jurisdiction: <jurisdiction, per case>\n    Known elected roles for this municipality: <known roles, per case>\n    Governing bodies of this municipality: <governing bodies, per case>\n\n    The URL tells you which links share the municipality's domain. It tells you nothing about\n    `is_relevant`, which comes from the page content alone.\n\n    ---\n\n    ## is_relevant\n\n    True when the page exists to show who currently holds a primary governing role: a roster, a\n    directory, or one official's own page. Ask \"does this page exist to show who holds office\n    right now?\" and answer on the page's own heading and body.\n\n    Also true, and these are the ones most often got wrong:\n    - The heading names a known elected role and the page gives a person's name for it. A\n      site-wide navigation menu is not the page's purpose however much of the content it fills,\n      and a non-voting deputy appearing alongside does not change the answer.\n    - The page lists the municipality's own officials and also lists appointed staff. A small\n      town's \"City Officials\" page naming the Mayor and council members alongside the City\n      Manager, Water Supervisor and Fire Chief is the roster. Judge it by whether the governing\n      body's members are presented as such, not by who else shares the page.\n    - A page about a body named under \"Governing bodies of this municipality\" above, whatever its\n      URL or site section suggests. An Office of the Mayor page filed beside the departments is\n      still the mayor's office.\n\n    False for these, whoever is named in them:\n    - Auxiliary committees, boards and commissions (Planning and Zoning, Parks and Recreation,\n      Airport Advisory), and pages about department heads or other non-elected staff. A Mayor or\n      Alderman sitting on such a body does not make its page relevant.\n    - Special districts, utility boards and other sub-municipal entities (Water Supply District,\n      Fire District, Library Board), which are separate legal entities. A structured roster of\n      their board members is still not this municipality's governing body.\n    - News, announcements and press releases, even a post naming newly elected members by ward.\n    - Meeting minutes, vote records, ordinances and legislative archives, even titled \"City\n      Council\" or living at a city council URL. Read the body, not the title.\n    - Historical rosters (\"Past Mayors\", \"Mayor History\"), even where the most recent entry is\n      the current holder.\n\n    ---\n\n    ## relevant_urls\n\n    These feed the crawler, so populate them whether or not the page itself is relevant: a page\n    already listing officials still links to more of them. Judge each link by its **anchor text\n    and surrounding context**, not by URL structure, since municipal CMS platforms use opaque\n    numeric paths (e.g. /179/Township-Board) where the slug is the only signal.\n\n    Include every link whose anchor text or context refers to:\n    - a governing body or elected role (\"Township Board\", \"City Council\", \"Mayor\", \"City\n      Officials\", \"Board of Trustees\", \"Aldermen\", \"Commissioners\", \"Select Board\")\n    - a government directory or index page likely to link onward to governance pages\n      (\"Government\", \"City Hall\", \"Our Government\", \"Administration\")\n    - a staff or personnel directory that may list elected officials (\"Staff Directory\",\n      \"Directory\", \"Elected Officials\")\n\n    These are not candidates to weigh against each other. A qualifying link left out is the worst\n    outcome here, because the crawler cannot reach a page it was never told about — include every\n    one, however few qualify and however much navigation surrounds them. A small site's menu may\n    offer exactly one, and returning nothing because one felt too few is the failure to avoid.\n    Stop at 20; beyond that you are including noise.\n\n    Leave out municipal services (library, parks, fire, utilities), individual news stories,\n    press releases and event pages, and non-municipal external domains. Copy each URL exactly as\n    it appears in the content, without normalizing or rewriting any part of it, and do not\n    include the current page's own URL.\n\n    ---\n\n    ## Output Format\n\n    Return a JSON object with the following fields:\n    {\n        \"relevant_urls\": [\"https://example.com/council\", \"https://example.com/directory/departments\"],\n        \"is_relevant\": true/false,\n    }\n    ",
+     "first_run_at": "2026-09-18T01:47:39+00:00",
+     "last_run_at": "2026-09-18T02:25:31+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean",
+      "NextBit"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-18T02:25:31+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:25:31+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.9824561403508771
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:25:31+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.9824561403508771
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:25:31+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "is_relevant": 0.9411764705882353,
+        "relevant_urls": 0.9824561403508771
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:18:26+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.6410256410256411
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:18:26+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.7027027027027027
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:18:26+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.4339622641509434
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:18:26+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "is_relevant": 0.9411764705882353,
+        "relevant_urls": 0.6341463414634146
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:47:39+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.6341463414634146
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:47:39+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.6329113924050633
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:47:39+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "is_relevant": 0.9411764705882353,
+        "relevant_urls": 0.48484848484848486
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:47:39+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.6582278481012658
+       }
+      }
+     ],
+     "previous_sha256": "2608d81f638d",
+     "diff": [
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    Your task is to determine if the provided content contains information about the **currently serving main officials**"
+      },
+      {
+       "kind": "removed",
+       "text": "-    of a specific target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members,"
+      },
+      {
+       "kind": "removed",
+       "text": "-    Commissioners, or other key elected or appointed officials who are part of the **primary governing body** of that municipality."
+      },
+      {
+       "kind": "added",
+       "text": "+    Decide two things about the page content provided: whether it presents the **currently"
+      },
+      {
+       "kind": "added",
+       "text": "+    serving main officials** of the target municipality, and which of its links a crawler should"
+      },
+      {
+       "kind": "added",
+       "text": "+    follow to find more of them."
+      },
+      {
+       "kind": "added",
+       "text": "+"
+      },
+      {
+       "kind": "added",
+       "text": "+    Main officials are the Mayor, City Council Members, Aldermen, Select Board Members,"
+      },
+      {
+       "kind": "added",
+       "text": "+    Commissioners and others who make up the municipality's **primary governing body**."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    The URL may help you identify which links belong to the municipality's domain(s) when selecting"
+      },
+      {
+       "kind": "removed",
+       "text": "-    relevant_urls. Do NOT use it to determine is_relevant — that must be based solely on page content."
+      },
+      {
+       "kind": "removed",
+       "text": "-    Do NOT use the page URL's domain to normalize or rewrite any link URLs found in the content."
+      },
+      {
+       "kind": "added",
+       "text": "+    The URL tells you which links share the municipality's domain. It tells you nothing about"
+      },
+      {
+       "kind": "added",
+       "text": "+    `is_relevant`, which comes from the page content alone."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    ## Relevant content"
+      },
+      {
+       "kind": "added",
+       "text": "+    ## is_relevant"
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    - Structured listings (e.g., tables, lists, or directories) or dedicated sections (e.g., biography, contact, or about pages)"
+      },
+      {
+       "kind": "removed",
+       "text": "-      for the main officials of the municipality."
+      },
+      {
+       "kind": "removed",
+       "text": "-    - Pages that provide information about the current governing body, such as their names, roles, contact information, or biographies."
+      },
+      {
+       "kind": "added",
+       "text": "+    True when the page exists to show who currently holds a primary governing role: a roster, a"
+      },
+      {
+       "kind": "added",
+       "text": "+    directory, or one official's own page. Ask \"does this page exist to show who holds office"
+      },
+      {
+       "kind": "added",
+       "text": "+    right now?\" and answer on the page's own heading and body."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    ## Irrelevant content"
+      },
+      {
+       "kind": "added",
+       "text": "+    Also true, and these are the ones most often got wrong:"
+      },
+      {
+       "kind": "added",
+       "text": "+    - The heading names a known elected role and the page gives a person's name for it. A"
+      },
+      {
+       "kind": "added",
+       "text": "+      site-wide navigation menu is not the page's purpose however much of the content it fills,"
+      },
+      {
+       "kind": "added",
+       "text": "+      and a non-voting deputy appearing alongside does not change the answer."
+      },
+      {
+       "kind": "added",
+       "text": "+    - The page lists the municipality's own officials and also lists appointed staff. A small"
+      },
+      {
+       "kind": "added",
+       "text": "+      town's \"City Officials\" page naming the Mayor and council members alongside the City"
+      },
+      {
+       "kind": "added",
+       "text": "+      Manager, Water Supervisor and Fire Chief is the roster. Judge it by whether the governing"
+      },
+      {
+       "kind": "added",
+       "text": "+      body's members are presented as such, not by who else shares the page."
+      },
+      {
+       "kind": "added",
+       "text": "+    - A page about a body named under \"Governing bodies of this municipality\" above, whatever its"
+      },
+      {
+       "kind": "added",
+       "text": "+      URL or site section suggests. An Office of the Mayor page filed beside the departments is"
+      },
+      {
+       "kind": "added",
+       "text": "+      still the mayor's office."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    - Pages about auxiliary committees, department heads, or other non-elected staff."
+      },
+      {
+       "kind": "removed",
+       "text": "-      For example: Planning and Zoning Committee, Parks and Recreation Board, Airport Advisory Commission, etc."
+      },
+      {
+       "kind": "removed",
+       "text": "-      This applies even if primary governing officials (e.g., the Mayor or an Alderman) appear as members"
+      },
+      {
+       "kind": "removed",
+       "text": "-      of that auxiliary body — their membership on the auxiliary board does not make the page relevant."
+      },
+      {
+       "kind": "removed",
+       "text": "-    - Pages about special districts, utility boards, or other sub-municipal entities (e.g., Water Supply District,"
+      },
+      {
+       "kind": "removed",
+       "text": "-      Fire District, Library Board) — even if they contain a structured roster of named board members."
+      },
+      {
+       "kind": "removed",
+       "text": "-      These are separate legal entities, not the primary governing body of the municipality."
+      },
+      {
+       "kind": "added",
+       "text": "+    False for these, whoever is named in them:"
+      },
+      {
+       "kind": "added",
+       "text": "+    - Auxiliary committees, boards and commissions (Planning and Zoning, Parks and Recreation,"
+      },
+      {
+       "kind": "added",
+       "text": "+      Airport Advisory), and pages about department heads or other non-elected staff. A Mayor or"
+      },
+      {
+       "kind": "added",
+       "text": "+      Alderman sitting on such a body does not make its page relevant."
+      },
+      {
+       "kind": "added",
+       "text": "+    - Special districts, utility boards and other sub-municipal entities (Water Supply District,"
+      },
+      {
+       "kind": "added",
+       "text": "+      Fire District, Library Board), which are separate legal entities. A structured roster of"
+      },
+      {
+       "kind": "added",
+       "text": "+      their board members is still not this municipality's governing body."
+      },
+      {
+       "kind": "added",
+       "text": "+    - News, announcements and press releases, even a post naming newly elected members by ward."
+      },
+      {
+       "kind": "added",
+       "text": "+    - Meeting minutes, vote records, ordinances and legislative archives, even titled \"City"
+      },
+      {
+       "kind": "added",
+       "text": "+      Council\" or living at a city council URL. Read the body, not the title."
+      },
+      {
+       "kind": "added",
+       "text": "+    - Historical rosters (\"Past Mayors\", \"Mayor History\"), even where the most recent entry is"
+      },
+      {
+       "kind": "added",
+       "text": "+      the current holder."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    A page about any body listed under \"Governing bodies of this municipality\" above is RELEVANT,"
+      },
+      {
+       "kind": "removed",
+       "text": "-    and the two rules immediately above do not apply to it. Those bodies are governing bodies of"
+      },
+      {
+       "kind": "removed",
+       "text": "-    this municipality, whatever the page's URL or section suggests — an Office of the Mayor page"
+      },
+      {
+       "kind": "removed",
+       "text": "-    filed beside the departments is still the mayor's office."
+      },
+      {
+       "kind": "context",
+       "text": "     ---"
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    ## Steps for selecting relevant_urls"
+      },
+      {
+       "kind": "added",
+       "text": "+    ## relevant_urls"
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    `relevant_urls` feeds a web crawler. Always populate it with qualifying links regardless of"
+      },
+      {
+       "kind": "removed",
+       "text": "-    whether `is_relevant` is true or false — the crawler uses these links to discover further"
+      },
+      {
+       "kind": "removed",
+       "text": "-    officials pages even when the current page is already relevant. Evaluate each link primarily"
+      },
+      {
+       "kind": "removed",
+       "text": "-    by its **anchor text and surrounding context** on the page — not by URL structure alone,"
+      },
+      {
+       "kind": "removed",
+       "text": "-    since many municipal CMS platforms use opaque numeric paths (e.g. /179/Township-Board)"
+      },
+      {
+       "kind": "removed",
+       "text": "-    where the slug is the only meaningful signal."
+      },
+      {
+       "kind": "added",
+       "text": "+    These feed the crawler, so populate them whether or not the page itself is relevant: a page"
+      },
+      {
+       "kind": "added",
+       "text": "+    already listing officials still links to more of them. Judge each link by its **anchor text"
+      },
+      {
+       "kind": "added",
+       "text": "+    and surrounding context**, not by URL structure, since municipal CMS platforms use opaque"
+      },
+      {
+       "kind": "added",
+       "text": "+    numeric paths (e.g. /179/Township-Board) where the slug is the only signal."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    Include every link that qualifies below, however few that is — a small site's navigation may"
+      },
+      {
+       "kind": "removed",
+       "text": "-    offer exactly one, and returning nothing because one felt too few is the worst answer here."
+      },
+      {
+       "kind": "removed",
+       "text": "-    Stop at 20; past that you are almost certainly including noise, so re-evaluate and cut."
+      },
+      {
+       "kind": "removed",
+       "text": "-"
+      },
+      {
+       "kind": "removed",
+       "text": "-    You MUST include every link whose anchor text or surrounding context refers to any of"
+      },
+      {
+       "kind": "removed",
+       "text": "-    the following. These are not candidates to weigh against each other — if a link matches,"
+      },
+      {
+       "kind": "removed",
+       "text": "-    it goes in the list, however many other links the page has and however much navigation"
+      },
+      {
+       "kind": "removed",
+       "text": "-    surrounds it:"
+      },
+      {
+       "kind": "removed",
+       "text": "-    - A governing body or elected role (e.g. \"Township Board\", \"City Council\", \"Mayor\","
+      },
+      {
+       "kind": "removed",
+       "text": "-      \"City Officials\", \"Board of Trustees\", \"Aldermen\", \"Commissioners\", \"Select Board\")"
+      },
+      {
+       "kind": "removed",
+       "text": "-    - A broad government directory or index page (e.g. \"Government\", \"City Hall\","
+      },
+      {
+       "kind": "removed",
+       "text": "-      \"Our Government\", \"Administration\") that is likely a hub linking to governance pages"
+      },
+      {
+       "kind": "removed",
+       "text": "-    - A staff or personnel directory that may list elected officials (e.g. \"Staff Directory\","
+      },
+      {
+       "kind": "added",
+       "text": "+    Include every link whose anchor text or context refers to:"
+      },
+      {
+       "kind": "added",
+       "text": "+    - a governing body or elected role (\"Township Board\", \"City Council\", \"Mayor\", \"City"
+      },
+      {
+       "kind": "added",
+       "text": "+      Officials\", \"Board of Trustees\", \"Aldermen\", \"Commissioners\", \"Select Board\")"
+      },
+      {
+       "kind": "added",
+       "text": "+    - a government directory or index page likely to link onward to governance pages"
+      },
+      {
+       "kind": "added",
+       "text": "+      (\"Government\", \"City Hall\", \"Our Government\", \"Administration\")"
+      },
+      {
+       "kind": "added",
+       "text": "+    - a staff or personnel directory that may list elected officials (\"Staff Directory\","
+      },
+      {
+       "kind": "context",
+       "text": "       \"Directory\", \"Elected Officials\")"
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    A link that matches one of those and is left out is the single worst outcome here —"
+      },
+      {
+       "kind": "removed",
+       "text": "-    the crawler cannot reach a page it was never told about. If a link does not match any"
+      },
+      {
+       "kind": "removed",
+       "text": "-    of the above, discard it."
+      },
+      {
+       "kind": "removed",
+       "text": "-    Do not include links to municipal services (library, parks, fire, utilities),"
+      },
+      {
+       "kind": "removed",
+       "text": "-    news or announcements, or non-municipal external domains."
+      },
+      {
+       "kind": "added",
+       "text": "+    These are not candidates to weigh against each other. A qualifying link left out is the worst"
+      },
+      {
+       "kind": "added",
+       "text": "+    outcome here, because the crawler cannot reach a page it was never told about — include every"
+      },
+      {
+       "kind": "added",
+       "text": "+    one, however few qualify and however much navigation surrounds them. A small site's menu may"
+      },
+      {
+       "kind": "added",
+       "text": "+    offer exactly one, and returning nothing because one felt too few is the failure to avoid."
+      },
+      {
+       "kind": "added",
+       "text": "+    Stop at 20; beyond that you are including noise."
+      },
+      {
+       "kind": "added",
+       "text": "+"
+      },
+      {
+       "kind": "added",
+       "text": "+    Leave out municipal services (library, parks, fire, utilities), individual news stories,"
+      },
+      {
+       "kind": "added",
+       "text": "+    press releases and event pages, and non-municipal external domains. Copy each URL exactly as"
+      },
+      {
+       "kind": "added",
+       "text": "+    it appears in the content, without normalizing or rewriting any part of it, and do not"
+      },
+      {
+       "kind": "added",
+       "text": "+    include the current page's own URL."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "context",
+       "text": "     }"
+      },
+      {
+       "kind": "removed",
+       "text": "-"
+      },
+      {
+       "kind": "removed",
+       "text": "-    ---"
+      },
+      {
+       "kind": "removed",
+       "text": "-"
+      },
+      {
+       "kind": "removed",
+       "text": "-    ## Critical rules"
+      },
+      {
+       "kind": "removed",
+       "text": "-"
+      },
+      {
+       "kind": "removed",
+       "text": "-    - `is_relevant` must be true ONLY if the page's PRIMARY PURPOSE is to present currently"
+      },
+      {
+       "kind": "removed",
+       "text": "-      serving primary governing officials — whether a full roster or a dedicated page for a"
+      },
+      {
+       "kind": "removed",
+       "text": "-      single official. Ask: \"Does this page exist to show who currently holds a primary"
+      },
+      {
+       "kind": "removed",
+       "text": "-      governing role?\" If the answer is no, set is_relevant to false."
+      },
+      {
+       "kind": "removed",
+       "text": "-      If `known_roles` are provided, the page heading or title names one of those roles, and"
+      },
+      {
+       "kind": "removed",
+       "text": "-      the page gives a person's name for it, then `is_relevant` is TRUE. Decide this on the"
+      },
+      {
+       "kind": "removed",
+       "text": "-      heading and that person's details alone — a shared site-wide navigation menu is not"
+      },
+      {
+       "kind": "removed",
+       "text": "-      the page's purpose no matter how much of the content it occupies, and a page whose own"
+      },
+      {
+       "kind": "removed",
+       "text": "-      heading names an elected role is a page about that role, not an index. A non-voting"
+      },
+      {
+       "kind": "removed",
+       "text": "-      deputy or assistant appearing alongside does not change it."
+      },
+      {
+       "kind": "removed",
+       "text": "-      The following are NOT relevant regardless of what names appear in them:"
+      },
+      {
+       "kind": "removed",
+       "text": "-      - News and announcements feeds — even if a post lists newly elected council members by name and ward"
+      },
+      {
+       "kind": "removed",
+       "text": "-      - Meeting minutes, vote records, ordinances, or legislative archives — even if the page is"
+      },
+      {
+       "kind": "removed",
+       "text": "-        titled \"City Council\" or lives at a city council URL; read the body content, not the title"
+      },
+      {
+       "kind": "removed",
+       "text": "-      - Historical rosters (e.g., \"Past Mayors\", \"Mayor History\") — even if the most recent entry is current"
+      },
+      {
+       "kind": "removed",
+       "text": "-      - Auxiliary committee or board pages — even if a Mayor or Alderman sits on the committee"
+      },
+      {
+       "kind": "removed",
+       "text": "-      The test is always the page's purpose, not its content patterns."
+      },
+      {
+       "kind": "removed",
+       "text": "-    - `relevant_urls` must contain only links whose anchor text clearly signals a governing body,"
+      },
+      {
+       "kind": "removed",
+       "text": "-      elected role, or government directory. Aim for 3–20 URLs; if you exceed 20, you are including noise."
+      },
+      {
+       "kind": "removed",
+       "text": "-    - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list."
+      },
+      {
+       "kind": "removed",
+       "text": "-    - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself."
+      },
+      {
+       "kind": "removed",
+       "text": "-    - Copy URLs exactly as they appear in the content — do NOT normalize, rewrite, or substitute any part of the URL."
+      },
+      {
+       "kind": "removed",
+       "text": "-    - Do NOT include individual news stories, press releases, or event pages even if they mention an official by name."
+      },
+      {
+       "kind": "context",
+       "text": "     "
+      }
+     ]
+    },
     {
      "prompt_sha256": "2608d81f638d",
      "text": "\n    Your task is to determine if the provided content contains information about the **currently serving main officials**\n    of a specific target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members,\n    Commissioners, or other key elected or appointed officials who are part of the **primary governing body** of that municipality.\n\n    Page URL: <page url, per case>\n    Target jurisdiction: <jurisdiction, per case>\n    Known elected roles for this municipality: <known roles, per case>\n    Governing bodies of this municipality: <governing bodies, per case>\n\n    The URL may help you identify which links belong to the municipality's domain(s) when selecting\n    relevant_urls. Do NOT use it to determine is_relevant — that must be based solely on page content.\n    Do NOT use the page URL's domain to normalize or rewrite any link URLs found in the content.\n\n    ---\n\n    ## Relevant content\n\n    - Structured listings (e.g., tables, lists, or directories) or dedicated sections (e.g., biography, contact, or about pages)\n      for the main officials of the municipality.\n    - Pages that provide information about the current governing body, such as their names, roles, contact information, or biographies.\n\n    ## Irrelevant content\n\n    - Pages about auxiliary committees, department heads, or other non-elected staff.\n      For example: Planning and Zoning Committee, Parks and Recreation Board, Airport Advisory Commission, etc.\n      This applies even if primary governing officials (e.g., the Mayor or an Alderman) appear as members\n      of that auxiliary body — their membership on the auxiliary board does not make the page relevant.\n    - Pages about special districts, utility boards, or other sub-municipal entities (e.g., Water Supply District,\n      Fire District, Library Board) — even if they contain a structured roster of named board members.\n      These are separate legal entities, not the primary governing body of the municipality.\n\n    A page about any body listed under \"Governing bodies of this municipality\" above is RELEVANT,\n    and the two rules immediately above do not apply to it. Those bodies are governing bodies of\n    this municipality, whatever the page's URL or section suggests — an Office of the Mayor page\n    filed beside the departments is still the mayor's office.\n    ---\n\n    ## Steps for selecting relevant_urls\n\n    `relevant_urls` feeds a web crawler. Always populate it with qualifying links regardless of\n    whether `is_relevant` is true or false — the crawler uses these links to discover further\n    officials pages even when the current page is already relevant. Evaluate each link primarily\n    by its **anchor text and surrounding context** on the page — not by URL structure alone,\n    since many municipal CMS platforms use opaque numeric paths (e.g. /179/Township-Board)\n    where the slug is the only meaningful signal.\n\n    Include every link that qualifies below, however few that is — a small site's navigation may\n    offer exactly one, and returning nothing because one felt too few is the worst answer here.\n    Stop at 20; past that you are almost certainly including noise, so re-evaluate and cut.\n\n    You MUST include every link whose anchor text or surrounding context refers to any of\n    the following. These are not candidates to weigh against each other — if a link matches,\n    it goes in the list, however many other links the page has and however much navigation\n    surrounds it:\n    - A governing body or elected role (e.g. \"Township Board\", \"City Council\", \"Mayor\",\n      \"City Officials\", \"Board of Trustees\", \"Aldermen\", \"Commissioners\", \"Select Board\")\n    - A broad government directory or index page (e.g. \"Government\", \"City Hall\",\n      \"Our Government\", \"Administration\") that is likely a hub linking to governance pages\n    - A staff or personnel directory that may list elected officials (e.g. \"Staff Directory\",\n      \"Directory\", \"Elected Officials\")\n\n    A link that matches one of those and is left out is the single worst outcome here —\n    the crawler cannot reach a page it was never told about. If a link does not match any\n    of the above, discard it.\n    Do not include links to municipal services (library, parks, fire, utilities),\n    news or announcements, or non-municipal external domains.\n\n    ---\n\n    ## Output Format\n\n    Return a JSON object with the following fields:\n    {\n        \"relevant_urls\": [\"https://example.com/council\", \"https://example.com/directory/departments\"],\n        \"is_relevant\": true/false,\n    }\n\n    ---\n\n    ## Critical rules\n\n    - `is_relevant` must be true ONLY if the page's PRIMARY PURPOSE is to present currently\n      serving primary governing officials — whether a full roster or a dedicated page for a\n      single official. Ask: \"Does this page exist to show who currently holds a primary\n      governing role?\" If the answer is no, set is_relevant to false.\n      If `known_roles` are provided, the page heading or title names one of those roles, and\n      the page gives a person's name for it, then `is_relevant` is TRUE. Decide this on the\n      heading and that person's details alone — a shared site-wide navigation menu is not\n      the page's purpose no matter how much of the content it occupies, and a page whose own\n      heading names an elected role is a page about that role, not an index. A non-voting\n      deputy or assistant appearing alongside does not change it.\n      The following are NOT relevant regardless of what names appear in them:\n      - News and announcements feeds — even if a post lists newly elected council members by name and ward\n      - Meeting minutes, vote records, ordinances, or legislative archives — even if the page is\n        titled \"City Council\" or lives at a city council URL; read the body content, not the title\n      - Historical rosters (e.g., \"Past Mayors\", \"Mayor History\") — even if the most recent entry is current\n      - Auxiliary committee or board pages — even if a Mayor or Alderman sits on the committee\n      The test is always the page's purpose, not its content patterns.\n    - `relevant_urls` must contain only links whose anchor text clearly signals a governing body,\n      elected role, or government directory. Aim for 3–20 URLs; if you exceed 20, you are including noise.\n    - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list.\n    - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself.\n    - Copy URLs exactly as they appear in the content — do NOT normalize, rewrite, or substitute any part of the URL.\n    - Do NOT include individual news stories, press releases, or event pages even if they mention an official by name.\n    ",
@@ -9301,12 +10378,6 @@
       "metric": "is_relevant",
       "cells": [
        {
-        "score": 1.0,
-        "swing_is_wide": false,
-        "half_swing": 0.03125,
-        "missing_count": 0
-       },
-       {
         "score": 0.9411764705882353,
         "swing_is_wide": false,
         "half_swing": 0.03125,
@@ -9321,7 +10392,13 @@
        {
         "score": 1.0,
         "swing_is_wide": false,
-        "half_swing": 0.0,
+        "half_swing": 0.03125,
+        "missing_count": 0
+       },
+       {
+        "score": 1.0,
+        "swing_is_wide": false,
+        "half_swing": 0.02941176470588236,
         "missing_count": 0
        }
       ]
@@ -9330,27 +10407,27 @@
       "metric": "relevant_urls",
       "cells": [
        {
-        "score": 0.676056338028169,
-        "swing_is_wide": false,
-        "half_swing": 0.022959675863399587,
-        "missing_count": 2
-       },
-       {
-        "score": 0.64,
-        "swing_is_wide": false,
-        "half_swing": 0.036036036036036,
-        "missing_count": 2
-       },
-       {
-        "score": 0.5208333333333334,
+        "score": 1.0,
         "swing_is_wide": true,
-        "half_swing": 0.08212209302325582,
-        "missing_count": 1
+        "half_swing": 0.18493150684931509,
+        "missing_count": 0
        },
        {
-        "score": 0.6486486486486487,
-        "swing_is_wide": false,
-        "half_swing": 0.009255831173639428,
+        "score": 1.0,
+        "swing_is_wide": true,
+        "half_swing": 0.2027027027027027,
+        "missing_count": 0
+       },
+       {
+        "score": 0.9642857142857143,
+        "swing_is_wide": true,
+        "half_swing": 0.31293349653202773,
+        "missing_count": 2
+       },
+       {
+        "score": 0.9642857142857143,
+        "swing_is_wide": true,
+        "half_swing": 0.17615957702475366,
         "missing_count": 2
        }
       ]
@@ -9359,25 +10436,25 @@
       "metric": "cases passed",
       "cells": [
        {
-        "score": 0.8823529411764706,
-        "swing_is_wide": false,
-        "half_swing": 0.0,
-        "missing_count": null
-       },
-       {
-        "score": 0.8823529411764706,
-        "swing_is_wide": false,
-        "half_swing": 0.0,
-        "missing_count": null
-       },
-       {
         "score": 0.9411764705882353,
         "swing_is_wide": false,
         "half_swing": 0.0,
         "missing_count": null
        },
        {
-        "score": 0.8823529411764706,
+        "score": 1.0,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       },
+       {
+        "score": 1.0,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       },
+       {
+        "score": 1.0,
         "swing_is_wide": false,
         "half_swing": 0.0,
         "missing_count": null
@@ -9393,41 +10470,11 @@
     ],
     "case_rows": [
      {
-      "case_id": "mcgregor_city_announcement_irrelevant",
-      "scores": [
-       1.0,
-       0.0,
-       1.0,
-       0.0
-      ],
-      "stability": "moves"
-     },
-     {
-      "case_id": "quitaque_council",
-      "scores": [
-       0.0,
-       0.0,
-       1.0,
-       1.0
-      ],
-      "stability": "moves"
-     },
-     {
-      "case_id": "san_antonio",
+      "case_id": "gatesville_ordinances",
       "scores": [
        0.0,
        1.0,
        1.0,
-       0.0
-      ],
-      "stability": "moves"
-     },
-     {
-      "case_id": "san_saba_airport_advisory_irrelevant",
-      "scores": [
-       1.0,
-       1.0,
-       0.0,
        1.0
       ],
       "stability": "moves"
@@ -9503,16 +10550,6 @@
       "stability": "steady"
      },
      {
-      "case_id": "gatesville_ordinances",
-      "scores": [
-       1.0,
-       1.0,
-       1.0,
-       1.0
-      ],
-      "stability": "steady"
-     },
-     {
       "case_id": "jackson_mayors_office",
       "scores": [
        1.0,
@@ -9520,7 +10557,17 @@
        1.0,
        1.0
       ],
-      "stability": "unknown"
+      "stability": "moves"
+     },
+     {
+      "case_id": "mcgregor_city_announcement_irrelevant",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "moves"
      },
      {
       "case_id": "mikado_township_home",
@@ -9543,6 +10590,16 @@
       "stability": "steady"
      },
      {
+      "case_id": "quitaque_council",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "moves"
+     },
+     {
       "case_id": "raisin_township_clerk",
       "scores": [
        1.0,
@@ -9561,41 +10618,113 @@
        1.0
       ],
       "stability": "steady"
+     },
+     {
+      "case_id": "san_antonio",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "san_saba_airport_advisory_irrelevant",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "moves"
      }
     ],
     "movements": [
      {
       "provider": "Alibaba",
-      "regressed": [],
+      "regressed": [
+       "gatesville_ordinances"
+      ],
       "improved": []
      },
      {
       "provider": "AtlasCloud",
-      "regressed": [
-       "mcgregor_city_announcement_irrelevant"
-      ],
+      "regressed": [],
       "improved": []
      },
      {
       "provider": "DigitalOcean",
       "regressed": [],
-      "improved": [
-       "raisin_township_clerk"
-      ]
+      "improved": []
      },
      {
       "provider": "NextBit",
-      "regressed": [
-       "mcgregor_city_announcement_irrelevant",
-       "san_antonio"
-      ],
+      "regressed": [],
       "improved": [
-       "quitaque_council"
+       "jackson_mayors_office"
       ]
      }
     ]
    },
-   "latest_mismatches": {}
+   "latest_mismatches": {
+    "Alibaba": {
+     "gatesville_ordinances": [
+      {
+       "subject": "page",
+       "field": "is_relevant",
+       "expected": false,
+       "actual": true,
+       "expected_label": null,
+       "actual_label": null
+      }
+     ]
+    },
+    "DigitalOcean": {
+     "gatesville_ordinance_vote_records": [
+      {
+       "subject": "https://gatesvilletx.com/government/index.php",
+       "field": "relevant_urls",
+       "expected": "present",
+       "actual": "—",
+       "expected_label": null,
+       "actual_label": null
+      }
+     ],
+     "san_saba_airport_advisory_irrelevant": [
+      {
+       "subject": "https://sansabatexas.com/city-hall/",
+       "field": "relevant_urls",
+       "expected": "present",
+       "actual": "—",
+       "expected_label": null,
+       "actual_label": null
+      }
+     ]
+    },
+    "NextBit": {
+     "quitaque_council": [
+      {
+       "subject": "https://quitaque.us/cityofficials.html",
+       "field": "relevant_urls",
+       "expected": "present",
+       "actual": "—",
+       "expected_label": null,
+       "actual_label": null
+      }
+     ],
+     "san_antonio": [
+      {
+       "subject": "https://www.sa.gov/Directory",
+       "field": "relevant_urls",
+       "expected": "present",
+       "actual": "—",
+       "expected_label": null,
+       "actual_label": null
+      }
+     ]
+    }
+   }
   },
   {
    "eval_name": "page_covers",
@@ -9603,53 +10732,49 @@
    "verdicts": [
     {
      "provider": "Alibaba",
-     "blocked": true,
-     "gate_failures": [],
-     "failed_case_ids": [
-      "seattle_home_news_mentions"
-     ],
-     "cases_passed": 4,
-     "cases_total": 5,
-     "priority_scores": {},
-     "cost_usd": 0.01721699,
-     "ran_at": "2026-09-18T01:30:21+00:00"
-    },
-    {
-     "provider": "AtlasCloud",
-     "blocked": true,
-     "gate_failures": [],
-     "failed_case_ids": [
-      "seattle_home_news_mentions"
-     ],
-     "cases_passed": 4,
-     "cases_total": 5,
-     "priority_scores": {},
-     "cost_usd": 0.01801758,
-     "ran_at": "2026-09-18T01:30:21+00:00"
-    },
-    {
-     "provider": "DigitalOcean",
      "blocked": false,
      "gate_failures": [],
      "failed_case_ids": [],
-     "cases_passed": 5,
-     "cases_total": 5,
+     "cases_passed": 9,
+     "cases_total": 9,
      "priority_scores": {},
-     "cost_usd": 0.012344178,
-     "ran_at": "2026-09-18T01:30:21+00:00"
+     "cost_usd": 0.0230908264,
+     "ran_at": "2026-09-18T02:51:34+00:00"
     },
     {
-     "provider": "NextBit",
+     "provider": "AtlasCloud",
+     "blocked": false,
+     "gate_failures": [],
+     "failed_case_ids": [],
+     "cases_passed": 9,
+     "cases_total": 9,
+     "priority_scores": {},
+     "cost_usd": 0.022829352,
+     "ran_at": "2026-09-18T02:51:34+00:00"
+    },
+    {
+     "provider": "DigitalOcean",
      "blocked": true,
      "gate_failures": [],
      "failed_case_ids": [
-      "seattle_home_news_mentions"
+      "irvine_council_roster"
      ],
-     "cases_passed": 4,
-     "cases_total": 5,
+     "cases_passed": 8,
+     "cases_total": 9,
      "priority_scores": {},
-     "cost_usd": 0.01803944,
-     "ran_at": "2026-09-18T01:30:21+00:00"
+     "cost_usd": 0.0165445952,
+     "ran_at": "2026-09-18T02:51:34+00:00"
+    },
+    {
+     "provider": "NextBit",
+     "blocked": false,
+     "gate_failures": [],
+     "failed_case_ids": [],
+     "cases_passed": 9,
+     "cases_total": 9,
+     "priority_scores": {},
+     "cost_usd": 0.02287369,
+     "ran_at": "2026-09-18T02:51:34+00:00"
     }
    ],
    "matrix": {
@@ -9672,6 +10797,81 @@
      }
     ],
     "rows": [
+     {
+      "prompt_sha256": "d318f76e0deb",
+      "cells": [
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.0230908264
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.022829352
+       },
+       {
+        "mean_score": 0.8888888888888888,
+        "run_count": 1,
+        "mean_cost_usd": 0.0165445952
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.02287369
+       }
+      ]
+     },
+     {
+      "prompt_sha256": "8dd4a1880ce5",
+      "cells": [
+       {
+        "mean_score": 0.9,
+        "run_count": 2,
+        "mean_cost_usd": 0.013443831400000002
+       },
+       {
+        "mean_score": 0.9,
+        "run_count": 2,
+        "mean_cost_usd": 0.013260702000000001
+       },
+       {
+        "mean_score": 0.9285714285714286,
+        "run_count": 2,
+        "mean_cost_usd": 0.013294689799999999
+       },
+       {
+        "mean_score": 0.9,
+        "run_count": 2,
+        "mean_cost_usd": 0.011301465
+       }
+      ]
+     },
+     {
+      "prompt_sha256": "0749e3b84f81",
+      "cells": [
+       {
+        "mean_score": 0.8,
+        "run_count": 2,
+        "mean_cost_usd": 0.015591355599999999
+       },
+       {
+        "mean_score": 0.8,
+        "run_count": 2,
+        "mean_cost_usd": 0.014865872
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 2,
+        "mean_cost_usd": 0.01242003
+       },
+       {
+        "mean_score": 0.8,
+        "run_count": 2,
+        "mean_cost_usd": 0.016611905
+       }
+      ]
+     },
      {
       "prompt_sha256": "1ae867f897aa",
       "cells": [
@@ -9700,295 +10900,343 @@
     ]
    },
    "comparison": {
-    "default_baseline_index": 2,
-    "default_candidate_index": 3,
+    "default_baseline_index": 3,
+    "default_candidate_index": 1,
     "pairs": [
      {
       "baseline_index": 0,
       "candidate_index": 1,
-      "prompt_sha256": "1ae867f897aa",
+      "prompt_sha256": "d318f76e0deb",
       "baseline": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01721699
+       "mean_cost_usd": 0.0230908264
       },
       "candidate": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01801758
+       "mean_cost_usd": 0.022829352
       },
       "regressed": [],
       "improved": [],
-      "unchanged_count": 5,
-      "has_value_detail": false,
+      "unchanged_count": 9,
+      "has_value_detail": true,
       "newly_wrong": [],
       "fixed": []
      },
      {
       "baseline_index": 0,
       "candidate_index": 2,
-      "prompt_sha256": "1ae867f897aa",
+      "prompt_sha256": "d318f76e0deb",
       "baseline": {
-       "mean_score": 0.8,
-       "run_count": 1,
-       "mean_cost_usd": 0.01721699
-      },
-      "candidate": {
        "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.012344178
+       "mean_cost_usd": 0.0230908264
       },
-      "regressed": [],
-      "improved": [
+      "candidate": {
+       "mean_score": 0.8888888888888888,
+       "run_count": 1,
+       "mean_cost_usd": 0.0165445952
+      },
+      "regressed": [
        {
-        "case_id": "seattle_home_news_mentions",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
+        "case_id": "irvine_council_roster",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
        }
       ],
-      "unchanged_count": 4,
-      "has_value_detail": false,
-      "newly_wrong": [],
+      "improved": [],
+      "unchanged_count": 8,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "irvine_council_roster",
+        "subject": "Office of the Mayor",
+        "field": "covers",
+        "expected": true,
+        "actual": false
+       }
+      ],
       "fixed": []
      },
      {
       "baseline_index": 0,
       "candidate_index": 3,
-      "prompt_sha256": "1ae867f897aa",
+      "prompt_sha256": "d318f76e0deb",
       "baseline": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01721699
+       "mean_cost_usd": 0.0230908264
       },
       "candidate": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01803944
+       "mean_cost_usd": 0.02287369
       },
       "regressed": [],
       "improved": [],
-      "unchanged_count": 5,
-      "has_value_detail": false,
+      "unchanged_count": 9,
+      "has_value_detail": true,
       "newly_wrong": [],
       "fixed": []
      },
      {
       "baseline_index": 1,
       "candidate_index": 0,
-      "prompt_sha256": "1ae867f897aa",
+      "prompt_sha256": "d318f76e0deb",
       "baseline": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01801758
+       "mean_cost_usd": 0.022829352
       },
       "candidate": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01721699
+       "mean_cost_usd": 0.0230908264
       },
       "regressed": [],
       "improved": [],
-      "unchanged_count": 5,
-      "has_value_detail": false,
+      "unchanged_count": 9,
+      "has_value_detail": true,
       "newly_wrong": [],
       "fixed": []
      },
      {
       "baseline_index": 1,
       "candidate_index": 2,
-      "prompt_sha256": "1ae867f897aa",
+      "prompt_sha256": "d318f76e0deb",
       "baseline": {
-       "mean_score": 0.8,
-       "run_count": 1,
-       "mean_cost_usd": 0.01801758
-      },
-      "candidate": {
        "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.012344178
+       "mean_cost_usd": 0.022829352
       },
-      "regressed": [],
-      "improved": [
+      "candidate": {
+       "mean_score": 0.8888888888888888,
+       "run_count": 1,
+       "mean_cost_usd": 0.0165445952
+      },
+      "regressed": [
        {
-        "case_id": "seattle_home_news_mentions",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
+        "case_id": "irvine_council_roster",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
        }
       ],
-      "unchanged_count": 4,
-      "has_value_detail": false,
-      "newly_wrong": [],
+      "improved": [],
+      "unchanged_count": 8,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "irvine_council_roster",
+        "subject": "Office of the Mayor",
+        "field": "covers",
+        "expected": true,
+        "actual": false
+       }
+      ],
       "fixed": []
      },
      {
       "baseline_index": 1,
       "candidate_index": 3,
-      "prompt_sha256": "1ae867f897aa",
+      "prompt_sha256": "d318f76e0deb",
       "baseline": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01801758
+       "mean_cost_usd": 0.022829352
       },
       "candidate": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01803944
+       "mean_cost_usd": 0.02287369
       },
       "regressed": [],
       "improved": [],
-      "unchanged_count": 5,
-      "has_value_detail": false,
+      "unchanged_count": 9,
+      "has_value_detail": true,
       "newly_wrong": [],
       "fixed": []
      },
      {
       "baseline_index": 2,
       "candidate_index": 0,
-      "prompt_sha256": "1ae867f897aa",
+      "prompt_sha256": "d318f76e0deb",
       "baseline": {
-       "mean_score": 1.0,
+       "mean_score": 0.8888888888888888,
        "run_count": 1,
-       "mean_cost_usd": 0.012344178
+       "mean_cost_usd": 0.0165445952
       },
       "candidate": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01721699
+       "mean_cost_usd": 0.0230908264
       },
-      "regressed": [
+      "regressed": [],
+      "improved": [
        {
-        "case_id": "seattle_home_news_mentions",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
+        "case_id": "irvine_council_roster",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
        }
       ],
-      "improved": [],
-      "unchanged_count": 4,
-      "has_value_detail": false,
+      "unchanged_count": 8,
+      "has_value_detail": true,
       "newly_wrong": [],
-      "fixed": []
+      "fixed": [
+       {
+        "case_id": "irvine_council_roster",
+        "subject": "Office of the Mayor",
+        "field": "covers",
+        "expected": true,
+        "actual": false
+       }
+      ]
      },
      {
       "baseline_index": 2,
       "candidate_index": 1,
-      "prompt_sha256": "1ae867f897aa",
+      "prompt_sha256": "d318f76e0deb",
       "baseline": {
-       "mean_score": 1.0,
+       "mean_score": 0.8888888888888888,
        "run_count": 1,
-       "mean_cost_usd": 0.012344178
+       "mean_cost_usd": 0.0165445952
       },
       "candidate": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01801758
+       "mean_cost_usd": 0.022829352
       },
-      "regressed": [
+      "regressed": [],
+      "improved": [
        {
-        "case_id": "seattle_home_news_mentions",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
+        "case_id": "irvine_council_roster",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
        }
       ],
-      "improved": [],
-      "unchanged_count": 4,
-      "has_value_detail": false,
+      "unchanged_count": 8,
+      "has_value_detail": true,
       "newly_wrong": [],
-      "fixed": []
+      "fixed": [
+       {
+        "case_id": "irvine_council_roster",
+        "subject": "Office of the Mayor",
+        "field": "covers",
+        "expected": true,
+        "actual": false
+       }
+      ]
      },
      {
       "baseline_index": 2,
       "candidate_index": 3,
-      "prompt_sha256": "1ae867f897aa",
+      "prompt_sha256": "d318f76e0deb",
       "baseline": {
-       "mean_score": 1.0,
+       "mean_score": 0.8888888888888888,
        "run_count": 1,
-       "mean_cost_usd": 0.012344178
+       "mean_cost_usd": 0.0165445952
       },
       "candidate": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01803944
+       "mean_cost_usd": 0.02287369
       },
-      "regressed": [
+      "regressed": [],
+      "improved": [
        {
-        "case_id": "seattle_home_news_mentions",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
+        "case_id": "irvine_council_roster",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
        }
       ],
-      "improved": [],
-      "unchanged_count": 4,
-      "has_value_detail": false,
+      "unchanged_count": 8,
+      "has_value_detail": true,
       "newly_wrong": [],
-      "fixed": []
+      "fixed": [
+       {
+        "case_id": "irvine_council_roster",
+        "subject": "Office of the Mayor",
+        "field": "covers",
+        "expected": true,
+        "actual": false
+       }
+      ]
      },
      {
       "baseline_index": 3,
       "candidate_index": 0,
-      "prompt_sha256": "1ae867f897aa",
+      "prompt_sha256": "d318f76e0deb",
       "baseline": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01803944
+       "mean_cost_usd": 0.02287369
       },
       "candidate": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01721699
+       "mean_cost_usd": 0.0230908264
       },
       "regressed": [],
       "improved": [],
-      "unchanged_count": 5,
-      "has_value_detail": false,
+      "unchanged_count": 9,
+      "has_value_detail": true,
       "newly_wrong": [],
       "fixed": []
      },
      {
       "baseline_index": 3,
       "candidate_index": 1,
-      "prompt_sha256": "1ae867f897aa",
+      "prompt_sha256": "d318f76e0deb",
       "baseline": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01803944
+       "mean_cost_usd": 0.02287369
       },
       "candidate": {
-       "mean_score": 0.8,
+       "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.01801758
+       "mean_cost_usd": 0.022829352
       },
       "regressed": [],
       "improved": [],
-      "unchanged_count": 5,
-      "has_value_detail": false,
+      "unchanged_count": 9,
+      "has_value_detail": true,
       "newly_wrong": [],
       "fixed": []
      },
      {
       "baseline_index": 3,
       "candidate_index": 2,
-      "prompt_sha256": "1ae867f897aa",
+      "prompt_sha256": "d318f76e0deb",
       "baseline": {
-       "mean_score": 0.8,
-       "run_count": 1,
-       "mean_cost_usd": 0.01803944
-      },
-      "candidate": {
        "mean_score": 1.0,
        "run_count": 1,
-       "mean_cost_usd": 0.012344178
+       "mean_cost_usd": 0.02287369
       },
-      "regressed": [],
-      "improved": [
+      "candidate": {
+       "mean_score": 0.8888888888888888,
+       "run_count": 1,
+       "mean_cost_usd": 0.0165445952
+      },
+      "regressed": [
        {
-        "case_id": "seattle_home_news_mentions",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
+        "case_id": "irvine_council_roster",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
        }
       ],
-      "unchanged_count": 4,
-      "has_value_detail": false,
-      "newly_wrong": [],
+      "improved": [],
+      "unchanged_count": 8,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "irvine_council_roster",
+        "subject": "Office of the Mayor",
+        "field": "covers",
+        "expected": true,
+        "actual": false
+       }
+      ],
       "fixed": []
      }
     ]
@@ -10000,10 +11248,513 @@
      "DigitalOcean",
      "NextBit"
     ],
-    "charts": [],
-    "run_count": 4
+    "charts": [
+     {
+      "metric": "covers",
+      "is_priority": false,
+      "gate_floor": null,
+      "series": [
+       {
+        "provider": "Alibaba",
+        "points": [
+         {
+          "timestamp": "2026-09-18T01:30:21+00:00",
+          "prompt_sha256": "1ae867f897aa",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T01:45:28+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:11:48+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:23:43+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:39:21+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:51:34+00:00",
+          "prompt_sha256": "d318f76e0deb",
+          "score": 1.0
+         }
+        ]
+       },
+       {
+        "provider": "AtlasCloud",
+        "points": [
+         {
+          "timestamp": "2026-09-18T01:30:21+00:00",
+          "prompt_sha256": "1ae867f897aa",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T01:45:28+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:11:48+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:23:43+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:39:21+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:51:34+00:00",
+          "prompt_sha256": "d318f76e0deb",
+          "score": 1.0
+         }
+        ]
+       },
+       {
+        "provider": "DigitalOcean",
+        "points": [
+         {
+          "timestamp": "2026-09-18T01:30:21+00:00",
+          "prompt_sha256": "1ae867f897aa",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T01:45:28+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:11:48+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:23:43+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:39:21+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 0.9285714285714286
+         },
+         {
+          "timestamp": "2026-09-18T02:51:34+00:00",
+          "prompt_sha256": "d318f76e0deb",
+          "score": 0.9444444444444444
+         }
+        ]
+       },
+       {
+        "provider": "NextBit",
+        "points": [
+         {
+          "timestamp": "2026-09-18T01:30:21+00:00",
+          "prompt_sha256": "1ae867f897aa",
+          "score": 0.8
+         },
+         {
+          "timestamp": "2026-09-18T01:45:28+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:11:48+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:23:43+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:39:21+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:51:34+00:00",
+          "prompt_sha256": "d318f76e0deb",
+          "score": 1.0
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "run_count": 24
    },
    "prompt_versions": [
+    {
+     "prompt_sha256": "d318f76e0deb",
+     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if this page presents a person holding office in that body as one of its\n    officials — a roster entry, a directory row, a profile, or a contact block naming them.\n\n    The test: would this page tell a reader who currently holds the office, if they had never\n    heard of the person? A listing, a profile or a contact block answers that. A sentence about\n    something that happened assumes you already know, and names the person in passing.\n\n    All of these are false, however prominently the body or its people appear, and however many\n    times a name is repeated:\n    - a link to the body, or its name in the site navigation, including a heading such as\n      \"Connect with Elected Officials\" that links elsewhere\n    - a mention of the body in prose, or a meeting agenda or minutes naming it\n    - news stories, press releases and announcements. \"Mayor Wilson Signs Junk Fee Legislation\n      into Law\" names the mayor and their office and is still a report of an event: the page\n      exists to say what happened, not who holds the office. A homepage carrying six such\n      headlines is a newsfeed, not a roster.\n\n    Judge the page's own content. A block that would be identical on every page of the site —\n    a menu, a footer, a sidebar list of members repeated across a section — is furniture, and\n    counting it would make every page of a site cover every body, which is no answer at all. The\n    same list in the body of a page, as what that page exists to present, does count.\n\n    Someone who holds office in that body counts even if the page gives them a title that is not\n    among the offices listed above; the list is there to say what holding office in this body\n    looks like, not to limit it.\n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
+     "first_run_at": "2026-09-18T02:51:34+00:00",
+     "last_run_at": "2026-09-18T02:51:34+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean",
+      "NextBit"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-18T02:51:34+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:51:34+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:51:34+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 0.9444444444444444
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:51:34+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "covers": 1.0
+       }
+      }
+     ],
+     "previous_sha256": "8dd4a1880ce5",
+     "diff": [
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "added",
+       "text": "+    Judge the page's own content. A block that would be identical on every page of the site —"
+      },
+      {
+       "kind": "added",
+       "text": "+    a menu, a footer, a sidebar list of members repeated across a section — is furniture, and"
+      },
+      {
+       "kind": "added",
+       "text": "+    counting it would make every page of a site cover every body, which is no answer at all. The"
+      },
+      {
+       "kind": "added",
+       "text": "+    same list in the body of a page, as what that page exists to present, does count."
+      },
+      {
+       "kind": "added",
+       "text": "+"
+      },
+      {
+       "kind": "context",
+       "text": "     Someone who holds office in that body counts even if the page gives them a title that is not"
+      }
+     ]
+    },
+    {
+     "prompt_sha256": "8dd4a1880ce5",
+     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if this page presents a person holding office in that body as one of its\n    officials — a roster entry, a directory row, a profile, or a contact block naming them.\n\n    The test: would this page tell a reader who currently holds the office, if they had never\n    heard of the person? A listing, a profile or a contact block answers that. A sentence about\n    something that happened assumes you already know, and names the person in passing.\n\n    All of these are false, however prominently the body or its people appear, and however many\n    times a name is repeated:\n    - a link to the body, or its name in the site navigation, including a heading such as\n      \"Connect with Elected Officials\" that links elsewhere\n    - a mention of the body in prose, or a meeting agenda or minutes naming it\n    - news stories, press releases and announcements. \"Mayor Wilson Signs Junk Fee Legislation\n      into Law\" names the mayor and their office and is still a report of an event: the page\n      exists to say what happened, not who holds the office. A homepage carrying six such\n      headlines is a newsfeed, not a roster.\n\n    Someone who holds office in that body counts even if the page gives them a title that is not\n    among the offices listed above; the list is there to say what holding office in this body\n    looks like, not to limit it.\n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
+     "first_run_at": "2026-09-18T02:23:43+00:00",
+     "last_run_at": "2026-09-18T02:39:21+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean",
+      "NextBit"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-18T02:39:21+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:39:21+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:39:21+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 0.9285714285714286
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:39:21+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:23:43+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:23:43+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:23:43+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:23:43+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "covers": 0.9
+       }
+      }
+     ],
+     "previous_sha256": "0749e3b84f81",
+     "diff": [
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    All of these are false, however prominently the body or its people appear:"
+      },
+      {
+       "kind": "removed",
+       "text": "-    - a link to the body, or its name in the site navigation"
+      },
+      {
+       "kind": "added",
+       "text": "+    The test: would this page tell a reader who currently holds the office, if they had never"
+      },
+      {
+       "kind": "added",
+       "text": "+    heard of the person? A listing, a profile or a contact block answers that. A sentence about"
+      },
+      {
+       "kind": "added",
+       "text": "+    something that happened assumes you already know, and names the person in passing."
+      },
+      {
+       "kind": "added",
+       "text": "+"
+      },
+      {
+       "kind": "added",
+       "text": "+    All of these are false, however prominently the body or its people appear, and however many"
+      },
+      {
+       "kind": "added",
+       "text": "+    times a name is repeated:"
+      },
+      {
+       "kind": "added",
+       "text": "+    - a link to the body, or its name in the site navigation, including a heading such as"
+      },
+      {
+       "kind": "added",
+       "text": "+      \"Connect with Elected Officials\" that links elsewhere"
+      },
+      {
+       "kind": "context",
+       "text": "     - a mention of the body in prose, or a meeting agenda or minutes naming it"
+      },
+      {
+       "kind": "removed",
+       "text": "-    - a news story, press release or announcement about something an official said or did."
+      },
+      {
+       "kind": "removed",
+       "text": "-      A page reporting on the mayor is not a page that lists the mayor, and a homepage carrying"
+      },
+      {
+       "kind": "removed",
+       "text": "-      headlines about officials is reporting, not listing."
+      },
+      {
+       "kind": "added",
+       "text": "+    - news stories, press releases and announcements. \"Mayor Wilson Signs Junk Fee Legislation"
+      },
+      {
+       "kind": "added",
+       "text": "+      into Law\" names the mayor and their office and is still a report of an event: the page"
+      },
+      {
+       "kind": "added",
+       "text": "+      exists to say what happened, not who holds the office. A homepage carrying six such"
+      },
+      {
+       "kind": "added",
+       "text": "+      headlines is a newsfeed, not a roster."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      }
+     ]
+    },
+    {
+     "prompt_sha256": "0749e3b84f81",
+     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if this page presents a person holding office in that body as one of its\n    officials — a roster entry, a directory row, a profile, or a contact block naming them.\n\n    All of these are false, however prominently the body or its people appear:\n    - a link to the body, or its name in the site navigation\n    - a mention of the body in prose, or a meeting agenda or minutes naming it\n    - a news story, press release or announcement about something an official said or did.\n      A page reporting on the mayor is not a page that lists the mayor, and a homepage carrying\n      headlines about officials is reporting, not listing.\n\n    Someone who holds office in that body counts even if the page gives them a title that is not\n    among the offices listed above; the list is there to say what holding office in this body\n    looks like, not to limit it.\n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
+     "first_run_at": "2026-09-18T01:45:28+00:00",
+     "last_run_at": "2026-09-18T02:11:48+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean",
+      "NextBit"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-18T02:11:48+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:11:48+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:11:48+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:11:48+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:45:28+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:45:28+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:45:28+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:45:28+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "covers": 0.9
+       }
+      }
+     ],
+     "previous_sha256": "1ae867f897aa",
+     "diff": [
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    Answer true only if a person holding office in that body appears on this page, named. A link"
+      },
+      {
+       "kind": "removed",
+       "text": "-    to the body, its name in the navigation, a mention of it in prose, or a meeting agenda that"
+      },
+      {
+       "kind": "removed",
+       "text": "-    names it are all false — the question is whether the page lists its people."
+      },
+      {
+       "kind": "added",
+       "text": "+    Answer true only if this page presents a person holding office in that body as one of its"
+      },
+      {
+       "kind": "added",
+       "text": "+    officials — a roster entry, a directory row, a profile, or a contact block naming them."
+      },
+      {
+       "kind": "added",
+       "text": "+"
+      },
+      {
+       "kind": "added",
+       "text": "+    All of these are false, however prominently the body or its people appear:"
+      },
+      {
+       "kind": "added",
+       "text": "+    - a link to the body, or its name in the site navigation"
+      },
+      {
+       "kind": "added",
+       "text": "+    - a mention of the body in prose, or a meeting agenda or minutes naming it"
+      },
+      {
+       "kind": "added",
+       "text": "+    - a news story, press release or announcement about something an official said or did."
+      },
+      {
+       "kind": "added",
+       "text": "+      A page reporting on the mayor is not a page that lists the mayor, and a homepage carrying"
+      },
+      {
+       "kind": "added",
+       "text": "+      headlines about officials is reporting, not listing."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      }
+     ]
+    },
     {
      "prompt_sha256": "1ae867f897aa",
      "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if a person holding office in that body appears on this page, named. A link\n    to the body, its name in the navigation, a mention of it in prose, or a meeting agenda that\n    names it are all false — the question is whether the page lists its people.\n\n    Someone who holds office in that body counts even if the page gives them a title that is not\n    among the offices listed above; the list is there to say what holding office in this body\n    looks like, not to limit it.\n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
@@ -10061,27 +11812,27 @@
       "metric": "covers",
       "cells": [
        {
-        "score": 0.9,
+        "score": 1.0,
         "swing_is_wide": false,
-        "half_swing": 0.0,
-        "missing_count": 0
-       },
-       {
-        "score": 0.9,
-        "swing_is_wide": false,
-        "half_swing": 0.0,
+        "half_swing": 0.04999999999999999,
         "missing_count": 0
        },
        {
         "score": 1.0,
         "swing_is_wide": false,
-        "half_swing": 0.0,
+        "half_swing": 0.04999999999999999,
         "missing_count": 0
        },
        {
-        "score": 0.8,
+        "score": 0.9444444444444444,
         "swing_is_wide": false,
-        "half_swing": 0.0,
+        "half_swing": 0.0357142857142857,
+        "missing_count": 0
+       },
+       {
+        "score": 1.0,
+        "swing_is_wide": true,
+        "half_swing": 0.09999999999999998,
         "missing_count": 0
        }
       ]
@@ -10090,13 +11841,7 @@
       "metric": "cases passed",
       "cells": [
        {
-        "score": 0.8,
-        "swing_is_wide": false,
-        "half_swing": 0.0,
-        "missing_count": null
-       },
-       {
-        "score": 0.8,
+        "score": 1.0,
         "swing_is_wide": false,
         "half_swing": 0.0,
         "missing_count": null
@@ -10108,7 +11853,13 @@
         "missing_count": null
        },
        {
-        "score": 0.8,
+        "score": 0.8888888888888888,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       },
+       {
+        "score": 1.0,
         "swing_is_wide": false,
         "half_swing": 0.0,
         "missing_count": null
@@ -10124,14 +11875,24 @@
     ],
     "case_rows": [
      {
-      "case_id": "seattle_home_news_mentions",
+      "case_id": "irvine_council_roster",
       "scores": [
-       0.0,
-       0.0,
        1.0,
-       0.0
+       1.0,
+       0.0,
+       1.0
       ],
-      "stability": "unknown"
+      "stability": "moves"
+     },
+     {
+      "case_id": "irvine_councilmember_bio",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "moves"
      },
      {
       "case_id": "jackson_council_agendas",
@@ -10141,10 +11902,20 @@
        1.0,
        1.0
       ],
-      "stability": "unknown"
+      "stability": "steady"
      },
      {
       "case_id": "jackson_council_member_bio",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "jackson_mayor_staff_directory",
       "scores": [
        1.0,
        1.0,
@@ -10161,7 +11932,7 @@
        1.0,
        1.0
       ],
-      "stability": "unknown"
+      "stability": "steady"
      },
      {
       "case_id": "jackson_meet_the_council",
@@ -10171,12 +11942,70 @@
        1.0,
        1.0
       ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "quitaque_city_officials",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
       "stability": "unknown"
+     },
+     {
+      "case_id": "seattle_mayor_page",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "steady"
      }
     ],
-    "movements": []
+    "movements": [
+     {
+      "provider": "Alibaba",
+      "regressed": [],
+      "improved": []
+     },
+     {
+      "provider": "AtlasCloud",
+      "regressed": [],
+      "improved": []
+     },
+     {
+      "provider": "DigitalOcean",
+      "regressed": [
+       "irvine_council_roster"
+      ],
+      "improved": [
+       "irvine_councilmember_bio"
+      ]
+     },
+     {
+      "provider": "NextBit",
+      "regressed": [],
+      "improved": []
+     }
+    ]
    },
-   "latest_mismatches": {}
+   "latest_mismatches": {
+    "DigitalOcean": {
+     "irvine_council_roster": [
+      {
+       "subject": "Office of the Mayor",
+       "field": "covers",
+       "expected": true,
+       "actual": false,
+       "expected_label": null,
+       "actual_label": null
+      }
+     ]
+    }
+   }
   },
   {
    "eval_name": "find_jurisdiction_url",
@@ -10366,30 +12195,13 @@
    "expected_count": null,
    "swing": null,
    "failed_case_ids": [
-    "quitaque_council",
-    "san_antonio"
+    "gatesville_ordinances"
    ]
   },
   {
    "kind": "cases_failed",
    "severity": 0,
-   "eval_name": "relevant_page",
-   "provider": "AtlasCloud",
-   "metric": null,
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": null,
-   "failed_case_ids": [
-    "mcgregor_city_announcement_irrelevant",
-    "quitaque_council"
-   ]
-  },
-  {
-   "kind": "cases_failed",
-   "severity": 0,
-   "eval_name": "relevant_page",
+   "eval_name": "page_covers",
    "provider": "DigitalOcean",
    "metric": null,
    "score": null,
@@ -10398,68 +12210,7 @@
    "expected_count": null,
    "swing": null,
    "failed_case_ids": [
-    "san_saba_airport_advisory_irrelevant"
-   ]
-  },
-  {
-   "kind": "cases_failed",
-   "severity": 0,
-   "eval_name": "relevant_page",
-   "provider": "NextBit",
-   "metric": null,
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": null,
-   "failed_case_ids": [
-    "mcgregor_city_announcement_irrelevant",
-    "san_antonio"
-   ]
-  },
-  {
-   "kind": "cases_failed",
-   "severity": 0,
-   "eval_name": "page_covers",
-   "provider": "Alibaba",
-   "metric": null,
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": null,
-   "failed_case_ids": [
-    "seattle_home_news_mentions"
-   ]
-  },
-  {
-   "kind": "cases_failed",
-   "severity": 0,
-   "eval_name": "page_covers",
-   "provider": "AtlasCloud",
-   "metric": null,
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": null,
-   "failed_case_ids": [
-    "seattle_home_news_mentions"
-   ]
-  },
-  {
-   "kind": "cases_failed",
-   "severity": 0,
-   "eval_name": "page_covers",
-   "provider": "NextBit",
-   "metric": null,
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": null,
-   "failed_case_ids": [
-    "seattle_home_news_mentions"
+    "irvine_council_roster"
    ]
   },
   {
@@ -10507,6 +12258,71 @@
    "eval_name": "officials",
    "provider": "AtlasCloud",
    "metric": "email",
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": 0.5,
+   "failed_case_ids": []
+  },
+  {
+   "kind": "wide_swing",
+   "severity": 2,
+   "eval_name": "officials",
+   "provider": "AtlasCloud",
+   "metric": "phone",
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": 0.5,
+   "failed_case_ids": []
+  },
+  {
+   "kind": "wide_swing",
+   "severity": 2,
+   "eval_name": "officials",
+   "provider": "AtlasCloud",
+   "metric": "url",
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": 0.5,
+   "failed_case_ids": []
+  },
+  {
+   "kind": "wide_swing",
+   "severity": 2,
+   "eval_name": "officials",
+   "provider": "Alibaba",
+   "metric": "url",
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": 0.5,
+   "failed_case_ids": []
+  },
+  {
+   "kind": "wide_swing",
+   "severity": 2,
+   "eval_name": "officials",
+   "provider": "NextBit",
+   "metric": "email",
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": 0.5,
+   "failed_case_ids": []
+  },
+  {
+   "kind": "wide_swing",
+   "severity": 2,
+   "eval_name": "officials",
+   "provider": "NextBit",
+   "metric": "phone",
    "score": null,
    "gate_floor": null,
    "missing_count": null,

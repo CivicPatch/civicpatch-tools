@@ -1,0 +1,6 @@
+mismatches:
+  seattle_home_news_mentions:
+  - actual: true
+    expected: false
+    field: covers
+    subject: Office of the Mayor

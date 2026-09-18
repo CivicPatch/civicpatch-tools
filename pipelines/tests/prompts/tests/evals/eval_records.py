@@ -2,7 +2,9 @@ from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
 OPEN_ROUTER_PREFIX = "open_router-"
 
-MismatchValue = str | list[str] | None
+# `bool` first: the page-coverage eval's answers are yes/no, and with `str` first pydantic
+# renders them as "True"/"False" in the dashboard rather than as booleans.
+MismatchValue = bool | str | list[str] | None
 
 
 def short_provider(provider: str) -> str:

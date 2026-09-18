@@ -1,28 +1,42 @@
 run:
-  timestamp: '2026-09-18T01:47:39+00:00'
-  prompt_sha256: 983a0dfb3b48
-  prompt_file: _prompts/983a0dfb3b48.txt
+  timestamp: '2026-09-18T02:38:43+00:00'
+  prompt_sha256: cb8e073a37f3
+  prompt_file: _prompts/cb8e073a37f3.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 144.44
-  total_input_tokens: 85332
-  total_output_tokens: 19760
-  total_cost_usd: 0.0165380656
+  elapsed_seconds: 241.81
+  total_input_tokens: 86624
+  total_output_tokens: 19599
+  total_cost_usd: 0.0166680456
 accuracy:
   relevant_urls:
-    correct: 26
-    missing: 0
-    spurious: 30
-    wrong: 0
-    precision: 0.4642857142857143
-    recall: 1.0
-    f1: 0.6341463414634146
-  is_relevant:
-    correct: 17
+    correct: 29
     missing: 0
     spurious: 0
     wrong: 0
     precision: 1.0
     recall: 1.0
     f1: 1.0
-failed_cases: []
+  is_relevant:
+    correct: 16
+    missing: 0
+    spurious: 0
+    wrong: 1
+    precision: 0.9411764705882353
+    recall: 0.9411764705882353
+    f1: 0.9411764705882353
+failed_cases:
+- model_client: open_router-Alibaba
+  case_id: gatesville_ordinances
+  failures:
+  - field: is_relevant
+    expected: false
+    actual: true
+    score: 0.0
+    threshold: 1.0
+mismatches:
+  gatesville_ordinances:
+  - subject: page
+    field: is_relevant
+    expected: false
+    actual: true

@@ -1,0 +1,11 @@
+mismatches:
+  jackson_mayors_office:
+  - actual: false
+    expected: true
+    field: is_relevant
+    subject: page
+  san_antonio:
+  - actual: "\u2014"
+    expected: present
+    field: relevant_urls
+    subject: https://www.sa.gov/Directory

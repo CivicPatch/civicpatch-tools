@@ -32,6 +32,41 @@ class BatchAlreadyRunning(Exception):
         self.lock_key = lock_key
 
 
+# How long a batch may hold the lock without finishing before the next caller takes it over.
+# A real import is minutes: the whole sheet is read once and each locality is a handful of
+# requests. This is the margin for a slow one, not a guess at a normal one.
+STALE_AFTER = "2 hours"
+
+ABANDONED = (
+    "abandoned: nothing finished this batch, so the process it ran in died "
+    "(a restart or a deploy). Released by the next import."
+)
+
+
+async def _release_abandoned(cur, lock_key: str) -> int:
+    """Close any batch on this key that is old and still unfinished.
+
+    `finish` runs in a `try/finally`-shaped path, so an *exception* already releases the lock.
+    A process that dies does not run anything, and `changeset_batches_one_running_per_key` is
+    `UNIQUE (lock_key) WHERE finished_at IS NULL` — so without this, one killed worker wedges
+    every future import on that key permanently, repairable only by hand.
+
+    Taken over here rather than swept on a timer: the only caller who cares is the next one, and
+    it is about to prove the previous run is gone by starting.
+    """
+    await cur.execute(
+        f"""
+        UPDATE changeset_batches
+           SET status = %s, error = COALESCE(error, %s), finished_at = now()
+         WHERE lock_key = %s
+           AND finished_at IS NULL
+           AND started_at < now() - interval '{STALE_AFTER}'
+        """,
+        (BatchStatus.FAILED.value, ABANDONED, lock_key),
+    )
+    return cur.rowcount
+
+
 async def start(
     kind: BatchKind,
     lock_key: str,
@@ -43,6 +78,7 @@ async def start(
     check-then-act window for two callers to race through."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        await _release_abandoned(cur, lock_key)
         try:
             await cur.execute(
                 """
