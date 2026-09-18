@@ -115,6 +115,15 @@ SCHEMAS: dict[str, pa.Schema] = {
             ("created_at", _TIMESTAMP),
         ]
     ),
+    "role_aliases": pa.schema(
+        [
+            ("id", pa.string()),
+            ("role_id", pa.string()),
+            ("label", pa.string()),
+            ("status", pa.string()),
+            ("created_at", _TIMESTAMP),
+        ]
+    ),
 }
 
 

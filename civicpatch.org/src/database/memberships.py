@@ -246,7 +246,14 @@ async def close_for_people_rejected_here(cur, jurisdiction_ocdid: str, closed_at
         for person_id in {membership.person_id for membership in held}
         if claims.get(person_id, {}).get(EXISTENCE_FIELD, {}).get(AssertionKind.REJECT)
     ]
-    if not rejected:
+    return await close_for_people(cur, jurisdiction_ocdid, rejected, closed_at)
+
+
+async def close_for_people(
+    cur, jurisdiction_ocdid: str, person_ids: list[str], closed_at
+) -> int:
+    """Close every open membership these people hold here."""
+    if not person_ids:
         return 0
     await cur.execute(
         """
@@ -254,7 +261,7 @@ async def close_for_people_rejected_here(cur, jurisdiction_ocdid: str, closed_at
         WHERE person_id::text = ANY(%s) AND closed_at IS NULL
           AND post_id IN (SELECT id FROM posts WHERE jurisdiction_ocdid = %s)
         """,
-        (closed_at, rejected, jurisdiction_ocdid),
+        (closed_at, person_ids, jurisdiction_ocdid),
     )
     return cur.rowcount
 

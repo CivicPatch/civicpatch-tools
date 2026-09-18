@@ -646,3 +646,64 @@ async def test_editing_two_people_at_once_keeps_their_own_rows():
     assert [type_ for type_, _ in rows] == ["edit_person", "edit_person", "publish_review"]
     publish_changes = next(changes for type_, changes in rows if type_ == "publish_review")
     assert publish_changes is None
+
+
+async def _open_posts(person_id: str) -> list[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT post_id::text FROM memberships "
+            "WHERE person_id::text = %s AND closed_at IS NULL",
+            (person_id,),
+        )
+        return [row[0] for row in await cur.fetchall()]
+
+
+async def _clerk_post() -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        await conn.commit()
+    return post_id
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_hand_edit_keeps_a_post_that_was_assigned():
+    """Crescent City, 2026-09-18: the editor assigns a post, then saves person fields. The save
+    re-derived everyone's post from label text; an assigned membership has no sources, so it
+    derived to nothing and was closed as absent."""
+    person_id, user = await _seed()
+    clerk = await _clerk_post()
+
+    await memberships.assign(person_id, clerk, None, user.user_id)
+    await roster_edits.edit_published(
+        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    )
+
+    assert await _open_posts(person_id) == [clerk]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_hand_edit_does_not_re_derive_a_post_from_label_text():
+    """The other half: someone held a post their source label does not parse to (a reviewer
+    picked it). Saving their fields moved them to the parsed post."""
+    person_id, user = await _seed()
+    clerk = await _clerk_post()
+    await memberships.assign(person_id, clerk, None, user.user_id)
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE memberships SET sources = %s::jsonb "
+            "WHERE person_id::text = %s AND closed_at IS NULL",
+            ('[{"url": null, "note": "Mayor"}]', person_id),
+        )
+        await conn.commit()
+
+    await roster_edits.edit_published(
+        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    )
+
+    assert await _open_posts(person_id) == [clerk]

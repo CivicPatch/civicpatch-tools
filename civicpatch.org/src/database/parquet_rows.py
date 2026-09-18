@@ -36,7 +36,7 @@ from database.database import get_pool
 # prefixed (`ocd-jurisdiction/country:us/state:wa/...` → `state:wa` → `wa`).
 _STATE_OF = "split_part(split_part({col}, '/', 3), ':', 2)"
 
-GLOBAL_TABLES = ("roles",)
+GLOBAL_TABLES = ("roles", "role_aliases")
 
 # `LiteralString`, not `str`: psycopg only accepts a literal, which is what keeps a table name
 # from ever being composed from input. The registry is the only place SQL is written here.
@@ -101,6 +101,11 @@ TABLES: dict[str, LiteralString] = {
         SELECT id, label, status, is_unique, priority, created_at
         FROM roles
         ORDER BY id
+    """,
+    "role_aliases": """
+        SELECT id::text, role_id, label, status, created_at
+        FROM role_aliases
+        ORDER BY role_id, label
     """,
 }
 

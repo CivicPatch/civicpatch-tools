@@ -10,7 +10,7 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from core.entry_rows import ImportStatus
+from core.sheet_import_rows import ImportStatus
 from services.sheet_import import JurisdictionResult, run_import
 
 _BATCH_ID = "batch-1"

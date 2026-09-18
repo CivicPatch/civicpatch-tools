@@ -5,20 +5,20 @@ through the same sync code production runs (which also gives each one its defaul
 from a single public archive download rather than the authenticated GitHub API. Everything
 `civicpatch.org` itself owns comes from its public Parquet export at
 `https://cdn.civicpatch.org/parquet/` (the dataset the open-data.civicpatch.org SQL explorer
-queries): `divisions` in full, optionally narrowed to specific states, and `organizations` plus
-everything that hangs off one (`posts`, `memberships`, the `people` those reference) capped by
-`--limit`, since those are the tables that actually grow with real content. No GitHub App
-credentials, no Temporal worker, just real production data to click around in.
+queries): every jurisdiction and division, and `organizations` plus everything that hangs off
+one (`posts`, `memberships`, the `people` those reference) capped by `--limit`, since those are
+the tables that actually grow with real content. No GitHub App credentials, no Temporal worker,
+just real production data to click around in.
 
 Run via `mise run seed-dev-data` (see `mise.toml`), which execs this inside the running
 `civicpatch-org` container.
 
-**Destructive.** Every run wipes the tables it is about to repopulate first — see
-`wipe_existing_data` — rather than merging with whatever a dev's database already holds. Real
-production ids collide with existing local rows more often than a fresh-DB assumption allows for
-(the id itself matches by luck, but a *different* unique constraint — an organization's own
-`(jurisdiction_ocdid, name)`, say — does not), and an `ON CONFLICT DO NOTHING` cannot recover
-from a collision it did not target. Intended only for a local dev database.
+**Destructive.** Every run wipes the tables it is about to repopulate — see
+`wipe_existing_data`, which runs only once every download has succeeded — rather than merging
+with whatever a dev's database already holds. Real production ids collide with existing local
+rows more often than a fresh-DB assumption allows for (the id itself matches by luck, but a
+*different* unique constraint — an organization's own `(jurisdiction_ocdid, name)`, say — does
+not), and an `ON CONFLICT DO NOTHING` cannot recover from a collision it did not target. Intended only for a local dev database.
 """
 
 import argparse
@@ -33,8 +33,9 @@ from typing import Any, LiteralString
 import httpx
 import pyarrow.parquet as pq
 from psycopg import AsyncConnection
+from pydantic import BaseModel
 
-from core.sources.open_data.paths import SyncFileKind, classify_path, jurisdiction_path_parts
+from core.sources.open_data.paths import SyncFileKind, classify_path
 from database.database import get_pool
 from services.sources.open_data import read_jurisdiction_files
 
@@ -50,6 +51,17 @@ async def fetch_table(client: httpx.AsyncClient, table: str) -> list[dict[str, A
     response = await client.get(f"{DATA_BASE}{table}/data.parquet")
     response.raise_for_status()
     return pq.read_table(io.BytesIO(response.content)).to_pylist()
+
+
+async def fetch_aliases(client: httpx.AsyncClient) -> list[dict[str, Any]]:
+    """Empty until production's first parquet run after the table was added to the export."""
+    try:
+        return await fetch_table(client, "role_aliases")
+    except httpx.HTTPStatusError as e:
+        if e.response.status_code != httpx.codes.NOT_FOUND:
+            raise
+        logger.warning("seed_open_data_subset: role_aliases not exported yet; seeding none")
+        return []
 
 
 async def fetch_open_data_archive(client: httpx.AsyncClient) -> bytes:
@@ -69,12 +81,6 @@ def jurisdiction_files(archive: bytes) -> dict[str, str]:
             if extracted and classify_path(path) is SyncFileKind.JURISDICTIONS:
                 files[path] = extracted.read().decode("utf-8")
     return files
-
-
-def files_in_states(files: dict[str, str], states: set[str] | None) -> list[str]:
-    if states is None:
-        return list(files)
-    return [path for path in files if jurisdiction_path_parts(path)[0] in states]
 
 
 def rows_in_jurisdictions(
@@ -99,6 +105,16 @@ def role_row(row: dict[str, Any]) -> dict[str, Any]:
         "status": row["status"],
         "is_unique": row["is_unique"],
         "priority": row["priority"],
+        "created_at": row["created_at"],
+    }
+
+
+def role_alias_row(row: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "id": row["id"],
+        "role_id": row["role_id"],
+        "label": row["label"],
+        "status": row["status"],
         "created_at": row["created_at"],
     }
 
@@ -178,6 +194,11 @@ INSERT_SQL: dict[str, LiteralString] = {
         INSERT INTO roles (id, label, status, is_unique, priority, created_at)
         VALUES (%(id)s, %(label)s, %(status)s, %(is_unique)s, %(priority)s, %(created_at)s)
         ON CONFLICT (id) DO NOTHING
+    """,
+    "role_aliases": """
+        INSERT INTO role_aliases (id, role_id, label, status, created_at)
+        VALUES (%(id)s, %(role_id)s, %(label)s, %(status)s, %(created_at)s)
+        ON CONFLICT DO NOTHING
     """,
     "divisions": """
         INSERT INTO divisions (ocdid, jurisdiction_ocdid, created_at)
@@ -279,78 +300,127 @@ async def remove_synced_defaults(conn: AsyncConnection, jurisdiction_ocdids: set
     await conn.commit()
 
 
-async def seed(states: list[str] | None, limit: int) -> None:
-    """`jurisdictions` and `divisions` load in full (optionally narrowed by `states`) — pure
-    geography, cheap regardless of size. `limit` caps how many `organizations` load, and
-    everything that hangs off one — `posts`, `memberships`, and the `people` those memberships
-    reference — is scoped to just that limited set rather than to the full jurisdiction list."""
-    state_set = {state.lower() for state in states} if states else None
+class Downloads(BaseModel):
+    """Every table this run loads, fetched before anything is wiped."""
+
+    roles: list[dict[str, Any]]
+    role_aliases: list[dict[str, Any]]
+    jurisdiction_files: dict[str, str]
+    divisions: list[dict[str, Any]]
+    organizations: list[dict[str, Any]]
+    posts: list[dict[str, Any]]
+    memberships: list[dict[str, Any]]
+    people: list[dict[str, Any]]
+
+
+async def download(client: httpx.AsyncClient) -> Downloads:
+    archive = await fetch_open_data_archive(client)
+    roles, aliases, divisions, organizations, posts, memberships, people = await asyncio.gather(
+        fetch_table(client, "roles"),
+        fetch_aliases(client),
+        fetch_table(client, "divisions"),
+        fetch_table(client, "organizations"),
+        fetch_table(client, "posts"),
+        fetch_table(client, "memberships"),
+        fetch_table(client, "people"),
+    )
+    return Downloads(
+        roles=roles,
+        role_aliases=aliases,
+        jurisdiction_files=jurisdiction_files(archive),
+        divisions=divisions,
+        organizations=organizations,
+        posts=posts,
+        memberships=memberships,
+        people=people,
+    )
+
+
+async def load_roles(conn: AsyncConnection, downloads: Downloads) -> None:
+    role_rows = [role_row(row) for row in downloads.roles]
+    await insert_ignoring_conflicts(conn, "roles", role_rows)
+    logger.info("seed_open_data_subset: roles: %d row(s)", len(role_rows))
+
+    # After roles: an alias's role must exist. The roles truncate cascades to these.
+    alias_rows = [role_alias_row(row) for row in downloads.role_aliases]
+    await insert_ignoring_conflicts(conn, "role_aliases", alias_rows)
+    logger.info("seed_open_data_subset: role_aliases: %d row(s)", len(alias_rows))
+
+
+async def load_places(conn: AsyncConnection, downloads: Downloads) -> set[str]:
+    """Every jurisdiction, through the production sync, then their divisions. Returns the ocdids."""
+    files = downloads.jurisdiction_files
+
+    async def read_file(path: str) -> tuple[str, str]:
+        return path, files[path]
+
+    synced = await read_jurisdiction_files(list(files), datetime.now(timezone.utc), read_file)
+    jurisdiction_ocdids = await loaded_jurisdiction_ocdids(conn)
+    logger.info(
+        "seed_open_data_subset: jurisdictions: %d from %d file(s)",
+        len(jurisdiction_ocdids),
+        len(synced),
+    )
+
+    division_rows = [
+        division_row(row)
+        for row in rows_in_jurisdictions(downloads.divisions, jurisdiction_ocdids)
+    ]
+    await insert_ignoring_conflicts(conn, "divisions", division_rows)
+    logger.info("seed_open_data_subset: divisions: %d row(s)", len(division_rows))
+    return jurisdiction_ocdids
+
+
+async def load_rosters(
+    conn: AsyncConnection, downloads: Downloads, jurisdiction_ocdids: set[str], limit: int
+) -> None:
+    """Up to `limit` organizations, and the posts, people and memberships that hang off them."""
+    organizations_in_scope = rows_in_jurisdictions(downloads.organizations, jurisdiction_ocdids)[
+        :limit
+    ]
+    organization_ids = {row["id"] for row in organizations_in_scope}
+    organization_rows = [organization_row(row) for row in organizations_in_scope]
+    await remove_synced_defaults(
+        conn, {row["jurisdiction_ocdid"] for row in organizations_in_scope}
+    )
+    await insert_ignoring_conflicts(conn, "organizations", organization_rows)
+    logger.info("seed_open_data_subset: organizations: %d row(s)", len(organization_rows))
+
+    post_rows = [
+        post_row(row) for row in downloads.posts if row["organization_id"] in organization_ids
+    ]
+    await insert_ignoring_conflicts(conn, "posts", post_rows)
+    logger.info("seed_open_data_subset: posts: %d row(s)", len(post_rows))
+
+    # People narrowed to who these memberships reference, and inserted first: memberships FK them.
+    memberships_in_scope = [
+        row for row in downloads.memberships if row["organization_id"] in organization_ids
+    ]
+    person_ids = {row["person_id"] for row in memberships_in_scope}
+    person_rows = [person_row(row) for row in downloads.people if row["id"] in person_ids]
+    await insert_ignoring_conflicts(conn, "people", person_rows)
+    logger.info("seed_open_data_subset: people: %d row(s)", len(person_rows))
+
+    membership_rows = [membership_row(row) for row in memberships_in_scope]
+    await insert_ignoring_conflicts(conn, "memberships", membership_rows)
+    logger.info("seed_open_data_subset: memberships: %d row(s)", len(membership_rows))
+
+
+async def seed(limit: int) -> None:
+    """`jurisdictions` and `divisions` load in full — pure geography, cheap regardless of size.
+    `limit` caps how many `organizations` load, and everything that hangs off one — `posts`,
+    `memberships`, and the `people` those memberships reference — is scoped to that set.
+
+    Everything is downloaded before the wipe, so a failed download leaves the database as it was.
+    """
     pool = await get_pool()
 
     async with httpx.AsyncClient(timeout=120) as client, pool.connection() as conn:
+        downloads = await download(client)
         await wipe_existing_data(conn)
-
-        role_rows = [role_row(row) for row in await fetch_table(client, "roles")]
-        await insert_ignoring_conflicts(conn, "roles", role_rows)
-        logger.info("seed_open_data_subset: roles: %d row(s)", len(role_rows))
-
-        files = jurisdiction_files(await fetch_open_data_archive(client))
-
-        async def read_file(path: str) -> tuple[str, str]:
-            return path, files[path]
-
-        synced = await read_jurisdiction_files(
-            files_in_states(files, state_set), datetime.now(timezone.utc), read_file
-        )
-        jurisdiction_ocdids = await loaded_jurisdiction_ocdids(conn)
-        logger.info(
-            "seed_open_data_subset: jurisdictions: %d from %d file(s)",
-            len(jurisdiction_ocdids),
-            len(synced),
-        )
-
-        raw_divisions = await fetch_table(client, "divisions")
-        division_rows = [
-            division_row(row)
-            for row in rows_in_jurisdictions(raw_divisions, jurisdiction_ocdids)
-        ]
-        await insert_ignoring_conflicts(conn, "divisions", division_rows)
-        logger.info("seed_open_data_subset: divisions: %d row(s)", len(division_rows))
-
-        raw_organizations = await fetch_table(client, "organizations")
-        organizations_in_scope = rows_in_jurisdictions(raw_organizations, jurisdiction_ocdids)[
-            :limit
-        ]
-        organization_ids = {row["id"] for row in organizations_in_scope}
-        organization_rows = [organization_row(row) for row in organizations_in_scope]
-        await remove_synced_defaults(
-            conn, {row["jurisdiction_ocdid"] for row in organizations_in_scope}
-        )
-        await insert_ignoring_conflicts(conn, "organizations", organization_rows)
-        logger.info("seed_open_data_subset: organizations: %d row(s)", len(organization_rows))
-
-        raw_posts = await fetch_table(client, "posts")
-        posts_in_scope = [row for row in raw_posts if row["organization_id"] in organization_ids]
-        post_rows = [post_row(row) for row in posts_in_scope]
-        await insert_ignoring_conflicts(conn, "posts", post_rows)
-        logger.info("seed_open_data_subset: posts: %d row(s)", len(post_rows))
-
-        # Fetched before `people` so the person set can be narrowed to just who these
-        # memberships actually reference, but inserted after — memberships FK both ways.
-        raw_memberships = await fetch_table(client, "memberships")
-        memberships_in_scope = [
-            row for row in raw_memberships if row["organization_id"] in organization_ids
-        ]
-        person_ids = {row["person_id"] for row in memberships_in_scope}
-
-        raw_people = await fetch_table(client, "people")
-        person_rows = [person_row(row) for row in raw_people if row["id"] in person_ids]
-        await insert_ignoring_conflicts(conn, "people", person_rows)
-        logger.info("seed_open_data_subset: people: %d row(s)", len(person_rows))
-
-        membership_rows = [membership_row(row) for row in memberships_in_scope]
-        await insert_ignoring_conflicts(conn, "memberships", membership_rows)
-        logger.info("seed_open_data_subset: memberships: %d row(s)", len(membership_rows))
+        await load_roles(conn, downloads)
+        jurisdiction_ocdids = await load_places(conn, downloads)
+        await load_rosters(conn, downloads, jurisdiction_ocdids, limit)
 
 
 DEFAULT_LIMIT = 10
@@ -360,23 +430,13 @@ def main() -> None:
     logging.basicConfig(level=logging.INFO)
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--states",
-        default=None,
-        help="Comma-separated state postal codes to narrow jurisdictions to (default: any state)",
-    )
-    parser.add_argument(
         "--limit",
         type=int,
         default=DEFAULT_LIMIT,
         help="Maximum number of organizations (and what hangs off them) to load (default: %(default)s)",
     )
     args = parser.parse_args()
-    states = (
-        [state.strip() for state in args.states.split(",") if state.strip()]
-        if args.states
-        else None
-    )
-    asyncio.run(seed(states, args.limit))
+    asyncio.run(seed(args.limit))
 
 
 if __name__ == "__main__":

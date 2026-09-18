@@ -23,7 +23,12 @@ from database import output_hashes as output_hashes_db
 from database import posts as posts_db
 from database.database import get_pool
 from database.people import get_roster
-from database.publications import dismiss_changeset, publish_changeset, record_change_url
+from database.publications import (
+    dismiss_changeset,
+    publish_changeset,
+    publish_hand_edit,
+    record_change_url,
+)
 from database.roles import get_roles
 from lib.temporal.types import (
     OpenDataBatchCommitRequest,
@@ -146,6 +151,30 @@ async def publish_people(
         changes=changes,
     )
     logger.info(f"[{changeset_id}] Published {written} people for {jurisdiction_ocdid}")
+    return written
+
+
+async def publish_people_edit(
+    changeset_id: str,
+    jurisdiction_ocdid: str,
+    people: list[dict],
+    added: list[dict],
+    removed_person_ids: list[str],
+    resolved_by_user_id: str,
+    changes: Change | None = None,
+) -> int:
+    """A hand edit: `people` are the ones it touched, `added` the ones it created (each already
+    in `people`). Only `added` get memberships; nobody's are re-derived."""
+    written = await publish_hand_edit(
+        changeset_id,
+        jurisdiction_ocdid,
+        await promote_images(people),
+        resolved_by_user_id,
+        await _get_derived_posts(added),
+        removed_person_ids,
+        changes=changes,
+    )
+    logger.info(f"[{changeset_id}] Published a hand edit to {written} people in {jurisdiction_ocdid}")
     return written
 
 

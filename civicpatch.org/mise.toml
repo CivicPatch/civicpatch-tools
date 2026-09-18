@@ -16,18 +16,13 @@ run = """
 docker compose run --rm civicpatch-org
 """
 
-[tasks.seed-dev-prs]
-description = "Seed dev database with open PRs from GitHub"
-usage = 'flag "--limit <limit>" help="Maximum number of PRs to seed" default="10"'
-run = "docker exec -w /app civicpatch-org python src/scripts/seed_dev_prs.py --limit ${usage_limit}"
-
 [tasks.seed-dev-data]
 description = "Populate the dev database with a subset of the published open-data dataset (for new devs)"
 usage = '''
 flag "--states <states>" help="Comma-separated state postal codes to narrow to (default: any state)" default=""
 flag "--limit <limit>" help="Maximum number of organizations (and their posts, memberships, people) to load" default="10"
 '''
-run = 'docker exec -w /app civicpatch-org python src/scripts/seed_open_data_subset.py --states "${usage_states}" --limit ${usage_limit}'
+run = 'docker exec -w /app civicpatch-org python src/scripts/seed_open_data_subset.py --limit ${usage_limit}'
 
 [tasks.containsh]
 run = "docker compose exec civicpatch-org bash"

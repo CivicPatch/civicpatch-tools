@@ -135,6 +135,20 @@ describe("multiValueDiff", () => {
   });
 });
 
+describe("recordsDiffer on Office", () => {
+  // A published record holds its post in `memberships`; only a proposed one carries `post_id`.
+  const held = { name: "Candace", memberships: [{ post_id: "post-mpt" }] } as any;
+
+  it("is false when the proposed post is one they already hold", () => {
+    // A partial import keeping someone's post writes it as `post_id`; that is not a move.
+    expect(recordsDiffer(held, { name: "Candace", post_id: "post-mpt" })).toBe(false);
+  });
+
+  it("is true when the proposed post is a different one", () => {
+    expect(recordsDiffer(held, { name: "Candace", post_id: "post-mayor" })).toBe(true);
+  });
+});
+
 describe("recordsDiffer", () => {
   const base = {
     name: "Maria",

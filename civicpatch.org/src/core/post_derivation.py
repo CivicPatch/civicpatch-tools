@@ -97,10 +97,6 @@ def _demoted_roles(
 ) -> list[tuple[str, str]]:
     """Every role the label named except the one the post is defined by, as (label, id) pairs.
 
-    Compared on the post's actual role id, not on the parse's winner: when a human picked the
-    post, the role the parse would have chosen is itself demoted, and dropping it would lose
-    that the source ever said it.
-
     Only known ids: `membership_roles.role_id` is a foreign key, so an unrecognised role has
     nowhere to go and stays in `meta_unmatched_text`, which is where triage can act on it.
 
@@ -112,6 +108,14 @@ def _demoted_roles(
         for label in parsed.roles
         if label in ids_by_label and ids_by_label[label] != post_role_id
     ]
+
+
+def _without_winner(parsed: DerivedRoles) -> DerivedRoles:
+    """A pick overrode the parse, so the role it chose is wrong, not a second role they hold.
+    The source's wording survives on the membership's `sources`."""
+    return parsed.model_copy(
+        update={"roles": [label for label in parsed.roles if label != parsed.role]}
+    )
 
 
 def _unresolved_text(parsed: DerivedRoles) -> list[str]:
@@ -231,11 +235,11 @@ def derived_posts(
         for organization_id, sources in groups.items():
             labels = list(dict.fromkeys(source.note for source in sources))
             parsed = derive_roles(labels, record.jurisdiction_ocdid, taxonomy)
-            key = (
-                (picked.organization_id, picked.role_id, picked.division_ocdid)
-                if picked and organization_id == picked.organization_id
-                else (organization_id, role_id_for(parsed), parsed.division_ocdid)
-            )
+            if picked and organization_id == picked.organization_id:
+                key = (picked.organization_id, picked.role_id, picked.division_ocdid)
+                parsed = _without_winner(parsed)
+            else:
+                key = (organization_id, role_id_for(parsed), parsed.division_ocdid)
             grouped.setdefault(key, []).append(
                 _member(record, parsed, sources, ids_by_label, key[1])
             )

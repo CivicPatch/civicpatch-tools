@@ -1,14 +1,13 @@
 import pytest
 
-from core.entry_rows import (
+from core.sheet_import_rows import (
     ImportRow,
-    RowError,
     Sighting,
     already_handled,
     parse_rows,
-    roster_columns,
     rows_by_jurisdiction,
 )
+from core.source_sites import SiteIndex, SiteOwner, build_site_index
 
 _OCDID = "ocd-jurisdiction/country:us/state:ca/place:amador_city/government"
 _OCDID_2 = "ocd-jurisdiction/country:us/state:ca/place:menlo_park/government"
@@ -28,16 +27,44 @@ def _row(**overrides) -> dict:
     return row
 
 
+def _parse(rows: list[dict], sites: SiteIndex = SiteIndex()):
+    return parse_rows(rows, sites)
+
+
 def _flags(errors) -> set:
     return {(error.line, error.column) for error in errors}
 
 
-# --- the happy path ---
+def _parsed_row(
+    line: int, ocdid: str = _OCDID, name: str = "Ana Reyes", status: str = ""
+) -> ImportRow:
+    return ImportRow(
+        line=line,
+        jurisdiction_ocdid=ocdid,
+        sighting=Sighting(name=name, label="Chair", source_url="s"),
+        status=status,
+    )
+
+
+def _parsed(*rows: dict):
+    parsed, errors = _parse(list(rows))
+    assert errors == []
+    return parsed
+
+
+_SITES = build_site_index(
+    [
+        SiteOwner(jurisdiction_ocdid=_OCDID, url="https://example.gov"),
+        SiteOwner(jurisdiction_ocdid=_OCDID, organization_id="org-schools", url="https://schools.gov"),
+        SiteOwner(jurisdiction_ocdid=_OCDID, url="https://shared.gov"),
+        SiteOwner(jurisdiction_ocdid=_OCDID_2, url="https://shared.gov"),
+    ]
+)
 
 
 @pytest.mark.unit
 def test_a_row_becomes_a_sighting():
-    rows, errors = parse_rows([_row()])
+    rows, errors = _parse([_row()])
     assert errors == []
     assert rows[0].sighting.name == "Ana Reyes"
     assert rows[0].sighting.source_url == "https://example.gov/select-board"
@@ -48,27 +75,27 @@ def test_a_row_becomes_a_sighting():
 def test_a_blank_label_is_allowed():
     """A sheet import states only what it fills in: a blank label keeps the person's current
     post (`people_roster.partial_roster`), so it is not a mistake to catch."""
-    rows, errors = parse_rows([_row(label="")])
+    rows, errors = _parse([_row(label="")])
     assert errors == []
     assert rows[0].sighting.label == ""
 
 
 @pytest.mark.unit
 def test_a_present_label_still_works():
-    rows, _ = parse_rows([_row(label="Select Board Chair")])
+    rows, _ = _parse([_row(label="Select Board Chair")])
     assert rows[0].sighting.label == "Select Board Chair"
 
 
 @pytest.mark.unit
 def test_line_numbers_count_the_header():
     """They have to match the row gutter a volunteer is looking at."""
-    rows, _ = parse_rows([_row(), _row(name="Bo Chen")])
+    rows, _ = _parse([_row(), _row(name="Bo Chen")])
     assert [row.line for row in rows] == [2, 3]
 
 
 @pytest.mark.unit
 def test_blanks_become_none_and_whitespace_is_stripped():
-    rows, _ = parse_rows([_row(name="  Ana Reyes  ", phone="  ", email="a@b.gov")])
+    rows, _ = _parse([_row(name="  Ana Reyes  ", phone="  ", email="a@b.gov")])
     assert rows[0].sighting.name == "Ana Reyes"
     assert rows[0].sighting.phone is None
     assert rows[0].sighting.email == "a@b.gov"
@@ -78,18 +105,15 @@ def test_blanks_become_none_and_whitespace_is_stripped():
 def test_the_sheet_carries_no_ids():
     """Matching is ingest's job. A uuid in a cell would let a curator mis-seat somebody with a
     value nothing can validate, so the model has nowhere to put one."""
-    rows, _ = parse_rows([_row(person_id="anything", post_id="anything")])
+    rows, _ = _parse([_row(person_id="anything", post_id="anything")])
     assert not hasattr(rows[0], "person_id")
     assert not hasattr(rows[0].sighting, "post_id")
 
 
-# --- what blocks a row ---
-
-
 @pytest.mark.unit
-@pytest.mark.parametrize("column", ["jurisdiction_ocdid", "name", "source_url"])
+@pytest.mark.parametrize("column", ["name", "source_url"])
 def test_the_required_columns(column):
-    _, errors = parse_rows([_row(**{column: ""})])
+    _, errors = _parse([_row(**{column: ""})])
     assert _flags(errors) == {(2, column)}
 
 
@@ -106,7 +130,7 @@ def test_the_required_columns(column):
 def test_contact_columns_are_checked_here_not_further_down(column, value):
     """The same rules `SubmittedPersonRecord` applies, run at the row so a volunteer sees the bad
     cell in their sheet. Before this the three passed through unchecked."""
-    _, errors = parse_rows([_row(**{column: value})])
+    _, errors = _parse([_row(**{column: value})])
     assert _flags(errors) == {(2, column)}
 
 
@@ -119,54 +143,48 @@ def test_contact_columns_are_checked_here_not_further_down(column, value):
     ],
 )
 def test_a_contact_column_that_is_fine_is_left_alone(column, value):
-    _, errors = parse_rows([_row(**{column: value})])
+    _, errors = _parse([_row(**{column: value})])
     assert errors == []
 
 
 @pytest.mark.unit
 def test_an_empty_contact_column_is_not_an_error():
     """All three are optional — absent is not the same as wrong."""
-    _, errors = parse_rows([_row(phone="", email="")])
+    _, errors = _parse([_row(phone="", email="")])
     assert errors == []
 
 
 @pytest.mark.unit
 def test_one_bad_row_does_not_cost_the_others_their_turn():
-    rows, errors = parse_rows([_row(), _row(name=""), _row(name="Bo Chen")])
+    rows, errors = _parse([_row(), _row(name=""), _row(name="Bo Chen")])
     assert [row.line for row in rows] == [2, 4]
     assert _flags(errors) == {(3, "name")}
-
-
-# --- one person, one seat ---
 
 
 @pytest.mark.unit
 def test_the_same_person_twice_in_one_jurisdiction_is_an_error():
     """`memberships` has a unique index on (person_id, organization_id) among open rows and a
     jurisdiction has one organization, so two rows for one person is unrepresentable."""
-    _, errors = parse_rows([_row(), _row(label="Chair")])
+    _, errors = _parse([_row(), _row(label="Chair")])
     assert _flags(errors) == {(3, "name")}
     assert "line 2" in errors[0].message
 
 
 @pytest.mark.unit
 def test_duplicate_detection_ignores_case():
-    _, errors = parse_rows([_row(name="Ana Reyes"), _row(name="ana reyes")])
+    _, errors = _parse([_row(name="Ana Reyes"), _row(name="ana reyes")])
     assert _flags(errors) == {(3, "name")}
 
 
 @pytest.mark.unit
 def test_the_same_name_in_two_jurisdictions_is_ordinary():
-    _, errors = parse_rows([_row(), _row(jurisdiction_ocdid=_OCDID_2)])
+    _, errors = _parse([_row(), _row(jurisdiction_ocdid=_OCDID_2)])
     assert errors == []
-
-
-# --- grouping ---
 
 
 @pytest.mark.unit
 def test_rows_group_by_jurisdiction():
-    rows, _ = parse_rows(
+    rows, _ = _parse(
         [_row(), _row(name="Bo Chen"), _row(jurisdiction_ocdid=_OCDID_2)]
     )
     grouped = rows_by_jurisdiction(rows)
@@ -174,14 +192,11 @@ def test_rows_group_by_jurisdiction():
     assert len(grouped[_OCDID]) == 2
 
 
-# --- already-handled jurisdictions are skipped before validation ---
-
-
 @pytest.mark.unit
 def test_a_fully_handled_jurisdiction_is_skipped_even_if_invalid_now():
     """A contract change made after a row was accepted (a new required column, say) must not
     re-reject it forever — clearing its status is the only thing that should ask for it again."""
-    rows, errors = parse_rows([_row(label="", status="imported")])
+    rows, errors = _parse([_row(label="", status="imported")])
     assert rows == []
     assert errors == []
 
@@ -190,90 +205,9 @@ def test_a_fully_handled_jurisdiction_is_skipped_even_if_invalid_now():
 def test_a_mixed_jurisdiction_is_not_skipped():
     """One cleared row brings the whole town back — including rows still carrying a status, so
     the roster submitted together is complete, not missing whoever already had one."""
-    rows, errors = parse_rows([_row(status="imported"), _row(name="Bo Chen", status="")])
+    rows, errors = _parse([_row(status="imported"), _row(name="Bo Chen", status="")])
     assert [row.sighting.name for row in rows] == ["Ana Reyes", "Bo Chen"]
     assert errors == []
-
-
-# ── Columns out ──────────────────────────────────────────────────────────────
-
-_STAMP = "2026-08-27 14:02"
-
-
-def _parsed_row(
-    line: int, ocdid: str = _OCDID, name: str = "Ana Reyes", status: str = ""
-) -> ImportRow:
-    return ImportRow(
-        line=line,
-        jurisdiction_ocdid=ocdid,
-        sighting=Sighting(name=name, label="Chair", source_url="s"),
-        status=status,
-    )
-
-
-def _row_error(line: int, ocdid: str = _OCDID, column: str | None = "name") -> RowError:
-    return RowError(line=line, jurisdiction_ocdid=ocdid, column=column, message="required")
-
-
-def _raw_rows(count: int, overrides: dict[int, dict] | None = None) -> list[dict]:
-    """`count` raw sheet rows, line 2..count+1 — the shape `roster_columns` reads its "keep
-    whatever this line already said" fallback from, independent of what parsed this run."""
-    rows: list[dict] = [{} for _ in range(count)]
-    for line, values in (overrides or {}).items():
-        rows[line - 2] = values
-    return rows
-
-
-# --- roster tab ---
-
-
-@pytest.mark.unit
-def test_an_imported_row_says_so_and_carries_no_error():
-    columns = roster_columns(_raw_rows(1), [_parsed_row(2)], [], {_OCDID}, _STAMP, {}, set())
-    assert columns["status"] == ["imported"]
-    assert columns["error"] == [""]
-
-
-@pytest.mark.unit
-def test_a_rejected_row_names_its_column():
-    columns = roster_columns(_raw_rows(1), [], [_row_error(2)], set(), _STAMP, {}, set())
-    assert columns["status"] == ["error"]
-    assert columns["error"] == ["name: required"]
-
-
-@pytest.mark.unit
-def test_a_good_row_in_a_blocked_town_points_elsewhere():
-    """Most of a blocked town is rows that are perfectly fine. Saying 'error' against them would
-    have the volunteer hunting for a fault that is on somebody else's line."""
-    columns = roster_columns(_raw_rows(2), [_parsed_row(2)], [_row_error(3)], set(), _STAMP, {}, set())
-    assert columns["status"] == ["blocked", "error"]
-    assert columns["error"][0] == "another row in this town was rejected"
-
-
-@pytest.mark.unit
-def test_every_row_gets_a_value_so_stale_errors_clear():
-    """A row that failed last run and is fine now must not keep last run's message — the
-    volunteer would chase a problem they already fixed."""
-    rows = [_parsed_row(2), _parsed_row(3, name="Bo Chen")]
-    columns = roster_columns(_raw_rows(2), rows, [], {_OCDID}, _STAMP, {}, set())
-    assert columns["error"] == ["", ""]
-    assert len(columns["status"]) == 2
-    assert columns["last_import_at"] == [_STAMP, _STAMP]
-
-
-# --- the status column decides whether a locality is re-imported ---
-#
-# Tested directly on `ImportRow`s, not through `parse_rows`: a fully-handled jurisdiction is
-# now skipped before parsing even runs (`_handled_jurisdictions`, tested above), so building
-# these through `parse_rows` would just hand `already_handled` an empty list and pass on that
-# vacuous truth instead of exercising it. `import_rows` still calls `already_handled` directly
-# as a second, defensive check, so it stays worth testing on its own.
-
-
-def _parsed(*rows: dict):
-    parsed, errors = parse_rows(list(rows))
-    assert errors == []
-    return parsed
 
 
 @pytest.mark.unit
@@ -298,18 +232,6 @@ def test_any_status_counts_as_handled_not_just_imported():
 
 
 @pytest.mark.unit
-def test_a_row_this_run_did_not_touch_keeps_its_status():
-    """A jurisdiction already fully handled is skipped before parsing even runs
-    (`_handled_jurisdictions`), so this row never becomes an `ImportRow` this pass — and still
-    must not be blanked. Status and timestamp both have to come from the sheet's own current
-    cells, not from the parse, which saw nothing here at all."""
-    raw_rows = _raw_rows(1, {2: {"status": "imported", "last_import_at": "2026-08-01 09:00"}})
-    columns = roster_columns(raw_rows, [], [], set(), _STAMP, {}, set())
-    assert columns["status"] == ["imported"]
-    assert columns["last_import_at"] == ["2026-08-01 09:00"]
-
-
-@pytest.mark.unit
 def test_a_never_imported_locality_has_no_status_at_all():
     assert not already_handled([_parsed_row(2, status="")])
 
@@ -328,7 +250,7 @@ def test_blank_rows_are_grid_not_errors():
     """Sheets returns every line in the used range. A tab with four entries and 140 spare lines
     was reporting 420 `required` errors and blocking both jurisdictions on rows nobody typed."""
     blank = {column: "" for column in _row()}
-    parsed, errors = parse_rows([_row(), blank, blank, blank])
+    parsed, errors = _parse([_row(), blank, blank, blank])
     assert len(parsed) == 1
     assert errors == []
 
@@ -339,7 +261,7 @@ def test_a_half_filled_row_is_still_an_error():
     they meant to write, and telling them about it is the point."""
     started = {column: "" for column in _row()}
     started["jurisdiction_ocdid"] = _OCDID
-    _, errors = parse_rows([started])
+    _, errors = _parse([started])
     assert {column for _, column in _flags(errors)} == {"name", "source_url"}
 
 
@@ -348,7 +270,7 @@ def test_line_numbers_survive_skipped_blanks():
     """Blank rows still occupy a line, so a row after one must keep the gutter number the
     volunteer sees."""
     blank = {column: "" for column in _row()}
-    parsed, _ = parse_rows([blank, blank, _row()])
+    parsed, _ = _parse([blank, blank, _row()])
     assert [row.line for row in parsed] == [4]
 
 
@@ -359,60 +281,46 @@ def test_a_stamped_but_untyped_row_is_still_blank():
     143 empty lines as occupied and rejected each three times."""
     stamped = {column: "" for column in _row()}
     stamped["last_import_at"] = "2026-09-03 22:41"
-    parsed, errors = parse_rows([_row(), stamped])
+    parsed, errors = _parse([_row(), stamped])
     assert len(parsed) == 1
     assert errors == []
 
 
 @pytest.mark.unit
-def test_spare_lines_are_not_stamped():
-    """The other half: stop creating the condition. A line the parse produced nothing for gets
-    no timestamp, so it stays a line nobody wrote."""
-    columns = roster_columns(_raw_rows(3), [], [], set(), _STAMP, {}, set())
-    assert columns["last_import_at"] == ["", "", ""]
+def test_a_blank_jurisdiction_is_the_one_whose_site_the_source_is_on():
+    [row], errors = _parse([_row(jurisdiction_ocdid="")], _SITES)
+
+    assert errors == []
+    assert row.jurisdiction_ocdid == _OCDID
+    assert row.sighting.organization_id is None
 
 
 @pytest.mark.unit
-def test_rows_the_run_saw_are_still_stamped():
-    parsed, errors = parse_rows([_row()])
-    columns = roster_columns(_raw_rows(1), parsed, errors, {_OCDID}, _STAMP, {}, set())
-    assert columns["last_import_at"] == [_STAMP]
+def test_a_source_on_a_bodys_site_takes_that_body():
+    [row], _ = _parse(
+        [_row(jurisdiction_ocdid="", source_url="https://schools.gov/board")], _SITES
+    )
 
-
-# --- note ---
-
-_OTHER_TOWN = "ocd-jurisdiction/country:us/state:zz/place:other/government"
-
-
-def _named_row(name: str, ocdid: str = _OCDID, note: str = "") -> dict:
-    return {"jurisdiction_ocdid": ocdid, "name": name, "note": note}
+    assert row.sighting.organization_id == "org-schools"
 
 
 @pytest.mark.unit
-def test_an_imported_town_gets_each_rows_note_by_name():
-    """By name, not line: write-back re-reads the tab, so a row inserted since would shift lines."""
-    raw_rows = [_named_row(" Bo Chen "), _named_row("Ana Reyes", note="stale")]
-    notes = {(_OCDID, "ana reyes"): "new person", (_OCDID, "bo chen"): "changed: phones"}
+def test_a_typed_jurisdiction_still_takes_the_body_whose_site_it_is():
+    [row], _ = _parse([_row(source_url="https://schools.gov/board")], _SITES)
 
-    columns = roster_columns(raw_rows, [], [], {_OCDID}, _STAMP, notes, set())
-
-    assert columns["note"] == ["changed: phones", "new person"]
+    assert (row.jurisdiction_ocdid, row.sighting.organization_id) == (_OCDID, "org-schools")
 
 
 @pytest.mark.unit
-def test_a_town_not_imported_this_run_keeps_its_note():
-    raw_rows = [_named_row("Ana Reyes", ocdid=_OTHER_TOWN, note="new person")]
+@pytest.mark.parametrize(
+    "source_url,expected",
+    [
+        ("https://nowhere.gov/council", "no jurisdiction's website matches nowhere.gov"),
+        ("https://shared.gov/council", "shared.gov is the website of 2 jurisdictions"),
+    ],
+)
+def test_a_site_that_names_no_single_jurisdiction_asks_for_one(source_url, expected):
+    _, [error] = _parse([_row(jurisdiction_ocdid="", source_url=source_url)], _SITES)
 
-    columns = roster_columns(raw_rows, [], [], {_OCDID}, _STAMP, {}, set())
-
-    assert columns["note"] == ["new person"]
-
-
-@pytest.mark.unit
-def test_a_dismissed_import_clears_its_note():
-    """Rejected, superseded or expired: the change the note describes can no longer happen."""
-    raw_rows = [_named_row("Ana Reyes", ocdid=_OTHER_TOWN, note="new person")]
-
-    columns = roster_columns(raw_rows, [], [], set(), _STAMP, {}, {_OTHER_TOWN})
-
-    assert columns["note"] == [""]
+    assert error.column == "jurisdiction_ocdid"
+    assert error.message.startswith(expected)

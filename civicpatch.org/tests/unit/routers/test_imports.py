@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from unittest.mock import AsyncMock, patch
 
 import pytest
-from core.entry_rows import ImportRow, Sighting
+from core.sheet_import_rows import ImportRow, Sighting
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from lib.auth import get_optional_user

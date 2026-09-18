@@ -18,12 +18,13 @@ from unittest.mock import patch
 import pytest
 import pytest_asyncio
 
-from core.entry_rows import ImportRow, ImportStatus, Sighting
+from core.sheet_import_rows import ImportRow, ImportStatus, Sighting
 from core.membership_proposal import MembershipDisposition
 from core.post_derivation import UNMATCHED_ROLE_ID
 from shared.schemas import POST_FIELD
 from shared.utils.statuses import ActivityType, ChangesetKind
 from core.roster_diff import UNCHANGED_NOTE, ChangeCounts
+from core.source_sites import SiteIndex
 from lib.csv import parse_csv
 from database import activity, changeset_batches, dismissals, divisions, organizations, posts
 from database.database import get_pool
@@ -435,7 +436,7 @@ async def test_end_to_end_from_csv_text(user_id, batch_id):
         f"{_OCDID},Bo Chen,https://zz.gov/roster,Select Board Member,bo@zz.gov\n"
         f"{_OCDID_2},,https://zz.gov/roster,Select Board Clerk,cy@zz.gov\n"
     )
-    read = read_rows(parse_csv(roster_csv))
+    read = read_rows(parse_csv(roster_csv), SiteIndex())
 
     # The name-less row is rejected, and takes nobody else with it.
     assert [(error.line, error.column) for error in read.preview.errors] == [

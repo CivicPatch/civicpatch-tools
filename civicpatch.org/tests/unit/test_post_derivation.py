@@ -316,8 +316,8 @@ def test_a_chosen_post_decides_where_the_person_lands():
 
 @pytest.mark.unit
 def test_a_chosen_post_does_not_rewrite_what_the_source_said():
-    """The pick says where they serve. Designations, demoted roles and residue still come from
-    the labels, because a post is not a claim about what the page called them."""
+    """The pick says where they serve. Designations and residue still come from the labels, and
+    the sources keep the page's wording."""
     person = _person("a", "Council Member - Place 6")
     # Picked onto the mayor's post, though the label says council member.
     chosen = {"a": ChosenPost(organization_id=_COUNCIL, role_id="mayor", division_ocdid=_BASE)}
@@ -325,10 +325,22 @@ def test_a_chosen_post_does_not_rewrite_what_the_source_said():
     member = derived_posts([person], _TAXONOMY, _ROLES, chosen)[0].members[0]
 
     assert [source.note for source in member.sources] == ["Council Member", "Place 6"]
-    # "Council Member" is demoted rather than dropped; "Place 6" is a designation that stays
-    # on the membership either way. The chosen post's own name ("Mayor") is not repeated here
-    # — every caller shows it separately, from the post it picked.
-    assert member.membership_label == "Council Member, Place 6"
+    # "Place 6" is a designation that stays either way. The chosen post's own name ("Mayor")
+    # is not repeated here — every caller shows it separately, from the post it picked.
+    assert member.membership_label == "Place 6"
+
+
+@pytest.mark.unit
+def test_a_pick_drops_the_role_the_parse_got_wrong():
+    """Crescent City, 2026-09-18: "Mayor Pro Tem" parsed to Mayor, a reviewer picked Mayor Pro
+    Tempore, and the parse's Mayor survived as a second role she held, labelled "Mayor, Pro Tem".
+    The pick says the parse was wrong, so its winner is not demoted — it is dropped."""
+    person = _person("a", "Council Member - Place 6")
+    chosen = {"a": ChosenPost(organization_id=_COUNCIL, role_id="mayor", division_ocdid=_BASE)}
+
+    member = derived_posts([person], _TAXONOMY, _ROLES, chosen)[0].members[0]
+
+    assert member.role_ids == []
 
 
 @pytest.mark.unit
