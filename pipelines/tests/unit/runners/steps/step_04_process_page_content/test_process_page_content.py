@@ -805,7 +805,7 @@ async def test_check_page_relevance_filters_cross_domain_relevant_urls():
         new=AsyncMock(return_value=llm_response.model_dump()),
     ):
         result_frontier, _ = await check_page_relevance(
-            context, page, "some page content", []
+            context, page, "some page content", [], []
         )
 
     result_pending_urls = pending_urls(result_frontier)

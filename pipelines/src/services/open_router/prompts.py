@@ -5,7 +5,14 @@ from pydantic import BaseModel
 
 
 def relevant_page_prompt(
-    page_url: str, jurisdiction_name: str = "", known_roles: List[str] = []
+    page_url: str,
+    jurisdiction_name: str = "",
+    known_roles: List[str] = [],
+    # The bodies cp.org already holds for this jurisdiction, by name. Without them the rules
+    # below rule out an Office of the Mayor page as a department: Jackson TN's lives at
+    # `/government/mayorsoffice`, a sibling of `/government/departments/*`, and reads exactly
+    # like the auxiliary pages the Irrelevant section is written to reject.
+    known_organizations: List[str] = [],
 ):
     jurisdiction_line = (
         f"    Target jurisdiction: {jurisdiction_name}\n" if jurisdiction_name else ""
@@ -15,64 +22,97 @@ def relevant_page_prompt(
         if known_roles
         else ""
     )
+    known_organizations_line = (
+        f"    Governing bodies of this municipality: {', '.join(known_organizations)}\n"
+        if known_organizations
+        else ""
+    )
+    # Both halves or neither. Unconditional, the rule read as a general softening of the
+    # Irrelevant section on every page with no bodies listed — which is every cold-start page and
+    # every eval case predating the list — and it cost cases on the first `evalsr` run after it
+    # was added.
+    # Both halves or neither. Unconditional, the rule read as a general softening of the
+    # Irrelevant section on every page with no bodies listed — which is every cold-start page and
+    # every eval case predating the list — and it cost cases on the first `evalsr` run after it
+    # was added.
+    known_organizations_rule = (
+        """
+    - A page about a body named under "Governing bodies of this municipality" above, whatever its
+      URL or site section suggests. An Office of the Mayor page filed beside the departments is
+      still the mayor's office."""
+        if known_organizations
+        else ""
+    )
     prompt = f"""
-    Your task is to determine if the provided content contains information about the **currently serving main officials**
-    of a specific target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members,
-    Commissioners, or other key elected or appointed officials who are part of the **primary governing body** of that municipality.
+    Decide two things about the page content provided: whether it presents the **currently
+    serving main officials** of the target municipality, and which of its links a crawler should
+    follow to find more of them.
+
+    Main officials are the Mayor, City Council Members, Aldermen, Select Board Members,
+    Commissioners and others who make up the municipality's **primary governing body**.
 
     Page URL: {page_url}
-{jurisdiction_line}{known_roles_line}
-    The URL may help you identify which links belong to the municipality's domain(s) when selecting
-    relevant_urls. Do NOT use it to determine is_relevant — that must be based solely on page content.
-    Do NOT use the page URL's domain to normalize or rewrite any link URLs found in the content.
+{jurisdiction_line}{known_roles_line}{known_organizations_line}
+    The URL tells you which links share the municipality's domain. It tells you nothing about
+    `is_relevant`, which comes from the page content alone.
 
     ---
 
-    ## Relevant content
+    ## is_relevant
 
-    - Structured listings (e.g., tables, lists, or directories) or dedicated sections (e.g., biography, contact, or about pages)
-      for the main officials of the municipality.
-    - Pages that provide information about the current governing body, such as their names, roles, contact information, or biographies.
+    True when the page exists to show who currently holds a primary governing role: a roster, a
+    directory, or one official's own page. Ask "does this page exist to show who holds office
+    right now?" and answer on the page's own heading and body.
 
-    ## Irrelevant content
+    Also true, and these are the ones most often got wrong:
+    - The heading names a known elected role and the page gives a person's name for it. A
+      site-wide navigation menu is not the page's purpose however much of the content it fills,
+      and a non-voting deputy appearing alongside does not change the answer.
+    - The page lists the municipality's own officials and also lists appointed staff. A small
+      town's "City Officials" page naming the Mayor and council members alongside the City
+      Manager, Water Supervisor and Fire Chief is the roster. Judge it by whether the governing
+      body's members are presented as such, not by who else shares the page.{known_organizations_rule}
 
-    - Pages about auxiliary committees, department heads, or other non-elected staff.
-      For example: Planning and Zoning Committee, Parks and Recreation Board, Airport Advisory Commission, etc.
-      This applies even if primary governing officials (e.g., the Mayor or an Alderman) appear as members
-      of that auxiliary body — their membership on the auxiliary board does not make the page relevant.
-    - Pages about special districts, utility boards, or other sub-municipal entities (e.g., Water Supply District,
-      Fire District, Library Board) — even if they contain a structured roster of named board members.
-      These are separate legal entities, not the primary governing body of the municipality.
+    False for these, whoever is named in them:
+    - Auxiliary committees, boards and commissions (Planning and Zoning, Parks and Recreation,
+      Airport Advisory), and pages about department heads or other non-elected staff. A Mayor or
+      Alderman sitting on such a body does not make its page relevant.
+    - Special districts, utility boards and other sub-municipal entities (Water Supply District,
+      Fire District, Library Board), which are separate legal entities. A structured roster of
+      their board members is still not this municipality's governing body.
+    - News, announcements and press releases, even a post naming newly elected members by ward.
+    - Meeting minutes, vote records, ordinances and legislative archives, even titled "City
+      Council" or living at a city council URL. Read the body, not the title.
+    - Historical rosters ("Past Mayors", "Mayor History"), even where the most recent entry is
+      the current holder.
+
     ---
 
-    ## Steps for selecting relevant_urls
+    ## relevant_urls
 
-    `relevant_urls` feeds a web crawler. Always populate it with qualifying links regardless of
-    whether `is_relevant` is true or false — the crawler uses these links to discover further
-    officials pages even when the current page is already relevant. Evaluate each link primarily
-    by its **anchor text and surrounding context** on the page — not by URL structure alone,
-    since many municipal CMS platforms use opaque numeric paths (e.g. /179/Township-Board)
-    where the slug is the only meaningful signal.
+    These feed the crawler, so populate them whether or not the page itself is relevant: a page
+    already listing officials still links to more of them. Judge each link by its **anchor text
+    and surrounding context**, not by URL structure, since municipal CMS platforms use opaque
+    numeric paths (e.g. /179/Township-Board) where the slug is the only signal.
 
-    Return between 3 and 20 URLs. Fewer than 3 suggests over-filtering; more than 20 means you
-    are almost certainly including noise — re-evaluate and cut.
-
-    You MUST include every link whose anchor text or surrounding context refers to any of
-    the following. These are not candidates to weigh against each other — if a link matches,
-    it goes in the list, however many other links the page has and however much navigation
-    surrounds it:
-    - A governing body or elected role (e.g. "Township Board", "City Council", "Mayor",
-      "City Officials", "Board of Trustees", "Aldermen", "Commissioners", "Select Board")
-    - A broad government directory or index page (e.g. "Government", "City Hall",
-      "Our Government", "Administration") that is likely a hub linking to governance pages
-    - A staff or personnel directory that may list elected officials (e.g. "Staff Directory",
+    Include every link whose anchor text or context refers to:
+    - a governing body or elected role ("Township Board", "City Council", "Mayor", "City
+      Officials", "Board of Trustees", "Aldermen", "Commissioners", "Select Board")
+    - a government directory or index page likely to link onward to governance pages
+      ("Government", "City Hall", "Our Government", "Administration")
+    - a staff or personnel directory that may list elected officials ("Staff Directory",
       "Directory", "Elected Officials")
 
-    A link that matches one of those and is left out is the single worst outcome here —
-    the crawler cannot reach a page it was never told about. If a link does not match any
-    of the above, discard it.
-    Do not include links to municipal services (library, parks, fire, utilities),
-    news or announcements, or non-municipal external domains.
+    These are not candidates to weigh against each other. A qualifying link left out is the worst
+    outcome here, because the crawler cannot reach a page it was never told about — include every
+    one, however few qualify and however much navigation surrounds them. A small site's menu may
+    offer exactly one, and returning nothing because one felt too few is the failure to avoid.
+    Stop at 20; beyond that you are including noise.
+
+    Leave out municipal services (library, parks, fire, utilities), individual news stories,
+    press releases and event pages, and non-municipal external domains. Copy each URL exactly as
+    it appears in the content, without normalizing or rewriting any part of it, and do not
+    include the current page's own URL.
 
     ---
 
@@ -83,34 +123,6 @@ def relevant_page_prompt(
         "relevant_urls": ["https://example.com/council", "https://example.com/directory/departments"],
         "is_relevant": true/false,
     }}
-
-    ---
-
-    ## Critical rules
-
-    - `is_relevant` must be true ONLY if the page's PRIMARY PURPOSE is to present currently
-      serving primary governing officials — whether a full roster or a dedicated page for a
-      single official. Ask: "Does this page exist to show who currently holds a primary
-      governing role?" If the answer is no, set is_relevant to false.
-      If `known_roles` are provided, the page heading or title names one of those roles, and
-      the page gives a person's name for it, then `is_relevant` is TRUE. Decide this on the
-      heading and that person's details alone — a shared site-wide navigation menu is not
-      the page's purpose no matter how much of the content it occupies, and a page whose own
-      heading names an elected role is a page about that role, not an index. A non-voting
-      deputy or assistant appearing alongside does not change it.
-      The following are NOT relevant regardless of what names appear in them:
-      - News and announcements feeds — even if a post lists newly elected council members by name and ward
-      - Meeting minutes, vote records, ordinances, or legislative archives — even if the page is
-        titled "City Council" or lives at a city council URL; read the body content, not the title
-      - Historical rosters (e.g., "Past Mayors", "Mayor History") — even if the most recent entry is current
-      - Auxiliary committee or board pages — even if a Mayor or Alderman sits on the committee
-      The test is always the page's purpose, not its content patterns.
-    - `relevant_urls` must contain only links whose anchor text clearly signals a governing body,
-      elected role, or government directory. Aim for 3–20 URLs; if you exceed 20, you are including noise.
-    - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list.
-    - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself.
-    - Copy URLs exactly as they appear in the content — do NOT normalize, rewrite, or substitute any part of the URL.
-    - Do NOT include individual news stories, press releases, or event pages even if they mention an official by name.
     """
     return prompt
 
@@ -295,4 +307,47 @@ def is_official_jurisdiction_url_prompt() -> str:
     a GoDaddy or registrar placeholder, spam, advertisements, or otherwise has no substantive government content.
 
     IMPORTANT: Return only valid JSON. Do not include any other text.
+    """
+
+
+def page_covers_organization_prompt(
+    organization_name: str,
+    # That body's posts, to say what holding office in it looks like. A person is the evidence a
+    # page covers a body, so the offices are the thing to recognise.
+    posts: List[str],
+    jurisdiction_name: str = "",
+) -> str:
+    """Whether one page carries people of one body.
+
+    Asked once per body, after `relevant_page_prompt` has already said the page is worth reading
+    and which links to follow. Deliberately not a list to choose from: picking one body out of
+    several is the forced-match failure the officials prompt guards against, and it is invisible
+    when it goes wrong, where a wrong yes/no about one body is one extraction run too many or too
+    few.
+    """
+    jurisdiction_line = (
+        f"    Municipality: {jurisdiction_name}\n" if jurisdiction_name else ""
+    )
+    posts_line = f"    Offices in it: {', '.join(posts)}\n" if posts else ""
+    return f"""
+    Decide whether the provided page content carries people who currently hold office in one
+    specific governing body.
+
+    Body: {organization_name}
+{jurisdiction_line}{posts_line}
+    Answer true only if this page presents a person holding office in that body as one of its
+    officials — a roster entry, a directory row, a profile, or a contact block naming them.
+
+    All of these are false, however prominently the body or its people appear:
+    - a link to the body, or its name in the site navigation
+    - a mention of the body in prose, or a meeting agenda or minutes naming it
+    - a news story, press release or announcement about something an official said or did.
+      A page reporting on the mayor is not a page that lists the mayor, and a homepage carrying
+      headlines about officials is reporting, not listing.
+
+    Someone who holds office in that body counts even if the page gives them a title that is not
+    among the offices listed above; the list is there to say what holding office in this body
+    looks like, not to limit it.
+
+    IMPORTANT: Return only valid JSON, {{"covers": true}} or {{"covers": false}}.
     """

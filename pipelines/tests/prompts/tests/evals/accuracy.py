@@ -233,7 +233,7 @@ def case_mismatches(actual, expected, taxonomy) -> list[dict]:
         }
         if not expected_records or not actual_records:
             rows.append({
-                "person": name, "field": PERSON_FIELD, **labels,
+                "subject": name, "field": PERSON_FIELD, **labels,
                 "expected": "present" if expected_records else "—",
                 "actual": "present" if actual_records else "—",
             })

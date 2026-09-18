@@ -45,7 +45,7 @@ export interface EditorContext {
   canCreatePost: boolean;
   // The whole jurisdiction's open memberships; each editor takes its own person's out of it.
   rosterMemberships: RosterMembership[];
-  onSetRemoval: (membershipId: string, assertion: MembershipRemoval) => void;
+  onSetRemoval: ((membershipId: string, assertion: MembershipRemoval) => void) | null;
   onSetNotAMember: (personId: string, claimed: boolean) => void;
   proposals: Map<string, ProposedChange[]>;
   assertions: Record<string, PersonAssertion[]>;
@@ -122,7 +122,6 @@ export function personEditorPropsFor(
     personId: card.personId,
     memberships: ctx.rosterMemberships,
     onSetRemoval: ctx.onSetRemoval,
-    onSetNotAMember: ctx.onSetNotAMember,
     status: card.status,
     oldRecord: card.oldRecord,
     newRecord: card.newRecord,
@@ -146,9 +145,21 @@ export function personEditorPropsFor(
     isExpanded: ctx.isExpanded(card.personId),
     onToggleExpand: () => ctx.onToggleExpand(card.personId),
     onSave: save,
-    onRemove: () => ctx.onRemovePerson(card.personId),
-    onUnremove: () => ctx.onUnremovePerson(card.personId),
-    onRestore: () => ctx.onRestorePerson(card.oldRecord),
+    // Remove is the person-scoped claim: they are not a member here at all. It was two channels
+    // for one act — a card flag publish read, and an assertion nobody filed from the UI — so the
+    // button files the claim and putting them back withdraws it.
+    onRemove: () => {
+      ctx.onRemovePerson(card.personId);
+      ctx.onSetNotAMember(card.personId, true);
+    },
+    onUnremove: () => {
+      ctx.onUnremovePerson(card.personId);
+      ctx.onSetNotAMember(card.personId, false);
+    },
+    onRestore: () => {
+      ctx.onRestorePerson(card.oldRecord);
+      ctx.onSetNotAMember(card.personId, false);
+    },
     onReset:
       ctx.dirtyIds.has(card.personId) && card.status !== PersonStatus.REMOVED
         ? () => ctx.onResetPerson(card.personId)

@@ -208,6 +208,18 @@ dir = "pipelines"
 run = "uv run pytest -s tests/prompts/tests/evals/test_local_relevant_page_eval.py"
 dir = "pipelines"
 
+[tasks.frontier-report]
+# Offline: replays the saved crawl queues in data_source through the frontier's sort key and
+# prints where each body's pages rank. No network, no LLM, no cost.
+run = "uv run python -m tests.unit.runners.frontier_report"
+dir = "pipelines"
+
+[tasks.evalsc]
+# Which bodies a page carries people for — one call per (page, body), so a 5-case dataset over
+# two bodies is 10 calls per provider. -s: see the note on evalsm.
+run = "uv run pytest -s tests/prompts/tests/evals/test_local_page_covers_eval.py"
+dir = "pipelines"
+
 [tasks.evals]
 # -s: see the note on evalsm
 run = "uv run pytest -s -m evals tests/prompts"

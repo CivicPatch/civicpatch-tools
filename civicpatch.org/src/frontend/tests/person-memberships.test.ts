@@ -3,6 +3,7 @@ import {
   membershipTitle,
   membershipsByOrganization,
   nextRemoval,
+  pageWordings,
 } from "../components/person-editor/person-memberships-model.js";
 import {
   MEMBERSHIP_REMOVAL,
@@ -99,5 +100,35 @@ describe("nextRemoval", () => {
     expect(nextRemoval(MEMBERSHIP_REMOVAL.NONE, MEMBERSHIP_REMOVAL.CLOSED)).toBe(
       MEMBERSHIP_REMOVAL.CLOSED,
     );
+  });
+});
+
+
+describe("pageWordings", () => {
+  it("drops a wording the title already says", () => {
+    // Otherwise the row prints the same words twice and reads as two different posts.
+    const row = membership({ source_labels: ["Council Member, District 3"] });
+
+    expect(pageWordings(row, "Council Member, District 3")).toEqual([]);
+  });
+
+  it("keeps the page's own phrasing when it differs", () => {
+    // The pair that prompted this: an abbreviation is a different string, not a different post.
+    const row = membership({ source_labels: ["Mayor Pro Tem District 4"] });
+
+    expect(pageWordings(row, "Mayor Pro Tempore, District 4")).toEqual([
+      "Mayor Pro Tem District 4",
+    ]);
+  });
+
+  it("lists each distinct wording once", () => {
+    const row = membership({
+      source_labels: ["Mayor Pro Tem", "Mayor Pro Tem", "Acting Mayor"],
+    });
+
+    expect(pageWordings(row, "Mayor Pro Tempore")).toEqual([
+      "Mayor Pro Tem",
+      "Acting Mayor",
+    ]);
   });
 });

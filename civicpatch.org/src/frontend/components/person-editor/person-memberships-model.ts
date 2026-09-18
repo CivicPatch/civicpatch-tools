@@ -40,6 +40,26 @@ export function membershipTitle(membership: RosterMembership): string {
   return membership.label || membership.post_label;
 }
 
+/** How the page worded this post, where that is not what the title already says.
+ *
+ * The title is the post's own name, composed from the decided role and division
+ * (`derive_post_label`); `sources` is the page's own phrasing, stored verbatim. They differ by
+ * an abbreviation as often as not ("Mayor Pro Tempore, District 4" against "Mayor Pro Tem
+ * District 4"), which reads as a duplicate rather than as two different things, so an identical
+ * one is dropped and the rest are labelled.
+ */
+export function pageWordings(
+  membership: RosterMembership,
+  title: string,
+): string[] {
+  const seen = new Set<string>();
+  return (membership.source_labels ?? []).filter((wording) => {
+    if (!wording || wording === title || seen.has(wording)) return false;
+    seen.add(wording);
+    return true;
+  });
+}
+
 // Picking the claim already made withdraws it. The two claims contradict each other, so the
 // server withdraws the other one itself and the screen never has to send two requests.
 export function nextRemoval(

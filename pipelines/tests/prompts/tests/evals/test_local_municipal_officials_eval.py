@@ -370,7 +370,7 @@ async def test_provider_comparison(load_eval_cases):
             print(f"\n[{name}] {len(rows)} field(s) below a per-person floor:")
             for row in rows[:20]:
                 print(
-                    f"    {row['case_id']}/{row['person']} {row['field']}="
+                    f"    {row['case_id']}/{row['subject']} {row['field']}="
                     f"{row['score']:.2f} expected={row['expected']!r} actual={row['actual']!r}"
                 )
     assert not under_threshold, "Accuracy below threshold:\n  " + "\n  ".join(under_threshold)

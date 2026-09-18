@@ -208,6 +208,14 @@ class PeopleArrayLLMResponseSchema(BaseModel):
     # thought: str
 
 
+class OrganizationCoverageResponseSchema(BaseModel):
+    """Whether one page carries people of one body. Its own call, and its own prompt: asking one
+    prompt to pick from a list of bodies is the forced-match failure the officials prompt already
+    has to guard against, and a yes/no about one body has no list to be pulled toward."""
+
+    covers: bool
+
+
 class RelevantPageResponseSchema(BaseModel):
     is_relevant: bool
     relevant_urls: List[str] = []

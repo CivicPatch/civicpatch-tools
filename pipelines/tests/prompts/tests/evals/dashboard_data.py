@@ -8,12 +8,14 @@ EVALS = pathlib.Path("tests/prompts/tests/evals")
 EVAL_DIRS = {
     "officials": EVALS / "municipal_officials",
     "relevant_page": EVALS / "relevant_page",
+    "page_covers": EVALS / "page_covers",
     "find_jurisdiction_url": EVALS / "find_jurisdiction_url",
 }
 # Relative to dashboard/, since the page links to them.
 DATASET_DIRS = {
     "officials": "../../../datasets/local/municipal_officials",
     "relevant_page": "../../../datasets/local/relevant_page",
+    "page_covers": "../../../datasets/local/page_covers",
     "find_jurisdiction_url": "../../../datasets/local/find_jurisdiction_url",
 }
 REPORT_SUFFIX = "-eval-report.yml"
@@ -129,5 +131,6 @@ def read_results() -> dict[str, EvalResults]:
     return {
         "officials": read_officials_results(),
         "relevant_page": read_pass_fail_results("relevant_page"),
+        "page_covers": read_pass_fail_results("page_covers"),
         "find_jurisdiction_url": read_pass_fail_results("find_jurisdiction_url"),
     }

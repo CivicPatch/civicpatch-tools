@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
 OPEN_ROUTER_PREFIX = "open_router-"
 
@@ -10,7 +10,12 @@ def short_provider(provider: str) -> str:
 
 
 class Mismatch(BaseModel):
-    person: str
+    model_config = ConfigDict(populate_by_name=True)
+
+    # What the row is about: a person for the officials eval, a body for page coverage, a url or
+    # `page` for the page-relevance eval. Reads `person` too, because every run recorded before
+    # the three suites shared this model wrote that name and history is not rewritten.
+    subject: str = Field(validation_alias=AliasChoices("subject", "person"))
     field: str
     expected: MismatchValue = None
     actual: MismatchValue = None
@@ -32,6 +37,9 @@ class HistoryRun(BaseModel):
     scores: dict[str, float] = {}
     cases: dict[str, float] = {}
     mismatches_file: str | None = None
+    # Set when the provider produced no numbers at all: a timeout or a refusal, recorded so the
+    # run shows a failure rather than a provider that silently stopped appearing.
+    error: str | None = None
 
     @property
     def short_provider(self) -> str:
