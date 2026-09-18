@@ -67,14 +67,14 @@ function mismatchCase(caseId, mismatches, selection, actions) {
       </div>
       <table class="data-table mismatch-table">
         <colgroup>
-          <col class="mismatch-table__col-person"><col class="mismatch-table__col-field">
+          <col class="mismatch-table__col-subject"><col class="mismatch-table__col-field">
           <col class="mismatch-table__col-value"><col class="mismatch-table__col-value">
         </colgroup>
         <thead><tr><th></th><th>field</th><th>expected</th><th>actual</th></tr></thead>
         <tbody>
           ${mismatches.map((mismatch) => html`
             <tr>
-              <th>${mismatch.person}</th>
+              <th>${mismatch.subject}</th>
               <td class="mismatch-table__field">${mismatch.field}</td>
               ${valueCell("mismatch-table__expected", mismatch.expected, mismatch.expected_label, LABEL_FIELDS.has(mismatch.field))}
               ${valueCell("mismatch-table__actual", mismatch.actual, mismatch.actual_label, LABEL_FIELDS.has(mismatch.field))}

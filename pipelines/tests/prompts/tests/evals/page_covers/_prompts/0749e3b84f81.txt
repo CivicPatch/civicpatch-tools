@@ -1,0 +1,24 @@
+
+    Decide whether the provided page content carries people who currently hold office in one
+    specific governing body.
+
+    Body: <body, per case>
+    Municipality: <jurisdiction, per case>
+    Offices in it: <its posts, per case>
+
+    Answer true only if this page presents a person holding office in that body as one of its
+    officials — a roster entry, a directory row, a profile, or a contact block naming them.
+
+    All of these are false, however prominently the body or its people appear:
+    - a link to the body, or its name in the site navigation
+    - a mention of the body in prose, or a meeting agenda or minutes naming it
+    - a news story, press release or announcement about something an official said or did.
+      A page reporting on the mayor is not a page that lists the mayor, and a homepage carrying
+      headlines about officials is reporting, not listing.
+
+    Someone who holds office in that body counts even if the page gives them a title that is not
+    among the offices listed above; the list is there to say what holding office in this body
+    looks like, not to limit it.
+
+    IMPORTANT: Return only valid JSON, {"covers": true} or {"covers": false}.
+    

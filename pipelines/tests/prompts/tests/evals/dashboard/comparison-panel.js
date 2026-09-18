@@ -73,12 +73,12 @@ function valueChangeTable(section, title, wrongHeading, changes) {
     <details>
       <summary>${title} (${changes.length})</summary>
       <table class="data-table mismatch-table">
-        <thead><tr><th>case</th><th>person</th><th>field</th><th>expected</th><th>${wrongHeading}</th></tr></thead>
+        <thead><tr><th>case</th><th>subject</th><th>field</th><th>expected</th><th>${wrongHeading}</th></tr></thead>
         <tbody>
           ${changes.map((change) => html`
             <tr>
               <th>${caseLink(section, change.case_id)}</th>
-              <td>${change.person}</td>
+              <td>${change.subject}</td>
               <td class="mismatch-table__field">${change.field}</td>
               <td class="mismatch-table__expected">${formatValue(change.expected)}</td>
               <td class="mismatch-table__actual">${formatValue(change.actual)}</td>

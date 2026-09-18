@@ -1,0 +1,20 @@
+run:
+  timestamp: '2026-09-18T01:45:28+00:00'
+  prompt_sha256: 0749e3b84f81
+  prompt_file: _prompts/0749e3b84f81.txt
+cost_summary:
+  model: deepseek/deepseek-v4-flash
+  elapsed_seconds: 72.91
+  total_input_tokens: 126595
+  total_output_tokens: 70
+  total_cost_usd: 0.01242003
+accuracy:
+  covers:
+    correct: 10
+    missing: 0
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
+failed_cases: []

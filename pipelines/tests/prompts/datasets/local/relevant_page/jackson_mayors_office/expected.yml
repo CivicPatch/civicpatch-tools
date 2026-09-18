@@ -1,0 +1,23 @@
+page_url: https://www.jacksontn.gov/government/mayorsoffice
+jurisdiction_name: Jackson city
+known_roles:
+- Mayor
+- Council Member
+known_organizations:
+- Office of the Mayor
+- City Council
+page:
+  is_relevant: true
+  relevant_urls:
+  - https://www.jacksontn.gov/government/citycouncil
+  - https://www.jacksontn.gov/government/mayorsoffice/staffdirectory
+  thoughts: >-
+    The page names the sitting mayor, Scott Conger, with his photo and contact details,
+    so it carries a current official of a governing body this jurisdiction holds.
+
+    It is the case the organization list exists for. The url sits under
+    /government/mayorsoffice, a sibling of /government/departments/*, and the page reads
+    like a department landing page with a welcome letter, which is what the "auxiliary
+    committees, department heads" and "sub-municipal entities" rules would otherwise rule
+    out. Without the Office of the Mayor named as a governing body, irrelevant is the
+    defensible answer.

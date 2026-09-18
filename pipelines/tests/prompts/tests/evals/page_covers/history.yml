@@ -1,0 +1,165 @@
+runs:
+- timestamp: '2026-09-18T01:30:21+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 1ae867f897aa
+  cost_usd: 0.01721699
+  elapsed_seconds: 170.77
+  scores:
+    covers: 0.9
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 0.0
+  dispositions:
+    covers:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 1
+- timestamp: '2026-09-18T01:45:28+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 0749e3b84f81
+  cost_usd: 0.0172599772
+  elapsed_seconds: 92.9
+  scores:
+    covers: 0.9
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 0.0
+  dispositions:
+    covers:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260918T014528Z-open_router-Alibaba.yml
+- timestamp: '2026-09-18T01:30:21+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 1ae867f897aa
+  cost_usd: 0.01801758
+  elapsed_seconds: 109.02
+  scores:
+    covers: 0.9
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 0.0
+  dispositions:
+    covers:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 1
+- timestamp: '2026-09-18T01:45:28+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 0749e3b84f81
+  cost_usd: 0.016749684
+  elapsed_seconds: 83.89
+  scores:
+    covers: 0.9
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 0.0
+  dispositions:
+    covers:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260918T014528Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-18T01:30:21+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 1ae867f897aa
+  cost_usd: 0.012344178
+  elapsed_seconds: 269.52
+  scores:
+    covers: 1.0
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 1.0
+  dispositions:
+    covers:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+- timestamp: '2026-09-18T01:45:28+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 0749e3b84f81
+  cost_usd: 0.01242003
+  elapsed_seconds: 72.91
+  scores:
+    covers: 1.0
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 1.0
+  dispositions:
+    covers:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260918T014528Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-18T01:30:21+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 1ae867f897aa
+  cost_usd: 0.01803944
+  elapsed_seconds: 173.23
+  scores:
+    covers: 0.8
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 0.0
+  dispositions:
+    covers:
+      correct: 8
+      missing: 0
+      spurious: 0
+      wrong: 2
+- timestamp: '2026-09-18T01:45:28+00:00'
+  provider: open_router-NextBit
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 0749e3b84f81
+  cost_usd: 0.01803424
+  elapsed_seconds: 368.22
+  scores:
+    covers: 0.9
+  cases:
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    seattle_home_news_mentions: 0.0
+  dispositions:
+    covers:
+      correct: 9
+      missing: 0
+      spurious: 0
+      wrong: 1
+  mismatches_file: _runs/20260918T014528Z-open_router-NextBit.yml

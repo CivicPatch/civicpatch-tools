@@ -1,0 +1,26 @@
+run:
+  timestamp: '2026-09-18T01:45:28+00:00'
+  prompt_sha256: 0749e3b84f81
+  prompt_file: _prompts/0749e3b84f81.txt
+cost_summary:
+  model: deepseek/deepseek-v4-flash
+  elapsed_seconds: 92.9
+  total_input_tokens: 126615
+  total_output_tokens: 1505
+  total_cost_usd: 0.0172599772
+accuracy:
+  covers:
+    correct: 9
+    missing: 0
+    spurious: 0
+    wrong: 1
+    precision: 0.9
+    recall: 0.9
+    f1: 0.9
+failed_cases:
+- model_client: open_router-Alibaba
+  case_id: seattle_home_news_mentions
+  failures:
+  - field: Office of the Mayor
+    expected: false
+    actual: true
