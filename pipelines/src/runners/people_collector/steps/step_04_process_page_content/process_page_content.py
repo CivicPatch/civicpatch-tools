@@ -33,6 +33,7 @@ from runners.people_collector.steps.step_04_process_page_content.heuristics impo
 from shared.schemas import KnownOrganization
 from runners.people_collector.utils.link_discovery import (
     add_relevant_urls,
+    organization_search_terms,
     extract_names_and_designations,
     find_heuristic_urls,
     has_role_and_contact_info,
@@ -302,7 +303,10 @@ async def check_page_relevance(
             frontier,
             page_to_process.url,
             names,
-            designations + known_roles,
+            # Bodies and their posts as well as roles: the queue now ranks a designation match
+            # above reference count, and an organization whose wording no role covers had nothing to
+            # match on at all.
+            designations + known_roles + organization_search_terms(known_organizations),
             logger,
             url_comments=url_comments,
         )
@@ -321,9 +325,9 @@ async def organizations_covered(
     content: str,
     organizations: List[KnownOrganization],
 ) -> List[str]:
-    """Which bodies this page carries people for, one narrow question each.
+    """Which organizations this page carries people for, one narrow question each.
 
-    Only worth asking where there are bodies to tell apart, and only on a page already judged
+    Only worth asking where there are organizations to tell apart, and only on a page already judged
     relevant, so the calls land on the minority of pages that are worth extracting from at all.
     """
     if len(organizations) < 2:

@@ -14,6 +14,7 @@ import pathlib
 from typing import Callable, Iterable
 
 from runners.people_collector.schemas import Link, LinkFrontier, LinkStatus
+from shared.utils.url_utils import canonical_url
 from runners.people_collector.utils.link_discovery import (
     _compute_link_signals,
     _pending_sort_key,
@@ -38,6 +39,32 @@ def research_signals(context_path: pathlib.Path) -> tuple[list[str], list[str]]:
     data = json.loads(context_path.read_text(encoding="utf-8"))["data"]
     research = data.get("research_municipality_step") or {}
     return list(research.get("identities") or {}), list(research.get("known_roles") or [])
+
+
+def productive_urls(context_path: pathlib.Path) -> set[str]:
+    """The pages this run actually got records from, canonicalised.
+
+    The only outcome label the saved runs carry: every record keeps the `source_url` it was read
+    from, so a link either produced people or it did not. Nothing was written down for this
+    purpose, which is why it is reconstructed here rather than read from a field.
+    """
+    data = json.loads(context_path.read_text(encoding="utf-8"))["data"]
+    records = (data.get("process_page_content_step") or {}).get("records") or {}
+    return {
+        canonical_url(record["source_url"])
+        for group in records.values()
+        for record in group
+        if record.get("source_url")
+    }
+
+
+def all_links(frontier: LinkFrontier) -> list[Link]:
+    """Every link the run ever held, fetched or not.
+
+    `pending` answers "what would it do next"; this answers "in what order would it have worked
+    through everything", which is the question an outcome can score.
+    """
+    return [link for key in frontier.links if (link := frontier.links.get(key))]
 
 
 def pending(frontier: LinkFrontier) -> list[Link]:
@@ -78,12 +105,12 @@ def url_contains(fragment: str) -> Callable[[Link], bool]:
     return lambda link: fragment in link.url.lower()
 
 
-def body_first_key(link: Link, names: list[str], designations: list[str]) -> tuple:
-    """Candidate: a link naming a role or body we are looking for outranks reference count.
+def organization_first_key(link: Link, names: list[str], designations: list[str]) -> tuple:
+    """Candidate: a link naming a role or organization we are looking for outranks reference count.
 
     The shipped key scores references second, which is self-reinforcing — every council page
-    crawled adds a reference to every councilmember link — so a body linked once is buried by a
-    body linked from its own section. This moves the designation match above it. Designation, not
+    crawled adds a reference to every councilmember link — so an organization linked once is buried by a
+    organization linked from its own section. This moves the designation match above it. Designation, not
     `role`: the caller folds `known_roles` into `designations` (`add_relevant_urls` is passed
     `designations + known_roles`), and the key never passes `roles` at all, so `signals.role` is
     always None and the term is dead.

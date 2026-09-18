@@ -1,0 +1,6 @@
+mismatches:
+  gatesville_ordinances:
+  - actual: true
+    expected: false
+    field: is_relevant
+    subject: page

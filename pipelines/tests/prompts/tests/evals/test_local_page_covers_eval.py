@@ -5,9 +5,24 @@ silent either way, and neither the heuristics nor the extraction can catch it. A
 drops a body's extraction on a page that did carry it, and the records simply never appear; a
 false positive pays for an extraction that returns nobody.
 
-The cases are real pages from `data_source`, and four of the ten answers are "no" on a page that
-looks like a yes: navigation naming the other body, an agenda page about a body that lists none
-of its people, and a homepage whose news headlines name the mayor.
+The cases are real pages from `data_source`: nine pages across four jurisdictions, eighteen
+answers, eight of them "no" on a page that looks like a yes — the other body in the site menu,
+and an agenda page about a body that lists none of its people. Four sites on purpose, since a
+prompt that only works on one CMS is a prompt fitted to one CMS: Jackson (CivicLive), Irvine,
+Seattle, and Quitaque, whose whole site is a single page with no navigation at all.
+
+What the cases turn on is a roster against a menu, not where on the page it sits. Irvine's
+sidebar is headed "Members & Bios" and names all seven officeholders, so both Irvine pages cover
+both bodies even though one is a single councilmember's own bio — that case expected false for
+the mayor until three providers disagreed on 2026-09-18 and turned out to be right. Jackson's
+menu names the mayor too, under "Past Mayors" and "Request the Mayor", and covers nothing:
+those are links to other pages rather than a listing of who holds what.
+
+A fifth case, Seattle's homepage naming the mayor in news headlines, was removed 2026-09-18 after
+four attempts to word the prompt around it. Three of four providers called it coverage every
+time, and they were arguing with a question the pipeline never asks: coverage is only asked about
+pages the relevance check accepted, and that homepage came back `processed_irrelevant` in the
+real run. Gating on it measured a page this prompt never sees.
 
 Run with: mise run evalsc
 """
@@ -205,6 +220,9 @@ def _write_report(model_client, failed_cases, elapsed_seconds, found, case_ids, 
                 "cost_summary": cost_summary,
                 "accuracy": accuracy,
                 "failed_cases": failed_cases,
+                # The dashboard's per-case detail reads this from the report, not from history:
+                # `dashboard_data.read_latest_mismatches` globs the report files.
+                "mismatches": mismatches,
             },
             f,
             sort_keys=False,

@@ -6,13 +6,13 @@ from runners.people_collector.schemas import (
     Link,
     LinkFrontier,
     LinkStatus,
-    PersonSourceRecord,
     PeopleByName,
+    PersonSourceRecord,
 )
 from shared.utils import config_utils, name_utils, url_utils
-from shared.utils.url_utils import canonical_url
 from shared.utils.label_parser import parse_label
 from shared.utils.taxonomy import Taxonomy
+from shared.utils.url_utils import canonical_url
 
 # URL patterns that are deterministic dead ends. Matched against the full URL
 # before adding to the crawl frontier, so the LLM never wastes a scrape on them.
@@ -162,15 +162,68 @@ def extract_names_and_designations(
     return names, designations
 
 
+# Words in an organization's name that every municipal site uses somewhere, so matching on them ranks
+# `/clerks-office` and `/city-hall-hours` alongside the roster. Dropped rather than the whole
+# name, because what is left is what distinguishes one organization from another: "School Board" keeps
+# `school`, "Office of the Mayor" keeps `mayor`.
+_GENERIC_ORGANIZATION_TOKENS = frozenset(
+    {
+        "city",
+        "town",
+        "village",
+        "borough",
+        "township",
+        "county",
+        "government",
+        "municipal",
+        "office",
+        "offices",
+        "department",
+        "departments",
+        "administration",
+        "public",
+        "general",
+    }
+)
+
+
+def organization_search_terms(organizations) -> List[str]:
+    """The distinctive words of each organization's name and its posts' labels, as search terms.
+
+    `designations` are matched token-wise at four characters or more, so passing an organization name
+    whole would contribute its filler words too. These are the tokens worth ranking a link on,
+    and they are what lets an organization whose wording no role covers — a School Board in a jurisdiction
+    whose roles are Mayor and Council Member — score at all.
+    """
+    terms: List[str] = []
+    for organization in organizations:
+        for source in [organization.name, *(post.label for post in organization.posts)]:
+            # Split in source order rather than through `_tokenize`, which returns a set: this
+            # feeds a sort key, and a term list that reorders between runs makes a queue that
+            # cannot be replayed.
+            for token in re.split(
+                r"[^a-z0-9]", name_utils.normalize_text_for_search(source or "").lower()
+            ):
+                if (
+                    len(token) >= 4
+                    and token not in _GENERIC_ORGANIZATION_TOKENS
+                    and token not in terms
+                ):
+                    terms.append(token)
+    return terms
+
+
 def _pending_sort_key(link: Link, names: List[str], designations: List[str]) -> tuple:
     signals = _compute_link_signals(
         link.url, link.text or "", designations, names=names
     )
     return (
         -int(signals.keyword is not None),
+        -int(signals.designation is not None),
         -link.num_references,
         -int(signals.name is not None),
-        -int(signals.designation is not None),
+        # Dead: `_compute_link_signals` is called above without `roles`, so this is always None.
+        # Roles do reach the key, as `add_relevant_urls` is passed `designations + known_roles`.
         -int(signals.role is not None),
         len(url_utils.get_path(link.url).split("/")),
     )

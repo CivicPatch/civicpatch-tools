@@ -1,0 +1,25 @@
+page_url: https://www.jacksontn.gov/government/mayorsoffice/staffdirectory
+jurisdiction_name: Jackson city
+organizations:
+- name: Office of the Mayor
+  posts:
+  - Mayor
+- name: City Council
+  posts:
+  - Council Member, District 1
+  - Council Member, District 2
+  - Council Member, District 3
+  - Council Member, District 4
+  - Council Member, District 5
+  - Council Member, District 6
+  - Council Member, District 7
+  - Council Member, District 8
+  - Council Member, District 9
+covers:
+  Office of the Mayor: true
+  City Council: false
+thoughts: >-
+  A page headed "Staff Directory" that lists Scott Conger, Mayor, with his email and phone,
+  above the Executive Assistant and the Chief of Staff. The heading describes who else is on
+  it, not whether the officeholder is: this is the richest page on the site for the mayor and
+  the one an extraction most wants to run on. The council is named only in the site menu.

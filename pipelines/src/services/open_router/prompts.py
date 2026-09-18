@@ -73,6 +73,11 @@ def relevant_page_prompt(
       Manager, Water Supervisor and Fire Chief is the roster. Judge it by whether the governing
       body's members are presented as such, not by who else shares the page.{known_organizations_rule}
 
+    When a page names a person who holds one of the roles above and you cannot tell whether it is
+    a roster or a department landing page, answer true. The two mistakes do not cost the same: a
+    page wrongly called relevant costs one extraction that returns nobody, while a page wrongly
+    called irrelevant is never read again and its officials are never found.
+
     False for these, whoever is named in them:
     - Auxiliary committees, boards and commissions (Planning and Zoning, Parks and Recreation,
       Airport Advisory), and pages about department heads or other non-elected staff. A Mayor or
@@ -338,12 +343,24 @@ def page_covers_organization_prompt(
     Answer true only if this page presents a person holding office in that body as one of its
     officials — a roster entry, a directory row, a profile, or a contact block naming them.
 
-    All of these are false, however prominently the body or its people appear:
-    - a link to the body, or its name in the site navigation
+    The test: would this page tell a reader who currently holds the office, if they had never
+    heard of the person? A listing, a profile or a contact block answers that. A sentence about
+    something that happened assumes you already know, and names the person in passing.
+
+    All of these are false, however prominently the body or its people appear, and however many
+    times a name is repeated:
+    - a link to the body, or its name in the site navigation, including a heading such as
+      "Connect with Elected Officials" that links elsewhere
     - a mention of the body in prose, or a meeting agenda or minutes naming it
-    - a news story, press release or announcement about something an official said or did.
-      A page reporting on the mayor is not a page that lists the mayor, and a homepage carrying
-      headlines about officials is reporting, not listing.
+    - news stories, press releases and announcements. "Mayor Wilson Signs Junk Fee Legislation
+      into Law" names the mayor and their office and is still a report of an event: the page
+      exists to say what happened, not who holds the office. A homepage carrying six such
+      headlines is a newsfeed, not a roster.
+
+    Judge the page's own content. A block that would be identical on every page of the site —
+    a menu, a footer, a sidebar list of members repeated across a section — is furniture, and
+    counting it would make every page of a site cover every body, which is no answer at all. The
+    same list in the body of a page, as what that page exists to present, does count.
 
     Someone who holds office in that body counts even if the page gives them a title that is not
     among the offices listed above; the list is there to say what holding office in this body

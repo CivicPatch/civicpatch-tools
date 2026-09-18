@@ -9,11 +9,16 @@ measurement; this keeps the thing that prints it honest.
 import pytest
 
 from runners.people_collector.schemas import Link, LinkFrontier, LinkStatus
+from runners.people_collector.utils.link_discovery import organization_search_terms
+from shared.schemas import KnownOrganization, Post
+from shared.utils.url_utils import canonical_url
 from tests.unit.runners.frontier_replay import (
+    all_links,
     load_frontier,
     ordered,
     pending,
     rank_of,
+    productive_urls,
     research_signals,
     saved_contexts,
     url_contains,
@@ -44,7 +49,7 @@ def test_a_page_already_read_is_not_ranked_again():
 
 def test_references_decide_the_order_today():
     """The shipped key, and the bias the org-aware plan measured: a page linked from every
-    council page outranks one linked once, whichever body needs people."""
+    council page outranks one linked once, whichever organization needs people."""
     frontier = _frontier(
         ("https://zz.gov/mayor", 1, LinkStatus.PENDING.value),
         ("https://zz.gov/council/members/ana", 3, LinkStatus.PENDING.value),
@@ -93,3 +98,82 @@ def test_a_real_saved_run_replays():
         assert len(links) == len(pending(frontier))
         replayed += 1
     assert replayed == len(contexts)
+
+
+def test_a_body_beats_a_page_linked_from_everywhere():
+    """The shipped change: `num_references` is self-reinforcing, so an organization linked once used to
+    lose to a councilmember bio linked from every council page."""
+    frontier = _frontier(
+        ("https://zz.gov/council/members/ana", 9, LinkStatus.PENDING.value),
+        ("https://zz.gov/school-board", 1, LinkStatus.PENDING.value),
+    )
+
+    order = [link.url for link in ordered(frontier, designations=["School Board"])]
+
+    assert order[0] == "https://zz.gov/school-board"
+
+
+def test_references_still_break_a_tie_between_two_bodies():
+    """Demoted, not deleted: with nothing to tell two links apart, the better-linked one is
+    still the better guess."""
+    frontier = _frontier(
+        ("https://zz.gov/school-board/members", 1, LinkStatus.PENDING.value),
+        ("https://zz.gov/school-board", 4, LinkStatus.PENDING.value),
+    )
+
+    order = [link.url for link in ordered(frontier, designations=["School Board"])]
+
+    assert order[0] == "https://zz.gov/school-board"
+
+
+def test_body_terms_keep_what_distinguishes_a_body():
+    organizations = [
+        KnownOrganization(id="a", name="School Board", posts=[]),
+        KnownOrganization(id="b", name="Office of the Mayor", posts=[]),
+    ]
+
+    assert organization_search_terms(organizations) == ["school", "board", "mayor"]
+
+
+def test_body_terms_drop_words_every_municipal_site_uses():
+    """"City" or "office" as a search term ranks /city-hall-hours and /clerks-office alongside
+    the roster, which is the opposite of the point."""
+    organizations = [KnownOrganization(id="a", name="City Council", posts=[])]
+
+    assert organization_search_terms(organizations) == ["council"]
+
+
+def test_post_labels_are_terms_too():
+    organizations = [
+        KnownOrganization(
+            id="a",
+            name="Board of Trustees",
+            posts=[
+                Post(
+                    id="p",
+                    jurisdiction_ocdid="ocd-jurisdiction/country:us/state:zz/place:zz/government",
+                    organization_id="a",
+                    role_id="trustee",
+                    division_ocdid="ocd-division/country:us/state:zz/place:zz",
+                    label="Trustee, Ward 3",
+                )
+            ],
+        )
+    ]
+
+    assert organization_search_terms(organizations) == ["board", "trustees", "trustee", "ward"]
+
+
+def test_outcomes_come_from_the_records_source_urls():
+    """The only outcome label the saved runs carry, and it was never written down for this: a
+    record keeps the page it was read from, so a link either produced people or did not."""
+    contexts = [path for path in saved_contexts() if productive_urls(path)]
+    if not contexts:
+        pytest.skip("no saved run produced records")
+
+    for path in contexts[:5]:
+        productive = productive_urls(path)
+        links = {canonical_url(link.url) for link in all_links(load_frontier(path))}
+        # Every productive url is a link the run held: otherwise the label cannot be scored
+        # against an ordering of those links.
+        assert productive <= links, path

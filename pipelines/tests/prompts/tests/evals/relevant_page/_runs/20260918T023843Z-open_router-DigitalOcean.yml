@@ -1,0 +1,11 @@
+mismatches:
+  gatesville_ordinance_vote_records:
+  - actual: "\u2014"
+    expected: present
+    field: relevant_urls
+    subject: https://gatesvilletx.com/government/index.php
+  san_saba_airport_advisory_irrelevant:
+  - actual: "\u2014"
+    expected: present
+    field: relevant_urls
+    subject: https://sansabatexas.com/city-hall/

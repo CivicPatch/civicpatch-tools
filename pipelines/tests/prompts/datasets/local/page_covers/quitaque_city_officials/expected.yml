@@ -1,0 +1,20 @@
+page_url: https://quitaque.us
+jurisdiction_name: Quitaque city
+organizations:
+- name: Office of the Mayor
+  posts:
+  - Mayor
+  - Mayor Pro Tem
+- name: City Council
+  posts:
+  - Council Member
+covers:
+  Office of the Mayor: true
+  City Council: true
+thoughts: >-
+  A town of 400 whose entire site is one page: "Mayor - Janice Henson", "Mayor Pro-tem - Phil
+  Barefield", then a City Council list, then City Manager, Water Supervisor, Maintenance
+  Supervisor, Fire Chief and an Economic Development chairman. Both bodies are covered, and the
+  appointed staff sharing the page changes nothing — the same rule the relevance prompt needed
+  for this page, asked of coverage instead. The smallest site in the set, with no navigation to
+  mistake for content.

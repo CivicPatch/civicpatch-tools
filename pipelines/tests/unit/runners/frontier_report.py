@@ -1,4 +1,4 @@
-"""Where each body's pages rank in the queue every saved run left behind.
+"""Where each organization's pages rank in the queue every saved run left behind.
 
 `mise run frontier-report`. No network, no LLM, no database: it replays `data_source`'s saved
 frontiers through the shipped sort key and prints where a mayor-ish page lands. That is the
@@ -13,7 +13,7 @@ import os
 import pathlib
 
 from tests.unit.runners.frontier_replay import (
-    body_first_key,
+    organization_first_key,
     load_frontier,
     noise_last_key,
     path_shape_key,
@@ -25,18 +25,18 @@ from tests.unit.runners.frontier_replay import (
     url_contains,
 )
 
-# What a body's own page tends to look like in a url. Crude on purpose: the saved runs predate
-# any per-body labelling, so the url is the only signal available to ask the question at all.
-BODY_FRAGMENTS = ("mayor", "council", "trustee", "alderman", "selectboard", "supervisor")
+# What an organization's own page tends to look like in a url. Crude on purpose: the saved runs predate
+# any per-organization labelling, so the url is the only signal available to ask the question at all.
+ORGANIZATION_FRAGMENTS = ("mayor", "council", "trustee", "alderman", "selectboard", "supervisor")
 
 
 CANDIDATES = {
-    "body_first": body_first_key,
+    "organization_first": organization_first_key,
     "path_shape": path_shape_key,
     "noise_last": noise_last_key,
 }
 # Which candidate the report compares today's order against: `FRONTIER_CANDIDATE=path_shape`.
-CANDIDATE = os.environ.get("FRONTIER_CANDIDATE", "body_first")
+CANDIDATE = os.environ.get("FRONTIER_CANDIDATE", "organization_first")
 
 
 def _jurisdiction(path: pathlib.Path) -> str:
@@ -61,7 +61,7 @@ def report() -> int:
         candidate = ordered(frontier, names, designations, key=CANDIDATES[CANDIDATE])
         found = {
             fragment: (rank, rank_of(candidate, url_contains(fragment)))
-            for fragment in BODY_FRAGMENTS
+            for fragment in ORGANIZATION_FRAGMENTS
             if (rank := rank_of(today, url_contains(fragment)))
         }
         if not found:
@@ -72,7 +72,7 @@ def report() -> int:
             for fragment, (now, then) in sorted(found.items(), key=lambda kv: kv[1][0])
         )
         print(f"{_jurisdiction(path):38} {len(waiting):>7}  {summary}")
-    print(f"\n{interesting} of {len(contexts)} saved runs have a pending body page.")
+    print(f"\n{interesting} of {len(contexts)} saved runs have a pending organization page.")
     return interesting
 
 

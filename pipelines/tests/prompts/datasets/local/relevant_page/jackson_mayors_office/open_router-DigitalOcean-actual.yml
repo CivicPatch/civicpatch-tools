@@ -1,7 +1,8 @@
-is_relevant: false
+is_relevant: true
 relevant_urls:
-- https://www.jacksontn.gov/government/citycouncil
-- https://www.jacksontn.gov/government/citycouncil/meetthecouncil
 - https://www.jacksontn.gov/government/mayorsoffice/aboutmayorconger
 - https://www.jacksontn.gov/government/mayorsoffice/staffdirectory
+- https://www.jacksontn.gov/government/citycouncil
+- https://www.jacksontn.gov/government/citycouncil/meetthecouncil
+- https://www.jacksontn.gov/government/boardscommissions
 - https://www.jacksontn.gov/government

@@ -1,0 +1,31 @@
+
+    Decide whether the provided page content carries people who currently hold office in one
+    specific governing body.
+
+    Body: <body, per case>
+    Municipality: <jurisdiction, per case>
+    Offices in it: <its posts, per case>
+
+    Answer true only if this page presents a person holding office in that body as one of its
+    officials — a roster entry, a directory row, a profile, or a contact block naming them.
+
+    The test: would this page tell a reader who currently holds the office, if they had never
+    heard of the person? A listing, a profile or a contact block answers that. A sentence about
+    something that happened assumes you already know, and names the person in passing.
+
+    All of these are false, however prominently the body or its people appear, and however many
+    times a name is repeated:
+    - a link to the body, or its name in the site navigation, including a heading such as
+      "Connect with Elected Officials" that links elsewhere
+    - a mention of the body in prose, or a meeting agenda or minutes naming it
+    - news stories, press releases and announcements. "Mayor Wilson Signs Junk Fee Legislation
+      into Law" names the mayor and their office and is still a report of an event: the page
+      exists to say what happened, not who holds the office. A homepage carrying six such
+      headlines is a newsfeed, not a roster.
+
+    Someone who holds office in that body counts even if the page gives them a title that is not
+    among the offices listed above; the list is there to say what holding office in this body
+    looks like, not to limit it.
+
+    IMPORTANT: Return only valid JSON, {"covers": true} or {"covers": false}.
+    

@@ -1,36 +1,39 @@
 run:
-  timestamp: '2026-09-18T01:47:39+00:00'
-  prompt_sha256: 983a0dfb3b48
-  prompt_file: _prompts/983a0dfb3b48.txt
+  timestamp: '2026-09-18T02:38:43+00:00'
+  prompt_sha256: cb8e073a37f3
+  prompt_file: _prompts/cb8e073a37f3.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 73.56
-  total_input_tokens: 85298
-  total_output_tokens: 1656
-  total_cost_usd: 0.00868378
+  elapsed_seconds: 223.38
+  total_input_tokens: 86590
+  total_output_tokens: 1709
+  total_cost_usd: 0.008820784
 accuracy:
   relevant_urls:
-    correct: 24
+    correct: 27
     missing: 2
-    spurious: 49
+    spurious: 0
     wrong: 0
-    precision: 0.3287671232876712
-    recall: 0.9230769230769231
-    f1: 0.48484848484848486
+    precision: 1.0
+    recall: 0.9310344827586207
+    f1: 0.9642857142857143
   is_relevant:
-    correct: 16
+    correct: 17
     missing: 0
     spurious: 0
-    wrong: 1
-    precision: 0.9411764705882353
-    recall: 0.9411764705882353
-    f1: 0.9411764705882353
-failed_cases:
-- model_client: open_router-DigitalOcean
-  case_id: jackson_mayors_office
-  failures:
-  - field: is_relevant
-    expected: true
-    actual: false
-    score: 0.0
-    threshold: 1.0
+    wrong: 0
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
+failed_cases: []
+mismatches:
+  gatesville_ordinance_vote_records:
+  - subject: https://gatesvilletx.com/government/index.php
+    field: relevant_urls
+    expected: present
+    actual: "\u2014"
+  san_saba_airport_advisory_irrelevant:
+  - subject: https://sansabatexas.com/city-hall/
+    field: relevant_urls
+    expected: present
+    actual: "\u2014"

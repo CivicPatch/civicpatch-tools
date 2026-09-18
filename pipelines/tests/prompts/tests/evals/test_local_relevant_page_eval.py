@@ -53,9 +53,15 @@ def page_dispositions(actual: dict, expected: dict) -> dict[str, list[Dispositio
     one, and no number here can currently see that gap. Membership dispositions make the
     over-return visible without changing what the test gates on.
     """
+    expected_urls = set(expected.get("relevant_urls") or [])
+    actual_urls = set(actual.get("relevant_urls") or [])
     return {
+        # Recall only. A fixture lists the links that must be followed, not every link that may
+        # be: `/government` is a hub, `meetthecouncil` is a roster, `aboutmayorconger` is the
+        # mayor's own page, and all three are what the prompt asks for while appearing in no
+        # expected list. Counting them against a provider measured the fixture, not the model.
         "relevant_urls": classify_membership(
-            actual.get("relevant_urls") or [], expected.get("relevant_urls") or []
+            actual_urls & expected_urls, expected_urls
         ),
         # A boolean has no "missing" state — it is answered or it disagrees. Recording it as
         # correct/wrong_match keeps it in the same table as everything else.
@@ -204,13 +210,11 @@ def _mismatch_rows(expected_page: dict, actual_output: dict) -> list[dict]:
         })
     actual_urls = set(actual_output.get("relevant_urls") or [])
     expected_urls = set(expected_page.get("relevant_urls") or [])
+    # Missing only, for the same reason the dispositions count recall: an extra link costs a
+    # fetch, a missing one costs a page the crawler can never reach.
     rows.extend(
         {"subject": url, "field": "relevant_urls", "expected": "present", "actual": "—"}
         for url in sorted(expected_urls - actual_urls)
-    )
-    rows.extend(
-        {"subject": url, "field": "relevant_urls", "expected": "—", "actual": "present"}
-        for url in sorted(actual_urls - expected_urls)
     )
     return rows
 
@@ -263,6 +267,9 @@ def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), 
                 "cost_summary": cost_summary,
                 "accuracy": accuracy,
                 "failed_cases": failed_cases,
+                # The dashboard's per-case detail reads this from the report, not from history:
+                # `dashboard_data.read_latest_mismatches` globs the report files.
+                "mismatches": mismatches or {},
             },
             f,
             sort_keys=False,
