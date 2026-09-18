@@ -1,24 +1,23 @@
-"""The entry sheet's rows, both directions.
+"""The import sheet's rows in: a spreadsheet row becomes the sighting `source_records` stores.
 
-Rows in: a spreadsheet row becomes the sighting `source_records` stores. Columns out: what
-happened to each row and each town, for the sheet's own `status` / `error` columns.
-
-Pure either way — the Sheets calls are the caller's. Which sheet and which tabs is
-`services.entry_sheet`. Spec: `.scratch/2026-08-25-sheet-import-shape.md`.
+What goes back out — each row's status, error and note — is `sheet_import_columns`. Pure: the
+Sheets calls are the caller's. Which sheet and which tabs is `services.entry_sheet`. Spec:
+`.scratch/2026-08-25-sheet-import-shape.md`.
 
 The sheet carries no ids — matching is ingest's job, so there is nowhere to paste a uuid wrong.
 One row is one sighting; `roster_from_rows` groups by name, so two rows for one person would
 invite "Bob Smith" and "Robert Smith" to become two people.
 
-`jurisdiction_ocdid` is typed or pasted directly — never a geoid. A geoid needs a database read
-to resolve, which makes it exact but also a guess-and-check step for anything that does not
-already have one; an ocdid a source cannot spell correctly fails the same way a typo always
-did, at import, per jurisdiction, same as a hand-typed one always has.
+`jurisdiction_ocdid` is typed or pasted directly — never a geoid — or left blank, in which case
+the jurisdiction is the one whose website `source_url` is on (`core.source_sites`). A site that
+matches none, or several, is a row error asking for the ocdid.
 """
 
 from enum import StrEnum
 
 from pydantic import BaseModel
+
+from core.source_sites import SiteIndex, jurisdictions_on_site, organization_on_site, site_host
 from shared.utils.email_utils import is_valid_email
 from shared.utils.phone_utils import normalize_phone_number
 from shared.utils.url_utils import is_web_url
@@ -28,12 +27,6 @@ JURISDICTION = "jurisdiction_ocdid"
 # Written by the import, never by a volunteer. Every row gets a value on every run: a row that
 # failed last time and is fine now must not keep last time's message.
 STATUS_COLUMNS = ("status", "error", "last_import_at", "note")
-
-# What a row's `status` can say.
-IMPORTED = "imported"
-ERROR = "error"
-BLOCKED = "blocked"
-
 
 class ImportStatus(StrEnum):
     """What a whole jurisdiction's `status` can say. Coarser than a row's: a town is the unit
@@ -47,7 +40,7 @@ class ImportStatus(StrEnum):
     UNCHANGED = "unchanged"
 
 
-_REQUIRED = (JURISDICTION, "name", "source_url")
+_REQUIRED = ("name", "source_url")
 # A blank cell states nothing: the published value is kept (`people_roster.partial_roster`). A blank
 # `label` keeps the person's current post; for someone new it derives to unmatched.
 _OPTIONAL = ("label", "email", "phone", "image")
@@ -72,6 +65,8 @@ class Sighting(BaseModel):
     name: str
     label: str
     source_url: str
+    # The body whose site `source_url` is on; None for the jurisdiction's default.
+    organization_id: str | None = None
     url: str | None = None
     phone: str | None = None
     email: str | None = None
@@ -89,17 +84,27 @@ class ImportRow(BaseModel):
     status: str = ""
 
 
-def _clean(value) -> str:
+def clean_cell(value) -> str:
+    """A sheet cell as text, trimmed; blank for an empty one."""
     return "" if value is None else str(value).strip()
 
 
 def _optional(value) -> str | None:
-    return _clean(value) or None
+    return clean_cell(value) or None
 
 
-def _handled_jurisdictions(rows: list[dict]) -> set[str]:
-    """Every jurisdiction whose rows all already carry a status — on the raw, unvalidated
-    jurisdiction cell, since this runs before a row is known to parse at all.
+def _jurisdiction(row: dict, sites: SiteIndex) -> str:
+    """The row's own cell, else the one jurisdiction whose site its source is on, else blank."""
+    typed = clean_cell(row.get(JURISDICTION))
+    if typed:
+        return typed
+    matches = jurisdictions_on_site(sites, clean_cell(row.get("source_url")))
+    return matches[0] if len(matches) == 1 else ""
+
+
+def _handled_jurisdictions(rows: list[dict], sites: SiteIndex) -> set[str]:
+    """Every jurisdiction whose rows all already carry a status — on the unvalidated row, since
+    this runs before a row is known to parse at all.
 
     Whole, not row by row: a town where every row already says `imported` is genuinely
     unchanged, but a town with one cleared row among ten `imported` ones is not — clearing one
@@ -110,15 +115,15 @@ def _handled_jurisdictions(rows: list[dict]) -> set[str]:
     for row in rows:
         if _is_blank(row):
             continue
-        by_jurisdiction.setdefault(_clean(row.get(JURISDICTION)), []).append(row)
+        by_jurisdiction.setdefault(_jurisdiction(row, sites), []).append(row)
     return {
         jurisdiction
         for jurisdiction, jurisdiction_rows in by_jurisdiction.items()
-        if all(_clean(row.get("status")) for row in jurisdiction_rows)
+        if all(clean_cell(row.get("status")) for row in jurisdiction_rows)
     }
 
 
-def parse_rows(rows: list[dict]) -> tuple[list[ImportRow], list[RowError]]:
+def parse_rows(rows: list[dict], sites: SiteIndex) -> tuple[list[ImportRow], list[RowError]]:
     """Every row that parsed, and every reason one did not.
 
     Line numbers count the header, so they match the row gutter a volunteer sees.
@@ -126,7 +131,7 @@ def parse_rows(rows: list[dict]) -> tuple[list[ImportRow], list[RowError]]:
     parsed: list[ImportRow] = []
     errors: list[RowError] = []
 
-    handled = _handled_jurisdictions(rows)
+    handled = _handled_jurisdictions(rows, sites)
     for offset, row in enumerate(rows):
         line = offset + 2
         # A row with nothing in it is grid, not a row somebody wrote. Sheets returns every line
@@ -141,19 +146,20 @@ def parse_rows(rows: list[dict]) -> tuple[list[ImportRow], list[RowError]]:
         # (`already_handled`, in `services.sheet_import`) never even sees it — and a contract
         # change made after the row was accepted (a new required column, say) would otherwise
         # re-reject a row nothing is wrong with, forever, on every run.
-        if _clean(row.get(JURISDICTION)) in handled:
+        jurisdiction = _jurisdiction(row, sites)
+        if jurisdiction in handled:
             continue
-        row_errors = _row_errors(row, line)
+        row_errors = _row_errors(row, line, jurisdiction, sites)
         if row_errors:
             errors.extend(row_errors)
         else:
-            parsed.append(_import_row(row, line))
+            parsed.append(_import_row(row, line, jurisdiction, sites))
 
     return parsed, errors + _duplicate_errors(parsed)
 
 
 # What a volunteer fills in. `STATUS_COLUMNS` are ours and deliberately excluded below.
-_VOLUNTEER_COLUMNS = _REQUIRED + _OPTIONAL
+_VOLUNTEER_COLUMNS = (JURISDICTION,) + _REQUIRED + _OPTIONAL
 
 # Public: `services.sheet_import` marks these on the sheet itself, so a required column reads
 # as required without anyone having to already know the contract.
@@ -161,7 +167,7 @@ REQUIRED_COLUMNS = _REQUIRED
 
 # The header row in full — the single source of truth `services.sheet_import` writes to the
 # sheet itself, so the contract can never drift from what this module actually reads.
-ROSTER_HEADERS = _REQUIRED + _OPTIONAL + STATUS_COLUMNS
+ROSTER_HEADERS = _VOLUNTEER_COLUMNS + STATUS_COLUMNS
 
 
 def _is_blank(row: dict) -> bool:
@@ -171,24 +177,33 @@ def _is_blank(row: dict) -> bool:
     used range, so a spare line can carry a timestamp and still be a line nobody wrote — judging
     on every value would call it occupied and reject it three times over.
     """
-    return not any(_clean(row.get(column)) for column in _VOLUNTEER_COLUMNS)
+    return not any(clean_cell(row.get(column)) for column in _VOLUNTEER_COLUMNS)
 
 
-def _error(row: dict, line: int, column: str | None, message: str) -> RowError:
-    return RowError(
-        line=line,
-        jurisdiction_ocdid=_clean(row.get(JURISDICTION)),
-        column=column,
-        message=message,
-    )
+def _site_error(row: dict, sites: SiteIndex) -> str | None:
+    """Why a row with no jurisdiction could not take one from its source's site."""
+    source_url = clean_cell(row.get("source_url"))
+    if clean_cell(row.get(JURISDICTION)) or not source_url:
+        return None
+    matches = jurisdictions_on_site(sites, source_url)
+    host = site_host(source_url)
+    if not matches:
+        return f"no jurisdiction's website matches {host}; fill in {JURISDICTION}"
+    if len(matches) > 1:
+        return f"{host} is the website of {len(matches)} jurisdictions; fill in {JURISDICTION}"
+    return None
 
 
-def _row_errors(row: dict, line: int) -> list[RowError]:
-    errors = [
-        _error(row, line, column, "required")
-        for column in _REQUIRED
-        if not _clean(row.get(column))
-    ]
+def _row_errors(row: dict, line: int, jurisdiction: str, sites: SiteIndex) -> list[RowError]:
+    def error(column: str, message: str) -> RowError:
+        return RowError(
+            line=line, jurisdiction_ocdid=jurisdiction, column=column, message=message
+        )
+
+    errors = [error(column, "required") for column in _REQUIRED if not clean_cell(row.get(column))]
+    site_error = _site_error(row, sites)
+    if site_error:
+        errors.append(error(JURISDICTION, site_error))
     # The same checks `SubmittedPersonRecord` applies, run here so a bad cell is a rejected row
     # the volunteer sees in the sheet rather than a record that fails further down.
     for column, ok, expected in (
@@ -196,21 +211,23 @@ def _row_errors(row: dict, line: int) -> list[RowError]:
         ("email", is_valid_email, "not an email address"),
         ("source_url", is_web_url, "not an http(s) url with a domain"),
     ):
-        value = _clean(row.get(column))
+        value = clean_cell(row.get(column))
         if value and not ok(value):
-            errors.append(_error(row, line, column, f"{expected}: {value!r}"))
+            errors.append(error(column, f"{expected}: {value!r}"))
     return errors
 
 
-def _import_row(row: dict, line: int) -> ImportRow:
+def _import_row(row: dict, line: int, jurisdiction: str, sites: SiteIndex) -> ImportRow:
+    source_url = clean_cell(row["source_url"])
     return ImportRow(
         line=line,
-        jurisdiction_ocdid=_clean(row[JURISDICTION]),
-        status=_clean(row.get("status")),
+        jurisdiction_ocdid=jurisdiction,
+        status=clean_cell(row.get("status")),
         sighting=Sighting(
-            name=_clean(row["name"]),
-            label=_clean(row.get("label")),
-            source_url=_clean(row["source_url"]),
+            name=clean_cell(row["name"]),
+            label=clean_cell(row.get("label")),
+            source_url=source_url,
+            organization_id=organization_on_site(sites, jurisdiction, source_url),
             email=_optional(row.get("email")),
             phone=_optional(row.get("phone")),
             image=_optional(row.get("image")),
@@ -219,8 +236,8 @@ def _import_row(row: dict, line: int) -> ImportRow:
 
 
 def _duplicate_errors(rows: list[ImportRow]) -> list[RowError]:
-    """`memberships` allows one open row per (person, organization) and an import writes only to
-    the jurisdiction's default organization, so two rows for one person is unrepresentable."""
+    """One row per person per jurisdiction: `row_key`, which the write-back's notes key on, is
+    (jurisdiction, name), and a membership is one open row per (person, organization)."""
     seen: dict[tuple, int] = {}
     errors = []
     for row in rows:
@@ -242,7 +259,7 @@ def _duplicate_errors(rows: list[ImportRow]) -> list[RowError]:
 def row_key(jurisdiction_ocdid: str, name: str) -> tuple[str, str]:
     """A row's identity within one read: `_duplicate_errors` makes it unique. Not the line —
     write-back re-reads the tab, and a row inserted since would shift every line."""
-    return (_clean(jurisdiction_ocdid), _clean(name).lower())
+    return (clean_cell(jurisdiction_ocdid), clean_cell(name).lower())
 
 
 def already_handled(rows: list[ImportRow]) -> bool:
@@ -254,98 +271,3 @@ def rows_by_jurisdiction(rows: list[ImportRow]) -> dict[str, list[ImportRow]]:
     for row in rows:
         grouped.setdefault(row.jurisdiction_ocdid, []).append(row)
     return grouped
-
-
-# ── Columns out ──────────────────────────────────────────────────────────────
-
-
-def _note_column(
-    raw_rows: list[dict],
-    imported: set[str],
-    notes: dict[tuple[str, str], str],
-    dismissed: set[str],
-) -> list[str]:
-    """A town imported this run gets fresh notes. Otherwise the note stays until the town's
-    last import is dismissed, when it no longer describes anything that can happen."""
-    column = []
-    for row in raw_rows:
-        key = row_key(row.get(JURISDICTION) or "", row.get("name") or "")
-        jurisdiction = key[0]
-        if jurisdiction in imported:
-            column.append(notes.get(key, ""))
-        elif jurisdiction in dismissed:
-            column.append("")
-        else:
-            column.append(_clean(row.get("note")))
-    return column
-
-
-def roster_columns(
-    raw_rows: list[dict],
-    rows: list[ImportRow],
-    errors: list[RowError],
-    imported: set[str],
-    stamp: str,
-    notes: dict[tuple[str, str], str],
-    dismissed: set[str],
-) -> dict[str, list]:
-    """`status`, `error`, `last_import_at` and `note` for every row of the roster tab.
-
-    Every row, not only the ones that changed: a row that failed last run and is fine now needs
-    its error cleared, and leaving it would have the volunteer chasing a problem they fixed.
-
-    A row is `blocked` when its own jurisdiction was rejected over somebody else's bad row —
-    which is most of a blocked town, and the reason has to point elsewhere or it reads as a
-    fault in a row that is perfectly fine.
-
-    **A row this run did not touch keeps what it already said — status *and* timestamp.**
-    `raw_rows` is the fallback source for both, not `rows`: an already-handled jurisdiction is
-    now skipped before parsing even runs (`_handled_jurisdictions`), so its rows never become
-    `ImportRow`s at all, and reading "what it already said" from the parse would just find
-    nothing — the same as a blank cell — and blank it. Reading the sheet's own current cells
-    instead is what keeps status and timestamp from decaying to blank purely because a
-    jurisdiction was skipped, not because a volunteer cleared anything.
-    """
-    previous_status = {offset + 2: _clean(row.get("status")) for offset, row in enumerate(raw_rows)}
-    previous_stamp = {
-        offset + 2: _clean(row.get("last_import_at")) for offset, row in enumerate(raw_rows)
-    }
-    error_by_line = {error.line: error for error in errors}
-    jurisdiction_by_line = {row.line: row.jurisdiction_ocdid for row in rows}
-    blocked = {error.jurisdiction_ocdid for error in errors}
-
-    # Only a line the parse actually reached this run — imported, blocked, or rejected — gets a
-    # fresh stamp. Anything else (a spare line, or a row skipped as already handled) keeps
-    # whatever timestamp the sheet already had, same as its status.
-    written = {row.line for row in rows} | set(error_by_line)
-
-    status, message, stamps = [], [], []
-    for line in range(2, len(raw_rows) + 2):
-        stamps.append(stamp if line in written else previous_stamp.get(line, ""))
-        error = error_by_line.get(line)
-        jurisdiction = jurisdiction_by_line.get(line) or (
-            error.jurisdiction_ocdid if error else ""
-        )
-        if error:
-            status.append(ERROR)
-            message.append(
-                f"{error.column}: {error.message}" if error.column else error.message
-            )
-        elif jurisdiction in imported:
-            status.append(IMPORTED)
-            message.append("")
-        elif jurisdiction in blocked:
-            status.append(BLOCKED)
-            message.append("another row in this town was rejected")
-        else:
-            # Untouched this run — a skipped locality, a row the parse never reached, or a
-            # spare line.
-            status.append(previous_status.get(line, ""))
-            message.append("")
-
-    return {
-        "status": status,
-        "error": message,
-        "last_import_at": stamps,
-        "note": _note_column(raw_rows, imported, notes, dismissed),
-    }

@@ -11,7 +11,8 @@ import logging
 import uuid
 from datetime import datetime, timezone
 
-from core.entry_rows import (
+from core.sheet_import_columns import roster_columns
+from core.sheet_import_rows import (
     JURISDICTION,
     REQUIRED_COLUMNS,
     ROSTER_HEADERS,
@@ -19,13 +20,14 @@ from core.entry_rows import (
     ImportStatus,
     already_handled,
     parse_rows,
-    roster_columns,
     row_key,
     rows_by_jurisdiction,
 )
 from core.roster_diff import person_diffs, person_notes
+from core.source_sites import SiteIndex, build_site_index
 from database.changesets import register_sheet_import_changeset
 from database import changeset_batches, dismissals
+from database import sites as sites_db
 from database.people import get_rosters_by_jurisdiction
 from database.roles import get_roles
 from database.source_records import insert_source_records
@@ -204,14 +206,14 @@ async def _derive_posts(
         return 0, f"people imported, but posts could not be derived: {e}"
 
 
-def read_rows(rows: list[dict]) -> SheetRead:
+def read_rows(rows: list[dict], sites: SiteIndex) -> SheetRead:
     """Raw roster rows, parsed, with a preview of what importing them would do.
 
     Pure, and the only place that decides what "ready" and "blocked" mean. Both callers reach
     it: the one that opens the spreadsheet and the one that is handed rows over HTTP, so the two
     cannot come to different conclusions about the same rows.
     """
-    parsed, errors = parse_rows(rows)
+    parsed, errors = parse_rows(rows, sites)
 
     seen = {row.jurisdiction_ocdid for row in parsed}
     # Blocked whole, never partly: importing six rows of seven proposes a roster missing
@@ -256,6 +258,15 @@ async def ensure_roster_header(spreadsheet_id: str) -> None:
     )
 
 
+async def _site_index() -> SiteIndex:
+    return build_site_index(await sites_db.site_owners())
+
+
+def _typed_jurisdictions(roster: list[dict]) -> set[str]:
+    """Rows already handled never parse; their cell is still their town."""
+    return {str(row.get(JURISDICTION) or "").strip() for row in roster} - {""}
+
+
 async def read_sheet(spreadsheet_id: str) -> SheetRead:
     """The roster tab, read and previewed.
 
@@ -269,7 +280,7 @@ async def read_sheet(spreadsheet_id: str) -> SheetRead:
     roster_rows = await asyncio.to_thread(
         sheets.read_tab, spreadsheet_id, entry_sheet.ROSTER_TAB
     )
-    return read_rows(roster_rows)
+    return read_rows(roster_rows, await _site_index())
 
 
 async def run_import(
@@ -322,7 +333,7 @@ async def write_back(results: list[JurisdictionResult]) -> None:
         roster = await asyncio.to_thread(
             sheets.read_tab, spreadsheet_id, entry_sheet.ROSTER_TAB
         )
-        parsed, errors = parse_rows(roster)
+        parsed, errors = parse_rows(roster, await _site_index())
 
         by_ocdid = {result.jurisdiction_ocdid: result for result in results}
         imported = {
@@ -336,7 +347,7 @@ async def write_back(results: list[JurisdictionResult]) -> None:
             for name, note in result.notes.items()
         }
         dismissed = await dismissals.latest_import_dismissed(
-            sorted({str(row.get(JURISDICTION) or "").strip() for row in roster} - {""})
+            sorted({row.jurisdiction_ocdid for row in parsed} | _typed_jurisdictions(roster))
         )
         await asyncio.to_thread(
             sheets.write_columns,

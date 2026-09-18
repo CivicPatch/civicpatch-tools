@@ -79,6 +79,14 @@ def _projected() -> dict:
         "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:zz/government",
         "updated_at": "2026-09-02T00:00:00+00:00",
         "labels": ["Mayor"],
+        # `PERSON_SIGHTINGS`' shape: no `name`, so it is not a `PersonSourceRecord`.
+        "sightings": [
+            {
+                "label": "Mayor",
+                "source_url": "https://example.gov/council",
+                "organization_id": "org-1",
+            }
+        ],
         "division_ocdid": "ocd-division/country:us/state:wa/place:zz",
         "memberships": [
             {

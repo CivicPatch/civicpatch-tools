@@ -275,6 +275,47 @@ async def _organizations_to_close_in(
     return read or list(people_here)
 
 
+async def _publish_people(
+    cur,
+    changeset_id: str,
+    jurisdiction_ocdid: str,
+    people: list[dict],
+    resolved_by_user_id: str | None,
+    changes: Change | None,
+) -> int:
+    """The part every publish shares: the guards, the people rows, and the publish record."""
+    last_seen_at = await get_updated_at(cur, changeset_id)
+    await _refuse_if_superseded(cur, changeset_id, jurisdiction_ocdid, last_seen_at)
+    await _refuse_if_not_publishable(cur, changeset_id)
+
+    incoming_ids = [str(person["id"]) for person in people]
+    asserted = await assertions.asserted_values(cur, EntityType.PERSON, incoming_ids)
+    rows = person_upsert_params(
+        [with_asserted_values(person, asserted.get(str(person["id"]), {})) for person in people]
+    )
+    if rows:
+        await cur.executemany(PERSON_UPSERT, rows)
+
+    await _record_publish(cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id, changes)
+    return len(rows)
+
+
+async def _close_claimed_and_supersede(cur, changeset_id: str, jurisdiction_ocdid: str) -> None:
+    last_seen_at = await get_updated_at(cur, changeset_id)
+    await memberships.close_claimed(cur, jurisdiction_ocdid, last_seen_at)
+    await memberships.close_for_people_rejected_here(cur, jurisdiction_ocdid, last_seen_at)
+
+    # Same transaction, so a published roster and the cards it obsoletes cannot disagree.
+    stale = await dismissals_db.dismiss_superseded_by(
+        cur, changeset_id, jurisdiction_ocdid, last_seen_at
+    )
+    if stale:
+        logger.info(
+            f"[{changeset_id}] Superseded {len(stale)} stale card(s) for "
+            f"{jurisdiction_ocdid}: {stale}"
+        )
+
+
 async def publish_changeset(
     changeset_id: str,
     jurisdiction_ocdid: str,
@@ -283,60 +324,60 @@ async def publish_changeset(
     derived: list[DerivedPost] | None = None,
     changes: Change | None = None,
 ) -> int:
-    incoming_ids = [str(person["id"]) for person in people]
-
+    """A whole roster: every membership re-derived, and whoever the source stopped listing closed."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        written = await _publish_people(
+            cur, changeset_id, jurisdiction_ocdid, people, resolved_by_user_id, changes
+        )
         last_seen_at = await get_updated_at(cur, changeset_id)
         # `updated_at` orders superseding whatever the kind — a hand edit really is the newest
         # word. Whether it *dates a seat* is a different question, and only a source reading
-        # answers it. Two consequences hang off this, so it is named for the question.
+        # answers it.
         read_from_a_source = await _collected_from_a_source(cur, changeset_id)
-        await _refuse_if_superseded(cur, changeset_id, jurisdiction_ocdid, last_seen_at)
-        await _refuse_if_not_publishable(cur, changeset_id)
-
-        asserted = await assertions.asserted_values(cur, EntityType.PERSON, incoming_ids)
-        rows = person_upsert_params(
-            [
-                with_asserted_values(person, asserted.get(str(person["id"]), {}))
-                for person in people
-            ]
-        )
-        if rows:
-            await cur.executemany(PERSON_UPSERT, rows)
-
-        await _record_publish(
-            cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id, changes
-        )
         if derived:
             await _bind_memberships(
-                cur,
-                changeset_id,
-                jurisdiction_ocdid,
-                derived,
-                last_seen_at,
-                read_from_a_source,
+                cur, changeset_id, jurisdiction_ocdid, derived, last_seen_at, read_from_a_source
             )
 
         # A person's claims first: publish applies what somebody said, then infers the rest from
         # what the source stopped listing.
-        await memberships.close_claimed(cur, jurisdiction_ocdid, last_seen_at)
-        await memberships.close_for_people_rejected_here(cur, jurisdiction_ocdid, last_seen_at)
-
+        await _close_claimed_and_supersede(cur, changeset_id, jurisdiction_ocdid)
         people_here = _people_by_organization(derived or [])
         for organization_id in await _organizations_to_close_in(cur, changeset_id, people_here):
             await memberships.close_absent(
                 cur, organization_id, people_here.get(organization_id, []), last_seen_at
             )
+    return written
 
-        # Same transaction, so a published roster and the cards it obsoletes cannot disagree.
-        stale = await dismissals_db.dismiss_superseded_by(
-            cur, changeset_id, jurisdiction_ocdid, last_seen_at
+
+async def publish_hand_edit(
+    changeset_id: str,
+    jurisdiction_ocdid: str,
+    people: list[dict],
+    resolved_by_user_id: str,
+    added: list[DerivedPost],
+    removed_person_ids: list[str],
+    changes: Change | None = None,
+) -> int:
+    """Only the people a hand edit touched: memberships for the ones it added, closed for the
+    ones it removed.
+
+    Nobody else's membership is re-derived or closed: `memberships.assign` already put people
+    where a human said, and re-deriving from label text undid it.
+    """
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        written = await _publish_people(
+            cur, changeset_id, jurisdiction_ocdid, people, resolved_by_user_id, changes
         )
-        if stale:
-            logger.info(
-                f"[{changeset_id}] Superseded {len(stale)} stale card(s) for "
-                f"{jurisdiction_ocdid}: {stale}"
+        last_seen_at = await get_updated_at(cur, changeset_id)
+        if added:
+            await _bind_memberships(
+                cur, changeset_id, jurisdiction_ocdid, added, last_seen_at, advances_last_seen=False
             )
-
-    return len(rows)
+        await memberships.close_for_people(
+            cur, jurisdiction_ocdid, removed_person_ids, last_seen_at
+        )
+        await _close_claimed_and_supersede(cur, changeset_id, jurisdiction_ocdid)
+    return written

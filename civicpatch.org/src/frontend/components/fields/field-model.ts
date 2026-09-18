@@ -8,6 +8,7 @@
 
 import {
   FIELD_SCHEMA,
+  POST_FIELD,
   diffValue,
   isContextField,
   isMulti,
@@ -104,6 +105,7 @@ export function fieldState(
   newRecord: DiffRecord,
 ): ScalarDiffState {
   if (field.diff === false) return "same";
+  if (field.key === POST_FIELD && holdsPickedPost(oldRecord, newRecord)) return "same";
   const oldValue = diffValue(oldRecord, field);
   const newValue = diffValue(newRecord, field);
   if (isMulti(field)) {
@@ -113,6 +115,14 @@ export function fieldState(
     );
   }
   return fieldDiffState(oldValue, newValue, field.type);
+}
+
+// A published record holds its post in `memberships`, never as `post_id`, so a new side
+// naming a post they already hold (a partial import keeping it) is not an Office change.
+function holdsPickedPost(oldRecord: DiffRecord, newRecord: DiffRecord): boolean {
+  const picked = newRecord?.post_id;
+  if (!picked) return false;
+  return (oldRecord?.memberships ?? []).some((membership) => membership.post_id === picked);
 }
 
 export type FieldChangeState = Exclude<ScalarDiffState, "same">;

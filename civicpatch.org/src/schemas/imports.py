@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel
 
-from core.entry_rows import RowError
+from core.sheet_import_rows import RowError
 from core.roster_diff import ChangeCounts
 
 

@@ -1,7 +1,7 @@
 """
 Convert a jurisdiction_id-keyed roster payload into rows pasteable under Entry[Roster]'s
 header (`jurisdiction_ocdid, name, source_url, label, email, phone, image` — the order
-`core.entry_rows.ROSTER_HEADERS` writes, since a paste lands positionally).
+`core.sheet_import_rows.ROSTER_HEADERS` writes, since a paste lands positionally).
 
 Standalone: no app imports, no database, no docker. Runs anywhere with plain python3. The
 source's `jurisdiction_id` (e.g. "jurisdiction-ca-menlo-park") becomes the ocdid it implies

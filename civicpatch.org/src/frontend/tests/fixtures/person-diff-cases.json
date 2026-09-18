@@ -1,0 +1,71 @@
+{
+  "about": "Record pairs and the fields that changed between them. Read by both diffs — tests/field-model-contract.test.ts (the card) and tests/unit/core/test_roster_diff_contract.py (the batch counts and sheet notes) — so they cannot drift. post_id is not here: the card compares it for a reviewer's pick, the server leaves moves to the proposals.",
+  "cases": [
+    {
+      "name": "identical records",
+      "published": {"name": "Ana Reyes", "emails": ["ana@town.gov"], "start_date": "2024"},
+      "proposed": {"name": "Ana Reyes", "emails": ["ana@town.gov"], "start_date": "2024"},
+      "changed": []
+    },
+    {
+      "name": "a renamed person",
+      "published": {"name": "Ana Reyes"},
+      "proposed": {"name": "Ana M. Reyes"},
+      "changed": ["name"]
+    },
+    {
+      "name": "whitespace around a name is not a change",
+      "published": {"name": "Ana Reyes"},
+      "proposed": {"name": "  Ana Reyes "},
+      "changed": []
+    },
+    {
+      "name": "a new term start",
+      "published": {"name": "Ana Reyes", "start_date": "2022"},
+      "proposed": {"name": "Ana Reyes", "start_date": "2024"},
+      "changed": ["start_date"]
+    },
+    {
+      "name": "lists compare as case-folded sets",
+      "published": {"name": "Ana Reyes", "emails": ["Ana@Town.gov", "clerk@town.gov"]},
+      "proposed": {"name": "Ana Reyes", "emails": ["clerk@town.gov ", "ana@town.gov"]},
+      "changed": []
+    },
+    {
+      "name": "an added phone",
+      "published": {"name": "Ana Reyes", "phones": ["(206) 555-0100"]},
+      "proposed": {"name": "Ana Reyes", "phones": ["(206) 555-0100", "(206) 555-0199"]},
+      "changed": ["phones"]
+    },
+    {
+      "name": "an added other name",
+      "published": {"name": "Ana Reyes", "other_names": []},
+      "proposed": {"name": "Ana Reyes", "other_names": ["Ana Maria Reyes"]},
+      "changed": ["other_names"]
+    },
+    {
+      "name": "a missing list is an empty list",
+      "published": {"name": "Ana Reyes"},
+      "proposed": {"name": "Ana Reyes", "emails": [], "urls": []},
+      "changed": []
+    },
+    {
+      "name": "a new photo or source is not a change",
+      "published": {"name": "Ana Reyes", "image": "a.jpg", "source_urls": ["https://a.gov"]},
+      "proposed": {"name": "Ana Reyes", "image": "b.jpg", "source_urls": ["https://b.gov"]},
+      "changed": []
+    },
+    {
+      "name": "labels are the office's business, not a field",
+      "published": {"name": "Ana Reyes", "labels": ["Mayor"]},
+      "proposed": {"name": "Ana Reyes", "labels": ["Mayor Pro Tem"]},
+      "changed": []
+    },
+    {
+      "name": "several fields, in schema order",
+      "published": {"name": "Ana Reyes", "end_date": "2026", "urls": ["https://a.gov"]},
+      "proposed": {"name": "Ana Reyes", "end_date": "2028", "urls": ["https://b.gov"], "emails": ["ana@town.gov"]},
+      "changed": ["end_date", "emails", "urls"]
+    }
+  ]
+}

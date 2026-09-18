@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 import pytest
 
-from core.entry_rows import REQUIRED_COLUMNS, ROSTER_HEADERS
+from core.sheet_import_rows import REQUIRED_COLUMNS, ROSTER_HEADERS
 from services import entry_sheet
 from services.sheet_import import ensure_roster_header
 

@@ -10,12 +10,12 @@ import pytest
 
 from scripts.seed_open_data_subset import (
     division_row,
-    files_in_states,
     jurisdiction_files,
     membership_row,
     organization_row,
     person_row,
     post_row,
+    role_alias_row,
     role_row,
     rows_in_jurisdictions,
 )
@@ -51,17 +51,6 @@ def test_jurisdiction_files_strips_the_archive_directory_and_keeps_only_jurisdic
 
 
 @pytest.mark.unit
-def test_files_in_states_narrows_by_the_state_directory():
-    files = {
-        "data_source/wa/local/jurisdictions.yml": "",
-        "data_source/tx/local/jurisdictions.yml": "",
-    }
-
-    assert files_in_states(files, {"wa"}) == ["data_source/wa/local/jurisdictions.yml"]
-    assert sorted(files_in_states(files, None)) == sorted(files)
-
-
-@pytest.mark.unit
 def test_role_row_drops_nothing_it_should_not():
     row = role_row(
         {
@@ -75,6 +64,22 @@ def test_role_row_drops_nothing_it_should_not():
     )
 
     assert set(row) == {"id", "label", "status", "is_unique", "priority", "created_at"}
+
+
+@pytest.mark.unit
+def test_role_alias_row_keeps_the_role_it_names():
+    row = role_alias_row(
+        {
+            "id": "00000000-0000-0000-0000-000000000001",
+            "role_id": "mayor-pro-tempore",
+            "label": "Mayor Pro Tem",
+            "status": "active",
+            "created_at": "2026-01-01T00:00:00Z",
+        }
+    )
+
+    assert row["role_id"] == "mayor-pro-tempore"
+    assert set(row) == {"id", "role_id", "label", "status", "created_at"}
 
 
 @pytest.mark.unit

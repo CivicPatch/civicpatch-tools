@@ -7,7 +7,7 @@ def rows_from_table(table: list[list]) -> list[dict]:
     Sheets readers, so one sheet cannot parse differently depending on how it was read.
 
     Headers are lowercased and stripped — a header row is typed by a human. A trailing `*` is
-    stripped too: `entry_rows.ROSTER_HEADERS` marks its required columns that way on the sheet
+    stripped too: `sheet_import_rows.ROSTER_HEADERS` marks its required columns that way on the sheet
     itself, and the marker is for the human reading the header, not a character to match on.
     Short rows are padded, because Sheets omits trailing empty cells and a blank optional field
     is an empty value, not a missing column. A leading `'` is stripped: Sheets prefixes a value

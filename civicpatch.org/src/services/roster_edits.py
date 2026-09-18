@@ -32,7 +32,7 @@ from database.people import get_roster
 from database.source_records import insert_source_records
 from schemas.activity import Change
 from schemas.common import Identity
-from services.publish import promote_images, publish_people
+from services.publish import promote_images, publish_people, publish_people_edit
 from services.roster import proposed_roster, scraped_roster
 from shared.schemas import Post
 from shared.utils.id_utils import make_id
@@ -123,8 +123,17 @@ async def edit_published(
             changeset_id, jurisdiction_ocdid, user.user_id, changes
         )
 
-    await publish(
-        changeset_id, jurisdiction_ocdid, patched, user.user_id, changes=publish_change
+    # The editor sends every person, unchanged ones with no fields; one it left out was removed.
+    touched = {edit.id for edit in data if edit.fields}
+    patched_ids = {person["id"] for person in patched}
+    await publish_people_edit(
+        changeset_id,
+        jurisdiction_ocdid,
+        [person for person in patched if person["id"] in touched],
+        _additions(base, patched),
+        [person["id"] for person in base if person["id"] not in patched_ids],
+        user.user_id,
+        changes=publish_change,
     )
     return changeset_id, patched
 
