@@ -36,7 +36,7 @@ from schemas.activity import (
     Change,
     FieldChange,
 )
-from schemas.posts import AssignmentResult
+from schemas.posts import AssignmentResult, MembershipRemovalAssertion
 from shared.utils.statuses import ActivityType
 
 # The field a human can own, named once: it is compared in SQL below and asserted in Python.
@@ -48,6 +48,11 @@ LABEL_FIELD = "label"
 # considered and is structurally impossible (`NOT_REJECTABLE`), and a new `kind` would have
 # meant teaching the fold a third value everywhere it currently only expects two.
 EXISTENCE_FIELD = "exists"
+# The claim "stop listing this membership": accepted on the membership, applied at publish by
+# closing it. Not a claim about the term — `closed_at` is ours, `end_date` is the source's.
+# A claim rather than a bare write so it can be withdrawn, and so rollback re-derives without a
+# special case (see the plan's `published state = f(evidence, claims)`).
+CLOSED_FIELD = "closed_at"
 # The value carried by every retraction claim. Fixed and arbitrary — a reject's dedup key
 # includes its value, so retract/reinstate always targets the same (entity, field, value) row
 # rather than accumulating a new one each cycle.
@@ -186,6 +191,74 @@ async def advance_last_seen_at(cur, person_ids: list[str], last_seen_at) -> int:
     return cur.rowcount
 
 
+def removal_claimed(claim: dict) -> MembershipRemovalAssertion:
+    """Which of the three a membership's live claims amount to. One reading, so publish and the
+    editor cannot disagree about what somebody chose."""
+    if claim.get(EXISTENCE_FIELD, {}).get(AssertionKind.REJECT):
+        return MembershipRemovalAssertion.NEVER_HELD
+    if claim.get(CLOSED_FIELD, {}).get(AssertionKind.ACCEPT):
+        return MembershipRemovalAssertion.CLOSED
+    return MembershipRemovalAssertion.NONE
+
+
+async def close_claimed(cur, jurisdiction_ocdid: str, closed_at) -> int:
+    """Close every open membership somebody said to stop carrying, and every one they said never
+    held.
+
+    Publish's other close (`close_absent`) is an inference from the source; this one is somebody's
+    claim, so it runs whatever the scrape covered.
+    """
+    held = await open_memberships(cur, [jurisdiction_ocdid])
+    if not held:
+        return 0
+    claims = await assertions.asserted_values(
+        cur, EntityType.MEMBERSHIP, [membership.id for membership in held]
+    )
+    ended = [
+        membership.id
+        for membership in held
+        if removal_claimed(claims.get(membership.id, {})) is not MembershipRemovalAssertion.NONE
+    ]
+    if not ended:
+        return 0
+    await cur.execute(
+        "UPDATE memberships SET closed_at = %s WHERE id::text = ANY(%s) AND closed_at IS NULL",
+        (closed_at, ended),
+    )
+    return cur.rowcount
+
+
+async def close_for_people_rejected_here(cur, jurisdiction_ocdid: str, closed_at) -> int:
+    """Close every membership of a person somebody said is a member of nothing here.
+
+    The other half of the fork a reviewer faces: closing one membership says stop listing them in
+    that organization, this says the record does not belong to this jurisdiction at all. The person
+    row survives either way, because deleting it is its own act and the only irreversible one.
+    """
+    held = await open_memberships(cur, [jurisdiction_ocdid])
+    if not held:
+        return 0
+    claims = await assertions.asserted_values(
+        cur, EntityType.PERSON, list({membership.person_id for membership in held})
+    )
+    rejected = [
+        person_id
+        for person_id in {membership.person_id for membership in held}
+        if claims.get(person_id, {}).get(EXISTENCE_FIELD, {}).get(AssertionKind.REJECT)
+    ]
+    if not rejected:
+        return 0
+    await cur.execute(
+        """
+        UPDATE memberships SET closed_at = %s
+        WHERE person_id::text = ANY(%s) AND closed_at IS NULL
+          AND post_id IN (SELECT id FROM posts WHERE jurisdiction_ocdid = %s)
+        """,
+        (closed_at, rejected, jurisdiction_ocdid),
+    )
+    return cur.rowcount
+
+
 async def close_absent(
     cur, organization_id: str, present_person_ids: list[str], closed_at
 ) -> int:
@@ -222,10 +295,12 @@ async def list_for_jurisdiction(
                membership_source_labels(m.sources) AS source_labels,
                m.designations, m.meta_unmatched_text,
                p.role_id, p.division_ocdid,
+               p.organization_id::text, o.name AS organization_name,
                r.label AS role_label
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
         JOIN people pe ON pe.id = m.person_id
+        JOIN organizations o ON o.id = p.organization_id
         JOIN roles r ON r.id = p.role_id
         WHERE p.jurisdiction_ocdid = %(jurisdiction_ocdid)s
           AND m.first_seen_at < COALESCE(%(as_of)s::date + 1, now())
@@ -248,10 +323,34 @@ async def list_for_jurisdiction(
 async def list_by_person(
     jurisdiction_ocdid: str, as_of: date | None = None
 ) -> list[dict]:
-    """The roster by person rather than by post. `as_of` is None for now."""
+    """The roster by person rather than by post, each membership carrying whichever removal
+    somebody has claimed about it. `as_of` is None for now.
+
+    The claims ride along because the editor offers them as one exclusive choice: without them the
+    screen would have to guess which button is already chosen, or ask per row. `not_a_member` is a
+    claim about the person, so it repeats on each of their rows.
+    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        return await list_for_jurisdiction(cur, jurisdiction_ocdid, as_of)
+        rows = await list_for_jurisdiction(cur, jurisdiction_ocdid, as_of)
+        claims = await assertions.asserted_values(
+            cur, EntityType.MEMBERSHIP, [row["id"] for row in rows]
+        )
+        person_claims = await assertions.asserted_values(
+            cur, EntityType.PERSON, list({row["person_id"] for row in rows})
+        )
+    return [
+        {
+            **row,
+            "removal_assertion": removal_claimed(claims.get(row["id"], {})).value,
+            "not_a_member": bool(
+                person_claims.get(row["person_id"], {})
+                .get(EXISTENCE_FIELD, {})
+                .get(AssertionKind.REJECT)
+            ),
+        }
+        for row in rows
+    ]
 
 
 # The same shape `people._scope` and `posts.list_page_for_state` build. Written out a third
@@ -536,6 +635,53 @@ async def open_source_labels_by_person(
         for person_id, source_labels in await cur.fetchall()
         if source_labels
     }
+
+
+async def _assert(
+    cur,
+    membership_id: str,
+    field_path: str,
+    kind: AssertionKind,
+    user_id: str,
+    reason: str | None,
+    changeset_id: str | None,
+) -> str:
+    return await assertions.upsert(
+        cur,
+        Assertion(
+            entity_type=EntityType.MEMBERSHIP,
+            entity_id=membership_id,
+            field_path=field_path,
+            kind=kind,
+            value=True,
+            changeset_id=changeset_id,
+            sources=[Source(note=reason)] if reason else [],
+        ),
+        user_id,
+    )
+
+
+async def assert_closed_at(
+    cur,
+    membership_id: str,
+    user_id: str,
+    reason: str | None = None,
+    changeset_id: str | None = None,
+) -> str:
+    """Somebody says to stop carrying this membership. Publish applies it (`close_claimed`);
+    withdrawing it and publishing again re-derives the membership as though it had never been made.
+
+    Not `end_date`: that is the source's claim about the term, and this one is ours about the
+    record, the same split `closed_at` itself makes."""
+    return await _assert(
+        cur, membership_id, CLOSED_FIELD, AssertionKind.ACCEPT, user_id, reason, changeset_id
+    )
+
+
+async def withdraw_closed_at(cur, membership_id: str, user_id: str) -> int:
+    return await assertions.withdraw(
+        cur, EntityType.MEMBERSHIP, membership_id, CLOSED_FIELD, AssertionKind.ACCEPT, user_id
+    )
 
 
 async def set_label(

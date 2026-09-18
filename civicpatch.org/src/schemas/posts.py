@@ -1,3 +1,5 @@
+from enum import StrEnum
+
 from pydantic import BaseModel, Field
 
 from schemas.activity import FieldChange
@@ -42,15 +44,37 @@ class MovePostRequest(BaseModel):
     organization_id: str
 
 
+class MembershipRemovalAssertion(StrEnum):
+    """Which assertion takes a membership off the roster. Narrower than "an assertion about a
+    membership", which also covers its label and whatever else a person can claim about one.
+
+    One of three, because the two removals contradict each other: a membership that never held did
+    not also close, and either withdraws the other."""
+
+    NONE = "none"
+    CLOSED = "closed"
+    NEVER_HELD = "never_held"
+
+
+class MembershipRemovalRequest(BaseModel):
+    """What a person says about a membership, or about someone being a member here at all.
+
+    `reason` rides as the assertion's `sources` note, the "phoned the clerk" case. `changeset_id`
+    files it under a review in progress, so dismissing that review takes it with it.
+    """
+
+    assertion: MembershipRemovalAssertion = MembershipRemovalAssertion.NONE
+    reason: str | None = None
+    changeset_id: str | None = None
+
+
 class AssignMembershipRequest(BaseModel):
     """Assign a person, moving them off any other post in the same body.
 
     No `organization_id`: it comes from the post, so a request cannot name a mismatched pair.
 
-    No "what happened?" flag either — this is always a transition. Correction (they were never
-    in the old post) needs the publish merge to apply `assertions`, which is not built yet:
-    until it does, the next scrape re-derives the old membership, and offering the option would
-    let a curator believe they fixed history when it will be undone within the week.
+    No "what happened?" flag either: this is always a transition. Correction (they were never in
+    the old post) is its own claim now, `PUT /memberships/{id}/assertion`, which publish applies.
     """
 
     person_id: str

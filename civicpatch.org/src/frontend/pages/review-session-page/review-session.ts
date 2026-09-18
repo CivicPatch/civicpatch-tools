@@ -22,6 +22,7 @@ import {
   type IssueChecks,
 } from "../../components/review/issue-checks.js";
 import { useFrozenFields } from "./use-frozen-fields.js";
+import { useRosterMemberships } from "../../hooks/use-roster-memberships.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
 import {
   blockingErrors,
@@ -176,6 +177,11 @@ function ReviewSession(host: ReviewSessionHost) {
     proposals: proposalsByPersonId(changes ?? []),
   });
   const frozen = useFrozenFields(changesetId, cardFields(cards));
+  // Filed under the changeset being reviewed, so dismissing the review takes the claim with it.
+  const { memberships, setRemoval, setNotAMemberHere } = useRosterMemberships(
+    jurisdictionOcdid,
+    changesetId,
+  );
   const duplicateIds = duplicateIdsFor({
     existing: pr_people?.existing ?? [],
     currentPeople: currentPeople ?? [],
@@ -260,6 +266,9 @@ function ReviewSession(host: ReviewSessionHost) {
     roles,
     canAssignMembership,
     canCreatePost,
+    rosterMemberships: memberships,
+    onSetRemoval: setRemoval,
+    onSetNotAMember: setNotAMemberHere,
     proposals: proposalsByPersonId(changes ?? []),
     assertions: assertions ?? {},
     overriddenSourceValues: overriddenSourceValues ?? {},
@@ -385,6 +394,7 @@ function ReviewSession(host: ReviewSessionHost) {
         .roles=${roles}
         .assertions=${assertions ?? {}}
         .overriddenSourceValues=${overriddenSourceValues ?? {}}
+        .organizations=${organizations}
       ></review-overview>
       <review-sidebar
         .issues=${allIssues}

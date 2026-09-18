@@ -21,6 +21,7 @@ from shared.schemas import IssueCode
 # issue the same, so a ward-numbering gap outranked nothing and a new type was an
 # unprioritisable +1.
 _ISSUE_WEIGHT = {
+    IssueCode.NOBODY_FOUND_IN_ORGANIZATION: 10,  # a whole body missing reads like a failed scrape
     IssueCode.TOO_FEW_PEOPLE: 10,        # the roster is incomplete; publishing retires people
     IssueCode.DUPLICATE_UNIQUE_ROLE: 8,  # two mayors is a contradiction, not a judgement call
     IssueCode.ABSENT_PERSON: 5,          # someone we hold is gone

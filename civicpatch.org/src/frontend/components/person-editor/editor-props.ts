@@ -23,6 +23,10 @@ import {
   type RoleOption,
 } from "../posts-list/posts-model.js";
 import { type ProposedChange } from "../../schemas/membership-proposal.js";
+import {
+  type MembershipRemoval,
+  type RosterMembership,
+} from "../../schemas/membership-removal.js";
 
 export type EditorContextBase = Omit<
   EditorContext,
@@ -39,6 +43,10 @@ export interface EditorContext {
   roles: RoleOption[];
   canAssignMembership: boolean;
   canCreatePost: boolean;
+  // The whole jurisdiction's open memberships; each editor takes its own person's out of it.
+  rosterMemberships: RosterMembership[];
+  onSetRemoval: (membershipId: string, assertion: MembershipRemoval) => void;
+  onSetNotAMember: (personId: string, claimed: boolean) => void;
   proposals: Map<string, ProposedChange[]>;
   assertions: Record<string, PersonAssertion[]>;
   overriddenSourceValues: Record<string, Record<string, unknown>>;
@@ -111,6 +119,10 @@ export function personEditorPropsFor(
 ): PersonEditorProps {
   const save: Save = (updates) => ctx.onPersonSave(card.personId, updates);
   return {
+    personId: card.personId,
+    memberships: ctx.rosterMemberships,
+    onSetRemoval: ctx.onSetRemoval,
+    onSetNotAMember: ctx.onSetNotAMember,
     status: card.status,
     oldRecord: card.oldRecord,
     newRecord: card.newRecord,

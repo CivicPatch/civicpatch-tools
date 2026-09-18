@@ -20,9 +20,11 @@ import {
 } from "./diff-card.js";
 import {
   runsOf,
-  sectionsOf,
+  foundNobody,
+  sectionsByOrganization,
   sourceMapFor,
   tallyOf,
+  type CardInOrganization,
   type SourceMap,
 } from "./overview-model.js";
 import { type ProposedChange } from "../../schemas/membership-proposal.js";
@@ -39,6 +41,9 @@ export interface ReviewOverviewProps {
   roles: RoleOption[];
   assertions: Record<string, PersonAssertion[]>;
   overriddenSourceValues: Record<string, Record<string, unknown>>;
+  // Named so a section heading can say whose roster it is. A proposal names its organization by
+  // id only, and an id is not a heading.
+  organizations?: { id: string; name: string }[];
 }
 
 const UNMATCHED_SECTION_LABEL = "Unmatched role";
@@ -83,19 +88,30 @@ function renderCardRuns(
 
 function renderSection(
   heading: string,
-  cards: PersonCard[],
+  entries: CardInOrganization[],
   props: ReviewOverviewProps,
   sources: SourceMap,
   proposals: Map<string, ProposedChange[]>,
 ) {
   return renderRoleGroup(
     heading,
-    cards,
-    (card: PersonCard) => card.personId,
-    (subset: PersonCard[]) => renderCardRuns(subset, props, sources, proposals),
+    entries,
+    (entry: CardInOrganization) => entry.card.personId,
+    (subset: CardInOrganization[]) =>
+      renderCardRuns(subset.map((entry) => entry.card), props, sources, proposals),
     props.openPersonId,
-    (card: PersonCard) => renderInlineEditor(card, props),
+    (entry: CardInOrganization) => renderInlineEditor(entry.card, props),
   );
+}
+
+/** The proposals of one organization, keyed by person: a card rendered inside that section shows
+ * the post it holds there, not the one it holds in another. */
+function proposalsIn(entries: CardInOrganization[]): Map<string, ProposedChange[]> {
+  const scoped = new Map<string, ProposedChange[]>();
+  for (const { card, proposal } of entries) {
+    scoped.set(card.personId, [...(scoped.get(card.personId) ?? []), proposal]);
+  }
+  return scoped;
 }
 
 // A long "dropped" list shows the same way a long unchanged run does elsewhere — a couple in
@@ -175,23 +191,64 @@ function renderDepartingSection(
   `;
 }
 
+/** One organization's roster, headed the way the jurisdiction page heads its own (`.panel`,
+ * `panel__cap`), with the roles inside it. */
+function renderOrganization(
+  organizationId: string,
+  entries: CardInOrganization[],
+  ranked: { roleLabel: string; people: CardInOrganization[] }[],
+  unmatched: CardInOrganization[],
+  props: ReviewOverviewProps,
+  sources: SourceMap,
+) {
+  const name =
+    props.organizations?.find((organization) => organization.id === organizationId)?.name ??
+    "This jurisdiction";
+  const people = new Set(entries.map((entry) => entry.card.personId)).size;
+  const scoped = proposalsIn(entries);
+  return html`
+    <section class="panel review-overview__organization">
+      <div class="panel__cap">
+        <b>${name}</b>
+        <span class="jurisdiction-section__meta">
+          ${foundNobody(entries)
+            ? "not found in this scrape, nothing here changes"
+            : `${people} ${people === 1 ? "person" : "people"}`}
+        </span>
+      </div>
+      <div class="rgroup-list">
+        ${ranked.map((group) =>
+          renderSection(group.roleLabel, group.people, props, sources, scoped),
+        )}
+        ${renderSection(UNMATCHED_SECTION_LABEL, unmatched, props, sources, scoped)}
+      </div>
+    </section>
+  `;
+}
+
 function ReviewOverview(props: ReviewOverviewProps) {
   const { cards, isReadOnly, onAdd, roles } = props;
   const proposals = proposalsByPersonId(props.changes ?? []);
   const list = cards ?? [];
   const sources = sourceMapFor(list);
   const roleOrder = roles.map((role) => role.id);
-  const sections = sectionsOf(list, proposals, roleOrder);
+  const sections = sectionsByOrganization(list, proposals, roleOrder);
 
   return html`
     <div class="review-overview">
       ${renderTally(list)}
       ${list.length
         ? html`<div class="rgroup-list">
-            ${sections.ranked.map((group) =>
-              renderSection(group.roleLabel, group.people, props, sources, proposals),
+            ${sections.organizations.map((organization) =>
+              renderOrganization(
+                organization.organizationId,
+                [...organization.ranked.flatMap((group) => group.people), ...organization.unmatched],
+                organization.ranked,
+                organization.unmatched,
+                props,
+                sources,
+              ),
             )}
-            ${renderSection(UNMATCHED_SECTION_LABEL, sections.unmatched, props, sources, proposals)}
             ${renderDepartingSection(sections.departing, props, sources, proposals)}
             ${!isReadOnly && onAdd
               ? html`<button class="review-row review-row--ghost" @click=${onAdd}>

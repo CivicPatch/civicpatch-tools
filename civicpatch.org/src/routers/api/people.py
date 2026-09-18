@@ -11,8 +11,10 @@ from core.people_edits import PeopleValidationError, PersonPatch
 from fastapi import APIRouter, Depends, HTTPException, Query
 from lib.auth import require_route_access
 from pydantic import BaseModel
+from schemas.posts import MembershipRemovalRequest
 from schemas.common import Identity, RouteCategory, UserRole
 from schemas.pagination import paginated_response, pagination_offset
+from services import membership_assertions
 from services.review_proposal import assertions_for_people
 from shared.utils.person_id_utils import resolve_people_ids
 
@@ -113,17 +115,48 @@ def get_router() -> APIRouter:
         people = await jurisdictions_db.get_people_by_geo(lat, long)
         return {"data": people}
 
+    # The one irreversible act on a person: the row goes, their memberships with it, and the next
+    # scrape resolves that human to a new id. Everything else a reviewer can do is a withdrawable
+    # claim, which is why this alone is maintainers-only (raised from contributors 2026-09-17,
+    # where it sat below editing the same person's fields).
     @router.delete("/{person_id}")
     async def delete_person_endpoint(
         person_id: str,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
         # The activity row this writes is what the outward mirrors sweep on; nothing here calls
         # out to them.
         await database.delete_person(person_id, user.user_id)
         return {"data": None}
+
+    # Reversible, like the membership claims: publish applies it, the DELETE takes it back. Open
+    # to any signed-in user for that reason, unlike the delete above.
+    @router.put("/{person_id}/not-a-member")
+    async def assert_not_a_member_endpoint(
+        person_id: str,
+        body: MembershipRemovalRequest,
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+    ):
+        # 401 rather than a NULL author, as `routers/api/assertions.py`: a claim nobody made is
+        # not a claim, and `assertions.created_by` is NOT NULL.
+        if not user.user_id:
+            raise HTTPException(status_code=401, detail="Sign in to record a claim.")
+        await membership_assertions.assert_not_a_member(
+            person_id, user.user_id, body.reason, body.changeset_id
+        )
+        return {"data": {"ok": True}}
+
+    @router.delete("/{person_id}/not-a-member")
+    async def withdraw_not_a_member_endpoint(
+        person_id: str,
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+    ):
+        if not user.user_id:
+            raise HTTPException(status_code=401, detail="Sign in to record a claim.")
+        await membership_assertions.withdraw_not_a_member(person_id, user.user_id)
+        return {"data": {"ok": True}}
 
     @router.get("/directory")
     async def list_directory_endpoint(

@@ -414,6 +414,8 @@ class IssueCode(str, Enum):
     DUPLICATE_UNIQUE_ROLE = "duplicate_unique_role"
     DIVISION_NUMBERING_GAP = "division_numbering_gap"
     UNVERIFIED_POST = "unverified_post"
+    # A scrape that found nobody in one of the jurisdiction's organizations.
+    NOBODY_FOUND_IN_ORGANIZATION = "nobody_found_in_organization"
     # A field moved on someone who is in both rosters.
     CHANGED_FIELD = "changed_field"
 

@@ -16,7 +16,8 @@ import pytest
 import pytest_asyncio
 
 from core.post_derivation import ChosenPost, DerivedMembership, MembershipSource
-from database import divisions, memberships, organizations, posts
+from database import assertions, divisions, memberships, organizations, posts
+from schemas.assertions import Assertion, AssertionKind, EntityType
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from database.review_priority import issue_count, issue_priority
@@ -1545,5 +1546,107 @@ async def test_a_body_whose_extraction_returned_nobody_closes_nobody():
     from database.publications import publish_changeset
 
     await publish_changeset(changeset_id, _OCDID, [], None, derived=[])
+
+    assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
+
+
+async def _curator_id(cur) -> str:
+    """`assertions.created_by` is a foreign key, so a claim needs somebody to have made it."""
+    await cur.execute("SELECT id::text FROM users WHERE email = %s", (_CURATOR,))
+    row = await cur.fetchone()
+    if row:
+        return row[0]
+    await cur.execute(
+        "INSERT INTO users (email, provider, provider_user_id, username, role) "
+        "VALUES (%s, 'email', %s, %s, 'admins') RETURNING id::text",
+        (_CURATOR, _CURATOR, _CURATOR.replace("@", "-")),
+    )
+    return (await cur.fetchone())[0]
+
+
+async def _claim(membership_id: str, field: str, kind: AssertionKind, value) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await assertions.upsert(
+            cur,
+            Assertion(
+                entity_type=EntityType.MEMBERSHIP,
+                entity_id=membership_id,
+                field_path=field,
+                kind=kind,
+                value=value,
+            ),
+            await _curator_id(cur),
+        )
+        await conn.commit()
+
+
+async def _open_membership_id(person_id: str) -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text FROM memberships WHERE person_id = %s AND closed_at IS NULL",
+            (person_id,),
+        )
+        return (await cur.fetchone())[0]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_membership_somebody_said_ended_closes_at_publish():
+    """The reviewer's act is a claim, and publishing is what applies it — so a review that is
+    never approved leaves the published roster alone."""
+    person_id = await _seed_person("Ana Reyes")
+    council, _ = await _two_bodies()
+    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
+    membership_id = await _open_membership_id(person_id)
+
+    await _claim(membership_id, "closed_at", AssertionKind.ACCEPT, True)
+    assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
+
+    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
+
+    assert await _open_memberships(person_id) == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_membership_somebody_said_never_held_closes_at_publish():
+    person_id = await _seed_person("Ana Reyes")
+    council, _ = await _two_bodies()
+    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
+    membership_id = await _open_membership_id(person_id)
+
+    await _claim(membership_id, "exists", AssertionKind.REJECT, True)
+    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
+
+    assert await _open_memberships(person_id) == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_withdrawing_the_claim_reopens_the_membership_on_the_next_publish():
+    """What rollback does: withdraw the claim, publish again, and the derivation puts them back.
+    Nothing here knows about undo — the state is the derivation of evidence and live claims."""
+    person_id = await _seed_person("Ana Reyes")
+    council, _ = await _two_bodies()
+    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
+    membership_id = await _open_membership_id(person_id)
+    await _claim(membership_id, "closed_at", AssertionKind.ACCEPT, True)
+    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await assertions.withdraw(
+            cur,
+            EntityType.MEMBERSHIP,
+            membership_id,
+            "closed_at",
+            AssertionKind.ACCEPT,
+            await _curator_id(cur),
+        )
+        await conn.commit()
+
+    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
 
     assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]

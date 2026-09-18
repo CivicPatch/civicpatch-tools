@@ -20,8 +20,10 @@ _MAYORS_OFFICE = "org-2"
 _WARD_3 = f"{_BASE}/ward:3"
 
 
-def _propose(derived, existing):
-    return propose(derived, existing)
+def _propose(derived, existing, organizations_read=(_COUNCIL, _MAYORS_OFFICE)):
+    """Both organizations read unless a test says otherwise, which is what every case below
+    assumes when it expects an absence."""
+    return propose(derived, existing, list(organizations_read))
 
 
 def _post(role_id, division_ocdid, *person_ids, label=None, organization_id=_COUNCIL):
@@ -146,6 +148,32 @@ def test_an_empty_scrape_proposes_nothing():
     changes = _propose([], [_held("a", "mayor", _BASE)])
 
     assert changes == []
+
+
+@pytest.mark.unit
+def test_a_body_the_scrape_never_read_proposes_nothing():
+    """The bound publish already closes within: a council-only scrape says nothing about a school
+    board member. Without it, review shows a departure publish will refuse to make."""
+    changes = _propose(
+        [_post("mayor", _BASE, "a")],
+        [_held("b", "trustee", _BASE, organization_id=_MAYORS_OFFICE)],
+        organizations_read=(_COUNCIL,),
+    )
+
+    assert [change.person_id for change in changes] == ["a"]
+
+
+@pytest.mark.unit
+def test_a_body_read_that_returned_nobody_still_proposes_the_absence():
+    """Read and empty is not the same as never looked at. The scrape covered the mayor's office
+    and did not find them there, which is exactly the departure a reviewer should see."""
+    changes = _propose(
+        [_post("council-member", _BASE, "a")],
+        [_held("b", "mayor", _BASE, organization_id=_MAYORS_OFFICE)],
+    )
+
+    absent = next(change for change in changes if change.person_id == "b")
+    assert absent.disposition is MembershipDisposition.ABSENT
 
 
 @pytest.mark.unit
