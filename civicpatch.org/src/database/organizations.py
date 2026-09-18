@@ -94,17 +94,29 @@ async def names(cur, organization_ids: list[str]) -> dict[str, str]:
 
 
 async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
+    by_jurisdiction = await list_for_jurisdictions(cur, [jurisdiction_ocdid])
+    return by_jurisdiction.get(jurisdiction_ocdid, [])
+
+
+async def list_for_jurisdictions(
+    cur, jurisdiction_ocdids: list[str]
+) -> dict[str, list[dict]]:
     await cur.execute(
         """
-        SELECT id::text, name, url, sort_order, meta_is_default
+        SELECT jurisdiction_ocdid, id::text, name, url, sort_order, meta_is_default
         FROM organizations
-        WHERE jurisdiction_ocdid = %s
+        WHERE jurisdiction_ocdid = ANY(%s)
         ORDER BY sort_order, name
         """,
-        (jurisdiction_ocdid,),
+        (jurisdiction_ocdids,),
     )
     columns = [column.name for column in cur.description or []]
-    return [dict(zip(columns, row)) for row in await cur.fetchall()]
+    by_jurisdiction: dict[str, list[dict]] = {}
+    for row in await cur.fetchall():
+        organization = dict(zip(columns, row))
+        jurisdiction_ocdid = organization.pop("jurisdiction_ocdid")
+        by_jurisdiction.setdefault(jurisdiction_ocdid, []).append(organization)
+    return by_jurisdiction
 
 
 async def create(jurisdiction_ocdid: str, name: str, url: str | None) -> str | None:

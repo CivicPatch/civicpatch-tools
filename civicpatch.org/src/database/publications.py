@@ -17,8 +17,10 @@ import database.dismissals as dismissals_db
 from core.people_edits import with_asserted_values
 from core.membership_proposal import ids_by_person_and_organization
 from core.post_derivation import DerivedPost, MembershipBinding
+from core.sinks.open_data_commit import ChangesetAttribution
 from database import assertions, memberships, posts, source_records
 from database.activity import record_change
+from database.changeset_predicates import PUBLISHED
 from database.changesets import get_updated_at
 from database.database import get_pool
 from database.people import PERSON_UPSERT, person_upsert_params
@@ -46,6 +48,35 @@ async def record_change_url(changeset_id: str, url: str) -> None:
         await cur.execute(
             "UPDATE changesets SET change_url = %s WHERE id = %s", (url, changeset_id)
         )
+
+
+async def publish_attributions(changeset_ids: list[str]) -> dict[str, ChangesetAttribution]:
+    """Who published each of these, and from which batch. Unpublished ones are left out: the
+    sweep's feed also carries imports and runs that are still open or were dismissed."""
+    if not changeset_ids:
+        return {}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT changesets.id::text, changesets.kind, users.username,
+                   changesets.batch_id::text
+            FROM changesets
+            LEFT JOIN users ON users.id = changesets.resolved_by_user_id
+            WHERE changesets.id::text = ANY(%s) AND {PUBLISHED}
+            """,
+            (changeset_ids,),
+        )
+        rows = await cur.fetchall()
+    return {
+        changeset_id: ChangesetAttribution(
+            changeset_id=changeset_id,
+            kind=kind,
+            published_by=username,
+            batch_id=batch_id,
+        )
+        for changeset_id, kind, username, batch_id in rows
+    }
 
 
 async def dismiss_changeset(

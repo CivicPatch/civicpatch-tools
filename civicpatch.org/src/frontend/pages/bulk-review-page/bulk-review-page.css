@@ -11,40 +11,6 @@
     gap: 1rem;
 }
 
-/* ── View toggle ── */
-
-.bulk-review__view-toggle {
-    display: flex;
-    gap: 0.9rem;
-    align-self: baseline;
-}
-
-.bulk-review__view-toggle-btn {
-    font-family: var(--font-mono);
-    font-size: var(--font-size-sm);
-    text-transform: lowercase;
-    padding: 0;
-    border: none;
-    border-radius: 0;
-    background: none;
-    box-shadow: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    width: auto;
-    margin: 0;
-}
-
-.bulk-review__view-toggle-btn:hover {
-    color: var(--text);
-}
-
-.bulk-review__view-toggle-btn--active {
-    color: var(--text);
-    text-decoration: underline;
-    text-decoration-color: var(--accent);
-    text-underline-offset: 4px;
-}
-
 .bulk-review__state-filter {
     display: flex;
     align-items: center;

@@ -111,18 +111,43 @@ export const dismissIssues = async (issueIds) => {
   return res.json();
 };
 
-export const fetchPullRequestsWithData = async (
-  stateCode,
-  page = 1,
-  perPage = 10,
-  view = "quick",
-) => {
+export const fetchPullRequestsWithData = async (stateCode, page = 1, perPage = 10) => {
   const params = new URLSearchParams();
   if (stateCode) params.set("state_code", stateCode);
   params.set("page", page);
   params.set("per_page", perPage);
-  params.set("view", view);
   const res = await fetch(`/api/v1/reviews/with-data?${params}`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
+const postChangesetSelection = async (url, changesetIds) => {
+  const res = await fetch(url, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({ changeset_ids: changesetIds }),
+  });
+  const body = await res.json();
+  if (!res.ok) throw new Error(body.detail || body.error || `HTTP ${res.status}`);
+  return body;
+};
+
+export const publishReviewSelection = (changesetIds) =>
+  postChangesetSelection(`/api/v1/reviews/publish`, changesetIds);
+
+export const dismissReviewSelection = (changesetIds) =>
+  postChangesetSelection(`/api/v1/reviews/dismiss`, changesetIds);
+
+export const fetchReviewCards = async (changesetIds) => {
+  const params = new URLSearchParams();
+  for (const changesetId of changesetIds) params.append("changeset_ids", changesetId);
+  const res = await fetch(`/api/v1/reviews/cards?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -196,18 +221,6 @@ export const batchResolvePeople = async (jurisdictionOcdid, people) => {
       })),
       with_data: true,
     }),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const fetchPullRequestData = async (jurisdictionOcdid, changesetId) => {
-  const params = new URLSearchParams({
-    jurisdiction_ocdid: jurisdictionOcdid,
-    changeset_id: changesetId,
-  });
-  const res = await fetch(`/api/v1/reviews/data?${params}`, {
-    credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
@@ -976,7 +989,7 @@ export const fetchImportProgress = async (batchId) =>
 export const fetchBatchReview = async (batchId) =>
   importsRequest(`/${batchId}/review`, "GET");
 
-export const publishBatch = async (batchId, jurisdictionOcdids) => {
+export const publishBatch = async (batchId, changesetIds) => {
   const res = await fetch(`${IMPORTS_URL}/${batchId}/publish`, {
     credentials: "include",
     method: "POST",
@@ -984,7 +997,22 @@ export const publishBatch = async (batchId, jurisdictionOcdids) => {
       "Content-Type": "application/json",
       "X-CSRF-Token": getCsrfCookie(),
     },
-    body: JSON.stringify({ jurisdiction_ocdids: jurisdictionOcdids }),
+    body: JSON.stringify({ changeset_ids: changesetIds }),
+  });
+  const body = await res.json();
+  if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);
+  return body;
+};
+
+export const dismissBatch = async (batchId, changesetIds) => {
+  const res = await fetch(`${IMPORTS_URL}/${batchId}/dismiss`, {
+    credentials: "include",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({ changeset_ids: changesetIds }),
   });
   const body = await res.json();
   if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);

@@ -1,8 +1,7 @@
-"""A curated sheet's rows into the review queue, one request per jurisdiction.
+"""A curated sheet's rows into one open changeset per jurisdiction.
 
-The same ingest a scrape gets, minus the zip and the images. It stops at ingest:
-`AVAILABLE_FOR_REVIEW` is `EXISTS (source_records for this request)`, so writing the sightings
-is what raises the review card, and publishing stays the reviewer's existing action.
+The same ingest a scrape gets, minus the zip and the images. It stops at ingest: the changesets
+are published or dismissed on the import's batch page, never from the review pool.
 
 Spec: `.scratch/2026-08-25-sheet-import-shape.md`.
 """
@@ -13,7 +12,7 @@ import uuid
 from datetime import datetime, timezone
 
 from core.entry_rows import (
-    INHERIT,
+    JURISDICTION,
     REQUIRED_COLUMNS,
     ROSTER_HEADERS,
     ImportRow,
@@ -21,18 +20,21 @@ from core.entry_rows import (
     already_handled,
     parse_rows,
     roster_columns,
+    row_key,
     rows_by_jurisdiction,
 )
+from core.roster_diff import person_diffs, person_notes
 from database.changesets import register_sheet_import_changeset
-from database import changeset_batches
-from database import memberships
-from database.database import get_pool
+from database import changeset_batches, dismissals
+from database.people import get_rosters_by_jurisdiction
 from database.roles import get_roles
 from database.source_records import insert_source_records
 from pydantic import BaseModel
 from lib import sheets
 from schemas.imports import ImportPreview
 from services import entry_sheet, roster_ingest
+from services.review_proposal import proposals_for_requests
+from services.roster import proposed_roster
 from shared.schemas import Role, RoleConfig
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
@@ -58,6 +60,8 @@ class JurisdictionResult(BaseModel):
     sightings: int = 0
     posts: int = 0
     error: str | None = None
+    # By `row_key`'s lowercased name.
+    notes: dict[str, str] = {}
 
 
 async def import_rows(
@@ -96,54 +100,6 @@ async def import_rows(
     return results
 
 
-async def _resolve_inherited_labels(
-    jurisdiction_ocdid: str, roster: list[dict], records_by_person: dict[str, list[dict]]
-) -> tuple[list[dict], dict[str, list[dict]]]:
-    """Swap `inherit` for the real label text of the resolved person's current open
-    membership, so everything downstream sees it exactly as if the source had sent it —
-    ingest's own role/post derivation, and `source_records`, which the review card re-derives
-    from on every future view, not only this one.
-
-    By resolved person id, after identity linking (`reconcile_roster` already ran) — not by
-    name, which might not match the published spelling.
-
-    A person nothing is found for — new to this import, or between seats — falls back to
-    blank, same as never having inherited anything.
-    """
-    inheriting = [
-        person["id"]
-        for person in roster
-        if any(
-            record.get("label") == INHERIT
-            for record in records_by_person.get(person["id"], [])
-        )
-    ]
-    if not inheriting:
-        return roster, records_by_person
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        found = await memberships.open_source_labels_by_person(
-            cur, jurisdiction_ocdid, inheriting
-        )
-
-    resolved_roster = [
-        {**person, "labels": [found.get(person["id"], "")]}
-        if person["id"] in inheriting
-        else person
-        for person in roster
-    ]
-    resolved_records = {
-        person_id: (
-            [{**record, "label": found.get(person_id, "")} for record in records]
-            if person_id in inheriting
-            else records
-        )
-        for person_id, records in records_by_person.items()
-    }
-    return resolved_roster, resolved_records
-
-
 async def _import_jurisdiction(
     jurisdiction_ocdid: str,
     rows: list[ImportRow],
@@ -160,9 +116,6 @@ async def _import_jurisdiction(
             [row.sighting.model_dump() for row in rows],
             identities,
             taxonomy,
-        )
-        roster, records_by_person = await _resolve_inherited_labels(
-            jurisdiction_ocdid, roster, records_by_person
         )
         await register_sheet_import_changeset(
             changeset_id, jurisdiction_ocdid, user_id, batch_id
@@ -193,7 +146,40 @@ async def _import_jurisdiction(
         sightings=sightings,
         posts=posts,
         error=error,
+        notes=await _row_notes(changeset_id, jurisdiction_ocdid, records_by_person),
     )
+
+
+async def _row_notes(
+    changeset_id: str, jurisdiction_ocdid: str, records_by_person: dict[str, list[dict]]
+) -> dict[str, str]:
+    """What this import changes about each row's person, keyed by the row's lowercased name.
+
+    Read through `proposed_roster`, so blank cells state nothing here either. Never fatal: the
+    import already landed, and a missing note costs only the volunteer's feedback.
+    """
+    try:
+        proposed = await proposed_roster(changeset_id, jurisdiction_ocdid)
+        published, proposals = await asyncio.gather(
+            get_rosters_by_jurisdiction([jurisdiction_ocdid]),
+            proposals_for_requests([changeset_id], {changeset_id: proposed}),
+        )
+        notes = person_notes(
+            [person["id"] for person in proposed],
+            person_diffs(published.get(jurisdiction_ocdid, []), proposed),
+            proposals.get(changeset_id, []),
+        )
+    except Exception as e:
+        logger.error(
+            f"[{changeset_id}] {jurisdiction_ocdid}: notes failed: {e}", exc_info=True
+        )
+        return {}
+    return {
+        row_key(jurisdiction_ocdid, record["name"])[1]: notes[person_id]
+        for person_id, records in records_by_person.items()
+        if person_id in notes
+        for record in records
+    }
 
 
 async def _derive_posts(
@@ -323,7 +309,7 @@ async def write_back(results: list[JurisdictionResult]) -> None:
     tab raced, and with every state listed a per-town report described 9,464 rows to say
     something about twenty.
 
-    Never fatal: the data is already ingested and the review cards already raised, so a Sheets
+    Never fatal: the data is already ingested and waiting on the batch page, so a Sheets
     outage must not turn a successful import into a failed one. It does leave the volunteer
     without their feedback, which is why it is logged loudly.
     """
@@ -344,11 +330,19 @@ async def write_back(results: list[JurisdictionResult]) -> None:
             for ocdid, result in by_ocdid.items()
             if result.status in (ImportStatus.IMPORTED, ImportStatus.PARTIAL)
         }
+        notes = {
+            (result.jurisdiction_ocdid, name): note
+            for result in results
+            for name, note in result.notes.items()
+        }
+        dismissed = await dismissals.latest_import_dismissed(
+            sorted({str(row.get(JURISDICTION) or "").strip() for row in roster} - {""})
+        )
         await asyncio.to_thread(
             sheets.write_columns,
             spreadsheet_id,
             entry_sheet.ROSTER_TAB,
-            roster_columns(roster, parsed, errors, imported, stamp),
+            roster_columns(roster, parsed, errors, imported, stamp, notes, dismissed),
         )
     except Exception as e:
         logger.error(f"Failed to write results back to the sheet: {e}", exc_info=True)

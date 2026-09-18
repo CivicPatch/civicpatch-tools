@@ -21,14 +21,14 @@ async def test_roster_reads_are_capped_however_many_requests():
     live = 0
     peak = 0
 
-    async def slow_roster(changeset_id: str, ocdid: str) -> list[dict]:
+    async def slow_roster(changeset_id: str, ocdid: str) -> tuple[list[dict], dict]:
         nonlocal live, peak
         live += 1
         peak = max(peak, live)
         # Long enough that every caller overlaps if nothing is holding them back.
         await asyncio.sleep(0.01)
         live -= 1
-        return [{"id": changeset_id}]
+        return [{"id": changeset_id}], {}
 
     with (
         patch(
@@ -36,7 +36,7 @@ async def test_roster_reads_are_capped_however_many_requests():
             new_callable=AsyncMock,
             return_value=ocdids,
         ),
-        patch("services.roster.proposed_roster", side_effect=slow_roster),
+        patch("services.roster.proposed_roster_and_source_values", side_effect=slow_roster),
     ):
         rosters = await roster.proposed_rosters(list(ocdids))
 

@@ -80,22 +80,21 @@ async def test_update_pipeline_run_status_only_progress():
 
 
 # ---------------------------------------------------------------------------
-# database.people — dynamic projection columns
+# database.people — the batched published-roster read
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_people_by_jurisdictions_empty_inputs():
-    assert await db_people.get_people_by_jurisdictions([]) == {}
+async def test_get_rosters_by_jurisdiction_empty_inputs():
+    assert await db_people.get_rosters_by_jurisdiction([]) == {}
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-@pytest.mark.parametrize("view", ["quick", "detail"])
-async def test_get_people_by_jurisdictions_builds_each_projection(view):
-    """Both field sets are spliced into the SELECT, so both need real Postgres to parse."""
-    result = await db_people.get_people_by_jurisdictions(
-        ["ocd-jurisdiction/country:us/state:ca/place:oakland/government"], view=view
+async def test_get_rosters_by_jurisdiction_parses():
+    """`PERSON_JSON` and `IS_ON_THE_ROSTER` are spliced into the SELECT, so it needs real Postgres to parse."""
+    result = await db_people.get_rosters_by_jurisdiction(
+        ["ocd-jurisdiction/country:us/state:ca/place:oakland/government"]
     )
     assert isinstance(result, dict)
 

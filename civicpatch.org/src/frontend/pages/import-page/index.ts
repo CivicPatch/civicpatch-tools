@@ -11,6 +11,7 @@ import {
   fetchImportProgress,
   fetchBatchReview,
   publishBatch,
+  dismissBatch,
 } from "../../api.js";
 import {
   BATCH_FAILED,
@@ -26,7 +27,10 @@ import "./batch-review.js";
 import "../../components/panel/panel.css";
 import "./import-page.css";
 import { useAuth } from "../../hooks/useAuth.js";
-import { SectionNav, manageSection } from "../../components/section-nav/index.js";
+import {
+  SectionNav,
+  manageSection,
+} from "../../components/section-nav/index.js";
 import { useSummary } from "../../hooks/useSummary.js";
 
 const POLL_INTERVAL_MS = 2000;
@@ -46,7 +50,8 @@ function progressPanel(batch: ImportProgress | null) {
         ${batch
           ? `Started ${new Date(batch.started_at).toLocaleTimeString()}. `
           : ""}Each
-        locality becomes an ordinary review card. Nothing is published yet.
+        locality waits below for you to publish or dismiss it. Nothing is
+        published yet.
       </p>
     </section>
   `;
@@ -58,9 +63,7 @@ function resultsPanel(results: PublishResult[]) {
   const published = results.length - failed.length;
   return html`
     <section class="import-results">
-      <p>
-        Published ${published} of ${results.length}, in one open-data commit.
-      </p>
+      <p>Published ${published} of ${results.length}.</p>
       ${failed.map(
         (result) => html`
           <p class="import-results__failure">
@@ -109,7 +112,9 @@ function ImportPage() {
   const [resultsByBatch, setResultsByBatch] = useState<
     Record<string, PublishResult[]>
   >({});
-  const [publishingBatchId, setPublishingBatchId] = useState<string | null>(null);
+  const [publishingBatchId, setPublishingBatchId] = useState<string | null>(
+    null,
+  );
 
   // Refreshed whenever a batch changes or the page turns, so finishing an import updates the
   // list in place rather than leaving it stale until a reload.
@@ -229,11 +234,25 @@ function ImportPage() {
     try {
       const { data } = await publishBatch(
         targetBatchId,
-        e.detail.jurisdiction_ocdids,
+        e.detail.changeset_ids,
       );
       setResultsByBatch((prev) => ({ ...prev, [targetBatchId]: data }));
       // Re-read rather than patching locally: publishing is what decides the review status,
       // and a locality that refused must still show as pending.
+      const reviewBody = await fetchBatchReview(targetBatchId);
+      setReviews((prev) => ({ ...prev, [targetBatchId]: reviewBody.data }));
+    } catch (err) {
+      setError(String(err));
+    } finally {
+      setPublishingBatchId(null);
+    }
+  };
+
+  const handleDismiss = (targetBatchId: string) => async (e: CustomEvent) => {
+    setPublishingBatchId(targetBatchId);
+    setError(null);
+    try {
+      await dismissBatch(targetBatchId, e.detail.changeset_ids);
       const reviewBody = await fetchBatchReview(targetBatchId);
       setReviews((prev) => ({ ...prev, [targetBatchId]: reviewBody.data }));
     } catch (err) {
@@ -264,70 +283,72 @@ function ImportPage() {
         <h1 class="page-focal__title">Sheet import</h1>
       </div>
       <div class="sectioned">
-      ${SectionNav("manage", manageSection(permissions, globalSummary?.open_prs), "/imports")}
-      <div class="secbody">
-      <p class="import-hint">
-        The curated roster sheet, read as a scrape. Importing raises a review
-        card per locality. Publishing stays your decision.
-      </p>
+        ${SectionNav(
+          "manage",
+          manageSection(permissions, globalSummary?.open_prs),
+          "/imports",
+        )}
+        <div class="secbody">
+          <p class="import-hint">
+            The curated roster sheet, read as a scrape. Importing raises a
+            review card per locality. Publishing stays your decision.
+          </p>
 
-      ${error ? html`<p class="import-error">${error}</p>` : null}
-
-      ${running
-        ? progressPanel(batch)
-        : html`
-            <section class="panel import-panel">
-              <h2 class="import-panel__title">Import from the sheet</h2>
-              ${sheetUrl
-                ? html`<p class="import-hint">
-                    <a href=${sheetUrl} target="_blank" rel="noreferrer"
-                      >Open the sheet</a
-                    >
-                  </p>`
-                : null}
-              <button
-                type="button"
-                class="import-action"
-                ?disabled=${busy}
-                @click=${handleStart}
-              >
-                ${busy ? "Importing…" : "Import"}
-              </button>
-            </section>
-          `}
-
-      ${preview
-        ? html`<section class="panel import-panel">
-            <import-preview .preview=${preview}></import-preview>
-          </section>`
-        : null}
-
-      ${history.length
-        ? html`
-            <div ${ref(historyRef)}>
-            <h2 class="import-panel__title">Past imports</h2>
-            ${historyPager}
-            ${history.map(
-              (b) => html`
+          ${error ? html`<p class="import-error">${error}</p>` : null}
+          ${running
+            ? progressPanel(batch)
+            : html`
                 <section class="panel import-panel">
-                  ${batchHeader(b)}
-                  ${resultsPanel(resultsByBatch[b.batch_id] ?? [])}
-                  ${reviews[b.batch_id]
-                    ? html`<batch-review
-                        .review=${reviews[b.batch_id]}
-                        .importedAt=${b.started_at}
-                        .busy=${publishingBatchId === b.batch_id}
-                        @publish-selection=${handlePublish(b.batch_id)}
-                      ></batch-review>`
+                  <h2 class="import-panel__title">Import from the sheet</h2>
+                  ${sheetUrl
+                    ? html`<p class="import-hint">
+                        <a href=${sheetUrl} target="_blank" rel="noreferrer"
+                          >Open the sheet</a
+                        >
+                      </p>`
                     : null}
+                  <button
+                    type="button"
+                    class="import-action"
+                    ?disabled=${busy}
+                    @click=${handleStart}
+                  >
+                    ${busy ? "Importing…" : "Import"}
+                  </button>
                 </section>
-              `,
-            )}
-            ${historyPager}
-            </div>
-          `
-        : null}
-      </div>
+              `}
+          ${preview
+            ? html`<section class="panel import-panel">
+                <import-preview .preview=${preview}></import-preview>
+              </section>`
+            : null}
+          ${history.length
+            ? html`
+                <div ${ref(historyRef)}>
+                  <h2 class="import-panel__title">Past imports</h2>
+                  ${historyPager}
+                  ${history.map(
+                    (b) => html`
+                      <section class="panel import-panel">
+                        ${batchHeader(b)}
+                        ${resultsPanel(resultsByBatch[b.batch_id] ?? [])}
+                        ${reviews[b.batch_id]
+                          ? html`<batch-review
+                              .review=${reviews[b.batch_id]}
+                              .importedAt=${b.started_at}
+                              .busy=${publishingBatchId === b.batch_id}
+                              @publish-selection=${handlePublish(b.batch_id)}
+                              @dismiss-selection=${handleDismiss(b.batch_id)}
+                            ></batch-review>`
+                          : null}
+                      </section>
+                    `,
+                  )}
+                  ${historyPager}
+                </div>
+              `
+            : null}
+        </div>
       </div>
     </main>
   `;

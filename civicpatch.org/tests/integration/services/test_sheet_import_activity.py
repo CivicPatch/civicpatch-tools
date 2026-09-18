@@ -1,4 +1,4 @@
-"""A sheet import landing in the review queue, as an activity row.
+"""A sheet import landing on its batch page, as an activity row.
 
 Real Postgres: the write happens on its own connection, best-effort, after the changeset
 insert commits — a mocked connection cannot honestly exercise that ordering.

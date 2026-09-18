@@ -1,7 +1,6 @@
 import pytest
 
 from core.entry_rows import (
-    INHERIT,
     ImportRow,
     RowError,
     Sighting,
@@ -46,26 +45,12 @@ def test_a_row_becomes_a_sighting():
 
 
 @pytest.mark.unit
-def test_a_blank_label_is_required():
-    """A blank cell is a caught mistake now, not silent — a source with no title has to say so
-    on purpose, with `inherit`."""
-    _, errors = parse_rows([_row(label="")])
-    assert _flags(errors) == {(2, "label")}
-
-
-@pytest.mark.unit
-def test_inherit_passes_through_as_a_marker():
-    """Resolving it needs a database read — `services.sheet_import`'s job, not this pure
-    module's. This only has to not mangle it on the way through."""
-    rows, errors = parse_rows([_row(label=INHERIT)])
+def test_a_blank_label_is_allowed():
+    """A sheet import states only what it fills in: a blank label keeps the person's current
+    post (`people_roster.partial_roster`), so it is not a mistake to catch."""
+    rows, errors = parse_rows([_row(label="")])
     assert errors == []
-    assert rows[0].sighting.label == INHERIT
-
-
-@pytest.mark.unit
-def test_inherit_is_case_insensitive():
-    rows, _ = parse_rows([_row(label="Inherit")])
-    assert rows[0].sighting.label == INHERIT
+    assert rows[0].sighting.label == ""
 
 
 @pytest.mark.unit
@@ -102,7 +87,7 @@ def test_the_sheet_carries_no_ids():
 
 
 @pytest.mark.unit
-@pytest.mark.parametrize("column", ["jurisdiction_ocdid", "name", "source_url", "label"])
+@pytest.mark.parametrize("column", ["jurisdiction_ocdid", "name", "source_url"])
 def test_the_required_columns(column):
     _, errors = parse_rows([_row(**{column: ""})])
     assert _flags(errors) == {(2, column)}
@@ -244,14 +229,14 @@ def _raw_rows(count: int, overrides: dict[int, dict] | None = None) -> list[dict
 
 @pytest.mark.unit
 def test_an_imported_row_says_so_and_carries_no_error():
-    columns = roster_columns(_raw_rows(1), [_parsed_row(2)], [], {_OCDID}, _STAMP)
+    columns = roster_columns(_raw_rows(1), [_parsed_row(2)], [], {_OCDID}, _STAMP, {}, set())
     assert columns["status"] == ["imported"]
     assert columns["error"] == [""]
 
 
 @pytest.mark.unit
 def test_a_rejected_row_names_its_column():
-    columns = roster_columns(_raw_rows(1), [], [_row_error(2)], set(), _STAMP)
+    columns = roster_columns(_raw_rows(1), [], [_row_error(2)], set(), _STAMP, {}, set())
     assert columns["status"] == ["error"]
     assert columns["error"] == ["name: required"]
 
@@ -260,7 +245,7 @@ def test_a_rejected_row_names_its_column():
 def test_a_good_row_in_a_blocked_town_points_elsewhere():
     """Most of a blocked town is rows that are perfectly fine. Saying 'error' against them would
     have the volunteer hunting for a fault that is on somebody else's line."""
-    columns = roster_columns(_raw_rows(2), [_parsed_row(2)], [_row_error(3)], set(), _STAMP)
+    columns = roster_columns(_raw_rows(2), [_parsed_row(2)], [_row_error(3)], set(), _STAMP, {}, set())
     assert columns["status"] == ["blocked", "error"]
     assert columns["error"][0] == "another row in this town was rejected"
 
@@ -270,7 +255,7 @@ def test_every_row_gets_a_value_so_stale_errors_clear():
     """A row that failed last run and is fine now must not keep last run's message — the
     volunteer would chase a problem they already fixed."""
     rows = [_parsed_row(2), _parsed_row(3, name="Bo Chen")]
-    columns = roster_columns(_raw_rows(2), rows, [], {_OCDID}, _STAMP)
+    columns = roster_columns(_raw_rows(2), rows, [], {_OCDID}, _STAMP, {}, set())
     assert columns["error"] == ["", ""]
     assert len(columns["status"]) == 2
     assert columns["last_import_at"] == [_STAMP, _STAMP]
@@ -319,7 +304,7 @@ def test_a_row_this_run_did_not_touch_keeps_its_status():
     must not be blanked. Status and timestamp both have to come from the sheet's own current
     cells, not from the parse, which saw nothing here at all."""
     raw_rows = _raw_rows(1, {2: {"status": "imported", "last_import_at": "2026-08-01 09:00"}})
-    columns = roster_columns(raw_rows, [], [], set(), _STAMP)
+    columns = roster_columns(raw_rows, [], [], set(), _STAMP, {}, set())
     assert columns["status"] == ["imported"]
     assert columns["last_import_at"] == ["2026-08-01 09:00"]
 
@@ -355,7 +340,7 @@ def test_a_half_filled_row_is_still_an_error():
     started = {column: "" for column in _row()}
     started["jurisdiction_ocdid"] = _OCDID
     _, errors = parse_rows([started])
-    assert {column for _, column in _flags(errors)} == {"name", "source_url", "label"}
+    assert {column for _, column in _flags(errors)} == {"name", "source_url"}
 
 
 @pytest.mark.unit
@@ -383,12 +368,51 @@ def test_a_stamped_but_untyped_row_is_still_blank():
 def test_spare_lines_are_not_stamped():
     """The other half: stop creating the condition. A line the parse produced nothing for gets
     no timestamp, so it stays a line nobody wrote."""
-    columns = roster_columns(_raw_rows(3), [], [], set(), _STAMP)
+    columns = roster_columns(_raw_rows(3), [], [], set(), _STAMP, {}, set())
     assert columns["last_import_at"] == ["", "", ""]
 
 
 @pytest.mark.unit
 def test_rows_the_run_saw_are_still_stamped():
     parsed, errors = parse_rows([_row()])
-    columns = roster_columns(_raw_rows(1), parsed, errors, {_OCDID}, _STAMP)
+    columns = roster_columns(_raw_rows(1), parsed, errors, {_OCDID}, _STAMP, {}, set())
     assert columns["last_import_at"] == [_STAMP]
+
+
+# --- note ---
+
+_OTHER_TOWN = "ocd-jurisdiction/country:us/state:zz/place:other/government"
+
+
+def _named_row(name: str, ocdid: str = _OCDID, note: str = "") -> dict:
+    return {"jurisdiction_ocdid": ocdid, "name": name, "note": note}
+
+
+@pytest.mark.unit
+def test_an_imported_town_gets_each_rows_note_by_name():
+    """By name, not line: write-back re-reads the tab, so a row inserted since would shift lines."""
+    raw_rows = [_named_row(" Bo Chen "), _named_row("Ana Reyes", note="stale")]
+    notes = {(_OCDID, "ana reyes"): "new person", (_OCDID, "bo chen"): "changed: phones"}
+
+    columns = roster_columns(raw_rows, [], [], {_OCDID}, _STAMP, notes, set())
+
+    assert columns["note"] == ["changed: phones", "new person"]
+
+
+@pytest.mark.unit
+def test_a_town_not_imported_this_run_keeps_its_note():
+    raw_rows = [_named_row("Ana Reyes", ocdid=_OTHER_TOWN, note="new person")]
+
+    columns = roster_columns(raw_rows, [], [], {_OCDID}, _STAMP, {}, set())
+
+    assert columns["note"] == ["new person"]
+
+
+@pytest.mark.unit
+def test_a_dismissed_import_clears_its_note():
+    """Rejected, superseded or expired: the change the note describes can no longer happen."""
+    raw_rows = [_named_row("Ana Reyes", ocdid=_OTHER_TOWN, note="new person")]
+
+    columns = roster_columns(raw_rows, [], [], set(), _STAMP, {}, {_OTHER_TOWN})
+
+    assert columns["note"] == [""]

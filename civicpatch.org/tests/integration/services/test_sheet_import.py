@@ -1,8 +1,8 @@
 """Integration tests for `services.sheet_import`.
 
 Against the real test DB, because what is worth checking here is what a mock cannot show: that
-sightings and identities land as a pair, that the request lands **unpublished** so the card
-reaches the review queue, and that labels actually mint posts.
+sightings and identities land as a pair, that the changeset lands **unpublished** and waits on
+the batch page, and that labels actually mint posts.
 
 Run with:
   mise run tcp-integration
@@ -13,17 +13,26 @@ test. `requests` cascades to `source_records`, so the rows go with it.
 
 import uuid
 from typing import LiteralString
-from unittest.mock import AsyncMock, patch
+from unittest.mock import patch
 
 import pytest
 import pytest_asyncio
 
-from core.entry_rows import INHERIT, ImportRow, ImportStatus, Sighting
+from core.entry_rows import ImportRow, ImportStatus, Sighting
+from core.membership_proposal import MembershipDisposition
+from core.post_derivation import UNMATCHED_ROLE_ID
+from shared.schemas import POST_FIELD
+from shared.utils.statuses import ActivityType, ChangesetKind
+from core.roster_diff import UNCHANGED_NOTE, ChangeCounts
 from lib.csv import parse_csv
-from database import changeset_batches, divisions, organizations, posts
+from database import activity, changeset_batches, dismissals, divisions, organizations, posts
 from database.database import get_pool
-from services.batch_review import batch_review, publish_selected
-from services.sinks.open_data import reviewed_file_path
+from database.publications import publish_attributions
+from services import roster_edits
+from services.batch_review import batch_review, dismiss_selected, publish_selected
+from services.review_cards import with_card_data
+from services.review_proposal import proposals_for_requests, review_summary_for_changeset
+from services.roster import proposed_roster, proposed_roster_and_source_values
 from services.sheet_import import import_rows, read_rows
 from tests.integration import factories
 
@@ -33,20 +42,6 @@ _OCDID_2 = "ocd-jurisdiction/country:us/state:zz/place:zz_sheet_test_two/governm
 _OCDIDS = [_OCDID, _OCDID_2]
 _SHEET = "https://docs.google.com/spreadsheets/d/test/export?format=csv"
 _EMAIL = "zz-sheet-import@test.civicpatch.org"
-
-
-@pytest.fixture(autouse=True)
-def batch_commit():
-    """Publishing queues its open-data commit on Temporal, which is not running for tests.
-
-    Patched at the enqueue rather than at `promote_batch_to_reviewed`, so the part worth
-    checking — which jurisdictions made it in, and what file each renders to — still runs for
-    real.
-    """
-    with patch(
-        "lib.temporal.client.enqueue_write_open_data_batch", new_callable=AsyncMock
-    ) as enqueued:
-        yield enqueued
 
 
 async def _cleanup():
@@ -59,6 +54,9 @@ async def _cleanup():
         )
         await cur.execute(
             "DELETE FROM posts WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
+        )
+        await cur.execute(
+            "DELETE FROM activity WHERE jurisdiction_ocdid = ANY(%s)", (_OCDIDS,)
         )
         # Changesets first: their source records point at organizations (205: ON DELETE RESTRICT),
         # so a body cannot go while a changeset's evidence still names it.
@@ -152,7 +150,7 @@ async def _parsed(*people):
 
 
 async def _seed_open_membership(name: str, source_labels: list[str]) -> None:
-    """A currently-held seat, for `inherit` to find by name."""
+    """A currently-held post, for an import to find by name."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         person_id = str(uuid.uuid4())
@@ -175,6 +173,24 @@ async def _seed_open_membership(name: str, source_labels: list[str]) -> None:
         await conn.commit()
 
 
+async def _selected(batch_id: str, *ocdids: str) -> set[str]:
+    """What a reviewer ticking these towns on the batch page would send: their changeset ids."""
+    return {
+        item["changeset_id"]
+        for item in await changeset_batches.items(batch_id)
+        if item["jurisdiction_ocdid"] in ocdids
+    }
+
+
+async def _published_in_sweep() -> set[str]:
+    return {
+        changed.jurisdiction_ocdid
+        for changed in await activity.jurisdictions_changed_since(15)
+        if changed.jurisdiction_ocdid in _OCDIDS
+        and ActivityType.PUBLISH_REVIEW in changed.change_types
+    }
+
+
 async def _scalar(sql: LiteralString, params: tuple):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -186,11 +202,9 @@ async def _scalar(sql: LiteralString, params: tuple):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_an_import_writes_sightings_and_lands_in_the_review_queue(
-    user_id, batch_id
-):
-    """The card is raised by the sightings alone — `AVAILABLE_FOR_REVIEW` is
-    `EXISTS (source_records for this request)`, so there is no second write and no publish."""
+async def test_an_import_writes_sightings_and_waits_unpublished(user_id, batch_id):
+    """The sightings are the only write — no publish. It waits on the batch page, never in the
+    review pool (`test_jurisdiction_in_flight` covers that it stays out)."""
     rows = await _parsed(
         ("Ana Reyes", "Select Board Chair"), ("Bo Chen", "Select Board Member")
     )
@@ -260,26 +274,83 @@ async def test_a_label_mints_the_post_it_implies(user_id, batch_id):
     ), "ingest minted a seat; only publishing should"
 
 
+async def _published(name: str) -> tuple[str, str]:
+    """The seeded person's id and the post they hold."""
+    person_id = await _scalar(
+        "SELECT id::text FROM people WHERE jurisdiction_ocdid = %s AND name = %s", (_OCDID, name)
+    )
+    post_id = await _scalar(
+        "SELECT post_id::text FROM memberships WHERE person_id = %s::uuid AND closed_at IS NULL",
+        (person_id,),
+    )
+    return person_id, post_id
+
+
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_inherit_reuses_the_current_source_labels(user_id, batch_id):
-    """`inherit` is resolved by resolved person id, after identity linking, against the
-    person's currently open membership — and the real label text is substituted before
-    parsing, into `source_records` too, so it lands exactly as if the source had sent it, on
-    every future view of the card, not as some separate `chosen_posts`-style shortcut."""
+async def test_a_blank_label_keeps_the_current_post(user_id, batch_id):
+    """What `inherit` was for, without the word: a blank label states no post, so the person
+    keeps the one they hold — not one re-derived from label text, which moved people."""
     await _seed_open_membership("Ana Reyes", ["Select Board Chair"])
-    rows = _rows(("Ana Reyes", INHERIT))
+    person_id, post_id = await _published("Ana Reyes")
 
-    [result] = await import_rows(rows, user_id, batch_id)
+    [result] = await import_rows(_rows(("Ana Reyes", "")), user_id, batch_id)
+    assert result.changeset_id is not None
+    [ana] = await proposed_roster(result.changeset_id, _OCDID)
+    changes = (await proposals_for_requests([result.changeset_id]))[result.changeset_id]
 
-    assert result.status is ImportStatus.IMPORTED
-    assert (
-        await _scalar(
-            "SELECT label FROM source_records WHERE changeset_id = %s::uuid",
-            (result.changeset_id,),
-        )
-        == "Select Board Chair"
+    assert ana["id"] == person_id
+    assert ana[POST_FIELD] == post_id
+    assert [change.disposition for change in changes] == [MembershipDisposition.UNCHANGED]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_each_row_is_noted_with_what_it_changes(user_id, batch_id):
+    """Keyed by the row's name, so write-back can find it again after a re-read."""
+    await _seed_open_membership("Ana Reyes", ["Select Board Chair"])
+
+    [result] = await import_rows(
+        _rows(("Ana Reyes", ""), ("Bo Chen", "Town Clerk")), user_id, batch_id
     )
+
+    assert result.notes["ana reyes"] == UNCHANGED_NOTE
+    assert result.notes["bo chen"].startswith("new person; new post: ")
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_town_whose_latest_import_was_dismissed_is_found(user_id, batch_id):
+    rows = _rows(("Ana Reyes", "Select Board Chair")) + _rows(
+        ("Bo Nunez", "Town Clerk"), ocdid=_OCDID_2
+    )
+    await import_rows(rows, user_id, batch_id)
+
+    await dismiss_selected(batch_id, await _selected(batch_id, _OCDID), user_id)
+
+    assert await dismissals.latest_import_dismissed(_OCDIDS) == {_OCDID}
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_blank_cell_keeps_the_published_value(user_id, batch_id):
+    """The sheet has no links column and this row has no email: neither is a removal."""
+    await _seed_open_membership("Ana Reyes", ["Select Board Chair"])
+    person_id, _ = await _published("Ana Reyes")
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE people SET emails = %s, urls = %s WHERE id = %s::uuid",
+            (["ana@town.gov"], ["https://town.gov/ana"], person_id),
+        )
+        await conn.commit()
+
+    [result] = await import_rows(_rows(("Ana Reyes", "Select Board Chair")), user_id, batch_id)
+    assert result.changeset_id is not None
+    [ana] = await proposed_roster(result.changeset_id, _OCDID)
+
+    assert ana["emails"] == ["ana@town.gov"]
+    assert ana["urls"] == ["https://town.gov/ana"]
 
 
 @pytest.mark.integration
@@ -301,21 +372,16 @@ async def test_sightings_belong_to_the_default_organization(user_id, batch_id):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_inherit_with_nothing_to_inherit_falls_back_to_blank(user_id, batch_id):
-    """A name nobody currently holds a seat under — `inherit` degrades to blank, not to the
-    literal word being parsed as an unmatched label."""
-    rows = _rows(("Nobody Yet", INHERIT))
+async def test_someone_new_with_no_label_is_unmatched(user_id, batch_id):
+    """Nothing published to keep, so a blank label derives to the unmatched role — publishable,
+    for a reviewer to place later."""
+    [result] = await import_rows(_rows(("Nobody Yet", "")), user_id, batch_id)
+    assert result.changeset_id is not None
+    changes = (await proposals_for_requests([result.changeset_id]))[result.changeset_id]
 
-    [result] = await import_rows(rows, user_id, batch_id)
-
-    assert result.status is ImportStatus.IMPORTED
-    assert (
-        await _scalar(
-            "SELECT label FROM source_records WHERE changeset_id = %s::uuid",
-            (result.changeset_id,),
-        )
-        == ""
-    )
+    assert [(change.disposition, change.post.role_id) for change in changes] == [
+        (MembershipDisposition.NEW, UNMATCHED_ROLE_ID)
+    ]
 
 
 @pytest.mark.integration
@@ -395,7 +461,7 @@ async def test_end_to_end_from_csv_text(user_id, batch_id):
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_the_batch_review_shows_the_towns_it_made(user_id, batch_id):
-    """One pass over what the run produced — the limited view, with people from the sightings."""
+    """One pass over what the run produced, counting people from the sightings."""
     rows = await _parsed(
         ("Ana Reyes", "Select Board Chair"), ("Bo Chen", "Select Board Member")
     )
@@ -407,12 +473,39 @@ async def test_the_batch_review_shows_the_towns_it_made(user_id, batch_id):
     [jurisdiction] = review.jurisdictions
     assert jurisdiction.jurisdiction_ocdid == _OCDID
     assert jurisdiction.changeset_state == "open"
-    assert sorted(person.name for person in jurisdiction.people) == [
-        "Ana Reyes",
-        "Bo Chen",
-    ]
-    # The seat, rendered — what makes forty towns scannable.
-    assert all(person.label for person in jurisdiction.people)
+    assert jurisdiction.people == 2
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_the_batch_review_counts_what_each_town_changes(user_id, batch_id):
+    """Nothing is published here yet, so both people are added."""
+    rows = await _parsed(
+        ("Ana Reyes", "Select Board Chair"), ("Bo Chen", "Select Board Member")
+    )
+    await import_rows(rows, user_id, batch_id)
+
+    review = await batch_review(batch_id)
+
+    assert review is not None
+    [jurisdiction] = review.jurisdictions
+    assert jurisdiction.change_counts == ChangeCounts(added_people=2)
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_batched_card_says_what_the_single_card_reads_say(user_id, batch_id):
+    """The batch loader and the per-card endpoints must not disagree about one changeset."""
+    rows = await _parsed(("Ana Reyes", "Select Board Chair"))
+    [result] = await import_rows(rows, user_id, batch_id)
+    assert result.changeset_id is not None
+    [card] = await with_card_data([result.changeset_id])
+
+    _, overridden = await proposed_roster_and_source_values(result.changeset_id, _OCDID)
+    assert card.jurisdiction_ocdid == _OCDID
+    assert card.review == await review_summary_for_changeset(result.changeset_id)
+    assert card.overridden_source_values == overridden
+    assert card.organizations == await posts.list_by_organization(_OCDID)
 
 
 @pytest.mark.integration
@@ -428,13 +521,54 @@ async def test_publishing_a_selection_leaves_the_rest_open(user_id, batch_id):
     rows = await _parsed(("Ana Reyes", "Select Board Chair"))
     await import_rows(rows, user_id, batch_id)
 
-    [result] = await publish_selected(batch_id, {_OCDID}, user_id)
+    [result] = await publish_selected(batch_id, await _selected(batch_id, _OCDID), user_id)
     assert result.published is True
 
     review = await batch_review(batch_id)
     assert review is not None
     [jurisdiction] = review.jurisdictions
     assert jurisdiction.changeset_state == "published"
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_dismissing_a_selection_rejects_it_and_leaves_the_rest_open(
+    user_id, batch_id
+):
+    rows = _rows(("Ana Reyes", "Select Board Chair")) + _rows(
+        ("Bo Nunez", "Town Clerk"), ocdid=_OCDID_2
+    )
+    await import_rows(rows, user_id, batch_id)
+
+    picked = await _selected(batch_id, _OCDID)
+    assert await dismiss_selected(batch_id, picked, user_id) == list(picked)
+
+    review = await batch_review(batch_id)
+    assert review is not None
+    states = {j.jurisdiction_ocdid: j.changeset_state for j in review.jurisdictions}
+    assert states == {_OCDID: "dismissed", _OCDID_2: "open"}
+    assert (
+        await _scalar(
+            "SELECT dismissed_reason FROM changesets WHERE batch_id = %s::uuid "
+            "AND jurisdiction_ocdid = %s",
+            (batch_id, _OCDID),
+        )
+        == "rejected"
+    )
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_published_town_is_not_dismissed(user_id, batch_id):
+    rows = await _parsed(("Ana Reyes", "Select Board Chair"))
+    await import_rows(rows, user_id, batch_id)
+    await publish_selected(batch_id, await _selected(batch_id, _OCDID), user_id)
+
+    assert await dismiss_selected(batch_id, await _selected(batch_id, _OCDID), user_id) == []
+
+    review = await batch_review(batch_id)
+    assert review is not None
+    assert review.jurisdictions[0].changeset_state == "published"
 
 
 @pytest.mark.integration
@@ -457,71 +591,74 @@ async def test_publishing_twice_does_not_republish(user_id, batch_id):
     superseding itself for nothing."""
     rows = await _parsed(("Ana Reyes", "Select Board Chair"))
     await import_rows(rows, user_id, batch_id)
-    await publish_selected(batch_id, {_OCDID}, user_id)
+    await publish_selected(batch_id, await _selected(batch_id, _OCDID), user_id)
 
-    assert await publish_selected(batch_id, {_OCDID}, user_id) == []
+    assert await publish_selected(batch_id, await _selected(batch_id, _OCDID), user_id) == []
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_publishing_two_towns_queues_one_commit(user_id, batch_id, batch_commit):
-    """The reviewer published once, so open-data should say so once — not one commit per town.
-
-    Asserted at the enqueue because that is the only place the batching is observable: below it
-    is Temporal, above it is a per-jurisdiction loop that looks the same either way.
-    """
+async def test_publishing_two_towns_reaches_the_open_data_sweep(user_id, batch_id):
+    """Nothing is queued at publish: the 5-minute sweep reads the activity feed, so a batch
+    publish reaches open-data only if each town is in that feed as a publish."""
     rows = _rows(("Ana Reyes", "Select Board Chair")) + _rows(
         ("Bo Nunez", "Town Clerk"), ocdid=_OCDID_2
     )
     await import_rows(rows, user_id, batch_id)
 
-    results = await publish_selected(batch_id, set(_OCDIDS), user_id)
+    results = await publish_selected(batch_id, await _selected(batch_id, *_OCDIDS), user_id)
     assert [result.published for result in results] == [True, True]
 
-    batch_commit.assert_awaited_once()
-    request = batch_commit.await_args.args[0]
-    assert request.batch_id == batch_id
-    assert {item.jurisdiction_ocdid for item in request.items} == set(_OCDIDS)
-    assert {item.file_path for item in request.items} == {
-        reviewed_file_path(_OCDID),
-        reviewed_file_path(_OCDID_2),
-    }
+    assert await _published_in_sweep() == set(_OCDIDS)
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_town_that_refused_to_publish_stays_out_of_the_commit(
-    user_id, batch_id, batch_commit
-):
+async def test_a_town_that_refused_to_publish_stays_out_of_the_sweep(user_id, batch_id):
     """One jurisdiction failing must not keep the others out of open-data, and must not put
-    itself in — the commit covers what reached the database, not what was selected."""
+    itself in — the sweep covers what reached the database, not what was selected."""
     rows = _rows(("Ana Reyes", "Select Board Chair")) + _rows(
         ("Bo Nunez", "Town Clerk"), ocdid=_OCDID_2
     )
     await import_rows(rows, user_id, batch_id)
 
-    with patch(
-        "services.batch_review.roster_edits.publish",
-        new_callable=AsyncMock,
-        side_effect=[RuntimeError("supersede guard"), None],
-    ):
-        results = await publish_selected(batch_id, set(_OCDIDS), user_id)
+    real_publish = roster_edits.publish
+    refused = []
+
+    async def refuse_the_first(*args):
+        if not refused:
+            refused.append(args[1])
+            raise RuntimeError("supersede guard")
+        return await real_publish(*args)
+
+    with patch("services.batch_review.roster_edits.publish", side_effect=refuse_the_first):
+        results = await publish_selected(batch_id, await _selected(batch_id, *_OCDIDS), user_id)
 
     assert sorted(result.published for result in results) == [False, True]
-    [item] = batch_commit.await_args.args[0].items
-    published = next(result for result in results if result.published)
-    assert item.jurisdiction_ocdid == published.jurisdiction_ocdid
+    assert await _published_in_sweep() == set(_OCDIDS) - set(refused)
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_publishing_nothing_queues_no_commit(user_id, batch_id, batch_commit):
-    """An empty commit is not a record of anything."""
-    rows = await _parsed(("Ana Reyes", "Select Board Chair"))
+async def test_the_open_data_commit_names_who_published_the_import(user_id, batch_id):
+    """Only the published town is attributed; the open one is in the sweep's feed too, via its
+    `sheet_import` row, but nobody has published it."""
+    rows = _rows(("Ana Reyes", "Select Board Chair")) + _rows(
+        ("Bo Nunez", "Town Clerk"), ocdid=_OCDID_2
+    )
     await import_rows(rows, user_id, batch_id)
+    published_id, open_id = [
+        next(iter(await _selected(batch_id, ocdid))) for ocdid in _OCDIDS
+    ]
+    await publish_selected(batch_id, {published_id}, user_id)
 
-    assert await publish_selected(batch_id, set(), user_id) == []
-    batch_commit.assert_not_awaited()
+    attributions = await publish_attributions([published_id, open_id])
+
+    assert list(attributions) == [published_id]
+    attribution = attributions[published_id]
+    assert attribution.kind is ChangesetKind.SHEET_IMPORT
+    assert attribution.published_by == _EMAIL.replace("@", "-")
+    assert attribution.batch_id == batch_id
 
 
 @pytest.mark.integration
@@ -540,9 +677,7 @@ async def test_the_running_import_is_findable_without_being_remembered(
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_publishing_dismisses_the_cards_it_makes_pointless(
-    user_id, batch_id, batch_commit
-):
+async def test_publishing_dismisses_the_cards_it_makes_pointless(user_id, batch_id):
     """Two imports minutes apart leave two cards for one locality. Publishing the newer one
     makes the older obviously stale, and it used to sit in the queue until a timed sweep
     noticed — offering a reviewer a card that could only ever refuse."""
@@ -561,7 +696,7 @@ async def test_publishing_dismisses_the_cards_it_makes_pointless(
     )
     await import_rows(await _parsed(("Bo Nunez", "Town Clerk")), user_id, second)
 
-    [result] = await publish_selected(second, {_OCDID}, user_id)
+    [result] = await publish_selected(second, await _selected(second, _OCDID), user_id)
     assert result.published is True
 
     assert (

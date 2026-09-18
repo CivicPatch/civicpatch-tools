@@ -7,7 +7,6 @@
 export const STORAGE_KEYS = {
     THEME: "app:theme", // forever
     DEFAULT_STATE: "app:default-state", // forever; removed on logout
-    QUEUE_VIEW: "app:queue-view", // forever
     ISSUES_OPEN_SECTIONS: "issues-page:open-sections", // forever
     SWEPT_AT: "app:storage-swept-at", // forever; the sweep's own bookkeeping
 };

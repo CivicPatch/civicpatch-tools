@@ -27,9 +27,13 @@ const START = "**/api/v1/imports";
 const PROGRESS = "**/api/v1/imports/batch-e2e";
 const REVIEW = "**/api/v1/imports/batch-e2e/review";
 const PUBLISH = "**/api/v1/imports/batch-e2e/publish";
+// The stubbed batch's changeset exists nowhere, so its cards are stubbed too — empty.
+const CARDS = "**/api/v1/reviews/cards?*";
 
 const READY = "ocd-jurisdiction/country:us/state:wa/place:e2e_ready/government";
-const BLOCKED = "ocd-jurisdiction/country:us/state:wa/place:e2e_blocked/government";
+const READY_CHANGESET = "00000000-0000-0000-dddd-000000000001";
+const BLOCKED =
+  "ocd-jurisdiction/country:us/state:wa/place:e2e_blocked/government";
 
 const PREVIEW_BODY = {
   jurisdictions_ready: [READY],
@@ -39,26 +43,11 @@ const PREVIEW_BODY = {
     {
       line: 4,
       jurisdiction_ocdid: BLOCKED,
-      column: "label",
+      column: "name",
       message: "required",
     },
   ],
 };
-
-const person = (overrides = {}) => ({
-  id: "00000000-0000-0000-cccc-000000000001",
-  name: "Ada Whitfield",
-  label: "Council Member",
-  image: null,
-  urls: [],
-  phones: [],
-  emails: [],
-  start_date: null,
-  end_date: null,
-  role_id: "council-member",
-  unmatched_text: [],
-  ...overrides,
-});
 
 const progress = (status, done = 1) => ({
   batch_id: "batch-e2e",
@@ -70,19 +59,25 @@ const progress = (status, done = 1) => ({
   finished_at: status === "running" ? null : "2026-08-28T14:02:05Z",
 });
 
-const reviewBody = (people) => ({
+const reviewBody = () => ({
   batch_id: "batch-e2e",
   status: "succeeded",
   jurisdictions: [
     {
       jurisdiction_ocdid: READY,
       name: "E2E Ready",
-      changeset_id: "00000000-0000-0000-dddd-000000000001",
-      // `selectableOcdids` filters on this. It was `review_status: "pending"` until migration
+      changeset_id: READY_CHANGESET,
+      // `selectableChangesetIds` filters on this. It was `review_status: "pending"` until migration
       // 177 renamed the column and 178 settled 'ready' → 'open'; with the stale name nothing
       // was selectable and the panel read "Imported localities" instead of "Review and publish".
       changeset_state: "open",
-      people,
+      people: 1,
+      // The real endpoint always sends it; the page sorts and filters on it.
+      change_counts: {
+        added_people: 0,
+        changed_people: 0,
+        absent_memberships: 0,
+      },
     },
   ],
 });
@@ -96,7 +91,12 @@ async function json(route, body) {
 }
 
 function historyPage(batches) {
-  return { data: batches, total_items: batches.length, page: 1, total_pages: 1 };
+  return {
+    data: batches,
+    total_items: batches.length,
+    page: 1,
+    total_pages: 1,
+  };
 }
 
 /** The `/history` response has siblings next to `data`, so it can't reuse `json`'s shape. */
@@ -115,6 +115,7 @@ async function stubIdle(page) {
   );
   await page.route(LATEST, (route) => json(route, null));
   await page.route(HISTORY, (route) => historyRoute(route, []));
+  await page.route(CARDS, (route) => json(route, []));
 }
 
 test.describe("Import from the sheet", () => {
@@ -123,7 +124,7 @@ test.describe("Import from the sheet", () => {
   }) => {
     await stubIdle(page);
     await page.route(PROGRESS, (route) => json(route, progress("succeeded")));
-    await page.route(REVIEW, (route) => json(route, reviewBody([person()])));
+    await page.route(REVIEW, (route) => json(route, reviewBody()));
     await page.route(START, (route) =>
       route.request().method() === "POST"
         ? json(route, { batch_id: "batch-e2e", preview: PREVIEW_BODY })
@@ -142,8 +143,12 @@ test.describe("Import from the sheet", () => {
     ).toContainText("1");
 
     // The rejected row names its line, column and locality, so it is fixable in the sheet.
-    await expect(page.getByRole("cell", { name: "4", exact: true })).toBeVisible();
-    await expect(page.getByRole("cell", { name: "label" })).toBeVisible();
+    await expect(
+      page.getByRole("cell", { name: "4", exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("cell", { name: "name", exact: true }),
+    ).toBeVisible();
     // By town name, linking to the jurisdiction — the raw ocdid is unreadable in bulk, so it
     // moved to the link's title rather than being the cell's text.
     const rejected = page.getByRole("link", { name: "E2e Blocked" });
@@ -155,17 +160,16 @@ test.describe("Import from the sheet", () => {
     await stubIdle(page);
     await page.goto("/imports");
 
-    await expect(page.getByRole("link", { name: "Open the sheet" })).toHaveAttribute(
-      "href",
-      "https://docs.google.com/spreadsheets/d/e2e",
-    );
+    await expect(
+      page.getByRole("link", { name: "Open the sheet" }),
+    ).toHaveAttribute("href", "https://docs.google.com/spreadsheets/d/e2e");
   });
 
   test("follows a started import through to its review without a reload", async ({
     maintainerPage: page,
   }) => {
     await stubIdle(page);
-    await page.route(REVIEW, (route) => json(route, reviewBody([person()])));
+    await page.route(REVIEW, (route) => json(route, reviewBody()));
 
     // Running on the first poll, finished on the next: the page has to keep asking. History
     // only picks up the batch once it is finished, same as a real backend would — otherwise
@@ -195,30 +199,6 @@ test.describe("Import from the sheet", () => {
     // Arrives on its own — the poll used to die before the first batch existed, leaving this
     // stuck until somebody reloaded.
     await expect(page.getByText("Review and publish")).toBeVisible();
-    await expect(page.getByText("Ada Whitfield")).toBeVisible();
-  });
-
-  test("warns about a label that matched no role", async ({
-    maintainerPage: page,
-  }) => {
-    await stubIdle(page);
-    await page.route(LATEST, (route) => json(route, progress("succeeded")));
-    await page.route(PROGRESS, (route) => json(route, progress("succeeded")));
-    await page.route(HISTORY, (route) =>
-      historyRoute(route, [progress("succeeded")]),
-    );
-    await page.route(REVIEW, (route) =>
-      json(
-        route,
-        reviewBody([
-          person({ role_id: null, unmatched_text: ["Grand Poobah"] }),
-        ]),
-      ),
-    );
-
-    await page.goto("/imports");
-
-    await expect(page.locator(".review-unmatched")).toContainText("Grand Poobah");
   });
 
   test("publishes only the localities that were picked", async ({
@@ -230,12 +210,19 @@ test.describe("Import from the sheet", () => {
     await page.route(HISTORY, (route) =>
       historyRoute(route, [progress("succeeded")]),
     );
-    await page.route(REVIEW, (route) => json(route, reviewBody([person()])));
+    await page.route(REVIEW, (route) => json(route, reviewBody()));
 
     let published = null;
     await page.route(PUBLISH, async (route) => {
       published = route.request().postDataJSON();
-      await json(route, [{ jurisdiction_ocdid: READY, published: true, error: null }]);
+      await json(route, [
+        {
+          changeset_id: READY_CHANGESET,
+          jurisdiction_ocdid: READY,
+          published: true,
+          error: null,
+        },
+      ]);
     });
 
     await page.goto("/imports");
@@ -246,7 +233,6 @@ test.describe("Import from the sheet", () => {
     await page.getByRole("button", { name: "Publish" }).first().click();
 
     await expect.poll(() => published).not.toBeNull();
-    expect(published.jurisdiction_ocdids).toEqual([READY]);
-    await expect(page.getByText("in one open-data commit")).toBeVisible();
+    expect(published.changeset_ids).toEqual([READY_CHANGESET]);
   });
 });

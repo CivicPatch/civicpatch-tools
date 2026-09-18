@@ -1,6 +1,7 @@
 """
 Convert a jurisdiction_id-keyed roster payload into rows pasteable under Entry[Roster]'s
-header (`jurisdiction_ocdid, name, source_url, email, phone, image, label`).
+header (`jurisdiction_ocdid, name, source_url, label, email, phone, image` — the order
+`core.entry_rows.ROSTER_HEADERS` writes, since a paste lands positionally).
 
 Standalone: no app imports, no database, no docker. Runs anywhere with plain python3. The
 source's `jurisdiction_id` (e.g. "jurisdiction-ca-menlo-park") becomes the ocdid it implies
@@ -8,9 +9,9 @@ source's `jurisdiction_id` (e.g. "jurisdiction-ca-menlo-park") becomes the ocdid
 alone — the same thing a hand-typed ocdid always was, right or wrong, is checked at import,
 per jurisdiction, not here.
 
-The payload carries no title, so every row's `label` is written as `inherit` — the app looks
-up whatever this person's current seat already says and reuses it, or leaves it blank if this
-is someone new. `label` is required, so this can't just be left empty.
+The payload carries no title, so every row's `label` is left blank. A sheet import states only
+the cells it fills in, so a blank label keeps the person's current post; someone new derives to
+unmatched.
 
 Usage:
     python3 convert_roster_payload.py payload.tsv
@@ -42,11 +43,10 @@ SOURCE_COLUMNS = [
     "accessed_date",
 ]
 
-ROSTER_COLUMNS = ["jurisdiction_ocdid", "name", "source_url", "email", "phone", "image", "label"]
+ROSTER_COLUMNS = ["jurisdiction_ocdid", "name", "source_url", "label", "email", "phone", "image"]
 
-# Matches core.entry_rows.INHERIT — kept as a literal, not an import, since this script is
-# standalone by design and must not need the app's package on the path.
-INHERIT = "inherit"
+# Blank on purpose: the payload carries no title (see the module docstring).
+NO_LABEL = ""
 
 
 def _ocdid_from_jurisdiction_id(jurisdiction_id: str) -> str | None:
@@ -80,7 +80,7 @@ def main() -> None:
             print(f"skipped row {line}: bad jurisdiction_id {row['jurisdiction_id']!r}", file=sys.stderr)
             continue
         writer.writerow(
-            [ocdid, row["name"], row["source_url"], row["email"], row["phone"], row["image"], INHERIT]
+            [ocdid, row["name"], row["source_url"], NO_LABEL, row["email"], row["phone"], row["image"]]
         )
         written += 1
 

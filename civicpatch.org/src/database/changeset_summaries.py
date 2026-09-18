@@ -52,7 +52,7 @@ COLLECTED = "changesets.kind = ANY(%(collection_kinds)s)"
 # Not a state test: `superseded` is a dismissal the rollup deliberately does not count as a
 # failure, so this is state-plus-reason. Derived from `DismissalReason` minus the one exclusion,
 # so a new reason is counted by default and only an explicit choice leaves it out.
-_NOT_A_FAILURE = frozenset({DismissalReason.SUPERSEDED})
+_NOT_A_FAILURE = frozenset({DismissalReason.SUPERSEDED, DismissalReason.EXPIRED})
 DISMISSED = "changesets.dismissed_reason IN ({})".format(
     ", ".join(f"'{r.value}'" for r in DismissalReason if r not in _NOT_A_FAILURE)
 )

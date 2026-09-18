@@ -1,5 +1,5 @@
 // The kind of change a diff entry represents — the contract between
-// computePeopleDiff and its consumers (people-diff, diff-panel, data-panel).
+// computePeopleDiff and its consumers (person-cards).
 export const DiffType = Object.freeze({
   ADDED: "added",
   REMOVED: "removed",

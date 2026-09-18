@@ -339,7 +339,12 @@ async def identities_by_id(cur, post_ids: list[str]) -> dict[str, dict]:
 
 
 async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
-    """Every post in a jurisdiction.
+    by_jurisdiction = await list_for_jurisdictions(cur, [jurisdiction_ocdid])
+    return by_jurisdiction.get(jurisdiction_ocdid, [])
+
+
+async def list_for_jurisdictions(cur, jurisdiction_ocdids: list[str]) -> dict[str, list[dict]]:
+    """Every post in each jurisdiction.
 
     Undated on purpose. A post is not a temporal fact — one minted last week still belongs in
     a June answer — and who holds it at a given moment is the memberships read, which windows
@@ -356,15 +361,20 @@ async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
                {POST_IS_VERIFIED} AS meta_is_verified,
                roles.label AS role_label
         FROM posts LEFT JOIN roles ON roles.id = posts.role_id
-        WHERE posts.jurisdiction_ocdid = %(jurisdiction_ocdid)s
+        WHERE posts.jurisdiction_ocdid = ANY(%(jurisdiction_ocdids)s)
         ORDER BY posts.role_id, posts.division_ocdid
         """,
-        {"jurisdiction_ocdid": jurisdiction_ocdid},
+        {"jurisdiction_ocdids": jurisdiction_ocdids},
     )
     columns = [column.name for column in cur.description or []]
     rows = [dict(zip(columns, row)) for row in await cur.fetchall()]
     labels = await asserted_labels(cur, [row["id"] for row in rows])
-    return [_with_label(row, labels.get(row["id"])) for row in rows]
+    by_jurisdiction: dict[str, list[dict]] = {}
+    for row in rows:
+        by_jurisdiction.setdefault(row["jurisdiction_ocdid"], []).append(
+            _with_label(row, labels.get(row["id"]))
+        )
+    return by_jurisdiction
 
 
 async def list_page_for_state(
@@ -467,13 +477,25 @@ async def unverified_by_jurisdiction(
 
 async def list_by_organization(jurisdiction_ocdid: str) -> list[dict]:
     """Every body in a jurisdiction with its posts."""
+    by_jurisdiction = await list_by_organization_for_jurisdictions([jurisdiction_ocdid])
+    return by_jurisdiction[jurisdiction_ocdid]
+
+
+async def list_by_organization_for_jurisdictions(
+    jurisdiction_ocdids: list[str],
+) -> dict[str, list[dict]]:
+    """`list_by_organization` for many jurisdictions: two queries, whatever the count."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_rows = await organizations.list_for_jurisdiction(
-            cur, jurisdiction_ocdid
+        organization_rows = await organizations.list_for_jurisdictions(cur, jurisdiction_ocdids)
+        post_rows = await list_for_jurisdictions(cur, jurisdiction_ocdids)
+    return {
+        jurisdiction_ocdid: group_by_organization(
+            organization_rows.get(jurisdiction_ocdid, []),
+            post_rows.get(jurisdiction_ocdid, []),
         )
-        post_rows = await list_for_jurisdiction(cur, jurisdiction_ocdid)
-    return group_by_organization(organization_rows, post_rows)
+        for jurisdiction_ocdid in jurisdiction_ocdids
+    }
 
 
 async def create_all(

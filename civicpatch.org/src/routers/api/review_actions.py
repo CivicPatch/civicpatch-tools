@@ -12,6 +12,7 @@ import database.people
 import database.pipeline_runs
 import database.review_session_entries as review_session_entries_db
 import database.users
+import services.bulk_review as bulk_review_service
 import services.review_issue_report as review_issue_report_service
 import services.roster_edits as roster_edits
 from database.publications import SupersededRoster
@@ -23,6 +24,7 @@ from fastapi import (
 )
 from lib.auth import require_route_access
 from pydantic import BaseModel
+from schemas.imports import ChangesetSelection
 from schemas.common import (
     Identity,
     ReportReviewIssueRequest,
@@ -79,6 +81,10 @@ def _http_error(exc: Exception) -> HTTPException:
         return HTTPException(status_code=401, detail="Sign in to record an edit.")
     if isinstance(exc, SupersededRoster):
         return HTTPException(status_code=409, detail=str(exc))
+    if isinstance(exc, roster_edits.NotInReviewPool):
+        return HTTPException(
+            status_code=409, detail="An import is published from its import page."
+        )
     return HTTPException(status_code=409, detail=MISSING_ROSTER_DETAIL)
 
 
@@ -90,6 +96,33 @@ def _http_error(exc: Exception) -> HTTPException:
 
 def get_router(api_key_header):
     router = APIRouter()
+
+    # -- Publish or reject a selection of cards: the Queue's bulk actions ---
+    @router.post("/publish")
+    async def publish_selection_endpoint(
+        body: ChangesetSelection,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
+        ),
+    ):
+        """Partial success is normal, so the response says what happened to each card."""
+        if not user.user_id:
+            raise HTTPException(status_code=401, detail="User ID not available")
+        results = await bulk_review_service.publish_selected(body.changeset_ids, user.user_id)
+        return {"data": results}
+
+    @router.post("/dismiss")
+    async def dismiss_selection_endpoint(
+        body: ChangesetSelection,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.CONTRIBUTORS)
+        ),
+    ):
+        """Answers with the ids actually dismissed."""
+        if not user.user_id:
+            raise HTTPException(status_code=401, detail="User ID not available")
+        dismissed = await bulk_review_service.dismiss_selected(body.changeset_ids, user.user_id)
+        return {"data": dismissed}
 
     # -- File an issue against this scrape ---
     @router.post("/{changeset_id}/issues")
@@ -170,12 +203,13 @@ def get_router(api_key_header):
             # Publishing is a database write, so it is synchronous: a 200 means the roster is
             # live and `published_at` is stamped. The open-data commit is queued behind it and
             # retries on its own — git is the projection, not the record.
-            await roster_edits.publish(
+            await roster_edits.publish_from_review(
                 request.changeset_id, request.jurisdiction_ocdid, edited, user.user_id
             )
         except (
             roster_edits.MissingRoster,
             roster_edits.AnonymousEdit,
+            roster_edits.NotInReviewPool,
             PeopleValidationError,
             SupersededRoster,
         ) as exc:

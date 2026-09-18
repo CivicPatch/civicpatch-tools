@@ -10,7 +10,7 @@ Pure: rows and a taxonomy in, a roster out.
 
 from collections import defaultdict
 
-from shared.schemas import DerivedPerson, Person, PersonSourceRecord
+from shared.schemas import POST_FIELD, DerivedPerson, Person, PersonSourceRecord
 from shared.utils.log_protocol import Log
 from shared.utils.people_utils import sort_people
 from shared.utils.person_fields import order_person_fields
@@ -281,3 +281,51 @@ def in_known_organizations(
             f"{unknown[0].get('name')!r} names organization {unknown[0]['organization_id']!r}, not a current body"
         )
     return stamped
+
+
+# A partial source (`changeset_lifecycle.PARTIAL_KINDS`) states only the cells it fills in, so a
+# blank field keeps its published value. A blank label keeps current labels and current posts.
+_KEPT_WHEN_BLANK = (
+    "other_names",
+    "emails",
+    "phones",
+    "urls",
+    "image",
+    "cdn_image",
+    "start_date",
+    "end_date",
+)
+
+
+def _blank(value: object) -> bool:
+    if value is None:
+        return True
+    if isinstance(value, str):
+        return not value.strip()
+    if isinstance(value, list):
+        return all(_blank(item) for item in value)
+    return False
+
+
+def _kept_where_blank(proposed: dict, published: dict) -> dict:
+    person = dict(proposed)
+    for field in _KEPT_WHEN_BLANK:
+        if _blank(person.get(field)):
+            person[field] = published.get(field)
+    if _blank(person.get(LABELS_FIELD)):
+        person[LABELS_FIELD] = published.get(LABELS_FIELD) or []
+        person[POST_FIELD] = [
+            membership["post_id"] for membership in published.get("memberships") or []
+        ]
+    return person
+
+
+def partial_roster(proposed: list[dict], published: list[dict]) -> list[dict]:
+    """A partial source's roster: each published person's record with the source's filled-in
+    cells laid over it. Someone the source lists who is not published has nothing to keep."""
+    published_by_id = {person["id"]: person for person in published}
+    people = []
+    for person in proposed:
+        before = published_by_id.get(person["id"])
+        people.append(person if before is None else _kept_where_blank(person, before))
+    return people

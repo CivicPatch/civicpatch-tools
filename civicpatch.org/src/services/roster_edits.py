@@ -23,9 +23,10 @@ from core.people_edits import (
     assertions_from_edit,
     patch_people,
 )
+from core.changeset_lifecycle import REVIEW_POOL_KINDS
 from core.people_roster import reviewer_source_records
 from database import assertions, posts
-from database.changesets import register_people_edit_changeset
+from database.changesets import get_changeset_kind, register_people_edit_changeset
 from database.database import get_pool
 from database.people import get_roster
 from database.source_records import insert_source_records
@@ -49,6 +50,10 @@ class AnonymousEdit(Exception):
 
 class EmptyEdit(Exception):
     """Publishing nobody would retire everyone in the jurisdiction."""
+
+
+class NotInReviewPool(Exception):
+    """A sheet import is decided on its batch page, not from a review card."""
 
 
 async def save(
@@ -202,6 +207,21 @@ async def _record_edits(
         )
     ]
     await assertions.create_all(claims, user_id)
+
+
+async def publish_from_review(
+    changeset_id: str,
+    jurisdiction_ocdid: str,
+    edited: List[dict] | None,
+    resolved_by_user_id: str,
+) -> None:
+    """`publish`, for the review card — which offers only the kinds the review pool does."""
+    kind = await get_changeset_kind(changeset_id)
+    if kind is None:
+        raise MissingRoster(changeset_id)
+    if kind not in REVIEW_POOL_KINDS:
+        raise NotInReviewPool(changeset_id)
+    await publish(changeset_id, jurisdiction_ocdid, edited, resolved_by_user_id)
 
 
 async def publish(

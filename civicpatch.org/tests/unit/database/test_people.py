@@ -32,9 +32,12 @@ async def test_the_published_side_groups_by_jurisdiction():
     cur = _make_cursor([[(dallas, {"id": "p1"}), (dallas, {"id": "p2"}), (austin, {"id": "p3"})]])
 
     with patch("database.people.get_pool", AsyncMock(return_value=_make_pool(cur))):
-        result = await db_people.get_people_by_jurisdictions([dallas, austin])
+        result = await db_people.get_rosters_by_jurisdiction([dallas, austin])
 
-    assert result == {dallas: [{"id": "p1"}, {"id": "p2"}], austin: [{"id": "p3"}]}
+    assert {ocdid: [person["id"] for person in people] for ocdid, people in result.items()} == {
+        dallas: ["p1", "p2"],
+        austin: ["p3"],
+    }
 
 
 @pytest.mark.asyncio
@@ -42,46 +45,16 @@ async def test_the_published_side_groups_by_jurisdiction():
 async def test_no_jurisdictions_asks_nothing():
     cur = _make_cursor([[]])
     with patch("database.people.get_pool", AsyncMock(return_value=_make_pool(cur))) as pool:
-        assert await db_people.get_people_by_jurisdictions([]) == {}
+        assert await db_people.get_rosters_by_jurisdiction([]) == {}
     pool.assert_not_awaited()
 
 
 @pytest.mark.unit
-def test_both_sides_of_the_card_carry_the_same_keys():
-    """The published side is projected in SQL and the proposed side is a derived dict, so
-    nothing but this keeps them in step — and the card diffs them key by key."""
-    derived = {
-        "id": "p1",
-        "name": "Jane Doe",
-        "labels": ["Mayor"],
-        "source_urls": ["https://x.gov"],
-        "phones": ["(555) 0001"],
-        "cdn_image": "https://cdn/x.png",
-        "jurisdiction_ocdid": "ocd-jurisdiction/x",
-    }
-
-    assert set(db_people.projected(derived, "quick")) == {
-        "id", "name", "labels", "source_urls"
-    }
-    # Fields the view does not ask for are dropped, including ones only the derived side has.
-    assert "phones" not in db_people.projected(derived, "quick")
-    assert "cdn_image" not in db_people.projected(derived, "detail")
-    assert set(db_people.projected(derived, "detail")) <= db_people.VIEWS["detail"]
-
-
-@pytest.mark.unit
 def test_memberships_reach_the_card_so_a_seated_person_is_not_asked_for_a_post():
-    """The one key the two sides do *not* share, deliberately. `isPostUnanswered` treats an open
-    membership as the post question already answered; without it in the projection a published
-    person restored into the roster read as unanswered and blocked the publish.
-
-    The proposed side has no memberships to carry — nothing is seated until a publish — so it
-    simply lacks the key rather than carrying an empty one."""
-    assert "memberships" in db_people.VIEWS["quick"]
-    assert "memberships" in db_people.VIEWS["detail"]
-
-    derived = {"id": "p1", "name": "Jane Doe", "labels": ["Mayor"]}
-    assert "memberships" not in db_people.projected(derived, "quick")
+    """`isPostUnanswered` treats an open membership as the post question already answered;
+    without it on the published side a person restored into the roster read as unanswered and
+    blocked the publish."""
+    assert "'memberships'" in db_people.PERSON_JSON
 
 
 @pytest.mark.unit

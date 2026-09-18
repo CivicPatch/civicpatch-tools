@@ -186,6 +186,32 @@ def test_polling_an_unknown_batch_is_a_404():
 
 
 @pytest.mark.unit
+def test_dismissing_answers_with_what_was_dismissed():
+    with patch(
+        "routers.api.imports.batch_review_service.dismiss_selected",
+        new_callable=AsyncMock,
+        return_value=["changeset-1"],
+    ) as dismiss:
+        response = _client().post(
+            f"{_PREFIX}/batch-1/dismiss", json={"changeset_ids": ["changeset-1"]}
+        )
+
+    assert response.status_code == 200
+    assert response.json() == {"data": ["changeset-1"]}
+    dismiss.assert_awaited_once_with(
+        "batch-1", {"changeset-1"}, "00000000-0000-4000-8000-000000000001"
+    )
+
+
+@pytest.mark.unit
+def test_contributors_cannot_dismiss_an_import():
+    response = _client(UserRole.CONTRIBUTORS).post(
+        f"{_PREFIX}/batch-1/dismiss", json={"changeset_ids": ["changeset-1"]}
+    )
+    assert response.status_code in (401, 403)
+
+
+@pytest.mark.unit
 def test_contributors_cannot_start_an_import():
     """Publishing what an import proposes is a maintainer action, and so is raising it."""
     response = _client(UserRole.CONTRIBUTORS).post(_PREFIX)

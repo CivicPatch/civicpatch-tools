@@ -13,7 +13,6 @@ from schemas.assertions import Assertion, AssertionKind, EntityType, Source
 from schemas.activity import Change
 from shared.utils.id_utils import make_id
 from shared.utils.statuses import ActivityType
-from psycopg import sql
 from shared.schemas import Person
 
 logger = logging.getLogger(__name__)
@@ -129,62 +128,6 @@ PERSON_JSON = f"""jsonb_build_object(
     'division_ocdid', {PERSON_DIVISION},
     'memberships', {PERSON_MEMBERSHIPS}
 )"""
-
-
-# The published side of the review card. The proposed side is derived from sightings in
-# `services/roster.py` and filtered by `projected` below, so both sides carry the same keys.
-_PEOPLE_TABLE_EXPRS: dict[str, tuple[LiteralString, LiteralString]] = {
-    "id": ("'id'", "people.id::text"),
-    "name": ("'name'", "people.name"),
-    "labels": ("'labels'", PERSON_LABELS),
-    "division_ocdid": ("'division_ocdid'", PERSON_DIVISION),
-    "source_urls": ("'source_urls'", "to_jsonb(people.source_urls)"),
-    "phones": ("'phones'", "to_jsonb(people.phones)"),
-    "emails": ("'emails'", "to_jsonb(people.emails)"),
-    "urls": ("'urls'", "to_jsonb(people.urls)"),
-    "start_date": ("'start_date'", PERSON_START_DATE),
-    "end_date": ("'end_date'", PERSON_END_DATE),
-    "image": ("'image'", "people.image"),
-    # In every view, not only `detail`: it is how the card knows this person already holds a
-    # seat. Without it a published person restored into the roster reads as never having
-    # answered the post question, and `isPostUnanswered` blocks the publish on them.
-    "memberships": ("'memberships'", PERSON_MEMBERSHIPS),
-}
-
-_QUICK_FIELDS = frozenset({"id", "name", "labels", "memberships", "source_urls"})
-_DETAIL_FIELDS = frozenset(
-    {
-        "id",
-        "name",
-        "labels",
-        "source_urls",
-        "phones",
-        "emails",
-        "urls",
-        "start_date",
-        "end_date",
-        "image",
-        "memberships",
-    }
-)
-
-VIEWS: dict[str, frozenset[str]] = {
-    "quick": _QUICK_FIELDS,
-    "detail": _DETAIL_FIELDS,
-}
-DEFAULT_VIEW = "quick"
-
-
-def _build_jsonb_obj(
-    exprs: dict[str, tuple[LiteralString, LiteralString]], fields: frozenset[str]
-) -> sql.Composed:
-    pairs: list[sql.Composable] = []
-    for field in sorted(fields):
-        if field in exprs:
-            key, val = exprs[field]
-            pairs.append(sql.SQL(key))
-            pairs.append(sql.SQL(val))
-    return sql.SQL("jsonb_build_object({})").format(sql.SQL(", ").join(pairs))
 
 
 def labelled(person: dict) -> dict:
@@ -331,38 +274,28 @@ async def get_person_models(jurisdiction_ocdid: str) -> List[Person]:
     return [Person(**person) for person in people]
 
 
-async def get_people_by_jurisdictions(
-    jurisdiction_ocdids: list[str], view: str = DEFAULT_VIEW
+async def get_rosters_by_jurisdiction(
+    jurisdiction_ocdids: list[str],
 ) -> dict[str, list[dict]]:
-    """The published roster of each jurisdiction, projected to a review card's fields."""
+    """`get_roster` for many jurisdictions in one query, every field."""
     if not jurisdiction_ocdids:
         return {}
-    projection = _build_jsonb_obj(
-        _PEOPLE_TABLE_EXPRS, VIEWS.get(view, VIEWS[DEFAULT_VIEW])
-    )
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            sql.SQL("""
-            SELECT jurisdiction_ocdid, {} AS person
-            FROM people
-            WHERE jurisdiction_ocdid = ANY(%s) AND """ + IS_ON_THE_ROSTER).format(
-                projection
-            ),
+            f"""
+            SELECT jurisdiction_ocdid, {PERSON_JSON} FROM people
+            WHERE jurisdiction_ocdid = ANY(%s) AND {IS_ON_THE_ROSTER}
+            ORDER BY jurisdiction_ocdid, name, id
+            """,
             (jurisdiction_ocdids,),
         )
         rows = await cur.fetchall()
 
     by_jurisdiction: dict[str, list[dict]] = {}
     for jurisdiction_ocdid, person in rows:
-        by_jurisdiction.setdefault(jurisdiction_ocdid, []).append(person)
+        by_jurisdiction.setdefault(jurisdiction_ocdid, []).append(labelled(person))
     return by_jurisdiction
-
-
-def projected(person: dict, view: str = DEFAULT_VIEW) -> dict:
-    """A derived person cut down to the same fields the published side is projected to."""
-    fields = VIEWS.get(view, VIEWS[DEFAULT_VIEW])
-    return {key: value for key, value in person.items() if key in fields}
 
 
 async def get_people_by_ids(person_ids: list[str]) -> dict[str, Person]:

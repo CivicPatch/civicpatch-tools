@@ -11,13 +11,13 @@ Not a failure: a dismissed changeset keeps its evidence, it just never published
 import logging
 from datetime import timedelta
 
-from core.changeset_lifecycle import ChangesetEvent, states_accepting
+from core.changeset_lifecycle import ChangesetEvent, ChangesetState, states_accepting
 from database.activity import record_dismissal
 from database.changeset_predicates import HELD_BY_REVIEWER, SWEEPABLE
 from database.database import get_pool
 from database.review_sessions import SESSION_IDLE_TIMEOUT_MINUTES
 from database.users import SYSTEM_USER_ID
-from shared.utils.statuses import DismissalReason
+from shared.utils.statuses import ChangesetKind, DismissalReason
 
 logger = logging.getLogger(__name__)
 
@@ -69,6 +69,61 @@ async def mark_dismissed(
             cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id, reason
         )
     return [(row[0], row[1]) for row in dismissed]
+
+
+async def dismiss_all(
+    changeset_ids: list[str],
+    reason: DismissalReason,
+    resolved_by_user_id: str,
+) -> list[str]:
+    """`mark_dismissed` in its own transaction. Returns the ids that were still open."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        dismissed = await mark_dismissed(cur, changeset_ids, reason, resolved_by_user_id)
+        await conn.commit()
+    return [changeset_id for changeset_id, _ in dismissed]
+
+
+async def expire_stale_imports(max_age: timedelta) -> list[str]:
+    """Dismiss every sheet import still open `max_age` after it was made. Nobody decided, so no
+    user is recorded."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT changesets.id::text FROM changesets
+             WHERE changesets.kind = '{ChangesetKind.SHEET_IMPORT.value}'
+               AND changesets.changeset_state = '{ChangesetState.OPEN.value}'
+               AND changesets.created_at < now() - %s
+            """,
+            (max_age,),
+        )
+        stale = [row[0] for row in await cur.fetchall()]
+        dismissed = await mark_dismissed(cur, stale, DismissalReason.EXPIRED)
+        await conn.commit()
+    return [changeset_id for changeset_id, _ in dismissed]
+
+
+async def latest_import_dismissed(jurisdiction_ocdids: list[str]) -> set[str]:
+    """Which of these towns' most recent sheet import was dismissed — rejected, superseded or
+    expired."""
+    if not jurisdiction_ocdids:
+        return set()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT DISTINCT ON (changesets.jurisdiction_ocdid)
+                   changesets.jurisdiction_ocdid, changesets.changeset_state
+              FROM changesets
+             WHERE changesets.kind = '{ChangesetKind.SHEET_IMPORT.value}'
+               AND changesets.jurisdiction_ocdid = ANY(%s)
+             ORDER BY changesets.jurisdiction_ocdid, changesets.created_at DESC
+            """,
+            (jurisdiction_ocdids,),
+        )
+        rows = await cur.fetchall()
+    return {ocdid for ocdid, state in rows if state == ChangesetState.DISMISSED}
 
 
 async def dismiss_superseded_by(

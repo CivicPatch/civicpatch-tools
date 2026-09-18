@@ -165,8 +165,8 @@ async def register_sheet_import_changeset(
 ) -> None:
     """One jurisdiction's worth of a curated-sheet import. Nothing ran, so no run.
 
-    Unpublished, unlike a hand edit: an import proposes a whole roster typed elsewhere, so it
-    belongs in the review queue. Writing its sightings is what puts it there.
+    Unpublished, unlike a hand edit: an import proposes a whole roster typed elsewhere, so
+    somebody decides it on the import's batch page.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -341,6 +341,30 @@ async def get_changeset_jurisdiction(changeset_id: str) -> str | None:
         )
         row = await cur.fetchone()
     return row[0] if row else None
+
+
+async def get_changeset_kind(changeset_id: str) -> ChangesetKind | None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT kind FROM changesets WHERE id::text = %s",
+            (changeset_id,),
+        )
+        row = await cur.fetchone()
+    return ChangesetKind(row[0]) if row else None
+
+
+async def kinds_for_changesets(changeset_ids: list[str]) -> dict[str, ChangesetKind]:
+    if not changeset_ids:
+        return {}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text, kind FROM changesets WHERE id::text = ANY(%s)",
+            (changeset_ids,),
+        )
+        rows = await cur.fetchall()
+    return {row[0]: ChangesetKind(row[1]) for row in rows}
 
 
 async def jurisdictions_for_changesets(changeset_ids: list[str]) -> dict[str, str]:
