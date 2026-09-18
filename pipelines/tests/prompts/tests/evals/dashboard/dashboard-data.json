@@ -388,126 +388,126 @@
       "newly_wrong": [
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
@@ -553,63 +553,63 @@
       "newly_wrong": [
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "url",
         "expected": "https://seattle.gov/council/members/alexis-mercedes-rinck",
         "actual": "https:///council/members/alexis-mercedes-rinck"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "url",
         "expected": "https://seattle.gov/council/members/bob-kettle",
         "actual": "https:///council/members/bob-kettle"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "url",
         "expected": "https://seattle.gov/council/members/dan-strauss",
         "actual": "https:///council/members/dan-strauss"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "url",
         "expected": "https://seattle.gov/council/members/debora-juarez",
         "actual": "https:///council/members/debora-juarez"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "url",
         "expected": "https://seattle.gov/council/members/dionne-foster",
         "actual": "https:///council/members/dionne-foster"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "url",
         "expected": "https://seattle.gov/council/members/eddie-lin",
         "actual": "https:///council/members/eddie-lin"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "url",
         "expected": "https://seattle.gov/council/members/joy-hollingsworth",
         "actual": "https:///council/members/joy-hollingsworth"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "url",
         "expected": "https://seattle.gov/council/members/maritza-rivera",
         "actual": "https:///council/members/maritza-rivera"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "url",
         "expected": "https://seattle.gov/council/members/rob-saka",
         "actual": "https:///council/members/rob-saka"
@@ -697,126 +697,126 @@
       "newly_wrong": [
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
@@ -857,63 +857,63 @@
       "newly_wrong": [
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "url",
         "expected": "https://seattle.gov/council/members/alexis-mercedes-rinck",
         "actual": "https:///council/members/alexis-mercedes-rinck"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "url",
         "expected": "https://seattle.gov/council/members/bob-kettle",
         "actual": "https:///council/members/bob-kettle"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "url",
         "expected": "https://seattle.gov/council/members/dan-strauss",
         "actual": "https:///council/members/dan-strauss"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "url",
         "expected": "https://seattle.gov/council/members/debora-juarez",
         "actual": "https:///council/members/debora-juarez"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "url",
         "expected": "https://seattle.gov/council/members/dionne-foster",
         "actual": "https:///council/members/dionne-foster"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "url",
         "expected": "https://seattle.gov/council/members/eddie-lin",
         "actual": "https:///council/members/eddie-lin"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "url",
         "expected": "https://seattle.gov/council/members/joy-hollingsworth",
         "actual": "https:///council/members/joy-hollingsworth"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "url",
         "expected": "https://seattle.gov/council/members/maritza-rivera",
         "actual": "https:///council/members/maritza-rivera"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "url",
         "expected": "https://seattle.gov/council/members/rob-saka",
         "actual": "https:///council/members/rob-saka"
@@ -1033,126 +1033,126 @@
       "fixed": [
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
@@ -1187,126 +1187,126 @@
       "fixed": [
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
@@ -1358,63 +1358,63 @@
       "newly_wrong": [
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "url",
         "expected": "https://seattle.gov/council/members/alexis-mercedes-rinck",
         "actual": "https:///council/members/alexis-mercedes-rinck"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "url",
         "expected": "https://seattle.gov/council/members/bob-kettle",
         "actual": "https:///council/members/bob-kettle"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "url",
         "expected": "https://seattle.gov/council/members/dan-strauss",
         "actual": "https:///council/members/dan-strauss"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "url",
         "expected": "https://seattle.gov/council/members/debora-juarez",
         "actual": "https:///council/members/debora-juarez"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "url",
         "expected": "https://seattle.gov/council/members/dionne-foster",
         "actual": "https:///council/members/dionne-foster"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "url",
         "expected": "https://seattle.gov/council/members/eddie-lin",
         "actual": "https:///council/members/eddie-lin"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "url",
         "expected": "https://seattle.gov/council/members/joy-hollingsworth",
         "actual": "https:///council/members/joy-hollingsworth"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "url",
         "expected": "https://seattle.gov/council/members/maritza-rivera",
         "actual": "https:///council/members/maritza-rivera"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "url",
         "expected": "https://seattle.gov/council/members/rob-saka",
         "actual": "https:///council/members/rob-saka"
@@ -1423,126 +1423,126 @@
       "fixed": [
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
@@ -1601,63 +1601,63 @@
       "fixed": [
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "url",
         "expected": "https://seattle.gov/council/members/alexis-mercedes-rinck",
         "actual": "https:///council/members/alexis-mercedes-rinck"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "url",
         "expected": "https://seattle.gov/council/members/bob-kettle",
         "actual": "https:///council/members/bob-kettle"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "url",
         "expected": "https://seattle.gov/council/members/dan-strauss",
         "actual": "https:///council/members/dan-strauss"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "url",
         "expected": "https://seattle.gov/council/members/debora-juarez",
         "actual": "https:///council/members/debora-juarez"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "url",
         "expected": "https://seattle.gov/council/members/dionne-foster",
         "actual": "https:///council/members/dionne-foster"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "url",
         "expected": "https://seattle.gov/council/members/eddie-lin",
         "actual": "https:///council/members/eddie-lin"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "url",
         "expected": "https://seattle.gov/council/members/joy-hollingsworth",
         "actual": "https:///council/members/joy-hollingsworth"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "url",
         "expected": "https://seattle.gov/council/members/maritza-rivera",
         "actual": "https:///council/members/maritza-rivera"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "url",
         "expected": "https://seattle.gov/council/members/rob-saka",
         "actual": "https:///council/members/rob-saka"
@@ -1698,63 +1698,63 @@
       "fixed": [
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "url",
         "expected": "https://seattle.gov/council/members/alexis-mercedes-rinck",
         "actual": "https:///council/members/alexis-mercedes-rinck"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "url",
         "expected": "https://seattle.gov/council/members/bob-kettle",
         "actual": "https:///council/members/bob-kettle"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "url",
         "expected": "https://seattle.gov/council/members/dan-strauss",
         "actual": "https:///council/members/dan-strauss"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "url",
         "expected": "https://seattle.gov/council/members/debora-juarez",
         "actual": "https:///council/members/debora-juarez"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "url",
         "expected": "https://seattle.gov/council/members/dionne-foster",
         "actual": "https:///council/members/dionne-foster"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "url",
         "expected": "https://seattle.gov/council/members/eddie-lin",
         "actual": "https:///council/members/eddie-lin"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "url",
         "expected": "https://seattle.gov/council/members/joy-hollingsworth",
         "actual": "https:///council/members/joy-hollingsworth"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "url",
         "expected": "https://seattle.gov/council/members/maritza-rivera",
         "actual": "https:///council/members/maritza-rivera"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "url",
         "expected": "https://seattle.gov/council/members/rob-saka",
         "actual": "https:///council/members/rob-saka"
@@ -1806,126 +1806,126 @@
       "newly_wrong": [
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "email",
         "expected": "council@seattle.gov",
         "actual": "—"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "phone",
         "expected": "(206) 684-8888",
         "actual": "—"
@@ -1934,63 +1934,63 @@
       "fixed": [
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Alexis Mercedes Rinck",
+        "subject": "Alexis Mercedes Rinck",
         "field": "url",
         "expected": "https://seattle.gov/council/members/alexis-mercedes-rinck",
         "actual": "https:///council/members/alexis-mercedes-rinck"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Bob Kettle",
+        "subject": "Bob Kettle",
         "field": "url",
         "expected": "https://seattle.gov/council/members/bob-kettle",
         "actual": "https:///council/members/bob-kettle"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dan Strauss",
+        "subject": "Dan Strauss",
         "field": "url",
         "expected": "https://seattle.gov/council/members/dan-strauss",
         "actual": "https:///council/members/dan-strauss"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Debora Juarez",
+        "subject": "Debora Juarez",
         "field": "url",
         "expected": "https://seattle.gov/council/members/debora-juarez",
         "actual": "https:///council/members/debora-juarez"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Dionne Foster",
+        "subject": "Dionne Foster",
         "field": "url",
         "expected": "https://seattle.gov/council/members/dionne-foster",
         "actual": "https:///council/members/dionne-foster"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Eddie Lin",
+        "subject": "Eddie Lin",
         "field": "url",
         "expected": "https://seattle.gov/council/members/eddie-lin",
         "actual": "https:///council/members/eddie-lin"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Joy Hollingsworth",
+        "subject": "Joy Hollingsworth",
         "field": "url",
         "expected": "https://seattle.gov/council/members/joy-hollingsworth",
         "actual": "https:///council/members/joy-hollingsworth"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Maritza Rivera",
+        "subject": "Maritza Rivera",
         "field": "url",
         "expected": "https://seattle.gov/council/members/maritza-rivera",
         "actual": "https:///council/members/maritza-rivera"
        },
        {
         "case_id": "seattle_council_pick_list_missing_president",
-        "person": "Rob Saka",
+        "subject": "Rob Saka",
         "field": "url",
         "expected": "https://seattle.gov/council/members/rob-saka",
         "actual": "https:///council/members/rob-saka"
@@ -7962,7 +7962,7 @@
     "DigitalOcean": {
      "seattle_council_pick_list_missing_president": [
       {
-       "person": "Alexis Mercedes Rinck",
+       "subject": "Alexis Mercedes Rinck",
        "field": "email",
        "expected": "council@seattle.gov",
        "actual": "—",
@@ -7970,7 +7970,7 @@
        "actual_label": "Council Member Position 8"
       },
       {
-       "person": "Alexis Mercedes Rinck",
+       "subject": "Alexis Mercedes Rinck",
        "field": "phone",
        "expected": "(206) 684-8888",
        "actual": "—",
@@ -7978,7 +7978,7 @@
        "actual_label": "Council Member Position 8"
       },
       {
-       "person": "Bob Kettle",
+       "subject": "Bob Kettle",
        "field": "email",
        "expected": "council@seattle.gov",
        "actual": "—",
@@ -7986,7 +7986,7 @@
        "actual_label": "Council Member District 7"
       },
       {
-       "person": "Bob Kettle",
+       "subject": "Bob Kettle",
        "field": "phone",
        "expected": "(206) 684-8888",
        "actual": "—",
@@ -7994,7 +7994,7 @@
        "actual_label": "Council Member District 7"
       },
       {
-       "person": "Dan Strauss",
+       "subject": "Dan Strauss",
        "field": "email",
        "expected": "council@seattle.gov",
        "actual": "—",
@@ -8002,7 +8002,7 @@
        "actual_label": "Council Member District 6"
       },
       {
-       "person": "Dan Strauss",
+       "subject": "Dan Strauss",
        "field": "phone",
        "expected": "(206) 684-8888",
        "actual": "—",
@@ -8010,7 +8010,7 @@
        "actual_label": "Council Member District 6"
       },
       {
-       "person": "Debora Juarez",
+       "subject": "Debora Juarez",
        "field": "email",
        "expected": "council@seattle.gov",
        "actual": "—",
@@ -8018,7 +8018,7 @@
        "actual_label": "Council Member District 5"
       },
       {
-       "person": "Debora Juarez",
+       "subject": "Debora Juarez",
        "field": "phone",
        "expected": "(206) 684-8888",
        "actual": "—",
@@ -8026,7 +8026,7 @@
        "actual_label": "Council Member District 5"
       },
       {
-       "person": "Dionne Foster",
+       "subject": "Dionne Foster",
        "field": "email",
        "expected": "council@seattle.gov",
        "actual": "—",
@@ -8034,7 +8034,7 @@
        "actual_label": "Council Member Position 9"
       },
       {
-       "person": "Dionne Foster",
+       "subject": "Dionne Foster",
        "field": "phone",
        "expected": "(206) 684-8888",
        "actual": "—",
@@ -8042,7 +8042,7 @@
        "actual_label": "Council Member Position 9"
       },
       {
-       "person": "Eddie Lin",
+       "subject": "Eddie Lin",
        "field": "email",
        "expected": "council@seattle.gov",
        "actual": "—",
@@ -8050,7 +8050,7 @@
        "actual_label": "Council Member District 2"
       },
       {
-       "person": "Eddie Lin",
+       "subject": "Eddie Lin",
        "field": "phone",
        "expected": "(206) 684-8888",
        "actual": "—",
@@ -8058,7 +8058,7 @@
        "actual_label": "Council Member District 2"
       },
       {
-       "person": "Joy Hollingsworth",
+       "subject": "Joy Hollingsworth",
        "field": "email",
        "expected": "council@seattle.gov",
        "actual": "—",
@@ -8066,7 +8066,7 @@
        "actual_label": "Council President and Council Member District 3"
       },
       {
-       "person": "Joy Hollingsworth",
+       "subject": "Joy Hollingsworth",
        "field": "phone",
        "expected": "(206) 684-8888",
        "actual": "—",
@@ -8074,7 +8074,7 @@
        "actual_label": "Council President and Council Member District 3"
       },
       {
-       "person": "Maritza Rivera",
+       "subject": "Maritza Rivera",
        "field": "email",
        "expected": "council@seattle.gov",
        "actual": "—",
@@ -8082,7 +8082,7 @@
        "actual_label": "Council Member District 4"
       },
       {
-       "person": "Maritza Rivera",
+       "subject": "Maritza Rivera",
        "field": "phone",
        "expected": "(206) 684-8888",
        "actual": "—",
@@ -8090,7 +8090,7 @@
        "actual_label": "Council Member District 4"
       },
       {
-       "person": "Rob Saka",
+       "subject": "Rob Saka",
        "field": "email",
        "expected": "council@seattle.gov",
        "actual": "—",
@@ -8098,7 +8098,7 @@
        "actual_label": "Council Member District 1"
       },
       {
-       "person": "Rob Saka",
+       "subject": "Rob Saka",
        "field": "phone",
        "expected": "(206) 684-8888",
        "actual": "—",
@@ -8110,7 +8110,7 @@
     "NextBit": {
      "seattle_council_pick_list_missing_president": [
       {
-       "person": "Alexis Mercedes Rinck",
+       "subject": "Alexis Mercedes Rinck",
        "field": "url",
        "expected": "https://seattle.gov/council/members/alexis-mercedes-rinck",
        "actual": "https:///council/members/alexis-mercedes-rinck",
@@ -8118,7 +8118,7 @@
        "actual_label": "Council Member Position 8"
       },
       {
-       "person": "Bob Kettle",
+       "subject": "Bob Kettle",
        "field": "url",
        "expected": "https://seattle.gov/council/members/bob-kettle",
        "actual": "https:///council/members/bob-kettle",
@@ -8126,7 +8126,7 @@
        "actual_label": "Council Member District 7"
       },
       {
-       "person": "Dan Strauss",
+       "subject": "Dan Strauss",
        "field": "url",
        "expected": "https://seattle.gov/council/members/dan-strauss",
        "actual": "https:///council/members/dan-strauss",
@@ -8134,7 +8134,7 @@
        "actual_label": "Council Member District 6"
       },
       {
-       "person": "Debora Juarez",
+       "subject": "Debora Juarez",
        "field": "url",
        "expected": "https://seattle.gov/council/members/debora-juarez",
        "actual": "https:///council/members/debora-juarez",
@@ -8142,7 +8142,7 @@
        "actual_label": "Council Member District 5"
       },
       {
-       "person": "Dionne Foster",
+       "subject": "Dionne Foster",
        "field": "url",
        "expected": "https://seattle.gov/council/members/dionne-foster",
        "actual": "https:///council/members/dionne-foster",
@@ -8150,7 +8150,7 @@
        "actual_label": "Council Member Position 9"
       },
       {
-       "person": "Eddie Lin",
+       "subject": "Eddie Lin",
        "field": "url",
        "expected": "https://seattle.gov/council/members/eddie-lin",
        "actual": "https:///council/members/eddie-lin",
@@ -8158,7 +8158,7 @@
        "actual_label": "Council Member District 2"
       },
       {
-       "person": "Joy Hollingsworth",
+       "subject": "Joy Hollingsworth",
        "field": "url",
        "expected": "https://seattle.gov/council/members/joy-hollingsworth",
        "actual": "https:///council/members/joy-hollingsworth",
@@ -8166,7 +8166,7 @@
        "actual_label": "Council Member District 3 and Council President"
       },
       {
-       "person": "Maritza Rivera",
+       "subject": "Maritza Rivera",
        "field": "url",
        "expected": "https://seattle.gov/council/members/maritza-rivera",
        "actual": "https:///council/members/maritza-rivera",
@@ -8174,7 +8174,7 @@
        "actual_label": "Council Member District 4"
       },
       {
-       "person": "Rob Saka",
+       "subject": "Rob Saka",
        "field": "url",
        "expected": "https://seattle.gov/council/members/rob-saka",
        "actual": "https:///council/members/rob-saka",
@@ -8190,30 +8190,67 @@
    "dataset_dir": "../../../datasets/local/relevant_page",
    "verdicts": [
     {
-     "provider": "AtlasCloud",
-     "blocked": false,
+     "provider": "Alibaba",
+     "blocked": true,
      "gate_failures": [],
-     "failed_case_ids": [],
-     "cases_passed": 16,
-     "cases_total": 16,
+     "failed_case_ids": [
+      "quitaque_council",
+      "san_antonio"
+     ],
+     "cases_passed": 15,
+     "cases_total": 17,
      "priority_scores": {},
-     "cost_usd": 0.016679824,
-     "ran_at": "2026-09-16T19:50:43+00:00"
+     "cost_usd": 0.0166052264,
+     "ran_at": "2026-09-18T01:32:43+00:00"
+    },
+    {
+     "provider": "AtlasCloud",
+     "blocked": true,
+     "gate_failures": [],
+     "failed_case_ids": [
+      "mcgregor_city_announcement_irrelevant",
+      "quitaque_council"
+     ],
+     "cases_passed": 15,
+     "cases_total": 17,
+     "priority_scores": {},
+     "cost_usd": 0.016573704,
+     "ran_at": "2026-09-18T01:32:43+00:00"
     },
     {
      "provider": "DigitalOcean",
-     "blocked": false,
+     "blocked": true,
      "gate_failures": [],
-     "failed_case_ids": [],
+     "failed_case_ids": [
+      "san_saba_airport_advisory_irrelevant"
+     ],
      "cases_passed": 16,
-     "cases_total": 16,
+     "cases_total": 17,
      "priority_scores": {},
-     "cost_usd": 0.008172416,
-     "ran_at": "2026-09-16T19:50:43+00:00"
+     "cost_usd": 0.009333716,
+     "ran_at": "2026-09-18T01:32:43+00:00"
+    },
+    {
+     "provider": "NextBit",
+     "blocked": true,
+     "gate_failures": [],
+     "failed_case_ids": [
+      "mcgregor_city_announcement_irrelevant",
+      "san_antonio"
+     ],
+     "cases_passed": 15,
+     "cases_total": 17,
+     "priority_scores": {},
+     "cost_usd": 0.01767064,
+     "ran_at": "2026-09-18T01:32:43+00:00"
     }
    ],
    "matrix": {
     "lineages": [
+     {
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "Alibaba"
+     },
      {
       "model": "deepseek/deepseek-v4-flash",
       "provider": "AtlasCloud"
@@ -8221,12 +8258,67 @@
      {
       "model": "deepseek/deepseek-v4-flash",
       "provider": "DigitalOcean"
+     },
+     {
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "NextBit"
      }
     ],
     "rows": [
      {
+      "prompt_sha256": "2608d81f638d",
+      "cells": [
+       {
+        "mean_score": 0.8823529411764706,
+        "run_count": 1,
+        "mean_cost_usd": 0.0166052264
+       },
+       {
+        "mean_score": 0.8823529411764706,
+        "run_count": 1,
+        "mean_cost_usd": 0.016573704
+       },
+       {
+        "mean_score": 0.9411764705882353,
+        "run_count": 1,
+        "mean_cost_usd": 0.009333716
+       },
+       {
+        "mean_score": 0.8823529411764706,
+        "run_count": 1,
+        "mean_cost_usd": 0.01767064
+       }
+      ]
+     },
+     {
+      "prompt_sha256": "72427917ff22",
+      "cells": [
+       {
+        "mean_score": 0.875,
+        "run_count": 1,
+        "mean_cost_usd": 0.0161992064
+       },
+       {
+        "mean_score": 0.9375,
+        "run_count": 1,
+        "mean_cost_usd": 0.017509184
+       },
+       {
+        "mean_score": 0.875,
+        "run_count": 1,
+        "mean_cost_usd": 0.008306088
+       },
+       {
+        "mean_score": 0.9375,
+        "run_count": 1,
+        "mean_cost_usd": 0.01825143
+       }
+      ]
+     },
+     {
       "prompt_sha256": "962c93a9a841",
       "cells": [
+       null,
        {
         "mean_score": 0.95,
         "run_count": 5,
@@ -8236,54 +8328,116 @@
         "mean_score": 0.8875,
         "run_count": 5,
         "mean_cost_usd": 0.0063238992
-       }
+       },
+       null
       ]
      }
     ]
    },
    "comparison": {
-    "default_baseline_index": 0,
-    "default_candidate_index": 1,
+    "default_baseline_index": 2,
+    "default_candidate_index": 3,
     "pairs": [
      {
       "baseline_index": 0,
       "candidate_index": 1,
-      "prompt_sha256": "962c93a9a841",
+      "prompt_sha256": "2608d81f638d",
       "baseline": {
-       "mean_score": 0.95,
-       "run_count": 5,
-       "mean_cost_usd": 0.0180636288
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.0166052264
       },
       "candidate": {
-       "mean_score": 0.8875,
-       "run_count": 5,
-       "mean_cost_usd": 0.0063238992
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.016573704
       },
       "regressed": [
        {
-        "case_id": "raisin_township_clerk",
+        "case_id": "mcgregor_city_announcement_irrelevant",
         "baseline_score": 1.0,
-        "candidate_score": 0.4
-       },
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [
+       {
+        "case_id": "san_antonio",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 15,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 0,
+      "candidate_index": 2,
+      "prompt_sha256": "2608d81f638d",
+      "baseline": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.0166052264
+      },
+      "candidate": {
+       "mean_score": 0.9411764705882353,
+       "run_count": 1,
+       "mean_cost_usd": 0.009333716
+      },
+      "regressed": [
        {
         "case_id": "san_saba_airport_advisory_irrelevant",
         "baseline_score": 1.0,
-        "candidate_score": 0.4
-       },
-       {
-        "case_id": "san_antonio",
-        "baseline_score": 0.8,
-        "candidate_score": 0.6
+        "candidate_score": 0.0
        }
       ],
       "improved": [
        {
         "case_id": "quitaque_council",
-        "baseline_score": 0.4,
-        "candidate_score": 0.8
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "san_antonio",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
        }
       ],
-      "unchanged_count": 12,
+      "unchanged_count": 14,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 0,
+      "candidate_index": 3,
+      "prompt_sha256": "2608d81f638d",
+      "baseline": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.0166052264
+      },
+      "candidate": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.01767064
+      },
+      "regressed": [
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [
+       {
+        "case_id": "quitaque_council",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 15,
       "has_value_detail": false,
       "newly_wrong": [],
       "fixed": []
@@ -8291,42 +8445,321 @@
      {
       "baseline_index": 1,
       "candidate_index": 0,
-      "prompt_sha256": "962c93a9a841",
+      "prompt_sha256": "2608d81f638d",
       "baseline": {
-       "mean_score": 0.8875,
-       "run_count": 5,
-       "mean_cost_usd": 0.0063238992
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.016573704
       },
       "candidate": {
-       "mean_score": 0.95,
-       "run_count": 5,
-       "mean_cost_usd": 0.0180636288
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.0166052264
       },
       "regressed": [
        {
-        "case_id": "quitaque_council",
-        "baseline_score": 0.8,
-        "candidate_score": 0.4
+        "case_id": "san_antonio",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
        }
       ],
       "improved": [
        {
-        "case_id": "raisin_township_clerk",
-        "baseline_score": 0.4,
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 15,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 1,
+      "candidate_index": 2,
+      "prompt_sha256": "2608d81f638d",
+      "baseline": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.016573704
+      },
+      "candidate": {
+       "mean_score": 0.9411764705882353,
+       "run_count": 1,
+       "mean_cost_usd": 0.009333716
+      },
+      "regressed": [
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "baseline_score": 0.0,
         "candidate_score": 1.0
        },
        {
+        "case_id": "quitaque_council",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 14,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 1,
+      "candidate_index": 3,
+      "prompt_sha256": "2608d81f638d",
+      "baseline": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.016573704
+      },
+      "candidate": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.01767064
+      },
+      "regressed": [
+       {
+        "case_id": "san_antonio",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [
+       {
+        "case_id": "quitaque_council",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 15,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 2,
+      "candidate_index": 0,
+      "prompt_sha256": "2608d81f638d",
+      "baseline": {
+       "mean_score": 0.9411764705882353,
+       "run_count": 1,
+       "mean_cost_usd": 0.009333716
+      },
+      "candidate": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.0166052264
+      },
+      "regressed": [
+       {
+        "case_id": "quitaque_council",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "san_antonio",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [
+       {
         "case_id": "san_saba_airport_advisory_irrelevant",
-        "baseline_score": 0.4,
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 14,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 2,
+      "candidate_index": 1,
+      "prompt_sha256": "2608d81f638d",
+      "baseline": {
+       "mean_score": 0.9411764705882353,
+       "run_count": 1,
+       "mean_cost_usd": 0.009333716
+      },
+      "candidate": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.016573704
+      },
+      "regressed": [
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "quitaque_council",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 14,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 2,
+      "candidate_index": 3,
+      "prompt_sha256": "2608d81f638d",
+      "baseline": {
+       "mean_score": 0.9411764705882353,
+       "run_count": 1,
+       "mean_cost_usd": 0.009333716
+      },
+      "candidate": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.01767064
+      },
+      "regressed": [
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "san_antonio",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 14,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 3,
+      "candidate_index": 0,
+      "prompt_sha256": "2608d81f638d",
+      "baseline": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.01767064
+      },
+      "candidate": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.0166052264
+      },
+      "regressed": [
+       {
+        "case_id": "quitaque_council",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 15,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 3,
+      "candidate_index": 1,
+      "prompt_sha256": "2608d81f638d",
+      "baseline": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.01767064
+      },
+      "candidate": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.016573704
+      },
+      "regressed": [
+       {
+        "case_id": "quitaque_council",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [
+       {
+        "case_id": "san_antonio",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 15,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 3,
+      "candidate_index": 2,
+      "prompt_sha256": "2608d81f638d",
+      "baseline": {
+       "mean_score": 0.8823529411764706,
+       "run_count": 1,
+       "mean_cost_usd": 0.01767064
+      },
+      "candidate": {
+       "mean_score": 0.9411764705882353,
+       "run_count": 1,
+       "mean_cost_usd": 0.009333716
+      },
+      "regressed": [
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "baseline_score": 0.0,
         "candidate_score": 1.0
        },
        {
         "case_id": "san_antonio",
-        "baseline_score": 0.6,
-        "candidate_score": 0.8
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
        }
       ],
-      "unchanged_count": 12,
+      "unchanged_count": 14,
       "has_value_detail": false,
       "newly_wrong": [],
       "fixed": []
@@ -8335,8 +8768,10 @@
    },
    "trends": {
     "providers": [
+     "Alibaba",
      "AtlasCloud",
-     "DigitalOcean"
+     "DigitalOcean",
+     "NextBit"
     ],
     "charts": [
      {
@@ -8344,6 +8779,21 @@
       "is_priority": false,
       "gate_floor": null,
       "series": [
+       {
+        "provider": "Alibaba",
+        "points": [
+         {
+          "timestamp": "2026-09-18T01:12:59+00:00",
+          "prompt_sha256": "72427917ff22",
+          "score": 0.9375
+         },
+         {
+          "timestamp": "2026-09-18T01:32:43+00:00",
+          "prompt_sha256": "2608d81f638d",
+          "score": 1.0
+         }
+        ]
+       },
        {
         "provider": "AtlasCloud",
         "points": [
@@ -8371,6 +8821,16 @@
           "timestamp": "2026-09-16T19:50:43+00:00",
           "prompt_sha256": "962c93a9a841",
           "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T01:12:59+00:00",
+          "prompt_sha256": "72427917ff22",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T01:32:43+00:00",
+          "prompt_sha256": "2608d81f638d",
+          "score": 0.9411764705882353
          }
         ]
        },
@@ -8401,6 +8861,31 @@
           "timestamp": "2026-09-16T19:50:43+00:00",
           "prompt_sha256": "962c93a9a841",
           "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T01:12:59+00:00",
+          "prompt_sha256": "72427917ff22",
+          "score": 0.9375
+         },
+         {
+          "timestamp": "2026-09-18T01:32:43+00:00",
+          "prompt_sha256": "2608d81f638d",
+          "score": 1.0
+         }
+        ]
+       },
+       {
+        "provider": "NextBit",
+        "points": [
+         {
+          "timestamp": "2026-09-18T01:12:59+00:00",
+          "prompt_sha256": "72427917ff22",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T01:32:43+00:00",
+          "prompt_sha256": "2608d81f638d",
+          "score": 1.0
          }
         ]
        }
@@ -8411,6 +8896,21 @@
       "is_priority": false,
       "gate_floor": null,
       "series": [
+       {
+        "provider": "Alibaba",
+        "points": [
+         {
+          "timestamp": "2026-09-18T01:12:59+00:00",
+          "prompt_sha256": "72427917ff22",
+          "score": 0.6301369863013698
+         },
+         {
+          "timestamp": "2026-09-18T01:32:43+00:00",
+          "prompt_sha256": "2608d81f638d",
+          "score": 0.676056338028169
+         }
+        ]
+       },
        {
         "provider": "AtlasCloud",
         "points": [
@@ -8438,6 +8938,16 @@
           "timestamp": "2026-09-16T19:50:43+00:00",
           "prompt_sha256": "962c93a9a841",
           "score": 0.6
+         },
+         {
+          "timestamp": "2026-09-18T01:12:59+00:00",
+          "prompt_sha256": "72427917ff22",
+          "score": 0.6216216216216216
+         },
+         {
+          "timestamp": "2026-09-18T01:32:43+00:00",
+          "prompt_sha256": "2608d81f638d",
+          "score": 0.64
          }
         ]
        },
@@ -8468,15 +8978,222 @@
           "timestamp": "2026-09-16T19:50:43+00:00",
           "prompt_sha256": "962c93a9a841",
           "score": 0.38095238095238093
+         },
+         {
+          "timestamp": "2026-09-18T01:12:59+00:00",
+          "prompt_sha256": "72427917ff22",
+          "score": 0.35658914728682173
+         },
+         {
+          "timestamp": "2026-09-18T01:32:43+00:00",
+          "prompt_sha256": "2608d81f638d",
+          "score": 0.5208333333333334
+         }
+        ]
+       },
+       {
+        "provider": "NextBit",
+        "points": [
+         {
+          "timestamp": "2026-09-18T01:12:59+00:00",
+          "prompt_sha256": "72427917ff22",
+          "score": 0.6301369863013698
+         },
+         {
+          "timestamp": "2026-09-18T01:32:43+00:00",
+          "prompt_sha256": "2608d81f638d",
+          "score": 0.6486486486486487
          }
         ]
        }
       ]
      }
     ],
-    "run_count": 10
+    "run_count": 18
    },
    "prompt_versions": [
+    {
+     "prompt_sha256": "2608d81f638d",
+     "text": "\n    Your task is to determine if the provided content contains information about the **currently serving main officials**\n    of a specific target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members,\n    Commissioners, or other key elected or appointed officials who are part of the **primary governing body** of that municipality.\n\n    Page URL: <page url, per case>\n    Target jurisdiction: <jurisdiction, per case>\n    Known elected roles for this municipality: <known roles, per case>\n    Governing bodies of this municipality: <governing bodies, per case>\n\n    The URL may help you identify which links belong to the municipality's domain(s) when selecting\n    relevant_urls. Do NOT use it to determine is_relevant — that must be based solely on page content.\n    Do NOT use the page URL's domain to normalize or rewrite any link URLs found in the content.\n\n    ---\n\n    ## Relevant content\n\n    - Structured listings (e.g., tables, lists, or directories) or dedicated sections (e.g., biography, contact, or about pages)\n      for the main officials of the municipality.\n    - Pages that provide information about the current governing body, such as their names, roles, contact information, or biographies.\n\n    ## Irrelevant content\n\n    - Pages about auxiliary committees, department heads, or other non-elected staff.\n      For example: Planning and Zoning Committee, Parks and Recreation Board, Airport Advisory Commission, etc.\n      This applies even if primary governing officials (e.g., the Mayor or an Alderman) appear as members\n      of that auxiliary body — their membership on the auxiliary board does not make the page relevant.\n    - Pages about special districts, utility boards, or other sub-municipal entities (e.g., Water Supply District,\n      Fire District, Library Board) — even if they contain a structured roster of named board members.\n      These are separate legal entities, not the primary governing body of the municipality.\n\n    A page about any body listed under \"Governing bodies of this municipality\" above is RELEVANT,\n    and the two rules immediately above do not apply to it. Those bodies are governing bodies of\n    this municipality, whatever the page's URL or section suggests — an Office of the Mayor page\n    filed beside the departments is still the mayor's office.\n    ---\n\n    ## Steps for selecting relevant_urls\n\n    `relevant_urls` feeds a web crawler. Always populate it with qualifying links regardless of\n    whether `is_relevant` is true or false — the crawler uses these links to discover further\n    officials pages even when the current page is already relevant. Evaluate each link primarily\n    by its **anchor text and surrounding context** on the page — not by URL structure alone,\n    since many municipal CMS platforms use opaque numeric paths (e.g. /179/Township-Board)\n    where the slug is the only meaningful signal.\n\n    Include every link that qualifies below, however few that is — a small site's navigation may\n    offer exactly one, and returning nothing because one felt too few is the worst answer here.\n    Stop at 20; past that you are almost certainly including noise, so re-evaluate and cut.\n\n    You MUST include every link whose anchor text or surrounding context refers to any of\n    the following. These are not candidates to weigh against each other — if a link matches,\n    it goes in the list, however many other links the page has and however much navigation\n    surrounds it:\n    - A governing body or elected role (e.g. \"Township Board\", \"City Council\", \"Mayor\",\n      \"City Officials\", \"Board of Trustees\", \"Aldermen\", \"Commissioners\", \"Select Board\")\n    - A broad government directory or index page (e.g. \"Government\", \"City Hall\",\n      \"Our Government\", \"Administration\") that is likely a hub linking to governance pages\n    - A staff or personnel directory that may list elected officials (e.g. \"Staff Directory\",\n      \"Directory\", \"Elected Officials\")\n\n    A link that matches one of those and is left out is the single worst outcome here —\n    the crawler cannot reach a page it was never told about. If a link does not match any\n    of the above, discard it.\n    Do not include links to municipal services (library, parks, fire, utilities),\n    news or announcements, or non-municipal external domains.\n\n    ---\n\n    ## Output Format\n\n    Return a JSON object with the following fields:\n    {\n        \"relevant_urls\": [\"https://example.com/council\", \"https://example.com/directory/departments\"],\n        \"is_relevant\": true/false,\n    }\n\n    ---\n\n    ## Critical rules\n\n    - `is_relevant` must be true ONLY if the page's PRIMARY PURPOSE is to present currently\n      serving primary governing officials — whether a full roster or a dedicated page for a\n      single official. Ask: \"Does this page exist to show who currently holds a primary\n      governing role?\" If the answer is no, set is_relevant to false.\n      If `known_roles` are provided, the page heading or title names one of those roles, and\n      the page gives a person's name for it, then `is_relevant` is TRUE. Decide this on the\n      heading and that person's details alone — a shared site-wide navigation menu is not\n      the page's purpose no matter how much of the content it occupies, and a page whose own\n      heading names an elected role is a page about that role, not an index. A non-voting\n      deputy or assistant appearing alongside does not change it.\n      The following are NOT relevant regardless of what names appear in them:\n      - News and announcements feeds — even if a post lists newly elected council members by name and ward\n      - Meeting minutes, vote records, ordinances, or legislative archives — even if the page is\n        titled \"City Council\" or lives at a city council URL; read the body content, not the title\n      - Historical rosters (e.g., \"Past Mayors\", \"Mayor History\") — even if the most recent entry is current\n      - Auxiliary committee or board pages — even if a Mayor or Alderman sits on the committee\n      The test is always the page's purpose, not its content patterns.\n    - `relevant_urls` must contain only links whose anchor text clearly signals a governing body,\n      elected role, or government directory. Aim for 3–20 URLs; if you exceed 20, you are including noise.\n    - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list.\n    - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself.\n    - Copy URLs exactly as they appear in the content — do NOT normalize, rewrite, or substitute any part of the URL.\n    - Do NOT include individual news stories, press releases, or event pages even if they mention an official by name.\n    ",
+     "first_run_at": "2026-09-18T01:32:43+00:00",
+     "last_run_at": "2026-09-18T01:32:43+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean",
+      "NextBit"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-18T01:32:43+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.676056338028169
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:32:43+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "is_relevant": 0.9411764705882353,
+        "relevant_urls": 0.64
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:32:43+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.5208333333333334
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:32:43+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.6486486486486487
+       }
+      }
+     ],
+     "previous_sha256": "72427917ff22",
+     "diff": [
+      {
+       "kind": "context",
+       "text": "     filed beside the departments is still the mayor's office."
+      },
+      {
+       "kind": "removed",
+       "text": "-"
+      },
+      {
+       "kind": "context",
+       "text": "     ---"
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    Return between 3 and 20 URLs. Fewer than 3 suggests over-filtering; more than 20 means you"
+      },
+      {
+       "kind": "removed",
+       "text": "-    are almost certainly including noise — re-evaluate and cut."
+      },
+      {
+       "kind": "added",
+       "text": "+    Include every link that qualifies below, however few that is — a small site's navigation may"
+      },
+      {
+       "kind": "added",
+       "text": "+    offer exactly one, and returning nothing because one felt too few is the worst answer here."
+      },
+      {
+       "kind": "added",
+       "text": "+    Stop at 20; past that you are almost certainly including noise, so re-evaluate and cut."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      }
+     ]
+    },
+    {
+     "prompt_sha256": "72427917ff22",
+     "text": "\n    Your task is to determine if the provided content contains information about the **currently serving main officials**\n    of a specific target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members,\n    Commissioners, or other key elected or appointed officials who are part of the **primary governing body** of that municipality.\n\n    Page URL: <page url, per case>\n    Target jurisdiction: <jurisdiction, per case>\n    Known elected roles for this municipality: <known roles, per case>\n    Governing bodies of this municipality: <governing bodies, per case>\n\n    The URL may help you identify which links belong to the municipality's domain(s) when selecting\n    relevant_urls. Do NOT use it to determine is_relevant — that must be based solely on page content.\n    Do NOT use the page URL's domain to normalize or rewrite any link URLs found in the content.\n\n    ---\n\n    ## Relevant content\n\n    - Structured listings (e.g., tables, lists, or directories) or dedicated sections (e.g., biography, contact, or about pages)\n      for the main officials of the municipality.\n    - Pages that provide information about the current governing body, such as their names, roles, contact information, or biographies.\n\n    ## Irrelevant content\n\n    - Pages about auxiliary committees, department heads, or other non-elected staff.\n      For example: Planning and Zoning Committee, Parks and Recreation Board, Airport Advisory Commission, etc.\n      This applies even if primary governing officials (e.g., the Mayor or an Alderman) appear as members\n      of that auxiliary body — their membership on the auxiliary board does not make the page relevant.\n    - Pages about special districts, utility boards, or other sub-municipal entities (e.g., Water Supply District,\n      Fire District, Library Board) — even if they contain a structured roster of named board members.\n      These are separate legal entities, not the primary governing body of the municipality.\n\n    A page about any body listed under \"Governing bodies of this municipality\" above is RELEVANT,\n    and the two rules immediately above do not apply to it. Those bodies are governing bodies of\n    this municipality, whatever the page's URL or section suggests — an Office of the Mayor page\n    filed beside the departments is still the mayor's office.\n\n    ---\n\n    ## Steps for selecting relevant_urls\n\n    `relevant_urls` feeds a web crawler. Always populate it with qualifying links regardless of\n    whether `is_relevant` is true or false — the crawler uses these links to discover further\n    officials pages even when the current page is already relevant. Evaluate each link primarily\n    by its **anchor text and surrounding context** on the page — not by URL structure alone,\n    since many municipal CMS platforms use opaque numeric paths (e.g. /179/Township-Board)\n    where the slug is the only meaningful signal.\n\n    Return between 3 and 20 URLs. Fewer than 3 suggests over-filtering; more than 20 means you\n    are almost certainly including noise — re-evaluate and cut.\n\n    You MUST include every link whose anchor text or surrounding context refers to any of\n    the following. These are not candidates to weigh against each other — if a link matches,\n    it goes in the list, however many other links the page has and however much navigation\n    surrounds it:\n    - A governing body or elected role (e.g. \"Township Board\", \"City Council\", \"Mayor\",\n      \"City Officials\", \"Board of Trustees\", \"Aldermen\", \"Commissioners\", \"Select Board\")\n    - A broad government directory or index page (e.g. \"Government\", \"City Hall\",\n      \"Our Government\", \"Administration\") that is likely a hub linking to governance pages\n    - A staff or personnel directory that may list elected officials (e.g. \"Staff Directory\",\n      \"Directory\", \"Elected Officials\")\n\n    A link that matches one of those and is left out is the single worst outcome here —\n    the crawler cannot reach a page it was never told about. If a link does not match any\n    of the above, discard it.\n    Do not include links to municipal services (library, parks, fire, utilities),\n    news or announcements, or non-municipal external domains.\n\n    ---\n\n    ## Output Format\n\n    Return a JSON object with the following fields:\n    {\n        \"relevant_urls\": [\"https://example.com/council\", \"https://example.com/directory/departments\"],\n        \"is_relevant\": true/false,\n    }\n\n    ---\n\n    ## Critical rules\n\n    - `is_relevant` must be true ONLY if the page's PRIMARY PURPOSE is to present currently\n      serving primary governing officials — whether a full roster or a dedicated page for a\n      single official. Ask: \"Does this page exist to show who currently holds a primary\n      governing role?\" If the answer is no, set is_relevant to false.\n      If `known_roles` are provided, the page heading or title names one of those roles, and\n      the page gives a person's name for it, then `is_relevant` is TRUE. Decide this on the\n      heading and that person's details alone — a shared site-wide navigation menu is not\n      the page's purpose no matter how much of the content it occupies, and a page whose own\n      heading names an elected role is a page about that role, not an index. A non-voting\n      deputy or assistant appearing alongside does not change it.\n      The following are NOT relevant regardless of what names appear in them:\n      - News and announcements feeds — even if a post lists newly elected council members by name and ward\n      - Meeting minutes, vote records, ordinances, or legislative archives — even if the page is\n        titled \"City Council\" or lives at a city council URL; read the body content, not the title\n      - Historical rosters (e.g., \"Past Mayors\", \"Mayor History\") — even if the most recent entry is current\n      - Auxiliary committee or board pages — even if a Mayor or Alderman sits on the committee\n      The test is always the page's purpose, not its content patterns.\n    - `relevant_urls` must contain only links whose anchor text clearly signals a governing body,\n      elected role, or government directory. Aim for 3–20 URLs; if you exceed 20, you are including noise.\n    - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list.\n    - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself.\n    - Copy URLs exactly as they appear in the content — do NOT normalize, rewrite, or substitute any part of the URL.\n    - Do NOT include individual news stories, press releases, or event pages even if they mention an official by name.\n    ",
+     "first_run_at": "2026-09-18T01:12:59+00:00",
+     "last_run_at": "2026-09-18T01:12:59+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean",
+      "NextBit"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-18T01:12:59+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "is_relevant": 0.9375,
+        "relevant_urls": 0.6301369863013698
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:12:59+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.6216216216216216
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:12:59+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "is_relevant": 0.9375,
+        "relevant_urls": 0.35658914728682173
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:12:59+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.6301369863013698
+       }
+      }
+     ],
+     "previous_sha256": "962c93a9a841",
+     "diff": [
+      {
+       "kind": "context",
+       "text": "     Known elected roles for this municipality: <known roles, per case>"
+      },
+      {
+       "kind": "added",
+       "text": "+    Governing bodies of this municipality: <governing bodies, per case>"
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "context",
+       "text": "       These are separate legal entities, not the primary governing body of the municipality."
+      },
+      {
+       "kind": "added",
+       "text": "+"
+      },
+      {
+       "kind": "added",
+       "text": "+    A page about any body listed under \"Governing bodies of this municipality\" above is RELEVANT,"
+      },
+      {
+       "kind": "added",
+       "text": "+    and the two rules immediately above do not apply to it. Those bodies are governing bodies of"
+      },
+      {
+       "kind": "added",
+       "text": "+    this municipality, whatever the page's URL or section suggests — an Office of the Mayor page"
+      },
+      {
+       "kind": "added",
+       "text": "+    filed beside the departments is still the mayor's office."
+      },
+      {
+       "kind": "added",
+       "text": "+"
+      },
+      {
+       "kind": "context",
+       "text": "     ---"
+      }
+     ]
+    },
     {
      "prompt_sha256": "962c93a9a841",
      "text": "\n    Your task is to determine if the provided content contains information about the **currently serving main officials**\n    of a specific target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members,\n    Commissioners, or other key elected or appointed officials who are part of the **primary governing body** of that municipality.\n\n    Page URL: <page url, per case>\n    Target jurisdiction: <jurisdiction, per case>\n    Known elected roles for this municipality: <known roles, per case>\n\n    The URL may help you identify which links belong to the municipality's domain(s) when selecting\n    relevant_urls. Do NOT use it to determine is_relevant — that must be based solely on page content.\n    Do NOT use the page URL's domain to normalize or rewrite any link URLs found in the content.\n\n    ---\n\n    ## Relevant content\n\n    - Structured listings (e.g., tables, lists, or directories) or dedicated sections (e.g., biography, contact, or about pages)\n      for the main officials of the municipality.\n    - Pages that provide information about the current governing body, such as their names, roles, contact information, or biographies.\n\n    ## Irrelevant content\n\n    - Pages about auxiliary committees, department heads, or other non-elected staff.\n      For example: Planning and Zoning Committee, Parks and Recreation Board, Airport Advisory Commission, etc.\n      This applies even if primary governing officials (e.g., the Mayor or an Alderman) appear as members\n      of that auxiliary body — their membership on the auxiliary board does not make the page relevant.\n    - Pages about special districts, utility boards, or other sub-municipal entities (e.g., Water Supply District,\n      Fire District, Library Board) — even if they contain a structured roster of named board members.\n      These are separate legal entities, not the primary governing body of the municipality.\n    ---\n\n    ## Steps for selecting relevant_urls\n\n    `relevant_urls` feeds a web crawler. Always populate it with qualifying links regardless of\n    whether `is_relevant` is true or false — the crawler uses these links to discover further\n    officials pages even when the current page is already relevant. Evaluate each link primarily\n    by its **anchor text and surrounding context** on the page — not by URL structure alone,\n    since many municipal CMS platforms use opaque numeric paths (e.g. /179/Township-Board)\n    where the slug is the only meaningful signal.\n\n    Return between 3 and 20 URLs. Fewer than 3 suggests over-filtering; more than 20 means you\n    are almost certainly including noise — re-evaluate and cut.\n\n    You MUST include every link whose anchor text or surrounding context refers to any of\n    the following. These are not candidates to weigh against each other — if a link matches,\n    it goes in the list, however many other links the page has and however much navigation\n    surrounds it:\n    - A governing body or elected role (e.g. \"Township Board\", \"City Council\", \"Mayor\",\n      \"City Officials\", \"Board of Trustees\", \"Aldermen\", \"Commissioners\", \"Select Board\")\n    - A broad government directory or index page (e.g. \"Government\", \"City Hall\",\n      \"Our Government\", \"Administration\") that is likely a hub linking to governance pages\n    - A staff or personnel directory that may list elected officials (e.g. \"Staff Directory\",\n      \"Directory\", \"Elected Officials\")\n\n    A link that matches one of those and is left out is the single worst outcome here —\n    the crawler cannot reach a page it was never told about. If a link does not match any\n    of the above, discard it.\n    Do not include links to municipal services (library, parks, fire, utilities),\n    news or announcements, or non-municipal external domains.\n\n    ---\n\n    ## Output Format\n\n    Return a JSON object with the following fields:\n    {\n        \"relevant_urls\": [\"https://example.com/council\", \"https://example.com/directory/departments\"],\n        \"is_relevant\": true/false,\n    }\n\n    ---\n\n    ## Critical rules\n\n    - `is_relevant` must be true ONLY if the page's PRIMARY PURPOSE is to present currently\n      serving primary governing officials — whether a full roster or a dedicated page for a\n      single official. Ask: \"Does this page exist to show who currently holds a primary\n      governing role?\" If the answer is no, set is_relevant to false.\n      If `known_roles` are provided, the page heading or title names one of those roles, and\n      the page gives a person's name for it, then `is_relevant` is TRUE. Decide this on the\n      heading and that person's details alone — a shared site-wide navigation menu is not\n      the page's purpose no matter how much of the content it occupies, and a page whose own\n      heading names an elected role is a page about that role, not an index. A non-voting\n      deputy or assistant appearing alongside does not change it.\n      The following are NOT relevant regardless of what names appear in them:\n      - News and announcements feeds — even if a post lists newly elected council members by name and ward\n      - Meeting minutes, vote records, ordinances, or legislative archives — even if the page is\n        titled \"City Council\" or lives at a city council URL; read the body content, not the title\n      - Historical rosters (e.g., \"Past Mayors\", \"Mayor History\") — even if the most recent entry is current\n      - Auxiliary committee or board pages — even if a Mayor or Alderman sits on the committee\n      The test is always the page's purpose, not its content patterns.\n    - `relevant_urls` must contain only links whose anchor text clearly signals a governing body,\n      elected role, or government directory. Aim for 3–20 URLs; if you exceed 20, you are including noise.\n    - Do NOT leave `relevant_urls` empty if your reasoning mentions any URLs — they must appear in the list.\n    - `relevant_urls` is for links FOUND ON THIS PAGE pointing elsewhere, not the current page URL itself.\n    - Copy URLs exactly as they appear in the content — do NOT normalize, rewrite, or substitute any part of the URL.\n    - Do NOT include individual news stories, press releases, or event pages even if they mention an official by name.\n    ",
@@ -8574,8 +9291,10 @@
    ],
    "detail": {
     "providers": [
+     "Alibaba",
      "AtlasCloud",
-     "DigitalOcean"
+     "DigitalOcean",
+     "NextBit"
     ],
     "metric_rows": [
      {
@@ -8588,9 +9307,21 @@
         "missing_count": 0
        },
        {
+        "score": 0.9411764705882353,
+        "swing_is_wide": false,
+        "half_swing": 0.03125,
+        "missing_count": 0
+       },
+       {
         "score": 1.0,
         "swing_is_wide": false,
         "half_swing": 0.03125,
+        "missing_count": 0
+       },
+       {
+        "score": 1.0,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
         "missing_count": 0
        }
       ]
@@ -8599,16 +9330,28 @@
       "metric": "relevant_urls",
       "cells": [
        {
-        "score": 0.6,
+        "score": 0.676056338028169,
         "swing_is_wide": false,
-        "half_swing": 0.036036036036036,
-        "missing_count": 0
+        "half_swing": 0.022959675863399587,
+        "missing_count": 2
        },
        {
-        "score": 0.38095238095238093,
+        "score": 0.64,
         "swing_is_wide": false,
-        "half_swing": 0.03652871621621623,
-        "missing_count": 0
+        "half_swing": 0.036036036036036,
+        "missing_count": 2
+       },
+       {
+        "score": 0.5208333333333334,
+        "swing_is_wide": true,
+        "half_swing": 0.08212209302325582,
+        "missing_count": 1
+       },
+       {
+        "score": 0.6486486486486487,
+        "swing_is_wide": false,
+        "half_swing": 0.009255831173639428,
+        "missing_count": 2
        }
       ]
      },
@@ -8616,13 +9359,25 @@
       "metric": "cases passed",
       "cells": [
        {
-        "score": 1.0,
+        "score": 0.8823529411764706,
         "swing_is_wide": false,
         "half_swing": 0.0,
         "missing_count": null
        },
        {
-        "score": 1.0,
+        "score": 0.8823529411764706,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       },
+       {
+        "score": 0.9411764705882353,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       },
+       {
+        "score": 0.8823529411764706,
         "swing_is_wide": false,
         "half_swing": 0.0,
         "missing_count": null
@@ -8631,13 +9386,57 @@
      }
     ],
     "case_providers": [
+     "Alibaba",
      "AtlasCloud",
-     "DigitalOcean"
+     "DigitalOcean",
+     "NextBit"
     ],
     "case_rows": [
      {
+      "case_id": "mcgregor_city_announcement_irrelevant",
+      "scores": [
+       1.0,
+       0.0,
+       1.0,
+       0.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "quitaque_council",
+      "scores": [
+       0.0,
+       0.0,
+       1.0,
+       1.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "san_antonio",
+      "scores": [
+       0.0,
+       1.0,
+       1.0,
+       0.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "san_saba_airport_advisory_irrelevant",
+      "scores": [
+       1.0,
+       1.0,
+       0.0,
+       1.0
+      ],
+      "stability": "moves"
+     },
+     {
       "case_id": "austin_city_manager_irrelevant",
       "scores": [
+       1.0,
+       1.0,
        1.0,
        1.0
       ],
@@ -8647,6 +9446,8 @@
       "case_id": "beeville_water_supply_district_irrelevant",
       "scores": [
        1.0,
+       1.0,
+       1.0,
        1.0
       ],
       "stability": "steady"
@@ -8654,6 +9455,8 @@
      {
       "case_id": "castroville_airport_board_irrelevant",
       "scores": [
+       1.0,
+       1.0,
        1.0,
        1.0
       ],
@@ -8663,6 +9466,8 @@
       "case_id": "dish_irrelevant",
       "scores": [
        1.0,
+       1.0,
+       1.0,
        1.0
       ],
       "stability": "steady"
@@ -8670,6 +9475,8 @@
      {
       "case_id": "eastpointe_home",
       "scores": [
+       1.0,
+       1.0,
        1.0,
        1.0
       ],
@@ -8679,6 +9486,8 @@
       "case_id": "ellago_mayor_history_irrelevant",
       "scores": [
        1.0,
+       1.0,
+       1.0,
        1.0
       ],
       "stability": "steady"
@@ -8686,6 +9495,8 @@
      {
       "case_id": "gatesville_ordinance_vote_records",
       "scores": [
+       1.0,
+       1.0,
        1.0,
        1.0
       ],
@@ -8695,21 +9506,27 @@
       "case_id": "gatesville_ordinances",
       "scores": [
        1.0,
-       1.0
-      ],
-      "stability": "steady"
-     },
-     {
-      "case_id": "mcgregor_city_announcement_irrelevant",
-      "scores": [
+       1.0,
        1.0,
        1.0
       ],
       "stability": "steady"
      },
      {
+      "case_id": "jackson_mayors_office",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
       "case_id": "mikado_township_home",
       "scores": [
+       1.0,
+       1.0,
        1.0,
        1.0
       ],
@@ -8719,21 +9536,17 @@
       "case_id": "olton_newslist_irrelevant",
       "scores": [
        1.0,
+       1.0,
+       1.0,
        1.0
       ],
       "stability": "steady"
      },
      {
-      "case_id": "quitaque_council",
-      "scores": [
-       1.0,
-       1.0
-      ],
-      "stability": "moves"
-     },
-     {
       "case_id": "raisin_township_clerk",
       "scores": [
+       1.0,
+       1.0,
        1.0,
        1.0
       ],
@@ -8743,42 +9556,625 @@
       "case_id": "raisin_township_supervisor",
       "scores": [
        1.0,
+       1.0,
+       1.0,
        1.0
       ],
       "stability": "steady"
-     },
-     {
-      "case_id": "san_antonio",
-      "scores": [
-       1.0,
-       1.0
-      ],
-      "stability": "moves"
-     },
-     {
-      "case_id": "san_saba_airport_advisory_irrelevant",
-      "scores": [
-       1.0,
-       1.0
-      ],
-      "stability": "moves"
      }
     ],
     "movements": [
      {
-      "provider": "AtlasCloud",
+      "provider": "Alibaba",
       "regressed": [],
+      "improved": []
+     },
+     {
+      "provider": "AtlasCloud",
+      "regressed": [
+       "mcgregor_city_announcement_irrelevant"
+      ],
       "improved": []
      },
      {
       "provider": "DigitalOcean",
       "regressed": [],
       "improved": [
-       "san_antonio",
-       "san_saba_airport_advisory_irrelevant"
+       "raisin_township_clerk"
+      ]
+     },
+     {
+      "provider": "NextBit",
+      "regressed": [
+       "mcgregor_city_announcement_irrelevant",
+       "san_antonio"
+      ],
+      "improved": [
+       "quitaque_council"
       ]
      }
     ]
+   },
+   "latest_mismatches": {}
+  },
+  {
+   "eval_name": "page_covers",
+   "dataset_dir": "../../../datasets/local/page_covers",
+   "verdicts": [
+    {
+     "provider": "Alibaba",
+     "blocked": true,
+     "gate_failures": [],
+     "failed_case_ids": [
+      "seattle_home_news_mentions"
+     ],
+     "cases_passed": 4,
+     "cases_total": 5,
+     "priority_scores": {},
+     "cost_usd": 0.01721699,
+     "ran_at": "2026-09-18T01:30:21+00:00"
+    },
+    {
+     "provider": "AtlasCloud",
+     "blocked": true,
+     "gate_failures": [],
+     "failed_case_ids": [
+      "seattle_home_news_mentions"
+     ],
+     "cases_passed": 4,
+     "cases_total": 5,
+     "priority_scores": {},
+     "cost_usd": 0.01801758,
+     "ran_at": "2026-09-18T01:30:21+00:00"
+    },
+    {
+     "provider": "DigitalOcean",
+     "blocked": false,
+     "gate_failures": [],
+     "failed_case_ids": [],
+     "cases_passed": 5,
+     "cases_total": 5,
+     "priority_scores": {},
+     "cost_usd": 0.012344178,
+     "ran_at": "2026-09-18T01:30:21+00:00"
+    },
+    {
+     "provider": "NextBit",
+     "blocked": true,
+     "gate_failures": [],
+     "failed_case_ids": [
+      "seattle_home_news_mentions"
+     ],
+     "cases_passed": 4,
+     "cases_total": 5,
+     "priority_scores": {},
+     "cost_usd": 0.01803944,
+     "ran_at": "2026-09-18T01:30:21+00:00"
+    }
+   ],
+   "matrix": {
+    "lineages": [
+     {
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "Alibaba"
+     },
+     {
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "AtlasCloud"
+     },
+     {
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "DigitalOcean"
+     },
+     {
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "NextBit"
+     }
+    ],
+    "rows": [
+     {
+      "prompt_sha256": "1ae867f897aa",
+      "cells": [
+       {
+        "mean_score": 0.8,
+        "run_count": 1,
+        "mean_cost_usd": 0.01721699
+       },
+       {
+        "mean_score": 0.8,
+        "run_count": 1,
+        "mean_cost_usd": 0.01801758
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.012344178
+       },
+       {
+        "mean_score": 0.8,
+        "run_count": 1,
+        "mean_cost_usd": 0.01803944
+       }
+      ]
+     }
+    ]
+   },
+   "comparison": {
+    "default_baseline_index": 2,
+    "default_candidate_index": 3,
+    "pairs": [
+     {
+      "baseline_index": 0,
+      "candidate_index": 1,
+      "prompt_sha256": "1ae867f897aa",
+      "baseline": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01721699
+      },
+      "candidate": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01801758
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 5,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 0,
+      "candidate_index": 2,
+      "prompt_sha256": "1ae867f897aa",
+      "baseline": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01721699
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.012344178
+      },
+      "regressed": [],
+      "improved": [
+       {
+        "case_id": "seattle_home_news_mentions",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 4,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 0,
+      "candidate_index": 3,
+      "prompt_sha256": "1ae867f897aa",
+      "baseline": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01721699
+      },
+      "candidate": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01803944
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 5,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 1,
+      "candidate_index": 0,
+      "prompt_sha256": "1ae867f897aa",
+      "baseline": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01801758
+      },
+      "candidate": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01721699
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 5,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 1,
+      "candidate_index": 2,
+      "prompt_sha256": "1ae867f897aa",
+      "baseline": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01801758
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.012344178
+      },
+      "regressed": [],
+      "improved": [
+       {
+        "case_id": "seattle_home_news_mentions",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 4,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 1,
+      "candidate_index": 3,
+      "prompt_sha256": "1ae867f897aa",
+      "baseline": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01801758
+      },
+      "candidate": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01803944
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 5,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 2,
+      "candidate_index": 0,
+      "prompt_sha256": "1ae867f897aa",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.012344178
+      },
+      "candidate": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01721699
+      },
+      "regressed": [
+       {
+        "case_id": "seattle_home_news_mentions",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [],
+      "unchanged_count": 4,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 2,
+      "candidate_index": 1,
+      "prompt_sha256": "1ae867f897aa",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.012344178
+      },
+      "candidate": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01801758
+      },
+      "regressed": [
+       {
+        "case_id": "seattle_home_news_mentions",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [],
+      "unchanged_count": 4,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 2,
+      "candidate_index": 3,
+      "prompt_sha256": "1ae867f897aa",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.012344178
+      },
+      "candidate": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01803944
+      },
+      "regressed": [
+       {
+        "case_id": "seattle_home_news_mentions",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [],
+      "unchanged_count": 4,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 3,
+      "candidate_index": 0,
+      "prompt_sha256": "1ae867f897aa",
+      "baseline": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01803944
+      },
+      "candidate": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01721699
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 5,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 3,
+      "candidate_index": 1,
+      "prompt_sha256": "1ae867f897aa",
+      "baseline": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01803944
+      },
+      "candidate": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01801758
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 5,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 3,
+      "candidate_index": 2,
+      "prompt_sha256": "1ae867f897aa",
+      "baseline": {
+       "mean_score": 0.8,
+       "run_count": 1,
+       "mean_cost_usd": 0.01803944
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.012344178
+      },
+      "regressed": [],
+      "improved": [
+       {
+        "case_id": "seattle_home_news_mentions",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 4,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     }
+    ]
+   },
+   "trends": {
+    "providers": [
+     "Alibaba",
+     "AtlasCloud",
+     "DigitalOcean",
+     "NextBit"
+    ],
+    "charts": [],
+    "run_count": 4
+   },
+   "prompt_versions": [
+    {
+     "prompt_sha256": "1ae867f897aa",
+     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if a person holding office in that body appears on this page, named. A link\n    to the body, its name in the navigation, a mention of it in prose, or a meeting agenda that\n    names it are all false — the question is whether the page lists its people.\n\n    Someone who holds office in that body counts even if the page gives them a title that is not\n    among the offices listed above; the list is there to say what holding office in this body\n    looks like, not to limit it.\n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
+     "first_run_at": "2026-09-18T01:30:21+00:00",
+     "last_run_at": "2026-09-18T01:30:21+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean",
+      "NextBit"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-18T01:30:21+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:30:21+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:30:21+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:30:21+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "covers": 0.8
+       }
+      }
+     ],
+     "previous_sha256": null,
+     "diff": []
+    }
+   ],
+   "detail": {
+    "providers": [
+     "Alibaba",
+     "AtlasCloud",
+     "DigitalOcean",
+     "NextBit"
+    ],
+    "metric_rows": [
+     {
+      "metric": "covers",
+      "cells": [
+       {
+        "score": 0.9,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": 0
+       },
+       {
+        "score": 0.9,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": 0
+       },
+       {
+        "score": 1.0,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": 0
+       },
+       {
+        "score": 0.8,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": 0
+       }
+      ]
+     },
+     {
+      "metric": "cases passed",
+      "cells": [
+       {
+        "score": 0.8,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       },
+       {
+        "score": 0.8,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       },
+       {
+        "score": 1.0,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       },
+       {
+        "score": 0.8,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       }
+      ]
+     }
+    ],
+    "case_providers": [
+     "Alibaba",
+     "AtlasCloud",
+     "DigitalOcean",
+     "NextBit"
+    ],
+    "case_rows": [
+     {
+      "case_id": "seattle_home_news_mentions",
+      "scores": [
+       0.0,
+       0.0,
+       1.0,
+       0.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "jackson_council_agendas",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "jackson_council_member_bio",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "jackson_mayors_office",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "jackson_meet_the_council",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "unknown"
+     }
+    ],
+    "movements": []
    },
    "latest_mismatches": {}
   },
@@ -8959,101 +10355,118 @@
    "failed_case_ids": []
   },
   {
-   "kind": "wide_swing",
-   "severity": 2,
-   "eval_name": "officials",
-   "provider": "DigitalOcean",
-   "metric": "email",
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": 0.5,
-   "failed_case_ids": []
-  },
-  {
-   "kind": "wide_swing",
-   "severity": 2,
-   "eval_name": "officials",
-   "provider": "DigitalOcean",
-   "metric": "phone",
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": 0.5,
-   "failed_case_ids": []
-  },
-  {
-   "kind": "wide_swing",
-   "severity": 2,
-   "eval_name": "officials",
-   "provider": "DigitalOcean",
-   "metric": "url",
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": 0.5,
-   "failed_case_ids": []
-  },
-  {
-   "kind": "wide_swing",
-   "severity": 2,
-   "eval_name": "officials",
-   "provider": "AtlasCloud",
-   "metric": "email",
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": 0.5,
-   "failed_case_ids": []
-  },
-  {
-   "kind": "wide_swing",
-   "severity": 2,
-   "eval_name": "officials",
-   "provider": "AtlasCloud",
-   "metric": "phone",
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": 0.5,
-   "failed_case_ids": []
-  },
-  {
-   "kind": "wide_swing",
-   "severity": 2,
-   "eval_name": "officials",
-   "provider": "AtlasCloud",
-   "metric": "url",
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": 0.5,
-   "failed_case_ids": []
-  },
-  {
-   "kind": "wide_swing",
-   "severity": 2,
-   "eval_name": "officials",
+   "kind": "cases_failed",
+   "severity": 0,
+   "eval_name": "relevant_page",
    "provider": "Alibaba",
-   "metric": "url",
+   "metric": null,
    "score": null,
    "gate_floor": null,
    "missing_count": null,
    "expected_count": null,
-   "swing": 0.5,
-   "failed_case_ids": []
+   "swing": null,
+   "failed_case_ids": [
+    "quitaque_council",
+    "san_antonio"
+   ]
+  },
+  {
+   "kind": "cases_failed",
+   "severity": 0,
+   "eval_name": "relevant_page",
+   "provider": "AtlasCloud",
+   "metric": null,
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": null,
+   "failed_case_ids": [
+    "mcgregor_city_announcement_irrelevant",
+    "quitaque_council"
+   ]
+  },
+  {
+   "kind": "cases_failed",
+   "severity": 0,
+   "eval_name": "relevant_page",
+   "provider": "DigitalOcean",
+   "metric": null,
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": null,
+   "failed_case_ids": [
+    "san_saba_airport_advisory_irrelevant"
+   ]
+  },
+  {
+   "kind": "cases_failed",
+   "severity": 0,
+   "eval_name": "relevant_page",
+   "provider": "NextBit",
+   "metric": null,
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": null,
+   "failed_case_ids": [
+    "mcgregor_city_announcement_irrelevant",
+    "san_antonio"
+   ]
+  },
+  {
+   "kind": "cases_failed",
+   "severity": 0,
+   "eval_name": "page_covers",
+   "provider": "Alibaba",
+   "metric": null,
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": null,
+   "failed_case_ids": [
+    "seattle_home_news_mentions"
+   ]
+  },
+  {
+   "kind": "cases_failed",
+   "severity": 0,
+   "eval_name": "page_covers",
+   "provider": "AtlasCloud",
+   "metric": null,
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": null,
+   "failed_case_ids": [
+    "seattle_home_news_mentions"
+   ]
+  },
+  {
+   "kind": "cases_failed",
+   "severity": 0,
+   "eval_name": "page_covers",
+   "provider": "NextBit",
+   "metric": null,
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": null,
+   "failed_case_ids": [
+    "seattle_home_news_mentions"
+   ]
   },
   {
    "kind": "wide_swing",
    "severity": 2,
    "eval_name": "officials",
-   "provider": "NextBit",
+   "provider": "DigitalOcean",
    "metric": "email",
    "score": null,
    "gate_floor": null,
@@ -9066,7 +10479,7 @@
    "kind": "wide_swing",
    "severity": 2,
    "eval_name": "officials",
-   "provider": "NextBit",
+   "provider": "DigitalOcean",
    "metric": "phone",
    "score": null,
    "gate_floor": null,
@@ -9079,8 +10492,21 @@
    "kind": "wide_swing",
    "severity": 2,
    "eval_name": "officials",
-   "provider": "NextBit",
-   "metric": "image",
+   "provider": "DigitalOcean",
+   "metric": "url",
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": 0.5,
+   "failed_case_ids": []
+  },
+  {
+   "kind": "wide_swing",
+   "severity": 2,
+   "eval_name": "officials",
+   "provider": "AtlasCloud",
+   "metric": "email",
    "score": null,
    "gate_floor": null,
    "missing_count": null,

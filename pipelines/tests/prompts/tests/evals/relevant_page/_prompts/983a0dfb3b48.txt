@@ -1,0 +1,87 @@
+
+    Decide two things about the page content provided: whether it presents the **currently
+    serving main officials** of the target municipality, and which of its links a crawler should
+    follow to find more of them.
+
+    Main officials are the Mayor, City Council Members, Aldermen, Select Board Members,
+    Commissioners and others who make up the municipality's **primary governing body**.
+
+    Page URL: <page url, per case>
+    Target jurisdiction: <jurisdiction, per case>
+    Known elected roles for this municipality: <known roles, per case>
+    Governing bodies of this municipality: <governing bodies, per case>
+
+    The URL tells you which links share the municipality's domain. It tells you nothing about
+    `is_relevant`, which comes from the page content alone.
+
+    ---
+
+    ## is_relevant
+
+    True when the page exists to show who currently holds a primary governing role: a roster, a
+    directory, or one official's own page. Ask "does this page exist to show who holds office
+    right now?" and answer on the page's own heading and body.
+
+    Also true, and these are the ones most often got wrong:
+    - The heading names a known elected role and the page gives a person's name for it. A
+      site-wide navigation menu is not the page's purpose however much of the content it fills,
+      and a non-voting deputy appearing alongside does not change the answer.
+    - The page lists the municipality's own officials and also lists appointed staff. A small
+      town's "City Officials" page naming the Mayor and council members alongside the City
+      Manager, Water Supervisor and Fire Chief is the roster. Judge it by whether the governing
+      body's members are presented as such, not by who else shares the page.
+    - A page about a body named under "Governing bodies of this municipality" above, whatever its
+      URL or site section suggests. An Office of the Mayor page filed beside the departments is
+      still the mayor's office.
+
+    False for these, whoever is named in them:
+    - Auxiliary committees, boards and commissions (Planning and Zoning, Parks and Recreation,
+      Airport Advisory), and pages about department heads or other non-elected staff. A Mayor or
+      Alderman sitting on such a body does not make its page relevant.
+    - Special districts, utility boards and other sub-municipal entities (Water Supply District,
+      Fire District, Library Board), which are separate legal entities. A structured roster of
+      their board members is still not this municipality's governing body.
+    - News, announcements and press releases, even a post naming newly elected members by ward.
+    - Meeting minutes, vote records, ordinances and legislative archives, even titled "City
+      Council" or living at a city council URL. Read the body, not the title.
+    - Historical rosters ("Past Mayors", "Mayor History"), even where the most recent entry is
+      the current holder.
+
+    ---
+
+    ## relevant_urls
+
+    These feed the crawler, so populate them whether or not the page itself is relevant: a page
+    already listing officials still links to more of them. Judge each link by its **anchor text
+    and surrounding context**, not by URL structure, since municipal CMS platforms use opaque
+    numeric paths (e.g. /179/Township-Board) where the slug is the only signal.
+
+    Include every link whose anchor text or context refers to:
+    - a governing body or elected role ("Township Board", "City Council", "Mayor", "City
+      Officials", "Board of Trustees", "Aldermen", "Commissioners", "Select Board")
+    - a government directory or index page likely to link onward to governance pages
+      ("Government", "City Hall", "Our Government", "Administration")
+    - a staff or personnel directory that may list elected officials ("Staff Directory",
+      "Directory", "Elected Officials")
+
+    These are not candidates to weigh against each other. A qualifying link left out is the worst
+    outcome here, because the crawler cannot reach a page it was never told about — include every
+    one, however few qualify and however much navigation surrounds them. A small site's menu may
+    offer exactly one, and returning nothing because one felt too few is the failure to avoid.
+    Stop at 20; beyond that you are including noise.
+
+    Leave out municipal services (library, parks, fire, utilities), individual news stories,
+    press releases and event pages, and non-municipal external domains. Copy each URL exactly as
+    it appears in the content, without normalizing or rewriting any part of it, and do not
+    include the current page's own URL.
+
+    ---
+
+    ## Output Format
+
+    Return a JSON object with the following fields:
+    {
+        "relevant_urls": ["https://example.com/council", "https://example.com/directory/departments"],
+        "is_relevant": true/false,
+    }
+    

@@ -1,6 +1,6 @@
 import { html, nothing } from "lit-html";
 
-import { caseLink, formatAgo, formatFriendly, joinTemplates, sectionLabel } from "./format.js";
+import { formatAgo, formatFriendly, joinTemplates, sectionLabel } from "./format.js";
 
 function verdictSummary(verdict) {
   if (verdict.cases_total) {
@@ -17,16 +17,20 @@ function promptOfLatestRun(section, verdict) {
   return version && version.prompt_sha256;
 }
 
-function gateFailureCase(section, verdict, failure, caseCount, actions) {
+function caseButton(section, verdict, caseId, metric, actions) {
   const open = () => actions.openBrowser({
     eval_name: section.eval_name,
     prompt_sha256: promptOfLatestRun(section, verdict),
     timestamp: verdict.ran_at,
     provider: verdict.provider,
-    metric: failure.metric,
-    focused_case_id: caseCount.case_id,
+    metric,
+    focused_case_id: caseId,
   });
-  return html`${caseCount.count} in <button type="button" class="case-link" @click=${open}><code>${caseCount.case_id}</code></button>`;
+  return html`<button type="button" class="case-link" @click=${open}><code>${caseId}</code></button>`;
+}
+
+function gateFailureCase(section, verdict, failure, caseCount, actions) {
+  return html`${caseCount.count} in ${caseButton(section, verdict, caseCount.case_id, failure.metric, actions)}`;
 }
 
 function gateFailure(section, verdict, failure, actions) {
@@ -43,7 +47,7 @@ function verdictFailures(section, verdict, actions) {
   }
   const detail = verdict.gate_failures.length
     ? joinTemplates(verdict.gate_failures.map((failure) => gateFailure(section, verdict, failure, actions)), "; ")
-    : joinTemplates(verdict.failed_case_ids.map((caseId) => caseLink(section, caseId)));
+    : joinTemplates(verdict.failed_case_ids.map((caseId) => caseButton(section, verdict, caseId, null, actions)));
   return html`<span class="verdict__failures">fails ${detail}</span>`;
 }
 

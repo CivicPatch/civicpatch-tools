@@ -1,0 +1,24 @@
+page_url: https://www.jacksontn.gov/government/citycouncil/meetthecouncil
+jurisdiction_name: Jackson city
+organizations:
+- name: Office of the Mayor
+  posts:
+  - Mayor
+- name: City Council
+  posts:
+  - Council Member, District 1
+  - Council Member, District 2
+  - Council Member, District 3
+  - Council Member, District 4
+  - Council Member, District 5
+  - Council Member, District 6
+  - Council Member, District 7
+  - Council Member, District 8
+  - Council Member, District 9
+covers:
+  Office of the Mayor: false
+  City Council: true
+thoughts: >-
+  Nine councilmembers with their districts, which is the council's roster. The Mayor's
+  Office is in the navigation on every page of this site and the mayor is named nowhere in the
+  content, so answering true for it would be the failure this prompt exists to avoid.

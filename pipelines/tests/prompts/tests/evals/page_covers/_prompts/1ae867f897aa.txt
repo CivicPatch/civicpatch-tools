@@ -1,0 +1,18 @@
+
+    Decide whether the provided page content carries people who currently hold office in one
+    specific governing body.
+
+    Body: <body, per case>
+    Municipality: <jurisdiction, per case>
+    Offices in it: <its posts, per case>
+
+    Answer true only if a person holding office in that body appears on this page, named. A link
+    to the body, its name in the navigation, a mention of it in prose, or a meeting agenda that
+    names it are all false — the question is whether the page lists its people.
+
+    Someone who holds office in that body counts even if the page gives them a title that is not
+    among the offices listed above; the list is there to say what holding office in this body
+    looks like, not to limit it.
+
+    IMPORTANT: Return only valid JSON, {"covers": true} or {"covers": false}.
+    

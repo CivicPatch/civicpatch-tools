@@ -1,24 +1,24 @@
 run:
-  timestamp: '2026-09-16T19:50:43+00:00'
-  prompt_sha256: 962c93a9a841
-  prompt_file: _prompts/962c93a9a841.txt
+  timestamp: '2026-09-18T01:47:39+00:00'
+  prompt_sha256: 983a0dfb3b48
+  prompt_file: _prompts/983a0dfb3b48.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 76.26
-  total_input_tokens: 79286
-  total_output_tokens: 20747
-  total_cost_usd: 0.016679824
+  elapsed_seconds: 141.37
+  total_input_tokens: 85332
+  total_output_tokens: 18309
+  total_cost_usd: 0.016958312
 accuracy:
   relevant_urls:
-    correct: 24
-    missing: 0
-    spurious: 32
+    correct: 25
+    missing: 1
+    spurious: 28
     wrong: 0
-    precision: 0.42857142857142855
-    recall: 1.0
-    f1: 0.6
+    precision: 0.4716981132075472
+    recall: 0.9615384615384616
+    f1: 0.6329113924050633
   is_relevant:
-    correct: 16
+    correct: 17
     missing: 0
     spurious: 0
     wrong: 0
