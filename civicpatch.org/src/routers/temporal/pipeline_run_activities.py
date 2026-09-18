@@ -13,12 +13,15 @@ import base64
 import json
 import os
 import time
+from datetime import timedelta
 from typing import Optional
 
 import httpx
 import jwt
 from temporalio import activity
+from temporalio.exceptions import ApplicationError
 
+from core.run_watch import RunWatch, is_quiet, observe
 from lib.temporal.types import RunConclusion
 from shared.utils.statuses import PipelineRunStatus
 
@@ -42,6 +45,11 @@ _GITHUB_HEADERS = {
 _API_HEADERS = {"Authorization": SERVICE_API_KEY}
 
 _TERMINAL_STATUSES = {PipelineRunStatus.SUCCESS, PipelineRunStatus.ERROR, PipelineRunStatus.CANCELLED}
+
+_POLL_INTERVAL_SECONDS = 15
+# A run that reports nothing new for this long has died without saying so. Its steps take
+# seconds to minutes, so half an hour of the same status and progress is not slowness.
+_QUIET_AFTER = timedelta(minutes=30)
 
 
 def _generate_jwt() -> str:
@@ -146,31 +154,52 @@ async def update_pipeline_run_status(pipeline_run_id: str, status: str, progress
         resp.raise_for_status()
 
 
+async def _read_status(pipeline_run_id: str) -> tuple[str, int] | None:
+    """The run's status and progress, or None on a failure worth another try."""
+    try:
+        async with httpx.AsyncClient(headers=_API_HEADERS, timeout=15) as client:
+            resp = await client.get(f"{API_URL}/api/v1/pipeline_runs/{pipeline_run_id}/status")
+            resp.raise_for_status()
+    except httpx.HTTPStatusError as e:
+        if e.response.status_code < 500:
+            # A 4xx will not fix itself on a retry.
+            raise ApplicationError(
+                f"poll_pipeline_run_status request failed: {type(e).__name__}: {e}",
+                non_retryable=True,
+            ) from None
+        activity.logger.warning(f"Pipeline run {pipeline_run_id}: server error {e.response.status_code}, will retry")
+        return None
+    except httpx.HTTPError as e:
+        activity.logger.warning(f"Pipeline run {pipeline_run_id}: transient error ({type(e).__name__}), will retry")
+        return None
+    body = resp.json()
+    return body["status"], body["progress"]
+
+
 @activity.defn
 async def poll_pipeline_run_status(pipeline_run_id: str) -> str:
+    """Watch a run until it finishes.
+
+    Only a run that reports nothing new for `_QUIET_AFTER` fails the watch, and not retryably. A
+    worker restart resumes from the last heartbeat, so it costs the run nothing.
+    """
+    details = activity.info().heartbeat_details
+    watch = RunWatch(**details[0]) if details else RunWatch(changed_at=time.time())
     while True:
-        activity.heartbeat(f"polling pipeline run {pipeline_run_id}")
-        status = None
-        try:
-            async with httpx.AsyncClient(headers=_API_HEADERS, timeout=15) as client:
-                resp = await client.get(f"{API_URL}/api/v1/pipeline_runs/{pipeline_run_id}/status")
-                resp.raise_for_status()
-            status = resp.json()["status"]
-        except httpx.HTTPStatusError as e:
-            if e.response.status_code < 500:
-                raise RuntimeError(f"poll_pipeline_run_status request failed: {type(e).__name__}: {e}") from None
-            activity.logger.warning(f"Pipeline run {pipeline_run_id}: server error {e.response.status_code}, will retry")
-        except httpx.HTTPError as e:
-            activity.logger.warning(f"Pipeline run {pipeline_run_id}: transient error ({type(e).__name__}), will retry")
-        if status is not None:
+        reading = await _read_status(pipeline_run_id)
+        if reading is not None:
+            status, progress = reading
             activity.logger.info(f"Pipeline run {pipeline_run_id}: status={status}")
             if status in _TERMINAL_STATUSES:
                 return RunConclusion.SUCCESS if status == PipelineRunStatus.SUCCESS else RunConclusion.FAILURE
-        try:
-            await asyncio.sleep(15)
-        except asyncio.CancelledError:
-            raise
-        activity.heartbeat(f"polling pipeline run {pipeline_run_id}")
+            watch = observe(watch, f"{status}:{progress}", time.time())
+        if is_quiet(watch, time.time(), _QUIET_AFTER):
+            raise ApplicationError(
+                f"Pipeline run {pipeline_run_id} reported nothing new for {_QUIET_AFTER}",
+                non_retryable=True,
+            )
+        activity.heartbeat(watch.model_dump())
+        await asyncio.sleep(_POLL_INTERVAL_SECONDS)
 
 
 @activity.defn

@@ -25,9 +25,11 @@ with workflow.unsafe.imports_passed_through():
     )
     from shared.utils.statuses import PipelineRunStatus
 
-    from lib.temporal.types import RunConclusion
+    from lib.temporal.types import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT, RunConclusion
 
 _DISPATCH_MODE_LOCAL = "local"
+# Room after the watch gives up for the workflow to cancel the scrape and settle the run.
+_SETTLE_MARGIN = timedelta(minutes=5)
 
 
 def _workflow_id(jurisdiction_ocdid: str) -> str:
@@ -69,6 +71,13 @@ class PeopleCollectorWorkflow:
                 )
             raise
         except Exception:
+            # Stop the scrape too: left running, it reports into a run already settled.
+            if dispatch_mode == _DISPATCH_MODE_LOCAL:
+                await workflow.execute_activity(
+                    cancel_local_run,
+                    args=[pipeline_run_id],
+                    start_to_close_timeout=timedelta(seconds=30),
+                )
             await workflow.execute_activity(
                 update_pipeline_run_status,
                 args=[pipeline_run_id, PipelineRunStatus.ERROR],
@@ -101,15 +110,11 @@ class PeopleCollectorWorkflow:
         return await workflow.execute_activity(
             poll_pipeline_run_status,
             args=[pipeline_run_id],
-            start_to_close_timeout=timedelta(minutes=35),
+            # Attempts unbounded: a worker restart ends one, and must not cost the run. A quiet
+            # run fails the activity non-retryably. The whole watch ends before the workflow's own
+            # timeout, because a *terminated* workflow runs no `except` and nothing settles the run.
+            schedule_to_close_timeout=PEOPLE_COLLECTOR_EXECUTION_TIMEOUT - _SETTLE_MARGIN,
             heartbeat_timeout=timedelta(seconds=60),
-            # Bounded, where the default is forever. The activity is already its own retry loop
-            # — transient HTTP errors never leave it — so an attempt ending means the run has
-            # gone quiet, and starting a fresh 35-minute watch just delays saying so. Unbounded,
-            # the workflow never failed: it ran to its 2h execution timeout, and a *terminated*
-            # workflow runs no `except`, so nothing settled the run. Two, not one, so a worker
-            # restart mid-watch resumes rather than failing the run.
-            retry_policy=RetryPolicy(maximum_attempts=2),
         )
 
     async def _handle_conclusion(self, conclusion: str, pipeline_run_id: str) -> str:
