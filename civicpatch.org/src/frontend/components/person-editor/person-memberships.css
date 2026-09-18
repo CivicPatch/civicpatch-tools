@@ -1,0 +1,64 @@
+@layer components {
+.person-memberships {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+/* The same head idiom as .rgrouphead (person-card-grid.css), not that class: it carries the
+   card-packing flex sizing, which means nothing inside an editor. */
+.person-memberships__orghead {
+  font-family: var(--font-mono);
+  font-size: 0.714rem;
+  color: var(--text-muted);
+  text-transform: lowercase;
+  padding-bottom: 0.286rem;
+  margin-bottom: 0.357rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.person-memberships__line {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.2rem 0;
+}
+.person-memberships__post {
+  font-size: var(--font-size-sm);
+}
+.person-memberships__meta {
+  flex: 1 1 100%;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+.person-memberships__line--person {
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.person-memberships__acts {
+  display: flex;
+  gap: 0.3rem;
+  margin-left: auto;
+}
+.person-memberships__act {
+  padding: 0.05rem 0.4rem;
+  width: auto;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.02em;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.person-memberships__act:hover {
+  border-color: var(--border-strong);
+  color: var(--text-default);
+}
+.person-memberships__act[aria-pressed="true"] {
+  border-color: var(--diff-removed);
+  color: var(--diff-removed);
+}
+}

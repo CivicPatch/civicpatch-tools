@@ -23,6 +23,7 @@ import { focusOnMount } from "../../utils/focus-on-mount.js";
 import { EMPTY_FROZEN } from "../review-session-page/frozen-fields.js";
 import { renderRosterCards } from "./roster-section.js";
 import { useOrganizations } from "../../hooks/use-organizations.js";
+import { useRosterMemberships } from "../../hooks/use-roster-memberships.js";
 import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
 import { useAltArrowPeerNav } from "../../hooks/use-alt-arrow-peer-nav.js";
 import { officeChangesIn } from "../../components/person-editor/office-changes.js";
@@ -63,6 +64,10 @@ function RosterEditor({
   onPublished,
 }: RosterEditorProps) {
   const { organizations, reload: reloadOrganizations } = useOrganizations(jurisdictionOcdid);
+  // No changeset: this page edits live data, so a claim applies to the published roster as soon
+  // as the next publish re-derives it.
+  const { memberships, setRemoval, setNotAMemberHere } =
+    useRosterMemberships(jurisdictionOcdid);
   const roles = useJurisdictionRoles();
   // Where "Add" was clicked for a not-yet-saved person, since they hold no post yet to place
   // them by. Session-local — once they're given an office their held post takes over.
@@ -188,6 +193,9 @@ function RosterEditor({
       roles,
       canAssignMembership,
       canCreatePost,
+      rosterMemberships: memberships,
+      onSetRemoval: setRemoval,
+      onSetNotAMember: setNotAMemberHere,
       proposals: new Map(),
       assertions,
       overriddenSourceValues: {},

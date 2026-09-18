@@ -51,6 +51,32 @@ def moved_person_issues(
     ]
 
 
+def organizations_nobody_was_found_in(
+    changes: list[ProposedChange], names: Mapping[str, str]
+) -> list[Issue]:
+    """One issue per organization whose every proposal is a departure.
+
+    Nothing publishes there: closing skips an organization with nobody in it, so the roster it
+    holds today survives untouched. That is right when the scrape never read a page for it, and
+    wrong when it read one and came back empty, and only a person can tell those apart, which is
+    why this is a review issue rather than a pipeline one.
+    """
+    people: dict[str, int] = {}
+    departures: dict[str, int] = {}
+    for change in changes:
+        people[change.organization_id] = people.get(change.organization_id, 0) + 1
+        if change.disposition is MembershipDisposition.ABSENT:
+            departures[change.organization_id] = departures.get(change.organization_id, 0) + 1
+    return [
+        Issue(
+            code=IssueCode.NOBODY_FOUND_IN_ORGANIZATION,
+            message=f"Nobody found in {names.get(organization_id) or 'one organization'}",
+        )
+        for organization_id, count in people.items()
+        if departures.get(organization_id, 0) == count
+    ]
+
+
 def append_post_issues(summary: dict, posts: list[Issue]) -> dict:
     """One issue list for the card, the roster checks first.
 

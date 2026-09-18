@@ -1,3 +1,4 @@
+import { MEMBERSHIP_DISPOSITION } from "../../schemas/membership-proposal.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import {
   DEPARTING,
@@ -149,53 +150,82 @@ export function runsOf(cards: PersonCard[]): Run[] {
   }, []);
 }
 
-export interface ReviewSections {
-  ranked: RoleGroup<PersonCard>[];
-  unmatched: PersonCard[];
+
+/** One person as one organization sees them: the card, and the change proposed for them there.
+ * A person holding posts in two organizations is two of these, which puts them in both sections. */
+export interface CardInOrganization {
+  card: PersonCard;
+  proposal: ProposedChange;
+}
+
+export interface OrganizationSection {
+  organizationId: string;
+  ranked: RoleGroup<CardInOrganization>[];
+  unmatched: CardInOrganization[];
+}
+
+export interface ReviewOrganizationSections {
+  organizations: OrganizationSection[];
+  /** Nobody proposed anything for these: people leaving, and cards with no proposal at all. */
   departing: PersonCard[];
 }
 
-function roleMembershipsFor(
-  proposal: ProposedChange | null,
-  card: PersonCard,
-): PostRole[] | undefined {
-  if (!proposal) return personOf(card)?.memberships;
-  return [{ role_id: proposal.post.role_id, role_label: proposal.post.role_label }];
+/** Nothing was found in this organization: every proposal in it is someone leaving. Publishing
+ * changes nothing here, whether the scrape read no page for it or read one and returned nobody,
+ * because closing skips an organization with nobody in it. */
+export function foundNobody(entries: CardInOrganization[]): boolean {
+  return (
+    entries.length > 0 &&
+    entries.every((entry) => entry.proposal.disposition === MEMBERSHIP_DISPOSITION.ABSENT)
+  );
 }
 
-/** Cards grouped for display the way the jurisdiction grid groups people — by role, ranked
- * groups first — plus the trailing bucket a review needs that a published roster doesn't: a
- * seat the scrape couldn't name a role for at all. */
-export function sectionsOf(
+/** The same grouping one level down: a section per organization, roles inside it. A person is
+ * listed in each organization that proposed something for them, carrying that organization's own
+ * proposal, so the council section shows their council post and the mayor's office the mayoralty.
+ *
+ * Organizations come out in the order their proposals arrive, which is the derivation's order.
+ */
+export function sectionsByOrganization(
   cards: PersonCard[],
   proposals: Map<string, ProposedChange[]>,
   roleOrder: string[],
-): ReviewSections {
+): ReviewOrganizationSections {
   const departing = cards.filter((card) => DEPARTING.has(card.status));
-  // Each staying card's sole proposal, resolved once rather than re-derived by every filter
-  // and the group-membership step below.
-  const staying = cards
-    .filter((card) => !DEPARTING.has(card.status))
-    .map((card) => ({
-      card,
-      proposal: soleProposalFor(card.personId, proposals),
-    }));
-  const isUnmatched = (proposal: ProposedChange | null) =>
-    proposal?.post.role_id === UNMATCHED_ROLE_ID;
-  const unmatched = staying
-    .filter(({ proposal }) => isUnmatched(proposal))
-    .map(({ card }) => card);
-  const groupable = staying.filter(({ proposal }) => !isUnmatched(proposal));
-  const groups = groupByRole(
-    groupable.map(({ card, proposal }) => ({
-      id: card.personId,
-      memberships: roleMembershipsFor(proposal, card),
-      card,
-    })),
-    roleOrder,
-  ).map((group) => ({
-    ...group,
-    people: group.people.map(({ card }) => card),
-  }));
-  return { ranked: groups, unmatched, departing };
+  const staying = cards.filter((card) => !DEPARTING.has(card.status));
+
+  const byOrganization = new Map<string, CardInOrganization[]>();
+  const unproposed: PersonCard[] = [];
+  for (const card of staying) {
+    const proposed = proposals.get(card.personId) ?? [];
+    if (!proposed.length) unproposed.push(card);
+    for (const proposal of proposed) {
+      const listed = byOrganization.get(proposal.organization_id) ?? [];
+      listed.push({ card, proposal });
+      byOrganization.set(proposal.organization_id, listed);
+    }
+  }
+
+  const organizations = [...byOrganization].map(([organizationId, listed]) => {
+    const isUnmatched = (entry: CardInOrganization) =>
+      entry.proposal.post.role_id === UNMATCHED_ROLE_ID;
+    const ranked = groupByRole(
+      listed
+        .filter((entry) => !isUnmatched(entry))
+        .map((entry) => ({
+          id: entry.card.personId,
+          memberships: [
+            {
+              role_id: entry.proposal.post.role_id,
+              role_label: entry.proposal.post.role_label,
+            },
+          ],
+          entry,
+        })),
+      roleOrder,
+    ).map((group) => ({ ...group, people: group.people.map(({ entry }) => entry) }));
+    return { organizationId, ranked, unmatched: listed.filter(isUnmatched) };
+  });
+
+  return { organizations, departing: [...departing, ...unproposed] };
 }

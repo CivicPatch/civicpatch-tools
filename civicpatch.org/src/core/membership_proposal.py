@@ -92,8 +92,14 @@ def _disposition(held: ExistingMembership | None, post: DerivedPost) -> Membersh
 def propose(
     derived: list[DerivedPost],
     existing: list[ExistingMembership],
+    organizations_read: list[str],
 ) -> list[ProposedChange]:
-    """Each derived membership against what the person holds in that same organization."""
+    """Each derived membership against what the person holds in that same organization.
+
+    `organizations_read` bounds the absences, the same bound publish closes within
+    (`publications._organizations_to_close_in`): a scrape that read only the council page proposes
+    nothing about a school board member. Without it, review shows a departure publish will not make.
+    """
     # An empty scrape proposes nothing rather than marking everyone absent — the same guard
     # `close_absent` makes, for the same reason: that is a failed scrape, not a dissolved body.
     if not derived:
@@ -122,7 +128,8 @@ def propose(
             )
 
     # Sourced from what we hold, not from the scrape — there is no incoming row to hang a
-    # disappearance on. Per person until step 9 closes per organization.
+    # disappearance on.
+    read = set(organizations_read)
     changes.extend(
         ProposedChange(
             person_id=membership.person_id,
@@ -131,7 +138,7 @@ def propose(
             post=membership.post,
         )
         for membership in existing
-        if membership.person_id not in seen
+        if membership.person_id not in seen and membership.organization_id in read
     )
     return changes
 

@@ -4,7 +4,7 @@ import {
   byRank,
   issueTypesOf,
   runsOf,
-  sectionsOf,
+  sectionsByOrganization,
   sourceMapFor,
   tallyOf,
   visibleFields,
@@ -331,74 +331,91 @@ describe("tallyOf — the roster's shape, at a glance", () => {
   it("is empty for an empty roster", () => expect(tallyOf([])).toEqual([]));
 });
 
-describe("sectionsOf — role sections like the jurisdiction grid, plus review's own trailing buckets", () => {
+describe("sectionsByOrganization — a section per organization, roles inside it", () => {
   const roleOrder = ["mayor", "council-member"];
-  const proposal = (postOver: Record<string, unknown> = {}) => ({
-    person_id: "p1",
-    organization_id: "org-1",
-    disposition: "moved" as const,
+  const proposedIn = (
+    personId: string,
+    organizationId: string,
+    roleId: string,
+    roleLabel = roleId,
+  ) => ({
+    person_id: personId,
+    organization_id: organizationId,
+    disposition: "unchanged" as const,
     post: {
-      id: "post-1",
-      role_id: "council-member",
-      role_label: "Council Member",
+      id: null,
+      role_id: roleId,
+      role_label: roleLabel,
       division_ocdid: "ocd-division/country:us/state:wa/place:x",
-      label: "Council Member",
+      label: roleLabel,
       meta_is_tracked: true,
-      ...postOver,
     },
     membership_label: null,
     from_post: null,
   });
-  const withRole = (roleId: string, roleLabel: string) =>
-    card({
-      personId: "p1",
-      newRecord: { memberships: [{ role_id: roleId, role_label: roleLabel }] } as never,
-    });
 
-  it("groups a card under its proposed role, not its held one", () => {
-    const sections = sectionsOf(
-      [withRole("mayor", "Mayor")],
-      proposalsByPersonId([proposal()]),
+  it("lists a person once per organization they were proposed in", () => {
+    const ana = card({ personId: "ana" });
+    const { organizations } = sectionsByOrganization(
+      [ana],
+      proposalsByPersonId([
+        proposedIn("ana", "council", "council-member", "Council Member"),
+        proposedIn("ana", "mayors-office", "mayor", "Mayor"),
+      ]),
       roleOrder,
     );
-    expect(sections.ranked.map((group) => group.roleId)).toEqual(["council-member"]);
+
+    expect(organizations.map((organization) => organization.organizationId).sort()).toEqual([
+      "council",
+      "mayors-office",
+    ]);
+    expect(
+      organizations.flatMap((organization) =>
+        organization.ranked.flatMap((group) =>
+          group.people.map((entry) => [organization.organizationId, group.roleLabel, entry.card.personId]),
+        ),
+      ),
+    ).toEqual([
+      ["council", "Council Member", "ana"],
+      ["mayors-office", "Mayor", "ana"],
+    ]);
   });
 
-  it("falls back to the held membership when there is no proposal", () => {
-    const sections = sectionsOf(
-      [withRole("mayor", "Mayor")],
+  it("groups by role inside an organization, ranked first", () => {
+    const { organizations } = sectionsByOrganization(
+      [card({ personId: "ana" }), card({ personId: "bo" })],
+      proposalsByPersonId([
+        proposedIn("ana", "council", "council-member", "Council Member"),
+        proposedIn("bo", "council", "mayor", "Mayor"),
+      ]),
+      roleOrder,
+    );
+
+    expect(organizations[0].ranked.map((group) => group.roleLabel)).toEqual([
+      "Mayor",
+      "Council Member",
+    ]);
+  });
+
+  it("keeps a post no role matched out of the ranked groups", () => {
+    const { organizations } = sectionsByOrganization(
+      [card({ personId: "fay" })],
+      proposalsByPersonId([proposedIn("fay", "council", "unmatched")]),
+      roleOrder,
+    );
+
+    expect(organizations[0].ranked).toEqual([]);
+    expect(organizations[0].unmatched.map((entry) => entry.card.personId)).toEqual(["fay"]);
+  });
+
+  it("leaves people nobody proposed anything for out of every organization", () => {
+    const { organizations, departing } = sectionsByOrganization(
+      [card({ personId: "cy", status: PersonStatus.REMOVED }), card({ personId: "dee" })],
       proposalsByPersonId([]),
       roleOrder,
     );
-    expect(sections.ranked.map((group) => group.roleId)).toEqual(["mayor"]);
-  });
 
-  it("puts a seat the scrape couldn't name a role for in its own bucket", () => {
-    const sections = sectionsOf(
-      [card({ personId: "p1" })],
-      proposalsByPersonId([proposal({ role_id: "unmatched", role_label: "" })]),
-      roleOrder,
-    );
-    expect(sections.unmatched.map((c) => c.personId)).toEqual(["p1"]);
-  });
-
-  it("has no separate Other bucket — an unranked role just isn't a case real data can produce", () => {
-    // A real role_id is always in roleOrder: posts.role_id references roles.id, roles are
-    // only ever soft-deleted, and "unmatched" never survives to a persisted post (it's
-    // filtered into `unmatched` above instead). So there is nothing left to special-case here
-    // — groupByRole's own unranked fallback is simply never reached by real data.
-    const sections = sectionsOf([withRole("mayor", "Mayor")], proposalsByPersonId([]), roleOrder);
-    expect(sections.ranked.map((group) => group.roleId)).toEqual(["mayor"]);
-    expect(sections.unmatched).toEqual([]);
-  });
-
-  it("puts departing cards in their own trailing section, never grouped by role", () => {
-    const cards = [
-      card({ personId: "removed", status: PersonStatus.REMOVED }),
-      card({ personId: "deleted", status: PersonStatus.DELETED }),
-    ];
-    const sections = sectionsOf(cards, proposalsByPersonId([]), roleOrder);
-    expect(sections.departing.map((c) => c.personId)).toEqual(["removed", "deleted"]);
-    expect(sections.ranked).toEqual([]);
+    expect(organizations).toEqual([]);
+    expect(departing.map((entry) => entry.personId).sort()).toEqual(["cy", "dee"]);
   });
 });

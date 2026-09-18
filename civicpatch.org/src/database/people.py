@@ -3,12 +3,13 @@ import uuid
 from typing import Any, AsyncGenerator, List, LiteralString
 
 from core.membership_label import derive_post_label
+from database import assertions
 from database.activity import record_change
 from database.changesets import register_people_edit_changeset
 from database.database import get_pool
 from database.memberships import EXISTENCE_FIELD
 from database.users import SYSTEM_USER_ID
-from schemas.assertions import AssertionKind, EntityType
+from schemas.assertions import Assertion, AssertionKind, EntityType, Source
 from schemas.activity import Change
 from shared.utils.id_utils import make_id
 from shared.utils.statuses import ActivityType
@@ -471,6 +472,35 @@ async def stream_for_state(
             while rows := await cur.fetchmany(chunk_size):
                 columns = [column.name for column in cur.description or []]
                 yield [dict(zip(columns, row)) for row in rows]
+
+
+async def assert_not_a_member(
+    cur, person_id: str, user_id: str, reason: str | None = None, changeset_id: str | None = None
+) -> str:
+    """Somebody's claim that this person is a member of nothing here: the wrong person, or another
+    place's page. Publish closes every membership of theirs in the jurisdiction
+    (`memberships.close_for_people_rejected_here`); the person row survives, because deleting it is
+    its own act and the only irreversible one.
+    """
+    return await assertions.upsert(
+        cur,
+        Assertion(
+            entity_type=EntityType.PERSON,
+            entity_id=person_id,
+            field_path=EXISTENCE_FIELD,
+            kind=AssertionKind.REJECT,
+            value=True,
+            changeset_id=changeset_id,
+            sources=[Source(note=reason)] if reason else [],
+        ),
+        user_id,
+    )
+
+
+async def withdraw_not_a_member(cur, person_id: str, user_id: str) -> int:
+    return await assertions.withdraw(
+        cur, EntityType.PERSON, person_id, EXISTENCE_FIELD, AssertionKind.REJECT, user_id
+    )
 
 
 async def delete_person(person_id: str, user_id: str | None = None) -> str | None:

@@ -4,6 +4,7 @@ from core.membership_proposal import MembershipDisposition, MembershipPost, Prop
 from core.post_issues import (
     append_post_issues,
     moved_person_issues,
+    organizations_nobody_was_found_in,
     unverified_post_issues,
 )
 from shared.schemas import POST_FIELD, IssueCode
@@ -100,3 +101,63 @@ def test_a_summary_nothing_was_computed_for_is_left_alone():
     assert append_post_issues({"issues": []}, []) == {"issues": []}
 
 
+
+
+def _in(organization_id: str, person_id: str, disposition: MembershipDisposition) -> ProposedChange:
+    return ProposedChange(
+        person_id=person_id,
+        organization_id=organization_id,
+        disposition=disposition,
+        post=MembershipPost(
+            role_id="council-member",
+            role_label="Council Member",
+            division_ocdid=_BASE,
+            label="Council Member",
+        ),
+    )
+
+
+_NAMES = {"council": "City Council", "mayors-office": "Office of the Mayor"}
+
+
+@pytest.mark.unit
+def test_an_organization_of_only_departures_is_raised():
+    """Nothing publishes there, and only a person can say whether the scrape missed the page or
+    the body really emptied."""
+    issues = organizations_nobody_was_found_in(
+        [
+            _in("council", "a", MembershipDisposition.UNCHANGED),
+            _in("mayors-office", "b", MembershipDisposition.ABSENT),
+        ],
+        _NAMES,
+    )
+
+    assert [(issue.code, issue.message) for issue in issues] == [
+        (IssueCode.NOBODY_FOUND_IN_ORGANIZATION, "Nobody found in Office of the Mayor")
+    ]
+
+
+@pytest.mark.unit
+def test_an_organization_with_anyone_left_in_it_is_not_raised():
+    issues = organizations_nobody_was_found_in(
+        [
+            _in("council", "a", MembershipDisposition.ABSENT),
+            _in("council", "b", MembershipDisposition.UNCHANGED),
+        ],
+        _NAMES,
+    )
+
+    assert issues == []
+
+
+@pytest.mark.unit
+def test_an_organization_nothing_was_proposed_for_is_not_raised():
+    """Only what the proposal names can be judged: an organization with no rows is not in it."""
+    assert organizations_nobody_was_found_in([], _NAMES) == []
+
+
+@pytest.mark.unit
+def test_an_unnamed_organization_still_reads_as_a_sentence():
+    issues = organizations_nobody_was_found_in([_in("gone", "a", MembershipDisposition.ABSENT)], {})
+
+    assert issues[0].message == "Nobody found in one organization"

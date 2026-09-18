@@ -287,6 +287,11 @@ async def publish_changeset(
                 read_from_a_source,
             )
 
+        # A person's claims first: publish applies what somebody said, then infers the rest from
+        # what the source stopped listing.
+        await memberships.close_claimed(cur, jurisdiction_ocdid, last_seen_at)
+        await memberships.close_for_people_rejected_here(cur, jurisdiction_ocdid, last_seen_at)
+
         people_here = _people_by_organization(derived or [])
         for organization_id in await _organizations_to_close_in(cur, changeset_id, people_here):
             await memberships.close_absent(

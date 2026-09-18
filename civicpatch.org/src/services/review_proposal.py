@@ -15,13 +15,16 @@ from core.post_derivation import RosterEntry, derived_posts
 from core.post_issues import (
     append_post_issues,
     moved_person_issues,
+    organizations_nobody_was_found_in,
     unverified_post_issues,
 )
 from database import assertions
 from database import changesets as changesets_db
 from database import memberships as memberships_db
+from database import organizations as organizations_db
 from database import people as people_db
 from database import posts as posts_db
+from database import source_records
 from database.database import get_pool
 from database.roles import get_roles
 from schemas.assertions import EntityType
@@ -59,8 +62,8 @@ async def review_summary_for_changeset(changeset_id: str) -> dict:
     changes = (
         await proposals_for_requests([changeset_id], {changeset_id: proposed})
     ).get(changeset_id, [])
-    # `proposed` has already been collapsed to this changeset's organization, so a `post_id`
-    # here is the pick that applies to the review in front of the reviewer.
+    # `proposed` carries the picks in the organizations this changeset read, so a `post_id` here
+    # is one that applies to the review in front of the reviewer.
     picked = {
         person["id"]: post_id
         for person in proposed
@@ -71,8 +74,19 @@ async def review_summary_for_changeset(changeset_id: str) -> dict:
         [
             *posts,
             *moved_person_issues(changes, picked),
+            *organizations_nobody_was_found_in(changes, await _organization_names(changes)),
         ],
     )
+
+
+async def _organization_names(changes: list[ProposedChange]) -> dict[str, str]:
+    """An issue names the organization, and a proposal carries only its id."""
+    ids = list({change.organization_id for change in changes})
+    if not ids:
+        return {}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        return await organizations_db.names(cur, ids)
 
 
 async def _unverified_post_issues(jurisdiction_ocdid: str) -> list[Issue]:
@@ -106,6 +120,10 @@ async def proposals_for_requests(
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         held = await memberships_db.open_memberships(cur, jurisdictions)
+        read_by_changeset = {
+            changeset_id: await source_records.organizations_for_changeset(cur, changeset_id)
+            for changeset_id in ocdids
+        }
 
     held_by_jurisdiction: dict[str, list[ExistingMembership]] = {ocdid: [] for ocdid in jurisdictions}
     for membership in held:
@@ -117,9 +135,12 @@ async def proposals_for_requests(
             RosterEntry(**{**person, "jurisdiction_ocdid": ocdid})
             for person in rosters.get(changeset_id, [])
         ]
+        derived = derived_posts(people, taxonomy, roles, await chosen_posts(picks_in(people)))
+        # Same fallback as publish: a hand edit records evidence only for what it adds, so a
+        # changeset with none is bounded by the organizations its own roster fills.
+        read = read_by_changeset.get(changeset_id) or [post.organization_id for post in derived]
         changes_by_changeset[changeset_id] = propose(
-            derived_posts(people, taxonomy, roles, await chosen_posts(picks_in(people))),
-            held_by_jurisdiction[ocdid],
+            derived, held_by_jurisdiction[ocdid], read
         )
 
     organization_ids = list(
