@@ -163,6 +163,15 @@ async def test_a_cancellation_is_counted_by_the_badge_that_lists_it():
 
 
 @pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_expired_import_is_not_a_failure():
+    """Nobody decided it — like a superseded one, nothing went wrong."""
+    await _changeset(reason=DismissalReason.EXPIRED, kind="sheet_import", status=None)
+
+    assert (await _row()).dismissed == 0
+
+
+@pytest.mark.asyncio
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_the_queue_counts_one_changeset_per_jurisdiction():

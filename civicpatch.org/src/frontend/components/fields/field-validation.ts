@@ -160,6 +160,9 @@ function isPostUnanswered(record: DiffRecord, field: FieldSpec): boolean {
   const labels = getFieldValue(record, "labels");
   if (!Array.isArray(labels)) return false;
   if (labels.length > 0) return false;
+  // A sourced person whose labels resolved to nothing (an import's `inherit` that found no
+  // current post) is unmatched, not unanswered — only `emptyPerson`'s hand-added one must pick.
+  if (!getFieldValue(record, "_isNew")) return false;
   return !getFieldValue(record, "role_id");
 }
 

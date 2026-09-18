@@ -598,45 +598,6 @@ async def open_memberships(cur, jurisdiction_ocdids: list[str]) -> list[Existing
     ]
 
 
-async def open_source_labels_by_person(
-    cur, jurisdiction_ocdid: str, person_ids: list[str]
-) -> dict[str, str]:
-    """Each person's current open membership in the jurisdiction's default organization, as
-    the source's own words for it — verbatim text that re-parses to the same role.
-
-    By resolved person id, not name: this runs after identity linking, so it can reach exactly
-    who the sighting resolved to rather than matching on a name that might not be the
-    published spelling.
-
-    "Default" as `organizations.get_default` orders it: sheet imports belong to that organization.
-
-    Several source labels join back into one string — `parse_label` already treats ` / ` as a
-    segment boundary, so this re-parses exactly as the original multi-part label did.
-    """
-    if not person_ids:
-        return {}
-    await cur.execute(
-        """
-        SELECT m.person_id::text, membership_source_labels(m.sources)
-        FROM memberships m
-        WHERE m.organization_id = (
-            SELECT id FROM organizations
-            WHERE jurisdiction_ocdid = %s
-            ORDER BY meta_is_default DESC, sort_order, name
-            LIMIT 1
-        )
-          AND m.closed_at IS NULL
-          AND m.person_id::text = ANY(%s)
-        """,
-        (jurisdiction_ocdid, person_ids),
-    )
-    return {
-        person_id: " / ".join(source_labels)
-        for person_id, source_labels in await cur.fetchall()
-        if source_labels
-    }
-
-
 async def _assert(
     cur,
     membership_id: str,

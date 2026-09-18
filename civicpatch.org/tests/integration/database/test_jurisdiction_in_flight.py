@@ -166,18 +166,15 @@ async def test_a_finished_scrape_with_sightings_awaits_review():
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_an_import_awaits_review_with_no_pipeline_run():
-    """76% of changesets are imports. They never have a status, so the running lane can never
-    hold one — this is the case a name like `PipelineRunChangeset` would have mislabelled."""
+async def test_a_pending_import_is_in_neither_lane():
+    """Only its batch page decides an import, so it never awaits review here. It reaches the
+    jurisdiction's history once published or dismissed."""
     changeset_id = await _an_import()
     await _add_sighting(changeset_id)
 
     result = await get_in_flight(_OCDID)
 
-    assert [entry.id for entry in result.in_flight] == [changeset_id]
-    assert result.in_flight[0].is_running is False
-    assert result.in_flight[0].awaiting_review is True
-    assert result.in_flight[0].pipeline_run_status is None
+    assert result.in_flight == []
 
 
 @pytest.mark.integration

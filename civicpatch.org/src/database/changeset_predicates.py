@@ -50,8 +50,9 @@ WORK_IN_FLIGHT = (
 # Duplicates `DismissalReason`; kept only because the SQL fragments below splice it.
 DISMISSED_SUPERSEDED = "superseded"
 
-# A scrape still awaiting human review. Unaliased; callers use `FROM changesets` bare.
-AVAILABLE_FOR_REVIEW = (
+# Proposed, nobody has decided it yet, and nothing is blocking it — whichever surface decides.
+# `AVAILABLE_FOR_REVIEW` and `SWEEPABLE` both narrow this rather than each restating it.
+UNDECIDED = (
     "EXISTS (SELECT 1 FROM source_records sr WHERE sr.changeset_id = changesets.id) "
     # Composed, not restated: widening one used to leave the two disagreeing.
     f"AND {WORK_IN_FLIGHT} "
@@ -61,6 +62,16 @@ AVAILABLE_FOR_REVIEW = (
     "AND i.changeset_id = changesets.id "
     f"AND i.status NOT IN ('{PipelineIssueStatus.RESOLVED.value}', '{PipelineIssueStatus.SUPERSEDED.value}')"
     ")"
+)
+
+# Spelled out rather than joined from `REVIEW_POOL_KINDS`, so this stays a LiteralString;
+# `test_review_pool_kinds_match_the_lifecycle` binds the two.
+REVIEW_POOL_KIND_VALUES_SQL = f"'{ChangesetKind.SCRAPE.value}'"
+
+# A scrape still awaiting human review. Unaliased; callers use `FROM changesets` bare.
+AVAILABLE_FOR_REVIEW = (
+    f"{UNDECIDED} "
+    f"AND changesets.kind IN ({REVIEW_POOL_KIND_VALUES_SQL})"
 )
 
 # The run behind a changeset. No run — an import or a hand edit — answers NULL.
@@ -73,8 +84,11 @@ RUN_PROGRESS = "(SELECT progress FROM pipeline_runs WHERE pipeline_runs.changese
 
 # Request supercede can dismiss.
 # Sweep should not dismiss a card still in the queue.
+#
+# On `UNDECIDED`, not `AVAILABLE_FOR_REVIEW`: an import is out of the pool but still superseded
+# by a newer roster for the same jurisdiction.
 SWEEPABLE = (
-    f"{AVAILABLE_FOR_REVIEW} "
+    f"{UNDECIDED} "
     "AND EXISTS ("
     "SELECT 1 FROM jurisdictions j "
     "WHERE j.jurisdiction_ocdid = changesets.jurisdiction_ocdid "

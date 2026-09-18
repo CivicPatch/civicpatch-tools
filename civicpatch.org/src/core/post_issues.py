@@ -77,16 +77,3 @@ def organizations_nobody_was_found_in(
     ]
 
 
-def append_post_issues(summary: dict, posts: list[Issue]) -> dict:
-    """One issue list for the card, the roster checks first.
-
-    Both sides arrive as dicts — the roster checks dumped by the caller, a post issue dumped
-    here. The card reads one list and does not care which check produced a row.
-    """
-    return {
-        **summary,
-        "issues": [
-            *(summary.get("issues") or []),
-            *(issue.model_dump() for issue in posts),
-        ],
-    }

@@ -36,6 +36,13 @@
     --group-gap: 1rem;
   }
 
+  /* A full row each: its inner .rgroup-list is an inline-size container, which lends the section
+     no width of its own, so as a bare flex item it shrank to its heading. */
+  .review-overview__organization {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
   .review-overview__empty {
     font-size: var(--font-size-sm);
     color: var(--text-muted);

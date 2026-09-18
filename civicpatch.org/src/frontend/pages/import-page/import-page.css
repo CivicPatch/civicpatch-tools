@@ -16,6 +16,13 @@
   border-bottom: 1px solid var(--border-subtle);
 }
 
+/* The history pager sits right under the title, whose border already separates them. */
+.import-panel__title + .civ-pagination {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
 /* Sections within a panel */
 
 .import-section {
@@ -186,75 +193,6 @@
   margin-top: 0.35rem;
 }
 
-/* Person rows.
-   The jurisdiction directory's shape at a smaller scale: many localities on one screen, so the
-   photo is 2.5rem and long values are clipped rather than pushing the layout wide. */
-
-.review-person {
-  align-items: center;
-  display: flex;
-  gap: 0.5rem;
-  min-width: 0;
-  padding: 0.15rem 0;
-}
-
-.review-person__info {
-  min-width: 0;
-}
-
-.review-person__name {
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  line-height: 1.3;
-  margin: 0;
-}
-
-.review-person__office {
-  align-items: center;
-  color: var(--text-muted);
-  display: flex;
-  flex-wrap: wrap;
-  font-size: var(--font-size-xs);
-  gap: 0.3rem;
-  line-height: 1.3;
-  margin: 0;
-}
-
-.review-person__term {
-  font-variant-numeric: tabular-nums;
-}
-
-.review-person__contact {
-  display: flex;
-  flex-wrap: wrap;
-  font-size: var(--font-size-xs);
-  gap: 0 0.6rem;
-  line-height: 1.35;
-  margin: 0;
-  min-width: 0;
-}
-
-.review-person__contact a {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 22rem;
-}
-
-/* A warning, not an error: an unresolved title still mints a post, it just wants a look. Same
-   tinted treatment the badges use, so it reads as warning rather than failure. */
-.review-unmatched {
-  background: var(--warning-tint);
-  border: 1px solid var(--warning-tint);
-  border-radius: var(--radius);
-  color: var(--warning);
-  flex: none;
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-  line-height: 1.25;
-  padding: 0 0.35rem;
-}
-
 /* Bulk review */
 
 .review-jurisdiction {
@@ -277,13 +215,13 @@
   opacity: 0.55;
 }
 
-/* Fixed trailing columns, not flex — so "N people" and the status word land at the same
-   x-position on every row regardless of how long the jurisdiction's name is. */
+/* Fixed trailing columns, not flex — so "N people", the change counts and the status word land
+   at the same x-position on every row regardless of how long the jurisdiction's name is. */
 .review-jurisdiction__header {
   align-items: center;
   display: grid;
   gap: 0.75rem;
-  grid-template-columns: minmax(0, 1fr) 5rem 5.5rem;
+  grid-template-columns: minmax(0, 1fr) 5rem 12rem 5.5rem;
 }
 
 .review-jurisdiction__pick {
@@ -299,7 +237,7 @@
 }
 
 .review-jurisdiction__name {
-  flex: 1;
+  flex: 0 1 auto;
   font-weight: 600;
   min-width: 0;
   overflow: hidden;
@@ -312,15 +250,5 @@
   color: var(--text-muted);
   font-size: 0.85rem;
   text-align: right;
-}
-
-/* Two up where there is room: a roster is a dozen people, and one per line makes a bulk review
-   scroll for no reason. */
-.review-jurisdiction__people {
-  display: grid;
-  gap: 0 1.25rem;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-  margin: 0.3rem 0 0;
-  padding: 0 0 0 1.9rem;
 }
 }

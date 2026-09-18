@@ -14,7 +14,8 @@ import database.pipeline_runs as pipeline_runs_db
 import database.review_session_entries as review_session_entries_db
 from database.issues import upsert_issue
 from shared.utils.statuses import PipelineIssueType
-from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
+from core.changeset_lifecycle import UNPUBLISHED_IMPORT_MAX_AGE
+from lib.temporal.types import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
 from temporalio import activity
 
 # A run that dies before send_error uploads is expired to ERROR with no issue of its own.
@@ -61,3 +62,10 @@ async def supersede_stacked_requests_activity() -> None:
         activity.logger.info(
             "Superseded %d stacked request(s): %s", len(dismissed), dismissed
         )
+
+
+@activity.defn
+async def expire_stale_imports_activity() -> None:
+    expired = await dismissals_db.expire_stale_imports(UNPUBLISHED_IMPORT_MAX_AGE)
+    if expired:
+        activity.logger.info("Expired %d unpublished import(s): %s", len(expired), expired)

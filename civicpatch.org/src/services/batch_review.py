@@ -3,51 +3,34 @@
 Generic over batch kind: a sheet import and a state scrape both leave N unpublished requests,
 and reviewing forty towns at once is the same job either way.
 
-The people come back as a limited view — name, photo, seat. That is what makes forty towns
-scannable where a field-by-field diff is not, and it is a *scan*: the full card is still one
-click away for anything that looks wrong.
+Each town comes back as counts only; its card is loaded per page through `/reviews/cards`.
 """
 
 import asyncio
 import logging
 
-from database import changeset_batches
+from database import changeset_batches, dismissals
 from schemas.imports import (
     BatchReview,
     PublishResult,
     ReviewJurisdiction,
-    ReviewPerson,
 )
 from services import roster_edits
-from services.sinks.open_data import promote_batch_to_reviewed
+from services.review_proposal import proposals_for_requests
 from services.roster import proposed_rosters
 from core.changeset_lifecycle import ChangesetState
+from core.roster_diff import count_changes, person_diffs
+from database.people import get_rosters_by_jurisdiction
+from shared.utils.statuses import DismissalReason
 
 logger = logging.getLogger(__name__)
-
-
-def _person(person: dict) -> ReviewPerson:
-    return ReviewPerson(
-        id=person.get("id", ""),
-        name=person.get("name", ""),
-        label=person.get("label") or "",
-        image=person.get("cdn_image") or person.get("image"),
-        urls=person.get("urls") or [],
-        phones=person.get("phones") or [],
-        emails=person.get("emails") or [],
-        start_date=person.get("start_date"),
-        end_date=person.get("end_date"),
-        role_id=person.get("role_id"),
-        meta_unmatched_text=person.get("meta_unmatched_text") or [],
-    )
 
 
 async def batch_review(batch_id: str) -> BatchReview | None:
     """Every jurisdiction the batch made a request for, with its people and current state.
 
-    Current state, not the state it was made in: between the run and somebody opening this, a
-    card may have been published or dismissed from the ordinary review queue — an import's
-    requests are ordinary review cards, not a private set.
+    Current state, not the state it was made in: since the run, a town may have been published
+    or dismissed here, superseded by a newer roster, or expired.
     """
     batch, items = await asyncio.gather(
         changeset_batches.get(batch_id), changeset_batches.items(batch_id)
@@ -60,7 +43,12 @@ async def batch_review(batch_id: str) -> BatchReview | None:
     # locality claiming "0 people", and reading the jurisdiction's live roster instead would
     # answer a different question: who is seated there now, including people no scrape in this
     # batch ever saw.
-    rosters = await proposed_rosters([item["changeset_id"] for item in items])
+    changeset_ids = [item["changeset_id"] for item in items]
+    rosters = await proposed_rosters(changeset_ids)
+    published, proposals = await asyncio.gather(
+        get_rosters_by_jurisdiction([item["jurisdiction_ocdid"] for item in items]),
+        proposals_for_requests(changeset_ids, rosters),
+    )
 
     return BatchReview(
         batch_id=batch["id"],
@@ -71,10 +59,14 @@ async def batch_review(batch_id: str) -> BatchReview | None:
                 name=item["name"] or item["jurisdiction_ocdid"],
                 changeset_id=item["changeset_id"],
                 changeset_state=item["changeset_state"],
-                people=[
-                    _person(person)
-                    for person in rosters.get(item["changeset_id"], [])
-                ],
+                people=len(rosters.get(item["changeset_id"], [])),
+                change_counts=count_changes(
+                    person_diffs(
+                        published.get(item["jurisdiction_ocdid"], []),
+                        rosters.get(item["changeset_id"], []),
+                    ),
+                    proposals.get(item["changeset_id"], []),
+                ),
             )
             for item in items
         ],
@@ -82,28 +74,26 @@ async def batch_review(batch_id: str) -> BatchReview | None:
 
 
 async def publish_selected(
-    batch_id: str, jurisdiction_ocdids: set[str], user_id: str
+    batch_id: str, changeset_ids: set[str], user_id: str
 ) -> list[PublishResult]:
-    """Publish the towns a reviewer picked, then mirror them all in one open-data commit.
+    """Publish the towns a reviewer picked. Open-data picks them up in its 5-minute sweep.
 
     Sequential and isolated: publishing is a transaction per jurisdiction, and one refusing —
     the supersede guard turns down a roster older than one already live — must not cost the
-    other thirty-nine theirs. The commit comes after, covering whichever ones got through,
-    because the reviewer published once and open-data should say so once.
+    other thirty-nine theirs.
 
-    Only pending ones. A town published from the ordinary queue since the page loaded is
-    already live, and re-publishing it would supersede itself for nothing.
+    Only open ones. A town decided since the page loaded — in another tab, or superseded — is
+    left as it is.
     """
     items = await changeset_batches.items(batch_id)
     wanted = [
         item
         for item in items
-        if item["jurisdiction_ocdid"] in jurisdiction_ocdids
+        if item["changeset_id"] in changeset_ids
         and item["changeset_state"] == ChangesetState.OPEN
     ]
 
     results = []
-    published: dict[str, str] = {}
     for item in wanted:
         try:
             await roster_edits.publish(
@@ -116,19 +106,33 @@ async def publish_selected(
             )
             results.append(
                 PublishResult(
+                    changeset_id=item["changeset_id"],
                     jurisdiction_ocdid=item["jurisdiction_ocdid"],
                     published=False,
                     error=str(e),
                 )
             )
             continue
-        published[item["changeset_id"]] = item["jurisdiction_ocdid"]
         results.append(
             PublishResult(
-                jurisdiction_ocdid=item["jurisdiction_ocdid"], published=True
+                changeset_id=item["changeset_id"],
+                jurisdiction_ocdid=item["jurisdiction_ocdid"],
+                published=True,
             )
         )
-
-    # Queued, so a slow or failed GitHub write cannot affect publishes that already committed.
-    await promote_batch_to_reviewed(batch_id, published)
     return results
+
+
+async def dismiss_selected(
+    batch_id: str, changeset_ids: set[str], user_id: str
+) -> list[str]:
+    """Reject the changesets a reviewer picked. Returns the ids dismissed — an open one in this
+    batch only, since one decided since the page loaded is already decided."""
+    items = await changeset_batches.items(batch_id)
+    wanted = [
+        item["changeset_id"]
+        for item in items
+        if item["changeset_id"] in changeset_ids
+        and item["changeset_state"] == ChangesetState.OPEN
+    ]
+    return await dismissals.dismiss_all(wanted, DismissalReason.REJECTED, user_id)

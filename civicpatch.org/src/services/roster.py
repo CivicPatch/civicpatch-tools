@@ -1,12 +1,13 @@
 import asyncio
 import logging
 
+from core.changeset_lifecycle import PARTIAL_KINDS
 from core.people_edits import source_values_overridden, with_asserted_values
-from core.people_roster import roster_from_sightings
+from core.people_roster import partial_roster, roster_from_sightings
 from database import assertions
 from database import changesets as changesets_db
 from database.database import get_pool
-from database.people import get_people_by_ids
+from database.people import get_people_by_ids, get_roster
 from database.roles import get_roles
 from database import posts as posts_db
 from database import source_records
@@ -87,16 +88,13 @@ async def proposed_roster_and_source_values(
             )
         )
     }
-    return (
-        await _one_post_each(
-            changeset_id,
-            [
-                with_asserted_values(person, asserted.get(person["id"], {}))
-                for person in roster
-            ],
-        ),
-        overridden,
-    )
+    people = [
+        with_asserted_values(person, asserted.get(person["id"], {})) for person in roster
+    ]
+    if await changesets_db.get_changeset_kind(changeset_id) in PARTIAL_KINDS:
+        published = await get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
+        people = partial_roster(people, published)
+    return await _one_post_each(changeset_id, people), overridden
 
 
 async def _one_post_each(changeset_id: str, people: list[dict]) -> list[dict]:
@@ -145,7 +143,15 @@ _ROSTER_CONCURRENCY = 4
 
 
 async def proposed_rosters(changeset_ids: list[str]) -> dict[str, list[dict]]:
-    """One roster per request, for a page of review cards.
+    """One roster per request, for a page of review cards."""
+    both = await proposed_rosters_and_source_values(changeset_ids)
+    return {changeset_id: roster for changeset_id, (roster, _) in both.items()}
+
+
+async def proposed_rosters_and_source_values(
+    changeset_ids: list[str],
+) -> dict[str, tuple[list[dict], dict[str, dict]]]:
+    """`proposed_roster_and_source_values` for a page of review cards.
 
     Derived per request rather than in one query: a roster is Python over that scrape's own
     sightings, so there is nothing to batch.
@@ -155,11 +161,11 @@ async def proposed_rosters(changeset_ids: list[str]) -> dict[str, list[dict]]:
     ocdids = await changesets_db.jurisdictions_for_changesets(changeset_ids)
     limit = asyncio.Semaphore(_ROSTER_CONCURRENCY)
 
-    async def one(changeset_id: str, ocdid: str) -> list[dict]:
+    async def one(changeset_id: str, ocdid: str) -> tuple[list[dict], dict[str, dict]]:
         async with limit:
-            return await proposed_roster(changeset_id, ocdid)
+            return await proposed_roster_and_source_values(changeset_id, ocdid)
 
-    rosters = await asyncio.gather(
+    results = await asyncio.gather(
         *[one(changeset_id, ocdid) for changeset_id, ocdid in ocdids.items()]
     )
-    return dict(zip(ocdids, rosters))
+    return dict(zip(ocdids, results))

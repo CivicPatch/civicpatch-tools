@@ -262,7 +262,7 @@ button:not(.btn-ghost):not(.profile-modal__tab):not(.secondary):not(.role-chip):
   --control-border: var(--action);
   --control-text: var(--action);
 }
-button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(.role-chip):not(
+button:not(.destructive):not(.btn-ghost):not(.role-chip):not(
     .profile-modal__tab
   ):not(.secondary):hover,
 [type="submit"]:not(.profile-modal__tab):hover,
@@ -271,7 +271,7 @@ button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(.role-chip
   --control-border: var(--action-hover);
   --control-text: var(--action-text);
 }
-button:not(.destructive):not(.diff-panel__toggle):not(.btn-ghost):not(.role-chip):active,
+button:not(.destructive):not(.btn-ghost):not(.role-chip):active,
 [type="submit"]:active,
 [type="button"]:not(.btn-ghost):not(.role-chip):active {
   --control-bg: var(--action-hover);

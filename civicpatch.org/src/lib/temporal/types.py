@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import timedelta
 from enum import StrEnum
 
 # Every Temporal identifier lives here because this module imports nothing. Anything that needs
@@ -12,6 +13,10 @@ SINKS_TASK_QUEUE = "civicpatch-sinks"  # outbound: the sheet, open-data, parquet
 CLEANUP_TASK_QUEUE = "civicpatch-cleanup"  # retiring work time or a newer arrival made irrelevant
 PIPELINE_RUNS_TASK_QUEUE = "civicpatch-pipeline-runs"  # dispatching and polling scrape runs
 MAPS_TASK_QUEUE = "civicpatch-maps"  # building and uploading pmtiles
+
+# Maximum wall-clock time for a single people-collector workflow execution.
+# Covers the full run including any retry after human_approval.
+PEOPLE_COLLECTOR_EXECUTION_TIMEOUT = timedelta(hours=2)
 
 # The whitelist. Running work on any other queue is work whose worker is gone: nothing polls it,
 # and `terminate_undeclared_workflows` is scoped per queue, so nothing sweeps it either. Dropping

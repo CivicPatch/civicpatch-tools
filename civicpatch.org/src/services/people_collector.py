@@ -129,7 +129,7 @@ async def _publish_if_nothing_to_review(
     if await has_pending_issues(changeset_id):
         return
     summary = await review_summary_for_changeset(changeset_id)
-    if summary.get("issues"):
+    if summary.issues:
         return
     await roster_edits.publish(
         changeset_id, jurisdiction_ocdid, None, resolved_by_user_id=None

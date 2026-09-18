@@ -7,6 +7,7 @@ from unittest.mock import AsyncMock, patch
 
 from schemas.common import Identity, UserRole
 from shared.schemas import Post
+from shared.utils.statuses import ChangesetKind
 from lib.auth import get_optional_user
 from routers.api import review_actions as review_actions_router
 from routers.api import review_cards as review_cards_router
@@ -77,11 +78,6 @@ def test_get_pull_requests_with_data_returns_paginated(client):
             new_callable=AsyncMock,
             return_value=([], 0, 0),
         ),
-        patch(
-            "database.people.get_people_by_jurisdictions",
-            new_callable=AsyncMock,
-            return_value={},
-        ),
     ):
         response = client.get("/pull_requests/with-data")
 
@@ -144,6 +140,7 @@ def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[]),
+        patch("services.roster_edits.get_changeset_kind", new_callable=AsyncMock, return_value=ChangesetKind.SCRAPE),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[]),
     ):
         response = client.post(
@@ -185,6 +182,7 @@ def test_publish_returns_200_and_queues_no_merge(client):
     with (
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock) as mock_resolve,
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
+        patch("services.roster_edits.get_changeset_kind", new_callable=AsyncMock, return_value=ChangesetKind.SCRAPE),
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
@@ -225,6 +223,7 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
         patch("services.activity.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
+        patch("services.roster_edits.get_changeset_kind", new_callable=AsyncMock, return_value=ChangesetKind.SCRAPE),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/publish",
@@ -621,6 +620,7 @@ def test_publish_allows_default_role():
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch("services.roster_edits.publish_people", new_callable=AsyncMock),
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch("services.roster_edits.get_changeset_kind", new_callable=AsyncMock, return_value=ChangesetKind.SCRAPE),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
         response = client.post(
@@ -748,7 +748,7 @@ def test_publishing_a_superseded_roster_is_a_409_not_a_500(client):
     with (
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch(
-            "routers.api.review_actions.roster_edits.publish",
+            "routers.api.review_actions.roster_edits.publish_from_review",
             new_callable=AsyncMock,
             side_effect=SupersededRoster("A newer roster was already published"),
         ),
@@ -760,3 +760,81 @@ def test_publishing_a_superseded_roster_is_a_409_not_a_500(client):
 
     assert response.status_code == 409
     assert "newer roster" in response.json()["detail"]
+
+
+@pytest.mark.unit
+def test_a_sheet_import_is_not_published_from_a_review_card(client):
+    """It is out of the pool, so only a deep link reaches this — and it is still refused."""
+    with (
+        patch("services.roster_edits.get_changeset_kind", new_callable=AsyncMock, return_value=ChangesetKind.SHEET_IMPORT),
+        patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
+    ):
+        response = client.post(
+            f"/pull_requests/{TEST_CHANGESET_ID}/publish",
+            json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID},
+        )
+
+    assert response.status_code == 409
+    mock_publish.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_publishing_a_selection_answers_per_card():
+    client = _client_as(_user_at(UserRole.CONTRIBUTORS))
+    with patch(
+        "routers.api.review_actions.bulk_review_service.publish_selected",
+        new_callable=AsyncMock,
+        return_value=[],
+    ) as publish:
+        response = client.post(
+            "/pull_requests/publish", json={"changeset_ids": [TEST_CHANGESET_ID]}
+        )
+
+    assert response.status_code == 200
+    assert response.json() == {"data": []}
+    publish.assert_awaited_once_with(
+        [TEST_CHANGESET_ID], "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    )
+
+
+@pytest.mark.unit
+def test_dismissing_a_selection_answers_with_what_was_dismissed():
+    client = _client_as(_user_at(UserRole.CONTRIBUTORS))
+    with patch(
+        "routers.api.review_actions.bulk_review_service.dismiss_selected",
+        new_callable=AsyncMock,
+        return_value=[TEST_CHANGESET_ID],
+    ):
+        response = client.post(
+            "/pull_requests/dismiss", json={"changeset_ids": [TEST_CHANGESET_ID]}
+        )
+
+    assert response.status_code == 200
+    assert response.json() == {"data": [TEST_CHANGESET_ID]}
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("action", ["publish", "dismiss"])
+def test_a_default_user_cannot_act_on_a_selection(action):
+    """The Queue is contributor-level; publishing one card you are reviewing is not."""
+    client = _client_as(_user_at(UserRole.DEFAULT))
+    response = client.post(
+        f"/pull_requests/{action}", json={"changeset_ids": [TEST_CHANGESET_ID]}
+    )
+    assert response.status_code in (401, 403)
+
+
+@pytest.mark.unit
+def test_cards_are_loaded_for_the_ids_asked_for(client):
+    with patch(
+        "routers.api.review_cards.review_cards_service.with_card_data",
+        new_callable=AsyncMock,
+        return_value=[],
+    ) as load:
+        response = client.get(
+            "/pull_requests/cards", params=[("changeset_ids", "a"), ("changeset_ids", "b")]
+        )
+
+    assert response.status_code == 200
+    assert response.json() == {"data": []}
+    load.assert_awaited_once_with(["a", "b"])

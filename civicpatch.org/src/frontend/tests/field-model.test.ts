@@ -807,8 +807,15 @@ describe("fieldError — phones", () => {
 describe("fieldError — a post nobody has answered", () => {
   const post = { key: "post_id", label: "Post", type: "text" } as const;
 
-  it("asks for a post when there are no labels to derive one from", () =>
-    expect(fieldError(post, { post_id: null, labels: [] })).toBe("Choose a post"));
+  it("asks a hand-added person for a post", () =>
+    expect(fieldError(post, { post_id: null, labels: [], _isNew: true } as any)).toBe(
+      "Choose a post",
+    ));
+
+  // An import's `inherit` that found nobody holding a post: listed by the source, labels
+  // resolved to nothing. Unmatched, like a label naming no role — not a question owed an answer.
+  it("does not ask a sourced person whose labels resolved to nothing", () =>
+    expect(fieldError(post, { post_id: null, labels: [] })).toBeNull());
 
   // This test verified that a scraped label naming no role ("Deputy Vice Chair" matching
   // nothing) blocked publish the same as a truly unanswered post. It now verifies the

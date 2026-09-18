@@ -21,6 +21,7 @@ from lib.temporal.schedules import terminate_undeclared_workflows
 from lib.temporal.types import CLEANUP_TASK_QUEUE
 from routers.temporal.cleanup_activities import (
     cleanup_stale_review_entries_activity,
+    expire_stale_imports_activity,
     expire_stale_pipeline_runs_activity,
     supersede_stacked_requests_activity,
 )
@@ -32,6 +33,7 @@ WORKFLOWS = [CleanupPipelineRunsWorkflow, CleanupReviewSessionsWorkflow]
 
 ACTIVITIES = [
     cleanup_stale_review_entries_activity,
+    expire_stale_imports_activity,
     expire_stale_pipeline_runs_activity,
     supersede_stacked_requests_activity,
 ]

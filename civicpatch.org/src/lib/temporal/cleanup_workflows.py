@@ -11,6 +11,7 @@ from temporalio import workflow
 with workflow.unsafe.imports_passed_through():
     from routers.temporal.cleanup_activities import (
         cleanup_stale_review_entries_activity,
+        expire_stale_imports_activity,
         expire_stale_pipeline_runs_activity,
         supersede_stacked_requests_activity,
     )
@@ -36,5 +37,9 @@ class CleanupReviewSessionsWorkflow:
         )
         await workflow.execute_activity(
             supersede_stacked_requests_activity,
+            start_to_close_timeout=timedelta(minutes=5),
+        )
+        await workflow.execute_activity(
+            expire_stale_imports_activity,
             start_to_close_timeout=timedelta(minutes=5),
         )

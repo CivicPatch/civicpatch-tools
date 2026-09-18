@@ -22,11 +22,12 @@ import lib.github.git_data as git_data
 import shared.utils.id_utils
 from core.membership_label import derive_post_label
 from core.output_hash import hash_text
+from core.sinks.open_data_commit import commit_body
 from database import output_hashes as output_hashes_db
 from database.people import get_roster
-from database.publications import record_change_url
+from database.publications import publish_attributions, record_change_url
 from database.roles import get_roles
-from lib.temporal.types import OpenDataBatchCommitRequest, OpenDataCommitItem
+from lib.temporal.types import OpenDataCommitItem
 from shared.schemas import DerivedPerson, OpenStatesPersonRecord, RoleConfig
 from shared.utils.people_utils import person_sort_key
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
@@ -156,12 +157,23 @@ async def commit_rendered_files(
     if not pending:
         return None
 
-    # The count comes from `pending`, not from the caller: the caller knows what it selected,
-    # and the gate is what decides how much of that is actually a change.
+    # The count and the body come from `pending`, not from the caller: the caller knows what it
+    # selected, and the gate is what decides how much of that is actually a change.
+    committed = {
+        item.jurisdiction_ocdid: item.changeset_ids
+        for item in items
+        if item.file_path in pending
+    }
+    attributions = await publish_attributions(
+        [changeset_id for ids in committed.values() for changeset_id in ids]
+    )
     commit_url = await git_data.commit_github_files(
         branch_name=github_service.DEFAULT_BRANCH,
         contents=pending,
-        commit_message=f"{commit_message} ({len(pending)} jurisdiction(s))",
+        commit_message=(
+            f"{commit_message} ({len(pending)} jurisdiction(s))\n\n"
+            f"{commit_body(committed, attributions)}"
+        ),
     )
     if not commit_url:
         raise OpenDataWriteRejected(f"open-data refused {len(pending)} file(s)")
@@ -180,26 +192,3 @@ async def commit_rendered_files(
 def reviewed_file_path(jurisdiction_ocdid: str) -> str:
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
     return f"data/{folder}.yml"
-
-
-async def promote_batch_to_reviewed(batch_id: str, published: dict[str, str]) -> None:
-    # avoid circular import: lib.temporal.workflows imports the activities module, which
-    # imports this one, so importing the client at module scope closes the loop
-    import lib.temporal.client as temporal_client
-
-    if not published:
-        return
-    await temporal_client.enqueue_write_open_data_batch(
-        OpenDataBatchCommitRequest(
-            batch_id=batch_id,
-            items=[
-                OpenDataCommitItem(
-                    file_path=reviewed_file_path(jurisdiction_ocdid),
-                    changeset_ids=[changeset_id],
-                    jurisdiction_ocdid=jurisdiction_ocdid,
-                )
-                for changeset_id, jurisdiction_ocdid in sorted(published.items())
-            ],
-            commit_message=f"Publish ({batch_id})",
-        )
-    )

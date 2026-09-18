@@ -39,20 +39,11 @@ export type ImportProgress = {
   finished_at: string | null;
 };
 
-// Mirrors schemas/imports.py: ReviewPerson. Everything the sheet supplied, as it will be
-// written, plus whether the label resolved to a role.
-export type ReviewPerson = {
-  id: string;
-  name: string;
-  label: string;
-  image: string | null;
-  urls: string[];
-  phones: string[];
-  emails: string[];
-  start_date: string | null;
-  end_date: string | null;
-  role_id: string | null;
-  meta_unmatched_text: string[];
+// Mirrors core/roster_diff.py: ChangeCounts.
+export type ChangeCounts = {
+  added_people: number;
+  changed_people: number;
+  absent_memberships: number;
 };
 
 export type ReviewJurisdiction = {
@@ -60,7 +51,8 @@ export type ReviewJurisdiction = {
   name: string;
   changeset_id: string;
   changeset_state: string;
-  people: ReviewPerson[];
+  people: number;
+  change_counts: ChangeCounts;
 };
 
 export type BatchReview = {
@@ -70,6 +62,7 @@ export type BatchReview = {
 };
 
 export type PublishResult = {
+  changeset_id: string;
   jurisdiction_ocdid: string;
   published: boolean;
   error: string | null;

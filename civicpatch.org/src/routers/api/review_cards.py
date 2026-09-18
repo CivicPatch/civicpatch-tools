@@ -20,7 +20,6 @@ import shared.utils.data_path_utils
 import shared.utils.id_utils
 import shared.utils.url_utils
 from core.people_edits import PeopleValidationError, PersonPatch
-from database.people import DEFAULT_VIEW, VIEWS
 from fastapi import (
     APIRouter,
     Depends,
@@ -40,7 +39,7 @@ from services.review_proposal import (
     proposals_for_requests,
     review_summary_for_changeset,
 )
-import services.roster as services_roster
+import services.review_cards as review_cards_service
 from services.review_sources import build_sources
 from services.roster import proposed_roster, proposed_roster_and_source_values
 
@@ -154,7 +153,6 @@ def get_router(api_key_header):
         per_page: int = 10,
         state_code: str | None = None,
         jurisdiction_ocdid: str | None = None,
-        view: str = Query(default=DEFAULT_VIEW, pattern=f"^({'|'.join(VIEWS)})$"),
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         (
@@ -168,52 +166,13 @@ def get_router(api_key_header):
             per_page=per_page,
         )
         total_pages = (total + per_page - 1) // per_page
-
-        jurisdiction_ocdids = list(
-            {
-                pr["jurisdiction"]["ocdid"]
-                for pr in paged_pull_requests
-                if pr.get("jurisdiction")
-            }
+        cards = await review_cards_service.with_card_data(
+            [pr["changeset_id"] for pr in paged_pull_requests]
         )
-        changeset_ids = list({pr["changeset_id"] for pr in paged_pull_requests})
-        published, rosters, proposals = await asyncio.gather(
-            database.people.get_people_by_jurisdictions(jurisdiction_ocdids, view=view),
-            services_roster.proposed_rosters(changeset_ids),
-            # What each scrape would actually change. `existing` and `proposed` are two rosters
-            # a reader has to diff by eye; this is the diff.
-            proposals_for_requests(changeset_ids),
-        )
-
-        results = []
-        for pr in paged_pull_requests:
-            proposed = [
-                database.people.projected(person, view)
-                for person in rosters.get(pr["changeset_id"], [])
-            ]
-            unique_source_urls = list(
-                {
-                    url
-                    for person in proposed
-                    for url in (person.get("source_urls") or [])
-                }
-            )
-            results.append(
-                {
-                    **pr,
-                    "existing": published.get(pr["jurisdiction"]["ocdid"], []),
-                    "proposed": proposed,
-                    "changes": [
-                        change.model_dump()
-                        for change in proposals.get(pr["changeset_id"], [])
-                    ],
-                    "sources": build_sources(
-                        pr["changeset_id"],
-                        pr["jurisdiction"]["ocdid"],
-                        unique_source_urls,
-                    ),
-                }
-            )
+        # Flat, as this endpoint has always answered: the listing row with the card beside it.
+        results = [
+            {**pr, **card.model_dump()} for pr, card in zip(paged_pull_requests, cards)
+        ]
         return {
             "data": results,
             "total": total,
@@ -225,6 +184,14 @@ def get_router(api_key_header):
                 "with_issues": with_issues,
             },
         }
+
+    # -- Any cards, by changeset: what a page listing its own selection loads ---
+    @router.get("/cards", summary="Review cards for the given changesets, in that order")
+    async def get_cards_endpoint(
+        changeset_ids: List[str] = Query(...),
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+    ):
+        return {"data": await review_cards_service.with_card_data(changeset_ids)}
 
     # -- One card by deep link, the shape a review session navigates ---
     @router.get("/by-request/{changeset_id}")

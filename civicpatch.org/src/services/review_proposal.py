@@ -8,16 +8,10 @@ Nothing is written. A post can be proposed; a membership is only true once accep
 
 import asyncio
 
-from core.people_edits import SURFACED_FIELDS
-
 from core.membership_proposal import ExistingMembership, ProposedChange, propose
 from core.post_derivation import RosterEntry, derived_posts
-from core.post_issues import (
-    append_post_issues,
-    moved_person_issues,
-    organizations_nobody_was_found_in,
-    unverified_post_issues,
-)
+from core.post_issues import unverified_post_issues
+from core.review_summary import ReviewSummary, build_card_summary
 from database import assertions
 from database import changesets as changesets_db
 from database import memberships as memberships_db
@@ -29,54 +23,55 @@ from database.database import get_pool
 from database.roles import get_roles
 from schemas.assertions import EntityType
 from services.publish import chosen_posts, picks_in
-from services.roster import proposed_roster, proposed_rosters
-from shared.schemas import POST_FIELD, Issue, Person, RoleConfig
+from services.roster import proposed_rosters
+from shared.schemas import Issue, RoleConfig
 from shared.utils.config_utils import get_unique_roles
-from shared.utils.name_utils import person_list_to_identities
-from shared.utils.review_utils import ReviewInputs, build_review_summary
 from shared.utils.taxonomy import build_taxonomy
 
 
-async def review_summary_for_changeset(changeset_id: str) -> dict:
-
+async def review_summary_for_changeset(changeset_id: str) -> ReviewSummary:
     jurisdiction_ocdid = await changesets_db.get_changeset_jurisdiction(changeset_id)
     if not jurisdiction_ocdid:
-        return {}
+        return ReviewSummary()
+    rosters = await proposed_rosters([changeset_id])
+    changes = await proposals_for_requests([changeset_id], rosters)
+    published = await people_db.get_rosters_by_jurisdiction([jurisdiction_ocdid])
+    summaries = await review_summaries([changeset_id], published, rosters, changes)
+    return summaries[changeset_id]
 
-    published, proposed, roles = await asyncio.gather(
-        people_db.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
-        proposed_roster(changeset_id, jurisdiction_ocdid),
+
+async def review_summaries(
+    changeset_ids: list[str],
+    published: dict[str, list[dict]],
+    rosters: dict[str, list[dict]],
+    changes: dict[str, list[ProposedChange]],
+) -> dict[str, ReviewSummary]:
+    """The card summary for each changeset, with one read of each kind for all of them.
+
+    `published` is keyed by jurisdiction, as `people.get_rosters_by_jurisdiction` returns it.
+    """
+    if not changeset_ids:
+        return {}
+    ocdids = await changesets_db.jurisdictions_for_changesets(changeset_ids)
+    jurisdictions = list(set(ocdids.values()))
+    every_change = [change for listed in changes.values() for change in listed]
+    roles, unverified, names = await asyncio.gather(
         get_roles(),
+        _unverified_post_issues(jurisdictions),
+        _organization_names(every_change),
     )
-    summary = build_review_summary(
-        published,
-        proposed,
-        ReviewInputs(
-            identities=person_list_to_identities([Person(**p) for p in published]),
-            unique_roles=get_unique_roles(RoleConfig(roles=roles)),
-            changed_field_names=list(SURFACED_FIELDS),
-        ),
-    )
-    summary["issues"] = [issue.model_dump() for issue in summary["issues"]]
-    posts = await _unverified_post_issues(jurisdiction_ocdid)
-    changes = (
-        await proposals_for_requests([changeset_id], {changeset_id: proposed})
-    ).get(changeset_id, [])
-    # `proposed` carries the picks in the organizations this changeset read, so a `post_id` here
-    # is one that applies to the review in front of the reviewer.
-    picked = {
-        person["id"]: post_id
-        for person in proposed
-        if (post_id := person.get(POST_FIELD))
+    unique_roles = get_unique_roles(RoleConfig(roles=roles))
+    return {
+        changeset_id: build_card_summary(
+            published.get(ocdid, []),
+            rosters.get(changeset_id, []),
+            changes.get(changeset_id, []),
+            unique_roles,
+            unverified.get(ocdid, []),
+            names,
+        )
+        for changeset_id, ocdid in ocdids.items()
     }
-    return append_post_issues(
-        summary,
-        [
-            *posts,
-            *moved_person_issues(changes, picked),
-            *organizations_nobody_was_found_in(changes, await _organization_names(changes)),
-        ],
-    )
 
 
 async def _organization_names(changes: list[ProposedChange]) -> dict[str, str]:
@@ -89,13 +84,11 @@ async def _organization_names(changes: list[ProposedChange]) -> dict[str, str]:
         return await organizations_db.names(cur, ids)
 
 
-async def _unverified_post_issues(jurisdiction_ocdid: str) -> list[Issue]:
+async def _unverified_post_issues(jurisdiction_ocdids: list[str]) -> dict[str, list[Issue]]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        unverified = await posts_db.unverified_by_jurisdiction(
-            cur, [jurisdiction_ocdid]
-        )
-    return unverified_post_issues(unverified[jurisdiction_ocdid])
+        unverified = await posts_db.unverified_by_jurisdiction(cur, jurisdiction_ocdids)
+    return {ocdid: unverified_post_issues(posts) for ocdid, posts in unverified.items()}
 
 
 async def proposals_for_requests(

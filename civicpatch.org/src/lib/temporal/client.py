@@ -14,11 +14,11 @@ from lib.temporal.sink_workflows import (
     WriteSheetRosterWorkflow,
 )
 from lib.temporal.types import (
+    PEOPLE_COLLECTOR_EXECUTION_TIMEOUT,
     PIPELINE_RUNS_TASK_QUEUE,
     SINKS_TASK_QUEUE,
     OpenDataBatchCommitRequest,
 )
-from shared.utils.timeouts import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT
 from environment import get_env_vars
 
 _client: Client | None = None

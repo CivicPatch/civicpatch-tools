@@ -165,6 +165,7 @@ class DismissalReason(StrEnum):
     CANCELLED = "cancelled"  # somebody stopped the run before it produced one
     ERRORED = "errored"  # the run ended without a roster; nobody decided
     SUPERSEDED = "superseded"  # a newer roster for this jurisdiction won
+    EXPIRED = "expired"  # a sheet import nobody decided within a week
 
 
 class ActivityType(StrEnum):
@@ -194,8 +195,8 @@ class ActivityType(StrEnum):
     # only when the run succeeded far enough to mint one — a failed or cancelled run has none.
     PIPELINE_RUN_START = "pipeline_run_start"
     PIPELINE_RUN_END = "pipeline_run_end"
-    # A curated sheet's rows landing in the review queue — the sheet-import counterpart to a
-    # pipeline run raising a card. Publishing that card is a separate, later `PUBLISH_REVIEW`.
+    # A curated sheet's rows landing on the import's batch page, never the review pool.
+    # Publishing it there is a separate, later `PUBLISH_REVIEW`.
     SHEET_IMPORT = "sheet_import"
 
 

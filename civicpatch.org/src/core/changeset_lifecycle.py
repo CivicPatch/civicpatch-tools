@@ -21,6 +21,7 @@ they join other tables, so they are eligibility predicates, not states of a chan
 """
 
 from dataclasses import dataclass
+from datetime import timedelta
 from enum import StrEnum
 
 from shared.utils.statuses import ChangesetKind
@@ -94,6 +95,18 @@ INITIAL_STATE: dict[ChangesetKind, ChangesetState] = {
     ChangesetKind.PEOPLE_EDIT: ChangesetState.PUBLISHED,
     ChangesetKind.JURISDICTION_EDIT: ChangesetState.PUBLISHED,
 }
+
+
+# The kinds the review pool offers and the review card may publish. A sheet import is decided on
+# its own batch page only, so it is not one of them.
+REVIEW_POOL_KINDS: frozenset[ChangesetKind] = frozenset({ChangesetKind.SCRAPE})
+
+# Kinds whose sightings state only the fields they fill: a blank cell means "no information",
+# not "clear it", so the proposal keeps the published value. A scrape states a whole page.
+PARTIAL_KINDS: frozenset[ChangesetKind] = frozenset({ChangesetKind.SHEET_IMPORT})
+
+# How long a sheet import may wait on its batch page before the reaper dismisses it as expired.
+UNPUBLISHED_IMPORT_MAX_AGE = timedelta(days=7)
 
 
 def advance(state: ChangesetState, event: ChangesetEvent) -> ChangesetState | None:

@@ -27,7 +27,7 @@ JURISDICTION = "jurisdiction_ocdid"
 
 # Written by the import, never by a volunteer. Every row gets a value on every run: a row that
 # failed last time and is fine now must not keep last time's message.
-STATUS_COLUMNS = ("status", "error", "last_import_at")
+STATUS_COLUMNS = ("status", "error", "last_import_at", "note")
 
 # What a row's `status` can say.
 IMPORTED = "imported"
@@ -47,18 +47,10 @@ class ImportStatus(StrEnum):
     UNCHANGED = "unchanged"
 
 
-_REQUIRED = (JURISDICTION, "name", "source_url", "label")
-_OPTIONAL = ("email", "phone", "image")
-
-# `label` is required so a blank cell is a caught mistake, not silent — a source with no title
-# says so deliberately, with `inherit`, rather than leaving the cell empty.
-#
-# Cannot be resolved here — it needs the person's current open membership, a database read.
-# `services.sheet_import` looks it up by name and substitutes the real label text before
-# parsing continues, so everything downstream sees this exactly as if the source had sent it.
-# A name holding nothing open degrades to blank — the same shape a blank cell would be, if
-# blank were still allowed — so there is no separate "no title at all" sentinel to also support.
-INHERIT = "inherit"
+_REQUIRED = (JURISDICTION, "name", "source_url")
+# A blank cell states nothing: the published value is kept (`people_roster.partial_roster`). A blank
+# `label` keeps the person's current post; for someone new it derives to unmatched.
+_OPTIONAL = ("label", "email", "phone", "image")
 
 
 class RowError(BaseModel):
@@ -210,11 +202,6 @@ def _row_errors(row: dict, line: int) -> list[RowError]:
     return errors
 
 
-def _label(value: str) -> str:
-    """`inherit` passes through verbatim; resolving it is `services.sheet_import`'s job."""
-    return INHERIT if value.lower() == INHERIT else value
-
-
 def _import_row(row: dict, line: int) -> ImportRow:
     return ImportRow(
         line=line,
@@ -222,7 +209,7 @@ def _import_row(row: dict, line: int) -> ImportRow:
         status=_clean(row.get("status")),
         sighting=Sighting(
             name=_clean(row["name"]),
-            label=_label(_clean(row["label"])),
+            label=_clean(row.get("label")),
             source_url=_clean(row["source_url"]),
             email=_optional(row.get("email")),
             phone=_optional(row.get("phone")),
@@ -232,12 +219,12 @@ def _import_row(row: dict, line: int) -> ImportRow:
 
 
 def _duplicate_errors(rows: list[ImportRow]) -> list[RowError]:
-    """`memberships` allows one open row per (person, organization) and a jurisdiction has one
-    organization, so two rows for one person is unrepresentable."""
+    """`memberships` allows one open row per (person, organization) and an import writes only to
+    the jurisdiction's default organization, so two rows for one person is unrepresentable."""
     seen: dict[tuple, int] = {}
     errors = []
     for row in rows:
-        key = (row.jurisdiction_ocdid, row.sighting.name.lower())
+        key = row_key(row.jurisdiction_ocdid, row.sighting.name)
         if key in seen:
             errors.append(
                 RowError(
@@ -250,6 +237,12 @@ def _duplicate_errors(rows: list[ImportRow]) -> list[RowError]:
         else:
             seen[key] = row.line
     return errors
+
+
+def row_key(jurisdiction_ocdid: str, name: str) -> tuple[str, str]:
+    """A row's identity within one read: `_duplicate_errors` makes it unique. Not the line —
+    write-back re-reads the tab, and a row inserted since would shift every line."""
+    return (_clean(jurisdiction_ocdid), _clean(name).lower())
 
 
 def already_handled(rows: list[ImportRow]) -> bool:
@@ -266,14 +259,37 @@ def rows_by_jurisdiction(rows: list[ImportRow]) -> dict[str, list[ImportRow]]:
 # ── Columns out ──────────────────────────────────────────────────────────────
 
 
+def _note_column(
+    raw_rows: list[dict],
+    imported: set[str],
+    notes: dict[tuple[str, str], str],
+    dismissed: set[str],
+) -> list[str]:
+    """A town imported this run gets fresh notes. Otherwise the note stays until the town's
+    last import is dismissed, when it no longer describes anything that can happen."""
+    column = []
+    for row in raw_rows:
+        key = row_key(row.get(JURISDICTION) or "", row.get("name") or "")
+        jurisdiction = key[0]
+        if jurisdiction in imported:
+            column.append(notes.get(key, ""))
+        elif jurisdiction in dismissed:
+            column.append("")
+        else:
+            column.append(_clean(row.get("note")))
+    return column
+
+
 def roster_columns(
     raw_rows: list[dict],
     rows: list[ImportRow],
     errors: list[RowError],
     imported: set[str],
     stamp: str,
+    notes: dict[tuple[str, str], str],
+    dismissed: set[str],
 ) -> dict[str, list]:
-    """`status`, `error` and `last_import_at` for every row of the roster tab.
+    """`status`, `error`, `last_import_at` and `note` for every row of the roster tab.
 
     Every row, not only the ones that changed: a row that failed last run and is fine now needs
     its error cleared, and leaving it would have the volunteer chasing a problem they fixed.
@@ -331,4 +347,5 @@ def roster_columns(
         "status": status,
         "error": message,
         "last_import_at": stamps,
+        "note": _note_column(raw_rows, imported, notes, dismissed),
     }

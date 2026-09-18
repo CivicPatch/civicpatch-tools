@@ -192,8 +192,8 @@ async def items(batch_id: str) -> list[dict]:
     """The batch's requests with their *current* review state, not the state they were made in.
 
     That is the whole reason `changesets.batch_id` exists rather than a stored result: between the
-    import and somebody opening this page, a card may have been published or dismissed from the
-    ordinary review queue, which an import-time snapshot would never know.
+    import and somebody opening this page, a town may have been published or dismissed here,
+    superseded by a newer roster, or expired, which an import-time snapshot would never know.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

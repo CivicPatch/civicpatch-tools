@@ -10,8 +10,8 @@ from lib.auth import require_route_access
 from lib.sheets import SheetsNotConfigured
 from schemas.common import Identity, RouteCategory, UserRole
 from schemas.imports import (
+    ChangesetSelection,
     ImportProgress,
-    PublishSelectionRequest,
     StartImportResponse,
 )
 from schemas.pagination import pagination_offset, pagination_total_pages
@@ -167,7 +167,7 @@ def get_router() -> APIRouter:
     @router.post("/{batch_id}/publish")
     async def publish_batch_endpoint(
         batch_id: str,
-        body: PublishSelectionRequest,
+        body: ChangesetSelection,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
@@ -177,9 +177,25 @@ def get_router() -> APIRouter:
         if not user.user_id:
             return JSONResponse({"error": "User ID not available"}, status_code=401)
         results = await batch_review_service.publish_selected(
-            batch_id, set(body.jurisdiction_ocdids), user.user_id
+            batch_id, set(body.changeset_ids), user.user_id
         )
         return {"data": results}
+
+    @router.post("/{batch_id}/dismiss")
+    async def dismiss_batch_endpoint(
+        batch_id: str,
+        body: ChangesetSelection,
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+        ),
+    ):
+        """Reject the towns a reviewer selected. Answers with the ones actually dismissed."""
+        if not user.user_id:
+            return JSONResponse({"error": "User ID not available"}, status_code=401)
+        dismissed = await batch_review_service.dismiss_selected(
+            batch_id, set(body.changeset_ids), user.user_id
+        )
+        return {"data": dismissed}
 
     return router
 
