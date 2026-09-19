@@ -325,6 +325,7 @@ function BatchReviewPanel(host: BatchReviewHost) {
       Review and publish <span>[${selected.length}]</span>
     </h2>
     ${importedNote}
+    ${errorBlock}
     <div class="import-toolbar">
       <label class="import-pick">
         <input
@@ -363,7 +364,6 @@ function BatchReviewPanel(host: BatchReviewHost) {
       </label>
     </div>
 
-    ${errorBlock}
     ${shown.length || showErrors
       ? null
       : html`<p class="import-hint">No localities match this filter.</p>`}
