@@ -4,9 +4,9 @@ import { html } from "lit-html";
 
 import { saveCadence, saveCaps } from "../../api.js";
 import { inputValue } from "../../components/fields/field-controls.js";
+import { stateNameForCode } from "../../components/ocdid-utils.js";
 import { hostDispatch } from "../../utils/host-dispatch.js";
-import { estimateMonthlyCost, type StateScrapePanel } from "./scrape-settings.js";
-import { formatUsd } from "../spend-page/spend.js";
+import { estimateMonthlyCost, formatUsd, type StateScrapePanel } from "./scrape-settings.js";
 
 export const SAVED_EVENT = "settings-saved";
 export const CANCEL_EVENT = "cancel";
@@ -51,8 +51,8 @@ function ScrapeSettingsModal(host: Host) {
   const fields = html`
     <div class="cs-settings-form">
       <label class="cs-settings-form__field">
-        <span>Cadence</span>
-        <span class="cs-settings-form__row">
+        <span class="cs-settings-form__label">Cadence</span>
+        <span class="cs-settings-form__control">
           every
           <input
             type="number"
@@ -61,56 +61,58 @@ function ScrapeSettingsModal(host: Host) {
             .value=${cadenceDays}
             @input=${(e: Event) => setCadenceDays(inputValue(e))}
           />
-          days, landing on
+          days
+        </span>
+      </label>
+      <label class="cs-settings-form__field">
+        <span class="cs-settings-form__label">Lands on</span>
+        <input type="date" .value=${anchor} @input=${(e: Event) => setAnchor(inputValue(e))} />
+      </label>
+      <p class="cs-settings-form__hint">
+        Blank cadence means manual: nothing runs on a schedule. The date picks the day in the
+        cycle a run lands on, not the day it starts.
+      </p>
+
+      <label class="cs-settings-form__field">
+        <span class="cs-settings-form__label">Per-run cap</span>
+        <span class="cs-settings-form__control">
+          $
           <input
-            type="date"
-            .value=${anchor}
-            @input=${(e: Event) => setAnchor(inputValue(e))}
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="default 0.05"
+            .value=${runCap}
+            @input=${(e: Event) => setRunCap(inputValue(e))}
+          />
+        </span>
+      </label>
+      <label class="cs-settings-form__field">
+        <span class="cs-settings-form__label">Monthly cap</span>
+        <span class="cs-settings-form__control">
+          $
+          <input
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="none"
+            .value=${monthlyCap}
+            @input=${(e: Event) => setMonthlyCap(inputValue(e))}
           />
         </span>
       </label>
       <p class="cs-settings-form__hint">
-        Leave the cadence blank for manual — no schedule, and this state's candidates never
-        drain on their own. The date picks which day the cadence lands on, not the day it
-        starts: Sep 1 at 30 days gives Sep 1, Oct 1, Nov 1 — and Aug 2 before that.
+        Blank means no cap. 0 means spend nothing, which stops the state.
       </p>
-
-            <label class="cs-settings-form__field">
-              <span>Per-run cap</span>
-              <input
-                type="number"
-                min="0"
-                step="0.01"
-                placeholder="inherit $0.05"
-                .value=${runCap}
-                @input=${(e: Event) => setRunCap(inputValue(e))}
-              />
-            </label>
-            <label class="cs-settings-form__field">
-              <span>Monthly cap</span>
-              <input
-                type="number"
-                min="0"
-                step="0.01"
-                placeholder="no cap"
-                .value=${monthlyCap}
-                @input=${(e: Event) => setMonthlyCap(inputValue(e))}
-              />
-            </label>
-            <p class="cs-settings-form__hint">
-              Blank means no cap. <strong>0 means spend nothing</strong>, which stops the state
-              rather than leaving it unlimited.
-            </p>
-
 
       ${estimate
         ? html`<p class="cs-settings-form__estimate">
-            About ${formatUsd(estimate.monthly_usd)} a month — ${estimate.passes_per_month}
+            About ${formatUsd(estimate.monthly_usd)} a month: ${estimate.passes_per_month}
             ${estimate.passes_per_month === 1 ? "pass" : "passes"} over
             ${panel.candidates_due} due, at ${formatUsd(estimate.per_run_usd)} each.
             ${estimate.over_cap
-              ? html`<strong>Over the ${formatUsd(panel.monthly_cap_usd ?? "0")} cap</strong> —
-                  the state will stop partway through a pass.`
+              ? html`<strong>Over the ${formatUsd(panel.monthly_cap_usd ?? "0")} cap,</strong>
+                  so the state will stop partway through a pass.`
               : ""}
           </p>`
         : ""}
@@ -127,7 +129,7 @@ function ScrapeSettingsModal(host: Host) {
 
   return html`
     <civ-modal
-      .title=${`${panel.state.toUpperCase()} scrape settings`}
+      .title=${`${stateNameForCode(panel.state) || panel.state.toUpperCase()} Settings`}
       .content=${fields}
       .footer=${footer}
       .modalProps=${{ open: true, onClose: handleCancel }}

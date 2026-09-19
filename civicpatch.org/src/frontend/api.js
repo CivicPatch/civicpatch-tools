@@ -1068,16 +1068,6 @@ export const fetchElections = async () => {
   return body.data;
 };
 
-export const fetchStateSpend = async (windowDays) => {
-  const res = await fetch(
-    `/api/v1/pipeline_runs/spend?window_days=${windowDays}`,
-    { credentials: "include" },
-  );
-  const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(parseSaveError(body, res.status));
-  return body.data;
-};
-
 const SCRAPE_SETTINGS_URL = `/api/v1/scrape_settings`;
 
 const scrapeSettingsRequest = async (path, options = {}) => {

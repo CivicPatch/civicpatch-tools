@@ -63,6 +63,8 @@ class StateScrapePanel(BaseModel):
     global_spent_this_month_usd: Decimal
     # Which cap is already reached, if either — `state_month`, `global_month`, or None.
     cap_reached: Optional[str] = None
+    # None means no runs this month, never a free one.
+    cost_per_run_this_month_usd: Optional[Decimal] = None
 
     # Runs that stopped at their per-run ceiling this month. One is noise; a third of the
     # state's runs means the cap is set below what its pages cost.
@@ -76,3 +78,7 @@ class GlobalScrapePanel(BaseModel):
     spent_this_month_usd: Decimal
     # SUM of every state's monthly cap. May exceed the cap above; the block says so.
     state_monthly_caps_usd: Decimal
+    # Month to date, every state. None means no runs to average, never a free or instant one.
+    cost_per_run_this_month_usd: Optional[Decimal] = None
+    seconds_per_run_this_month: Optional[int] = None
+    pipeline_run_concurrency: int

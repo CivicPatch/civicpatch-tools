@@ -81,7 +81,6 @@ export function overviewSection(): SectionNavItem[] {
 
 export function adminSection(permissions: object): SectionNavItem[] {
   const items: SectionNavItem[] = [{ label: "users", href: "/admin/users" }];
-  if (perm(permissions, "can_edit_spend")) items.push({ label: "spend", href: "/spend" });
   if (perm(permissions, "can_batch_scrape")) items.push({ label: "pipelines", href: "/pipelines" });
   if (perm(permissions, "can_view_issues_page")) items.push({ label: "issues", href: "/issues" });
   if (perm(permissions, "can_view_gallery_page")) items.push({ label: "components", href: "/gallery" });

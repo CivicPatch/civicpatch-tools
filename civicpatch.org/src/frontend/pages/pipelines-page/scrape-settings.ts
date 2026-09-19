@@ -1,6 +1,10 @@
 // The cadence and budget block, and the pure formatting it needs.
 
-import { formatUsd } from "../spend-page/spend.js";
+// Four places under a dollar: a run costs a fraction of a cent, and $0.00 hides it.
+export function formatUsd(value: string): string {
+  const n = Number(value);
+  return n >= 1 ? `$${n.toFixed(2)}` : `$${n.toFixed(4)}`;
+}
 
 export interface StateScrapePanel {
   state: string;
@@ -13,6 +17,8 @@ export interface StateScrapePanel {
   spent_this_month_usd: string;
   global_spent_this_month_usd: string;
   cap_reached: string | null;
+  // Null means no runs this month, never a free one.
+  cost_per_run_this_month_usd: string | null;
   cost_cap_hits_this_month: number;
   candidates_due: number;
 }
@@ -41,6 +47,12 @@ export function describeNextRun(nextRunAt: string | null, now: Date): string {
 export function describeBudget(spent: string, cap: string | null): string {
   const spentText = formatUsd(spent);
   return cap === null ? `${spentText} spent, no cap` : `${spentText} of ${formatUsd(cap)}`;
+}
+
+export function describePerRun(costPerRun: string | null, cap: string | null): string {
+  if (costPerRun === null) return cap === null ? "no cap" : `${formatUsd(cap)} cap`;
+  const costText = formatUsd(costPerRun);
+  return cap === null ? `${costText}, no cap` : `${costText} of ${formatUsd(cap)}`;
 }
 
 export interface MonthlyEstimate {
@@ -75,6 +87,40 @@ export interface GlobalScrapePanel {
   monthly_cap_usd: string | null;
   spent_this_month_usd: string;
   state_monthly_caps_usd: string;
+  // Month to date, every state. Null means no runs to average.
+  cost_per_run_this_month_usd: string | null;
+  seconds_per_run_this_month: number | null;
+  pipeline_run_concurrency: number;
+}
+
+export function formatDuration(seconds: number): string {
+  if (seconds < 60) return `${seconds}s`;
+  const minutes = Math.round(seconds / 60);
+  if (minutes < 60) return `${minutes}m`;
+  const hours = Math.floor(minutes / 60);
+  const rest = minutes % 60;
+  return rest === 0 ? `${hours}h` : `${hours}h ${rest}m`;
+}
+
+// Wall-clock: a batch runs `concurrency` at a time, so the due list takes that many rounds.
+// Total: every run's time added up, which is what counts against rate limits.
+export interface NextPass {
+  cost: string;
+  wall_clock: string;
+  total: string;
+}
+
+// Empty strings when nothing is due or there are no runs to average: never a $0 or 0s estimate.
+export function describeNextPass(candidatesDue: number, fleet: GlobalScrapePanel): NextPass {
+  const cost = fleet.cost_per_run_this_month_usd;
+  const seconds = fleet.seconds_per_run_this_month;
+  const rounds = Math.ceil(candidatesDue / fleet.pipeline_run_concurrency);
+  const due = candidatesDue > 0;
+  return {
+    cost: due && cost !== null ? formatUsd(String(candidatesDue * Number(cost))) : "",
+    wall_clock: due && seconds !== null ? formatDuration(rounds * seconds) : "",
+    total: due && seconds !== null ? formatDuration(candidatesDue * seconds) : "",
+  };
 }
 
 // State caps may add up past the global one: they are ceilings, not reservations.
