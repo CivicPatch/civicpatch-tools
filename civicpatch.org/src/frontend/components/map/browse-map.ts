@@ -6,6 +6,7 @@ import type * as maplibregl from 'maplibre-gl';
 import { loadMapEngine, type MapEngine } from './map-engine.js';
 import { fetchStateCoverageSummary } from '../../api.js';
 import { getNeedsReviewCount } from '../../utils/coverage-utils.js';
+import { useTheme } from '../../hooks/use-theme.js';
 import {
   DrillLevel,
   NATIONAL_SOURCE_ID,
@@ -22,6 +23,7 @@ import {
   applyStateCoverage,
   featureBounds,
   whenStyleReady,
+  applyMapTheme,
 } from './map-base.js';
 
 interface BrowseMapProps {
@@ -37,8 +39,9 @@ function BrowseMap(this: HTMLElement, {
   selectedOcdid = null,
   localStatus = {},
   coverageSummary = {},
-  height = '25rem',
+  height = '30rem',
 }: BrowseMapProps) {
+  const [theme] = useTheme();
   const containerRef = useRef<HTMLElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const engineRef = useRef<MapEngine | null>(null);
@@ -222,7 +225,7 @@ function BrowseMap(this: HTMLElement, {
     loadMapEngine().then((engine) => {
       if (disposed) return;
       engineRef.current = engine;
-      map = createMap(engine, el);
+      map = createMap(engine, el, theme.mode);
       map.addControl(new engine.NavigationControl(), 'bottom-right');
       map.on('load', () => map?.resize());
       map.on('click', handleClick);
@@ -243,6 +246,12 @@ function BrowseMap(this: HTMLElement, {
       mapRef.current = null;
     };
   }, []);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    whenStyleReady(map, () => applyMapTheme(map, theme.mode));
+  }, [theme.palette]);
 
   // Load national source when no state selected
   useEffect(() => {

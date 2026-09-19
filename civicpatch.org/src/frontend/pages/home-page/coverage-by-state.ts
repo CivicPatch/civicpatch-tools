@@ -37,9 +37,15 @@ export function renderCoverageByState({
           (row) => html`
             <button
               type="button"
-              class="coverage-by-state__row"
+              class="coverage-by-state__row ${row.code === selectedState
+                ? "coverage-by-state__row--selected"
+                : ""}"
+              aria-current=${row.code === selectedState ? "true" : "false"}
               @click=${() => onSelectState(row.code)}
             >
+              <span class="coverage-by-state__marker"
+                >${row.code === selectedState ? ">" : ""}</span
+              >
               <span class="coverage-by-state__name"
                 >${stateNameForCode(row.code)}</span
               >

@@ -3,7 +3,7 @@
    up in the same columns across every state, not just within one row's own text. */
 .coverage-by-state__list {
   display: grid;
-  grid-template-columns: minmax(6.5rem, auto) 1fr auto;
+  grid-template-columns: 0.6rem minmax(6.5rem, auto) 1fr auto;
   row-gap: 0.3rem;
 }
 
@@ -19,23 +19,40 @@
   align-items: center;
   column-gap: 0.6rem;
   width: 100%;
-  padding: 0.15rem 0;
+  padding: 0.2rem 0.3rem;
   background: none;
   border: none;
-  border-radius: var(--radius-sm);
   font: inherit;
   text-align: left;
   cursor: pointer;
 }
 
+.coverage-by-state__row:nth-child(even) {
+  background: var(--surface-stripe);
+}
+
 .coverage-by-state__row:hover {
-  background: var(--surface-2);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.coverage-by-state__marker {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--accent);
 }
 
 .coverage-by-state__name {
   color: var(--text-muted);
   font-size: var(--font-size-sm);
   white-space: nowrap;
+}
+
+.coverage-by-state__row--selected .coverage-by-state__name {
+  color: var(--accent);
+}
+
+.coverage-by-state__row--selected .coverage-by-state__count {
+  color: var(--text);
 }
 
 .coverage-by-state__bar {
