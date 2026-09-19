@@ -200,6 +200,36 @@ class ActivityType(StrEnum):
     SHEET_IMPORT = "sheet_import"
 
 
+# What changes published data, and so what the outward mirrors (open-data, the sheet) sweep on.
+# An allowlist: a type that only proposes (an import, a run ending) must not trigger a commit
+# that credits it. Every `ActivityType` sits in exactly one of these two sets.
+PUBLISHED_CHANGE_TYPES = frozenset({
+    ActivityType.PUBLISH_REVIEW,
+    ActivityType.ADD_PERSON,
+    ActivityType.EDIT_PERSON,
+    ActivityType.DELETE_PERSON,
+    ActivityType.EDIT_JURISDICTION,
+    ActivityType.ADD_POST,
+    ActivityType.EDIT_POST,
+    ActivityType.DELETE_POST,
+    ActivityType.ASSIGN_MEMBERSHIP,
+    ActivityType.ASSERT_FIELD,
+})
+
+UNPUBLISHED_ACTIVITY_TYPES = frozenset({
+    # A dismissal ends a review without moving a row.
+    ActivityType.DISMISS_REVIEW,
+    # Global: no jurisdiction to sweep; the next change in each state carries the new wording.
+    ActivityType.ADD_ROLE,
+    ActivityType.EDIT_ROLE,
+    ActivityType.DELETE_ROLE,
+    ActivityType.REORDER_ROLES,
+    # Proposals: nothing is published until a later `PUBLISH_REVIEW`.
+    ActivityType.PIPELINE_RUN_START,
+    ActivityType.PIPELINE_RUN_END,
+    ActivityType.SHEET_IMPORT,
+})
+
 # Nearly every activity type is audit trail only — read from the table, never watched — so this
 # names the ones actually worth a live push.
 LIVE_ACTIVITY_TYPES = frozenset({

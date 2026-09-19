@@ -9,9 +9,11 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
+from schemas.sheets import SheetCell
 from lib.sheets import (
     _column_letter,
     _move_requests,
+    _cell_rows_request,
     _target_order,
     clear_rows_from,
     ensure_tab,
@@ -356,3 +358,19 @@ def test_every_move_is_backwards():
         order.insert(properties["index"], tab)
 
     assert order == target
+
+
+@pytest.mark.unit
+def test_cells_are_written_with_their_tint_and_note_from_the_top_left():
+    request = _cell_rows_request(
+        7, [[SheetCell(value="Ana"), SheetCell(value="x", background={"red": 0.9}, note="was: y")]]
+    )["updateCells"]
+
+    assert request["range"] == {"sheetId": 7, "startRowIndex": 0, "startColumnIndex": 0}
+    plain, marked = request["rows"][0]["values"]
+    assert plain["note"] == ""
+    assert marked == {
+        "userEnteredValue": {"stringValue": "x"},
+        "userEnteredFormat": {"backgroundColor": {"red": 0.9}},
+        "note": "was: y",
+    }

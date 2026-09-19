@@ -39,6 +39,13 @@ class ChangeCounts(BaseModel):
     absent_memberships: int = 0
 
 
+class ProposalCounts(BaseModel):
+    """A proposed roster's size and what it changes — one locality's line on the batch page."""
+
+    people: int
+    change_counts: ChangeCounts
+
+
 def _scalar(value: object) -> str:
     return "" if value is None else str(value).strip()
 
@@ -131,3 +138,9 @@ def count_changes(diffs: list[PersonDiff], proposals: list[ProposedChange]) -> C
             1 for proposal in proposals if proposal.disposition is MembershipDisposition.ABSENT
         ),
     )
+
+
+def proposal_counts(
+    proposed: list[dict], diffs: list[PersonDiff], proposals: list[ProposedChange]
+) -> ProposalCounts:
+    return ProposalCounts(people=len(proposed), change_counts=count_changes(diffs, proposals))

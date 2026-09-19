@@ -495,6 +495,28 @@ async def test_the_batch_review_counts_what_each_town_changes(user_id, batch_id)
 
 @pytest.mark.integration
 @pytest.mark.asyncio
+async def test_a_locality_whose_counting_failed_shows_as_unknown(user_id, batch_id):
+    """Counting is best-effort at import and nothing recounts later; it must still list."""
+    rows = await _parsed(
+        ("Ana Reyes", "Select Board Chair"), ("Bo Chen", "Select Board Member")
+    )
+    [result] = await import_rows(rows, user_id, batch_id)
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE changesets SET proposal_counts = NULL WHERE id = %s", (result.changeset_id,)
+        )
+
+    review = await batch_review(batch_id)
+
+    assert review is not None
+    [jurisdiction] = review.jurisdictions
+    assert jurisdiction.people is None
+    assert jurisdiction.change_counts is None
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
 async def test_a_batched_card_says_what_the_single_card_reads_say(user_id, batch_id):
     """The batch loader and the per-card endpoints must not disagree about one changeset."""
     rows = await _parsed(("Ana Reyes", "Select Board Chair"))

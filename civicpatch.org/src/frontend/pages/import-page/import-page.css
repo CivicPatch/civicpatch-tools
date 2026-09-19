@@ -16,8 +16,18 @@
   border-bottom: 1px solid var(--border-subtle);
 }
 
-/* The history pager sits right under the title, whose border already separates them. */
+/* The history pager sits right under the title, whose border already separates them. The
+   first batch panel follows it, and a panel spaces only its own bottom. */
 .import-panel__title + .civ-pagination {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-top: 0;
+  border-top: none;
+}
+
+/* The bottom pager follows the last batch panel: its border and bottom margin already separate
+   them, so the pager's own divider would draw a second line. */
+.import-panel + .civ-pagination {
   margin-top: 0;
   padding-top: 0;
   border-top: none;
@@ -99,6 +109,11 @@
   margin: 0;
 }
 
+/* Filters on one line, Select all on the next. */
+.import-toolbar + .import-toolbar {
+  margin-top: 0.75rem;
+}
+
 .import-action {
   font-size: 0.9rem;
   margin: 1.5rem 0 0;
@@ -140,6 +155,33 @@
   font-size: 0.9rem;
   gap: 0.75rem;
   margin: 0 0 0.75rem;
+}
+
+/* Same as the issues page's collapsible caption: the whole header opens and closes it. */
+.import-batch__header--toggle {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* A fixed square that only turns, so the chevron swivels in place rather than hopping. */
+.import-batch__caret {
+  align-items: center;
+  display: inline-flex;
+  height: 1rem;
+  justify-content: center;
+  line-height: 1;
+  margin-left: auto;
+  transition: transform 0.15s ease;
+  width: 1rem;
+}
+
+.import-batch__caret--open {
+  transform: rotate(180deg);
+}
+
+/* A collapsed batch is only its header, so nothing below it needs the gap. */
+.import-batch__header:last-child {
+  margin-bottom: 0;
 }
 
 .import-batch__error {
@@ -211,6 +253,11 @@
   border-bottom: none;
 }
 
+/* The bottom pager follows the last card, whose own border already rules it off. */
+.review-jurisdiction + .civ-pagination {
+  border-top: none;
+}
+
 .review-jurisdiction--settled {
   opacity: 0.55;
 }
@@ -243,6 +290,30 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Scrolls on its own: a big import can reject hundreds of rows, and the cards below are what
+   the page is for. */
+.import-errored {
+  margin: 0 0 1rem;
+  max-height: 20rem;
+  overflow-y: auto;
+  padding-left: 1.25rem;
+}
+
+.review-jurisdiction__errors {
+  color: var(--diff-removed);
+  font-size: 0.85rem;
+  margin: 0.35rem 0 0;
+  padding-left: 1.25rem;
+}
+
+/* The change badges wrap within their fixed column rather than widen it. */
+.review-jurisdiction__changes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  justify-content: flex-end;
 }
 
 .review-jurisdiction__count,

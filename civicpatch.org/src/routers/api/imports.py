@@ -68,11 +68,6 @@ def get_router() -> APIRouter:
         except Exception as e:
             return JSONResponse({"error": _sharing_hint(e)}, status_code=502)
 
-        # Nothing to ingest — every row was already handled or blocked. No batch, so the
-        # history stays a record of imports that did something, not one entry per click.
-        if not read.rows:
-            return {"data": StartImportResponse(batch_id=None, preview=read.preview)}
-
         try:
             batch_id = await changeset_batches.start(
                 changeset_batches.BatchKind.SHEET_IMPORT,
@@ -80,12 +75,18 @@ def get_router() -> APIRouter:
                 user.user_id,
                 {"spreadsheet_id": spreadsheet_id},
                 items_total=len(read.preview.jurisdictions_ready),
+                errors=read.preview.errors,
+                rows_read=read.preview.rows,
             )
         except changeset_batches.BatchAlreadyRunning as e:
             # Not queued: two runs would race each other's write-back.
             return JSONResponse({"error": str(e)}, status_code=409)
 
-        background_tasks.add_task(run_import_task, batch_id, read.rows, user.user_id)
+        # Still a batch when nothing is ready: the rows it rejected are what it has to report.
+        if not read.rows:
+            await changeset_batches.finish(batch_id, changeset_batches.BatchStatus.SUCCEEDED)
+        else:
+            background_tasks.add_task(run_import_task, batch_id, read.rows, user.user_id)
         return {"data": StartImportResponse(batch_id=batch_id, preview=read.preview)}
 
     # Declared before `/{batch_id}` or the path parameter swallows it.
@@ -207,6 +208,8 @@ def _progress(batch: dict) -> ImportProgress:
         items_total=batch["items_total"],
         items_done=batch["items_done"],
         error=batch["error"],
+        errors=batch["errors"],
+        rows_read=batch["rows_read"],
         started_at=batch["started_at"].isoformat(),
         finished_at=batch["finished_at"].isoformat()
         if batch["finished_at"]

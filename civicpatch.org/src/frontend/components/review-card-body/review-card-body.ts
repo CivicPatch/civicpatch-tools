@@ -1,5 +1,6 @@
 // One review card, read-only: the same diff view a review session shows, for a page that lists
-// many cards and decides them in bulk. Everything it needs arrives on the card.
+// many cards and decides them in bulk. Opening a person edits the card on the review page, in a
+// new tab so the list keeps its place. Everything it needs arrives on the card.
 
 import { html } from "lit-html";
 import { component } from "haunted";
@@ -12,6 +13,8 @@ import {
 import type { PersonEditorProps } from "../person-editor/person-editor.js";
 import type { Post, RoleOption } from "../posts-list/posts-model.js";
 import type { ReviewCard } from "../../schemas/review-card.js";
+import { reviewSessionUrl } from "../../pages/review-routes.js";
+import { jurisdictionOcdidToState } from "../ocdid-utils.js";
 
 type ReviewCardBodyHost = HTMLElement & {
   card: ReviewCard | null;
@@ -21,12 +24,18 @@ type ReviewCardBodyHost = HTMLElement & {
 const NOBODY_REMOVED = new Set<string>();
 const NOBODY_OPEN = null;
 
-// The list never opens a person (`openPersonId` is always null), so the editor is never asked for.
+// Nothing opens in place (`openPersonId` is always null), so the editor is never asked for.
 function noEditor(): PersonEditorProps {
   throw new Error("a read-only review card has no editor");
 }
 
-function ignoreOpen() {}
+function editOnReviewPage(card: ReviewCard) {
+  const url = reviewSessionUrl(
+    jurisdictionOcdidToState(card.jurisdiction_ocdid),
+    card.changeset_id,
+  );
+  window.open(url, "_blank", "noopener");
+}
 
 function postsOf(card: ReviewCard): Post[] {
   return card.organizations
@@ -52,7 +61,7 @@ function ReviewCardBody(host: ReviewCardBodyHost) {
       .cards=${cards}
       .changes=${card.changes}
       .isReadOnly=${true}
-      .onOpenPerson=${ignoreOpen}
+      .onOpenPerson=${() => editOnReviewPage(card)}
       .openPersonId=${NOBODY_OPEN}
       .editorFor=${noEditor}
       .posts=${postsOf(card)}

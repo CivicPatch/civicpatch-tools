@@ -3,14 +3,16 @@ import {
   REVIEW_FILTER,
   REVIEW_PAGE_SIZE,
   byChangeRank,
+  filterCounts,
   filtered,
+  localities,
   pageCount,
   pageOf,
   selectableChangesetIds,
-  changeSummary,
+  changeBadges,
 } from "../pages/import-page/batch-selection.js";
 import { toggleSelection } from "../utils/toggle-selection.js";
-import type { ChangeCounts } from "../pages/import-page/import-types.js";
+import type { ChangeCounts, RowError } from "../pages/import-page/import-types.js";
 
 const UNCHANGED: ChangeCounts = {
   added_people: 0,
@@ -18,7 +20,7 @@ const UNCHANGED: ChangeCounts = {
   absent_memberships: 0,
 };
 
-const town = (
+const card = (
   ocdid: string,
   changeset_state: string,
   change_counts: ChangeCounts = UNCHANGED,
@@ -29,6 +31,44 @@ const town = (
   changeset_state,
   people: 0,
   change_counts,
+});
+
+const town = (
+  ocdid: string,
+  changeset_state: string,
+  change_counts: ChangeCounts = UNCHANGED,
+  errors: RowError[] = [],
+) => ({
+  jurisdiction_ocdid: ocdid,
+  name: ocdid,
+  review: card(ocdid, changeset_state, change_counts),
+  errors,
+});
+
+const SHERBORN = "ocd-jurisdiction/country:us/state:ma/county:middlesex/place:sherborn/government";
+
+const rowError = (ocdid: string, line: number | null = 3): RowError => ({
+  line,
+  jurisdiction_ocdid: ocdid,
+  column: line == null ? null : "source_url",
+  message: "required",
+});
+
+describe("localities", () => {
+  it("puts each error on its locality's card", () => {
+    const [sherborn] = localities([card(SHERBORN, "open")], [rowError(SHERBORN)]);
+
+    expect(sherborn.review?.changeset_id).toBe(`req-${SHERBORN}`);
+    expect(sherborn.errors).toHaveLength(1);
+  });
+
+  it("lists a locality the import rejected though it has no card", () => {
+    const [blocked] = localities([], [rowError(SHERBORN), rowError(SHERBORN, 4)]);
+
+    expect(blocked.review).toBeNull();
+    expect(blocked.name).toBe("Sherborn");
+    expect(blocked.errors).toHaveLength(2);
+  });
 });
 
 describe("selectableChangesetIds", () => {
@@ -89,6 +129,15 @@ describe("paging", () => {
 });
 
 describe("byChangeRank", () => {
+  it("puts a locality with errors ahead of every change", () => {
+    const ordered = byChangeRank([
+      town("absent", "open", { ...UNCHANGED, absent_memberships: 1 }),
+      town("broken", "open", UNCHANGED, [rowError("broken")]),
+    ]);
+
+    expect(ordered.map((j) => j.name)).toEqual(["broken", "absent"]);
+  });
+
   it("puts absences first, then new people, then edits, then the unchanged", () => {
     const ordered = byChangeRank([
       town("unchanged", "open"),
@@ -120,24 +169,65 @@ describe("filtered", () => {
   ];
 
   it("shows everything when no filter is picked", () => {
-    expect(filtered(towns, [])).toHaveLength(3);
+    expect(filtered(towns, null)).toHaveLength(3);
   });
 
-  it("shows towns matching any picked filter", () => {
-    const shown = filtered(towns, [REVIEW_FILTER.HAS_ABSENT, REVIEW_FILTER.UNCHANGED]);
+  it("shows only the towns matching the picked filter", () => {
+    expect(filtered(towns, REVIEW_FILTER.HAS_ABSENT).map((j) => j.name)).toEqual(["absent"]);
+  });
 
-    expect(shown.map((j) => j.name)).toEqual(["absent", "quiet"]);
+  it("keeps a card-less locality under Errors and out of every change filter", () => {
+    const [blocked] = localities([], [rowError(SHERBORN)]);
+
+    expect(filtered([blocked], REVIEW_FILTER.ERRORS)).toHaveLength(1);
+    expect(filtered([blocked], REVIEW_FILTER.UNCHANGED)).toHaveLength(0);
+    expect(filtered([blocked], REVIEW_FILTER.OPEN)).toHaveLength(0);
   });
 });
 
-describe("changeSummary", () => {
-  it("names only what is non-zero", () => {
-    expect(
-      changeSummary({ added_people: 2, changed_people: 0, absent_memberships: 1 }),
-    ).toBe("2 added, 1 absent");
+describe("an uncounted locality", () => {
+  const uncounted = { ...town("quiet", "open"), review: { ...card("quiet", "open"), change_counts: null } };
+
+  it("matches no change filter, since nothing is known about its changes", () => {
+    expect(filtered([uncounted], REVIEW_FILTER.UNCHANGED)).toHaveLength(0);
+    expect(filtered([uncounted], REVIEW_FILTER.HAS_ADDED)).toHaveLength(0);
   });
 
-  it("is empty when nothing changed", () => {
-    expect(changeSummary(UNCHANGED)).toBe("");
+  it("still counts as open", () => {
+    expect(filtered([uncounted], REVIEW_FILTER.OPEN)).toHaveLength(1);
+  });
+});
+
+describe("filterCounts", () => {
+  it("counts every filter over the whole batch", () => {
+    const counts = filterCounts([
+      town("absent", "open", { ...UNCHANGED, absent_memberships: 1, changed_people: 2 }),
+      town("done", "published"),
+      ...localities([], [rowError(SHERBORN)]),
+    ]);
+
+    expect(counts).toEqual({
+      [REVIEW_FILTER.ERRORS]: 1,
+      [REVIEW_FILTER.HAS_ABSENT]: 1,
+      [REVIEW_FILTER.HAS_ADDED]: 0,
+      [REVIEW_FILTER.HAS_CHANGED]: 1,
+      [REVIEW_FILTER.UNCHANGED]: 1,
+      [REVIEW_FILTER.OPEN]: 1,
+    });
+  });
+});
+
+describe("changeBadges", () => {
+  it("names only what is non-zero, in the tally's colours", () => {
+    expect(
+      changeBadges({ added_people: 2, changed_people: 0, absent_memberships: 1 }),
+    ).toEqual([
+      { status: "added", label: "2 added" },
+      { status: "removed", label: "1 absent" },
+    ]);
+  });
+
+  it("says unchanged when nothing changed", () => {
+    expect(changeBadges(UNCHANGED)).toEqual([{ status: "unchanged", label: "Unchanged" }]);
   });
 });

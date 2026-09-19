@@ -16,11 +16,8 @@ from schemas.imports import (
     ReviewJurisdiction,
 )
 from services import roster_edits
-from services.review_proposal import proposals_for_requests
-from services.roster import proposed_rosters
 from core.changeset_lifecycle import ChangesetState
-from core.roster_diff import count_changes, person_diffs
-from database.people import get_rosters_by_jurisdiction
+from core.roster_diff import ProposalCounts
 from shared.utils.statuses import DismissalReason
 
 logger = logging.getLogger(__name__)
@@ -38,38 +35,27 @@ async def batch_review(batch_id: str) -> BatchReview | None:
     if batch is None:
         return None
 
-    # Every card, published or not. This is what *this import* proposed, derived from its own
-    # sightings — which outlive publishing. Reading only the pending ones left a published
-    # locality claiming "0 people", and reading the jurisdiction's live roster instead would
-    # answer a different question: who is seated there now, including people no scrape in this
-    # batch ever saw.
-    changeset_ids = [item["changeset_id"] for item in items]
-    rosters = await proposed_rosters(changeset_ids)
-    published, proposals = await asyncio.gather(
-        get_rosters_by_jurisdiction([item["jurisdiction_ocdid"] for item in items]),
-        proposals_for_requests(changeset_ids, rosters),
-    )
-
     return BatchReview(
         batch_id=batch["id"],
         status=batch["status"],
-        jurisdictions=[
-            ReviewJurisdiction(
-                jurisdiction_ocdid=item["jurisdiction_ocdid"],
-                name=item["name"] or item["jurisdiction_ocdid"],
-                changeset_id=item["changeset_id"],
-                changeset_state=item["changeset_state"],
-                people=len(rosters.get(item["changeset_id"], [])),
-                change_counts=count_changes(
-                    person_diffs(
-                        published.get(item["jurisdiction_ocdid"], []),
-                        rosters.get(item["changeset_id"], []),
-                    ),
-                    proposals.get(item["changeset_id"], []),
-                ),
-            )
-            for item in items
-        ],
+        jurisdictions=[_reviewed(item) for item in items],
+    )
+
+
+def _reviewed(item: dict) -> ReviewJurisdiction:
+    # Counted at import; None when that failed, which shows as unknown rather than wrong.
+    counts = (
+        ProposalCounts.model_validate(item["proposal_counts"])
+        if item["proposal_counts"]
+        else None
+    )
+    return ReviewJurisdiction(
+        jurisdiction_ocdid=item["jurisdiction_ocdid"],
+        name=item["name"] or item["jurisdiction_ocdid"],
+        changeset_id=item["changeset_id"],
+        changeset_state=item["changeset_state"],
+        people=counts.people if counts else None,
+        change_counts=counts.change_counts if counts else None,
     )
 
 

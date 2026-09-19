@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from unittest.mock import AsyncMock, patch
 
 import pytest
-from core.sheet_import_rows import ImportRow, Sighting
+from core.sheet_import_rows import ImportRow, RowError, Sighting
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from lib.auth import get_optional_user
@@ -131,18 +131,23 @@ def test_starting_returns_the_batch_and_defers_the_work():
 
 
 @pytest.mark.unit
-def test_nothing_to_ingest_creates_no_batch():
-    """Every row already handled or blocked — no batch gets minted, so history stays a record
-    of imports that did something rather than one entry per click."""
+def test_nothing_to_ingest_still_records_a_finished_batch():
+    """Every row already handled or blocked: the batch is still minted and closed at once, so
+    the rows it rejected stay on the page after a refresh."""
+    rejected = RowError(line=3, jurisdiction_ocdid=_OCDID, column="source_url", message="required")
+    preview = _EMPTY_PREVIEW.model_copy(update={"errors": [rejected]})
     with (
         patch("routers.api.imports.entry_sheet.spreadsheet_id", return_value="abc"),
         patch(
             "routers.api.imports.sheet_import.read_sheet",
-            return_value=SheetRead(rows=[], preview=_EMPTY_PREVIEW),
+            return_value=SheetRead(rows=[], preview=preview),
         ),
         patch(
-            "routers.api.imports.changeset_batches.start", new_callable=AsyncMock
+            "routers.api.imports.changeset_batches.start",
+            new_callable=AsyncMock,
+            return_value="batch-1",
         ) as start,
+        patch("routers.api.imports.changeset_batches.finish", new_callable=AsyncMock) as finish,
         patch(
             "routers.api.imports.run_import_task", new_callable=AsyncMock
         ) as task,
@@ -150,8 +155,9 @@ def test_nothing_to_ingest_creates_no_batch():
         response = _client().post(_PREFIX)
 
     assert response.status_code == 200
-    assert response.json()["data"]["batch_id"] is None
-    start.assert_not_awaited()
+    assert response.json()["data"]["batch_id"] == "batch-1"
+    assert start.await_args.kwargs["errors"] == [rejected]
+    finish.assert_awaited_once()
     task.assert_not_awaited()
 
 
@@ -262,6 +268,8 @@ def test_history_is_paged():
         "items_total": 3,
         "items_done": 3,
         "error": None,
+        "errors": [],
+        "rows_read": 3,
         "started_at": datetime(2026, 1, 1, tzinfo=timezone.utc),
         "finished_at": datetime(2026, 1, 1, 0, 5, tzinfo=timezone.utc),
     }

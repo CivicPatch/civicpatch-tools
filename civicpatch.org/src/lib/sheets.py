@@ -4,6 +4,9 @@ import googleapiclient.discovery
 from google.oauth2 import service_account
 import environment
 from lib.csv import rows_from_table
+from schemas.sheets import SheetCell
+
+_WHITE = {"red": 1.0, "green": 1.0, "blue": 1.0}
 
 def quote_tab(tab: str) -> str:
     """A tab name as A1 notation accepts it.
@@ -411,6 +414,55 @@ def _all_sheets(service, spreadsheet_id: str) -> list[dict]:
         .execute()
     )
     return [sheet["properties"] for sheet in response.get("sheets", [])]
+
+
+def _cell_rows_request(sheet_id: int, rows: list[list[SheetCell]]) -> dict:
+    """Values, tints and notes in one request, from A1. Written onto the cells themselves rather
+    than as rules, so a sort carries them with their rows."""
+    return {
+        "updateCells": {
+            "range": {"sheetId": sheet_id, "startRowIndex": 0, "startColumnIndex": 0},
+            "rows": [
+                {
+                    "values": [
+                        {
+                            "userEnteredValue": {"stringValue": cell.value},
+                            "userEnteredFormat": {"backgroundColor": cell.background or _WHITE},
+                            "note": cell.note or "",
+                        }
+                        for cell in row
+                    ]
+                }
+                for row in rows
+            ],
+            "fields": "userEnteredValue,userEnteredFormat.backgroundColor,note",
+        }
+    }
+
+
+def write_cell_rows(spreadsheet_id: str, tab: str, rows: list[list[SheetCell]]) -> None:
+    service = get_service()
+    sheet = _sheet(service, spreadsheet_id, tab)
+    if sheet is None or not rows:
+        return
+    _batch_update(
+        service, spreadsheet_id, [_cell_rows_request(sheet["properties"]["sheetId"], rows)]
+    )
+
+
+def tab_titles(spreadsheet_id: str) -> list[str]:
+    return [sheet["title"] for sheet in _all_sheets(get_service(), spreadsheet_id)]
+
+
+def delete_tabs(spreadsheet_id: str, titles: list[str]) -> None:
+    """Delete these tabs; one that is already gone is skipped."""
+    service = get_service()
+    sheet_ids = {sheet["title"]: sheet["sheetId"] for sheet in _all_sheets(service, spreadsheet_id)}
+    _batch_update(
+        service,
+        spreadsheet_id,
+        [{"deleteSheet": {"sheetId": sheet_ids[title]}} for title in titles if title in sheet_ids],
+    )
 
 
 def _target_order(current: list[str], desired: list[str]) -> list[str]:

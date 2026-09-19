@@ -193,7 +193,10 @@ export function renderDiffCard(
         </span>
         <span class="review-row__sources">${renderSources(card, sources)}</span>
       </span>
-      <i class="fa-solid fa-chevron-down pc-hint" aria-hidden="true"></i>
+      <i
+        class="fa-solid ${props.isReadOnly ? "fa-pen-to-square" : "fa-chevron-down"} pc-hint"
+        aria-hidden="true"
+      ></i>
     `,
   );
 }
