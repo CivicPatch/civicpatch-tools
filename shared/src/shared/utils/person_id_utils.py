@@ -6,8 +6,11 @@ from shared.utils.email_utils import normalize_email
 from shared.utils.name_utils import (
     best_identity_match,
     build_canonical_map,
-    exact_match,
+    exact_identity_match,
     fuzzy_match_score,
+    nickname_tie,
+    same_name,
+    same_surname,
 )
 
 
@@ -66,12 +69,47 @@ def resolve_people_ids(
     claimed_ids: set[str] = set()
     for p in people_to_resolve:
         matches = resolve_person_id(
-            p.get("name"), p.get("emails") or [], people, canonical_map, identities
+            p.get("name"),
+            p.get("other_names") or [],
+            p.get("emails") or [],
+            people,
+            canonical_map,
+            identities,
         )
         result = _resolution(p, matches, claimed_ids)
         claimed_ids.add(result["id"])
         results.append(result)
-    return results
+
+    unmatched = {
+        index: person.get("name") or ""
+        for index, (person, result) in enumerate(zip(people_to_resolve, results))
+        if result["person"] is None and not result["duplicate_match"]
+    }
+    ties = _nickname_ties(unmatched, _absent(people, claimed_ids))
+    return [
+        _resolution(people_to_resolve[index], [ties[index]], set()) if index in ties else result
+        for index, result in enumerate(results)
+    ]
+
+
+def _absent(people: List[Person], claimed_ids: set[str]) -> List[Person]:
+    """Published people still on the roster whom no entry matched."""
+    return [person for person in people if person.id not in claimed_ids and person.memberships]
+
+
+def _nickname_ties(unmatched: Dict[int, str], absent: List[Person]) -> Dict[int, Person]:
+    """An unmatched entry and an absent person, when they are the only two sharing a surname
+    and their first names are a nickname pair: one leaves, one arrives, "Dave" for "David"."""
+    ties = {}
+    for index, name in unmatched.items():
+        same_surname_absent = [person for person in absent if same_surname(name, person.name)]
+        if len(same_surname_absent) != 1:
+            continue
+        candidate = same_surname_absent[0]
+        same_surname_new = [other for other in unmatched.values() if same_surname(other, candidate.name)]
+        if len(same_surname_new) == 1 and nickname_tie(name, candidate.name):
+            ties[index] = candidate
+    return ties
 
 
 def ensure_person_ids(people: List[dict]) -> List[dict]:
@@ -80,8 +118,25 @@ def ensure_person_ids(people: List[dict]) -> List[dict]:
     ]
 
 
+def _canonical_for(
+    name: str,
+    other_names: List[str],
+    canonical_map: Dict[str, str],
+    identities: Dict[str, List[str]],
+) -> str | None:
+    """The name as published, then a name the source stated outright, then a guess."""
+    if canonical_map.get(name):
+        return canonical_map[name]
+    for other_name in other_names:
+        stated = exact_identity_match(other_name, identities)
+        if stated is not None:
+            return stated
+    return best_identity_match(name, identities)
+
+
 def resolve_person_id(
     name: str | None,
+    other_names: List[str],
     emails: List[str],
     people: List[Person],
     canonical_map: Dict[str, str],
@@ -89,9 +144,7 @@ def resolve_person_id(
 ) -> List[Person]:
     if not name:
         return []
-    canonical_name = canonical_map.get(name)
-    if not canonical_name:
-        canonical_name = best_identity_match(name, identities)
+    canonical_name = _canonical_for(name, other_names, canonical_map, identities)
     if not canonical_name:
         return []
     matches = [p for p in people if canonical_map.get(p.name) == canonical_name]
@@ -123,27 +176,16 @@ def merge_forward_other_names(
     existing_name: str | None,
     existing_other_names: List[str],
 ) -> List[str]:
-    """Carry the matched entity's confirmed aliases forward onto the freshly-scraped
-    person, so human-added `other_names` survive every run — they are the durable
-    signal that steers the next run's name matching. If the entity was renamed, both
-    the old and new names become aliases too. Deduped, order-preserving.
-
-    Load-bearing: drop the existing-aliases merge and each run clobbers human aliases.
-    """
-    # A renamed entity keeps both names as aliases; existing aliases always carry forward.
-    # `exact_match`, not `!=`: a source spelling the same person "Melvin taylor" on one page and
-    # "Melvin Taylor" on another is not a rename, and treating it as one filed the variant as an
-    # alias — then carried it forward on every run after.
-    renamed = bool(existing_name) and not exact_match(existing_name or "", person_name)
+    renamed = bool(existing_name) and not same_name(existing_name or "", person_name)
     renamed_variants = [person_name, existing_name] if renamed else []
     existing_aliases = [n for n in existing_other_names if isinstance(n, str)]
 
     merged: List[str] = []
     for name in person_other_names + renamed_variants + existing_aliases:
         # Only a rename earns the current name a place among its own aliases.
-        if not renamed and exact_match(name, person_name):
+        if not renamed and same_name(name, person_name):
             continue
-        if any(exact_match(name, kept) for kept in merged):
+        if any(same_name(name, kept) for kept in merged):
             continue
         merged.append(name)
     return merged

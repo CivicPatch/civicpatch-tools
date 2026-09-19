@@ -56,3 +56,9 @@ def test_a_leading_quote_is_stripped_as_sheets_own_escape():
     from being read as a formula) — reading that back must return the value beneath the
     escape, not the quote itself."""
     assert parse_csv("label\n'=SUM(A1:A2)\n")[0]["label"] == "=SUM(A1:A2)"
+
+
+@pytest.mark.unit
+def test_a_read_only_marker_is_stripped_from_the_header():
+    rows = parse_csv("name,Published_Other_Names (read-only)\nAna Reyes,Ana R.\n")
+    assert rows == [{"name": "Ana Reyes", "published_other_names": "Ana R."}]

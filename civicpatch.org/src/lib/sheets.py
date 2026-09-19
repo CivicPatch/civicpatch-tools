@@ -3,7 +3,7 @@ import base64
 import googleapiclient.discovery
 from google.oauth2 import service_account
 import environment
-from lib.csv import rows_from_table
+from lib.csv import column_key, rows_from_table
 from schemas.sheets import SheetCell
 
 _WHITE = {"red": 1.0, "green": 1.0, "blue": 1.0}
@@ -44,7 +44,7 @@ def read_tab(spreadsheet_id: str, tab: str) -> list[dict]:
 
 
 def read_header(spreadsheet_id: str, tab: str) -> list[str]:
-    """The tab's first row, lowercased — column positions, which `read_tab` throws away."""
+    """The tab's first row as column keys — column positions, which `read_tab` throws away."""
     response = (
         get_service()
         .spreadsheets()
@@ -53,7 +53,7 @@ def read_header(spreadsheet_id: str, tab: str) -> list[str]:
         .execute()
     )
     values = response.get("values", [[]])
-    return [str(name or "").strip().lower() for name in (values[0] if values else [])]
+    return [column_key(name) for name in (values[0] if values else [])]
 
 
 def _column_letter(index: int) -> str:

@@ -40,6 +40,7 @@ class ReportCell(BaseModel):
     value: str
     # Set when the import changes this cell: what it said before ("" for nothing).
     before: str | None = None
+    note: str | None = None
 
 
 class ImportReportRow(BaseModel):
@@ -110,6 +111,7 @@ def _person_row(
     proposed: dict | None,
     diff: PersonDiff | None,
     proposals: list[ProposedChange],
+    likely_same_as: str | None,
 ) -> ImportReportRow:
     # An absent person is only in the published roster, and is shown as they last were.
     record = proposed or published
@@ -121,6 +123,8 @@ def _person_row(
         )
         for field in [NAME_FIELD, *PERSON_FIELDS]
     }
+    if likely_same_as:
+        cells[NAME_FIELD].note = f"may be {likely_same_as}"
     cells[POST_FIELD] = _post_cell(proposals)
     return ImportReportRow(
         jurisdiction_ocdid=jurisdiction_ocdid, change=_headline(diff, proposals), cells=cells
@@ -133,6 +137,7 @@ def report_rows(
     proposed: list[dict],
     diffs: list[PersonDiff],
     proposals: list[ProposedChange],
+    likely_same: dict[str, str],
 ) -> list[ImportReportRow]:
     """One row per person the import changes: added, edited, moved, given a post, or absent."""
     published_by_id = {person["id"]: person for person in published}
@@ -158,6 +163,7 @@ def report_rows(
             proposed_by_id.get(person_id),
             diff_by_id.get(person_id),
             proposals_by_id.get(person_id, []),
+            likely_same.get(person_id),
         )
         for person_id in touched
     ]
@@ -166,7 +172,7 @@ def report_rows(
 
 def _sheet_cell(cell: ReportCell, row_background: dict[str, float] | None) -> SheetCell:
     if row_background is not None or cell.before is None:
-        return SheetCell(value=cell.value, background=row_background)
+        return SheetCell(value=cell.value, background=row_background, note=cell.note)
     return SheetCell(
         value=cell.value, background=CHANGED_CELL, note=f"was: {cell.before or '(none)'}"
     )

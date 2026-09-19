@@ -11,9 +11,14 @@ import logging
 import uuid
 from datetime import datetime, timezone
 
-from core.sheet_import_columns import roster_columns
+from core.sheet_import_columns import (
+    by_row,
+    published_other_names_by_person,
+    roster_columns,
+)
 from core.sheet_import_rows import (
     JURISDICTION,
+    PUBLISHED_OTHER_NAMES,
     REQUIRED_COLUMNS,
     ROSTER_HEADERS,
     ImportRow,
@@ -21,11 +26,16 @@ from core.sheet_import_rows import (
     RowError,
     already_handled,
     parse_rows,
-    row_key,
     rows_by_jurisdiction,
 )
 from core.import_report import ImportReportRow, report_rows
-from core.roster_diff import ProposalCounts, person_diffs, person_notes, proposal_counts
+from core.roster_diff import (
+    ProposalCounts,
+    likely_same_people,
+    person_diffs,
+    person_notes,
+    proposal_counts,
+)
 from core.source_sites import SiteIndex, build_site_index
 from database.changesets import register_sheet_import_changeset, set_proposal_counts
 from database import changeset_batches, dismissals
@@ -35,6 +45,7 @@ from database.roles import get_roles
 from database.source_records import insert_source_records
 from pydantic import BaseModel
 from lib import sheets
+from lib.csv import READ_ONLY_MARKER, REQUIRED_MARKER
 from schemas.imports import ImportPreview
 from services import entry_sheet, import_report, roster_ingest
 from services.review_proposal import proposals_for_requests
@@ -66,7 +77,18 @@ class JurisdictionResult(BaseModel):
     error: str | None = None
     # By `row_key`'s lowercased name.
     notes: dict[str, str] = {}
+    published_other_names: dict[str, str] = {}
     report: list[ImportReportRow] = []
+
+
+class ImportChanges(BaseModel):
+    """What one import changes, from one read so the parts cannot disagree. Row values are
+    keyed by `row_key`'s lowercased name."""
+
+    notes: dict[str, str] = {}
+    published_other_names: dict[str, str] = {}
+    report: list[ImportReportRow] = []
+    counts: ProposalCounts | None = None
 
 
 async def import_rows(
@@ -143,9 +165,9 @@ async def _import_jurisdiction(
     posts, error = await _derive_posts(
         changeset_id, jurisdiction_ocdid, roster, roles, taxonomy
     )
-    notes, report, counts = await _changes(changeset_id, jurisdiction_ocdid, records_by_person)
-    if counts is not None:
-        await set_proposal_counts(changeset_id, counts)
+    changes = await _changes(changeset_id, jurisdiction_ocdid, records_by_person)
+    if changes.counts is not None:
+        await set_proposal_counts(changeset_id, changes.counts)
     return JurisdictionResult(
         jurisdiction_ocdid=jurisdiction_ocdid,
         status=ImportStatus.IMPORTED if error is None else ImportStatus.PARTIAL,
@@ -154,17 +176,17 @@ async def _import_jurisdiction(
         sightings=sightings,
         posts=posts,
         error=error,
-        notes=notes,
-        report=report,
+        notes=changes.notes,
+        published_other_names=changes.published_other_names,
+        report=changes.report,
     )
 
 
 async def _changes(
     changeset_id: str, jurisdiction_ocdid: str, records_by_person: dict[str, list[dict]]
-) -> tuple[dict[str, str], list[ImportReportRow], ProposalCounts | None]:
-    """What this import changes: each row's note, keyed by the row's lowercased name, the
-    report tab's rows, and the batch page's counts. One read for all three, so they cannot
-    disagree.
+) -> ImportChanges:
+    """What this import changes: each row's note and published aliases, the report tab's rows,
+    and the batch page's counts.
 
     Read through `proposed_roster`, so blank cells state nothing here either. Never fatal: the
     import already landed, and a missing note costs only the volunteer's feedback.
@@ -178,21 +200,25 @@ async def _changes(
         published = published_by_jurisdiction.get(jurisdiction_ocdid, [])
         proposals = proposals_by_changeset.get(changeset_id, [])
         diffs = person_diffs(published, proposed)
-        notes = person_notes([person["id"] for person in proposed], diffs, proposals)
-        report = report_rows(jurisdiction_ocdid, published, proposed, diffs, proposals)
+        likely_same = likely_same_people(published, proposed, diffs, proposals)
+        notes = person_notes([person["id"] for person in proposed], diffs, proposals, likely_same)
+        report = report_rows(
+            jurisdiction_ocdid, published, proposed, diffs, proposals, likely_same
+        )
         counts = proposal_counts(proposed, diffs, proposals)
     except Exception as e:
         logger.error(
             f"[{changeset_id}] {jurisdiction_ocdid}: notes failed: {e}", exc_info=True
         )
-        return {}, [], None
-    row_notes = {
-        row_key(jurisdiction_ocdid, record["name"])[1]: notes[person_id]
-        for person_id, records in records_by_person.items()
-        if person_id in notes
-        for record in records
-    }
-    return row_notes, report, counts
+        return ImportChanges()
+    return ImportChanges(
+        notes=by_row(jurisdiction_ocdid, records_by_person, notes),
+        published_other_names=by_row(
+            jurisdiction_ocdid, records_by_person, published_other_names_by_person(published)
+        ),
+        report=report,
+        counts=counts,
+    )
 
 
 async def _derive_posts(
@@ -245,9 +271,13 @@ def read_rows(rows: list[dict], sites: SiteIndex) -> SheetRead:
 
 def _header_text(column: str) -> str:
     """A required column reads as required on the sheet itself — `*`, the same convention a
-    form uses — without anyone having to already know the contract. `lib.csv.rows_from_table`
-    strips it back off before matching a cell to this name."""
-    return f"{column}*" if column in REQUIRED_COLUMNS else column
+    form uses — and one of ours among the volunteer's reads as read-only, without anyone having
+    to already know the contract. `lib.csv.column_key` strips both back off."""
+    if column in REQUIRED_COLUMNS:
+        return f"{column}{REQUIRED_MARKER}"
+    if column == PUBLISHED_OTHER_NAMES:
+        return f"{column}{READ_ONLY_MARKER}"
+    return column
 
 
 async def ensure_roster_header(spreadsheet_id: str) -> None:
@@ -368,6 +398,11 @@ async def write_back(results: list[JurisdictionResult]) -> None:
             for result in results
             for name, note in result.notes.items()
         }
+        published_other_names = {
+            (result.jurisdiction_ocdid, name): names
+            for result in results
+            for name, names in result.published_other_names.items()
+        }
         dismissed = await dismissals.latest_import_dismissed(
             sorted({row.jurisdiction_ocdid for row in parsed} | _typed_jurisdictions(roster))
         )
@@ -375,7 +410,16 @@ async def write_back(results: list[JurisdictionResult]) -> None:
             sheets.write_columns,
             spreadsheet_id,
             entry_sheet.ROSTER_TAB,
-            roster_columns(roster, parsed, errors, imported, stamp, notes, dismissed),
+            roster_columns(
+                roster,
+                parsed,
+                errors,
+                imported,
+                stamp,
+                notes,
+                published_other_names,
+                dismissed,
+            ),
         )
     except Exception as e:
         logger.error(f"Failed to write results back to the sheet: {e}", exc_info=True)

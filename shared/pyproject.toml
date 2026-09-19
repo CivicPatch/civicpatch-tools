@@ -13,7 +13,8 @@ dependencies = [
     "ruamel-yaml>=0.19.1,<0.20.0",
     "phonenumbers (>=9.0.25,<10.0.0)",
     "rapidfuzz (>=3.14.0,<4.0.0)",
-    "python-levenshtein (>=0.27.1,<0.28.0)"
+    "python-levenshtein (>=0.27.1,<0.28.0)",
+    "nicknames>=1.0.1",
 ]
 
 [tool.uv]

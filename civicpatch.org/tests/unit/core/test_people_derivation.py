@@ -362,3 +362,17 @@ def test_duplicate_records_merged_within_same_name():
     assert len(holland_people) == 1
     assert "(956) 943-2682" in holland_people[0].phones
     assert "sholland@example.com" in holland_people[0].emails
+
+
+def test_a_stated_other_name_becomes_an_alias():
+    """A sheet row's `other_names` survive normalisation and join the sighting spellings."""
+    record = _make_llm_person(
+        name="Jennifer Fisk-Becker",
+        label="Council Member",
+        source_url="https://ferndale.gov/council",
+        other_names=["Jenny Fisk-Becker", "Jennifer Fisk-Becker."],
+    )
+
+    people = _reconcile({"sheet": [record]}, [], identities={})
+
+    assert [person.other_names for person in people] == [["Jenny Fisk-Becker"]]

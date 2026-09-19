@@ -1,6 +1,6 @@
 import uuid
 
-from shared.schemas import Person
+from shared.schemas import Membership, Person
 from shared.utils.name_utils import build_canonical_map
 from shared.utils.person_id_utils import resolve_people_ids, resolve_person_id
 
@@ -28,7 +28,7 @@ def test_resolve_person_id_exact_match():
     canonical_map = build_canonical_map([person], identities)
 
     matches = resolve_person_id(
-        "Ruben Gutierrez, Jr.", [], [person], canonical_map, identities
+        "Ruben Gutierrez, Jr.", [], [], [person], canonical_map, identities
     )
     assert len(matches) == 1
     assert matches[0].name == "Ruben Gutierrez, Jr."
@@ -41,7 +41,7 @@ def test_resolve_person_id_alias_match():
     canonical_map = build_canonical_map([person], identities)
 
     matches = resolve_person_id(
-        "Ruben Gutierrez Jr.", [], [person], canonical_map, identities
+        "Ruben Gutierrez Jr.", [], [], [person], canonical_map, identities
     )
     assert len(matches) == 1
     assert matches[0].name == "Ruben Gutierrez, Jr."
@@ -55,7 +55,7 @@ def test_resolve_person_id_fuzzy_match_via_identity():
 
     # Incoming name is a variant not literally in the map
     matches = resolve_person_id(
-        "Ricardo Richie Rangel Jr", [], [person], canonical_map, identities
+        "Ricardo Richie Rangel Jr", [], [], [person], canonical_map, identities
     )
     assert len(matches) == 1
     assert matches[0].name == "Ricardo Richie Rangel, Jr."
@@ -66,7 +66,7 @@ def test_resolve_person_id_no_match():
     identities = {"Ruben Gutierrez, Jr.": []}
     canonical_map = build_canonical_map([person], identities)
 
-    matches = resolve_person_id("John Smith", [], [person], canonical_map, identities)
+    matches = resolve_person_id("John Smith", [], [], [person], canonical_map, identities)
     assert matches == []
 
 
@@ -75,7 +75,7 @@ def test_resolve_person_id_empty_name():
     identities = {"Ruben Gutierrez, Jr.": []}
     canonical_map = build_canonical_map([person], identities)
 
-    matches = resolve_person_id(None, [], [person], canonical_map, identities)
+    matches = resolve_person_id(None, [], [], [person], canonical_map, identities)
     assert matches == []
 
 
@@ -88,6 +88,7 @@ def test_resolve_person_id_narrows_by_email():
 
     matches = resolve_person_id(
         "Ruben Gutierrez, Jr.",
+        [],
         ["ruben@ci.laredo.tx.us"],
         [person_a, person_b],
         canonical_map,
@@ -105,7 +106,7 @@ def test_resolve_person_id_ambiguous_without_email():
     canonical_map = build_canonical_map([person_a, person_b], identities)
 
     matches = resolve_person_id(
-        "Ruben Gutierrez, Jr.", [], [person_a, person_b], canonical_map, identities
+        "Ruben Gutierrez, Jr.", [], [], [person_a, person_b], canonical_map, identities
     )
     assert len(matches) == 2
 
@@ -282,3 +283,98 @@ def test_resolve_people_ids_distinct_people_keep_their_matches():
 
     assert [r["id"] for r in results] == ["id-a", "id-b"]
     assert all(r["duplicate_match"] is False for r in results)
+
+
+def test_resolve_people_ids_matches_on_a_stated_other_name():
+    """A sheet row "Jennifer Fisk-Becker" whose volunteer wrote the published "Jenny" beside it."""
+    person = make_person("Jenny Fisk-Becker", id="jenny")
+
+    results = resolve_people_ids(
+        [{"name": "Jennifer Fisk-Becker", "other_names": ["Jenny Fisk-Becker"]}],
+        [person],
+        {"Jenny Fisk-Becker": []},
+    )
+    assert results[0]["id"] == "jenny"
+
+
+def test_a_stated_other_name_outranks_a_guess_on_the_name():
+    guessed = make_person("Jon Smith", id="jon")
+    stated = make_person("Johnny Smith", id="johnny")
+
+    matches = resolve_person_id(
+        "John Smith",
+        ["Johnny Smith"],
+        [],
+        [guessed, stated],
+        build_canonical_map([guessed, stated], {"Jon Smith": [], "Johnny Smith": []}),
+        {"Jon Smith": [], "Johnny Smith": []},
+    )
+    assert [person.id for person in matches] == ["johnny"]
+
+
+def test_a_stated_other_name_must_match_exactly():
+    person = make_person("Jenny Fisk-Becker", id="jenny")
+
+    matches = resolve_person_id(
+        "Jennifer Fisk-Becker",
+        ["Jenny Fisk"],
+        [],
+        [person],
+        build_canonical_map([person], {"Jenny Fisk-Becker": []}),
+        {"Jenny Fisk-Becker": []},
+    )
+    assert matches == []
+
+
+
+def _seated(name, id):
+    """On the roster: holds an open membership."""
+    return Person(
+        id=id,
+        name=name,
+        memberships=[
+            Membership(
+                post_id=f"post-{id}",
+                role_id="council-member",
+                division_ocdid="ocd-division/country:us/state:tx/place:laredo",
+                role_label="Council Member",
+            )
+        ],
+        jurisdiction_ocdid=_OCDID,
+    )
+
+
+def _resolve_ids(names, people):
+    identities = {person.name: person.other_names for person in people}
+    return [result["id"] for result in resolve_people_ids([{"name": n} for n in names], people, identities)]
+
+
+def test_one_leaving_and_one_arriving_under_a_nickname_are_one_person():
+    """Truckee, 2026-09-18: we publish Dave Polivy, the sheet says David."""
+    people = [_seated("Dave Polivy", "dave"), _seated("Anna Klovstad", "anna")]
+
+    assert _resolve_ids(["David Polivy", "Anna Klovstad"], people) == ["dave", "anna"]
+
+
+def test_no_nickname_tie_when_two_absent_people_share_the_surname():
+    people = [_seated("Dave Polivy", "dave"), _seated("Donna Polivy", "donna")]
+
+    assert "dave" not in _resolve_ids(["David Polivy"], people)
+
+
+def test_no_nickname_tie_when_two_arrivals_share_the_surname():
+    people = [_seated("Dave Polivy", "dave")]
+
+    assert "dave" not in _resolve_ids(["David Polivy", "Diane Polivy"], people)
+
+
+def test_no_nickname_tie_to_someone_already_off_the_roster():
+    people = [make_person("Dave Polivy", id="dave")]
+
+    assert _resolve_ids(["David Polivy"], people) != ["dave"]
+
+
+def test_no_nickname_tie_between_names_that_are_not_nicknames():
+    people = [_seated("Ricardo Batalla", "ricardo")]
+
+    assert _resolve_ids(["Richard Batalla"], people) != ["ricardo"]

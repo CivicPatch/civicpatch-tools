@@ -6,7 +6,8 @@ from unittest.mock import patch
 
 import pytest
 
-from core.sheet_import_rows import REQUIRED_COLUMNS, ROSTER_HEADERS
+from core.sheet_import_rows import PUBLISHED_OTHER_NAMES, REQUIRED_COLUMNS, ROSTER_HEADERS
+from lib.csv import column_key
 from services import entry_sheet
 from services.sheet_import import ensure_roster_header
 
@@ -44,4 +45,22 @@ async def test_required_columns_are_marked_on_the_sheet():
 
     [written] = write_rows.call_args.args[2]
     for column, header in zip(ROSTER_HEADERS, written):
-        assert header == (f"{column}*" if column in REQUIRED_COLUMNS else column)
+        if column in REQUIRED_COLUMNS:
+            assert header == f"{column}*"
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_published_other_names_is_marked_read_only_and_reads_back_as_itself():
+    """Ours, among the volunteer's columns: marked so nobody types there expecting it to count,
+    and still found by `write_columns`, which looks the column up by its key."""
+    with (
+        patch("services.sheet_import.sheets.clear_row"),
+        patch("services.sheet_import.sheets.write_rows") as write_rows,
+    ):
+        await ensure_roster_header(_SPREADSHEET_ID)
+
+    [written] = write_rows.call_args.args[2]
+    header = written[ROSTER_HEADERS.index(PUBLISHED_OTHER_NAMES)]
+    assert header == "published_other_names (read-only)"
+    assert column_key(header) == PUBLISHED_OTHER_NAMES

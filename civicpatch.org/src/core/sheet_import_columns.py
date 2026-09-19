@@ -1,10 +1,19 @@
 """The import sheet's columns out: what happened to each row and town, written back into the
-app-owned columns (`STATUS_COLUMNS`) and a jurisdiction the row's source site resolved.
+app-owned columns (`STATUS_COLUMNS`, `PUBLISHED_OTHER_NAMES`) and a jurisdiction the row's
+source site resolved.
 
 Pure: the Sheets calls are the caller's. Rows in is `sheet_import_rows`.
 """
 
-from core.sheet_import_rows import JURISDICTION, ImportRow, RowError, clean_cell, row_key
+from core.sheet_import_rows import (
+    JURISDICTION,
+    NAMES_SEPARATOR,
+    PUBLISHED_OTHER_NAMES,
+    ImportRow,
+    RowError,
+    clean_cell,
+    row_key,
+)
 
 # What a row's `status` can say.
 IMPORTED = "imported"
@@ -22,26 +31,46 @@ def _jurisdiction_column(raw_rows: list[dict], rows: list[ImportRow]) -> list[st
     ]
 
 
-def _note_column(
+def _per_row_column(
+    column: str,
     raw_rows: list[dict],
     jurisdictions: list[str],
     imported: set[str],
-    notes: dict[tuple[str, str], str],
+    values: dict[tuple[str, str], str],
     dismissed: set[str],
 ) -> list[str]:
-    """A town imported this run gets fresh notes. Otherwise the note stays until the town's
+    """A town imported this run gets fresh values. Otherwise the cell stays until the town's
     last import is dismissed, when it no longer describes anything that can happen."""
-    column = []
+    cells = []
     for row, jurisdiction_cell in zip(raw_rows, jurisdictions):
         key = row_key(jurisdiction_cell, row.get("name") or "")
         jurisdiction = key[0]
         if jurisdiction in imported:
-            column.append(notes.get(key, ""))
+            cells.append(values.get(key, ""))
         elif jurisdiction in dismissed:
-            column.append("")
+            cells.append("")
         else:
-            column.append(clean_cell(row.get("note")))
-    return column
+            cells.append(clean_cell(row.get(column)))
+    return cells
+
+
+def by_row(
+    jurisdiction_ocdid: str, records_by_person: dict[str, list[dict]], by_person: dict[str, str]
+) -> dict[str, str]:
+    """A value per person, keyed as the roster tab's rows are: by `row_key`'s lowercased name."""
+    return {
+        row_key(jurisdiction_ocdid, record["name"])[1]: by_person[person_id]
+        for person_id, records in records_by_person.items()
+        if person_id in by_person
+        for record in records
+    }
+
+
+def published_other_names_by_person(published: list[dict]) -> dict[str, str]:
+    return {
+        person["id"]: NAMES_SEPARATOR.join(person.get("other_names") or [])
+        for person in published
+    }
 
 
 def roster_columns(
@@ -51,10 +80,12 @@ def roster_columns(
     imported: set[str],
     stamp: str,
     notes: dict[tuple[str, str], str],
+    published_other_names: dict[tuple[str, str], str],
     dismissed: set[str],
 ) -> dict[str, list]:
-    """`status`, `error`, `last_import_at` and `note` for every row of the roster tab, and
-    `jurisdiction_ocdid` filled in where the row's source site resolved a blank one.
+    """`status`, `error`, `last_import_at`, `note` and `published_other_names` for every row of
+    the roster tab, and `jurisdiction_ocdid` filled in where the row's source site resolved a
+    blank one.
 
     Every row, not only the ones that changed: a row that failed last run and is fine now needs
     its error cleared, and leaving it would have the volunteer chasing a problem they fixed.
@@ -115,5 +146,8 @@ def roster_columns(
         "status": status,
         "error": message,
         "last_import_at": stamps,
-        "note": _note_column(raw_rows, jurisdictions, imported, notes, dismissed),
+        "note": _per_row_column("note", raw_rows, jurisdictions, imported, notes, dismissed),
+        PUBLISHED_OTHER_NAMES: _per_row_column(
+            PUBLISHED_OTHER_NAMES, raw_rows, jurisdictions, imported, published_other_names, dismissed
+        ),
     }

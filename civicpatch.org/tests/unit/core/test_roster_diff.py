@@ -10,6 +10,7 @@ from core.roster_diff import (
     ChangeCounts,
     DiffType,
     count_changes,
+    likely_same_people,
     person_diffs,
     person_notes,
 )
@@ -130,7 +131,7 @@ def _label(division_ocdid):
 def test_a_new_person_notes_that_first_then_their_post():
     proposals = propose([_post(f"{_BASE}/ward:3", "p3")], [], [_COUNCIL])
 
-    notes = person_notes(["p3"], person_diffs([], [_person("p3", "Cy Dunn")]), proposals)
+    notes = person_notes(["p3"], person_diffs([], [_person("p3", "Cy Dunn")]), proposals, {})
 
     assert notes == {"p3": f"new person; new post: {_label(f'{_BASE}/ward:3')}"}
 
@@ -143,7 +144,7 @@ def test_a_move_comes_before_changed_fields():
         [_post(f"{_BASE}/ward:2", "p1")], [_held("p1", f"{_BASE}/ward:1")], [_COUNCIL]
     )
 
-    notes = person_notes(["p1"], person_diffs(published, proposed), proposals)
+    notes = person_notes(["p1"], person_diffs(published, proposed), proposals, {})
 
     assert notes["p1"] == (
         f"moved from {_label(f'{_BASE}/ward:1')} to {_label(f'{_BASE}/ward:2')}; "
@@ -158,6 +159,52 @@ def test_someone_the_import_leaves_as_they_are_is_unchanged():
         [_post(f"{_BASE}/ward:1", "p1")], [_held("p1", f"{_BASE}/ward:1")], [_COUNCIL]
     )
 
-    assert person_notes(["p1"], person_diffs([person], [person]), proposals) == {
+    assert person_notes(["p1"], person_diffs([person], [person]), proposals, {}) == {
         "p1": UNCHANGED_NOTE
     }
+
+
+def _turnover(published: list[dict], proposed: list[dict]):
+    """Everyone published held a ward; everyone proposed is seated in one."""
+    proposals = propose(
+        [_post(f"{_BASE}/ward:{index}", person["id"]) for index, person in enumerate(proposed)],
+        [_held(person["id"], f"{_BASE}/ward:{index}") for index, person in enumerate(published)],
+        [_COUNCIL],
+    )
+    return person_diffs(published, proposed), proposals
+
+
+@pytest.mark.unit
+def test_an_added_and_an_absent_person_sharing_a_surname_may_be_one():
+    """Ferndale, 2026-09-18: the sheet said Jennifer, we publish her as Jenny."""
+    published = [_person("p1", "Ana Reyes"), _person("p2", "Jenny Fisk-Becker")]
+    proposed = [_person("p1", "Ana Reyes"), _person("p3", "Jennifer Fisk-Becker")]
+    diffs, proposals = _turnover(published, proposed)
+
+    assert likely_same_people(published, proposed, diffs, proposals) == {
+        "p3": "Jenny Fisk-Becker",
+        "p2": "Jennifer Fisk-Becker",
+    }
+
+
+@pytest.mark.unit
+def test_two_absent_people_sharing_the_surname_make_no_pair():
+    published = [_person("p1", "Ann Smith"), _person("p2", "Bob Smith")]
+    proposed = [_person("p3", "Robert Smith")]
+    diffs, proposals = _turnover(published, proposed)
+
+    assert likely_same_people(published, proposed, diffs, proposals) == {}
+
+
+@pytest.mark.unit
+def test_a_likely_pair_tells_the_volunteer_how_to_link_them():
+    published = [_person("p2", "Jenny Fisk-Becker")]
+    proposed = [_person("p3", "Jennifer Fisk-Becker")]
+    diffs, proposals = _turnover(published, proposed)
+    likely = likely_same_people(published, proposed, diffs, proposals)
+
+    notes = person_notes(["p3"], diffs, proposals, likely)
+
+    assert notes["p3"].startswith(
+        "new person; may be Jenny Fisk-Becker: add that name to other_names to link them"
+    )

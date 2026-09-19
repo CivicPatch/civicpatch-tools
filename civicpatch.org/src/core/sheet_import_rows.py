@@ -42,8 +42,12 @@ class ImportStatus(StrEnum):
 
 _REQUIRED = ("name", "source_url")
 # A blank cell states nothing: the published value is kept (`people_roster.partial_roster`). A blank
-# `label` keeps the person's current post; for someone new it derives to unmatched.
-_OPTIONAL = ("label", "email", "phone", "image")
+# `label` keeps the person's current post; for someone new it derives to unmatched. `other_names`
+# only ever adds: a name left out is not taken away.
+_OPTIONAL = ("label", "email", "phone", "image", "other_names")
+
+# The Live tabs' list separator. Not a comma: a name can hold one ("Hale, Jr.").
+NAMES_SEPARATOR = " | "
 
 
 class RowError(BaseModel):
@@ -64,6 +68,7 @@ class Sighting(BaseModel):
     """Exactly what `insert_source_records` writes, keyed as `source_records` names it."""
 
     name: str
+    other_names: list[str] = []
     label: str
     source_url: str
     # The body whose site `source_url` is on; None for the jurisdiction's default.
@@ -92,6 +97,12 @@ def clean_cell(value) -> str:
 
 def _optional(value) -> str | None:
     return clean_cell(value) or None
+
+
+def _names(value) -> list[str]:
+    """Split on the bare bar, so "a|b" reads the same as "a | b"."""
+    names = clean_cell(value).split(NAMES_SEPARATOR.strip())
+    return [name.strip() for name in names if name.strip()]
 
 
 def _jurisdiction(row: dict, sites: SiteIndex) -> str:
@@ -166,9 +177,13 @@ _VOLUNTEER_COLUMNS = (JURISDICTION,) + _REQUIRED + _OPTIONAL
 # as required without anyone having to already know the contract.
 REQUIRED_COLUMNS = _REQUIRED
 
+# Ours and never read back: the aliases the row's person is already published with, beside
+# `other_names` so a volunteer adds only what is missing.
+PUBLISHED_OTHER_NAMES = "published_other_names"
+
 # The header row in full — the single source of truth `services.sheet_import` writes to the
 # sheet itself, so the contract can never drift from what this module actually reads.
-ROSTER_HEADERS = _VOLUNTEER_COLUMNS + STATUS_COLUMNS
+ROSTER_HEADERS = _VOLUNTEER_COLUMNS + (PUBLISHED_OTHER_NAMES,) + STATUS_COLUMNS
 
 
 def _is_blank(row: dict) -> bool:
@@ -226,6 +241,7 @@ def _import_row(row: dict, line: int, jurisdiction: str, sites: SiteIndex) -> Im
         status=clean_cell(row.get("status")),
         sighting=Sighting(
             name=clean_cell(row["name"]),
+            other_names=_names(row.get("other_names")),
             label=clean_cell(row.get("label")),
             source_url=source_url,
             organization_id=organization_on_site(sites, jurisdiction, source_url),

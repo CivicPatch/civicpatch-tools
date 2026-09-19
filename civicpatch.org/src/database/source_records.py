@@ -16,9 +16,9 @@ from database.database import get_pool
 
 _INSERT_RECORD = """
     INSERT INTO source_records
-        (id, changeset_id, jurisdiction_ocdid, name, label, source_url,
+        (id, changeset_id, jurisdiction_ocdid, name, other_names, label, source_url,
          url, phone, email, image, cdn_image, start_date, end_date, organization_id)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
 """
 
 _INSERT_IDENTITY = """
@@ -35,6 +35,7 @@ def _record_row(
         changeset_id,
         jurisdiction_ocdid,
         record["name"],
+        record.get("other_names") or [],
         record["label"],
         record["source_url"],
         record.get("url"),
@@ -104,7 +105,7 @@ async def get_earliest_source_records_for_people(person_ids: list[str]) -> list[
             """
             WITH ranked AS (
                 SELECT s.id::text, s.changeset_id::text, i.person_id::text, s.jurisdiction_ocdid,
-                       s.name, s.label, s.source_url, s.url, s.phone, s.email,
+                       s.name, s.other_names, s.label, s.source_url, s.url, s.phone, s.email,
                        s.image, s.cdn_image, s.start_date, s.end_date, s.created_at,
                        s.organization_id::text AS organization_id,
                        FIRST_VALUE(s.changeset_id::text) OVER (
@@ -114,9 +115,9 @@ async def get_earliest_source_records_for_people(person_ids: list[str]) -> list[
                 JOIN source_record_identities i ON i.source_record_id = s.id
                 WHERE i.person_id = ANY(%s)
             )
-            SELECT id, changeset_id, person_id, jurisdiction_ocdid, name, label, source_url,
-                   url, phone, email, image, cdn_image, start_date, end_date, created_at,
-                   organization_id
+            SELECT id, changeset_id, person_id, jurisdiction_ocdid, name, other_names, label,
+                   source_url, url, phone, email, image, cdn_image, start_date, end_date,
+                   created_at, organization_id
             FROM ranked
             WHERE changeset_id = origin_changeset_id
             ORDER BY created_at, label
@@ -134,7 +135,7 @@ async def get_source_records_for_changeset(changeset_id: str) -> list[dict]:
         await cur.execute(
             """
             SELECT s.id::text, s.changeset_id::text, i.person_id::text, s.jurisdiction_ocdid,
-                   s.name, s.label, s.source_url, s.url, s.phone, s.email,
+                   s.name, s.other_names, s.label, s.source_url, s.url, s.phone, s.email,
                    s.image, s.cdn_image, s.start_date, s.end_date, s.created_at,
                    s.organization_id::text AS organization_id
             FROM source_records s
