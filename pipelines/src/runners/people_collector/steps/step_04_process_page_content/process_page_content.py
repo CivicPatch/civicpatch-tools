@@ -21,6 +21,7 @@ from runners.people_collector.schemas import (
     RelevantPageResponseSchema,
 )
 from runners.people_collector.steps.step_04_process_page_content.organization_progress import (
+    organization_needs,
     organizations_progress,
 )
 from runners.people_collector.steps.step_04_process_page_content.extraction_scopes import (
@@ -30,10 +31,10 @@ from runners.people_collector.steps.step_04_process_page_content.extraction_scop
 from runners.people_collector.steps.step_04_process_page_content.heuristics import (
     check_page_heuristics,
 )
-from shared.schemas import KnownOrganization
+from shared.schemas import KnownOrganization, Membership
+from runners.people_collector.utils.organization_terms import as_tokens, search_phrases
 from runners.people_collector.utils.link_discovery import (
     add_relevant_urls,
-    organization_search_terms,
     extract_names_and_designations,
     find_heuristic_urls,
     has_role_and_contact_info,
@@ -60,6 +61,7 @@ class ProcessingSetup:
     target_divisions: List[str]
     known_roles: List[str]
     known_organizations: List[KnownOrganization]
+    known_memberships: List[Membership]
 
 
 MINIMUM_NUM_PEOPLE = 5
@@ -169,6 +171,7 @@ async def process_page_content(
         target_divisions=research.target_divisions,
         known_roles=known_roles,
         known_organizations=research.known_organizations,
+        known_memberships=research.known_memberships,
     )
     current_step = get_or_create_step(context)
     identities = research.identities
@@ -177,7 +180,12 @@ async def process_page_content(
     )
 
     frontier, is_relevant = await check_page_relevance(
-        context, page_to_process, content, known_roles, research.known_organizations
+        context,
+        page_to_process,
+        content,
+        known_roles,
+        research.known_organizations,
+        research.known_memberships,
     )
     if not is_relevant:
         return frontier, current_step
@@ -206,6 +214,12 @@ async def process_page_content(
             taxonomy,
             role_names,
             updated_records,
+            organization_needs(
+                research.known_organizations,
+                research.known_memberships,
+                updated_records,
+                taxonomy,
+            ),
         )
     else:
         frontier = frontier.mark_status(
@@ -267,6 +281,7 @@ async def check_page_relevance(
     content: str,
     known_roles: list[str],
     known_organizations: List[KnownOrganization],
+    known_memberships: List[Membership],
 ) -> Tuple[LinkFrontier, bool]:
     prompt = open_router_prompt.relevant_page_prompt(
         page_to_process.url,
@@ -302,11 +317,18 @@ async def check_page_relevance(
             candidate_urls,
             frontier,
             page_to_process.url,
+            organization_needs(
+                known_organizations,
+                known_memberships,
+                existing_records,
+                build_taxonomy(context.data.role_config),
+            ),
             names,
-            # Bodies and their posts as well as roles: the queue now ranks a designation match
+            # Organizations and their posts as well as roles: the queue ranks a designation match
             # above reference count, and an organization whose wording no role covers had nothing to
             # match on at all.
-            designations + known_roles + organization_search_terms(known_organizations),
+            designations
+            + as_tokens(search_phrases(known_organizations, known_memberships, known_roles)),
             logger,
             url_comments=url_comments,
         )
@@ -499,7 +521,9 @@ def calculate_progress(
         current_data=max_people_count,
         has_target_role=has_target_role if requires_mayor else True,
         has_target_divisions=has_target_divisions,
-        organizations=organizations_progress(setup_data.known_organizations, records, taxonomy),
+        organizations=organizations_progress(
+            setup_data.known_organizations, setup_data.known_memberships, records, taxonomy
+        ),
     )
 
 

@@ -8,6 +8,7 @@ from runners.people_collector.schemas import (
     PipelineStatus, 
     PreprocessPageContentStep, 
 )
+from runners.people_collector.utils.organization_terms import search_phrases
 from shared.utils import data_path_utils, config_utils, url_utils
 from runners.people_collector.schemas import LinkFrontier
 from runners.people_collector.steps.step_03_preprocess_page_content.filter_content import filter_content
@@ -46,16 +47,12 @@ def preprocess_page_content(
     identities = context.data.research_municipality_step.identities
     known_roles = context.data.research_municipality_step.known_roles
     role_config_names = config_utils.get_role_names(context.data.role_config)
-    # Body names too: filtering runs before any prompt sees the page, so a section headed
+    # Organization names too: filtering runs before any prompt sees the page, so a section headed
     # "Office of the Mayor" or "Board of Aldermen" whose wording matches no role name was
     # dropped here and nothing downstream could recover it.
-    organization_names = [
-        organization.name
-        for organization in context.data.research_municipality_step.known_organizations
-    ]
-    extra_keywords = list(
-        dict.fromkeys(known_roles + role_config_names + organization_names)
-    )
+    research = context.data.research_municipality_step
+    phrases = search_phrases(research.known_organizations, research.known_memberships, known_roles)
+    extra_keywords = list(dict.fromkeys(phrases + role_config_names))
     logger.debug(f"-> Preprocessing with identities: {identities}")
     cleaned_html = clean_html(logger, output_html)
     preprocessed_html  = filter_content(logger, identities, cleaned_html, extra_keywords=extra_keywords)

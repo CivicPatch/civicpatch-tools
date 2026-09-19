@@ -6,6 +6,7 @@ from runners.people_collector.schemas import (
     Link,
     LinkFrontier,
     LinkStatus,
+    OrganizationNeed,
     PeopleByName,
     PersonSourceRecord,
 )
@@ -162,69 +163,33 @@ def extract_names_and_designations(
     return names, designations
 
 
-# Words in an organization's name that every municipal site uses somewhere, so matching on them ranks
-# `/clerks-office` and `/city-hall-hours` alongside the roster. Dropped rather than the whole
-# name, because what is left is what distinguishes one organization from another: "School Board" keeps
-# `school`, "Office of the Mayor" keeps `mayor`.
-_GENERIC_ORGANIZATION_TOKENS = frozenset(
-    {
-        "city",
-        "town",
-        "village",
-        "borough",
-        "township",
-        "county",
-        "government",
-        "municipal",
-        "office",
-        "offices",
-        "department",
-        "departments",
-        "administration",
-        "public",
-        "general",
-    }
-)
+def _serves(link: Link, terms: List[str]) -> bool:
+    # The path, not the url: "Greensboro City Council" must not match every link on greensboro-nc.gov.
+    return bool(
+        _match_any_token(url_utils.get_path(link.url), terms)
+        or _match_any_token(link.text or "", terms)
+    )
 
 
-def organization_search_terms(organizations) -> List[str]:
-    """The distinctive words of each organization's name and its posts' labels, as search terms.
-
-    `designations` are matched token-wise at four characters or more, so passing an organization name
-    whole would contribute its filler words too. These are the tokens worth ranking a link on,
-    and they are what lets an organization whose wording no role covers — a School Board in a jurisdiction
-    whose roles are Mayor and Council Member — score at all.
-    """
-    terms: List[str] = []
-    for organization in organizations:
-        for source in [organization.name, *(post.label for post in organization.posts)]:
-            # Split in source order rather than through `_tokenize`, which returns a set: this
-            # feeds a sort key, and a term list that reorders between runs makes a queue that
-            # cannot be replayed.
-            for token in re.split(
-                r"[^a-z0-9]", name_utils.normalize_text_for_search(source or "").lower()
-            ):
-                if (
-                    len(token) >= 4
-                    and token not in _GENERIC_ORGANIZATION_TOKENS
-                    and token not in terms
-                ):
-                    terms.append(token)
-    return terms
+def _neediest_served(link: Link, needs: List[OrganizationNeed]) -> Optional[OrganizationNeed]:
+    served = [need for need in needs if _serves(link, need.terms)]
+    return max(served, key=lambda need: need.shortfall, default=None)
 
 
-def _pending_sort_key(link: Link, names: List[str], designations: List[str]) -> tuple:
+def _pending_sort_key(
+    link: Link, needs: List[OrganizationNeed], names: List[str], designations: List[str]
+) -> tuple:
+    neediest = _neediest_served(link, needs)
     signals = _compute_link_signals(
         link.url, link.text or "", designations, names=names
     )
     return (
+        -(neediest.shortfall if neediest else 0.0),
+        -int(neediest is not None and _serves(link, neediest.missing_terms)),
         -int(signals.keyword is not None),
         -int(signals.designation is not None),
         -link.num_references,
         -int(signals.name is not None),
-        # Dead: `_compute_link_signals` is called above without `roles`, so this is always None.
-        # Roles do reach the key, as `add_relevant_urls` is passed `designations + known_roles`.
-        -int(signals.role is not None),
         len(url_utils.get_path(link.url).split("/")),
     )
 
@@ -233,6 +198,7 @@ def add_relevant_urls(
     urls: List[str],
     frontier: LinkFrontier,
     domain: str,
+    needs: List[OrganizationNeed],
     names: Optional[List[str]] = None,
     designations: Optional[List[str]] = None,
     logger=None,
@@ -285,7 +251,7 @@ def add_relevant_urls(
         new_keys.append(key)
 
     all_pending = list(frontier.queue) + new_keys
-    all_pending.sort(key=lambda k: _pending_sort_key(new_links[k], names, designations))
+    all_pending.sort(key=lambda k: _pending_sort_key(new_links[k], needs, names, designations))
     return frontier.model_copy(update={"links": new_links, "queue": all_pending})
 
 
@@ -347,11 +313,12 @@ def update_website_links(
     role_names: List[str],
     frontier: LinkFrontier,
     records: PeopleByName,
+    needs: List[OrganizationNeed],
 ) -> LinkFrontier:
     found_websites = extract_websites_from_processed_data(logger, taxonomy, records)
     names, designations = extract_names_and_designations(records)
     return add_relevant_urls(
-        found_websites, frontier, domain, names, designations + role_names, logger
+        found_websites, frontier, domain, needs, names, designations + role_names, logger
     )
 
 
@@ -363,7 +330,10 @@ def update_links(
     taxonomy: Taxonomy,
     role_names: List[str],
     records: PeopleByName,
+    needs: List[OrganizationNeed],
 ) -> LinkFrontier:
     """Mark processed page as DONE and add new website links from LLM records."""
     frontier = frontier.mark_status(processed_page.url, LinkStatus.DONE)
-    return update_website_links(logger, domain, taxonomy, role_names, frontier, records)
+    return update_website_links(
+        logger, domain, taxonomy, role_names, frontier, records, needs
+    )
