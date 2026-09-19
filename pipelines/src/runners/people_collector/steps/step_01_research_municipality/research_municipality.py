@@ -50,10 +50,8 @@ async def research_municipality(
     researched: List[ResearchedPerson] = []
     if posts:
         logger.info(f"research_municipality: {len(posts)} known posts, skipping research.")
-        origin_source = "existing"
     else:
         researched = await _research_roster(context, logger) if _can_research() else []
-        origin_source = "google_gemini" if researched else "none"
 
     taxonomy = build_taxonomy(context.data.role_config)
     return ResearchMunicipalityStep(
@@ -74,7 +72,6 @@ async def research_municipality(
         source_urls=_source_urls(
             context.data.config, [Person(**person) for person in existing]
         ),
-        origin_source=origin_source,
     )
 
 

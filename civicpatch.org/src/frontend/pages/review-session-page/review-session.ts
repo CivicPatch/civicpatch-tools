@@ -404,7 +404,6 @@ function ReviewSession(host: ReviewSessionHost) {
         .issues=${allIssues}
         .checks=${issueChecks}
         .peopleBySource=${review_data?.people_by_source ?? []}
-        .originSource=${review_data?.origin_source ?? null}
         .open=${checklistOpen}
         @close=${() => setChecklistOpen(false)}
         @toggle-issue=${(e: CustomEvent) => handleToggleIssue(e.detail.issue)}

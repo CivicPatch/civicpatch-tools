@@ -247,7 +247,6 @@ def build_review_summary(
     research_people,
     people,
     inputs: ReviewInputs | None = None,
-    origin_source: str = "google_gemini",
 ) -> dict:
     inputs = inputs or ReviewInputs()
     # Normalize to dicts once so every check reads fields uniformly (the pipeline passes
@@ -277,4 +276,4 @@ def build_review_summary(
 
     all_canonicals = _collect_all_canonicals(research_canonicals, people_canonicals)
     rows = _generate_rows(all_canonicals, research_canonicals, people_canonicals)
-    return {"issues": issues, "people_by_source": rows, "origin_source": origin_source}
+    return {"issues": issues, "people_by_source": rows}

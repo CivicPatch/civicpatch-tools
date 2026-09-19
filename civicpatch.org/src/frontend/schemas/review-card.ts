@@ -14,7 +14,6 @@ export interface RosterPresence {
 export interface ReviewSummary {
   issues: Issue[];
   people_by_source: RosterPresence[];
-  origin_source: string | null;
 }
 
 export interface ReviewSource {

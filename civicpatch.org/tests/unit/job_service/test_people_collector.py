@@ -172,7 +172,6 @@ def _context_with_research(identities: dict) -> dict:
         "data": {
             "research_municipality_step": {
                 "identities": identities,
-                "origin_source": "existing",
             }
         }
     }

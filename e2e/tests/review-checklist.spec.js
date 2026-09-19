@@ -212,20 +212,16 @@ test.describe("Issue checklist", () => {
     await expect(rowFor("Alice Mayor")).toHaveClass(/^$/);
   });
 
-  // This fixture has no origin_source, so the collector never had a previous
-  // scrape to compare against — the table is a first capture and says so.
-  test("says what the baseline is when there was no previous scrape", async ({
+  // Alice and Dave are published, so the baseline is a previous scrape.
+  test("names the baseline as the last scrape", async ({
     authenticatedPage: page,
   }) => {
     await openMarkers(page);
     await openDrawer(page);
 
-    await expect(page.locator(".review-sidebar__note")).toContainText(
-      "No previous scrape",
-    );
-    // The column is named for the origin source the summary carries, not a generic "Research".
+    await expect(page.locator(".review-sidebar__note")).toHaveCount(0);
     await expect(page.locator(".people-by-source thead")).toContainText(
-      "Google Gemini",
+      "Last scrape",
     );
     await expect(page.locator(".people-by-source thead")).toContainText(
       "This scrape",

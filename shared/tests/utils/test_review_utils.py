@@ -202,7 +202,6 @@ def test_build_review_summary_returns_structured_issues():
     research = [_rp("Alice Smith"), _rp("Bob Jones")]
     people = [_official("Alice Smith", person_id="a1", office_name="Mayor")]  # Bob missing, too few
     result = build_review_summary(research, people)
-    assert result["origin_source"] == "google_gemini"
     assert "people_by_source" in result
     issues = result["issues"]
     assert issues and all(isinstance(i, Issue) for i in issues)
