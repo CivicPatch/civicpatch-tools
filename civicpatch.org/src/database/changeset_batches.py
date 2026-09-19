@@ -6,8 +6,10 @@ per-item store — what one did reads off `source_records` by `changeset_id`.
 """
 
 import json
+from collections.abc import Sequence
 from enum import StrEnum
 
+from core.sheet_import_rows import RowError
 from database.database import get_pool
 from psycopg.errors import UniqueViolation
 
@@ -73,6 +75,8 @@ async def start(
     started_by_user_id: str,
     arguments_json: dict,
     items_total: int | None = None,
+    errors: Sequence[RowError] = (),
+    rows_read: int | None = None,
 ) -> str:
     """Claim the lock and open a batch. The claim *is* the insert, so there is no
     check-then-act window for two callers to race through."""
@@ -83,8 +87,9 @@ async def start(
             await cur.execute(
                 """
                 INSERT INTO changeset_batches
-                    (kind, lock_key, arguments_json, started_by_user_id, items_total)
-                VALUES (%s, %s, %s, %s, %s)
+                    (kind, lock_key, arguments_json, started_by_user_id, items_total, errors,
+                     rows_read)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
                 RETURNING id::text
                 """,
                 (
@@ -93,6 +98,8 @@ async def start(
                     json.dumps(arguments_json),
                     started_by_user_id,
                     items_total,
+                    _errors_json(errors),
+                    rows_read,
                 ),
             )
         except UniqueViolation as e:
@@ -102,19 +109,28 @@ async def start(
     return row[0]
 
 
-async def finish(batch_id: str, status: BatchStatus, error: str | None = None) -> None:
+async def finish(
+    batch_id: str,
+    status: BatchStatus,
+    error: str | None = None,
+    errors: Sequence[RowError] = (),
+) -> None:
     """Close the batch. `finished_at` is what the lock keys on, so this must happen even when
-    the batch failed."""
+    the batch failed. `errors` are appended to the ones found at start."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             UPDATE changeset_batches
-               SET status = %s, error = %s, finished_at = now()
+               SET status = %s, error = %s, errors = errors || %s::jsonb, finished_at = now()
              WHERE id = %s
             """,
-            (status.value, error, batch_id),
+            (status.value, error, _errors_json(errors), batch_id),
         )
+
+
+def _errors_json(errors: Sequence[RowError]) -> str:
+    return json.dumps([row_error.model_dump() for row_error in errors])
 
 
 async def get(batch_id: str) -> dict | None:
@@ -126,7 +142,7 @@ async def get(batch_id: str) -> dict | None:
             SELECT b.id::text, b.kind, b.lock_key, b.arguments_json, b.status,
                    b.items_total,
                    (SELECT count(*) FROM changesets WHERE changesets.batch_id = b.id) AS items_done,
-                   b.error, b.started_by_user_id::text, b.started_at, b.finished_at
+                   b.error, b.errors, b.rows_read, b.started_by_user_id::text, b.started_at, b.finished_at
             FROM changeset_batches b WHERE b.id = %s
             """,
             (batch_id,),
@@ -152,7 +168,7 @@ async def list_recent(kind: BatchKind, limit: int = 25, offset: int = 0) -> list
             SELECT b.id::text, b.kind, b.lock_key, b.arguments_json, b.status,
                    b.items_total,
                    (SELECT count(*) FROM changesets WHERE changesets.batch_id = b.id) AS items_done,
-                   b.error, b.started_by_user_id::text, b.started_at, b.finished_at
+                   b.error, b.errors, b.rows_read, b.started_by_user_id::text, b.started_at, b.finished_at
             FROM changeset_batches b
             WHERE b.kind = %s
             ORDER BY b.started_at DESC
@@ -200,7 +216,7 @@ async def items(batch_id: str) -> list[dict]:
         await cur.execute(
             f"""
             SELECT changesets.id::text AS changeset_id, changesets.jurisdiction_ocdid,
-                   changesets.changeset_state,
+                   changesets.changeset_state, changesets.proposal_counts,
                    j.data->>'name' AS name
             FROM changesets
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = changesets.jurisdiction_ocdid

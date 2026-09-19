@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Dict, List, Optional, TypeAlias
 
-from shared.schemas import KnownOrganization, Person
+from shared.schemas import KnownOrganization, Membership, Person
 from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, ConfigDict, Field
 from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import (
@@ -23,6 +23,16 @@ class OrganizationProgress(BaseModel):
     organization_id: str
     required: int
     found: int
+
+
+class OrganizationNeed(BaseModel):
+    """What the frontier ranks an organization's links by."""
+
+    organization_id: str
+    # 0 when done, 1 when nobody is found yet.
+    shortfall: float
+    terms: List[str]
+    missing_terms: List[str]
 
 
 class ProgressState(BaseModel):
@@ -251,13 +261,14 @@ class ResearchMunicipalityStep(BaseModel):
     researched: List[ResearchedPerson] = []
     # The organizations and their posts; empty on a first scrape. Flat views below are derived from it.
     known_organizations: List[KnownOrganization] = []
+    # The published people's open memberships: their labels are how the site words each post.
+    known_memberships: List[Membership] = []
     target_divisions: List[str] = []  # geographic divisions to look for
     known_roles: list[str] = []
     identities: dict[
         str, list[str]
     ] = {}  # canonical name to list of other names/aliases
     source_urls: list[str] = []
-    notes: Optional[str] = None
     origin_source: str = "google_gemini"
 
 

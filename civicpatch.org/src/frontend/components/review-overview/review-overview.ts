@@ -171,7 +171,7 @@ function renderDepartingSection(
   const upToOpen = shown.slice(0, openIndex + 1);
   const after = shown.slice(openIndex + 1);
   return html`
-    <div class="rgroup" style="--group-cards: ${upToOpen.length}">
+    <div class="rgroup" style="--group-cards: ${shown.length}">
       ${head}
       <div class="rgrid">
         ${upToOpen.map((card) => renderDiffCard(card, props, sources, proposals))}
@@ -180,7 +180,7 @@ function renderDepartingSection(
     ${renderInlineEditor(shown[openIndex], props)}
     ${after.length || rest.length
       ? html`
-          <div class="rgroup" style="--group-cards: ${after.length}">
+          <div class="rgroup" style="--group-cards: ${shown.length}">
             <div class="rgrid">
               ${after.map((card) => renderDiffCard(card, props, sources, proposals))}
             </div>

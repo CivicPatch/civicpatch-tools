@@ -53,7 +53,8 @@ class RowError(BaseModel):
     importer blocks per jurisdiction: without this there is nothing to attribute it to.
     """
 
-    line: int
+    # None for a jurisdiction that failed during ingest rather than a row the sheet rejected.
+    line: int | None
     jurisdiction_ocdid: str
     column: str | None
     message: str

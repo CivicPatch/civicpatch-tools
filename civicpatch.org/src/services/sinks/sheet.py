@@ -14,6 +14,7 @@ import hashlib
 import logging
 from typing import AsyncGenerator, Callable
 
+from core.import_report import report_tabs_in_order
 from core.output_hash import row_line
 from core.sinks.sheet import (
     jurisdiction_rows,
@@ -56,13 +57,14 @@ def posts_tab(state: str) -> str:
     return f"Live[Posts][{state.upper()}]"
 
 
-def ordered_tabs(states: list[str]) -> list[str]:
-    """The whole tab bar: entry, jurisdictions, then each state's three tabs together.
+def ordered_tabs(states: list[str], report_tabs: list[str]) -> list[str]:
+    """The whole tab bar: entry, the import reports, jurisdictions, then each state's three tabs.
 
     State first because that is how the sheet is worked — one state at a time, all three grains
-    side by side. Entry leads because it is the tab a volunteer actually opens.
+    side by side. Entry leads because it is the tab a volunteer actually opens, and the reports
+    follow it because they describe what the last imports of it proposed.
     """
-    tabs = [entry_sheet.ROSTER_TAB, JURISDICTIONS_TAB]
+    tabs = [entry_sheet.ROSTER_TAB, *report_tabs, JURISDICTIONS_TAB]
     for state in sorted(states):
         tabs += [people_tab(state), memberships_tab(state), posts_tab(state)]
     return tabs
@@ -236,6 +238,10 @@ async def order_tabs() -> int:
     A state whose tabs do not exist yet is simply not placed, and falls in on a later run.
     """
     states = [row["code"] for row in await jurisdictions_db.get_states_with_names()]
+    spreadsheet_id = entry_sheet.spreadsheet_id()
+    titles = await asyncio.to_thread(sheets.tab_titles, spreadsheet_id)
     return await asyncio.to_thread(
-        sheets.reorder_tabs, entry_sheet.spreadsheet_id(), ordered_tabs(states)
+        sheets.reorder_tabs,
+        spreadsheet_id,
+        ordered_tabs(states, report_tabs_in_order(titles)),
     )

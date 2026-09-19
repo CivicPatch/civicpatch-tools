@@ -13,6 +13,7 @@ import os
 import pathlib
 
 from tests.unit.runners.frontier_replay import (
+    ORGANIZATION_FIXTURES,
     organization_first_key,
     load_frontier,
     noise_last_key,
@@ -20,6 +21,7 @@ from tests.unit.runners.frontier_replay import (
     ordered,
     pending,
     rank_of,
+    shipped_key,
     research_signals,
     saved_contexts,
     url_contains,
@@ -57,7 +59,8 @@ def report() -> int:
         if not waiting:
             continue
         names, designations = research_signals(path)
-        today = ordered(frontier, names, designations)
+        needs = ORGANIZATION_FIXTURES.get(_jurisdiction(path), [])
+        today = ordered(frontier, names, designations, key=shipped_key(needs))
         candidate = ordered(frontier, names, designations, key=CANDIDATES[CANDIDATE])
         found = {
             fragment: (rank, rank_of(candidate, url_contains(fragment)))

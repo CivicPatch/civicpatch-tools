@@ -138,28 +138,22 @@ def _membership(organization_id: str, source_urls: list[str]) -> Membership:
     )
 
 
-def test_a_page_two_people_share_seeds_the_crawl():
-    """The rule that tells a roster page from a personal one."""
+def test_only_membership_pages_seed_the_crawl():
+    """A person's own `source_urls` span every organization they were ever seen in; the pages
+    behind their memberships are the ones that belong to an organization."""
     seeds = _source_urls(
         _config(),
         [
-            _person("a", ["https://zz.gov/council"]),
-            _person("b", ["https://zz.gov/council"]),
+            _person("a", ["https://zz.gov/news"], [_membership("council", ["https://zz.gov/council"])]),
+            _person("b", ["https://zz.gov/news"]),
         ],
     )
 
     assert seeds == ["https://zz.gov/council"]
 
 
-def test_a_page_only_one_person_is_on_is_not_a_roster_page():
-    seeds = _source_urls(_config(), [_person("a", ["https://zz.gov/staff/ana"])])
-
-    assert seeds == []
-
-
-def test_a_one_person_body_keeps_its_page():
-    """A mayor's office can never clear the shared-page rule, so without this its page would
-    leave the frontier and the body would go unscraped."""
+def test_a_one_person_organization_keeps_its_page():
+    """A mayor's office page is seeded though nobody else was read from it."""
     seeds = _source_urls(
         _config(),
         [_person("a", [], [_membership("mayor", ["https://zz.gov/mayor"])])],
@@ -182,7 +176,7 @@ def test_the_directory_comes_before_the_bios_it_links_to():
     assert sorted(seeds[1:]) == [f"https://zz.gov/council/{n}" for n in ("ana", "ben", "cal")]
 
 
-def test_a_page_two_bodies_were_read_from_is_seeded_once():
+def test_a_page_two_organizations_were_read_from_is_seeded_once():
     """A shared "elected officials" listing belongs to both, and the crawler fetches one page."""
     shared = "https://zz.gov/elected-officials"
     people = [

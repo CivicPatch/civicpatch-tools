@@ -1,5 +1,5 @@
 import { html } from "lit-html";
-import { component, useState, useEffect } from "haunted";
+import { component, useState, useEffect, useRef } from "haunted";
 import { ref } from "lit/directives/ref.js";
 import { usePagerRef } from "../../hooks/use-pager-ref.js";
 import { formatDateTime } from "../../utils/date-utils.js";
@@ -32,6 +32,8 @@ import {
   manageSection,
 } from "../../components/section-nav/index.js";
 import { useSummary } from "../../hooks/useSummary.js";
+import { toggleSelection } from "../../utils/toggle-selection.js";
+import { loadingLine } from "./loading-line.js";
 
 const POLL_INTERVAL_MS = 2000;
 const HISTORY_PER_PAGE = 10;
@@ -75,14 +77,39 @@ function resultsPanel(results: PublishResult[]) {
   `;
 }
 
-function batchHeader(batch: ImportProgress) {
+// Rows the sheet rejected, out of the rows read. A locality that failed during ingest is not a
+// row, so it shows under the Errors filter but not here.
+function rowErrorCount(batch: ImportProgress) {
+  if (batch.rows_read == null) return null;
+  const rejected = batch.errors.filter((error) => error.line != null).length;
+  return html`<span
+    >${rejected} ${rejected === 1 ? "error" : "errors"} in ${batch.rows_read}
+    rows</span
+  >`;
+}
+
+function batchHeader(
+  batch: ImportProgress,
+  open: boolean,
+  onToggle: () => void,
+) {
   return html`
-    <header class="import-batch__header">
+    <header
+      class="import-batch__header import-batch__header--toggle"
+      @click=${onToggle}
+    >
       <span>${formatDateTime(batch.started_at)}</span>
       <span>${batch.status}</span>
+      ${rowErrorCount(batch)}
       ${batch.status === BATCH_FAILED && batch.error
         ? html`<span class="import-batch__error">${batch.error}</span>`
         : null}
+      <i
+        class="fa-solid fa-chevron-down import-batch__caret${open
+          ? " import-batch__caret--open"
+          : ""}"
+        aria-hidden="true"
+      ></i>
     </header>
   `;
 }
@@ -115,6 +142,18 @@ function ImportPage() {
   const [publishingBatchId, setPublishingBatchId] = useState<string | null>(
     null,
   );
+  // Collapsed unless opened: a big batch's review takes seconds, and nobody reads ten at once.
+  const [openBatchIds, setOpenBatchIds] = useState<string[]>([]);
+  const toggleBatch = (batchId: string) =>
+    setOpenBatchIds(toggleSelection(openBatchIds, batchId));
+
+  // The latest import opens by itself: it is almost always the one you came for.
+  useEffect(() => {
+    const latestId = batch?.batch_id;
+    if (latestId && !openBatchIds.includes(latestId)) {
+      setOpenBatchIds([...openBatchIds, latestId]);
+    }
+  }, [batch?.batch_id]);
 
   // Refreshed whenever a batch changes or the page turns, so finishing an import updates the
   // list in place rather than leaving it stale until a reload.
@@ -129,28 +168,29 @@ function ImportPage() {
       });
   }, [historyPage, batch?.batch_id, batch?.status]);
 
-  // One review per finished batch on the current page. A batch still running has none yet —
-  // the progress panel above already covers that one.
+  // One review per open, finished batch, requested once. A big batch's review takes seconds
+  // of server CPU, so a re-run of this effect must not ask again while the first is in flight.
+  // A batch still running has none yet — the progress panel above covers that one.
+  const requestedReviews = useRef<Set<string>>(new Set());
   useEffect(() => {
-    const finished = history.filter((b) => isFinished(b.status));
-    if (!finished.length) return;
-    let stopped = false;
-    Promise.all(
-      finished.map((b) =>
-        fetchBatchReview(b.batch_id).then((r) => [b.batch_id, r.data] as const),
-      ),
-    )
-      .then((pairs) => {
-        if (stopped) return;
-        setReviews(Object.fromEntries(pairs));
-      })
-      .catch(() => {
-        // A missing review reads as "nothing to show" for that batch, not a page-wide error.
-      });
-    return () => {
-      stopped = true;
-    };
-  }, [history]);
+    const wanted = history.filter(
+      (b) =>
+        isFinished(b.status) &&
+        openBatchIds.includes(b.batch_id) &&
+        !requestedReviews.current.has(b.batch_id),
+    );
+    for (const b of wanted) {
+      requestedReviews.current.add(b.batch_id);
+      fetchBatchReview(b.batch_id)
+        .then(({ data }) =>
+          setReviews((prev) => ({ ...prev, [b.batch_id]: data })),
+        )
+        .catch(() => {
+          // A missing review reads as "nothing to show" for that batch; opening it again retries.
+          requestedReviews.current.delete(b.batch_id);
+        });
+    }
+  }, [history, openBatchIds.join(",")]);
 
   useEffect(() => {
     fetchSheetUrl()
@@ -262,6 +302,23 @@ function ImportPage() {
     }
   };
 
+  const batchBody = (b: ImportProgress) => {
+    if (!isFinished(b.status)) return null;
+    const review = reviews[b.batch_id];
+    if (!review) return loadingLine("Loading this import…");
+    return html`
+      ${resultsPanel(resultsByBatch[b.batch_id] ?? [])}
+      <batch-review
+        .review=${review}
+        .errors=${b.errors}
+        .importedAt=${b.started_at}
+        .busy=${publishingBatchId === b.batch_id}
+        @publish-selection=${handlePublish(b.batch_id)}
+        @dismiss-selection=${handleDismiss(b.batch_id)}
+      ></batch-review>
+    `;
+  };
+
   // Built once so Next/Previous re-orients to the top of the history section either way —
   // clicking the bottom pager most often leaves the reader below what just changed above them.
   const historyPager = Pagination({
@@ -289,11 +346,6 @@ function ImportPage() {
           "/imports",
         )}
         <div class="secbody">
-          <p class="import-hint">
-            The curated roster sheet, read as a scrape. Importing raises a
-            review card per locality. Publishing stays your decision.
-          </p>
-
           ${error ? html`<p class="import-error">${error}</p>` : null}
           ${running
             ? progressPanel(batch)
@@ -327,23 +379,15 @@ function ImportPage() {
                 <div ${ref(historyRef)}>
                   <h2 class="import-panel__title">Past imports</h2>
                   ${historyPager}
-                  ${history.map(
-                    (b) => html`
+                  ${history.map((b) => {
+                    const open = openBatchIds.includes(b.batch_id);
+                    return html`
                       <section class="panel import-panel">
-                        ${batchHeader(b)}
-                        ${resultsPanel(resultsByBatch[b.batch_id] ?? [])}
-                        ${reviews[b.batch_id]
-                          ? html`<batch-review
-                              .review=${reviews[b.batch_id]}
-                              .importedAt=${b.started_at}
-                              .busy=${publishingBatchId === b.batch_id}
-                              @publish-selection=${handlePublish(b.batch_id)}
-                              @dismiss-selection=${handleDismiss(b.batch_id)}
-                            ></batch-review>`
-                          : null}
+                        ${batchHeader(b, open, () => toggleBatch(b.batch_id))}
+                        ${open ? batchBody(b) : null}
                       </section>
-                    `,
-                  )}
+                    `;
+                  })}
                   ${historyPager}
                 </div>
               `

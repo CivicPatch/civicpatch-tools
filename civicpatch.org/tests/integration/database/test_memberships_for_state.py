@@ -295,6 +295,27 @@ async def test_a_dismissal_does_not_put_its_state_on_the_feed():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_a_proposal_does_not_put_its_jurisdiction_on_either_feed():
+    """An import registering, or a run ending, publishes nothing. On the feed, the open-data
+    commit that followed credited those changesets as published and stamped their change_url."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO activity (type, jurisdiction_ocdid) "
+            "VALUES ('sheet_import', %s), ('pipeline_run_end', %s)",
+            (_ZX, _ZX),
+        )
+        await conn.commit()
+
+    assert "zx" not in await activity.states_changed_since(60)
+    assert _ZX not in [
+        row.jurisdiction_ocdid
+        for row in await activity.jurisdictions_changed_since(60)
+    ]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_the_jurisdiction_feed_names_what_changed():
     """Open-data's grain is one file per jurisdiction, so its sweep needs the ocdid rather than
     the state — and the types, so the commit can say what it is mirroring."""

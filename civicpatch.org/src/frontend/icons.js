@@ -29,6 +29,7 @@ export const SOLID = [
   "circle-check",
   "circle-exclamation",
   "circle-info",
+  "circle-notch",
   "clock-rotate-left",
   "cookie",
   "envelope",

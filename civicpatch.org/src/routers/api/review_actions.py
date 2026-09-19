@@ -81,10 +81,6 @@ def _http_error(exc: Exception) -> HTTPException:
         return HTTPException(status_code=401, detail="Sign in to record an edit.")
     if isinstance(exc, SupersededRoster):
         return HTTPException(status_code=409, detail=str(exc))
-    if isinstance(exc, roster_edits.NotInReviewPool):
-        return HTTPException(
-            status_code=409, detail="An import is published from its import page."
-        )
     return HTTPException(status_code=409, detail=MISSING_ROSTER_DETAIL)
 
 
@@ -203,13 +199,13 @@ def get_router(api_key_header):
             # Publishing is a database write, so it is synchronous: a 200 means the roster is
             # live and `published_at` is stamped. The open-data commit is queued behind it and
             # retries on its own — git is the projection, not the record.
-            await roster_edits.publish_from_review(
+            # Any kind: an import reaches a card only through its batch page's Edit link.
+            await roster_edits.publish(
                 request.changeset_id, request.jurisdiction_ocdid, edited, user.user_id
             )
         except (
             roster_edits.MissingRoster,
             roster_edits.AnonymousEdit,
-            roster_edits.NotInReviewPool,
             PeopleValidationError,
             SupersededRoster,
         ) as exc:

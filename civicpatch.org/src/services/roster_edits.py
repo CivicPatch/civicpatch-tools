@@ -53,7 +53,7 @@ class EmptyEdit(Exception):
 
 
 class NotInReviewPool(Exception):
-    """A sheet import is decided on its batch page, not from a review card."""
+    """A sheet import is not bulk-published from the queue."""
 
 
 async def save(
@@ -224,7 +224,7 @@ async def publish_from_review(
     edited: List[dict] | None,
     resolved_by_user_id: str,
 ) -> None:
-    """`publish`, for the review card — which offers only the kinds the review pool does."""
+    """`publish`, for bulk review — which offers only the kinds the review pool does."""
     kind = await get_changeset_kind(changeset_id)
     if kind is None:
         raise MissingRoster(changeset_id)

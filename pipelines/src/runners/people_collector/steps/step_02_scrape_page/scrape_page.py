@@ -16,6 +16,7 @@ from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import
     NavigationFailureReason,
     RETRYABLE_FAILURE_REASONS,
 )
+from runners.people_collector.utils.organization_terms import search_phrases
 from shared.utils import config_utils, data_path_utils, url_utils
 from utils import log_utils
 
@@ -32,7 +33,7 @@ async def scrape_page(
 
     try:
         folder_name, final_url = await _fetch_and_cache(
-            logger, context.data.jurisdiction_ocdid, link_to_scrape.url
+            logger, context.data.jurisdiction_ocdid, link_to_scrape.url, _accordion_keywords(context)
         )
     except Exception as e:
         logger.error(f"Error scraping {link_to_scrape.url}: {e}")
@@ -51,13 +52,32 @@ def _next_visit_order(frontier: LinkFrontier) -> int:
     return sum(1 for link in frontier.links.values() if link.visit_order is not None) + 1
 
 
-async def _fetch_and_cache(logger, jurisdiction_ocdid: str, url: str) -> tuple[str, str]:
+def _accordion_keywords(context: PeopleCollectorContext) -> list[str]:
+    """Common keywords plus `search_phrases`, so a collapsed "Mayor" or "City Council" section
+    opens — `keywords.yml` carries no roles."""
+    research = context.data.research_municipality_step
+    assert research is not None, (
+        "should never happen — research_municipality_step is required before scrape_page"
+    )
+    return list(
+        dict.fromkeys(
+            config_utils.governance_keywords()
+            + search_phrases(
+                research.known_organizations, research.known_memberships, research.known_roles
+            )
+        )
+    )
+
+
+async def _fetch_and_cache(
+    logger, jurisdiction_ocdid: str, url: str, accordion_keywords: list[str]
+) -> tuple[str, str]:
     html_content, final_url = await browser.scrape(
         logger,
         url,
         {
             "image_directory": data_path_utils.get_images_path(jurisdiction_ocdid),
-            "accordion_keywords": config_utils.governance_keywords(),
+            "accordion_keywords": accordion_keywords,
         },
     )
     if html_content is None:

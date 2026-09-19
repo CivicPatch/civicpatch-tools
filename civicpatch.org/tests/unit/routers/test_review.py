@@ -7,7 +7,6 @@ from unittest.mock import AsyncMock, patch
 
 from schemas.common import Identity, UserRole
 from shared.schemas import Post
-from shared.utils.statuses import ChangesetKind
 from lib.auth import get_optional_user
 from routers.api import review_actions as review_actions_router
 from routers.api import review_cards as review_cards_router
@@ -140,7 +139,6 @@ def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[]),
-        patch("services.roster_edits.get_changeset_kind", new_callable=AsyncMock, return_value=ChangesetKind.SCRAPE),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[]),
     ):
         response = client.post(
@@ -182,7 +180,6 @@ def test_publish_returns_200_and_queues_no_merge(client):
     with (
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock) as mock_resolve,
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
-        patch("services.roster_edits.get_changeset_kind", new_callable=AsyncMock, return_value=ChangesetKind.SCRAPE),
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
@@ -223,7 +220,6 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
         patch("services.activity.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
-        patch("services.roster_edits.get_changeset_kind", new_callable=AsyncMock, return_value=ChangesetKind.SCRAPE),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/publish",
@@ -620,7 +616,6 @@ def test_publish_allows_default_role():
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch("services.roster_edits.publish_people", new_callable=AsyncMock),
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("services.roster_edits.get_changeset_kind", new_callable=AsyncMock, return_value=ChangesetKind.SCRAPE),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
         response = client.post(
@@ -748,7 +743,7 @@ def test_publishing_a_superseded_roster_is_a_409_not_a_500(client):
     with (
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch(
-            "routers.api.review_actions.roster_edits.publish_from_review",
+            "routers.api.review_actions.roster_edits.publish",
             new_callable=AsyncMock,
             side_effect=SupersededRoster("A newer roster was already published"),
         ),
@@ -763,10 +758,17 @@ def test_publishing_a_superseded_roster_is_a_409_not_a_500(client):
 
 
 @pytest.mark.unit
-def test_a_sheet_import_is_not_published_from_a_review_card(client):
-    """It is out of the pool, so only a deep link reaches this — and it is still refused."""
+def test_a_sheet_import_publishes_from_its_review_card(client):
+    """Out of the pool, so only its batch page's Edit link reaches this card — and publishing
+    from there is the point of the link."""
     with (
-        patch("services.roster_edits.get_changeset_kind", new_callable=AsyncMock, return_value=ChangesetKind.SHEET_IMPORT),
+        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
+        patch(
+            "services.roster_edits.proposed_roster",
+            new_callable=AsyncMock,
+            return_value=[{"id": "p1", "name": "Ana Reyes"}],
+        ),
+        patch("services.roster_edits.promote_images", new_callable=AsyncMock, side_effect=lambda roster: roster),
         patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
     ):
         response = client.post(
@@ -774,8 +776,8 @@ def test_a_sheet_import_is_not_published_from_a_review_card(client):
             json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID},
         )
 
-    assert response.status_code == 409
-    mock_publish.assert_not_awaited()
+    assert response.status_code == 200
+    mock_publish.assert_awaited_once()
 
 
 @pytest.mark.unit
