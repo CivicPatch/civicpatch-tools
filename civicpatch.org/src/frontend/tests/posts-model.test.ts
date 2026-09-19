@@ -10,10 +10,10 @@ import {
   AT_LARGE_DIVISION,
   postName,
   divisionSelection,
-  isDivisionValue,
   postsHeld,
   derivedPostLabel,
 } from "../components/posts-list/posts-model.js";
+import { isDivisionValue } from "../utils/division-utils.js";
 import type { Post } from "../components/posts-list/posts-model.js";
 
 const post = (overrides: Partial<Post> & { id: string; role_id: string }): Post => ({
@@ -189,28 +189,28 @@ describe("postName", () => {
 
 describe("divisionSelection", () => {
   it("round-trips what buildDivisionOcdid produced", () => {
-    for (const [designation, value] of [["ward", "3"], ["council_district", "7"]] as const) {
-      const ocdid = buildDivisionOcdid("ocd-jurisdiction/country:us/state:wa/place:x/government", designation, value);
-      expect(divisionSelection(ocdid)).toEqual({ designation, value });
+    for (const [divisionKind, divisionValue] of [["ward", "3"], ["council_district", "7"]] as const) {
+      const ocdid = buildDivisionOcdid("ocd-jurisdiction/country:us/state:wa/place:x/government", divisionKind, divisionValue);
+      expect(divisionSelection(ocdid)).toEqual({ divisionKind, divisionValue });
     }
   });
 
   it("reads the jurisdiction's own division as at-large", () =>
     expect(divisionSelection("ocd-division/country:us/state:wa/place:x")).toEqual({
-      designation: AT_LARGE_DIVISION,
-      value: "",
+      divisionKind: AT_LARGE_DIVISION,
+      divisionValue: "",
     }));
 
   it("falls back to at-large for a designation the form cannot offer", () => {
     // Otherwise the select renders blank and Save writes something the form never showed.
     expect(divisionSelection("ocd-division/country:us/state:wa/place:x/precinct:4")).toEqual({
-      designation: AT_LARGE_DIVISION,
-      value: "",
+      divisionKind: AT_LARGE_DIVISION,
+      divisionValue: "",
     });
   });
 
   it("treats a missing division as at-large rather than throwing", () =>
-    expect(divisionSelection(null).designation).toBe(AT_LARGE_DIVISION));
+    expect(divisionSelection(null).divisionKind).toBe(AT_LARGE_DIVISION));
 });
 
 describe("isDivisionValue", () => {
