@@ -78,6 +78,7 @@ async def start_state_scrape_workflow(
     state: str,
     num_jurisdictions: int | None = None,
     created_by_user_id: str | None = None,
+    dispatch_mode: str = "remote",
 ) -> str:
     """One durable workflow per state. It finds its own candidates.
 
@@ -90,7 +91,13 @@ async def start_state_scrape_workflow(
     client = await get_client()
     handle = await client.start_workflow(
         "StateScrapeWorkflow",
-        args=[state, num_jurisdictions, created_by_user_id, _pipeline_run_concurrency()],
+        args=[
+            state,
+            num_jurisdictions,
+            created_by_user_id,
+            _pipeline_run_concurrency(),
+            dispatch_mode,
+        ],
         id=f"state-scrape-{state}",
         task_queue=PIPELINE_RUNS_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.FAIL,

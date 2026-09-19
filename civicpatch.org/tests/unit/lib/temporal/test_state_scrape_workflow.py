@@ -35,6 +35,7 @@ class Recorder:
         self.cap_after = cap_after  # trip the budget after this many claims
         self.claims: list[int] = []
         self.dispatched: list[str] = []
+        self.dispatched_locally: list[str] = []
 
 
 def _activities(rec: Recorder):
@@ -66,6 +67,7 @@ def _activities(rec: Recorder):
     @activity.defn(name="trigger_local")
     async def trigger_local(jurisdiction_ocdid, pipeline_run_id, url=None, source_urls=None):
         rec.dispatched.append(jurisdiction_ocdid)
+        rec.dispatched_locally.append(jurisdiction_ocdid)
 
     @activity.defn(name="poll_pipeline_run_status")
     async def poll_pipeline_run_status(pipeline_run_id: str):
@@ -101,7 +103,13 @@ async def _run_state_scrape(rec: Recorder, **kwargs) -> int:
         ):
             return await env.client.execute_workflow(
                 StateScrapeWorkflow.run,
-                args=[kwargs.get("state", "zz"), kwargs.get("num_jurisdictions"), None, kwargs.get("concurrency", 5)],
+                args=[
+                    kwargs.get("state", "zz"),
+                    kwargs.get("num_jurisdictions"),
+                    None,
+                    kwargs.get("concurrency", 5),
+                    kwargs.get("dispatch_mode", "remote"),
+                ],
                 id=f"state-scrape-{uuid.uuid4()}",
                 task_queue=queue,
             )
@@ -120,6 +128,15 @@ async def test_it_claims_a_slice_at_a_time_rather_than_the_whole_state():
     # count to compare against, so it learns the state is drained by asking.
     assert rec.claims == [5, 5, 5, 5]
     assert dispatched == 12
+
+
+@pytest.mark.asyncio
+async def test_a_local_state_scrape_dispatches_every_child_locally():
+    rec = Recorder(pool=3)
+
+    await _run_state_scrape(rec, concurrency=5, dispatch_mode="local")
+
+    assert len(rec.dispatched_locally) == 3
 
 
 @pytest.mark.asyncio

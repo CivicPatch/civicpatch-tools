@@ -238,7 +238,7 @@ def get_router(api_key_header):
           one will.
         """
         workflow_id = await temporal_service.start_state_scrape_workflow(
-            request.state, request.num_jurisdictions, user.user_id
+            request.state, request.num_jurisdictions, user.user_id, DISPATCH_MODE
         )
         return {"data": {"workflow_id": workflow_id, "state": request.state}}
 
