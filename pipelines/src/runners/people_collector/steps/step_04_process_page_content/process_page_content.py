@@ -7,6 +7,7 @@ import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompt
 import shared.utils.name_utils as name_utils
 from runners.people_collector.schemas import (
+    ExpectedMembership,
     Link,
     LinkFrontier,
     LinkStatus,
@@ -31,8 +32,12 @@ from runners.people_collector.steps.step_04_process_page_content.extraction_scop
 from runners.people_collector.steps.step_04_process_page_content.heuristics import (
     check_page_heuristics,
 )
-from shared.schemas import KnownOrganization, Membership
-from runners.people_collector.utils.organization_terms import as_tokens, search_phrases
+from shared.schemas import LOCAL_IMAGE_PREFIX, KnownOrganization
+from runners.people_collector.utils.organization_terms import (
+    as_tokens,
+    expected_roles,
+    search_phrases,
+)
 from runners.people_collector.utils.link_discovery import (
     add_relevant_urls,
     extract_names_and_designations,
@@ -57,11 +62,8 @@ from shared.utils.taxonomy import Taxonomy, build_taxonomy, lookup_key
 @dataclass
 class ProcessingSetup:
     roles: List[str]
-    target_role: str
-    target_divisions: List[str]
-    known_roles: List[str]
     known_organizations: List[KnownOrganization]
-    known_memberships: List[Membership]
+    expected_memberships: List[ExpectedMembership]
 
 
 MINIMUM_NUM_PEOPLE = 5
@@ -115,7 +117,7 @@ async def _process_with_llm_in_chunks(
     return all_found
 
 
-# `target_divisions` comes from the division_ocdids on the roster we already hold, so it has
+# Expected divisions come from the division_ocdids on the roster we already hold, so they have
 # the same staleness as required_data: a ward that was renamed, merged or dropped leaves a
 # target no scrape can reach. Floored at one so it stays a real signal — a jurisdiction with
 # divisions must still place somebody in one, it just need not place everybody.
@@ -131,7 +133,7 @@ def required_division_count(num_target_divisions: int) -> int:
 def _names_a_division(parsed: ParsedLabel) -> bool:
     """Whether the label places the person in a division — a ward, district or seat number.
 
-    Divisions only: `target_divisions` is built by `divisions.filter_divisions`, so counting
+    Divisions only: `ExpectedMembership.division` is built by `divisions.filter_divisions`, so counting
     `other_designations` here compared a person against a target they were never measured on,
     and a jurisdiction with no districts could satisfy the target on a seat marker alone.
     """
@@ -146,6 +148,15 @@ def _resolved_roles(taxonomy: Taxonomy, records: PeopleByName) -> set[str]:
             if canonical:
                 found.add(lookup_key(canonical))
     return found
+
+
+def found_every_expected_role(
+    taxonomy: Taxonomy, records: PeopleByName, expected: List[ExpectedMembership]
+) -> bool:
+    """Any record naming the role counts, contact details or not: this asks whether the office
+    was seen at all, which is how a missing mayor keeps an otherwise complete council crawling."""
+    found = _resolved_roles(taxonomy, records)
+    return all(lookup_key(role) in found for role in expected_roles(expected))
 
 
 async def process_page_content(
@@ -163,15 +174,12 @@ async def process_page_content(
 
     research = context.data.research_municipality_step
     taxonomy = build_taxonomy(context.data.role_config)
-    known_roles = research.known_roles
+    known_roles = expected_roles(research.expected_memberships)
     role_names = config_utils.get_role_names(context.data.role_config)
     setup_data = ProcessingSetup(
         roles=role_names,
-        target_role="Mayor",
-        target_divisions=research.target_divisions,
-        known_roles=known_roles,
         known_organizations=research.known_organizations,
-        known_memberships=research.known_memberships,
+        expected_memberships=research.expected_memberships,
     )
     current_step = get_or_create_step(context)
     identities = research.identities
@@ -185,7 +193,7 @@ async def process_page_content(
         content,
         known_roles,
         research.known_organizations,
-        research.known_memberships,
+        research.expected_memberships,
     )
     if not is_relevant:
         return frontier, current_step
@@ -216,7 +224,7 @@ async def process_page_content(
             updated_records,
             organization_needs(
                 research.known_organizations,
-                research.known_memberships,
+                research.expected_memberships,
                 updated_records,
                 taxonomy,
             ),
@@ -236,9 +244,9 @@ def get_or_create_step(context: PeopleCollectorContext) -> ProcessPageContentSte
     assert context.data.research_municipality_step is not None, (
         "should never happen — research_municipality_step is required before get_or_create_step"
     )
-    expected_count = context.data.research_municipality_step.expected_count
+    expected = context.data.research_municipality_step.expected_memberships
     return context.data.process_page_content_step or create_process_page_content_step(
-        required_data=max(MINIMUM_NUM_PEOPLE, expected_count)
+        required_data=max(MINIMUM_NUM_PEOPLE, len(expected))
     )
 
 
@@ -248,7 +256,7 @@ def create_process_page_content_step(required_data: int) -> ProcessPageContentSt
         progress=ProgressState(
             required_data=required_data,
             current_data=0,
-            has_target_role=False,
+            has_target_roles=False,
             has_target_divisions=False,
         ),
     )
@@ -281,7 +289,7 @@ async def check_page_relevance(
     content: str,
     known_roles: list[str],
     known_organizations: List[KnownOrganization],
-    known_memberships: List[Membership],
+    expected_memberships: List[ExpectedMembership],
 ) -> Tuple[LinkFrontier, bool]:
     prompt = open_router_prompt.relevant_page_prompt(
         page_to_process.url,
@@ -319,7 +327,7 @@ async def check_page_relevance(
             page_to_process.url,
             organization_needs(
                 known_organizations,
-                known_memberships,
+                expected_memberships,
                 existing_records,
                 build_taxonomy(context.data.role_config),
             ),
@@ -328,7 +336,7 @@ async def check_page_relevance(
             # above reference count, and an organization whose wording no role covers had nothing to
             # match on at all.
             designations
-            + as_tokens(search_phrases(known_organizations, known_memberships, known_roles)),
+            + as_tokens(search_phrases(known_organizations, expected_memberships)),
             logger,
             url_comments=url_comments,
         )
@@ -477,9 +485,16 @@ async def process_with_llm(
         p["source_url"] = source_url
         if p["url"]:
             p["url"] = url_utils.format_url(p["url"])
+        p["image"] = _downloaded_image(p.get("image"))
         processed_people.append(PersonSourceRecord.model_validate(p))
 
     return processed_people
+
+
+def _downloaded_image(image: Optional[str]) -> Optional[str]:
+    """Only a photo `scrape_images` downloaded can be served. The extractor copies whatever src
+    sits beside a person, and has wrapped a real `local://` hash in a url it made up."""
+    return image if image and image.startswith(LOCAL_IMAGE_PREFIX) else None
 
 
 def calculate_progress(
@@ -488,17 +503,15 @@ def calculate_progress(
     records: PeopleByName,
     setup_data: ProcessingSetup,
 ) -> ProgressState:
-    has_target_role = False
     has_target_divisions = False
-    num_target_divisions = len(setup_data.target_divisions)
+    num_target_divisions = sum(
+        1 for membership in setup_data.expected_memberships if membership.division
+    )
 
     valid_people = [
         p for p in records.values() if has_role_and_contact_info(taxonomy, p)
     ]
     max_people_count = len(valid_people)
-
-    if lookup_key(setup_data.target_role) in _resolved_roles(taxonomy, records):
-        has_target_role = True
 
     if num_target_divisions == 0:
         has_target_divisions = True
@@ -513,16 +526,15 @@ def calculate_progress(
         if len(people_with_divisions) >= required_division_count(num_target_divisions):
             has_target_divisions = True
 
-    known_roles_lower = {r.strip().lower() for r in setup_data.known_roles}
-    requires_mayor = not known_roles_lower or "mayor" in known_roles_lower
-
     return ProgressState(
         required_data=progress.required_data,
         current_data=max_people_count,
-        has_target_role=has_target_role if requires_mayor else True,
+        has_target_roles=found_every_expected_role(
+            taxonomy, records, setup_data.expected_memberships
+        ),
         has_target_divisions=has_target_divisions,
         organizations=organizations_progress(
-            setup_data.known_organizations, setup_data.known_memberships, records, taxonomy
+            setup_data.known_organizations, setup_data.expected_memberships, records, taxonomy
         ),
     )
 

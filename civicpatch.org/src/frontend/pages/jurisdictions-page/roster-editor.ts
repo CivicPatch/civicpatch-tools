@@ -241,7 +241,7 @@ function RosterEditor({
   // pop in and out of the layout; disabling them says the same thing without the jump.
   const header = canEdit
     ? html`
-        <div class="panel">
+        <div class="panel roster-header">
           <div class="panel__cap">
             <b>Roster</b>
             <span class="panel__cap-right roster-toolbar">

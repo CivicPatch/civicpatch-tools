@@ -22,6 +22,9 @@ from shared.utils.divisions import (
 from shared.utils.taxonomy import Taxonomy, lookup_key, normalize_word, role_sort_key
 
 _EDGE_PUNCTUATION = re.compile(r"^\W+|\W+$")
+# Left behind when the offices either side of them are consumed ("Mayor Pro Tem and Council
+# Member"); the pipeline also joins a person's held posts with it.
+_JOINING_WORDS = frozenset({"and"})
 
 # Wards and districts are named by direction as often as by number, in either word order
 # ("Ward East", "North Ward"). A closed set, so it can be trusted before the key where an
@@ -179,6 +182,9 @@ def _unmatched(label: str, used_tokens: set) -> List[str]:
     a run's own edges — "(Central Seattle)" is the text plus its decoration.
 
     Case is preserved: it is what a curator searches the source page for.
+
+    A joining word at a run's edge goes the same way; inside a run ("Parks and Recreation") it
+    is part of the term.
     """
     runs: List[str] = []
     current: List[str] = []
@@ -191,7 +197,17 @@ def _unmatched(label: str, used_tokens: set) -> List[str]:
             current = []
     if current:
         runs.append(" ".join(current))
-    return [_EDGE_PUNCTUATION.sub("", run) for run in runs]
+    trimmed = [_without_joining_edges(_EDGE_PUNCTUATION.sub("", run)) for run in runs]
+    return [run for run in trimmed if run]
+
+
+def _without_joining_edges(run: str) -> str:
+    words = run.split()
+    while words and words[0].lower() in _JOINING_WORDS:
+        words = words[1:]
+    while words and words[-1].lower() in _JOINING_WORDS:
+        words = words[:-1]
+    return _EDGE_PUNCTUATION.sub("", " ".join(words))
 
 
 # Punctuation a source uses to list several things in one label. Splitting on it before

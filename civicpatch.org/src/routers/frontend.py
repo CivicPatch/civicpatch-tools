@@ -79,6 +79,8 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         # stopping it are different acts, and the frontend uses this one to decide whether to
         # poll at all rather than fire a rejected request every few seconds.
         "can_view_temporal_workflow_state": has_at_least(role, UserRole.ADMINS),
+        # The debug bucket's copies of each fetched page: the HTML and the markdown extracted.
+        "can_view_source_debug": has_at_least(role, UserRole.ADMINS),
         # Money, all of it: what a scrape cost, the cadence driving it, and the caps it is
         # measured against. One boundary — seeing the spend without the ceiling is half an
         # answer. The rest of the Activity page stays signed-in.

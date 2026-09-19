@@ -6,6 +6,8 @@ from shared.utils import config_utils
 
 FUZZY_SCORE_CUTOFF = 85
 UNRANKED = float("inf")
+# A label resolving to no role still gets a post, so nobody is postless. Seeded by 118.
+UNMATCHED_ROLE_ID = "unmatched"
 
 
 def lookup_key(label: str) -> str:

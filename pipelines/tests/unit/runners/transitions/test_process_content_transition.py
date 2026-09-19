@@ -18,17 +18,17 @@ def _limits(max_pages=10, cap="1.00"):
     return PipelineRunLimits(max_pages=max_pages, pipeline_run_cap_usd=Decimal(cap))
 
 
-def _progress(current_data=0, required_data=5, has_target_role=False, has_target_divisions=False):
+def _progress(current_data=0, required_data=5, has_target_roles=False, has_target_divisions=False):
     return ProgressState(
         current_data=current_data,
         required_data=required_data,
-        has_target_role=has_target_role,
+        has_target_roles=has_target_roles,
         has_target_divisions=has_target_divisions,
     )
 
 
 def _met_progress():
-    return _progress(current_data=5, required_data=5, has_target_role=True, has_target_divisions=True)
+    return _progress(current_data=5, required_data=5, has_target_roles=True, has_target_divisions=True)
 
 
 # ── data requirement met ──────────────────────────────────────────────────────
@@ -127,7 +127,7 @@ def test_one_short_of_the_expected_roster_still_stops():
         progress=_progress(
             current_data=4,
             required_data=5,
-            has_target_role=True,
+            has_target_roles=True,
             has_target_divisions=True,
         ),
     )
@@ -145,7 +145,7 @@ def test_two_short_still_stops():
         progress=_progress(
             current_data=3,
             required_data=5,
-            has_target_role=True,
+            has_target_roles=True,
             has_target_divisions=True,
         ),
     )
@@ -161,7 +161,7 @@ def test_three_short_keeps_scraping():
         progress=_progress(
             current_data=2,
             required_data=5,
-            has_target_role=True,
+            has_target_roles=True,
             has_target_divisions=True,
         ),
     )
@@ -177,7 +177,7 @@ def test_tolerance_does_not_bypass_the_target_flags():
         progress=_progress(
             current_data=4,
             required_data=5,
-            has_target_role=False,
+            has_target_roles=False,
             has_target_divisions=True,
         ),
     )

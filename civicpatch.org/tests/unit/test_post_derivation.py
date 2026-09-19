@@ -6,10 +6,10 @@ is covered by tests/integration/database/test_post_derivation.py.
 
 import pytest
 
-from core.post_derivation import UNMATCHED_ROLE_ID, ChosenPost, derived_posts
+from core.post_derivation import ChosenPost, derived_posts
 from core.post_derivation import RosterEntry, RosterSighting
 from shared.schemas import Role, RoleConfig, RoleStatus
-from shared.utils.taxonomy import build_taxonomy
+from shared.utils.taxonomy import UNMATCHED_ROLE_ID, build_taxonomy
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
 _BASE = "ocd-division/country:us/state:zz/place:testville"

@@ -766,7 +766,7 @@ def test_add_relevant_urls_ranks_an_organizations_page_by_its_post_labels():
         frontier,
         domain="https://cityofbaycity.org",
         needs=[],
-        designations=as_tokens(search_phrases([council], [], [])),
+        designations=as_tokens(search_phrases([council], [])),
     )
     assert pending_in_queue_order(result)[0].url == "https://cityofbaycity.org/council"
 
@@ -995,3 +995,34 @@ async def test_process_with_llm_reorders_inverted_names():
         )
 
     assert [r.name for r in records] == ["Laurie Kincannon", "Rory Burke"]
+
+
+@pytest.mark.asyncio
+async def test_process_with_llm_keeps_only_downloaded_images():
+    """Seattle, 2026-09-19: a relative src the downloader skipped, and a `local://` hash the
+    extractor wrapped in a made-up url, each outvoted a real photo at ingest."""
+    llm_response = PeopleArrayLLMResponseSchema(
+        people=[
+            ExtractedPersonRecord(name="Rob Saka", label="Mayor", image="local://8ac384d14474.png"),
+            ExtractedPersonRecord(
+                name="Joy Hollingsworth", label="Mayor", image="/images/hollingsworth-family.jpeg"
+            ),
+            ExtractedPersonRecord(
+                name="Debora Juarez", label="Mayor", image="https://seattle.gov/domain/31ed0e44b6dc.png"
+            ),
+        ]
+    )
+
+    with patch(
+        "runners.people_collector.steps.step_04_process_page_content.process_page_content.open_router_llm.run_prompt",
+        new=AsyncMock(return_value=llm_response),
+    ):
+        records = await process_with_llm(
+            "https://seattle.gov/council",
+            "test-request",
+            "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
+            "page content",
+            "prompt",
+        )
+
+    assert [r.image for r in records] == ["local://8ac384d14474.png", None, None]

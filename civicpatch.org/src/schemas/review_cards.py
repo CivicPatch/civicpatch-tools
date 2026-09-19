@@ -7,7 +7,9 @@ from core.review_summary import ReviewSummary
 # Mirrors `services.review_sources.build_sources`.
 class ReviewSource(BaseModel):
     url: str
+    # Presigned links into the debug bucket; admins only, None for everyone else.
     markdown: str | None
+    html: str | None
 
 
 class ReviewCard(BaseModel):

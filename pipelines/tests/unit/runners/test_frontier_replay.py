@@ -132,7 +132,7 @@ def test_organization_terms_keep_what_distinguishes_an_organization():
         KnownOrganization(id="b", name="Office of the Mayor", posts=[]),
     ]
 
-    assert as_tokens(organization_phrases(organizations, [])) == ["school", "board", "mayor"]
+    assert as_tokens(organization_phrases(organizations)) == ["school", "board", "mayor"]
 
 
 def test_organization_terms_drop_words_every_municipal_site_uses():
@@ -140,7 +140,7 @@ def test_organization_terms_drop_words_every_municipal_site_uses():
     the roster, which is the opposite of the point."""
     organizations = [KnownOrganization(id="a", name="City Council", posts=[])]
 
-    assert as_tokens(organization_phrases(organizations, [])) == ["council"]
+    assert as_tokens(organization_phrases(organizations)) == ["council"]
 
 
 def test_post_labels_are_terms_too():
@@ -161,7 +161,7 @@ def test_post_labels_are_terms_too():
         )
     ]
 
-    assert as_tokens(organization_phrases(organizations, [])) == ["board", "trustees", "trustee", "ward"]
+    assert as_tokens(organization_phrases(organizations)) == ["board", "trustees", "trustee", "ward"]
 
 
 def test_outcomes_come_from_the_records_source_urls():

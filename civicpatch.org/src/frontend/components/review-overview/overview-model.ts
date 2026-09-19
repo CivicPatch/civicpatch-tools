@@ -218,6 +218,8 @@ export function sectionsByOrganization(
             {
               role_id: entry.proposal.post.role_id,
               role_label: entry.proposal.post.role_label,
+              post_label: entry.proposal.post.label,
+              membership_label: entry.proposal.membership_label,
             },
           ],
           entry,

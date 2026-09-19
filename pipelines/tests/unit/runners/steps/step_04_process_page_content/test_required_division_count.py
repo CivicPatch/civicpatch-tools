@@ -1,7 +1,7 @@
 """How many people must be placed in a division before the roster counts as division-complete.
 
-`target_divisions` is built from the division_ocdids on the roster already in the database, so
-it carries that roster's staleness — a ward renamed, merged or dropped upstream leaves a target
+Expected divisions are built from the division_ocdids on the roster already in the database, so
+they carry that roster's staleness — a ward renamed, merged or dropped upstream leaves a target
 no scrape can ever reach, and the run crawls to its page cap chasing it. Same failure the
 required_data tolerance exists for.
 

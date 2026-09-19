@@ -211,6 +211,14 @@
   gap: 0.6rem;
 }
 
+/* The roster header is only its caption, so the caption's hairline would sit on the panel's
+   own bottom border. It returns when a publish error sits beneath. */
+.roster-header .panel__cap:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 /* Why editing is off. Never shown without the PR list above it. */
 .jurisdiction-section__blocked {
   display: flex;

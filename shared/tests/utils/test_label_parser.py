@@ -210,6 +210,20 @@ def test_parse_label_trims_punctuation_from_the_edges_of_unmatched(label, unmatc
     assert parse_label(label, _TAXONOMY).unmatched == unmatched
 
 
+@pytest.mark.parametrize(
+    "label, unmatched",
+    [
+        ("Mayor Pro Tempore and Council Member, Ward 4", []),
+        ("Council Member and Finance Liaison", ["Finance Liaison"]),
+        ("Council Member, Parks and Recreation Liaison", ["Parks and Recreation Liaison"]),
+    ],
+)
+def test_parse_label_drops_and_left_between_consumed_offices(label, unmatched):
+    """"and" alone is the join between two offices the parser already took; inside a run it
+    belongs to the term."""
+    assert parse_label(label, _TAXONOMY).unmatched == unmatched
+
+
 def test_parse_label_keeps_an_unknown_office_as_unmatched():
     """`city` was a bare alias of at-large, so "City Attorney" parsed to a seat called
     "At-Large Attorney" and left nothing behind — destroying the one signal that says this

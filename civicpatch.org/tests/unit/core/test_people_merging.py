@@ -11,6 +11,7 @@ from core.people_derivation import (
     canonical_name,
     get_source_urls,
     merge_field,
+    merge_image,
     merge_labels,
     merge_records_to_person,
     merge_weak_tie_groups,
@@ -62,6 +63,24 @@ def test_merge_field():
     """Test merging single value fields"""
     result = merge_field(["555-1234", "555-1234"])
     assert result == "555-1234"
+
+
+def test_merge_image_prefers_a_downloaded_photo():
+    """Seattle, 2026-09-19: Joy Hollingsworth's sightings held two downloaded photos and one
+    relative `src` nobody fetched. The alphabetical tie-break chose the `/images/...` path, so
+    she published with no served photo."""
+    images = [
+        "local://ef06d9a9e07d.png",
+        "local://a7a100784ac2.png",
+        "/images/Council/Members/Hollingsworth/hollingsworth-family-update.jpeg",
+    ]
+
+    assert merge_image(images) == "local://a7a100784ac2.png"
+
+
+def test_merge_image_falls_back_to_a_url_when_nothing_was_downloaded():
+    """Still recorded: the source url is where a curator would go to fetch it."""
+    assert merge_image(["https://seattle.gov/mayor.jpg"]) == "https://seattle.gov/mayor.jpg"
 
 
 def test_canonical_name_prefers_the_name_we_already_know():

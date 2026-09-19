@@ -61,7 +61,7 @@ def should_stop_for_data_requirement(progress: ProgressState) -> bool:
     if progress.organizations:
         return all(is_done(organization) for organization in progress.organizations)
     found_enough = progress.current_data >= progress.required_data - DATA_REQUIREMENT_TOLERANCE
-    return found_enough and progress.has_target_role and progress.has_target_divisions
+    return found_enough and progress.has_target_roles and progress.has_target_divisions
 
 def is_short_of_expected(progress: ProgressState) -> bool:
     """Short by more than the tolerance above — the same slack `should_stop_for_data_requirement`
@@ -87,7 +87,7 @@ def describe_progress(
     return (
         f"Progress: {progress.current_data}/{progress.required_data} people "
         f"(tolerance {DATA_REQUIREMENT_TOLERANCE}) · "
-        f"role={'y' if progress.has_target_role else 'n'} "
+        f"roles={'y' if progress.has_target_roles else 'n'} "
         f"divisions={'y' if progress.has_target_divisions else 'n'} · "
         f"pages {processed_count}/{max_pages_allowed(limits, progress)} · "
         f"cost ${current_cost:.4f}/${limits.pipeline_run_cap_usd}"

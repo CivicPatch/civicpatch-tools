@@ -4,6 +4,7 @@ from collections import Counter
 from typing import List
 
 from runners.people_collector.schemas import (
+    ExpectedMembership,
     OrganizationNeed,
     OrganizationProgress,
     PeopleByName,
@@ -11,7 +12,7 @@ from runners.people_collector.schemas import (
 )
 from runners.people_collector.utils.link_discovery import has_role_and_contact_info
 from runners.people_collector.utils.organization_terms import as_tokens, organization_phrases
-from shared.schemas import KnownOrganization, Membership
+from shared.schemas import KnownOrganization
 from shared.utils.label_parser import parse_label
 from shared.utils.taxonomy import Taxonomy
 
@@ -28,7 +29,7 @@ def is_done(organization: OrganizationProgress) -> bool:
 
 def organizations_progress(
     organizations: List[KnownOrganization],
-    memberships: List[Membership],
+    memberships: List[ExpectedMembership],
     records: PeopleByName,
     taxonomy: Taxonomy,
 ) -> List[OrganizationProgress]:
@@ -48,7 +49,7 @@ def organizations_progress(
 
 def organization_needs(
     organizations: List[KnownOrganization],
-    memberships: List[Membership],
+    memberships: List[ExpectedMembership],
     records: PeopleByName,
     taxonomy: Taxonomy,
 ) -> List[OrganizationNeed]:
@@ -64,7 +65,9 @@ def _complete(records: PeopleByName, taxonomy: Taxonomy) -> List[List[PersonSour
     return [group for group in records.values() if has_role_and_contact_info(taxonomy, group)]
 
 
-def _held_in(organization: KnownOrganization, memberships: List[Membership]) -> List[Membership]:
+def _held_in(
+    organization: KnownOrganization, memberships: List[ExpectedMembership]
+) -> List[ExpectedMembership]:
     return [membership for membership in memberships if membership.organization_id == organization.id]
 
 
@@ -80,7 +83,7 @@ def _found_in(
 
 def _organization_need(
     organization: KnownOrganization,
-    memberships: List[Membership],
+    memberships: List[ExpectedMembership],
     found: List[List[PersonSourceRecord]],
     taxonomy: Taxonomy,
 ) -> OrganizationNeed:
@@ -89,16 +92,28 @@ def _organization_need(
     return OrganizationNeed(
         organization_id=organization.id,
         shortfall=max(0, target - len(found)) / target,
-        terms=as_tokens(organization_phrases([organization], memberships)),
+        # A cold start has no posts and a generic name, so what it expects is its only wording.
+        terms=as_tokens(
+            organization_phrases([organization])
+            + [phrase for membership in held for phrase in _membership_phrases(membership)]
+        ),
         missing_terms=as_tokens(_missing_phrases(held, found, taxonomy)),
     )
 
 
+def _membership_phrases(membership: ExpectedMembership) -> List[str]:
+    return [
+        phrase
+        for phrase in (membership.role_label, membership.division, *membership.designations)
+        if phrase
+    ]
+
+
 def _missing_phrases(
-    held: List[Membership], found: List[List[PersonSourceRecord]], taxonomy: Taxonomy
+    held: List[ExpectedMembership], found: List[List[PersonSourceRecord]], taxonomy: Taxonomy
 ) -> List[str]:
-    """How the memberships of a role are worded, when fewer people were found in it than hold it.
-    Per role, not per post: as tokens, "District 3" and "District 7" are the same words."""
+    """A role with its divisions and designations, when fewer people were found in it than hold
+    it. Per role, not per post: as tokens, "District 3" and "District 7" are the same words."""
     found_by_role: Counter[str] = Counter(
         role
         for group in found
@@ -110,5 +125,5 @@ def _missing_phrases(
         phrase
         for membership in held
         if found_by_role[membership.role_label] < held_by_role[membership.role_label]
-        for phrase in [membership.post_label, membership.label or "", *membership.source_labels]
+        for phrase in _membership_phrases(membership)
     ]

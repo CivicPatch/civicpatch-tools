@@ -30,7 +30,7 @@ def client():
 @pytest.mark.unit
 def test_create_job_returns_the_run_id(client):
     with patch(
-        "routers.api.pipeline_runs.has_open_changeset",
+        "routers.api.pipeline_runs.has_open_review",
         new_callable=AsyncMock,
         return_value=False,
     ), patch(
@@ -55,7 +55,7 @@ def test_create_job_returns_the_run_id(client):
 @pytest.mark.unit
 def test_create_job_returns_500_on_temporal_error(client):
     with patch(
-        "routers.api.pipeline_runs.has_open_changeset",
+        "routers.api.pipeline_runs.has_open_review",
         new_callable=AsyncMock,
         return_value=False,
     ), patch(
@@ -77,7 +77,7 @@ def test_create_job_returns_500_on_temporal_error(client):
 @pytest.mark.unit
 def test_create_job_returns_409_when_open_pr_exists(client):
     with patch(
-        "routers.api.pipeline_runs.has_open_changeset",
+        "routers.api.pipeline_runs.has_open_review",
         new_callable=AsyncMock,
         return_value=True,
     ):

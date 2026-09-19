@@ -10,6 +10,7 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from typing import Dict, List, Tuple
 
+from core.images import LOCAL_IMAGE_PREFIX
 from shared.schemas import DerivedPerson, PersonSourceRecord
 from shared.utils import email_utils, name_utils, phone_utils, url_utils
 from shared.utils.label_parser import parse_label
@@ -52,6 +53,14 @@ def merge_field(values: List[str]) -> str:
         return ""
     max_count = max(value_counter.values())
     return sorted(value for value, count in value_counter.items() if count == max_count)[0]
+
+
+def merge_image(values: List[str]) -> str:
+    """A photo the pipeline downloaded, when any sighting has one. Only those are ever served,
+    and `merge_field`'s alphabetical tie-break would otherwise hand the win to any `/…` or
+    `https://…` value, since both sort before `local://`."""
+    downloaded = [value for value in values if value.startswith(LOCAL_IMAGE_PREFIX)]
+    return merge_field(downloaded) or merge_field(values)
 
 
 def merge_field_to_list(values: List[str]) -> List[str]:
@@ -164,7 +173,7 @@ def merge_records_to_person(
 ) -> DerivedPerson:
     records = [normalize_record(log, r) for r in records]
 
-    image = merge_field([r.image for r in records if r.image is not None])
+    image = merge_image([r.image for r in records if r.image is not None])
     merged_labels = merge_labels(records, taxonomy)
     phones = merge_field_to_list([r.phone for r in records if r.phone is not None])
     emails = merge_field_to_list([r.email for r in records if r.email is not None])

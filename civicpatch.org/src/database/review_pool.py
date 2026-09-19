@@ -12,7 +12,11 @@ from shared.utils.statuses import (
     ChangesetKind,
 )
 from database.database import get_pool, to_iso
-from database.changeset_predicates import AVAILABLE_FOR_REVIEW, WORK_IN_FLIGHT
+from database.changeset_predicates import (
+    AVAILABLE_FOR_REVIEW,
+    REVIEW_POOL_KIND_VALUES_SQL,
+    WORK_IN_FLIGHT,
+)
 from database.review_priority import issue_count, issue_priority
 
 
@@ -173,7 +177,9 @@ async def jurisdiction_ocdids_with_open_changesets(state_code: str) -> set[str]:
     return {row[0] for row in rows}
 
 
-async def has_open_changeset(jurisdiction_ocdid: str) -> bool:
+async def has_open_review(jurisdiction_ocdid: str) -> bool:
+    """A scrape still waiting on review. An import waiting on its batch page does not count:
+    whichever of the two is published first supersedes the other."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -181,6 +187,7 @@ async def has_open_changeset(jurisdiction_ocdid: str) -> bool:
             SELECT 1
             FROM changesets
             WHERE {WORK_IN_FLIGHT}
+              AND changesets.kind IN ({REVIEW_POOL_KIND_VALUES_SQL})
               AND changesets.jurisdiction_ocdid = %s
             LIMIT 1
             """,

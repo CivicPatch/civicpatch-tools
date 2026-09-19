@@ -10,13 +10,13 @@ from types import SimpleNamespace
 import pytest
 
 from runners.people_collector.steps.step_01_research_municipality.research_municipality import (
-    _roles_from_posts,
-    _parts_from_research,
-    _divisions_from_posts,
+    _post_memberships,
+    _researched_memberships,
     _source_urls,
 )
-from runners.people_collector.schemas import ResearchedPerson
-from shared.schemas import Membership, Person, Post, Role, RoleConfig
+from runners.people_collector.schemas import ExpectedMembership, ResearchedPerson
+from shared.schemas import KnownOrganization, Membership, Person, Post, Role, RoleConfig
+from shared.utils.taxonomy import UNMATCHED_ROLE_ID, build_taxonomy
 
 pytestmark = pytest.mark.unit
 
@@ -43,70 +43,92 @@ def _post(role_id: str, division_ocdid: str = _BASE) -> Post:
     )
 
 
-def test_a_posts_role_id_renders_as_its_taxonomy_label():
-    roles = _roles_from_posts([_post("mayor"), _post("council-member")], _ROLE_CONFIG)
-    assert roles == ["Mayor", "Council Member"]
+# --- _post_memberships: one expected membership per known post ---
 
 
-def test_one_role_across_many_posts_is_named_once():
-    """It becomes prompt keywords, so repeats are noise."""
-    posts = [_post("council-member", f"{_BASE}/ward:{n}") for n in (1, 2, 3)]
-    assert _roles_from_posts(posts, _ROLE_CONFIG) == ["Council Member"]
+def test_each_post_is_expected_once_under_its_taxonomy_label_and_division():
+    posts = [_post("mayor"), _post("council-member", f"{_BASE}/ward:2")]
+
+    assert _post_memberships(posts, [], _ROLE_CONFIG, _OCDID) == [
+        ExpectedMembership(organization_id="org", role_label="Mayor"),
+        ExpectedMembership(organization_id="org", role_label="Council Member", division="ward 2"),
+    ]
 
 
-def test_a_role_the_config_does_not_name_is_skipped():
+def test_a_post_with_a_headcount_is_still_expected_once():
+    """`meta_headcount` is the first scrape's count and never recomputed."""
+    at_large = _post("council-member").model_copy(update={"meta_headcount": 5})
+
+    assert len(_post_memberships([at_large], [], _ROLE_CONFIG, _OCDID)) == 1
+
+
+def test_an_unmatched_post_is_not_expected():
     """`unmatched` is a real post's role and has no label worth searching a page for."""
-    assert _roles_from_posts([_post("unmatched"), _post("mayor")], _ROLE_CONFIG) == ["Mayor"]
+    expected = _post_memberships([_post(UNMATCHED_ROLE_ID), _post("mayor")], [], _ROLE_CONFIG, _OCDID)
+
+    assert [membership.role_label for membership in expected] == ["Mayor"]
 
 
-def test_no_posts_means_nothing_to_look_for():
-    assert _roles_from_posts([], _ROLE_CONFIG) == []
-    assert _divisions_from_posts([], _OCDID) == []
+def _held(post: Post, designations: list[str]) -> Membership:
+    return Membership(
+        post_id=post.id,
+        role_id=post.role_id,
+        division_ocdid=post.division_ocdid,
+        role_label="Council Member",
+        designations=designations,
+    )
 
 
-def test_each_posts_division_becomes_the_designation_a_label_would_name():
-    posts = [_post("council-member", f"{_BASE}/ward:1"), _post("council-member", f"{_BASE}/ward:2")]
-    assert _divisions_from_posts(posts, _OCDID) == ["ward 1", "ward 2"]
+def test_a_post_carries_the_designations_of_every_membership_held_on_it():
+    """An at-large post is one expected membership, however many seat markers its holders have."""
+    at_large, mayor = _post("council-member"), _post("mayor")
+    held = [_held(at_large, ["Seat 1"]), _held(at_large, ["Seat 2"]), _held(mayor, ["Seat 9"])]
+
+    [council] = _post_memberships([at_large], held, _ROLE_CONFIG, _OCDID)
+
+    assert council.designations == ["Seat 1", "Seat 2"]
 
 
-def test_a_post_covering_the_whole_jurisdiction_is_no_target():
-    """There is no ward to go looking for, so an at-large post sets no goal."""
-    assert _divisions_from_posts([_post("mayor", _BASE)], _OCDID) == []
+# --- _researched_memberships: the first scrape, parsed with the shared parser ---
 
-
-# --- _parts_from_research: the first scrape, split once with the shared parser ---
+_DEFAULT = KnownOrganization(id="government", name="Government", meta_is_default=True, posts=[])
+_OTHER = KnownOrganization(id="schools", name="School Board", posts=[])
 
 
 def _researched(label: str) -> ResearchedPerson:
     return ResearchedPerson(name="Ann Lee", label=label)
 
 
-def test_a_researched_label_is_split_into_role_and_division():
-    """The same `parse_label` cp.org runs at ingest, so a first scrape and every later one
-    agree about what a label means."""
-    roles, designations = _parts_from_research(
-        [_researched("Council Member, Ward 3")], _ROLE_CONFIG
+def test_research_is_expected_in_the_default_organization():
+    """Research knows no organizations. The same `parse_label` cp.org runs at ingest, so a
+    first scrape and every later one agree about what a label means."""
+    expected = _researched_memberships(
+        [_researched("Council Member, Ward 3"), _researched("Mayor")],
+        [_OTHER, _DEFAULT],
+        build_taxonomy(_ROLE_CONFIG),
     )
-    assert roles == ["Council Member"]
-    assert designations == ["ward 3"]
+
+    assert expected == [
+        ExpectedMembership(organization_id="government", role_label="Council Member", division="ward 3"),
+        ExpectedMembership(organization_id="government", role_label="Mayor"),
+    ]
 
 
-def test_a_label_naming_no_division_sets_no_goal():
-    roles, designations = _parts_from_research([_researched("Mayor")], _ROLE_CONFIG)
-    assert roles == ["Mayor"]
-    assert designations == []
-
-
-def test_one_role_across_several_researched_people_is_named_once():
-    roles, _ = _parts_from_research(
-        [_researched("Council Member, Ward 1"), _researched("Council Member, Ward 2")],
-        _ROLE_CONFIG,
+def test_a_researched_label_naming_no_role_is_not_expected():
+    """Progress counts by role, so it would count toward nothing."""
+    expected = _researched_memberships(
+        [_researched("Friend of the Library")], [_DEFAULT], build_taxonomy(_ROLE_CONFIG)
     )
-    assert roles == ["Council Member"]
+
+    assert expected == []
 
 
-def test_research_that_named_no_offices_steers_by_nothing():
-    assert _parts_from_research([_researched("")], _ROLE_CONFIG) == ([], [])
+def test_a_researched_designation_naming_no_division_is_search_wording_only():
+    [council] = _researched_memberships(
+        [_researched("Council Member, Position 1")], [_DEFAULT], build_taxonomy(_ROLE_CONFIG)
+    )
+
+    assert (council.division, council.designations) == (None, ["Position 1"])
 
 
 def _config(source_urls: list[str] | None = None):

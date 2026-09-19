@@ -10,13 +10,10 @@ those is per-person and belongs on the membership, so it never appears here.
 
 from pydantic import BaseModel
 from shared.schemas import Role
-from shared.utils.taxonomy import Taxonomy
+from shared.utils.taxonomy import UNMATCHED_ROLE_ID, Taxonomy
 
 from core.membership_label import MembershipLabel, render
 from core.people_roles import DerivedRoles, derive_roles
-
-# A label resolving to no role still gets a post, so nobody is postless. Seeded by 118.
-UNMATCHED_ROLE_ID = "unmatched"
 
 
 class RosterSighting(BaseModel):

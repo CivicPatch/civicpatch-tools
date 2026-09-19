@@ -62,9 +62,7 @@ def _accordion_keywords(context: PeopleCollectorContext) -> list[str]:
     return list(
         dict.fromkeys(
             config_utils.governance_keywords()
-            + search_phrases(
-                research.known_organizations, research.known_memberships, research.known_roles
-            )
+            + search_phrases(research.known_organizations, research.expected_memberships)
         )
     )
 

@@ -42,9 +42,6 @@ def pipeline_run_context_factory(
             research_municipality_step=research_municipality_step
             or default_steps.get(PipelineStatus.RESEARCH_MUNICIPALITY)
             or ResearchMunicipalityStep(
-                expected_count=0,
-                target_designations=[],
-                known_roles=[],
                 identities={},
                 source_urls=[],
             ),
