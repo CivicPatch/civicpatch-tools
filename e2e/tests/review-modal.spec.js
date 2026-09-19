@@ -9,26 +9,25 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { SCALE_CHANGESET_ID } from "../fixtures/db.js";
-import { openOverview, rowFor, editorFor, fieldIn } from "./helpers/review-card.js";
+import { rowFor, openEditorFor } from "./helpers/review-card.js";
 
 const openCardModal = async (page, name) => {
   await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
   await expect(page.locator("review-overview")).toBeVisible();
-  await rowFor(page, name).locator(".review-row__open").click();
-  await expect(page.locator("review-modal dialog")).toBeVisible();
+  await openEditorFor(page, name);
 };
 
 // By accessible name, not by row: `hasText` is a case-insensitive *substring*
 // match, so filtering rows on "Name" also catches "Other names" and the input
 // lookup resolves to two.
 const modalNameInput = (page) =>
-  page.locator("review-modal").getByLabel("Name", { exact: true });
+  page.locator(".person-editor-inline").getByLabel("Name", { exact: true });
 
 // Name is unchanged on these people, so the collapse rule hides it. Reaching a
 // field that did not move is exactly what the expander is for — and expansion is
 // keyed per person, so stepping to someone else starts collapsed again.
 const showAllFields = (page) =>
-  page.locator("review-modal .person-editor__expander").click();
+  page.locator(".person-editor-inline .person-editor__expander").click();
 
 test.describe("Review modal", () => {
   test("opens on the person whose tile was clicked", async ({
@@ -56,7 +55,7 @@ test.describe("Review modal", () => {
     authenticatedPage: page,
   }) => {
     await openCardModal(page, "Councillor 02 Scale");
-    const fields = page.locator("review-modal .person-editor__field");
+    const fields = page.locator(".person-editor-inline .person-editor__field");
 
     // The modal is the editor mounted with one person, not a second editor, so it
     // collapses rather than having its own idea of what to show: the two fields
@@ -76,7 +75,7 @@ test.describe("Review modal", () => {
     // the list you opened it from rather than a status-sorted sequence. The
     // overview is still mounted behind the modal, so it can be read here.
     const rosterNames = (
-      await page.locator(".review-row__name").allTextContents()
+      await page.locator("review-overview .pc-name").allTextContents()
     ).map((n) => n.trim());
     // Derived, not hardcoded: the roster sorts by role rank before division, so who is first
     // depends on who the scrape promoted. The claim is that the walk follows that order.
@@ -168,7 +167,7 @@ test.describe("Review modal", () => {
 
     // Revert measures against the card as it loaded, the same baseline that
     // marks the row dirty — not against the state the modal last opened in.
-    await rowFor(page, "Renamed Councillor").locator(".review-row__open").click();
+    await rowFor(page, "Renamed Councillor").locator(".pc-name").click();
     await expect(page.locator("review-modal dialog")).toBeVisible();
     await showAllFields(page);
     await expect(page.locator(".review-modal__revert")).toBeEnabled();
