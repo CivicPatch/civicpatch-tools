@@ -84,6 +84,7 @@ def normalize_record(log: Log, record: PersonSourceRecord) -> PersonSourceRecord
 
     return PersonSourceRecord(
         name=record.name,
+        other_names=record.other_names,
         # Verbatim: normalizing here is what 2.2 removed — cp.org parses.
         label=record.label,
         phone=normalized_phone,
@@ -160,8 +161,14 @@ def canonical_name(published_name: str, records: List[PersonSourceRecord]) -> st
 
     `known_name` is empty when nobody has published this person. At ingest that is decided by
     `identities`; at read time by whether the resolved id is in `people`.
+
+    Titles and credentials never make it into the name, published or not: "Chair Hilda L. Solis"
+    is Hilda L. Solis. The sightings keep the name as the page printed it.
     """
-    return published_name or merge_field([record.name for record in records])
+    strip = name_utils.strip_titles_and_credentials
+    if published_name:
+        return strip(published_name)
+    return merge_field([strip(record.name) for record in records])
 
 
 def merge_records_to_person(
@@ -180,13 +187,15 @@ def merge_records_to_person(
     urls = merge_field_to_list([r.url for r in records if r.url is not None])
     # Case-insensitive both ways: a source that writes the name differently on two pages is
     # spelling one name, not naming an alias.
+    # Every spelling a sighting used, and every name a source stated outright.
+    seen_names = [name for record in records for name in [record.name, *record.other_names]]
     other_names: List[str] = []
-    for record in records:
-        if not record.name or name_utils.exact_match(record.name, canonical_name):
+    for name in seen_names:
+        if not name or name_utils.same_name(name, canonical_name):
             continue
-        if any(name_utils.exact_match(record.name, kept) for kept in other_names):
+        if any(name_utils.same_name(name, kept) for kept in other_names):
             continue
-        other_names.append(record.name)
+        other_names.append(name)
     other_names.sort()
 
     person = DerivedPerson(

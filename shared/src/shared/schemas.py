@@ -173,6 +173,9 @@ class PersonSourceRecord(ExtractedPersonRecord):
     """
 
     source_url: str
+    # Stated by the source, as a sheet row does. Not on `ExtractedPersonRecord`: a page names
+    # someone once, and asking the extractor for more invites it to invent them.
+    other_names: List[str] = []
     # Which body's extraction produced it — known from which prompt ran, not read off the page.
     # None for records that predate bodies: stored `source_records` rows and older artifacts.
     organization_id: str | None = None

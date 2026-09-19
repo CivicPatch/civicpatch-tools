@@ -10,6 +10,7 @@ from enum import StrEnum
 from pydantic import BaseModel
 
 from core.membership_proposal import MembershipDisposition, ProposedChange
+from shared.utils.name_utils import surname_key
 
 # Mirrors the compared entries of `FIELD_SCHEMA` in frontend/components/fields/field-schema.ts,
 # in its order. Photo and source urls are `diff: false`; the office is a membership.
@@ -102,10 +103,14 @@ def _membership_note(proposal: ProposedChange) -> str | None:
     return None
 
 
-def _person_note(diff: PersonDiff | None, proposals: list[ProposedChange]) -> str:
+def _person_note(
+    diff: PersonDiff | None, proposals: list[ProposedChange], likely_same_as: str | None
+) -> str:
     parts = []
     if diff is not None and diff.type is DiffType.ADDED:
         parts.append("new person")
+        if likely_same_as:
+            parts.append(f"may be {likely_same_as}: add that name to other_names to link them")
     for proposal in proposals:
         note = _membership_note(proposal)
         if note is not None:
@@ -116,7 +121,10 @@ def _person_note(diff: PersonDiff | None, proposals: list[ProposedChange]) -> st
 
 
 def person_notes(
-    person_ids: list[str], diffs: list[PersonDiff], proposals: list[ProposedChange]
+    person_ids: list[str],
+    diffs: list[PersonDiff],
+    proposals: list[ProposedChange],
+    likely_same: dict[str, str],
 ) -> dict[str, str]:
     """What this roster changes about each person, most important first: new person, then
     posts, then fields. Absences have no row to note; the batch page counts them."""
@@ -125,9 +133,53 @@ def person_notes(
         person_id: _person_note(
             diff_by_id.get(person_id),
             [proposal for proposal in proposals if proposal.person_id == person_id],
+            likely_same.get(person_id),
         )
         for person_id in person_ids
     }
+
+
+def _absent_names(
+    published: list[dict], proposed: list[dict], proposals: list[ProposedChange]
+) -> dict[str, str]:
+    """Published people this roster no longer has at all; someone absent from one post but
+    still on the roster has only moved."""
+    still_here = {person["id"] for person in proposed}
+    absent_ids = {
+        proposal.person_id
+        for proposal in proposals
+        if proposal.disposition is MembershipDisposition.ABSENT
+    }
+    return {
+        person["id"]: person["name"]
+        for person in published
+        if person["id"] in absent_ids and person["id"] not in still_here
+    }
+
+
+def likely_same_people(
+    published: list[dict],
+    proposed: list[dict],
+    diffs: list[PersonDiff],
+    proposals: list[ProposedChange],
+) -> dict[str, str]:
+    """Each added person the import may have mistaken for an absent one, and the reverse: id to
+    the other person's name.
+
+    A pair is the only added and the only absent person sharing a surname. A hint for a human,
+    never a match: a relative taking over the post shares one too.
+    """
+    added = {diff.person_id: diff.name for diff in diffs if diff.type is DiffType.ADDED}
+    absent = _absent_names(published, proposed, proposals)
+    pairs: dict[str, str] = {}
+    for surname in {surname_key(name) for name in added.values()} - {""}:
+        added_here = [person_id for person_id, name in added.items() if surname_key(name) == surname]
+        absent_here = [person_id for person_id, name in absent.items() if surname_key(name) == surname]
+        if len(added_here) != 1 or len(absent_here) != 1:
+            continue
+        pairs[added_here[0]] = absent[absent_here[0]]
+        pairs[absent_here[0]] = added[added_here[0]]
+    return pairs
 
 
 def count_changes(diffs: list[PersonDiff], proposals: list[ProposedChange]) -> ChangeCounts:

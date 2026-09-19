@@ -424,3 +424,18 @@ class TestMergeWeakTieGroups:
         result = merge_weak_tie_groups(groups, build_taxonomy(ROLE_CONFIG))
         assert "Smith" not in result
         assert len(result["Marty C Smith Jr"]) == 2
+
+
+def test_canonical_name_drops_a_published_title():
+    """Dev 2026-09-19: LA County publishes "Chair Hilda L. Solis". The chair is a post."""
+    assert canonical_name("Chair Hilda L. Solis", []) == "Hilda L. Solis"
+
+
+def test_canonical_name_counts_spellings_without_their_credentials():
+    records = [
+        make_llm_person("Dr. Frank Figueroa"),
+        make_llm_person("Frank Figueroa"),
+        make_llm_person("Frank J. Figueroa"),
+    ]
+
+    assert canonical_name("", records) == "Frank Figueroa"

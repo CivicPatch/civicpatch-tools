@@ -71,7 +71,7 @@ def _merged_contacts(people: list[dict]) -> dict[str, dict]:
     """
     merged: dict[str, dict] = {}
     for person in people:
-        key = name_utils.normalize_name(person.get("name", ""))
+        key = name_utils.name_grouping_key(person.get("name", ""))
         into = merged.setdefault(key, {"name": person.get("name")})
         for field in FIELDS:
             if not into.get(field):
@@ -126,7 +126,7 @@ def _grouped_labels(people: list[dict]) -> dict[str, list[str]]:
     two records, so a `{name: person}` comprehension would keep only the last."""
     grouped: dict[str, list[str]] = {}
     for person in people:
-        key = name_utils.normalize_name(person.get("name", ""))
+        key = name_utils.name_grouping_key(person.get("name", ""))
         grouped.setdefault(key, []).append(person.get("label") or "")
     return grouped
 
@@ -188,13 +188,13 @@ def audit_extra_people(roots: list[pathlib.Path]) -> list[dict]:
         if not case.is_dir() or not (case / "expected.yml").exists():
             continue
         wanted = {
-            name_utils.normalize_name(p.get("name", "")) for p in (_people(case / "expected.yml") or [])
+            name_utils.name_grouping_key(p.get("name", "")) for p in (_people(case / "expected.yml") or [])
         }
         samples = _samples(case, roots)
         if len(samples) < 2:
             continue
         produced = [
-            {name_utils.normalize_name(p.get("name", "")): p.get("name") for p in sample}
+            {name_utils.name_grouping_key(p.get("name", "")): p.get("name") for p in sample}
             for sample in samples
         ]
         for name_key in set.intersection(*(set(s) for s in produced)):

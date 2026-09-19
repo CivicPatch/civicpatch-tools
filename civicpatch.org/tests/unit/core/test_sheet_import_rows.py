@@ -324,3 +324,21 @@ def test_a_site_that_names_no_single_jurisdiction_asks_for_one(source_url, expec
 
     assert error.column == "jurisdiction_ocdid"
     assert error.message.startswith(expected)
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "cell, names",
+    [
+        ("", []),
+        ("Jenny Fisk-Becker", ["Jenny Fisk-Becker"]),
+        ("Jenny Fisk-Becker | J. Fisk", ["Jenny Fisk-Becker", "J. Fisk"]),
+        ("Jenny Fisk-Becker|J. Fisk", ["Jenny Fisk-Becker", "J. Fisk"]),
+        ("Richard T. Hale, Jr.", ["Richard T. Hale, Jr."]),
+        (" | Jenny Fisk-Becker | ", ["Jenny Fisk-Becker"]),
+    ],
+)
+def test_other_names_split_on_the_bar(cell, names):
+    rows, errors = _parse([_row(other_names=cell)])
+    assert errors == []
+    assert rows[0].sighting.other_names == names

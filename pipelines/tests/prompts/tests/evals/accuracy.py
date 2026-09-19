@@ -164,7 +164,7 @@ def group_by_name(people) -> dict[str, list]:
     old `{name: person}` comprehension silently kept the last and dropped a label."""
     grouped: dict[str, list] = defaultdict(list)
     for person in people:
-        grouped[name_utils.normalize_name(person.name or "")].append(person)
+        grouped[name_utils.name_grouping_key(person.name or "")].append(person)
     return dict(grouped)
 
 

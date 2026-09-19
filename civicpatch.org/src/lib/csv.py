@@ -1,21 +1,32 @@
 import csv
 import io
 
+# How the entry sheet marks a column for the human reading its header; never part of the key.
+REQUIRED_MARKER = "*"
+READ_ONLY_MARKER = " (read-only)"
+
+
+def column_key(header_text) -> str:
+    """A header cell as the column it names: "Name*" and "published_other_names (read-only)"
+    are `name` and `published_other_names`."""
+    key = str(header_text or "").strip().lower()
+    key = key.removesuffix(READ_ONLY_MARKER.strip()).strip()
+    return key.rstrip(REQUIRED_MARKER).strip()
+
 
 def rows_from_table(table: list[list]) -> list[dict]:
     """A header row and its data rows, as dicts keyed by the header. Shared by the CSV and
     Sheets readers, so one sheet cannot parse differently depending on how it was read.
 
-    Headers are lowercased and stripped — a header row is typed by a human. A trailing `*` is
-    stripped too: `sheet_import_rows.ROSTER_HEADERS` marks its required columns that way on the sheet
-    itself, and the marker is for the human reading the header, not a character to match on.
+    Headers go through `column_key` — a header row is typed by a human, and the entry sheet's
+    markers are for the human reading it, not characters to match on.
     Short rows are padded, because Sheets omits trailing empty cells and a blank optional field
     is an empty value, not a missing column. A leading `'` is stripped: Sheets prefixes a value
     with it to force text formatting (e.g. keeping a leading `=` from being read as a formula).
     """
     if not table:
         return []
-    header = [str(name or "").strip().lower().rstrip("*").strip() for name in table[0]]
+    header = [column_key(name) for name in table[0]]
     return [
         {
             key: _unsanitize(row[index] if index < len(row) else "")

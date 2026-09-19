@@ -48,7 +48,7 @@ def _proposal(
 
 
 def _rows(published: list[dict], proposed: list[dict], proposals: list[ProposedChange]):
-    return report_rows(_OCDID, published, proposed, person_diffs(published, proposed), proposals)
+    return report_rows(_OCDID, published, proposed, person_diffs(published, proposed), proposals, {})
 
 
 def _cells(row) -> dict[str, SheetCell]:
@@ -137,3 +137,25 @@ def test_writing_a_report_drops_all_but_the_newest_others():
 def test_a_same_minute_report_is_replaced_rather_than_rewritten():
     """Rewriting in place would leave the old tab's longer tail below the new rows."""
     assert stale_report_tabs([_report(20)], _report(20)) == [_report(20)]
+
+
+def test_both_rows_of_a_likely_pair_point_at_each_other():
+    published = [{"id": "p2", "name": "Jenny Fisk-Becker"}]
+    proposed = [{"id": "p3", "name": "Jennifer Fisk-Becker"}]
+    proposals = [
+        _proposal("p2", MembershipDisposition.ABSENT, "Member"),
+        _proposal("p3", MembershipDisposition.NEW, "Member"),
+    ]
+    likely = {"p3": "Jenny Fisk-Becker", "p2": "Jennifer Fisk-Becker"}
+
+    rows = report_rows(
+        _OCDID, published, proposed, person_diffs(published, proposed), proposals, likely
+    )
+    jennifer, jenny = [_cells(row) for row in rows]
+
+    assert jennifer["name"] == SheetCell(
+        value="Jennifer Fisk-Becker", background=ADDED_ROW, note="may be Jenny Fisk-Becker"
+    )
+    assert jenny["name"] == SheetCell(
+        value="Jenny Fisk-Becker", background=ABSENT_ROW, note="may be Jennifer Fisk-Becker"
+    )

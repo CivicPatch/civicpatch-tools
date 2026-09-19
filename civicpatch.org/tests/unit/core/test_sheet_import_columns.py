@@ -1,6 +1,6 @@
 import pytest
 
-from core.sheet_import_columns import roster_columns
+from core.sheet_import_columns import by_row, published_other_names_by_person, roster_columns
 from core.sheet_import_rows import ImportRow, RowError, Sighting, parse_rows
 from core.source_sites import SiteIndex, SiteOwner, build_site_index
 
@@ -74,14 +74,14 @@ _SITES = build_site_index(
 
 @pytest.mark.unit
 def test_an_imported_row_says_so_and_carries_no_error():
-    columns = roster_columns(_raw_rows(1), [_parsed_row(2)], [], {_OCDID}, _STAMP, {}, set())
+    columns = roster_columns(_raw_rows(1), [_parsed_row(2)], [], {_OCDID}, _STAMP, {}, {}, set())
     assert columns["status"] == ["imported"]
     assert columns["error"] == [""]
 
 
 @pytest.mark.unit
 def test_a_rejected_row_names_its_column():
-    columns = roster_columns(_raw_rows(1), [], [_row_error(2)], set(), _STAMP, {}, set())
+    columns = roster_columns(_raw_rows(1), [], [_row_error(2)], set(), _STAMP, {}, {}, set())
     assert columns["status"] == ["error"]
     assert columns["error"] == ["name: required"]
 
@@ -90,7 +90,7 @@ def test_a_rejected_row_names_its_column():
 def test_a_good_row_in_a_blocked_town_points_elsewhere():
     """Most of a blocked town is rows that are perfectly fine. Saying 'error' against them would
     have the volunteer hunting for a fault that is on somebody else's line."""
-    columns = roster_columns(_raw_rows(2), [_parsed_row(2)], [_row_error(3)], set(), _STAMP, {}, set())
+    columns = roster_columns(_raw_rows(2), [_parsed_row(2)], [_row_error(3)], set(), _STAMP, {}, {}, set())
     assert columns["status"] == ["blocked", "error"]
     assert columns["error"][0] == "another row in this town was rejected"
 
@@ -100,7 +100,7 @@ def test_every_row_gets_a_value_so_stale_errors_clear():
     """A row that failed last run and is fine now must not keep last run's message — the
     volunteer would chase a problem they already fixed."""
     rows = [_parsed_row(2), _parsed_row(3, name="Bo Chen")]
-    columns = roster_columns(_raw_rows(2), rows, [], {_OCDID}, _STAMP, {}, set())
+    columns = roster_columns(_raw_rows(2), rows, [], {_OCDID}, _STAMP, {}, {}, set())
     assert columns["error"] == ["", ""]
     assert len(columns["status"]) == 2
     assert columns["last_import_at"] == [_STAMP, _STAMP]
@@ -113,7 +113,7 @@ def test_a_row_this_run_did_not_touch_keeps_its_status():
     must not be blanked. Status and timestamp both have to come from the sheet's own current
     cells, not from the parse, which saw nothing here at all."""
     raw_rows = _raw_rows(1, {2: {"status": "imported", "last_import_at": "2026-08-01 09:00"}})
-    columns = roster_columns(raw_rows, [], [], set(), _STAMP, {}, set())
+    columns = roster_columns(raw_rows, [], [], set(), _STAMP, {}, {}, set())
     assert columns["status"] == ["imported"]
     assert columns["last_import_at"] == ["2026-08-01 09:00"]
 
@@ -122,14 +122,14 @@ def test_a_row_this_run_did_not_touch_keeps_its_status():
 def test_spare_lines_are_not_stamped():
     """The other half: stop creating the condition. A line the parse produced nothing for gets
     no timestamp, so it stays a line nobody wrote."""
-    columns = roster_columns(_raw_rows(3), [], [], set(), _STAMP, {}, set())
+    columns = roster_columns(_raw_rows(3), [], [], set(), _STAMP, {}, {}, set())
     assert columns["last_import_at"] == ["", "", ""]
 
 
 @pytest.mark.unit
 def test_rows_the_run_saw_are_still_stamped():
     parsed, errors = _parse([_row()])
-    columns = roster_columns(_raw_rows(1), parsed, errors, {_OCDID}, _STAMP, {}, set())
+    columns = roster_columns(_raw_rows(1), parsed, errors, {_OCDID}, _STAMP, {}, {}, set())
     assert columns["last_import_at"] == [_STAMP]
 
 
@@ -139,7 +139,7 @@ def test_an_imported_town_gets_each_rows_note_by_name():
     raw_rows = [_named_row(" Bo Chen "), _named_row("Ana Reyes", note="stale")]
     notes = {(_OCDID, "ana reyes"): "new person", (_OCDID, "bo chen"): "changed: phones"}
 
-    columns = roster_columns(raw_rows, [], [], {_OCDID}, _STAMP, notes, set())
+    columns = roster_columns(raw_rows, [], [], {_OCDID}, _STAMP, notes, {}, set())
 
     assert columns["note"] == ["changed: phones", "new person"]
 
@@ -148,7 +148,7 @@ def test_an_imported_town_gets_each_rows_note_by_name():
 def test_a_town_not_imported_this_run_keeps_its_note():
     raw_rows = [_named_row("Ana Reyes", ocdid=_OTHER_TOWN, note="new person")]
 
-    columns = roster_columns(raw_rows, [], [], {_OCDID}, _STAMP, {}, set())
+    columns = roster_columns(raw_rows, [], [], {_OCDID}, _STAMP, {}, {}, set())
 
     assert columns["note"] == ["new person"]
 
@@ -158,7 +158,7 @@ def test_a_dismissed_import_clears_its_note():
     """Rejected, superseded or expired: the change the note describes can no longer happen."""
     raw_rows = [_named_row("Ana Reyes", ocdid=_OTHER_TOWN, note="new person")]
 
-    columns = roster_columns(raw_rows, [], [], set(), _STAMP, {}, {_OTHER_TOWN})
+    columns = roster_columns(raw_rows, [], [], set(), _STAMP, {}, {}, {_OTHER_TOWN})
 
     assert columns["note"] == [""]
 
@@ -168,7 +168,7 @@ def test_a_resolved_jurisdiction_is_written_back_and_a_typed_one_is_kept():
     raw_rows = [_row(jurisdiction_ocdid=""), _row(name="Bo Chen", jurisdiction_ocdid=_OCDID)]
     parsed, errors = _parse(raw_rows, _SITES)
 
-    columns = roster_columns(raw_rows, parsed, errors, {_OCDID}, _STAMP, {}, set())
+    columns = roster_columns(raw_rows, parsed, errors, {_OCDID}, _STAMP, {}, {}, set())
 
     assert columns["jurisdiction_ocdid"] == [_OCDID, _OCDID]
 
@@ -179,6 +179,38 @@ def test_a_row_no_site_resolved_blocks_no_spare_line():
     raw_rows = [_row(jurisdiction_ocdid="", source_url="https://nowhere.gov"), {}]
     parsed, errors = _parse(raw_rows, _SITES)
 
-    columns = roster_columns(raw_rows, parsed, errors, set(), _STAMP, {}, set())
+    columns = roster_columns(raw_rows, parsed, errors, set(), _STAMP, {}, {}, set())
 
     assert columns["status"] == ["error", ""]
+
+
+@pytest.mark.unit
+def test_an_imported_town_gets_each_rows_published_other_names():
+    raw_rows = [_named_row("Jennifer Fisk-Becker"), _named_row("Bo Chen")]
+    published = {(_OCDID, "jennifer fisk-becker"): "Jenny Fisk-Becker | J. Fisk-Becker"}
+
+    columns = roster_columns(raw_rows, [], [], {_OCDID}, _STAMP, {}, published, set())
+
+    assert columns["published_other_names"] == ["Jenny Fisk-Becker | J. Fisk-Becker", ""]
+
+
+@pytest.mark.unit
+def test_published_other_names_are_joined_like_the_live_tabs():
+    published = [
+        {"id": "jenny", "other_names": ["Jenny Fisk-Becker", "Richard T. Hale, Jr."]},
+        {"id": "bo", "other_names": []},
+    ]
+
+    assert published_other_names_by_person(published) == {
+        "jenny": "Jenny Fisk-Becker | Richard T. Hale, Jr.",
+        "bo": "",
+    }
+
+
+@pytest.mark.unit
+def test_by_row_keys_a_persons_value_by_each_of_their_rows():
+    records_by_person = {"jenny": [{"name": "Jennifer Fisk-Becker"}], "new": [{"name": "Bo Chen"}]}
+
+    assert by_row(_OCDID, records_by_person, {"jenny": "Jenny Fisk-Becker"}) == {
+        "jennifer fisk-becker": "Jenny Fisk-Becker"
+    }
