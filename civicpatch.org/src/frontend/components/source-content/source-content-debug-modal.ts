@@ -8,9 +8,12 @@ import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import "../basic/modal.js";
 import "../civ-tab-bar/civ-tab-bar.js";
 
+// `markdown` and `html` are the debug bucket's copies of the page: what the pipeline read, and
+// what it fetched. Admins only; null for everyone else, who never open this modal.
 export type SourceContentUrl = {
   url: string;
-  markdown: string;
+  markdown: string | null;
+  html: string | null;
 };
 
 type SourceContentDebugModalHost = HTMLElement & {
@@ -33,6 +36,10 @@ function SourceContentDebugModal(host: SourceContentDebugModalHost) {
     }
     let isMounted = true;
     const markdownUrl = sourceContentUrls[safeTab].markdown;
+    if (!markdownUrl) {
+      setMarkdownHtml("");
+      return;
+    }
     fetch(markdownUrl)
       .then((res) => res.text())
       .then((markdown) => DOMPurify.sanitize(marked.parse(markdown) as string))
@@ -63,7 +70,15 @@ function SourceContentDebugModal(host: SourceContentDebugModalHost) {
       href=${sourceContentUrls[safeTab].url}
       target="_blank"
       rel="noopener noreferrer"
-    >View Original</a>
+    >Live page</a>
+    ${sourceContentUrls[safeTab].html
+      ? html`<a
+          class="source-content-debug-modal__link"
+          href=${sourceContentUrls[safeTab].html}
+          target="_blank"
+          rel="noopener noreferrer"
+        >Fetched HTML</a>`
+      : null}
     <div class="source-content-debug-modal__markdown">${unsafeHTML(markdownHtml)}</div>
   `;
 

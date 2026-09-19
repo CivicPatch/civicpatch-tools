@@ -83,6 +83,7 @@ type ReviewSessionHost = HTMLElement & {
   currentEntry: CurrentEntry | null;
   error: string | null;
   canReject: boolean;
+  canViewSourceDebug: boolean;
   isRejecting: boolean;
   canAssignMembership: boolean;
   canCreatePost: boolean;
@@ -103,6 +104,7 @@ function ReviewSession(host: ReviewSessionHost) {
     currentEntry,
     error,
     canReject,
+    canViewSourceDebug,
     isRejecting,
     canAssignMembership,
     canCreatePost,
@@ -306,7 +308,7 @@ function ReviewSession(host: ReviewSessionHost) {
           .officeChanges=${officeChanges}
         ></review-session-actions>
         <div class="review-session__header-tools">
-          ${hasSourceContent
+          ${canViewSourceDebug && hasSourceContent
             ? html`<button
                 class="btn btn-sm secondary"
                 @click=${() => setDebugOpen(true)}

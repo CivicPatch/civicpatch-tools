@@ -96,6 +96,7 @@ function ReviewSessionPage() {
       .progress=${progress}
       .error=${publishError}
       .canReject=${permissions.can_reject_scrape}
+      .canViewSourceDebug=${permissions.can_view_source_debug}
       .isRejecting=${isRejecting}
       .canAssignMembership=${canAssignMembership}
       .canCreatePost=${permissions.can_create_post}

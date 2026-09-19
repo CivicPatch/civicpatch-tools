@@ -13,9 +13,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from lib.auth import require_route_access
 from psycopg.errors import UniqueViolation
 from pydantic import BaseModel
-from schemas.common import Identity, ReviewMode, RouteCategory
+from schemas.common import Identity, ReviewMode, RouteCategory, UserRole, has_at_least
 from services.review_proposal import assertions_for_people, proposals_for_requests
-from services.review_sources import build_sources
+from services.review_sources import build_sources, without_debug_links
 from services.roster import proposed_roster_and_source_values
 logger = logging.getLogger(__name__)
 
@@ -81,7 +81,7 @@ def get_router() -> APIRouter:
         body: NavigateToEntryRequest,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        return await _navigate_response(session_id, body.entry_number)
+        return await _navigate_response(session_id, body.entry_number, user.role)
 
     @router.post("/{session_id}/pass")
     async def pass_session(
@@ -90,7 +90,7 @@ def get_router() -> APIRouter:
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         await review_session_entries_db.pass_entry(session_id, body.entry_number)
-        return await _navigate_response(session_id, body.entry_number)
+        return await _navigate_response(session_id, body.entry_number, user.role)
 
     @router.get("/active")
     async def get_active_session(
@@ -115,7 +115,7 @@ def get_router() -> APIRouter:
     return router
 
 
-async def _navigate_response(session_id: str, entry_number: int):
+async def _navigate_response(session_id: str, entry_number: int, viewer_role: str | None):
     try:
         result = await review_session_navigation_db.navigate_to_entry(
             session_id, entry_number
@@ -156,6 +156,8 @@ async def _navigate_response(session_id: str, entry_number: int):
         {url for person in proposed for url in (person.get("source_urls") or [])}
     )
     sources = build_sources(changeset_id, jurisdiction_ocdid, unique_source_urls)
+    if not has_at_least(viewer_role, UserRole.ADMINS):
+        sources = without_debug_links(sources)
 
     if pr_meta is None:
         raise HTTPException(status_code=404, detail="Pull request metadata not found")

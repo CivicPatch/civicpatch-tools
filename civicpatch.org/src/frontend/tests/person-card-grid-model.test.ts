@@ -3,18 +3,16 @@ import {
   roleRank,
   sortByRoleRank,
   computeLeadIds,
+  groupByRole,
 } from "../components/people/person-card-grid-model.js";
 
 const ROLE_ORDER = ["mayor", "council-president", "council-member", "clerk"];
 
 const member = (roleId: string) => ({
-  post_id: "p1",
   role_id: roleId,
   role_label: roleId,
-  division_ocdid: "",
-  label: null,
   post_label: "",
-  source_labels: [],
+  membership_label: null as string | null,
 });
 
 describe("roleRank", () => {
@@ -82,5 +80,49 @@ describe("computeLeadIds", () => {
 
   it("marks nobody on an empty page", () => {
     expect(computeLeadIds([], ROLE_ORDER).size).toBe(0);
+  });
+});
+
+describe("groupByRole", () => {
+  const seated = (
+    id: string,
+    roleId: string,
+    postLabel: string,
+    membershipLabel: string | null = null,
+  ) => ({
+    id,
+    memberships: [{ ...member(roleId), post_label: postLabel, membership_label: membershipLabel }],
+  });
+  const idsIn = (people: ReturnType<typeof seated>[]) =>
+    groupByRole(people, ROLE_ORDER).map((group) => group.people.map((person) => person.id));
+
+  it("orders role groups, then post label, then the membership's own label", () => {
+    const people = [
+      seated("strauss", "council-member", "Council Member, District 6"),
+      seated("foster", "council-member", "Council Member, Position 9"),
+      seated("saka-pro-tem", "council-member", "Council Member, District 1", "Mayor Pro Tem"),
+      seated("wilson", "mayor", "Mayor"),
+      seated("saka", "council-member", "Council Member, District 1"),
+    ];
+    expect(idsIn(people)).toEqual([
+      ["wilson"],
+      ["saka", "saka-pro-tem", "strauss", "foster"],
+    ]);
+  });
+
+  it("reads District 2 before District 10", () => {
+    const people = [
+      seated("ten", "council-member", "Council Member, District 10"),
+      seated("two", "council-member", "Council Member, District 2"),
+    ];
+    expect(idsIn(people)).toEqual([["two", "ten"]]);
+  });
+
+  it("keeps arrival order when every label ties", () => {
+    const people = [
+      seated("b", "council-member", "Council Member, At Large"),
+      seated("a", "council-member", "Council Member, At Large"),
+    ];
+    expect(idsIn(people)).toEqual([["b", "a"]]);
   });
 });

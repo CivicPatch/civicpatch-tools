@@ -20,6 +20,7 @@ from database.changesets import (
     register_sheet_import_changeset,
 )
 from database.database import get_pool
+from database.review_pool import has_open_review
 from database.users import SYSTEM_USER_ID
 from shared.utils.statuses import ChangesetKind
 from tests.integration import factories
@@ -149,3 +150,23 @@ async def test_every_kind_is_born_where_INITIAL_STATE_says():
     }
 
     assert born == {kind: state.value for kind, state in INITIAL_STATE.items()}
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_import_waiting_on_its_batch_page_does_not_block_a_scrape():
+    """Publishing either supersedes the other, so an undecided import holds nothing up."""
+    batch_id = await batches_db.start(
+        batches_db.BatchKind.SHEET_IMPORT, _BATCH_LOCK_KEY, SYSTEM_USER_ID, {}
+    )
+    await register_sheet_import_changeset(str(uuid.uuid4()), _OCDID, SYSTEM_USER_ID, batch_id)
+
+    assert not await has_open_review(_OCDID)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_scrape_awaiting_review_blocks_another():
+    await factories.complete_run(await factories.start_run(_OCDID))
+
+    assert await has_open_review(_OCDID)

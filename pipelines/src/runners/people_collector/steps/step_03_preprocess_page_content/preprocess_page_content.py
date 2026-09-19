@@ -45,13 +45,12 @@ def preprocess_page_content(
 
     assert context.data.research_municipality_step is not None, "should never happen — research_municipality_step is required before preprocess_page_content"
     identities = context.data.research_municipality_step.identities
-    known_roles = context.data.research_municipality_step.known_roles
     role_config_names = config_utils.get_role_names(context.data.role_config)
     # Organization names too: filtering runs before any prompt sees the page, so a section headed
     # "Office of the Mayor" or "Board of Aldermen" whose wording matches no role name was
     # dropped here and nothing downstream could recover it.
     research = context.data.research_municipality_step
-    phrases = search_phrases(research.known_organizations, research.known_memberships, known_roles)
+    phrases = search_phrases(research.known_organizations, research.expected_memberships)
     extra_keywords = list(dict.fromkeys(phrases + role_config_names))
     logger.debug(f"-> Preprocessing with identities: {identities}")
     cleaned_html = clean_html(logger, output_html)

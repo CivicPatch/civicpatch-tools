@@ -24,7 +24,7 @@ def _progress(found, expected):
     return ProgressState(
         current_data=found,
         required_data=expected,
-        has_target_role=True,
+        has_target_roles=True,
         has_target_divisions=True,
     )
 

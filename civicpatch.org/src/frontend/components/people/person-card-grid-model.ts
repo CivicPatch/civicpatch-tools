@@ -2,11 +2,16 @@
 // canonical priority order (role-reorder.ts writes that order by array position), so rank is
 // just an index lookup — no separate priority field to keep in sync.
 
-// The only two fields this module reads off a membership — a real `PersonMembership` (a
+// The only fields this module reads off a membership — a real `PersonMembership` (a
 // published seat) satisfies this, and so does a proposal's role, which has no post yet.
 // Keeping the constraint this narrow is what lets review-session group by proposed role
 // through the same functions the jurisdiction grid groups published people with.
-export type PostRole = { role_id: string; role_label: string };
+export type PostRole = {
+  role_id: string;
+  role_label: string;
+  post_label: string;
+  membership_label: string | null;
+};
 
 const UNRANKED = Number.POSITIVE_INFINITY;
 
@@ -92,6 +97,11 @@ function bestMembershipAndRank(
   return { membership: best, rank: bestRank };
 }
 
+// Numeric-aware, so "District 2" reads before "District 10".
+function compareLabels(a: string | null | undefined, b: string | null | undefined): number {
+  return (a ?? "").localeCompare(b ?? "", undefined, { numeric: true });
+}
+
 export interface RoleGroup<T> {
   roleId: string | null;
   roleLabel: string;
@@ -112,7 +122,12 @@ export function groupByRole<T extends { id: string; memberships?: PostRole[] }>(
     person,
     ...bestMembershipAndRank(person.memberships, roleOrder),
   }));
-  decorated.sort((a, b) => a.rank - b.rank);
+  decorated.sort(
+    (a, b) =>
+      a.rank - b.rank ||
+      compareLabels(a.membership?.post_label, b.membership?.post_label) ||
+      compareLabels(a.membership?.membership_label, b.membership?.membership_label),
+  );
 
   const groups = new Map<string, RoleGroup<T>>();
   const order: string[] = [];

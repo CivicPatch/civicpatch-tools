@@ -29,10 +29,13 @@ from fastapi import (
 from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
 from pydantic import BaseModel
+from schemas.review_cards import ReviewCard
 from schemas.common import (
     Identity,
     ReviewMode,
     RouteCategory,
+    UserRole,
+    has_at_least,
 )
 from services.review_proposal import (
     assertions_for_people,
@@ -40,7 +43,7 @@ from services.review_proposal import (
     review_summary_for_changeset,
 )
 import services.review_cards as review_cards_service
-from services.review_sources import build_sources
+from services.review_sources import build_sources, without_debug_links
 from services.roster import proposed_roster, proposed_roster_and_source_values
 
 logger = logging.getLogger(__name__)
@@ -94,6 +97,23 @@ def _http_error(exc: Exception) -> HTTPException:
 # Router
 # ──────────────────────────────────────────────
 
+
+
+def _for_viewer(cards: list[ReviewCard], viewer_role: str | None) -> list[ReviewCard]:
+    """Everyone keeps each card's sources; only admins get the debug bucket's copies of them."""
+    if has_at_least(viewer_role, UserRole.ADMINS):
+        return cards
+    return [
+        card.model_copy(
+            update={
+                "sources": [
+                    source.model_copy(update={"markdown": None, "html": None})
+                    for source in card.sources
+                ]
+            }
+        )
+        for card in cards
+    ]
 
 
 def get_router(api_key_header):
@@ -166,8 +186,11 @@ def get_router(api_key_header):
             per_page=per_page,
         )
         total_pages = (total + per_page - 1) // per_page
-        cards = await review_cards_service.with_card_data(
-            [pr["changeset_id"] for pr in paged_pull_requests]
+        cards = _for_viewer(
+            await review_cards_service.with_card_data(
+                [pr["changeset_id"] for pr in paged_pull_requests]
+            ),
+            user.role,
         )
         # Flat, as this endpoint has always answered: the listing row with the card beside it.
         results = [
@@ -191,7 +214,11 @@ def get_router(api_key_header):
         changeset_ids: List[str] = Query(...),
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        return {"data": await review_cards_service.with_card_data(changeset_ids)}
+        return {
+            "data": _for_viewer(
+                await review_cards_service.with_card_data(changeset_ids), user.role
+            )
+        }
 
     # -- One card by deep link, the shape a review session navigates ---
     @router.get("/by-request/{changeset_id}")
@@ -219,6 +246,9 @@ def get_router(api_key_header):
         unique_source_urls = list(
             {url for person in proposed for url in (person.get("source_urls") or [])}
         )
+        sources = build_sources(changeset_id, jurisdiction_ocdid, unique_source_urls)
+        if not has_at_least(user.role, UserRole.ADMINS):
+            sources = without_debug_links(sources)
 
         return {
             "data": {
@@ -245,9 +275,7 @@ def get_router(api_key_header):
                 # See the same key on the session endpoint: the fields an assertion changed,
                 # with what the source had said.
                 "overridden_source_values": overridden,
-                "sources": build_sources(
-                    changeset_id, jurisdiction_ocdid, unique_source_urls
-                ),
+                "sources": sources,
             }
         }
 

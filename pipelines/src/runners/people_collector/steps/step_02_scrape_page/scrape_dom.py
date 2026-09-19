@@ -2,6 +2,9 @@ from urllib.parse import urljoin
 from patchright.async_api import Page
 from typing import List
 
+# Playwright waits 30s for a hidden button to become clickable; a real accordion responds at once.
+ACCORDION_CLICK_TIMEOUT_MS = 2000
+
 
 async def inline_iframes(page: Page, logger):
     """
@@ -45,7 +48,7 @@ async def expand_accordions(page: Page, logger, keywords: List[str] | None = Non
                     text = (await el.inner_text()).lower()
                     if not any(kw.lower() in text for kw in keywords):
                         continue
-                await el.click()
+                await el.click(timeout=ACCORDION_CLICK_TIMEOUT_MS)
                 await page.wait_for_timeout(300)
                 expanded += 1
             except Exception:

@@ -7,7 +7,8 @@ from runners.people_collector.utils.organization_terms import (
     organization_phrases,
     search_phrases,
 )
-from shared.schemas import KnownOrganization, Membership, Post
+from runners.people_collector.schemas import ExpectedMembership
+from shared.schemas import KnownOrganization, Post
 
 pytestmark = pytest.mark.unit
 
@@ -35,7 +36,7 @@ def test_each_organization_keeps_its_own_terms():
     ]
 
     terms = {
-        organization.id: as_tokens(organization_phrases([organization], []))
+        organization.id: as_tokens(organization_phrases([organization]))
         for organization in organizations
     }
 
@@ -54,49 +55,26 @@ def test_text_gets_phrases_and_urls_get_their_tokens():
         ),
     ]
 
-    phrases = search_phrases(organizations, [], ["Mayor", "City Council"])
+    memberships = [ExpectedMembership(organization_id="council", role_label="Mayor")]
+
+    phrases = search_phrases(organizations, memberships)
 
     assert phrases == ["City Council", "Council Member, District 3", "Mayor"]
     assert as_tokens(phrases) == ["council", "member", "district", "mayor"]
 
 
-def _membership(organization_id: str, label: str | None, source_labels: list[str]) -> Membership:
-    return Membership(
-        post_id="post",
-        organization_id=organization_id,
-        label=label,
-        source_labels=source_labels,
-        role_id="role",
-        division_ocdid="ocd-division/country:us/state:zz/place:zz",
-        role_label="Council Member",
-    )
-
-
-def test_membership_labels_are_how_the_site_words_the_post():
-    """A member's labels belong to their organization: the one a human set, and the page's own
-    wording — "Councilmember Pos. 8" is what a section heading or accordion actually says."""
-    organizations = [
-        KnownOrganization(id="council", name="City Council", posts=[]),
-        KnownOrganization(id="schools", name="School Board", posts=[]),
-    ]
+def test_expected_roles_and_designations_are_searched_once_each():
+    """"Position 8" names no division, so it is wording to search for and nothing more."""
+    organizations = [KnownOrganization(id="council", name="City Council", posts=[])]
     memberships = [
-        _membership("council", "Mayor Pro Tem", ["Councilmember Pos. 8"]),
-        _membership("schools", None, ["Trustee"]),
+        ExpectedMembership(organization_id="council", role_label="Council Member", designations=["Position 8"]),
+        ExpectedMembership(
+            organization_id="council", role_label="Council Member", division="ward 2", designations=["Position 8"]
+        ),
     ]
 
-    terms = {
-        organization.id: as_tokens(organization_phrases([organization], memberships))
-        for organization in organizations
-    }
-
-    assert search_phrases(organizations, memberships, []) == [
+    assert search_phrases(organizations, memberships) == [
         "City Council",
-        "Mayor Pro Tem",
-        "Councilmember Pos. 8",
-        "School Board",
-        "Trustee",
+        "Council Member",
+        "Position 8",
     ]
-    assert terms == {
-        "council": ["council", "mayor", "councilmember"],
-        "schools": ["school", "board", "trustee"],
-    }

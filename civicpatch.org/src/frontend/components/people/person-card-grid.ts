@@ -252,7 +252,12 @@ export function renderPersonCardGrid(
   const groups = groupByRole(
     cards.map((card) => ({
       id: card.personId,
-      memberships: personOf(card)?.memberships,
+      memberships: personOf(card)?.memberships?.map((membership) => ({
+        role_id: membership.role_id,
+        role_label: membership.role_label,
+        post_label: membership.post_label,
+        membership_label: membership.label,
+      })),
       card,
     })),
     roleOrder,

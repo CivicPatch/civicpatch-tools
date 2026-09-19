@@ -1,7 +1,6 @@
 from enum import Enum
 from typing import Dict, List, Optional, TypeAlias
 
-from shared.schemas import KnownOrganization, Membership, Person
 from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, ConfigDict, Field
 from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import (
@@ -9,11 +8,11 @@ from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import
 )
 from shared.schemas import (
     ExtractedPersonRecord,
+    KnownOrganization,
     PersonSourceRecord,
     PipelineRunConfig,
     RoleConfig,
 )
-from runners.people_collector.utils.crawl_order import least_crawled_section_first
 from shared.utils.statuses import PipelineRunStatus
 
 
@@ -38,7 +37,7 @@ class OrganizationNeed(BaseModel):
 class ProgressState(BaseModel):
     required_data: int
     current_data: int
-    has_target_role: bool = False
+    has_target_roles: bool = False
     has_target_divisions: bool = False
     # One entry per organization when there are several; empty means the flat fields above decide.
     organizations: List[OrganizationProgress] = []
@@ -101,9 +100,7 @@ class LinkFrontier(BaseModel):
         return LinkStatus(link.status) if link else None
 
     def next_pending(self) -> Optional["Link"]:
-        crawled = [key for key, link in self.links.items() if link.status != LinkStatus.PENDING.value]
-        key = least_crawled_section_first(self.queue, crawled)
-        return self.links[key] if key is not None else None
+        return self.links[self.queue[0]] if self.queue else None
 
     def next_with_status(self, status: "LinkStatus") -> Optional["Link"]:
         if status == LinkStatus.PENDING:
@@ -154,9 +151,7 @@ class LinkFrontier(BaseModel):
                     url=format_url(url), status=LinkStatus.PENDING.value
                 )
                 added.append(key)
-        return self.model_copy(
-            update={"links": new_links, "queue": added + self.queue}
-        )
+        return self.model_copy(update={"links": new_links, "queue": added + self.queue})
 
     def dequeue(self, url: str) -> "LinkFrontier":
         from shared.utils.url_utils import canonical_url
@@ -254,17 +249,26 @@ class ResearchedPerson(BaseModel):
     label: str = ""
 
 
+class ExpectedMembership(BaseModel):
+    """Someone a scrape expects to find: one per known post, else one per person research named.
+    How many of them there are, their roles and their divisions are the scrape's progress target."""
+
+    organization_id: str
+    # Canonical, the same vocabulary `parse_label(...).role` gives a found record.
+    role_label: str
+    # As `divisions.filter_divisions` gives it ("ward 3"); None for an at-large post.
+    division: Optional[str] = None
+    # Markers naming no division ("Position 1"): search wording only, never a progress target.
+    designations: List[str] = []
+
+
 class ResearchMunicipalityStep(BaseModel):
-    expected_count: int = 0  # how many officials the pipeline expects to find
     # Who research thinks holds which office, labels verbatim. Only the cold-start path fills
     # it: once cp.org has posts, they are the same answer already parsed.
     researched: List[ResearchedPerson] = []
-    # The organizations and their posts; empty on a first scrape. Flat views below are derived from it.
+    # The organizations and their posts; empty on a first scrape.
     known_organizations: List[KnownOrganization] = []
-    # The published people's open memberships: their labels are how the site words each post.
-    known_memberships: List[Membership] = []
-    target_divisions: List[str] = []  # geographic divisions to look for
-    known_roles: list[str] = []
+    expected_memberships: List[ExpectedMembership] = []
     identities: dict[
         str, list[str]
     ] = {}  # canonical name to list of other names/aliases
@@ -288,7 +292,7 @@ class ProcessPageContentStep(BaseModel):
     progress: ProgressState = ProgressState(
         required_data=0,
         current_data=0,
-        has_target_role=False,
+        has_target_roles=False,
         has_target_divisions=False,
     )
 

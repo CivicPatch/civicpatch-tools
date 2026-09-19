@@ -6,7 +6,7 @@ These mock browser.scrape so the full pipeline can be tested without a real brow
 import os
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
-from runners.people_collector.schemas import LinkFrontier, LinkStatus
+from runners.people_collector.schemas import ExpectedMembership, LinkFrontier, LinkStatus
 from runners.people_collector.steps.step_02_scrape_page.scrape_constants import MAX_SCRAPE_ATTEMPTS
 from runners.people_collector.steps.step_02_scrape_page.scrape_page import _accordion_keywords, scrape_page
 from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import NavigationError, NavigationFailureReason
@@ -200,7 +200,9 @@ def test_accordions_open_on_the_runs_organizations_and_roles():
             "known_organizations": [
                 KnownOrganization(id="council", name="City Council", posts=[]),
             ],
-            "known_roles": ["Mayor"],
+            "expected_memberships": [
+                ExpectedMembership(organization_id="council", role_label="Mayor")
+            ],
         }
     )
     ctx = ctx.model_copy(

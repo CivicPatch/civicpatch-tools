@@ -32,7 +32,7 @@ from database.pipeline_runs import (
     update_pipeline_run_status,
 )
 from database.review_pool import (
-    has_open_changeset,
+    has_open_review,
 )
 from database.changesets import (
     get_issue_changeset_details,
@@ -176,10 +176,10 @@ def get_router(api_key_header):
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
-        if await has_open_changeset(request.jurisdiction_ocdid):
+        if await has_open_review(request.jurisdiction_ocdid):
             return JSONResponse(
                 content=ErrorResponse(
-                    error="A scrape for this jurisdiction is already in flight"
+                    error="A scrape for this jurisdiction is already awaiting review"
                 ).model_dump(),
                 status_code=409,
             )

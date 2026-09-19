@@ -20,8 +20,8 @@ import pytest_asyncio
 
 from core.sheet_import_rows import ImportRow, ImportStatus, Sighting
 from core.membership_proposal import MembershipDisposition
-from core.post_derivation import UNMATCHED_ROLE_ID
 from shared.schemas import POST_FIELD
+from shared.utils.taxonomy import UNMATCHED_ROLE_ID
 from shared.utils.statuses import ActivityType, ChangesetKind
 from core.roster_diff import UNCHANGED_NOTE, ChangeCounts
 from core.source_sites import SiteIndex
