@@ -13,12 +13,16 @@ import json
 import pathlib
 from typing import Callable, Iterable
 
-from runners.people_collector.schemas import Link, LinkFrontier, LinkStatus
+from runners.people_collector.schemas import Link, LinkFrontier, LinkStatus, OrganizationNeed
 from shared.utils.url_utils import canonical_url
+from runners.people_collector.steps.step_04_process_page_content.organization_progress import (
+    required_to_be_done,
+)
 from runners.people_collector.utils.link_discovery import (
     _compute_link_signals,
     _pending_sort_key,
 )
+from runners.people_collector.utils.organization_terms import as_tokens
 from shared.utils import url_utils
 
 DATA_SOURCE = pathlib.Path("data_source")
@@ -79,14 +83,22 @@ def ordered(
     frontier: LinkFrontier,
     names: Iterable[str] = (),
     designations: Iterable[str] = (),
-    key: Callable = _pending_sort_key,
+    key: Callable | None = None,
 ) -> list[Link]:
     """The pending queue as `add_relevant_urls` would leave it after its next re-sort.
 
     Takes the sort key as an argument so a candidate ordering can be measured against the
     shipped one on the same saved queues.
     """
-    return sorted(pending(frontier), key=lambda link: key(link, list(names), list(designations)))
+    sort_key = key or shipped_key([])
+    return sorted(
+        pending(frontier), key=lambda link: sort_key(link, list(names), list(designations))
+    )
+
+
+def shipped_key(needs: list[OrganizationNeed]) -> Callable:
+    """`_pending_sort_key` with a run's organizations bound, in the shape candidates share."""
+    return lambda link, names, designations: _pending_sort_key(link, needs, names, designations)
 
 
 def rank_of(links: list[Link], matches: Callable[[Link], bool]) -> int | None:
@@ -175,6 +187,42 @@ def path_shape_key(link: Link, names: list[str], designations: list[str]) -> tup
     )
 
 
+def _need(
+    organization_id: str, required: int, found: int, phrases: list[str], missing: list[str]
+) -> OrganizationNeed:
+    target = required_to_be_done(required)
+    return OrganizationNeed(
+        organization_id=organization_id,
+        shortfall=max(0, target - found) / target,
+        terms=as_tokens(phrases),
+        missing_terms=as_tokens(missing),
+    )
+
+
+_SEATTLE_COUNCIL_POSTS = [f"Council Member Position {n}: District {n}" for n in range(1, 8)] + [
+    "Council Member Position 8: At-large",
+    "Council Member Position 9: At-large",
+]
+_GREENSBORO_POSTS = ["Mayor", *["Council Member At Large"] * 3] + [
+    f"Council Member District {n}" for n in range(1, 6)
+]
+_SHELTON_POSTS = [f"Council Member Seat {n}" for n in range(1, 8)]
+
+# The saved runs filed everyone under one default organization. Each split as the city is
+# organised, with everyone found but the mayor: the state the mayor's page was buried in.
+ORGANIZATION_FIXTURES = {
+    "wa/place_seattle": [
+        _need("council", 9, 9, ["City Council", *_SEATTLE_COUNCIL_POSTS], []),
+        _need("mayor", 1, 0, ["Office of the Mayor", "Mayor"], ["Mayor"]),
+    ],
+    "nc/place_greensboro": [_need("council", 9, 8, ["City Council", *_GREENSBORO_POSTS], ["Mayor"])],
+    # Shelton's mayor is a council member chosen by the council: a membership label, not a post.
+    "wa/place_shelton": [
+        _need("council", 7, 6, ["City Council", *_SHELTON_POSTS, "Mayor", "Deputy Mayor"], ["Mayor"])
+    ],
+}
+
+
 def noise_last_key(link: Link, names: list[str], designations: list[str]) -> tuple:
     """Candidate: today's key exactly, with archive-shaped urls pushed to the back.
 
@@ -183,4 +231,4 @@ def noise_last_key(link: Link, names: list[str], designations: list[str]) -> tup
     opaque CMS path twice. This changes one thing: a url carrying a year or a news/agenda segment
     sorts last, whatever else it scores.
     """
-    return (int(_noise(link.url)),) + _pending_sort_key(link, names, designations)
+    return (int(_noise(link.url)),) + _pending_sort_key(link, [], names, designations)

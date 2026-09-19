@@ -5,6 +5,7 @@ from runners.people_collector.schemas import (
     Link,
     LinkFrontier,
     LinkStatus,
+    OrganizationNeed,
     PersonSourceRecord,
     PeopleArrayLLMResponseSchema,
     ExtractedPersonRecord,
@@ -19,10 +20,12 @@ from runners.people_collector.steps.step_04_process_page_content.process_page_co
     process_with_llm,
 )
 from runners.people_collector.utils.link_discovery import (
+    _pending_sort_key,
     add_relevant_urls,
     has_role_and_contact_info,
 )
-from shared.schemas import RoleConfig, Role
+from runners.people_collector.utils.organization_terms import as_tokens, search_phrases
+from shared.schemas import KnownOrganization, Post, RoleConfig, Role
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 from shared.utils.taxonomy import build_taxonomy
 
@@ -572,6 +575,7 @@ def test_add_relevant_urls_includes_same_domain():
         ["https://www.cityofbaycity.org/296/Office-of-the-Mayor"],
         frontier,
         domain="https://cityofbaycity.org",
+        needs=[],
     )
     assert "https://www.cityofbaycity.org/296/Office-of-the-Mayor" in pending_urls(
         result
@@ -583,6 +587,7 @@ def test_add_relevant_urls_filters_cross_domain():
         ["https://www.baycitytx.gov/296/Office-of-the-Mayor"],
         LinkFrontier(),
         domain="https://cityofbaycity.org",
+        needs=[],
     )
     assert len(result) == 0
 
@@ -599,6 +604,7 @@ def test_add_relevant_urls_skips_already_present():
         ["https://cityofbaycity.org/mayor"],
         frontier,
         domain="https://cityofbaycity.org",
+        needs=[],
     )
     assert len(result) == 1
 
@@ -622,6 +628,7 @@ def test_add_relevant_urls_increments_existing_pending():
         ["https://cityofbaycity.org/mayor"],
         frontier,
         domain="https://cityofbaycity.org",
+        needs=[],
     )
     assert result.get("https://cityofbaycity.org/mayor").num_references == 2
 
@@ -645,18 +652,19 @@ def test_add_relevant_urls_sorts_by_num_references():
         ["https://cityofbaycity.org/mayor"],
         frontier,
         domain="https://cityofbaycity.org",
+        needs=[],
     )
     p = pending_in_queue_order(r1)
     assert p[0].url == "https://cityofbaycity.org/council"
     assert p[1].url == "https://cityofbaycity.org/mayor"
 
     r2 = add_relevant_urls(
-        ["https://cityofbaycity.org/mayor"], r1, domain="https://cityofbaycity.org"
+        ["https://cityofbaycity.org/mayor"], r1, domain="https://cityofbaycity.org", needs=[]
     )
     assert pending_in_queue_order(r2)[0].url == "https://cityofbaycity.org/council"
 
     r3 = add_relevant_urls(
-        ["https://cityofbaycity.org/mayor"], r2, domain="https://cityofbaycity.org"
+        ["https://cityofbaycity.org/mayor"], r2, domain="https://cityofbaycity.org", needs=[]
     )
     assert pending_in_queue_order(r3)[0].url == "https://cityofbaycity.org/mayor"
 
@@ -674,6 +682,7 @@ def test_add_relevant_urls_does_not_increment_non_pending():
         ["https://cityofbaycity.org/mayor"],
         frontier,
         domain="https://cityofbaycity.org",
+        needs=[],
     )
     assert len(result) == 1
     assert result.get("https://cityofbaycity.org/mayor").num_references == 1
@@ -695,7 +704,7 @@ def test_add_relevant_urls_keyword_beats_name_match():
         ),
     )
     result = add_relevant_urls(
-        [], frontier, domain="https://cityofbaycity.org", names=["Susan Reardon"]
+        [], frontier, domain="https://cityofbaycity.org", needs=[], names=["Susan Reardon"]
     )
     assert pending_in_queue_order(result)[0].url == "https://cityofbaycity.org/council"
 
@@ -703,7 +712,7 @@ def test_add_relevant_urls_keyword_beats_name_match():
 def test_add_relevant_urls_keyword_beats_designation_match():
     frontier = make_frontier(
         Link(
-            url="https://cityofbaycity.org/council",
+            url="https://cityofbaycity.org/directory",
             status=LinkStatus.PENDING.value,
             folder_name="",
             num_references=5,
@@ -716,9 +725,118 @@ def test_add_relevant_urls_keyword_beats_designation_match():
         ),
     )
     result = add_relevant_urls(
-        [], frontier, domain="https://cityofbaycity.org", designations=["Position 4"]
+        [], frontier, domain="https://cityofbaycity.org", needs=[], designations=["Position 4"]
+    )
+    assert pending_in_queue_order(result)[0].url == "https://cityofbaycity.org/directory"
+
+
+def test_add_relevant_urls_ranks_an_organizations_page_by_its_post_labels():
+    """No role word is a common keyword any more; the council's page ranks because "Council
+    Member" is one of the council's own post labels."""
+    council = KnownOrganization(
+        id="council",
+        name="City Council",
+        posts=[
+            Post(
+                id="post",
+                jurisdiction_ocdid="ocd-jurisdiction/country:us/state:zz/place:bay_city/government",
+                organization_id="council",
+                role_id="council-member",
+                division_ocdid="ocd-division/country:us/state:zz/place:bay_city",
+                label="Council Member",
+            )
+        ],
+    )
+    frontier = make_frontier(
+        Link(
+            url="https://cityofbaycity.org/news/latest",
+            status=LinkStatus.PENDING.value,
+            folder_name="",
+            num_references=5,
+        ),
+        Link(
+            url="https://cityofbaycity.org/council",
+            status=LinkStatus.PENDING.value,
+            folder_name="",
+            num_references=1,
+        ),
+    )
+    result = add_relevant_urls(
+        [],
+        frontier,
+        domain="https://cityofbaycity.org",
+        needs=[],
+        designations=as_tokens(search_phrases([council], [], [])),
     )
     assert pending_in_queue_order(result)[0].url == "https://cityofbaycity.org/council"
+
+
+def test_add_relevant_urls_serves_the_neediest_organization_first():
+    """The council is complete and its bios are linked from every council page; the mayor is
+    not found yet, so the mayor's one link goes first."""
+    frontier = make_frontier(
+        Link(
+            url="https://cityofbaycity.org/council/members/ana",
+            status=LinkStatus.PENDING.value,
+            folder_name="",
+            num_references=9,
+        ),
+        Link(
+            url="https://cityofbaycity.org/mayor",
+            status=LinkStatus.PENDING.value,
+            folder_name="",
+            num_references=1,
+        ),
+    )
+    needs = [
+        OrganizationNeed(organization_id="council", shortfall=0.0, terms=["council"], missing_terms=[]),
+        OrganizationNeed(
+            organization_id="mayor", shortfall=1.0, terms=["mayor"], missing_terms=["mayor"]
+        ),
+    ]
+
+    result = add_relevant_urls([], frontier, domain="https://cityofbaycity.org", needs=needs)
+
+    assert pending_in_queue_order(result)[0].url == "https://cityofbaycity.org/mayor"
+
+
+def test_add_relevant_urls_ranks_a_missing_post_within_its_organization():
+    frontier = make_frontier(
+        Link(
+            url="https://cityofbaycity.org/council/meetings",
+            status=LinkStatus.PENDING.value,
+            folder_name="",
+            num_references=5,
+        ),
+        Link(
+            url="https://cityofbaycity.org/council/mayor",
+            status=LinkStatus.PENDING.value,
+            folder_name="",
+            num_references=1,
+        ),
+    )
+    needs = [
+        OrganizationNeed(
+            organization_id="council",
+            shortfall=0.25,
+            terms=["council", "member", "mayor"],
+            missing_terms=["mayor"],
+        )
+    ]
+
+    result = add_relevant_urls([], frontier, domain="https://cityofbaycity.org", needs=needs)
+
+    assert pending_in_queue_order(result)[0].url == "https://cityofbaycity.org/council/mayor"
+
+
+def test_add_relevant_urls_matches_organizations_on_the_path_not_the_domain():
+    """"Bay City Council" must not make every link on cityofbaycity.org the council's."""
+    link = Link(url="https://cityofbaycity.org/news", status=LinkStatus.PENDING.value)
+    need = OrganizationNeed(
+        organization_id="council", shortfall=1.0, terms=["cityofbaycity"], missing_terms=[]
+    )
+
+    assert _pending_sort_key(link, [need], [], [])[0] == 0.0
 
 
 def test_add_relevant_urls_name_match_beats_designation_match():
@@ -740,6 +858,7 @@ def test_add_relevant_urls_name_match_beats_designation_match():
         [],
         frontier,
         domain="https://cityofbaycity.org",
+        needs=[],
         names=["Susan Reardon"],
     )
     assert (
@@ -767,6 +886,7 @@ def test_add_relevant_urls_role_hint_in_url_beats_more_references():
         [],
         frontier,
         domain="https://cityofbaycity.org",
+        needs=[],
     )
     assert (
         pending_in_queue_order(result)[0].url
@@ -805,7 +925,7 @@ async def test_check_page_relevance_filters_cross_domain_relevant_urls():
         new=AsyncMock(return_value=llm_response.model_dump()),
     ):
         result_frontier, _ = await check_page_relevance(
-            context, page, "some page content", [], []
+            context, page, "some page content", [], [], []
         )
 
     result_pending_urls = pending_urls(result_frontier)

@@ -8,8 +8,9 @@ import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 from runners.people_collector.schemas import LinkFrontier, LinkStatus
 from runners.people_collector.steps.step_02_scrape_page.scrape_constants import MAX_SCRAPE_ATTEMPTS
-from runners.people_collector.steps.step_02_scrape_page.scrape_page import scrape_page
+from runners.people_collector.steps.step_02_scrape_page.scrape_page import _accordion_keywords, scrape_page
 from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import NavigationError, NavigationFailureReason
+from shared.schemas import KnownOrganization
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
 pytestmark = pytest.mark.unit
@@ -188,3 +189,23 @@ async def test_scrape_page_preserves_other_links(tmp_path):
          patch(f"{MODULE}.config_utils.governance_keywords", return_value=[]):
         result_frontier, _ = await scrape_page(ctx, link)
     assert result_frontier.get(other_url).status == LinkStatus.PENDING.value
+
+
+def test_accordions_open_on_the_runs_organizations_and_roles():
+    """`keywords.yml` carries no roles, so a collapsed "Mayor" or "City Council" section opens
+    only because this run's organizations and roles are added to the common list."""
+    ctx = _make_context()
+    research = ctx.data.research_municipality_step.model_copy(
+        update={
+            "known_organizations": [
+                KnownOrganization(id="council", name="City Council", posts=[]),
+            ],
+            "known_roles": ["Mayor"],
+        }
+    )
+    ctx = ctx.model_copy(
+        update={"data": ctx.data.model_copy(update={"research_municipality_step": research})}
+    )
+
+    with patch(f"{MODULE}.config_utils.governance_keywords", return_value=["directory"]):
+        assert _accordion_keywords(ctx) == ["directory", "City Council", "Mayor"]

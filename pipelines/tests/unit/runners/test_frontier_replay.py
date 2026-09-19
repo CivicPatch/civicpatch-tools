@@ -9,7 +9,7 @@ measurement; this keeps the thing that prints it honest.
 import pytest
 
 from runners.people_collector.schemas import Link, LinkFrontier, LinkStatus
-from runners.people_collector.utils.link_discovery import organization_search_terms
+from runners.people_collector.utils.organization_terms import as_tokens, organization_phrases
 from shared.schemas import KnownOrganization, Post
 from shared.utils.url_utils import canonical_url
 from tests.unit.runners.frontier_replay import (
@@ -100,7 +100,7 @@ def test_a_real_saved_run_replays():
     assert replayed == len(contexts)
 
 
-def test_a_body_beats_a_page_linked_from_everywhere():
+def test_an_organization_beats_a_page_linked_from_everywhere():
     """The shipped change: `num_references` is self-reinforcing, so an organization linked once used to
     lose to a councilmember bio linked from every council page."""
     frontier = _frontier(
@@ -113,7 +113,7 @@ def test_a_body_beats_a_page_linked_from_everywhere():
     assert order[0] == "https://zz.gov/school-board"
 
 
-def test_references_still_break_a_tie_between_two_bodies():
+def test_references_still_break_a_tie_between_two_organizations():
     """Demoted, not deleted: with nothing to tell two links apart, the better-linked one is
     still the better guess."""
     frontier = _frontier(
@@ -126,21 +126,21 @@ def test_references_still_break_a_tie_between_two_bodies():
     assert order[0] == "https://zz.gov/school-board"
 
 
-def test_body_terms_keep_what_distinguishes_a_body():
+def test_organization_terms_keep_what_distinguishes_an_organization():
     organizations = [
         KnownOrganization(id="a", name="School Board", posts=[]),
         KnownOrganization(id="b", name="Office of the Mayor", posts=[]),
     ]
 
-    assert organization_search_terms(organizations) == ["school", "board", "mayor"]
+    assert as_tokens(organization_phrases(organizations, [])) == ["school", "board", "mayor"]
 
 
-def test_body_terms_drop_words_every_municipal_site_uses():
+def test_organization_terms_drop_words_every_municipal_site_uses():
     """"City" or "office" as a search term ranks /city-hall-hours and /clerks-office alongside
     the roster, which is the opposite of the point."""
     organizations = [KnownOrganization(id="a", name="City Council", posts=[])]
 
-    assert organization_search_terms(organizations) == ["council"]
+    assert as_tokens(organization_phrases(organizations, [])) == ["council"]
 
 
 def test_post_labels_are_terms_too():
@@ -161,7 +161,7 @@ def test_post_labels_are_terms_too():
         )
     ]
 
-    assert organization_search_terms(organizations) == ["board", "trustees", "trustee", "ward"]
+    assert as_tokens(organization_phrases(organizations, [])) == ["board", "trustees", "trustee", "ward"]
 
 
 def test_outcomes_come_from_the_records_source_urls():

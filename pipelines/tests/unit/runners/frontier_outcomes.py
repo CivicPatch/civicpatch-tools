@@ -26,12 +26,12 @@ from tests.unit.runners.frontier_replay import (
     productive_urls,
     research_signals,
     saved_contexts,
+    shipped_key,
 )
-from runners.people_collector.utils.link_discovery import _pending_sort_key
 from shared.utils.url_utils import canonical_url
 
 KEYS = {
-    "shipped": _pending_sort_key,
+    "shipped": shipped_key([]),
     "organization_first": organization_first_key,
     "path_shape": path_shape_key,
     "noise_last": noise_last_key,
