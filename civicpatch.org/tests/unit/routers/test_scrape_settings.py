@@ -49,7 +49,9 @@ def _patched():
             "get_global_panel",
             new=AsyncMock(
                 return_value=GlobalScrapePanel(
-                    spent_this_month_usd=Decimal("9"), state_monthly_caps_usd=Decimal("50")
+                    spent_this_month_usd=Decimal("9"),
+                    state_monthly_caps_usd=Decimal("50"),
+                    pipeline_run_concurrency=25,
                 )
             ),
         ),
@@ -141,6 +143,7 @@ def test_the_state_caps_total_is_shown_even_when_it_exceeds_the_cap(client):
                 monthly_cap_usd=Decimal("40"),
                 spent_this_month_usd=Decimal("9"),
                 state_monthly_caps_usd=Decimal("120"),
+                pipeline_run_concurrency=25,
             )
         ),
     ):

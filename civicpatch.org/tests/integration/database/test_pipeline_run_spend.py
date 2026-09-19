@@ -14,7 +14,12 @@ from decimal import Decimal
 import pytest
 import pytest_asyncio
 
-from database.pipeline_run_spend import get_month_to_date_spend, get_state_spend
+from database.pipeline_run_spend import (
+    get_fleet_month_to_date_cost_per_run,
+    get_fleet_month_to_date_seconds_per_run,
+    get_month_to_date_cost_per_run,
+    get_month_to_date_spend,
+)
 from database.database import get_pool
 from database.llm_calls import record_calls
 from tests.integration import factories
@@ -110,119 +115,6 @@ async def _backdate(run_id: str, days: int) -> None:
         await conn.commit()
 
 
-async def _row():
-    return next((r for r in await get_state_spend() if r.state == _STATE), None)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_state_that_ran_nothing_is_absent_rather_than_zero():
-    """`not scraped` and `scraped for free` are different facts, and this query says so by
-    omission — every state it returns spent something."""
-    await _seed_jurisdiction()
-
-    assert await _row() is None
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_spend_sums_the_window_s_calls_and_averages_per_run():
-    await _seed_jurisdiction()
-    await _seed_jurisdiction(_OCDID_TWO)
-    run_one = await factories.start_run(_OCDID)
-    await record_calls(run_one, [_call("0.01"), _call("0.02")])
-    run_two = await factories.start_run(_OCDID_TWO)
-    await record_calls(run_two, [_call("0.09")])
-
-    row = await _row()
-
-    assert row is not None
-    assert row.spend_usd == Decimal("0.12")
-    assert row.cost_per_scrape_usd == Decimal("0.06")  # two runs, not three calls
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_run_that_minted_no_changeset_still_counts():
-    """Per *run*, not per changeset. A scrape that spent money and then failed before ingest
-    produced nothing to review — leaving it out would flatter exactly the states that waste the
-    most."""
-    await _seed_jurisdiction()
-    run_id = await factories.start_run(_OCDID)
-    await record_calls(run_id, [_call("0.05")])
-    await factories.fail_run(run_id)
-
-    row = await _row()
-
-    assert row is not None
-    assert row.spend_usd == Decimal("0.05")
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_the_window_before_this_one_is_reported_beside_it():
-    """One scan, two windows — the page ranks states by whether spend is rising."""
-    await _seed_jurisdiction()
-    now_run = await factories.start_run(_OCDID)
-    await record_calls(now_run, [_call("0.02")])
-    then_run = await factories.start_run(_OCDID)
-    await record_calls(then_run, [_call("0.07")])
-    await _backdate(then_run, 45)  # inside the prior 30 days, outside the current
-
-    row = await _row()
-
-    assert row is not None
-    assert row.spend_usd == Decimal("0.02")
-    assert row.prior_spend_usd == Decimal("0.07")
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_state_that_stopped_spending_still_appears_with_no_current_spend():
-    """The drop to nothing is the signal the comparison exists to show, so the row has to
-    survive. `spend_usd` is null, never 0 — it did not scrape for free."""
-    await _seed_jurisdiction()
-    then_run = await factories.start_run(_OCDID)
-    await record_calls(then_run, [_call("0.07")])
-    await _backdate(then_run, 45)
-
-    row = await _row()
-
-    assert row is not None
-    assert row.spend_usd is None
-    assert row.prior_spend_usd == Decimal("0.07")
-    assert row.cost_per_scrape_usd is None
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_spend_older_than_both_windows_is_not_reported_at_all():
-    await _seed_jurisdiction()
-    ancient = await factories.start_run(_OCDID)
-    await record_calls(ancient, [_call("9.99")])
-    await _backdate(ancient, 200)
-
-    assert await _row() is None
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_cost_per_scrape_averages_only_the_current_window_s_runs():
-    """A prior-window run is in `prior_spend_usd`, so counting it in the denominator too would
-    halve the current figure using money that is not in the numerator."""
-    await _seed_jurisdiction()
-    now_run = await factories.start_run(_OCDID)
-    await record_calls(now_run, [_call("0.02")])
-    then_run = await factories.start_run(_OCDID)
-    await record_calls(then_run, [_call("0.07")])
-    await _backdate(then_run, 45)
-
-    row = await _row()
-
-    assert row is not None
-    assert row.cost_per_scrape_usd == Decimal("0.02")  # one run, not two
-
-
 # --- Month to date, for the two monthly caps ------------------------------------------
 
 
@@ -239,6 +131,21 @@ async def test_month_to_date_reports_this_state_and_everything_together():
 
     assert state_spent == Decimal("0.04")
     assert global_spent >= state_spent  # other states share the fleet figure
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_run_that_minted_no_changeset_still_counts_against_the_cap():
+    """Per run, not per changeset: a scrape that spent money and then failed produced nothing to
+    review, and leaving it out would flatter exactly the states that waste the most."""
+    await _seed_jurisdiction()
+    run = await factories.start_run(_OCDID)
+    await record_calls(run, [_call("0.05")])
+    await factories.fail_run(run)
+
+    state_spent, _global = await get_month_to_date_spend(_STATE)
+
+    assert state_spent == Decimal("0.05")
 
 
 @pytest.mark.asyncio
@@ -264,3 +171,75 @@ async def test_a_state_that_spent_nothing_reads_zero_rather_than_null():
     state_spent, _global = await get_month_to_date_spend(_STATE)
 
     assert state_spent == Decimal("0")
+
+
+# --- Month to date, cost per run ------------------------------------------------------
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_month_to_date_cost_per_run_averages_over_runs_not_calls():
+    await _seed_jurisdiction()
+    await _seed_jurisdiction(_OCDID_TWO)
+    run_one = await factories.start_run(_OCDID)
+    await record_calls(run_one, [_call("0.01"), _call("0.02")])
+    run_two = await factories.start_run(_OCDID_TWO)
+    await record_calls(run_two, [_call("0.09")])
+
+    assert await get_month_to_date_cost_per_run(_STATE) == Decimal("0.06")
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_month_to_date_cost_per_run_ignores_last_month_s_runs():
+    """Last month's run would sit in the denominator with none of its money in the numerator."""
+    await _seed_jurisdiction()
+    now_run = await factories.start_run(_OCDID)
+    await record_calls(now_run, [_call("0.02")])
+    old_run = await factories.start_run(_OCDID)
+    await record_calls(old_run, [_call("0.07")])
+    await _backdate(old_run, 45)
+
+    assert await get_month_to_date_cost_per_run(_STATE) == Decimal("0.02")
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_month_to_date_cost_per_run_is_null_when_nothing_ran():
+    """Null, not zero: no run this month is not a free run."""
+    await _seed_jurisdiction()
+
+    assert await get_month_to_date_cost_per_run(_STATE) is None
+
+
+# --- Fleet averages, month to date ----------------------------------------------------
+# Every state shares these figures, so other suites' rows can sit in them too: the assertions
+# are bounds, not exact values.
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_fleet_cost_per_run_counts_this_month_s_runs():
+    await _seed_jurisdiction()
+    run = await factories.start_run(_OCDID)
+    await record_calls(run, [_call("0.04")])
+
+    assert await get_fleet_month_to_date_cost_per_run() is not None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_fleet_duration_ignores_runs_the_stale_sweep_gave_up_on():
+    """An expired run's finished_at is when the sweep noticed, so its "duration" is noise."""
+    await _seed_jurisdiction()
+    await _seed_jurisdiction(_OCDID_TWO)
+    succeeded = await factories.start_run(_OCDID)
+    await factories.complete_run(succeeded)
+    expired = await factories.start_run(_OCDID_TWO)
+    await factories.backdate_run(expired, 20)
+    await factories.fail_run(expired)
+
+    seconds = await get_fleet_month_to_date_seconds_per_run()
+
+    assert seconds is not None
+    assert seconds < 10 * 86_400

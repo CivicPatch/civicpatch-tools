@@ -5,7 +5,7 @@ import { html } from "lit-html";
 import { saveGlobalCap } from "../../api.js";
 import { inputValue } from "../../components/fields/field-controls.js";
 import { hostDispatch } from "../../utils/host-dispatch.js";
-import { describeStateCaps, type GlobalScrapePanel } from "../pipelines-page/scrape-settings.js";
+import { describeStateCaps, type GlobalScrapePanel } from "./scrape-settings.js";
 
 export const SAVED_EVENT = "settings-saved";
 export const CANCEL_EVENT = "cancel";
@@ -34,20 +34,23 @@ function GlobalBudgetModal(host: Host) {
   const fields = html`
     <div class="cs-settings-form">
       <label class="cs-settings-form__field">
-        <span>Monthly cap, all states</span>
-        <input
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="no cap"
-          .value=${cap}
-          @input=${(e: Event) => setCap(inputValue(e))}
-        />
+        <span class="cs-settings-form__label">Monthly cap</span>
+        <span class="cs-settings-form__control">
+          $
+          <input
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="none"
+            .value=${cap}
+            @input=${(e: Event) => setCap(inputValue(e))}
+          />
+        </span>
       </label>
       <p class="cs-settings-form__hint">
         A shared ceiling, not an allocation: states draw from it first-come, and each state's
-        own monthly cap is what stops one state emptying it. ${describeStateCaps(host.panel)} —
-        the state caps may add up past this, which is normal.
+        own monthly cap is what stops one state emptying it. ${describeStateCaps(host.panel)}.
+        The state caps may add up past this, which is normal.
       </p>
       ${error ? html`<p class="cs-settings-form__error">${error}</p>` : ""}
     </div>

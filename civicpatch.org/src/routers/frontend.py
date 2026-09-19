@@ -81,10 +81,6 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         "can_view_temporal_workflow_state": has_at_least(role, UserRole.ADMINS),
         # The debug bucket's copies of each fetched page: the HTML and the markdown extracted.
         "can_view_source_debug": has_at_least(role, UserRole.ADMINS),
-        # Money, all of it: what a scrape cost, the cadence driving it, and the caps it is
-        # measured against. One boundary — seeing the spend without the ceiling is half an
-        # answer. The rest of the Activity page stays signed-in.
-        "can_edit_spend": has_at_least(role, UserRole.ADMINS),
         "can_write_config": has_at_least(role, UserRole.MAINTAINERS),
         "can_write_global_config": has_at_least(role, UserRole.ADMINS),
         "can_manage_roles": has_at_least(role, UserRole.ADMINS),
@@ -194,12 +190,6 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         request: Request, user: dict = Depends(require_page_permission("can_view_issues_page"))
     ):
         return templates.TemplateResponse("pages/issues.html", {"request": request, "user": user})
-
-    @router.get("/spend", response_class=HTMLResponse, include_in_schema=False)
-    async def spend_page(
-        request: Request, user: dict = Depends(require_page_permission("can_edit_spend"))
-    ):
-        return templates.TemplateResponse("pages/spend.html", {"request": request, "user": user})
 
     @router.get("/pipelines", response_class=HTMLResponse, include_in_schema=False)
     async def pipelines_page(

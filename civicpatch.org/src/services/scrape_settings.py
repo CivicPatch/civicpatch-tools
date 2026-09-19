@@ -6,9 +6,15 @@ is orchestration, and routers in this codebase do none.
 
 from datetime import datetime, timezone
 
+import environment
 from core.scrape_schedule import next_run_at
 from database.issue_listings import count_cost_cap_hits_this_month
-from database.pipeline_run_spend import get_month_to_date_spend
+from database.pipeline_run_spend import (
+    get_fleet_month_to_date_cost_per_run,
+    get_fleet_month_to_date_seconds_per_run,
+    get_month_to_date_cost_per_run,
+    get_month_to_date_spend,
+)
 from database.state_settings import (
     get_global_settings,
     get_state_settings,
@@ -24,6 +30,7 @@ async def get_state_panel(state: str) -> StateScrapePanel:
     fleet = await get_global_settings()
     state_spent, global_spent = await get_month_to_date_spend(state)
     cap_reached = await cap_reached_for_state(state)
+    cost_per_run = await get_month_to_date_cost_per_run(state)
     hits = await count_cost_cap_hits_this_month(state)
     candidates = await get_scrape_candidates(state)
 
@@ -40,6 +47,7 @@ async def get_state_panel(state: str) -> StateScrapePanel:
         spent_this_month_usd=state_spent,
         global_spent_this_month_usd=global_spent,
         cap_reached=cap_reached.value if cap_reached else None,
+        cost_per_run_this_month_usd=cost_per_run,
         cost_cap_hits_this_month=hits,
         candidates_due=len(candidates),
     )
@@ -53,4 +61,7 @@ async def get_global_panel() -> GlobalScrapePanel:
         monthly_cap_usd=fleet.monthly_cap_usd,
         spent_this_month_usd=global_spent,
         state_monthly_caps_usd=await sum_state_monthly_caps(),
+        cost_per_run_this_month_usd=await get_fleet_month_to_date_cost_per_run(),
+        seconds_per_run_this_month=await get_fleet_month_to_date_seconds_per_run(),
+        pipeline_run_concurrency=int(environment.get_env_vars()["PIPELINE_RUN_CONCURRENCY"]),
     )

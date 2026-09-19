@@ -226,6 +226,7 @@ async def test_the_settings_panel_answers_from_one_moment():
     assert panel.next_run_at is None  # manual has no next run
     assert panel.spent_this_month_usd == Decimal("0")
     assert panel.cap_reached is None
+    assert panel.cost_per_run_this_month_usd is None
     assert panel.cost_cap_hits_this_month == 0
 
 

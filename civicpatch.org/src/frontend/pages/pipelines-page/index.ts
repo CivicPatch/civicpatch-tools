@@ -3,34 +3,36 @@
 // are admin-only now, so neither belongs on the page any signed-in user reads.
 
 import { component, useEffect, useState } from "haunted";
-import { html, nothing } from "lit-html";
+import { html, nothing, type TemplateResult } from "lit-html";
 import "./pipelines-page.css";
 import {
   fetchActivePipelineRuns,
+  fetchGlobalScrapeSettings,
   fetchJurisdictionStates,
   fetchStateScrapeSettings,
   startStateScrape,
 } from "../../api.js";
 import "../../components/confirm-modal/confirm-modal.ts";
 import "./scrape-settings-modal.ts";
+import "./global-budget-modal.ts";
 import "./active-runs/index.js";
 import {
   describeAnchor,
   describeBudget,
   describeCadence,
+  describeNextPass,
   describeNextRun,
+  describePerRun,
+  formatDuration,
+  formatUsd,
+  type GlobalScrapePanel,
   type StateScrapePanel,
 } from "./scrape-settings.js";
-
-// Four places under a dollar, matching `formatUsd` in spend-page/spend.ts — a per-run cap of
-// a fraction of a cent should not read as "$0.00".
-import { formatUsd } from "../spend-page/spend.js";
 import { useAuth } from "../../hooks/useAuth.js";
-import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
-import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { SectionNav, adminSection } from "../../components/section-nav/index.js";
 
 const RUNS_PER_PAGE_CHOICES = [10, 25, 50];
+const RUNS_POLL_MS = 5000;
 
 function getIntParam(key: string, fallback: number, allowed: number[] | null = null): number {
   const val = parseInt(new URLSearchParams(window.location.search).get(key) ?? "", 10);
@@ -54,9 +56,12 @@ function getStateFromUrl(): string {
 const COLS = [
   { key: "cadence", label: "cadence" },
   { key: "next-run", label: "next run" },
-  { key: "per-run", label: "per run" },
+  { key: "per-run", label: "avg per run" },
   { key: "month", label: "this month" },
   { key: "due", label: "due" },
+  { key: "est-cost", label: "est. cost" },
+  { key: "wall-clock", label: "wall-clock" },
+  { key: "total", label: "total time" },
 ] as const;
 
 // One panel per state, in parallel — admin-only and infrequent, so N small requests cost less
@@ -67,14 +72,64 @@ async function fetchAllPanels(): Promise<StateScrapePanel[]> {
   return panels.sort((a: StateScrapePanel, b: StateScrapePanel) => a.state.localeCompare(b.state));
 }
 
-function renderHead() {
+function renderFigure(value: string, label: TemplateResult | string) {
+  return html`
+    <span class="pipelines-page__ledger-figure">
+      <span class="pipelines-page__ledger-n">${value}</span>
+      <span class="pipelines-page__ledger-label">${label}</span>
+    </span>
+  `;
+}
+
+function renderLedger(panel: GlobalScrapePanel, canEdit: boolean, onEdit: () => void) {
+  const cap = panel.monthly_cap_usd === null ? "no cap" : `of ${formatUsd(panel.monthly_cap_usd)}`;
+  const cost = panel.cost_per_run_this_month_usd;
+  const seconds = panel.seconds_per_run_this_month;
+  return html`
+    <div class="pipelines-page__ledger">
+      ${renderFigure(
+        formatUsd(panel.spent_this_month_usd),
+        html`this month, ${cap}
+        ${canEdit
+          ? html`<button class="pipelines-page__edit" @click=${onEdit}>edit</button>`
+          : nothing}`,
+      )}
+      ${cost !== null ? renderFigure(formatUsd(cost), "avg per run") : nothing}
+      ${seconds !== null ? renderFigure(formatDuration(seconds), "avg run time") : nothing}
+    </div>
+  `;
+}
+
+const ESTIMATE_NOTE_ID = "pipelines-estimate-note";
+
+function renderEstimateNote(concurrency: number) {
+  return html`
+    <button
+      class="pipelines-page__info"
+      popovertarget=${ESTIMATE_NOTE_ID}
+      aria-label="How the estimates are worked out"
+    >
+      <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+    </button>
+    <div id=${ESTIMATE_NOTE_ID} popover class="pipelines-page__popover">
+      Wall-clock is how long the pass takes: due runs go ${concurrency} at a time, each batch
+      taking about one average run. Total is every run's time added up, which is what counts
+      against rate limits. The average run is this month's successful runs, measured from when
+      each was queued to when it finished.
+    </div>
+  `;
+}
+
+function renderHead(fleet: GlobalScrapePanel | null) {
   return html`
     <div class="pipelines-page__row pipelines-page__row--head">
       <span class="pipelines-page__row-state">state</span>
       ${COLS.map(
         (col) =>
           html`<span class="pipelines-page__row-fig pipelines-page__row-fig--${col.key}"
-            >${col.label}</span
+            >${col.label}${col.key === "wall-clock" && fleet
+              ? renderEstimateNote(fleet.pipeline_run_concurrency)
+              : nothing}</span
           >`,
       )}
       <span></span>
@@ -85,6 +140,7 @@ function renderHead() {
 
 function renderRow(
   panel: StateScrapePanel,
+  fleet: GlobalScrapePanel | null,
   onEdit: (state: string) => void,
   onScrapeClick: (state: string) => void,
   starting: string | null,
@@ -92,6 +148,7 @@ function renderRow(
 ) {
   const overBudget = panel.cap_reached !== null;
   const anchor = describeAnchor(panel);
+  const nextPass = fleet ? describeNextPass(panel.candidates_due, fleet) : null;
   return html`
     <div class="pipelines-page__row">
       <span class="pipelines-page__row-state">${panel.state}</span>
@@ -102,7 +159,7 @@ function renderRow(
         ${describeNextRun(panel.next_run_at, new Date())}
       </span>
       <span class="pipelines-page__row-fig pipelines-page__row-fig--per-run">
-        ${panel.pipeline_run_cap_usd ? formatUsd(panel.pipeline_run_cap_usd) : "no cap"}
+        ${describePerRun(panel.cost_per_run_this_month_usd, panel.pipeline_run_cap_usd)}
       </span>
       <span
         class="pipelines-page__row-fig pipelines-page__row-fig--month
@@ -116,7 +173,16 @@ function renderRow(
           : nothing}
       </span>
       <span class="pipelines-page__row-fig pipelines-page__row-fig--due">
-        ${panel.candidates_due ? `${panel.candidates_due} due` : "—"}
+        ${panel.candidates_due ? `${panel.candidates_due} due` : "none"}
+      </span>
+      <span class="pipelines-page__row-fig pipelines-page__row-fig--est-cost">
+        ${nextPass?.cost}
+      </span>
+      <span class="pipelines-page__row-fig pipelines-page__row-fig--wall-clock">
+        ${nextPass?.wall_clock}
+      </span>
+      <span class="pipelines-page__row-fig pipelines-page__row-fig--total">
+        ${nextPass?.total}
       </span>
       <button class="pipelines-page__edit" @click=${() => onEdit(panel.state)}>edit</button>
       <span class="pipelines-page__scrape">
@@ -136,14 +202,16 @@ function renderRow(
 function PipelinesPage() {
   const { permissions } = useAuth();
   const [panels, setPanels] = useState<StateScrapePanel[] | null>(null);
+  const [budget, setBudget] = useState<GlobalScrapePanel | null>(null);
+  const [editingBudget, setEditingBudget] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [editingState, setEditingState] = useState<string | null>(null);
   const [confirmingState, setConfirmingState] = useState<string | null>(null);
   const [starting, setStarting] = useState<string | null>(null);
   const [scrapeErrors, setScrapeErrors] = useState<Record<string, string>>({});
 
-  const [defaultState] = useLocalStorage(STORAGE_KEYS.DEFAULT_STATE, "", { ttl: PERSIST_FOREVER });
-  const runsStateCode = (getStateFromUrl() || defaultState || "").toLowerCase();
+  // Every state unless the URL names one: the table above lists them all.
+  const runsStateCode = getStateFromUrl();
   const [runs, setRuns] = useState<any[]>([]);
   const [runsPage, setRunsPage] = useState(getIntParam("runs_page", 1));
   const [runsPerPage, setRunsPerPage] = useState(
@@ -158,7 +226,14 @@ function PipelinesPage() {
       .catch((err: Error) => setError(err.message));
   };
 
+  const loadBudget = () => {
+    fetchGlobalScrapeSettings()
+      .then(setBudget)
+      .catch(() => setBudget(null));
+  };
+
   useEffect(load, []);
+  useEffect(loadBudget, []);
 
   useEffect(() => {
     const onPopState = () => {
@@ -169,7 +244,7 @@ function PipelinesPage() {
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
-  useEffect(() => {
+  const loadRuns = () => {
     fetchActivePipelineRuns(runsStateCode || undefined, runsPage, runsPerPage)
       .then((result: any) => {
         setRuns(result.data || []);
@@ -177,6 +252,13 @@ function PipelinesPage() {
       })
       .catch(() => setRuns([]))
       .finally(() => setRunsLoaded(true));
+  };
+
+  // Always, not only while runs exist: a batch registers its runs after Scrape now returns.
+  useEffect(() => {
+    loadRuns();
+    const timer = setInterval(loadRuns, RUNS_POLL_MS);
+    return () => clearInterval(timer);
   }, [runsStateCode, runsPage, runsPerPage]);
 
   const handleRunsPerPageChange = (e: Event) => {
@@ -206,16 +288,34 @@ function PipelinesPage() {
     <main class="pipelines-page page-content">
       <div class="page-focal">
         <h1 class="page-focal__title">Pipelines</h1>
+        ${budget
+          ? html`<div class="page-focal__end">
+              ${renderLedger(budget, !!permissions.can_write_global_config, () =>
+                setEditingBudget(true),
+              )}
+            </div>`
+          : nothing}
       </div>
 
       <div class="sectioned">
       ${SectionNav("admin", adminSection(permissions), "/pipelines")}
       <div class="secbody">
 
+      ${editingBudget && budget
+        ? html`<civ-global-budget-modal
+            .panel=${budget}
+            @settings-saved=${() => {
+              setEditingBudget(false);
+              loadBudget();
+            }}
+            @cancel=${() => setEditingBudget(false)}
+          ></civ-global-budget-modal>`
+        : nothing}
+
       <div class="pipelines-page__list">
-        ${renderHead()}
+        ${renderHead(budget)}
         ${panels.map((panel) =>
-          renderRow(panel, setEditingState, setConfirmingState, starting, scrapeErrors[panel.state] || null),
+          renderRow(panel, budget, setEditingState, setConfirmingState, starting, scrapeErrors[panel.state] || null),
         )}
       </div>
 
@@ -250,7 +350,7 @@ function PipelinesPage() {
       ${confirmingState
         ? html`<civ-confirm-modal
             .title=${`Scrape ${confirmingState.toUpperCase()}?`}
-            .message=${`Scrapes every jurisdiction in ${confirmingState.toUpperCase()} that is due — however many that is. They cost money to run and cannot be stopped once started.`}
+            .message=${`Scrapes every jurisdiction in ${confirmingState.toUpperCase()} that is due, however many that is. They cost money to run and cannot be stopped once started.`}
             .confirmLabel=${"Start scraping"}
             .variant=${"danger"}
             @confirm=${confirmScrape}

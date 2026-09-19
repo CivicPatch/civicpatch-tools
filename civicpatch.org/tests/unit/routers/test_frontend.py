@@ -311,40 +311,6 @@ def test_the_changesets_page_is_closed_to_signed_out_visitors(permissions_client
     assert response.headers["location"] == "/"
 
 
-# ── GET /spend ───────────────────────────────────────────────────────────────
-# Split out of the changesets page: money is admin-only (`can_edit_spend`), unlike
-# changesets, which any signed-in user reads.
-
-@pytest.mark.unit
-def test_the_spend_page_renders_for_an_admin(permissions_client):
-    permissions_client.dependency_overrides[get_optional_user] = lambda: ADMIN
-    client = TestClient(permissions_client)
-    response = client.get("/spend")
-
-    assert response.status_code == 200
-    assert "spend-page" in response.text
-
-
-@pytest.mark.unit
-def test_the_spend_page_is_closed_to_a_maintainer(permissions_client):
-    permissions_client.dependency_overrides[get_optional_user] = _maintainer
-    client = TestClient(permissions_client, follow_redirects=False)
-    response = client.get("/spend")
-
-    assert response.status_code == 303
-    assert response.headers["location"] == "/"
-
-
-@pytest.mark.unit
-def test_the_spend_page_is_closed_to_signed_out_visitors(permissions_client):
-    permissions_client.dependency_overrides[get_optional_user] = lambda: None
-    client = TestClient(permissions_client, follow_redirects=False)
-    response = client.get("/spend")
-
-    assert response.status_code == 303
-    assert response.headers["location"] == "/"
-
-
 # ── GET /pipelines ─────────────────────────────────────────────────────────────
 # Cadence, budget and the batch-scrape trigger — also split off the changesets page, and
 # also admin-only (`can_batch_scrape`), same reasoning as spend.

@@ -4,10 +4,52 @@ import {
   describeStateCaps,
   describeBudget,
   describeCadence,
+  describeNextPass,
   describeNextRun,
+  describePerRun,
   estimateMonthlyCost,
+  formatDuration,
+  formatUsd,
+  type GlobalScrapePanel,
   type StateScrapePanel,
 } from "../pages/pipelines-page/scrape-settings.ts";
+
+describe("describePerRun", () => {
+  it("shows what a run cost against its cap", () => {
+    expect(describePerRun("0.12", "0.50")).toBe("$0.1200 of $0.5000");
+  });
+
+  it("says no cap rather than showing a zero ceiling", () => {
+    expect(describePerRun("0.12", null)).toBe("$0.1200, no cap");
+  });
+
+  it("shows only the cap when nothing ran this month, never a $0 cost", () => {
+    expect(describePerRun(null, "0.50")).toBe("$0.5000 cap");
+    expect(describePerRun(null, null)).toBe("no cap");
+  });
+});
+
+describe("formatUsd", () => {
+  it("keeps a sub-cent figure visible instead of rounding it to nothing", () => {
+    // The real dev figure for one Ellensburg scrape, 2026-09-05.
+    expect(formatUsd("0.00221606")).toBe("$0.0022");
+  });
+
+  it("shows small amounts to four places", () => {
+    expect(formatUsd("0.0425")).toBe("$0.0425");
+    expect(formatUsd("0.99")).toBe("$0.9900");
+  });
+
+  it("switches to two places at a dollar", () => {
+    expect(formatUsd("1")).toBe("$1.00");
+    expect(formatUsd("18.4212")).toBe("$18.42");
+  });
+
+  it("reads the value as a string, so the exact decimal survives the wire", () => {
+    // Pydantic serialises Decimal as text. Parsing early is what would lose this.
+    expect(formatUsd("0.10")).toBe("$0.1000");
+  });
+});
 
 const panel = (over: Partial<StateScrapePanel> = {}): StateScrapePanel => ({
   state: "wa",
@@ -20,6 +62,7 @@ const panel = (over: Partial<StateScrapePanel> = {}): StateScrapePanel => ({
   spent_this_month_usd: "0",
   global_spent_this_month_usd: "0",
   cap_reached: null,
+  cost_per_run_this_month_usd: null,
   cost_cap_hits_this_month: 0,
   candidates_due: 0,
   ...over,
@@ -103,28 +146,61 @@ describe("estimateMonthlyCost", () => {
   });
 });
 
-describe("describeStateCaps", () => {
-  const g = (over = {}) => ({
-    monthly_cap_usd: null,
-    spent_this_month_usd: "0",
-    state_monthly_caps_usd: "0",
-    ...over,
-  });
+const fleet = (over: Partial<GlobalScrapePanel> = {}): GlobalScrapePanel => ({
+  monthly_cap_usd: null,
+  spent_this_month_usd: "0",
+  state_monthly_caps_usd: "0",
+  cost_per_run_this_month_usd: null,
+  seconds_per_run_this_month: null,
+  pipeline_run_concurrency: 25,
+  ...over,
+});
 
+describe("describeStateCaps", () => {
   it("does not compare against a cap that is not set", () => {
-    expect(describeStateCaps(g({ state_monthly_caps_usd: "120" }))).toBe("$120.00 in state caps");
+    expect(describeStateCaps(fleet({ state_monthly_caps_usd: "120" }))).toBe("$120.00 in state caps");
   });
 
   it("says when the state caps exceed the cap without treating it as an error", () => {
     // Ceilings, not reservations — refusing this would be the allocation model the plan rejected.
-    expect(describeStateCaps(g({ state_monthly_caps_usd: "120", monthly_cap_usd: "40" }))).toBe(
+    expect(describeStateCaps(fleet({ state_monthly_caps_usd: "120", monthly_cap_usd: "40" }))).toBe(
       "$120.00 in state caps, over the cap",
     );
   });
 
   it("is quiet when the allocation fits", () => {
-    expect(describeStateCaps(g({ state_monthly_caps_usd: "20", monthly_cap_usd: "40" }))).toBe(
+    expect(describeStateCaps(fleet({ state_monthly_caps_usd: "20", monthly_cap_usd: "40" }))).toBe(
       "$20.00 in state caps",
     );
+  });
+});
+
+describe("formatDuration", () => {
+  it("steps up from seconds to minutes to hours", () => {
+    expect(formatDuration(45)).toBe("45s");
+    expect(formatDuration(310)).toBe("5m");
+    expect(formatDuration(3600)).toBe("1h");
+    expect(formatDuration(4800)).toBe("1h 20m");
+  });
+});
+
+describe("describeNextPass", () => {
+  const averages = { cost_per_run_this_month_usd: "0.12", seconds_per_run_this_month: 300 };
+
+  it("gives wall-clock time in batches of the concurrency, and total time run by run", () => {
+    // 41 due at 25 at a time is two rounds of 5m; all 41 runs added up is 205m.
+    expect(describeNextPass(41, fleet(averages))).toEqual({
+      cost: "$4.92",
+      wall_clock: "10m",
+      total: "3h 25m",
+    });
+  });
+
+  it("says nothing when nothing is due", () => {
+    expect(describeNextPass(0, fleet(averages))).toEqual({ cost: "", wall_clock: "", total: "" });
+  });
+
+  it("says nothing when there are no runs to average, never $0", () => {
+    expect(describeNextPass(41, fleet())).toEqual({ cost: "", wall_clock: "", total: "" });
   });
 });
