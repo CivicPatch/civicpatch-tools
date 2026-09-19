@@ -149,4 +149,24 @@
 .map-tooltip-popup .maplibregl-popup-tip {
   display: none;
 }
+
+/* Attribution */
+.maplibregl-ctrl.maplibregl-ctrl-attrib,
+.maplibregl-ctrl-attrib.maplibregl-compact {
+  background-color: color-mix(in srgb, var(--surface) 75%, transparent) !important;
+  color: var(--text-muted) !important;
+}
+
+.maplibregl-ctrl-attrib a {
+  color: var(--text-muted) !important;
+}
+
+.maplibregl-ctrl-attrib-button {
+  background-color: transparent !important;
+}
+
+/* The info icon is a black SVG baked into maplibre's CSS. */
+[data-theme="dark"] .maplibregl-ctrl-attrib-button {
+  filter: invert(1);
+}
 }

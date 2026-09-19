@@ -4,7 +4,7 @@
 import type * as maplibregl from 'maplibre-gl';
 import { config } from '../../assets/config.js';
 import type { MapEngine } from './map-engine.js';
-import type { ThemeMode } from '../../hooks/use-theme.js';
+import type { ThemeMode } from '../../utils/theme.js';
 
 // config.storageHost comes from the backend's own FRIENDLY_STORAGE_HOST, so dev/staging
 // map tiles come from the same bucket the map-generation pipeline uploaded them to —
