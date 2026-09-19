@@ -16,21 +16,14 @@
   border-bottom: 1px solid var(--border-subtle);
 }
 
-/* The history pager sits right under the title, whose border already separates them. The
-   first batch panel follows it, and a panel spaces only its own bottom. */
+/* The first batch panel follows the top pager, and a panel spaces only its own bottom. */
 .import-panel__title + .civ-pagination {
   margin-top: 0;
   margin-bottom: 1rem;
-  padding-top: 0;
-  border-top: none;
 }
 
-/* The bottom pager follows the last batch panel: its border and bottom margin already separate
-   them, so the pager's own divider would draw a second line. */
 .import-panel + .civ-pagination {
   margin-top: 0;
-  padding-top: 0;
-  border-top: none;
 }
 
 /* Sections within a panel */
@@ -251,11 +244,6 @@
 
 .review-jurisdiction:last-child {
   border-bottom: none;
-}
-
-/* The bottom pager follows the last card, whose own border already rules it off. */
-.review-jurisdiction + .civ-pagination {
-  border-top: none;
 }
 
 .review-jurisdiction--settled {

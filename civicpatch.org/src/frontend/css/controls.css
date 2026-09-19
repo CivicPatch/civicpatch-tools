@@ -86,8 +86,9 @@ textarea {
 }
 input:not([type="checkbox"], [type="radio"], [type="range"]),
 select:not([multiple], [size]) {
+  /* em, not rem: a control with a smaller font gets a shorter box, not the full-size one */
   height: calc(
-    1rem * var(--line-height) + var(--control-pad-y) * 2 +
+    1em * var(--line-height) + var(--control-pad-y) * 2 +
       var(--border-width) * 2
   );
 }
