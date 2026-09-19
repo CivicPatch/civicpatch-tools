@@ -1,8 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
-  baselineColumnLabel,
   hasPriorScrape,
-  originSourceLabel,
   sourceRowClass,
   type SourceRow,
 } from "../components/people-by-source/source-model.js";
@@ -15,44 +13,13 @@ const row = (over: Partial<SourceRow> = {}): SourceRow => ({
 });
 
 describe("hasPriorScrape", () => {
-  // The collector only reports "existing" when it found people already in the
-  // DB and skipped Gemini — the one case with a previous scrape behind it.
-  it("is true only when the baseline came from existing records", () => {
-    expect(hasPriorScrape("existing")).toBe(true);
-    expect(hasPriorScrape("google_gemini")).toBe(false);
+  it("is true when anyone was published before this scrape", () => {
+    expect(hasPriorScrape([row({ in_research: false }), row({ in_research: true })])).toBe(true);
   });
 
-  // A card predating origin_source, or a source we do not recognise, has not
-  // proven there was a prior scrape — so it must not claim one.
-  it("is false for a missing or unknown source", () => {
-    expect(hasPriorScrape(null)).toBe(false);
-    expect(hasPriorScrape(undefined)).toBe(false);
-    expect(hasPriorScrape("some_future_model")).toBe(false);
-  });
-});
-
-describe("originSourceLabel", () => {
-  it("names the known sources", () => {
-    expect(originSourceLabel("google_gemini")).toBe("Google Gemini");
-    expect(originSourceLabel("existing")).toBe("Existing");
-  });
-
-  it("falls back rather than rendering an empty column header", () => {
-    expect(originSourceLabel("some_future_model")).toBe("Research");
-    expect(originSourceLabel(null)).toBe("Research");
-  });
-});
-
-describe("baselineColumnLabel", () => {
-  it("names the previous scrape when there was one", () => {
-    expect(baselineColumnLabel("existing")).toBe("Last scrape");
-  });
-
-  // With no prior scrape the column is not a "last scrape" at all — it is
-  // whatever supplied the baseline, and saying so is the point.
-  it("names the source that supplied the baseline otherwise", () => {
-    expect(baselineColumnLabel("google_gemini")).toBe("Google Gemini");
-    expect(baselineColumnLabel(null)).toBe("Research");
+  it("is false when nobody was", () => {
+    expect(hasPriorScrape([row({ in_research: false })])).toBe(false);
+    expect(hasPriorScrape([])).toBe(false);
   });
 });
 

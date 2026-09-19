@@ -5,11 +5,7 @@ import { component, useEffect } from "haunted";
 import { isChecked, type IssueChecks } from "../review/issue-checks.js";
 import { type Issue } from "../fields/field-model.js";
 import { checkedCount } from "./sidebar-model.js";
-import {
-  hasPriorScrape,
-  originSourceLabel,
-  type SourceRow,
-} from "../people-by-source/source-model.js";
+import { hasPriorScrape, type SourceRow } from "../people-by-source/source-model.js";
 
 // The card's checklist, as a drawer rather than a column in the info row. A tick
 // is personal progress in this browser — never a team signal — which is why the
@@ -26,12 +22,11 @@ type ReviewSidebarHost = HTMLElement & {
   issues: Issue[];
   checks: IssueChecks;
   peopleBySource: SourceRow[];
-  originSource: string | null;
   open: boolean;
 };
 
 function ReviewSidebar(host: ReviewSidebarHost) {
-  const { issues = [], checks = {}, peopleBySource = [], originSource, open } = host;
+  const { issues = [], checks = {}, peopleBySource = [], open } = host;
 
   const handleClose = () =>
     host.dispatchEvent(new CustomEvent(CLOSE_EVENT, { bubbles: true, composed: true }));
@@ -112,16 +107,10 @@ function ReviewSidebar(host: ReviewSidebarHost) {
         ${checklistSection()}
         <section class="review-sidebar__section">
           <h5 class="review-sidebar__section-title">Since last scrape</h5>
-          ${hasPriorScrape(originSource)
+          ${hasPriorScrape(peopleBySource)
             ? ""
-            : html`<p class="review-sidebar__note">
-                No previous scrape to compare against — the baseline is
-                ${originSourceLabel(originSource)} research.
-              </p>`}
-          <civ-people-by-source
-            .rows=${peopleBySource}
-            .originSource=${originSource}
-          ></civ-people-by-source>
+            : html`<p class="review-sidebar__note">No previous scrape to compare against.</p>`}
+          <civ-people-by-source .rows=${peopleBySource}></civ-people-by-source>
         </section>
       </div>
     </aside>

@@ -273,7 +273,6 @@ class ResearchMunicipalityStep(BaseModel):
         str, list[str]
     ] = {}  # canonical name to list of other names/aliases
     source_urls: list[str] = []
-    origin_source: str = "google_gemini"
 
 
 class PreprocessPageContentStep(BaseModel):

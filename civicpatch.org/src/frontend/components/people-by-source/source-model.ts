@@ -3,38 +3,16 @@
 // when each kept its own copy they drifted: one tinted a dropped official green
 // while the other got it right.
 
-const EXISTING_SOURCE = "existing";
-
-const ORIGIN_SOURCE_LABEL_BY_KEY: Record<string, string> = {
-  google_gemini: "Google Gemini",
-  [EXISTING_SOURCE]: "Existing",
-};
-
-// origin_source says where the comparison's baseline came from. The collector
-// uses people already in the DB when it finds any, and skips Gemini — so
-// "existing" is the only value that means there was a previous scrape to
-// compare against. Anything else and Gemini supplied the baseline itself, which
-// makes the table a first capture rather than a diff.
-export function hasPriorScrape(originSource: string | null | undefined): boolean {
-  return originSource === EXISTING_SOURCE;
-}
-
-// A pipeline that grows a new origin source should still render a usable column
-// header rather than an empty one.
-export function originSourceLabel(originSource: string | null | undefined): string {
-  return (originSource && ORIGIN_SOURCE_LABEL_BY_KEY[originSource]) || "Research";
-}
-
-// The baseline side of the comparison: the previous scrape when there was one,
-// otherwise whatever supplied the baseline instead.
-export function baselineColumnLabel(originSource: string | null | undefined): string {
-  return hasPriorScrape(originSource) ? "Last scrape" : originSourceLabel(originSource);
-}
-
 export interface SourceRow {
   name: string;
   in_research: boolean;
   in_data: boolean;
+}
+
+// The baseline is the jurisdiction's published people, so nobody on it means
+// nothing was published before this scrape.
+export function hasPriorScrape(rows: SourceRow[]): boolean {
+  return rows.some((row) => row.in_research);
 }
 
 // Which way the roster moved, in the diff convention: red for a name that was in

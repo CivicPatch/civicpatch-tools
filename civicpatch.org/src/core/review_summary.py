@@ -26,7 +26,6 @@ class ReviewSummary(BaseModel):
 
     issues: list[Issue] = []
     people_by_source: list[PeopleBySourceRow] = []
-    origin_source: str | None = None
 
 
 def build_card_summary(
@@ -64,5 +63,4 @@ def build_card_summary(
         people_by_source=[
             PeopleBySourceRow(**row) for row in roster_checks["people_by_source"]
         ],
-        origin_source=roster_checks["origin_source"],
     )
