@@ -12,7 +12,10 @@ import {
   applyLevelVisibility,
   stateFromOcdid,
   featureBounds,
+  whenStyleReady,
+  applyMapTheme,
 } from "./map-base.js";
+import { useTheme } from "../../hooks/use-theme.js";
 
 interface JurisdictionMapProps {
   jurisdictionOcdid?: string;
@@ -22,6 +25,7 @@ function JurisdictionMap(
   this: HTMLElement,
   { jurisdictionOcdid }: JurisdictionMapProps,
 ) {
+  const [theme] = useTheme();
   const containerRef = useRef<HTMLElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [mapReady, setMapReady] = useState(false);
@@ -40,7 +44,7 @@ function JurisdictionMap(
 
     loadMapEngine().then((engine) => {
       if (disposed) return;
-      map = createMap(engine, el);
+      map = createMap(engine, el, theme.mode);
       mapRef.current = map;
       setMapReady(true);
     });
@@ -51,6 +55,12 @@ function JurisdictionMap(
       mapRef.current = null;
     };
   }, []);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    whenStyleReady(map, () => applyMapTheme(map, theme.mode));
+  }, [theme.palette]);
 
   useEffect(() => {
     if (!mapRef.current || !jurisdictionOcdid) return;

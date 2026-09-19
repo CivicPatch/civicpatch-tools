@@ -1,10 +1,8 @@
 import { component } from "haunted";
 import { html } from "lit";
-import {
-  useLocalStorage,
-  PERSIST_FOREVER,
-} from "../hooks/use-local-storage.js";
 import { STORAGE_KEYS } from "../utils/storage-keys.js";
+import { useTheme } from "../hooks/use-theme.ts";
+import { THEMES } from "../utils/theme.ts";
 import { useStorageSweep } from "../hooks/use-storage-sweep.js";
 import "./nav-shortcuts/index.js";
 import {
@@ -24,19 +22,6 @@ import "./navbar.css";
 // for the fifty the app uses, and woff2 is already compressed so nothing downstream can
 // recover that. Run `npm run build` (or `npm run icons`) after adding an icon.
 import "../generated/fontawesome/icons.css";
-
-// Named palettes, grouped by mode. `<html data-theme>` stays "light"/"dark" — every
-// mode-scoped CSS selector across the app keys on that — while `<html data-palette>`
-// carries the specific id below, which is all tokens.css's colour blocks key on. Adding a
-// theme means one more entry here and one more `[data-palette="..."]` block in tokens.css;
-// nothing that reads `data-theme` for light/dark-specific styling needs to change.
-const THEMES = [
-  { id: "one-light", name: "one light", mode: "light" },
-  { id: "nord-light", name: "nord light", mode: "light" },
-  { id: "nord-dark", name: "nord dark", mode: "dark" },
-  { id: "terminal", name: "terminal", mode: "dark" },
-];
-const DEFAULT_PALETTE = { light: "one-light", dark: "nord-dark" };
 
 function getRoleTooltip(role) {
   if (!role) return "No role assigned";
@@ -206,16 +191,7 @@ function Navbar(host) {
   // sweeping is navigation's business.
   useStorageSweep();
 
-  const [theme, setTheme] = useLocalStorage(STORAGE_KEYS.THEME, "", {
-    ttl: PERSIST_FOREVER,
-  });
-  const systemMode = window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-  const resolvedPalette = THEMES.some((t) => t.id === theme)
-    ? theme
-    : DEFAULT_PALETTE[systemMode];
-  const resolvedMode = THEMES.find((t) => t.id === resolvedPalette).mode;
+  const [{ palette: resolvedPalette, mode: resolvedMode }, setTheme] = useTheme();
   document.documentElement.dataset.theme = resolvedMode;
   document.documentElement.dataset.palette = resolvedPalette;
   const handleThemeChange = (e) => setTheme(e.target.value);
