@@ -9,6 +9,7 @@ import logging
 from datetime import datetime
 from typing import Optional
 
+from core.roster_diff import ProposalCounts
 from database.activity import create_activity_row
 from database.changeset_predicates import (
     AVAILABLE_FOR_REVIEW,
@@ -200,6 +201,16 @@ async def register_sheet_import_changeset(
         )
     except Exception:
         logger.exception(f"[{changeset_id}] Failed to log sheet_import activity")
+
+
+async def set_proposal_counts(changeset_id: str, counts: ProposalCounts) -> None:
+    """What the import proposed, counted once so the batch page need not rebuild the roster."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE changesets SET proposal_counts = %s::jsonb WHERE id = %s",
+            (counts.model_dump_json(), changeset_id),
+        )
 
 
 async def register_jurisdiction_edit_changeset(

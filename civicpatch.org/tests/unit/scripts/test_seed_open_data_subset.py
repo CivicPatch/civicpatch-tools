@@ -9,8 +9,10 @@ import tarfile
 import pytest
 
 from scripts.seed_open_data_subset import (
+    NO_LIMIT,
     division_row,
     jurisdiction_files,
+    limit_arg,
     membership_row,
     organization_row,
     person_row,
@@ -18,6 +20,7 @@ from scripts.seed_open_data_subset import (
     role_alias_row,
     role_row,
     rows_in_jurisdictions,
+    states_arg,
 )
 
 _OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
@@ -227,3 +230,16 @@ def test_rows_in_jurisdictions_empty_set_keeps_nothing():
     rows = [{"jurisdiction_ocdid": "a", "value": 1}]
 
     assert rows_in_jurisdictions(rows, set()) == []
+
+
+@pytest.mark.unit
+def test_limit_none_loads_every_organization():
+    """`[:None]` is the whole list, so all of a state is `--states ca --limit none`."""
+    assert limit_arg(NO_LIMIT) is None
+    assert limit_arg("10") == 10
+
+
+@pytest.mark.unit
+def test_states_are_lowercased_like_the_jurisdictions_column():
+    assert states_arg(" CA,wa ,") == ["ca", "wa"]
+    assert states_arg("") == []

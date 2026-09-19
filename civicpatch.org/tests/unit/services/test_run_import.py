@@ -10,7 +10,7 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from core.sheet_import_rows import ImportStatus
+from core.sheet_import_rows import ImportStatus, RowError
 from services.sheet_import import JurisdictionResult, run_import
 
 _BATCH_ID = "batch-1"
@@ -60,8 +60,9 @@ async def test_a_failed_jurisdiction_marks_the_whole_batch_failed():
 
     _, status = finish.await_args.args
     assert status.value == "failed"
-    assert "ocd-b" in finish.await_args.kwargs["error"]
-    assert "unknown jurisdiction" in finish.await_args.kwargs["error"]
+    assert finish.await_args.kwargs["errors"] == [
+        RowError(line=None, jurisdiction_ocdid="ocd-b", column=None, message="unknown jurisdiction")
+    ]
 
 
 @pytest.mark.unit

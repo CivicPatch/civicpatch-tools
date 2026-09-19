@@ -16,9 +16,7 @@ class ImportPreview(BaseModel):
 
 
 class StartImportResponse(BaseModel):
-    # None when there was nothing to ingest — every row already handled or blocked. No batch
-    # gets minted for that, so there is no id to carry.
-    batch_id: str | None
+    batch_id: str
     preview: ImportPreview
 
 
@@ -28,6 +26,8 @@ class ImportProgress(BaseModel):
     items_total: int | None
     items_done: int
     error: str | None
+    errors: list[RowError]
+    rows_read: int | None
     started_at: str
     finished_at: str | None
 
@@ -37,8 +37,9 @@ class ReviewJurisdiction(BaseModel):
     name: str
     changeset_id: str
     changeset_state: str
-    people: int
-    change_counts: ChangeCounts
+    # None when counting failed at import; the import itself still landed.
+    people: int | None
+    change_counts: ChangeCounts | None
 
 
 class BatchReview(BaseModel):

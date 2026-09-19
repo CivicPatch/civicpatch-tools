@@ -5,7 +5,12 @@ from core.activity import summarize_activity
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
 from schemas.activity import Change, ChangedJurisdiction
-from shared.utils.statuses import LIVE_ACTIVITY_TYPES, ActivityType, DismissalReason
+from shared.utils.statuses import (
+    LIVE_ACTIVITY_TYPES,
+    PUBLISHED_CHANGE_TYPES,
+    ActivityType,
+    DismissalReason,
+)
 
 
 async def get_activity_for_roles(
@@ -251,9 +256,8 @@ async def jurisdictions_changed_since(minutes: int) -> list[ChangedJurisdiction]
     `states_changed_since` for the sink whose unit is a file rather than a tab: open-data holds
     one file per jurisdiction, so it needs the ocdid and not the state.
 
-    Global rows carry no jurisdiction and name no file, so they are excluded here for the same
-    reason they are there. `dismiss_review` too: a dismissal ends a review without touching a row,
-    and 245 of the 294 so far were superseded — a newer scrape won, so the roster is unchanged.
+    Only `PUBLISHED_CHANGE_TYPES`: the commit credits the changesets it swept, so an import or a
+    run ending here would be credited as published when nothing was.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -265,11 +269,11 @@ async def jurisdictions_changed_since(minutes: int) -> list[ChangedJurisdiction]
             FROM activity
             WHERE created_at > now() - make_interval(mins => %s)
               AND jurisdiction_ocdid IS NOT NULL
-              AND type <> %s
+              AND type = ANY(%s)
             GROUP BY jurisdiction_ocdid
             ORDER BY jurisdiction_ocdid
             """,
-            (minutes, ActivityType.DISMISS_REVIEW),
+            (minutes, list(PUBLISHED_CHANGE_TYPES)),
         )
         rows = await cur.fetchall()
     return [
@@ -295,7 +299,7 @@ async def states_changed_since(minutes: int) -> list[str]:
     state derives a label from. Deliberately not chased: the next change in a state carries the
     new wording anyway, so a rename reaches the sheet as those states are next touched.
 
-    `dismiss_review` is skipped for a different reason — a dismissal moves no row at all.
+    Only `PUBLISHED_CHANGE_TYPES`, as for `jurisdictions_changed_since`.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -305,9 +309,9 @@ async def states_changed_since(minutes: int) -> list[str]:
             FROM activity
             WHERE created_at > now() - make_interval(mins => %s)
               AND jurisdiction_ocdid IS NOT NULL
-              AND type <> %s
+              AND type = ANY(%s)
             """,
-            (minutes, ActivityType.DISMISS_REVIEW),
+            (minutes, list(PUBLISHED_CHANGE_TYPES)),
         )
         rows = await cur.fetchall()
     return sorted(row[0] for row in rows if row[0])

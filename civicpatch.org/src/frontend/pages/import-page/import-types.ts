@@ -16,7 +16,8 @@ export function isFinished(status: string): boolean {
 }
 
 export type RowError = {
-  line: number;
+  // Null for a locality that failed during ingest rather than a row the sheet rejected.
+  line: number | null;
   jurisdiction_ocdid: string;
   column: string | null;
   message: string;
@@ -35,6 +36,8 @@ export type ImportProgress = {
   items_total: number | null;
   items_done: number;
   error: string | null;
+  errors: RowError[];
+  rows_read: number | null;
   started_at: string;
   finished_at: string | null;
 };
@@ -51,8 +54,9 @@ export type ReviewJurisdiction = {
   name: string;
   changeset_id: string;
   changeset_state: string;
-  people: number;
-  change_counts: ChangeCounts;
+  // Null when counting failed at import.
+  people: number | null;
+  change_counts: ChangeCounts | null;
 };
 
 export type BatchReview = {

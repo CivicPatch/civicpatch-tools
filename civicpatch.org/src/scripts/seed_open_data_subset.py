@@ -53,17 +53,6 @@ async def fetch_table(client: httpx.AsyncClient, table: str) -> list[dict[str, A
     return pq.read_table(io.BytesIO(response.content)).to_pylist()
 
 
-async def fetch_aliases(client: httpx.AsyncClient) -> list[dict[str, Any]]:
-    """Empty until production's first parquet run after the table was added to the export."""
-    try:
-        return await fetch_table(client, "role_aliases")
-    except httpx.HTTPStatusError as e:
-        if e.response.status_code != httpx.codes.NOT_FOUND:
-            raise
-        logger.warning("seed_open_data_subset: role_aliases not exported yet; seeding none")
-        return []
-
-
 async def fetch_open_data_archive(client: httpx.AsyncClient) -> bytes:
     response = await client.get(OPEN_DATA_ARCHIVE, follow_redirects=True)
     response.raise_for_status()
@@ -288,6 +277,14 @@ async def loaded_jurisdiction_ocdids(conn: AsyncConnection) -> set[str]:
         return {row[0] for row in await cur.fetchall()}
 
 
+async def jurisdiction_ocdids_in_states(conn: AsyncConnection, states: list[str]) -> set[str]:
+    async with conn.cursor() as cur:
+        await cur.execute(
+            "SELECT jurisdiction_ocdid FROM jurisdictions WHERE state = ANY(%s)", (states,)
+        )
+        return {row[0] for row in await cur.fetchall()}
+
+
 async def remove_synced_defaults(conn: AsyncConnection, jurisdiction_ocdids: set[str]) -> None:
     """The sync gave every jurisdiction an empty 'Government'. Where the export has the real
     bodies, that placeholder would take the name first and leave the exported one skipped by its
@@ -317,7 +314,7 @@ async def download(client: httpx.AsyncClient) -> Downloads:
     archive = await fetch_open_data_archive(client)
     roles, aliases, divisions, organizations, posts, memberships, people = await asyncio.gather(
         fetch_table(client, "roles"),
-        fetch_aliases(client),
+        fetch_table(client, "role_aliases"),
         fetch_table(client, "divisions"),
         fetch_table(client, "organizations"),
         fetch_table(client, "posts"),
@@ -372,9 +369,13 @@ async def load_places(conn: AsyncConnection, downloads: Downloads) -> set[str]:
 
 
 async def load_rosters(
-    conn: AsyncConnection, downloads: Downloads, jurisdiction_ocdids: set[str], limit: int
+    conn: AsyncConnection,
+    downloads: Downloads,
+    jurisdiction_ocdids: set[str],
+    limit: int | None,
 ) -> None:
-    """Up to `limit` organizations, and the posts, people and memberships that hang off them."""
+    """Up to `limit` organizations (all when None), and the posts, people and memberships —
+    closed ones included — that hang off them."""
     organizations_in_scope = rows_in_jurisdictions(downloads.organizations, jurisdiction_ocdids)[
         :limit
     ]
@@ -406,10 +407,11 @@ async def load_rosters(
     logger.info("seed_open_data_subset: memberships: %d row(s)", len(membership_rows))
 
 
-async def seed(limit: int) -> None:
+async def seed(states: list[str], limit: int | None) -> None:
     """`jurisdictions` and `divisions` load in full — pure geography, cheap regardless of size.
-    `limit` caps how many `organizations` load, and everything that hangs off one — `posts`,
-    `memberships`, and the `people` those memberships reference — is scoped to that set.
+    `states`, when given, narrows which jurisdictions' `organizations` load, and `limit` caps how
+    many; everything that hangs off one — `posts`, `memberships`, and the `people` those
+    memberships reference — is scoped to that set.
 
     Everything is downloaded before the wipe, so a failed download leaves the database as it was.
     """
@@ -420,10 +422,21 @@ async def seed(limit: int) -> None:
         await wipe_existing_data(conn)
         await load_roles(conn, downloads)
         jurisdiction_ocdids = await load_places(conn, downloads)
+        if states:
+            jurisdiction_ocdids = await jurisdiction_ocdids_in_states(conn, states)
         await load_rosters(conn, downloads, jurisdiction_ocdids, limit)
 
 
-DEFAULT_LIMIT = 10
+DEFAULT_LIMIT = "10"
+NO_LIMIT = "none"
+
+
+def limit_arg(value: str) -> int | None:
+    return None if value == NO_LIMIT else int(value)
+
+
+def states_arg(value: str) -> list[str]:
+    return [state.strip().lower() for state in value.split(",") if state.strip()]
 
 
 def main() -> None:
@@ -431,12 +444,19 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--limit",
-        type=int,
+        type=limit_arg,
         default=DEFAULT_LIMIT,
-        help="Maximum number of organizations (and what hangs off them) to load (default: %(default)s)",
+        help=f"Maximum number of organizations (and what hangs off them) to load, or "
+        f"'{NO_LIMIT}' (default: %(default)s)",
+    )
+    parser.add_argument(
+        "--states",
+        type=states_arg,
+        default=[],
+        help="Comma-separated state postal codes whose organizations to load (default: any)",
     )
     args = parser.parse_args()
-    asyncio.run(seed(args.limit))
+    asyncio.run(seed(args.states, args.limit))
 
 
 if __name__ == "__main__":

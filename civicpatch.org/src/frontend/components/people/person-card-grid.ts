@@ -224,15 +224,17 @@ export function renderRoleGroup<T>(
   }
   const upToOpen = items.slice(0, openIndex + 1);
   const after = items.slice(openIndex + 1);
+  // Both halves keep the whole group's width: a narrower first half fits beside the group
+  // before it and jumps up a line.
   return html`
-    <div class="rgroup" style="--group-cards: ${upToOpen.length}">
+    <div class="rgroup" style="--group-cards: ${items.length}">
       ${renderGroupHead(roleLabel, items.length)}
       <div class="rgrid">${renderCards(upToOpen)}</div>
     </div>
     ${renderEditor!(items[openIndex])}
     ${after.length
       ? html`
-          <div class="rgroup" style="--group-cards: ${after.length}">
+          <div class="rgroup" style="--group-cards: ${items.length}">
             <div class="rgrid">${renderCards(after)}</div>
           </div>
         `

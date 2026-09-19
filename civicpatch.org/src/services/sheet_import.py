@@ -18,14 +18,16 @@ from core.sheet_import_rows import (
     ROSTER_HEADERS,
     ImportRow,
     ImportStatus,
+    RowError,
     already_handled,
     parse_rows,
     row_key,
     rows_by_jurisdiction,
 )
-from core.roster_diff import person_diffs, person_notes
+from core.import_report import ImportReportRow, report_rows
+from core.roster_diff import ProposalCounts, person_diffs, person_notes, proposal_counts
 from core.source_sites import SiteIndex, build_site_index
-from database.changesets import register_sheet_import_changeset
+from database.changesets import register_sheet_import_changeset, set_proposal_counts
 from database import changeset_batches, dismissals
 from database import sites as sites_db
 from database.people import get_rosters_by_jurisdiction
@@ -34,7 +36,7 @@ from database.source_records import insert_source_records
 from pydantic import BaseModel
 from lib import sheets
 from schemas.imports import ImportPreview
-from services import entry_sheet, roster_ingest
+from services import entry_sheet, import_report, roster_ingest
 from services.review_proposal import proposals_for_requests
 from services.roster import proposed_roster
 from shared.schemas import Role, RoleConfig
@@ -64,6 +66,7 @@ class JurisdictionResult(BaseModel):
     error: str | None = None
     # By `row_key`'s lowercased name.
     notes: dict[str, str] = {}
+    report: list[ImportReportRow] = []
 
 
 async def import_rows(
@@ -140,6 +143,9 @@ async def _import_jurisdiction(
     posts, error = await _derive_posts(
         changeset_id, jurisdiction_ocdid, roster, roles, taxonomy
     )
+    notes, report, counts = await _changes(changeset_id, jurisdiction_ocdid, records_by_person)
+    if counts is not None:
+        await set_proposal_counts(changeset_id, counts)
     return JurisdictionResult(
         jurisdiction_ocdid=jurisdiction_ocdid,
         status=ImportStatus.IMPORTED if error is None else ImportStatus.PARTIAL,
@@ -148,40 +154,45 @@ async def _import_jurisdiction(
         sightings=sightings,
         posts=posts,
         error=error,
-        notes=await _row_notes(changeset_id, jurisdiction_ocdid, records_by_person),
+        notes=notes,
+        report=report,
     )
 
 
-async def _row_notes(
+async def _changes(
     changeset_id: str, jurisdiction_ocdid: str, records_by_person: dict[str, list[dict]]
-) -> dict[str, str]:
-    """What this import changes about each row's person, keyed by the row's lowercased name.
+) -> tuple[dict[str, str], list[ImportReportRow], ProposalCounts | None]:
+    """What this import changes: each row's note, keyed by the row's lowercased name, the
+    report tab's rows, and the batch page's counts. One read for all three, so they cannot
+    disagree.
 
     Read through `proposed_roster`, so blank cells state nothing here either. Never fatal: the
     import already landed, and a missing note costs only the volunteer's feedback.
     """
     try:
         proposed = await proposed_roster(changeset_id, jurisdiction_ocdid)
-        published, proposals = await asyncio.gather(
+        published_by_jurisdiction, proposals_by_changeset = await asyncio.gather(
             get_rosters_by_jurisdiction([jurisdiction_ocdid]),
             proposals_for_requests([changeset_id], {changeset_id: proposed}),
         )
-        notes = person_notes(
-            [person["id"] for person in proposed],
-            person_diffs(published.get(jurisdiction_ocdid, []), proposed),
-            proposals.get(changeset_id, []),
-        )
+        published = published_by_jurisdiction.get(jurisdiction_ocdid, [])
+        proposals = proposals_by_changeset.get(changeset_id, [])
+        diffs = person_diffs(published, proposed)
+        notes = person_notes([person["id"] for person in proposed], diffs, proposals)
+        report = report_rows(jurisdiction_ocdid, published, proposed, diffs, proposals)
+        counts = proposal_counts(proposed, diffs, proposals)
     except Exception as e:
         logger.error(
             f"[{changeset_id}] {jurisdiction_ocdid}: notes failed: {e}", exc_info=True
         )
-        return {}
-    return {
+        return {}, [], None
+    row_notes = {
         row_key(jurisdiction_ocdid, record["name"])[1]: notes[person_id]
         for person_id, records in records_by_person.items()
         if person_id in notes
         for record in records
     }
+    return row_notes, report, counts
 
 
 async def _derive_posts(
@@ -293,24 +304,35 @@ async def run_import(
     """
     status = changeset_batches.BatchStatus.SUCCEEDED
     error = None
+    errors: list[RowError] = []
     try:
         results = await import_rows(rows, user_id, batch_id)
         # A jurisdiction failing is not an exception here — `_import_jurisdiction` catches its
         # own and reports it in the result — so without this the batch reads `succeeded` with
         # no hint that a town silently failed to import at all.
-        failed = [
-            result for result in results if result.status is ImportStatus.FAILED
-        ]
-        if failed:
+        errors = jurisdiction_errors(results)
+        if any(result.status is ImportStatus.FAILED for result in results):
             status = changeset_batches.BatchStatus.FAILED
-            error = "; ".join(
-                f"{result.jurisdiction_ocdid}: {result.error}" for result in failed
-            )
         await write_back(results)
+        await import_report.write_report([row for result in results for row in result.report])
     except Exception as e:
         logger.error(f"[{batch_id}] import failed: {e}", exc_info=True)
         status, error = changeset_batches.BatchStatus.FAILED, str(e)
-    await changeset_batches.finish(batch_id, status, error=error)
+    await changeset_batches.finish(batch_id, status, error=error, errors=errors)
+
+
+def jurisdiction_errors(results: list[JurisdictionResult]) -> list[RowError]:
+    """A failed or partial jurisdiction as a batch error; it came from no one row."""
+    return [
+        RowError(
+            line=None,
+            jurisdiction_ocdid=result.jurisdiction_ocdid,
+            column=None,
+            message=result.error,
+        )
+        for result in results
+        if result.error
+    ]
 
 
 async def write_back(results: list[JurisdictionResult]) -> None:

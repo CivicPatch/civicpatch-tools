@@ -59,6 +59,15 @@ _WIDTHS = {
     "post_headcount": 90,
     "population": 100,
     "level": 90,
+    # The import report's columns, sized like the person tabs' own.
+    "change": 90,
+    "post": 220,
+    "other_names": 120,
+    "emails": 240,
+    "phones": 140,
+    "urls": 300,
+    "start_date": 110,
+    "end_date": 110,
 }
 
 

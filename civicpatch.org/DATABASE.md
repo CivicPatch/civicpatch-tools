@@ -57,6 +57,7 @@ erDiagram
         uuid_null       batch_id            FK  "idx. NULL for every changeset made outside a batch, which is most"
         text            changeset_state     "GENERATED — open|published|dismissed. 170 cut it from five: running and failed are states of an attempt, and the attempt has its own table now. 177 renamed it from `state`, which collided with jurisdictions.state and left it with zero readers; 178 settled 'ready' → 'open' — 'pending' is taken by issues.status, and open is what an OSM changeset is"
         uuid_null       parent_changeset_id FK  "189. idx. ON DELETE SET NULL. The changeset this one layers on — live_roster_changeset (any kind except jurisdiction_edit) at mint time, resolved once rather than re-derived by every reader"
+        jsonb_null      proposal_counts     "209. sheet_import only: {people, change_counts} counted at import against the roster published then. The batch page reads it instead of rebuilding every roster; NULL on other kinds, or where counting failed at import. 209 dropped the batches made before it"
     }
 
     pipeline_runs {
@@ -106,7 +107,9 @@ erDiagram
         jsonb           arguments_json      "producer-specific inputs: the spreadsheet, or the state and how many"
         text            status              "CHECK running|succeeded|failed. lifecycle only, never progress"
         int_null        items_total         "how many the run will attempt. progress is count(changesets WHERE batch_id) out of this — the changesets are the items, so no counter and no result blob"
-        text_null       error
+        text_null       error               "the batch itself failing: an exception, or abandoned"
+        jsonb           errors              "RowError[]: sheet rows rejected at start, jurisdictions that failed during ingest (line null)"
+        int_null        rows_read           "sheet rows read at start; null for batches that read no sheet"
         uuid            started_by_user_id  FK
         timestamptz     started_at
         timestamptz_null finished_at        "UNIQUE (lock_key) WHERE finished_at IS NULL — the lock, one running batch per target"
