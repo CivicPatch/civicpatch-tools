@@ -1,21 +1,15 @@
 @layer components {
+/* No divider of its own: the list above it already ends in one, and two drew a double line. */
 .civ-pagination {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.7rem;
-    margin-top: 0.5rem;
-    padding-top: 0.7rem;
-    border-top: 1px solid var(--border-subtle);
+    margin-top: 0.7rem;
 }
 
-/* A pager placed right under a panel caption (a "top" pager, for pages that repeat
-   pagination above and below the list) would otherwise double .panel__cap's own
-   border-bottom with this border-top. */
 .panel__cap + .civ-pagination {
     margin-top: 0;
-    padding-top: 0;
-    border-top: none;
 }
 
 .civ-pagination__btn {
@@ -63,10 +57,12 @@
 }
 
 .civ-pagination__per-page select {
+    --control-pad-y: 0.1em;
     width: auto;
     margin: 0;
-    padding-block: 0.1em;
-    padding-inline-start: 0.5em;
+    padding-inline: 0.5em 1.6em;
+    background-position: center right 0.4em;
+    background-size: 0.8em auto;
     font-family: var(--font-mono);
     font-size: var(--font-size-sm);
 }
