@@ -136,13 +136,14 @@
   color: var(--text-muted);
 }
 
-/* maplibre popup chrome — match the app surface instead of the default white */
+/* maplibre popup chrome: match the app surface instead of the default white.
+   !important because maplibre's stylesheet is unlayered and outranks this layer. */
 .map-tooltip-popup .maplibregl-popup-content {
-  background: var(--surface, #fff);
+  background: var(--surface, #fff) !important;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 0.45rem 0.6rem;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius) !important;
+  padding: 0.45rem 0.6rem !important;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1) !important;
 }
 
 .map-tooltip-popup .maplibregl-popup-tip {

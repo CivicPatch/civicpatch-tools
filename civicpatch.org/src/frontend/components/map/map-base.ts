@@ -4,6 +4,7 @@
 import type * as maplibregl from 'maplibre-gl';
 import { config } from '../../assets/config.js';
 import type { MapEngine } from './map-engine.js';
+import type { ThemeMode } from '../../hooks/use-theme.js';
 
 // config.storageHost comes from the backend's own FRIENDLY_STORAGE_HOST, so dev/staging
 // map tiles come from the same bucket the map-generation pipeline uploaded them to —
@@ -27,14 +28,32 @@ function cssVar(name: string): string {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
 
-// Read once at module load; theme toggles mid-session won't update paint expressions
-// since they're baked when the layer is added. A reload re-reads the values.
-const STATUS_COLORS = {
-  fresh:     cssVar('--status-fresh'),
-  stale:     cssVar('--status-stale'),
-  gap:       cssVar('--status-gap'),
-  untracked: cssVar('--status-untracked'),
-  selected:  cssVar('--status-selected'),
+interface MapColors {
+  fresh: string;
+  stale: string;
+  gap: string;
+  untracked: string;
+  selected: string;
+  outline: string;
+}
+
+function readMapColors(): MapColors {
+  return {
+    fresh:     cssVar('--status-fresh'),
+    stale:     cssVar('--status-stale'),
+    gap:       cssVar('--status-gap'),
+    untracked: cssVar('--status-untracked'),
+    selected:  cssVar('--status-selected'),
+    outline:   cssVar('--border'),
+  };
+}
+
+const BASEMAP_LAYER_ID = 'osm';
+
+// OSM only publishes a light style, so dark palettes invert it (brightness min/max swapped).
+const BASEMAP_PAINT: Record<ThemeMode, Record<string, number>> = {
+  light: { 'raster-saturation': -1, 'raster-contrast': -0.2, 'raster-brightness-min': 0, 'raster-brightness-max': 1 },
+  dark:  { 'raster-saturation': -1, 'raster-contrast': -0.3, 'raster-brightness-min': 1, 'raster-brightness-max': 0 },
 };
 
 export function getVisibleLayers(level: DrillLevel): string[] {
@@ -100,7 +119,7 @@ export function whenStyleReady(map: maplibregl.Map, fn: () => void): void {
   map.on('idle', onIdle);
 }
 
-export function createMap(engine: MapEngine, container: HTMLElement): maplibregl.Map {
+export function createMap(engine: MapEngine, container: HTMLElement, mode: ThemeMode): maplibregl.Map {
   const m = new engine.Map({
     container,
     style: {
@@ -113,7 +132,7 @@ export function createMap(engine: MapEngine, container: HTMLElement): maplibregl
           attribution: '© OpenStreetMap contributors',
         },
       },
-      layers: [{ id: 'osm', type: 'raster', source: 'osm' }],
+      layers: [{ id: BASEMAP_LAYER_ID, type: 'raster', source: 'osm', paint: BASEMAP_PAINT[mode] }],
       // TODO: replace with cdn.civicpatch.org/fonts once PBFs are uploaded to R2
       glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
     },
@@ -121,6 +140,20 @@ export function createMap(engine: MapEngine, container: HTMLElement): maplibregl
     zoom: 3,
   });
   return m;
+}
+
+export function applyMapTheme(map: maplibregl.Map, mode: ThemeMode): void {
+  setPaint(map, BASEMAP_LAYER_ID, BASEMAP_PAINT[mode]);
+  for (const [id, { fill, stroke }] of Object.entries(layerPaints(readMapColors()))) {
+    if (map.getLayer(id)) setPaint(map, id, fill);
+    if (map.getLayer(`${id}-stroke`)) setPaint(map, `${id}-stroke`, stroke);
+  }
+}
+
+function setPaint(map: maplibregl.Map, layerId: string, paint: Record<string, unknown>): void {
+  for (const [property, value] of Object.entries(paint)) {
+    map.setPaintProperty(layerId, property, value);
+  }
 }
 
 export function loadNationalSource(map: maplibregl.Map): void {
@@ -152,56 +185,73 @@ export function loadStateSource(map: maplibregl.Map, state: string): void {
 // Two axes, two channels: color = freshness (covered_fresh / covered), so all-stale reads
 // amber and all-fresh reads green; opacity = coverage (covered / total), so faint = little
 // data and bold = mostly covered. No coverage at all → grey (gap).
-const GRADIENT_PAINT = {
-  'fill-color': [
-    'case',
-    ['==', ['coalesce', ['feature-state', 'coverage'], 0], 0], STATUS_COLORS.gap,
-    [
+function gradientPaint(colors: MapColors) {
+  return {
+    'fill-color': [
+      'case',
+      ['==', ['coalesce', ['feature-state', 'coverage'], 0], 0], colors.gap,
+      [
+        'interpolate', ['linear'],
+        ['coalesce', ['feature-state', 'freshness'], 0],
+        0, colors.stale,
+        1, colors.fresh,
+      ],
+    ] as any,
+    'fill-opacity': [
       'interpolate', ['linear'],
-      ['coalesce', ['feature-state', 'freshness'], 0],
-      0, STATUS_COLORS.stale,
-      1, STATUS_COLORS.fresh,
-    ],
-  ] as any,
-  'fill-opacity': [
-    'interpolate', ['linear'],
-    ['coalesce', ['feature-state', 'coverage'], 0],
-    0, 0.15,
-    1, 0.5,
-  ] as any,
-};
+      ['coalesce', ['feature-state', 'coverage'], 0],
+      0, 0.15,
+      1, 0.5,
+    ] as any,
+  };
+}
 
-const LOCAL_PAINT = {
-  'fill-color': [
-    'match', ['feature-state', 'status'],
-    LOCAL_STATUS.FRESH, STATUS_COLORS.fresh,
-    LOCAL_STATUS.STALE, STATUS_COLORS.stale,
-    LOCAL_STATUS.GAP,   STATUS_COLORS.gap,
-    STATUS_COLORS.untracked,
-  ] as any,
-  'fill-opacity': 0.35,
-};
+function localPaint(colors: MapColors) {
+  return {
+    'fill-color': [
+      'match', ['feature-state', 'status'],
+      LOCAL_STATUS.FRESH, colors.fresh,
+      LOCAL_STATUS.STALE, colors.stale,
+      LOCAL_STATUS.GAP,   colors.gap,
+      colors.untracked,
+    ] as any,
+    'fill-opacity': 0.35,
+  };
+}
 
-const LOCAL_STROKE_PAINT = {
-  'line-color': [
-    'case',
-    ['boolean', ['feature-state', 'selected'], false], STATUS_COLORS.selected,
-    '#6b7280',
-  ] as any,
-  'line-width': [
-    'case',
-    ['boolean', ['feature-state', 'selected'], false], 2.5,
-    0.8,
-  ] as any,
-};
+function localStrokePaint(colors: MapColors) {
+  return {
+    'line-color': [
+      'case',
+      ['boolean', ['feature-state', 'selected'], false], colors.selected,
+      colors.outline,
+    ] as any,
+    'line-width': [
+      'case',
+      ['boolean', ['feature-state', 'selected'], false], 2.5,
+      0.8,
+    ] as any,
+  };
+}
 
-const DEFAULT_STROKE_PAINT = { 'line-color': '#6b7280', 'line-width': 0.8 };
+function defaultStrokePaint(colors: MapColors) {
+  return { 'line-color': colors.outline, 'line-width': 0.8 };
+}
+
+function layerPaints(colors: MapColors) {
+  return {
+    states:   { fill: gradientPaint(colors), stroke: defaultStrokePaint(colors) },
+    counties: { fill: gradientPaint(colors), stroke: defaultStrokePaint(colors) },
+    local:    { fill: localPaint(colors),    stroke: localStrokePaint(colors) },
+  };
+}
 
 export function addAllLayers(map: maplibregl.Map): void {
+  const paints = layerPaints(readMapColors());
   const layers = [
-    { id: 'states',   source: NATIONAL_SOURCE_ID, sourceLayer: 'states',   paint: GRADIENT_PAINT, strokePaint: DEFAULT_STROKE_PAINT },
-    { id: 'counties', source: STATE_SOURCE_ID,    sourceLayer: 'counties', paint: GRADIENT_PAINT, strokePaint: DEFAULT_STROKE_PAINT },
-    { id: 'local',    source: STATE_SOURCE_ID,    sourceLayer: 'local',    paint: LOCAL_PAINT,    strokePaint: LOCAL_STROKE_PAINT },
+    { id: 'states',   source: NATIONAL_SOURCE_ID, sourceLayer: 'states',   paint: paints.states.fill,   strokePaint: paints.states.stroke },
+    { id: 'counties', source: STATE_SOURCE_ID,    sourceLayer: 'counties', paint: paints.counties.fill, strokePaint: paints.counties.stroke },
+    { id: 'local',    source: STATE_SOURCE_ID,    sourceLayer: 'local',    paint: paints.local.fill,    strokePaint: paints.local.stroke },
   ];
 
   for (const { id, source, sourceLayer, paint, strokePaint } of layers) {
