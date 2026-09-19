@@ -9,21 +9,20 @@
 
 import { test, expect } from "../fixtures/index.js";
 import { SCALE_CHANGESET_ID } from "../fixtures/db.js";
+import {
+  rowFor,
+  foldFor,
+  editorFor,
+  openOverview as closeEditor,
+} from "./helpers/review-card.js";
+
+// A departing person past the first two collapses to a name chip; it is still their card.
+const CARDS = "review-overview .rperson, review-overview .review-overview__chip";
 
 const openOverview = async (page, changesetId = SCALE_CHANGESET_ID) => {
   await page.goto(`/review/session?changeset_id=${changesetId}`);
   await expect(page.locator("review-overview")).toBeVisible();
 };
-
-const rowFor = (page, name) =>
-  page
-    .locator("review-overview .review-row")
-    .filter({ has: page.locator(".review-row__name", { hasText: name }) });
-
-const foldFor = (page, name) =>
-  page
-    .locator("review-overview .review-fold")
-    .filter({ has: page.locator(".review-fold__name", { hasText: name }) });
 
 test.describe("Review overview", () => {
   test("renders one roster in seat order, folding the untouched", async ({
@@ -36,7 +35,7 @@ test.describe("Review overview", () => {
     // This replaced a two-group assertion (counts "18"/"25", 25 faces in a strip).
     // The groups are gone: grouping moved people to express status, and now the
     // card expresses it, so seat order survives instead.
-    await expect(page.locator("review-overview .review-row:not(.review-row--ghost)")).toHaveCount(18);
+    await expect(page.locator(CARDS)).toHaveCount(18);
     await expect(page.locator("review-overview .review-fold")).toHaveCount(25);
 
     // An untouched person is still present and still theirs to open — folded, not
@@ -51,7 +50,7 @@ test.describe("Review overview", () => {
     await openOverview(page);
 
     const names = (
-      await page.locator(".review-row__name, .review-fold__name").allTextContents()
+      await page.locator("review-overview .pc-name, review-overview .review-fold__name").allTextContents()
     ).map((n) => n.trim());
 
     // `sort_people` ranks by role before division, so the five the scrape promoted to
@@ -87,7 +86,8 @@ test.describe("Review overview", () => {
     // this list — it is a context field and renders as a numbered link instead,
     // so a tag would say the same thing twice.
     const row = rowFor(page, "Councillor 02 Scale");
-    await expect(row.locator(".review-row__field")).toHaveText(["Phone", "Term end"]);
+    // The office line is the card's subtitle now, shown whether or not it moved.
+    await expect(row.locator(".pv:not(.pv--post) .pvk")).toHaveText(["phone", "term end"]);
     await expect(row).toHaveClass(/review-row--changed/);
     await expect(row.locator(".review-row__source")).toHaveCount(1);
   });
@@ -133,7 +133,7 @@ test.describe("Review overview", () => {
     await expect(row).toHaveClass(/review-row--removed/);
     // With no new-side record every field reads cleared; a list here would say
     // "9 things to review" about a card that is one decision.
-    await expect(row.locator(".review-row__field")).toHaveCount(0);
+    await expect(row.locator(".pv")).toHaveCount(0);
   });
 
   test("the add-person ghost is the last thing in the list", async ({
@@ -144,7 +144,7 @@ test.describe("Review overview", () => {
     // This replaced "ends the To review group". There is no group to end: the
     // ghost is last overall, so adding someone puts their card where it stood and
     // pushes it down, and the affordance never moves.
-    const list = page.locator(".review-overview__list");
+    const list = page.locator("review-overview .review-overview > .rgroup-list");
     await expect(list.locator(".review-row--ghost")).toHaveCount(1);
     await expect(list.locator("> *").last()).toHaveClass(/review-row--ghost/);
   });
@@ -154,9 +154,8 @@ test.describe("Review overview", () => {
   }) => {
     await openOverview(page);
 
-    await rowFor(page, "Councillor 02 Scale").locator(".review-row__open").click();
-    await expect(page.locator("review-modal dialog")).toBeVisible();
-    await expect(page.locator(".review-modal__head")).toContainText("Councillor 02 Scale");
+    await rowFor(page, "Councillor 02 Scale").locator(".pc-name").click();
+    await expect(editorFor(page, "Councillor 02 Scale")).toBeVisible();
   });
 
   test("a folded person opens the editor too", async ({
@@ -167,8 +166,7 @@ test.describe("Review overview", () => {
     // Folding is a display decision, not a loss of reach: an untouched person is
     // still editable, and the fold is the only way to get to them here.
     await foldFor(page, "Councillor 03 Scale").locator(".review-fold__open").click();
-    await expect(page.locator("review-modal dialog")).toBeVisible();
-    await expect(page.locator(".review-modal__head")).toContainText("Councillor 03 Scale");
+    await expect(editorFor(page, "Councillor 03 Scale")).toBeVisible();
   });
 
   test("the whole card is one target — nothing in it opens something else", async ({
@@ -185,9 +183,9 @@ test.describe("Review overview", () => {
     // Source numbers are the one deliberate exception, raised above the hit area
     // so a reviewer can check a source without opening the person.
     const row = rowFor(page, "Councillor 02 Scale");
-    await expect(row.locator(".review-row__meta button")).toHaveCount(0);
+    await expect(row.locator(".pc-ident button")).toHaveCount(0);
     await expect(
-      row.locator(".review-row__meta a:not(.review-row__source)"),
+      row.locator(".pc-ident a:not(.review-row__source)"),
     ).toHaveCount(0);
 
     // Clicking where a tag sits still opens the person: the card's hit area covers
@@ -198,36 +196,33 @@ test.describe("Review overview", () => {
     // roster this long the click would land on whatever happens to be at that point instead.
     await row.scrollIntoViewIfNeeded();
     const tag = await row
-      .locator(".review-row__field", { hasText: "Term end" })
+      .locator(".pv", { hasText: "term end" })
       .boundingBox();
     await page.mouse.click(tag.x + tag.width / 2, tag.y + tag.height / 2);
-    await expect(page.locator("review-modal dialog")).toBeVisible();
-    await expect(page.locator(".review-modal__head")).toContainText("Councillor 02 Scale");
+    await expect(editorFor(page, "Councillor 02 Scale")).toBeVisible();
   });
 
   test("adding a person lands them last and opens the editor on them", async ({
     authenticatedPage: page,
   }) => {
     await openOverview(page);
-    const before = await page.locator("review-overview .review-row:not(.review-row--ghost)").count();
+    const before = await page.locator(CARDS).count();
 
     await page.locator("review-overview .review-row--ghost").click();
 
     // A new person is empty, so the reviewer is put where they can fill them in
     // rather than left looking at a blank card. This needs the modal to open as
     // part of a re-render, which is the case civ-modal used to lose.
-    await expect(page.locator("dialog[open]")).toHaveCount(1);
-    await expect(page.locator(".review-modal__head")).toContainText("(unnamed)");
-    await page.keyboard.press("Escape");
-    await expect(page.locator("dialog[open]")).toHaveCount(0);
+    await expect(page.locator(".person-editor-inline")).toHaveCount(1);
+    await expect(editorFor(page, "(unnamed)")).toBeVisible();
+    await closeEditor(page);
 
     // Appended, not prepended: they belong after the roster, where the add
     // affordance stood. Not *last* overall, though — departing people have no slot
     // and trail everything (see buildReviewCards), so the new person is the last of
     // the people still on the roster.
-    await expect(page.locator("review-overview .review-row:not(.review-row--ghost)")).toHaveCount(before + 1);
-    const staying =
-      ".review-row:not(.review-row--ghost):not(.review-row--removed):not(.review-row--deleted)";
-    await expect(page.locator(`${staying} .review-row__name`).last()).toHaveText("(unnamed)");
+    await expect(page.locator(CARDS)).toHaveCount(before + 1);
+    const staying = ".rperson:not(.review-row--removed):not(.review-row--deleted)";
+    await expect(page.locator(`${staying} .pc-name`).last()).toHaveText("(unnamed)");
   });
 });
