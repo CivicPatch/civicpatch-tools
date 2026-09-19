@@ -161,6 +161,7 @@ class StateScrapeWorkflow:
         num_jurisdictions: Optional[int] = None,
         created_by_user_id: Optional[str] = None,
         concurrency: int = DEFAULT_PIPELINE_RUN_CONCURRENCY,
+        dispatch_mode: str = "remote",
     ) -> int:
         slice_size = max(1, concurrency)
         dispatched = 0
@@ -202,13 +203,13 @@ class StateScrapeWorkflow:
             if not items:
                 break
 
-            await _dispatch(items, slice_size)
+            await _dispatch(items, slice_size, dispatch_mode)
             dispatched += len(items)
 
         return dispatched
 
 
-async def _dispatch(items: list[dict], concurrency: int) -> None:
+async def _dispatch(items: list[dict], concurrency: int, dispatch_mode: str) -> None:
     """A slice at a time, not all at once: a state scrape takes every jurisdiction due — 1,293
     for Michigan — and each one dispatches its own pipeline run.
 
@@ -220,7 +221,7 @@ async def _dispatch(items: list[dict], concurrency: int) -> None:
         for item in items[start : start + concurrency]:
             handle = await workflow.start_child_workflow(
                 PeopleCollectorWorkflow.run,
-                args=[item["jurisdiction_ocdid"], item["pipeline_run_id"]],
+                args=[item["jurisdiction_ocdid"], item["pipeline_run_id"], dispatch_mode],
                 id=_workflow_id(item["jurisdiction_ocdid"]),
                 id_reuse_policy=WorkflowIDReusePolicy.TERMINATE_IF_RUNNING,
             )
