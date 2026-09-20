@@ -13,9 +13,10 @@ SHELL = ROOT / "css"  # tokens, elements, layout, styles, utilities
 TOKENS = SHELL / "tokens.css"
 
 # !important is a specificity fight. Every one left is a known debt; the number
-# may fall, never rise. @layer removed the ones that were fighting the base layer;
-# what is left fights third-party CSS, which is unlayered and so outranks us.
-IMPORTANT_CEILING = 14
+# may fall, never rise. @layer removed the ones that were fighting the base layer,
+# and pulling vendor CSS into `layer(vendor)` removed the ones fighting maplibre;
+# what is left fights inline styles a component writes from its own props.
+IMPORTANT_CEILING = 9
 
 ELEMENT = r"a|p|ul|ol|li|h[1-6]|table|thead|tbody|tr|td|th|button|input|select|textarea|label|form|fieldset|legend|section|article|aside|nav|main|header|footer|dialog|details|summary|img|svg|pre|code|figure|blockquote"
 BARE_SELECTOR = re.compile(rf"^(?:{ELEMENT})(?:[\s,{{:>+~]|$)")

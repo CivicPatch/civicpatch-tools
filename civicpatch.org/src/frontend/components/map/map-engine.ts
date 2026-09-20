@@ -18,7 +18,7 @@ async function importEngine(): Promise<MapEngine> {
   const [maplibregl, pmtiles] = await Promise.all([
     import('maplibre-gl'),
     import('pmtiles'),
-    import('maplibre-gl/dist/maplibre-gl.css'),
+    import('./maplibre-vendor.css'),
   ]);
   maplibregl.addProtocol('pmtiles', new pmtiles.Protocol().tile);
   return maplibregl;

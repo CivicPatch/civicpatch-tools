@@ -1,7 +1,11 @@
 /* ── Cascade layers ── */
 /* Declared here because tokens.css loads first. A later layer wins regardless of
-   specificity. Third-party CSS is unlayered and so outranks all of these. */
-@layer base, layout, components, utilities;
+   specificity. Third-party CSS is unlayered and so outranks all of these unless it
+   is pulled into `vendor` by an @import, the way maplibre-vendor.css does.
+   `vendor` sits above `base` on purpose: a third-party widget must beat our generic
+   element rules (a `summary::after` chevron would otherwise land inside its button),
+   but lose to the component stylesheet that deliberately restyles it. */
+@layer base, vendor, layout, components, utilities;
 
 /* Design tokens — every custom property the app defines, and nothing else.
    Rules live in styles.css and in the component stylesheets; this file only

@@ -35,8 +35,8 @@
   top: 0.5rem;
   left: 0.5rem;
   z-index: 10;
-  background: var(--surface) !important;
-  color: var(--text-default) !important;
+  background: var(--surface);
+  color: var(--text-default);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 0.4rem 0.75rem;
@@ -48,8 +48,8 @@
 }
 
 .map-reset-btn:hover {
-  background: var(--surface-2) !important;
-  color: var(--text-default) !important;
+  background: var(--surface-2);
+  color: var(--text-default);
 }
 
 .map-empty {
@@ -136,14 +136,13 @@
   color: var(--text-muted);
 }
 
-/* maplibre popup chrome: match the app surface instead of the default white.
-   !important because maplibre's stylesheet is unlayered and outranks this layer. */
+/* maplibre popup chrome: match the app surface instead of the default white. */
 .map-tooltip-popup .maplibregl-popup-content {
-  background: var(--surface, #fff) !important;
+  background: var(--surface, #fff);
   border: 1px solid var(--border);
-  border-radius: var(--radius) !important;
-  padding: 0.45rem 0.6rem !important;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1) !important;
+  border-radius: var(--radius);
+  padding: 0.45rem 0.6rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
 }
 
 .map-tooltip-popup .maplibregl-popup-tip {
@@ -153,16 +152,30 @@
 /* Attribution */
 .maplibregl-ctrl.maplibregl-ctrl-attrib,
 .maplibregl-ctrl-attrib.maplibregl-compact {
-  background-color: color-mix(in srgb, var(--surface) 75%, transparent) !important;
-  color: var(--text-muted) !important;
+  background-color: color-mix(in srgb, var(--surface) 75%, transparent);
+  color: var(--text-muted);
 }
 
 .maplibregl-ctrl-attrib a {
-  color: var(--text-muted) !important;
+  color: var(--text-muted);
 }
 
 .maplibregl-ctrl-attrib-button {
-  background-color: transparent !important;
+  background-color: transparent;
+}
+
+/* The control is a <details>, so the app's generic disclosure styling lands on it:
+   a chevron inside the 24px button, and an open-state margin that shifts the icon. */
+.maplibregl-ctrl-attrib summary.maplibregl-ctrl-attrib-button::after {
+  display: none;
+}
+
+.maplibregl-ctrl-attrib[open] > summary.maplibregl-ctrl-attrib-button {
+  margin-bottom: 0;
+}
+
+.maplibregl-ctrl-attrib summary.maplibregl-ctrl-attrib-button:focus-visible {
+  outline-offset: 0;
 }
 
 /* The info icon is a black SVG baked into maplibre's CSS. */

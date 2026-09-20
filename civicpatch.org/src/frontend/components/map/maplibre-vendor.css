@@ -1,0 +1,3 @@
+/* maplibre ships unlayered CSS, which outranks every layered app rule. Pulling it into
+   `vendor` (the lowest layer, declared in tokens.css) lets map.css style it without !important. */
+@import url("maplibre-gl/dist/maplibre-gl.css") layer(vendor);
