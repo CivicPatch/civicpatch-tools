@@ -288,10 +288,13 @@ export function applyLevelVisibility(map: maplibregl.Map, level: DrillLevel): vo
   }
 }
 
+// The three apply* functions below bail when their source is missing: coverage can arrive
+// before the source is added, and the sourcedata handlers repaint from refs once it is.
 export function applyLocalStatus(
   map: maplibregl.Map,
   localStatus: Record<string, string>,
 ): void {
+  if (!map.getSource(STATE_SOURCE_ID)) return;
   for (const [ocdid, status] of Object.entries(localStatus)) {
     map.setFeatureState(
       { source: STATE_SOURCE_ID, sourceLayer: 'local', id: ocdid },
@@ -318,6 +321,7 @@ export function applyCountyCoverage(
   map: maplibregl.Map,
   counties: Record<string, CoverageEntry>,
 ): void {
+  if (!map.getSource(STATE_SOURCE_ID)) return;
   for (const [ocdid, { total, covered, covered_fresh }] of Object.entries(counties)) {
     map.setFeatureState(
       { source: STATE_SOURCE_ID, sourceLayer: 'counties', id: ocdid },
@@ -333,6 +337,7 @@ export function applyStateCoverage(
   map: maplibregl.Map,
   coverageSummary: CoverageSummary,
 ): void {
+  if (!map.getSource(NATIONAL_SOURCE_ID)) return;
   for (const summary of Object.values(coverageSummary)) {
     if (!summary.state?.ocdid) {
       continue;

@@ -235,7 +235,7 @@ def get_router() -> APIRouter:
                     display_name=j.get("display_name"),
                     population=j.get("population"),
                     url=j.get("url"),
-                    parent_names=j.get("parent_ocdids", []),
+                    parent_names=j.get("parent_names", []),
                 )
                 for j in jurisdictions
             ]

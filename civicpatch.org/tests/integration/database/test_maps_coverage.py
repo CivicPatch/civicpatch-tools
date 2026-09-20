@@ -59,19 +59,18 @@ async def clean_sentinels():
 
 
 async def _insert(ocdid, *, collected_at, people, level="local"):
-    fields: dict[str, object] = {"url": "https://x"}
-    if level == "local":
-        fields["parent_ocdids"] = [_COUNTY]
-    data = json.dumps(fields)
+    data = json.dumps({"url": "https://x"})
+    parents = [_COUNTY] if level == "local" else []
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             INSERT INTO jurisdictions
-                (jurisdiction_ocdid, state, level, data, updated_at, status)
-            VALUES (%s, 'zz', %s, %s, now(), 'active')
+                (jurisdiction_ocdid, state, level, data, updated_at, status,
+                 meta_parent_ocdids)
+            VALUES (%s, 'zz', %s, %s, now(), 'active', %s)
             """,
-            (ocdid, level, data),
+            (ocdid, level, data, parents),
         )
         if people:
             # Seated, not merely present: "has people" is an open membership now, so a person

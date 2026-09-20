@@ -1,6 +1,6 @@
 """
 Convert a jurisdiction_id-keyed roster payload into rows pasteable under Entry[Roster]'s
-header (`jurisdiction_ocdid, name, source_url, label, email, phone, image` — the order
+header (`jurisdiction_ocdid, geoid, name, source_url, label, email, phone, image` — the order
 `core.sheet_import_rows.ROSTER_HEADERS` writes, since a paste lands positionally).
 
 Standalone: no app imports, no database, no docker. Runs anywhere with plain python3. The
@@ -43,10 +43,21 @@ SOURCE_COLUMNS = [
     "accessed_date",
 ]
 
-ROSTER_COLUMNS = ["jurisdiction_ocdid", "name", "source_url", "label", "email", "phone", "image"]
+ROSTER_COLUMNS = [
+    "jurisdiction_ocdid",
+    "geoid",
+    "name",
+    "source_url",
+    "label",
+    "email",
+    "phone",
+    "image",
+]
 
 # Blank on purpose: the payload carries no title (see the module docstring).
 NO_LABEL = ""
+# Blank too: every row already names its jurisdiction by ocdid, so the geoid has nothing to add.
+NO_GEOID = ""
 
 
 def _ocdid_from_jurisdiction_id(jurisdiction_id: str) -> str | None:
@@ -80,7 +91,16 @@ def main() -> None:
             print(f"skipped row {line}: bad jurisdiction_id {row['jurisdiction_id']!r}", file=sys.stderr)
             continue
         writer.writerow(
-            [ocdid, row["name"], row["source_url"], NO_LABEL, row["email"], row["phone"], row["image"]]
+            [
+                ocdid,
+                NO_GEOID,
+                row["name"],
+                row["source_url"],
+                NO_LABEL,
+                row["email"],
+                row["phone"],
+                row["image"],
+            ]
         )
         written += 1
 

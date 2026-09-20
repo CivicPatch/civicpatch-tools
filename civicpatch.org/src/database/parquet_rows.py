@@ -92,7 +92,7 @@ TABLES: dict[str, LiteralString] = {
         SELECT state, jurisdiction_ocdid, level, status,
                data->>'name' AS name,
                data::text AS data,
-               parent_ocdids, updated_at
+               meta_parent_ocdids, updated_at
         FROM jurisdictions
         ORDER BY state, jurisdiction_ocdid
     """,

@@ -8,8 +8,8 @@ from database.jurisdictions import FRESH_SINCE_SQL
 async def get_maps_coverage() -> dict:
     """Return total/covered/covered_fresh counts by county and state, grouped by state.
 
-    County counts come from parent_ocdids stored in jurisdictions.data; the array
-    contains all OCD ancestors (county, state, etc.) so we filter to county OCDs.
+    County counts come from `jurisdictions.meta_parent_ocdids`; the array contains all
+    OCD ancestors (county, state, etc.) so we filter to county OCDs.
     A county with no local jurisdictions beneath it (e.g. Hawaii) counts itself as the
     coverage unit instead — otherwise it never appears, since nothing lists it as a parent.
     State counts are computed directly from j.state.
@@ -42,10 +42,9 @@ async def get_maps_coverage() -> dict:
                 {covered_fresh_filter}
             FROM jurisdictions j
             {LAST_COLLECTED_JOIN}
-            CROSS JOIN LATERAL jsonb_array_elements_text(j.data -> 'parent_ocdids') AS parent_ocdid
+            CROSS JOIN LATERAL unnest(j.meta_parent_ocdids) AS parent_ocdid
             LEFT JOIN ({has_people_subquery}) p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
             WHERE j.status = 'active'
-              AND j.data ? 'parent_ocdids'
               AND parent_ocdid LIKE '%/county:%'
             GROUP BY j.state, parent_ocdid
             ORDER BY j.state, parent_ocdid
