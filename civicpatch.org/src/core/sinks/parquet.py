@@ -101,7 +101,7 @@ SCHEMAS: dict[str, pa.Schema] = {
             # Raw JSON text, not a nested struct — see the query's comment in
             # `database/parquet_rows.py` for why.
             ("data", pa.string()),
-            ("parent_ocdids", _STRINGS),
+            ("meta_parent_ocdids", _STRINGS),
             ("updated_at", _TIMESTAMP),
         ]
     ),

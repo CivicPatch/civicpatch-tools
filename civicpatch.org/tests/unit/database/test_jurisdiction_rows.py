@@ -52,8 +52,17 @@ def test_state_and_level_arg_returns_in_row():
 
 @pytest.mark.unit
 def test_entry_returns_row():
-    # the data column holds the whole entry, serialized losslessly (round-trip)
+    # the data column holds the entry, serialized losslessly apart from the dropped key below
     rows = jurisdiction_rows([_ENTRY], "tx", "local", _UPDATED_AT)
+    assert json.loads(rows[0][3]) == _ENTRY
+
+
+@pytest.mark.unit
+def test_upstream_parent_ocdids_does_not_reach_the_data_column():
+    # Ancestry is computed here by the boundary overlay and kept in meta_parent_ocdids. A
+    # stale copy in upstream YAML would otherwise read as current.
+    entry = {**_ENTRY, "parent_ocdids": ["ocd-jurisdiction/country:us/state:tx/government"]}
+    rows = jurisdiction_rows([entry], "tx", "local", _UPDATED_AT)
     assert json.loads(rows[0][3]) == _ENTRY
 
 

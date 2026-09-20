@@ -43,6 +43,12 @@ logger = logging.getLogger(__name__)
 FRESH_SINCE_SQL = "now() - interval '90 days'"
 
 
+def _synced_entry(entry: dict[str, str]) -> dict[str, str]:
+    # The boundary overlay owns ancestry and writes `meta_parent_ocdids`, so a stale copy in
+    # upstream YAML must not travel into `data` where it would read as current.
+    return {key: value for key, value in entry.items() if key != "parent_ocdids"}
+
+
 def jurisdiction_rows(
     entries: list[dict[str, str]],
     state: str,
@@ -55,7 +61,7 @@ def jurisdiction_rows(
             entry["id"],
             state,
             level,
-            json.dumps(entry),
+            json.dumps(_synced_entry(entry)),
             updated_at,
             build_search_text(entry, state, state_name),
         )
@@ -91,19 +97,25 @@ def _fuzzy_match_clause(token_count: int) -> sql.Composed:
     ).format(conditions=conditions)
 
 
-_SEARCH_SELECT_LIST = """
+# Names resolved here rather than stored, so a renamed parent is correct immediately. Which
+# parents, and their order, was settled by the boundary overlay. Keeps the `j` alias rather
+# than naming the table: it joins `jurisdictions` to itself, which the unaliased convention
+# cannot express.
+_PARENT_NAMES = """
+        (SELECT array_agg(parent_row.data->>'name' ORDER BY parent.ord)
+           FROM unnest(j.meta_parent_ocdids) WITH ORDINALITY AS parent(ocdid, ord)
+           JOIN jurisdictions parent_row
+             ON parent_row.jurisdiction_ocdid = parent.ocdid)
+"""
+
+_SEARCH_SELECT_LIST = f"""
     SELECT
         j.jurisdiction_ocdid,
         j.level,
         j.data->>'name',
         j.data->>'display_name',
         (j.data->>'population')::bigint,
-        -- Names resolved here rather than stored, so a renamed parent is correct
-        -- immediately. Which parents, and their order, was settled by the boundary overlay.
-        (SELECT array_agg(parent_row.data->>'name' ORDER BY parent.ord)
-           FROM unnest(j.meta_parent_ocdids) WITH ORDINALITY AS parent(ocdid, ord)
-           JOIN jurisdictions parent_row
-             ON parent_row.jurisdiction_ocdid = parent.ocdid)
+{_PARENT_NAMES}
 """
 
 # jurisdiction_ocdid breaks ties so paging is stable: without a total order a row can
@@ -555,14 +567,14 @@ async def search_jurisdictions(
         limit = 100
 
     where_clauses: list[sql.Composable] = [
-        sql.SQL("state = %s"),
-        sql.SQL("status = 'active'"),
-        sql.SQL("level = 'local'"),
+        sql.SQL("j.state = %s"),
+        sql.SQL("j.status = 'active'"),
+        sql.SQL("j.level = 'local'"),
     ]
     params = [state.lower()]
 
     if search_string:
-        where_clauses.append(sql.SQL("LOWER(data->>'name') LIKE %s"))
+        where_clauses.append(sql.SQL("LOWER(j.data->>'name') LIKE %s"))
         params.append(f"%{search_string.lower()}%")
 
     where_condition = sql.SQL("WHERE {}").format(sql.SQL(" AND ").join(where_clauses))
@@ -571,7 +583,7 @@ async def search_jurisdictions(
         pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
-                sql.SQL("SELECT COUNT(*) FROM jurisdictions {};").format(
+                sql.SQL("SELECT COUNT(*) FROM jurisdictions j {};").format(
                     where_condition
                 ),
                 params,
@@ -581,12 +593,14 @@ async def search_jurisdictions(
 
             await cur.execute(
                 sql.SQL("""
-                SELECT jurisdiction_ocdid, data
-                FROM jurisdictions
-                {}
-                ORDER BY jurisdiction_ocdid
+                SELECT j.jurisdiction_ocdid, j.data, {parent_names}
+                FROM jurisdictions j
+                {where}
+                ORDER BY j.jurisdiction_ocdid
                 LIMIT %s OFFSET %s;
-                """).format(where_condition),
+                """).format(
+                    parent_names=sql.SQL(_PARENT_NAMES), where=where_condition
+                ),
                 (*params, limit, skip),
             )
 
@@ -599,6 +613,7 @@ async def search_jurisdictions(
                         "jurisdiction_ocdid": row[0],
                         "jurisdiction_path": row[0],
                         **row[1],
+                        "parent_names": row[2] or [],
                     }
                 )
 

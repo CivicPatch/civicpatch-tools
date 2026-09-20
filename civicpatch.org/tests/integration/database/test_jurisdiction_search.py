@@ -43,8 +43,6 @@ async def _insert(ocdid, *, level, name, search_text, population, parents=None):
     # meta_parent_ocdids is a real column, resolved to names at read time — the boundary
     # overlay computes it, so fixtures must supply it rather than relying on the jsonb copy.
     data = {"name": name, "population": population}
-    if parents is not None:
-        data["parent_ocdids"] = parents
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
