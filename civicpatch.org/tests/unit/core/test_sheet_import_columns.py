@@ -1,11 +1,25 @@
 import pytest
 
-from core.sheet_import_columns import by_row, published_other_names_by_person, roster_columns
-from core.sheet_import_rows import ImportRow, RowError, Sighting, parse_rows
+from core.sheet_import_columns import (
+    by_row,
+    merge_jurisdiction_notes,
+    published_other_names_by_person,
+    roster_columns,
+)
+from core.sheet_import_rows import (
+    ImportRow,
+    RowError,
+    Sighting,
+    build_jurisdiction_index,
+    parse_rows,
+)
 from core.source_sites import SiteIndex, SiteOwner, build_site_index
 
 _OCDID = "ocd-jurisdiction/country:us/state:ca/place:amador_city/government"
 _OCDID_2 = "ocd-jurisdiction/country:us/state:ca/place:menlo_park/government"
+
+# Both towns, as the import knows them: an ocdid is only trusted if it names one of these.
+_JURISDICTIONS = build_jurisdiction_index({_OCDID: "0600296", _OCDID_2: "0646870"})
 
 
 def _row(**overrides) -> dict:
@@ -23,7 +37,12 @@ def _row(**overrides) -> dict:
 
 
 def _parse(rows: list[dict], sites: SiteIndex = SiteIndex()):
-    return parse_rows(rows, sites)
+    return parse_rows(rows, sites, _JURISDICTIONS)
+
+
+def _parsed(*rows: dict):
+    parsed, _ = _parse(list(rows))
+    return parsed
 
 
 # ── Columns out ──────────────────────────────────────────────────────────────
@@ -164,13 +183,35 @@ def test_a_dismissed_import_clears_its_note():
 
 
 @pytest.mark.unit
-def test_a_resolved_jurisdiction_is_written_back_and_a_typed_one_is_kept():
+def test_a_jurisdiction_note_leads_the_persons_own():
+    """One column carries both, and the id that was passed over is the more surprising."""
+    rows = _parsed(_row(geoid="9999999"))
+    merged = merge_jurisdiction_notes({(_OCDID, "ana reyes"): "new person"}, rows)
+
+    assert merged[(_OCDID, "ana reyes")] == (
+        f"matched {_OCDID}; geoid 9999999 names no jurisdiction; new person"
+    )
+
+
+@pytest.mark.unit
+def test_a_row_whose_ids_agreed_leaves_the_note_alone():
+    rows = _parsed(_row())
+    notes = {(_OCDID, "ana reyes"): "new person"}
+
+    assert merge_jurisdiction_notes(notes, rows) == notes
+
+
+@pytest.mark.unit
+def test_no_volunteer_column_is_written_back():
+    """A volunteer's columns are theirs. What a blank ocdid resolved to is keyed on internally
+    and re-resolved every read, rather than pinned into the cell they left empty."""
     raw_rows = [_row(jurisdiction_ocdid=""), _row(name="Bo Chen", jurisdiction_ocdid=_OCDID)]
     parsed, errors = _parse(raw_rows, _SITES)
 
     columns = roster_columns(raw_rows, parsed, errors, {_OCDID}, _STAMP, {}, {}, set())
 
-    assert columns["jurisdiction_ocdid"] == [_OCDID, _OCDID]
+    assert "jurisdiction_ocdid" not in columns
+    assert set(columns) == {"status", "error", "last_import_at", "note", "published_other_names"}
 
 
 @pytest.mark.unit

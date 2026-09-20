@@ -8,9 +8,9 @@ The sheet carries no ids — matching is ingest's job, so there is nowhere to pa
 One row is one sighting; `roster_from_rows` groups by name, so two rows for one person would
 invite "Bob Smith" and "Robert Smith" to become two people.
 
-`jurisdiction_ocdid` is typed or pasted directly — never a geoid — or left blank, in which case
-the jurisdiction is the one whose website `source_url` is on (`core.source_sites`). A site that
-matches none, or several, is a row error asking for the ocdid.
+Which town a row belongs to is answered in order: `jurisdiction_ocdid` typed or pasted directly,
+else the jurisdiction its `geoid` names, else the one whose website `source_url` is on
+(`core.source_sites`). A site that matches none, or several, is a row error asking for either id.
 """
 
 from enum import StrEnum
@@ -23,6 +23,7 @@ from shared.utils.phone_utils import normalize_phone_number
 from shared.utils.url_utils import is_web_url
 
 JURISDICTION = "jurisdiction_ocdid"
+GEOID = "geoid"
 
 # Written by the import, never by a volunteer. Every row gets a value on every run: a row that
 # failed last time and is fine now must not keep last time's message.
@@ -88,6 +89,8 @@ class ImportRow(BaseModel):
     # What the last run wrote here. Blank for a row nobody has imported, and blank again when a
     # volunteer clears it to say "look at this one again".
     status: str = ""
+    # Blank unless an id the row gave was passed over; see `jurisdiction_note`.
+    jurisdiction_note: str = ""
 
 
 def clean_cell(value) -> str:
@@ -105,16 +108,55 @@ def _names(value) -> list[str]:
     return [name.strip() for name in names if name.strip()]
 
 
-def _jurisdiction(row: dict, sites: SiteIndex) -> str:
-    """The row's own cell, else the one jurisdiction whose site its source is on, else blank."""
+def normalize_geoid(value) -> str:
+    """Leading zeros dropped, so a text cell ("0601514") and the number Sheets reads that same
+    cell as (601514) land on the same key. Lossless: no state is `00`, so county, place and
+    cousub geoids still cannot collide once stripped."""
+    return clean_cell(value).lstrip("0")
+
+
+class JurisdictionIndex(BaseModel):
+    """Every active jurisdiction, under both ids a row can name one with."""
+
+    ocdids: set[str] = set()
+    by_geoid: dict[str, str] = {}
+
+
+def build_jurisdiction_index(geoids_by_ocdid: dict[str, str | None]) -> JurisdictionIndex:
+    """Geoids re-keyed the way `normalize_geoid` reads a cell, so both sides of the lookup are
+    normalized by the same function and cannot drift.
+
+    A geoid that normalizes to blank is dropped: it would key on what an empty cell resolves to,
+    quietly filing every row that named no jurisdiction under that one town.
+    """
+    by_geoid = {}
+    for ocdid, geoid in geoids_by_ocdid.items():
+        bare = normalize_geoid(geoid)
+        if bare:
+            by_geoid[bare] = ocdid
+    return JurisdictionIndex(ocdids=set(geoids_by_ocdid), by_geoid=by_geoid)
+
+
+def resolve_jurisdiction(row: dict, sites: SiteIndex, jurisdictions: JurisdictionIndex) -> str:
+    """The first id the row gives that names a jurisdiction we hold, else the one whose site its
+    source is on, else blank.
+
+    An id naming nothing is passed over, not trusted: a typo in the ocdid would otherwise beat a
+    geoid that was right. What was passed over is reported by `jurisdiction_note`.
+    """
     typed = clean_cell(row.get(JURISDICTION))
-    if typed:
+    if typed in jurisdictions.ocdids:
         return typed
+    named = jurisdictions.by_geoid.get(normalize_geoid(row.get(GEOID)))
+    if named:
+        return named
     matches = jurisdictions_on_site(sites, clean_cell(row.get("source_url")))
     return matches[0] if len(matches) == 1 else ""
 
 
-def _handled_jurisdictions(rows: list[dict], sites: SiteIndex) -> set[str]:
+def _handled_jurisdictions(
+    rows: list[dict], sites: SiteIndex, jurisdictions: JurisdictionIndex
+) -> set[str]:
     """Every jurisdiction whose rows all already carry a status — on the unvalidated row, since
     this runs before a row is known to parse at all.
 
@@ -127,7 +169,7 @@ def _handled_jurisdictions(rows: list[dict], sites: SiteIndex) -> set[str]:
     for row in rows:
         if _is_blank(row):
             continue
-        by_jurisdiction.setdefault(_jurisdiction(row, sites), []).append(row)
+        by_jurisdiction.setdefault(resolve_jurisdiction(row, sites, jurisdictions), []).append(row)
     return {
         jurisdiction
         for jurisdiction, jurisdiction_rows in by_jurisdiction.items()
@@ -135,7 +177,9 @@ def _handled_jurisdictions(rows: list[dict], sites: SiteIndex) -> set[str]:
     }
 
 
-def parse_rows(rows: list[dict], sites: SiteIndex) -> tuple[list[ImportRow], list[RowError]]:
+def parse_rows(
+    rows: list[dict], sites: SiteIndex, jurisdictions: JurisdictionIndex
+) -> tuple[list[ImportRow], list[RowError]]:
     """Every row that parsed, and every reason one did not.
 
     Line numbers count the header, so they match the row gutter a volunteer sees.
@@ -143,7 +187,7 @@ def parse_rows(rows: list[dict], sites: SiteIndex) -> tuple[list[ImportRow], lis
     parsed: list[ImportRow] = []
     errors: list[RowError] = []
 
-    handled = _handled_jurisdictions(rows, sites)
+    handled = _handled_jurisdictions(rows, sites, jurisdictions)
     for offset, row in enumerate(rows):
         line = offset + 2
         # A row with nothing in it is grid, not a row somebody wrote. Sheets returns every line
@@ -158,20 +202,21 @@ def parse_rows(rows: list[dict], sites: SiteIndex) -> tuple[list[ImportRow], lis
         # (`already_handled`, in `services.sheet_import`) never even sees it — and a contract
         # change made after the row was accepted (a new required column, say) would otherwise
         # re-reject a row nothing is wrong with, forever, on every run.
-        jurisdiction = _jurisdiction(row, sites)
+        jurisdiction = resolve_jurisdiction(row, sites, jurisdictions)
         if jurisdiction in handled:
             continue
         row_errors = _row_errors(row, line, jurisdiction, sites)
         if row_errors:
             errors.extend(row_errors)
         else:
-            parsed.append(_import_row(row, line, jurisdiction, sites))
+            parsed.append(_import_row(row, line, jurisdiction, sites, jurisdictions))
 
     return parsed, errors + _duplicate_errors(parsed)
 
 
 # What a volunteer fills in. `STATUS_COLUMNS` are ours and deliberately excluded below.
-_VOLUNTEER_COLUMNS = (JURISDICTION,) + _REQUIRED + _OPTIONAL
+# The two jurisdiction ids lead, in the order they resolve.
+_VOLUNTEER_COLUMNS = (JURISDICTION, GEOID) + _REQUIRED + _OPTIONAL
 
 # Public: `services.sheet_import` marks these on the sheet itself, so a required column reads
 # as required without anyone having to already know the contract.
@@ -196,28 +241,55 @@ def _is_blank(row: dict) -> bool:
     return not any(clean_cell(row.get(column)) for column in _VOLUNTEER_COLUMNS)
 
 
-def _site_error(row: dict, sites: SiteIndex) -> str | None:
-    """Why a row with no jurisdiction could not take one from its source's site."""
+def _site_error(row: dict, jurisdiction: str, sites: SiteIndex) -> str | None:
+    """Why a row that resolved to no jurisdiction could not take one from its source's site.
+
+    Judged on the resolved jurisdiction, not on the ocdid cell: a row a geoid answered has its
+    town already, and a site matching none or several says nothing about it.
+    """
     source_url = clean_cell(row.get("source_url"))
-    if clean_cell(row.get(JURISDICTION)) or not source_url:
+    if jurisdiction or not source_url:
         return None
     matches = jurisdictions_on_site(sites, source_url)
     host = site_host(source_url)
+    ask = f"fill in {JURISDICTION} or {GEOID}"
     if not matches:
-        return f"no jurisdiction's website matches {host}; fill in {JURISDICTION}"
-    if len(matches) > 1:
-        return f"{host} is the website of {len(matches)} jurisdictions; fill in {JURISDICTION}"
-    return None
+        return f"no jurisdiction's website matches {host}; {ask}"
+    return f"{host} is the website of {len(matches)} jurisdictions; {ask}"
 
 
-def _row_errors(row: dict, line: int, jurisdiction: str, sites: SiteIndex) -> list[RowError]:
+def jurisdiction_note(row: dict, resolved: str, jurisdictions: JurisdictionIndex) -> str:
+    """What a row's own ids said that the town it resolved to did not, or blank when they agree.
+
+    Information, never a rejection: the row imported, and an id that named nothing was passed
+    over rather than trusted. This is the only place a volunteer sees that happen.
+    """
+    passed_over = []
+    typed = clean_cell(row.get(JURISDICTION))
+    if typed and typed not in jurisdictions.ocdids:
+        passed_over.append(f"{JURISDICTION} {typed} names no jurisdiction")
+    geoid = clean_cell(row.get(GEOID))
+    if geoid:
+        named = jurisdictions.by_geoid.get(normalize_geoid(geoid))
+        if not named:
+            passed_over.append(f"{GEOID} {geoid} names no jurisdiction")
+        elif named != resolved:
+            passed_over.append(f"{GEOID} {geoid} names {named}")
+    if not passed_over:
+        return ""
+    return f"matched {resolved}; " + "; ".join(passed_over)
+
+
+def _row_errors(
+    row: dict, line: int, jurisdiction: str, sites: SiteIndex
+) -> list[RowError]:
     def error(column: str, message: str) -> RowError:
         return RowError(
             line=line, jurisdiction_ocdid=jurisdiction, column=column, message=message
         )
 
     errors = [error(column, "required") for column in _REQUIRED if not clean_cell(row.get(column))]
-    site_error = _site_error(row, sites)
+    site_error = _site_error(row, jurisdiction, sites)
     if site_error:
         errors.append(error(JURISDICTION, site_error))
     # The same checks `SubmittedPersonRecord` applies, run here so a bad cell is a rejected row
@@ -233,12 +305,15 @@ def _row_errors(row: dict, line: int, jurisdiction: str, sites: SiteIndex) -> li
     return errors
 
 
-def _import_row(row: dict, line: int, jurisdiction: str, sites: SiteIndex) -> ImportRow:
+def _import_row(
+    row: dict, line: int, jurisdiction: str, sites: SiteIndex, jurisdictions: JurisdictionIndex
+) -> ImportRow:
     source_url = clean_cell(row["source_url"])
     return ImportRow(
         line=line,
         jurisdiction_ocdid=jurisdiction,
         status=clean_cell(row.get("status")),
+        jurisdiction_note=jurisdiction_note(row, jurisdiction, jurisdictions),
         sighting=Sighting(
             name=clean_cell(row["name"]),
             other_names=_names(row.get("other_names")),

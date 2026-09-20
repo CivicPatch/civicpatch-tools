@@ -40,8 +40,8 @@ async def clean_sentinels():
 
 
 async def _insert(ocdid, *, level, name, search_text, population, parents=None):
-    # parent_ocdids is a real column now, resolved to names at read time — the sync
-    # computes it, so fixtures must supply it rather than relying on data->'parent_ocdids'.
+    # meta_parent_ocdids is a real column, resolved to names at read time — the boundary
+    # overlay computes it, so fixtures must supply it rather than relying on the jsonb copy.
     data = {"name": name, "population": population}
     if parents is not None:
         data["parent_ocdids"] = parents
@@ -51,7 +51,7 @@ async def _insert(ocdid, *, level, name, search_text, population, parents=None):
             """
             INSERT INTO jurisdictions
                 (jurisdiction_ocdid, state, level, data, updated_at, status,
-                 search_text, parent_ocdids)
+                 search_text, meta_parent_ocdids)
             VALUES (%s, 'zs', %s, %s, now(), 'active', %s, %s)
             """,
             (ocdid, level, json.dumps(data), search_text, parents or []),

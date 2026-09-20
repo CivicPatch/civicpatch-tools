@@ -13,19 +13,22 @@ from datetime import datetime, timezone
 
 from core.sheet_import_columns import (
     by_row,
+    merge_jurisdiction_notes,
     published_other_names_by_person,
     roster_columns,
 )
 from core.sheet_import_rows import (
-    JURISDICTION,
     PUBLISHED_OTHER_NAMES,
     REQUIRED_COLUMNS,
     ROSTER_HEADERS,
     ImportRow,
     ImportStatus,
+    JurisdictionIndex,
     RowError,
     already_handled,
+    build_jurisdiction_index,
     parse_rows,
+    resolve_jurisdiction,
     rows_by_jurisdiction,
 )
 from core.import_report import ImportReportRow, report_rows
@@ -40,6 +43,7 @@ from core.source_sites import SiteIndex, build_site_index
 from database.changesets import register_sheet_import_changeset, set_proposal_counts
 from database import changeset_batches, dismissals
 from database import sites as sites_db
+from database.jurisdictions import get_jurisdiction_geoids
 from database.people import get_rosters_by_jurisdiction
 from database.roles import get_roles
 from database.source_records import insert_source_records
@@ -243,14 +247,16 @@ async def _derive_posts(
         return 0, f"people imported, but posts could not be derived: {e}"
 
 
-def read_rows(rows: list[dict], sites: SiteIndex) -> SheetRead:
+def read_rows(
+    rows: list[dict], sites: SiteIndex, jurisdictions: JurisdictionIndex
+) -> SheetRead:
     """Raw roster rows, parsed, with a preview of what importing them would do.
 
     Pure, and the only place that decides what "ready" and "blocked" mean. Both callers reach
     it: the one that opens the spreadsheet and the one that is handed rows over HTTP, so the two
     cannot come to different conclusions about the same rows.
     """
-    parsed, errors = parse_rows(rows, sites)
+    parsed, errors = parse_rows(rows, sites, jurisdictions)
 
     seen = {row.jurisdiction_ocdid for row in parsed}
     # Blocked whole, never partly: importing six rows of seven proposes a roster missing
@@ -303,9 +309,19 @@ async def _site_index() -> SiteIndex:
     return build_site_index(await sites_db.site_owners())
 
 
-def _typed_jurisdictions(roster: list[dict]) -> set[str]:
-    """Rows already handled never parse; their cell is still their town."""
-    return {str(row.get(JURISDICTION) or "").strip() for row in roster} - {""}
+async def _jurisdiction_index() -> JurisdictionIndex:
+    return build_jurisdiction_index(await get_jurisdiction_geoids())
+
+
+def _resolved_jurisdictions(
+    roster: list[dict], sites: SiteIndex, jurisdictions: JurisdictionIndex
+) -> set[str]:
+    """Rows already handled never parse, so their town is resolved here instead.
+
+    Through the same resolver the parse uses, not off the ocdid cell: nothing writes a resolved
+    ocdid back into the sheet, so a row answered by its geoid or its site has a blank cell.
+    """
+    return {resolve_jurisdiction(row, sites, jurisdictions) for row in roster} - {""}
 
 
 async def read_sheet(spreadsheet_id: str) -> SheetRead:
@@ -321,7 +337,7 @@ async def read_sheet(spreadsheet_id: str) -> SheetRead:
     roster_rows = await asyncio.to_thread(
         sheets.read_tab, spreadsheet_id, entry_sheet.ROSTER_TAB
     )
-    return read_rows(roster_rows, await _site_index())
+    return read_rows(roster_rows, await _site_index(), await _jurisdiction_index())
 
 
 async def run_import(
@@ -385,7 +401,9 @@ async def write_back(results: list[JurisdictionResult]) -> None:
         roster = await asyncio.to_thread(
             sheets.read_tab, spreadsheet_id, entry_sheet.ROSTER_TAB
         )
-        parsed, errors = parse_rows(roster, await _site_index())
+        sites = await _site_index()
+        jurisdictions = await _jurisdiction_index()
+        parsed, errors = parse_rows(roster, sites, jurisdictions)
 
         by_ocdid = {result.jurisdiction_ocdid: result for result in results}
         imported = {
@@ -393,18 +411,24 @@ async def write_back(results: list[JurisdictionResult]) -> None:
             for ocdid, result in by_ocdid.items()
             if result.status in (ImportStatus.IMPORTED, ImportStatus.PARTIAL)
         }
-        notes = {
-            (result.jurisdiction_ocdid, name): note
-            for result in results
-            for name, note in result.notes.items()
-        }
+        notes = merge_jurisdiction_notes(
+            {
+                (result.jurisdiction_ocdid, name): note
+                for result in results
+                for name, note in result.notes.items()
+            },
+            parsed,
+        )
         published_other_names = {
             (result.jurisdiction_ocdid, name): names
             for result in results
             for name, names in result.published_other_names.items()
         }
         dismissed = await dismissals.latest_import_dismissed(
-            sorted({row.jurisdiction_ocdid for row in parsed} | _typed_jurisdictions(roster))
+            sorted(
+                {row.jurisdiction_ocdid for row in parsed}
+                | _resolved_jurisdictions(roster, sites, jurisdictions)
+            )
         )
         await asyncio.to_thread(
             sheets.write_columns,

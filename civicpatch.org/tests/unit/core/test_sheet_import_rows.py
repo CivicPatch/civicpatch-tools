@@ -4,6 +4,7 @@ from core.sheet_import_rows import (
     ImportRow,
     Sighting,
     already_handled,
+    build_jurisdiction_index,
     parse_rows,
     rows_by_jurisdiction,
 )
@@ -11,6 +12,11 @@ from core.source_sites import SiteIndex, SiteOwner, build_site_index
 
 _OCDID = "ocd-jurisdiction/country:us/state:ca/place:amador_city/government"
 _OCDID_2 = "ocd-jurisdiction/country:us/state:ca/place:menlo_park/government"
+
+_GEOID = "0600296"
+_GEOID_2 = "0646870"
+# Both towns, as the import knows them: an ocdid is only trusted if it names one of these.
+_JURISDICTIONS = build_jurisdiction_index({_OCDID: _GEOID, _OCDID_2: _GEOID_2})
 
 
 def _row(**overrides) -> dict:
@@ -27,8 +33,8 @@ def _row(**overrides) -> dict:
     return row
 
 
-def _parse(rows: list[dict], sites: SiteIndex = SiteIndex()):
-    return parse_rows(rows, sites)
+def _parse(rows: list[dict], sites: SiteIndex = SiteIndex(), jurisdictions=_JURISDICTIONS):
+    return parse_rows(rows, sites, jurisdictions)
 
 
 def _flags(errors) -> set:
@@ -342,3 +348,96 @@ def test_other_names_split_on_the_bar(cell, names):
     rows, errors = _parse([_row(other_names=cell)])
     assert errors == []
     assert rows[0].sighting.other_names == names
+
+
+# ── Geoids ───────────────────────────────────────────────────────────────────
+
+
+@pytest.mark.unit
+def test_a_geoid_answers_a_blank_jurisdiction():
+    [row], errors = _parse([_row(jurisdiction_ocdid="", geoid=_GEOID)])
+
+    assert errors == []
+    assert row.jurisdiction_ocdid == _OCDID
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("cell", ["0600296", 600296, "600296", " 0600296 "])
+def test_a_geoid_reads_the_same_padded_or_bare(cell):
+    """Sheets stores a geoid cell as a number unless it is formatted as text, so `0600296` comes
+    back as `600296`. Both sides are stripped, so the coercion cannot change which town wins."""
+    [row], errors = _parse([_row(jurisdiction_ocdid="", geoid=cell)])
+
+    assert errors == []
+    assert row.jurisdiction_ocdid == _OCDID
+
+
+@pytest.mark.unit
+def test_a_geoid_resolved_row_is_not_asked_for_a_site():
+    """A row its geoid answered has its town already, so a host matching nothing says nothing
+    about it."""
+    [row], errors = _parse(
+        [_row(jurisdiction_ocdid="", geoid=_GEOID, source_url="https://nowhere.gov/x")],
+        _SITES,
+    )
+
+    assert errors == []
+    assert row.jurisdiction_ocdid == _OCDID
+
+
+@pytest.mark.unit
+def test_an_ocdid_that_names_nothing_is_passed_over_for_the_geoid():
+    """Precedence is over ids that resolve, not over cells that are filled: a typo must not beat
+    a geoid that was right."""
+    [row], errors = _parse([_row(jurisdiction_ocdid="ocd-jurisdiction/nope", geoid=_GEOID_2)])
+
+    assert errors == []
+    assert row.jurisdiction_ocdid == _OCDID_2
+
+
+@pytest.mark.unit
+def test_an_ocdid_that_resolves_beats_a_geoid_that_disagrees():
+    [row], errors = _parse([_row(jurisdiction_ocdid=_OCDID, geoid=_GEOID_2)])
+
+    assert errors == []
+    assert row.jurisdiction_ocdid == _OCDID
+
+
+@pytest.mark.unit
+def test_a_blank_geoid_cell_resolves_nothing():
+    """A geoid stored blank would normalize to the same key an empty cell does, and then every
+    row that named no town would be filed under whichever jurisdiction carried it."""
+    jurisdictions = build_jurisdiction_index({_OCDID: _GEOID, _OCDID_2: ""})
+    _, [error] = _parse(
+        [_row(jurisdiction_ocdid="", geoid="", source_url="https://nowhere.gov/x")],
+        _SITES,
+        jurisdictions,
+    )
+
+    assert error.column == "jurisdiction_ocdid"
+
+
+# ── What the ids disagreed about ─────────────────────────────────────────────
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "overrides, expected",
+    [
+        ({"geoid": _GEOID}, ""),
+        ({"geoid": ""}, ""),
+        ({"geoid": "9999999"}, "geoid 9999999 names no jurisdiction"),
+        ({"geoid": _GEOID_2}, f"geoid {_GEOID_2} names {_OCDID_2}"),
+        (
+            {"jurisdiction_ocdid": "ocd-jurisdiction/nope", "geoid": _GEOID},
+            "jurisdiction_ocdid ocd-jurisdiction/nope names no jurisdiction",
+        ),
+    ],
+)
+def test_the_note_says_which_id_was_passed_over(overrides, expected):
+    """Information, never a rejection: every one of these rows imports."""
+    [row], errors = _parse([_row(**overrides)])
+
+    assert errors == []
+    assert expected in row.jurisdiction_note
+    assert bool(row.jurisdiction_note) is bool(expected)

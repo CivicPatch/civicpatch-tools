@@ -1,6 +1,6 @@
 """The import sheet's columns out: what happened to each row and town, written back into the
-app-owned columns (`STATUS_COLUMNS`, `PUBLISHED_OTHER_NAMES`) and a jurisdiction the row's
-source site resolved.
+app-owned columns (`STATUS_COLUMNS`, `PUBLISHED_OTHER_NAMES`) and nothing else. A volunteer's
+own columns are theirs, so what a row resolved to is keyed on here but never written into them.
 
 Pure: the Sheets calls are the caller's. Rows in is `sheet_import_rows`.
 """
@@ -21,9 +21,12 @@ ERROR = "error"
 BLOCKED = "blocked"
 
 
-def _jurisdiction_column(raw_rows: list[dict], rows: list[ImportRow]) -> list[str]:
-    """The volunteer's own cell, verbatim, or the jurisdiction a blank one resolved to — so they
-    see what their row was matched to, and the next read keys on it."""
+def _row_jurisdictions(raw_rows: list[dict], rows: list[ImportRow]) -> list[str]:
+    """Each row's town: the volunteer's own cell, or what a blank one resolved to.
+
+    Internal keying only. Never written back: the volunteer's columns are theirs, so a row
+    resolved by geoid or by its site is re-resolved on every read rather than pinned here.
+    """
     resolved = {row.line: row.jurisdiction_ocdid for row in rows}
     return [
         str(row.get(JURISDICTION) or "") or resolved.get(offset + 2, "")
@@ -66,6 +69,24 @@ def by_row(
     }
 
 
+def merge_jurisdiction_notes(
+    notes: dict[tuple[str, str], str], rows: list[ImportRow]
+) -> dict[tuple[str, str], str]:
+    """A row's jurisdiction note ahead of whatever the import had to say about that person.
+
+    Both share the one `note` column, and an id that was passed over is the more surprising of
+    the two, so it leads.
+    """
+    merged = dict(notes)
+    for row in rows:
+        if not row.jurisdiction_note:
+            continue
+        key = row_key(row.jurisdiction_ocdid, row.sighting.name)
+        already = merged.get(key, "")
+        merged[key] = f"{row.jurisdiction_note}; {already}" if already else row.jurisdiction_note
+    return merged
+
+
 def published_other_names_by_person(published: list[dict]) -> dict[str, str]:
     return {
         person["id"]: NAMES_SEPARATOR.join(person.get("other_names") or [])
@@ -84,8 +105,7 @@ def roster_columns(
     dismissed: set[str],
 ) -> dict[str, list]:
     """`status`, `error`, `last_import_at`, `note` and `published_other_names` for every row of
-    the roster tab, and `jurisdiction_ocdid` filled in where the row's source site resolved a
-    blank one.
+    the roster tab. App-owned columns only.
 
     Every row, not only the ones that changed: a row that failed last run and is fine now needs
     its error cleared, and leaving it would have the volunteer chasing a problem they fixed.
@@ -140,9 +160,8 @@ def roster_columns(
             status.append(previous_status.get(line, ""))
             message.append("")
 
-    jurisdictions = _jurisdiction_column(raw_rows, rows)
+    jurisdictions = _row_jurisdictions(raw_rows, rows)
     return {
-        JURISDICTION: jurisdictions,
         "status": status,
         "error": message,
         "last_import_at": stamps,
