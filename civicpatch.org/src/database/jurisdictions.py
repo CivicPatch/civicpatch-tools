@@ -99,9 +99,9 @@ _SEARCH_SELECT_LIST = """
         j.data->>'display_name',
         (j.data->>'population')::bigint,
         -- Names resolved here rather than stored, so a renamed parent is correct
-        -- immediately. Which parents, and their order, was settled at sync time.
+        -- immediately. Which parents, and their order, was settled by the boundary overlay.
         (SELECT array_agg(parent_row.data->>'name' ORDER BY parent.ord)
-           FROM unnest(j.parent_ocdids) WITH ORDINALITY AS parent(ocdid, ord)
+           FROM unnest(j.meta_parent_ocdids) WITH ORDINALITY AS parent(ocdid, ord)
            JOIN jurisdictions parent_row
              ON parent_row.jurisdiction_ocdid = parent.ocdid)
 """
@@ -272,10 +272,29 @@ async def get_geoid_lookup(state: str) -> dict[str, GeoidEntry]:
     return {geoid: GeoidEntry(ocdid, name) for geoid, ocdid, name in results}
 
 
+async def get_jurisdiction_geoids() -> dict[str, str | None]:
+    # Every active jurisdiction, geoid or not: the import validates both ids a sheet row can
+    # name a town with, and one without a geoid is still a real ocdid. Unscoped because the
+    # import sheet is read whole. Geoids come back as stored; normalizing them is
+    # `core.sheet_import_rows`'s job, so the cell and the lookup key cannot drift apart.
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT jurisdiction_ocdid, data->>'geoid'
+            FROM jurisdictions
+            WHERE status = 'active';
+            """,
+        )
+        results = await cur.fetchall()
+
+    return {ocdid: geoid for ocdid, geoid in results}
+
+
 async def set_parent_ocdids(
     parent_ocdids_by_jurisdiction: dict[str, list[str]],
 ) -> None:
-    """Overwrite parent_ocdids for each given jurisdiction. One round trip regardless of
+    """Overwrite meta_parent_ocdids for each given jurisdiction. One round trip regardless of
     how many rows — the map-generation county overlay is the only writer, and it always
     recomputes the whole state's set from scratch, so there's nothing to merge."""
     if not parent_ocdids_by_jurisdiction:
@@ -283,7 +302,7 @@ async def set_parent_ocdids(
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.executemany(
-            "UPDATE jurisdictions SET parent_ocdids = %s WHERE jurisdiction_ocdid = %s",
+            "UPDATE jurisdictions SET meta_parent_ocdids = %s WHERE jurisdiction_ocdid = %s",
             [
                 (parents, ocdid)
                 for ocdid, parents in parent_ocdids_by_jurisdiction.items()

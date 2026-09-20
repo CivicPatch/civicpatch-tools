@@ -18,7 +18,12 @@ from unittest.mock import patch
 import pytest
 import pytest_asyncio
 
-from core.sheet_import_rows import ImportRow, ImportStatus, Sighting
+from core.sheet_import_rows import (
+    ImportRow,
+    ImportStatus,
+    Sighting,
+    build_jurisdiction_index,
+)
 from core.membership_proposal import MembershipDisposition
 from shared.schemas import POST_FIELD
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID
@@ -436,7 +441,8 @@ async def test_end_to_end_from_csv_text(user_id, batch_id):
         f"{_OCDID},Bo Chen,https://zz.gov/roster,Select Board Member,bo@zz.gov\n"
         f"{_OCDID_2},,https://zz.gov/roster,Select Board Clerk,cy@zz.gov\n"
     )
-    read = read_rows(parse_csv(roster_csv), SiteIndex())
+    jurisdictions = build_jurisdiction_index({_OCDID: None, _OCDID_2: None})
+    read = read_rows(parse_csv(roster_csv), SiteIndex(), jurisdictions)
 
     # The name-less row is rejected, and takes nobody else with it.
     assert [(error.line, error.column) for error in read.preview.errors] == [

@@ -48,7 +48,8 @@ async def _read_parent_ocdids(ocdid):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT parent_ocdids FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,)
+            "SELECT meta_parent_ocdids FROM jurisdictions WHERE jurisdiction_ocdid = %s",
+            (ocdid,),
         )
         row = await cur.fetchone()
         return row[0] if row else None

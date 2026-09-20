@@ -5,6 +5,7 @@ Pure, so no mocks: the split is a function of the rows alone.
 
 import pytest
 
+from core.sheet_import_rows import build_jurisdiction_index
 from core.source_sites import SiteIndex
 from services.sheet_import import read_rows
 
@@ -12,6 +13,9 @@ _NO_SITES = SiteIndex()
 
 _TOWN = "ocd-jurisdiction/country:us/state:wa/place:sedro-woolley/government"
 _OTHER = "ocd-jurisdiction/country:us/state:wa/place:aberdeen/government"
+
+# Both towns, as the import knows them: an ocdid is only trusted if it names one of these.
+_JURISDICTIONS = build_jurisdiction_index({_TOWN: "5363385", _OTHER: "5300100"})
 
 
 def _row(**overrides) -> dict:
@@ -35,6 +39,7 @@ def test_a_bad_row_blocks_only_its_own_town():
             _row(jurisdiction_ocdid=_OTHER, name="Ada Whitfield", label="Mayor"),
         ],
         _NO_SITES,
+        _JURISDICTIONS,
     )
 
     assert read.preview.jurisdictions_blocked == [_TOWN]
@@ -52,6 +57,7 @@ def test_a_blocked_towns_rows_do_not_reach_the_import():
             _row(jurisdiction_ocdid=_OTHER, name="Ada Whitfield", label="Mayor"),
         ],
         _NO_SITES,
+        _JURISDICTIONS,
     )
 
     assert [row.jurisdiction_ocdid for row in read.rows] == [_OTHER]
