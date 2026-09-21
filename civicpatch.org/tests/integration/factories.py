@@ -19,7 +19,7 @@ import uuid
 
 from core.membership_proposal import ids_by_person_and_organization
 from core.post_derivation import DerivedMembership, MembershipBinding
-from database import memberships, organizations
+from database import memberships, organizations, projection
 from database.changesets import register_scrape_changeset
 from database.database import get_pool
 from database.pipeline_runs import register_run, update_pipeline_run_status
@@ -127,13 +127,13 @@ async def bind_membership(
     """One membership, written by the same steps publish runs. Returns its id."""
     bindings = [MembershipBinding(member=member, organization_id=organization_id, post_id=post_id)]
     await memberships.close_moved_memberships(cur, bindings, last_seen_at)
-    await memberships.upsert_open_memberships(cur, bindings, last_seen_at, advances_last_seen=True)
+    await projection.upsert_open_memberships(cur, bindings, last_seen_at, advances_last_seen=True)
     jurisdiction_ocdid = await organizations.jurisdiction_for(cur, organization_id)
     assert jurisdiction_ocdid is not None
     membership_ids = ids_by_person_and_organization(
         await memberships.open_memberships(cur, [jurisdiction_ocdid])
     )
-    await memberships.replace_membership_roles(cur, bindings, membership_ids)
+    await projection.replace_membership_roles(cur, bindings, membership_ids)
     return membership_ids[(member.person_id, organization_id)]
 
 

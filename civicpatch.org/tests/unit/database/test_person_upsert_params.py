@@ -7,7 +7,7 @@ this is a plain unit test (no DB).
 
 import pytest
 
-from database.people import person_upsert_params
+from database.projection import person_upsert_params
 
 _PERSON = {
     "id": "22aa-1",

@@ -6,12 +6,20 @@ the projection, and this is what proves it. It is deliberately broad and deliber
 a characterization test earns its keep by failing when anything moves, so update the expectation
 only alongside a change that means to move it.
 
-Covers two bodies in one jurisdiction, a re-scrape of one of them, and a person dropped from the
-body that was read: between them they pin the `last_seen_at` ratchet, the org-scoped close, and
-the body nothing looked at, which are the three the projector refactor is most likely to move.
+The first three cases cover two bodies in one jurisdiction, a re-scrape of one of them, and a
+person dropped from the body that was read: between them they pin the `last_seen_at` ratchet,
+the org-scoped close, and the body nothing looked at. Nothing in them changes between scrapes,
+so four more exercise the field and post rules: contact details that change, a value a human
+rejected that the page keeps printing, a label that maps to no role, and a person who is mayor,
+then a member, then mayor again.
 
 `memberships.label` reads NULL throughout, and that is the behaviour: it holds the name a human
 asserted (`set_label`), never the source's note, which lives in `sources`.
+
+Each case ends with `_shadow`: the fold, run over the same facts, must derive the same people and
+open memberships that today's path wrote. Everyone the shadow compares has been scraped at least
+once, because `_seed` inserts `people` rows directly and a person with no fact behind them does
+not exist to the fold.
 
 Isolation: sentinel state 'zc', cleaned before and after.
 """
@@ -22,11 +30,19 @@ import uuid
 import pytest
 import pytest_asyncio
 
+from shared.schemas import RoleConfig
+from shared.utils.taxonomy import UNMATCHED_ROLE_ID, build_taxonomy
+
 from core.post_derivation import DerivedMembership, DerivedPost, MembershipSource
-from database import divisions, posts
+from core.projection.posts import PostKey
+from core.projection.roster import derive_roster
+from database import assertions, divisions, posts
 from database.database import get_pool
+from database.facts import load_facts_for
 from database.publications import publish_changeset
+from database.roles import get_roles
 from database.source_records import insert_source_records
+from schemas.assertions import Assertion, AssertionKind, EntityType
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zc/place:charville/government"
@@ -34,7 +50,9 @@ _BASE = "ocd-division/country:us/state:zc/place:charville"
 _WARD_2 = f"{_BASE}/ward:2"
 _T0 = datetime.datetime(2026, 3, 11, tzinfo=datetime.timezone.utc)
 _T1 = datetime.datetime(2026, 6, 2, tzinfo=datetime.timezone.utc)
+_T2 = datetime.datetime(2026, 9, 14, tzinfo=datetime.timezone.utc)
 _PAGE = "https://zc.gov/council"
+_USER = "zc-reject-user@example.com"
 
 
 async def _wipe():
@@ -53,6 +71,11 @@ async def _wipe():
         await cur.execute("DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zc'")
+        await cur.execute(
+            "DELETE FROM assertions WHERE created_by IN (SELECT id FROM users WHERE email = %s)",
+            (_USER,),
+        )
+        await cur.execute("DELETE FROM users WHERE email = %s", (_USER,))
         await conn.commit()
 
 
@@ -110,12 +133,16 @@ async def _changeset(at: datetime.datetime) -> str:
     return changeset_id
 
 
-def _person(person_id: str, name: str) -> dict:
+def _person(person_id: str, name: str, **fields) -> dict:
+    """What `people_derivation` hands publish for one `_record_evidence` row: its `url` lands in
+    `urls` and its page in `source_urls`. `fields` is whatever else that row said."""
     return {
         "id": person_id,
         "name": name,
         "jurisdiction_ocdid": _OCDID,
+        "urls": [_PAGE],
         "source_urls": [_PAGE],
+        **fields,
     }
 
 
@@ -133,10 +160,13 @@ def _seat(organization_id: str, role_id: str, division: str, person_id: str, not
 
 
 async def _record_evidence(
-    changeset_id: str, organization_id: str, person_id: str, name: str
+    changeset_id: str, organization_id: str, person_id: str, name: str, label: str, **fields
 ) -> None:
     """What the scrape read, in the body it read it for. `close_absent` runs only in the bodies
-    a changeset recorded evidence for, so the snapshot depends on this being right."""
+    a changeset recorded evidence for, so the snapshot depends on this being right.
+
+    `label` must be the one that derives the seat the test hands publish: today's path takes
+    the seat as given, but the fold derives it from this label."""
     await insert_source_records(
         changeset_id,
         _OCDID,
@@ -144,14 +174,29 @@ async def _record_evidence(
             person_id: [
                 {
                     "name": name,
-                    "label": "Member",
+                    "label": label,
                     "source_url": _PAGE,
                     "url": _PAGE,
                     "organization_id": organization_id,
+                    **fields,
                 }
             ]
         },
     )
+
+
+async def _reject_user() -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO users (email, provider, provider_user_id, username, role) "
+            "VALUES (%s, 'email', %s, %s, 'admins') RETURNING id::text",
+            (_USER, _USER, _USER.replace("@", "-")),
+        )
+        row = await cur.fetchone()
+        assert row is not None
+        await conn.commit()
+    return row[0]
 
 
 async def _projection(ids: dict) -> dict:
@@ -239,14 +284,82 @@ async def _projection(ids: dict) -> dict:
     }
 
 
+_COMPARED_FIELDS = (
+    "name",
+    "other_names",
+    "phones",
+    "emails",
+    "urls",
+    "source_urls",
+    "image",
+    "cdn_image",
+)
+
+
+async def _shadow(ids: dict) -> tuple[dict, dict]:
+    """The same roster twice: as today's path wrote it, and as the fold derives it from facts.
+
+    Memberships compare by post key, not post id: today's ids are random and the fold's are
+    `uuid5` over the key, so the key is the only thing the two can agree on.
+    """
+    names = {ids["ana"]: "ana", ids["ben"]: "ben"}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT m.person_id::text, p.organization_id::text, p.role_id, p.division_ocdid
+            FROM memberships m JOIN posts p ON p.id = m.post_id
+            WHERE p.jurisdiction_ocdid = %s AND m.closed_at IS NULL
+            """,
+            (_OCDID,),
+        )
+        open_rows = await cur.fetchall()
+        await cur.execute(
+            f"SELECT id::text, {', '.join(_COMPARED_FIELDS)} FROM people "
+            "WHERE jurisdiction_ocdid = %s",
+            (_OCDID,),
+        )
+        people_rows = await cur.fetchall()
+
+    today = {
+        "people": {
+            names[row[0]]: {
+                field: (tuple(value) if isinstance(value, list) else value)
+                for field, value in zip(_COMPARED_FIELDS, row[1:])
+            }
+            for row in people_rows
+        },
+        "memberships": sorted(
+            (names[row[0]], PostKey(organization_id=row[1], role_id=row[2], division_ocdid=row[3]).post_id)
+            for row in open_rows
+        ),
+    }
+
+    roles = await get_roles()
+    facts = await load_facts_for(_OCDID, datetime.datetime.now(datetime.timezone.utc))
+    roster = derive_roster(facts, _OCDID, build_taxonomy(RoleConfig(roles=roles)), roles)
+    fold = {
+        "people": {
+            names[person.id]: {field: getattr(person, field) for field in _COMPARED_FIELDS}
+            for person in roster.people
+        },
+        "memberships": sorted(
+            (names[person.id], membership.post_id)
+            for person in roster.people
+            for membership in person.memberships
+        ),
+    }
+    return today, fold
+
+
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_publishing_two_bodies_derives_this_projection():
     """One scrape, both bodies, one person in each and Ana in both."""
     ids = await _seed()
     changeset_id = await _changeset(_T0)
-    await _record_evidence(changeset_id, ids["council"], ids["ana"], "Ana Reyes")
-    await _record_evidence(changeset_id, ids["mayors_office"], ids["ben"], "Ben Ortiz")
+    await _record_evidence(changeset_id, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
+    await _record_evidence(changeset_id, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
 
     await publish_changeset(
         changeset_id,
@@ -267,7 +380,7 @@ async def test_publishing_two_bodies_derives_this_projection():
                 "other_names": [],
                 "phones": [],
                 "emails": [],
-                "urls": [],
+                "urls": [_PAGE],
                 "source_urls": [_PAGE],
                 "image": None,
                 "cdn_image": None,
@@ -278,7 +391,7 @@ async def test_publishing_two_bodies_derives_this_projection():
                 "other_names": [],
                 "phones": [],
                 "emails": [],
-                "urls": [],
+                "urls": [_PAGE],
                 "source_urls": [_PAGE],
                 "image": None,
                 "cdn_image": None,
@@ -326,6 +439,9 @@ async def test_publishing_two_bodies_derives_this_projection():
         ]
     }
 
+    today, fold = await _shadow(ids)
+    assert fold == today
+
 
 @pytest.mark.asyncio
 @pytest.mark.integration
@@ -334,8 +450,8 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
     and her clock advances, Ben is untouched because nothing read his body."""
     ids = await _seed()
     first = await _changeset(_T0)
-    await _record_evidence(first, ids["council"], ids["ana"], "Ana Reyes")
-    await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz")
+    await _record_evidence(first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
+    await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
     await publish_changeset(
         first,
         _OCDID,
@@ -348,7 +464,7 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
     )
 
     second = await _changeset(_T1)
-    await _record_evidence(second, ids["council"], ids["ana"], "Ana Reyes")
+    await _record_evidence(second, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
     await publish_changeset(
         second,
         _OCDID,
@@ -367,7 +483,7 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
                 "other_names": [],
                 "phones": [],
                 "emails": [],
-                "urls": [],
+                "urls": [_PAGE],
                 "source_urls": [_PAGE],
                 "image": None,
                 "cdn_image": None,
@@ -378,7 +494,7 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
                 "other_names": [],
                 "phones": [],
                 "emails": [],
-                "urls": [],
+                "urls": [_PAGE],
                 "source_urls": [_PAGE],
                 "image": None,
                 "cdn_image": None,
@@ -426,6 +542,9 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
         ]
     }
 
+    today, fold = await _shadow(ids)
+    assert fold == today
+
 
 @pytest.mark.asyncio
 @pytest.mark.integration
@@ -434,8 +553,8 @@ async def test_a_body_read_without_someone_closes_them_there():
     closes while Ben's, in a body nothing read, does not."""
     ids = await _seed()
     first = await _changeset(_T0)
-    await _record_evidence(first, ids["council"], ids["ana"], "Ana Reyes")
-    await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz")
+    await _record_evidence(first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
+    await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
     await publish_changeset(
         first,
         _OCDID,
@@ -448,7 +567,7 @@ async def test_a_body_read_without_someone_closes_them_there():
     )
 
     second = await _changeset(_T1)
-    await _record_evidence(second, ids["council"], ids["ben"], "Ben Ortiz")
+    await _record_evidence(second, ids["council"], ids["ben"], "Ben Ortiz", "Council Member")
     await publish_changeset(
         second,
         _OCDID,
@@ -463,3 +582,185 @@ async def test_a_body_read_without_someone_closes_them_there():
     }
     assert closed[("ana", "council")] == _T1
     assert closed[("ben", "mayors_office")] is None
+
+    today, fold = await _shadow(ids)
+    assert fold == today
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_rescrape_that_changes_the_pages_details():
+    """Ana's phone and the spelling in her page's aside both change between scrapes. Publish
+    overwrites the list columns with what the newest page says; the fold reads her newest
+    listing. Ben, whose page was not read again, keeps his."""
+    ids = await _seed()
+    first = await _changeset(_T0)
+    await _record_evidence(
+        first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2",
+        phone="555-0001", other_names=["A. Reyes"],
+    )
+    await _record_evidence(
+        first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor", phone="555-0009"
+    )
+    await publish_changeset(
+        first,
+        _OCDID,
+        [
+            _person(ids["ana"], "Ana Reyes", phones=["555-0001"], other_names=["A. Reyes"]),
+            _person(ids["ben"], "Ben Ortiz", phones=["555-0009"]),
+        ],
+        None,
+        derived=[
+            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2"),
+            _seat(ids["mayors_office"], "mayor", _BASE, ids["ben"], "Mayor"),
+        ],
+    )
+
+    second = await _changeset(_T1)
+    await _record_evidence(
+        second, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2",
+        phone="555-0002", other_names=["Ana M. Reyes"],
+    )
+    await publish_changeset(
+        second,
+        _OCDID,
+        [_person(ids["ana"], "Ana Reyes", phones=["555-0002"], other_names=["Ana M. Reyes"])],
+        None,
+        derived=[
+            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2")
+        ],
+    )
+
+    people = {row["person"]: row for row in (await _projection(ids))["people"]}
+    assert people["ana"]["phones"] == ["555-0002"]
+    assert people["ana"]["other_names"] == ["Ana M. Reyes"]
+    assert people["ben"]["phones"] == ["555-0009"]
+
+    today, fold = await _shadow(ids)
+    assert fold == today
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_rejected_value_stays_gone_when_the_page_keeps_printing_it():
+    """A human rejects Ana's phone; the next scrape says it again. Publish drops it through
+    `with_asserted_values`, the fold through `stands`, and the shadow says they agree."""
+    ids = await _seed()
+    user_id = await _reject_user()
+    first = await _changeset(_T0)
+    await _record_evidence(
+        first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2", phone="555-0001"
+    )
+    await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
+    await publish_changeset(
+        first,
+        _OCDID,
+        [_person(ids["ana"], "Ana Reyes", phones=["555-0001"]), _person(ids["ben"], "Ben Ortiz")],
+        None,
+        derived=[
+            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2"),
+            _seat(ids["mayors_office"], "mayor", _BASE, ids["ben"], "Mayor"),
+        ],
+    )
+    await assertions.create(
+        Assertion(
+            entity_type=EntityType.PERSON,
+            entity_id=ids["ana"],
+            field_path="phones",
+            kind=AssertionKind.REJECT,
+            value="555-0001",
+        ),
+        user_id,
+    )
+
+    second = await _changeset(_T1)
+    await _record_evidence(
+        second, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2", phone="555-0001"
+    )
+    await publish_changeset(
+        second,
+        _OCDID,
+        [_person(ids["ana"], "Ana Reyes", phones=["555-0001"])],
+        None,
+        derived=[
+            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2")
+        ],
+    )
+
+    people = {row["person"]: row for row in (await _projection(ids))["people"]}
+    assert people["ana"]["phones"] == []
+
+    today, fold = await _shadow(ids)
+    assert fold == today
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_label_that_maps_to_no_role_still_seats_them():
+    """The page calls Ana something the taxonomy has never heard of. She still projects, in a
+    post under the unmatched role, with the label there for a human to map later."""
+    ids = await _seed()
+    changeset_id = await _changeset(_T0)
+    await _record_evidence(changeset_id, ids["council"], ids["ana"], "Ana Reyes", "Grand Vizier")
+    await _record_evidence(changeset_id, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
+    await publish_changeset(
+        changeset_id,
+        _OCDID,
+        [_person(ids["ana"], "Ana Reyes"), _person(ids["ben"], "Ben Ortiz")],
+        None,
+        derived=[
+            _seat(ids["council"], UNMATCHED_ROLE_ID, _BASE, ids["ana"], "Grand Vizier"),
+            _seat(ids["mayors_office"], "mayor", _BASE, ids["ben"], "Mayor"),
+        ],
+    )
+
+    memberships = {
+        (row["person"], row["role_id"]) for row in (await _projection(ids))["memberships"]
+    }
+    assert ("ana", UNMATCHED_ROLE_ID) in memberships
+
+    today, fold = await _shadow(ids)
+    assert fold == today
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_mayor_then_member_then_mayor_again():
+    """Three scrapes of the council page. Ana is mayor, then a council member, then mayor
+    again: two posts, and at the end only the mayor one is open. Each scrape's label is
+    parsed on its own, so nothing turns into a Mayor of Ward 2."""
+    ids = await _seed()
+    steps = (
+        (_T0, "Mayor", "mayor", _BASE),
+        (_T1, "Council Member Ward 2", "council-member", _WARD_2),
+        (_T2, "Mayor", "mayor", _BASE),
+    )
+    first = await _changeset(_T0)
+    await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
+    await publish_changeset(
+        first,
+        _OCDID,
+        [_person(ids["ben"], "Ben Ortiz")],
+        None,
+        derived=[_seat(ids["mayors_office"], "mayor", _BASE, ids["ben"], "Mayor")],
+    )
+    for at, label, role_id, division in steps:
+        changeset_id = await _changeset(at)
+        await _record_evidence(changeset_id, ids["council"], ids["ana"], "Ana Reyes", label)
+        await publish_changeset(
+            changeset_id,
+            _OCDID,
+            [_person(ids["ana"], "Ana Reyes")],
+            None,
+            derived=[_seat(ids["council"], role_id, division, ids["ana"], label)],
+        )
+
+    open_now = {
+        (row["person"], row["role_id"])
+        for row in (await _projection(ids))["memberships"]
+        if row["closed_at"] is None
+    }
+    assert open_now == {("ana", "mayor"), ("ben", "mayor")}
+
+    today, fold = await _shadow(ids)
+    assert fold == today
