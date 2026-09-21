@@ -12,18 +12,17 @@ This is the seam 2.5 extends: `posts` and `memberships` are derived at publish a
 
 import logging
 
-import database.changesets as changesets_db
 import database.dismissals as dismissals_db
-from core.people_edits import with_asserted_values
 from core.membership_proposal import ids_by_person_and_organization
+from core.people_edits import with_asserted_values
 from core.post_derivation import DerivedPost, MembershipBinding
 from core.sinks.open_data_commit import ChangesetAttribution
-from database import assertions, memberships, posts, source_records
+from database import assertions, memberships, posts, projection, source_records
 from database.activity import record_change
 from database.changeset_predicates import PUBLISHED
 from database.changesets import get_updated_at
 from database.database import get_pool
-from database.people import PERSON_UPSERT, person_upsert_params
+from database.projection import PERSON_UPSERT, person_upsert_params
 from database.users import SYSTEM_USER_ID
 from schemas.activity import Change
 from schemas.assertions import EntityType
@@ -50,7 +49,9 @@ async def record_change_url(changeset_id: str, url: str) -> None:
         )
 
 
-async def publish_attributions(changeset_ids: list[str]) -> dict[str, ChangesetAttribution]:
+async def publish_attributions(
+    changeset_ids: list[str],
+) -> dict[str, ChangesetAttribution]:
     """Who published each of these, and from which batch. Unpublished ones are left out: the
     sweep's feed also carries imports and runs that are still open or were dismissed."""
     if not changeset_ids:
@@ -230,23 +231,25 @@ async def _bind_memberships(
     """
     # Seats are created here, not at ingest: a scrape only proposes them, and publishing is what
     # accepts. `create_all` logs each mint against this changeset.
-    post_ids = await posts.create_all(
-        cur, jurisdiction_ocdid, derived, changeset_id
-    )
+    post_ids = await posts.create_all(cur, jurisdiction_ocdid, derived, changeset_id)
     bindings: list[MembershipBinding] = []
     for post in derived:
         post_id = post_ids[(post.organization_id, post.role_id, post.division_ocdid)]
         for member in post.members:
             bindings.append(
-                MembershipBinding(member=member, organization_id=post.organization_id, post_id=post_id)
+                MembershipBinding(
+                    member=member, organization_id=post.organization_id, post_id=post_id
+                )
             )
     if bindings:
         await memberships.close_moved_memberships(cur, bindings, last_seen_at)
-        await memberships.upsert_open_memberships(cur, bindings, last_seen_at, advances_last_seen)
+        await projection.upsert_open_memberships(
+            cur, bindings, last_seen_at, advances_last_seen
+        )
         membership_ids = ids_by_person_and_organization(
             await memberships.open_memberships(cur, [jurisdiction_ocdid])
         )
-        await memberships.replace_membership_roles(cur, bindings, membership_ids)
+        await projection.replace_membership_roles(cur, bindings, membership_ids)
 
 
 def _people_by_organization(derived: list[DerivedPost]) -> dict[str, list[str]]:
@@ -300,10 +303,14 @@ async def _publish_people(
     return len(rows)
 
 
-async def _close_claimed_and_supersede(cur, changeset_id: str, jurisdiction_ocdid: str) -> None:
+async def _close_claimed_and_supersede(
+    cur, changeset_id: str, jurisdiction_ocdid: str
+) -> None:
     last_seen_at = await get_updated_at(cur, changeset_id)
     await memberships.close_claimed(cur, jurisdiction_ocdid, last_seen_at)
-    await memberships.close_for_people_rejected_here(cur, jurisdiction_ocdid, last_seen_at)
+    await memberships.close_for_people_rejected_here(
+        cur, jurisdiction_ocdid, last_seen_at
+    )
 
     # Same transaction, so a published roster and the cards it obsoletes cannot disagree.
     stale = await dismissals_db.dismiss_superseded_by(
@@ -337,14 +344,21 @@ async def publish_changeset(
         read_from_a_source = await _collected_from_a_source(cur, changeset_id)
         if derived:
             await _bind_memberships(
-                cur, changeset_id, jurisdiction_ocdid, derived, last_seen_at, read_from_a_source
+                cur,
+                changeset_id,
+                jurisdiction_ocdid,
+                derived,
+                last_seen_at,
+                read_from_a_source,
             )
 
         # A person's claims first: publish applies what somebody said, then infers the rest from
         # what the source stopped listing.
         await _close_claimed_and_supersede(cur, changeset_id, jurisdiction_ocdid)
         people_here = _people_by_organization(derived or [])
-        for organization_id in await _organizations_to_close_in(cur, changeset_id, people_here):
+        for organization_id in await _organizations_to_close_in(
+            cur, changeset_id, people_here
+        ):
             await memberships.close_absent(
                 cur, organization_id, people_here.get(organization_id, []), last_seen_at
             )
@@ -374,7 +388,12 @@ async def publish_hand_edit(
         last_seen_at = await get_updated_at(cur, changeset_id)
         if added:
             await _bind_memberships(
-                cur, changeset_id, jurisdiction_ocdid, added, last_seen_at, advances_last_seen=False
+                cur,
+                changeset_id,
+                jurisdiction_ocdid,
+                added,
+                last_seen_at,
+                advances_last_seen=False,
             )
         await memberships.close_for_people(
             cur, jurisdiction_ocdid, removed_person_ids, last_seen_at

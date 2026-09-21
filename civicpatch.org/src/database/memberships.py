@@ -13,7 +13,6 @@ which is what the roster timeline reads. One *open* membership per person per bo
 gone, not when they went.
 """
 
-import json
 import uuid
 from datetime import date, datetime, timezone
 from typing import AsyncGenerator
@@ -26,10 +25,10 @@ from core.membership_proposal import (
 )
 from core.post_derivation import DerivedMembership, MembershipBinding
 from database import assertions, posts
-from database.assertions import LATEST_FIRST
 from database.activity import record_change
 from database.changesets import get_updated_at, live_roster_changeset
 from database.database import get_pool
+from database.projection import replace_membership_roles, upsert_open_memberships
 from schemas.assertions import Assertion, AssertionKind, EntityType, Source
 from schemas.activity import (
     MEMBERSHIP_POST_FIELD,
@@ -58,22 +57,6 @@ CLOSED_FIELD = "closed_at"
 # rather than accumulating a new one each cycle.
 _RETRACTED = True
 
-# withdrawn_at IS NULL, added 189: without it this found a withdrawn label assertion just as
-# readily as a live one, since the ORDER BY has no opinion on withdrawal — so clearing a label
-# back to derived (set_label's withdraw call) had no effect here, and the very next scrape
-# would still be refused the field it was just supposed to get back.
-LABEL_IS_HUMAN_SET = f"""COALESCE((
-    SELECT assertions.kind = 'accept'
-    FROM assertions
-    WHERE assertions.entity_type = 'membership'
-      AND assertions.entity_id = memberships.id
-      AND assertions.field_path = '{LABEL_FIELD}'
-      AND assertions.withdrawn_at IS NULL
-    {LATEST_FIRST}
-    LIMIT 1
-), false)"""
-
-
 class UnknownPost(Exception):
     """The post id does not exist."""
 
@@ -88,56 +71,6 @@ _CLOSE_MOVED_MEMBERSHIPS = """
       AND closed_at IS NULL AND post_id <> %s
 """
 
-# Only a publish that read a source advances `last_seen_at`; a hand edit still dates a new one.
-_UPSERT_OPEN_MEMBERSHIPS = f"""
-    INSERT INTO memberships
-        (post_id, organization_id, person_id, designations, meta_unmatched_text,
-         sources, start_date, end_date, first_seen_at, last_seen_at, label)
-    VALUES (%s, %s, %s, %s, %s, %s::jsonb, %s, %s, %s, %s, %s)
-    ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
-    DO UPDATE SET
-        last_seen_at = CASE WHEN %s
-            THEN GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at)
-            ELSE memberships.last_seen_at END,
-        designations = EXCLUDED.designations,
-        meta_unmatched_text = EXCLUDED.meta_unmatched_text,
-        sources = EXCLUDED.sources,
-        start_date = EXCLUDED.start_date,
-        end_date = EXCLUDED.end_date,
-        label = CASE WHEN {LABEL_IS_HUMAN_SET}
-                     THEN memberships.label ELSE EXCLUDED.label END
-"""
-
-_DELETE_MEMBERSHIP_ROLES = "DELETE FROM membership_roles WHERE membership_id::text = %s"
-
-_INSERT_MEMBERSHIP_ROLE = """
-    INSERT INTO membership_roles (membership_id, role_id) VALUES (%s, %s)
-    ON CONFLICT DO NOTHING
-"""
-
-
-def _upsert_params(binding: MembershipBinding, last_seen_at, advances_last_seen: bool) -> tuple:
-    member = binding.member
-    return (
-        binding.post_id,
-        binding.organization_id,
-        member.person_id,
-        member.designations,
-        member.meta_unmatched_text,
-        json.dumps([source.model_dump() for source in member.sources]),
-        member.start_date,
-        member.end_date,
-        last_seen_at,
-        last_seen_at,
-        member.membership_label,
-        advances_last_seen,
-    )
-
-
-def _open_membership_key(binding: MembershipBinding) -> tuple[str, str]:
-    return (binding.member.person_id, binding.organization_id)
-
-
 async def close_moved_memberships(cur, bindings: list[MembershipBinding], closed_at) -> None:
     """Close each person's open membership in the organization when it is on a different post."""
     await cur.executemany(
@@ -145,33 +78,6 @@ async def close_moved_memberships(cur, bindings: list[MembershipBinding], closed
         [
             (closed_at, binding.member.person_id, binding.organization_id, binding.post_id)
             for binding in bindings
-        ],
-    )
-
-
-async def upsert_open_memberships(
-    cur, bindings: list[MembershipBinding], last_seen_at, advances_last_seen: bool
-) -> None:
-    """Open each membership, or refresh the open one; a human-set label is kept."""
-    await cur.executemany(
-        _UPSERT_OPEN_MEMBERSHIPS,
-        [_upsert_params(binding, last_seen_at, advances_last_seen) for binding in bindings],
-    )
-
-
-async def replace_membership_roles(
-    cur, bindings: list[MembershipBinding], membership_ids: dict[tuple[str, str], str]
-) -> None:
-    """Replace the open memberships' extra roles (beyond the post's own) with the latest label's."""
-    await cur.executemany(
-        _DELETE_MEMBERSHIP_ROLES, [(membership_ids[_open_membership_key(binding)],) for binding in bindings]
-    )
-    await cur.executemany(
-        _INSERT_MEMBERSHIP_ROLE,
-        [
-            (membership_ids[_open_membership_key(binding)], role_id)
-            for binding in bindings
-            for role_id in binding.member.role_ids
         ],
     )
 
