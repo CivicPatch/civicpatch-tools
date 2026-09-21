@@ -11,7 +11,10 @@ Run with:
 Isolation: everything hangs off one sentinel jurisdiction, removed before and after each test.
 `people` has no FK to `requests`, so it is cleaned explicitly.
 """
+import datetime
 import uuid
+
+from tests.integration import factories
 
 import pytest
 from shared.utils.statuses import ActivityType, DismissalReason
@@ -118,6 +121,34 @@ def _person(name: str) -> dict:
     }
 
 
+_PAGE = "https://zz-publish.example/council"
+_SCRAPED_AT = datetime.datetime(2026, 1, 1, tzinfo=datetime.timezone.utc)
+
+
+async def _scraped(*people: dict) -> str:
+    """The records behind these people, one per phone (a page prints one number per line),
+    under one published scrape. To the fold a person is their records; today's publish takes
+    the dicts as given, so this changes nothing it writes."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        organization_id = await organizations.get_default(cur, _SENTINEL_OCDID)
+    records = {
+        str(person["id"]): [
+            {
+                "name": person["name"],
+                "label": "Council Member",
+                "source_url": _PAGE,
+                "url": _PAGE,
+                "organization_id": organization_id,
+                "phone": phone,
+            }
+            for phone in (person.get("phones") or [None])
+        ]
+        for person in people
+    }
+    return await factories.published_scrape(_SENTINEL_OCDID, _SCRAPED_AT, records)
+
+
 async def _posts_for(people: list[dict]) -> list[DerivedPost]:
     """One post holding everyone, so a publish actually gives them memberships.
 
@@ -168,6 +199,7 @@ async def _people_by_status() -> dict[str, list[str]]:
 @pytest.mark.asyncio
 async def test_publish_writes_the_roster_as_current(sentinel_request):
     ann, bob = _person("Ann"), _person("Bob")
+    await _scraped(ann, bob)
     written = await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=await _posts_for([ann, bob])
     )
@@ -181,10 +213,12 @@ async def test_publish_writes_the_roster_as_current(sentinel_request):
 async def test_someone_absent_from_the_roster_becomes_inactive(sentinel_request):
     """`inactive`, not deleted — seat history has to survive a person leaving office."""
     ann, bob = _person("Ann"), _person("Bob")
+    await _scraped(ann, bob)
     await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=await _posts_for([ann, bob])
     )
 
+    await _scraped(ann)
     await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann], derived=await _posts_for([ann])
     )
@@ -196,13 +230,16 @@ async def test_someone_absent_from_the_roster_becomes_inactive(sentinel_request)
 @pytest.mark.asyncio
 async def test_republishing_someone_brings_them_back_to_active(sentinel_request):
     ann, bob = _person("Ann"), _person("Bob")
+    await _scraped(ann, bob)
     await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=await _posts_for([ann, bob])
     )
+    await _scraped(ann)
     await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann], derived=await _posts_for([ann])
     )
 
+    await _scraped(ann, bob)
     await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann, bob], derived=await _posts_for([ann, bob])
     )
@@ -218,6 +255,7 @@ async def test_an_empty_roster_does_not_retire_everyone(sentinel_request):
     Now guards `close_absent` rather than the deleted `_retire_absent` — same claim, and the
     same guard inside `close_absent` still makes it true."""
     ann = _person("Ann")
+    await _scraped(ann)
     await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann], derived=await _posts_for([ann])
     )
@@ -231,6 +269,7 @@ async def test_an_empty_roster_does_not_retire_everyone(sentinel_request):
 async def test_a_failed_publish_writes_nothing(sentinel_request):
     """One transaction: a person the table rejects must not leave the roster half-written."""
     ann = _person("Ann")
+    await _scraped(ann)
     await publish_changeset(
         sentinel_request, _SENTINEL_OCDID, [ann], derived=await _posts_for([ann])
     )
@@ -461,6 +500,7 @@ async def test_publish_applies_what_a_human_accepted(sentinel_request):
     person = _person("Ann")
     await _assert_field(person["id"], "name", "Ann Rodriguez", AssertionKind.ACCEPT)
 
+    await _scraped(person)
     await publish_changeset(sentinel_request, _SENTINEL_OCDID, [person])
 
     pool = await get_pool()
@@ -477,6 +517,7 @@ async def test_publish_drops_a_rejected_value_but_keeps_the_rest(sentinel_reques
     person = {**_person("Bob"), "phones": ["(555) 0001", "(555) 9999"]}
     await _assert_field(person["id"], "phones", "(555) 0001", AssertionKind.REJECT)
 
+    await _scraped(person)
     await publish_changeset(sentinel_request, _SENTINEL_OCDID, [person])
 
     pool = await get_pool()

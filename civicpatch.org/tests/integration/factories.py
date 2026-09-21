@@ -23,10 +23,13 @@ from database import memberships, organizations, projection
 from database.changesets import register_scrape_changeset
 from database.database import get_pool
 from database.pipeline_runs import register_run, update_pipeline_run_status
+from database.source_records import insert_source_records
 from shared.utils.statuses import PipelineRunStatus
 
 
-async def seed_jurisdiction(jurisdiction_ocdid: str, state: str, name: str = "Zy Place") -> None:
+async def seed_jurisdiction(
+    jurisdiction_ocdid: str, state: str, name: str = "Zy Place"
+) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -125,9 +128,15 @@ async def bind_membership(
     cur, member: DerivedMembership, post_id: str, organization_id: str, last_seen_at
 ) -> str:
     """One membership, written by the same steps publish runs. Returns its id."""
-    bindings = [MembershipBinding(member=member, organization_id=organization_id, post_id=post_id)]
+    bindings = [
+        MembershipBinding(
+            member=member, organization_id=organization_id, post_id=post_id
+        )
+    ]
     await memberships.close_moved_memberships(cur, bindings, last_seen_at)
-    await projection.upsert_open_memberships(cur, bindings, last_seen_at, advances_last_seen=True)
+    await projection.upsert_open_memberships(
+        cur, bindings, last_seen_at, advances_last_seen=True
+    )
     jurisdiction_ocdid = await organizations.jurisdiction_for(cur, organization_id)
     assert jurisdiction_ocdid is not None
     membership_ids = ids_by_person_and_organization(
@@ -152,7 +161,55 @@ async def default_organization(cur, jurisdiction_ocdid: str) -> str:
     return await organizations.find_or_create(cur, jurisdiction_ocdid)
 
 
+async def published_scrape(
+    jurisdiction_ocdid: str, at, records: dict[str, list[dict]]
+) -> str:
+    """A published scrape changeset dated `at`, and its source records keyed by person id, each
+    with its identity row. What has to exist before a person exists to the fold. Returns the
+    changeset id."""
+    changeset_id = str(uuid.uuid4())
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            "INSERT INTO changesets "
+            "  (id, jurisdiction_ocdid, kind, created_at, updated_at, published_at) "
+            "VALUES (%s, %s, 'scrape', %s, %s, %s)",
+            (changeset_id, jurisdiction_ocdid, at, at, at),
+        )
+    await insert_source_records(changeset_id, jurisdiction_ocdid, records)
+    return changeset_id
+
+
+async def published_source_record(
+    jurisdiction_ocdid: str,
+    organization_id: str,
+    person_id: str,
+    name: str,
+    label: str,
+    page: str,
+    at,
+    **fields,
+) -> str:
+    """One person's record from one page, under its own published scrape. `fields` is whatever
+    else the page said (`phone`, `other_names`, ...)."""
+    return await published_scrape(
+        jurisdiction_ocdid,
+        at,
+        {
+            person_id: [
+                {
+                    "name": name,
+                    "label": label,
+                    "source_url": page,
+                    "url": page,
+                    "organization_id": organization_id,
+                    **fields,
+                }
+            ]
+        },
+    )
+
+
 def sources_of(labels: list[str]) -> str:
     """`memberships.sources` for labels with no page, as jsonb text for a raw insert."""
     return json.dumps([{"url": None, "note": label} for label in labels])
-

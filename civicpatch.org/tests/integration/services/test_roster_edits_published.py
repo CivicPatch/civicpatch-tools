@@ -91,9 +91,12 @@ async def _seed() -> tuple[str, Identity]:
             "INSERT INTO changesets (kind, jurisdiction_ocdid, "
             "                        updated_at, published_at, created_at) "
             "VALUES ('scrape', %s, %s, now(), now()) "
-            "ON CONFLICT DO NOTHING",
+            "RETURNING id::text",
             (_OCDID, datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc)),
         )
+        changeset_row = await cur.fetchone()
+        assert changeset_row is not None
+        scrape_id = changeset_row[0]
         await cur.execute(
             # `source_urls` and `updated_at` are required by `SubmittedPersonRecord`, which every
             # edit is validated against — a person without them fails before any field does.
@@ -126,6 +129,24 @@ async def _seed() -> tuple[str, Identity]:
         assert row is not None
         user_id = row[0]
         await conn.commit()
+    # The record behind the row, under the scrape that published it: to the fold a person is
+    # their records.
+    await insert_source_records(
+        scrape_id,
+        _OCDID,
+        {
+            person_id: [
+                {
+                    "name": "Ada Chen",
+                    "label": "Mayor",
+                    "source_url": "https://editville.gov/council",
+                    "url": "https://editville.gov/council",
+                    "organization_id": org,
+                    "phone": "(206) 555-0111",
+                }
+            ]
+        },
+    )
     return person_id, Identity(
         type="session",
         provider="github",

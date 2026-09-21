@@ -420,6 +420,10 @@ async def test_publish_writes_memberships_for_the_roster():
             (_T0, _T0, changeset_id),
         )
         await conn.commit()
+    # The record behind the row: to the fold a person is their records.
+    await factories.published_source_record(
+        _OCDID, organization_id, person_id, "Robert Michaud", "Mayor", "https://example.gov", _T0
+    )
 
     people = [
         {
