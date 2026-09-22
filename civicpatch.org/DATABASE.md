@@ -58,6 +58,7 @@ erDiagram
         text            changeset_state     "GENERATED — open|published|dismissed. 170 cut it from five: running and failed are states of an attempt, and the attempt has its own table now. 177 renamed it from `state`, which collided with jurisdictions.state and left it with zero readers; 178 settled 'ready' → 'open' — 'pending' is taken by issues.status, and open is what an OSM changeset is"
         uuid_null       parent_changeset_id FK  "189. idx. ON DELETE SET NULL. The changeset this one layers on — live_roster_changeset (any kind except jurisdiction_edit) at mint time, resolved once rather than re-derived by every reader"
         jsonb_null      proposal_counts     "209. sheet_import only: {people, change_counts} counted at import against the roster published then. The batch page reads it instead of rebuilding every roster; NULL on other kinds, or where counting failed at import. 209 dropped the batches made before it"
+        text_null       comment             "214. Why, in the admin's words; the rollback route requires it. 214 also minted one rollback changeset per (user, jurisdiction) for withdrawals filed before withdraw was a claim kind, with this set to say so"
     }
 
     pipeline_runs {
@@ -296,10 +297,10 @@ erDiagram
 
     assertions {
         uuid            id                  PK
-        text            entity_type         "CHECK post|membership|person|jurisdiction|organization; no FK — heterogeneous subjects, the price of an event log"
-        uuid            entity_id           "no FK; deletes are refused rather than cascaded"
-        text            field_path          "NOT NULL — every assertion here is about a field. List fields (incl. post_id since 159) key on the value, scalars on the field; the two partial indexes from 137 that enforced this were DROPPED in 187, since history means several rows can now exist per key"
-        text            kind                "CHECK accept|reject"
+        text            entity_type         "CHECK post|membership|person|jurisdiction|organization|source_record|source_page|claim (last three 214: what a withdraw can name); no FK — heterogeneous subjects, the price of an event log"
+        uuid            entity_id           "no FK; deletes are refused rather than cascaded. For entity_type membership, since 216: membership_id(person, post) = uuid5 over the person and the fold's post id (SQL function, twin of shared.utils.membership_ids); rows keyed by a memberships row id are the pre-216 originals, read by today's publish until the fold replaces it"
+        text_null       field_path          "NULL only on a withdraw, which names a whole fact (CHECK, 214). Otherwise the field: list fields (incl. post_id since 159) key on the value, scalars on the field; the two partial indexes from 137 that enforced this were DROPPED in 187, since history means several rows can now exist per key"
+        text            kind                "CHECK accept|reject|withdraw (214). A withdraw's entity is the fact it cancels: entity_type claim|source_record|source_page, entity_id that row's id, value 'null'"
         jsonb_null      value               "corrections only; NULL = deliberately empty, which is why kind exists"
         jsonb_null      sources             "[{note, url}] — note may stand alone: 'phoned the clerk'"
         uuid            created_by          FK "NOT NULL — an assertion nobody made is not an assertion. Permanent since 187: a re-assert inserts, it never overwrites this. Renamed from asserted_by in 191, same reasoning as created_at below"

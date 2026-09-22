@@ -426,9 +426,11 @@ class TestMergeWeakTieGroups:
         assert len(result["Marty C Smith Jr"]) == 2
 
 
-def test_canonical_name_drops_a_published_title():
-    """Dev 2026-09-19: LA County publishes "Chair Hilda L. Solis". The chair is a post."""
-    assert canonical_name("Chair Hilda L. Solis", []) == "Hilda L. Solis"
+def test_canonical_name_keeps_a_published_title():
+    """Dev 2026-09-19: LA County publishes "Chair Hilda L. Solis". Stripping a published name
+    renamed every titled person already on a roster and showed each as changed on their next
+    review, so a published name wins as it stands; a human edits the title out."""
+    assert canonical_name("Chair Hilda L. Solis", []) == "Chair Hilda L. Solis"
 
 
 def test_canonical_name_counts_spellings_without_their_credentials():

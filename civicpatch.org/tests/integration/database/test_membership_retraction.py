@@ -12,10 +12,10 @@ import uuid
 
 import pytest
 import pytest_asyncio
-
 from core.post_derivation import DerivedMembership
 from database import divisions, memberships, organizations, people, posts
 from database.database import get_pool
+
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_retract/government"
@@ -44,6 +44,12 @@ async def _wipe():
             )
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        # A withdraw row is filed by the user too, and it names a claim, not a person.
+        await cur.execute(
+            "DELETE FROM assertions WHERE created_by IN "
+            "(SELECT id FROM users WHERE provider_user_id = %s)",
+            (_USER_EMAIL,),
         )
         await cur.execute(
             "DELETE FROM users WHERE provider_user_id = %s", (_USER_EMAIL,)
@@ -116,7 +122,9 @@ async def test_retraction_neither_closes_nor_deletes_the_membership():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await memberships.retract(cur, membership_id, user_id, reason="fabricated by a scrape")
+        await memberships.retract(
+            cur, membership_id, user_id, reason="fabricated by a scrape"
+        )
         await conn.commit()
 
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -169,7 +177,8 @@ async def test_retracting_twice_does_not_accumulate_rows():
         await conn.commit()
 
         await cur.execute(
-            "SELECT count(*) FROM assertions WHERE entity_id::text = %s", (membership_id,)
+            "SELECT count(*) FROM assertions WHERE entity_id::text = %s",
+            (membership_id,),
         )
         assert (await cur.fetchone())[0] == 1
 
@@ -201,7 +210,9 @@ async def test_a_withdrawn_label_no_longer_protects_the_field_from_a_scrape():
         await cur.execute(
             "SELECT label FROM memberships WHERE id::text = %s", (membership_id,)
         )
-        assert (await cur.fetchone())[0] == "Human Label", "the human's label must still win"
+        assert (await cur.fetchone())[0] == "Human Label", (
+            "the human's label must still win"
+        )
 
     # Clear it back to derived.
     async with pool.connection() as conn, conn.cursor() as cur:

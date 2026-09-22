@@ -60,10 +60,14 @@ def with_images(person: dict, source_urls: dict, cdn_urls: dict) -> dict:
     return resolved
 
 
-def cdn_urls(filenames_to_urls: dict, storage_endpoint: str, bucket: str, domain: str) -> dict:
+def cdn_urls(
+    filenames_to_urls: dict, storage_endpoint: str, bucket: str, domain: str
+) -> dict:
     """Where each uploaded photo is served from, keyed by downloaded filename."""
     return {
-        basename: url.replace(f"{storage_endpoint}/{bucket}", f"https://{bucket}.{domain}")
+        basename: url.replace(
+            f"{storage_endpoint}/{bucket}", f"https://{bucket}.{domain}"
+        )
         for basename, url in filenames_to_urls.items()
     }
 
@@ -132,3 +136,15 @@ def promoted_key(key: str) -> str | None:
 
 def promoted_url(friendly_storage_host: str, key: str) -> str:
     return f"{friendly_storage_host.rstrip('/')}/{key}"
+
+
+def published_image_url(
+    cdn_image: str | None, artifacts_bucket: str, friendly_storage_host: str
+) -> str | None:
+    if not cdn_image:
+        return cdn_image
+    key = artifacts_key(cdn_image, artifacts_bucket)
+    destination = promoted_key(key) if key else None
+    if not destination:
+        return cdn_image
+    return promoted_url(friendly_storage_host, destination)

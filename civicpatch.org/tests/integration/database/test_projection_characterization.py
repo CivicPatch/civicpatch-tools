@@ -16,10 +16,10 @@ then a member, then mayor again.
 `memberships.label` reads NULL throughout, and that is the behaviour: it holds the name a human
 asserted (`set_label`), never the source's note, which lives in `sources`.
 
-Each case ends with `_shadow`: the fold, run over the same facts, must derive the same people and
-open memberships that today's path wrote. Everyone the shadow compares has been scraped at least
-once, because `_seed` inserts `people` rows directly and a person with no fact behind them does
-not exist to the fold.
+Each case ends with the projection diff: the fold, run over the same facts, must derive the same
+people and open memberships that today's path wrote. Everyone it compares has been scraped at
+least once, because `_seed` inserts `people` rows directly and a person with no fact behind them
+does not exist to the fold.
 
 Isolation: sentinel state 'zc', cleaned before and after.
 """
@@ -34,11 +34,12 @@ from shared.schemas import RoleConfig
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID, build_taxonomy
 
 from core.post_derivation import DerivedMembership, DerivedPost, MembershipSource
-from core.projection.posts import PostKey
+from core.projection.diff import RosterDiff, roster_diff
 from core.projection.roster import derive_roster
 from database import assertions, divisions, posts
 from database.database import get_pool
-from database.facts import load_facts_for
+from database.facts import load_facts
+from database.projection import stored_roster
 from database.publications import publish_changeset
 from database.roles import get_roles
 from database.source_records import insert_source_records
@@ -284,72 +285,17 @@ async def _projection(ids: dict) -> dict:
     }
 
 
-_COMPARED_FIELDS = (
-    "name",
-    "other_names",
-    "phones",
-    "emails",
-    "urls",
-    "source_urls",
-    "image",
-    "cdn_image",
-)
-
-
-async def _shadow(ids: dict) -> tuple[dict, dict]:
-    """The same roster twice: as today's path wrote it, and as the fold derives it from facts.
-
-    Memberships compare by post key, not post id: today's ids are random and the fold's are
-    `uuid5` over the key, so the key is the only thing the two can agree on.
-    """
-    names = {ids["ana"]: "ana", ids["ben"]: "ben"}
+async def _projection_diff() -> RosterDiff:
+    """The roster diff of stored against derived: the rows today's path wrote, against
+    `derive_roster` over the same facts. Empty is R6."""
+    roles = await get_roles()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT m.person_id::text, p.organization_id::text, p.role_id, p.division_ocdid
-            FROM memberships m JOIN posts p ON p.id = m.post_id
-            WHERE p.jurisdiction_ocdid = %s AND m.closed_at IS NULL
-            """,
-            (_OCDID,),
-        )
-        open_rows = await cur.fetchall()
-        await cur.execute(
-            f"SELECT id::text, {', '.join(_COMPARED_FIELDS)} FROM people "
-            "WHERE jurisdiction_ocdid = %s",
-            (_OCDID,),
-        )
-        people_rows = await cur.fetchall()
+        stored = await stored_roster(cur, _OCDID)
+        facts = await load_facts(cur, _OCDID, datetime.datetime.now(datetime.timezone.utc))
+    derived = derive_roster(facts, _OCDID, build_taxonomy(RoleConfig(roles=roles)), roles)
+    return roster_diff(stored, derived)
 
-    today = {
-        "people": {
-            names[row[0]]: {
-                field: (tuple(value) if isinstance(value, list) else value)
-                for field, value in zip(_COMPARED_FIELDS, row[1:])
-            }
-            for row in people_rows
-        },
-        "memberships": sorted(
-            (names[row[0]], PostKey(organization_id=row[1], role_id=row[2], division_ocdid=row[3]).post_id)
-            for row in open_rows
-        ),
-    }
-
-    roles = await get_roles()
-    facts = await load_facts_for(_OCDID, datetime.datetime.now(datetime.timezone.utc))
-    roster = derive_roster(facts, _OCDID, build_taxonomy(RoleConfig(roles=roles)), roles)
-    fold = {
-        "people": {
-            names[person.id]: {field: getattr(person, field) for field in _COMPARED_FIELDS}
-            for person in roster.people
-        },
-        "memberships": sorted(
-            (names[person.id], membership.post_id)
-            for person in roster.people
-            for membership in person.memberships
-        ),
-    }
-    return today, fold
 
 
 @pytest.mark.asyncio
@@ -439,8 +385,8 @@ async def test_publishing_two_bodies_derives_this_projection():
         ]
     }
 
-    today, fold = await _shadow(ids)
-    assert fold == today
+    diff = await _projection_diff()
+    assert diff.empty, diff
 
 
 @pytest.mark.asyncio
@@ -542,8 +488,8 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
         ]
     }
 
-    today, fold = await _shadow(ids)
-    assert fold == today
+    diff = await _projection_diff()
+    assert diff.empty, diff
 
 
 @pytest.mark.asyncio
@@ -583,8 +529,8 @@ async def test_a_body_read_without_someone_closes_them_there():
     assert closed[("ana", "council")] == _T1
     assert closed[("ben", "mayors_office")] is None
 
-    today, fold = await _shadow(ids)
-    assert fold == today
+    diff = await _projection_diff()
+    assert diff.empty, diff
 
 
 @pytest.mark.asyncio
@@ -597,17 +543,17 @@ async def test_a_rescrape_that_changes_the_pages_details():
     first = await _changeset(_T0)
     await _record_evidence(
         first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2",
-        phone="555-0001", other_names=["A. Reyes"],
+        phone="(206) 555-0001", other_names=["A. Reyes"],
     )
     await _record_evidence(
-        first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor", phone="555-0009"
+        first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor", phone="(206) 555-0009"
     )
     await publish_changeset(
         first,
         _OCDID,
         [
-            _person(ids["ana"], "Ana Reyes", phones=["555-0001"], other_names=["A. Reyes"]),
-            _person(ids["ben"], "Ben Ortiz", phones=["555-0009"]),
+            _person(ids["ana"], "Ana Reyes", phones=["(206) 555-0001"], other_names=["A. Reyes"]),
+            _person(ids["ben"], "Ben Ortiz", phones=["(206) 555-0009"]),
         ],
         None,
         derived=[
@@ -619,12 +565,12 @@ async def test_a_rescrape_that_changes_the_pages_details():
     second = await _changeset(_T1)
     await _record_evidence(
         second, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2",
-        phone="555-0002", other_names=["Ana M. Reyes"],
+        phone="(206) 555-0002", other_names=["Ana M. Reyes"],
     )
     await publish_changeset(
         second,
         _OCDID,
-        [_person(ids["ana"], "Ana Reyes", phones=["555-0002"], other_names=["Ana M. Reyes"])],
+        [_person(ids["ana"], "Ana Reyes", phones=["(206) 555-0002"], other_names=["Ana M. Reyes"])],
         None,
         derived=[
             _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2")
@@ -632,30 +578,30 @@ async def test_a_rescrape_that_changes_the_pages_details():
     )
 
     people = {row["person"]: row for row in (await _projection(ids))["people"]}
-    assert people["ana"]["phones"] == ["555-0002"]
+    assert people["ana"]["phones"] == ["(206) 555-0002"]
     assert people["ana"]["other_names"] == ["Ana M. Reyes"]
-    assert people["ben"]["phones"] == ["555-0009"]
+    assert people["ben"]["phones"] == ["(206) 555-0009"]
 
-    today, fold = await _shadow(ids)
-    assert fold == today
+    diff = await _projection_diff()
+    assert diff.empty, diff
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_rejected_value_stays_gone_when_the_page_keeps_printing_it():
     """A human rejects Ana's phone; the next scrape says it again. Publish drops it through
-    `with_asserted_values`, the fold through `stands`, and the shadow says they agree."""
+    `with_asserted_values`, the fold through `stands`, and the projection diff is empty."""
     ids = await _seed()
     user_id = await _reject_user()
     first = await _changeset(_T0)
     await _record_evidence(
-        first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2", phone="555-0001"
+        first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2", phone="(206) 555-0001"
     )
     await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
     await publish_changeset(
         first,
         _OCDID,
-        [_person(ids["ana"], "Ana Reyes", phones=["555-0001"]), _person(ids["ben"], "Ben Ortiz")],
+        [_person(ids["ana"], "Ana Reyes", phones=["(206) 555-0001"]), _person(ids["ben"], "Ben Ortiz")],
         None,
         derived=[
             _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2"),
@@ -668,19 +614,19 @@ async def test_a_rejected_value_stays_gone_when_the_page_keeps_printing_it():
             entity_id=ids["ana"],
             field_path="phones",
             kind=AssertionKind.REJECT,
-            value="555-0001",
+            value="(206) 555-0001",
         ),
         user_id,
     )
 
     second = await _changeset(_T1)
     await _record_evidence(
-        second, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2", phone="555-0001"
+        second, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2", phone="(206) 555-0001"
     )
     await publish_changeset(
         second,
         _OCDID,
-        [_person(ids["ana"], "Ana Reyes", phones=["555-0001"])],
+        [_person(ids["ana"], "Ana Reyes", phones=["(206) 555-0001"])],
         None,
         derived=[
             _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2")
@@ -690,8 +636,8 @@ async def test_a_rejected_value_stays_gone_when_the_page_keeps_printing_it():
     people = {row["person"]: row for row in (await _projection(ids))["people"]}
     assert people["ana"]["phones"] == []
 
-    today, fold = await _shadow(ids)
-    assert fold == today
+    diff = await _projection_diff()
+    assert diff.empty, diff
 
 
 @pytest.mark.asyncio
@@ -719,8 +665,8 @@ async def test_a_label_that_maps_to_no_role_still_seats_them():
     }
     assert ("ana", UNMATCHED_ROLE_ID) in memberships
 
-    today, fold = await _shadow(ids)
-    assert fold == today
+    diff = await _projection_diff()
+    assert diff.empty, diff
 
 
 @pytest.mark.asyncio
@@ -762,5 +708,65 @@ async def test_mayor_then_member_then_mayor_again():
     }
     assert open_now == {("ana", "mayor"), ("ben", "mayor")}
 
-    today, fold = await _shadow(ids)
-    assert fold == today
+    diff = await _projection_diff()
+    assert diff.empty, diff
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_withdrawn_claim_no_longer_counts():
+    """A human accepts a name, then it is withdrawn (an admin's rollback, or clearing an
+    override today). Today's publish reads `withdrawn_at`; the fold reads the withdraw row that
+    214 files alongside it. Both must fall back to what the page says."""
+    ids = await _seed()
+    user_id = await _reject_user()
+    first = await _changeset(_T0)
+    await _record_evidence(first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
+    await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
+    await assertions.create(
+        Assertion(
+            entity_type=EntityType.PERSON,
+            entity_id=ids["ana"],
+            field_path="name",
+            kind=AssertionKind.ACCEPT,
+            value="Ana M. Reyes",
+        ),
+        user_id,
+    )
+    await publish_changeset(
+        first,
+        _OCDID,
+        [_person(ids["ana"], "Ana Reyes"), _person(ids["ben"], "Ben Ortiz")],
+        None,
+        derived=[
+            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2"),
+            _seat(ids["mayors_office"], "mayor", _BASE, ids["ben"], "Mayor"),
+        ],
+    )
+    people = {row["person"]: row for row in (await _projection(ids))["people"]}
+    assert people["ana"]["name"] == "Ana M. Reyes"
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        withdrawn = await assertions.withdraw(
+            cur, EntityType.PERSON, ids["ana"], "name", AssertionKind.ACCEPT, user_id, "typo"
+        )
+        await conn.commit()
+    assert withdrawn == 1
+
+    second = await _changeset(_T1)
+    await _record_evidence(second, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
+    await publish_changeset(
+        second,
+        _OCDID,
+        [_person(ids["ana"], "Ana Reyes")],
+        None,
+        derived=[
+            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2")
+        ],
+    )
+    people = {row["person"]: row for row in (await _projection(ids))["people"]}
+    assert people["ana"]["name"] == "Ana Reyes"
+
+    diff = await _projection_diff()
+    assert diff.empty, diff

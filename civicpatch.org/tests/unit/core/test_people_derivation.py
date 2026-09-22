@@ -12,7 +12,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from core.people_derivation import derived_people
+from core.people_derivation import canonical_name, derived_people
 from shared.schemas import Person, PersonSourceRecord, Role, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 
@@ -376,3 +376,13 @@ def test_a_stated_other_name_becomes_an_alias():
     people = _reconcile({"sheet": [record]}, [], identities={})
 
     assert [person.other_names for person in people] == [["Jenny Fisk-Becker"]]
+
+
+def test_a_new_name_loses_its_title():
+    record = PersonSourceRecord(
+        name="Chair Hilda L. Solis",
+        label="Supervisor",
+        source_url="https://example.gov/board",
+    )
+
+    assert canonical_name("", [record]) == "Hilda L. Solis"

@@ -1,8 +1,8 @@
 """What `membership_state` must answer.
 
-The four-row table in plan §6: the newest live claim across `exists` and `closed` decides, and
-with no claim the latest read of the organization does. Everything here is one of the four
-rows, or the boundary between two of them.
+Three rows: the newest live `exists` claim decides (accept holds it, reject does not), and with
+no claim the latest read of the organization does. Everything here is one of the three rows,
+or the boundary between two of them.
 """
 
 from datetime import datetime, timedelta, timezone
@@ -11,7 +11,7 @@ import pytest
 from shared.utils.membership_ids import membership_id
 
 from core.projection.facts import Claim, ClaimKind, EntityType, Facts, SourceRecord
-from core.projection.memberships import LISTED_AFTER_CLOSE, membership_state
+from core.projection.memberships import LISTED_AFTER_REJECT, membership_state
 
 _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
 ALICE = {"alice"}
@@ -120,36 +120,36 @@ def test_an_exists_reject_suppresses_it_however_often_the_page_says_otherwise():
 
 
 @pytest.mark.unit
-def test_a_close_ends_it():
+def test_a_reject_ends_it():
     own = (record("r1", "c1", minutes=1),)
     facts = Facts(
-        records=own, claims=(membership_claim("k1", "closed", True, minutes=2),)
+        records=own, claims=(membership_claim("k1", "exists", MAYOR, kind=ClaimKind.REJECT, minutes=2),)
     )
 
     assert membership_state(ALICE, MAYOR, own, facts).active is False
 
 
 @pytest.mark.unit
-def test_a_close_stands_even_while_the_page_keeps_listing_them():
-    """No evidence reopens a close: a stale page must not undo a human's "they are gone". The
+def test_a_reject_stands_even_while_the_page_keeps_listing_them():
+    """No evidence reopens a reject: a stale page must not undo a human's "they are gone". The
     issue is what prompts somebody to look again."""
     own = (record("r1", "c1", minutes=1), record("r2", "c2", minutes=3))
     facts = Facts(
-        records=own, claims=(membership_claim("k1", "closed", True, minutes=2),)
+        records=own, claims=(membership_claim("k1", "exists", MAYOR, kind=ClaimKind.REJECT, minutes=2),)
     )
 
     state = membership_state(ALICE, MAYOR, own, facts)
 
     assert state.active is False
-    assert state.issue == LISTED_AFTER_CLOSE
+    assert state.issue == LISTED_AFTER_REJECT
 
 
 @pytest.mark.unit
-def test_a_close_the_page_agrees_with_raises_nothing():
+def test_a_reject_the_page_agrees_with_raises_nothing():
     own = (record("r1", "c1", minutes=1),)
     facts = Facts(
         records=own + (record("r2", "c2", person="bob", minutes=3),),
-        claims=(membership_claim("k1", "closed", True, minutes=2),),
+        claims=(membership_claim("k1", "exists", MAYOR, kind=ClaimKind.REJECT, minutes=2),),
     )
 
     state = membership_state(ALICE, MAYOR, own, facts)
@@ -159,11 +159,11 @@ def test_a_close_the_page_agrees_with_raises_nothing():
 
 
 @pytest.mark.unit
-def test_accepting_after_a_close_reopens_it():
-    """A re-election, and the only thing that reopens a closed membership."""
+def test_accepting_after_a_reject_reopens_it():
+    """A re-election, and the only thing that reopens a rejected membership."""
     facts = Facts(
         claims=(
-            membership_claim("k1", "closed", True, minutes=1),
+            membership_claim("k1", "exists", MAYOR, kind=ClaimKind.REJECT, minutes=1),
             membership_claim("k2", "exists", MAYOR, minutes=2),
         )
     )
@@ -172,13 +172,12 @@ def test_accepting_after_a_close_reopens_it():
 
 
 @pytest.mark.unit
-def test_closing_after_an_accept_ends_it():
-    """The same two claims the other way round. The newest wins across both field paths, which
-    is why they cannot be resolved separately."""
+def test_rejecting_after_an_accept_ends_it():
+    """The same two claims the other way round: the newest wins."""
     facts = Facts(
         claims=(
             membership_claim("k1", "exists", MAYOR, minutes=1),
-            membership_claim("k2", "closed", True, minutes=2),
+            membership_claim("k2", "exists", MAYOR, kind=ClaimKind.REJECT, minutes=2),
         )
     )
 
@@ -216,7 +215,7 @@ def test_the_answer_does_not_depend_on_the_order_the_facts_arrive():
     """R6: the same facts rebuild the same projection, whatever order the loader returns."""
     own = (record("r1", "c1", minutes=1), record("r2", "c2", minutes=3))
     claims = (
-        membership_claim("k1", "closed", True, minutes=2),
+        membership_claim("k1", "exists", MAYOR, kind=ClaimKind.REJECT, minutes=2),
         membership_claim("k2", "exists", MAYOR, minutes=4),
     )
 

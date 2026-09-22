@@ -25,16 +25,15 @@ from core.projection.facts import (
 from core.projection.reads import reads_of
 
 EXISTS = "exists"
-CLOSED = "closed"
 LABEL = "label"
 
 START_DATE = "start_date"
 END_DATE = "end_date"
 
 # Every field a human can claim about a membership, which is what "edited" asks about.
-MEMBERSHIP_FIELDS = (EXISTS, CLOSED, LABEL, START_DATE, END_DATE)
+MEMBERSHIP_FIELDS = (EXISTS, LABEL, START_DATE, END_DATE)
 
-LISTED_AFTER_CLOSE = "LISTED_AFTER_CLOSE"
+LISTED_AFTER_REJECT = "LISTED_AFTER_REJECT"
 
 
 class MembershipState(BaseModel, frozen=True):
@@ -105,7 +104,7 @@ def membership_state(
 ) -> MembershipState:
     """Whether this cluster holds this post, and what to ask a human about.
 
-    A close stands until a user accepts. No evidence reopens it, not a continuous listing and
+    A reject stands until a user accepts. No evidence reopens it, not a continuous listing and
     not a gap in the reads, because a stale page must not undo somebody's "they are gone".
     """
 
@@ -117,22 +116,13 @@ def membership_state(
             record.changeset_id == reads[-1].changeset_id for record in own_records
         )
 
-    claims = sorted(
-        (
-            membership_claims(members, post_id, EXISTS, facts)
-            + membership_claims(members, post_id, CLOSED, facts)
-        ),
-        key=latest_first,
-    )
+    claims = membership_claims(members, post_id, EXISTS, facts)
 
     if not claims:
         return MembershipState(active=listed_now)
 
-    newest = claims[-1]
-    if newest.kind == ClaimKind.REJECT:
-        return MembershipState(active=False)
-    if newest.field_path == EXISTS:
+    if claims[-1].kind == ClaimKind.ACCEPT:
         return MembershipState(active=True)
     return MembershipState(
-        active=False, issue=LISTED_AFTER_CLOSE if listed_now else None
+        active=False, issue=LISTED_AFTER_REJECT if listed_now else None
     )

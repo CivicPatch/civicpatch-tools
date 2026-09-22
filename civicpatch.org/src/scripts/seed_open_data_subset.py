@@ -27,6 +27,7 @@ import io
 import json
 import logging
 import tarfile
+from pathlib import Path
 from datetime import datetime, timezone
 from typing import Any, LiteralString
 
@@ -40,6 +41,13 @@ from database.database import get_pool
 from services.sources.open_data import read_jurisdiction_files
 
 logger = logging.getLogger(__name__)
+
+# The export carries `people` and `memberships` but no records, and the fold derives people from
+# records. Migration 215 gives record-less rosters their records and is idempotent, so the seed
+# runs it again over what it just loaded rather than keeping a copy of it.
+BACKFILL_MIGRATION = (
+    Path(__file__).parents[2] / "database_operations/migrations/215_backfill_source_records.up.sql"
+)
 
 DATA_BASE = "https://cdn.civicpatch.org/parquet/"
 # The whole public repo as one download: the REST API allows 60 unauthenticated requests an hour,
@@ -425,6 +433,17 @@ async def seed(states: list[str], limit: int | None) -> None:
         if states:
             jurisdiction_ocdids = await jurisdiction_ocdids_in_states(conn, states)
         await load_rosters(conn, downloads, jurisdiction_ocdids, limit)
+        await backfill_source_records(conn)
+
+
+async def backfill_source_records(conn: AsyncConnection) -> None:
+    await conn.commit()
+    await conn.set_autocommit(True)
+    # The migration file is its own transaction (BEGIN ... COMMIT), and is read from disk, which
+    # psycopg's LiteralString typing cannot see through.
+    await conn.execute(BACKFILL_MIGRATION.read_text())  # type: ignore[arg-type]
+    await conn.set_autocommit(False)
+    logger.info("seed_open_data_subset: backfilled source records (migration 215)")
 
 
 DEFAULT_LIMIT = "10"

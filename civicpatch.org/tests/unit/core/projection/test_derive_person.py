@@ -13,7 +13,7 @@ from shared.utils.membership_ids import membership_id
 from shared.utils.taxonomy import build_taxonomy
 
 from core.projection.facts import Claim, ClaimKind, EntityType, Facts, SourceRecord
-from core.projection.memberships import LISTED_AFTER_CLOSE
+from core.projection.memberships import LISTED_AFTER_REJECT
 from core.projection.people import derive_person
 from core.projection.posts import PostKey
 
@@ -113,12 +113,12 @@ def test_a_person_with_no_facts_at_all():
 
 @pytest.mark.unit
 def test_fields_come_from_field_value():
-    facts = Facts(records=(record("r1", name="Alice Ng", phone="555-1111", image="a.jpg"),))
+    facts = Facts(records=(record("r1", name="Alice Ng", phone="(206) 555-1111", image="a.jpg"),))
 
     person = derive(ALICE, facts)
 
     assert person.name == "Alice Ng"
-    assert person.phones == ("555-1111",)
+    assert person.phones == ("(206) 555-1111",)
     assert person.image == "a.jpg"
     assert person.emails == ()
 
@@ -197,14 +197,14 @@ def test_an_issue_from_membership_state_is_carried_up():
             record("r1", "Mayor", changeset="c1", minutes=1),
             record("r2", "Mayor", changeset="c2", minutes=3),
         ),
-        claims=(membership_claim("k1", MAYOR, "closed", True, minutes=2),),
+        claims=(membership_claim("k1", MAYOR, "exists", MAYOR, kind=ClaimKind.REJECT, minutes=2),),
     )
 
     person = derive(ALICE, facts)
 
     assert person.memberships == ()
     assert person.issues == (
-        type(person.issues[0])(post_id=MAYOR, issue=LISTED_AFTER_CLOSE),
+        type(person.issues[0])(post_id=MAYOR, issue=LISTED_AFTER_REJECT),
     )
 
 
