@@ -13,7 +13,9 @@ import json
 from collections.abc import Iterable
 
 from core.post_derivation import MembershipBinding
-from core.projection.people import Person
+from core.projection.people import Membership, Person
+from core.projection.posts import PostKey
+from core.projection.roster import Roster
 from database.assertions import LATEST_FIRST
 from database.posts import LABEL_FIELD
 
@@ -181,4 +183,58 @@ async def replace_membership_roles(
             for binding in bindings
             for role_id in binding.member.role_ids
         ],
+    )
+
+
+# The stored projection as a `Roster`, the stored side of the projection diff. Read-only.
+_JURISDICTIONS_WITH_A_ROSTER = """
+    SELECT DISTINCT p.jurisdiction_ocdid
+    FROM memberships m JOIN posts p ON p.id = m.post_id
+    WHERE m.closed_at IS NULL
+    ORDER BY p.jurisdiction_ocdid
+"""
+
+_STORED_PEOPLE = """
+    SELECT id::text, name, other_names, phones, emails, urls, source_urls, image, cdn_image
+    FROM people WHERE jurisdiction_ocdid = %s
+"""
+
+_STORED_OPEN_MEMBERSHIPS = """
+    SELECT m.person_id::text, p.organization_id::text, p.role_id, p.division_ocdid, m.label
+    FROM memberships m JOIN posts p ON p.id = m.post_id
+    WHERE p.jurisdiction_ocdid = %s AND m.closed_at IS NULL
+"""
+
+
+async def jurisdictions_with_a_roster(cur) -> list[str]:
+    await cur.execute(_JURISDICTIONS_WITH_A_ROSTER)
+    return [row[0] for row in await cur.fetchall()]
+
+
+async def stored_roster(cur, jurisdiction_ocdid: str) -> Roster:
+    await cur.execute(_STORED_OPEN_MEMBERSHIPS, (jurisdiction_ocdid,))
+    memberships: dict[str, list[Membership]] = {}
+    for person_id, organization_id, role_id, division_ocdid, label in await cur.fetchall():
+        post_id = PostKey(
+            organization_id=organization_id, role_id=role_id, division_ocdid=division_ocdid
+        ).post_id
+        memberships.setdefault(person_id, []).append(Membership(post_id=post_id, label=label))
+
+    await cur.execute(_STORED_PEOPLE, (jurisdiction_ocdid,))
+    return Roster(
+        people=tuple(
+            Person(
+                id=row[0],
+                name=row[1],
+                other_names=tuple(row[2] or ()),
+                phones=tuple(row[3] or ()),
+                emails=tuple(row[4] or ()),
+                urls=tuple(row[5] or ()),
+                source_urls=tuple(row[6] or ()),
+                image=row[7],
+                cdn_image=row[8],
+                memberships=tuple(sorted(memberships.get(row[0], ()), key=lambda m: m.post_id)),
+            )
+            for row in sorted(await cur.fetchall())
+        )
     )

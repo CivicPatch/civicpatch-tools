@@ -8,9 +8,11 @@ lives:
     list      every value a current record carries, plus accepted values; `()` if neither
 """
 
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 
+from shared.utils.email_utils import is_valid_email, normalize_email
 from shared.utils.name_utils import same_name
+from shared.utils.phone_utils import normalize_phone_number
 
 from core.projection.facts import Claim, ClaimKind, Facts, SourceRecord, latest_first
 
@@ -29,8 +31,16 @@ LIST_FIELDS: dict[str, str] = {
     "urls": "url",
 }
 
-# `other_names` and `source_urls` are not in the tables: each reads more than one attribute
-# off a record, so they have their own functions below.
+
+def _valid_email(value: str) -> str | None:
+    email = normalize_email(value)
+    return email if email and is_valid_email(email) else None
+
+
+RECORD_NORMALIZERS: dict[str, Callable[[str], str | None]] = {
+    "phones": normalize_phone_number,
+    "emails": _valid_email,
+}
 
 
 def claims_for(
@@ -104,9 +114,13 @@ def list_value(members: Iterable[str], field: str, facts: Facts) -> tuple[str, .
     stands = _stands(accepts, claims_for(members, field, ClaimKind.REJECT, facts))
     attribute = LIST_FIELDS[field]
 
-    from_records = [
-        getattr(record, attribute) for record in current_records(members, facts)
-    ]
+    normalize = RECORD_NORMALIZERS.get(field)
+    from_records = []
+    for record in current_records(members, facts):
+        value = getattr(record, attribute)
+        if normalize and value is not None:
+            value = normalize(value)
+        from_records.append(value)
     from_claims = [claim.value for claim in accepts]
 
     values = []

@@ -53,6 +53,12 @@ async def _wipe():
             await cur.execute("DELETE FROM divisions WHERE jurisdiction_ocdid = %s", (ocdid,))
             await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (ocdid,))
             await cur.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
+        # A withdraw row is filed by the user too (214), and it names a claim, not a person.
+        await cur.execute(
+            "DELETE FROM assertions WHERE created_by IN "
+            "(SELECT id FROM users WHERE email IN (%s, %s))",
+            (_EMAIL, _OTHER_EMAIL),
+        )
         await cur.execute("DELETE FROM users WHERE email IN (%s, %s)", (_EMAIL, _OTHER_EMAIL))
         await conn.commit()
 

@@ -85,20 +85,20 @@ def test_a_claim_on_either_half_of_a_merge_counts():
 
 @pytest.mark.unit
 def test_a_claim_about_another_field_names_no_post():
-    """Only `exists` carries a post as its value. A `closed` claim's value is true, and
-    `membership_id(member, True)` matches nothing."""
-    closed = Claim(
+    """Only `exists` carries a post as its value. A `label` claim's value is display text, and
+    `membership_id(member, text)` matches nothing."""
+    label = Claim(
         id="k1",
         changeset_id="c1",
         created_at=_T,
         entity_type=EntityType.MEMBERSHIP,
         entity_id=membership_id("alice", MAYOR),
-        field_path="closed",
+        field_path="label",
         kind=ClaimKind.ACCEPT,
-        value=True,
+        value="Mayor (interim)",
     )
 
-    assert claimed_posts(ALICE, Facts(claims=(closed,))) == set()
+    assert claimed_posts(ALICE, Facts(claims=(label,))) == set()
 
 
 @pytest.mark.unit

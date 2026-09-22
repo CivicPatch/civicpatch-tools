@@ -11,6 +11,7 @@ from pydantic import BaseModel
 from shared.schemas import Role
 from shared.utils.taxonomy import Taxonomy
 
+from core.images import published_image_url
 from core.projection.canonical_ids import SAME_AS, canonical_ids
 from core.projection.facts import EntityType, Facts
 from core.projection.live_facts import live_facts
@@ -57,3 +58,20 @@ def derive_roster(
         for root_id in sorted(clusters.keys())
     ]
     return Roster(people=tuple(people))
+
+
+def with_published_images(
+    roster: Roster, artifacts_bucket: str, friendly_storage_host: str
+) -> Roster:
+    return Roster(
+        people=tuple(
+            person.model_copy(
+                update={
+                    "cdn_image": published_image_url(
+                        person.cdn_image, artifacts_bucket, friendly_storage_host
+                    )
+                }
+            )
+            for person in roster.people
+        )
+    )

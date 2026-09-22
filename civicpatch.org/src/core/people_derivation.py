@@ -10,12 +10,13 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from typing import Dict, List, Tuple
 
-from core.images import LOCAL_IMAGE_PREFIX
 from shared.schemas import DerivedPerson, PersonSourceRecord
 from shared.utils import email_utils, name_utils, phone_utils, url_utils
 from shared.utils.label_parser import parse_label
 from shared.utils.log_protocol import Log
 from shared.utils.taxonomy import Taxonomy
+
+from core.images import LOCAL_IMAGE_PREFIX
 
 
 def term_dates(records: List[PersonSourceRecord]) -> tuple[str, str]:
@@ -52,7 +53,9 @@ def merge_field(values: List[str]) -> str:
     if not value_counter:
         return ""
     max_count = max(value_counter.values())
-    return sorted(value for value, count in value_counter.items() if count == max_count)[0]
+    return sorted(
+        value for value, count in value_counter.items() if count == max_count
+    )[0]
 
 
 def merge_image(values: List[str]) -> str:
@@ -162,13 +165,12 @@ def canonical_name(published_name: str, records: List[PersonSourceRecord]) -> st
     `known_name` is empty when nobody has published this person. At ingest that is decided by
     `identities`; at read time by whether the resolved id is in `people`.
 
-    Titles and credentials never make it into the name, published or not: "Chair Hilda L. Solis"
-    is Hilda L. Solis. The sightings keep the name as the page printed it.
     """
-    strip = name_utils.strip_titles_and_credentials
     if published_name:
-        return strip(published_name)
-    return merge_field([strip(record.name) for record in records])
+        return published_name
+    return merge_field(
+        [name_utils.strip_titles_and_credentials(record.name) for record in records]
+    )
 
 
 def merge_records_to_person(
@@ -188,7 +190,9 @@ def merge_records_to_person(
     # Case-insensitive both ways: a source that writes the name differently on two pages is
     # spelling one name, not naming an alias.
     # Every spelling a sighting used, and every name a source stated outright.
-    seen_names = [name for record in records for name in [record.name, *record.other_names]]
+    seen_names = [
+        name for record in records for name in [record.name, *record.other_names]
+    ]
     other_names: List[str] = []
     for name in seen_names:
         if not name or name_utils.same_name(name, canonical_name):

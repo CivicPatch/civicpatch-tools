@@ -146,35 +146,35 @@ def test_a_rejected_scalar_leaves_nothing():
 def test_a_list_unions_every_record():
     facts = Facts(
         records=(
-            record("r1", minutes=1, phone="555-1111"),
-            record("r2", minutes=2, phone="555-2222"),
+            record("r1", minutes=1, phone="(206) 555-1111"),
+            record("r2", minutes=2, phone="(206) 555-2222"),
         )
     )
 
-    assert list_value(ALICE, "phones", facts) == ("555-1111", "555-2222")
+    assert list_value(ALICE, "phones", facts) == ("(206) 555-1111", "(206) 555-2222")
 
 
 @pytest.mark.unit
 def test_a_list_says_each_value_once():
     facts = Facts(
         records=(
-            record("r1", minutes=1, phone="555-1111"),
-            record("r2", minutes=2, phone="555-1111"),
+            record("r1", minutes=1, phone="(206) 555-1111"),
+            record("r2", minutes=2, phone="(206) 555-1111"),
         )
     )
 
-    assert list_value(ALICE, "phones", facts) == ("555-1111",)
+    assert list_value(ALICE, "phones", facts) == ("(206) 555-1111",)
 
 
 @pytest.mark.unit
 def test_a_list_adds_accepted_values():
     """Somebody typing a second phone number is an accept on the list field."""
     facts = Facts(
-        records=(record("r1", minutes=1, phone="555-1111"),),
-        claims=(claim("k1", "phones", "555-9999", minutes=2),),
+        records=(record("r1", minutes=1, phone="(206) 555-1111"),),
+        claims=(claim("k1", "phones", "(206) 555-9999", minutes=2),),
     )
 
-    assert list_value(ALICE, "phones", facts) == ("555-1111", "555-9999")
+    assert list_value(ALICE, "phones", facts) == ("(206) 555-1111", "(206) 555-9999")
 
 
 @pytest.mark.unit
@@ -183,13 +183,13 @@ def test_a_list_drops_rejected_values():
     different from withdrawing the record."""
     facts = Facts(
         records=(
-            record("r1", minutes=1, phone="555-1111"),
-            record("r2", minutes=2, phone="555-2222"),
+            record("r1", minutes=1, phone="(206) 555-1111"),
+            record("r2", minutes=2, phone="(206) 555-2222"),
         ),
-        claims=(claim("k1", "phones", "555-1111", kind=ClaimKind.REJECT, minutes=3),),
+        claims=(claim("k1", "phones", "(206) 555-1111", kind=ClaimKind.REJECT, minutes=3),),
     )
 
-    assert list_value(ALICE, "phones", facts) == ("555-2222",)
+    assert list_value(ALICE, "phones", facts) == ("(206) 555-2222",)
 
 
 @pytest.mark.unit
@@ -197,8 +197,8 @@ def test_a_reject_beats_an_accept_of_the_same_value():
     """Both are live claims about one value; the value is suppressed."""
     facts = Facts(
         claims=(
-            claim("k1", "phones", "555-1111", minutes=1),
-            claim("k2", "phones", "555-1111", kind=ClaimKind.REJECT, minutes=2),
+            claim("k1", "phones", "(206) 555-1111", minutes=1),
+            claim("k2", "phones", "(206) 555-1111", kind=ClaimKind.REJECT, minutes=2),
         )
     )
 
@@ -225,12 +225,12 @@ def test_accepting_a_rejected_value_again_brings_it_back():
     """The other half of R7: a reject is not permanent, it is just the last word so far."""
     facts = Facts(
         claims=(
-            claim("k1", "phones", "555-1111", kind=ClaimKind.REJECT, minutes=1),
-            claim("k2", "phones", "555-1111", minutes=2),
+            claim("k1", "phones", "(206) 555-1111", kind=ClaimKind.REJECT, minutes=1),
+            claim("k2", "phones", "(206) 555-1111", minutes=2),
         )
     )
 
-    assert list_value(ALICE, "phones", facts) == ("555-1111",)
+    assert list_value(ALICE, "phones", facts) == ("(206) 555-1111",)
 
 
 @pytest.mark.unit
@@ -239,12 +239,12 @@ def test_a_list_value_the_page_stopped_printing_is_gone():
     that last printed it; today's publish overwrote it the same way."""
     facts = Facts(
         records=(
-            record("r1", minutes=1, changeset_id="c1", phone="555-1111"),
-            record("r2", minutes=2, changeset_id="c2", phone="555-2222"),
+            record("r1", minutes=1, changeset_id="c1", phone="(206) 555-1111"),
+            record("r2", minutes=2, changeset_id="c2", phone="(206) 555-2222"),
         )
     )
 
-    assert list_value(ALICE, "phones", facts) == ("555-2222",)
+    assert list_value(ALICE, "phones", facts) == ("(206) 555-2222",)
 
 
 @pytest.mark.unit
@@ -253,20 +253,53 @@ def test_a_list_value_from_another_organizations_page_stays():
     about it. Today's publish would have dropped it, since the last publish wins."""
     facts = Facts(
         records=(
-            record("r1", minutes=1, changeset_id="c1", organization_id="school", phone="555-1111"),
-            record("r2", minutes=2, changeset_id="c2", phone="555-2222"),
+            record("r1", minutes=1, changeset_id="c1", organization_id="school", phone="(206) 555-1111"),
+            record("r2", minutes=2, changeset_id="c2", phone="(206) 555-2222"),
         )
     )
 
-    assert list_value(ALICE, "phones", facts) == ("555-1111", "555-2222")
+    assert list_value(ALICE, "phones", facts) == ("(206) 555-1111", "(206) 555-2222")
+
+
+@pytest.mark.unit
+def test_a_phone_from_a_page_is_normalised():
+    """A page prints a number its own way; the projection holds one spelling, as publish did."""
+    facts = Facts(records=(record("r1", phone="909-797-2489"),))
+
+    assert list_value(ALICE, "phones", facts) == ("(909) 797-2489",)
+
+
+@pytest.mark.unit
+def test_a_phone_that_will_not_normalise_is_dropped():
+    facts = Facts(records=(record("r1", phone="call the clerk"),))
+
+    assert list_value(ALICE, "phones", facts) == ()
+
+
+@pytest.mark.unit
+def test_an_email_from_a_page_is_lowercased():
+    facts = Facts(records=(record("r1", email="Rob.Saka@Seattle.gov"),))
+
+    assert list_value(ALICE, "emails", facts) == ("rob.saka@seattle.gov",)
+
+
+@pytest.mark.unit
+def test_a_reject_matches_the_normalised_value():
+    """Rejects are filed against the published value, which is the normalised one."""
+    facts = Facts(
+        records=(record("r1", phone="909-797-2489"),),
+        claims=(claim("k1", "phones", "(909) 797-2489", kind=ClaimKind.REJECT),),
+    )
+
+    assert list_value(ALICE, "phones", facts) == ()
 
 
 @pytest.mark.unit
 def test_the_answer_does_not_depend_on_the_order_the_facts_arrive():
     """R6: the same facts rebuild the same projection, whatever order the loader returns."""
     records = (
-        record("r1", minutes=1, phone="555-1111"),
-        record("r2", minutes=2, phone="555-2222"),
+        record("r1", minutes=1, phone="(206) 555-1111"),
+        record("r2", minutes=2, phone="(206) 555-2222"),
     )
     claims = (
         claim("k1", "name", "First", minutes=1),

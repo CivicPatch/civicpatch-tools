@@ -2,14 +2,18 @@
 
 The only module that knows how facts are stored. It filters (published changesets, the as-of
 cutoff, withdraws never cut) so `core/projection/` can trust what it is handed, and it adapts
-today's schema to the shape the resolvers will keep: three of the four adapters below are
-deleted by a named step, and nothing in `core/` has to know they existed.
+today's schema to the shape the resolvers will keep: the two adapters below are deleted by a
+named step, and nothing in `core/` has to know they existed. Withdraws are rows (214).
 """
 
 from datetime import datetime
 
+from shared.utils.membership_ids import membership_id
+
 from core.projection.facts import Claim, Facts, SourceRecord
+from core.projection.posts import PostKey
 from database.database import get_pool
+from schemas.assertions import AssertionKind
 
 # Only a published changeset's facts derive (R3). `assertions.changeset_id` is still nullable
 # today — a direct field assert or an edit made outside review has none — and those claims are
@@ -49,10 +53,38 @@ _PERSON_CLAIMS = f"""
     {_PUBLISHED_OR_UNATTRIBUTED}
       AND assertions.entity_type = 'person'
       AND assertions.entity_id::text = ANY(%(person_ids)s)
-      -- A withdrawal is still a column, so a withdrawn claim is simply not loaded and
-      -- `withdraws` stays empty. Step 5 turns these into `withdraw` rows, and `live_facts`
-      -- starts doing the work this line does now.
-      AND assertions.withdrawn_at IS NULL
+"""
+
+# Every post a human could have named a membership in: nobody claims about a post before it is
+# published, and publish is what creates the row.
+_POST_KEYS = """
+    SELECT organization_id::text, role_id, division_ocdid
+    FROM posts WHERE jurisdiction_ocdid = %(jurisdiction_ocdid)s
+"""
+
+# A membership claim is keyed by a hash, `membership_id(person, post)` (216), which cannot be
+# read back, so it is found by hashing every person the records name with every post above.
+_MEMBERSHIP_CLAIMS = f"""
+    SELECT assertions.id::text, assertions.changeset_id::text, assertions.created_at,
+           assertions.entity_type, assertions.entity_id::text, assertions.field_path,
+           assertions.kind, assertions.value
+    FROM assertions
+    {_PUBLISHED_OR_UNATTRIBUTED}
+      AND assertions.entity_type = 'membership'
+      AND assertions.entity_id::text = ANY(%(membership_ids)s)
+"""
+
+# Every published withdraw, whatever it points at and whenever it was filed: a withdraw can
+# name a withdraw, so the chain is not scoped by jurisdiction, and the as-of cutoff never
+# applies (a rolled-back edit vanishes from every date). Rollbacks are rare; this stays small.
+_WITHDRAWS = f"""
+    SELECT assertions.id::text, assertions.changeset_id::text, assertions.created_at,
+           assertions.entity_type, assertions.entity_id::text, assertions.field_path,
+           assertions.kind, assertions.value
+    FROM assertions
+    LEFT JOIN changesets ON changesets.id = assertions.changeset_id
+    WHERE assertions.kind = '{AssertionKind.WITHDRAW.value}'
+      AND (assertions.changeset_id IS NULL OR changesets.published_at IS NOT NULL)
 """
 
 
@@ -93,9 +125,8 @@ def _claim(row: tuple) -> Claim:
 async def load_facts(cur, jurisdiction_ocdid: str, as_of: datetime) -> Facts:
     """Every live fact this jurisdiction's roster derives from, as at `as_of`.
 
-    Membership, post, organization and taxonomy claims join this as their write paths move
-    onto the model (steps 7, 10, 11 and 18); until then a person's claims are the only
-    judgements the fold reads.
+    Claims about people and memberships; post, organization and taxonomy claims join as their
+    write paths move onto the model (steps 10, 11 and 18).
 
     `reads` stays empty until `source_pages` exists: `core.projection.reads.reads_of` infers a
     read from any live record naming the organization, which is today's rule, and page rows
@@ -111,11 +142,26 @@ async def load_facts(cur, jurisdiction_ocdid: str, as_of: datetime) -> Facts:
     if person_ids:
         await cur.execute(_PERSON_CLAIMS, {"person_ids": person_ids, "as_of": as_of})
         claims = tuple(_claim(row) for row in await cur.fetchall())
+        await cur.execute(_POST_KEYS, {"jurisdiction_ocdid": jurisdiction_ocdid})
+        post_ids = [
+            PostKey(organization_id=row[0], role_id=row[1], division_ocdid=row[2]).post_id
+            for row in await cur.fetchall()
+        ]
+        membership_ids = [
+            membership_id(person_id, post_id) for person_id in person_ids for post_id in post_ids
+        ]
+        await cur.execute(
+            _MEMBERSHIP_CLAIMS, {"membership_ids": membership_ids, "as_of": as_of}
+        )
+        claims += tuple(_claim(row) for row in await cur.fetchall())
+
+    await cur.execute(_WITHDRAWS)
+    withdraws = tuple(_claim(row) for row in await cur.fetchall())
 
     return Facts(
         records=records,
         claims=claims,
-        withdraws=(),
+        withdraws=withdraws,
         reads=(),
     )
 

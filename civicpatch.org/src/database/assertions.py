@@ -170,6 +170,7 @@ async def withdraw(
               {LATEST_FIRST}
               LIMIT 1
          )
+        RETURNING id::text
         """,
         (
             withdrawn_by,
@@ -181,7 +182,44 @@ async def withdraw(
             kind.value,
         ),
     )
-    return cur.rowcount
+    withdrawn = [row[0] for row in await cur.fetchall()]
+    await _insert_withdraws(cur, withdrawn, withdrawn_by, withdrawn_by_changeset_id)
+    return len(withdrawn)
+
+
+# The fold reads withdrawals as rows (214), today's readers as the `withdrawn_*` columns; both
+# are written until every reader has moved. Idempotent per target, so a rerun files no second
+# withdraw for a fact that is already dead.
+_INSERT_WITHDRAW = """
+    INSERT INTO assertions
+        (entity_type, entity_id, field_path, kind, value, created_by, changeset_id)
+    SELECT %(entity_type)s, %(entity_id)s::uuid, NULL, %(kind)s, 'null'::jsonb,
+           %(created_by)s, %(changeset_id)s
+    WHERE NOT EXISTS (
+        SELECT 1 FROM assertions
+         WHERE kind = %(kind)s AND entity_id = %(entity_id)s::uuid AND withdrawn_at IS NULL
+    )
+"""
+
+
+async def _insert_withdraws(
+    cur, assertion_ids: list[str], withdrawn_by: str, changeset_id: str | None
+) -> None:
+    if not assertion_ids:
+        return
+    await cur.executemany(
+        _INSERT_WITHDRAW,
+        [
+            {
+                "entity_type": EntityType.CLAIM.value,
+                "entity_id": assertion_id,
+                "kind": AssertionKind.WITHDRAW.value,
+                "created_by": withdrawn_by,
+                "changeset_id": changeset_id,
+            }
+            for assertion_id in assertion_ids
+        ],
+    )
 
 
 # "Which row currently wins," spelled as a predicate (not a Python fold) so a bulk rollback can
@@ -276,10 +314,13 @@ async def withdraw_assertions(
            SET withdrawn_at = now(), withdrawn_by = %s, withdrawn_reason = %s,
                withdrawn_by_changeset_id = %s
          WHERE a.id = ANY(%s) AND {_IS_ACTIVE}
+        RETURNING a.id::text
         """,
         (withdrawn_by, reason, withdrawn_by_changeset_id, assertion_ids),
     )
-    return cur.rowcount
+    withdrawn = [row[0] for row in await cur.fetchall()]
+    await _insert_withdraws(cur, withdrawn, withdrawn_by, withdrawn_by_changeset_id)
+    return len(withdrawn)
 
 async def create(assertion: Assertion, created_by: str) -> str:
     """Set one assertion, owning the connection. Returns its id.
