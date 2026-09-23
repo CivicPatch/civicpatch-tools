@@ -20,6 +20,7 @@ from typing import AsyncGenerator
 from core.membership_label import derive_post_label
 from core.membership_proposal import ExistingMembership, MembershipPost
 from core.people_edits import POSTS_FIELD
+from core.projection.memberships import MEMBERSHIP_LABEL_FIELD
 from database import assertions, posts
 from database.activity import record_change
 from database.changesets import live_roster_changeset
@@ -31,15 +32,17 @@ from schemas.activity import (
     Change,
     FieldChange,
 )
-from schemas.assertions import Assertion, AssertionKind, EntityType, Source
+from schemas.assertions import (
+    DefaultNote,
+    Assertion,
+    AssertionKind,
+    EntityType,
+    Source,
+)
 from schemas.posts import AssignmentResult, MembershipRemovalAssertion
 from shared.schemas import Post
 from shared.utils.membership_ids import membership_id
 from shared.utils.statuses import ActivityType
-
-LABEL_FIELD = "label"
-
-EXISTENCE_FIELD = "exists"
 
 
 class UnknownPost(Exception):
@@ -98,8 +101,7 @@ async def list_by_person(
     somebody has claimed about it. `as_of` is None for now.
 
     The claims ride along because the editor offers them as one exclusive choice: without them the
-    screen would have to guess which button is already chosen, or ask per row. `not_a_member` is a
-    claim about the person, so it repeats on each of their rows.
+    screen would have to guess which button is already chosen, or ask per row.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -113,11 +115,6 @@ async def list_by_person(
             "removal_assertion": _rejected(
                 person_claims.get(row["person_id"], {}), row["post_id"]
             ).value,
-            "not_a_member": bool(
-                person_claims.get(row["person_id"], {})
-                .get(EXISTENCE_FIELD, {})
-                .get(AssertionKind.REJECT)
-            ),
         }
         for row in rows
     ]
@@ -388,8 +385,8 @@ async def _assert(
             field_path=field_path,
             kind=kind,
             value=True,
+            sources=[Source(note=reason or DefaultNote.NO_REASON)],
             changeset_id=changeset_id,
-            sources=[Source(note=reason)] if reason else [],
         ),
         user_id,
     )
@@ -413,7 +410,7 @@ async def set_label(
             cur,
             EntityType.MEMBERSHIP,
             membership_id,
-            LABEL_FIELD,
+            MEMBERSHIP_LABEL_FIELD,
             AssertionKind.ACCEPT,
             user_id,
         )
@@ -423,9 +420,10 @@ async def set_label(
         Assertion(
             entity_type=EntityType.MEMBERSHIP,
             entity_id=membership_id,
-            field_path=LABEL_FIELD,
+            field_path=MEMBERSHIP_LABEL_FIELD,
             kind=AssertionKind.ACCEPT,
             value=label,
+            sources=[Source(note=DefaultNote.LABEL_SET)],
             changeset_id=changeset_id,
         ),
         user_id,
@@ -457,7 +455,7 @@ async def reject(
             field_path=POSTS_FIELD,
             kind=AssertionKind.REJECT,
             value=post_id,
-            sources=[Source(note=reason)] if reason else [],
+            sources=[Source(note=reason or DefaultNote.NO_REASON)],
             changeset_id=changeset_id,
         ),
         user_id,
@@ -572,7 +570,7 @@ async def assign(
             if (current.membership_label or None) == (label or None):
                 raise NothingToAssign(post_id)
             change = FieldChange(
-                field=LABEL_FIELD, before=current.membership_label, after=label
+                field=MEMBERSHIP_LABEL_FIELD, before=current.membership_label, after=label
             )
         else:
             # A claim, not a row: publishing derives the roster from the facts, so a human
@@ -588,6 +586,7 @@ async def assign(
                     field_path=POSTS_FIELD,
                     kind=AssertionKind.ACCEPT,
                     value=post_id,
+                    sources=[Source(note=DefaultNote.ASSIGNED)],
                     changeset_id=changeset_id,
                 ),
                 user_id or SYSTEM_USER_ID,

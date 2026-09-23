@@ -6,14 +6,12 @@ import { SESSION_COUNTS } from "../../pages/review-page/review-landing.js";
 import { createReviewSession, navigateToEntry } from "../../api.js";
 
 interface VerifyCtaProps {
-  isLoggedIn?: boolean;
   toReviewCount?: number;
   state?: string;
   hasActiveSession?: boolean;
 }
 
 function VerifyCta({
-  isLoggedIn = false,
   toReviewCount = 0,
   state = "",
   hasActiveSession = false,
@@ -46,7 +44,7 @@ function VerifyCta({
 
   // No picker at all once a session is already resumable — length was decided when
   // that session started, so offering to change it here would change nothing.
-  const lengthPicker = isLoggedIn && !hasActiveSession
+  const lengthPicker = !hasActiveSession
     ? html`
         <span class="verify-cta__lengths">
           ${SESSION_COUNTS.map(
@@ -65,23 +63,17 @@ function VerifyCta({
       `
     : "";
 
-  return isLoggedIn
-    ? html`
-        ${lengthPicker}
-        <button
-          class="verify-cta"
-          type="button"
-          ?disabled=${starting || (!hasActiveSession && toReviewCount === 0)}
-          @click=${handleVerifyClick}
-        >
-          ${hasActiveSession ? "resume" : "review"}${state ? html` in #${state}` : ""}
-        </button>
-      `
-    : html`
-        <a class="verify-cta" role="button" href="/login">
-          sign in to review${state ? html` in #${state}` : ""}
-        </a>
-      `;
+  return html`
+    ${lengthPicker}
+    <button
+      class="verify-cta"
+      type="button"
+      ?disabled=${starting || (!hasActiveSession && toReviewCount === 0)}
+      @click=${handleVerifyClick}
+    >
+      ${hasActiveSession ? "resume" : "review"}${state ? html` in #${state}` : ""}
+    </button>
+  `;
 }
 
 customElements.define(

@@ -3,6 +3,29 @@ from typing import List
 
 import shared.utils.config_utils as config_utils
 
+# The trailing `/slug:value` of a division ocdid. This is the one place it is matched; every
+# reader of a division's type and number goes through `_division_tail`.
+_DIVISION_TAIL = re.compile(r"/([^/:]+):([^/]+)$")
+
+
+def _division_tail(division_ocdid: str | None) -> tuple[str, str] | None:
+    match = _DIVISION_TAIL.search(division_ocdid or "")
+    if match is None:
+        return None
+    return (match.group(1), match.group(2))
+
+
+def numbered_division_label(division_ocdid: str | None) -> tuple[str, int] | None:
+    """("council district", 3) for a division whose value is a number, else None.
+
+    The ocdid's own slug, spaced, not the canonical designation: the numbering-gap message names
+    the division the way the ocdid does.
+    """
+    tail = _division_tail(division_ocdid)
+    if tail is None or not tail[1].isdigit():
+        return None
+    return (tail[0].replace("_", " "), int(tail[1]))
+
 
 def jurisdiction_ocdid_to_division_ocdid(jurisdiction_ocdid: str) -> str:
     return jurisdiction_ocdid.rsplit("/", 1)[0].replace(
@@ -18,10 +41,10 @@ def division_ocdid_to_designation(
     division_base = jurisdiction_ocdid_to_division_ocdid(jurisdiction_ocdid)
     if division_ocdid == division_base:
         return []
-    match = re.search(r"/([^/:]+):([^/]+)$", division_ocdid)
-    if not match:
+    tail = _division_tail(division_ocdid)
+    if tail is None:
         return []
-    ocd_slug, value = match.group(1), match.group(2)
+    ocd_slug, value = tail
     # council_district is the OCD-ID slug for "district" per format_division
     canonical = "district" if ocd_slug == "council_district" else ocd_slug
     return [f"{canonical.title()} {value.upper() if len(value) == 1 else value}"]

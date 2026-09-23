@@ -9,7 +9,7 @@ from typing import Any
 
 from core.people_edits import LIST_FIELDS, POSTS_FIELD
 from database.database import get_pool
-from schemas.assertions import Assertion, AssertionKind, EntityType
+from schemas.assertions import DefaultNote, Assertion, AssertionKind, EntityType, Source
 
 
 # Fields whose accepts are per value rather than one answer for the whole field: the list
@@ -149,9 +149,7 @@ async def upsert(cur, assertion: Assertion, created_by: str) -> str:
     return row[0] if row else ""
 
 
-def _sources(assertion: Assertion) -> str | None:
-    if not assertion.sources:
-        return None
+def _sources(assertion: Assertion) -> str:
     return json.dumps([source.model_dump() for source in assertion.sources])
 
 
@@ -202,7 +200,7 @@ async def withdraw(
         ),
     )
     withdrawn = [row[0] for row in await cur.fetchall()]
-    await _insert_withdraws(cur, withdrawn, withdrawn_by, withdrawn_by_changeset_id)
+    await _insert_withdraws(cur, withdrawn, withdrawn_by, withdrawn_by_changeset_id, reason)
     return len(withdrawn)
 
 
@@ -211,9 +209,9 @@ async def withdraw(
 # withdraw for a fact that is already dead.
 _INSERT_WITHDRAW = """
     INSERT INTO assertions
-        (entity_type, entity_id, field_path, kind, value, created_by, changeset_id)
+        (entity_type, entity_id, field_path, kind, value, sources, created_by, changeset_id)
     SELECT %(entity_type)s, %(entity_id)s::uuid, NULL, %(kind)s, 'null'::jsonb,
-           %(created_by)s, %(changeset_id)s
+           %(sources)s::jsonb, %(created_by)s, %(changeset_id)s
     WHERE NOT EXISTS (
         SELECT 1 FROM assertions
          WHERE kind = %(kind)s AND entity_id = %(entity_id)s::uuid AND withdrawn_at IS NULL
@@ -222,10 +220,15 @@ _INSERT_WITHDRAW = """
 
 
 async def _insert_withdraws(
-    cur, assertion_ids: list[str], withdrawn_by: str, changeset_id: str | None
+    cur,
+    assertion_ids: list[str],
+    withdrawn_by: str,
+    changeset_id: str | None,
+    reason: str | None = None,
 ) -> None:
     if not assertion_ids:
         return
+    sources = json.dumps([Source(note=reason or DefaultNote.WITHDRAWN).model_dump()])
     await cur.executemany(
         _INSERT_WITHDRAW,
         [
@@ -233,6 +236,7 @@ async def _insert_withdraws(
                 "entity_type": EntityType.CLAIM.value,
                 "entity_id": assertion_id,
                 "kind": AssertionKind.WITHDRAW.value,
+                "sources": sources,
                 "created_by": withdrawn_by,
                 "changeset_id": changeset_id,
             }
@@ -338,7 +342,7 @@ async def withdraw_assertions(
         (withdrawn_by, reason, withdrawn_by_changeset_id, assertion_ids),
     )
     withdrawn = [row[0] for row in await cur.fetchall()]
-    await _insert_withdraws(cur, withdrawn, withdrawn_by, withdrawn_by_changeset_id)
+    await _insert_withdraws(cur, withdrawn, withdrawn_by, withdrawn_by_changeset_id, reason)
     return len(withdrawn)
 
 async def create(assertion: Assertion, created_by: str) -> str:

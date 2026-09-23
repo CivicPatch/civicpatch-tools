@@ -7,7 +7,13 @@ from database import assertions, divisions, organizations
 from database.activity import record_change
 from database.changesets import live_roster_changeset
 from database.database import get_pool
-from schemas.assertions import Assertion, AssertionKind, EntityType
+from schemas.assertions import (
+    DefaultNote,
+    Assertion,
+    AssertionKind,
+    EntityType,
+    Source,
+)
 from schemas.activity import Change, FieldChange
 from shared.utils.statuses import ActivityType
 
@@ -31,7 +37,7 @@ _HUMAN_FIELDS = ("meta_headcount", "meta_is_tracked")
 # Not a column — 148 dropped `posts.label` in favor of composing it from role and division on
 # read. A human can still override that guess ("Position 8" instead of the bare role), the same
 # way `memberships.label` overrides its own derivation: as an assertion, read back here.
-LABEL_FIELD = "label"
+POST_LABEL_FIELD = "label"
 
 
 def _with_label(post: dict, asserted_label: str | None = None) -> dict:
@@ -48,7 +54,7 @@ async def asserted_labels(cur, post_ids: list[str]) -> dict[str, str]:
     return {
         post_id: accepted[0]
         for post_id, by_field in asserted.items()
-        for accepted in [by_field.get(LABEL_FIELD, {}).get(AssertionKind.ACCEPT) or []]
+        for accepted in [by_field.get(POST_LABEL_FIELD, {}).get(AssertionKind.ACCEPT) or []]
         if accepted
     }
 
@@ -64,7 +70,7 @@ async def set_label(
     the whole effect, unlike `update_human_fields`'s pair."""
     if label is None:
         await assertions.withdraw(
-            cur, EntityType.POST, post_id, LABEL_FIELD, AssertionKind.ACCEPT, user_id
+            cur, EntityType.POST, post_id, POST_LABEL_FIELD, AssertionKind.ACCEPT, user_id
         )
         return
     await assertions.upsert(
@@ -72,9 +78,10 @@ async def set_label(
         Assertion(
             entity_type=EntityType.POST,
             entity_id=post_id,
-            field_path=LABEL_FIELD,
+            field_path=POST_LABEL_FIELD,
             kind=AssertionKind.ACCEPT,
             value=label,
+            sources=[Source(note=DefaultNote.LABEL_SET)],
             changeset_id=changeset_id,
         ),
         user_id,
@@ -115,6 +122,7 @@ async def _accept_fields(
                 field_path=field,
                 kind=AssertionKind.ACCEPT,
                 value=value,
+                sources=[Source(note=DefaultNote.EDITED)],
                 changeset_id=changeset_id,
             )
             for field, value in _fields_to_accept(values)

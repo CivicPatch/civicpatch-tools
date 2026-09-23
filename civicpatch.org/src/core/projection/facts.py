@@ -36,7 +36,7 @@ class EntityType(StrEnum):
     JURISDICTION = "jurisdiction"
     ORGANIZATION = "organization"
     # Facts can be claimed about too: a withdraw names one, and a split is a `person_id` claim
-    # on a record. Not yet in the `assertions_entity_type_check` constraint.
+    # on a record.
     SOURCE_RECORD = "source_record"
     SOURCE_PAGE = "source_page"
     CLAIM = "claim"
@@ -45,8 +45,6 @@ class EntityType(StrEnum):
 class ClaimKind(StrEnum):
     ACCEPT = "accept"
     REJECT = "reject"
-    # Not yet in the `assertions_kind_check` constraint; the loader synthesises these from
-    # `withdrawn_at`.
     WITHDRAW = "withdraw"
 
 

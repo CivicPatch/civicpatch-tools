@@ -38,7 +38,7 @@ async def diff_all() -> list[tuple[str, RosterDiff]]:
         for jurisdiction_ocdid in await jurisdictions_with_a_roster(cur):
             facts = await load_facts(cur, jurisdiction_ocdid, as_of)
             derived = with_published_images(
-                derive_roster(facts, jurisdiction_ocdid, taxonomy, roles),
+                derive_roster(facts, jurisdiction_ocdid, taxonomy),
                 buckets.ARTIFACTS,
                 friendly_host,
             )
@@ -67,6 +67,10 @@ def report(results: list[tuple[str, RosterDiff]], examples: int) -> None:
     )
     by_field = Counter(difference.field for _, r in results for difference in r.fields)
     print(f"field differences: {dict(by_field) or 'none'}")
+    by_membership_field = Counter(
+        difference.field for _, r in results for difference in r.membership_fields
+    )
+    print(f"membership field differences: {dict(by_membership_field) or 'none'}")
 
     for jurisdiction_ocdid, result in differing[:examples]:
         print(f"\n{jurisdiction_ocdid}")
@@ -74,9 +78,18 @@ def report(results: list[tuple[str, RosterDiff]], examples: int) -> None:
             print(f"  only stored:  {person_id}")
         for person_id in result.only_after[:examples]:
             print(f"  only derived: {person_id}")
+        for person_id, post_id in result.memberships_only_before[:examples]:
+            print(f"  membership only stored:  {person_id} {post_id}")
+        for person_id, post_id in result.memberships_only_after[:examples]:
+            print(f"  membership only derived: {person_id} {post_id}")
         for difference in result.fields[:examples]:
             print(
                 f"  {difference.person_id} {difference.field}: "
+                f"stored={difference.before!r} derived={difference.after!r}"
+            )
+        for difference in result.membership_fields[:examples]:
+            print(
+                f"  {difference.person_id} {difference.post_id} {difference.field}: "
                 f"stored={difference.before!r} derived={difference.after!r}"
             )
 

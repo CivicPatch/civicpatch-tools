@@ -1,4 +1,4 @@
-"""What `post_of` must answer.
+"""What `parse_labels` must answer.
 
 Today's `derived_posts` rule, kept: one person's labels in one organization parse together,
 the highest-priority role wins, an unknown label still lands on the organization's unmatched
@@ -13,7 +13,8 @@ from shared.schemas import Role, RoleConfig, RoleStatus
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID, build_taxonomy
 
 from core.projection.facts import PostKey, SourceRecord
-from core.projection.posts import post_of
+from core.projection.membership_details import LabelDetails
+from core.projection.posts import parse_labels
 
 _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
 JURISDICTION = "ocd-jurisdiction/country:us/state:tx/place:alpha/government"
@@ -57,6 +58,15 @@ def key(role_id: str, division: str = BASE) -> PostKey:
     return PostKey(organization_id=COUNCIL, role_id=role_id, division_ocdid=division)
 
 
+def post_for(records) -> PostKey:
+    return parse_labels(records, JURISDICTION, TAXONOMY)[0]
+
+
+def details(*labels: str) -> LabelDetails:
+    records = [record(f"r{i}", label, minutes=i) for i, label in enumerate(labels)]
+    return parse_labels(records, JURISDICTION, TAXONOMY)[1]
+
+
 @pytest.mark.unit
 def test_a_posts_id_is_a_pure_function_of_its_key():
     """The fold must address a post it has just derived, before any row exists. A lookup in
@@ -82,12 +92,12 @@ def test_a_posts_id_never_changes():
 
 @pytest.mark.unit
 def test_a_known_label_maps_to_its_role():
-    assert post_of([record("r1", "Mayor")], JURISDICTION, TAXONOMY, ROLES) == key("mayor")
+    assert post_for([record("r1", "Mayor")]) == key("mayor")
 
 
 @pytest.mark.unit
 def test_an_alias_maps_to_its_role():
-    assert post_of([record("r1", "Councilman")], JURISDICTION, TAXONOMY, ROLES) == key(
+    assert post_for([record("r1", "Councilman")]) == key(
         "council-member"
     )
 
@@ -96,7 +106,7 @@ def test_an_alias_maps_to_its_role():
 def test_an_unknown_label_still_lands_on_a_post():
     """The person keeps a membership, under the unmatched role, with the label right there for
     a human to map later. Today's behaviour, kept on purpose."""
-    assert post_of([record("r1", "Grand Vizier")], JURISDICTION, TAXONOMY, ROLES) == key(
+    assert post_for([record("r1", "Grand Vizier")]) == key(
         UNMATCHED_ROLE_ID
     )
 
@@ -110,12 +120,12 @@ def test_several_labels_pick_the_highest_priority_role():
         record("r2", "Mayor", minutes=2),
     ]
 
-    assert post_of(records, JURISDICTION, TAXONOMY, ROLES) == key("mayor")
+    assert post_for(records) == key("mayor")
 
 
 @pytest.mark.unit
 def test_a_district_in_the_label_sets_the_division():
-    result = post_of([record("r1", "Council Member District 3")], JURISDICTION, TAXONOMY, ROLES)
+    result = post_for([record("r1", "Council Member District 3")])
 
     assert result.role_id == "council-member"
     assert result.division_ocdid.endswith("council_district:3")
@@ -126,12 +136,12 @@ def test_each_changeset_parses_on_its_own():
     """Called once per changeset, never across them. Monday's Mayor and Tuesday's District 5
     are two posts, not a Mayor of District 5; District 2 then District 5 are two posts, not
     the first division forever."""
-    monday = post_of([record("r1", "Mayor", minutes=1)], JURISDICTION, TAXONOMY, ROLES)
-    tuesday = post_of(
-        [record("r2", "Council Member District 5", minutes=2)], JURISDICTION, TAXONOMY, ROLES
+    monday = post_for([record("r1", "Mayor", minutes=1)])
+    tuesday = post_for(
+        [record("r2", "Council Member District 5", minutes=2)]
     )
-    later = post_of(
-        [record("r3", "Council Member District 2", minutes=3)], JURISDICTION, TAXONOMY, ROLES
+    later = post_for(
+        [record("r3", "Council Member District 2", minutes=3)]
     )
 
     assert monday == key("mayor")
@@ -150,8 +160,38 @@ def test_the_answer_does_not_depend_on_the_order_the_records_arrive():
         record("r2", "Council Member District 5", minutes=2),
     ]
 
-    forwards = post_of(records, JURISDICTION, TAXONOMY, ROLES)
-    backwards = post_of(list(reversed(records)), JURISDICTION, TAXONOMY, ROLES)
+    forwards = post_for(records)
+    backwards = post_for(list(reversed(records)))
 
     assert forwards == backwards
     assert forwards.division_ocdid.endswith("council_district:3")
+
+
+@pytest.mark.unit
+def test_a_plain_label_carries_nothing_beyond_its_role():
+    assert details("Mayor") == LabelDetails()
+
+
+@pytest.mark.unit
+def test_a_designation_that_names_no_division_is_kept():
+    assert details("Council Member Place 3").designations == ("Place 3",)
+
+
+@pytest.mark.unit
+def test_a_second_known_role_is_an_extra_role_and_the_winner_is_not():
+    assert details("Mayor and Council Member").extra_roles == ("council-member",)
+
+
+@pytest.mark.unit
+def test_residue_beside_a_known_role_is_not_unmatched_text():
+    assert details("Council Member, Liaison to Parks").unmatched_text == ()
+
+
+@pytest.mark.unit
+def test_residue_from_a_label_with_no_role_is_unmatched_text():
+    assert details("Harbor Commissioner").unmatched_text == ("Harbor Commissioner",)
+
+
+@pytest.mark.unit
+def test_labels_across_records_are_parsed_together():
+    assert details("Council Member", "Council Member Place 3").designations == ("Place 3",)

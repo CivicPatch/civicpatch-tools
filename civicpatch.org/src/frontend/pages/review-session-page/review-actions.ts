@@ -188,8 +188,6 @@ export async function saveCurrent(current: CurrentEntry, sessionId: string | nul
     return;
   }
   e.dispatch({ type: ActionType.MARK_SAVED });
-  // Save leaves the PR open, so standalone the reviewer stays on the card.
-  await goToEntry(sessionId, entryNumber + 1, stateCode, e);
 }
 
 export async function closeCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, stateCode: string, e: Effects): Promise<void> {

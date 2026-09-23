@@ -3,9 +3,13 @@
 Two policies, one per kind of field, and the table below is the only place that knowledge
 lives:
 
-    scalar    the newest claimed value, else the newest a record carries; None if neither
+    scalar    the newest claimed value, else the newest a current record carries; None if
+              neither
 
     list      every value a current record carries, plus accepted values; `()` if neither
+
+"Current" is the same rule for both: the newest read of each organization. A value the page
+has stopped printing goes, whether it is a phone or a photograph.
 """
 
 from collections.abc import Callable, Iterable
@@ -82,36 +86,31 @@ def current_records(members: Iterable[str], facts: Facts) -> list[SourceRecord]:
     ]
 
 
-def _stands(accepts: list[Claim], rejects: list[Claim]):
-    """Whether a value survives what people have said about it."""
-
-    def stands(value) -> bool:
-        claims = sorted(
-            (k for k in accepts + rejects if k.value == value), key=latest_first
-        )
-        return not claims or claims[-1].kind != ClaimKind.REJECT
-
-    return stands
+def stands(value, accepts: list[Claim], rejects: list[Claim]) -> bool:
+    """Whether a value survives what people have said about it: the newest claim naming that
+    value decides, and no claim about it means it stands."""
+    claims = sorted((k for k in accepts + rejects if k.value == value), key=latest_first)
+    return not claims or claims[-1].kind != ClaimKind.REJECT
 
 
 def scalar_value(members: Iterable[str], field: str, facts: Facts) -> str | None:
     accepts = claims_for(members, field, ClaimKind.ACCEPT, facts)
-    stands = _stands(accepts, claims_for(members, field, ClaimKind.REJECT, facts))
+    rejects = claims_for(members, field, ClaimKind.REJECT, facts)
     attribute = SCALAR_FIELDS[field]
 
     for claim in reversed(accepts):
-        if stands(claim.value):
+        if stands(claim.value, accepts, rejects):
             return claim.value
-    for record in reversed(records_for(members, facts)):
+    for record in reversed(current_records(members, facts)):
         value = getattr(record, attribute)
-        if value is not None and stands(value):
+        if value is not None and stands(value, accepts, rejects):
             return value
     return None
 
 
 def list_value(members: Iterable[str], field: str, facts: Facts) -> tuple[str, ...]:
     accepts = claims_for(members, field, ClaimKind.ACCEPT, facts)
-    stands = _stands(accepts, claims_for(members, field, ClaimKind.REJECT, facts))
+    rejects = claims_for(members, field, ClaimKind.REJECT, facts)
     attribute = LIST_FIELDS[field]
 
     normalize = RECORD_NORMALIZERS.get(field)
@@ -127,7 +126,7 @@ def list_value(members: Iterable[str], field: str, facts: Facts) -> tuple[str, .
     for value in from_records + from_claims:
         if value is None:
             continue
-        if not stands(value):
+        if not stands(value, accepts, rejects):
             continue
         if value in values:
             continue
@@ -144,7 +143,6 @@ def source_urls(members: Iterable[str], facts: Facts) -> tuple[str, ...]:
 def other_names(members: Iterable[str], facts: Facts) -> tuple[str, ...]:
     accepts = claims_for(members, OTHER_NAMES, ClaimKind.ACCEPT, facts)
     rejects = claims_for(members, OTHER_NAMES, ClaimKind.REJECT, facts)
-    stands = _stands(accepts, rejects)
     published = scalar_value(members, NAME, facts)
 
     seen = []
@@ -160,7 +158,7 @@ def other_names(members: Iterable[str], facts: Facts) -> tuple[str, ...]:
             continue
         if published and same_name(name, published):
             continue
-        if not stands(name):
+        if not stands(name, accepts, rejects):
             continue
         if any(same_name(name, k) for k in kept):
             continue

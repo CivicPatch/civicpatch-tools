@@ -295,31 +295,6 @@ export const setMembershipRemoval = async (
   return res.json();
 };
 
-// The person-level half of the removals: they are a member of nothing here. Publish closes every
-// membership of theirs in the jurisdiction; the DELETE takes the claim back.
-export const setNotAMember = async (personId, reason = null, changesetId = null) => {
-  const res = await fetch(`/api/v1/people/${personId}/not-a-member`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRF-Token": getCsrfCookie(),
-    },
-    credentials: "include",
-    body: JSON.stringify({ reason, changeset_id: changesetId }),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const withdrawNotAMember = async (personId) => {
-  const res = await fetch(`/api/v1/people/${personId}/not-a-member`, {
-    method: "DELETE",
-    headers: { "X-CSRF-Token": getCsrfCookie() },
-    credentials: "include",
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
 
 export const createPost = async (organizationId, body) => {
   const res = await fetch(`/api/v1/organizations/${organizationId}/posts`, {

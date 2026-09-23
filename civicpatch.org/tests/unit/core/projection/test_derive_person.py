@@ -112,7 +112,7 @@ def membership_claim(
 
 
 def derive(members, facts, person_id="alice"):
-    return derive_person(person_id, members, facts, JURISDICTION, TAXONOMY, ROLES)
+    return derive_person(person_id, members, facts, JURISDICTION, TAXONOMY)
 
 
 @pytest.mark.unit
@@ -143,7 +143,7 @@ def test_fields_come_from_field_value():
 def test_a_record_gives_a_membership():
     person = derive(ALICE, Facts(records=(record("r1", "Mayor"),)))
 
-    assert [m.post_id for m in person.memberships] == [MAYOR]
+    assert [m.post.post_id for m in person.memberships] == [MAYOR]
 
 
 @pytest.mark.unit
@@ -192,7 +192,7 @@ def test_an_accepted_post_gives_a_membership_with_no_record():
 
     person = derive(ALICE, facts)
 
-    assert [m.post_id for m in person.memberships] == [MAYOR]
+    assert [m.post.post_id for m in person.memberships] == [MAYOR]
     assert person.edited is True
 
 
@@ -206,7 +206,7 @@ def test_posts_from_records_and_claims_union():
 
     person = derive(ALICE, facts)
 
-    assert sorted(m.post_id for m in person.memberships) == sorted(
+    assert sorted(m.post.post_id for m in person.memberships) == sorted(
         [MAYOR, BOARD_MEMBER_KEY.post_id]
     )
 
@@ -245,7 +245,7 @@ def test_a_move_within_an_organization_keeps_only_the_new_post():
 
     person = derive(ALICE, facts)
 
-    assert [m.post_id for m in person.memberships] == [COUNCIL_MEMBER]
+    assert [m.post.post_id for m in person.memberships] == [COUNCIL_MEMBER]
     assert person.memberships[0].first_seen_at == _T + timedelta(minutes=2)
     assert person.edited is True
 
@@ -261,7 +261,7 @@ def test_a_read_after_the_move_wins_it_back():
 
     [membership] = derive(ALICE, facts).memberships
 
-    assert membership.post_id == MAYOR
+    assert membership.post.post_id == MAYOR
     assert membership.first_seen_at == _T + timedelta(minutes=1)
 
 
@@ -278,7 +278,7 @@ def test_a_move_leaves_another_organizations_membership_alone():
 
     person = derive(ALICE, facts)
 
-    assert sorted(m.post_id for m in person.memberships) == sorted(
+    assert sorted(m.post.post_id for m in person.memberships) == sorted(
         [COUNCIL_MEMBER, BOARD_MEMBER_KEY.post_id]
     )
 
@@ -311,7 +311,7 @@ def test_the_cluster_publishes_under_the_id_it_is_known_by():
 
     assert person.id == "alice2"
     assert person.name == "Alice Ng"
-    assert [m.post_id for m in person.memberships] == [MAYOR]
+    assert [m.post.post_id for m in person.memberships] == [MAYOR]
 
 
 @pytest.mark.unit

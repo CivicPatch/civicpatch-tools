@@ -7,17 +7,22 @@ import pytest
 from shared.utils.membership_ids import membership_id
 
 from core.projection.membership_details import MembershipSource
+from core.projection.facts import PostKey
 from core.projection.people import Membership, Person
 from database.projection import membership_role_rows, membership_rows
 
 _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
 _LATER = datetime(2026, 6, 1, tzinfo=timezone.utc)
-MAYOR = "post-mayor"
-MEMBER = "post-member"
+COUNCIL = "11111111-1111-1111-1111-111111111111"
+BASE = "ocd-division/country:us/state:tx/place:alpha"
+MAYOR = PostKey(organization_id=COUNCIL, role_id="mayor", division_ocdid=BASE)
+MEMBER = PostKey(
+    organization_id=COUNCIL, role_id="council-member", division_ocdid=BASE
+)
 
 
-def membership(post: str, **fields) -> Membership:
-    return Membership(post_id=post, first_seen_at=_T, last_seen_at=_LATER, **fields)
+def membership(post: PostKey, **fields) -> Membership:
+    return Membership(post=post, first_seen_at=_T, last_seen_at=_LATER, **fields)
 
 
 @pytest.mark.unit
@@ -32,11 +37,11 @@ def test_one_row_per_membership_keyed_by_person_and_post():
     rows = membership_rows([alice])
 
     assert [row["id"] for row in rows] == [
-        membership_id("alice", MAYOR),
-        membership_id("alice", MEMBER),
+        membership_id("alice", MAYOR.post_id),
+        membership_id("alice", MEMBER.post_id),
     ]
     assert {row["person_id"] for row in rows} == {"alice"}
-    assert [row["post_id"] for row in rows] == [MAYOR, MEMBER]
+    assert [row["post_id"] for row in rows] == [MAYOR.post_id, MEMBER.post_id]
 
 
 @pytest.mark.unit
@@ -76,8 +81,8 @@ def test_each_extra_role_is_a_row_on_its_membership():
     )
 
     assert membership_role_rows([alice]) == [
-        (membership_id("alice", MAYOR), "council-member"),
-        (membership_id("alice", MAYOR), "board-member"),
+        (membership_id("alice", MAYOR.post_id), "council-member"),
+        (membership_id("alice", MAYOR.post_id), "board-member"),
     ]
 
 

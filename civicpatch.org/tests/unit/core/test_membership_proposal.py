@@ -143,8 +143,8 @@ def test_every_absence_surfaces_while_tracked_is_undecided():
 
 @pytest.mark.unit
 def test_an_empty_scrape_proposes_nothing():
-    """The guard `close_absent` already makes: an empty roster is a failed scrape, not a
-    dissolved council, and without this every holder becomes a false departure."""
+    """An empty roster is a failed scrape, not a dissolved council, and without this guard
+    every holder becomes a false departure."""
     changes = _propose([], [_held("a", "mayor", _BASE)])
 
     assert changes == []
@@ -186,9 +186,8 @@ def test_the_proposed_label_rides_along():
 
 
 # `still_held` and `still_listed` were deleted with the ingest-time observation writes they
-# fed. Both answered "who should stay open" for `advance_last_seen_at` and `close_absent`,
-# which now run only at publish — where `close_absent` takes `incoming_ids`, everyone in the
-# published roster, a more direct answer than a disposition filter.
+# fed. Both answered "who should stay open" by filtering dispositions; publish answers it from
+# the facts instead, which is more direct and is the only place it is answered now.
 
 
 

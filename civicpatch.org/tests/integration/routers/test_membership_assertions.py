@@ -1,6 +1,6 @@
 """Route-level integration tests for the removal claims.
 
-`PUT /memberships/{id}/assertion` and `PUT|DELETE /people/{id}/not-a-member`. What publish then
+`PUT /memberships/{id}/assertion`. What publish then
 does with these claims is covered at the database layer
 (`tests/integration/database/test_post_derivation.py`); these cover what only crosses the wire:
 that the endpoint files the claim the fold reads, that `none` takes it back, and who is allowed
@@ -21,7 +21,6 @@ from core.post_derivation import DerivedMembership
 from database import assertions, divisions, organizations, posts
 from database.database import get_pool
 from core.people_edits import POSTS_FIELD
-from database.memberships import EXISTENCE_FIELD
 from lib.auth import get_optional_user
 from routers.api import memberships as memberships_router
 from routers.api import people as people_router
@@ -305,34 +304,6 @@ async def test_an_unattributable_claim_is_refused(client):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_not_a_member_claims_about_the_person_not_one_membership(client):
-    """The other half of the fork: closing one membership says stop listing them in that
-    organization, this says the record does not belong to this jurisdiction at all."""
-    person_id, membership_id = await _seed()
-
-    response = client.put(f"{_PEOPLE}/{person_id}/not-a-member", json={})
-
-    assert response.status_code == 200, response.text
-    assert (await _claims(EntityType.PERSON, person_id))[EXISTENCE_FIELD][
-        AssertionKind.REJECT
-    ] == [True]
-    assert await _claims(EntityType.MEMBERSHIP, membership_id) == {}
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_deleting_the_not_a_member_claim_withdraws_it(client):
-    person_id, _ = await _seed()
-    client.put(f"{_PEOPLE}/{person_id}/not-a-member", json={})
-
-    response = client.delete(f"{_PEOPLE}/{person_id}/not-a-member")
-
-    assert response.status_code == 200, response.text
-    assert await _claims(EntityType.PERSON, person_id) == {}
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_the_by_person_read_names_the_organization_and_the_live_claim(client):
     """What the person editor renders from: memberships grouped under the organization they are
     in, each row naming its organization so the screen never has to guess.
@@ -360,33 +331,3 @@ async def test_an_unclaimed_membership_reads_as_none(client):
     rows = client.get(f"{_MEMBERSHIPS}/{_OCDID}").json()["data"]["memberships"]
 
     assert rows[0]["removal_assertion"] == "none"
-    assert rows[0]["not_a_member"] is False
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_not_a_member_rides_on_the_persons_rows(client):
-    """A claim about the person, carried on each of their memberships: the editor shows it once,
-    under every organization, and has no second read to make for it."""
-    person_id, _ = await _seed()
-    client.put(f"{_PEOPLE}/{person_id}/not-a-member", json={})
-
-    rows = client.get(f"{_MEMBERSHIPS}/{_OCDID}").json()["data"]["memberships"]
-
-    assert rows[0]["not_a_member"] is True
-    assert rows[0]["removal_assertion"] == "none"
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_the_person_survives_being_claimed_not_a_member(client):
-    """Unlike deleting them, which destroys history and is maintainers-only for that reason."""
-    person_id, _ = await _seed()
-
-    client.put(f"{_PEOPLE}/{person_id}/not-a-member", json={})
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("SELECT count(*) FROM people WHERE id = %s", (person_id,))
-        assert (await cur.fetchone())[0] == 1
-    assert await _open_membership_count(person_id) == 1

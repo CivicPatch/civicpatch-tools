@@ -23,6 +23,4 @@ export interface RosterMembership {
   label: string | null;
   source_labels: string[];
   removal_assertion: MembershipRemoval;
-  // A claim about the person, not this membership, so it repeats on every row of theirs.
-  not_a_member: boolean;
 }

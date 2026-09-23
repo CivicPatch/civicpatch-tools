@@ -209,11 +209,11 @@ async def _ingest_roster(
 async def _apply_scrape_changes(changeset_id: str, jurisdiction_ocdid: str) -> None:
     """Settle the scrape if the reviewer would find nothing in it.
 
-    All that is left of this at ingest. `advance_last_seen_at` and `close_absent` used to run
-    here too, mutating *published* memberships on the strength of an *unreviewed* scrape. They
-    were defended as observations — "the source stopped listing D" is true whether or not D
-    left office — which holds for a good scrape and not for a bad one, and nothing here can
-    tell which. The reviewer's own issue list can, which is what gates the publish below.
+    All that is left of this at ingest. Closing and re-dating published memberships used to run
+    here too, on the strength of an *unreviewed* scrape. It was defended as observation — "the
+    source stopped listing D" is true whether or not D left office — which holds for a good
+    scrape and not for a bad one, and nothing here can tell which. The reviewer's own issue list
+    can, which is what gates the publish below.
 
     It derives no posts of its own any more: `review_summary_for_changeset` derives what it needs
     from the proposed roster, at the point it is needed.

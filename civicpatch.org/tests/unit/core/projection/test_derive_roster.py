@@ -69,7 +69,7 @@ def withdraw(id: str, target: str, entity_type: EntityType) -> Claim:
 
 
 def derive(facts: Facts):
-    return derive_roster(facts, JURISDICTION, TAXONOMY, ROLES)
+    return derive_roster(facts, JURISDICTION, TAXONOMY)
 
 
 def ids(roster):
@@ -152,6 +152,39 @@ def test_a_person_claim_with_no_record_is_a_hand_added_person():
 
     assert ids(roster) == ["dana"]
     assert roster.people[0].name == "Dana Ruiz"
+
+
+@pytest.mark.unit
+def test_a_reject_alone_does_not_make_a_person():
+    """A claim that denies or describes a person presupposes them; it does not establish them.
+    A `posts` reject with no record names nobody (§19.1)."""
+    facts = Facts(
+        claims=(claim("k1", EntityType.PERSON, "dana", "posts", MAYOR, ClaimKind.REJECT),)
+    )
+
+    assert derive(facts).people == ()
+
+
+@pytest.mark.unit
+def test_a_non_name_accept_alone_does_not_make_a_person():
+    """Only a `name` establishes a person. A hand-assignment presupposes one the card showed."""
+    facts = Facts(claims=(claim("k1", EntityType.PERSON, "dana", "posts", MAYOR),))
+
+    assert derive(facts).people == ()
+
+
+@pytest.mark.unit
+def test_a_person_whose_records_are_withdrawn_and_only_a_reject_remains_is_gone():
+    """The Seattle phantom: every record withdrawn, one live `posts` reject left. The reject
+    was filed while the records were live and then outlived them, so it must not resurrect
+    them with no name (migration 219, §19.1)."""
+    facts = Facts(
+        records=(record("r1", "dana"),),
+        claims=(claim("k1", EntityType.PERSON, "dana", "posts", MAYOR, ClaimKind.REJECT),),
+        withdraws=(withdraw("w1", "r1", EntityType.SOURCE_RECORD),),
+    )
+
+    assert derive(facts).people == ()
 
 
 @pytest.mark.unit

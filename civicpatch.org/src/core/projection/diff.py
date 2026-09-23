@@ -83,7 +83,7 @@ def on_roster(roster: Roster) -> Roster:
 
 def _memberships(people: dict[str, Person]) -> dict[tuple[str, str], Membership]:
     return {
-        (person.id, membership.post_id): membership
+        (person.id, membership.post.post_id): membership
         for person in people.values()
         for membership in person.memberships
     }

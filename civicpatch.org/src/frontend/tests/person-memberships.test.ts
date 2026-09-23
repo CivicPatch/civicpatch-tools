@@ -20,7 +20,6 @@ const membership = (over: Partial<RosterMembership> = {}): RosterMembership => (
   label: null,
   source_labels: [],
   removal_assertion: MEMBERSHIP_REMOVAL.NONE,
-  not_a_member: false,
   ...over,
 });
 

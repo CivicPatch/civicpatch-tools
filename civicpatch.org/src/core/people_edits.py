@@ -1,5 +1,11 @@
 from pydantic import BaseModel, ValidationError
-from schemas.assertions import Assertion, AssertionKind, EntityType
+from schemas.assertions import (
+    DefaultNote,
+    Assertion,
+    AssertionKind,
+    EntityType,
+    Source,
+)
 from shared.schemas import SubmittedPersonRecord
 from shared.utils.person_fields import order_person_fields
 
@@ -183,6 +189,12 @@ def assertions_from_edit(
 ) -> list[Assertion]:
     """A reviewer's save as assertions, diffed against the scrape so repeat saves stay
     idempotent."""
+    urls = [
+        url
+        for url in (edited.get("source_urls") or scraped.get("source_urls") or [])
+        if url
+    ]
+    sources = [Source(url=urls[0])] if urls else [Source(note=DefaultNote.EDITED)]
 
     def assertion(field: str, kind: AssertionKind, value: object) -> Assertion:
         return Assertion(
@@ -191,6 +203,7 @@ def assertions_from_edit(
             field_path=field,
             kind=kind,
             value=value,
+            sources=sources,
             changeset_id=changeset_id,
         )
 

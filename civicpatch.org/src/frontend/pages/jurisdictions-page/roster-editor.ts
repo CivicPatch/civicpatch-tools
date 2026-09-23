@@ -66,7 +66,7 @@ function RosterEditor({
   const { organizations, reload: reloadOrganizations } = useOrganizations(jurisdictionOcdid);
   // No changeset: this page edits live data, so a claim applies to the published roster as soon
   // as the next publish re-derives it.
-  const { memberships, setRemoval, setNotAMemberHere } =
+  const { memberships, setRemoval } =
     useRosterMemberships(jurisdictionOcdid);
   const roles = useJurisdictionRoles();
   // Where "Add" was clicked for a not-yet-saved person, since they hold no post yet to place
@@ -195,7 +195,6 @@ function RosterEditor({
       canCreatePost,
       rosterMemberships: memberships,
       onSetRemoval: setRemoval,
-      onSetNotAMember: setNotAMemberHere,
       proposals: new Map(),
       assertions,
       overriddenSourceValues: {},

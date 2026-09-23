@@ -1,7 +1,7 @@
 """What `records_by_post` must answer.
 
-The grouping `post_of` depends on: per changeset and organization when parsing, then collapsed
-by post. Getting the first half wrong invents posts nobody held; getting the second wrong
+The grouping `parse_labels` depends on: per changeset and organization when parsing, then
+collapsed by post. Getting the first half wrong invents posts nobody held; getting the second wrong
 splits one membership into one per scrape.
 """
 
@@ -60,7 +60,11 @@ def record(
 
 
 def grouped(records):
-    return records_by_post(records, JURISDICTION, TAXONOMY, ROLES)
+    return records_by_post(records, JURISDICTION, TAXONOMY)
+
+
+def ids_in(result, post: PostKey) -> list[str]:
+    return [record.id for record in result[post].records]
 
 
 def key(role_id: str, organization: str = COUNCIL, division: str = BASE) -> PostKey:
@@ -79,7 +83,7 @@ def test_one_record_one_post():
     result = grouped([record("r1", "Mayor")])
 
     assert list(result) == [key("mayor")]
-    assert [r.id for r in result[key("mayor")]] == ["r1"]
+    assert ids_in(result, key("mayor")) == ["r1"]
 
 
 @pytest.mark.unit
@@ -94,7 +98,7 @@ def test_two_labels_in_one_scrape_parse_together():
     )
 
     assert list(result) == [key("mayor")]
-    assert len(result[key("mayor")]) == 2
+    assert len(result[key("mayor")].records) == 2
 
 
 @pytest.mark.unit
@@ -143,7 +147,7 @@ def test_the_same_post_across_scrapes_is_one_entry():
     )
 
     assert list(result) == [key("mayor")]
-    assert [r.id for r in result[key("mayor")]] == ["r1", "r2", "r3"]
+    assert ids_in(result, key("mayor")) == ["r1", "r2", "r3"]
 
 
 @pytest.mark.unit
@@ -160,8 +164,8 @@ def test_a_move_between_posts_keeps_both_with_their_own_records():
     district_2 = key("council-member", division=BASE + "/council_district:2")
     district_5 = key("council-member", division=BASE + "/council_district:5")
 
-    assert [r.id for r in result[district_2]] == ["r1"]
-    assert [r.id for r in result[district_5]] == ["r2"]
+    assert ids_in(result, district_2) == ["r1"]
+    assert ids_in(result, district_5) == ["r2"]
 
 
 @pytest.mark.unit
@@ -177,4 +181,4 @@ def test_the_answer_does_not_depend_on_the_order_the_records_arrive():
     backwards = grouped(list(reversed(records)))
 
     assert forwards == backwards
-    assert [r.id for r in forwards[key("mayor")]] == ["r1", "r2"]
+    assert ids_in(forwards, key("mayor")) == ["r1", "r2"]

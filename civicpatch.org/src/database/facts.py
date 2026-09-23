@@ -13,15 +13,19 @@ from core.projection.facts import Claim, Facts, PostKey, SourceRecord
 from database.database import get_pool
 from schemas.assertions import AssertionKind
 
-# Only a published changeset's facts derive (R3). `assertions.changeset_id` is still nullable
-# today — a direct field assert or an edit made outside review has none — and those claims are
-# live, so they must not be dropped by the join. Step 16 makes the column NOT NULL and this
-# becomes a plain inner join.
+# Only a published changeset's facts derive (R3), plus the one changeset a caller asks to see
+# as though it had published, which is what a proposed roster is. `including` is NULL for the
+# live roster, and `id = NULL` is never true, so that caller pays nothing for the clause.
+#
+# `assertions.changeset_id` is still nullable today — a direct field assert or an edit made
+# outside review has none — and those claims are live, so they must not be dropped by the
+# join. Step 16 makes the column NOT NULL and this becomes a plain inner join.
 _PUBLISHED_OR_UNATTRIBUTED = """
     LEFT JOIN changesets ON changesets.id = assertions.changeset_id
     WHERE (
         (assertions.changeset_id IS NULL AND assertions.created_at <= %(as_of)s)
         OR changesets.published_at <= %(as_of)s
+        OR changesets.id = %(including)s
     )
 """
 
@@ -40,7 +44,7 @@ _RECORDS = """
     JOIN source_record_identities
       ON source_record_identities.source_record_id = source_records.id
     WHERE source_records.jurisdiction_ocdid = %(jurisdiction_ocdid)s
-      AND changesets.published_at <= %(as_of)s
+      AND (changesets.published_at <= %(as_of)s OR changesets.id = %(including)s)
 """
 
 # A `posts` claim's value is a post's id, and the fold works in post keys, so the join is the
@@ -74,9 +78,11 @@ _MEMBERSHIP_CLAIMS = f"""
            OR assertions.changeset_id IS NULL)
 """
 
-# Every published withdraw, whatever it points at and whenever it was filed: a withdraw can
-# name a withdraw, so the chain is not scoped by jurisdiction, and the as-of cutoff never
-# applies (a rolled-back edit vanishes from every date). Rollbacks are rare; this stays small.
+# Every published withdraw that can affect this jurisdiction. Scoping by the changeset's own
+# jurisdiction is safe because only `services/rollback.py` files a withdraw under one, and it
+# takes that jurisdiction from the target's own `people` row, so the two always agree. Every
+# other withdrawal (a cleared label, a taken-back rejection) leaves `changeset_id` NULL and is
+# loaded unconditionally. Never cut by date: a rolled-back edit is gone from every as-of.
 _WITHDRAWS = f"""
     SELECT assertions.id::text, assertions.changeset_id::text, assertions.created_at,
            assertions.entity_type, assertions.entity_id::text, assertions.field_path,
@@ -84,7 +90,14 @@ _WITHDRAWS = f"""
     FROM assertions
     LEFT JOIN changesets ON changesets.id = assertions.changeset_id
     WHERE assertions.kind = '{AssertionKind.WITHDRAW.value}'
-      AND (assertions.changeset_id IS NULL OR changesets.published_at IS NOT NULL)
+      AND (
+          assertions.changeset_id IS NULL
+          OR (
+              (changesets.published_at IS NOT NULL OR changesets.id = %(including)s)
+              AND (changesets.jurisdiction_ocdid = %(jurisdiction_ocdid)s
+                   OR changesets.jurisdiction_ocdid IS NULL)
+          )
+      )
 """
 
 
@@ -127,8 +140,14 @@ def _claim(row: tuple) -> Claim:
     )
 
 
-async def load_facts(cur, jurisdiction_ocdid: str, as_of: datetime) -> Facts:
+async def load_facts(
+    cur, jurisdiction_ocdid: str, as_of: datetime, including: str | None = None
+) -> Facts:
     """Every live fact this jurisdiction's roster derives from, as at `as_of`.
+
+    `including` names one unpublished changeset to read as though it had published, which is
+    what makes a proposed roster `derive(published facts + this changeset)` (R3). Nothing is
+    written either way.
 
     Claims about people and memberships; post, organization and taxonomy claims join as their
     write paths move onto the model (steps 10, 11 and 18).
@@ -137,23 +156,23 @@ async def load_facts(cur, jurisdiction_ocdid: str, as_of: datetime) -> Facts:
     read from any live record naming the organization, which is today's rule, and page rows
     will union with that rather than replace it.
     """
-    await cur.execute(
-        _RECORDS, {"jurisdiction_ocdid": jurisdiction_ocdid, "as_of": as_of}
-    )
+    scope = {
+        "jurisdiction_ocdid": jurisdiction_ocdid,
+        "as_of": as_of,
+        "including": including,
+    }
+    await cur.execute(_RECORDS, scope)
     records = tuple(_record(row) for row in await cur.fetchall())
 
     person_ids = sorted({record.person_id for record in records})
     claims: tuple[Claim, ...] = ()
     if person_ids:
-        await cur.execute(_PERSON_CLAIMS, {"person_ids": person_ids, "as_of": as_of})
+        await cur.execute(_PERSON_CLAIMS, {**scope, "person_ids": person_ids})
         claims = tuple(_claim(row) for row in await cur.fetchall())
-        await cur.execute(
-            _MEMBERSHIP_CLAIMS,
-            {"jurisdiction_ocdid": jurisdiction_ocdid, "as_of": as_of},
-        )
+        await cur.execute(_MEMBERSHIP_CLAIMS, scope)
         claims += tuple(_claim(row) for row in await cur.fetchall())
 
-    await cur.execute(_WITHDRAWS)
+    await cur.execute(_WITHDRAWS, scope)
     withdraws = tuple(_claim(row) for row in await cur.fetchall())
 
     return Facts(
@@ -164,8 +183,10 @@ async def load_facts(cur, jurisdiction_ocdid: str, as_of: datetime) -> Facts:
     )
 
 
-async def load_facts_for(jurisdiction_ocdid: str, as_of: datetime) -> Facts:
+async def load_facts_for(
+    jurisdiction_ocdid: str, as_of: datetime, including: str | None = None
+) -> Facts:
     """`load_facts` on its own connection, for callers outside a transaction."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        return await load_facts(cur, jurisdiction_ocdid, as_of)
+        return await load_facts(cur, jurisdiction_ocdid, as_of, including)

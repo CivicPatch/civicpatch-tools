@@ -38,19 +38,3 @@ async def set_assertion(
             await memberships.reject(cur, person_id, post.id, user_id, reason, changeset_id)
         await projection.rebuild_from_facts(cur, post.jurisdiction_ocdid, changeset_id)
         await conn.commit()
-
-
-async def assert_not_a_member(
-    person_id: str, user_id: str, reason: str | None = None, changeset_id: str | None = None
-) -> str:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        return await people.assert_not_a_member(
-            cur, person_id, user_id, reason, changeset_id
-        )
-
-
-async def withdraw_not_a_member(person_id: str, user_id: str) -> int:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        return await people.withdraw_not_a_member(cur, person_id, user_id)

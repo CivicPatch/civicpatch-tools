@@ -76,12 +76,40 @@ def test_a_scalar_takes_the_latest_record():
 
 
 @pytest.mark.unit
-def test_a_scalar_skips_a_newer_record_that_says_nothing():
-    """A page that stopped printing the photo has not said the photo is wrong."""
+def test_a_scalar_skips_another_line_of_the_same_read_that_says_nothing():
+    """One read, two lines about her: the one that carries a photo answers for the read."""
     facts = Facts(
         records=(
             record("r1", minutes=1, image="alice.jpg"),
             record("r2", minutes=2, image=None),
+        )
+    )
+
+    assert scalar_value(ALICE, "image", facts) == "alice.jpg"
+
+
+@pytest.mark.unit
+def test_a_later_read_that_drops_the_photo_clears_it():
+    """One rule for every field: the current read is the answer. A page that stopped printing
+    a photo has stopped printing it, exactly as it would have stopped printing a phone."""
+    facts = Facts(
+        records=(
+            record("r1", changeset_id="c1", minutes=1, image="alice.jpg"),
+            record("r2", changeset_id="c2", minutes=2, image=None),
+        )
+    )
+
+    assert scalar_value(ALICE, "image", facts) is None
+
+
+@pytest.mark.unit
+def test_an_older_read_of_another_organization_still_answers():
+    """"Current" is per organization: the council reading again says nothing about what the
+    school board's page printed."""
+    facts = Facts(
+        records=(
+            record("r1", changeset_id="c1", minutes=1, image="alice.jpg", organization_id="school"),
+            record("r2", changeset_id="c2", minutes=2, image=None),
         )
     )
 

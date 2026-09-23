@@ -25,6 +25,9 @@ class Taxonomy(NamedTuple):
     designation_priority: dict[str, int]
     # Keys of `excluded` roles: known non-roles to drop rather than pass through.
     excluded_keys: frozenset[str] = frozenset()
+    # canonical role name -> role id. A match names a role by its label; every caller that
+    # then wants the id used to be handed the role list a second time to build this itself.
+    role_ids: dict[str, str] = {}
 
 
 def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
@@ -41,6 +44,7 @@ def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
             for name in config_utils.get_excluded_role_aliases(role_config)
         ),
         role_priority={entry.label: i for i, entry in enumerate(roles)},
+        role_ids={entry.label: entry.id for entry in roles},
         designation_priority={
             lookup_key(name): i for i, name in enumerate(designations)
         },
