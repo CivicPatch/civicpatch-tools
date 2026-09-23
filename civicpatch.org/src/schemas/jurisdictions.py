@@ -1,4 +1,4 @@
-from typing import List
+from typing import Any, List
 
 from pydantic import BaseModel, Field
 from schemas.activity import RosterChange
@@ -6,6 +6,40 @@ from schemas.activity import RosterChange
 
 class JurisdictionsByOcdidsRequest(BaseModel):
     ocdids: List[str]
+
+
+class OfficeEdit(BaseModel):
+    """A post this person should hold, and what to call their seat in it.
+
+    `membership_label` is what this person's seat is called. A post's own name is
+    `post_label`, a maintainer's act on the posts route, and is never edited here. Absent
+    means "leave it as it is"; null clears it back to the derived guess.
+    """
+
+    id: str
+    membership_label: str | None = None
+
+
+class PersonEdit(BaseModel):
+    """One person as the client says they should be.
+
+    `fields` holds only what changed; the server diffs it against the person the facts derive,
+    so sending a value that already stands files nothing. `offices` is the whole set of posts
+    they should hold, absent when the edit does not touch them and `[]` to remove the person
+    from the roster.
+    """
+
+    id: str
+    fields: dict[str, Any] | None = None
+    offices: list[OfficeEdit] | None = None
+
+
+class JurisdictionRosterEditRequest(BaseModel):
+    # The jurisdiction is the path, not a field: one place says which roster this edits.
+    people: list[PersonEdit]
+    # The caller's own review, when the edit is part of one: the claims are filed under it
+    # rather than as an unrelated jurisdiction edit.
+    changeset_id: str | None = None
 
 
 class JurisdictionSearchResult(BaseModel):

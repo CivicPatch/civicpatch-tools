@@ -16,8 +16,11 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from core.post_derivation import DerivedMembership, MembershipSource
-from database import activity, divisions, organizations, posts
+from database import activity, divisions, memberships, organizations, posts, projection
 from database.database import get_pool
+from database.users import SYSTEM_USER_ID
+from schemas.jurisdictions import OfficeEdit, PersonEdit
+from services.jurisdiction_edits import edit_published_roster
 from lib.auth import get_optional_user
 from routers.api import memberships as memberships_router
 from schemas.common import Identity
@@ -112,6 +115,30 @@ async def clean_sentinels():
     await _wipe()
 
 
+async def _seat(person_id: str, post_id: str, label: str | None = None) -> None:
+    """Add an office to what somebody holds. Was `PUT /memberships`, deleted 2026-09-23.
+
+    `offices` is the whole set, not a delta, so this reads what they hold first: seating them
+    in the council without naming their clerk's post would say they hold only the council one.
+    """
+    # From the facts, not the table: the clerk membership the seeded record derives exists
+    # only after a rebuild, and the editor reads the same roster the API serves.
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await projection.rebuild_from_facts(cur, _OCDID)
+        await conn.commit()
+        held = await memberships.open_memberships_for_persons(cur, [person_id])
+    offices = [
+        OfficeEdit(id=row["post_id"])
+        for row in held
+        if row["post_id"] != post_id
+    ]
+    offices.append(OfficeEdit(id=post_id, membership_label=label))
+    await edit_published_roster(
+        _OCDID, [PersonEdit(id=person_id, offices=offices)], SYSTEM_USER_ID
+    )
+
+
 async def _seed() -> tuple[str, str, str]:
     """A person and two posts in one organization to move between.
 
@@ -156,82 +183,16 @@ async def _seed() -> tuple[str, str, str]:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_seating_someone_reports_no_move(client):
-    person_id, mayor, _ = await _seed()
-
-    response = client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
-
-    assert response.status_code == 200, response.text
-    body = response.json()["data"]
-    assert body["change"]["before"] is None
-    assert body["membership_id"]
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_move_names_the_seat_it_came_from(client):
-    """The `post_id` change's `before` is what lets the UI say "moved from X" rather than
-    "assigned". A move leaves a closed row behind, and the curator has to know it did."""
-    person_id, mayor, ward = await _seed()
-    client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
-
-    moved = client.put(_PREFIX, json={"person_id": person_id, "post_id": ward})
-
-    assert moved.status_code == 200, moved.text
-    assert moved.json()["data"]["change"]["before"] == mayor
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_assigning_puts_the_jurisdiction_on_the_sync_feed(client):
     """How this edit reaches open-data and the sheet. The route calls neither: `assign` writes
     a change log on its own cursor and `WriteRecentChangesWorkflow` reads it, so a seat that moved in
     the database cannot leave the published files behind."""
     person_id, mayor, _ = await _seed()
 
-    client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
+    await _seat(person_id, mayor)
 
     changed = await activity.jurisdictions_changed_since(15)
     assert _OCDID in [row.jurisdiction_ocdid for row in changed]
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_refused_assignment_logs_nothing(client):
-    """409 means the seat did not move, so nothing should reach the feed — a log would put an
-    unchanged roster into open-data's history as a no-op commit."""
-    person_id, mayor, _ = await _seed()
-    client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
-    before = await _activity_rows()
-
-    repeated = client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
-
-    assert repeated.status_code == 409, repeated.text
-    assert await _activity_rows() == before
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_seating_into_a_post_that_is_not_there_is_404(client):
-    """`UnknownPost` has to become a status code. Uncaught it is a 500, which reads to the
-    caller as our fault rather than a bad post id."""
-    person_id, _, _ = await _seed()
-
-    missing = client.put(
-        _PREFIX, json={"person_id": person_id, "post_id": str(uuid.uuid4())}
-    )
-
-    assert missing.status_code == 404, missing.text
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_seat_with_no_person_is_rejected(client):
-    _, mayor, _ = await _seed()
-
-    rejected = client.put(_PREFIX, json={"post_id": mayor})
-
-    assert rejected.status_code == 422, rejected.text
 
 
 @pytest.mark.asyncio
@@ -275,42 +236,6 @@ async def _activity_rows() -> list[dict]:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_an_assignment_and_a_move_are_one_type_told_apart_by_the_payload(client):
-    """Splitting them into two types would put the distinction in a place the feed has to
-    special-case. The `post_id` change carries it, and its `before` is the fact worth reading —
-    a move left a closed row behind."""
-    person_id, mayor, ward = await _seed()
-
-    client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
-    client.put(_PREFIX, json={"person_id": person_id, "post_id": ward})
-
-    logs = await _activity_rows()
-
-    assert [log["type"] for log in logs] == ["assign_membership"] * 2
-    # `sources` is empty on everything but an assertion — "phoned the clerk" is a field-level
-    # justification, so it lives beside the value it justifies.
-    assert logs[0]["fields"] == [
-        {"field": "post_id", "before": None, "after": mayor, "sources": []}
-    ]
-    assert logs[1]["fields"] == [
-        {"field": "post_id", "before": mayor, "after": ward, "sources": []}
-    ]
-    assert logs[0]["subject"] == "Route Test"
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_failed_assignment_leaves_no_trace(client):
-    """404 means nobody was assigned."""
-    person_id, _, _ = await _seed()
-
-    client.put(_PREFIX, json={"person_id": person_id, "post_id": str(uuid.uuid4())})
-
-    assert await _activity_rows() == []
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_unmatched_is_not_swallowed_by_the_jurisdiction_route(client):
     """Both are GET on this router and `:path` matches greedily, so declaration order is the
     only thing keeping "unmatched" from being read as a jurisdiction ocdid. Reversed, this
@@ -329,7 +254,7 @@ async def test_the_person_axis_read_names_the_person(client):
     """Screen 4 lists by person, so an id is not enough — the join is what makes the row
     renderable without a second lookup per row."""
     person_id, mayor, _ = await _seed()
-    client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor, "label": "Mayor"})
+    await _seat(person_id, mayor, "Mayor")
 
     response = client.get(f"{_PREFIX}/{_OCDID}")
 
@@ -346,7 +271,7 @@ async def test_both_axes_answer_the_same_moment(client):
     """The screen toggles between by-post and by-person, so a date meaning one thing on one
     axis and another on the other would make switching the view silently switch the moment."""
     person_id, mayor, _ = await _seed()
-    client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
+    await _seat(person_id, mayor)
 
     before = client.get(f"{_PREFIX}/{_OCDID}?as_of=2020-01-01")
     after = client.get(f"{_PREFIX}/{_OCDID}?as_of=2099-01-01")
@@ -421,38 +346,11 @@ async def _seat_seen_at(person_id: str, post_id: str):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_any_signed_in_user_can_assign_a_membership(default_role_client):
-    """Looser than creating or editing the post itself (test_posts.py, maintainer+): moving a
-    membership to an existing post is a direct write, never an assertion, so a scrape stays
-    free to move or end it again — only the label can ever be asserted, and only when given."""
-    person_id, mayor, _ = await _seed()
-
-    response = default_role_client.put(
-        _PREFIX, json={"person_id": person_id, "post_id": mayor, "label": "Mayor"}
-    )
-
-    assert response.status_code == 200, response.text
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_assigning_a_membership_requires_signing_in(anonymous_client):
-    person_id, mayor, _ = await _seed()
-
-    response = anonymous_client.put(_PREFIX, json={"person_id": person_id, "post_id": mayor})
-
-    assert response.status_code == 403, response.text
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_a_manual_seat_is_dated_when_the_human_seated_them(client):
     person_id, mayor, _ = await _seed()
     before = datetime.now(timezone.utc)
 
-    assert client.put(
-        _PREFIX, json={"person_id": person_id, "post_id": mayor}
-    ).status_code == 200
+    await _seat(person_id, mayor)
 
     first_seen_at, last_seen_at = await _seat_seen_at(person_id, mayor)
     assert first_seen_at >= before

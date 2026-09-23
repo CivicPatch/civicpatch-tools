@@ -1,3 +1,5 @@
+from collections.abc import Iterable
+
 from pydantic import BaseModel, ValidationError
 from schemas.assertions import (
     DefaultNote,
@@ -16,8 +18,8 @@ from core.post_derivation import LABELS_FIELD, SIGHTINGS_FIELD
 SERVER_OWNED_FIELDS = (SIGHTINGS_FIELD, LABELS_FIELD)
 
 # Fields a reviewer can edit — a missing one goes unrecorded in the change log. Not
-# cdn_image; publish derives it from image. Not post_id — a scrape must always stay free
-# to move/end a membership, so a post pick is never asserted (see memberships.assign).
+# cdn_image; publish derives it from image. Which posts somebody holds is `POSTS_FIELD`, its
+# own multi-valued claim, not a field here.
 EDITABLE_FIELDS = (
     "name",
     "other_names",
@@ -182,6 +184,37 @@ def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> lis
 def patch_people(base: list[dict], edits: list[PersonPatch]) -> list[dict]:
     patched = validate_and_normalize(apply_people_patch(base, edits), edits)
     return [order_person_fields(person) for person in patched]
+
+
+def assertions_from_posts(
+    person_id: str,
+    held: Iterable[str],
+    wanted: Iterable[str],
+    changeset_id: str | None = None,
+) -> list[Assertion]:
+    """The posts a person should hold, as claims: a new id accepts, a dropped one rejects.
+
+    `wanted` is the whole set, not a delta, so the caller never has to say which way a move
+    went: it is one id arriving and another leaving, and the fold's collapse does the rest.
+    Sorted, so two identical edits file identical claims (R6).
+    """
+    held, wanted = set(held), set(wanted)
+
+    def claim(post_id: str, kind: AssertionKind) -> Assertion:
+        return Assertion(
+            entity_type=EntityType.PERSON,
+            entity_id=person_id,
+            field_path=POSTS_FIELD,
+            kind=kind,
+            value=post_id,
+            sources=[Source(note=DefaultNote.EDITED)],
+            changeset_id=changeset_id,
+        )
+
+    return [
+        *(claim(post_id, AssertionKind.ACCEPT) for post_id in sorted(wanted - held)),
+        *(claim(post_id, AssertionKind.REJECT) for post_id in sorted(held - wanted)),
+    ]
 
 
 def assertions_from_edit(

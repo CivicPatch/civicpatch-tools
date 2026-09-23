@@ -61,26 +61,4 @@ class MembershipRemovalRequest(BaseModel):
     changeset_id: str | None = None
 
 
-class AssignMembershipRequest(BaseModel):
-    """Assign a person, moving them off any other post in the same body.
 
-    No `organization_id`: it comes from the post, so a request cannot name a mismatched pair.
-
-    No "what happened?" flag either: this is always a transition. Correction (they were never in
-    the old post) is its own claim now, `PUT /memberships/{id}/assertion`, which publish applies.
-    """
-
-    person_id: str
-    post_id: str
-    label: str | None = None
-    # The caller's own in-progress review, when called from one — otherwise this files under
-    # the live roster's changeset instead.
-    changeset_id: str | None = None
-
-
-class AssignmentResult(BaseModel):
-    """What an assignment did."""
-
-    membership_id: str
-    jurisdiction_ocdid: str
-    change: FieldChange  # post_id when moved, label when staying but renamed

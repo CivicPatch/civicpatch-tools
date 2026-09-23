@@ -186,7 +186,7 @@ def test_navigate_to_open_entry_returns_card(client):
             },
         ),
         patch(
-            "database.people.get_roster",
+            "routers.api.review_sessions.published_card_rows",
             new_callable=AsyncMock,
             return_value=[],
         ),

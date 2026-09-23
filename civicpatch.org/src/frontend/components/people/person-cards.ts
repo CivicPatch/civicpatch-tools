@@ -97,7 +97,7 @@ export function membershipLabelFor(
 ): string {
   const record = personOf(card);
   // A reviewer's own explicit pick names a post, not a label — the label input beside the
-  // picker is a separate, later action (office-changes.ts), so there is nothing to show yet.
+  // picker is a separate, later action (office-edits.ts), so there is nothing to show yet.
   if (record && getFieldValue(record, POST_FIELD)) return "";
   return heldSourceFor(card, proposedByPersonId)
     .map((entry) => entry.label || "")

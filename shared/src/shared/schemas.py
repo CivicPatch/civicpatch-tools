@@ -36,7 +36,6 @@ class SubmittedPersonRecord(PersonBase):
     role_id: Optional[str] = None
     unmatched_text: List[str] = []
     source_urls: List[str]
-    updated_at: str
     # A reviewer's pick. Never set by the pipeline, which reports labels and nothing else.
     post_id: Optional[str] = None
 
@@ -103,21 +102,6 @@ class SubmittedPersonRecord(PersonBase):
                 )
             cleaned.append(url)
         return cleaned
-
-    @field_validator("updated_at")
-    @classmethod
-    def validate_updated_at(cls, v):
-        datetime_pattern = r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$"
-        if not re.match(datetime_pattern, v):
-            expected_format = datetime.now(timezone.utc).isoformat(timespec="seconds")
-            raise ValueError(
-                f"DateTime must be in format '{expected_format}', got: '{v}'"
-            )
-        try:
-            datetime.fromisoformat(v)
-        except ValueError:
-            raise ValueError(f"Invalid datetime value: '{v}'")
-        return v
 
     @field_validator("source_urls")
     @classmethod

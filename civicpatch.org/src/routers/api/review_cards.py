@@ -44,7 +44,11 @@ from services.review_proposal import (
 )
 import services.review_cards as review_cards_service
 from services.review_sources import build_sources, without_debug_links
-from services.roster import proposed_roster, proposed_roster_and_source_values
+from services.roster import (
+    proposed_roster,
+    proposed_roster_and_source_values,
+    published_card_rows,
+)
 
 logger = logging.getLogger(__name__)
 # ──────────────────────────────────────────────
@@ -146,7 +150,7 @@ def get_router(api_key_header):
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         existing, proposed = await asyncio.gather(
-            database.people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
+            published_card_rows(jurisdiction_ocdid),
             proposed_roster(changeset_id, jurisdiction_ocdid),
         )
         if not proposed:
@@ -234,7 +238,7 @@ def get_router(api_key_header):
         jurisdiction_ocdid = result["jurisdiction_ocdid"]
 
         existing, (proposed, overridden), has_ever_collected, proposals = await asyncio.gather(
-            database.people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
+            published_card_rows(jurisdiction_ocdid),
             proposed_roster_and_source_values(changeset_id, jurisdiction_ocdid),
             jurisdictions_db.has_ever_collected(jurisdiction_ocdid),
             # What this scrape would change about who holds what. The queue listing has carried

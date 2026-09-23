@@ -1,15 +1,18 @@
 import asyncio
 import logging
 
+from core.card_rows import card_rows
 from core.changeset_lifecycle import PARTIAL_KINDS
 from core.people_edits import source_values_overridden, with_asserted_values
 from core.people_roster import partial_roster, roster_from_sightings
+from core.projection.diff import on_roster
 from database import assertions
 from database import changesets as changesets_db
 from database.database import get_pool
 from database.people import get_people_by_ids, get_roster
 from database.roles import get_roles
 from database import posts as posts_db
+from database import projection as projection_db
 from database import source_records
 from database.source_records import (
     get_earliest_source_records_for_people,
@@ -61,6 +64,21 @@ async def origin_roster_for(entity_ids: list[str], jurisdiction_ocdid: str) -> l
         jurisdiction_ocdid,
         logger,
     )
+
+
+async def published_card_rows(jurisdiction_ocdid: str) -> list[dict]:
+    """The published roster as the card's `existing` rows, derived rather than read.
+
+    `on_roster` is what `get_roster`'s `IS_ON_THE_ROSTER` was asking: somebody is on the roster
+    if they hold a post. The shape is `PERSON_JSON`'s, so the browser reads the same keys.
+    """
+    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        published = await projection_db.derived_roster(
+            cur, jurisdiction_ocdid, taxonomy=taxonomy
+        )
+    return card_rows(on_roster(published), jurisdiction_ocdid, taxonomy)
 
 
 async def proposed_roster(changeset_id: str, jurisdiction_ocdid: str) -> list[dict]:

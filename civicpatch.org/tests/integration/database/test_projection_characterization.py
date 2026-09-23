@@ -14,7 +14,7 @@ rejected that the page keeps printing, a label that maps to no role, and a perso
 then a member, then mayor again.
 
 `memberships.label` reads NULL throughout, and that is the behaviour: it holds the name a human
-asserted (`set_label`), never the source's note, which lives in `sources`.
+asserted (`set_membership_label`), never the source's note, which lives in `sources`.
 
 Each case ends with the projection diff: the fold, run over the same facts, must derive the same
 people and open memberships that today's path wrote. Everyone it compares has been scraped at

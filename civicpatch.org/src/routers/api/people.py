@@ -31,11 +31,6 @@ class PeopleBatchResolveRequest(BaseModel):
     with_data: bool = False
 
 
-class OpenPrRequest(BaseModel):
-    jurisdiction_ocdid: str
-    data: list[PersonPatch]
-
-
 def get_router() -> APIRouter:
     router = APIRouter()
 
@@ -167,27 +162,5 @@ def get_router() -> APIRouter:
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         return {"data": {"person_id": uuid.uuid4()}}
-
-    @router.patch("/data")
-    async def patch_people_data_endpoint(
-        request: OpenPrRequest,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
-        ),
-    ):
-        try:
-            changeset_id, _ = await roster_edits.edit_published(
-                request.jurisdiction_ocdid, request.data, user
-            )
-        except PeopleValidationError as exc:
-            raise HTTPException(status_code=422, detail=exc.failures)
-        except roster_edits.AnonymousEdit:
-            raise HTTPException(status_code=401, detail="Sign in to record an edit.")
-        except roster_edits.EmptyEdit:
-            raise HTTPException(
-                status_code=409,
-                detail="That edit would leave the jurisdiction with nobody on it.",
-            )
-        return {"data": {"changeset_id": changeset_id}}
 
     return router

@@ -151,29 +151,6 @@ def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
 
 
 @pytest.mark.unit
-def test_save_refuses_when_the_scrape_recorded_no_roster(client):
-    """Patches are sparse: patching against a missing base silently reduces every person to
-    the fields the reviewer touched, so the save must refuse rather than truncate."""
-    with (
-        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[]),
-        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[]),
-        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
-        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock),
-    ):
-        response = client.post(
-            f"/pull_requests/{TEST_CHANGESET_ID}/save",
-            json={
-                "changeset_id": TEST_CHANGESET_ID,
-                "jurisdiction_ocdid": TEST_OCDID,
-                "data": [{"id": "p1", "fields": {"phones": ["9168085300"]}}],
-            },
-        )
-
-    assert response.status_code == 409
-    mock_update.assert_not_awaited()
-
-
-@pytest.mark.unit
 def test_publish_returns_200_and_queues_no_merge(client):
     """Publishing settles within the request: the roster is written and the entry resolved
     before the response, so there is nothing for the caller to poll."""
@@ -212,80 +189,18 @@ BASE_PERSON = {
 }
 
 
-@pytest.mark.unit
-def test_save_and_merge_applies_patch_and_normalizes(client):
-    with (
-        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
-        patch("services.activity.record_manual_edits", new_callable=AsyncMock),
-        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
-        patch("services.roster_edits.publish_roster", new_callable=AsyncMock) as mock_publish,
-    ):
-        response = client.post(
-            f"/pull_requests/{TEST_CHANGESET_ID}/publish",
-            json={
-                "changeset_id": TEST_CHANGESET_ID,
-                "jurisdiction_ocdid": TEST_OCDID,
-                # A number the base does not have: the old payload restated the base's own
-                # phone unformatted, so the edit was a no-op and only the published blob
-                # showed the normalization.
-                "data": [{"id": "p1", "fields": {"phones": ["9168085399"]}}],
-            },
-        )
-
-    assert response.status_code == 200
-    # This test verified the patched roster handed to publish. It now verifies the claims that
-    # edit files, because publishing takes no roster: it rebuilds from the facts, and the
-    # reviewer's answer *is* a fact. Key order is not observable any more, and not a thing that
-    # can go wrong, since nothing carries a person-shaped blob through the publish.
-    mock_publish.assert_awaited_once()
-    claims = mock_update.await_args.args[0]
-    assert sorted((claim.field_path, claim.kind.value, claim.value) for claim in claims) == [
-        ("phones", "accept", "(916) 808-5399"),  # edited field, canonicalized
-        ("phones", "reject", "(916) 808-5300"),  # the base value it replaced
-    ]
-
-
-@pytest.mark.unit
-def test_save_and_merge_rejects_invalid_field(client):
-    with (
-        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
-        patch("lib.redis.set", new_callable=AsyncMock),
-        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
-    ):
-        response = client.post(
-            f"/pull_requests/{TEST_CHANGESET_ID}/publish",
-            json={
-                "changeset_id": TEST_CHANGESET_ID,
-                "jurisdiction_ocdid": TEST_OCDID,
-                "data": [{"id": "p1", "fields": {"phones": ["not-a-phone"]}}],
-            },
-        )
-
-    assert response.status_code == 422
-    detail = response.json()["detail"]
-    assert detail[0]["id"] == "p1"
-    assert detail[0]["name"] == "Jane Doe"
-    assert detail[0]["field"] == "phones"
-    mock_update.assert_not_awaited()
-
-
-# ── save (commit without publishing) tests ────────────────────────────────
 
 SAVE_PATCH = [{"id": "p1", "fields": {"phones": ["9165551234"]}}]
 
-
 @pytest.mark.unit
-def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
-    """The whole point of /save: it persists the edit but triggers none of the merge machinery."""
+def test_save_marks_the_entry_saved_without_publishing(client):
+    """The whole point of /save: it marks the entry and triggers none of the merge machinery.
+
+    This test verified that /save also wrote the reviewer's claims. It now verifies only the
+    session bookkeeping, because the claims are filed by `POST /jurisdictions/roster-edits` before
+    this call — one payload for the fields and the posts, one place that turns an answer into
+    claims."""
     with (
-        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
-        patch("services.activity.record_manual_edits", new_callable=AsyncMock) as mock_record_manual_edits,
         patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock) as mock_save,
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock) as mock_resolve,
     ):
@@ -296,168 +211,8 @@ def test_save_commits_and_marks_the_entry_saved_without_publishing(client):
 
     assert response.status_code == 200
     assert response.json()["status"] == "saved"
-    # Two claims from one edited field: the new number accepted, the old one rejected.
-    assert len(mock_update.await_args.args[0]) == 2
-    mock_record_manual_edits.assert_awaited_once()
     mock_save.assert_awaited_once_with(TEST_CHANGESET_ID)
-
     mock_resolve.assert_not_awaited()
-
-
-@pytest.mark.unit
-def test_reformatting_a_number_the_scrape_already_found_claims_nothing(client):
-    """The reviewer retypes `9168085300`; the scrape already had `(916) 808-5300`. Normalizing
-    makes them the same value, so there is nothing for a human to have claimed — a save must
-    not manufacture an assertion out of a formatting difference."""
-    with (
-        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
-        patch("services.activity.record_manual_edits", new_callable=AsyncMock),
-        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock),
-    ):
-        response = client.post(
-            f"/pull_requests/{TEST_CHANGESET_ID}/save",
-            json={
-                "changeset_id": TEST_CHANGESET_ID,
-                "jurisdiction_ocdid": TEST_OCDID,
-                "data": [{"id": "p1", "fields": {"phones": ["9168085300"]}}],
-            },
-        )
-
-    assert response.status_code == 200
-    # Called, with nothing to record — a formatting difference is not a human claim.
-    assert mock_update.await_args.args[0] == []
-
-
-@pytest.mark.unit
-def test_save_records_the_edited_field_canonicalized(client):
-    with (
-        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
-        patch("services.activity.record_manual_edits", new_callable=AsyncMock),
-        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock),
-    ):
-        response = client.post(
-            f"/pull_requests/{TEST_CHANGESET_ID}/save",
-            json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
-        )
-
-    assert response.status_code == 200
-    # A save writes claims, not a roster, so what it recorded is the observable: the number the
-    # reviewer typed is accepted canonicalized, and the one the scrape found is rejected.
-    stated = mock_update.await_args.args[0]
-    assert sorted((a.kind, a.value) for a in stated) == [
-        ("accept", "(916) 555-1234"),
-        ("reject", "(916) 808-5300"),
-    ]
-    assert {a.field_path for a in stated} == {"phones"}
-
-
-@pytest.mark.unit
-def test_a_person_added_by_hand_becomes_evidence_and_claims(client):
-    """Both, and they mean different things. The record is why they are on the roster at all —
-    without one the next read derives the roster from sightings and they are gone. The claims
-    are what the reviewer said about them, diffed against nothing because the scrape never
-    saw them.
-
-    `post_id` is required of an addition since 2026-08-26: the sighting's label is the seat
-    they were given, and without one the derivation drops them on `unmatched`."""
-    added = {
-        "id": "p2",
-        "fields": {
-            "id": "p2",
-            "name": "Carolyn Robertson Harding",
-            "phones": ["9165551234"],
-            "emails": [],
-            "urls": [],
-            "office": {"name": "Mayor", "division_ocdid": None},
-            "post_id": "post-mayor",
-            "jurisdiction_ocdid": TEST_OCDID,
-            "source_urls": ["https://x.gov/directory"],
-            "updated_at": "2026-08-25T00:00:00+00:00",
-        },
-    }
-    with (
-        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("services.roster_edits.insert_source_records", new_callable=AsyncMock) as mock_records,
-        # Stubbed: this test is about the pair of writes; label resolution has its own
-        # integration coverage.
-        patch("services.roster_edits._chosen_posts", new_callable=AsyncMock,
-              return_value={"p2": Post(id="post-mayor", jurisdiction_ocdid=TEST_OCDID, organization_id="org-1",
-                                       role_id="mayor", division_ocdid="ocd-division/country:us", label="Mayor")}),
-        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_claims,
-        patch("services.activity.record_manual_edits", new_callable=AsyncMock),
-        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock),
-    ):
-        response = client.post(
-            f"/pull_requests/{TEST_CHANGESET_ID}/save",
-            json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID, "data": [added]},
-        )
-
-    assert response.status_code == 200
-    # One record, for the one page the reviewer cited — and only for the added person.
-    written = mock_records.await_args.args[2]
-    assert list(written) == ["p2"]
-    assert [(r["source_url"], r["organization_id"]) for r in written["p2"]] == [("https://x.gov/directory", "org-1")]
-
-    claims = mock_claims.await_args.args[0]
-    theirs = {(c.field_path, c.kind, c.value) for c in claims if c.entity_id == "p2"}
-    assert ("name", "accept", "Carolyn Robertson Harding") in theirs
-    assert ("phones", "accept", "(916) 555-1234") in theirs
-    # `source_urls` is the evidence, not a claim about the world.
-    assert not any(field == "source_urls" for field, _, _ in theirs)
-
-
-@pytest.mark.unit
-def test_save_rejects_invalid_field_without_marking_the_entry(client):
-    with (
-        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
-        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock) as mock_save,
-    ):
-        response = client.post(
-            f"/pull_requests/{TEST_CHANGESET_ID}/save",
-            json={
-                "changeset_id": TEST_CHANGESET_ID,
-                "jurisdiction_ocdid": TEST_OCDID,
-                "data": [{"id": "p1", "fields": {"phones": ["not-a-phone"]}}],
-            },
-        )
-
-    assert response.status_code == 422
-    mock_update.assert_not_awaited()
-    mock_save.assert_not_awaited()
-
-
-@pytest.mark.unit
-def test_save_returns_500_and_does_not_mark_the_entry_when_the_write_fails():
-    """The persist is the only thing standing between the reviewer and a lost edit, so a
-    failure must not be reported as a save."""
-    app = FastAPI()
-    app.dependency_overrides[get_optional_user] = lambda: MOCK_IDENTITY
-    app.include_router(review_cards_router.get_router(None), prefix="/pull_requests")
-    app.include_router(review_actions_router.get_router(None), prefix="/pull_requests")
-    # The write raises rather than returning falsy now that it is a DB call, so the 500 has to
-    # come from the app rather than from the test client re-raising.
-    failing_client = TestClient(app, raise_server_exceptions=False)
-
-    with (
-        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("database.assertions.create_all", new_callable=AsyncMock, side_effect=RuntimeError("write failed")),
-        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock) as mock_save,
-    ):
-        response = failing_client.post(
-            f"/pull_requests/{TEST_CHANGESET_ID}/save",
-            json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
-        )
-
-    assert response.status_code == 500
-    mock_save.assert_not_awaited()
 
 
 @pytest.mark.unit
@@ -506,7 +261,7 @@ def test_get_by_request_200_for_open_pr(client):
             return_value=OPEN_PR_DB_RESULT,
         ),
         patch(
-            "database.people.get_roster",
+            "routers.api.review_cards.published_card_rows",
             new_callable=AsyncMock,
             return_value=[],
         ),
@@ -551,7 +306,7 @@ def test_get_by_request_200_for_merged_pr(client):
             return_value=MERGED_PR_DB_RESULT,
         ),
         patch(
-            "database.people.get_roster",
+            "routers.api.review_cards.published_card_rows",
             new_callable=AsyncMock,
             return_value=[],
         ),

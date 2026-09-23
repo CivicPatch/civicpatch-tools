@@ -4,13 +4,10 @@ import { component, useState, useEffect, useCallback, useRef } from "haunted";
 import "./jurisdiction-page.css";
 import "../../components/status-toast/status-toast.js";
 import "../../components/status-toast/status-toast.css";
-import {
-  patchPeopleData,
-  generatePersonId,
-  assignMembership,
-} from "../../api.js";
+import { editJurisdictionRoster, generatePersonId } from "../../api.js";
 import { fetchPeopleAssertions } from "../../api.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
+import { rosterEditPayload } from "../../components/edit-people/roster-edit-payload.js";
 import { emptyPerson } from "../../components/edit-people/people-editing.js";
 import {
   blockingErrors,
@@ -26,7 +23,7 @@ import { useOrganizations } from "../../hooks/use-organizations.js";
 import { useRosterMemberships } from "../../hooks/use-roster-memberships.js";
 import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
 import { useAltArrowPeerNav } from "../../hooks/use-alt-arrow-peer-nav.js";
-import { officeChangesIn } from "../../components/person-editor/office-changes.js";
+import { officeEditsIn } from "../../components/person-editor/office-edits.js";
 import {
   cardOrganizationsById,
   groupCardsByOrganization,
@@ -163,12 +160,13 @@ function RosterEditor({
     setPublishStage("publishing");
     setPublishError(null);
     try {
-      // Office picks first: direct writes, unrelated to the PR this patch opens, but both
-      // are "make what's on screen real" and belong behind the one button that says so.
-      for (const change of officeChangesIn(cards)) {
-        await assignMembership(change.personId, change.postId, change.label);
-      }
-      await patchPeopleData(jurisdictionOcdid, peoplePatch);
+      // One call: the fields, the office picks and the removals are one answer about this
+      // roster, so they are one payload under one changeset. With no changeset id it publishes
+      // on the spot, which is what this button has always meant.
+      await editJurisdictionRoster(
+        jurisdictionOcdid,
+        rosterEditPayload(peoplePatch, officeEditsIn(cards), removedIds),
+      );
       setOpenPersonId(null);
       setFocusFieldKey(null);
       setPublishStage("idle");

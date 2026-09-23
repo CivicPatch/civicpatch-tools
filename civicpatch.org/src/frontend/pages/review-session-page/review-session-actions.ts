@@ -1,6 +1,6 @@
 import { html } from "lit-html";
 import { component } from "haunted";
-import { type OfficeChange } from "../../components/person-editor/office-changes.js";
+import { type OfficeEdit } from "../../components/person-editor/office-edits.js";
 
 // What the reviewer can do with the card in front of them. The card owns the
 // edits, so approving and saving carry the patch out in the event and the page
@@ -32,11 +32,11 @@ type ReviewSessionActionsHost = HTMLElement & {
   canReject: boolean;
   isRejecting: boolean;
   hasSession: boolean;
-  officeChanges: OfficeChange[];
+  officeEdits: OfficeEdit[];
 };
 
 function ReviewSessionActions(host: ReviewSessionActionsHost) {
-  const { isReadOnly, dirty, peoplePatch, blockers, canReject, isRejecting, hasSession, officeChanges } = host;
+  const { isReadOnly, dirty, peoplePatch, blockers, canReject, isRejecting, hasSession, officeEdits } = host;
 
   const blockerTitle = blockers
     .map((b) => `${b.name} — ${b.fieldLabel}: ${b.message}`)
@@ -49,7 +49,7 @@ function ReviewSessionActions(host: ReviewSessionActionsHost) {
   const handleApprove = () =>
     host.dispatchEvent(
       new CustomEvent(APPROVE_EVENT, {
-        detail: { people: dirty ? peoplePatch : null, officeChanges },
+        detail: { people: dirty ? peoplePatch : null, officeEdits },
         bubbles: true,
         composed: true,
       }),
@@ -58,7 +58,7 @@ function ReviewSessionActions(host: ReviewSessionActionsHost) {
   const handleSave = () =>
     host.dispatchEvent(
       new CustomEvent(SAVE_EVENT, {
-        detail: { people: peoplePatch, officeChanges },
+        detail: { people: peoplePatch, officeEdits },
         bubbles: true,
         composed: true,
       }),

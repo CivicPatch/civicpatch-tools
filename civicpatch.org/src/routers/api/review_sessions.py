@@ -16,7 +16,7 @@ from pydantic import BaseModel
 from schemas.common import Identity, ReviewMode, RouteCategory, UserRole, has_at_least
 from services.review_proposal import assertions_for_people, proposals_for_requests
 from services.review_sources import build_sources, without_debug_links
-from services.roster import proposed_roster_and_source_values
+from services.roster import proposed_roster_and_source_values, published_card_rows
 logger = logging.getLogger(__name__)
 
 
@@ -143,7 +143,7 @@ async def _navigate_response(session_id: str, entry_number: int, viewer_role: st
 
     pr_meta, existing, (proposed, overridden), has_ever_collected = await asyncio.gather(
         review_pool_db.get_changeset_for_review(changeset_id),
-        database_people.get_roster(jurisdiction_ocdid=jurisdiction_ocdid),
+        published_card_rows(jurisdiction_ocdid),
         proposed_roster_and_source_values(changeset_id, jurisdiction_ocdid),
         jurisdictions_db.has_ever_collected(jurisdiction_ocdid),
     )

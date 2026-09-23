@@ -1,24 +1,26 @@
 import urllib.parse
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
-from fastapi.responses import JSONResponse
-from pydantic import BaseModel, field_validator
-
-import services.jurisdiction_pull_request as jurisdiction_pr_service
-import services.jurisdiction_scrape_candidate as candidate_service
 import database.changesets as changesets
 import database.jurisdictions as database
 import lib.cache as cache_service
-from lib.auth import require_route_access
-from schemas.common import Identity, UserRole, RouteCategory
-from schemas.pagination import paginated_response, pagination_offset
+import services.jurisdiction_edits as jurisdiction_edits
+import services.jurisdiction_pull_request as jurisdiction_pr_service
+import services.jurisdiction_scrape_candidate as candidate_service
 from core.jurisdiction_search import build_fuzzy_tokens, build_tsquery
+from core.people_edits import PeopleValidationError
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
+from fastapi.responses import JSONResponse
+from lib.auth import require_route_access
+from pydantic import BaseModel, field_validator
+from schemas.common import Identity, RouteCategory, UserRole, has_at_least
 from schemas.jurisdictions import (
-    JurisdictionSearchResult,
-    JurisdictionSearchResponse,
+    JurisdictionRosterEditRequest,
     JurisdictionsByOcdidsRequest,
+    JurisdictionSearchResponse,
+    JurisdictionSearchResult,
     PaginationLinks,
 )
+from schemas.pagination import paginated_response, pagination_offset
 from shared.schemas import JurisdictionLevel
 
 # Typeahead returns a short list plus the true match count; refinement narrows it rather
@@ -99,21 +101,28 @@ class PatchJurisdictionDataRequest(BaseModel):
             return None
         url = v.strip()
         if not url.startswith(("http://", "https://")):
-            raise ValueError(f"Website must start with 'http://' or 'https://', got: '{url}'")
+            raise ValueError(
+                f"Website must start with 'http://' or 'https://', got: '{url}'"
+            )
         parsed = urllib.parse.urlparse(url)
         if not parsed.netloc or "." not in parsed.netloc or " " in url:
             raise ValueError(f"Website must be a valid URL with a domain, got: '{url}'")
         return url
+
 
 def get_router() -> APIRouter:
     router = APIRouter()
 
     @router.get("")
     async def get_jurisdiction_data_endpoint(
-        jurisdiction_ocdid: str = Query(..., description="The OCD ID of the jurisdiction"),
+        jurisdiction_ocdid: str = Query(
+            ..., description="The OCD ID of the jurisdiction"
+        ),
         with_geom: bool = False,
     ):
-        jurisdiction_data = await database.get_jurisdiction(jurisdiction_ocdid, with_geom)
+        jurisdiction_data = await database.get_jurisdiction(
+            jurisdiction_ocdid, with_geom
+        )
 
         if jurisdiction_data is None or jurisdiction_data.get("data") is None:
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
@@ -134,7 +143,9 @@ def get_router() -> APIRouter:
         num_jurisdictions: int = 10,
     ):
         try:
-            candidates = await candidate_service.get_scrape_candidates(state, num_jurisdictions)
+            candidates = await candidate_service.get_scrape_candidates(
+                state, num_jurisdictions
+            )
         except ValueError as e:
             raise HTTPException(status_code=404, detail=str(e))
         return {"jurisdictions": candidates}
@@ -144,7 +155,7 @@ def get_router() -> APIRouter:
         states = await database.get_states_with_names()
 
         return {"total_items": len(states), "data": states}
-    
+
     @router.get("/geojson")
     async def get_geojson_by_point_endpoint(
         lat: float,
@@ -158,7 +169,7 @@ def get_router() -> APIRouter:
         """
         try:
             results = await database.get_geojson_by_latlong(lat, long, zoom)
-        except Exception as e:
+        except Exception:
             raise HTTPException(status_code=500, detail="Database error")
 
         features = []
@@ -180,7 +191,7 @@ def get_router() -> APIRouter:
             "features": features,
             "buffer_m": results.get("buffer_m"),
         }
- 
+
     @router.post("/by-ocdids")
     async def get_jurisdictions_by_ocdids_endpoint(body: JurisdictionsByOcdidsRequest):
         results = await database.get_jurisdictions_by_ocdids(body.ocdids)
@@ -190,14 +201,20 @@ def get_router() -> APIRouter:
     async def patch_jurisdiction_data_endpoint(
         request: PatchJurisdictionDataRequest,
         background_tasks: BackgroundTasks,
-        user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
+        user: Identity = Depends(
+            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+        ),
     ):
         if not user.email:
             return JSONResponse({"error": "User email required"}, status_code=400)
         # exclude_unset, not a dict literal: a field the caller omitted must stay omitted, or
         # its None becomes indistinguishable from an explicit null and every edit would clear
         # the two fields it did not mention.
-        commit_url, url_or_error, _changeset_id = await jurisdiction_pr_service.commit_jurisdiction_patch(
+        (
+            commit_url,
+            url_or_error,
+            _changeset_id,
+        ) = await jurisdiction_pr_service.commit_jurisdiction_patch(
             jurisdiction_ocdid=request.jurisdiction_ocdid,
             fields=request.model_dump(exclude_unset=True),
             user_id=user.user_id,
@@ -205,9 +222,46 @@ def get_router() -> APIRouter:
         if commit_url is None:
             # Nothing to write is the caller's mistake, not a server failure.
             no_op = url_or_error in set(jurisdiction_pr_service.EditRejection)
-            return JSONResponse({"error": url_or_error}, status_code=400 if no_op else 500)
+            return JSONResponse(
+                {"error": url_or_error}, status_code=400 if no_op else 500
+            )
         # No background merge: the commit already landed, so the response is the outcome.
         return {"data": {"change_url": commit_url}}
+
+    # `:path` because an ocdid carries slashes. The literal suffix anchors it, so this cannot
+    # swallow the sibling routes.
+    @router.post("/{jurisdiction_ocdid:path}/roster-edits")
+    async def edit_jurisdiction_roster_endpoint(
+        jurisdiction_ocdid: str,
+        body: JurisdictionRosterEditRequest,
+        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+    ):
+        """One hand edit to a jurisdiction's roster, as one changeset.
+
+        POST rather than PATCH because each call creates a changeset, and the id comes back:
+        undoing the edit is rolling that changeset back.
+        """
+        if not body.changeset_id and not has_at_least(user.role, UserRole.MAINTAINERS):
+            raise HTTPException(
+                status_code=403,
+                detail="Editing the published roster needs a maintainer.",
+            )
+        try:
+            if body.changeset_id:
+                changeset_id = await jurisdiction_edits.edit_in_review(
+                    jurisdiction_ocdid, body.people, user.user_id, body.changeset_id
+                )
+            else:
+                changeset_id = await jurisdiction_edits.edit_published_roster(
+                    jurisdiction_ocdid, body.people, user.user_id
+                )
+        except PeopleValidationError as exc:
+            raise HTTPException(status_code=422, detail=exc.failures)
+        except jurisdiction_edits.UnknownPost as exc:
+            raise HTTPException(status_code=404, detail=f"No such post: {exc.args[0]}")
+        except jurisdiction_edits.AnonymousEdit:
+            raise HTTPException(status_code=401, detail="Sign in to record an edit.")
+        return {"data": {"changeset_id": changeset_id}}
 
     @router.get("/search")
     async def search_jurisdictions_endpoint(
@@ -219,7 +273,11 @@ def get_router() -> APIRouter:
     ) -> JurisdictionSearchResponse:
         # `level` limits the jurisdiction level(s), e.g. "local" or "local,counties".
         # Defaults to both local and counties when empty.
-        levels = [l.strip() for l in level.split(",") if l.strip()] if level else SEARCHABLE_LEVELS
+        levels = (
+            [l.strip() for l in level.split(",") if l.strip()]
+            if level
+            else SEARCHABLE_LEVELS
+        )
 
         # A `state` filter scopes the search to a single state (used by the
         # config editor's locality picker). Without it, searches nationwide.
@@ -245,11 +303,17 @@ def get_router() -> APIRouter:
                 total_pages=(total_items + limit - 1) // limit if limit > 0 else 1,
                 limit=limit,
                 data=results,
-                links=PaginationLinks.model_validate({
-                    "prev": f"/api/v1/jurisdictions/search?{urllib.parse.urlencode({'q': q, 'state': state, 'limit': limit, 'page': page - 1})}" if page > 1 else "",
-                    "next": f"/api/v1/jurisdictions/search?{urllib.parse.urlencode({'q': q, 'state': state, 'limit': limit, 'page': page + 1})}" if (page * limit) < total_items else "",
-                    "self": f"/api/v1/jurisdictions/search?{urllib.parse.urlencode({'q': q, 'state': state, 'limit': limit, 'page': page})}",
-                })
+                links=PaginationLinks.model_validate(
+                    {
+                        "prev": f"/api/v1/jurisdictions/search?{urllib.parse.urlencode({'q': q, 'state': state, 'limit': limit, 'page': page - 1})}"
+                        if page > 1
+                        else "",
+                        "next": f"/api/v1/jurisdictions/search?{urllib.parse.urlencode({'q': q, 'state': state, 'limit': limit, 'page': page + 1})}"
+                        if (page * limit) < total_items
+                        else "",
+                        "self": f"/api/v1/jurisdictions/search?{urllib.parse.urlencode({'q': q, 'state': state, 'limit': limit, 'page': page})}",
+                    }
+                ),
             )
 
         normalized = _normalized_query(q)
@@ -276,7 +340,9 @@ def get_router() -> APIRouter:
             total_pages=(total_items + limit - 1) // limit,
             limit=limit,
             data=results,
-            links=_search_links(normalized, limit, page, skip + len(results), total_items),
+            links=_search_links(
+                normalized, limit, page, skip + len(results), total_items
+            ),
         )
         await cache_service.set_cached(
             cache_key,
@@ -290,7 +356,9 @@ def get_router() -> APIRouter:
     # and 5 return this envelope.
     @router.get("/history")
     async def get_jurisdiction_history_endpoint(
-        jurisdiction_ocdid: str = Query(..., description="The OCD ID of the jurisdiction"),
+        jurisdiction_ocdid: str = Query(
+            ..., description="The OCD ID of the jurisdiction"
+        ),
         page: int = Query(1, ge=1),
         per_page: int = Query(database.DEFAULT_HISTORY_LIMIT, ge=1, le=100),
     ):
@@ -304,7 +372,9 @@ def get_router() -> APIRouter:
     # it actually derives from.
     @router.get("/in-flight")
     async def get_jurisdiction_in_flight_endpoint(
-        jurisdiction_ocdid: str = Query(..., description="The OCD ID of the jurisdiction")
+        jurisdiction_ocdid: str = Query(
+            ..., description="The OCD ID of the jurisdiction"
+        ),
     ):
         return {"data": await changesets.get_in_flight(jurisdiction_ocdid)}
 

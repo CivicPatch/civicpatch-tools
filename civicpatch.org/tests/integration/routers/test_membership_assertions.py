@@ -195,7 +195,7 @@ async def test_a_removal_files_a_claim_rather_than_writing_the_row(client):
 @pytest.mark.integration
 async def test_a_reason_rides_as_the_claim_s_source(client):
     """"Phoned the clerk" belongs beside the claim it justifies, not in a column of its own."""
-    _, membership_id = await _seed()
+    person_id, membership_id = await _seed()
 
     client.put(
         f"{_MEMBERSHIPS}/{membership_id}/assertion",
@@ -204,11 +204,13 @@ async def test_a_reason_rides_as_the_claim_s_source(client):
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        # Scoped to this person: `posts` rejects are filed by every roster edit now, so an
+        # unscoped read answers with whatever else the suite has done.
         await cur.execute(
             "SELECT sources FROM assertions "
-            "WHERE entity_type = 'person' AND field_path = %s AND kind = 'reject' "
-            "  AND withdrawn_at IS NULL",
-            (POSTS_FIELD,),
+            "WHERE entity_type = 'person' AND entity_id::text = %s AND field_path = %s "
+            "  AND kind = 'reject' AND withdrawn_at IS NULL",
+            (person_id, POSTS_FIELD),
         )
         rows = await cur.fetchall()
     assert [row[0] for row in rows] == [

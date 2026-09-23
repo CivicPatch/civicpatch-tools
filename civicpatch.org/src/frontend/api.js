@@ -246,30 +246,6 @@ export const fetchMemberships = async (jurisdictionOcdid, asOf = null) => {
   return res.json();
 };
 
-export const assignMembership = async (
-  personId,
-  postId,
-  label = null,
-  changesetId = null,
-) => {
-  const res = await fetch(`/api/v1/memberships`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRF-Token": getCsrfCookie(),
-    },
-    credentials: "include",
-    body: JSON.stringify({
-      person_id: personId,
-      post_id: postId,
-      label,
-      changeset_id: changesetId,
-    }),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
 // One of "none" | "closed" | "never_held" — the server withdraws whichever claim this one
 // contradicts, so the caller never files two.
 export const setMembershipRemoval = async (
@@ -295,6 +271,27 @@ export const setMembershipRemoval = async (
   return res.json();
 };
 
+
+// One hand edit to a jurisdiction's roster. With a `changesetId` it is a save inside that
+// review and publishes nothing; without one it edits the live roster and publishes on the spot,
+// which is maintainer-only. The changeset id comes back either way: undo is rolling it back.
+export const editJurisdictionRoster = async (
+  jurisdictionOcdid,
+  people,
+  changesetId = null,
+) => {
+  const res = await fetch(`/api/v1/jurisdictions/${jurisdictionOcdid}/roster-edits`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    credentials: "include",
+    body: JSON.stringify({ people, changeset_id: changesetId }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
 
 export const createPost = async (organizationId, body) => {
   const res = await fetch(`/api/v1/organizations/${organizationId}/posts`, {
@@ -458,23 +455,6 @@ export const fetchPeopleDirectory = async (
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
-export const patchPeopleData = async (jurisdictionOcdid, data) => {
-  const res = await fetch(`/api/v1/people/data`, {
-    method: "PATCH",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRF-Token": getCsrfCookie(),
-    },
-    body: JSON.stringify({ jurisdiction_ocdid: jurisdictionOcdid, data }),
-  });
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(parseSaveError(body, res.status));
-  }
   return res.json();
 };
 

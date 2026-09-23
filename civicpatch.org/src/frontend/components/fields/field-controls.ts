@@ -228,7 +228,7 @@ export function renderOfficeNewSide(props: OfficeFieldProps) {
   const picked = (record.post_id as string | null | undefined) ?? null;
   const current = picked ?? currentPostId;
   // The label never names the post itself, so picking a different one has no bearing on it
-  // (see office-changes.ts) — it keeps showing whatever it already held.
+  // (see office-edits.ts) — it keeps showing whatever it already held.
   const pickedLabel = (record.membership_label as string | null | undefined) ?? currentLabel;
   const handlePicked = (e: CustomEvent) => {
     const { post_id, membership_label } = e.detail;
