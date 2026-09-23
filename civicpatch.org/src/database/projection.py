@@ -10,14 +10,29 @@ each named there with the step that deletes them.
 """
 
 import json
-from collections.abc import Iterable
+from collections.abc import Iterable, Sequence
+from datetime import datetime, timezone
 
-from core.post_derivation import MembershipBinding
+import environment
+import lib.buckets as buckets
+
+from shared.utils.membership_ids import membership_id
+from shared.utils.statuses import ActivityType
+
+from core.projection.membership_details import MembershipSource
 from core.projection.people import Membership, Person
-from core.projection.posts import PostKey
-from core.projection.roster import Roster
-from database.assertions import LATEST_FIRST
-from database.posts import LABEL_FIELD
+from core.projection.live_facts import live_facts
+from core.projection.facts import PostKey
+from core.projection.posts import post_keys
+from core.projection.roster import Roster, derive_roster, with_published_images
+from database import divisions, posts
+from database.activity import record_change
+from database.facts import load_facts
+from database.roles import get_roles
+from shared.schemas import RoleConfig
+from shared.utils.taxonomy import build_taxonomy
+from schemas.activity import Change
+from schemas.assertions import EntityType
 
 _PERSON_COLUMNS = (
     "name",
@@ -88,102 +103,125 @@ def person_rows(people: Iterable[Person], jurisdiction_ocdid: str) -> list[dict]
     )
 
 
-# withdrawn_at IS NULL, added 189: without it this found a withdrawn label assertion just as
-# readily as a live one, since the ORDER BY has no opinion on withdrawal — so clearing a label
-# back to derived (set_label's withdraw call) had no effect here, and the very next scrape
-# would still be refused the field it was just supposed to get back.
-LABEL_IS_HUMAN_SET = f"""COALESCE((
-    SELECT assertions.kind = 'accept'
-    FROM assertions
-    WHERE assertions.entity_type = 'membership'
-      AND assertions.entity_id = memberships.id
-      AND assertions.field_path = '{LABEL_FIELD}'
-      AND assertions.withdrawn_at IS NULL
-    {LATEST_FIRST}
-    LIMIT 1
-), false)"""
-
-# Only a publish that read a source advances `last_seen_at`; a hand edit still dates a new one.
-_UPSERT_OPEN_MEMBERSHIPS = f"""
-    INSERT INTO memberships
-        (post_id, organization_id, person_id, designations, meta_unmatched_text,
-         sources, start_date, end_date, first_seen_at, last_seen_at, label)
-    VALUES (%s, %s, %s, %s, %s, %s::jsonb, %s, %s, %s, %s, %s)
-    ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
-    DO UPDATE SET
-        last_seen_at = CASE WHEN %s
-            THEN GREATEST(memberships.last_seen_at, EXCLUDED.last_seen_at)
-            ELSE memberships.last_seen_at END,
-        designations = EXCLUDED.designations,
-        meta_unmatched_text = EXCLUDED.meta_unmatched_text,
-        sources = EXCLUDED.sources,
-        start_date = EXCLUDED.start_date,
-        end_date = EXCLUDED.end_date,
-        label = CASE WHEN {LABEL_IS_HUMAN_SET}
-                     THEN memberships.label ELSE EXCLUDED.label END
-"""
-
-_DELETE_MEMBERSHIP_ROLES = "DELETE FROM membership_roles WHERE membership_id::text = %s"
+# One publish per jurisdiction at a time: the rebuild deletes and re-inserts, and two at once
+# would each insert the other's rows. Transaction-scoped, so a failed publish releases it.
+_LOCK_JURISDICTION = "SELECT pg_advisory_xact_lock(hashtext(%s))"
 
 _INSERT_MEMBERSHIP_ROLE = """
     INSERT INTO membership_roles (membership_id, role_id) VALUES (%s, %s)
     ON CONFLICT DO NOTHING
 """
 
+_DELETE_OPEN_MEMBERSHIPS = """
+    DELETE FROM memberships m USING posts p
+    WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s AND m.closed_at IS NULL
+"""
 
-def _upsert_params(
-    binding: MembershipBinding, last_seen_at, advances_last_seen: bool
-) -> tuple:
-    member = binding.member
-    return (
-        binding.post_id,
-        binding.organization_id,
-        member.person_id,
-        member.designations,
-        member.meta_unmatched_text,
-        json.dumps([source.model_dump() for source in member.sources]),
-        member.start_date,
-        member.end_date,
-        last_seen_at,
-        last_seen_at,
-        member.membership_label,
-        advances_last_seen,
-    )
+# `organization_id` is the post's, joined here rather than carried: a membership cannot
+# disagree with its post about which organization it is in.
+_INSERT_MEMBERSHIP = """
+    INSERT INTO memberships
+        (id, post_id, organization_id, person_id, label, start_date, end_date,
+         first_seen_at, last_seen_at, designations, meta_unmatched_text, sources)
+    SELECT %(id)s, p.id, p.organization_id, %(person_id)s, %(label)s, %(start_date)s,
+           %(end_date)s, %(first_seen_at)s, %(last_seen_at)s, %(designations)s,
+           %(meta_unmatched_text)s, %(sources)s::jsonb
+    FROM posts p WHERE p.id = %(post_id)s
+"""
 
 
-def _open_membership_key(binding: MembershipBinding) -> tuple[str, str]:
-    return (binding.member.person_id, binding.organization_id)
-
-
-async def upsert_open_memberships(
-    cur, bindings: list[MembershipBinding], last_seen_at, advances_last_seen: bool
+async def _ensure_posts(
+    cur, jurisdiction_ocdid: str, keys: Sequence[PostKey], changeset_id: str | None
 ) -> None:
-    """Open each membership, or refresh the open one; a human-set label is kept."""
-    await cur.executemany(
-        _UPSERT_OPEN_MEMBERSHIPS,
-        [
-            _upsert_params(binding, last_seen_at, advances_last_seen)
-            for binding in bindings
-        ],
+    """Mint the posts the roster names that do not exist yet, logging each mint."""
+    for key in keys:
+        await divisions.find_or_create(cur, key.division_ocdid, jurisdiction_ocdid)
+        minted = await posts.create_if_absent(
+            cur, jurisdiction_ocdid, key.organization_id, key.role_id, key.division_ocdid
+        )
+        if minted:
+            await record_change(
+                cur,
+                ActivityType.ADD_POST,
+                None,
+                jurisdiction_ocdid,
+                Change(entity_type=EntityType.POST, entity_id=minted, subject=key.role_id),
+                changeset_id=changeset_id,
+            )
+
+
+async def rebuild_from_facts(
+    cur, jurisdiction_ocdid: str, changeset_id: str | None = None
+) -> int:
+    """The roster every live fact derives, written over the jurisdiction's projection.
+
+    Call it after whatever made a fact true is published, so the fold can see it. Returns the
+    number of people written.
+    """
+    roles = await get_roles()
+    taxonomy = build_taxonomy(RoleConfig(roles=roles))
+    facts = await load_facts(cur, jurisdiction_ocdid, datetime.now(timezone.utc))
+    roster = with_published_images(
+        derive_roster(facts, jurisdiction_ocdid, taxonomy, roles),
+        buckets.ARTIFACTS,
+        environment.get_env_vars()["FRIENDLY_STORAGE_HOST"],
     )
+    keys = post_keys(live_facts(facts).records, jurisdiction_ocdid, taxonomy, roles)
+    await rebuild(cur, jurisdiction_ocdid, roster, keys, changeset_id)
+    return len(roster.people)
 
 
-async def replace_membership_roles(
-    cur, bindings: list[MembershipBinding], membership_ids: dict[tuple[str, str], str]
+async def rebuild(
+    cur,
+    jurisdiction_ocdid: str,
+    roster: Roster,
+    keys: Sequence[PostKey],
+    changeset_id: str | None = None,
 ) -> None:
-    """Replace the open memberships' extra roles (beyond the post's own) with the latest label's."""
-    await cur.executemany(
-        _DELETE_MEMBERSHIP_ROLES,
-        [(membership_ids[_open_membership_key(binding)],) for binding in bindings],
-    )
-    await cur.executemany(
-        _INSERT_MEMBERSHIP_ROLE,
-        [
-            (membership_ids[_open_membership_key(binding)], role_id)
-            for binding in bindings
-            for role_id in binding.member.role_ids
-        ],
-    )
+    """Replace the jurisdiction's projection with `roster`: every person row upserted, every
+    open membership deleted and re-inserted. Closed rows are history and are left alone."""
+    await cur.execute(_LOCK_JURISDICTION, (jurisdiction_ocdid,))
+    await _ensure_posts(cur, jurisdiction_ocdid, keys, changeset_id)
+    people = person_rows(roster.people, jurisdiction_ocdid)
+    if people:
+        await cur.executemany(PERSON_UPSERT, people)
+    await cur.execute(_DELETE_OPEN_MEMBERSHIPS, (jurisdiction_ocdid,))
+    memberships = membership_rows(roster.people)
+    if memberships:
+        await cur.executemany(_INSERT_MEMBERSHIP, memberships)
+    roles = membership_role_rows(roster.people)
+    if roles:
+        await cur.executemany(_INSERT_MEMBERSHIP_ROLE, roles)
+
+
+def membership_rows(people: Iterable[Person]) -> list[dict]:
+    return [
+        {
+            "id": membership_id(person.id, membership.post_id),
+            "person_id": person.id,
+            "post_id": membership.post_id,
+            "label": membership.label,
+            "start_date": membership.start_date,
+            "end_date": membership.end_date,
+            "first_seen_at": membership.first_seen_at,
+            "last_seen_at": membership.last_seen_at,
+            "designations": list(membership.designations),
+            "meta_unmatched_text": list(membership.unmatched_text),
+            "sources": json.dumps([source.model_dump() for source in membership.sources]),
+        }
+        for person in people
+        for membership in person.memberships
+    ]
+
+
+def membership_role_rows(people: Iterable[Person]) -> list[tuple[str, str]]:
+    """`(membership_id, role_id)` for each extra role of each open membership."""
+    return [
+        (membership_id(person.id, membership.post_id), role_id)
+        for person in people
+        for membership in person.memberships
+        for role_id in membership.extra_roles
+    ]
 
 
 # The stored projection as a `Roster`, the stored side of the projection diff. Read-only.
@@ -200,7 +238,13 @@ _STORED_PEOPLE = """
 """
 
 _STORED_OPEN_MEMBERSHIPS = """
-    SELECT m.person_id::text, p.organization_id::text, p.role_id, p.division_ocdid, m.label
+    SELECT m.person_id::text, p.organization_id::text, p.role_id, p.division_ocdid, m.label,
+           m.start_date, m.end_date, m.first_seen_at, m.last_seen_at,
+           m.designations, m.meta_unmatched_text, m.sources,
+           array(
+               SELECT r.role_id FROM membership_roles r
+               WHERE r.membership_id = m.id ORDER BY r.role_id
+           )
     FROM memberships m JOIN posts p ON p.id = m.post_id
     WHERE p.jurisdiction_ocdid = %s AND m.closed_at IS NULL
 """
@@ -211,14 +255,45 @@ async def jurisdictions_with_a_roster(cur) -> list[str]:
     return [row[0] for row in await cur.fetchall()]
 
 
+def _stored_membership(row) -> Membership:
+    (
+        _,
+        organization_id,
+        role_id,
+        division_ocdid,
+        label,
+        start_date,
+        end_date,
+        first_seen_at,
+        last_seen_at,
+        designations,
+        unmatched_text,
+        sources,
+        extra_roles,
+    ) = row
+    return Membership(
+        post_id=PostKey(
+            organization_id=organization_id,
+            role_id=role_id,
+            division_ocdid=division_ocdid,
+        ).post_id,
+        first_seen_at=first_seen_at,
+        last_seen_at=last_seen_at,
+        label=label,
+        start_date=start_date,
+        end_date=end_date,
+        designations=tuple(designations),
+        unmatched_text=tuple(unmatched_text),
+        sources=tuple(MembershipSource(**source) for source in sources),
+        extra_roles=tuple(extra_roles),
+    )
+
+
 async def stored_roster(cur, jurisdiction_ocdid: str) -> Roster:
     await cur.execute(_STORED_OPEN_MEMBERSHIPS, (jurisdiction_ocdid,))
     memberships: dict[str, list[Membership]] = {}
-    for person_id, organization_id, role_id, division_ocdid, label in await cur.fetchall():
-        post_id = PostKey(
-            organization_id=organization_id, role_id=role_id, division_ocdid=division_ocdid
-        ).post_id
-        memberships.setdefault(person_id, []).append(Membership(post_id=post_id, label=label))
+    for row in await cur.fetchall():
+        memberships.setdefault(row[0], []).append(_stored_membership(row))
 
     await cur.execute(_STORED_PEOPLE, (jurisdiction_ocdid,))
     return Roster(
@@ -233,7 +308,9 @@ async def stored_roster(cur, jurisdiction_ocdid: str) -> Roster:
                 source_urls=tuple(row[6] or ()),
                 image=row[7],
                 cdn_image=row[8],
-                memberships=tuple(sorted(memberships.get(row[0], ()), key=lambda m: m.post_id)),
+                memberships=tuple(
+                    sorted(memberships.get(row[0], ()), key=lambda m: m.post_id)
+                ),
             )
             for row in sorted(await cur.fetchall())
         )

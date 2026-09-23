@@ -10,8 +10,6 @@ import {
   deleteOrganization,
   setDefaultOrganization,
 } from "../../api-organizations.js";
-import { movePost } from "../../api.js";
-import { inputValue } from "../fields/field-controls.js";
 import { useAsyncData } from "../../hooks/use-async-data.js";
 import { defaultOrganizationId, type Organization } from "./organizations-model.js";
 
@@ -27,27 +25,15 @@ type RowActions = {
   onEdit: (id: string) => void;
   onRemove: (id: string) => void;
   onMakeDefault: (id: string) => void;
-  onMovePost: (postId: string, e: Event) => void;
 };
 
-const NOT_MOVING = "";
-
-const renderPosts = (organization: Organization, others: Organization[], actions: RowActions) => html`
+const renderPosts = (organization: Organization) => html`
   <li class="organizations-list__posts">
     <ul class="organizations-list__post-rows">
       ${organization.posts.map(
         (post) => html`
           <li class="organizations-list__post">
             <span>${post.label}</span>
-            ${others.length
-              ? html`<select
-                  aria-label="Move ${post.label} to another organization"
-                  @change=${(e: Event) => actions.onMovePost(post.id, e)}
-                >
-                  <option value=${NOT_MOVING} selected>Move to…</option>
-                  ${others.map((other) => html`<option value=${other.id}>${other.name}</option>`)}
-                </select>`
-              : ""}
           </li>
         `,
       )}
@@ -122,17 +108,10 @@ function OrganizationsList(host: OrganizationsListHost) {
       setError(String(cause).replace(/^Error:\s*/, ""));
     }
   };
-  const handleMovePost = (postId: string, e: Event) => {
-    const organizationId = inputValue(e);
-    // A refused move leaves the list unchanged, so the select would keep showing the choice.
-    (e.target as HTMLSelectElement).value = NOT_MOVING;
-    if (organizationId !== NOT_MOVING) runAndReload(() => movePost(postId, organizationId));
-  };
   const actions: RowActions = {
     onEdit: (id) => setEditing({ entity: "organization", id }),
     onRemove: (id) => runAndReload(() => deleteOrganization(id)),
     onMakeDefault: (id) => runAndReload(() => setDefaultOrganization(id)),
-    onMovePost: handleMovePost,
   };
 
   const controls = html`
@@ -171,11 +150,7 @@ function OrganizationsList(host: OrganizationsListHost) {
           (organization) => html`
             ${renderOrganization(organization, organization.id === defaultId, canManage, actions)}
             ${canManage && organization.posts.length
-              ? renderPosts(
-                  organization,
-                  data.filter((other) => other.id !== organization.id),
-                  actions,
-                )
+              ? renderPosts(organization)
               : ""}
           `,
         )}

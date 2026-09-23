@@ -1,28 +1,15 @@
-"""What a person says about a membership, and about whether someone is an official here at all.
+"""What a person says about a membership.
 
-Assertions, not writes: each one is an `assertions` row that publish applies (`close_claimed`,
-`close_for_people_rejected_here`) and that withdrawing takes back, so the published roster stays a
-derivation of evidence plus live claims and rollback needs no per-action undo.
+Two verbs, not three (§2 of the projector plan): a membership either stands or is rejected.
+`closed` is gone — "they left" and "the page was wrong" end a membership the same way, from the
+claim's date, and history before it stays either way. The three-way request the editor still
+sends maps onto them here until step 9's edit route replaces it.
 
-The three a reviewer picks between, and what each means:
-
-  none         no assertion                      nothing filed; either below withdrawn
-  closed       stop listing them here            membership `closed_at` accepted
-  never_held   the membership was never true     membership existence rejected (`retract`)
-
-`closed_at` is ours and `end_date` is the source's, so closing says we stopped carrying the
-membership, not that somebody knows the term ended on a date. A claim about the term itself is an
-`end_date` assertion, which is a different act nobody has asked for yet.
-
-They contradict each other, so setting one withdraws the other: `set_assertion` takes the choice,
-rather than four endpoints that could file both at once.
-
-Not a member is the person-level version: publish closes every membership of theirs in the
-jurisdiction. Deleting the person row is none of these, because it destroys history rather than
-claiming anything, which is why it lives in `people.delete_person` behind a stricter permission.
+The claim is what publish applies: the roster is derived from the facts, so nothing here writes
+a row, and rolling the claim back re-derives without a special case.
 """
 
-from database import memberships, people
+from database import memberships, people, projection
 from database.database import get_pool
 from schemas.posts import MembershipRemovalAssertion
 
@@ -34,20 +21,23 @@ async def set_assertion(
     reason: str | None = None,
     changeset_id: str | None = None,
 ) -> None:
-    """File the assertion somebody chose, and withdraw the one it contradicts."""
+    """Reject this membership, or take a rejection back, and rebuild.
+
+    `closed` and `never_held` are the same claim: the editor still offers both, and step 9
+    deletes the choice along with the enum.
+    """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        if assertion is MembershipRemovalAssertion.CLOSED:
-            await memberships.reinstate(cur, membership_id, user_id)
-            await memberships.assert_closed_at(
-                cur, membership_id, user_id, reason, changeset_id
-            )
-        elif assertion is MembershipRemovalAssertion.NEVER_HELD:
-            await memberships.withdraw_closed_at(cur, membership_id, user_id)
-            await memberships.retract(cur, membership_id, user_id, reason, changeset_id)
+        held = await memberships.membership_pair(cur, membership_id)
+        if held is None:
+            return
+        person_id, post = held
+        if assertion is MembershipRemovalAssertion.NONE:
+            await memberships.withdraw_reject(cur, person_id, post.id, user_id)
         else:
-            await memberships.withdraw_closed_at(cur, membership_id, user_id)
-            await memberships.reinstate(cur, membership_id, user_id)
+            await memberships.reject(cur, person_id, post.id, user_id, reason, changeset_id)
+        await projection.rebuild_from_facts(cur, post.jurisdiction_ocdid, changeset_id)
+        await conn.commit()
 
 
 async def assert_not_a_member(

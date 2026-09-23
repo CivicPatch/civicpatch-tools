@@ -13,7 +13,7 @@ from typing import LiteralString
 import pytest
 from shared.utils.membership_ids import MEMBERSHIP_NAMESPACE, membership_id
 
-from core.projection.posts import POST_NAMESPACE, PostKey
+from core.projection.facts import POST_NAMESPACE, PostKey
 from database.database import get_pool
 
 _ORGANIZATION = "11111111-1111-1111-1111-111111111111"
@@ -51,16 +51,22 @@ async def test_membership_id_matches_python():
     assert sql == membership_id(_PERSON, post_id)
 
 
-_MIGRATION = (
-    Path(__file__).parents[3]
-    / "database_operations/migrations/216_membership_claims_name_the_membership.up.sql"
+_MIGRATIONS = sorted(
+    (Path(__file__).parents[3] / "database_operations/migrations").glob("*.up.sql")
 )
 
 
 @pytest.mark.integration
-def test_the_migrations_use_the_same_namespaces():
+@pytest.mark.parametrize(
+    "function, namespace",
+    [("pg_temp.post_key_id", POST_NAMESPACE), ("pg_temp.membership_id", MEMBERSHIP_NAMESPACE)],
+)
+def test_the_migrations_use_the_same_namespaces(function, namespace):
     """The migrations spell the namespaces as literals, since SQL cannot import Python."""
-    migration = _MIGRATION.read_text()
+    defining = [
+        path for path in _MIGRATIONS if f"FUNCTION {function}" in path.read_text()
+    ]
 
-    assert str(POST_NAMESPACE) in migration
-    assert str(MEMBERSHIP_NAMESPACE) in migration
+    assert defining
+    for path in defining:
+        assert str(namespace) in path.read_text(), path.name

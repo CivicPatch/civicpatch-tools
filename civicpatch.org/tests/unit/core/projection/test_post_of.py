@@ -12,8 +12,8 @@ import pytest
 from shared.schemas import Role, RoleConfig, RoleStatus
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID, build_taxonomy
 
-from core.projection.facts import SourceRecord
-from core.projection.posts import PostKey, post_of
+from core.projection.facts import PostKey, SourceRecord
+from core.projection.posts import post_of
 
 _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
 JURISDICTION = "ocd-jurisdiction/country:us/state:tx/place:alpha/government"

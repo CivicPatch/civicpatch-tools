@@ -428,12 +428,6 @@ async def test_a_contributor_can_create_a_post(contributor_client):
     assert (await _create(contributor_client, division=_WARD_3)).status_code == 200
 
 
-async def _organization(name: str, jurisdiction_ocdid: str = _OCDID) -> str:
-    organization_id = await organizations.create(jurisdiction_ocdid, name, None)
-    assert organization_id is not None
-    return organization_id
-
-
 async def _membership(person_id: str, post_id: str, organization_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -446,84 +440,3 @@ async def _membership(person_id: str, post_id: str, organization_id: str) -> Non
             cur, DerivedMembership(person_id=person_id), post_id, organization_id, "2026-06-15T00:00:00Z"
         )
         await conn.commit()
-
-
-def _move(client, post_id: str, organization_id: str):
-    return client.put(f"{_PREFIX}/{post_id}/organization", json={"organization_id": organization_id})
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_moving_a_post_carries_its_memberships(client):
-    post_id = (await _create(client)).json()["data"]["id"]
-    await _membership(str(uuid.uuid4()), post_id, await _default_org_id())
-    mayor = await _organization("Office of the Mayor")
-
-    response = _move(client, post_id, mayor)
-    assert response.status_code == 200, response.text
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("SELECT organization_id::text FROM posts WHERE id::text = %s", (post_id,))
-        assert await cur.fetchone() == (mayor,)
-        await cur.execute(
-            "SELECT organization_id::text FROM memberships WHERE post_id::text = %s", (post_id,)
-        )
-        assert await cur.fetchall() == [(mayor,)]
-    moved = [row for row in await _activity_rows() if row["type"] == "edit_post"]
-    assert moved[-1]["fields"] == [
-        {"field": "organization", "before": "Government", "after": "Office of the Mayor", "sources": []}
-    ]
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_moving_a_post_requires_maintainer(client, default_role_client):
-    post_id = (await _create(client)).json()["data"]["id"]
-    mayor = await _organization("Office of the Mayor")
-
-    assert _move(default_role_client, post_id, mayor).status_code == 403
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_moving_a_missing_post_is_404(client):
-    mayor = await _organization("Office of the Mayor")
-
-    assert _move(client, str(uuid.uuid4()), mayor).status_code == 404
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_moving_into_an_unknown_organization_is_404(client):
-    post_id = (await _create(client)).json()["data"]["id"]
-
-    assert _move(client, str(uuid.uuid4()), str(uuid.uuid4())).status_code == 404
-    assert _move(client, post_id, str(uuid.uuid4())).status_code == 404
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_moving_onto_a_post_the_target_already_has_is_a_conflict(client):
-    post_id = (await _create(client)).json()["data"]["id"]
-    mayor = await _organization("Office of the Mayor")
-    assert (await _create(client, organization_id=mayor)).status_code == 200
-
-    response = _move(client, post_id, mayor)
-    assert response.status_code == 409, response.text
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_moving_a_post_whose_holder_already_sits_in_the_target_is_a_conflict(client):
-    """One open membership per person per body: the mayor who also sits on council cannot
-    have the Mayor post moved into Council."""
-    person_id = str(uuid.uuid4())
-    mayor_post = (await _create(client)).json()["data"]["id"]
-    await _membership(person_id, mayor_post, await _default_org_id())
-    council = await _organization("City Council")
-    council_post = (await _create(client, role_id="council-member", division=_WARD_3, organization_id=council)).json()["data"]["id"]
-    await _membership(person_id, council_post, council)
-
-    response = _move(client, mayor_post, council)
-    assert response.status_code == 409, response.text

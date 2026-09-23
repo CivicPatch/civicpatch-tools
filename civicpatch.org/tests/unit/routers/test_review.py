@@ -136,7 +136,7 @@ def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
     """`data_json` is the only copy of the roster now. Publishing a request that never
     recorded one would resolve to [] and retire every person in the jurisdiction."""
     with (
-        patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
+        patch("services.roster_edits.publish_roster", new_callable=AsyncMock) as mock_publish,
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[]),
@@ -179,7 +179,7 @@ def test_publish_returns_200_and_queues_no_merge(client):
     before the response, so there is nothing for the caller to poll."""
     with (
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock) as mock_resolve,
-        patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
+        patch("services.roster_edits.publish_roster", new_callable=AsyncMock) as mock_publish,
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
@@ -191,8 +191,9 @@ def test_publish_returns_200_and_queues_no_merge(client):
     assert response.status_code == 200
     assert response.json()["status"] == "published"
     mock_resolve.assert_awaited_once_with(TEST_CHANGESET_ID)
+    # No roster argument: publishing rebuilds from the facts, and the save filed them.
     mock_publish.assert_awaited_once_with(
-        TEST_CHANGESET_ID, TEST_OCDID, [BASE_PERSON], "user-id-123", None
+        TEST_CHANGESET_ID, TEST_OCDID, "user-id-123", None
     )
 
 
@@ -219,24 +220,31 @@ def test_save_and_merge_applies_patch_and_normalizes(client):
         patch("database.assertions.create_all", new_callable=AsyncMock) as mock_update,
         patch("services.activity.record_manual_edits", new_callable=AsyncMock),
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
-        patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
+        patch("services.roster_edits.publish_roster", new_callable=AsyncMock) as mock_publish,
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/publish",
             json={
                 "changeset_id": TEST_CHANGESET_ID,
                 "jurisdiction_ocdid": TEST_OCDID,
-                "data": [{"id": "p1", "fields": {"phones": ["9168085300"]}}],
+                # A number the base does not have: the old payload restated the base's own
+                # phone unformatted, so the edit was a no-op and only the published blob
+                # showed the normalization.
+                "data": [{"id": "p1", "fields": {"phones": ["9168085399"]}}],
             },
         )
 
     assert response.status_code == 200
-    # The roster handed to publish, which is what goes live — the patched blob it used to be
-    # written to is gone, so this is where the overlay is now observable.
-    published = mock_publish.await_args.args[2]
-    assert published[0]["phones"] == ["(916) 808-5300"]            # edited field, canonicalized
-    assert published[0]["name"] == "Jane Doe"                      # untouched
-    assert list(published[0].keys()) == list(BASE_PERSON.keys())   # key order preserved
+    # This test verified the patched roster handed to publish. It now verifies the claims that
+    # edit files, because publishing takes no roster: it rebuilds from the facts, and the
+    # reviewer's answer *is* a fact. Key order is not observable any more, and not a thing that
+    # can go wrong, since nothing carries a person-shaped blob through the publish.
+    mock_publish.assert_awaited_once()
+    claims = mock_update.await_args.args[0]
+    assert sorted((claim.field_path, claim.kind.value, claim.value) for claim in claims) == [
+        ("phones", "accept", "(916) 808-5399"),  # edited field, canonicalized
+        ("phones", "reject", "(916) 808-5300"),  # the base value it replaced
+    ]
 
 
 @pytest.mark.unit
@@ -614,7 +622,7 @@ def test_publish_allows_default_role():
     client = _client_as(_user_at(UserRole.DEFAULT))
     with (
         patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
-        patch("services.roster_edits.publish_people", new_callable=AsyncMock),
+        patch("services.roster_edits.publish_roster", new_callable=AsyncMock),
         patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
         patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
     ):
@@ -768,8 +776,7 @@ def test_a_sheet_import_publishes_from_its_review_card(client):
             new_callable=AsyncMock,
             return_value=[{"id": "p1", "name": "Ana Reyes"}],
         ),
-        patch("services.roster_edits.promote_images", new_callable=AsyncMock, side_effect=lambda roster: roster),
-        patch("services.roster_edits.publish_people", new_callable=AsyncMock) as mock_publish,
+        patch("services.roster_edits.publish_roster", new_callable=AsyncMock) as mock_publish,
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/publish",

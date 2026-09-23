@@ -29,11 +29,6 @@ _WRITE = re.compile(
 
 # (file, statement prefix): how many times it appears. Step numbers are the projector plan's.
 ALLOWED: dict[tuple[str, str], int] = {
-    # Membership patching; the fold decides all of it from step 8.
-    ("database/memberships.py", "UPDATE memberships SET closed_at"): 4,
-    ("database/memberships.py", "UPDATE memberships SET last_seen_at"): 1,
-    # Labels derive from claims at step 7.
-    ("database/memberships.py", "UPDATE memberships SET label"): 1,
     # Deleting a person becomes withdrawing the records that name them at step 9.
     ("database/people.py", "DELETE FROM people"): 1,
     # Mints the persistent post row. Stays: a post's id is stable and the row persists (R1, R4).
@@ -41,7 +36,6 @@ ALLOWED: dict[tuple[str, str], int] = {
     # Derived columns enter the fold at step 10.
     ("database/posts.py", "UPDATE posts SET meta_headcount"): 1,
     # A post's organization and existence become claims at step 11.
-    ("database/posts.py", "UPDATE posts SET organization_id"): 1,
     ("database/posts.py", "DELETE FROM posts"): 1,
     # Organizations become claims at step 11.
     ("database/organizations.py", "INSERT INTO organizations"): 3,
@@ -113,8 +107,8 @@ def test_only_the_writer_writes_the_projection():
         "the allow-list no longer matches the code. Entries whose count changed:\n  "
         + "\n  ".join(
             f"{file}: {prefix!r} expected {ALLOWED.get((file, prefix), 0)}, found {count}"
-            for (file, prefix), count in sorted(set(found) | set(ALLOWED), key=lambda k: k)
-            if found.get((file, prefix), 0) != ALLOWED.get((file, prefix), 0)
+            for file, prefix in sorted(set(found) | set(ALLOWED))
+            if (count := found.get((file, prefix), 0)) != ALLOWED.get((file, prefix), 0)
         )
     )
 

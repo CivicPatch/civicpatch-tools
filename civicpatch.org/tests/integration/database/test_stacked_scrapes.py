@@ -350,10 +350,10 @@ async def test_the_guard_refuses_a_roster_older_than_one_already_published():
     await _jurisdiction()
     newer, older = await _request(_NEW), await _request(_OLD)
 
-    await publish_changeset(newer, _OCDID, [{**_person(), "updated_at": _NEW}])
+    await publish_changeset(newer, _OCDID)
 
     with pytest.raises(ValueError, match="already published a newer roster"):
-        await publish_changeset(older, _OCDID, [{**_person(), "updated_at": _OLD}])
+        await publish_changeset(older, _OCDID)
 
 
 @pytest.mark.asyncio
@@ -364,8 +364,8 @@ async def test_the_guard_permits_republishing_the_same_request():
     changeset_id = await _request(_NEW)
     people = [{**_person(), "updated_at": _NEW}]
 
-    await publish_changeset(changeset_id, _OCDID, people)
-    await publish_changeset(changeset_id, _OCDID, people)  # must not raise
+    await publish_changeset(changeset_id, _OCDID)
+    await publish_changeset(changeset_id, _OCDID)  # must not raise
 
 
 @pytest.mark.asyncio
@@ -374,8 +374,8 @@ async def test_the_guard_permits_a_newer_roster():
     await _jurisdiction()
     older, newer = await _request(_OLD), await _request(_NEW)
 
-    await publish_changeset(older, _OCDID, [{**_person(), "updated_at": _OLD}])
-    await publish_changeset(newer, _OCDID, [{**_person(), "updated_at": _NEW}])
+    await publish_changeset(older, _OCDID)
+    await publish_changeset(newer, _OCDID)
 
 
 @pytest.mark.asyncio

@@ -28,6 +28,8 @@ _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_mroute/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_mroute"
 _WARD_3 = f"{_BASE}/ward:3"
 _SEEN_AT = "2026-06-15T00:00:00Z"
+_PAGE = "https://zz-mroute.example/clerk"
+_READ_AT = datetime(2026, 6, 1, tzinfo=timezone.utc)
 
 
 def _fake_admin() -> Identity:
@@ -90,6 +92,9 @@ async def _wipe():
         await cur.execute(
             "DELETE FROM activity WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
+        await cur.execute(
+            "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
         for table in ("posts", "divisions", "organizations", "people"):
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_OCDID,)
@@ -108,7 +113,12 @@ async def clean_sentinels():
 
 
 async def _seed() -> tuple[str, str, str]:
-    """A person and two seats in one body to move between."""
+    """A person and two posts in one organization to move between.
+
+    The person is somebody a page named, in an organization of their own: a roster is derived
+    from records, so somebody no page ever mentioned holds nothing whatever is claimed about
+    them, and could not be assigned either.
+    """
     person_id = str(uuid.uuid4())
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -131,7 +141,16 @@ async def _seed() -> tuple[str, str, str]:
         ward = await posts.find_or_create(
             cur, _OCDID, organization_id, "council-member", _WARD_3
         )
+        elsewhere = await organizations.find_or_create(
+            cur, _OCDID, "Office of the City Clerk"
+        )
+        # The post the record below derives, so the first rebuild matches it rather than
+        # minting one and logging the mint.
+        await posts.find_or_create(cur, _OCDID, elsewhere, "clerk", _BASE)
         await conn.commit()
+    await factories.published_source_record(
+        _OCDID, elsewhere, person_id, "Route Test", "Clerk", _PAGE, _READ_AT
+    )
     return person_id, mayor, ward
 
 
@@ -316,10 +335,9 @@ async def test_the_person_axis_read_names_the_person(client):
 
     assert response.status_code == 200, response.text
     rows = response.json()["data"]["memberships"]
-    assert len(rows) == 1
-    assert rows[0]["person_name"] == "Route Test"
-    assert rows[0]["role_id"] == "mayor"
-    assert rows[0]["label"] == "Mayor"
+    [seated] = [row for row in rows if row["role_id"] == "mayor"]
+    assert seated["person_name"] == "Route Test"
+    assert seated["label"] == "Mayor"
 
 
 @pytest.mark.asyncio
@@ -335,7 +353,10 @@ async def test_both_axes_answer_the_same_moment(client):
 
     assert before.status_code == 200, before.text
     assert before.json()["data"]["memberships"] == []
-    assert len(after.json()["data"]["memberships"]) == 1
+    assert [row["role_id"] for row in after.json()["data"]["memberships"]] == [
+        "clerk",
+        "mayor",
+    ]
 
 
 @pytest.mark.asyncio
@@ -387,13 +408,13 @@ async def test_the_person_axis_reads_without_signing_in(anonymous_client):
 # kind — and `assign`, which mints no changeset, uses the same `now()` a hand edit would get.
 
 
-async def _seat_seen_at(person_id: str):
+async def _seat_seen_at(person_id: str, post_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT first_seen_at, last_seen_at FROM memberships "
-            "WHERE person_id = %s AND closed_at IS NULL",
-            (person_id,),
+            "WHERE person_id = %s AND post_id = %s AND closed_at IS NULL",
+            (person_id, post_id),
         )
         return await cur.fetchone()
 
@@ -433,6 +454,6 @@ async def test_a_manual_seat_is_dated_when_the_human_seated_them(client):
         _PREFIX, json={"person_id": person_id, "post_id": mayor}
     ).status_code == 200
 
-    first_seen_at, last_seen_at = await _seat_seen_at(person_id)
+    first_seen_at, last_seen_at = await _seat_seen_at(person_id, mayor)
     assert first_seen_at >= before
     assert last_seen_at >= before

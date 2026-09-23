@@ -11,8 +11,8 @@ import pytest
 from shared.schemas import Role, RoleConfig, RoleStatus
 from shared.utils.taxonomy import build_taxonomy
 
-from core.projection.facts import SourceRecord
-from core.projection.posts import PostKey, records_by_post
+from core.projection.facts import PostKey, SourceRecord
+from core.projection.posts import records_by_post
 
 _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
 JURISDICTION = "ocd-jurisdiction/country:us/state:tx/place:alpha/government"
@@ -63,10 +63,10 @@ def grouped(records):
     return records_by_post(records, JURISDICTION, TAXONOMY, ROLES)
 
 
-def post_id(role_id: str, organization: str = COUNCIL, division: str = BASE) -> str:
+def key(role_id: str, organization: str = COUNCIL, division: str = BASE) -> PostKey:
     return PostKey(
         organization_id=organization, role_id=role_id, division_ocdid=division
-    ).post_id
+    )
 
 
 @pytest.mark.unit
@@ -78,8 +78,8 @@ def test_no_records_no_posts():
 def test_one_record_one_post():
     result = grouped([record("r1", "Mayor")])
 
-    assert list(result) == [post_id("mayor")]
-    assert [r.id for r in result[post_id("mayor")]] == ["r1"]
+    assert list(result) == [key("mayor")]
+    assert [r.id for r in result[key("mayor")]] == ["r1"]
 
 
 @pytest.mark.unit
@@ -93,8 +93,8 @@ def test_two_labels_in_one_scrape_parse_together():
         ]
     )
 
-    assert list(result) == [post_id("mayor")]
-    assert len(result[post_id("mayor")]) == 2
+    assert list(result) == [key("mayor")]
+    assert len(result[key("mayor")]) == 2
 
 
 @pytest.mark.unit
@@ -108,9 +108,9 @@ def test_two_changesets_parse_apart():
         ]
     )
 
-    district_5 = post_id("council-member", division=BASE + "/council_district:5")
+    district_5 = key("council-member", division=BASE + "/council_district:5")
 
-    assert set(result) == {post_id("mayor"), district_5}
+    assert set(result) == {key("mayor"), district_5}
 
 
 @pytest.mark.unit
@@ -125,8 +125,8 @@ def test_two_organizations_in_one_changeset_parse_apart():
     )
 
     assert set(result) == {
-        post_id("mayor"),
-        post_id("board-member", organization=SCHOOL),
+        key("mayor"),
+        key("board-member", organization=SCHOOL),
     }
 
 
@@ -142,8 +142,8 @@ def test_the_same_post_across_scrapes_is_one_entry():
         ]
     )
 
-    assert list(result) == [post_id("mayor")]
-    assert [r.id for r in result[post_id("mayor")]] == ["r1", "r2", "r3"]
+    assert list(result) == [key("mayor")]
+    assert [r.id for r in result[key("mayor")]] == ["r1", "r2", "r3"]
 
 
 @pytest.mark.unit
@@ -157,8 +157,8 @@ def test_a_move_between_posts_keeps_both_with_their_own_records():
         ]
     )
 
-    district_2 = post_id("council-member", division=BASE + "/council_district:2")
-    district_5 = post_id("council-member", division=BASE + "/council_district:5")
+    district_2 = key("council-member", division=BASE + "/council_district:2")
+    district_5 = key("council-member", division=BASE + "/council_district:5")
 
     assert [r.id for r in result[district_2]] == ["r1"]
     assert [r.id for r in result[district_5]] == ["r2"]
@@ -177,4 +177,4 @@ def test_the_answer_does_not_depend_on_the_order_the_records_arrive():
     backwards = grouped(list(reversed(records)))
 
     assert forwards == backwards
-    assert [r.id for r in forwards[post_id("mayor")]] == ["r1", "r2"]
+    assert [r.id for r in forwards[key("mayor")]] == ["r1", "r2"]

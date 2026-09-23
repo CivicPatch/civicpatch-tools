@@ -432,7 +432,7 @@ async def test_publishing_removes_the_card_from_the_pool_for_good():
         before, _, _ = await list_open_changesets(state_code="zz")
         assert changeset_id in [r["changeset_id"] for r in before], "unpublished scrape starts in the pool"
 
-        await publish_changeset(changeset_id, ocdid, [])
+        await publish_changeset(changeset_id, ocdid)
 
         after, _, _ = await list_open_changesets(state_code="zz")
         assert changeset_id not in [r["changeset_id"] for r in after], "published scrape must leave the pool"

@@ -11,8 +11,7 @@ from shared.schemas import Role, RoleConfig, RoleStatus
 from shared.utils.membership_ids import membership_id
 from shared.utils.taxonomy import build_taxonomy
 
-from core.projection.facts import Claim, ClaimKind, EntityType, Facts, SourceRecord
-from core.projection.posts import PostKey
+from core.projection.facts import Claim, ClaimKind, EntityType, Facts, PostKey, SourceRecord
 from core.projection.roster import derive_roster
 
 _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
@@ -27,7 +26,8 @@ ROLES = [
     ),
 ]
 TAXONOMY = build_taxonomy(RoleConfig(roles=ROLES))
-MAYOR = PostKey(organization_id=COUNCIL, role_id="mayor", division_ocdid=BASE).post_id
+MAYOR_KEY = PostKey(organization_id=COUNCIL, role_id="mayor", division_ocdid=BASE)
+MAYOR = MAYOR_KEY.post_id
 
 
 def record(id: str, person: str, name: str = "Someone", minutes: int = 0) -> SourceRecord:

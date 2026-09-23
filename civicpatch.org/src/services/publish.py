@@ -9,89 +9,64 @@ made the repo the authority for what is live and meant a dead merge worker meant
 import asyncio
 import logging
 
-import environment
 import lib.buckets as buckets
-import lib.github.api as github_service
-import lib.github.git_data as git_data
 import lib.storage as storage_service
-import shared.utils.id_utils
-from core.images import artifacts_key, promoted_key, promoted_url
-from core.output_hash import hash_text
-from core.membership_label import derive_post_label
+from core.images import artifacts_key, promoted_key
 from core.post_derivation import ChosenPost, DerivedPost, RosterEntry, derived_posts
-from database import output_hashes as output_hashes_db
 from database import posts as posts_db
 from database.database import get_pool
-from database.people import get_roster
+from database import source_records as source_records_db
 from database.publications import (
     dismiss_changeset,
     publish_changeset,
-    publish_hand_edit,
-    record_change_url,
 )
 from database.roles import get_roles
-from lib.temporal.types import (
-    OpenDataBatchCommitRequest,
-    OpenDataCommitItem,
-)
 from schemas.activity import Change
-from shared.schemas import DerivedPerson, OpenStatesPersonRecord, RoleConfig
-from shared.utils.people_utils import person_sort_key
+from shared.schemas import RoleConfig
 from shared.utils.statuses import DismissalReason
-from shared.utils.taxonomy import Taxonomy, build_taxonomy
-from shared.utils.yaml_utils import yaml_dump
+from shared.utils.taxonomy import build_taxonomy
 
 logger = logging.getLogger(__name__)
 
 
-async def promote_images(people: list[dict]) -> list[dict]:
-    """Move this roster's photos from the artifacts bucket to the CDN, and point the records
-    at their new home. Mutates nothing the caller owns — returns the rewritten roster.
+async def promote_changeset_images(changeset_id: str) -> None:
+    """Copy this changeset's photos from the artifacts bucket to the CDN.
+
+    Only the copy: where a promoted photo *lives* is `core.images.published_image_url`, a pure
+    function the fold applies, so nothing here rewrites a row.
 
     Runs at publish rather than submit so unreviewed photos never reach the CDN, mirroring
     the data itself: `local-unreviewed` is promoted to `local` by the same act of review.
 
-    A photo that fails to copy is left pointing at the artifacts bucket rather than failing
-    the publish — the URL still resolves, it is just not on the permanent host yet.
+    A photo that fails to copy is logged and skipped rather than failing the publish — the
+    fold will still point at the CDN key, so the sweep is what should retry it (§19).
 
     Concurrent, because each copy is an independent round trip to object storage and this runs
     inside the publish request: nine councillors were nine serial copies, each also building
     its own boto client. `to_thread` rather than an async client because boto is synchronous —
     called directly these blocked the event loop, so they delayed every other request too, not
     only this one.
-
-    `gather` preserves order, so the roster comes back in the order it went in.
     """
-    friendly_host = environment.get_env_vars()["FRIENDLY_STORAGE_HOST"]
-    return list(
-        await asyncio.gather(
-            *(
-                asyncio.to_thread(_promote_person_image, person, friendly_host)
-                for person in people
-            )
-        )
-    )
+    images = await source_records_db.changeset_images(changeset_id)
+    if not images:
+        return
+    await asyncio.gather(*(asyncio.to_thread(_promote_image, image) for image in images))
 
 
-def _promote_person_image(person: dict, friendly_host: str) -> dict:
-    cdn_image = person.get("cdn_image")
-    if not cdn_image:
-        return person
+def _promote_image(cdn_image: str) -> None:
     source_key = artifacts_key(cdn_image, buckets.ARTIFACTS)
     if not source_key:
-        return person
+        return
     dest_key = promoted_key(source_key)
     if not dest_key:
         logger.warning(f"Unexpected artifacts key, not promoting: {source_key}")
-        return person
+        return
     try:
         storage_service.copy_object(
             buckets.ARTIFACTS, source_key, buckets.CDN, dest_key
         )
     except Exception as e:
         logger.error(f"Failed to promote image {source_key}: {e}", exc_info=True)
-        return person
-    return {**person, "cdn_image": promoted_url(friendly_host, dest_key)}
 
 
 def picks_in(roster: list[RosterEntry]) -> dict[str, str]:
@@ -131,50 +106,24 @@ async def _get_derived_posts(people: list[dict]) -> list[DerivedPost]:
     return derived_posts(roster, taxonomy, roles, await chosen_posts(picks_in(roster)))
 
 
-async def publish_people(
+async def publish_roster(
     changeset_id: str,
     jurisdiction_ocdid: str,
-    people: list[dict],
     resolved_by_user_id: str | None = None,
     changes: Change | None = None,
 ) -> int:
-    """Publish one scrape's roster. Returns the number of people written.
+    """Make a changeset live: promote its photos, then rebuild the roster from the facts.
+
+    One call for every kind. A scrape and a hand edit differ in what facts they filed, not in
+    how they publish, so there is no second entry point to keep in step.
 
     `changes`, when given, rides on the publish's own activity row — see `roster_edits.publish`.
     """
+    await promote_changeset_images(changeset_id)
     written = await publish_changeset(
-        changeset_id,
-        jurisdiction_ocdid,
-        people,
-        resolved_by_user_id,
-        derived=await _get_derived_posts(people),
-        changes=changes,
+        changeset_id, jurisdiction_ocdid, resolved_by_user_id, changes
     )
     logger.info(f"[{changeset_id}] Published {written} people for {jurisdiction_ocdid}")
-    return written
-
-
-async def publish_people_edit(
-    changeset_id: str,
-    jurisdiction_ocdid: str,
-    people: list[dict],
-    added: list[dict],
-    removed_person_ids: list[str],
-    resolved_by_user_id: str,
-    changes: Change | None = None,
-) -> int:
-    """A hand edit: `people` are the ones it touched, `added` the ones it created (each already
-    in `people`). Only `added` get memberships; nobody's are re-derived."""
-    written = await publish_hand_edit(
-        changeset_id,
-        jurisdiction_ocdid,
-        await promote_images(people),
-        resolved_by_user_id,
-        await _get_derived_posts(added),
-        removed_person_ids,
-        changes=changes,
-    )
-    logger.info(f"[{changeset_id}] Published a hand edit to {written} people in {jurisdiction_ocdid}")
     return written
 
 

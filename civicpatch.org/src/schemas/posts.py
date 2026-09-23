@@ -1,7 +1,6 @@
 from enum import StrEnum
 
 from pydantic import BaseModel, Field
-
 from schemas.activity import FieldChange
 
 
@@ -36,12 +35,6 @@ class UpdatePostRequest(BaseModel):
     # a default would let an omission silently re-track a post somebody turned off.
     meta_headcount: int = Field(gt=0)
     meta_is_tracked: bool
-
-
-class MovePostRequest(BaseModel):
-    """The body a post belongs to. Must be in the post's own jurisdiction."""
-
-    organization_id: str
 
 
 class MembershipRemovalAssertion(StrEnum):
@@ -86,17 +79,8 @@ class AssignMembershipRequest(BaseModel):
 
 
 class AssignmentResult(BaseModel):
-    """What an assignment did.
-
-    One `change`, because an assignment does one thing to the seat: `post_id` when they move,
-    `label` when they stay and it is renamed. A first assignment is the one whose `post_id`
-    change has no `before`, which is what lets a caller say "moved from X" rather than
-    "assigned".
-
-    `jurisdiction_ocdid` is carried because mirroring the roster into open-data needs it and
-    only `assign` has it — it comes off the post, which its caller never loads.
-    """
+    """What an assignment did."""
 
     membership_id: str
     jurisdiction_ocdid: str
-    change: FieldChange
+    change: FieldChange  # post_id when moved, label when staying but renamed

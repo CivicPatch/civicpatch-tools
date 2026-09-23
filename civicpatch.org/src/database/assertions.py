@@ -5,16 +5,28 @@ and `created_by`/`created_at` are never rewritten — `asserted_values` resolves
 by reading, not by holding one row per field."""
 
 import json
+from typing import Any
 
-from core.people_edits import LIST_FIELDS
+from core.people_edits import LIST_FIELDS, POSTS_FIELD
 from database.database import get_pool
 from schemas.assertions import Assertion, AssertionKind, EntityType
 
 
+# Fields whose accepts are per value rather than one answer for the whole field: the list
+# fields, and the posts somebody holds — two organizations, two claims, neither superseding
+# the other.
+_MULTI_VALUED = LIST_FIELDS | {POSTS_FIELD}
+
+
 def _value_keyed(field_path: str, kind: str) -> bool:
     """Only a scalar accept has one answer for the whole field; a reject (of either field
-    shape) and a list field's accept are per-value, so distinct values coexist."""
-    return kind == AssertionKind.REJECT.value or field_path in LIST_FIELDS
+    shape) and a multi-valued field's accept are per-value, so distinct values coexist."""
+    return kind == AssertionKind.REJECT.value or field_path in _MULTI_VALUED
+
+
+# "Whichever value currently wins", for a caller that does not mean one in particular. `None`
+# cannot say it: a claim's value may itself be null.
+_WHOLE_FIELD = object()
 
 
 def _keyed_by_value(assertion: Assertion) -> bool:
@@ -152,12 +164,16 @@ async def withdraw(
     withdrawn_by: str,
     reason: str | None = None,
     withdrawn_by_changeset_id: str | None = None,
+    value: Any = _WHOLE_FIELD,
 ) -> int:
     """Retract the current claim of this kind on a field, or 0 rows if nothing was live.
 
     `kind` is explicit since reject and accept can both be live on the same field at once, and
-    only the winning (newest, non-withdrawn) row is touched. `withdrawn_by_changeset_id` is set
-    only when a rollback changeset caused this; ordinary withdrawals leave it NULL."""
+    only the winning (newest, non-withdrawn) row is touched. `value` names which claim on a
+    multi-valued field, where the newest claim on the field need not be about the value the
+    caller means. `withdrawn_by_changeset_id` is set only when a rollback changeset caused
+    this; ordinary withdrawals leave it NULL."""
+    wanted = None if value is _WHOLE_FIELD else json.dumps(value)
     await cur.execute(
         f"""
         UPDATE assertions
@@ -167,6 +183,7 @@ async def withdraw(
              SELECT id FROM assertions
               WHERE entity_type = %s AND entity_id = %s AND field_path = %s
                 AND kind = %s AND withdrawn_at IS NULL
+                AND (%s::jsonb IS NULL OR value = %s::jsonb)
               {LATEST_FIRST}
               LIMIT 1
          )
@@ -180,6 +197,8 @@ async def withdraw(
             entity_id,
             field_path,
             kind.value,
+            wanted,
+            wanted,
         ),
     )
     withdrawn = [row[0] for row in await cur.fetchall()]
@@ -401,7 +420,8 @@ async def asserted_values(
         # Rows arrive newest first, so the first time a key is seen is its current winner —
         # everything after is history a newer claim has already superseded.
         key = (
-            (entity_id, field_path, value)
+            # By the value's JSON text: a membership claim's value is the post's key, an object.
+            (entity_id, field_path, json.dumps(value, sort_keys=True))
             if _value_keyed(field_path, kind)
             else (entity_id, field_path)
         )

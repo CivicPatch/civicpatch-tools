@@ -33,7 +33,6 @@ import pytest_asyncio
 from shared.schemas import RoleConfig
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID, build_taxonomy
 
-from core.post_derivation import DerivedMembership, DerivedPost, MembershipSource
 from core.projection.diff import RosterDiff, roster_diff
 from core.projection.roster import derive_roster
 from database import assertions, divisions, posts
@@ -134,40 +133,14 @@ async def _changeset(at: datetime.datetime) -> str:
     return changeset_id
 
 
-def _person(person_id: str, name: str, **fields) -> dict:
-    """What `people_derivation` hands publish for one `_record_evidence` row: its `url` lands in
-    `urls` and its page in `source_urls`. `fields` is whatever else that row said."""
-    return {
-        "id": person_id,
-        "name": name,
-        "jurisdiction_ocdid": _OCDID,
-        "urls": [_PAGE],
-        "source_urls": [_PAGE],
-        **fields,
-    }
-
-
-def _seat(organization_id: str, role_id: str, division: str, person_id: str, note: str) -> DerivedPost:
-    return DerivedPost(
-        organization_id=organization_id,
-        role_id=role_id,
-        role_label=role_id.replace("-", " ").title(),
-        division_ocdid=division,
-        headcount=1,
-        members=[
-            DerivedMembership(person_id=person_id, sources=[MembershipSource(note=note, url=_PAGE)])
-        ],
-    )
-
-
 async def _record_evidence(
     changeset_id: str, organization_id: str, person_id: str, name: str, label: str, **fields
 ) -> None:
-    """What the scrape read, in the body it read it for. `close_absent` runs only in the bodies
-    a changeset recorded evidence for, so the snapshot depends on this being right.
+    """What the scrape read, in the organization it read it for. `close_absent` runs only in the
+    organizations a changeset recorded evidence for, so the snapshot depends on this being right.
 
-    `label` must be the one that derives the seat the test hands publish: today's path takes
-    the seat as given, but the fold derives it from this label."""
+    `label` must be the one that derives the post the test hands publish: today's path takes
+    the post as given, but the fold derives it from this label."""
     await insert_source_records(
         changeset_id,
         _OCDID,
@@ -184,6 +157,15 @@ async def _record_evidence(
             ]
         },
     )
+    # The insert stamps `now()`; a scrape's records carry its date, and the fold reads those
+    # as when the membership was first and last seen.
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE source_records SET created_at = "
+            "  (SELECT updated_at FROM changesets WHERE id = %s) WHERE changeset_id = %s",
+            (changeset_id, changeset_id),
+        )
 
 
 async def _reject_user() -> str:
@@ -307,16 +289,7 @@ async def test_publishing_two_bodies_derives_this_projection():
     await _record_evidence(changeset_id, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
     await _record_evidence(changeset_id, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
 
-    await publish_changeset(
-        changeset_id,
-        _OCDID,
-        [_person(ids["ana"], "Ana Reyes"), _person(ids["ben"], "Ben Ortiz")],
-        None,
-        derived=[
-            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2"),
-            _seat(ids["mayors_office"], "mayor", _BASE, ids["ben"], "Mayor"),
-        ],
-    )
+    await publish_changeset(changeset_id, _OCDID)
 
     assert await _projection(ids) == {
         "people": [
@@ -398,28 +371,11 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
     first = await _changeset(_T0)
     await _record_evidence(first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
     await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
-    await publish_changeset(
-        first,
-        _OCDID,
-        [_person(ids["ana"], "Ana Reyes"), _person(ids["ben"], "Ben Ortiz")],
-        None,
-        derived=[
-            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2"),
-            _seat(ids["mayors_office"], "mayor", _BASE, ids["ben"], "Mayor"),
-        ],
-    )
+    await publish_changeset(first, _OCDID)
 
     second = await _changeset(_T1)
     await _record_evidence(second, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
-    await publish_changeset(
-        second,
-        _OCDID,
-        [_person(ids["ana"], "Ana Reyes")],
-        None,
-        derived=[
-            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2")
-        ],
-    )
+    await publish_changeset(second, _OCDID)
 
     assert await _projection(ids) == {
         "people": [
@@ -494,40 +450,30 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_body_read_without_someone_closes_them_there():
-    """The other half: the council page is read and Ana is not on it, so her council membership
-    closes while Ben's, in a body nothing read, does not."""
+async def test_a_body_read_without_someone_drops_them_there():
+    """The other half: the council page is read and Ana is not on it, so she no longer holds a
+    council membership, while Ben's, in an organization nothing read, stands.
+
+    This test verified that her membership was closed, with `closed_at` set to the scrape's
+    date. It now verifies that the membership is gone, because the writer replaces a
+    jurisdiction's open memberships with what the facts derive rather than closing what they
+    drop. The interval it used to leave behind is `membership_terms`, at step 15."""
     ids = await _seed()
     first = await _changeset(_T0)
     await _record_evidence(first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
     await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
-    await publish_changeset(
-        first,
-        _OCDID,
-        [_person(ids["ana"], "Ana Reyes"), _person(ids["ben"], "Ben Ortiz")],
-        None,
-        derived=[
-            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2"),
-            _seat(ids["mayors_office"], "mayor", _BASE, ids["ben"], "Mayor"),
-        ],
-    )
+    await publish_changeset(first, _OCDID)
 
     second = await _changeset(_T1)
     await _record_evidence(second, ids["council"], ids["ben"], "Ben Ortiz", "Council Member")
-    await publish_changeset(
-        second,
-        _OCDID,
-        [_person(ids["ben"], "Ben Ortiz")],
-        None,
-        derived=[_seat(ids["council"], "council-member", _BASE, ids["ben"], "Council Member")],
-    )
+    await publish_changeset(second, _OCDID)
 
-    closed = {
-        (row["person"], row["organization"]): row["closed_at"]
+    held = {
+        (row["person"], row["organization"])
         for row in (await _projection(ids))["memberships"]
     }
-    assert closed[("ana", "council")] == _T1
-    assert closed[("ben", "mayors_office")] is None
+    assert ("ana", "council") not in held
+    assert ("ben", "mayors_office") in held
 
     diff = await _projection_diff()
     assert diff.empty, diff
@@ -548,34 +494,14 @@ async def test_a_rescrape_that_changes_the_pages_details():
     await _record_evidence(
         first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor", phone="(206) 555-0009"
     )
-    await publish_changeset(
-        first,
-        _OCDID,
-        [
-            _person(ids["ana"], "Ana Reyes", phones=["(206) 555-0001"], other_names=["A. Reyes"]),
-            _person(ids["ben"], "Ben Ortiz", phones=["(206) 555-0009"]),
-        ],
-        None,
-        derived=[
-            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2"),
-            _seat(ids["mayors_office"], "mayor", _BASE, ids["ben"], "Mayor"),
-        ],
-    )
+    await publish_changeset(first, _OCDID)
 
     second = await _changeset(_T1)
     await _record_evidence(
         second, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2",
         phone="(206) 555-0002", other_names=["Ana M. Reyes"],
     )
-    await publish_changeset(
-        second,
-        _OCDID,
-        [_person(ids["ana"], "Ana Reyes", phones=["(206) 555-0002"], other_names=["Ana M. Reyes"])],
-        None,
-        derived=[
-            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2")
-        ],
-    )
+    await publish_changeset(second, _OCDID)
 
     people = {row["person"]: row for row in (await _projection(ids))["people"]}
     assert people["ana"]["phones"] == ["(206) 555-0002"]
@@ -598,16 +524,7 @@ async def test_a_rejected_value_stays_gone_when_the_page_keeps_printing_it():
         first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2", phone="(206) 555-0001"
     )
     await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
-    await publish_changeset(
-        first,
-        _OCDID,
-        [_person(ids["ana"], "Ana Reyes", phones=["(206) 555-0001"]), _person(ids["ben"], "Ben Ortiz")],
-        None,
-        derived=[
-            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2"),
-            _seat(ids["mayors_office"], "mayor", _BASE, ids["ben"], "Mayor"),
-        ],
-    )
+    await publish_changeset(first, _OCDID)
     await assertions.create(
         Assertion(
             entity_type=EntityType.PERSON,
@@ -623,15 +540,7 @@ async def test_a_rejected_value_stays_gone_when_the_page_keeps_printing_it():
     await _record_evidence(
         second, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2", phone="(206) 555-0001"
     )
-    await publish_changeset(
-        second,
-        _OCDID,
-        [_person(ids["ana"], "Ana Reyes", phones=["(206) 555-0001"])],
-        None,
-        derived=[
-            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2")
-        ],
-    )
+    await publish_changeset(second, _OCDID)
 
     people = {row["person"]: row for row in (await _projection(ids))["people"]}
     assert people["ana"]["phones"] == []
@@ -642,23 +551,14 @@ async def test_a_rejected_value_stays_gone_when_the_page_keeps_printing_it():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_label_that_maps_to_no_role_still_seats_them():
+async def test_a_label_that_maps_to_no_role_still_holds_a_post():
     """The page calls Ana something the taxonomy has never heard of. She still projects, in a
     post under the unmatched role, with the label there for a human to map later."""
     ids = await _seed()
     changeset_id = await _changeset(_T0)
     await _record_evidence(changeset_id, ids["council"], ids["ana"], "Ana Reyes", "Grand Vizier")
     await _record_evidence(changeset_id, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
-    await publish_changeset(
-        changeset_id,
-        _OCDID,
-        [_person(ids["ana"], "Ana Reyes"), _person(ids["ben"], "Ben Ortiz")],
-        None,
-        derived=[
-            _seat(ids["council"], UNMATCHED_ROLE_ID, _BASE, ids["ana"], "Grand Vizier"),
-            _seat(ids["mayors_office"], "mayor", _BASE, ids["ben"], "Mayor"),
-        ],
-    )
+    await publish_changeset(changeset_id, _OCDID)
 
     memberships = {
         (row["person"], row["role_id"]) for row in (await _projection(ids))["memberships"]
@@ -683,23 +583,11 @@ async def test_mayor_then_member_then_mayor_again():
     )
     first = await _changeset(_T0)
     await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
-    await publish_changeset(
-        first,
-        _OCDID,
-        [_person(ids["ben"], "Ben Ortiz")],
-        None,
-        derived=[_seat(ids["mayors_office"], "mayor", _BASE, ids["ben"], "Mayor")],
-    )
+    await publish_changeset(first, _OCDID)
     for at, label, role_id, division in steps:
         changeset_id = await _changeset(at)
         await _record_evidence(changeset_id, ids["council"], ids["ana"], "Ana Reyes", label)
-        await publish_changeset(
-            changeset_id,
-            _OCDID,
-            [_person(ids["ana"], "Ana Reyes")],
-            None,
-            derived=[_seat(ids["council"], role_id, division, ids["ana"], label)],
-        )
+        await publish_changeset(changeset_id, _OCDID)
 
     open_now = {
         (row["person"], row["role_id"])
@@ -733,16 +621,7 @@ async def test_a_withdrawn_claim_no_longer_counts():
         ),
         user_id,
     )
-    await publish_changeset(
-        first,
-        _OCDID,
-        [_person(ids["ana"], "Ana Reyes"), _person(ids["ben"], "Ben Ortiz")],
-        None,
-        derived=[
-            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2"),
-            _seat(ids["mayors_office"], "mayor", _BASE, ids["ben"], "Mayor"),
-        ],
-    )
+    await publish_changeset(first, _OCDID)
     people = {row["person"]: row for row in (await _projection(ids))["people"]}
     assert people["ana"]["name"] == "Ana M. Reyes"
 
@@ -756,15 +635,7 @@ async def test_a_withdrawn_claim_no_longer_counts():
 
     second = await _changeset(_T1)
     await _record_evidence(second, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
-    await publish_changeset(
-        second,
-        _OCDID,
-        [_person(ids["ana"], "Ana Reyes")],
-        None,
-        derived=[
-            _seat(ids["council"], "council-member", _WARD_2, ids["ana"], "Council Member Ward 2")
-        ],
-    )
+    await publish_changeset(second, _OCDID)
     people = {row["person"]: row for row in (await _projection(ids))["people"]}
     assert people["ana"]["name"] == "Ana Reyes"
 

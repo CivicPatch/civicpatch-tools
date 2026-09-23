@@ -15,9 +15,8 @@ import uuid
 import pytest
 import pytest_asyncio
 
-from core.post_derivation import ChosenPost, DerivedMembership, MembershipSource
-from database import assertions, divisions, memberships, organizations, posts
-from schemas.assertions import Assertion, AssertionKind, EntityType
+from core.post_derivation import ChosenPost, DerivedMembership
+from database import divisions, memberships, organizations, posts
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from database.review_priority import issue_count, issue_priority
@@ -31,6 +30,7 @@ _WARD_3 = f"{_BASE}/ward:3"
 
 _T0 = datetime.datetime(2026, 3, 11, tzinfo=datetime.timezone.utc)
 _T1 = datetime.datetime(2026, 6, 2, tzinfo=datetime.timezone.utc)
+_T2 = datetime.datetime(2026, 9, 1, tzinfo=datetime.timezone.utc)
 
 
 async def _wipe():
@@ -182,103 +182,51 @@ async def test_same_post_advances_the_window_without_a_second_row():
         await conn.rollback()
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_different_post_closes_the_old_membership_and_opens_a_new_one():
-    """Closing rather than moving is what leaves history for the roster timeline."""
+async def _already_published() -> None:
+    """Put the jurisdiction past its first publish, by holding a seat that is not under test.
+
+    A membership only exists at publish, so one is the proof — which is why the predicate reads
+    memberships rather than `requests.published_at`. A *different* post on purpose: the tests
+    below assert that the post they created is still unverified.
+    """
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        await divisions.find_or_create(cur, _WARD_3, _OCDID)
-        mayor = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        ward = await posts.find_or_create(cur, _OCDID, org, "council-member", _WARD_3)
+        other = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), other, org, _T0)
+        await conn.commit()
 
-        old = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), mayor, org, _T0)
-        new = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), ward, org, _T1)
-        assert old != new
 
-        await cur.execute("SELECT closed_at FROM memberships WHERE id = %s", (old,))
-        assert (await cur.fetchone())[0] == _T1
+async def _seed_request() -> str:
+    changeset_id = str(uuid.uuid4())
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT count(*) FROM memberships WHERE person_id = %s AND closed_at IS NULL",
-            (person_id,),
+            """
+            INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, data, status)
+            VALUES (%s, 'zz', 'local', %s, 'active')
+            ON CONFLICT (jurisdiction_ocdid) DO NOTHING
+            """,
+            (_OCDID, json.dumps({})),
         )
-        assert (await cur.fetchone())[0] == 1
-        await conn.rollback()
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_close_absent_ignores_an_empty_roster():
-    """An empty roster is a failed scrape, not a dissolved council — the same guard
-    `publish_changeset` already applies before retiring people."""
-    person_id = await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
-
-        assert await memberships.close_absent(cur, org, [], _T1) == 0
-        assert await memberships.close_absent(cur, org, [str(uuid.uuid4())], _T1) == 1
-        await conn.rollback()
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_close_absent_leaves_another_body_in_the_jurisdiction_alone():
-    """It used to sweep on `posts.jurisdiction_ocdid` while `_bind_memberships` seated people in
-    the changeset's organization alone. So publishing a council roster retired the whole school
-    board — none of whom appear on a council roster — with nothing recording why.
-
-    Invisible while a jurisdiction has one organization, which is every one of them in dev."""
-    councillor = await _seed_person("Council Person")
-    trustee = await _seed_person("School Trustee")
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        council = await organizations.find_or_create(cur, _OCDID, "Testville Council")
-        board = await organizations.find_or_create(cur, _OCDID, "Testville School Board")
-        council_post = await posts.find_or_create(cur, _OCDID, council, "mayor", _BASE)
-        board_post = await posts.find_or_create(cur, _OCDID, board, "mayor", _BASE)
-        await factories.bind_membership(
-            cur, DerivedMembership(person_id=councillor), council_post, council, _T0
-        )
-        await factories.bind_membership(
-            cur, DerivedMembership(person_id=trustee), board_post, board, _T0
-        )
-
-        # A council publish naming nobody who currently holds a council seat.
-        closed = await memberships.close_absent(cur, council, [str(uuid.uuid4())], _T1)
-
-        assert closed == 1
+        # Real jurisdictions get their default organization at sync time (open_data.py); this
+        # raw insert bypasses that, so it has to do the pairing itself.
         await cur.execute(
-            "SELECT closed_at FROM memberships WHERE person_id = %s", (trustee,)
+            """
+            INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, 'Government')
+            ON CONFLICT (jurisdiction_ocdid, name) DO NOTHING
+            """,
+            (_OCDID,),
         )
-        assert (await cur.fetchone())[0] is None
-        await conn.rollback()
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_close_absent_closes_an_untracked_posts_membership_too():
-    """`closed_at` is transaction time — it records that we stopped seeing someone, not that
-    they left, so it is true of an untracked post as much as a tracked one. `meta_is_tracked`
-    gates whether anyone is asked to look, which is the review queue, not the record."""
-    person_id = await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
-        await cur.execute("UPDATE posts SET meta_is_tracked = false WHERE id = %s", (post_id,))
-
-        assert await memberships.close_absent(cur, org, [str(uuid.uuid4())], _T1) == 1
-        await conn.rollback()
+        await cur.execute(
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind) "
+            "VALUES (%s, %s, 'people_edit')",
+            (changeset_id, _OCDID),
+        )
+        await conn.commit()
+    return changeset_id
 
 
 @pytest.mark.asyncio
@@ -391,74 +339,42 @@ async def test_unmatched_people_share_one_post_per_division():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_publish_writes_memberships_for_the_roster():
-    """The publish half end to end: posts re-ensured, memberships opened, absentees closed.
+    """The publish half end to end: the posts the records name are minted, the memberships
+    opened, and the person row written.
 
-    Posts are re-ensured here because ingest is never fatal — a roster must publish even if
-    post derivation failed at submit.
+    This test used to hand publish a roster and a derivation. It now stores the record and
+    publishes the changeset, because publish takes neither: the fold derives both from the
+    facts, including the term dates the page stated.
     """
-    from core.post_derivation import DerivedMembership, DerivedPost
-    from database.publications import publish_changeset
-
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            INSERT INTO changesets (id, jurisdiction_ocdid, kind)
-            VALUES (%s, %s, 'scrape')
-            ON CONFLICT (id) DO NOTHING
-            """,
-            (changeset_id := str(uuid.uuid4()), _OCDID),
-        )
         organization_id = await organizations.get_default(cur, _OCDID)
-        # Publish reads `updated_at` as the observation's clock, so this is where `_T0` goes.
-        await cur.execute(
-            """
-            UPDATE changesets SET created_at = %s, updated_at = %s
-            WHERE id = %s
-            """,
-            (_T0, _T0, changeset_id),
-        )
-        await conn.commit()
-    # The record behind the row: to the fold a person is their records.
-    await factories.published_source_record(
-        _OCDID, organization_id, person_id, "Robert Michaud", "Mayor", "https://example.gov", _T0
-    )
-
-    people = [
+    changeset_id = await _published_changeset(_T0)
+    await insert_source_records(
+        changeset_id,
+        _OCDID,
         {
-            "id": person_id,
-            "name": "Robert Michaud",
-            "office": {"name": "Mayor"},
-            "jurisdiction_ocdid": _OCDID,
-            "source_urls": ["https://example.gov"],
-            "updated_at": "2026-03-11T00:00:00+00:00",
-        }
-    ]
-    derived = [
-        DerivedPost(
-            organization_id=organization_id,
-            role_id="mayor",
-            role_label="Mayor",
-            division_ocdid=_BASE,
-            headcount=1,
-            members=[
-                DerivedMembership(
-                    person_id=person_id,
-                    sources=[MembershipSource(note="Mayor")],
-                    # The source's claim about the tenure. Partial on purpose: `start_date`
-                    # was a `date` column until 144 and could not have held a bare year.
-                    start_date="2025",
-                    end_date="2029-12-31",
-                )
-            ],
-        )
-    ]
+            person_id: [
+                {
+                    "name": "Robert Michaud",
+                    "label": "Mayor",
+                    "source_url": "https://example.gov",
+                    "url": "https://example.gov",
+                    "organization_id": organization_id,
+                    # Partial on purpose: `start_date` was a `date` column until 144 and could
+                    # not have held a bare year.
+                    "start_date": "2025",
+                    "end_date": "2029-12-31",
+                }
+            ]
+        },
+    )
+    await _date_records(changeset_id, _T0)
+    from database.publications import publish_changeset
 
-    written = await publish_changeset(changeset_id, _OCDID, people, None, derived=derived)
-    assert written == 1
+    assert await publish_changeset(changeset_id, _OCDID) == 1
 
-    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -473,27 +389,18 @@ async def test_publish_writes_memberships_for_the_roster():
         role_id, first_seen_at, closed_at, start_date, end_date = rows[0]
         assert role_id == "mayor"
         assert closed_at is None
-        # The Record's own updated_at, not the moment publish ran.
+        # The record's own date, not the moment publish ran.
         assert first_seen_at == _T0
-        # Valid time — what the source claims about the term — beside transaction time above.
-        # Untested until 2026-08-26: publish carried dates onto `DerivedMembership` but no test
-        # followed them into the row, and the last publish to do it for real dropped them.
+        # Valid time, what the source claims about the term, beside transaction time above.
         assert (start_date, end_date) == ("2025", "2029-12-31")
 
-        # Asserted on the stored row rather than on the dict the row builder produced: since
-        # 136 these columns are the record, so a publish that shapes them wrong has nowhere
-        # else to be right.
         await cur.execute(
-            "SELECT name, source_urls, emails FROM people WHERE id = %s",
-            (person_id,),
+            "SELECT name, source_urls, emails FROM people WHERE id = %s", (person_id,)
         )
         name, source_urls, emails = await cur.fetchone()
         assert name == "Robert Michaud"
         assert source_urls == ["https://example.gov"]
         assert emails == [], "a person with no emails has none, not NULL"
-
-        await cur.execute("DELETE FROM changesets WHERE id = %s", (changeset_id,))
-        await conn.commit()
 
     # Asserted through the reader the jurisdiction modal actually calls, because the failure
     # mode is not an exception: it is a subtitle that silently goes blank.
@@ -501,14 +408,7 @@ async def test_publish_writes_memberships_for_the_roster():
 
     roster = await get_person_models(_OCDID)
     assert len(roster) == 1
-    assert roster[0].memberships[0].division_ocdid == _BASE
-
-    # Plural, because the schema allows a person one open membership *per organization* and a
-    # jurisdiction can have several bodies. Carried inline so a consumer needs one read, not a
-    # join against a second endpoint.
-    memberships_inline = roster[0].memberships
-    assert len(memberships_inline) == 1
-    held = memberships_inline[0]
+    held = roster[0].memberships[0]
     assert held.role_id == "mayor"
     assert held.division_ocdid == _BASE
     # The source's own words, which is what `office.name` always was.
@@ -613,60 +513,6 @@ async def _human_sets_label(cur, membership_id: str, label: str) -> None:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_an_asserted_label_survives_a_re_scrape():
-    """The only human-owned field on a membership, and only once a human has claimed it."""
-    person_id = await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
-
-        membership_id = await factories.bind_membership(
-            cur, DerivedMembership(person_id=person_id, designations=["Position 8"]), post_id, org, _T0
-        )
-        await _human_sets_label(cur, membership_id, "Councilmember Pos. 8")
-
-        # A later scrape of the same seat, with the designation parsed differently.
-        await factories.bind_membership(
-            cur, DerivedMembership(person_id=person_id, designations=["Position 08"]), post_id, org, _T1
-        )
-
-        await cur.execute(
-            "SELECT label, designations FROM memberships WHERE id::text = %s",
-            (membership_id,),
-        )
-        label, designations = await cur.fetchone()
-        assert label == "Councilmember Pos. 8"  # untouched
-        assert designations == ["Position 08"]  # re-derived
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_moving_to_another_post_leaves_the_label_behind():
-    """A label names this person in *this* seat, so a different seat starts unnamed."""
-    person_id = await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        await divisions.find_or_create(cur, _WARD_3, _OCDID)
-        first = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
-        second = await posts.find_or_create(cur, _OCDID, org, "council-member", _WARD_3)
-
-        old = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), first, org, _T0)
-        await memberships.set_label(cur, old, "Councilmember Pos. 8")
-        new = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), second, org, _T1)
-
-        await cur.execute(
-            "SELECT label FROM memberships WHERE id::text = ANY(%s) ORDER BY first_seen_at",
-            ([old, new],),
-        )
-        assert [row[0] for row in await cur.fetchall()] == ["Councilmember Pos. 8", None]
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_the_membership_read_still_selects_every_column_it_names():
     """122 dropped `label` while this query still selected it, and only the absence of a caller
     hid that for two migrations. Executing it is the check."""
@@ -688,187 +534,36 @@ async def test_the_membership_read_still_selects_every_column_it_names():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_label_naming_two_offices_keeps_the_loser_on_the_membership():
-    """One open membership per person per body means one role must define the post. Without
-    somewhere for the other to land it was simply dropped — a clerk who is also treasurer
-    published as a clerk, and the treasurership vanished."""
+    """One open membership per person per organization means one role must define the post.
+    Without somewhere for the other to land it was simply dropped: a clerk who is also
+    treasurer published as a clerk, and the treasurership vanished.
+
+    This test drove the two writes by hand. It now publishes the labels that carry them,
+    because the fold parses the extra roles out of the page's own words."""
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        membership_id = await factories.bind_membership(
-            cur, DerivedMembership(person_id=person_id, role_ids=["treasurer", "assessor"]), post_id, org, _T0
-        )
-        await cur.execute(
-            "SELECT role_id FROM membership_roles WHERE membership_id::text = %s "
-            "ORDER BY role_id",
-            (membership_id,),
-        )
-        assert [r[0] for r in await cur.fetchall()] == ["assessor", "treasurer"]
 
-        # Derived from the label, so the newest scrape's answer is the whole answer — a role
-        # the page stopped naming must not linger.
-        await factories.bind_membership(cur, DerivedMembership(person_id=person_id, role_ids=["treasurer"]), post_id, org, _T0)
-        await cur.execute(
-            "SELECT role_id FROM membership_roles WHERE membership_id::text = %s",
-            (membership_id,),
-        )
-        assert [r[0] for r in await cur.fetchall()] == ["treasurer"]
+    await _publish((org, person_id, "Clerk and Treasurer"))
+    assert await _extra_roles(person_id) == ["treasurer"]
+
+    # Derived from the label, so the newest scrape's answer is the whole answer: a role the
+    # page stopped naming must not linger.
+    await _publish((org, person_id, "Clerk"), at=_T1)
+    assert await _extra_roles(person_id) == []
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_scrape_reworded_by_nobody_is_re_derived():
-    """The other half of the rule, and the reason the guard is conditional.
-
-    `label` used to be absent from the DO UPDATE SET entirely, which protected a curator's
-    edit and also froze every label nobody had touched — so no parser improvement could ever
-    reach a membership that already existed. Takes two real upserts to see."""
-    person_id = await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-
-        first = await factories.bind_membership(
-            cur, DerivedMembership(person_id=person_id, membership_label="Commissioner Of Public Safety"), post_id, org, _T0
-        )
-        await cur.execute("SELECT label FROM memberships WHERE id = %s", (first,))
-        assert (await cur.fetchone())[0] == "Commissioner Of Public Safety"
-
-        # A later scrape whose parser words it better. Nobody has asserted anything, so the
-        # improvement lands.
-        again = await factories.bind_membership(
-            cur, DerivedMembership(person_id=person_id, membership_label="Public Safety Commissioner"), post_id, org, _T1
-        )
-        assert again == first
-
-        await cur.execute(
-            "SELECT label, last_seen_at FROM memberships WHERE id = %s", (first,)
-        )
-        label, last_seen_at = await cur.fetchone()
-        assert label == "Public Safety Commissioner"
-        assert last_seen_at == _T1
-        await conn.rollback()
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_advancing_last_seen_leaves_everything_else_alone():
-    """Transaction time only. `close_absent` is the direction that needs review; still being
-    on the same page is not a change and should not wait for a human."""
-    person_id = await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        membership_id = await factories.bind_membership(
-            cur, DerivedMembership(person_id=person_id, membership_label="Mayor, At-Large"), post_id, org, _T0
-        )
-
-        assert await memberships.advance_last_seen_at(cur, [person_id], _T1) == 1
-
-        await cur.execute(
-            "SELECT first_seen_at, last_seen_at, closed_at, label FROM memberships WHERE id = %s",
-            (membership_id,),
-        )
-        first_seen_at, last_seen_at, closed_at, label = await cur.fetchone()
-        assert last_seen_at == _T1
-        # Nothing else moves: not the interval's start, not the human-owned label.
-        assert first_seen_at == _T0
-        assert closed_at is None
-        assert label == "Mayor, At-Large"
-        await conn.rollback()
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_last_seen_never_walks_backwards():
-    """Scrapes can land out of order. GREATEST is what stops a late arrival from a stale run
-    making a roster look older than it is."""
-    person_id = await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        membership_id = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T1)
-
-        await memberships.advance_last_seen_at(cur, [person_id], _T0)
-
-        await cur.execute("SELECT last_seen_at FROM memberships WHERE id = %s", (membership_id,))
-        assert (await cur.fetchone())[0] == _T1
-        await conn.rollback()
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_closed_membership_is_not_reopened_by_being_seen():
-    """Someone who left is not brought back by a scrape naming them. Reopening is a decision,
-    and this is only a clock."""
-    person_id = await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        membership_id = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
-        await cur.execute(
-            "UPDATE memberships SET closed_at = %s WHERE id = %s", (_T0, membership_id)
-        )
-
-        assert await memberships.advance_last_seen_at(cur, [person_id], _T1) == 0
-        await conn.rollback()
-
-
-async def _already_published() -> None:
-    """Put the jurisdiction past its first publish, by holding a seat that is not under test.
-
-    A membership only exists at publish, so one is the proof — which is why the predicate reads
-    memberships rather than `requests.published_at`. A *different* post on purpose: the tests
-    below assert that the post they created is still unverified.
-    """
-    person_id = await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        other = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), other, org, _T0)
-        await conn.commit()
-
-
-async def _seed_request() -> str:
-    changeset_id = str(uuid.uuid4())
+async def _extra_roles(person_id: str) -> list[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
-            INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, data, status)
-            VALUES (%s, 'zz', 'local', %s, 'active')
-            ON CONFLICT (jurisdiction_ocdid) DO NOTHING
-            """,
-            (_OCDID, json.dumps({})),
+            "SELECT r.role_id FROM membership_roles r "
+            "JOIN memberships m ON m.id = r.membership_id "
+            "WHERE m.person_id = %s ORDER BY r.role_id",
+            (person_id,),
         )
-        # Real jurisdictions get their default organization at sync time (open_data.py); this
-        # raw insert bypasses that, so it has to do the pairing itself.
-        await cur.execute(
-            """
-            INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, 'Government')
-            ON CONFLICT (jurisdiction_ocdid, name) DO NOTHING
-            """,
-            (_OCDID,),
-        )
-        await cur.execute(
-            "INSERT INTO changesets (id, jurisdiction_ocdid, kind) "
-            "VALUES (%s, %s, 'people_edit')",
-            (changeset_id, _OCDID),
-        )
-        await conn.commit()
-    return changeset_id
+        return [row[0] for row in await cur.fetchall()]
 
 
 async def _add_post_logs(changeset_id: str) -> list[dict]:
@@ -1321,29 +1016,18 @@ async def test_a_persons_term_is_read_off_the_seat_they_hold():
 # --- per organization ------------------------------------------------------------------------
 
 
-async def _published_changeset() -> str:
+async def _published_changeset(at: datetime.datetime | None = None) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            # `updated_at` is the clock publish dates memberships by.
-            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, updated_at) VALUES (%s, %s, 'scrape', clock_timestamp())",
-            (changeset_id := str(uuid.uuid4()), _OCDID),
+            # `updated_at` orders the reads: two scrapes of one page cannot share a date.
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, updated_at) "
+            "VALUES (%s, %s, 'scrape', coalesce(%s, clock_timestamp()))",
+            (changeset_id := str(uuid.uuid4()), _OCDID, at),
         )
         await conn.commit()
     return changeset_id
 
-
-def _membership(organization_id: str, role_id: str, division_ocdid: str, person_id: str):
-    from core.post_derivation import DerivedPost
-
-    return DerivedPost(
-        organization_id=organization_id,
-        role_id=role_id,
-        role_label=role_id.title(),
-        division_ocdid=division_ocdid,
-        headcount=1,
-        members=[DerivedMembership(person_id=person_id)],
-    )
 
 
 async def _open_memberships(person_id: str) -> list[tuple[str, str, str]]:
@@ -1370,22 +1054,42 @@ async def _two_bodies() -> tuple[str, str]:
     return council, mayors_office
 
 
-async def _publish(person_id: str, derived) -> None:
+async def _publish(*sightings: tuple[str, str, str], at: datetime.datetime = _T0) -> str:
+    """A published scrape that read these `(organization, person, label)` sightings.
+
+    Publish takes no roster: the records are the input, so a test says what the page said and
+    publishing is what lets the fold see it.
+    """
+    changeset_id = await _published_changeset(at)
+    for organization_id, person_id, label in sightings:
+        await _record_for(changeset_id, organization_id, person_id, label)
+    await _date_records(changeset_id, at)
     from database.publications import publish_changeset
 
-    person = {"id": person_id, "name": "Ana Reyes", "jurisdiction_ocdid": _OCDID}
-    await publish_changeset(await _published_changeset(), _OCDID, [person], None, derived=derived)
+    await publish_changeset(changeset_id, _OCDID)
+    return changeset_id
+
+
+async def _date_records(changeset_id: str, at: datetime.datetime) -> None:
+    """The insert stamps `now()`; a scrape's records carry its date, which the fold reads as
+    when the membership was first and last seen."""
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE source_records SET created_at = %s WHERE changeset_id = %s",
+            (at, changeset_id),
+        )
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_person_in_two_bodies_holds_an_open_membership_in_each():
+async def test_a_person_in_two_organizations_holds_an_open_membership_in_each():
     person_id = await _seed_person("Ana Reyes")
     council, mayors_office = await _two_bodies()
 
     await _publish(
-        person_id,
-        [_membership(council, "council-member", _WARD_3, person_id), _membership(mayors_office, "mayor", _BASE, person_id)],
+        (council, person_id, "Council Member Ward 3"),
+        (mayors_office, person_id, "Mayor"),
     )
 
     assert await _open_memberships(person_id) == [
@@ -1396,17 +1100,19 @@ async def test_a_person_in_two_bodies_holds_an_open_membership_in_each():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_move_in_one_body_leaves_the_other_bodys_membership_open():
+async def test_a_move_in_one_organization_leaves_the_others_membership_open():
     person_id = await _seed_person("Ana Reyes")
     council, mayors_office = await _two_bodies()
     await _publish(
-        person_id,
-        [_membership(council, "council-member", _WARD_3, person_id), _membership(mayors_office, "mayor", _BASE, person_id)],
+        (council, person_id, "Council Member Ward 3"),
+        (mayors_office, person_id, "Mayor"),
     )
 
+    # The council page moves her to the at-large seat; the mayor's office page is unchanged.
     await _publish(
-        person_id,
-        [_membership(council, "council-member", _BASE, person_id), _membership(mayors_office, "mayor", _BASE, person_id)],
+        (council, person_id, "Council Member"),
+        (mayors_office, person_id, "Mayor"),
+        at=_T1,
     )
 
     assert await _open_memberships(person_id) == [
@@ -1423,8 +1129,8 @@ async def test_reviewing_a_roster_restating_two_bodies_proposes_no_move():
     person_id = await _seed_person("Ana Reyes")
     council, mayors_office = await _two_bodies()
     await _publish(
-        person_id,
-        [_membership(council, "council-member", _WARD_3, person_id), _membership(mayors_office, "mayor", _BASE, person_id)],
+        (council, person_id, "Council Member Ward 3"),
+        (mayors_office, person_id, "Mayor"),
     )
     changeset_id = await _published_changeset()
     roster = [
@@ -1486,14 +1192,18 @@ async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
 
 
 async def _record_for(changeset_id: str, organization_id: str, person_id: str, label: str) -> None:
-    """What makes a body enumerated: this changeset read a page for it."""
+    """What makes an organization enumerated: this changeset read a page for it."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT name FROM people WHERE id = %s", (person_id,))
+        name = (await cur.fetchone())[0]
     await insert_source_records(
         changeset_id,
         _OCDID,
         {
             person_id: [
                 {
-                    "name": "Ana Reyes",
+                    "name": name,
                     "label": label,
                     "source_url": _ROSTER_URL,
                     "organization_id": organization_id,
@@ -1508,30 +1218,19 @@ async def _record_for(changeset_id: str, organization_id: str, person_id: str, l
 async def test_a_body_the_scrape_never_read_keeps_its_people():
     """The rule step 9 turns on: a run that read one body cannot retire anyone in another.
 
-    The scrape reads the mayor's office only, and names somebody else there. Ana keeps her council
-    membership because no page was read for the council: the old close swept the changeset's own
-    organization instead, which is the council, and would have retired her from it.
+    The scrape reads the mayor's office only, and names somebody else there. Ana loses the
+    mayor's office, where the page no longer lists her, and keeps the council, which nothing
+    read.
     """
     person_id = await _seed_person("Ana Reyes")
+    other_id = await _seed_person("Bo Chen")
     council, mayors_office = await _two_bodies()
     await _publish(
-        person_id,
-        [_membership(council, "council-member", _WARD_3, person_id),
-         _membership(mayors_office, "mayor", _BASE, person_id)],
+        (council, person_id, "Council Member Ward 3"),
+        (mayors_office, person_id, "Mayor"),
     )
 
-    other_id = await _seed_person("Bo Chen")
-    changeset_id = await _published_changeset()
-    await _record_for(changeset_id, mayors_office, other_id, "Mayor")
-    from database.publications import publish_changeset
-
-    await publish_changeset(
-        changeset_id,
-        _OCDID,
-        [{"id": other_id, "name": "Bo Chen", "jurisdiction_ocdid": _OCDID}],
-        None,
-        derived=[_membership(mayors_office, "mayor", _BASE, other_id)],
-    )
+    await _publish((mayors_office, other_id, "Mayor"), at=_T1)
 
     assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
     assert await _open_memberships(other_id) == [(mayors_office, "mayor", _BASE)]
@@ -1540,16 +1239,13 @@ async def test_a_body_the_scrape_never_read_keeps_its_people():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_body_whose_extraction_returned_nobody_closes_nobody():
-    """An empty result is a failed scrape more often than a dissolved body."""
+    """An empty result is a failed scrape more often than a dissolved body, and a changeset
+    with no record for the council never says the council was read."""
     person_id = await _seed_person("Ana Reyes")
     council, _ = await _two_bodies()
-    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
+    await _publish((council, person_id, "Council Member Ward 3"))
 
-    changeset_id = await _published_changeset()
-    await _record_for(changeset_id, council, person_id, "Council Member Ward 3")
-    from database.publications import publish_changeset
-
-    await publish_changeset(changeset_id, _OCDID, [], None, derived=[])
+    await _publish(at=_T1)
 
     assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
 
@@ -1568,22 +1264,6 @@ async def _curator_id(cur) -> str:
     return (await cur.fetchone())[0]
 
 
-async def _claim(membership_id: str, field: str, kind: AssertionKind, value) -> None:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await assertions.upsert(
-            cur,
-            Assertion(
-                entity_type=EntityType.MEMBERSHIP,
-                entity_id=membership_id,
-                field_path=field,
-                kind=kind,
-                value=value,
-            ),
-            await _curator_id(cur),
-        )
-        await conn.commit()
-
 
 async def _open_membership_id(person_id: str) -> str:
     pool = await get_pool()
@@ -1595,34 +1275,36 @@ async def _open_membership_id(person_id: str) -> str:
         return (await cur.fetchone())[0]
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_membership_somebody_said_ended_closes_at_publish():
-    """The reviewer's act is a claim, and publishing is what applies it — so a review that is
-    never approved leaves the published roster alone."""
-    person_id = await _seed_person("Ana Reyes")
-    council, _ = await _two_bodies()
-    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
+async def _reject_membership(person_id: str) -> tuple[str, str]:
+    """Somebody says they never held it, and the `(person, post)` pair they said it about.
+
+    The pair is what a claim names a membership by, and it outlives the row: the rebuild
+    deletes the membership, so the row id is no use for taking the claim back.
+    """
     membership_id = await _open_membership_id(person_id)
-
-    await _claim(membership_id, "closed_at", AssertionKind.ACCEPT, True)
-    assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
-
-    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
-
-    assert await _open_memberships(person_id) == []
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        pair = await memberships.membership_pair(cur, membership_id)
+        assert pair is not None
+        held_by, post = pair
+        await memberships.reject(cur, held_by, post.id, await _curator_id(cur))
+        await conn.commit()
+    return held_by, post.id
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_membership_somebody_said_never_held_closes_at_publish():
+    """The reviewer's act is a claim, and publishing is what applies it — so a review that is
+    never approved leaves the published roster alone."""
     person_id = await _seed_person("Ana Reyes")
     council, _ = await _two_bodies()
-    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
-    membership_id = await _open_membership_id(person_id)
+    await _publish((council, person_id, "Council Member Ward 3"))
 
-    await _claim(membership_id, "exists", AssertionKind.REJECT, True)
-    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
+    await _reject_membership(person_id)
+    assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
+
+    await _publish(at=_T1)
 
     assert await _open_memberships(person_id) == []
 
@@ -1634,23 +1316,15 @@ async def test_withdrawing_the_claim_reopens_the_membership_on_the_next_publish(
     Nothing here knows about undo — the state is the derivation of evidence and live claims."""
     person_id = await _seed_person("Ana Reyes")
     council, _ = await _two_bodies()
-    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
-    membership_id = await _open_membership_id(person_id)
-    await _claim(membership_id, "closed_at", AssertionKind.ACCEPT, True)
-    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
+    await _publish((council, person_id, "Council Member Ward 3"))
+    pair = await _reject_membership(person_id)
+    await _publish(at=_T1)
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await assertions.withdraw(
-            cur,
-            EntityType.MEMBERSHIP,
-            membership_id,
-            "closed_at",
-            AssertionKind.ACCEPT,
-            await _curator_id(cur),
-        )
+        await memberships.withdraw_reject(cur, *pair, await _curator_id(cur))
         await conn.commit()
 
-    await _publish(person_id, [_membership(council, "council-member", _WARD_3, person_id)])
+    await _publish(at=_T2)
 
     assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
