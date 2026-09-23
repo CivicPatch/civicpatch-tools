@@ -337,25 +337,6 @@ export const createPost = async (organizationId, body) => {
   return res.json();
 };
 
-export const movePost = async (postId, organizationId) => {
-  const res = await fetch(`/api/v1/posts/${postId}/organization`, {
-    method: "PUT",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRF-Token": getCsrfCookie(),
-    },
-    body: JSON.stringify({ organization_id: organizationId }),
-  });
-  // 404 and 409 each carry the reason the move was refused; the caller shows it as written.
-  if (res.status === 404 || res.status === 409) {
-    const body = await res.json();
-    throw new Error(body.error);
-  }
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
 export const fetchUnmatchedText = async (page = 1, perPage = 20) => {
   const query = new URLSearchParams({ page, per_page: perPage });
   const res = await fetch(`/api/v1/memberships/unmatched?${query}`, {

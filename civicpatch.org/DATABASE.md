@@ -263,7 +263,7 @@ erDiagram
     }
 
     posts {
-        uuid            id                  PK "also unique (id, organization_id) so memberships can FK the pair — kept: that column feeds a partial unique index and its failure would be silent"
+        uuid            id                  PK "218: uuid5 over (organization_id, role_id, division_ocdid), the fold's PostKey.post_id, minted by the caller; also unique (id, organization_id) so memberships can FK the pair — kept: that column feeds a partial unique index and its failure would be silent"
         text            jurisdiction_ocdid  FK "denormalised for direct queries; 121 dropped the composite FK — a mismatch is visible, not silent"
         uuid            organization_id     FK
         text            role_id             FK "ON UPDATE CASCADE; the POST's own role — other roles the label named live in membership_roles"
@@ -275,7 +275,7 @@ erDiagram
 
     memberships {
         uuid            id                  PK
-        uuid            post_id             FK "composite FK (post_id, organization_id) ON UPDATE CASCADE"
+        uuid            post_id             FK "ON UPDATE CASCADE (218), and composite FK (post_id, organization_id) ON UPDATE CASCADE"
         uuid            organization_id     "unique idx: (person_id, organization_id) WHERE closed_at IS NULL — one open post per body"
         uuid            person_id           FK
         text_array      designations        "default: {}; how the source tells one post from another: Place 2, Position 8"

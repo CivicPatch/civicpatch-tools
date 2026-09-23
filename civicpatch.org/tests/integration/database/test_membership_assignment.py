@@ -1,24 +1,30 @@
 """Integration tests for seating a person (database.memberships.assign).
 
-Real Postgres: "one open seat per body" is a partial unique index, and the close-then-open is
-two statements whose ordering is the guarantee.
+Real Postgres: what `assign` does now is file a claim and rebuild the jurisdiction from the
+facts, so the row it reports is one the fold derived, not one it wrote.
+
+The tests below read that through `assign`'s result and the rows that come out, never through
+the claim's own columns: the claim's shape is step 7's business and changes again with §20.1.
 
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
 
 import uuid
+from datetime import datetime, timezone
 
 import pytest
 import pytest_asyncio
 
 from core.post_derivation import DerivedMembership
-from database import divisions, memberships, organizations, posts
+from database import divisions, memberships, organizations, posts, projection
 from database.database import get_pool
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_assign/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_assign"
 _WARD_3 = f"{_BASE}/ward:3"
+_PAGE = "https://zz.gov/council"
+_SCRAPED_AT = datetime(2026, 3, 1, tzinfo=timezone.utc)
 
 
 async def _wipe():
@@ -28,7 +34,14 @@ async def _wipe():
             "DELETE FROM memberships m USING posts p WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s",
             (_OCDID,),
         )
-        for table in ("posts", "divisions", "organizations", "people"):
+        # Claims and changesets before the organizations their records name (205, ON DELETE
+        # RESTRICT); the records go with the changeset.
+        await cur.execute(
+            "DELETE FROM assertions WHERE changeset_id IN "
+            "(SELECT id FROM changesets WHERE jurisdiction_ocdid = %s)",
+            (_OCDID,),
+        )
+        for table in ("posts", "divisions", "changesets", "organizations", "people"):
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_OCDID,)
             )
@@ -43,8 +56,15 @@ async def clean_sentinels():
     await _wipe()
 
 
-async def _seed() -> tuple[str, str, str]:
-    """A person and two posts to move between."""
+async def _seed(label: str = "Mayor", read_in: str | None = None) -> tuple[str, str, str]:
+    """A person the page puts in the first post, and a second post to move them to.
+
+    The record matters: a `people` row with nothing behind it does not exist to the fold, so a
+    rebuild would derive the person away. Migration 217's backfill settled that for production.
+
+    `read_in` names the organization whose page listed them, defaulting to the one both posts
+    are in. Another organization is how somebody comes to hold nothing here.
+    """
     person_id = str(uuid.uuid4())
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -62,14 +82,53 @@ async def _seed() -> tuple[str, str, str]:
         await divisions.find_or_create(cur, _WARD_3, _OCDID)
         first = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         second = await posts.find_or_create(cur, _OCDID, org, "council-member", _WARD_3)
+        listed_by = (
+            await organizations.find_or_create(cur, _OCDID, read_in) if read_in else org
+        )
+        await conn.commit()
+    await factories.published_scrape(
+        _OCDID,
+        _SCRAPED_AT,
+        {
+            person_id: [
+                {
+                    "name": "Assign Test",
+                    "label": label,
+                    "source_url": _PAGE,
+                    "organization_id": listed_by,
+                }
+            ]
+        },
+    )
+    # What publishing the scrape would have done: the memberships a reader sees are the ones
+    # the facts derive, and `assign` reads them to tell a move from a seating.
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await projection.rebuild_from_facts(cur, _OCDID)
         await conn.commit()
     return person_id, first, second
 
 
+async def _open_posts(person_id: str) -> list[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT post_id::text FROM memberships "
+            "WHERE person_id::text = %s AND closed_at IS NULL",
+            (person_id,),
+        )
+        return [row[0] for row in await cur.fetchall()]
+
+
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_assigning_an_unseated_person_reports_no_move():
-    person_id, post_id, _ = await _seed()
+async def test_assigning_somebody_the_page_puts_nowhere_reports_no_move():
+    """This test verified that seating an unseated person reported no move and wrote the
+    label. It now seeds a person another organization's page listed, because every record puts
+    its person in a post — an unparsed title in one too — so holding nothing here means having
+    been read somewhere else."""
+    person_id, post_id, _ = await _seed(
+        label="Clerk", read_in="Office of the City Clerk"
+    )
 
     result = await memberships.assign(person_id, post_id, "Mayor of Testville")
 
@@ -85,52 +144,42 @@ async def test_assigning_an_unseated_person_reports_no_move():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_moving_closes_the_old_seat_and_reports_where_from():
+async def test_moving_reports_where_from_and_leaves_one_membership():
     """The `post_id` change's `before` is what lets the UI say "moved from X" rather than
-    "assigned" — a move leaves history behind and the curator should know it did."""
+    "assigned".
+
+    This test verified that the old seat was closed and both rows survived. It now verifies
+    that the person holds the new post alone, because the writer replaces a jurisdiction's
+    open memberships with what the facts derive rather than closing what they drop; the
+    interval the closed row used to carry is `membership_terms`, at step 15."""
     person_id, first, second = await _seed()
-    await memberships.assign(person_id, first, None)
 
     result = await memberships.assign(person_id, second, None)
 
     assert result.change.before == first
     assert result.change.after == second
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT post_id::text, closed_at IS NOT NULL FROM memberships WHERE person_id = %s"
-            " ORDER BY first_seen_at",
-            (person_id,),
-        )
-        assert await cur.fetchall() == [(first, True), (second, False)]
+    assert await _open_posts(person_id) == [second]
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_reassigning_to_the_same_seat_only_sets_the_label():
-    """Going through `upsert` would overwrite designations with empty arrays, wiping what the
-    parser found until the next scrape re-derives it."""
-    person_id, post_id, _ = await _seed()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        first = await factories.bind_membership(
-            cur,
-            DerivedMembership(person_id=person_id, designations=["Position 8"]),
-            post_id,
-            org,
-            "2026-03-01T00:00:00+00:00",
-        )
-        await conn.commit()
+    """Naming a membership must not cost what the parser found in the page's own label.
+
+    This test verified that against `upsert`, which would have overwritten `designations` with
+    an empty array. It now verifies it against the rebuild, which re-derives them from the
+    record every time: the label is the human's claim, the designations are the page's."""
+    person_id, post_id, _ = await _seed(label="Mayor Position 8")
 
     result = await memberships.assign(person_id, post_id, "Renamed")
 
     # Same seat, so the change is the label rather than the post.
-    assert result.membership_id == first
     assert (result.change.field, result.change.after) == ("label", "Renamed")
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT label, designations FROM memberships WHERE id::text = %s", (first,)
+            "SELECT label, designations FROM memberships WHERE id::text = %s",
+            (result.membership_id,),
         )
         assert await cur.fetchone() == ("Renamed", ["Position 8"])
 

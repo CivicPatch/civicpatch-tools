@@ -59,6 +59,20 @@ async def organizations_for_changeset(cur, changeset_id: str) -> list[str]:
     return [row[0] for row in await cur.fetchall()]
 
 
+_CHANGESET_IMAGES = """
+    SELECT DISTINCT cdn_image FROM source_records
+    WHERE changeset_id = %s AND cdn_image IS NOT NULL AND cdn_image <> ''
+"""
+
+
+async def changeset_images(changeset_id: str) -> list[str]:
+    """The artifact photos this changeset's records brought, for publish to promote."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(_CHANGESET_IMAGES, (changeset_id,))
+        return [row[0] for row in await cur.fetchall()]
+
+
 async def insert_source_records(
     changeset_id: str, jurisdiction_ocdid: str, records_by_person: dict[str, list[dict]]
 ) -> int:

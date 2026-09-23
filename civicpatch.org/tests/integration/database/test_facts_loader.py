@@ -1,8 +1,9 @@
-"""What `load_facts` hands the fold: membership claims found by their hashed id.
+"""What `load_facts` hands the fold: the membership claims of one jurisdiction.
 
-A membership claim names `membership_id(person, post)`, which nothing can read back, so the
-loader finds it by computing the hash over the jurisdiction's people and posts. These pin that
-it finds a claim on its own jurisdiction's membership, and not one on another's.
+A membership claim names `membership_id(person, post)`, which nothing can read back and no
+query can join on, so the loader scopes them by the changeset they were made under. These pin
+that a claim made here is loaded, that one made in another jurisdiction is not, and that one
+made under no changeset at all still reaches the fold.
 """
 
 import datetime
@@ -11,8 +12,7 @@ import uuid
 import pytest
 import pytest_asyncio
 
-from core.projection.facts import EntityType
-from core.projection.posts import PostKey
+from core.projection.facts import EntityType, PostKey
 from database import divisions, posts
 from database.database import get_pool
 from database.facts import load_facts_for
@@ -51,16 +51,40 @@ async def clean():
     await _wipe()
 
 
-async def _label_claim(entity_id: str, label: str) -> None:
+async def _changeset_of(jurisdiction_ocdid: str) -> str:
+    """A published changeset of this jurisdiction: what a claim is made under, and what scopes
+    it to one jurisdiction."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text FROM changesets WHERE jurisdiction_ocdid = %s "
+            "AND published_at IS NOT NULL ORDER BY published_at LIMIT 1",
+            (jurisdiction_ocdid,),
+        )
+        row = await cur.fetchone()
+        assert row is not None, "the fixture publishes one"
+        return row[0]
+
+
+async def _label_claim(entity_id: str, label: str, changeset_id: str | None = None) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "INSERT INTO assertions "
-            "  (entity_type, entity_id, field_path, kind, value, created_by, created_at) "
-            "VALUES ('membership', %s, 'label', 'accept', to_jsonb(%s::text), %s, %s)",
-            (entity_id, label, SYSTEM_USER_ID, _T0),
+            "  (entity_type, entity_id, field_path, kind, value, created_by, created_at, "
+            "   changeset_id) "
+            "VALUES ('membership', %s, 'label', 'accept', to_jsonb(%s::text), %s, %s, %s)",
+            (entity_id, label, SYSTEM_USER_ID, _T0, changeset_id),
         )
         await conn.commit()
+
+
+def _labels_of(facts, entity_id: str) -> list:
+    return [
+        claim.value
+        for claim in facts.claims
+        if claim.entity_type == EntityType.MEMBERSHIP and claim.entity_id == entity_id
+    ]
 
 
 @pytest.mark.asyncio
@@ -80,14 +104,12 @@ async def test_a_claim_on_this_jurisdictions_membership_is_loaded():
     post_id = PostKey(
         organization_id=organization_id, role_id="mayor", division_ocdid=_BASE
     ).post_id
-    await _label_claim(membership_id(person_id, post_id), "zl-Mayor (interim)")
+    entity_id = membership_id(person_id, post_id)
+    await _label_claim(entity_id, "zl-Mayor (interim)", await _changeset_of(_OCDID))
 
     facts = await load_facts_for(_OCDID, datetime.datetime.now(datetime.timezone.utc))
 
-    membership_claims = [c for c in facts.claims if c.entity_type == EntityType.MEMBERSHIP]
-    assert [(c.field_path, c.value) for c in membership_claims] == [
-        ("label", "zl-Mayor (interim)")
-    ]
+    assert _labels_of(facts, entity_id) == ["zl-Mayor (interim)"]
 
 
 @pytest.mark.asyncio
@@ -104,11 +126,41 @@ async def test_a_claim_on_another_jurisdictions_membership_is_not():
     await factories.published_source_record(
         _OCDID, organization_id, person_id, "Lia Load", "Mayor", _PAGE, _T0
     )
+    await factories.published_source_record(
+        _OTHER, other_organization, str(uuid.uuid4()), "Bo Else", "Mayor", _PAGE, _T0
+    )
     elsewhere = PostKey(
         organization_id=other_organization, role_id="mayor", division_ocdid=_BASE
     ).post_id
-    await _label_claim(membership_id(person_id, elsewhere), "zl-Elsewhere")
+    entity_id = membership_id(person_id, elsewhere)
+    await _label_claim(entity_id, "zl-Elsewhere", await _changeset_of(_OTHER))
 
     facts = await load_facts_for(_OCDID, datetime.datetime.now(datetime.timezone.utc))
 
-    assert [c for c in facts.claims if c.entity_type == EntityType.MEMBERSHIP] == []
+    assert _labels_of(facts, entity_id) == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_claim_made_under_no_changeset_is_loaded():
+    """Why the scope has an `OR`: a label set outside a review names no jurisdiction, and it
+    still has to reach the fold. The fold matches it to its own memberships, so one about
+    somebody else's is inert rather than wrong."""
+    person_id = str(uuid.uuid4())
+    await factories.seed_jurisdiction(_OCDID, "zl")
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        organization_id = await factories.default_organization(cur, _OCDID)
+        await conn.commit()
+    await factories.published_source_record(
+        _OCDID, organization_id, person_id, "Lia Load", "Mayor", _PAGE, _T0
+    )
+    post_id = PostKey(
+        organization_id=organization_id, role_id="mayor", division_ocdid=_BASE
+    ).post_id
+    entity_id = membership_id(person_id, post_id)
+    await _label_claim(entity_id, "zl-Mayor (unattributed)")
+
+    facts = await load_facts_for(_OCDID, datetime.datetime.now(datetime.timezone.utc))
+
+    assert _labels_of(facts, entity_id) == ["zl-Mayor (unattributed)"]

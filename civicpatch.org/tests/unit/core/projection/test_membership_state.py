@@ -1,22 +1,25 @@
 """What `membership_state` must answer.
 
-Three rows: the newest live `exists` claim decides (accept holds it, reject does not), and with
-no claim the latest read of the organization does. Everything here is one of the three rows,
-or the boundary between two of them.
+An accept stands until withdrawn. A reject lasts until the organization is read again, and
+then the page decides (2026-09-21). With no claim the latest read decides.
 """
 
 from datetime import datetime, timedelta, timezone
 
 import pytest
-from shared.utils.membership_ids import membership_id
 
-from core.projection.facts import Claim, ClaimKind, EntityType, Facts, SourceRecord
-from core.projection.memberships import LISTED_AFTER_REJECT, membership_state
+from core.projection.facts import Claim, ClaimKind, EntityType, Facts, PostKey, SourceRecord
+from core.projection.memberships import membership_state
 
 _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
 ALICE = {"alice"}
 COUNCIL = "council"
-MAYOR = "post-mayor"
+MAYOR = PostKey(
+    organization_id=COUNCIL,
+    role_id="mayor",
+    division_ocdid="ocd-division/country:us/state:tx/place:alpha",
+)
+CLERK = MAYOR.model_copy(update={"role_id": "clerk"})
 
 
 def record(
@@ -35,29 +38,30 @@ def record(
     )
 
 
-def membership_claim(
+def holds(
     id: str,
-    field: str,
-    value,
+    post: PostKey = MAYOR,
     kind: ClaimKind = ClaimKind.ACCEPT,
     person: str = "alice",
     minutes: int = 0,
 ) -> Claim:
+    """Somebody said this person holds this post: a claim about them, one per post."""
     return Claim(
         id=id,
         changeset_id="c9",
         created_at=_T + timedelta(minutes=minutes),
-        entity_type=EntityType.MEMBERSHIP,
-        entity_id=membership_id(person, MAYOR),
-        field_path=field,
+        entity_type=EntityType.PERSON,
+        entity_id=person,
+        field_path="posts",
         kind=kind,
-        value=value,
+        value=post.post_id,
+        post=post,
     )
 
 
 @pytest.mark.unit
 def test_nothing_known_means_no_membership():
-    assert membership_state(ALICE, MAYOR, (), Facts()).active is False
+    assert membership_state(ALICE, MAYOR, (), Facts()) is False
 
 
 @pytest.mark.unit
@@ -65,7 +69,7 @@ def test_the_latest_read_listing_them_makes_it_live():
     own = (record("r1", "c1"),)
     facts = Facts(records=own)
 
-    assert membership_state(ALICE, MAYOR, own, facts).active is True
+    assert membership_state(ALICE, MAYOR, own, facts) is True
 
 
 @pytest.mark.unit
@@ -75,7 +79,7 @@ def test_a_later_read_that_does_not_list_them_retires_them():
     own = (record("r1", "c1", minutes=1),)
     facts = Facts(records=own + (record("r2", "c2", person="bob", minutes=2),))
 
-    assert membership_state(ALICE, MAYOR, own, facts).active is False
+    assert membership_state(ALICE, MAYOR, own, facts) is False
 
 
 @pytest.mark.unit
@@ -95,67 +99,47 @@ def test_a_read_of_another_organization_retires_nobody():
 
     facts = Facts(records=own + (elsewhere,))
 
-    assert membership_state(ALICE, MAYOR, own, facts).active is True
+    assert membership_state(ALICE, MAYOR, own, facts) is True
 
 
 @pytest.mark.unit
 def test_an_exists_claim_holds_it_open_with_no_records_at_all():
     """A hand-assignment. No page ever said this, and it still has to project."""
-    facts = Facts(claims=(membership_claim("k1", "exists", MAYOR),))
+    facts = Facts(claims=(holds("k1"),))
 
-    assert membership_state(ALICE, MAYOR, (), facts).active is True
+    assert membership_state(ALICE, MAYOR, (), facts) is True
 
 
 @pytest.mark.unit
-def test_an_exists_reject_suppresses_it_however_often_the_page_says_otherwise():
-    """The scraper keeps mislabelling this person. The reject outlives every re-scrape, which
-    is what makes it different from withdrawing the record."""
-    own = (record("r1", "c1"),)
+def test_an_accept_stands_when_a_later_read_omits_them():
+    """A hand-add brought its own source; a page that never listed them has nothing to say."""
     facts = Facts(
-        records=own,
-        claims=(membership_claim("k1", "exists", MAYOR, kind=ClaimKind.REJECT),),
+        records=(record("r1", "c1", person="bob", minutes=3),),
+        claims=(holds("k1", minutes=1),),
     )
 
-    assert membership_state(ALICE, MAYOR, own, facts).active is False
+    assert membership_state(ALICE, MAYOR, (), facts) is True
 
 
 @pytest.mark.unit
 def test_a_reject_ends_it():
     own = (record("r1", "c1", minutes=1),)
     facts = Facts(
-        records=own, claims=(membership_claim("k1", "exists", MAYOR, kind=ClaimKind.REJECT, minutes=2),)
+        records=own, claims=(holds("k1", kind=ClaimKind.REJECT, minutes=2),)
     )
 
-    assert membership_state(ALICE, MAYOR, own, facts).active is False
+    assert membership_state(ALICE, MAYOR, own, facts) is False
 
 
 @pytest.mark.unit
-def test_a_reject_stands_even_while_the_page_keeps_listing_them():
-    """No evidence reopens a reject: a stale page must not undo a human's "they are gone". The
-    issue is what prompts somebody to look again."""
+def test_a_later_read_listing_them_reinstates_them_over_a_reject():
+    """The page wins at the next read."""
     own = (record("r1", "c1", minutes=1), record("r2", "c2", minutes=3))
     facts = Facts(
-        records=own, claims=(membership_claim("k1", "exists", MAYOR, kind=ClaimKind.REJECT, minutes=2),)
+        records=own, claims=(holds("k1", kind=ClaimKind.REJECT, minutes=2),)
     )
 
-    state = membership_state(ALICE, MAYOR, own, facts)
-
-    assert state.active is False
-    assert state.issue == LISTED_AFTER_REJECT
-
-
-@pytest.mark.unit
-def test_a_reject_the_page_agrees_with_raises_nothing():
-    own = (record("r1", "c1", minutes=1),)
-    facts = Facts(
-        records=own + (record("r2", "c2", person="bob", minutes=3),),
-        claims=(membership_claim("k1", "exists", MAYOR, kind=ClaimKind.REJECT, minutes=2),),
-    )
-
-    state = membership_state(ALICE, MAYOR, own, facts)
-
-    assert state.active is False
-    assert state.issue is None
+    assert membership_state(ALICE, MAYOR, own, facts) is True
 
 
 @pytest.mark.unit
@@ -163,12 +147,12 @@ def test_accepting_after_a_reject_reopens_it():
     """A re-election, and the only thing that reopens a rejected membership."""
     facts = Facts(
         claims=(
-            membership_claim("k1", "exists", MAYOR, kind=ClaimKind.REJECT, minutes=1),
-            membership_claim("k2", "exists", MAYOR, minutes=2),
+            holds("k1", kind=ClaimKind.REJECT, minutes=1),
+            holds("k2", minutes=2),
         )
     )
 
-    assert membership_state(ALICE, MAYOR, (), facts).active is True
+    assert membership_state(ALICE, MAYOR, (), facts) is True
 
 
 @pytest.mark.unit
@@ -176,38 +160,28 @@ def test_rejecting_after_an_accept_ends_it():
     """The same two claims the other way round: the newest wins."""
     facts = Facts(
         claims=(
-            membership_claim("k1", "exists", MAYOR, minutes=1),
-            membership_claim("k2", "exists", MAYOR, kind=ClaimKind.REJECT, minutes=2),
+            holds("k1", minutes=1),
+            holds("k2", kind=ClaimKind.REJECT, minutes=2),
         )
     )
 
-    assert membership_state(ALICE, MAYOR, (), facts).active is False
+    assert membership_state(ALICE, MAYOR, (), facts) is False
 
 
 @pytest.mark.unit
 def test_a_claim_on_either_half_of_a_merge_counts():
-    facts = Facts(claims=(membership_claim("k1", "exists", MAYOR, person="alice2"),))
+    facts = Facts(claims=(holds("k1", person="alice2"),))
 
-    assert membership_state({"alice", "alice2"}, MAYOR, (), facts).active is True
+    assert membership_state({"alice", "alice2"}, MAYOR, (), facts) is True
 
 
 @pytest.mark.unit
 def test_a_claim_about_another_post_is_ignored():
-    """The claim is addressed to `uuid5(alice, some other post)`, so it is not about this
-    membership at all."""
-    other = Claim(
-        id="k1",
-        changeset_id="c9",
-        created_at=_T,
-        entity_type=EntityType.MEMBERSHIP,
-        entity_id=membership_id("alice", "post-clerk"),
-        field_path="exists",
-        kind=ClaimKind.REJECT,
-        value="post-clerk",
-    )
+    """The claim names the clerk's post, so it says nothing about this one."""
+    other = holds("k1", CLERK, kind=ClaimKind.REJECT)
     own = (record("r1", "c1"),)
 
-    assert membership_state(ALICE, MAYOR, own, Facts(records=own, claims=(other,))).active is True
+    assert membership_state(ALICE, MAYOR, own, Facts(records=own, claims=(other,))) is True
 
 
 @pytest.mark.unit
@@ -215,8 +189,8 @@ def test_the_answer_does_not_depend_on_the_order_the_facts_arrive():
     """R6: the same facts rebuild the same projection, whatever order the loader returns."""
     own = (record("r1", "c1", minutes=1), record("r2", "c2", minutes=3))
     claims = (
-        membership_claim("k1", "exists", MAYOR, kind=ClaimKind.REJECT, minutes=2),
-        membership_claim("k2", "exists", MAYOR, minutes=4),
+        holds("k1", kind=ClaimKind.REJECT, minutes=2),
+        holds("k2", minutes=4),
     )
 
     forwards = Facts(records=own, claims=claims)

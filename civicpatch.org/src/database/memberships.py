@@ -14,48 +14,33 @@ gone, not when they went.
 """
 
 import uuid
-from datetime import date, datetime, timezone
+from datetime import date
 from typing import AsyncGenerator
 
 from core.membership_label import derive_post_label
-from core.membership_proposal import (
-    ExistingMembership,
-    MembershipPost,
-    ids_by_person_and_organization,
-)
-from core.post_derivation import DerivedMembership, MembershipBinding
+from core.membership_proposal import ExistingMembership, MembershipPost
+from core.people_edits import POSTS_FIELD
 from database import assertions, posts
 from database.activity import record_change
-from database.changesets import get_updated_at, live_roster_changeset
+from database.changesets import live_roster_changeset
 from database.database import get_pool
-from database.projection import replace_membership_roles, upsert_open_memberships
-from schemas.assertions import Assertion, AssertionKind, EntityType, Source
+from database.projection import rebuild_from_facts
+from database.users import SYSTEM_USER_ID
 from schemas.activity import (
     MEMBERSHIP_POST_FIELD,
     Change,
     FieldChange,
 )
+from schemas.assertions import Assertion, AssertionKind, EntityType, Source
 from schemas.posts import AssignmentResult, MembershipRemovalAssertion
+from shared.schemas import Post
+from shared.utils.membership_ids import membership_id
 from shared.utils.statuses import ActivityType
 
-# The field a human can own, named once: it is compared in SQL below and asserted in Python.
 LABEL_FIELD = "label"
 
-# Sentinel field_path for "this membership never held" (189) — a reject assertion about the
-# row itself, not a field of it. `field_path` is NOT NULL and a whole-row claim isn't a field,
-# so this is the one-time ugliness the plan named rather than solved: a `post_id` reject was
-# considered and is structurally impossible (`NOT_REJECTABLE`), and a new `kind` would have
-# meant teaching the fold a third value everywhere it currently only expects two.
 EXISTENCE_FIELD = "exists"
-# The claim "stop listing this membership": accepted on the membership, applied at publish by
-# closing it. Not a claim about the term — `closed_at` is ours, `end_date` is the source's.
-# A claim rather than a bare write so it can be withdrawn, and so rollback re-derives without a
-# special case (see the plan's `published state = f(evidence, claims)`).
-CLOSED_FIELD = "closed_at"
-# The value carried by every retraction claim. Fixed and arbitrary — a reject's dedup key
-# includes its value, so retract/reinstate always targets the same (entity, field, value) row
-# rather than accumulating a new one each cycle.
-_RETRACTED = True
+
 
 class UnknownPost(Exception):
     """The post id does not exist."""
@@ -63,133 +48,6 @@ class UnknownPost(Exception):
 
 class NothingToAssign(Exception):
     """They already hold that post under that label."""
-
-
-_CLOSE_MOVED_MEMBERSHIPS = """
-    UPDATE memberships SET closed_at = %s
-    WHERE person_id = %s AND organization_id = %s
-      AND closed_at IS NULL AND post_id <> %s
-"""
-
-async def close_moved_memberships(cur, bindings: list[MembershipBinding], closed_at) -> None:
-    """Close each person's open membership in the organization when it is on a different post."""
-    await cur.executemany(
-        _CLOSE_MOVED_MEMBERSHIPS,
-        [
-            (closed_at, binding.member.person_id, binding.organization_id, binding.post_id)
-            for binding in bindings
-        ],
-    )
-
-
-async def advance_last_seen_at(cur, person_ids: list[str], last_seen_at) -> int:
-    """Transaction time: we saw them, not a claim about their tenure. `GREATEST` so an
-    out-of-order scrape cannot walk the clock backwards."""
-    if not person_ids:
-        return 0
-    await cur.execute(
-        """
-        UPDATE memberships SET last_seen_at = GREATEST(last_seen_at, %s)
-        WHERE person_id = ANY(%s) AND closed_at IS NULL
-        """,
-        (last_seen_at, person_ids),
-    )
-    return cur.rowcount
-
-
-def removal_claimed(claim: dict) -> MembershipRemovalAssertion:
-    """Which of the three a membership's live claims amount to. One reading, so publish and the
-    editor cannot disagree about what somebody chose."""
-    if claim.get(EXISTENCE_FIELD, {}).get(AssertionKind.REJECT):
-        return MembershipRemovalAssertion.NEVER_HELD
-    if claim.get(CLOSED_FIELD, {}).get(AssertionKind.ACCEPT):
-        return MembershipRemovalAssertion.CLOSED
-    return MembershipRemovalAssertion.NONE
-
-
-async def close_claimed(cur, jurisdiction_ocdid: str, closed_at) -> int:
-    """Close every open membership somebody said to stop carrying, and every one they said never
-    held.
-
-    Publish's other close (`close_absent`) is an inference from the source; this one is somebody's
-    claim, so it runs whatever the scrape covered.
-    """
-    held = await open_memberships(cur, [jurisdiction_ocdid])
-    if not held:
-        return 0
-    claims = await assertions.asserted_values(
-        cur, EntityType.MEMBERSHIP, [membership.id for membership in held]
-    )
-    ended = [
-        membership.id
-        for membership in held
-        if removal_claimed(claims.get(membership.id, {})) is not MembershipRemovalAssertion.NONE
-    ]
-    if not ended:
-        return 0
-    await cur.execute(
-        "UPDATE memberships SET closed_at = %s WHERE id::text = ANY(%s) AND closed_at IS NULL",
-        (closed_at, ended),
-    )
-    return cur.rowcount
-
-
-async def close_for_people_rejected_here(cur, jurisdiction_ocdid: str, closed_at) -> int:
-    """Close every membership of a person somebody said is a member of nothing here.
-
-    The other half of the fork a reviewer faces: closing one membership says stop listing them in
-    that organization, this says the record does not belong to this jurisdiction at all. The person
-    row survives either way, because deleting it is its own act and the only irreversible one.
-    """
-    held = await open_memberships(cur, [jurisdiction_ocdid])
-    if not held:
-        return 0
-    claims = await assertions.asserted_values(
-        cur, EntityType.PERSON, list({membership.person_id for membership in held})
-    )
-    rejected = [
-        person_id
-        for person_id in {membership.person_id for membership in held}
-        if claims.get(person_id, {}).get(EXISTENCE_FIELD, {}).get(AssertionKind.REJECT)
-    ]
-    return await close_for_people(cur, jurisdiction_ocdid, rejected, closed_at)
-
-
-async def close_for_people(
-    cur, jurisdiction_ocdid: str, person_ids: list[str], closed_at
-) -> int:
-    """Close every open membership these people hold here."""
-    if not person_ids:
-        return 0
-    await cur.execute(
-        """
-        UPDATE memberships SET closed_at = %s
-        WHERE person_id::text = ANY(%s) AND closed_at IS NULL
-          AND post_id IN (SELECT id FROM posts WHERE jurisdiction_ocdid = %s)
-        """,
-        (closed_at, person_ids, jurisdiction_ocdid),
-    )
-    return cur.rowcount
-
-
-async def close_absent(
-    cur, organization_id: str, present_person_ids: list[str], closed_at
-) -> int:
-    if not present_person_ids:
-        return 0
-
-    # No join: `memberships.organization_id` is the scope, and an organization belongs to one
-    # jurisdiction by construction.
-    await cur.execute(
-        """
-        UPDATE memberships SET closed_at = %s
-        WHERE organization_id = %s
-          AND closed_at IS NULL
-          AND person_id <> ALL(%s)
-        """,
-        (closed_at, organization_id, present_person_ids),
-    )
-    return cur.rowcount
 
 
 async def list_for_jurisdiction(
@@ -246,16 +104,15 @@ async def list_by_person(
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = await list_for_jurisdiction(cur, jurisdiction_ocdid, as_of)
-        claims = await assertions.asserted_values(
-            cur, EntityType.MEMBERSHIP, [row["id"] for row in rows]
-        )
         person_claims = await assertions.asserted_values(
             cur, EntityType.PERSON, list({row["person_id"] for row in rows})
         )
     return [
         {
             **row,
-            "removal_assertion": removal_claimed(claims.get(row["id"], {})).value,
+            "removal_assertion": _rejected(
+                person_claims.get(row["person_id"], {}), row["post_id"]
+            ).value,
             "not_a_member": bool(
                 person_claims.get(row["person_id"], {})
                 .get(EXISTENCE_FIELD, {})
@@ -463,7 +320,9 @@ async def meta_unmatched_text(limit: int, offset: int) -> tuple[int, list[dict]]
         return await _count_triage_terms(cur), await _triage_page(cur, limit, offset)
 
 
-async def open_memberships(cur, jurisdiction_ocdids: list[str]) -> list[ExistingMembership]:
+async def open_memberships(
+    cur, jurisdiction_ocdids: list[str]
+) -> list[ExistingMembership]:
     """Every open membership in these jurisdictions, with its post's role and division."""
     if not jurisdiction_ocdids:
         return []
@@ -492,7 +351,8 @@ async def open_memberships(cur, jurisdiction_ocdids: list[str]) -> list[Existing
                 role_id=role_id,
                 role_label=role_label,
                 division_ocdid=division_ocdid,
-                label=names.get(post_id) or derive_post_label(role_label, division_ocdid),
+                label=names.get(post_id)
+                or derive_post_label(role_label, division_ocdid),
                 meta_is_tracked=meta_is_tracked,
             ),
         )
@@ -535,52 +395,27 @@ async def _assert(
     )
 
 
-async def assert_closed_at(
-    cur,
-    membership_id: str,
-    user_id: str,
-    reason: str | None = None,
-    changeset_id: str | None = None,
-) -> str:
-    """Somebody says to stop carrying this membership. Publish applies it (`close_claimed`);
-    withdrawing it and publishing again re-derives the membership as though it had never been made.
-
-    Not `end_date`: that is the source's claim about the term, and this one is ours about the
-    record, the same split `closed_at` itself makes."""
-    return await _assert(
-        cur, membership_id, CLOSED_FIELD, AssertionKind.ACCEPT, user_id, reason, changeset_id
-    )
-
-
-async def withdraw_closed_at(cur, membership_id: str, user_id: str) -> int:
-    return await assertions.withdraw(
-        cur, EntityType.MEMBERSHIP, membership_id, CLOSED_FIELD, AssertionKind.ACCEPT, user_id
-    )
-
-
 async def set_label(
     cur,
     membership_id: str,
     label: str | None,
-    user_id: str | None = None,
+    user_id: str,
     changeset_id: str | None = None,
 ) -> None:
     """Name this person's post, or clear it back to the derived guess.
 
-    `user_id` records that a human owns the value, which is what stops the next scrape
-    overwriting it — writing the column without that is how a reviewer's choice silently
-    reverts. Omitted only where the caller is not a person.
+    The claim is the whole value: the row is rewritten from the facts at the next rebuild, so
+    a column written here would be a copy the next publish disagrees with.
     """
-    await cur.execute(
-        "UPDATE memberships SET label = %s WHERE id::text = %s",
-        (label, membership_id),
-    )
-    if user_id is None:
-        return
     if label is None:
         # An ordinary withdrawal, not a rollback's — withdrawn_by_changeset_id stays NULL.
         await assertions.withdraw(
-            cur, EntityType.MEMBERSHIP, membership_id, LABEL_FIELD, AssertionKind.ACCEPT, user_id
+            cur,
+            EntityType.MEMBERSHIP,
+            membership_id,
+            LABEL_FIELD,
+            AssertionKind.ACCEPT,
+            user_id,
         )
         return
     await assertions.upsert(
@@ -597,32 +432,31 @@ async def set_label(
     )
 
 
-async def retract(
+async def reject(
     cur,
-    membership_id: str,
+    person_id: str,
+    post_id: str,
     user_id: str,
     reason: str | None = None,
     changeset_id: str | None = None,
 ) -> str:
-    """Say this membership never held — the moderation half of `EXISTENCE_FIELD`. Returns the
-    claim's id.
+    """They do not hold this post. One of the two verbs (§2 of the projector plan): the
+    membership row survives, and so does every term before the claim's date.
 
-    An ordinary reject assertion, entity_type='membership': `IS_ON_THE_ROSTER` excludes anyone
-    with a live one, but the membership row, its `first_seen_at`, and the post it pointed at
-    all survive — this is reversible by `reinstate`, unlike closing (`closed_at`) or deleting
-    the row, neither of which this is.
+    Which posts somebody holds is a claim about the person, one per post, so the fold reads it
+    without knowing the membership row's id — which it cannot, since it writes that row.
 
     `reason`, when given, rides as `sources` — the same "phoned the clerk" mechanism every
-    other assertion already has, rather than a new column just for this one.
+    other claim already has, rather than a new column just for this one.
     """
     return await assertions.upsert(
         cur,
         Assertion(
-            entity_type=EntityType.MEMBERSHIP,
-            entity_id=membership_id,
-            field_path=EXISTENCE_FIELD,
+            entity_type=EntityType.PERSON,
+            entity_id=person_id,
+            field_path=POSTS_FIELD,
             kind=AssertionKind.REJECT,
-            value=_RETRACTED,
+            value=post_id,
             sources=[Source(note=reason)] if reason else [],
             changeset_id=changeset_id,
         ),
@@ -630,32 +464,63 @@ async def retract(
     )
 
 
-async def reinstate(cur, membership_id: str, user_id: str) -> int:
-    """Undo the most recent `retract` on this membership — an ASSERT, undone by WITHDRAW, same
-    as every other claim. Returns how many rows went — 0 if nothing here is currently
-    retracted."""
+async def withdraw_reject(cur, person_id: str, post_id: str, user_id: str) -> int:
+    """Take that rejection back. Returns how many rows went, 0 if there was none."""
     return await assertions.withdraw(
-        cur, EntityType.MEMBERSHIP, membership_id, EXISTENCE_FIELD, AssertionKind.REJECT, user_id
+        cur,
+        EntityType.PERSON,
+        person_id,
+        POSTS_FIELD,
+        AssertionKind.REJECT,
+        user_id,
+        value=post_id,
     )
 
 
-async def open_membership_ids_for_persons(cur, person_ids: list[str]) -> list[dict]:
-    """Every open membership id for these people, to look up label assertions by.
+def _rejected(person_claims: dict, post_id: str) -> MembershipRemovalAssertion:
+    """What the editor's three-way control shows for a membership: rejected or not. `closed` is
+    gone, so a reject reads as the one removal there is. The control goes at step 9."""
+    rejected = person_claims.get(POSTS_FIELD, {}).get(AssertionKind.REJECT) or []
+    if post_id in rejected:
+        return MembershipRemovalAssertion.NEVER_HELD
+    return MembershipRemovalAssertion.NONE
 
-    Person id, not entity id: `assertions` is keyed on `membership.id`, which the editor's
-    per-person payload never otherwise carries. One person can hold more than one open
-    membership (`memberships_one_open_per_organization` is per organization, not per
-    person), so this returns a row per membership rather than one per person.
+
+async def membership_pair(cur, membership_id: str) -> tuple[str, Post] | None:
+    """The `(person, post)` a membership row is, which is what a claim about it names.
+
+    The editor still addresses memberships by row id; the fold addresses them by the pair. This
+    is the translation, and it goes with step 9's route.
+    """
+    await cur.execute(
+        "SELECT person_id::text, post_id::text FROM memberships WHERE id::text = %s",
+        (membership_id,),
+    )
+    row = await cur.fetchone()
+    if row is None:
+        return None
+    post = await posts.get(cur, row[1])
+    return (row[0], post) if post else None
+
+
+async def open_memberships_for_persons(cur, person_ids: list[str]) -> list[dict]:
+    """Every open membership these people hold: the post it is in, and the row id the
+    proposal layer still looks label assertions up by (step 2).
+
+    Person id, not entity id: the editor's per-person payload carries neither. One person can
+    hold more than one open membership, so this is a row per membership, not per person.
     """
     if not person_ids:
         return []
     await cur.execute(
-        "SELECT id::text, person_id::text FROM memberships "
+        "SELECT id::text, person_id::text, post_id::text FROM memberships "
         "WHERE person_id = ANY(%s) AND closed_at IS NULL",
         (person_ids,),
     )
-    columns = [column.name for column in cur.description or []]
-    return [dict(zip(columns, row)) for row in await cur.fetchall()]
+    return [
+        {"id": row[0], "person_id": row[1], "post_id": row[2]}
+        for row in await cur.fetchall()
+    ]
 
 
 async def _person_name(cur, person_id: str) -> str:
@@ -685,58 +550,54 @@ async def assign(
         if post is None:
             raise UnknownPost(post_id)
 
-        # Same changeset, same date. The seat is dated by the changeset this edit is filed
-        # under — so a hand edit cannot advance `last_seen_at`: `upsert_open_memberships` takes GREATEST, and
-        # that date is already the seat's. Nobody read a source here.
-        changeset_id = changeset_id or await live_roster_changeset(cur, post.jurisdiction_ocdid)
-        seen_at = (
-            await get_updated_at(cur, changeset_id)
-            if changeset_id
-            # Nothing published here yet, so there is no changeset to date from.
-            else datetime.now(timezone.utc)
+        # The claims this edit files are filed under the caller's own review when there is
+        # one, so they show up as part of it rather than as an unrelated jurisdiction edit.
+        changeset_id = changeset_id or await live_roster_changeset(
+            cur, post.jurisdiction_ocdid
         )
-
         organization_id = post.organization_id
         held = await open_memberships(cur, [post.jurisdiction_ocdid])
         current = next(
             (
                 membership
                 for membership in held
-                if membership.person_id == person_id and membership.organization_id == organization_id
+                if membership.person_id == person_id
+                and membership.organization_id == organization_id
             ),
             None,
         )
+        entity_id = membership_id(person_id, post_id)
 
         if current and current.post.id == post_id:
             if (current.membership_label or None) == (label or None):
                 raise NothingToAssign(post_id)
-            membership_id = current.id
             change = FieldChange(
                 field=LABEL_FIELD, before=current.membership_label, after=label
             )
         else:
+            # A claim, not a row: publishing derives the roster from the facts, so a human
+            # putting somebody in a post has to be one. A move is the same claim on the new
+            # post — the fold keeps one membership per organization, and the page decides
+            # between the two again at the next read. Step 9's edit route replaces this.
             moved_from = current.post.id if current else None
-            # A human states only who and where — the label follows below, and the source's
-            # term dates are not theirs to invent.
-            bindings = [
-                MembershipBinding(
-                    member=DerivedMembership(person_id=person_id),
-                    organization_id=organization_id,
-                    post_id=post_id,
-                )
-            ]
-            await close_moved_memberships(cur, bindings, seen_at)
-            await upsert_open_memberships(cur, bindings, seen_at, advances_last_seen=True)
-            membership_ids = ids_by_person_and_organization(
-                await open_memberships(cur, [post.jurisdiction_ocdid])
+            await assertions.upsert(
+                cur,
+                Assertion(
+                    entity_type=EntityType.PERSON,
+                    entity_id=person_id,
+                    field_path=POSTS_FIELD,
+                    kind=AssertionKind.ACCEPT,
+                    value=post_id,
+                    changeset_id=changeset_id,
+                ),
+                user_id or SYSTEM_USER_ID,
             )
-            await replace_membership_roles(cur, bindings, membership_ids)
-            membership_id = membership_ids[(person_id, organization_id)]
             change = FieldChange(
                 field=MEMBERSHIP_POST_FIELD, before=moved_from, after=post_id
             )
 
-        await set_label(cur, membership_id, label, user_id, changeset_id)
+        await set_label(cur, entity_id, label, user_id or SYSTEM_USER_ID, changeset_id)
+        await rebuild_from_facts(cur, post.jurisdiction_ocdid, changeset_id)
 
         await record_change(
             cur,
@@ -745,7 +606,7 @@ async def assign(
             post.jurisdiction_ocdid,
             Change(
                 entity_type=EntityType.MEMBERSHIP,
-                entity_id=membership_id,
+                entity_id=entity_id,
                 subject=await _person_name(cur, person_id),
                 # The seat, which an assignment is read as much by as by who took it.
                 detail=label or post.label,
@@ -755,7 +616,7 @@ async def assign(
             changeset_id=changeset_id,
         )
         return AssignmentResult(
-            membership_id=membership_id,
+            membership_id=entity_id,
             jurisdiction_ocdid=post.jurisdiction_ocdid,
             change=change,
         )

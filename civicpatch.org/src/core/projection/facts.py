@@ -1,8 +1,32 @@
+import uuid
 from datetime import datetime
 from enum import StrEnum
 from typing import Any
 
 from pydantic import BaseModel
+
+POST_NAMESPACE = uuid.UUID("c8374c67-da4d-4aac-a0d9-4f353c803eca")
+
+
+class PostKey(BaseModel, frozen=True):
+    """A post, as the fold names one: `(organization, role, division)`.
+
+    Lives with the facts because a claim about a post carries one, and because the fold has to
+    be able to say which organization a membership is in without reading `posts`.
+    """
+
+    organization_id: str
+    role_id: str
+    division_ocdid: str
+
+    @property
+    def post_id(self) -> str:
+        return str(
+            uuid.uuid5(
+                POST_NAMESPACE,
+                f"{self.organization_id}|{self.role_id}|{self.division_ocdid}",
+            )
+        )
 
 
 class EntityType(StrEnum):
@@ -51,6 +75,8 @@ class Claim(BaseModel, frozen=True):
     """What a user said about one thing, once.
 
     `field_path` is None only on a withdraw, which names a whole fact rather than a field.
+    `post` is the post a `posts` claim's value names, which the loader resolves: the value is
+    stored as the post's id, and the fold works in keys.
     """
 
     id: str
@@ -61,6 +87,7 @@ class Claim(BaseModel, frozen=True):
     field_path: str | None
     kind: ClaimKind
     value: Any
+    post: PostKey | None = None
 
 
 class SourcePage(BaseModel, frozen=True):

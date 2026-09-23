@@ -181,7 +181,7 @@ async def assertions_for_people(person_ids: list[str]) -> dict[str, list[dict]]:
 
     async def _open_memberships() -> list[dict]:
         async with pool.connection() as conn, conn.cursor() as cur:
-            return await memberships_db.open_membership_ids_for_persons(cur, person_ids)
+            return await memberships_db.open_memberships_for_persons(cur, person_ids)
 
     # Independent reads — neither needs the other's result — so they run concurrently rather
     # than as two round trips on one connection.

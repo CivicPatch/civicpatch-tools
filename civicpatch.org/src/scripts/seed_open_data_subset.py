@@ -36,6 +36,7 @@ import pyarrow.parquet as pq
 from psycopg import AsyncConnection
 from pydantic import BaseModel
 
+from core.projection.facts import PostKey
 from core.sources.open_data.paths import SyncFileKind, classify_path
 from database.database import get_pool
 from services.sources.open_data import read_jurisdiction_files
@@ -138,8 +139,9 @@ def organization_row(row: dict[str, Any]) -> dict[str, Any]:
 
 
 def post_row(row: dict[str, Any]) -> dict[str, Any]:
+    # Exports from before 218 carry random ids; the id is the key's now.
     return {
-        "id": row["id"],
+        "id": post_id_of(row),
         "jurisdiction_ocdid": row["jurisdiction_ocdid"],
         "organization_id": row["organization_id"],
         "role_id": row["role_id"],
@@ -164,10 +166,18 @@ def person_row(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def membership_row(row: dict[str, Any]) -> dict[str, Any]:
+def post_id_of(post: dict[str, Any]) -> str:
+    return PostKey(
+        organization_id=post["organization_id"],
+        role_id=post["role_id"],
+        division_ocdid=post["division_ocdid"],
+    ).post_id
+
+
+def membership_row(row: dict[str, Any], post_ids: dict[str, str]) -> dict[str, Any]:
     return {
         "id": row["id"],
-        "post_id": row["post_id"],
+        "post_id": post_ids[row["post_id"]],
         "organization_id": row["organization_id"],
         "person_id": row["person_id"],
         "label": row["label"],
@@ -395,9 +405,9 @@ async def load_rosters(
     await insert_ignoring_conflicts(conn, "organizations", organization_rows)
     logger.info("seed_open_data_subset: organizations: %d row(s)", len(organization_rows))
 
-    post_rows = [
-        post_row(row) for row in downloads.posts if row["organization_id"] in organization_ids
-    ]
+    posts_in_scope = [row for row in downloads.posts if row["organization_id"] in organization_ids]
+    post_rows = [post_row(row) for row in posts_in_scope]
+    post_ids = {row["id"]: post_id_of(row) for row in posts_in_scope}
     await insert_ignoring_conflicts(conn, "posts", post_rows)
     logger.info("seed_open_data_subset: posts: %d row(s)", len(post_rows))
 
@@ -410,7 +420,7 @@ async def load_rosters(
     await insert_ignoring_conflicts(conn, "people", person_rows)
     logger.info("seed_open_data_subset: people: %d row(s)", len(person_rows))
 
-    membership_rows = [membership_row(row) for row in memberships_in_scope]
+    membership_rows = [membership_row(row, post_ids) for row in memberships_in_scope]
     await insert_ignoring_conflicts(conn, "memberships", membership_rows)
     logger.info("seed_open_data_subset: memberships: %d row(s)", len(membership_rows))
 

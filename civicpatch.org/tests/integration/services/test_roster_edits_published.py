@@ -33,6 +33,8 @@ _EMAIL = "zz-editville-maintainer@example.com"
 
 
 async def _wipe():
+    """In dependency order: claims, then the changesets they point at (which takes their source
+    records with them), then the organizations those records named, then the rest."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -41,23 +43,23 @@ async def _wipe():
             (_OCDID,),
         )
         await cur.execute("DELETE FROM posts WHERE jurisdiction_ocdid = %s", (_OCDID,))
-        # Changesets first: their source records point at organizations (205: ON DELETE RESTRICT),
-        # so a body cannot go while a changeset's evidence still names it.
+        # A membership claim's entity is `uuid5(person, post)` and it may carry no changeset,
+        # so "the claims about these people" catches neither: take everything this maintainer
+        # said, whatever it was about.
+        await cur.execute(
+            "DELETE FROM assertions WHERE created_by IN "
+            "(SELECT id FROM users WHERE email = %s) "
+            "   OR entity_id IN (SELECT id FROM people WHERE jurisdiction_ocdid = %s)",
+            (_EMAIL, _OCDID),
+        )
         await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,))
-        await cur.execute(
-            "DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_OCDID,)
-        )
-        await cur.execute(
-            "DELETE FROM divisions WHERE jurisdiction_ocdid = %s", (_OCDID,)
-        )
-        await cur.execute(
-            "DELETE FROM assertions WHERE entity_id IN "
-            "(SELECT id FROM people WHERE jurisdiction_ocdid = %s)",
-            (_OCDID,),
-        )
         await cur.execute(
             "DELETE FROM source_records WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
+        await cur.execute(
+            "DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        await cur.execute("DELETE FROM divisions WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM users WHERE email = %s", (_EMAIL,))
         await cur.execute(
@@ -147,6 +149,11 @@ async def _seed() -> tuple[str, Identity]:
             ]
         },
     )
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE source_records SET created_at = %s WHERE changeset_id = %s",
+            (datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc), scrape_id),
+        )
     return person_id, Identity(
         type="session",
         provider="github",
@@ -375,11 +382,13 @@ async def test_leaving_somebody_out_retires_them():
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT closed_at IS NOT NULL FROM memberships WHERE person_id::text = %s",
-            (other_id,),
+            "SELECT count(*) FROM memberships WHERE person_id::text = %s", (other_id,)
         )
         row = await cur.fetchone()
-    assert row is not None and row[0] is True
+    # This test verified that the absent person's membership was closed. It now verifies that
+    # they hold none, because the editor's removal files an `exists` reject and the writer
+    # derives the roster without it rather than closing a row.
+    assert row is not None and row[0] == 0
 
 
 @pytest.mark.asyncio

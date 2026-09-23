@@ -155,17 +155,11 @@ def labelled(person: dict) -> dict:
 # entity_type='membership') is not closed and its row is not deleted, so `closed_at IS NULL`
 # alone would still count it. Alias-free throughout, per CLAUDE.md, so any caller that already
 # does `FROM people`/`FROM memberships` unaliased can splice this in unchanged.
-IS_ON_THE_ROSTER = f"""EXISTS (
+# A rejected membership is not a row with a claim against it any more: the fold does not derive
+# it, so the writer does not insert it. Being on the roster is holding an open membership.
+IS_ON_THE_ROSTER = """EXISTS (
     SELECT 1 FROM memberships
     WHERE memberships.person_id = people.id AND memberships.closed_at IS NULL
-      AND NOT EXISTS (
-          SELECT 1 FROM assertions
-          WHERE assertions.entity_type = 'membership'
-            AND assertions.entity_id = memberships.id
-            AND assertions.field_path = '{EXISTENCE_FIELD}'
-            AND assertions.kind = '{AssertionKind.REJECT.value}'
-            AND assertions.withdrawn_at IS NULL
-      )
 )"""
 
 

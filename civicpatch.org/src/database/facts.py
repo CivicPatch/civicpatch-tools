@@ -8,10 +8,8 @@ named step, and nothing in `core/` has to know they existed. Withdraws are rows 
 
 from datetime import datetime
 
-from shared.utils.membership_ids import membership_id
-
-from core.projection.facts import Claim, Facts, SourceRecord
-from core.projection.posts import PostKey
+from core.people_edits import POSTS_FIELD
+from core.projection.facts import Claim, Facts, PostKey, SourceRecord
 from database.database import get_pool
 from schemas.assertions import AssertionKind
 
@@ -45,33 +43,35 @@ _RECORDS = """
       AND changesets.published_at <= %(as_of)s
 """
 
+# A `posts` claim's value is a post's id, and the fold works in post keys, so the join is the
+# translation. A claim naming a post that no longer exists keeps its id and matches none of the
+# fold's posts, which is the same as placing nobody.
 _PERSON_CLAIMS = f"""
     SELECT assertions.id::text, assertions.changeset_id::text, assertions.created_at,
            assertions.entity_type, assertions.entity_id::text, assertions.field_path,
-           assertions.kind, assertions.value
+           assertions.kind, assertions.value,
+           posts.organization_id::text, posts.role_id, posts.division_ocdid
     FROM assertions
+    LEFT JOIN posts ON assertions.field_path = '{POSTS_FIELD}'
+                   AND posts.id::text = assertions.value #>> '{{}}'
     {_PUBLISHED_OR_UNATTRIBUTED}
       AND assertions.entity_type = 'person'
       AND assertions.entity_id::text = ANY(%(person_ids)s)
 """
 
-# Every post a human could have named a membership in: nobody claims about a post before it is
-# published, and publish is what creates the row.
-_POST_KEYS = """
-    SELECT organization_id::text, role_id, division_ocdid
-    FROM posts WHERE jurisdiction_ocdid = %(jurisdiction_ocdid)s
-"""
-
-# A membership claim is keyed by a hash, `membership_id(person, post)` (216), which cannot be
-# read back, so it is found by hashing every person the records name with every post above.
+# By the jurisdiction the claim was made in, not by the membership's id: the id is a hash of
+# `(person, post)` that no query can join on. The fold matches them to its own posts, so a
+# claim about somebody else's membership is inert — `changeset_id IS NULL` is the pre-review
+# claims, which name no jurisdiction until step 16.
 _MEMBERSHIP_CLAIMS = f"""
     SELECT assertions.id::text, assertions.changeset_id::text, assertions.created_at,
            assertions.entity_type, assertions.entity_id::text, assertions.field_path,
-           assertions.kind, assertions.value
+           assertions.kind, assertions.value, NULL, NULL, NULL
     FROM assertions
     {_PUBLISHED_OR_UNATTRIBUTED}
       AND assertions.entity_type = 'membership'
-      AND assertions.entity_id::text = ANY(%(membership_ids)s)
+      AND (changesets.jurisdiction_ocdid = %(jurisdiction_ocdid)s
+           OR assertions.changeset_id IS NULL)
 """
 
 # Every published withdraw, whatever it points at and whenever it was filed: a withdraw can
@@ -80,7 +80,7 @@ _MEMBERSHIP_CLAIMS = f"""
 _WITHDRAWS = f"""
     SELECT assertions.id::text, assertions.changeset_id::text, assertions.created_at,
            assertions.entity_type, assertions.entity_id::text, assertions.field_path,
-           assertions.kind, assertions.value
+           assertions.kind, assertions.value, NULL, NULL, NULL
     FROM assertions
     LEFT JOIN changesets ON changesets.id = assertions.changeset_id
     WHERE assertions.kind = '{AssertionKind.WITHDRAW.value}'
@@ -110,6 +110,8 @@ def _record(row: tuple) -> SourceRecord:
 
 
 def _claim(row: tuple) -> Claim:
+    """A claim as the fold reads one. A `posts` claim stores the post's id and the fold works
+    in keys, so the join resolves one onto the claim."""
     return Claim(
         id=row[0],
         changeset_id=row[1],
@@ -119,6 +121,9 @@ def _claim(row: tuple) -> Claim:
         field_path=row[5],
         kind=row[6],
         value=row[7],
+        post=PostKey(organization_id=row[8], role_id=row[9], division_ocdid=row[10])
+        if row[8]
+        else None,
     )
 
 
@@ -142,16 +147,9 @@ async def load_facts(cur, jurisdiction_ocdid: str, as_of: datetime) -> Facts:
     if person_ids:
         await cur.execute(_PERSON_CLAIMS, {"person_ids": person_ids, "as_of": as_of})
         claims = tuple(_claim(row) for row in await cur.fetchall())
-        await cur.execute(_POST_KEYS, {"jurisdiction_ocdid": jurisdiction_ocdid})
-        post_ids = [
-            PostKey(organization_id=row[0], role_id=row[1], division_ocdid=row[2]).post_id
-            for row in await cur.fetchall()
-        ]
-        membership_ids = [
-            membership_id(person_id, post_id) for person_id in person_ids for post_id in post_ids
-        ]
         await cur.execute(
-            _MEMBERSHIP_CLAIMS, {"membership_ids": membership_ids, "as_of": as_of}
+            _MEMBERSHIP_CLAIMS,
+            {"jurisdiction_ocdid": jurisdiction_ocdid, "as_of": as_of},
         )
         claims += tuple(_claim(row) for row in await cur.fetchall())
 

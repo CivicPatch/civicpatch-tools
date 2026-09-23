@@ -17,8 +17,8 @@ a row through time.
 import json
 import uuid
 
-from core.membership_proposal import ids_by_person_and_organization
-from core.post_derivation import DerivedMembership, MembershipBinding
+from core.post_derivation import DerivedMembership
+from shared.utils.membership_ids import membership_id
 from database import memberships, organizations, projection
 from database.changesets import register_scrape_changeset
 from database.database import get_pool
@@ -124,26 +124,50 @@ async def collect_and_publish(jurisdiction_ocdid: str, collected_at) -> str:
     return changeset_id
 
 
+_INSERT_MEMBERSHIP = """
+    INSERT INTO memberships
+        (id, post_id, organization_id, person_id, label, start_date, end_date,
+         first_seen_at, last_seen_at, designations, meta_unmatched_text, sources)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb)
+    ON CONFLICT (id) DO UPDATE SET last_seen_at = EXCLUDED.last_seen_at
+    RETURNING id::text
+"""
+
+
 async def bind_membership(
     cur, member: DerivedMembership, post_id: str, organization_id: str, last_seen_at
 ) -> str:
-    """One membership, written by the same steps publish runs. Returns its id."""
-    bindings = [
-        MembershipBinding(
-            member=member, organization_id=organization_id, post_id=post_id
+    """One open membership, as the writer would lay it down. Returns its id.
+
+    A row, not a publish: what a test needs here is a membership to read back, and going
+    through the fold would mean seeding the facts behind it as well.
+    """
+    await cur.execute(
+        _INSERT_MEMBERSHIP,
+        (
+            membership_id(member.person_id, post_id),
+            post_id,
+            organization_id,
+            member.person_id,
+            member.membership_label,
+            member.start_date,
+            member.end_date,
+            last_seen_at,
+            last_seen_at,
+            member.designations,
+            member.meta_unmatched_text,
+            json.dumps([source.model_dump() for source in member.sources]),
+        ),
+    )
+    row = await cur.fetchone()
+    assert row is not None
+    if member.role_ids:
+        await cur.executemany(
+            "INSERT INTO membership_roles (membership_id, role_id) VALUES (%s, %s) "
+            "ON CONFLICT DO NOTHING",
+            [(row[0], role_id) for role_id in member.role_ids],
         )
-    ]
-    await memberships.close_moved_memberships(cur, bindings, last_seen_at)
-    await projection.upsert_open_memberships(
-        cur, bindings, last_seen_at, advances_last_seen=True
-    )
-    jurisdiction_ocdid = await organizations.jurisdiction_for(cur, organization_id)
-    assert jurisdiction_ocdid is not None
-    membership_ids = ids_by_person_and_organization(
-        await memberships.open_memberships(cur, [jurisdiction_ocdid])
-    )
-    await projection.replace_membership_roles(cur, bindings, membership_ids)
-    return membership_ids[(member.person_id, organization_id)]
+    return row[0]
 
 
 async def default_organization(cur, jurisdiction_ocdid: str) -> str:
@@ -177,6 +201,12 @@ async def published_scrape(
             (changeset_id, jurisdiction_ocdid, at, at, at),
         )
     await insert_source_records(changeset_id, jurisdiction_ocdid, records)
+    # The insert stamps `now()`; a scrape dated `at` has records dated `at`, as a real one does.
+    async with pool.connection() as conn:
+        await conn.execute(
+            "UPDATE source_records SET created_at = %s WHERE changeset_id = %s",
+            (at, changeset_id),
+        )
     return changeset_id
 
 

@@ -1,50 +1,80 @@
 """Which posts a cluster holds, and what has been said about holding them.
 
-A membership claim names its pair by a hash (`uuid5(person_id, post_id)`), so the fold cannot
-read the post back out of `entity_id`. An `exists` claim therefore carries its post as its
-`value` and locates itself: it is the claim on `(member, value)` for whichever member satisfies
-`membership_id(member, value) == entity_id`.
+Holding a post is a claim about the *person*: `field_path = "posts"`, one claim per post,
+accept or reject. So the fold reads who holds what without knowing a membership's row id, and
+without reading `posts` — the loader resolves the claim's value into the post's key, which is
+what says which organization the membership is in.
 
-Every other membership field is reached the other way round, through a post the cluster already
-has from a record or an `exists` claim, by asking for `membership_id(member, post)`.
+What a membership is called, and when it ran, is a claim about the membership itself, keyed by
+`membership_id(person, post)` — reached from a post the cluster already has.
 """
 
 from collections.abc import Iterable, Sequence
 
-from pydantic import BaseModel
 from shared.utils.membership_ids import membership_id
 
+from core.people_edits import POSTS_FIELD
 from core.projection.facts import (
     Claim,
     ClaimKind,
     EntityType,
     Facts,
+    PostKey,
     SourceRecord,
     latest_first,
 )
-from core.projection.reads import reads_of
+from core.projection.reads import Read, reads_of
 
-EXISTS = "exists"
 LABEL = "label"
-
 START_DATE = "start_date"
 END_DATE = "end_date"
 
 # Every field a human can claim about a membership, which is what "edited" asks about.
-MEMBERSHIP_FIELDS = (EXISTS, LABEL, START_DATE, END_DATE)
+MEMBERSHIP_FIELDS = (LABEL, START_DATE, END_DATE)
 
-LISTED_AFTER_REJECT = "LISTED_AFTER_REJECT"
+def _posts_claims(members: Iterable[str], facts: Facts) -> list[Claim]:
+    """Every live claim about which posts this cluster holds, oldest first. A claim naming a
+    post that no longer exists has no key, and places nobody."""
+    people = set(members)
+    return sorted(
+        (
+            claim
+            for claim in facts.claims
+            if claim.entity_type == EntityType.PERSON
+            and claim.entity_id in people
+            and claim.field_path == POSTS_FIELD
+        ),
+        key=latest_first,
+    )
 
 
-class MembershipState(BaseModel, frozen=True):
-    active: bool
-    issue: str | None = None
+def post_claims(members: Iterable[str], post: PostKey, facts: Facts) -> list[Claim]:
+    """This cluster's live claims about whether it holds one post, oldest first."""
+    return [claim for claim in _posts_claims(members, facts) if claim.post == post]
+
+
+def post_accepts(members: Iterable[str], post: PostKey, facts: Facts) -> list[Claim]:
+    """The accepts among them: a human put this cluster in this post."""
+    return [
+        claim
+        for claim in post_claims(members, post, facts)
+        if claim.kind == ClaimKind.ACCEPT
+    ]
+
+
+def claimed_posts(members: Iterable[str], facts: Facts) -> set[PostKey]:
+    """Posts a human named for this cluster, of either kind. Naming one is not holding it:
+    `membership_state` decides that."""
+    return {
+        claim.post for claim in _posts_claims(members, facts) if claim.post is not None
+    }
 
 
 def membership_claims(
     members: Iterable[str], post_id: str, field: str, facts: Facts
 ) -> list[Claim]:
-    """This cluster's live claims about one field of one membership, oldest first."""
+    """This cluster's live claims about one field of one membership, oldest first. Keyed by
+    `membership_id(person, post)`, which is the row's own id."""
     ids = {membership_id(member, post_id) for member in members}
     return sorted(
         (
@@ -58,22 +88,6 @@ def membership_claims(
     )
 
 
-def claimed_posts(members: Iterable[str], facts: Facts) -> set[str]:
-    """Posts a human named for this cluster, including rejects.
-    membership_state decides the absent membership
-    """
-
-    posts = set()
-    for claim in facts.claims:
-        if claim.entity_type != EntityType.MEMBERSHIP:
-            continue
-        for member in members:
-            if membership_id(member, claim.value) == claim.entity_id:
-                posts.add(claim.value)
-
-    return posts
-
-
 def membership_label(members: Iterable[str], post_id: str, facts: Facts) -> str | None:
     """A human's name for this membership, if one stands."""
     labels = [
@@ -82,6 +96,31 @@ def membership_label(members: Iterable[str], post_id: str, facts: Facts) -> str 
         if claim.kind == ClaimKind.ACCEPT
     ]
     return labels[-1].value if labels else None
+
+
+def membership_date(
+    members: Iterable[str],
+    post_id: str,
+    field: str,
+    own_records: Sequence[SourceRecord],
+    facts: Facts,
+) -> str | None:
+    """`start_date` or `end_date`: the latest accept claim's value, else the latest record
+    that has one."""
+    accepts = [
+        claim
+        for claim in membership_claims(members, post_id, field, facts)
+        if claim.kind == ClaimKind.ACCEPT
+    ]
+    if accepts:
+        return accepts[-1].value
+
+    dated = [
+        record
+        for record in sorted(own_records, key=latest_first)
+        if getattr(record, field) is not None
+    ]
+    return getattr(dated[-1], field) if dated else None
 
 
 def is_edited(members: Iterable[str], post_ids: Iterable[str], facts: Facts) -> bool:
@@ -96,33 +135,31 @@ def is_edited(members: Iterable[str], post_ids: Iterable[str], facts: Facts) -> 
     )
 
 
+def _listed_in(own_records: Sequence[SourceRecord], read: Read) -> bool:
+    return any(record.changeset_id == read.changeset_id for record in own_records)
+
+
 def membership_state(
     members: Iterable[str],
-    post_id: str,
+    post: PostKey,
     own_records: Sequence[SourceRecord],
     facts: Facts,
-) -> MembershipState:
-    """Whether this cluster holds this post, and what to ask a human about.
+) -> bool:
+    """Whether this cluster holds this post.
 
-    A reject stands until a user accepts. No evidence reopens it, not a continuous listing and
-    not a gap in the reads, because a stale page must not undo somebody's "they are gone".
+    An accept stands until withdrawn. A reject lasts until the organization is read again,
+    and then the page decides.
     """
+    claims = post_claims(members, post, facts)
+    newest = claims[-1] if claims else None
+    if newest and newest.kind == ClaimKind.ACCEPT:
+        return True
+    if not own_records:
+        return False
 
-    listed_now = False
-    if own_records:
-        organization_id = sorted(own_records, key=latest_first)[-1].organization_id
-        reads = reads_of(organization_id, facts)
-        listed_now = bool(reads) and any(
-            record.changeset_id == reads[-1].changeset_id for record in own_records
-        )
+    last_read = reads_of(post.organization_id, facts)[-1]
+    lapsed = newest is not None and last_read.created_at > newest.created_at
+    if newest and not lapsed:
+        return False
 
-    claims = membership_claims(members, post_id, EXISTS, facts)
-
-    if not claims:
-        return MembershipState(active=listed_now)
-
-    if claims[-1].kind == ClaimKind.ACCEPT:
-        return MembershipState(active=True)
-    return MembershipState(
-        active=False, issue=LISTED_AFTER_REJECT if listed_now else None
-    )
+    return _listed_in(own_records, last_read)

@@ -8,14 +8,12 @@ addition needs the sighting invalidated, which nothing here does.
 """
 
 from core.assertion_lifecycle import state_of
-from core.people_edits import with_asserted_values
 from database import assertions, changesets as changesets_db
 from database.database import get_pool
-from database.people import get_people, get_people_by_ids
+from database.people import get_people_by_ids
 from schemas.assertions import EntityType
 from schemas.rollback import RollbackCandidate
-from services.publish import publish_people
-from services.roster import origin_roster_for
+from services.publish import publish_roster
 from shared.utils.id_utils import make_id
 
 
@@ -54,31 +52,6 @@ async def list_user_assertions(created_by: str) -> list[RollbackCandidate]:
     ]
 
 
-async def _republish(
-    jurisdiction_ocdid: str,
-    rollback_changeset_id: str,
-    affected_entity_ids: list[str],
-    user_id: str,
-) -> None:
-    """Make a withdrawal visible. The live roster already has the withdrawn assertion baked
-    into its stored columns, so only the affected people are recomputed, from their earliest
-    sighting; everyone else's row is already correct and comes through untouched."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        asserted = await assertions.asserted_values(
-            cur, EntityType.PERSON, affected_entity_ids
-        )
-    origin = {
-        person["id"]: with_asserted_values(person, asserted.get(person["id"], {}))
-        for person in await origin_roster_for(affected_entity_ids, jurisdiction_ocdid)
-    }
-    people = [
-        origin.get(person["id"], person)
-        for person in await get_people(jurisdiction_ocdid=jurisdiction_ocdid)
-    ]
-    await publish_people(rollback_changeset_id, jurisdiction_ocdid, people, user_id)
-
-
 async def _rollback_in_jurisdiction(
     assertion_ids: list[str], jurisdiction_ocdid: str, user_id: str, reason: str | None
 ) -> int:
@@ -96,12 +69,11 @@ async def _rollback_in_jurisdiction(
         )
         if not withdrawn:
             raise NothingToRollBack(assertion_ids)
-        affected_entity_ids = await assertions.get_entity_ids_for_assertions(
-            cur, EntityType.PERSON, assertion_ids
-        )
         await conn.commit()
 
-    await _republish(jurisdiction_ocdid, rollback_id, affected_entity_ids, user_id)
+    # Publishing the rollback changeset is what makes the withdrawal visible: the fold sees
+    # the withdraws and derives the roster without them. Nothing is recomputed per person.
+    await publish_roster(jurisdiction_ocdid=jurisdiction_ocdid, changeset_id=rollback_id, resolved_by_user_id=user_id)
     return withdrawn
 
 

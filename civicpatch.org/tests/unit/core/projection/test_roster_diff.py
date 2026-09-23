@@ -4,9 +4,16 @@ The one diff: the projection diff (stored against derived), review cards, and th
 are all this over two rosters.
 """
 
+from datetime import datetime, timezone
+
 import pytest
 
-from core.projection.diff import FieldDifference, on_roster, roster_diff
+from core.projection.diff import (
+    FieldDifference,
+    MembershipFieldDifference,
+    on_roster,
+    roster_diff,
+)
 from core.projection.people import Membership, Person
 from core.projection.roster import Roster
 
@@ -14,11 +21,18 @@ MAYOR = "post-mayor"
 MEMBER = "post-member"
 
 
+_T = datetime(2026, 1, 1, tzinfo=timezone.utc)
+
+
+def membership(post: str, **fields) -> Membership:
+    return Membership(post_id=post, first_seen_at=_T, last_seen_at=_T, **fields)
+
+
 def person(id: str, *posts: str, **fields) -> Person:
     return Person(
         id=id,
         name=fields.pop("name", id.title()),
-        memberships=tuple(Membership(post_id=post) for post in posts),
+        memberships=tuple(membership(post) for post in posts),
         **fields,
     )
 
@@ -64,6 +78,37 @@ def test_a_membership_that_moved():
     assert diff.memberships_only_before == (("alice", MAYOR),)
     assert diff.memberships_only_after == (("alice", MEMBER),)
     assert diff.fields == ()
+
+
+@pytest.mark.unit
+def test_a_membership_both_sides_hold_compares_column_by_column():
+    before = Person(id="alice", memberships=(membership(MAYOR, label="Mayor"),))
+    after = Person(id="alice", memberships=(membership(MAYOR, label="Mayor Pro Tem"),))
+
+    diff = roster_diff(roster(before), roster(after))
+
+    assert diff.membership_fields == (
+        MembershipFieldDifference(
+            person_id="alice", post_id=MAYOR, field="label", before="Mayor",
+            after="Mayor Pro Tem",
+        ),
+    )
+    assert diff.memberships_only_before == diff.memberships_only_after == ()
+
+
+@pytest.mark.unit
+def test_seen_dates_are_not_compared():
+    """The fold dates by record, the stored rows by changeset; step 15 replaces both."""
+    before = Person(id="alice", memberships=(membership(MAYOR),))
+    later = _T.replace(year=2027)
+    after = Person(
+        id="alice",
+        memberships=(
+            Membership(post_id=MAYOR, first_seen_at=later, last_seen_at=later),
+        ),
+    )
+
+    assert roster_diff(roster(before), roster(after)).empty
 
 
 @pytest.mark.unit

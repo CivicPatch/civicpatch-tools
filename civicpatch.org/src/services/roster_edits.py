@@ -25,14 +25,14 @@ from core.people_edits import (
 )
 from core.changeset_lifecycle import REVIEW_POOL_KINDS
 from core.people_roster import reviewer_source_records
-from database import assertions, posts
+from database import assertions, memberships as memberships_db, posts
 from database.changesets import get_changeset_kind, register_people_edit_changeset
 from database.database import get_pool
 from database.people import get_roster
 from database.source_records import insert_source_records
 from schemas.activity import Change
 from schemas.common import Identity
-from services.publish import promote_images, publish_people, publish_people_edit
+from services.publish import publish_roster
 from services.roster import proposed_roster, scraped_roster
 from shared.schemas import Post
 from shared.utils.id_utils import make_id
@@ -124,14 +124,15 @@ async def edit_published(
         )
 
     # The editor sends every person, unchanged ones with no fields; one it left out was removed.
-    touched = {edit.id for edit in data if edit.fields}
     patched_ids = {person["id"] for person in patched}
-    await publish_people_edit(
+    await _reject_memberships_of(
+        [person["id"] for person in base if person["id"] not in patched_ids],
+        changeset_id,
+        user.user_id,
+    )
+    await publish_roster(
         changeset_id,
         jurisdiction_ocdid,
-        [person for person in patched if person["id"] in touched],
-        _additions(base, patched),
-        [person["id"] for person in base if person["id"] not in patched_ids],
         user.user_id,
         changes=publish_change,
     )
@@ -180,6 +181,30 @@ async def _posts_for_additions(new_people: List[dict]) -> dict[str, Post]:
     chosen = await _chosen_posts(new_people)
     _refuse_postless_additions(new_people, chosen)
     return chosen
+
+
+async def _reject_memberships_of(
+    removed_person_ids: List[str], changeset_id: str, user_id: str
+) -> None:
+    """Somebody the editor left out: a reject of each post they hold.
+
+    The claim, not a close — publishing derives the roster from the facts, so "they are not on
+    it" has to be a fact. Until step 9's edit route, this is where that is said.
+    """
+    if not removed_person_ids:
+        return
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        held = await memberships_db.open_memberships_for_persons(cur, removed_person_ids)
+        for membership in held:
+            await memberships_db.reject(
+                cur,
+                membership["person_id"],
+                membership["post_id"],
+                user_id,
+                changeset_id=changeset_id,
+            )
+        await conn.commit()
 
 
 async def _record_edits(
@@ -259,10 +284,4 @@ async def publish(
     if not roster:
         raise MissingRoster(changeset_id)
     # Photos promote with the data: publishing is what moves them off the artifacts bucket.
-    await publish_people(
-        changeset_id,
-        jurisdiction_ocdid,
-        await promote_images(roster),
-        resolved_by_user_id,
-        changes,
-    )
+    await publish_roster(changeset_id, jurisdiction_ocdid, resolved_by_user_id, changes)

@@ -44,7 +44,9 @@ async def _wipe():
             "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s",
             (_OCDID,),
         )
-        for table in ("posts", "divisions", "organizations", "changesets", "people"):
+        # Changesets before organizations: a changeset's source records name one (205, ON
+        # DELETE RESTRICT), and they go with the changeset.
+        for table in ("posts", "divisions", "changesets", "organizations", "people"):
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_OCDID,)
             )
@@ -738,23 +740,49 @@ async def test_a_post_someone_holds_cannot_be_deleted():
         await conn.rollback()
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_open_membership_ids_for_persons_finds_an_open_seat():
-    user_id, post_id = await _seed()
+async def _person_with_a_record(name: str) -> str:
+    """A person the fold can see: a `people` row and the published record behind it. A row with
+    no record does not exist to the fold, which is what migration 217's backfill settled."""
+    person_id = str(uuid.uuid4())
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
-            (person_id := str(uuid.uuid4()), _OCDID, "Membership Lookup Subject"),
+            (person_id, _OCDID, name),
         )
+        organization_id = await organizations.find_or_create(cur, _OCDID)
         await conn.commit()
+    await factories.published_scrape(
+        _OCDID,
+        datetime(2026, 3, 1, tzinfo=timezone.utc),
+        {
+            person_id: [
+                {
+                    "name": name,
+                    "label": "Mayor",
+                    "source_url": "https://zz.gov/council",
+                    "organization_id": organization_id,
+                }
+            ]
+        },
+    )
+    return person_id
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_open_memberships_for_persons_finds_an_open_seat():
+    user_id, post_id = await _seed()
+    person_id = await _person_with_a_record("Membership Lookup Subject")
 
     result = await memberships.assign(person_id, post_id, "Mayor Pro Tem", user_id=user_id)
 
+    pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await memberships.open_membership_ids_for_persons(cur, [person_id])
-    assert rows == [{"id": result.membership_id, "person_id": person_id}]
+        rows = await memberships.open_memberships_for_persons(cur, [person_id])
+    assert [(row["id"], row["person_id"]) for row in rows] == [
+        (result.membership_id, person_id)
+    ]
 
 
 @pytest.mark.asyncio
@@ -764,13 +792,7 @@ async def test_assertions_for_people_includes_a_human_set_membership_label():
     `assertions_for_people` is keyed by person id, but `set_label` files the assertion
     against the membership — this is the merge that lets the two meet."""
     user_id, post_id = await _seed()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
-            (person_id := str(uuid.uuid4()), _OCDID, "Assertion Merge Subject"),
-        )
-        await conn.commit()
+    person_id = await _person_with_a_record("Assertion Merge Subject")
     await memberships.assign(person_id, post_id, "Mayor Pro Tem", user_id=user_id)
 
     result = await assertions_for_people([person_id])

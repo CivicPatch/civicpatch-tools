@@ -30,6 +30,11 @@ SURFACED_FIELDS = ("name",)
 
 # Multi-valued fields. Mirrors the two partial unique indexes in migration 137.
 LIST_FIELDS = frozenset({"other_names", "phones", "emails", "urls", "source_urls"})
+
+# Which posts somebody holds: one claim per post, the post's id as the value, accept or
+# reject. Multi-valued for the same reason a phone is — somebody can hold two. Not editable: a
+# patch cannot set it, because a scrape stays free to move or end a membership.
+POSTS_FIELD = "posts"
 # Derived from the sightings now, so editing it states nothing about the world.
 NOT_ASSERTABLE = frozenset({"source_urls"})
 

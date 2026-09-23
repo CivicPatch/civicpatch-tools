@@ -1,10 +1,11 @@
-"""Route-level integration tests for the three removal claims.
+"""Route-level integration tests for the removal claims.
 
 `PUT /memberships/{id}/assertion` and `PUT|DELETE /people/{id}/not-a-member`. What publish then
 does with these claims is covered at the database layer
 (`tests/integration/database/test_post_derivation.py`); these cover what only crosses the wire:
-that one endpoint names which of the mutually exclusive claims is chosen, that choosing one
-withdraws the other, that `none` leaves nothing live, and who is allowed to say any of it.
+that the endpoint files the claim the fold reads, that `none` takes it back, and who is allowed
+to say any of it. `closed` and `never_held` are the same claim now, and the choice between them
+goes with the enum at step 9.
 
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
@@ -19,7 +20,8 @@ from fastapi.testclient import TestClient
 from core.post_derivation import DerivedMembership
 from database import assertions, divisions, organizations, posts
 from database.database import get_pool
-from database.memberships import CLOSED_FIELD, EXISTENCE_FIELD
+from core.people_edits import POSTS_FIELD
+from database.memberships import EXISTENCE_FIELD
 from lib.auth import get_optional_user
 from routers.api import memberships as memberships_router
 from routers.api import people as people_router
@@ -137,6 +139,22 @@ async def _seed() -> tuple[str, str]:
     return person_id, membership_id
 
 
+async def _seeded_post_id() -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text FROM posts WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        return (await cur.fetchone())[0]
+
+
+async def _posts_claimed(person_id: str, kind: AssertionKind) -> list:
+    """Which posts somebody has been said to hold, or not hold. The claim is about the person:
+    the membership row is rewritten at every publish, so nothing can address it."""
+    claims = await _claims(EntityType.PERSON, person_id)
+    return claims.get(POSTS_FIELD, {}).get(kind) or []
+
+
 async def _claims(entity_type: EntityType, entity_id: str) -> dict:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -157,9 +175,11 @@ async def _open_membership_count(person_id: str) -> int:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_closing_files_a_claim_rather_than_closing_the_row(client):
-    """The endpoint does not touch `closed_at`: publish does, from this claim. Writing the column
-    here is what would make the act unrollbackable."""
+async def test_a_removal_files_a_claim_rather_than_writing_the_row(client):
+    """This test verified that `closed` filed a `closed_at` accept. It now verifies that a
+    removal files a reject of the post, because `closed` is gone ("they left" and "the page was
+    wrong" end a membership the same way, §17) and because which posts somebody holds is a
+    claim about the person, which is what publish re-derives from."""
     person_id, membership_id = await _seed()
 
     response = client.put(
@@ -167,9 +187,9 @@ async def test_closing_files_a_claim_rather_than_closing_the_row(client):
     )
 
     assert response.status_code == 200, response.text
-    claims = await _claims(EntityType.MEMBERSHIP, membership_id)
-    assert claims[CLOSED_FIELD][AssertionKind.ACCEPT] == [True]
-    assert await _open_membership_count(person_id) == 1
+    assert await _posts_claimed(person_id, AssertionKind.REJECT) == [
+        await _seeded_post_id()
+    ]
 
 
 @pytest.mark.asyncio
@@ -186,40 +206,30 @@ async def test_a_reason_rides_as_the_claim_s_source(client):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT sources FROM assertions WHERE entity_id::text = %s "
-            "AND field_path = %s AND withdrawn_at IS NULL",
-            (membership_id, CLOSED_FIELD),
+            "SELECT sources FROM assertions "
+            "WHERE entity_type = 'person' AND field_path = %s AND kind = 'reject' "
+            "  AND withdrawn_at IS NULL",
+            (POSTS_FIELD,),
         )
-        sources = (await cur.fetchone())[0]
-    assert sources == [{"note": "phoned the clerk, she retired in May", "url": None}]
+        rows = await cur.fetchall()
+    assert [row[0] for row in rows] == [
+        [{"note": "phoned the clerk, she retired in May", "url": None}]
+    ]
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_choosing_never_held_withdraws_the_closing_claim(client):
-    """The two contradict each other: a membership that never held did not also close. One
-    endpoint naming the choice is what keeps both from being live at once."""
-    _, membership_id = await _seed()
-    client.put(f"{_MEMBERSHIPS}/{membership_id}/assertion", json={"assertion": "closed"})
-
-    client.put(f"{_MEMBERSHIPS}/{membership_id}/assertion", json={"assertion": "never_held"})
-
-    claims = await _claims(EntityType.MEMBERSHIP, membership_id)
-    assert claims[EXISTENCE_FIELD][AssertionKind.REJECT] == [True]
-    assert CLOSED_FIELD not in claims
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_choosing_none_takes_back_whichever_was_made(client):
-    """The undo, and the reason neither removal needs a rollback path of its own: publishing
-    after this re-derives the membership as though nothing had been claimed."""
-    _, membership_id = await _seed()
-    client.put(f"{_MEMBERSHIPS}/{membership_id}/assertion", json={"assertion": "never_held"})
+async def test_choosing_none_on_a_membership_nobody_removed_claims_nothing(client):
+    """This test verified that `none` took a removal back. It now verifies that `none` on an
+    unremoved membership claims nothing, because a removed one has no row left to address: the
+    writer derives the roster and does not keep a rejected membership. Putting somebody back is
+    a fresh accept of the post (`PUT /memberships`), which outranks the reject as the newest
+    claim, and step 9's route addresses the pair rather than the row."""
+    person_id, membership_id = await _seed()
 
     client.put(f"{_MEMBERSHIPS}/{membership_id}/assertion", json={"assertion": "none"})
 
-    assert await _claims(EntityType.MEMBERSHIP, membership_id) == {}
+    assert await _posts_claimed(person_id, AssertionKind.REJECT) == []
 
 
 @pytest.mark.asyncio
@@ -325,16 +335,21 @@ async def test_deleting_the_not_a_member_claim_withdraws_it(client):
 @pytest.mark.integration
 async def test_the_by_person_read_names_the_organization_and_the_live_claim(client):
     """What the person editor renders from: memberships grouped under the organization they are
-    in, each row knowing which of the three is already chosen so the screen never has to guess."""
+    in, each row naming its organization so the screen never has to guess.
+
+    This test verified that a rejected membership still listed, marked `never_held`. It now
+    verifies that it is gone from the list, because the writer derives the roster from the facts
+    and a rejected membership is not on it."""
     _, membership_id = await _seed()
-    client.put(f"{_MEMBERSHIPS}/{membership_id}/assertion", json={"assertion": "never_held"})
 
     rows = client.get(f"{_MEMBERSHIPS}/{_OCDID}").json()["data"]["memberships"]
-
     assert len(rows) == 1
     assert rows[0]["organization_name"]
     assert rows[0]["organization_id"]
-    assert rows[0]["removal_assertion"] == "never_held"
+
+    client.put(f"{_MEMBERSHIPS}/{membership_id}/assertion", json={"assertion": "never_held"})
+
+    assert client.get(f"{_MEMBERSHIPS}/{_OCDID}").json()["data"]["memberships"] == []
 
 
 @pytest.mark.asyncio
