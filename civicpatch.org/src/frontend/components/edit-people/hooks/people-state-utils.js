@@ -76,7 +76,7 @@ export function buildPeoplePatch(currentPeople, changesById, removedIds) {
 }
 
 // An existing person's post/office pick is applied via `memberships.assign`
-// (office-changes.ts), never through this patch — including it here would let the
+// (office-edits.ts), never through this patch — including it here would let the
 // backend's assertion pipeline durably pin it, which is exactly what that direct write
 // is for avoiding. A brand-new person still needs `post_id` in their patch: nothing else
 // tells `edit_published` which post their first sighting belongs to.

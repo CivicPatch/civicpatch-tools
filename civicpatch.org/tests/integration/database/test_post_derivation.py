@@ -498,7 +498,7 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
 
 
 async def _human_sets_label(cur, membership_id: str, label: str) -> None:
-    """What `assign` does. `set_label` with a user is the whole human edit: the value and the
+    """What `assign` does. `set_membership_label` with a user is the whole human edit: the value and the
     assertion saying somebody chose it, which is what survives the next scrape."""
     # `assertions.created_by` is a foreign key, so an assertion needs somebody to have made it.
     await cur.execute(
@@ -508,7 +508,7 @@ async def _human_sets_label(cur, membership_id: str, label: str) -> None:
     )
     curator_id = (await cur.fetchone())[0]
 
-    await memberships.set_label(cur, membership_id, label, curator_id)
+    await memberships.set_membership_label(cur, membership_id, label, curator_id)
 
 
 @pytest.mark.asyncio
@@ -1170,7 +1170,7 @@ async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
             (_CURATOR, _CURATOR, _CURATOR.replace("@", "-")),
         )
         curator_id = (await cur.fetchone())[0]
-        await posts.set_label(cur, post_id, "Position 8", curator_id)
+        await posts.set_post_label(cur, post_id, "Position 8", curator_id)
         for person_id in (staying, leaving):
             await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, council, _T0)
         await conn.commit()

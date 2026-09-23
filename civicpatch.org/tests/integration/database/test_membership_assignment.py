@@ -1,10 +1,10 @@
-"""Integration tests for seating a person (database.memberships.assign).
+"""Integration tests for seating a person, through `POST /jurisdictions/{ocdid}/roster-edits`.
 
-Real Postgres: what `assign` does now is file a claim and rebuild the jurisdiction from the
-facts, so the row it reports is one the fold derived, not one it wrote.
+Real Postgres: an edit files claims and rebuilds the jurisdiction from the facts, so every row
+read below is one the fold derived, not one the edit wrote.
 
-The tests below read that through `assign`'s result and the rows that come out, never through
-the claim's own columns: the claim's shape is step 7's business and changes again with §20.1.
+Ported 2026-09-23 from `memberships.assign`, deleted with `PUT /memberships`. The tests read
+the rows that come out, never the claim's own columns.
 
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
@@ -16,11 +16,17 @@ import pytest
 import pytest_asyncio
 
 from core.post_derivation import DerivedMembership
-from database import divisions, memberships, organizations, posts, projection
+from database import divisions, organizations, posts, projection
 from database.database import get_pool
+from database.users import SYSTEM_USER_ID
+from schemas.jurisdictions import OfficeEdit, PersonEdit
+from services.jurisdiction_edits import UnknownPost, edit_in_review, edit_published_roster
+from shared.utils.membership_ids import membership_id
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_assign/government"
+# These tests are about what seating does, not who did it; `assign` defaulted the same way.
+_USER_ID = SYSTEM_USER_ID
 _BASE = "ocd-division/country:us/state:zz/place:zz_assign"
 _WARD_3 = f"{_BASE}/ward:3"
 _PAGE = "https://zz.gov/council"
@@ -119,69 +125,68 @@ async def _open_posts(person_id: str) -> list[str]:
         return [row[0] for row in await cur.fetchall()]
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_assigning_somebody_the_page_puts_nowhere_reports_no_move():
-    """This test verified that seating an unseated person reported no move and wrote the
-    label. It now seeds a person another organization's page listed, because every record puts
-    its person in a post — an unparsed title in one too — so holding nothing here means having
-    been read somewhere else."""
-    person_id, post_id, _ = await _seed(
-        label="Clerk", read_in="Office of the City Clerk"
-    )
+async def _seat(person_id, post_id, label, changeset_id=None):
+    """Put somebody in an office, the way the app does now.
 
-    result = await memberships.assign(person_id, post_id, "Mayor of Testville")
+    These tests called `memberships.assign`, deleted 2026-09-23 with `PUT /memberships`. The
+    act is the same: a human says this person holds this post, under this name.
+    """
+    office = [OfficeEdit(id=post_id, membership_label=label)]
+    edit = [PersonEdit(id=person_id, offices=office)]
+    if changeset_id:
+        return await edit_in_review(_OCDID, edit, _USER_ID, changeset_id)
+    return await edit_published_roster(_OCDID, edit, _USER_ID)
 
-    assert result.change.field == "post_id"
-    assert result.change.before is None
+
+async def _membership(person_id, post_id):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT label FROM memberships WHERE id::text = %s", (result.membership_id,)
+            "SELECT label, designations FROM memberships WHERE id::text = %s",
+            (membership_id(person_id, post_id),),
         )
-        assert (await cur.fetchone())[0] == "Mayor of Testville"
+        return await cur.fetchone()
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_moving_reports_where_from_and_leaves_one_membership():
-    """The `post_id` change's `before` is what lets the UI say "moved from X" rather than
-    "assigned".
+async def test_seating_somebody_the_page_puts_nowhere_gives_them_the_office():
+    """This test verified that seating reported no move and wrote the label. It now verifies
+    only that they hold the office under that name, because a roster edit answers with the
+    changeset it filed and the caller re-reads the roster: where a move came from was
+    `assign`'s to report, and `assign` is gone."""
+    person_id, post_id, _ = await _seed(label="Clerk", read_in="Office of the City Clerk")
 
-    This test verified that the old seat was closed and both rows survived. It now verifies
-    that the person holds the new post alone, because the writer replaces a jurisdiction's
-    open memberships with what the facts derive rather than closing what they drop; the
-    interval the closed row used to carry is `membership_terms`, at step 15."""
+    await _seat(person_id, post_id, "Mayor of Testville")
+
+    assert await _open_posts(person_id) == [post_id]
+    assert (await _membership(person_id, post_id))[0] == "Mayor of Testville"
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_moving_leaves_one_membership():
+    """This test verified that a move reported where it came from and left one membership. It
+    now verifies the second half only: the fold keeps one membership per organization, so the
+    new office replaces the old without anything closing it."""
     person_id, first, second = await _seed()
 
-    result = await memberships.assign(person_id, second, None)
+    await _seat(person_id, second, None)
 
-    assert result.change.before == first
-    assert result.change.after == second
     assert await _open_posts(person_id) == [second]
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_reassigning_to_the_same_seat_only_sets_the_label():
-    """Naming a membership must not cost what the parser found in the page's own label.
-
-    This test verified that against `upsert`, which would have overwritten `designations` with
-    an empty array. It now verifies it against the rebuild, which re-derives them from the
-    record every time: the label is the human's claim, the designations are the page's."""
+async def test_naming_a_seat_keeps_what_the_page_said_about_it():
+    """Naming a membership must not cost what the parser found in the page's own label: the
+    label is the human's claim, the designations are the page's, and the rebuild re-derives
+    the second from the record every time."""
     person_id, post_id, _ = await _seed(label="Mayor Position 8")
 
-    result = await memberships.assign(person_id, post_id, "Renamed")
+    await _seat(person_id, post_id, "Renamed")
 
-    # Same seat, so the change is the label rather than the post.
-    assert (result.change.field, result.change.after) == ("label", "Renamed")
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT label, designations FROM memberships WHERE id::text = %s",
-            (result.membership_id,),
-        )
-        assert await cur.fetchone() == ("Renamed", ["Position 8"])
+    assert await _membership(person_id, post_id) == ("Renamed", ["Position 8"])
 
 
 async def _activity_count() -> int:
@@ -195,49 +200,52 @@ async def _activity_count() -> int:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_the_same_seat_under_the_same_label_is_refused():
-    """A re-assign that changes nothing still recorded an "assigned" in the activity feed —
-    a change nobody made, against a membership that did not move."""
+async def test_saying_again_what_already_stands_records_nothing():
+    """This test verified that a re-assign raised `NothingToAssign`. It now verifies that it
+    files and logs nothing, because a roster edit that changes nothing is not an error — the
+    editor sends every person on the screen, so saying the same thing twice is the normal
+    case, not a mistake."""
     person_id, post_id, _ = await _seed()
-    await memberships.assign(person_id, post_id, "Mayor of Testville")
+    await _seat(person_id, post_id, "Mayor of Testville")
     logged = await _activity_count()
 
-    with pytest.raises(memberships.NothingToAssign):
-        await memberships.assign(person_id, post_id, "Mayor of Testville")
+    await _seat(person_id, post_id, "Mayor of Testville")
 
     assert await _activity_count() == logged
+    assert (await _membership(person_id, post_id))[0] == "Mayor of Testville"
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_clearing_the_label_on_the_same_seat_is_a_real_change():
-    """`None` is not "no edit": it hands the field back to the scraper."""
+async def test_clearing_the_name_of_a_seat_hands_it_back_to_the_page():
+    """`None` is not "no edit": it withdraws the human's claim, and the fold answers with
+    whatever the page's own label derives."""
     person_id, post_id, _ = await _seed()
-    await memberships.assign(person_id, post_id, "Mayor of Testville")
+    await _seat(person_id, post_id, "Mayor of Testville")
 
-    result = await memberships.assign(person_id, post_id, None)
+    await _seat(person_id, post_id, None)
 
-    assert (result.change.field, result.change.after) == ("label", None)
+    assert (await _membership(person_id, post_id))[0] != "Mayor of Testville"
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_an_unknown_post_raises_rather_than_seating_nobody():
+async def test_an_unknown_post_is_refused_rather_than_seating_nobody():
+    """The fold ignores a claim naming a post it cannot find, so without this the edit would
+    file a claim and do nothing."""
     person_id, _, _ = await _seed()
 
-    with pytest.raises(memberships.UnknownPost):
-        await memberships.assign(
-            person_id, "00000000-0000-0000-0000-000000000000", None
-        )
+    with pytest.raises(UnknownPost):
+        await _seat(person_id, "00000000-0000-0000-0000-000000000000", None)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_pick_made_mid_review_files_under_that_review():
-    """Without an explicit `changeset_id`, an assignment always files under the live roster's
-    changeset — wrong for a pick made from inside an in-progress review, which should show up
-    as part of that review rather than as an unrelated jurisdiction edit."""
-    person_id, post_id, _ = await _seed()
+    """A pick made from inside an in-progress review belongs to it, rather than showing up as
+    an unrelated jurisdiction edit."""
+    # A different office from the one the page already put them in, or the edit says nothing.
+    person_id, _, second = await _seed()
     review_changeset_id = str(uuid.uuid4())
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -249,22 +257,18 @@ async def test_a_pick_made_mid_review_files_under_that_review():
         await conn.commit()
 
     try:
-        await memberships.assign(
-            person_id, post_id, "Mayor of Testville", changeset_id=review_changeset_id
-        )
+        await _seat(person_id, second, "Mayor of Testville", review_changeset_id)
 
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
-                "SELECT 1 FROM activity WHERE changeset_id = %s AND type = 'assign_membership'",
+                "SELECT 1 FROM assertions WHERE changeset_id = %s AND field_path = 'posts'",
                 (review_changeset_id,),
             )
             assert await cur.fetchone() is not None
     finally:
-        # `_wipe()` doesn't know about `changesets`/`activity` — clean up ourselves, or the
-        # next test's teardown fails deleting the `organizations` row this still references.
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
-                "DELETE FROM activity WHERE changeset_id = %s", (review_changeset_id,)
+                "DELETE FROM assertions WHERE changeset_id = %s", (review_changeset_id,)
             )
             await cur.execute(
                 "DELETE FROM changesets WHERE id::text = %s", (review_changeset_id,)

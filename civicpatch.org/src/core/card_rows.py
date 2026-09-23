@@ -2,8 +2,10 @@
 
 Verbatim on purpose: the card already renders the shape `database.people`'s `PERSON_JSON` builds,
 so moving it to the fold changes where the values come from, not what the browser reads. Pure —
-the taxonomy is passed in. `updated_at` is null: the fold has no opinion about it, and no card
-component reads it.
+the taxonomy is passed in. `updated_at` is null: the fold has no opinion about it. One reader
+exists, `components/review/merge-model.ts`, which takes the newer of two merged records' values
+and leaves the key off when neither has one. `updated_at` is not editable, so nothing downstream
+reads what it wrote.
 """
 
 from collections.abc import Sequence

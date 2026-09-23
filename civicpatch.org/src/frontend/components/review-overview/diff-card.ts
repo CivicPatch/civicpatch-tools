@@ -99,11 +99,11 @@ function renderFieldLock(lock: FieldLock | null) {
     : nothing;
 }
 
-// The post field is never a raw scraped value (see office-changes.ts/editor-field.ts's own
+// The post field is never a raw scraped value (see office-edits.ts/editor-field.ts's own
 // comments on this) — `renderFieldValueDiff`'s generic diffValue-based rendering would show a
 // raw post id, not a label. `movedNote`/`postNameFor` already resolve it to one, the same way
 // the picker and the card subtitle do. Only the post itself is diffed here — the membership
-// label is a second, independently-changing thing (office-changes.ts) and renders in its own
+// label is a second, independently-changing thing (office-edits.ts) and renders in its own
 // row below, plainly, never compared against an old value.
 function renderPostFieldValue(
   card: PersonCard,

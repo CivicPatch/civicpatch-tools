@@ -167,12 +167,10 @@ def get_router(api_key_header):
         request: SaveReviewRequest,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        try:
-            await roster_edits.save(
-                request.changeset_id, request.jurisdiction_ocdid, request.data, user
-            )
-        except (roster_edits.MissingRoster, roster_edits.AnonymousEdit, PeopleValidationError) as exc:
-            raise _http_error(exc)
+        # The edits themselves are filed by `POST /api/v1/jurisdictions/roster-edits` before this call:
+        # one payload for the fields and the posts, one changeset, one place that turns a
+        # reviewer's answer into claims. This route keeps only the session bookkeeping.
+        #
         # No merge, no parking: the request stays in AVAILABLE_FOR_REVIEW. The entry is
         # held by its session (see _allocate_next_review) and returns to the pool
         # when that session is released.
@@ -186,13 +184,7 @@ def get_router(api_key_header):
         request: SaveAndMergeRequest,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        edited = None
         try:
-            if request.data:
-                edited = await roster_edits.save(
-                    request.changeset_id, request.jurisdiction_ocdid, request.data, user
-                )
-
             if not user.user_id:
                 raise HTTPException(status_code=401, detail="User ID not available")
 
@@ -200,8 +192,10 @@ def get_router(api_key_header):
             # live and `published_at` is stamped. The open-data commit is queued behind it and
             # retries on its own — git is the projection, not the record.
             # Any kind: an import reaches a card only through its batch page's Edit link.
+            # `None`: the reviewer's edits are already claims, so the roster to publish is
+            # the one the facts derive, which `publish` reads for itself.
             await roster_edits.publish(
-                request.changeset_id, request.jurisdiction_ocdid, edited, user.user_id
+                request.changeset_id, request.jurisdiction_ocdid, None, user.user_id
             )
         except (
             roster_edits.MissingRoster,

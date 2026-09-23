@@ -7,35 +7,11 @@ from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory
 from schemas.pagination import pagination_offset, pagination_total_pages
-from schemas.posts import AssignMembershipRequest, MembershipRemovalRequest
+from schemas.posts import MembershipRemovalRequest
 
 
 def get_router() -> APIRouter:
     router = APIRouter()
-
-    @router.put("")
-    async def assign_membership_endpoint(
-        body: AssignMembershipRequest,
-        # Any signed-in user: moving a membership to a different post is a direct write,
-        # never an assertion, so a scrape stays free to move/end it again — and the label
-        # only ever asserts when given. Creating/editing the *post itself* is a separate,
-        # stricter capability (routers/api/posts.py, maintainers).
-        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
-    ):
-        try:
-            result = await memberships.assign(
-                body.person_id, body.post_id, body.label, user.user_id, body.changeset_id
-            )
-        except memberships.UnknownPost:
-            return JSONResponse({"error": "No such post."}, status_code=404)
-        except memberships.NothingToAssign:
-            return JSONResponse(
-                {"error": "They already hold that post under that label."},
-                status_code=409,
-            )
-        # No mirror call: `assign` writes a change log on its own cursor and the sweep reads
-        # it, so open-data hears about this without the endpoint knowing open-data exists.
-        return {"data": result}
 
     # One endpoint, not four: the three claims contradict each other, so the request names which
     # one is being made and the service withdraws the others. Reversible by picking `none` again,

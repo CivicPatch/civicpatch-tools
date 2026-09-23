@@ -202,7 +202,7 @@ function OfficePicker(host: OfficePickerHost) {
     setDivisionOcdid(division_ocdid === atLarge ? NO_DIVISION : division_ocdid);
     // Not `label` — that's the new post's own name (civ-post-add's own field, ignored by the
     // API since 148 anyway), never the occupant's membership label. Picking a post never sets
-    // one (see office-changes.ts/field-controls.ts's own comments on this).
+    // one (see office-edits.ts/field-controls.ts's own comments on this).
     notifyPicked(post_id);
     hostDispatch(host, POST_CREATED_EVENT);
   };

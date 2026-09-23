@@ -19,6 +19,9 @@ from database.database import get_pool
 from core.projection.memberships import MEMBERSHIP_LABEL_FIELD
 from schemas.assertions import Assertion, AssertionKind, EntityType, Source
 from services.review_proposal import assertions_for_people
+from schemas.jurisdictions import OfficeEdit, PersonEdit
+from services.jurisdiction_edits import edit_published_roster
+from shared.utils.membership_ids import membership_id
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_assert/government"
@@ -777,19 +780,37 @@ async def _person_with_a_record(name: str) -> str:
     return person_id
 
 
+async def _seat(person_id: str, post_id: str, user_id: str) -> None:
+    """Put somebody in a post, the way the app does: one roster edit naming the office.
+
+    These tests used `memberships.assign`, deleted 2026-09-23 with `PUT /memberships`. The
+    claim they are about, a human-set membership label, is the same one either way.
+    """
+    await edit_published_roster(
+        _OCDID,
+        [
+            PersonEdit(
+                id=person_id,
+                offices=[OfficeEdit(id=post_id, membership_label="Mayor Pro Tem")],
+            )
+        ],
+        user_id,
+    )
+
+
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_open_memberships_for_persons_finds_an_open_seat():
     user_id, post_id = await _seed()
     person_id = await _person_with_a_record("Membership Lookup Subject")
 
-    result = await memberships.assign(person_id, post_id, "Mayor Pro Tem", user_id=user_id)
+    await _seat(person_id, post_id, user_id)
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = await memberships.open_memberships_for_persons(cur, [person_id])
     assert [(row["id"], row["person_id"]) for row in rows] == [
-        (result.membership_id, person_id)
+        (membership_id(person_id, post_id), person_id)
     ]
 
 
@@ -797,11 +818,11 @@ async def test_open_memberships_for_persons_finds_an_open_seat():
 @pytest.mark.integration
 async def test_assertions_for_people_includes_a_human_set_membership_label():
     """The picker needs to know a label was asserted, the same way every other field does.
-    `assertions_for_people` is keyed by person id, but `set_label` files the assertion
+    `assertions_for_people` is keyed by person id, but `set_membership_label` files the assertion
     against the membership — this is the merge that lets the two meet."""
     user_id, post_id = await _seed()
     person_id = await _person_with_a_record("Assertion Merge Subject")
-    await memberships.assign(person_id, post_id, "Mayor Pro Tem", user_id=user_id)
+    await _seat(person_id, post_id, user_id)
 
     result = await assertions_for_people([person_id])
 

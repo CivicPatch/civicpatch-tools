@@ -14,14 +14,14 @@ import uuid
 import pytest
 import pytest_asyncio
 
-from core.people_edits import PersonPatch
 from core.post_derivation import DerivedMembership, MembershipSource
 from database import divisions, organizations, posts
 from database.database import get_pool
 from database.source_records import insert_source_records
 from schemas.common import Identity, UserRole
+from schemas.jurisdictions import PersonEdit
 from services import rollback
-from services.roster_edits import edit_published
+from services.jurisdiction_edits import edit_published_roster
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:rollbackville/government"
@@ -175,8 +175,10 @@ async def test_rollback_reverts_the_edit_and_republishes():
     user = _identity(_EMAIL, user_id)
     person_id = await _seed_person("Ada Chen", "https://rollbackville.gov/mayor", "mayor", "Mayor")
 
-    changeset_id, _ = await edit_published(
-        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    changeset_id = await edit_published_roster(
+        _OCDID,
+        [PersonEdit(id=person_id, fields={"name": "Ada M. Chen"})],
+        user.user_id,
     )
 
     withdrawn = await _rollback_user(user_id, user_id)
@@ -210,8 +212,8 @@ async def test_rollback_refuses_a_changeset_already_rolled_back():
     user = _identity(_EMAIL, user_id)
     person_id = await _seed_person("Ada Chen", "https://rollbackville.gov/mayor", "mayor", "Mayor")
 
-    await edit_published(
-        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    await edit_published_roster(
+        _OCDID, [PersonEdit(id=person_id, fields={"name": "Ada M. Chen"})], user.user_id
     )
     await _rollback_user(user_id, user_id)
 
@@ -230,24 +232,16 @@ async def test_rollback_user_in_jurisdiction_reverts_only_that_users_edits():
     mine_id = await _seed_person("Ada Chen", "https://rollbackville.gov/mayor", "mayor", "Mayor")
     theirs_id = await _seed_person("Bo Nguyen", "https://rollbackville.gov/clerk", "clerk", "Clerk")
 
-    # `data` is the whole roster, not a list of changes (see
-    # `test_roster_edits_published.py::test_leaving_somebody_out_retires_them`) — so each edit
-    # names both people, unchanged fields empty, or the other one's membership would retire.
-    await edit_published(
-        _OCDID,
-        [
-            PersonPatch(id=mine_id, fields={"name": "Ada M. Chen"}),
-            PersonPatch(id=theirs_id, fields={}),
-        ],
-        user,
+    # An edit names only who it changes. It used to have to name the whole roster, because
+    # leaving somebody out retired them; the edit route says removal explicitly instead
+    # (`posts: []`), so silence about a person means silence.
+    await edit_published_roster(
+        _OCDID, [PersonEdit(id=mine_id, fields={"name": "Ada M. Chen"})], user.user_id
     )
-    await edit_published(
+    await edit_published_roster(
         _OCDID,
-        [
-            PersonPatch(id=mine_id, fields={}),
-            PersonPatch(id=theirs_id, fields={"name": "Bo A. Nguyen"}),
-        ],
-        other_user,
+        [PersonEdit(id=theirs_id, fields={"name": "Bo A. Nguyen"})],
+        other_user.user_id,
     )
 
     withdrawn = await _rollback_user(user_id, user_id)
@@ -293,11 +287,13 @@ async def test_rollback_spans_multiple_jurisdictions_in_one_call():
         base=_OTHER_BASE,
     )
 
-    await edit_published(
-        _OCDID, [PersonPatch(id=here_id, fields={"name": "Ada M. Chen"})], user
+    await edit_published_roster(
+        _OCDID, [PersonEdit(id=here_id, fields={"name": "Ada M. Chen"})], user.user_id
     )
-    await edit_published(
-        _OTHER_OCDID, [PersonPatch(id=there_id, fields={"name": "Cy A. Okonkwo"})], user
+    await edit_published_roster(
+        _OTHER_OCDID,
+        [PersonEdit(id=there_id, fields={"name": "Cy A. Okonkwo"})],
+        user.user_id,
     )
 
     candidates = await rollback.list_user_assertions(user_id)

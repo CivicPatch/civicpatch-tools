@@ -243,7 +243,7 @@ async def assertions_for_people(person_ids: list[str]) -> dict[str, list[dict]]:
     """Every assertion about these people, for the editor's per-field tags.
 
     A membership label's assertion is filed against the membership, not the person
-    (`set_label`) — merged in here, under the person it belongs to, so the editor's
+    (`set_post_label`) — merged in here, under the person it belongs to, so the editor's
     per-field lock lookup never has to know the label lives on a different entity.
     """
     if not person_ids:

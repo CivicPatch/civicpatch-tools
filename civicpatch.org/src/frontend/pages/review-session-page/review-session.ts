@@ -43,7 +43,7 @@ import {
 import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
 import { useOrganizations } from "../../hooks/use-organizations.js";
 import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
-import { officeChangesIn } from "../../components/person-editor/office-changes.js";
+import { officeEditsIn } from "../../components/person-editor/office-edits.js";
 import { type ProposedChange } from "../../schemas/membership-proposal.js";
 import type { PersonAssertion } from "../../components/person-editor/field-provenance.js";
 import {
@@ -230,7 +230,7 @@ function ReviewSession(host: ReviewSessionHost) {
     updatePerson(id, updates);
   // Handed to `review-session-actions`, which folds it into the same `publish`/`save` event
   // that already carries `peoplePatch` — the page applies both under one action.
-  const officeChanges = officeChangesIn(cards);
+  const officeEdits = officeEditsIn(cards);
   const [candidatesOpen, setCandidatesOpen] = useState(false);
   const handleToggleCandidates = () => setCandidatesOpen((open) => !open);
   const [pendingMerge, setPendingMerge] = useState<{
@@ -304,7 +304,7 @@ function ReviewSession(host: ReviewSessionHost) {
           .canReject=${canReject}
           .isRejecting=${isRejecting}
           .hasSession=${hasSession}
-          .officeChanges=${officeChanges}
+          .officeEdits=${officeEdits}
         ></review-session-actions>
         <div class="review-session__header-tools">
           ${canViewSourceDebug && hasSourceContent

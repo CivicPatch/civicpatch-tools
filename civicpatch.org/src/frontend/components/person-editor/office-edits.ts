@@ -6,15 +6,15 @@
 import { heldPost, heldMembershipLabel } from "../posts-list/posts-model.js";
 import { type PersonCard, personOf } from "../people/person-cards.js";
 
-export interface OfficeChange {
+export interface OfficeEdit {
   personId: string;
   postId: string;
-  label: string | null;
+  membershipLabel: string | null;
 }
 
 // `undefined` on the record means untouched; `null` means explicitly cleared. Only the
 // former counts as "nothing to say" — a cleared label is still a real change.
-function officeChangeFor(card: PersonCard): OfficeChange | null {
+function officeEditFor(card: PersonCard): OfficeEdit | null {
   const record = personOf(card);
   if (!card.oldRecord || !record) return null; // no prior membership to move
   const held = heldPost(card.oldRecord.memberships);
@@ -32,10 +32,10 @@ function officeChangeFor(card: PersonCard): OfficeChange | null {
   return {
     personId: card.personId,
     postId,
-    label: labelChanged ? (pickedLabel ?? null) : heldLabel,
+    membershipLabel: labelChanged ? (pickedLabel ?? null) : heldLabel,
   };
 }
 
-export function officeChangesIn(cards: PersonCard[]): OfficeChange[] {
-  return cards.map(officeChangeFor).filter((change): change is OfficeChange => change !== null);
+export function officeEditsIn(cards: PersonCard[]): OfficeEdit[] {
+  return cards.map(officeEditFor).filter((change): change is OfficeEdit => change !== null);
 }

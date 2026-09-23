@@ -517,3 +517,119 @@ def test_in_flight_answers_the_data_envelope(client):
 
     assert response.status_code == 200
     assert response.json()["data"] == payload
+
+
+EDIT_OCDID = "ocd-jurisdiction/country:us/state:ca/place:oakland"
+EDIT_URL = f"/jurisdictions/{EDIT_OCDID}/roster-edits"
+EDIT_BODY = {"people": [{"id": "p1", "fields": {"name": "Ann Lee-Park"}, "posts": []}]}
+
+
+@pytest.mark.unit
+def test_posting_an_edit_returns_the_changeset_it_was_filed_under(client):
+    """The id is the whole outcome: undoing the edit is rolling that changeset back."""
+    client.app.dependency_overrides[get_optional_user] = _maintainer
+    with patch.object(
+        jurisdictions_router.jurisdiction_edits,
+        "edit_published_roster",
+        new=AsyncMock(return_value=CHANGESET_ID),
+    ) as edit:
+        response = client.post(EDIT_URL, json=EDIT_BODY)
+
+    assert response.status_code == 200, response.text
+    assert response.json() == {"data": {"changeset_id": CHANGESET_ID}}
+    assert edit.await_args.args[0] == EDIT_OCDID
+    assert [person.id for person in edit.await_args.args[1]] == ["p1"]
+
+
+@pytest.mark.unit
+def test_an_edit_with_no_author_is_refused(client):
+    """`assertions.created_by` is NOT NULL, so the service raises rather than filing a claim
+    nobody made."""
+    client.app.dependency_overrides[get_optional_user] = _maintainer
+    with patch.object(
+        jurisdictions_router.jurisdiction_edits,
+        "edit_published_roster",
+        new=AsyncMock(side_effect=jurisdictions_router.jurisdiction_edits.AnonymousEdit("x")),
+    ):
+        response = client.post(EDIT_URL, json=EDIT_BODY)
+
+    assert response.status_code == 401, response.text
+
+
+@pytest.mark.unit
+def test_anyone_signed_in_may_edit_inside_their_own_review(client):
+    """A review is open to any signed-in user, and an edit made during one is part of it."""
+    client.app.dependency_overrides[get_optional_user] = _default
+    with patch.object(
+        jurisdictions_router.jurisdiction_edits,
+        "edit_in_review",
+        new=AsyncMock(return_value=CHANGESET_ID),
+    ) as save:
+        response = client.post(EDIT_URL, json={**EDIT_BODY, "changeset_id": CHANGESET_ID})
+
+    assert response.status_code == 200, response.text
+
+
+@pytest.mark.unit
+def test_editing_the_published_roster_still_needs_a_maintainer(client):
+    """No changeset means it publishes on the spot, which is what `PATCH /people/data` was."""
+    client.app.dependency_overrides[get_optional_user] = _default
+
+    response = client.post(EDIT_URL, json=EDIT_BODY)
+
+    assert response.status_code == 403, response.text
+
+
+@pytest.mark.unit
+def test_saving_inside_a_review_publishes_nothing(client):
+    """A reviewer must be able to put work down half-finished. Approving the review is its own
+    act, on its own route."""
+    client.app.dependency_overrides[get_optional_user] = _default
+    with patch.object(
+        jurisdictions_router.jurisdiction_edits,
+        "edit_published_roster",
+        new=AsyncMock(return_value=CHANGESET_ID),
+    ) as publish, patch.object(
+        jurisdictions_router.jurisdiction_edits,
+        "edit_in_review",
+        new=AsyncMock(return_value=CHANGESET_ID),
+    ):
+        client.post(EDIT_URL, json={**EDIT_BODY, "changeset_id": CHANGESET_ID})
+
+    publish.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_an_invalid_field_is_a_422_with_the_failures(client):
+    """Moved from `test_review.py::test_save_and_merge_rejects_invalid_field`: the claim is the
+    same, the route that makes it is new."""
+    client.app.dependency_overrides[get_optional_user] = _default
+    failures = [{"id": "p1", "name": "Ann", "field": "emails", "message": "bad"}]
+    with patch.object(
+        jurisdictions_router.jurisdiction_edits,
+        "edit_in_review",
+        new=AsyncMock(
+            side_effect=jurisdictions_router.PeopleValidationError(failures)
+        ),
+    ):
+        response = client.post(EDIT_URL, json={**EDIT_BODY, "changeset_id": CHANGESET_ID})
+
+    assert response.status_code == 422, response.text
+    assert response.json()["detail"] == failures
+
+
+@pytest.mark.unit
+def test_an_unknown_post_is_a_404(client):
+    """Carried from `memberships.assign`'s 404: the fold ignores a claim naming a post it
+    cannot find, so a typo'd id would otherwise file a claim and do nothing silently."""
+    client.app.dependency_overrides[get_optional_user] = _default
+    with patch.object(
+        jurisdictions_router.jurisdiction_edits,
+        "edit_in_review",
+        new=AsyncMock(
+            side_effect=jurisdictions_router.jurisdiction_edits.UnknownPost(["nope"])
+        ),
+    ):
+        response = client.post(EDIT_URL, json={**EDIT_BODY, "changeset_id": CHANGESET_ID})
+
+    assert response.status_code == 404, response.text

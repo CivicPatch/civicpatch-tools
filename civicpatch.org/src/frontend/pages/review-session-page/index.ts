@@ -3,7 +3,8 @@ import { component } from "haunted";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { useAuth } from "../../hooks/useAuth.js";
-import { assignMembership } from "../../api.js";
+import { editJurisdictionRoster } from "../../api.js";
+import type { OfficeEdit } from "../../components/person-editor/office-edits.js";
 import { useReviewActions } from "../../hooks/use-review-actions.js";
 import { REVIEW_ACTION } from "../../components/review-card/review-action.js";
 import { useReviewSession } from "./use-review-session.js";
@@ -38,18 +39,28 @@ function ReviewSessionPage() {
   // like rejecting a scrape (see routers/api/memberships.py).
   const canAssignMembership = !!user?.authenticated;
 
-  // Office picks are direct membership writes, not part of the `peoplePatch` this hands to
-  // `merge`/`save` — apply them first, under this review's own changeset (see
-  // `memberships.assign`). A failure here stops before `merge`/`save` runs, rather than
-  // leaving a half-applied publish with no word to the reviewer.
-  const applyOfficeChanges = async (e: CustomEvent): Promise<boolean> => {
+  // One call for the whole card: the fields a reviewer corrected and the posts they picked are
+  // one answer about one person, so they are one payload under one changeset. A failure stops
+  // before `merge`/`save` runs, rather than leaving a half-applied publish with no word to the
+  // reviewer.
+  const applyEdits = async (e: CustomEvent): Promise<boolean> => {
+    const ocdid = currentEntry?.jurisdiction?.ocdid;
+    if (!ocdid || !changesetId) return true;
+    const byPerson = new Map<string, any>();
+    for (const person of e.detail.people ?? []) {
+      byPerson.set(person.id, { id: person.id, fields: person.fields });
+    }
+    for (const change of (e.detail.officeEdits ?? []) as OfficeEdit[]) {
+      const person = byPerson.get(change.personId) ?? { id: change.personId };
+      person.offices = [{ id: change.postId, membership_label: change.membershipLabel }];
+      byPerson.set(change.personId, person);
+    }
+    if (!byPerson.size) return true;
     try {
-      for (const change of e.detail.officeChanges ?? []) {
-        await assignMembership(change.personId, change.postId, change.label, changesetId);
-      }
+      await editJurisdictionRoster(ocdid, [...byPerson.values()], changesetId);
       return true;
     } catch (err: any) {
-      window.alert(err.message ?? "Failed to update an office.");
+      window.alert(err.message ?? "Failed to save the card.");
       return false;
     }
   };
@@ -57,10 +68,10 @@ function ReviewSessionPage() {
   // The card owns the reviewer's edits and hands them over when it asks to
   // publish or save; the page only decides what that does to the session.
   const handlePublish = async (e: CustomEvent) => {
-    if (await applyOfficeChanges(e)) merge(e.detail.people);
+    if (await applyEdits(e)) merge(e.detail.people);
   };
   const handleSave = async (e: CustomEvent) => {
-    if (await applyOfficeChanges(e)) save(e.detail.people);
+    if (await applyEdits(e)) save(e.detail.people);
   };
   const handleNavigateTo = (e: CustomEvent) => navigateTo(e.detail.entry_number);
 

@@ -18,8 +18,9 @@ import services.roster_edits as roster_edits
 from core.people_edits import PeopleValidationError
 from core.post_derivation import DerivedMembership, MembershipSource
 from database import divisions, memberships, organizations, posts
-from core.people_edits import PersonPatch
 from database.database import get_pool
+from schemas.jurisdictions import OfficeEdit, PersonEdit
+from services.jurisdiction_edits import UnknownPost, edit_published_roster
 from database.changeset_predicates import DISMISSED_SUPERSEDED
 from database.dismissals import supersede_stacked_changesets
 from database.source_records import insert_source_records
@@ -171,10 +172,10 @@ async def test_an_edit_is_recorded_as_an_assertion_so_a_scrape_cannot_revert_it(
     a human had chosen the value and the next publish overwrote it from the sightings."""
     person_id, user = await _seed()
 
-    await roster_edits.edit_published(
+    await edit_published_roster(
         _OCDID,
-        [PersonPatch(id=person_id, fields={"phones": ["(206) 555-0999"]})],
-        user,
+        [PersonEdit(id=person_id, fields={"phones": ["(206) 555-0999"]})],
+        user.user_id,
     )
 
     pool = await get_pool()
@@ -196,8 +197,8 @@ async def test_an_edit_is_recorded_as_an_assertion_so_a_scrape_cannot_revert_it(
 async def test_the_edit_reaches_the_people_row_not_only_the_file():
     person_id, user = await _seed()
 
-    await roster_edits.edit_published(
-        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    await edit_published_roster(
+        _OCDID, [PersonEdit(id=person_id, fields={"name": "Ada M. Chen"})], user.user_id
     )
 
     pool = await get_pool()
@@ -221,8 +222,8 @@ async def test_the_edit_mints_a_changeset_born_published():
     separately below."""
     person_id, user = await _seed()
 
-    changeset_id, _ = await roster_edits.edit_published(
-        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    changeset_id = await edit_published_roster(
+        _OCDID, [PersonEdit(id=person_id, fields={"name": "Ada M. Chen"})], user.user_id
     )
 
     pool = await get_pool()
@@ -238,106 +239,62 @@ async def test_the_edit_mints_a_changeset_born_published():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_an_added_person_lands_in_the_seat_they_were_given():
-    """The sighting carries the chosen post's label, so the ordinary derivation resolves the
-    role from it. Recording only `post_id` left the label empty, no role matched, and they
-    were published into the `unmatched` seat — which exists for labels we cannot parse, not
-    for a question nobody asked the human who was right there."""
+async def test_an_addition_with_no_office_puts_nobody_on_the_roster():
+    """This test verified that an addition with no post was refused, because a sighting with
+    nothing to say would have published somebody into the `unmatched` seat. It now verifies
+    that nothing lands: being on the roster is holding an office, so an addition that names
+    none says a person exists and places them nowhere."""
     _, user = await _seed()
     added_id = str(uuid.uuid4())
 
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        seat = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        await conn.commit()
-
-    await roster_edits.edit_published(
-        _OCDID,
-        [
-            PersonPatch(
-                id=added_id,
-                fields={
-                    "name": "Bo Nguyen",
-                    "jurisdiction_ocdid": _OCDID,
-                    "source_urls": ["https://editville.gov/clerk"],
-                    "updated_at": "2026-08-26T00:00:00+00:00",
-                    "post_id": seat,
-                },
-            )
-        ],
-        user,
-    )
-
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT sr.label FROM source_records sr "
-            "JOIN source_record_identities i ON i.source_record_id = sr.id "
-            "WHERE i.person_id::text = %s",
-            (added_id,),
-        )
-        labels = [row[0] for row in await cur.fetchall()]
-        await cur.execute(
-            "SELECT p.role_id FROM memberships m JOIN posts p ON p.id = m.post_id "
-            "WHERE m.person_id::text = %s",
-            (added_id,),
-        )
-        roles = [row[0] for row in await cur.fetchall()]
-
-    assert labels == ["Clerk"], labels
-    assert roles == ["clerk"], roles
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_an_addition_with_no_seat_is_refused():
-    """The editor asks for a post; this is what makes it a rule. The route is reachable
-    without the editor, and a sighting with nothing to say would publish somebody into the
-    `unmatched` seat."""
-    _, user = await _seed()
-
-    with pytest.raises(PeopleValidationError) as caught:
-        await roster_edits.edit_published(
+    if True:
+        await edit_published_roster(
             _OCDID,
             [
-                PersonPatch(
-                    id=str(uuid.uuid4()),
+                PersonEdit(
+                    id=added_id,
                     fields={
                         "name": "Bo Nguyen",
                         "jurisdiction_ocdid": _OCDID,
                         "source_urls": ["https://editville.gov/clerk"],
-                        "updated_at": "2026-08-26T00:00:00+00:00",
                     },
                 )
             ],
-            user,
+            user.user_id,
         )
 
-    assert caught.value.failures[0]["field"] == "post_id"
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT count(*) FROM memberships WHERE person_id::text = %s",
+            (added_id,),
+        )
+        assert (await cur.fetchone())[0] == 0
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_an_addition_naming_a_post_that_is_gone_is_refused():
-    """Same rule, reached differently: an id resolving to no post yields no label."""
+    """Same rule, reached differently. This test verified a `PeopleValidationError`, raised
+    when the addition's `post_id` resolved to no label. It now verifies `UnknownPost`, the
+    route's own guard, because the fold ignores a claim naming a post it cannot find."""
     _, user = await _seed()
 
-    with pytest.raises(PeopleValidationError):
-        await roster_edits.edit_published(
+    with pytest.raises(UnknownPost):
+        await edit_published_roster(
             _OCDID,
             [
-                PersonPatch(
+                PersonEdit(
                     id=str(uuid.uuid4()),
                     fields={
                         "name": "Bo Nguyen",
                         "jurisdiction_ocdid": _OCDID,
                         "source_urls": ["https://editville.gov/clerk"],
-                        "updated_at": "2026-08-26T00:00:00+00:00",
-                        "post_id": str(uuid.uuid4()),
                     },
+                    offices=[OfficeEdit(id=str(uuid.uuid4()))],
                 )
             ],
-            user,
+            user.user_id,
         )
 
 
@@ -376,8 +333,8 @@ async def test_leaving_somebody_out_retires_them():
         await conn.commit()
 
     # Only the mayor is sent. The clerk is absent, so their membership closes.
-    await roster_edits.edit_published(
-        _OCDID, [PersonPatch(id=kept_id, fields={"name": "Ada M. Chen"})], user
+    await edit_published_roster(
+        _OCDID, [PersonEdit(id=kept_id, fields={"name": "Ada M. Chen"})], user.user_id
     )
 
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -398,21 +355,23 @@ async def test_a_refused_edit_leaves_no_request_behind():
     published requests as supersedors, so a phantom would dismiss every pending card."""
     _, user = await _seed()
 
-    with pytest.raises(PeopleValidationError):
-        await roster_edits.edit_published(
+    # This test refused on a missing `post_id`; it now refuses on one that names no post,
+    # which is the guard the edit route carries.
+    with pytest.raises(UnknownPost):
+        await edit_published_roster(
             _OCDID,
             [
-                PersonPatch(
+                PersonEdit(
                     id=str(uuid.uuid4()),
                     fields={
                         "name": "Bo Nguyen",
                         "jurisdiction_ocdid": _OCDID,
                         "source_urls": ["https://editville.gov/clerk"],
-                        "updated_at": "2026-08-26T00:00:00+00:00",
                     },
+                    offices=[OfficeEdit(id=str(uuid.uuid4()))],
                 )
             ],
-            user,
+            user.user_id,
         )
 
     pool = await get_pool()
@@ -490,8 +449,8 @@ async def test_a_hand_edit_supersedes_a_pending_scrape():
         datetime.datetime(2026, 6, 1, tzinfo=datetime.timezone.utc)
     )
 
-    await roster_edits.edit_published(
-        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    await edit_published_roster(
+        _OCDID, [PersonEdit(id=person_id, fields={"name": "Ada M. Chen"})], user.user_id
     )
 
     # In the publish's own transaction, so there is nothing left for the sweep to find.
@@ -503,61 +462,6 @@ async def test_a_hand_edit_supersedes_a_pending_scrape():
         )
         row = await cur.fetchone()
     assert row is not None and row[0] == DISMISSED_SUPERSEDED
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_post_pick_via_save_is_never_asserted():
-    """`post_id` is not in `EDITABLE_FIELDS`: a scrape must always stay free to move or end a
-    membership, so a pick made through `roster_edits.save` must never durably override it.
-    Moving an existing person to a post now goes through `memberships.assign` instead, which
-    writes the move directly (never an assertion) and logs its own `ASSIGN_MEMBERSHIP` entry.
-
-    This test only pins the negative: a save carrying `post_id` in its fields writes no
-    assertion for it, so nothing here can outlive the changeset it was made on.
-    """
-    person_id, user = await _seed()
-    changeset_id = str(uuid.uuid4())
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        council = await organizations.find_or_create(cur, _OCDID, "Council")
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        council_seat = await posts.find_or_create(cur, _OCDID, council, "clerk", _BASE)
-        await cur.execute(
-            "INSERT INTO changesets (id, kind, jurisdiction_ocdid, updated_at) "
-            "VALUES (%s, 'scrape', %s, now())",
-            (changeset_id, _OCDID),
-        )
-        await conn.commit()
-    await insert_source_records(
-        changeset_id,
-        _OCDID,
-        {
-            person_id: [
-                {
-                    "name": "Bo Nguyen",
-                    "label": "Clerk",
-                    "source_url": "https://editville.gov/clerk",
-                    "organization_id": council,
-                }
-            ]
-        },
-    )
-
-    await roster_edits.save(
-        changeset_id,
-        _OCDID,
-        [PersonPatch(id=person_id, fields={"post_id": council_seat})],
-        user,
-    )
-
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT 1 FROM assertions WHERE entity_id = %s AND field_path = 'post_id'",
-            (person_id,),
-        )
-        assert await cur.fetchone() is None
-
 
 @pytest.mark.asyncio
 @pytest.mark.integration
@@ -576,8 +480,8 @@ async def test_a_hand_edit_does_not_advance_last_seen_at():
         )
         before = (await cur.fetchone())[0]
 
-    await roster_edits.edit_published(
-        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    await edit_published_roster(
+        _OCDID, [PersonEdit(id=person_id, fields={"name": "Ada M. Chen"})], user.user_id
     )
 
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -611,8 +515,8 @@ async def test_only_the_edited_person_gets_a_new_updated_at():
         )
         before = {row[0]: row[1] for row in await cur.fetchall()}
 
-    await roster_edits.edit_published(
-        _OCDID, [PersonPatch(id=edited_id, fields={"name": "Ada M. Chen"})], user
+    await edit_published_roster(
+        _OCDID, [PersonEdit(id=edited_id, fields={"name": "Ada M. Chen"})], user.user_id
     )
 
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -638,67 +542,6 @@ async def _activity_rows(changeset_id: str) -> list[tuple]:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_single_person_hand_edit_folds_onto_one_publish_review_row():
-    """One reviewer action, one row — not a separate edit_person beside a payload-less
-    publish_review for the same edit. See roster_edits.edit_published."""
-    person_id, user = await _seed()
-
-    changeset_id, _ = await roster_edits.edit_published(
-        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
-    )
-
-    rows = await _activity_rows(changeset_id)
-    assert [type_ for type_, _ in rows] == ["publish_review"]
-    changes = rows[0][1]
-    assert changes["subject"] == "Ada M. Chen"
-    assert any(f["field"] == "name" for f in changes["fields"])
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_editing_two_people_at_once_keeps_their_own_rows():
-    """More than one person has no single Change to fold onto the publish row, so this keeps
-    today's shape: one edit_person row per person, plus the plain publish_review."""
-    edited_id, user = await _seed()
-    other_id = await _seed_second_person()
-
-    changeset_id, _ = await roster_edits.edit_published(
-        _OCDID,
-        [
-            PersonPatch(id=edited_id, fields={"name": "Ada M. Chen"}),
-            PersonPatch(id=other_id, fields={"name": "Bo T. Nguyen"}),
-        ],
-        user,
-    )
-
-    rows = await _activity_rows(changeset_id)
-    assert [type_ for type_, _ in rows] == ["edit_person", "edit_person", "publish_review"]
-    publish_changes = next(changes for type_, changes in rows if type_ == "publish_review")
-    assert publish_changes is None
-
-
-async def _open_posts(person_id: str) -> list[str]:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT post_id::text FROM memberships "
-            "WHERE person_id::text = %s AND closed_at IS NULL",
-            (person_id,),
-        )
-        return [row[0] for row in await cur.fetchall()]
-
-
-async def _clerk_post() -> str:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        await conn.commit()
-    return post_id
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_a_hand_edit_keeps_a_post_that_was_assigned():
     """Crescent City, 2026-09-18: the editor assigns a post, then saves person fields. The save
     re-derived everyone's post from label text; an assigned membership has no sources, so it
@@ -706,9 +549,9 @@ async def test_a_hand_edit_keeps_a_post_that_was_assigned():
     person_id, user = await _seed()
     clerk = await _clerk_post()
 
-    await memberships.assign(person_id, clerk, None, user.user_id)
-    await roster_edits.edit_published(
-        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    await _seat(person_id, clerk, None, user.user_id)
+    await edit_published_roster(
+        _OCDID, [PersonEdit(id=person_id, fields={"name": "Ada M. Chen"})], user.user_id
     )
 
     assert await _open_posts(person_id) == [clerk]
@@ -721,7 +564,7 @@ async def test_a_hand_edit_does_not_re_derive_a_post_from_label_text():
     picked it). Saving their fields moved them to the parsed post."""
     person_id, user = await _seed()
     clerk = await _clerk_post()
-    await memberships.assign(person_id, clerk, None, user.user_id)
+    await _seat(person_id, clerk, None, user.user_id)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -731,8 +574,37 @@ async def test_a_hand_edit_does_not_re_derive_a_post_from_label_text():
         )
         await conn.commit()
 
-    await roster_edits.edit_published(
-        _OCDID, [PersonPatch(id=person_id, fields={"name": "Ada M. Chen"})], user
+    await edit_published_roster(
+        _OCDID, [PersonEdit(id=person_id, fields={"name": "Ada M. Chen"})], user.user_id
     )
 
     assert await _open_posts(person_id) == [clerk]
+
+
+async def _seat(person_id: str, post_id: str, label: str | None, user_id: str) -> None:
+    """Put somebody in an office. Was `memberships.assign`, deleted 2026-09-23."""
+    await edit_published_roster(
+        _OCDID,
+        [PersonEdit(id=person_id, offices=[OfficeEdit(id=post_id, membership_label=label)])],
+        user_id,
+    )
+
+
+async def _clerk_post() -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        org = await organizations.find_or_create(cur, _OCDID)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        await conn.commit()
+    return post_id
+
+
+async def _open_posts(person_id: str) -> list[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT post_id::text FROM memberships "
+            "WHERE person_id::text = %s AND closed_at IS NULL",
+            (person_id,),
+        )
+        return [row[0] for row in await cur.fetchall()]

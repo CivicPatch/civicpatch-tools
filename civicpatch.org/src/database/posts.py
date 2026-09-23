@@ -59,7 +59,7 @@ async def asserted_labels(cur, post_ids: list[str]) -> dict[str, str]:
     }
 
 
-async def set_label(
+async def set_post_label(
     cur,
     post_id: str,
     label: str | None,
@@ -593,7 +593,7 @@ async def create(
                 cur, post_id, {"meta_headcount": headcount}, user_id, changeset_id
             )
             if label and user_id:
-                await set_label(cur, post_id, label, user_id, changeset_id)
+                await set_post_label(cur, post_id, label, user_id, changeset_id)
             minted = await get(cur, post_id)
             await record_change(
                 cur,

@@ -39,18 +39,10 @@ from schemas.assertions import (
     EntityType,
     Source,
 )
-from schemas.posts import AssignmentResult, MembershipRemovalAssertion
+from schemas.posts import MembershipRemovalAssertion
 from shared.schemas import Post
 from shared.utils.membership_ids import membership_id
 from shared.utils.statuses import ActivityType
-
-
-class UnknownPost(Exception):
-    """The post id does not exist."""
-
-
-class NothingToAssign(Exception):
-    """They already hold that post under that label."""
 
 
 async def list_for_jurisdiction(
@@ -392,7 +384,7 @@ async def _assert(
     )
 
 
-async def set_label(
+async def set_membership_label(
     cur,
     membership_id: str,
     label: str | None,
@@ -526,96 +518,3 @@ async def _person_name(cur, person_id: str) -> str:
     await cur.execute("SELECT name FROM people WHERE id = %s", (person_id,))
     row = await cur.fetchone()
     return (row[0] if row else None) or person_id
-
-
-async def assign(
-    person_id: str,
-    post_id: str,
-    label: str | None,
-    user_id: str | None = None,
-    changeset_id: str | None = None,
-) -> AssignmentResult:
-    """Assign a person to a post, direct and unasserted — a scrape stays free to move or end
-    this membership again.
-
-    `changeset_id`, when given, is the caller's own in-progress review — the activity entry and
-    any label assertion are filed under it instead of the live roster's, so a pick made mid-
-    review shows up as part of that review rather than as an unrelated jurisdiction edit.
-    """
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        post = await posts.get(cur, post_id)
-        if post is None:
-            raise UnknownPost(post_id)
-
-        # The claims this edit files are filed under the caller's own review when there is
-        # one, so they show up as part of it rather than as an unrelated jurisdiction edit.
-        changeset_id = changeset_id or await live_roster_changeset(
-            cur, post.jurisdiction_ocdid
-        )
-        organization_id = post.organization_id
-        held = await open_memberships(cur, [post.jurisdiction_ocdid])
-        current = next(
-            (
-                membership
-                for membership in held
-                if membership.person_id == person_id
-                and membership.organization_id == organization_id
-            ),
-            None,
-        )
-        entity_id = membership_id(person_id, post_id)
-
-        if current and current.post.id == post_id:
-            if (current.membership_label or None) == (label or None):
-                raise NothingToAssign(post_id)
-            change = FieldChange(
-                field=MEMBERSHIP_LABEL_FIELD, before=current.membership_label, after=label
-            )
-        else:
-            # A claim, not a row: publishing derives the roster from the facts, so a human
-            # putting somebody in a post has to be one. A move is the same claim on the new
-            # post — the fold keeps one membership per organization, and the page decides
-            # between the two again at the next read. Step 9's edit route replaces this.
-            moved_from = current.post.id if current else None
-            await assertions.upsert(
-                cur,
-                Assertion(
-                    entity_type=EntityType.PERSON,
-                    entity_id=person_id,
-                    field_path=POSTS_FIELD,
-                    kind=AssertionKind.ACCEPT,
-                    value=post_id,
-                    sources=[Source(note=DefaultNote.ASSIGNED)],
-                    changeset_id=changeset_id,
-                ),
-                user_id or SYSTEM_USER_ID,
-            )
-            change = FieldChange(
-                field=MEMBERSHIP_POST_FIELD, before=moved_from, after=post_id
-            )
-
-        await set_label(cur, entity_id, label, user_id or SYSTEM_USER_ID, changeset_id)
-        await rebuild_from_facts(cur, post.jurisdiction_ocdid, changeset_id)
-
-        await record_change(
-            cur,
-            ActivityType.ASSIGN_MEMBERSHIP,
-            user_id,
-            post.jurisdiction_ocdid,
-            Change(
-                entity_type=EntityType.MEMBERSHIP,
-                entity_id=entity_id,
-                subject=await _person_name(cur, person_id),
-                # The seat, which an assignment is read as much by as by who took it.
-                detail=label or post.label,
-                fields=[change],
-            ),
-            # So the edit lands on the live roster's timeline entry rather than nowhere.
-            changeset_id=changeset_id,
-        )
-        return AssignmentResult(
-            membership_id=entity_id,
-            jurisdiction_ocdid=post.jurisdiction_ocdid,
-            change=change,
-        )
