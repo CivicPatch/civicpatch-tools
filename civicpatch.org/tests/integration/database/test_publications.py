@@ -34,7 +34,7 @@ from database.publications import (
     dismiss_changeset,
     publish_changeset,
 )
-from schemas.assertions import Assertion, AssertionKind, EntityType
+from schemas.assertions import Assertion, AssertionKind, EntityType, Source
 
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_publish/government"
 _SENTINEL_DIVISION = "ocd-division/country:us/state:zz/place:zz_publish"
@@ -447,6 +447,7 @@ async def _assert_field(person_id: str, field: str, value, kind: AssertionKind) 
                 field_path=field,
                 kind=kind,
                 value=value,
+                sources=[Source(note="test")],
             ),
             curator_id,
         )

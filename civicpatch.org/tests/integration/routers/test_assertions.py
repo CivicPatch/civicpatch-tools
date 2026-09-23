@@ -153,6 +153,7 @@ async def test_an_accepted_value_carries_its_type_across_the_wire(client):
             "field_path": "name",
             "kind": "accept",
             "value": "Jane Q. Clerk",
+            "sources": [{"note": "test"}],
         },
     )
 
@@ -200,6 +201,7 @@ async def test_an_unattributable_assertion_is_refused(client):
             "field_path": "meta_headcount",
             "value": 5,
             "kind": "accept",
+            "sources": [{"note": "test"}],
         },
     )
 
@@ -252,6 +254,7 @@ async def test_an_assertion_names_its_jurisdiction_and_the_live_roster(client):
             "field_path": "meta_headcount",
             "value": 5,
             "kind": "accept",
+            "sources": [{"note": "test"}],
         },
     )
     assert response.status_code == 200, response.text
@@ -274,6 +277,7 @@ async def test_an_assertion_before_any_publish_still_names_its_jurisdiction(clie
             "field_path": "meta_headcount",
             "value": 5,
             "kind": "accept",
+            "sources": [{"note": "test"}],
         },
     )
 

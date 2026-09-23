@@ -180,7 +180,7 @@ function ReviewSession(host: ReviewSessionHost) {
   });
   const frozen = useFrozenFields(changesetId, cardFields(cards));
   // Filed under the changeset being reviewed, so dismissing the review takes the claim with it.
-  const { memberships, setNotAMemberHere } = useRosterMemberships(
+  const { memberships } = useRosterMemberships(
     jurisdictionOcdid,
     changesetId,
   );
@@ -272,7 +272,6 @@ function ReviewSession(host: ReviewSessionHost) {
     // Read-only here: see `RosterMembershipsProps.onSetRemoval`. Remove stays, because "this is
     // not a member here" is the reviewer's own question.
     onSetRemoval: null,
-    onSetNotAMember: setNotAMemberHere,
     proposals: proposalsByPersonId(changes ?? []),
     assertions: assertions ?? {},
     overriddenSourceValues: overriddenSourceValues ?? {},

@@ -68,12 +68,13 @@ export function renderCoverageByState({
           `,
         )}
       </div>
-      <civ-verify-cta
-        .isLoggedIn=${isLoggedIn}
-        .toReviewCount=${toReviewCount}
-        .state=${selectedState}
-        .hasActiveSession=${hasActiveSession}
-      ></civ-verify-cta>
+      ${isLoggedIn
+        ? html`<civ-verify-cta
+            .toReviewCount=${toReviewCount}
+            .state=${selectedState}
+            .hasActiveSession=${hasActiveSession}
+          ></civ-verify-cta>`
+        : ""}
     </div>
   `;
 }

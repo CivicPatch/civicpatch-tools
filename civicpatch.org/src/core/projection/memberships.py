@@ -25,12 +25,16 @@ from core.projection.facts import (
 )
 from core.projection.reads import Read, reads_of
 
-LABEL = "label"
-START_DATE = "start_date"
-END_DATE = "end_date"
+MEMBERSHIP_LABEL_FIELD = "label"
+MEMBERSHIP_START_DATE_FIELD = "start_date"
+MEMBERSHIP_END_DATE_FIELD = "end_date"
 
 # Every field a human can claim about a membership, which is what "edited" asks about.
-MEMBERSHIP_FIELDS = (LABEL, START_DATE, END_DATE)
+MEMBERSHIP_FIELDS = (
+    MEMBERSHIP_LABEL_FIELD,
+    MEMBERSHIP_START_DATE_FIELD,
+    MEMBERSHIP_END_DATE_FIELD,
+)
 
 def _posts_claims(members: Iterable[str], facts: Facts) -> list[Claim]:
     """Every live claim about which posts this cluster holds, oldest first. A claim naming a
@@ -92,7 +96,7 @@ def membership_label(members: Iterable[str], post_id: str, facts: Facts) -> str 
     """A human's name for this membership, if one stands."""
     labels = [
         claim
-        for claim in membership_claims(members, post_id, LABEL, facts)
+        for claim in membership_claims(members, post_id, MEMBERSHIP_LABEL_FIELD, facts)
         if claim.kind == ClaimKind.ACCEPT
     ]
     return labels[-1].value if labels else None

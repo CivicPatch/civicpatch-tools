@@ -16,7 +16,7 @@ from psycopg.errors import CheckViolation, ForeignKeyViolation, NotNullViolation
 from core.post_derivation import DerivedMembership
 from database import assertions, divisions, memberships, organizations, posts
 from database.database import get_pool
-from database.memberships import LABEL_FIELD
+from core.projection.memberships import MEMBERSHIP_LABEL_FIELD
 from schemas.assertions import Assertion, AssertionKind, EntityType, Source
 from services.review_proposal import assertions_for_people
 from tests.integration import factories
@@ -282,6 +282,7 @@ async def test_stating_a_scalar_field_twice_keeps_both_but_resolves_to_the_lates
                 field_path="name",
                 kind=AssertionKind.ACCEPT,
                 value=value,
+                sources=[Source(note="test")],
             ),
             user_id,
         )
@@ -313,6 +314,7 @@ async def test_stating_a_claim_drops_only_its_opposite_about_the_same_value():
             field_path=field,
             kind=kind,
             value=value,
+            sources=[Source(note="test")],
         )
 
     pool = await get_pool()
@@ -352,6 +354,7 @@ async def test_a_list_field_accumulates_one_row_per_element():
                 field_path="phones",
                 kind=AssertionKind.ACCEPT,
                 value=value,
+                sources=[Source(note="test")],
             ),
             user_id,
         )
@@ -380,6 +383,7 @@ async def test_withdrawing_stops_the_claim_without_deleting_it():
             field_path="name",
             kind=AssertionKind.ACCEPT,
             value="Wrong Name",
+            sources=[Source(note="test")],
         ),
         user_id,
     )
@@ -435,6 +439,7 @@ async def test_withdrawing_falls_back_to_the_earlier_claim_not_the_scrape():
                 field_path="name",
                 kind=AssertionKind.ACCEPT,
                 value=value,
+                sources=[Source(note="test")],
             ),
             user_id,
         )
@@ -550,6 +555,7 @@ async def test_get_assertions_by_creator_scopes_to_the_user_not_a_place():
                 kind=AssertionKind.ACCEPT,
                 value=value,
                 changeset_id=changeset_id,
+                sources=[Source(note="test")],
             ),
             asserted_by,
         )
@@ -624,6 +630,7 @@ async def test_get_assertions_by_creator_reports_withdrawn_and_superseded():
                     field_path="name",
                     kind=AssertionKind.ACCEPT,
                     value=value,
+                    sources=[Source(note="test")],
                 ),
                 user_id,
             )
@@ -674,8 +681,9 @@ async def test_an_unknown_entity_type_is_refused():
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
                 "INSERT INTO assertions "
-                "(entity_type, entity_id, field_path, value, kind, created_by) "
-                "VALUES ('organisation', %s, 'name', '\"x\"', 'accept', %s)",
+                "(entity_type, entity_id, field_path, value, kind, sources, created_by) "
+                "VALUES ('organisation', %s, 'name', '\"x\"', 'accept', "
+                "'[{\"note\": \"test\"}]'::jsonb, %s)",
                 (post_id, user_id),
             )
             await conn.commit()
@@ -799,7 +807,7 @@ async def test_assertions_for_people_includes_a_human_set_membership_label():
 
     claims = result[person_id]
     assert any(
-        claim["field_path"] == LABEL_FIELD and claim["value"] == "Mayor Pro Tem"
+        claim["field_path"] == MEMBERSHIP_LABEL_FIELD and claim["value"] == "Mayor Pro Tem"
         for claim in claims
     )
 

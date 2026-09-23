@@ -1,5 +1,6 @@
-"""What a membership's own records say about it: seen dates, sources, and what the labels
-carried beyond the winning role."""
+"""What a membership's own records say about it: the dates it was seen between, and the
+pages and wordings behind it. What the labels carried beyond the winning role is
+`test_parse_labels`, which reads them."""
 
 from datetime import datetime, timedelta, timezone
 
@@ -10,10 +11,8 @@ from shared.utils.taxonomy import build_taxonomy
 
 from core.projection.facts import Claim, ClaimKind, EntityType, SourceRecord
 from core.projection.membership_details import (
-    LabelDetails,
     MembershipSource,
     first_seen,
-    label_details,
     last_seen,
     membership_sources,
 )
@@ -63,11 +62,6 @@ def exists_accept(id: str, minutes: int = 0) -> Claim:
     )
 
 
-def details(*labels: str) -> LabelDetails:
-    records = [record(f"r{i}", label, minutes=i) for i, label in enumerate(labels)]
-    return label_details(records, JURISDICTION, TAXONOMY, ROLES)
-
-
 @pytest.mark.unit
 def test_seen_dates_span_the_records_whatever_order_they_arrive_in():
     records = [record("r2", minutes=20), record("r0", minutes=0), record("r1", minutes=10)]
@@ -100,33 +94,3 @@ def test_sources_are_each_distinct_label_and_page_oldest_first():
         MembershipSource(note="Mayor", url=COUNCIL_PAGE),
         MembershipSource(note="Mayor", url=MAYOR_PAGE),
     )
-
-
-@pytest.mark.unit
-def test_a_plain_label_carries_nothing_beyond_its_role():
-    assert details("Mayor") == LabelDetails()
-
-
-@pytest.mark.unit
-def test_a_designation_that_names_no_division_is_kept():
-    assert details("Council Member Place 3").designations == ("Place 3",)
-
-
-@pytest.mark.unit
-def test_a_second_known_role_is_an_extra_role_and_the_winner_is_not():
-    assert details("Mayor and Council Member").extra_roles == ("council-member",)
-
-
-@pytest.mark.unit
-def test_residue_beside_a_known_role_is_not_unmatched_text():
-    assert details("Council Member, Liaison to Parks").unmatched_text == ()
-
-
-@pytest.mark.unit
-def test_residue_from_a_label_with_no_role_is_unmatched_text():
-    assert details("Harbor Commissioner").unmatched_text == ("Harbor Commissioner",)
-
-
-@pytest.mark.unit
-def test_labels_across_records_are_parsed_together():
-    assert details("Council Member", "Council Member Place 3").designations == ("Place 3",)

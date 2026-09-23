@@ -22,7 +22,7 @@ from shared.utils.statuses import ActivityType
 from core.projection.membership_details import MembershipSource
 from core.projection.people import Membership, Person
 from core.projection.live_facts import live_facts
-from core.projection.facts import PostKey
+from core.projection.facts import Facts, PostKey
 from core.projection.posts import post_keys
 from core.projection.roster import Roster, derive_roster, with_published_images
 from database import divisions, posts
@@ -30,7 +30,7 @@ from database.activity import record_change
 from database.facts import load_facts
 from database.roles import get_roles
 from shared.schemas import RoleConfig
-from shared.utils.taxonomy import build_taxonomy
+from shared.utils.taxonomy import Taxonomy, build_taxonomy
 from schemas.activity import Change
 from schemas.assertions import EntityType
 
@@ -150,23 +150,56 @@ async def _ensure_posts(
             )
 
 
+async def _taxonomy(taxonomy: Taxonomy | None) -> Taxonomy:
+    if taxonomy is not None:
+        return taxonomy
+    return build_taxonomy(RoleConfig(roles=await get_roles()))
+
+
+def _fold(facts: Facts, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> Roster:
+    return with_published_images(
+        derive_roster(facts, jurisdiction_ocdid, taxonomy),
+        buckets.ARTIFACTS,
+        environment.get_env_vars()["FRIENDLY_STORAGE_HOST"],
+    )
+
+
+async def derived_roster(
+    cur,
+    jurisdiction_ocdid: str,
+    *,
+    including: str | None = None,
+    as_of: datetime | None = None,
+    taxonomy: Taxonomy | None = None,
+) -> Roster:
+    """The roster this jurisdiction's facts derive. Nothing is written.
+
+    `including` reads one unpublished changeset as though it had published, which is what a
+    proposed roster is (R3): the same fold answers what is live and what a review would make
+    live, so a preview cannot disagree with its own outcome. `taxonomy` is for a caller folding
+    several changesets of one jurisdiction, which builds it once; the baseline and proposed
+    folds of a review also share one `as_of`, so a claim filed between them cannot land on one
+    side only.
+    """
+    facts = await load_facts(
+        cur, jurisdiction_ocdid, as_of or datetime.now(timezone.utc), including
+    )
+    return _fold(facts, jurisdiction_ocdid, await _taxonomy(taxonomy))
+
+
 async def rebuild_from_facts(
     cur, jurisdiction_ocdid: str, changeset_id: str | None = None
 ) -> int:
     """The roster every live fact derives, written over the jurisdiction's projection.
 
     Call it after whatever made a fact true is published, so the fold can see it. Returns the
-    number of people written.
+    number of people written. `post_keys` is read here and nowhere else: its only job is to let
+    `rebuild` mint the posts the roster names, which a preview does not do.
     """
-    roles = await get_roles()
-    taxonomy = build_taxonomy(RoleConfig(roles=roles))
+    taxonomy = await _taxonomy(None)
     facts = await load_facts(cur, jurisdiction_ocdid, datetime.now(timezone.utc))
-    roster = with_published_images(
-        derive_roster(facts, jurisdiction_ocdid, taxonomy, roles),
-        buckets.ARTIFACTS,
-        environment.get_env_vars()["FRIENDLY_STORAGE_HOST"],
-    )
-    keys = post_keys(live_facts(facts).records, jurisdiction_ocdid, taxonomy, roles)
+    roster = _fold(facts, jurisdiction_ocdid, taxonomy)
+    keys = post_keys(live_facts(facts).records, jurisdiction_ocdid, taxonomy)
     await rebuild(cur, jurisdiction_ocdid, roster, keys, changeset_id)
     return len(roster.people)
 
@@ -197,9 +230,9 @@ async def rebuild(
 def membership_rows(people: Iterable[Person]) -> list[dict]:
     return [
         {
-            "id": membership_id(person.id, membership.post_id),
+            "id": membership_id(person.id, membership.post.post_id),
             "person_id": person.id,
-            "post_id": membership.post_id,
+            "post_id": membership.post.post_id,
             "label": membership.label,
             "start_date": membership.start_date,
             "end_date": membership.end_date,
@@ -217,7 +250,7 @@ def membership_rows(people: Iterable[Person]) -> list[dict]:
 def membership_role_rows(people: Iterable[Person]) -> list[tuple[str, str]]:
     """`(membership_id, role_id)` for each extra role of each open membership."""
     return [
-        (membership_id(person.id, membership.post_id), role_id)
+        (membership_id(person.id, membership.post.post_id), role_id)
         for person in people
         for membership in person.memberships
         for role_id in membership.extra_roles
@@ -272,11 +305,11 @@ def _stored_membership(row) -> Membership:
         extra_roles,
     ) = row
     return Membership(
-        post_id=PostKey(
+        post=PostKey(
             organization_id=organization_id,
             role_id=role_id,
             division_ocdid=division_ocdid,
-        ).post_id,
+        ),
         first_seen_at=first_seen_at,
         last_seen_at=last_seen_at,
         label=label,
@@ -309,7 +342,7 @@ async def stored_roster(cur, jurisdiction_ocdid: str) -> Roster:
                 image=row[7],
                 cdn_image=row[8],
                 memberships=tuple(
-                    sorted(memberships.get(row[0], ()), key=lambda m: m.post_id)
+                    sorted(memberships.get(row[0], ()), key=lambda m: m.post.post_id)
                 ),
             )
             for row in sorted(await cur.fetchall())

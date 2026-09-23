@@ -688,16 +688,15 @@ async def test_the_same_post_raises_once_the_jurisdiction_has_been_published():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
-    """The point of moving `close_absent` and `advance_last_seen_at` to publish.
+    """The point of retiring and re-dating memberships at publish and nowhere else.
 
-    Ingest used to run both, so a scrape that fetched three of seven pages closed four
-    memberships with nobody in the way. They were defended as observations — "the source
-    stopped listing D" is true whether or not D left office — which holds for a good scrape
-    and not for a bad one, and nothing at ingest can tell which.
+    Ingest used to do both, so a scrape that fetched three of seven pages closed four
+    memberships with nobody in the way. It was defended as observation — "the source stopped
+    listing D" is true whether or not D left office — which holds for a good scrape and not
+    for a bad one, and nothing at ingest can tell which.
 
-    Asserted through `_apply_scrape_changes` rather than through `close_absent` directly: the
-    existing tests for those two call the DB functions themselves, so they stayed green when
-    ingest stopped calling them at all.
+    Asserted through `_apply_scrape_changes`, which is what ingest actually runs: the old
+    tests called the writes directly and so stayed green when ingest stopped calling them.
     """
     from core.post_derivation import DerivedMembership
     from services.people_collector import _apply_scrape_changes

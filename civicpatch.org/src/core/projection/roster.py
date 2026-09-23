@@ -5,15 +5,14 @@ Each step is a resolver with its own module and tests; this only chains them:
     live_facts → with_person_ids → canonical_ids → one cluster per canonical id → derive_person
 """
 
-from collections.abc import Sequence
 
 from pydantic import BaseModel
-from shared.schemas import Role
 from shared.utils.taxonomy import Taxonomy
 
 from core.images import published_image_url
 from core.projection.canonical_ids import SAME_AS, canonical_ids
-from core.projection.facts import EntityType, Facts
+from core.projection.facts import ClaimKind, EntityType, Facts
+from core.projection.field_value import NAME
 from core.projection.live_facts import live_facts
 from core.projection.people import Person, derive_person
 from core.projection.person_ids import with_person_ids
@@ -24,10 +23,7 @@ class Roster(BaseModel, frozen=True):
 
 
 def derive_roster(
-    facts: Facts,
-    jurisdiction_ocdid: str,
-    taxonomy: Taxonomy,
-    roles: Sequence[Role],
+    facts: Facts, jurisdiction_ocdid: str, taxonomy: Taxonomy
 ) -> Roster:
     """`facts` is what the loader returned: published, cut at as-of, withdraws not yet applied.
 
@@ -41,10 +37,15 @@ def derive_roster(
         if claim.entity_type == EntityType.PERSON and claim.field_path == SAME_AS
     ]
     canonical = canonical_ids(same_as)
+    # A live record or an explicit name establishes a person; every other claim (a `posts`
+    # reject, a phone) only annotates one. Otherwise a claim that outlives the records it was
+    # filed against keeps a nameless person alive (§19.1).
     named = [record.person_id for record in live.records] + [
         claim.entity_id
         for claim in live.claims
         if claim.entity_type == EntityType.PERSON
+        and claim.field_path == NAME
+        and claim.kind == ClaimKind.ACCEPT
     ]
     clusters: dict[str, set[str]] = {}
     for person_id in named:
@@ -52,9 +53,7 @@ def derive_roster(
         clusters.setdefault(root_id, {root_id}).add(person_id)
 
     people = [
-        derive_person(
-            root_id, clusters[root_id], live, jurisdiction_ocdid, taxonomy, roles
-        )
+        derive_person(root_id, clusters[root_id], live, jurisdiction_ocdid, taxonomy)
         for root_id in sorted(clusters.keys())
     ]
     return Roster(people=tuple(people))

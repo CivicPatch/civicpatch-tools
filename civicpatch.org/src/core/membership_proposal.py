@@ -100,8 +100,8 @@ def propose(
     (`publications._organizations_to_close_in`): a scrape that read only the council page proposes
     nothing about a school board member. Without it, review shows a departure publish will not make.
     """
-    # An empty scrape proposes nothing rather than marking everyone absent — the same guard
-    # `close_absent` makes, for the same reason: that is a failed scrape, not a dissolved body.
+    # An empty scrape proposes nothing rather than marking everyone absent: that is a failed
+    # scrape more often than a dissolved organization.
     if not derived:
         return []
 

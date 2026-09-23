@@ -120,7 +120,7 @@ erDiagram
         uuid            id                  PK
         text            jurisdiction_ocdid  FK  "idx"
         jsonb           data                "134: being retired into the columns below; still authoritative until every reader moves"
-        text_null       name                "134: nullable only during the transition; NOT NULL arrives with the contract migration"
+        text_null       name                "NULL when the fold names a person by a claim alone, with no live record; 219 dropped the NOT NULL 136 set once the old `data` column was retired"
         text_array      other_names         "134"
         text_array      phones              "134"
         text_array      emails              "134"
@@ -300,9 +300,9 @@ erDiagram
         text            entity_type         "CHECK post|membership|person|jurisdiction|organization|source_record|source_page|claim (last three 214: what a withdraw can name); no FK — heterogeneous subjects, the price of an event log"
         uuid            entity_id           "no FK; deletes are refused rather than cascaded. For entity_type membership, since 216: membership_id(person, post) = uuid5 over the person and the fold's post id (SQL function, twin of shared.utils.membership_ids); rows keyed by a memberships row id are the pre-216 originals, read by today's publish until the fold replaces it"
         text_null       field_path          "NULL only on a withdraw, which names a whole fact (CHECK, 214). Otherwise the field: list fields (incl. post_id since 159) key on the value, scalars on the field; the two partial indexes from 137 that enforced this were DROPPED in 187, since history means several rows can now exist per key"
-        text            kind                "CHECK accept|reject|withdraw (214). A withdraw's entity is the fact it cancels: entity_type claim|source_record|source_page, entity_id that row's id, value 'null'"
+        text            kind                "CHECK accept|reject|withdraw (214). A withdraw's entity is the fact it cancels: entity_type claim|source_record|source_page, entity_id that row's id, value 'null'; idx: (changeset_id) WHERE kind = 'withdraw' (218)"
         jsonb_null      value               "corrections only; NULL = deliberately empty, which is why kind exists"
-        jsonb_null      sources             "[{note, url}] — note may stand alone: 'phoned the clerk'"
+        jsonb           sources             "[{note, url}] — note may stand alone: 'phoned the clerk'. NOT NULL and non-empty since 220: a claim says where it came from, and an internal action records its own name"
         uuid            created_by          FK "NOT NULL — an assertion nobody made is not an assertion. Permanent since 187: a re-assert inserts, it never overwrites this. Renamed from asserted_by in 191, same reasoning as created_at below"
         timestamptz     created_at          "idx: (entity_type, entity_id, field_path, created_at DESC), widened in 187 to serve `asserted_values`. APPEND-ONLY since 187 — history is only trustworthy if rows never change. Renamed from asserted_at in 191: the table is insert-only, so there is no separate created/asserted moment, and this matches every other table's naming"
         timestamptz_null withdrawn_at       "187. Set together with withdrawn_by (CHECK). NULL = still applies"
@@ -402,6 +402,15 @@ erDiagram
   both sides collapsed five user reports into three on the first backfill. `merge_failed` was
   dropped rather than migrated: nothing had been able to raise one since 2026-09-04, when
   rosters moved to committing straight to `main`.
+
+- **A person's `exists` claim is gone, migration 221.** `field_path = 'exists'` on an
+  `entity_type = 'person'` row meant "not a member of anything in this jurisdiction", written by
+  `PUT /api/v1/people/{id}/not-a-member`. Nothing read it once the fold replaced
+  `memberships.close_for_people_rejected_here`: the fold names the fields it reads and `exists`
+  was not among them, so the button succeeded and changed nothing. Migration 217 had already
+  converted the claims that meant something — §1 into `posts` claims, §3 into withdrawals of the
+  source records behind them — so 221 deletes the residue and the endpoint went with it.
+  Removal of a person from a post is `memberships.reject`, per post, and always was.
 
 - **`post_id` became a list-valued assertion field in migration 159.** A reviewer picks one post, so a scalar assertion looks right — but its uniqueness is per `(person, field_path)`, and a person holds one open membership per _organization_. With a second body in a jurisdiction, picking their school-board post would overwrite their council post on the same key, silently. A post names its own organization, so a list is self-scoping and one-per-organization stays enforced by `memberships_one_open_per_organization`. **The array of list fields is written in three places** — `core/people_edits.LIST_FIELDS`, these two partial indexes, and the `ON CONFLICT` predicates in `database/assertions.py` (now derived from the first). They must agree exactly: postgres matches a conflict predicate against an index's, and a mismatch fails with "no unique or exclusion constraint matching the ON CONFLICT specification".
 

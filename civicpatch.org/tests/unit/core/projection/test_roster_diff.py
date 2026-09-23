@@ -14,18 +14,23 @@ from core.projection.diff import (
     on_roster,
     roster_diff,
 )
+from core.projection.facts import PostKey
 from core.projection.people import Membership, Person
 from core.projection.roster import Roster
 
-MAYOR = "post-mayor"
-MEMBER = "post-member"
+COUNCIL = "11111111-1111-1111-1111-111111111111"
+BASE = "ocd-division/country:us/state:tx/place:alpha"
+MAYOR = PostKey(organization_id=COUNCIL, role_id="mayor", division_ocdid=BASE)
+MEMBER = PostKey(
+    organization_id=COUNCIL, role_id="council-member", division_ocdid=BASE
+)
 
 
 _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
 
 
-def membership(post: str, **fields) -> Membership:
-    return Membership(post_id=post, first_seen_at=_T, last_seen_at=_T, **fields)
+def membership(post: PostKey, **fields) -> Membership:
+    return Membership(post=post, first_seen_at=_T, last_seen_at=_T, **fields)
 
 
 def person(id: str, *posts: str, **fields) -> Person:
@@ -75,8 +80,8 @@ def test_a_changed_field_names_both_values():
 def test_a_membership_that_moved():
     diff = roster_diff(roster(person("alice", MAYOR)), roster(person("alice", MEMBER)))
 
-    assert diff.memberships_only_before == (("alice", MAYOR),)
-    assert diff.memberships_only_after == (("alice", MEMBER),)
+    assert diff.memberships_only_before == (("alice", MAYOR.post_id),)
+    assert diff.memberships_only_after == (("alice", MEMBER.post_id),)
     assert diff.fields == ()
 
 
@@ -89,7 +94,7 @@ def test_a_membership_both_sides_hold_compares_column_by_column():
 
     assert diff.membership_fields == (
         MembershipFieldDifference(
-            person_id="alice", post_id=MAYOR, field="label", before="Mayor",
+            person_id="alice", post_id=MAYOR.post_id, field="label", before="Mayor",
             after="Mayor Pro Tem",
         ),
     )
@@ -104,7 +109,7 @@ def test_seen_dates_are_not_compared():
     after = Person(
         id="alice",
         memberships=(
-            Membership(post_id=MAYOR, first_seen_at=later, last_seen_at=later),
+            Membership(post=MAYOR, first_seen_at=later, last_seen_at=later),
         ),
     )
 

@@ -3,6 +3,7 @@ from shared.utils.divisions import (
     designations_without_division,
     division_ocdid_to_designation,
     filter_divisions,
+    numbered_division_label,
     resolve_division,
 )
 
@@ -146,3 +147,19 @@ _DIVISION_BASE = "ocd-division/country:us/state:tx/place:katy"
 )
 def test_division_ocdid_to_designation(division_ocdid, expected):
     assert division_ocdid_to_designation(division_ocdid, _OCDID) == expected
+
+
+@pytest.mark.parametrize(
+    "division_ocdid, expected",
+    [
+        (f"{_DIVISION_BASE}/council_district:5", ("council district", 5)),
+        (f"{_DIVISION_BASE}/ward:3", ("ward", 3)),
+        # a named ward has no number to place in a gap
+        (f"{_DIVISION_BASE}/ward:a", None),
+        # at-large is the base division, and nothing has no tail
+        (_DIVISION_BASE, None),
+        (None, None),
+    ],
+)
+def test_numbered_division_label(division_ocdid, expected):
+    assert numbered_division_label(division_ocdid) == expected

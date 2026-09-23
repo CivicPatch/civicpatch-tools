@@ -8,7 +8,7 @@ that was two statements each, in series inside one transaction.
 import pytest
 
 from database.assertions import latest_of_each
-from schemas.assertions import Assertion, AssertionKind, EntityType
+from schemas.assertions import Assertion, AssertionKind, EntityType, Source
 
 pytestmark = pytest.mark.unit
 
@@ -20,6 +20,7 @@ def _claim(field: str, value, kind=AssertionKind.ACCEPT, entity="p1") -> Asserti
         field_path=field,
         kind=kind,
         value=value,
+        sources=[Source(note="test")],
     )
 
 

@@ -1,9 +1,4 @@
-import {
-  fetchMemberships,
-  setMembershipRemoval,
-  setNotAMember,
-  withdrawNotAMember,
-} from "../api.js";
+import { fetchMemberships, setMembershipRemoval } from "../api.js";
 import type {
   MembershipRemoval,
   RosterMembership,
@@ -15,7 +10,6 @@ const NO_MEMBERSHIPS: RosterMembership[] = [];
 export interface RosterMemberships {
   memberships: RosterMembership[];
   setRemoval: (membershipId: string, assertion: MembershipRemoval) => void;
-  setNotAMemberHere: (personId: string, claimed: boolean) => void;
 }
 
 /** A jurisdiction's open memberships, and the one write the editor makes against them.
@@ -36,10 +30,5 @@ export function useRosterMemberships(
     await setMembershipRemoval(membershipId, assertion, null, changesetId);
     reload();
   };
-  const setNotAMemberHere = async (personId: string, claimed: boolean) => {
-    if (claimed) await setNotAMember(personId, null, changesetId);
-    else await withdrawNotAMember(personId);
-    reload();
-  };
-  return { memberships: data ?? NO_MEMBERSHIPS, setRemoval, setNotAMemberHere };
+  return { memberships: data ?? NO_MEMBERSHIPS, setRemoval };
 }

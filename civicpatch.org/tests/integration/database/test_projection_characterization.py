@@ -42,7 +42,7 @@ from database.projection import stored_roster
 from database.publications import publish_changeset
 from database.roles import get_roles
 from database.source_records import insert_source_records
-from schemas.assertions import Assertion, AssertionKind, EntityType
+from schemas.assertions import Assertion, AssertionKind, EntityType, Source
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zc/place:charville/government"
@@ -136,8 +136,8 @@ async def _changeset(at: datetime.datetime) -> str:
 async def _record_evidence(
     changeset_id: str, organization_id: str, person_id: str, name: str, label: str, **fields
 ) -> None:
-    """What the scrape read, in the organization it read it for. `close_absent` runs only in the
-    organizations a changeset recorded evidence for, so the snapshot depends on this being right.
+    """What the scrape read, in the organization it read it for. Nobody is retired in an
+    organization no record names, so the snapshot depends on this being right.
 
     `label` must be the one that derives the post the test hands publish: today's path takes
     the post as given, but the fold derives it from this label."""
@@ -275,7 +275,7 @@ async def _projection_diff() -> RosterDiff:
     async with pool.connection() as conn, conn.cursor() as cur:
         stored = await stored_roster(cur, _OCDID)
         facts = await load_facts(cur, _OCDID, datetime.datetime.now(datetime.timezone.utc))
-    derived = derive_roster(facts, _OCDID, build_taxonomy(RoleConfig(roles=roles)), roles)
+    derived = derive_roster(facts, _OCDID, build_taxonomy(RoleConfig(roles=roles)))
     return roster_diff(stored, derived)
 
 
@@ -532,6 +532,7 @@ async def test_a_rejected_value_stays_gone_when_the_page_keeps_printing_it():
             field_path="phones",
             kind=AssertionKind.REJECT,
             value="(206) 555-0001",
+            sources=[Source(note="test")],
         ),
         user_id,
     )
@@ -618,6 +619,7 @@ async def test_a_withdrawn_claim_no_longer_counts():
             field_path="name",
             kind=AssertionKind.ACCEPT,
             value="Ana M. Reyes",
+            sources=[Source(note="test")],
         ),
         user_id,
     )

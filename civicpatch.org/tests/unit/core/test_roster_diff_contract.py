@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from core.roster_diff import changed_fields
+from core.field_diff import changed_fields
 
 _CASES = json.loads(
     (

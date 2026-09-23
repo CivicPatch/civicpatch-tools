@@ -7,7 +7,7 @@ import pytest
 from shared.utils.membership_ids import membership_id
 
 from core.projection.facts import Claim, ClaimKind, EntityType, Facts, SourceRecord
-from core.projection.memberships import END_DATE, START_DATE, membership_date
+from core.projection.memberships import MEMBERSHIP_END_DATE_FIELD, MEMBERSHIP_START_DATE_FIELD, membership_date
 
 _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
 POST = "post-mayor"
@@ -50,7 +50,7 @@ def date(field: str, records: list[SourceRecord], claims: tuple[Claim, ...] = ()
 
 @pytest.mark.unit
 def test_no_record_and_no_claim_says_nothing():
-    assert date(START_DATE, []) is None
+    assert date(MEMBERSHIP_START_DATE_FIELD, []) is None
 
 
 @pytest.mark.unit
@@ -60,26 +60,26 @@ def test_the_latest_record_that_gives_a_date_wins():
         record("r1", minutes=10, start_date="2022-01-01"),
         record("r2", minutes=20),
     ]
-    assert date(START_DATE, records) == "2022-01-01"
+    assert date(MEMBERSHIP_START_DATE_FIELD, records) == "2022-01-01"
 
 
 @pytest.mark.unit
 def test_an_accept_beats_any_record():
     records = [record("r0", minutes=30, end_date="2030-01-01")]
-    claims = (date_claim("a0", END_DATE, "2028-01-01", minutes=0),)
-    assert date(END_DATE, records, claims) == "2028-01-01"
+    claims = (date_claim("a0", MEMBERSHIP_END_DATE_FIELD, "2028-01-01", minutes=0),)
+    assert date(MEMBERSHIP_END_DATE_FIELD, records, claims) == "2028-01-01"
 
 
 @pytest.mark.unit
 def test_the_latest_accept_wins():
     claims = (
-        date_claim("a0", START_DATE, "2020-01-01", minutes=0),
-        date_claim("a1", START_DATE, "2021-01-01", minutes=10),
+        date_claim("a0", MEMBERSHIP_START_DATE_FIELD, "2020-01-01", minutes=0),
+        date_claim("a1", MEMBERSHIP_START_DATE_FIELD, "2021-01-01", minutes=10),
     )
-    assert date(START_DATE, [], claims) == "2021-01-01"
+    assert date(MEMBERSHIP_START_DATE_FIELD, [], claims) == "2021-01-01"
 
 
 @pytest.mark.unit
 def test_a_claim_on_the_other_date_field_is_ignored():
-    claims = (date_claim("a0", END_DATE, "2028-01-01"),)
-    assert date(START_DATE, [record("r0", start_date="2020-01-01")], claims) == "2020-01-01"
+    claims = (date_claim("a0", MEMBERSHIP_END_DATE_FIELD, "2028-01-01"),)
+    assert date(MEMBERSHIP_START_DATE_FIELD, [record("r0", start_date="2020-01-01")], claims) == "2020-01-01"

@@ -320,7 +320,7 @@ describe("mergeCurrent", () => {
 });
 
 describe("saveCurrent", () => {
-  it("commits the edits, marks the entry saved, and advances", async () => {
+  it("commits the edits and marks the entry saved, staying on the card", async () => {
     const api = fakeApi({ navigateToEntry: vi.fn(async () => ({ data: cardData({ entry_number: 3 }) })) });
     const e = fakeEffects(api);
     const people = [{ id: "p1" }];
@@ -328,7 +328,10 @@ describe("saveCurrent", () => {
 
     expect(api.saveReviewData).toHaveBeenCalledWith("req-1", "ocd-x", people);
     expect(dispatchedTypes(e)).toContain(ActionType.MARK_SAVED);
-    expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 3);
+    // Saving leaves the PR open and still being edited, so it advances nothing — even in a
+    // session, where advancing would drop the reviewer into the queue or the overview.
+    expect(api.navigateToEntry).not.toHaveBeenCalled();
+    expect(e.navigate).not.toHaveBeenCalled();
   });
 
   it("does not credit the entry as resolved", async () => {

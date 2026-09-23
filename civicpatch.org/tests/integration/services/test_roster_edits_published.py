@@ -562,10 +562,9 @@ async def test_a_post_pick_via_save_is_never_asserted():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_hand_edit_does_not_advance_last_seen_at():
-    """The whole reason a hand edit's changeset is treated differently. `updated_at` on a
-    `people_edit` is now(), so publishing one would otherwise claim the source still lists
-    everyone it touched — `DATABASE.md` has `last_seen_at` as "advanced on every publish that
-    still seats them", and a hand edit read nothing."""
+    """The whole reason a hand edit's changeset is treated differently: it read nothing, so it
+    must not claim the source still lists everyone it touched. `last_seen_at` comes from the
+    records and the accepts behind a membership, and a hand edit adds neither."""
     person_id, user = await _seed()
 
     pool = await get_pool()

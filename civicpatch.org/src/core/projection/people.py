@@ -2,7 +2,6 @@ from collections.abc import Iterable, Sequence
 from datetime import datetime
 
 from pydantic import BaseModel
-from shared.schemas import Role
 from shared.utils.taxonomy import Taxonomy
 
 from core.projection.facts import Claim, Facts, PostKey, SourceRecord, latest_first
@@ -15,13 +14,12 @@ from core.projection.field_value import (
 from core.projection.membership_details import (
     MembershipSource,
     first_seen,
-    label_details,
     last_seen,
     membership_sources,
 )
 from core.projection.memberships import (
-    END_DATE,
-    START_DATE,
+    MEMBERSHIP_END_DATE_FIELD,
+    MEMBERSHIP_START_DATE_FIELD,
     claimed_posts,
     post_accepts,
     is_edited,
@@ -29,11 +27,13 @@ from core.projection.memberships import (
     membership_label,
     membership_state,
 )
-from core.projection.posts import records_by_post
+from core.projection.posts import PostRecords, records_by_post
 
 
 class Membership(BaseModel, frozen=True):
-    post_id: str
+    # The key, not its hash: a membership is read for the role and division it is in, and the
+    # hash cannot be read back to either.
+    post: PostKey
     first_seen_at: datetime
     last_seen_at: datetime
     label: str | None = None
@@ -64,31 +64,25 @@ class Person(BaseModel, frozen=True):
 
 
 def derive_membership(
-    members: Iterable[str],
-    post: PostKey,
-    own_records: Sequence[SourceRecord],
-    facts: Facts,
-    jurisdiction_ocdid: str,
-    taxonomy: Taxonomy,
-    roles: Sequence[Role],
+    members: Iterable[str], post: PostKey, held: PostRecords, facts: Facts
 ) -> Membership:
+    own_records = held.records
     seen = [*own_records, *post_accepts(members, post, facts)]
-    # The latest read's labels are the whole answer: a role or designation the page stopped
-    # printing must not linger, which is what the upsert's `DO UPDATE` used to guarantee.
-    latest_read = sorted(own_records, key=latest_first)[-1].changeset_id if own_records else None
-    current = [record for record in own_records if record.changeset_id == latest_read]
-    details = label_details(current, jurisdiction_ocdid, taxonomy, roles)
     return Membership(
-        post_id=post.post_id,
+        post=post,
         label=membership_label(members, post.post_id, facts),
-        start_date=membership_date(members, post.post_id, START_DATE, own_records, facts),
-        end_date=membership_date(members, post.post_id, END_DATE, own_records, facts),
+        start_date=membership_date(
+            members, post.post_id, MEMBERSHIP_START_DATE_FIELD, own_records, facts
+        ),
+        end_date=membership_date(
+            members, post.post_id, MEMBERSHIP_END_DATE_FIELD, own_records, facts
+        ),
         first_seen_at=first_seen(seen),
         last_seen_at=last_seen(seen),
-        designations=details.designations,
-        unmatched_text=details.unmatched_text,
+        designations=held.details.designations,
+        unmatched_text=held.details.unmatched_text,
         sources=membership_sources(own_records),
-        extra_roles=details.extra_roles,
+        extra_roles=held.details.extra_roles,
     )
 
 
@@ -107,7 +101,7 @@ def _newest_membership_fact(
 def collapse_per_organization(
     members: Iterable[str],
     posts: Sequence[PostKey],
-    by_post: dict[PostKey, list[SourceRecord]],
+    by_post: dict[PostKey, PostRecords],
     facts: Facts,
 ) -> list[PostKey]:
     """The posts to keep, one per organization, which is all the projection allows.
@@ -130,7 +124,7 @@ def collapse_per_organization(
             max(
                 organization_posts,
                 key=lambda post: latest_first(
-                    _newest_membership_fact(members, post, by_post.get(post, []), facts)
+                    _newest_membership_fact(members, post, _records(by_post, post), facts)
                 ),
             )
         )
@@ -143,16 +137,15 @@ def derive_person(
     facts: Facts,
     jurisdiction_ocdid: str,
     taxonomy: Taxonomy,
-    roles: Sequence[Role],
 ) -> Person:
     mine = [record for record in facts.records if record.person_id in members]
-    by_post = records_by_post(mine, jurisdiction_ocdid, taxonomy, roles)
+    by_post = records_by_post(mine, jurisdiction_ocdid, taxonomy)
     candidates = sorted(set(by_post) | claimed_posts(members, facts), key=_by_post_id)
 
     active = [
         post
         for post in candidates
-        if membership_state(members, post, by_post.get(post, []), facts)
+        if membership_state(members, post, _records(by_post, post), facts)
     ]
     held = collapse_per_organization(members, active, by_post, facts)
     return Person(
@@ -166,9 +159,7 @@ def derive_person(
         other_names=other_names(members, facts),
         source_urls=source_urls(members, facts),
         memberships=tuple(
-            derive_membership(
-                members, post, by_post.get(post, []), facts, jurisdiction_ocdid, taxonomy, roles
-            )
+            derive_membership(members, post, by_post.get(post, PostRecords()), facts)
             for post in sorted(held, key=_by_post_id)
         ),
         edited=is_edited(members, [post.post_id for post in candidates], facts),
@@ -177,3 +168,10 @@ def derive_person(
 
 def _by_post_id(post: PostKey) -> str:
     return post.post_id
+
+
+def _records(
+    by_post: dict[PostKey, PostRecords], post: PostKey
+) -> tuple[SourceRecord, ...]:
+    """A post only a claim named has no records, which is not the same as holding nothing."""
+    return by_post[post].records if post in by_post else ()

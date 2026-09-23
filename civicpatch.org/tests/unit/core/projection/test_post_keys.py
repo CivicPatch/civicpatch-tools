@@ -57,7 +57,7 @@ def record(
 
 
 def keys(*records: SourceRecord) -> tuple[PostKey, ...]:
-    return post_keys(records, JURISDICTION, TAXONOMY, ROLES)
+    return post_keys(records, JURISDICTION, TAXONOMY)
 
 
 @pytest.mark.unit

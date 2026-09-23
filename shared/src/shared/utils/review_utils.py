@@ -1,9 +1,9 @@
-import re
 from collections import defaultdict
 from typing import Dict, List, Protocol, Set
 
 from pydantic import BaseModel
 from shared.schemas import POST_FIELD, Issue, IssueCode
+from shared.utils.divisions import numbered_division_label
 
 from . import name_utils
 
@@ -109,27 +109,89 @@ def _get_division_ocdid(person) -> str:
 
 
 def _parse_division_entries(people) -> List[tuple]:
-    entries = []
-    for p in people:
-        match = re.search(r"/([^/:]+):(\d+)$", _get_division_ocdid(p))
-        if match:
-            entries.append((match.group(1).replace("_", " "), int(match.group(2))))
-    return entries
+    return [
+        number
+        for p in people
+        if (number := numbered_division_label(_get_division_ocdid(p))) is not None
+    ]
 
 
 def _get_person_id(person) -> str:
     return person.get("id", "")
 
 
+# The Issue constructors and the division parse are shared with `core/review_summary`'s fold
+# checks: the two builders read different models, but a card must say the same thing either way.
+def absent_person_issue(name: str) -> Issue:
+    return Issue(
+        code=IssueCode.ABSENT_PERSON,
+        message=f"Not found in this scrape: {name}",
+        person_ids=[],
+    )
+
+
+def new_person_issue(name: str, person_id: str = "") -> Issue:
+    return Issue(
+        code=IssueCode.NEW_PERSON,
+        message=f"New person found: {name}",
+        person_ids=[person_id] if person_id else [],
+    )
+
+
+def too_few_people_issues(count: int) -> List[Issue]:
+    if count >= MIN_EXPECTED_PEOPLE:
+        return []
+    return [
+        Issue(
+            code=IssueCode.TOO_FEW_PEOPLE,
+            message=f"Only {count} people found (minimum expected: {MIN_EXPECTED_PEOPLE})",
+            person_ids=[],
+        )
+    ]
+
+
+def changed_field_issue(field: str, name: str, person_id: str = "") -> Issue:
+    return Issue(
+        code=IssueCode.CHANGED_FIELD,
+        message=f"{field} changed for {name}",
+        person_ids=[person_id] if person_id else [],
+        field=field,
+    )
+
+
+def duplicate_unique_role_issue(role: str, holders: List[tuple]) -> Issue:
+    return Issue(
+        code=IssueCode.DUPLICATE_UNIQUE_ROLE,
+        message=(
+            f"Role '{role}' is marked as unique but found in multiple officials: "
+            f"{', '.join(name for _, name in holders)}"
+        ),
+        person_ids=[person_id for person_id, _ in holders if person_id],
+        field=POST_FIELD,
+    )
+
+
+def division_numbering_issues(entries: List[tuple]) -> List[Issue]:
+    if not entries:
+        return []
+    label = entries[0][0]
+    numbers = {number for _, number in entries}
+    expected = set(range(min(numbers), max(numbers) + 1))
+    return [
+        Issue(
+            code=IssueCode.DIVISION_NUMBERING_GAP,
+            message=f"Missing {label} {number}",
+            person_ids=[],
+        )
+        for number in sorted(expected - numbers)
+    ]
+
+
 def _check_absent_people(
     research_canonicals: Set[str], people_canonicals: Set[str]
 ) -> List[Issue]:
     return [
-        Issue(
-            code=IssueCode.ABSENT_PERSON,
-            message=f"Not found in this scrape: {name}",
-            person_ids=[],
-        )
+        absent_person_issue(name)
         for name in sorted(research_canonicals - people_canonicals)
     ]
 
@@ -148,22 +210,13 @@ def _check_new_people(
             continue
         person_id = _get_person_id(person)
         issues.append(
-            Issue(
-                code=IssueCode.NEW_PERSON,
-                message=f"New person found: {name_utils.get_person_name(person)}",
-                person_ids=[person_id] if person_id else [],
-            )
+            new_person_issue(name_utils.get_person_name(person), person_id)
         )
     return issues
 
 
 def _check_too_few_people(people) -> List[Issue]:
-    if len(people) >= MIN_EXPECTED_PEOPLE:
-        return []
-    message = (
-        f"Only {len(people)} people found (minimum expected: {MIN_EXPECTED_PEOPLE})"
-    )
-    return [Issue(code=IssueCode.TOO_FEW_PEOPLE, message=message, person_ids=[])]
+    return too_few_people_issues(len(people))
 
 
 def _values_differ(before, after) -> bool:
@@ -195,11 +248,8 @@ def _check_changed_fields(
                 continue
             person_id = _get_person_id(person)
             issues.append(
-                Issue(
-                    code=IssueCode.CHANGED_FIELD,
-                    message=f"{field} changed for {name_utils.get_person_name(person)}",
-                    person_ids=[person_id] if person_id else [],
-                    field=field,
+                changed_field_issue(
+                    field, name_utils.get_person_name(person), person_id
                 )
             )
     return issues
@@ -215,32 +265,14 @@ def _check_duplicate_unique_roles(people, unique_roles: List[str]) -> List[Issue
                 (_get_person_id(person), name_utils.get_person_name(person))
             )
     return [
-        Issue(
-            code=IssueCode.DUPLICATE_UNIQUE_ROLE,
-            message=f"Role '{role}' is marked as unique but found in multiple officials: {', '.join(name for _, name in holders)}",
-            person_ids=[pid for pid, _ in holders if pid],
-            field=POST_FIELD,
-        )
+        duplicate_unique_role_issue(role, holders)
         for role, holders in role_to_holders.items()
         if len(holders) > 1
     ]
 
 
 def _check_division_numbering(people) -> List[Issue]:
-    entries = _parse_division_entries(people)
-    if not entries:
-        return []
-    label = entries[0][0]
-    numbers = {n for _, n in entries}
-    expected = set(range(min(numbers), max(numbers) + 1))
-    return [
-        Issue(
-            code=IssueCode.DIVISION_NUMBERING_GAP,
-            message=f"Missing {label} {n}",
-            person_ids=[],
-        )
-        for n in sorted(expected - numbers)
-    ]
+    return division_numbering_issues(_parse_division_entries(people))
 
 
 def build_review_summary(
