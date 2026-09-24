@@ -227,14 +227,21 @@ const MARKERS_PR_NUMBER = 12;
 // review pool, so it is only reachable by link, which is how reviewers reach it too.
 // One person holding an office in two bodies — the case the roster editor grouped wrong until
 // 2026-09-23, when it filed them silently under whichever body sorted first.
+// Own state (md), like every other fixture jurisdiction: in NJ it was a fourth locality in
+// the list `municipalities-page.spec.js` counts.
 export const TWO_BODY_JURISDICTION_OCDID =
-  "ocd-jurisdiction/country:us/state:nj/place:e2e_two_body/government";
+  "ocd-jurisdiction/country:us/state:md/place:e2e_two_body/government";
 export const TWO_BODY_COUNCIL = "E2E Council";
 export const TWO_BODY_SCHOOL_BOARD = "E2E School Board";
-// A scrape that read both of those bodies in one changeset, with one person in each. The
-// review card was built assuming a changeset is one organization; this is the fixture that
-// asks whether that is true.
-export const TWO_BODY_CHANGESET_ID = "00000000-0000-0000-eeee-000000000016";
+// A scrape that read two bodies in one changeset, with one person in both. The review card was
+// built assuming a changeset is one organization; this is the fixture that says otherwise.
+// Its own jurisdiction on purpose: an unpublished changeset puts a jurisdiction into review,
+// and `peopleEditBlockers` then switches roster editing off — which would make the two-body
+// *roster* fixture untestable. Own state (de) for the usual reason: this card is open, so in
+// NJ it joined every other spec's review queue and became "the first card".
+export const TWO_ORG_JURISDICTION_OCDID =
+  "ocd-jurisdiction/country:us/state:de/place:e2e_two_org/government";
+export const TWO_ORG_CHANGESET_ID = "00000000-0000-0000-eeee-000000000016";
 
 export const READ_ONLY_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:ri/place:e2e_read_only/government";
@@ -957,7 +964,7 @@ export async function seedE2eFixtures() {
     // own editor. No changeset: this page edits live data, so the fixture is the roster.
     await client.query(
       `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
-       VALUES ($1, 'nj', 'active', '{"name":"E2E Two Body City","geoid":"0600009"}')
+       VALUES ($1, 'md', 'active', '{"name":"E2E Two Body City","geoid":"2400009"}')
        ON CONFLICT (jurisdiction_ocdid)
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
       [TWO_BODY_JURISDICTION_OCDID],
@@ -1006,28 +1013,37 @@ export async function seedE2eFixtures() {
 
     // A scrape of both bodies in one changeset: Ada listed under each, Bo under the council
     // only. Source records name their own organization, so one changeset spans two.
+    await client.query(
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
+       VALUES ($1, 'de', 'active', '{"name":"E2E Two Org City","geoid":"1000010"}')
+       ON CONFLICT (jurisdiction_ocdid)
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
+      [TWO_ORG_JURISDICTION_OCDID],
+    );
+    await clearRoster(client, TWO_ORG_JURISDICTION_OCDID);
+    await seedPublishedRoster(client, TWO_ORG_JURISDICTION_OCDID, [
+      {
+        id: "two-org-ada",
+        name: "Ada Two-Body",
+        office: { name: "Council Member" },
+        source_urls: ["https://e2e-two-org.example.gov/council"],
+      },
+    ]);
     await seedReviewCard(client, {
-      changesetId: TWO_BODY_CHANGESET_ID,
-      ocdid: TWO_BODY_JURISDICTION_OCDID,
+      changesetId: TWO_ORG_CHANGESET_ID,
+      ocdid: TWO_ORG_JURISDICTION_OCDID,
       people: [
         {
-          person_id: "two-body-ada",
+          person_id: "two-org-ada",
           name: "Ada Two-Body",
           label: "Council Member",
           organization: TWO_BODY_COUNCIL,
-          email: "ada@twobody.example.gov",
         },
         {
-          person_id: "two-body-ada",
+          person_id: "two-org-ada",
           name: "Ada Two-Body",
           label: "Trustee",
           organization: TWO_BODY_SCHOOL_BOARD,
-        },
-        {
-          person_id: "two-body-bo",
-          name: "Bo Council-Only",
-          label: "Council Member",
-          organization: TWO_BODY_COUNCIL,
         },
       ],
     });
@@ -1174,6 +1190,7 @@ export async function teardownE2eFixtures() {
       MARKERS_JURISDICTION_OCDID,
       READ_ONLY_JURISDICTION_OCDID,
       TWO_BODY_JURISDICTION_OCDID,
+      TWO_ORG_JURISDICTION_OCDID,
     ]) {
       // source_records cascades from changesets; identities cascade from source_records.
       await client.query(`DELETE FROM changesets WHERE jurisdiction_ocdid = $1`, [jOcdid]);

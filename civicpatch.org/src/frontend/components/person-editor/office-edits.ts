@@ -19,32 +19,20 @@ export interface OfficeEdit {
   organizationId: string | null;
 }
 
-// `undefined` on the record means untouched; `null` means explicitly cleared. Only the
-// former counts as "nothing to say" — a cleared label is still a real change.
 function officeEditFor(
   card: PersonCard,
   organizationId: string | null,
 ): OfficeEdit | null {
   const record = personOf(card);
   if (!card.oldRecord || !record) return null; // no prior membership to move
-  const held = heldPost(card.oldRecord.memberships, organizationId);
-  const heldLabel = heldMembershipLabel(card.oldRecord.memberships, organizationId);
-  const pickedPostId = record.post_id;
-  const pickedLabel = record.membership_label;
-  const postChanged = pickedPostId !== undefined && (pickedPostId ?? null) !== (held?.post_id ?? null);
-  const labelChanged = pickedLabel !== undefined && (pickedLabel ?? null) !== (heldLabel ?? null);
-  if (!postChanged && !labelChanged) return null;
-  const postId = postChanged ? pickedPostId : held?.post_id;
+  const heldPostId = heldPost(record.memberships, organizationId)?.post_id;
+  const heldLabel = heldMembershipLabel(record.memberships, organizationId);
+  const postId = record.post_id ?? heldPostId;
+  // A cleared label is `null`, a real change; only `undefined` means untouched.
+  const label = record.membership_label === undefined ? heldLabel : record.membership_label;
   if (!postId) return null; // a label-only edit needs an existing post to attach to
-  // A label never names the post itself (core/membership_label.py's `render` no longer folds
-  // it in), so it has no reason to change just because the post did — it rides along as-is
-  // unless the reviewer edits it directly.
-  return {
-    personId: card.personId,
-    postId,
-    membershipLabel: labelChanged ? (pickedLabel ?? null) : heldLabel,
-    organizationId,
-  };
+  if (postId === heldPostId && label === heldLabel) return null;
+  return { personId: card.personId, postId, membershipLabel: label, organizationId };
 }
 
 export function officeEditsIn(

@@ -18,7 +18,7 @@ from schemas.pipeline_runs import (
 from services import roster_edits, roster_ingest
 from services import pipeline_runs as pipeline_run_service
 from services.jurisdiction_url import record_resolved_url, resolved_url
-from services.review_proposal import review_summary_for_changeset
+from services.review_summary import review_summary_for_changeset
 from shared.schemas import RoleConfig
 from shared.utils.statuses import (
     RUN_LEVEL_ISSUE_TYPES,

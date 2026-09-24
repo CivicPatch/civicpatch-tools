@@ -29,7 +29,7 @@ const CONTACT_SCHEME: Record<string, string> = {
 
 export interface PersonCardGridOptions {
   onOpenPerson?: ((card: PersonCard) => void) | null;
-  openPersonId?: string | null;
+  openCardKey?: string | null;
   renderEditor?: ((card: PersonCard) => unknown) | null;
   // Matches whatever prefix the caller's own renderEditor gives the inline editor's id, so the
   // card's button can point `aria-controls` at it. No prefix, no `aria-controls` — a caller
@@ -143,14 +143,14 @@ function subtitleFor(record: DiffRecord): Subtitle {
 function renderPerson(
   card: PersonCard,
   sources: SourceMap,
-  { onOpenPerson, openPersonId, idPrefix }: PersonCardGridOptions,
+  { onOpenPerson, openCardKey, idPrefix }: PersonCardGridOptions,
 ) {
   const record = personOf(card);
   const name = record?.name || "(unnamed)";
   const { postLabel, membershipLabel } = subtitleFor(record);
   // By card key, not person id: a person on two bodies has a row in each, and only the one
   // that was clicked opens. The two are the same string for a card with no body.
-  const isOpen = onOpenPerson ? cardKey(card) === openPersonId : false;
+  const isOpen = onOpenPerson ? cardKey(card) === openCardKey : false;
   const ariaSubtitle = [postLabel, membershipLabel].filter(Boolean).join(", ");
   const nameBlock = html`<span class="pc-name">${name}</span>
     ${postLabel ? html`<span class="pc-sub">${postLabel}</span>` : nothing}
@@ -161,7 +161,7 @@ function renderPerson(
       ariaLabel: `${name}${ariaSubtitle ? `, ${ariaSubtitle}` : ""}`,
       isOpen,
       onOpenPerson,
-      editorId: idPrefix ? `${idPrefix}${card.personId}` : undefined,
+      editorId: idPrefix ? `${idPrefix}${cardKey(card)}` : undefined,
     },
     html`
       <span class="pc-av">
@@ -208,15 +208,15 @@ function renderGroupHead(roleLabel: string, count: number) {
 export function renderRoleGroup<T>(
   roleLabel: string,
   items: T[],
-  personIdOf: (item: T) => string,
+  keyOf: (item: T) => string,
   renderCards: (items: T[]) => unknown,
-  openPersonId: string | null | undefined,
+  openCardKey: string | null | undefined,
   renderEditor: ((item: T) => unknown) | null | undefined,
 ): unknown {
   if (!items.length) return nothing;
   const openIndex =
-    renderEditor && openPersonId
-      ? items.findIndex((item) => personIdOf(item) === openPersonId)
+    renderEditor && openCardKey
+      ? items.findIndex((item) => keyOf(item) === openCardKey)
       : -1;
   if (openIndex === -1) {
     return html`
@@ -251,7 +251,7 @@ export function renderPersonCardGrid(
   roles: RoleOption[],
   options: PersonCardGridOptions = {},
 ) {
-  const { openPersonId, renderEditor } = options;
+  const { openCardKey, renderEditor } = options;
   const roleOrder = roles.map((role) => role.id);
   const groups = groupByRole(
     cards.map((card) => ({
@@ -275,7 +275,7 @@ export function renderPersonCardGrid(
         group.people,
         ({ card }) => cardKey(card),
         (people) => people.map(({ card }) => renderPerson(card, sources, options)),
-        openPersonId,
+        openCardKey,
         renderEditor && ((item) => renderEditor(item.card)),
       ),
     )}

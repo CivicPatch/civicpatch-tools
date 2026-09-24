@@ -12,6 +12,7 @@ test. `requests` cascades to `source_records`, so the rows go with it.
 """
 
 import uuid
+from datetime import datetime, timedelta, timezone
 from typing import LiteralString
 from unittest.mock import patch
 
@@ -28,7 +29,7 @@ from core.membership_proposal import MembershipDisposition
 from shared.schemas import POST_FIELD
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID
 from shared.utils.statuses import ActivityType, ChangesetKind
-from core.roster_diff import UNCHANGED_NOTE, ChangeCounts
+from core.roster_changes import UNCHANGED_NOTE, ChangeCounts
 from core.source_sites import SiteIndex
 from lib.csv import parse_csv
 from database import activity, changeset_batches, dismissals, divisions, organizations, posts
@@ -37,7 +38,8 @@ from database.publications import publish_attributions
 from services import roster_edits
 from services.batch_review import batch_review, dismiss_selected, publish_selected
 from services.review_cards import with_card_data
-from services.review_proposal import proposals_for_requests, review_summary_for_changeset
+from services.review_proposal import proposals_for_requests
+from services.review_summary import review_summary_for_changeset
 from services.roster import proposed_roster, proposed_roster_and_source_values
 from services.sheet_import import import_rows, read_rows
 from tests.integration import factories
@@ -156,16 +158,22 @@ async def _parsed(*people):
 
 
 async def _seed_open_membership(name: str, source_labels: list[str]) -> None:
-    """A currently-held post, for an import to find by name."""
+    """A currently-held post, for an import to find by name.
+
+    Both halves of what publishing a scrape leaves behind: the projection rows, and the
+    published record they were derived from. The record is not decoration — the card's two
+    sides come from the fold now, so a person with only a `memberships` row behind them holds
+    nothing as far as the fold is concerned, and every import reads them as new.
+    """
     pool = await get_pool()
+    person_id = str(uuid.uuid4())
     async with pool.connection() as conn, conn.cursor() as cur:
-        person_id = str(uuid.uuid4())
         await cur.execute(
             "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
             (person_id, _OCDID, name),
         )
         org = await organizations.find_or_create(cur, _OCDID)
-        division = f"ocd-division/country:us/state:zz/place:zz_sheet_test"
+        division = "ocd-division/country:us/state:zz/place:zz_sheet_test"
         await divisions.find_or_create(cur, division, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "select-board-chair", division)
         await cur.execute(
@@ -177,6 +185,15 @@ async def _seed_open_membership(name: str, source_labels: list[str]) -> None:
             (post_id, org, person_id, factories.sources_of(source_labels)),
         )
         await conn.commit()
+    await factories.published_source_record(
+        _OCDID,
+        org,
+        person_id,
+        name,
+        source_labels[0],
+        _SHEET,
+        datetime.now(timezone.utc) - timedelta(days=1),
+    )
 
 
 async def _selected(batch_id: str, *ocdids: str) -> set[str]:

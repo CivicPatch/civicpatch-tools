@@ -23,7 +23,7 @@ type ReviewCardBodyHost = HTMLElement & {
 const NOBODY_REMOVED = new Set<string>();
 const NOBODY_OPEN = null;
 
-// Nothing opens in place (`openPersonId` is always null), so the editor is never asked for.
+// Nothing opens in place (`openCardKey` is always null), so the editor is never asked for.
 function noEditor(): PersonEditorProps {
   throw new Error("a read-only review card has no editor");
 }
@@ -59,7 +59,7 @@ function ReviewCardBody(host: ReviewCardBodyHost) {
       .cards=${cards}
       .isReadOnly=${true}
       .onOpenPerson=${() => editOnReviewPage(card)}
-      .openPersonId=${NOBODY_OPEN}
+      .openCardKey=${NOBODY_OPEN}
       .editorFor=${noEditor}
       .posts=${postsOf(card)}
       .roles=${host.roles}

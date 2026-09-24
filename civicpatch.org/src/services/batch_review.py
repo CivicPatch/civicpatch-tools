@@ -17,7 +17,7 @@ from schemas.imports import (
 )
 from services import roster_edits
 from core.changeset_lifecycle import ChangesetState
-from core.roster_diff import ProposalCounts
+from core.roster_changes import ProposalCounts
 from shared.utils.statuses import DismissalReason
 
 logger = logging.getLogger(__name__)

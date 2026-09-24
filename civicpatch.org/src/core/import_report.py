@@ -9,8 +9,7 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
-from core.membership_proposal import MembershipDisposition, ProposedChange
-from core.roster_diff import DiffType, PersonDiff
+from core.roster_changes import ChangeKind, PersonChange
 from schemas.sheets import SheetCell
 
 REPORT_TAB_PREFIX = "Live[Import]"
@@ -45,8 +44,7 @@ class ReportCell(BaseModel):
 
 class ImportReportRow(BaseModel):
     jurisdiction_ocdid: str
-    # The headline: added, else absent, else the post's move or new post, else changed.
-    change: DiffType | MembershipDisposition
+    change: ChangeKind
     cells: dict[str, ReportCell]
 
 
@@ -75,47 +73,31 @@ def _text(value: object) -> str:
     return "" if value is None else str(value)
 
 
-def _headline(
-    diff: PersonDiff | None, proposals: list[ProposedChange]
-) -> DiffType | MembershipDisposition:
-    if diff is not None and diff.type is DiffType.ADDED:
-        return DiffType.ADDED
-    dispositions = {proposal.disposition for proposal in proposals}
-    for disposition in (
-        MembershipDisposition.ABSENT,
-        MembershipDisposition.MOVED,
-        MembershipDisposition.NEW,
-    ):
-        if disposition in dispositions:
-            return disposition
-    return DiffType.CHANGED
+def _post_labels(record: dict) -> str:
+    return ", ".join(
+        membership["post_label"] for membership in record.get("memberships") or []
+    )
 
 
-def _post_cell(proposals: list[ProposedChange]) -> ReportCell:
-    held = [p for p in proposals if p.disposition is not MembershipDisposition.ABSENT]
-    value = ", ".join(proposal.post.label for proposal in held)
-    moved = [p for p in proposals if p.disposition is not MembershipDisposition.UNCHANGED]
-    if not moved:
+def _post_cell(change: PersonChange, published: dict, proposed: dict | None) -> ReportCell:
+    """What they hold now, and — when an office moved, was created or was left — what they held
+    before. Both read off the rows, so the cell says what the roster says."""
+    value = _post_labels(proposed or {})
+    if not change.offices:
         return ReportCell(value=value)
-    before = [
-        (proposal.from_post or proposal.post).label
-        for proposal in proposals
-        if proposal.disposition is not MembershipDisposition.NEW
-    ]
-    return ReportCell(value=value, before=", ".join(before))
+    return ReportCell(value=value, before=_post_labels(published))
 
 
 def _person_row(
     jurisdiction_ocdid: str,
     published: dict,
     proposed: dict | None,
-    diff: PersonDiff | None,
-    proposals: list[ProposedChange],
+    change: PersonChange,
     likely_same_as: str | None,
 ) -> ImportReportRow:
     # An absent person is only in the published roster, and is shown as they last were.
     record = proposed or published
-    changed = set(diff.fields) if diff is not None else set()
+    changed = set(change.fields)
     cells = {
         field: ReportCell(
             value=_text(record.get(field)),
@@ -125,9 +107,9 @@ def _person_row(
     }
     if likely_same_as:
         cells[NAME_FIELD].note = f"may be {likely_same_as}"
-    cells[POST_FIELD] = _post_cell(proposals)
+    cells[POST_FIELD] = _post_cell(change, published, proposed)
     return ImportReportRow(
-        jurisdiction_ocdid=jurisdiction_ocdid, change=_headline(diff, proposals), cells=cells
+        jurisdiction_ocdid=jurisdiction_ocdid, change=change.kind, cells=cells
     )
 
 
@@ -135,37 +117,22 @@ def report_rows(
     jurisdiction_ocdid: str,
     published: list[dict],
     proposed: list[dict],
-    diffs: list[PersonDiff],
-    proposals: list[ProposedChange],
+    changes: list[PersonChange],
     likely_same: dict[str, str],
 ) -> list[ImportReportRow]:
     """One row per person the import changes: added, edited, moved, given a post, or absent."""
     published_by_id = {person["id"]: person for person in published}
     proposed_by_id = {person["id"]: person for person in proposed}
-    diff_by_id = {diff.person_id: diff for diff in diffs}
-    proposals_by_id: dict[str, list[ProposedChange]] = {}
-    for proposal in proposals:
-        proposals_by_id.setdefault(proposal.person_id, []).append(proposal)
-    touched = list(
-        dict.fromkeys(
-            [diff.person_id for diff in diffs]
-            + [
-                proposal.person_id
-                for proposal in proposals
-                if proposal.disposition is not MembershipDisposition.UNCHANGED
-            ]
-        )
-    )
     rows = [
         _person_row(
             jurisdiction_ocdid,
-            published_by_id.get(person_id, {}),
-            proposed_by_id.get(person_id),
-            diff_by_id.get(person_id),
-            proposals_by_id.get(person_id, []),
-            likely_same.get(person_id),
+            published_by_id.get(change.person_id, {}),
+            proposed_by_id.get(change.person_id),
+            change,
+            likely_same.get(change.person_id),
         )
-        for person_id in touched
+        for change in changes
+        if change.kind is not ChangeKind.UNCHANGED
     ]
     return sorted(rows, key=lambda row: row.cells[NAME_FIELD].value)
 
@@ -182,9 +149,9 @@ def row_cells(row: ImportReportRow) -> list[SheetCell]:
     """An added row is new throughout and an absent one leaves whole, so both are tinted as a
     row; otherwise only the changed cells are, each noting what it said before."""
     row_background = None
-    if row.change is DiffType.ADDED:
+    if row.change is ChangeKind.ADDED:
         row_background = ADDED_ROW
-    elif row.change is MembershipDisposition.ABSENT:
+    elif row.change is ChangeKind.ABSENT:
         row_background = ABSENT_ROW
     return [
         SheetCell(value=row.jurisdiction_ocdid, background=row_background),

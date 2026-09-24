@@ -3,7 +3,7 @@
 from pydantic import BaseModel
 
 from core.sheet_import_rows import RowError
-from core.roster_diff import ChangeCounts
+from core.roster_changes import ChangeCounts
 
 
 class ImportPreview(BaseModel):

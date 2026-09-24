@@ -7,6 +7,7 @@ import { type PersonEditorProps } from "../person-editor/person-editor.js";
 import { type Post, type RoleOption } from "../posts-list/posts-model.js";
 import { renderRoleGroup } from "../people/person-card-grid.js";
 import {
+  cardKey,
   personOf,
   type PersonCard,
 } from "../people/person-cards.js";
@@ -30,9 +31,9 @@ import {
 export interface ReviewOverviewProps {
   cards: PersonCard[];
   isReadOnly: boolean;
-  onOpenPerson: (personId: string, fieldKey: string | null) => void;
+  onOpenPerson: (card: PersonCard, fieldKey: string | null) => void;
   onAdd?: () => void;
-  openPersonId: string | null;
+  openCardKey: string | null;
   editorFor: (card: PersonCard) => PersonEditorProps;
   posts: Post[];
   roles: RoleOption[];
@@ -92,10 +93,10 @@ function renderSection(
   return renderRoleGroup(
     heading,
     entries,
-    (entry: CardInOrganization) => entry.card.personId,
+    (entry: CardInOrganization) => cardKey(entry.card),
     (subset: CardInOrganization[]) =>
       renderCardRuns(subset.map((entry) => entry.card), props, sources),
-    props.openPersonId,
+    props.openCardKey,
     (entry: CardInOrganization) => renderInlineEditor(entry.card, props),
   );
 }
@@ -110,7 +111,7 @@ function renderDepartingChips(cards: PersonCard[], props: ReviewOverviewProps) {
       (card, i) => html`${i > 0 ? ", " : ""}<button
         class="review-overview__chip"
         aria-label=${rowLabel(card)}
-        @click=${() => props.onOpenPerson(card.personId, null)}
+        @click=${() => props.onOpenPerson(card, null)}
         >${personOf(card)?.name || "(unnamed)"}</button
       >`,
     )}
@@ -131,10 +132,10 @@ function renderUnplacedSection(
   return renderRoleGroup(
     UNPLACED_SECTION_LABEL,
     cards,
-    (card: PersonCard) => card.personId,
+    (card: PersonCard) => cardKey(card),
     (subset: PersonCard[]) =>
       subset.map((card) => renderDiffCard(card, props, sources)),
-    props.openPersonId,
+    props.openCardKey,
     (card: PersonCard) => renderInlineEditor(card, props),
   );
 }
@@ -155,13 +156,13 @@ function renderDepartingSection(
   const head = html`<div class="rgrouphead">
     ${DEPARTING_SECTION_LABEL} <span class="sub">${cards.length}</span>
   </div>`;
-  const openIndex = props.openPersonId
-    ? shown.findIndex((card) => card.personId === props.openPersonId)
+  const openIndex = props.openCardKey
+    ? shown.findIndex((card) => cardKey(card) === props.openCardKey)
     : -1;
 
   if (openIndex === -1) {
     const openInRest = cards.find(
-      (card) => card.personId === props.openPersonId && rest.includes(card),
+      (card) => cardKey(card) === props.openCardKey && rest.includes(card),
     );
     return html`
       <div class="rgroup" style="--group-cards: ${shown.length}">

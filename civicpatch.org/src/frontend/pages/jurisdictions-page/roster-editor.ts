@@ -134,7 +134,7 @@ function RosterEditor({
   const cards: PersonCard[] = buildPersonCards({
     existing: published,
     currentPeople: currentPeople ?? [],
-    removedIds: new Set<string>(),
+    removedIds,
     restoredIds,
     issues: [],
   });
@@ -146,16 +146,13 @@ function RosterEditor({
     .join("\n");
   // Same mechanism as review-session.ts: alt-arrow steps to the next/previous card while
   // one is open, and the opened field autofocuses once the inline editor has mounted.
-  const handleOpenPerson = (
-    personId: string,
-    fieldKey: string | null,
-    organizationId: string,
-  ) => {
-    const key = cardKey({ personId, organizationId });
+  const openRow = (key: string, fieldKey: string | null) => {
     const opening = openCardKey !== key;
     setOpenCardKey(opening ? key : null);
     setFocusFieldKey(opening ? fieldKey : null);
   };
+  const handleOpenPerson = (card: PersonCard, fieldKey: string | null) =>
+    openRow(cardKey(card), fieldKey);
   useAltArrowPeerNav(openCardKey ? personIdIn(openCardKey) : null, cards, (next) => {
     setOpenCardKey(cardKey(next));
     setFocusFieldKey(null);
@@ -169,7 +166,7 @@ function RosterEditor({
       new Map(current).set(personId, organizationId),
     );
     addPerson(emptyPerson(personId, jurisdictionOcdid));
-    handleOpenPerson(personId, null, organizationId);
+    openRow(cardKey({ personId, organizationId }), null);
   };
   const handlePublish = async () => {
     setPublishStage("publishing");
@@ -199,12 +196,7 @@ function RosterEditor({
       setPublishStage("idle");
     }
   };
-  const groups = groupCardsByOrganization(
-    cards,
-    organizations,
-    addedUnderOrg,
-    removedIds,
-  );
+  const groups = groupCardsByOrganization(cards, organizations, addedUnderOrg);
   // Bound to the body whose section is rendering it, rather than looked up per person: one
   // person may appear under two sections, and each row is about that body's office.
   const editorForIn = (organization: Organization) => (card: PersonCard) => {
@@ -312,11 +304,8 @@ function RosterEditor({
             isLoading,
             blockedReason,
             actions: addActionFor(group.organization.id),
-            onOpenPerson: canEdit
-              ? (personId: string, fieldKey: string | null) =>
-                  handleOpenPerson(personId, fieldKey, group.organization.id)
-              : null,
-            openPersonId: canEdit ? openCardKey : null,
+            onOpenPerson: canEdit ? handleOpenPerson : null,
+            openCardKey: canEdit ? openCardKey : null,
             editorFor: canEdit ? editorForIn(group.organization) : null,
             roles,
             title: group.organization.name,

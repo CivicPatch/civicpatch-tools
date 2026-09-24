@@ -8,10 +8,12 @@ named step, and nothing in `core/` has to know they existed. Withdraws are rows 
 
 from datetime import datetime
 
+from core.changeset_lifecycle import PARTIAL_KINDS
 from core.people_edits import POSTS_FIELD
 from core.projection.facts import Claim, Facts, PostKey, SourceRecord
 from database.database import get_pool
 from schemas.assertions import AssertionKind
+from shared.utils.statuses import ChangesetKind
 
 # Only a published changeset's facts derive (R3), plus the one changeset a caller asks to see
 # as though it had published, which is what a proposed roster is. `including` is NULL for the
@@ -35,7 +37,8 @@ _RECORDS = """
            source_records.organization_id::text, source_records.name, source_records.label,
            source_records.source_url, source_records.other_names, source_records.url,
            source_records.phone, source_records.email, source_records.image,
-           source_records.cdn_image, source_records.start_date, source_records.end_date
+           source_records.cdn_image, source_records.start_date, source_records.end_date,
+           changesets.kind
     FROM source_records
     JOIN changesets ON changesets.id = source_records.changeset_id
     -- Inner join, not left: a record nobody matched names no one, so it can derive no person.
@@ -119,6 +122,7 @@ def _record(row: tuple) -> SourceRecord:
         cdn_image=row[13],
         start_date=row[14],
         end_date=row[15],
+        is_partial=ChangesetKind(row[16]) in PARTIAL_KINDS,
     )
 
 
@@ -162,7 +166,8 @@ async def load_facts(
         "including": including,
     }
     await cur.execute(_RECORDS, scope)
-    records = tuple(_record(row) for row in await cur.fetchall())
+    rows = await cur.fetchall()
+    records = tuple(_record(row) for row in rows)
 
     person_ids = sorted({record.person_id for record in records})
     claims: tuple[Claim, ...] = ()

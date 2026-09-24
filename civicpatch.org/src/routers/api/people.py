@@ -11,7 +11,7 @@ from lib.auth import require_route_access
 from pydantic import BaseModel
 from schemas.common import Identity, RouteCategory
 from schemas.pagination import paginated_response, pagination_offset
-from services.review_proposal import assertions_for_people
+from services.assertions import assertions_for_people
 from shared.utils.person_id_utils import resolve_people_ids
 
 

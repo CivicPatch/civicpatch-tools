@@ -292,20 +292,30 @@ describe("sectionsByOrganization — a section per organization, roles inside it
     division_ocdid: "ocd-division/country:us/state:wa/place:x",
     label: null,
   });
-  const holding = (personId: string, offices: unknown[], over = {}) =>
+  // A row as `buildPersonCards` emits one: already about a single body, and carrying which.
+  // This used to take a person whole and fan them out across their memberships; that moved
+  // into `buildPersonCards` on 2026-09-24, so the roster page gets the same rows.
+  const holding = (
+    personId: string,
+    organizationId: string,
+    offices: unknown[],
+    over = {},
+  ) =>
     card({
       personId,
+      organizationId,
       newRecord: { id: personId, name: personId, memberships: offices } as never,
       ...over,
     });
 
-  it("lists a person once per organization they hold an office in", () => {
+  it("files each of a person's rows under its own organization", () => {
+    // This verified that one card for a person on two bodies became a section in each. It now
+    // verifies that the two rows `buildPersonCards` already emitted are filed apart, because
+    // the fan-out moved there and this is a group-by.
     const { organizations } = sectionsByOrganization(
       [
-        holding("ana", [
-          office("council", "council-member", "Council Member"),
-          office("mayors-office", "mayor", "Mayor"),
-        ]),
+        holding("ana", "council", [office("council", "council-member", "Council Member")]),
+        holding("ana", "mayors-office", [office("mayors-office", "mayor", "Mayor")]),
       ],
       roleOrder,
     );
@@ -329,8 +339,8 @@ describe("sectionsByOrganization — a section per organization, roles inside it
   it("groups by role inside an organization, ranked first", () => {
     const { organizations } = sectionsByOrganization(
       [
-        holding("ana", [office("council", "council-member", "Council Member")]),
-        holding("bo", [office("council", "mayor", "Mayor")]),
+        holding("ana", "council", [office("council", "council-member", "Council Member")]),
+        holding("bo", "council", [office("council", "mayor", "Mayor")]),
       ],
       roleOrder,
     );
@@ -343,7 +353,7 @@ describe("sectionsByOrganization — a section per organization, roles inside it
 
   it("keeps a post no role matched out of the ranked groups", () => {
     const { organizations } = sectionsByOrganization(
-      [holding("fay", [office("council", "unmatched")])],
+      [holding("fay", "council", [office("council", "unmatched")])],
       roleOrder,
     );
 
@@ -370,6 +380,7 @@ describe("sectionsByOrganization — a section per organization, roles inside it
     // never read it". The section survives because the held side still names the body.
     const leaving = card({
       personId: "gus",
+      organizationId: "council",
       oldRecord: { id: "gus", memberships: [office("council", "mayor", "Mayor")] } as never,
       newRecord: { id: "gus", name: "gus", memberships: [] } as never,
     });
@@ -383,8 +394,8 @@ describe("sectionsByOrganization — a section per organization, roles inside it
   it("orders sections the way the card lists its organizations", () => {
     const { organizations } = sectionsByOrganization(
       [
-        holding("ana", [office("council", "council-member", "Council Member")]),
-        holding("bo", [office("mayors-office", "mayor", "Mayor")]),
+        holding("ana", "council", [office("council", "council-member", "Council Member")]),
+        holding("bo", "mayors-office", [office("mayors-office", "mayor", "Mayor")]),
       ],
       roleOrder,
       ["mayors-office", "council"],
