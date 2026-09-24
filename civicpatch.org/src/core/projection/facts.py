@@ -67,6 +67,9 @@ class SourceRecord(BaseModel, frozen=True):
     cdn_image: str | None = None
     start_date: str | None = None
     end_date: str | None = None
+    # This source stated only the cells it filled, so a blank here is no information and keeps
+    # the last stated value. A scrape reads a whole page, so its blank is a clearing.
+    is_partial: bool = False
 
 
 class Claim(BaseModel, frozen=True):

@@ -18,7 +18,7 @@ from database import assertions, divisions, memberships, organizations, posts
 from database.database import get_pool
 from core.projection.memberships import MEMBERSHIP_LABEL_FIELD
 from schemas.assertions import Assertion, AssertionKind, EntityType, Source
-from services.review_proposal import assertions_for_people
+from services.assertions import assertions_for_people
 from schemas.jurisdictions import OfficeEdit, PersonEdit
 from services.jurisdiction_edits import edit_published_roster
 from shared.utils.membership_ids import membership_id

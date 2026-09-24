@@ -196,7 +196,13 @@ describe("buildPersonCards — office visibility", () => {
 
   it("surfaces a move the same way", () => {
     const cards = build({
-      existing: [person("a", { memberships: [{ post_id: "old", label: "Mayor" }] })],
+      // Same body on both sides, which is what a move is: a person leaving one body for
+      // another is two rows, not one changed office.
+      existing: [
+        person("a", {
+          memberships: [office({ post_id: "old", post_label: "Mayor" })],
+        }),
+      ],
       currentPeople: [person("a", { memberships: [office()] })],
     });
     expect(officeKeys(cards)).toEqual(["diff"]);
@@ -487,5 +493,83 @@ describe("cardKey", () => {
   it("reads back whom a key is about, either way", () => {
     expect(personIdIn("p1:org-council")).toBe("p1");
     expect(personIdIn("p1")).toBe("p1");
+  });
+});
+
+describe("buildPersonCards — one row per body", () => {
+  // Moved here from roster-organization-grouping on 2026-09-24: placing a person in a body is
+  // the card builder's job, so the review page gets it too. It used to happen after the cards
+  // were built, in a function only the jurisdiction page called — which is why a review card
+  // whose changeset read two organizations rendered one person several times and opened every
+  // one of their editors at once.
+  const office = (organizationId: string, postId = `post-${organizationId}`) => ({
+    post_id: postId,
+    organization_id: organizationId,
+    post_label: "Council Member",
+    label: null,
+  });
+
+  it("gives somebody in two bodies a row in each", () => {
+    const cards = build({
+      existing: [person("a", { memberships: [office("org-1"), office("org-2")] })],
+      currentPeople: [person("a", { memberships: [office("org-1"), office("org-2")] })],
+    });
+
+    expect(cards.map((card) => card.organizationId)).toEqual(["org-1", "org-2"]);
+    expect(cards.map((card) => cardKey(card))).toEqual(["a:org-1", "a:org-2"]);
+  });
+
+  it("gives somebody in one body the single row every card used to be", () => {
+    const cards = build({
+      existing: [person("a", { memberships: [office("org-1")] })],
+      currentPeople: [person("a", { memberships: [office("org-1")] })],
+    });
+
+    expect(cards).toHaveLength(1);
+    expect(cards[0].organizationId).toBe("org-1");
+  });
+
+  it("keeps a row for a body they are leaving", () => {
+    // Both sides, or the body they are being taken out of would have nothing to show.
+    const cards = build({
+      existing: [person("a", { memberships: [office("org-1"), office("org-2")] })],
+      currentPeople: [person("a", { memberships: [office("org-1")] })],
+    });
+
+    expect(cards.map((card) => card.organizationId)).toEqual(["org-1", "org-2"]);
+  });
+
+  it("removes the row that was removed, and only that one", () => {
+    const cards = build({
+      existing: [person("a", { memberships: [office("org-1"), office("org-2")] })],
+      currentPeople: [person("a", { memberships: [office("org-1"), office("org-2")] })],
+      removedIds: new Set(["a:org-1"]),
+    });
+
+    expect(cards.map((card) => card.status)).toEqual([
+      PersonStatus.DELETED,
+      PersonStatus.UNCHANGED,
+    ]);
+  });
+
+  it("removes every row when the removal names the person whole", () => {
+    // Which is what a review's Remove means: not on this roster at all.
+    const cards = build({
+      existing: [person("a", { memberships: [office("org-1"), office("org-2")] })],
+      currentPeople: [person("a", { memberships: [office("org-1"), office("org-2")] })],
+      removedIds: new Set(["a"]),
+    });
+
+    expect(cards.map((card) => card.status)).toEqual([
+      PersonStatus.DELETED,
+      PersonStatus.DELETED,
+    ]);
+  });
+
+  it("gives somebody with no office one row and no body", () => {
+    const cards = build({ currentPeople: [person("new-1")] });
+
+    expect(cards).toHaveLength(1);
+    expect(cards[0].organizationId).toBeUndefined();
   });
 });

@@ -2,7 +2,7 @@
 
 Each step is a resolver with its own module and tests; this only chains them:
 
-    live_facts → with_person_ids → canonical_ids → one cluster per canonical id → derive_person
+    live_facts → with_person_ids → with_inherited_blanks → canonical_ids → one cluster per canonical id → derive_person
 """
 
 from pydantic import BaseModel
@@ -13,6 +13,7 @@ from core.projection.canonical_ids import SAME_AS, canonical_ids
 from core.projection.facts import ClaimKind, EntityType, Facts
 from core.projection.field_value import NAME, overridden_source_values
 from core.projection.live_facts import live_facts
+from core.projection.partial_records import with_inherited_blanks
 from core.projection.people import Person, derive_person
 from core.projection.person_ids import with_person_ids
 
@@ -27,7 +28,7 @@ def derive_roster(facts: Facts, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> 
     People come back sorted by id so two rebuilds of the same facts agree (R6).
     """
 
-    live = with_person_ids(live_facts(facts))
+    live = with_inherited_blanks(with_person_ids(live_facts(facts)))
     clusters = person_clusters(live)
     people = [
         derive_person(root_id, clusters[root_id], live, jurisdiction_ocdid, taxonomy)

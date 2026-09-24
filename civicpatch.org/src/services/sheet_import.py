@@ -32,10 +32,10 @@ from core.sheet_import_rows import (
     rows_by_jurisdiction,
 )
 from core.import_report import ImportReportRow, report_rows
-from core.roster_diff import (
+from core.roster_changes import (
     ProposalCounts,
+    changes_of,
     likely_same_people,
-    person_diffs,
     person_notes,
     proposal_counts,
 )
@@ -44,7 +44,6 @@ from database.changesets import register_sheet_import_changeset, set_proposal_co
 from database import changeset_batches, dismissals
 from database import sites as sites_db
 from database.jurisdictions import get_jurisdiction_geoids
-from database.people import get_rosters_by_jurisdiction
 from database.roles import get_roles
 from database.source_records import insert_source_records
 from pydantic import BaseModel
@@ -52,8 +51,7 @@ from lib import sheets
 from lib.csv import READ_ONLY_MARKER, REQUIRED_MARKER
 from schemas.imports import ImportPreview
 from services import entry_sheet, import_report, roster_ingest
-from services.review_proposal import proposals_for_requests
-from services.roster import proposed_roster
+from services.roster import card_fold, sides_of
 from shared.schemas import Role, RoleConfig
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
@@ -192,24 +190,18 @@ async def _changes(
     """What this import changes: each row's note and published aliases, the report tab's rows,
     and the batch page's counts.
 
-    Read through `proposed_roster`, so blank cells state nothing here either. Never fatal: the
-    import already landed, and a missing note costs only the volunteer's feedback.
+    Both sides come from one fold — the same two the review card compares — so the sheet cannot
+    tell a volunteer something the card would deny. Never fatal: the import already landed, and
+    a missing note costs only the volunteer's feedback.
     """
     try:
-        proposed = await proposed_roster(changeset_id, jurisdiction_ocdid)
-        published_by_jurisdiction, proposals_by_changeset = await asyncio.gather(
-            get_rosters_by_jurisdiction([jurisdiction_ocdid]),
-            proposals_for_requests([changeset_id], {changeset_id: proposed}),
-        )
-        published = published_by_jurisdiction.get(jurisdiction_ocdid, [])
-        proposals = proposals_by_changeset.get(changeset_id, [])
-        diffs = person_diffs(published, proposed)
-        likely_same = likely_same_people(published, proposed, diffs, proposals)
-        notes = person_notes([person["id"] for person in proposed], diffs, proposals, likely_same)
-        report = report_rows(
-            jurisdiction_ocdid, published, proposed, diffs, proposals, likely_same
-        )
-        counts = proposal_counts(proposed, diffs, proposals)
+        fold = await card_fold(changeset_id, jurisdiction_ocdid)
+        published, proposed, _overridden = sides_of(fold, jurisdiction_ocdid)
+        changes = changes_of(published, proposed)
+        likely_same = likely_same_people(changes)
+        notes = person_notes(changes, likely_same)
+        report = report_rows(jurisdiction_ocdid, published, proposed, changes, likely_same)
+        counts = proposal_counts(changes)
     except Exception as e:
         logger.error(
             f"[{changeset_id}] {jurisdiction_ocdid}: notes failed: {e}", exc_info=True

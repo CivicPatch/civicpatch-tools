@@ -37,10 +37,8 @@ from schemas.common import (
     UserRole,
     has_at_least,
 )
-from services.review_proposal import (
-    assertions_for_people,
-    review_summary_for_changeset,
-)
+from services.assertions import assertions_for_people
+from services.review_summary import review_summary_for_changeset
 import services.review_cards as review_cards_service
 from services.review_sources import build_sources, without_debug_links
 from services.roster import card_sides

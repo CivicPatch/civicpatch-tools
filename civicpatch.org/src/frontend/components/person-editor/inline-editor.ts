@@ -10,7 +10,7 @@ import { type PersonCard, cardKey } from "../people/person-cards.js";
 
 export interface InlinePersonEditorProps {
   card: PersonCard;
-  openPersonId: string | null;
+  openCardKey: string | null;
   editorFor: (card: PersonCard) => PersonEditorProps;
   idPrefix: string;
 }
@@ -19,17 +19,17 @@ export interface InlinePersonEditorProps {
 // renders this under must use the same `idPrefix` as its `controlsId`/`aria-controls`.
 export function renderInlinePersonEditor({
   card,
-  openPersonId,
+  openCardKey,
   editorFor,
   idPrefix,
 }: InlinePersonEditorProps) {
-  if (cardKey(card) !== openPersonId) return nothing;
+  if (cardKey(card) !== openCardKey) return nothing;
   const editorProps = editorFor(card);
   const focusWrapper = (el?: Element) => {
     el?.scrollIntoView({ block: "center", behavior: "smooth" });
     if (!editorProps.focusField) focusOnMount(el);
   };
-  const id = `${idPrefix}${card.personId}`;
+  const id = `${idPrefix}${cardKey(card)}`;
   return html`
     <div
       class="person-editor-inline"

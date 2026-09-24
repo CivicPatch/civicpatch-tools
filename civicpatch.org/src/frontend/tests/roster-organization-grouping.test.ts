@@ -1,23 +1,17 @@
 import { describe, it, expect } from "vitest";
 import { groupCardsByOrganization } from "../pages/jurisdictions-page/roster-organization-grouping.js";
-import { cardKey } from "../components/people/person-cards.js";
 
 const COUNCIL = "org-council";
 const SCHOOLS = "org-schools";
-const MAYOR = "post-mayor";
-const TRUSTEE = "post-trustee";
 
 const organizations = [
-  { id: COUNCIL, name: "City Council", posts: [{ id: MAYOR }] },
-  { id: SCHOOLS, name: "School Board", posts: [{ id: TRUSTEE }] },
+  { id: COUNCIL, name: "City Council", posts: [] },
+  { id: SCHOOLS, name: "School Board", posts: [] },
 ] as any[];
 
-const card = (personId: string, postIds: string[]) =>
-  ({
-    personId,
-    oldRecord: { id: personId, memberships: postIds.map((post_id) => ({ post_id })) },
-    newRecord: null,
-  }) as any;
+// A row as `buildPersonCards` emits one: already about a single body, and carrying which.
+const row = (personId: string, organizationId?: string) =>
+  ({ personId, organizationId, oldRecord: null, newRecord: null }) as any;
 
 const idsUnder = (groups: any[], organizationId: string) =>
   groups
@@ -25,18 +19,24 @@ const idsUnder = (groups: any[], organizationId: string) =>
     .cards.map((c: any) => c.personId);
 
 describe("groupCardsByOrganization", () => {
-  it("files somebody under the body their office is in", () => {
-    const groups = groupCardsByOrganization([card("p1", [MAYOR])], organizations, new Map());
+  // These used to verify that the grouping *placed* cards — resolving a held post back to its
+  // organization, cloning the card per body, stamping a removed status. All of that moved into
+  // `buildPersonCards` on 2026-09-24, where the review page gets it too; the tests for it live
+  // in person-cards.test.ts. What is left here is the group-by.
+  it("files a row under the body it is about", () => {
+    const groups = groupCardsByOrganization(
+      [row("p1", COUNCIL), row("p2", SCHOOLS)],
+      organizations,
+      new Map(),
+    );
 
     expect(idsUnder(groups, COUNCIL)).toEqual(["p1"]);
-    expect(idsUnder(groups, SCHOOLS)).toEqual([]);
+    expect(idsUnder(groups, SCHOOLS)).toEqual(["p2"]);
   });
 
-  it("shows somebody under every body they hold an office in", () => {
-    // Until 2026-09-23 this answered with one body and gave up on two, so a person on the
-    // council and the school board was filed silently under whichever came first.
+  it("shows somebody under every body they have a row for", () => {
     const groups = groupCardsByOrganization(
-      [card("p1", [MAYOR, TRUSTEE])],
+      [row("p1", COUNCIL), row("p1", SCHOOLS)],
       organizations,
       new Map(),
     );
@@ -45,9 +45,9 @@ describe("groupCardsByOrganization", () => {
     expect(idsUnder(groups, SCHOOLS)).toEqual(["p1"]);
   });
 
-  it("puts somebody who holds nothing where Add was clicked", () => {
+  it("puts somebody with no body where Add was clicked", () => {
     const groups = groupCardsByOrganization(
-      [card("new-1", [])],
+      [row("new-1")],
       organizations,
       new Map([["new-1", SCHOOLS]]),
     );
@@ -56,38 +56,23 @@ describe("groupCardsByOrganization", () => {
     expect(idsUnder(groups, COUNCIL)).toEqual([]);
   });
 
-  it("falls back to the first body for somebody nobody has placed", () => {
-    const groups = groupCardsByOrganization([card("p9", [])], organizations, new Map());
+  it("falls back to the first body for somebody nobody has placed at all", () => {
+    const groups = groupCardsByOrganization([row("p9")], organizations, new Map());
 
     expect(idsUnder(groups, COUNCIL)).toEqual(["p9"]);
+    // And the row gets the body it landed in, so it keys and edits like any other.
+    expect(
+      groups.find((g) => g.organization.id === COUNCIL)!.cards[0].organizationId,
+    ).toBe(COUNCIL);
   });
 
-  it("ignores an office in a body this jurisdiction does not list", () => {
+  it("drops a row whose body this jurisdiction does not list", () => {
     const groups = groupCardsByOrganization(
-      [card("p1", ["post-elsewhere"])],
+      [row("p1", "org-elsewhere")],
       organizations,
       new Map(),
     );
 
-    // No body to file them under, so they land in the fallback rather than vanishing.
-    expect(idsUnder(groups, COUNCIL)).toEqual(["p1"]);
-  });
-
-  it("gives each row the body it is about, so they are separate cards", () => {
-    // The office, its label and its removal belong to the row. Sharing one card object would
-    // mean removing them from the council struck them through on the school board too.
-    const groups = groupCardsByOrganization(
-      [card("p1", [MAYOR, TRUSTEE])],
-      organizations,
-      new Map(),
-    );
-
-    const council = groups.find((g) => g.organization.id === COUNCIL)!.cards[0];
-    const schools = groups.find((g) => g.organization.id === SCHOOLS)!.cards[0];
-
-    expect(council.organizationId).toBe(COUNCIL);
-    expect(schools.organizationId).toBe(SCHOOLS);
-    expect(council).not.toBe(schools);
-    expect(cardKey(council)).not.toEqual(cardKey(schools));
+    expect(groups.flatMap((group) => group.cards)).toEqual([]);
   });
 });

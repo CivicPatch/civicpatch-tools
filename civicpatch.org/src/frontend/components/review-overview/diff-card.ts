@@ -10,6 +10,7 @@ import { renderCardShell } from "../people/person-card-grid.js";
 import { ensureUrl } from "../fields/field-controls.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 import {
+  cardKey,
   postsFor,
   postNameFor,
   membershipLabelFor,
@@ -160,15 +161,15 @@ export function renderDiffCard(
   const record = personOf(card);
   const moved = movedNote(card, props.posts);
   const fields = visibleFields(card);
-  const isOpen = card.personId === props.openPersonId;
+  const isOpen = cardKey(card) === props.openCardKey;
   return renderCardShell(
     {
       card,
       ariaLabel: rowLabel(card),
       isOpen,
       onOpenPerson: (c: PersonCard) =>
-        props.onOpenPerson(c.personId, fields[0]?.field.key ?? null),
-      editorId: `review-person-${card.personId}`,
+        props.onOpenPerson(c, fields[0]?.field.key ?? null),
+      editorId: `review-person-${cardKey(card)}`,
       extraClass: `review-row--${card.status}`,
     },
     html`
@@ -197,7 +198,7 @@ export function renderDiffCard(
 export function renderInlineEditor(card: PersonCard, props: ReviewOverviewProps) {
   return renderInlinePersonEditor({
     card,
-    openPersonId: props.openPersonId,
+    openCardKey: props.openCardKey,
     editorFor: props.editorFor,
     idPrefix: "review-person-",
   });
@@ -205,14 +206,14 @@ export function renderInlineEditor(card: PersonCard, props: ReviewOverviewProps)
 
 export function renderFold(card: PersonCard, props: ReviewOverviewProps) {
   const record = personOf(card);
-  const isOpen = card.personId === props.openPersonId;
+  const isOpen = cardKey(card) === props.openCardKey;
   return html`
     <span class="review-fold ${isOpen ? "review-fold--open" : ""}">
       <button
         class="review-fold__open"
         aria-label=${rowLabel(card)}
         aria-expanded=${isOpen}
-        @click=${() => props.onOpenPerson(card.personId, null)}
+        @click=${() => props.onOpenPerson(card, null)}
       >
         <person-image
           .person=${record}

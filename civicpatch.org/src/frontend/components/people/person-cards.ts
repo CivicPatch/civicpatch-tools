@@ -199,15 +199,45 @@ export function movedNote(card: PersonCard, posts: Post[]): MovedNote | null {
 
 function statusFor(
   type: string,
+  rowKey: string,
   personId: string,
   removedIds: Set<string>,
   restoredIds: Set<string>,
 ): PersonStatusKey {
   // Restoring copies the old record back, so it would otherwise diff as `unchanged`.
   if (restoredIds.has(personId)) return PersonStatus.RESTORED;
-  if (removedIds.has(personId)) return PersonStatus.DELETED;
+  // Either spelling: a roster removal names one row, a review's names the person whole.
+  if (removedIds.has(rowKey) || removedIds.has(personId))
+    return PersonStatus.DELETED;
   return type as PersonStatusKey;
 }
+
+/** Every body this person is in on either side, so a card can be one row per body. Both sides,
+ * because a body they are leaving is one they are still to be shown in — and `undefined` for
+ * somebody with no office at all, who is one row with no body. */
+function bodiesOf(
+  before: HeldMembership[] | undefined,
+  after: HeldMembership[] | undefined,
+): (string | undefined)[] {
+  const ids = [
+    ...new Set(
+      [...(before ?? []), ...(after ?? [])]
+        .map((membership) => membership.organization_id)
+        .filter((id): id is string => !!id),
+    ),
+  ];
+  return ids.length ? ids : [undefined];
+}
+
+const inBody = (
+  memberships: HeldMembership[] | undefined,
+  organizationId: string | undefined,
+): HeldMembership[] | undefined =>
+  organizationId === undefined
+    ? memberships
+    : memberships?.filter(
+        (membership) => membership.organization_id === organizationId,
+      );
 
 export function buildPersonCards({
   existing,
@@ -235,38 +265,54 @@ export function buildPersonCards({
     return ai - bi;
   });
 
-  return ordered.map((entry) => {
+  // One row per body, because an office belongs to one and so does a removal. Somebody in two
+  // bodies is two rows that open, edit and depart independently; somebody in one is one row,
+  // which is every card that existed before this.
+  return ordered.flatMap((entry) => {
     const personId = entry.person?.id;
     const cardIssues = issuesByPersonId.get(personId) ?? [];
-    const moved = postMoved(entry.from?.memberships, entry.person?.memberships);
-    let status = statusFor(entry.type, personId, removedIds, restoredIds);
-    // A move is a change even when every field matches.
-    if (status === PersonStatus.UNCHANGED && moved) {
-      status = PersonStatus.CHANGED;
-    }
-    // Only the scrape dropping someone leaves no new-side record.
-    const newRecord = status === PersonStatus.REMOVED ? null : entry.person;
-    // Departing is one decision, so it carries no field list: against a null new side every
-    // field they had reads "cleared", and nine cleared fields would say nine things to review
-    // about a card that asks one question.
-    const surviving = DEPARTING.has(status)
-      ? []
-      : survivingFields(entry.from, newRecord, cardIssues);
-    const office = officeSurvivingField(
-      entry.from?.memberships,
-      newRecord?.memberships,
+    return bodiesOf(entry.from?.memberships, entry.person?.memberships).map(
+      (organizationId) => {
+        const held = inBody(entry.from?.memberships, organizationId);
+        const proposed = inBody(entry.person?.memberships, organizationId);
+        const rowKey = cardKey({ personId, organizationId });
+        let status = statusFor(
+          entry.type,
+          rowKey,
+          personId,
+          removedIds,
+          restoredIds,
+        );
+        // A move is a change even when every field matches.
+        if (status === PersonStatus.UNCHANGED && postMoved(held, proposed)) {
+          status = PersonStatus.CHANGED;
+        }
+        // Only the scrape dropping someone leaves no new-side record.
+        const newRecord = status === PersonStatus.REMOVED ? null : entry.person;
+        // Departing is one decision, so it carries no field list: against a null new side
+        // every field they had reads "cleared", and nine cleared fields would say nine things
+        // to review about a card that asks one question.
+        const surviving = DEPARTING.has(status)
+          ? []
+          : survivingFields(entry.from, newRecord, cardIssues);
+        const office = officeSurvivingField(
+          held,
+          status === PersonStatus.REMOVED ? undefined : proposed,
+        );
+        return {
+          personId,
+          organizationId,
+          status,
+          oldRecord: entry.from,
+          newRecord,
+          surviving:
+            office && !surviving.some((field) => field.field.key === POST_FIELD)
+              ? [...surviving, office]
+              : surviving,
+          issues: cardIssues,
+        };
+      },
     );
-    return {
-      personId,
-      status,
-      oldRecord: entry.from,
-      newRecord,
-      surviving:
-        office && !surviving.some((field) => field.field.key === POST_FIELD)
-          ? [...surviving, office]
-          : surviving,
-      issues: cardIssues,
-    };
   });
 }
 

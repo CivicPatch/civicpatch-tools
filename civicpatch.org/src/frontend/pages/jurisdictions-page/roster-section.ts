@@ -21,8 +21,8 @@ export interface RosterCardsProps {
   isLoading: boolean;
   blockedReason: string | null;
   actions?: unknown;
-  onOpenPerson: ((personId: string, fieldKey: string | null) => void) | null;
-  openPersonId: string | null;
+  onOpenPerson: ((card: PersonCard, fieldKey: string | null) => void) | null;
+  openCardKey: string | null;
   editorFor: ((card: PersonCard) => PersonEditorProps) | null;
   // Global role vocabulary, in canonical priority order — the card grid uses it to group
   // people under their best-ranked role.
@@ -33,7 +33,7 @@ export interface RosterCardsProps {
 }
 
 export function renderRosterCards(props: RosterCardsProps) {
-  const { cards, isLoading, blockedReason, actions, onOpenPerson, openPersonId, editorFor, roles, title } =
+  const { cards, isLoading, blockedReason, actions, onOpenPerson, openCardKey, editorFor, roles, title } =
     props;
 
   return html`
@@ -63,15 +63,15 @@ export function renderRosterCards(props: RosterCardsProps) {
         : cards.length
           ? renderPersonCardGrid(cards, roles, {
               onOpenPerson: onOpenPerson
-                ? (card) => onOpenPerson(card.personId, card.surviving[0]?.field.key ?? null)
+                ? (card) => onOpenPerson(card, card.surviving[0]?.field.key ?? null)
                 : null,
-              openPersonId,
+              openCardKey,
               idPrefix: ROSTER_PERSON_ID_PREFIX,
               renderEditor: editorFor
                 ? (card) =>
                     renderInlinePersonEditor({
                       card,
-                      openPersonId,
+                      openCardKey,
                       editorFor,
                       idPrefix: ROSTER_PERSON_ID_PREFIX,
                     })

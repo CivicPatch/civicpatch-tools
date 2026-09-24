@@ -28,6 +28,8 @@ import {
   blockingErrors,
   buildPersonCards,
   cardFields,
+  cardKey,
+  personIdIn,
   duplicateIdsFor,
   navHintFor,
   needsReview,
@@ -184,18 +186,28 @@ function ReviewSession(host: ReviewSessionHost) {
     currentPeople: currentPeople ?? [],
   });
   const blockers = blockingErrors(cards);
-  const [openPersonId, setOpenPersonId] = useState<string | null>(null);
+  // Keyed the way a card is, not by person id: a changeset that read two organizations has a
+  // row for each, and opening one must not open the other.
+  const [openCardKey, setOpenCardKey] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const [focusFieldKey, setFocusFieldKey] = useState<string | null>(null);
-  const openCard = cards.find((c) => c.personId === openPersonId);
+  const openCard = cards.find((c) => cardKey(c) === openCardKey);
   const openPeers = peersOf(openCard, cards);
-  const handleOpenPerson = (personId: string, fieldKey: string | null) => {
-    const opening = openPersonId !== personId;
-    setOpenPersonId(opening ? personId : null);
+  const handleOpenPerson = (card: PersonCard, fieldKey: string | null) => {
+    const key = cardKey(card);
+    const opening = openCardKey !== key;
+    setOpenCardKey(opening ? key : null);
     setFocusFieldKey(opening ? fieldKey : null);
   };
-  useAltArrowPeerNav(openPersonId, openPeers, (next) => {
-    setOpenPersonId(next.personId);
+  // Whoever the caller has in hand is a person, not a row — Add has just minted them and merge
+  // has just made one of two, so the row to open is whichever one the rebuilt cards give them.
+  const openByPersonId = (personId: string) => {
+    const card = cards.find((c) => c.personId === personId);
+    setOpenCardKey(card ? cardKey(card) : personId);
+    setFocusFieldKey(null);
+  };
+  useAltArrowPeerNav(openCardKey ? personIdIn(openCardKey) : null, openPeers, (next) => {
+    setOpenCardKey(cardKey(next));
     setFocusFieldKey(null);
   });
   const focusOnOpen = useCallback(focusOnMount, [focusFieldKey]);
@@ -211,12 +223,12 @@ function ReviewSession(host: ReviewSessionHost) {
         setExpandedIds(next);
       },
     });
-    const peers = card.personId === openPersonId ? openPeers : peersOf(card, cards);
+    const peers = cardKey(card) === openCardKey ? openPeers : peersOf(card, cards);
     return {
       ...base,
       navHint: navHintFor(peers, card.personId),
       focusField:
-        card.personId === openPersonId && focusFieldKey
+        cardKey(card) === openCardKey && focusFieldKey
           ? { key: focusFieldKey, attach: focusOnOpen }
           : null,
     };
@@ -253,11 +265,11 @@ function ReviewSession(host: ReviewSessionHost) {
   ) => {
     setPendingMerge(null);
     mergePeople(survivorId, absorbedId, merged);
-    handleOpenPerson(survivorId, null);
+    openByPersonId(survivorId);
   };
   const handleAddPerson = async () => {
     const personId = await handleAdd();
-    handleOpenPerson(personId, null);
+    openByPersonId(personId);
   };
   const handleResetPerson = (id: string) => handleReset(id);
   const handleRemovePerson = (id: string) => handleRemove([id]);
@@ -390,7 +402,7 @@ function ReviewSession(host: ReviewSessionHost) {
         .isReadOnly=${is_read_only}
         .onOpenPerson=${handleOpenPerson}
         .onAdd=${handleAddPerson}
-        .openPersonId=${openPersonId}
+        .openCardKey=${openCardKey}
         .editorFor=${editorFor}
         .posts=${posts}
         .roles=${roles}

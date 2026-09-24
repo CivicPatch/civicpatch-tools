@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-from core.membership_proposal import ProposedChange
 from core.review_summary import ReviewSummary
 
 
@@ -19,7 +18,6 @@ class ReviewCard(BaseModel):
     jurisdiction_ocdid: str
     existing: list[dict]
     proposed: list[dict]
-    changes: list[ProposedChange]
     sources: list[ReviewSource]
     # Keyed by person id, then field: what the source said where an assertion changed it.
     overridden_source_values: dict[str, dict]

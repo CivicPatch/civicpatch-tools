@@ -14,7 +14,7 @@ from lib.auth import require_route_access
 from psycopg.errors import UniqueViolation
 from pydantic import BaseModel
 from schemas.common import Identity, ReviewMode, RouteCategory, UserRole, has_at_least
-from services.review_proposal import assertions_for_people
+from services.assertions import assertions_for_people
 from services.review_sources import build_sources, without_debug_links
 from services.roster import card_sides
 logger = logging.getLogger(__name__)

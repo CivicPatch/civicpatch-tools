@@ -9,7 +9,7 @@ from core.people_edits import source_values_overridden, with_asserted_values
 from core.people_roster import partial_roster, roster_from_sightings
 from core.projection.diff import on_roster
 from core.projection.facts import Facts
-from core.projection.roster import overridden_by_person
+from core.projection.roster import Roster, overridden_by_person
 from database import assertions, source_records
 from database import changesets as changesets_db
 from database import posts as posts_db
@@ -23,6 +23,7 @@ from database.source_records import (
 )
 from schemas.assertions import EntityType
 from shared.schemas import POST_FIELD, RoleConfig
+from shared.utils.batching import gather_in_batches
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
 logger = logging.getLogger(__name__)
@@ -107,8 +108,23 @@ class CardSides(NamedTuple):
     overridden: dict[str, dict]
 
 
-async def card_sides(changeset_id: str, jurisdiction_ocdid: str) -> CardSides:
-    """Both sides of a card, one connection, one `as_of`, one taxonomy.
+class CardFold(NamedTuple):
+    """Both sides of a card as the fold made them, before anything presents them.
+
+    Every question a card answers — its rows, its override disclosure, its summary — is one of
+    these two rosters read differently. Holding them means a caller answers all three from one
+    pair of folds instead of a pair each.
+    """
+
+    published: Roster
+    proposed: Roster
+    proposed_facts: Facts
+    taxonomy: Taxonomy
+
+
+async def card_fold(changeset_id: str, jurisdiction_ocdid: str) -> CardFold:
+    """The roster today and the roster this changeset would make live, one connection, one
+    `as_of`, one taxonomy.
 
     Pinned to a single moment on purpose: derived separately they would take a `now()` each,
     and a claim landing between them would reach one side of the card and not the other —
@@ -128,11 +144,24 @@ async def card_sides(changeset_id: str, jurisdiction_ocdid: str) -> CardSides:
             as_of=as_of,
             taxonomy=taxonomy,
         )
-    return CardSides(
-        existing=card_rows(on_roster(published), jurisdiction_ocdid, taxonomy),
-        proposed=card_rows(on_roster(proposed), jurisdiction_ocdid, taxonomy),
-        overridden=overridden_by_person(proposed_facts),
+    return CardFold(
+        published=on_roster(published),
+        proposed=on_roster(proposed),
+        proposed_facts=proposed_facts,
+        taxonomy=taxonomy,
     )
+
+
+def sides_of(fold: CardFold, jurisdiction_ocdid: str) -> CardSides:
+    return CardSides(
+        existing=card_rows(fold.published, jurisdiction_ocdid, fold.taxonomy),
+        proposed=card_rows(fold.proposed, jurisdiction_ocdid, fold.taxonomy),
+        overridden=overridden_by_person(fold.proposed_facts),
+    )
+
+
+async def card_sides(changeset_id: str, jurisdiction_ocdid: str) -> CardSides:
+    return sides_of(await card_fold(changeset_id, jurisdiction_ocdid), jurisdiction_ocdid)
 
 
 async def proposed_roster(changeset_id: str, jurisdiction_ocdid: str) -> list[dict]:
@@ -217,11 +246,10 @@ async def scraped_roster(changeset_id: str, jurisdiction_ocdid: str) -> list[dic
     return roster
 
 
-# One roster holds two pool connections at its widest, and the pool is 20. An unbounded gather
-# over a bulk import's forty requests therefore asks for more than exists and every one of them
-# waits out the timeout instead. The overlap is worth little — the work is CPU — so a small
-# window keeps what it was for without the failure mode.
-_ROSTER_CONCURRENCY = 4
+# One roster holds two pool connections at its widest, and the pool is 20 — see
+# `gather_in_batches` for what an unbounded fan-out does to that. The overlap is worth little
+# either way: the work is CPU.
+ROSTERS_AT_A_TIME = 4
 
 
 async def proposed_rosters(changeset_ids: list[str]) -> dict[str, list[dict]]:
@@ -237,15 +265,9 @@ async def proposed_rosters_and_source_values(
     if not changeset_ids:
         return {}
     ocdids = await changesets_db.jurisdictions_for_changesets(changeset_ids)
-    limit = asyncio.Semaphore(_ROSTER_CONCURRENCY)
-
-    async def one_roster(
-        changeset_id: str, ocdid: str
-    ) -> tuple[list[dict], dict[str, dict]]:
-        async with limit:
-            return await proposed_roster_and_source_values(changeset_id, ocdid)
-
-    results = await asyncio.gather(
-        *[one_roster(changeset_id, ocdid) for changeset_id, ocdid in ocdids.items()]
+    results = await gather_in_batches(
+        list(ocdids.items()),
+        ROSTERS_AT_A_TIME,
+        lambda pair: proposed_roster_and_source_values(*pair),
     )
     return dict(zip(ocdids, results))

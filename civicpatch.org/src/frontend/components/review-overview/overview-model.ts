@@ -192,6 +192,17 @@ export function foundNobody(entries: CardInOrganization[]): boolean {
   return entries.length > 0 && entries.every((entry) => entry.leaving);
 }
 
+/** What a row proposes in its own body, or what it is losing — which is what the section shows
+ * either way. `leaving` is the second: nothing proposed here any more. */
+function officeOf(card: PersonCard): { office: PostRole; leaving: boolean } | null {
+  const inHere = (membership: MembershipRow) =>
+    membership.organization_id === card.organizationId;
+  const proposed = (card.newRecord?.memberships ?? []).filter(inHere);
+  const held = (card.oldRecord?.memberships ?? []).filter(inHere);
+  const office = proposed[0] ?? held[0];
+  return office ? { office: asOffice(office), leaving: !proposed.length } : null;
+}
+
 /** The same grouping one level down: a section per organization, roles inside it. A person is
  * listed in each organization they hold a post in on either side, carrying that organization's
  * own office, so the council section shows their council post and the mayor's office the
@@ -211,28 +222,14 @@ export function sectionsByOrganization(
   const byOrganization = new Map<string, CardInOrganization[]>();
   const unplaced: PersonCard[] = [];
   for (const card of staying) {
-    const proposed: MembershipRow[] = card.newRecord?.memberships ?? [];
-    const held: MembershipRow[] = card.oldRecord?.memberships ?? [];
-    const organizationIds = [
-      ...new Set(
-        [...proposed, ...held]
-          .map((membership) => membership.organization_id)
-          .filter((id): id is string => !!id),
-      ),
-    ];
-    if (!organizationIds.length) unplaced.push(card);
-    for (const organizationId of organizationIds) {
-      const inHere = (membership: MembershipRow) =>
-        membership.organization_id === organizationId;
-      const office = proposed.find(inHere) ?? held.find(inHere)!;
-      const listed = byOrganization.get(organizationId) ?? [];
-      listed.push({
-        card,
-        office: asOffice(office),
-        leaving: !proposed.some(inHere),
-      });
-      byOrganization.set(organizationId, listed);
+    const here = card.organizationId ? officeOf(card) : null;
+    if (!card.organizationId || !here) {
+      unplaced.push(card);
+      continue;
     }
+    const listed = byOrganization.get(card.organizationId) ?? [];
+    listed.push({ card, ...here });
+    byOrganization.set(card.organizationId, listed);
   }
 
   const rank = (organizationId: string) => {

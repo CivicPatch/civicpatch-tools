@@ -1,4 +1,10 @@
-"""The import report tab: one row per change, and which old report tabs to drop. Pure."""
+"""The import report tab: one row per change, and which old report tabs to drop. Pure.
+
+The fixtures moved on 2026-09-24: a row used to be built from a person diff plus hand-written
+`ProposedChange`s, and is now built from the two card sides `changes_of` reads. Every test's
+claim is unchanged — an office is stated as a membership on a row rather than as a proposal
+about one, because that is where the fold puts it.
+"""
 
 from datetime import datetime, timezone
 
@@ -16,8 +22,7 @@ from core.import_report import (
     row_cells,
     stale_report_tabs,
 )
-from core.membership_proposal import MembershipDisposition, MembershipPost, ProposedChange
-from core.roster_diff import person_diffs
+from core.roster_changes import changes_of
 from schemas.sheets import SheetCell
 
 pytestmark = pytest.mark.unit
@@ -26,29 +31,14 @@ _OCDID = "ocd-jurisdiction/country:us/state:ma/county:middlesex/place:sherborn/g
 _DIVISION = "ocd-division/country:us/state:ma/county:middlesex/place:sherborn"
 
 
-def _post(label: str) -> MembershipPost:
-    return MembershipPost(
-        role_id=label.lower(), role_label=label, division_ocdid=_DIVISION, label=label
+def _office(label: str) -> dict:
+    return {"organization_id": "org", "post_id": f"post-{label}", "post_label": label}
+
+
+def _rows(published: list[dict], proposed: list[dict], likely_same: dict | None = None):
+    return report_rows(
+        _OCDID, published, proposed, changes_of(published, proposed), likely_same or {}
     )
-
-
-def _proposal(
-    person_id: str,
-    disposition: MembershipDisposition,
-    post: str,
-    from_post: str | None = None,
-) -> ProposedChange:
-    return ProposedChange(
-        person_id=person_id,
-        organization_id="org",
-        disposition=disposition,
-        post=_post(post),
-        from_post=_post(from_post) if from_post else None,
-    )
-
-
-def _rows(published: list[dict], proposed: list[dict], proposals: list[ProposedChange]):
-    return report_rows(_OCDID, published, proposed, person_diffs(published, proposed), proposals, {})
 
 
 def _cells(row) -> dict[str, SheetCell]:
@@ -70,10 +60,11 @@ def test_a_changed_field_shows_the_new_value_tinted_with_the_old_in_its_note():
 
 
 def test_a_new_person_is_one_green_row_with_their_post():
-    proposed = [{"id": "p2", "name": "Ben Ortiz"}]
-    proposals = [_proposal("p2", MembershipDisposition.NEW, "Select Board Member")]
+    proposed = [
+        {"id": "p2", "name": "Ben Ortiz", "memberships": [_office("Select Board Member")]}
+    ]
 
-    [row] = _rows([], proposed, proposals)
+    [row] = _rows([], proposed)
     cells = _cells(row)
 
     assert cells["change"].value == "added"
@@ -84,16 +75,17 @@ def test_a_new_person_is_one_green_row_with_their_post():
 def test_a_move_notes_the_post_left_and_an_absence_keeps_the_last_published_values():
     """An absent person is only in the published roster, so their row comes from there."""
     published = [
-        {"id": "p1", "name": "Ana Reyes"},
-        {"id": "p3", "name": "Cal Diaz", "emails": ["cal@town.gov"]},
+        {"id": "p1", "name": "Ana Reyes", "memberships": [_office("Member")]},
+        {
+            "id": "p3",
+            "name": "Cal Diaz",
+            "emails": ["cal@town.gov"],
+            "memberships": [_office("Clerk")],
+        },
     ]
-    proposed = [{"id": "p1", "name": "Ana Reyes"}]
-    proposals = [
-        _proposal("p1", MembershipDisposition.MOVED, "Chair", from_post="Member"),
-        _proposal("p3", MembershipDisposition.ABSENT, "Clerk"),
-    ]
+    proposed = [{"id": "p1", "name": "Ana Reyes", "memberships": [_office("Chair")]}]
 
-    ana, cal = [_cells(row) for row in _rows(published, proposed, proposals)]
+    ana, cal = [_cells(row) for row in _rows(published, proposed)]
 
     assert ana["change"].value == "moved"
     assert ana["post"] == SheetCell(value="Chair", background=CHANGED_CELL, note="was: Member")
@@ -102,10 +94,9 @@ def test_a_move_notes_the_post_left_and_an_absence_keeps_the_last_published_valu
 
 
 def test_an_unchanged_membership_is_not_reported():
-    proposed = [{"id": "p1", "name": "Ana Reyes"}]
-    proposals = [_proposal("p1", MembershipDisposition.UNCHANGED, "Chair")]
+    proposed = [{"id": "p1", "name": "Ana Reyes", "memberships": [_office("Chair")]}]
 
-    assert _rows(proposed, proposed, proposals) == []
+    assert _rows(proposed, proposed) == []
 
 
 def test_the_tab_name_carries_its_minute_in_utc():
@@ -140,18 +131,15 @@ def test_a_same_minute_report_is_replaced_rather_than_rewritten():
 
 
 def test_both_rows_of_a_likely_pair_point_at_each_other():
-    published = [{"id": "p2", "name": "Jenny Fisk-Becker"}]
-    proposed = [{"id": "p3", "name": "Jennifer Fisk-Becker"}]
-    proposals = [
-        _proposal("p2", MembershipDisposition.ABSENT, "Member"),
-        _proposal("p3", MembershipDisposition.NEW, "Member"),
+    published = [
+        {"id": "p2", "name": "Jenny Fisk-Becker", "memberships": [_office("Member")]}
+    ]
+    proposed = [
+        {"id": "p3", "name": "Jennifer Fisk-Becker", "memberships": [_office("Member")]}
     ]
     likely = {"p3": "Jenny Fisk-Becker", "p2": "Jennifer Fisk-Becker"}
 
-    rows = report_rows(
-        _OCDID, published, proposed, person_diffs(published, proposed), proposals, likely
-    )
-    jennifer, jenny = [_cells(row) for row in rows]
+    jennifer, jenny = [_cells(row) for row in _rows(published, proposed, likely)]
 
     assert jennifer["name"] == SheetCell(
         value="Jennifer Fisk-Becker", background=ADDED_ROW, note="may be Jenny Fisk-Becker"

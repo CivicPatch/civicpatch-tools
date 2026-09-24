@@ -40,7 +40,7 @@ async def test_roster_reads_are_capped_however_many_requests():
     ):
         rosters = await roster.proposed_rosters(list(ocdids))
 
-    assert peak <= roster._ROSTER_CONCURRENCY
+    assert peak <= roster.ROSTERS_AT_A_TIME
     # Capping must not drop anybody.
     assert len(rosters) == 40
 

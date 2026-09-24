@@ -9,7 +9,7 @@ import logging
 from datetime import datetime
 from typing import Optional
 
-from core.roster_diff import ProposalCounts
+from core.roster_changes import ProposalCounts
 from database.activity import create_activity_row
 from database.changeset_predicates import (
     AVAILABLE_FOR_REVIEW,
