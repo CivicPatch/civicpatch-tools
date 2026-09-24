@@ -179,26 +179,67 @@ export interface DerivedPost {
   division_ocdid?: string;
 }
 
-/** The post a person actually holds, which is a memberships question — `post_id` on a record is
- * the reviewer's pick and is null until they make one, so it cannot answer this.
- *
- * Only when they hold exactly one: two is no single answer, the same rule the picker follows. */
-export function heldPost(
-  memberships: { post_id: string; post_label: string }[] | null | undefined,
-): DerivedPost | null {
-  const held = memberships ?? [];
-  if (held.length !== 1 || !held[0].post_id) return null;
-  return { post_id: held[0].post_id, label: held[0].post_label };
+// A membership as a card carries it. `organization_id` is what makes the questions below
+// answerable: somebody holds one office per body, and may hold offices in several.
+export interface HeldMembership {
+  post_id: string;
+  post_label?: string;
+  label?: string | null;
+  organization_id?: string;
+  role_id?: string;
+  division_ocdid?: string;
 }
 
-/** The human label on the one post someone holds — what `memberships.assign` would send
- * back, as opposed to `heldPost`'s post-derived label. Same one-membership rule as `heldPost`. */
+/** The whole membership somebody holds in one body. `heldPost` and `heldMembershipLabel` are
+ * projections of this; callers needing more than either take it whole. */
+export function heldOffice(
+  memberships: HeldMembership[] | null | undefined,
+  organizationId: string | null = null,
+): HeldMembership | null {
+  const held = (memberships ?? []).filter((membership) => !!membership.post_id);
+  // Without a body named, the old rule: answer only when there is no ambiguity.
+  if (!organizationId) return held.length === 1 ? held[0] : null;
+  const here = held.filter(
+    (membership) => membership.organization_id === organizationId,
+  );
+  return here[0] ?? null;
+}
+
+/** The post a person holds in one body, which is a memberships question — `post_id` on a record
+ * is the reviewer's pick and is null until they make one, so it cannot answer this.
+ *
+ * One per body, which `collapse_per_organization` guarantees: a person with offices in two
+ * bodies has an answer in each, and had none at all before this took an organization. */
+export function heldPost(
+  memberships: HeldMembership[] | null | undefined,
+  organizationId: string | null = null,
+): DerivedPost | null {
+  const held = heldOffice(memberships, organizationId);
+  if (!held) return null;
+  return { post_id: held.post_id, label: held.post_label ?? "" };
+}
+
+/** The human label on the post someone holds in one body — what the editor sends back, as
+ * opposed to `heldPost`'s post-derived label. */
 export function heldMembershipLabel(
-  memberships: { post_id: string; label: string | null }[] | null | undefined,
+  memberships: HeldMembership[] | null | undefined,
+  organizationId: string | null = null,
 ): string | null {
-  const held = memberships ?? [];
-  if (held.length !== 1 || !held[0].post_id) return null;
-  return held[0].label ?? null;
+  return heldOffice(memberships, organizationId)?.label ?? null;
+}
+
+/** Every body this person holds an office in, in a stable order. What the editor groups by:
+ * one row per body, each with its own office. */
+export function heldOrganizationIds(
+  memberships: HeldMembership[] | null | undefined,
+): string[] {
+  const seen = new Set<string>();
+  for (const membership of memberships ?? []) {
+    if (membership.post_id && membership.organization_id) {
+      seen.add(membership.organization_id);
+    }
+  }
+  return [...seen].sort();
 }
 
 /** The backend's `derive_label` shape. At-large adds nothing — `_division_phrase` returns None

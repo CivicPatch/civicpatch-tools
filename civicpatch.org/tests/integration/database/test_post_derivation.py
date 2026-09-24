@@ -15,12 +15,14 @@ import uuid
 import pytest
 import pytest_asyncio
 
+from core.people_edits import POSTS_FIELD
 from core.post_derivation import ChosenPost, DerivedMembership
-from database import divisions, memberships, organizations, posts
+from database import assertions, divisions, memberships, organizations, posts
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from database.review_priority import issue_count, issue_priority
 from database.source_records import insert_source_records
+from schemas.assertions import Assertion, AssertionKind, DefaultNote, EntityType, Source
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
@@ -1264,31 +1266,44 @@ async def _curator_id(cur) -> str:
 
 
 
-async def _open_membership_id(person_id: str) -> str:
+async def _held_post_id(person_id: str) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT id::text FROM memberships WHERE person_id = %s AND closed_at IS NULL",
+            "SELECT post_id::text FROM memberships "
+            "WHERE person_id = %s AND closed_at IS NULL",
             (person_id,),
         )
         return (await cur.fetchone())[0]
 
 
-async def _reject_membership(person_id: str) -> tuple[str, str]:
-    """Somebody says they never held it, and the `(person, post)` pair they said it about.
+def _posts_claim(person_id: str, post_id: str, kind: AssertionKind) -> Assertion:
+    return Assertion(
+        entity_type=EntityType.PERSON,
+        entity_id=person_id,
+        field_path=POSTS_FIELD,
+        kind=kind,
+        value=post_id,
+        sources=[Source(note=DefaultNote.EDITED)],
+    )
 
-    The pair is what a claim names a membership by, and it outlives the row: the rebuild
-    deletes the membership, so the row id is no use for taking the claim back.
+
+async def _reject_post(person_id: str) -> str:
+    """Somebody says this person does not hold the post, and which post they said it about.
+
+    The claim is about the person: the rebuild deletes and remints the membership row, so the
+    row id is no use for taking the claim back, but `(person, post)` outlives it.
     """
-    membership_id = await _open_membership_id(person_id)
+    post_id = await _held_post_id(person_id)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        pair = await memberships.membership_pair(cur, membership_id)
-        assert pair is not None
-        held_by, post = pair
-        await memberships.reject(cur, held_by, post.id, await _curator_id(cur))
+        await assertions.upsert(
+            cur,
+            _posts_claim(person_id, post_id, AssertionKind.REJECT),
+            await _curator_id(cur),
+        )
         await conn.commit()
-    return held_by, post.id
+    return post_id
 
 
 @pytest.mark.asyncio
@@ -1300,7 +1315,7 @@ async def test_a_membership_somebody_said_never_held_closes_at_publish():
     council, _ = await _two_bodies()
     await _publish((council, person_id, "Council Member Ward 3"))
 
-    await _reject_membership(person_id)
+    await _reject_post(person_id)
     assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
 
     await _publish(at=_T1)
@@ -1316,12 +1331,20 @@ async def test_withdrawing_the_claim_reopens_the_membership_on_the_next_publish(
     person_id = await _seed_person("Ana Reyes")
     council, _ = await _two_bodies()
     await _publish((council, person_id, "Council Member Ward 3"))
-    pair = await _reject_membership(person_id)
+    post_id = await _reject_post(person_id)
     await _publish(at=_T1)
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await memberships.withdraw_reject(cur, *pair, await _curator_id(cur))
+        await assertions.withdraw(
+            cur,
+            EntityType.PERSON,
+            person_id,
+            POSTS_FIELD,
+            AssertionKind.REJECT,
+            await _curator_id(cur),
+            value=post_id,
+        )
         await conn.commit()
 
     await _publish(at=_T2)

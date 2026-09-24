@@ -31,7 +31,6 @@ import {
   duplicateIdsFor,
   navHintFor,
   needsReview,
-  proposalsByPersonId,
   type PersonCard,
 } from "../../components/people/person-cards.js";
 import {
@@ -44,7 +43,6 @@ import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
 import { useOrganizations } from "../../hooks/use-organizations.js";
 import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
 import { officeEditsIn } from "../../components/person-editor/office-edits.js";
-import { type ProposedChange } from "../../schemas/membership-proposal.js";
 import type { PersonAssertion } from "../../components/person-editor/field-provenance.js";
 import {
   jurisdictionOcdidToPath,
@@ -68,7 +66,6 @@ type CurrentEntry = {
   };
   mode: ReviewModeValue;
   pr_people: { existing: any[]; proposed: any[] };
-  changes?: ProposedChange[];
   assertions?: Record<string, PersonAssertion[]>;
   overriddenSourceValues?: Record<string, Record<string, unknown>>;
   review_data: any;
@@ -114,7 +111,6 @@ function ReviewSession(host: ReviewSessionHost) {
     pr,
     mode,
     pr_people,
-    changes,
     assertions,
     overriddenSourceValues,
     review_data,
@@ -176,7 +172,6 @@ function ReviewSession(host: ReviewSessionHost) {
     removedIds,
     restoredIds,
     issues: unresolvedIssues(allIssues, issueChecks),
-    proposals: proposalsByPersonId(changes ?? []),
   });
   const frozen = useFrozenFields(changesetId, cardFields(cards));
   // Filed under the changeset being reviewed, so dismissing the review takes the claim with it.
@@ -230,12 +225,18 @@ function ReviewSession(host: ReviewSessionHost) {
     updatePerson(id, updates);
   // Handed to `review-session-actions`, which folds it into the same `publish`/`save` event
   // that already carries `peoplePatch` — the page applies both under one action.
-  const officeEdits = officeEditsIn(cards);
+  //
+  // One body: a review card is scoped to the changeset's organization, so every card here is
+  // about the same one. 9b(c) is where a card becomes per (person, body).
+  const officeEdits = officeEditsIn(cards, () => organizationId);
   const [candidatesOpen, setCandidatesOpen] = useState(false);
   const handleToggleCandidates = () => setCandidatesOpen((open) => !open);
+  // The anchor outlives the partner: merge is a *screen* in the person's modal, so going Back
+  // from it returns to that person rather than closing the whole thing. One state with a
+  // nullable partner is what keeps the two apart — `mergeAnchorId` is what holds the modal open.
   const [pendingMerge, setPendingMerge] = useState<{
     anchorId: string;
-    partnerId: string;
+    partnerId: string | null;
   } | null>(null);
   const mergeAnchorId = pendingMerge?.anchorId ?? null;
   const handlePickPartner = (anchorId: string, partnerId: string) => {
@@ -243,6 +244,8 @@ function ReviewSession(host: ReviewSessionHost) {
     setPendingMerge({ anchorId, partnerId });
   };
   const clearPendingMerge = () => setPendingMerge(null);
+  const backFromMerge = () =>
+    setPendingMerge((current) => (current ? { ...current, partnerId: null } : null));
   const handleMergePeople = (
     survivorId: string,
     absorbedId: string,
@@ -269,10 +272,6 @@ function ReviewSession(host: ReviewSessionHost) {
     canAssignMembership,
     canCreatePost,
     rosterMemberships: memberships,
-    // Read-only here: see `RosterMembershipsProps.onSetRemoval`. Remove stays, because "this is
-    // not a member here" is the reviewer's own question.
-    onSetRemoval: null,
-    proposals: proposalsByPersonId(changes ?? []),
     assertions: assertions ?? {},
     overriddenSourceValues: overriddenSourceValues ?? {},
     onPersonSave: handlePersonSave,
@@ -305,6 +304,7 @@ function ReviewSession(host: ReviewSessionHost) {
           .isRejecting=${isRejecting}
           .hasSession=${hasSession}
           .officeEdits=${officeEdits}
+          .removedIds=${[...removedIds]}
         ></review-session-actions>
         <div class="review-session__header-tools">
           ${canViewSourceDebug && hasSourceContent
@@ -387,7 +387,6 @@ function ReviewSession(host: ReviewSessionHost) {
       </div>
       <review-overview
         .cards=${cards}
-        .changes=${changes}
         .isReadOnly=${is_read_only}
         .onOpenPerson=${handleOpenPerson}
         .onAdd=${handleAddPerson}
@@ -408,7 +407,6 @@ function ReviewSession(host: ReviewSessionHost) {
         @toggle-issue=${(e: CustomEvent) => handleToggleIssue(e.detail.issue)}
       ></review-sidebar>
       <review-modal
-        .changes=${changes}
         .cards=${cards}
         .posts=${posts}
         .openPersonId=${mergeAnchorId}
@@ -416,10 +414,10 @@ function ReviewSession(host: ReviewSessionHost) {
         .editor=${editorFor}
         .isReadOnly=${!!is_read_only}
         .onClose=${clearPendingMerge}
-        .mergePartner=${pendingMerge
+        .mergePartner=${pendingMerge?.partnerId
           ? (cards.find((c) => c.personId === pendingMerge.partnerId) ?? null)
           : null}
-        .onMergeBack=${clearPendingMerge}
+        .onMergeBack=${backFromMerge}
         .onMerge=${handleMergePeople}
       ></review-modal>
       ${debugOpen

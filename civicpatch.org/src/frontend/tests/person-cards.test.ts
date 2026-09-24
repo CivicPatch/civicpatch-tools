@@ -1,5 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
+  cardKey,
+  personIdIn,
   buildPersonCards,
   postsFor,
   postNameFor,
@@ -9,7 +11,6 @@ import {
   publishSet,
   blockingErrors,
   byDivision,
-  proposalsByPersonId,
   PersonStatus,
 } from "../components/people/person-cards.js";
 import { isContextField, type Issue } from "../components/fields/field-model.js";
@@ -166,21 +167,16 @@ describe("buildPersonCards — surviving fields and issues", () => {
 
 describe("buildPersonCards — office visibility", () => {
   // `post_id` is never a raw scraped value, so a plain field diff never surfaces it — these
-  // lock down the cases `officeSurvivingField` adds it back for.
-  const proposal = (over: Record<string, unknown> = {}) => ({
-    person_id: "a",
+  // lock down the cases `officeSurvivingField` adds it back for. These read the proposed
+  // record's own memberships since 2026-09-23; they read a separate `ProposedChange` before,
+  // because the post did not exist yet and only the derivation could name it.
+  const office = (over: Record<string, unknown> = {}) => ({
+    post_id: "post-1",
     organization_id: "org-1",
-    disposition: "unchanged" as const,
-    post: {
-      id: "post-1",
-      role_id: "council-member",
-      role_label: "Council Member",
-      division_ocdid: "ocd-division/country:us/state:wa/place:x",
-      label: "Council Member",
-      meta_is_tracked: true,
-    },
-    membership_label: "Council Member",
-    from_post: null,
+    role_id: "council-member",
+    role_label: "Council Member",
+    post_label: "Council Member",
+    label: "Council Member",
     ...over,
   });
   const officeKeys = (cards: ReturnType<typeof buildPersonCards>) =>
@@ -190,8 +186,7 @@ describe("buildPersonCards — office visibility", () => {
 
   it("surfaces a first appearance, which a field diff has nothing to compare", () => {
     const cards = build({
-      currentPeople: [person("a")],
-      proposals: proposalsByPersonId([proposal({ disposition: "new" })]),
+      currentPeople: [person("a", { memberships: [office()] })],
     });
     expect(officeKeys(cards)).toEqual(["diff"]);
     // Matches every other field on a brand-new person, which reads "added" too — not
@@ -202,8 +197,7 @@ describe("buildPersonCards — office visibility", () => {
   it("surfaces a move the same way", () => {
     const cards = build({
       existing: [person("a", { memberships: [{ post_id: "old", label: "Mayor" }] })],
-      currentPeople: [person("a")],
-      proposals: proposalsByPersonId([proposal({ disposition: "moved" })]),
+      currentPeople: [person("a", { memberships: [office()] })],
     });
     expect(officeKeys(cards)).toEqual(["diff"]);
     expect(officeStates(cards)).toEqual(["changed"]);
@@ -212,10 +206,13 @@ describe("buildPersonCards — office visibility", () => {
   it("surfaces a recomposed label even though the seat did not move", () => {
     const cards = build({
       existing: [
-        person("a", { memberships: [{ post_id: "post-1", label: "Council Member" }] }),
+        person("a", { memberships: [
+          { post_id: "post-1", label: "Council Member", organization_id: "org-1" },
+        ] }),
       ],
-      currentPeople: [person("a")],
-      proposals: proposalsByPersonId([proposal({ membership_label: "Council Member, Deputy" })]),
+      currentPeople: [
+        person("a", { memberships: [office({ label: "Council Member, Deputy" })] }),
+      ],
     });
     expect(officeKeys(cards)).toEqual(["diff"]);
     expect(officeStates(cards)).toEqual(["changed"]);
@@ -224,15 +221,16 @@ describe("buildPersonCards — office visibility", () => {
   it("stays quiet when the seat and the label both match what was held", () => {
     const cards = build({
       existing: [
-        person("a", { memberships: [{ post_id: "post-1", label: "Council Member" }] }),
+        person("a", { memberships: [
+          { post_id: "post-1", label: "Council Member", organization_id: "org-1" },
+        ] }),
       ],
-      currentPeople: [person("a")],
-      proposals: proposalsByPersonId([proposal()]),
+      currentPeople: [person("a", { memberships: [office()] })],
     });
     expect(officeKeys(cards)).toEqual([]);
   });
 
-  it("stays quiet with no proposals at all, the jurisdiction page's case", () => {
+  it("stays quiet when nobody holds an office at all, the jurisdiction page's case", () => {
     const cards = build({
       existing: [person("a")],
       currentPeople: [person("a")],
@@ -249,9 +247,8 @@ describe("buildPersonCards — office visibility", () => {
     };
     const cards = build({
       existing: [person("a", { memberships: [{ post_id: "old", label: "Mayor" }] })],
-      currentPeople: [person("a")],
+      currentPeople: [person("a", { memberships: [office()] })],
       issues: [issue],
-      proposals: proposalsByPersonId([proposal({ disposition: "moved" })]),
     });
     expect(officeKeys(cards)).toEqual(["issue"]);
   });
@@ -409,7 +406,7 @@ describe("postsFor — what a card calls the person's post", () => {
   it("is empty when nothing is known", () => {
     expect(postsFor(card({}))).toBe("");
   });
-  it("prefers the reviewer's own post_id pick over memberships and proposals", () => {
+  it("prefers the reviewer's own post_id pick over the memberships", () => {
     const posts = [{ id: "post-1", label: "Council President" }] as never;
     expect(
       postsFor(
@@ -417,7 +414,6 @@ describe("postsFor — what a card calls the person's post", () => {
           post_id: "post-1",
           memberships: [{ post_label: "Council Member", label: null }],
         }),
-        undefined,
         posts,
       ),
     ).toBe("Council President");
@@ -430,7 +426,6 @@ describe("postsFor — what a card calls the person's post", () => {
           post_id: "not-a-real-post",
           memberships: [{ post_label: "Council Member", label: null }],
         }),
-        undefined,
         posts,
       ),
     ).toBe("Council Member");
@@ -476,5 +471,21 @@ describe("postNameFor / membershipLabelFor — the two split apart", () => {
         }),
       ),
     ).toBe("");
+  });
+});
+
+describe("cardKey", () => {
+  it("names the person alone when no body is in play", () => {
+    // A review card is one person: the scrape either found them or it did not.
+    expect(cardKey({ personId: "p1" })).toBe("p1");
+  });
+
+  it("names the person in the body for a roster row", () => {
+    expect(cardKey({ personId: "p1", organizationId: "org-council" })).toBe("p1:org-council");
+  });
+
+  it("reads back whom a key is about, either way", () => {
+    expect(personIdIn("p1:org-council")).toBe("p1");
+    expect(personIdIn("p1")).toBe("p1");
   });
 });

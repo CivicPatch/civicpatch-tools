@@ -22,9 +22,9 @@ test.describe("Review progress dots", () => {
   }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
+    await expect(page.locator(".review-session__jurisdiction")).toContainText("E2E Test City");
 
-    const dots = page.locator(".review-page__dot");
+    const dots = page.locator(".review-session__dot");
     await expect(dots).toHaveCount(SEEDED_NJ_CARDS);
 
     // Card 1 is current (disabled — you are already there); 2 and 3 are unreached.
@@ -38,17 +38,17 @@ test.describe("Review progress dots", () => {
   }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
+    await expect(page.locator(".review-session__jurisdiction")).toContainText("E2E Test City");
 
-    await page.locator(".review-page__next-btn").click();
-    await expect(page.locator(".review-page__progress")).toContainText("2");
-    await page.locator(".review-page__next-btn").click();
-    await expect(page.locator(".review-page__progress")).toContainText("3");
+    await page.locator(".review-session__next-btn").click();
+    await expect(page.locator(".review-session__progress")).toContainText("2");
+    await page.locator(".review-session__next-btn").click();
+    await expect(page.locator(".review-session__progress")).toContainText("3");
 
     // Jump straight back to card 1 — two steps back in a single click.
-    await page.locator(".review-page__dot").nth(0).click();
+    await page.locator(".review-session__dot").nth(0).click();
 
-    await expect(page.locator(".review-page__progress")).toContainText(
+    await expect(page.locator(".review-session__progress")).toContainText(
       `1 of ${SEEDED_NJ_CARDS}`,
     );
   });
@@ -58,25 +58,25 @@ test.describe("Review progress dots", () => {
   }) => {
     await page.goto("/review");
     await page.locator(".review-page__start-btn").click();
-    await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
+    await expect(page.locator(".review-session__jurisdiction")).toContainText("E2E Test City");
 
-    await page.locator(".review-page__next-btn").click();
-    await expect(page.locator(".review-page__progress")).toContainText("2");
-    await page.locator(".review-page__next-btn").click();
-    await expect(page.locator(".review-page__progress")).toContainText("3");
+    await page.locator(".review-session__next-btn").click();
+    await expect(page.locator(".review-session__progress")).toContainText("2");
+    await page.locator(".review-session__next-btn").click();
+    await expect(page.locator(".review-session__progress")).toContainText("3");
 
-    await page.locator(".review-page__dot").nth(0).click();
-    await expect(page.locator(".review-page__progress")).toContainText("1 of");
+    await page.locator(".review-session__dot").nth(0).click();
+    await expect(page.locator(".review-session__progress")).toContainText("1 of");
 
-    const dots = page.locator(".review-page__dot");
+    const dots = page.locator(".review-session__dot");
 
     // Card 1 is where we are now.
-    await expect(dots.nth(0)).toHaveClass(/review-page__dot--current/);
+    await expect(dots.nth(0)).toHaveClass(/review-session__dot--current/);
 
     // Cards 2 and 3 were visited but neither published nor saved — they are
     // deferred, and clickable so the reviewer can return to them.
-    await expect(dots.nth(1)).toHaveClass(/review-page__dot--deferred/);
-    await expect(dots.nth(2)).toHaveClass(/review-page__dot--deferred/);
+    await expect(dots.nth(1)).toHaveClass(/review-session__dot--deferred/);
+    await expect(dots.nth(2)).toHaveClass(/review-session__dot--deferred/);
     await expect(dots.nth(1)).toBeEnabled();
     await expect(dots.nth(2)).toBeEnabled();
   });

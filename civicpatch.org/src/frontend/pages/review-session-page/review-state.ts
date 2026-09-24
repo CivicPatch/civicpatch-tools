@@ -9,7 +9,6 @@
 // snake_case keys cross the hook → page → component boundary and match the API
 // contract (see CLAUDE.md).
 
-import { type ProposedChange } from "../../schemas/membership-proposal.js";
 
 export const StateKind = {
   LOADING: "loading",
@@ -45,7 +44,6 @@ export type CurrentEntry = {
   mode: ReviewModeValue;
   pr_people: { existing: any[]; proposed: any[] };
   overriddenSourceValues?: Record<string, Record<string, unknown>>;
-  changes?: ProposedChange[];
   review_data: any;
   source_content_urls: any[];
   is_read_only: boolean;

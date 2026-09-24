@@ -25,16 +25,16 @@ test.describe("Review card — read only", () => {
   }) => {
     await page.goto(`/review/session?changeset_id=${READ_ONLY_CHANGESET_ID}`);
 
-    const banner = page.locator(".review-page__status-banner");
+    const banner = page.locator(".review-session__status-banner");
     await expect(banner).toBeVisible();
     // The banner is `--${reviewStatus}`, and a changeset's terminal state is published — the
     // vocabulary moved off the PR when the review stopped being one.
-    await expect(banner).toHaveClass(/review-page__status-banner--published/);
+    await expect(banner).toHaveClass(/review-session__status-banner--published/);
     await expect(banner).toContainText("published");
 
     // Nothing here can be published, saved or closed again.
-    await expect(page.locator(".review-page__approve-btn")).toHaveCount(0);
-    await expect(page.locator(".review-page__save-btn")).toHaveCount(0);
+    await expect(page.locator(".review-session__approve-btn")).toHaveCount(0);
+    await expect(page.locator(".review-session__save-btn")).toHaveCount(0);
     await expect(page.getByRole("button", { name: "Reject" })).toHaveCount(0);
   });
 
@@ -43,10 +43,10 @@ test.describe("Review card — read only", () => {
   }) => {
     await page.goto(`/review/session?changeset_id=${READ_ONLY_CHANGESET_ID}`);
 
-    const jurisdictionLink = page.locator(".review-page__jurisdiction");
+    const jurisdictionLink = page.locator(".review-session__jurisdiction");
     await expect(jurisdictionLink).toContainText("E2E Read Only City");
 
-    await expect(page.locator(".review-page__jurisdiction-website")).toHaveAttribute(
+    await expect(page.locator(".review-session__jurisdiction-website")).toHaveAttribute(
       "href",
       READ_ONLY_WEBSITE_URL,
     );
@@ -69,8 +69,13 @@ test.describe("Review card — read only across the views", () => {
     authenticatedPage: page,
   }) => {
     await openReadOnly(page);
+    // This verified the overview and `<review-preview>` both rendered. The preview element
+    // went in the 2026-09 redesign — the overview is the roster now — so what is left to
+    // verify is that a published card still shows its roster rather than an empty shell.
+    // As a fold, not a row: nothing changed on a published card, so every person is unchanged
+    // and the collapse rule shows them in a strip.
     await expect(page.locator("review-overview")).toBeVisible();
-    await expect(page.locator("review-preview")).toBeVisible();
+    await expect(page.locator("review-overview .review-fold")).not.toHaveCount(0);
   });
 
   test("every field renders as its value, never a disabled input", async ({
@@ -114,15 +119,8 @@ test.describe("Review card — read only across the views", () => {
     }
   });
 
-  test("the modal opens and navigates, but offers nothing to undo", async ({
-    authenticatedPage: page,
-  }) => {
-    await openReadOnly(page);
-    await page.locator(".review-row__open").first().click();
-    await expect(page.locator("review-modal dialog")).toBeVisible();
-
-    // Close, not Done — there is nothing to keep — and no Revert at all.
-    await expect(page.locator(".review-modal__revert")).toHaveCount(0);
-    await expect(page.locator("review-modal").getByText("Close")).toBeVisible();
-  });
+  // Retired 2026-09-23: "the modal opens and navigates, but offers nothing to undo". Opening a
+  // person no longer opens `<review-modal>` — it is the merge screen now — and the claim it
+  // made is covered above by "no mutating control is offered on any view", which asserts the
+  // absence directly rather than through the modal's chrome.
 });

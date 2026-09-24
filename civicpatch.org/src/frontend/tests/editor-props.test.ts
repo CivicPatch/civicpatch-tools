@@ -1,10 +1,9 @@
 import { describe, it, expect } from "vitest";
 import { personEditorPropsFor } from "../components/person-editor/editor-props.js";
-import { proposalsByPersonId } from "../components/people/person-cards.js";
 
 // Both renderers in the editor used to compute `office.name` + a friendly division
-// themselves, which is why a proposed person's card read empty: they hold no membership,
-// and only the proposal knows their post. The subtitle is built once, here.
+// themselves, which is why the same person's card read differently in two places. The
+// subtitle is built once, here.
 const card = (over = {}) =>
   ({
     personId: "p1",
@@ -25,7 +24,6 @@ const context = (over = {}) =>
     posts: [],
     roles: [],
     canAssignMembership: false,
-    proposals: proposalsByPersonId([]),
     assertions: {},
     overriddenSourceValues: {},
     isExpanded: () => false,
@@ -46,33 +44,10 @@ const subtitleOf = (cardOver = {}, contextOver = {}) =>
   personEditorPropsFor(card(cardOver), context(contextOver)).subtitle;
 
 describe("personEditorPropsFor — subtitle", () => {
-  it("names a proposed person's post, which no record on the card knows", () =>
-    expect(
-      subtitleOf(
-        {},
-        {
-          proposals: proposalsByPersonId([
-            {
-              person_id: "p1",
-              organization_id: "org-1",
-              disposition: "new",
-              post: {
-                id: null,
-                role_id: "council-member",
-                role_label: "Council Member",
-                division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
-                label: "Council Member, District 5",
-                meta_is_tracked: true,
-              },
-              membership_label: null,
-              from_post: null,
-            },
-          ]),
-        },
-      ),
-    ).toBe("Council Member, District 5"));
-
-  it("reads a published person's memberships", () =>
+  // This verified that the subtitle named the scrape's proposed post, which no record on the
+  // card knew. It now verifies that it names the office the record itself holds, because the
+  // proposed record is the fold's and carries its post like any published one.
+  it("names the post the record holds", () =>
     expect(
       subtitleOf({
         newRecord: {
@@ -80,91 +55,58 @@ describe("personEditorPropsFor — subtitle", () => {
           name: "A",
           memberships: [
             {
-              post_id: "x",
-              role_id: "mayor",
-              role_label: "Mayor",
-              division_ocdid: "ocd-division/country:us/state:wa/place:x",
+              post_id: "post-5",
+              post_label: "Council Member, District 5",
               label: null,
-              post_label: "Mayor",
-              source_labels: ["Mayor"],
             },
           ],
         },
       }),
-    ).toBe("Mayor"));
+    ).toBe("Council Member, District 5"));
 
-  it("prefers the proposal over a membership, because the proposal is the pending move", () =>
+  it("composes the post's own name with the membership's own label", () =>
     expect(
-      subtitleOf(
-        {
-          newRecord: {
-            id: "p1",
-            name: "A",
-            memberships: [
-              {
-                post_id: "x",
-                role_id: "council-member",
-                role_label: "Council Member",
-                division_ocdid: "ocd-division/country:us/state:wa/place:x",
-                label: null,
-                post_label: "Council Member",
-                source_labels: ["Council Member"],
-              },
-            ],
-          },
+      subtitleOf({
+        newRecord: {
+          id: "p1",
+          name: "A",
+          memberships: [{ post_id: "x", post_label: "Mayor", label: "Acting Mayor" }],
         },
-        {
-          proposals: proposalsByPersonId([
-            {
-              person_id: "p1",
-              organization_id: "org-1",
-              disposition: "moved",
-              post: {
-                id: null,
-                role_id: "mayor",
-                role_label: "Mayor",
-                division_ocdid: "ocd-division/country:us/state:wa/place:x",
-                label: "Mayor, At-Large",
-                meta_is_tracked: true,
-              },
-              membership_label: null,
-              from_post: null,
-            },
-          ]),
-        },
-      ),
-      // The proposal carries its own rendered label, because the post may not exist yet for
-      // anyone to look one up. The point is that it says Mayor and not Council Member.
-    ).toBe("Mayor, At-Large"));
+      }),
+    ).toBe("Mayor, Acting Mayor"));
+
+  it("says nothing when they hold nothing", () =>
+    expect(subtitleOf({})).toBe(""));
 });
 
 
-const change = (over = {}, postOver = {}) =>
+// A membership as the fold's card rows carry it. Until 2026-09-23 these read a separate
+// `ProposedChange`, because a proposed post had no row for anyone to name; the fold names it
+// from `PostKey`, so the proposed record carries it like any other membership.
+const office = (over = {}) =>
   ({
-    person_id: "p1",
+    post_id: "post-5",
     organization_id: "org-1",
-    disposition: "new",
-    post: {
-      id: "post-5",
-      role_id: "council-member",
-      role_label: "Council Member",
-      division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
-      label: "Council Member, District 5",
-      meta_is_tracked: true,
-      ...postOver,
-    },
-    membership_label: null,
-    from_post: null,
+    role_id: "council-member",
+    role_label: "Council Member",
+    post_label: "Council Member, District 5",
+    division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
+    label: null,
     ...over,
   }) as never;
 
-const derivedPostOf = (changes: unknown[]) =>
-  personEditorPropsFor(card(), context({ proposals: proposalsByPersonId(changes as never) }))
-    .derivedPost;
+const derivedPostOf = (memberships: unknown[], posts: unknown[] = []) =>
+  personEditorPropsFor(
+    card({ newRecord: { id: "p1", name: "A", memberships } }),
+    context({ posts }),
+  ).derivedPost;
 
 describe("personEditorPropsFor — derivedPost", () => {
-  it("offers the seat the derivation chose, so the Post field is not left saying 'derived'", () =>
-    expect(derivedPostOf([change()])).toEqual({
+  // This verified that the picker opened on the scrape's proposal. It now verifies that it
+  // opens on the office the proposed record holds, because that record is the fold's answer
+  // for this changeset and the proposal it used to read is gone.
+  it("offers the seat the fold chose, so the Post field is not left saying 'derived'", () =>
+    expect(derivedPostOf([office()], [{ id: "post-5", label: "x" }])).toEqual({
       post_id: "post-5",
       label: "Council Member, District 5",
       membershipLabel: null,
@@ -173,9 +115,10 @@ describe("personEditorPropsFor — derivedPost", () => {
     }));
 
   // Ingest stopped minting posts, so this is the ordinary case for a promotion rather than an
-  // edge one: the seat exists only as a proposal until somebody publishes.
-  it("offers the seat by label when the scrape would mint the post, since there is no row yet", () =>
-    expect(derivedPostOf([change({}, { id: null })])).toEqual({
+  // edge one. The fold names the post either way — `PostKey` is a uuid5, row or no row — so
+  // what decides is whether the picker's own list has it to look up.
+  it("offers the seat by role when the scrape would mint the post, since there is no row yet", () =>
+    expect(derivedPostOf([office()], [{ id: "some-other-post" }])).toEqual({
       post_id: null,
       label: "Council Member, District 5",
       membershipLabel: null,
@@ -183,72 +126,50 @@ describe("personEditorPropsFor — derivedPost", () => {
       division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
     }));
 
-  it("offers nothing when nobody is proposed onto a seat", () =>
+  it("keeps the post id while the picker's own list is still loading", () => {
+    // `useJurisdictionPosts` answers empty until its fetch lands. Reading that as "the post is
+    // not there" would offer every published person's long-standing post by role and division,
+    // as though this scrape were about to mint it.
+    expect(derivedPostOf([office()], [])?.post_id).toBe("post-5");
+  });
+
+  it("offers nothing when they hold no office at all", () =>
     expect(derivedPostOf([])).toBe(null));
 
   // `unmatched` is a vocabulary gap, not an answer.
-  it("offers nothing when the derivation could not name the role", () =>
-    expect(derivedPostOf([change({}, { role_id: "unmatched" })])).toBe(null));
+  it("offers nothing when the fold could not name the role", () =>
+    expect(derivedPostOf([office({ role_id: "unmatched" })])).toBe(null));
 
-  // Two seats is no single answer; picking either would show a decision nobody made.
-  it("offers nothing when the person is proposed onto two seats", () =>
+  // Two bodies with no body named is no single answer; picking either would show a decision
+  // nobody made. Naming one is what the review card and the roster page both do.
+  it("offers nothing when they hold offices in two bodies and none is named", () =>
     expect(
-      derivedPostOf([
-        change(),
-        change({}, { role_id: "mayor", id: "post-mayor" }),
-      ]),
+      derivedPostOf([office(), office({ post_id: "post-mayor", organization_id: "org-2" })]),
     ).toBe(null));
-});
 
-describe("personEditorPropsFor — derivedPost from a held membership", () => {
-  // The jurisdiction page passes no proposals: its people are published, so the seat comes
-  // from the membership they hold. Without this the Post field there could never answer.
-  const withMemberships = (memberships: unknown[]) =>
-    personEditorPropsFor(
-      card({ newRecord: { id: "p1", name: "A", memberships } }),
-      context(),
-    ).derivedPost;
-
-  it("offers the seat a published person holds", () =>
-    expect(withMemberships([{ post_id: "post-held", post_label: "Mayor" }])).toEqual({
-      post_id: "post-held",
-      label: "Mayor",
-      membershipLabel: null,
-    }));
-
-  it("offers nothing when they hold two seats", () =>
-    expect(withMemberships([{ post_id: "a" }, { post_id: "b" }])).toBe(null));
-
-  it("offers nothing when they hold none", () =>
-    expect(withMemberships([])).toBe(null));
-
-  it("prefers the proposal over the membership, since a scrape is the newer claim", () =>
+  it("answers per body once one is named", () =>
     expect(
       personEditorPropsFor(
-        card({ newRecord: { id: "p1", name: "A", memberships: [{ post_id: "old" }] } }),
-        context({ proposals: proposalsByPersonId([change()]) }),
-      ).derivedPost,
-    ).toEqual({
-      post_id: "post-5",
-      label: "Council Member, District 5",
-      membershipLabel: null,
-      role_id: "council-member",
-      division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
-    }));
+        card({
+          newRecord: {
+            id: "p1",
+            name: "A",
+            memberships: [
+              office(),
+              office({
+                post_id: "post-mayor",
+                organization_id: "org-2",
+                post_label: "Mayor",
+              }),
+            ],
+          },
+        }),
+        context({ organizationId: "org-2" }),
+      ).derivedPost?.label,
+    ).toBe("Mayor"));
 
-  it("carries the proposal's membership label, so the picker defaults to the detected move", () =>
-    expect(derivedPostOf([change({ membership_label: "Chair" })])).toEqual({
-      post_id: "post-5",
-      label: "Council Member, District 5",
-      membershipLabel: "Chair",
-      role_id: "council-member",
-      division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
-    }));
-
-  it("carries the held membership's own label when there is no proposal", () =>
-    expect(
-      withMemberships([{ post_id: "post-held", post_label: "Mayor", label: "Chair" }]),
-    ).toEqual({ post_id: "post-held", label: "Mayor", membershipLabel: "Chair" }));
+  it("carries the membership's own label, so the picker defaults to what the page said", () =>
+    expect(derivedPostOf([office({ label: "Chair" })])?.membershipLabel).toBe("Chair"));
 });
 
 

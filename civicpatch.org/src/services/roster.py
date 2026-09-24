@@ -1,31 +1,36 @@
 import asyncio
 import logging
+from datetime import datetime, timezone
+from typing import NamedTuple
 
 from core.card_rows import card_rows
 from core.changeset_lifecycle import PARTIAL_KINDS
 from core.people_edits import source_values_overridden, with_asserted_values
 from core.people_roster import partial_roster, roster_from_sightings
 from core.projection.diff import on_roster
-from database import assertions
+from core.projection.facts import Facts
+from core.projection.roster import overridden_by_person
+from database import assertions, source_records
 from database import changesets as changesets_db
+from database import posts as posts_db
+from database import projection as projection_db
 from database.database import get_pool
 from database.people import get_people_by_ids, get_roster
 from database.roles import get_roles
-from database import posts as posts_db
-from database import projection as projection_db
-from database import source_records
 from database.source_records import (
     get_earliest_source_records_for_people,
     get_source_records_for_changeset,
 )
 from schemas.assertions import EntityType
 from shared.schemas import POST_FIELD, RoleConfig
-from shared.utils.taxonomy import build_taxonomy
+from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
 logger = logging.getLogger(__name__)
 
 
-async def _roster(changeset_id: str, jurisdiction_ocdid: str) -> tuple[list[dict], dict]:
+async def _roster(
+    changeset_id: str, jurisdiction_ocdid: str
+) -> tuple[list[dict], dict]:
     sightings = await get_source_records_for_changeset(changeset_id)
     if not sightings:
         return [], {}
@@ -47,7 +52,9 @@ async def _roster(changeset_id: str, jurisdiction_ocdid: str) -> tuple[list[dict
     ), asserted
 
 
-async def origin_roster_for(entity_ids: list[str], jurisdiction_ocdid: str) -> list[dict]:
+async def origin_roster_for(
+    entity_ids: list[str], jurisdiction_ocdid: str
+) -> list[dict]:
     """These people's fields as their earliest sighting recorded them — the pristine base a
     rollback overlays currently-active assertions onto. Not the live roster: that already has
     every assertion (withdrawn ones included) baked in, so there's nothing left to fall back to.
@@ -66,19 +73,66 @@ async def origin_roster_for(entity_ids: list[str], jurisdiction_ocdid: str) -> l
     )
 
 
+async def _fold_for_card(
+    jurisdiction_ocdid: str, including: str | None
+) -> tuple[list[dict], Facts, Taxonomy]:
+    """One fold, and the facts behind it, for a caller that wants more than the rows."""
+    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        roster, facts = await projection_db.derived_roster_and_facts(
+            cur, jurisdiction_ocdid, including=including, taxonomy=taxonomy
+        )
+    return card_rows(on_roster(roster), jurisdiction_ocdid, taxonomy), facts, taxonomy
+
+
 async def published_card_rows(jurisdiction_ocdid: str) -> list[dict]:
     """The published roster as the card's `existing` rows, derived rather than read.
 
     `on_roster` is what `get_roster`'s `IS_ON_THE_ROSTER` was asking: somebody is on the roster
     if they hold a post. The shape is `PERSON_JSON`'s, so the browser reads the same keys.
+    No override disclosure: the published side carries no locks, and working one out is a
+    second pass over every record in the jurisdiction.
+    """
+    rows, _facts, _taxonomy = await _fold_for_card(jurisdiction_ocdid, None)
+    return rows
+
+
+class CardSides(NamedTuple):
+    """What a review card compares: the roster today, the roster this changeset would make
+    live, and the page values the proposed side's locks disclose."""
+
+    existing: list[dict]
+    proposed: list[dict]
+    overridden: dict[str, dict]
+
+
+async def card_sides(changeset_id: str, jurisdiction_ocdid: str) -> CardSides:
+    """Both sides of a card, one connection, one `as_of`, one taxonomy.
+
+    Pinned to a single moment on purpose: derived separately they would take a `now()` each,
+    and a claim landing between them would reach one side of the card and not the other —
+    which is `derived_roster`'s own warning. One connection because they are one question.
     """
     taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    as_of = datetime.now(timezone.utc)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        published = await projection_db.derived_roster(
-            cur, jurisdiction_ocdid, taxonomy=taxonomy
+        published, _facts = await projection_db.derived_roster_and_facts(
+            cur, jurisdiction_ocdid, as_of=as_of, taxonomy=taxonomy
         )
-    return card_rows(on_roster(published), jurisdiction_ocdid, taxonomy)
+        proposed, proposed_facts = await projection_db.derived_roster_and_facts(
+            cur,
+            jurisdiction_ocdid,
+            including=changeset_id,
+            as_of=as_of,
+            taxonomy=taxonomy,
+        )
+    return CardSides(
+        existing=card_rows(on_roster(published), jurisdiction_ocdid, taxonomy),
+        proposed=card_rows(on_roster(proposed), jurisdiction_ocdid, taxonomy),
+        overridden=overridden_by_person(proposed_facts),
+    )
 
 
 async def proposed_roster(changeset_id: str, jurisdiction_ocdid: str) -> list[dict]:
@@ -107,7 +161,8 @@ async def proposed_roster_and_source_values(
         )
     }
     people = [
-        with_asserted_values(person, asserted.get(person["id"], {})) for person in roster
+        with_asserted_values(person, asserted.get(person["id"], {}))
+        for person in roster
     ]
     if await changesets_db.get_changeset_kind(changeset_id) in PARTIAL_KINDS:
         published = await get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
@@ -134,14 +189,23 @@ async def _one_post_each(changeset_id: str, people: list[dict]) -> list[dict]:
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_ids = await source_records.organizations_for_changeset(cur, changeset_id)
+        organization_ids = await source_records.organizations_for_changeset(
+            cur, changeset_id
+        )
         here = await posts_db.ids_in_organizations(cur, every_id, organization_ids)
 
     return [
-        {**person, POST_FIELD: next(
-            (post_id for post_id in accepted.get(person["id"], []) if post_id in here),
-            None,
-        )}
+        {
+            **person,
+            POST_FIELD: next(
+                (
+                    post_id
+                    for post_id in accepted.get(person["id"], [])
+                    if post_id in here
+                ),
+                None,
+            ),
+        }
         if person["id"] in accepted
         else person
         for person in people
@@ -169,21 +233,19 @@ async def proposed_rosters(changeset_ids: list[str]) -> dict[str, list[dict]]:
 async def proposed_rosters_and_source_values(
     changeset_ids: list[str],
 ) -> dict[str, tuple[list[dict], dict[str, dict]]]:
-    """`proposed_roster_and_source_values` for a page of review cards.
-
-    Derived per request rather than in one query: a roster is Python over that scrape's own
-    sightings, so there is nothing to batch.
-    """
+    """`proposed_roster_and_source_values` for a page of review cards."""
     if not changeset_ids:
         return {}
     ocdids = await changesets_db.jurisdictions_for_changesets(changeset_ids)
     limit = asyncio.Semaphore(_ROSTER_CONCURRENCY)
 
-    async def one(changeset_id: str, ocdid: str) -> tuple[list[dict], dict[str, dict]]:
+    async def one_roster(
+        changeset_id: str, ocdid: str
+    ) -> tuple[list[dict], dict[str, dict]]:
         async with limit:
             return await proposed_roster_and_source_values(changeset_id, ocdid)
 
     results = await asyncio.gather(
-        *[one(changeset_id, ocdid) for changeset_id, ocdid in ocdids.items()]
+        *[one_roster(changeset_id, ocdid) for changeset_id, ocdid in ocdids.items()]
     )
     return dict(zip(ocdids, results))

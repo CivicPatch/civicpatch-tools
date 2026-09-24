@@ -21,19 +21,19 @@ describe("officeEditsIn", () => {
   it("keeps the held label when only the post changed", () =>
     expect(
       officeEditsIn([card({ newRecord: { id: "p1", post_id: "mayor-1" } })]),
-    ).toEqual([{ personId: "p1", postId: "mayor-1", membershipLabel: "District 3" }]));
+    ).toEqual([{ personId: "p1", postId: "mayor-1", membershipLabel: "District 3", organizationId: null }]));
 
   it("keeps an explicit label when both the post and the label changed", () =>
     expect(
       officeEditsIn([
         card({ newRecord: { id: "p1", post_id: "mayor-1", membership_label: "Acting" } }),
       ]),
-    ).toEqual([{ personId: "p1", postId: "mayor-1", membershipLabel: "Acting" }]));
+    ).toEqual([{ personId: "p1", postId: "mayor-1", membershipLabel: "Acting", organizationId: null }]));
 
   it("keeps the held post when only the label changed", () =>
     expect(
       officeEditsIn([card({ newRecord: { id: "p1", membership_label: "Ward 2" } })]),
-    ).toEqual([{ personId: "p1", postId: "council-1", membershipLabel: "Ward 2" }]));
+    ).toEqual([{ personId: "p1", postId: "council-1", membershipLabel: "Ward 2", organizationId: null }]));
 
   it("is empty when the pick matches what they already hold", () =>
     expect(
@@ -43,7 +43,7 @@ describe("officeEditsIn", () => {
   it("carries an explicitly cleared label through as null, not as unchanged", () =>
     expect(
       officeEditsIn([card({ newRecord: { id: "p1", membership_label: null } })]),
-    ).toEqual([{ personId: "p1", postId: "council-1", membershipLabel: null }]));
+    ).toEqual([{ personId: "p1", postId: "council-1", membershipLabel: null, organizationId: null }]));
 
   it("has nothing to attach a label-only edit to for someone with no current post", () =>
     expect(

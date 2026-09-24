@@ -39,7 +39,6 @@ import {
   type SourceMap,
 } from "./overview-model.js";
 import { type ReviewOverviewProps } from "./review-overview.js";
-import { type ProposedChange } from "../../schemas/membership-proposal.js";
 
 export function rowLabel(card: PersonCard): string {
   const parts = [
@@ -105,21 +104,14 @@ function renderFieldLock(lock: FieldLock | null) {
 // the picker and the card subtitle do. Only the post itself is diffed here — the membership
 // label is a second, independently-changing thing (office-edits.ts) and renders in its own
 // row below, plainly, never compared against an old value.
-function renderPostFieldValue(
-  card: PersonCard,
-  proposals: Map<string, ProposedChange[]>,
-  props: ReviewOverviewProps,
-) {
-  const moved = movedNote(card, proposals, props.posts);
+function renderPostFieldValue(card: PersonCard, props: ReviewOverviewProps) {
+  const moved = movedNote(card, props.posts);
   if (moved) return html`<del>${moved.from}</del> <ins>${moved.to}</ins>`;
-  return postNameFor(card, proposals, props.posts) || nothing;
+  return postNameFor(card, props.posts) || nothing;
 }
 
-function renderMembershipLabelRow(
-  card: PersonCard,
-  proposals: Map<string, ProposedChange[]>,
-) {
-  const label = membershipLabelFor(card, proposals);
+function renderMembershipLabelRow(card: PersonCard) {
+  const label = membershipLabelFor(card);
   if (!label) return nothing;
   return html`<span class="pv">
     <span class="pvk">label</span>
@@ -131,7 +123,6 @@ function renderFieldRow(
   surviving: SurvivingField,
   card: PersonCard,
   props: ReviewOverviewProps,
-  proposals: Map<string, ProposedChange[]>,
 ) {
   const { field } = surviving;
   const record = personOf(card);
@@ -142,17 +133,20 @@ function renderFieldRow(
     overrides[field.key],
     diffValue(record, field),
   );
+  // An issue outranks the field's own diff state: the card already says it has one, and this
+  // is what says which field it is about.
+  const anchored = surviving.reason === "issue" ? " pv--issue" : "";
   if (field.key === POST_FIELD) {
-    return html`<span class="pv pv--post">
+    return html`<span class="pv pv--post${anchored}">
         <span class="pvk">${field.label.toLowerCase()}</span>
         <span class="pvv"
-          >${renderFieldLock(lock)}${renderPostFieldValue(card, proposals, props)}</span
+          >${renderFieldLock(lock)}${renderPostFieldValue(card, props)}</span
         >
       </span>
-      ${renderMembershipLabelRow(card, proposals)}`;
+      ${renderMembershipLabelRow(card)}`;
   }
   const value = renderFieldValueDiff(field, surviving.state, card.oldRecord, card.newRecord);
-  return html`<span class="pv">
+  return html`<span class="pv${anchored}">
     <span class="pvk">${field.label.toLowerCase()}</span>
     <span class="pvv">${renderFieldLock(lock)}${value}</span>
   </span>`;
@@ -162,10 +156,9 @@ export function renderDiffCard(
   card: PersonCard,
   props: ReviewOverviewProps,
   sources: SourceMap,
-  proposals: Map<string, ProposedChange[]>,
 ) {
   const record = personOf(card);
-  const moved = movedNote(card, proposals, props.posts);
+  const moved = movedNote(card, props.posts);
   const fields = visibleFields(card);
   const isOpen = card.personId === props.openPersonId;
   return renderCardShell(
@@ -189,7 +182,7 @@ export function renderDiffCard(
           ${renderAttention(card)}
         </span>
         <span class="pc-vals">
-          ${fields.map((field) => renderFieldRow(field, card, props, proposals))}
+          ${fields.map((field) => renderFieldRow(field, card, props))}
         </span>
         <span class="review-row__sources">${renderSources(card, sources)}</span>
       </span>
@@ -210,11 +203,7 @@ export function renderInlineEditor(card: PersonCard, props: ReviewOverviewProps)
   });
 }
 
-export function renderFold(
-  card: PersonCard,
-  props: ReviewOverviewProps,
-  proposals: Map<string, ProposedChange[]>,
-) {
+export function renderFold(card: PersonCard, props: ReviewOverviewProps) {
   const record = personOf(card);
   const isOpen = card.personId === props.openPersonId;
   return html`
@@ -233,7 +222,7 @@ export function renderFold(
           <span class="review-fold__name">${record?.name || "(unnamed)"}</span>
           <span class="review-fold__meta">
             <span class="review-fold__sub"
-              >${postsFor(card, proposals, props.posts) || nothing}</span
+              >${postsFor(card, props.posts) || nothing}</span
             >
             ${renderAttention(card)}
           </span>

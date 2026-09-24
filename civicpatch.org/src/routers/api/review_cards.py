@@ -39,16 +39,11 @@ from schemas.common import (
 )
 from services.review_proposal import (
     assertions_for_people,
-    proposals_for_requests,
     review_summary_for_changeset,
 )
 import services.review_cards as review_cards_service
 from services.review_sources import build_sources, without_debug_links
-from services.roster import (
-    proposed_roster,
-    proposed_roster_and_source_values,
-    published_card_rows,
-)
+from services.roster import card_sides
 
 logger = logging.getLogger(__name__)
 # ──────────────────────────────────────────────
@@ -149,10 +144,8 @@ def get_router(api_key_header):
         changeset_id: str,
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        existing, proposed = await asyncio.gather(
-            published_card_rows(jurisdiction_ocdid),
-            proposed_roster(changeset_id, jurisdiction_ocdid),
-        )
+        sides = await card_sides(changeset_id, jurisdiction_ocdid)
+        existing, proposed = sides.existing, sides.proposed
         if not proposed:
             return JSONResponse(
                 content={"error": MISSING_ROSTER_DETAIL}, status_code=404
@@ -237,16 +230,14 @@ def get_router(api_key_header):
         changeset_id = result["changeset_id"]
         jurisdiction_ocdid = result["jurisdiction_ocdid"]
 
-        existing, (proposed, overridden), has_ever_collected, proposals = await asyncio.gather(
-            published_card_rows(jurisdiction_ocdid),
-            proposed_roster_and_source_values(changeset_id, jurisdiction_ocdid),
+        # Both sides from the same fold (R3): `existing` is what the facts derive today,
+        # `proposed` what they derive with this changeset counted as published, so the card
+        # cannot show a preview its own publish would disagree with.
+        sides, has_ever_collected = await asyncio.gather(
+            card_sides(changeset_id, jurisdiction_ocdid),
             jurisdictions_db.has_ever_collected(jurisdiction_ocdid),
-            # What this scrape would change about who holds what. The queue listing has carried
-            # it since the proposal landed; the review session reads this endpoint instead, and
-            # without it a proposed person has no post to name — the post does not exist yet, so
-            # the derivation is the only thing that knows.
-            proposals_for_requests([changeset_id]),
         )
+        existing, proposed, overridden = sides
         unique_source_urls = list(
             {url for person in proposed for url in (person.get("source_urls") or [])}
         )
@@ -270,9 +261,6 @@ def get_router(api_key_header):
                 "mode": ReviewMode.for_scrape(has_ever_collected).value,
                 "existing": existing,
                 "proposed": proposed,
-                "changes": [
-                    change.model_dump() for change in proposals.get(changeset_id, [])
-                ],
                 "assertions": await assertions_for_people(
                     [person["id"] for person in existing if person.get("id")]
                 ),

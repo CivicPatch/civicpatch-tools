@@ -4,7 +4,10 @@ import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.
 import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { editJurisdictionRoster } from "../../api.js";
-import type { OfficeEdit } from "../../components/person-editor/office-edits.js";
+import {
+  heldOfficesByPerson,
+  rosterEditPayload,
+} from "../../components/edit-people/roster-edit-payload.js";
 import { useReviewActions } from "../../hooks/use-review-actions.js";
 import { REVIEW_ACTION } from "../../components/review-card/review-action.js";
 import { useReviewSession } from "./use-review-session.js";
@@ -39,25 +42,24 @@ function ReviewSessionPage() {
   // like rejecting a scrape (see routers/api/memberships.py).
   const canAssignMembership = !!user?.authenticated;
 
-  // One call for the whole card: the fields a reviewer corrected and the posts they picked are
-  // one answer about one person, so they are one payload under one changeset. A failure stops
-  // before `merge`/`save` runs, rather than leaving a half-applied publish with no word to the
-  // reviewer.
+  // One call for the whole card: the fields a reviewer corrected and the offices they picked
+  // are one answer about one person, so they are one payload under one changeset. Built by
+  // `rosterEditPayload`, the same assembler the jurisdictions page uses — this page hand-built
+  // it until 2026-09-23 and carried its own copy of the bug where a second office replaced the
+  // first instead of joining it. A failure stops before `merge`/`save` runs, rather than
+  // leaving a half-applied publish with no word to the reviewer.
   const applyEdits = async (e: CustomEvent): Promise<boolean> => {
     const ocdid = currentEntry?.jurisdiction?.ocdid;
     if (!ocdid || !changesetId) return true;
-    const byPerson = new Map<string, any>();
-    for (const person of e.detail.people ?? []) {
-      byPerson.set(person.id, { id: person.id, fields: person.fields });
-    }
-    for (const change of (e.detail.officeEdits ?? []) as OfficeEdit[]) {
-      const person = byPerson.get(change.personId) ?? { id: change.personId };
-      person.offices = [{ id: change.postId, membership_label: change.membershipLabel }];
-      byPerson.set(change.personId, person);
-    }
-    if (!byPerson.size) return true;
+    const payload = rosterEditPayload(
+      e.detail.people ?? [],
+      e.detail.officeEdits ?? [],
+      e.detail.removedIds ?? [],
+      heldOfficesByPerson(e.detail.cards ?? []),
+    );
+    if (!payload.length) return true;
     try {
-      await editJurisdictionRoster(ocdid, [...byPerson.values()], changesetId);
+      await editJurisdictionRoster(ocdid, payload, changesetId);
       return true;
     } catch (err: any) {
       window.alert(err.message ?? "Failed to save the card.");

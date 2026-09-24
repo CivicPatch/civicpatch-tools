@@ -19,7 +19,6 @@ from typing import AsyncGenerator
 
 from core.membership_label import derive_post_label
 from core.membership_proposal import ExistingMembership, MembershipPost
-from core.people_edits import POSTS_FIELD
 from core.projection.memberships import MEMBERSHIP_LABEL_FIELD
 from database import assertions, posts
 from database.activity import record_change
@@ -39,8 +38,6 @@ from schemas.assertions import (
     EntityType,
     Source,
 )
-from schemas.posts import MembershipRemovalAssertion
-from shared.schemas import Post
 from shared.utils.membership_ids import membership_id
 from shared.utils.statuses import ActivityType
 
@@ -89,27 +86,10 @@ async def list_for_jurisdiction(
 async def list_by_person(
     jurisdiction_ocdid: str, as_of: date | None = None
 ) -> list[dict]:
-    """The roster by person rather than by post, each membership carrying whichever removal
-    somebody has claimed about it. `as_of` is None for now.
-
-    The claims ride along because the editor offers them as one exclusive choice: without them the
-    screen would have to guess which button is already chosen, or ask per row.
-    """
+    """The roster by person rather than by post. `as_of` is None for now."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await list_for_jurisdiction(cur, jurisdiction_ocdid, as_of)
-        person_claims = await assertions.asserted_values(
-            cur, EntityType.PERSON, list({row["person_id"] for row in rows})
-        )
-    return [
-        {
-            **row,
-            "removal_assertion": _rejected(
-                person_claims.get(row["person_id"], {}), row["post_id"]
-            ).value,
-        }
-        for row in rows
-    ]
+        return await list_for_jurisdiction(cur, jurisdiction_ocdid, as_of)
 
 
 # The same shape `people._scope` and `posts.list_page_for_state` build. Written out a third
@@ -420,77 +400,6 @@ async def set_membership_label(
         ),
         user_id,
     )
-
-
-async def reject(
-    cur,
-    person_id: str,
-    post_id: str,
-    user_id: str,
-    reason: str | None = None,
-    changeset_id: str | None = None,
-) -> str:
-    """They do not hold this post. One of the two verbs (§2 of the projector plan): the
-    membership row survives, and so does every term before the claim's date.
-
-    Which posts somebody holds is a claim about the person, one per post, so the fold reads it
-    without knowing the membership row's id — which it cannot, since it writes that row.
-
-    `reason`, when given, rides as `sources` — the same "phoned the clerk" mechanism every
-    other claim already has, rather than a new column just for this one.
-    """
-    return await assertions.upsert(
-        cur,
-        Assertion(
-            entity_type=EntityType.PERSON,
-            entity_id=person_id,
-            field_path=POSTS_FIELD,
-            kind=AssertionKind.REJECT,
-            value=post_id,
-            sources=[Source(note=reason or DefaultNote.NO_REASON)],
-            changeset_id=changeset_id,
-        ),
-        user_id,
-    )
-
-
-async def withdraw_reject(cur, person_id: str, post_id: str, user_id: str) -> int:
-    """Take that rejection back. Returns how many rows went, 0 if there was none."""
-    return await assertions.withdraw(
-        cur,
-        EntityType.PERSON,
-        person_id,
-        POSTS_FIELD,
-        AssertionKind.REJECT,
-        user_id,
-        value=post_id,
-    )
-
-
-def _rejected(person_claims: dict, post_id: str) -> MembershipRemovalAssertion:
-    """What the editor's three-way control shows for a membership: rejected or not. `closed` is
-    gone, so a reject reads as the one removal there is. The control goes at step 9."""
-    rejected = person_claims.get(POSTS_FIELD, {}).get(AssertionKind.REJECT) or []
-    if post_id in rejected:
-        return MembershipRemovalAssertion.NEVER_HELD
-    return MembershipRemovalAssertion.NONE
-
-
-async def membership_pair(cur, membership_id: str) -> tuple[str, Post] | None:
-    """The `(person, post)` a membership row is, which is what a claim about it names.
-
-    The editor still addresses memberships by row id; the fold addresses them by the pair. This
-    is the translation, and it goes with step 9's route.
-    """
-    await cur.execute(
-        "SELECT person_id::text, post_id::text FROM memberships WHERE id::text = %s",
-        (membership_id,),
-    )
-    row = await cur.fetchone()
-    if row is None:
-        return None
-    post = await posts.get(cur, row[1])
-    return (row[0], post) if post else None
 
 
 async def open_memberships_for_persons(cur, person_ids: list[str]) -> list[dict]:

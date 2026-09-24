@@ -1,15 +1,15 @@
 import asyncio
 import datetime
+from unittest.mock import AsyncMock, patch
+
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from unittest.mock import AsyncMock, patch
-
-from schemas.common import Identity, UserRole
-from shared.schemas import Post
 from lib.auth import get_optional_user
 from routers.api import review_actions as review_actions_router
 from routers.api import review_cards as review_cards_router
+from schemas.common import Identity, UserRole
+from services.roster import CardSides
 
 MOCK_IDENTITY = Identity(
     type="service_api_key",
@@ -38,6 +38,7 @@ def _client_as(identity: Identity) -> TestClient:
     app.include_router(review_cards_router.get_router(None), prefix="/pull_requests")
     app.include_router(review_actions_router.get_router(None), prefix="/pull_requests")
     return TestClient(app)
+
 
 TEST_CHANGESET_ID = "test-request-id-123"
 TEST_PR_NUMBER = "42"
@@ -136,10 +137,23 @@ def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
     """`data_json` is the only copy of the roster now. Publishing a request that never
     recorded one would resolve to [] and retire every person in the jurisdiction."""
     with (
-        patch("services.roster_edits.publish_roster", new_callable=AsyncMock) as mock_publish,
-        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
-        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[]),
-        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[]),
+        patch(
+            "services.roster_edits.publish_roster", new_callable=AsyncMock
+        ) as mock_publish,
+        patch(
+            "database.review_session_entries.resolve_entries_for_changeset",
+            new_callable=AsyncMock,
+        ),
+        patch(
+            "services.roster_edits.proposed_roster",
+            new_callable=AsyncMock,
+            return_value=[],
+        ),
+        patch(
+            "services.roster_edits.scraped_roster",
+            new_callable=AsyncMock,
+            return_value=[],
+        ),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/publish",
@@ -155,10 +169,23 @@ def test_publish_returns_200_and_queues_no_merge(client):
     """Publishing settles within the request: the roster is written and the entry resolved
     before the response, so there is nothing for the caller to poll."""
     with (
-        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock) as mock_resolve,
-        patch("services.roster_edits.publish_roster", new_callable=AsyncMock) as mock_publish,
-        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch(
+            "database.review_session_entries.resolve_entries_for_changeset",
+            new_callable=AsyncMock,
+        ) as mock_resolve,
+        patch(
+            "services.roster_edits.publish_roster", new_callable=AsyncMock
+        ) as mock_publish,
+        patch(
+            "services.roster_edits.proposed_roster",
+            new_callable=AsyncMock,
+            return_value=[{**BASE_PERSON}],
+        ),
+        patch(
+            "services.roster_edits.scraped_roster",
+            new_callable=AsyncMock,
+            return_value=[{**BASE_PERSON}],
+        ),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/publish",
@@ -189,8 +216,8 @@ BASE_PERSON = {
 }
 
 
-
 SAVE_PATCH = [{"id": "p1", "fields": {"phones": ["9165551234"]}}]
+
 
 @pytest.mark.unit
 def test_save_marks_the_entry_saved_without_publishing(client):
@@ -201,12 +228,22 @@ def test_save_marks_the_entry_saved_without_publishing(client):
     this call — one payload for the fields and the posts, one place that turns an answer into
     claims."""
     with (
-        patch("database.review_session_entries.save_entries_for_changeset", new_callable=AsyncMock) as mock_save,
-        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock) as mock_resolve,
+        patch(
+            "database.review_session_entries.save_entries_for_changeset",
+            new_callable=AsyncMock,
+        ) as mock_save,
+        patch(
+            "database.review_session_entries.resolve_entries_for_changeset",
+            new_callable=AsyncMock,
+        ) as mock_resolve,
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/save",
-            json={"changeset_id": TEST_CHANGESET_ID, "jurisdiction_ocdid": TEST_OCDID, "data": SAVE_PATCH},
+            json={
+                "changeset_id": TEST_CHANGESET_ID,
+                "jurisdiction_ocdid": TEST_OCDID,
+                "data": SAVE_PATCH,
+            },
         )
 
     assert response.status_code == 200
@@ -231,12 +268,20 @@ OPEN_PR_DB_RESULT = {
     "jurisdiction_ocdid": TEST_OCDID,
     "jurisdiction_name": "Oakland",
     "jurisdiction_website_url": "https://oaklandca.gov",
-    "pr": {"url": "https://github.com/org/repo/pull/42", "status": "open", "number": 42},
+    "pr": {
+        "url": "https://github.com/org/repo/pull/42",
+        "status": "open",
+        "number": 42,
+    },
 }
 
 MERGED_PR_DB_RESULT = {
     **OPEN_PR_DB_RESULT,
-    "pr": {"url": "https://github.com/org/repo/pull/42", "status": "merged", "number": 42},
+    "pr": {
+        "url": "https://github.com/org/repo/pull/42",
+        "status": "merged",
+        "number": 42,
+    },
 }
 
 
@@ -260,29 +305,17 @@ def test_get_by_request_200_for_open_pr(client):
             new_callable=AsyncMock,
             return_value=OPEN_PR_DB_RESULT,
         ),
+        # Both sides of the card and the locks' disclosure, from one call: derived apart they
+        # would take a `now()` each, and a claim landing between them would reach one side only.
         patch(
-            "routers.api.review_cards.published_card_rows",
+            "routers.api.review_cards.card_sides",
             new_callable=AsyncMock,
-            return_value=[],
-        ),
-        # The roster and what the source said where an assertion changed it, from one pass —
-        # so the card can show the published value under a lock and disclose what it replaced.
-        patch(
-            "routers.api.review_cards.proposed_roster_and_source_values",
-            new_callable=AsyncMock,
-            return_value=([{"name": "Jane Doe"}], {}),
+            return_value=CardSides([], [{"name": "Jane Doe"}], {}),
         ),
         patch(
             "database.jurisdictions.has_ever_collected",
             new_callable=AsyncMock,
             return_value=None,
-        ),
-        # Crosses to the DB for the roster and the memberships it diffs against. The
-        # proposal itself is unit-tested in core/test_membership_proposal.py.
-        patch(
-            "routers.api.review_cards.proposals_for_requests",
-            new_callable=AsyncMock,
-            return_value={},
         ),
     ):
         response = client.get(f"/pull_requests/by-request/{TEST_CHANGESET_ID}")
@@ -305,28 +338,17 @@ def test_get_by_request_200_for_merged_pr(client):
             new_callable=AsyncMock,
             return_value=MERGED_PR_DB_RESULT,
         ),
+        # Both sides of the card and the locks' disclosure, from one call: derived apart they
+        # would take a `now()` each, and a claim landing between them would reach one side only.
         patch(
-            "routers.api.review_cards.published_card_rows",
+            "routers.api.review_cards.card_sides",
             new_callable=AsyncMock,
-            return_value=[],
-        ),
-        # The roster and what the source said where an assertion changed it, from one pass —
-        # so the card can show the published value under a lock and disclose what it replaced.
-        patch(
-            "routers.api.review_cards.proposed_roster_and_source_values",
-            new_callable=AsyncMock,
-            return_value=([{"name": "Jane Doe"}], {}),
+            return_value=CardSides([], [{"name": "Jane Doe"}], {}),
         ),
         patch(
             "database.jurisdictions.has_ever_collected",
             new_callable=AsyncMock,
             return_value=datetime.datetime(2026, 1, 1, tzinfo=datetime.timezone.utc),
-        ),
-        # Same DB boundary as the open-pr case above.
-        patch(
-            "routers.api.review_cards.proposals_for_requests",
-            new_callable=AsyncMock,
-            return_value={},
         ),
     ):
         response = client.get(f"/pull_requests/by-request/{TEST_CHANGESET_ID}")
@@ -345,6 +367,8 @@ MERGE_KEY = f"merge_status:{TEST_PR_NUMBER}"
 
 def run(coro):
     return asyncio.get_event_loop().run_until_complete(coro)
+
+
 # ── Auth gates on write routes ──────────────────────────────────────────────
 #
 # These routes require (TEAM_REQUIRED, UserRole.CONTRIBUTORS). The default-level
@@ -376,10 +400,21 @@ def test_publish_allows_default_role():
     AUTHENTICATED, not contributor-gated."""
     client = _client_as(_user_at(UserRole.DEFAULT))
     with (
-        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
+        patch(
+            "database.review_session_entries.resolve_entries_for_changeset",
+            new_callable=AsyncMock,
+        ),
         patch("services.roster_edits.publish_roster", new_callable=AsyncMock),
-        patch("services.roster_edits.proposed_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
-        patch("services.roster_edits.scraped_roster", new_callable=AsyncMock, return_value=[{**BASE_PERSON}]),
+        patch(
+            "services.roster_edits.proposed_roster",
+            new_callable=AsyncMock,
+            return_value=[{**BASE_PERSON}],
+        ),
+        patch(
+            "services.roster_edits.scraped_roster",
+            new_callable=AsyncMock,
+            return_value=[{**BASE_PERSON}],
+        ),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/publish",
@@ -397,7 +432,11 @@ def test_report_review_issue_allows_default_role():
     with patch(
         "services.review_issue_report.report_review_issue",
         new_callable=AsyncMock,
-        return_value={"id": "issue-1", "github_issue_url": "https://github.com/org/open-data/issues/9", "github_issue_number": 9},
+        return_value={
+            "id": "issue-1",
+            "github_issue_url": "https://github.com/org/open-data/issues/9",
+            "github_issue_number": 9,
+        },
     ) as mock_report:
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/issues",
@@ -405,7 +444,10 @@ def test_report_review_issue_allows_default_role():
         )
 
     assert response.status_code == 200
-    assert response.json()["data"]["github_issue_url"] == "https://github.com/org/open-data/issues/9"
+    assert (
+        response.json()["data"]["github_issue_url"]
+        == "https://github.com/org/open-data/issues/9"
+    )
     mock_report.assert_awaited_once()
 
 
@@ -414,7 +456,9 @@ def test_report_review_issue_404_when_review_not_found(client):
     with patch(
         "services.review_issue_report.report_review_issue",
         new_callable=AsyncMock,
-        side_effect=review_actions_router.review_issue_report_service.ReviewNotFoundError("no review"),
+        side_effect=review_actions_router.review_issue_report_service.ReviewNotFoundError(
+            "no review"
+        ),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/issues",
@@ -429,7 +473,9 @@ def test_report_review_issue_502_when_github_fails(client):
     with patch(
         "services.review_issue_report.report_review_issue",
         new_callable=AsyncMock,
-        side_effect=review_actions_router.review_issue_report_service.GithubIssueCreationError("GitHub is down"),
+        side_effect=review_actions_router.review_issue_report_service.GithubIssueCreationError(
+            "GitHub is down"
+        ),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/issues",
@@ -473,7 +519,14 @@ def test_get_reported_issues_returns_data(client):
     with patch(
         "database.issues.get_user_reported_issues_for_changeset",
         new_callable=AsyncMock,
-        return_value=[{"id": "issue-1", "github_issue_url": "https://github.com/org/open-data/issues/9", "github_issue_number": 9, "status": "pending"}],
+        return_value=[
+            {
+                "id": "issue-1",
+                "github_issue_url": "https://github.com/org/open-data/issues/9",
+                "github_issue_number": 9,
+                "status": "pending",
+            }
+        ],
     ):
         response = client.get(f"/pull_requests/{TEST_CHANGESET_ID}/issues")
 
@@ -504,7 +557,10 @@ def test_publishing_a_superseded_roster_is_a_409_not_a_500(client):
     from database.publications import SupersededRoster
 
     with (
-        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
+        patch(
+            "database.review_session_entries.resolve_entries_for_changeset",
+            new_callable=AsyncMock,
+        ),
         patch(
             "routers.api.review_actions.roster_edits.publish",
             new_callable=AsyncMock,
@@ -525,13 +581,18 @@ def test_a_sheet_import_publishes_from_its_review_card(client):
     """Out of the pool, so only its batch page's Edit link reaches this card — and publishing
     from there is the point of the link."""
     with (
-        patch("database.review_session_entries.resolve_entries_for_changeset", new_callable=AsyncMock),
+        patch(
+            "database.review_session_entries.resolve_entries_for_changeset",
+            new_callable=AsyncMock,
+        ),
         patch(
             "services.roster_edits.proposed_roster",
             new_callable=AsyncMock,
             return_value=[{"id": "p1", "name": "Ana Reyes"}],
         ),
-        patch("services.roster_edits.publish_roster", new_callable=AsyncMock) as mock_publish,
+        patch(
+            "services.roster_edits.publish_roster", new_callable=AsyncMock
+        ) as mock_publish,
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/publish",
@@ -596,7 +657,8 @@ def test_cards_are_loaded_for_the_ids_asked_for(client):
         return_value=[],
     ) as load:
         response = client.get(
-            "/pull_requests/cards", params=[("changeset_ids", "a"), ("changeset_ids", "b")]
+            "/pull_requests/cards",
+            params=[("changeset_ids", "a"), ("changeset_ids", "b")],
         )
 
     assert response.status_code == 200

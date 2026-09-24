@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
 
+from services.roster import CardSides
 from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
 from routers.api import review_sessions as review_sessions_router
@@ -185,25 +186,17 @@ def test_navigate_to_open_entry_returns_card(client):
                 "pr": {"url": "https://github.com/org/repo/pull/42", "status": "open"},
             },
         ),
+        # Both sides of the card and the locks' disclosure, from one call: derived apart they
+        # would take a `now()` each, and a claim landing between them would reach one side only.
         patch(
-            "routers.api.review_sessions.published_card_rows",
+            "routers.api.review_sessions.card_sides",
             new_callable=AsyncMock,
-            return_value=[],
-        ),
-        patch(
-            "routers.api.review_sessions.proposed_roster_and_source_values",
-            new_callable=AsyncMock,
-            return_value=([], {}),
+            return_value=CardSides([], [], {}),
         ),
         patch(
             "database.jurisdictions.has_ever_collected",
             new_callable=AsyncMock,
             return_value=None,
-        ),
-        patch(
-            "routers.api.review_sessions.proposals_for_requests",
-            new_callable=AsyncMock,
-            return_value={},
         ),
     ):
         response = client.post(

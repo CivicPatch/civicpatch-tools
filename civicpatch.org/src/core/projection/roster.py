@@ -5,14 +5,13 @@ Each step is a resolver with its own module and tests; this only chains them:
     live_facts → with_person_ids → canonical_ids → one cluster per canonical id → derive_person
 """
 
-
 from pydantic import BaseModel
 from shared.utils.taxonomy import Taxonomy
 
 from core.images import published_image_url
 from core.projection.canonical_ids import SAME_AS, canonical_ids
 from core.projection.facts import ClaimKind, EntityType, Facts
-from core.projection.field_value import NAME
+from core.projection.field_value import NAME, overridden_source_values
 from core.projection.live_facts import live_facts
 from core.projection.people import Person, derive_person
 from core.projection.person_ids import with_person_ids
@@ -22,24 +21,28 @@ class Roster(BaseModel, frozen=True):
     people: tuple[Person, ...] = ()
 
 
-def derive_roster(
-    facts: Facts, jurisdiction_ocdid: str, taxonomy: Taxonomy
-) -> Roster:
+def derive_roster(facts: Facts, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> Roster:
     """`facts` is what the loader returned: published, cut at as-of, withdraws not yet applied.
 
     People come back sorted by id so two rebuilds of the same facts agree (R6).
     """
 
     live = with_person_ids(live_facts(facts))
+    clusters = person_clusters(live)
+    people = [
+        derive_person(root_id, clusters[root_id], live, jurisdiction_ocdid, taxonomy)
+        for root_id in sorted(clusters.keys())
+    ]
+    return Roster(people=tuple(people))
+
+
+def person_clusters(live: Facts) -> dict[str, set[str]]:
     same_as = [
         claim
         for claim in live.claims
         if claim.entity_type == EntityType.PERSON and claim.field_path == SAME_AS
     ]
     canonical = canonical_ids(same_as)
-    # A live record or an explicit name establishes a person; every other claim (a `posts`
-    # reject, a phone) only annotates one. Otherwise a claim that outlives the records it was
-    # filed against keeps a nameless person alive (§19.1).
     named = [record.person_id for record in live.records] + [
         claim.entity_id
         for claim in live.claims
@@ -51,12 +54,17 @@ def derive_roster(
     for person_id in named:
         root_id = canonical.get(person_id) or person_id
         clusters.setdefault(root_id, {root_id}).add(person_id)
+    return clusters
 
-    people = [
-        derive_person(root_id, clusters[root_id], live, jurisdiction_ocdid, taxonomy)
-        for root_id in sorted(clusters.keys())
-    ]
-    return Roster(people=tuple(people))
+
+def overridden_by_person(facts: Facts) -> dict[str, dict[str, object]]:
+    """Per person, what the page says where a claim overrode it — the card's lock disclosure."""
+    live = with_person_ids(live_facts(facts))
+    overridden = {
+        root_id: overridden_source_values(members, live)
+        for root_id, members in person_clusters(live).items()
+    }
+    return {person_id: values for person_id, values in overridden.items() if values}
 
 
 def with_published_images(

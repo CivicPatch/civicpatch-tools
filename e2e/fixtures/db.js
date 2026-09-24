@@ -34,6 +34,36 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
  * longer be inserted. Hashing keeps the fixtures readable and stable: the same slug always
  * yields the same id, which is what lets two sightings deliberately share a person.
  */
+/** The division a jurisdiction's own posts sit in, spelled the way the fold spells it.
+ *
+ * Not `ocdid.replace("/government", "")`: that leaves an `ocd-jurisdiction/...` id, and the
+ * fold derives `ocd-division/...` (`shared/utils/divisions.py`). Two spellings mean two posts
+ * for one office, and then the card's derived side and the stored side name different ids. */
+export const divisionOf = (ocdid) =>
+  ocdid.replace(/^ocd-jurisdiction/, "ocd-division").replace(/\/government$/, "");
+
+// `core/projection/facts.py::POST_NAMESPACE`. A post's id is derived, not assigned, so a
+// fixture that wants the fold to recognise its post has to compute the same uuid5.
+const POST_NAMESPACE = "c8374c67-da4d-4aac-a0d9-4f353c803eca";
+
+/** RFC 4122 uuid5, byte for byte what Python's `uuid.uuid5` produces. */
+export function postUuid(organizationId, roleId, divisionOcdid) {
+  const namespace = Buffer.from(POST_NAMESPACE.replace(/-/g, ""), "hex");
+  const name = Buffer.from(`${organizationId}|${roleId}|${divisionOcdid}`, "utf8");
+  const hash = crypto.createHash("sha1").update(Buffer.concat([namespace, name])).digest();
+  const bytes = Buffer.from(hash.subarray(0, 16));
+  bytes[6] = (bytes[6] & 0x0f) | 0x50;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const hex = bytes.toString("hex");
+  return [
+    hex.slice(0, 8),
+    hex.slice(8, 12),
+    hex.slice(12, 16),
+    hex.slice(16, 20),
+    hex.slice(20, 32),
+  ].join("-");
+}
+
 export function personUuid(slug) {
   if (UUID.test(slug)) return slug;
   const hex = crypto.createHash("md5").update(slug).digest("hex");
@@ -195,6 +225,17 @@ const MARKERS_PR_NUMBER = 12;
 // 'merged' because the card's link still reads PR metadata.
 // Own state (ri) and deep-linked by changeset_id: a published request is out of the
 // review pool, so it is only reachable by link, which is how reviewers reach it too.
+// One person holding an office in two bodies — the case the roster editor grouped wrong until
+// 2026-09-23, when it filed them silently under whichever body sorted first.
+export const TWO_BODY_JURISDICTION_OCDID =
+  "ocd-jurisdiction/country:us/state:nj/place:e2e_two_body/government";
+export const TWO_BODY_COUNCIL = "E2E Council";
+export const TWO_BODY_SCHOOL_BOARD = "E2E School Board";
+// A scrape that read both of those bodies in one changeset, with one person in each. The
+// review card was built assuming a changeset is one organization; this is the fixture that
+// asks whether that is true.
+export const TWO_BODY_CHANGESET_ID = "00000000-0000-0000-eeee-000000000016";
+
 export const READ_ONLY_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:ri/place:e2e_read_only/government";
 export const READ_ONLY_CHANGESET_ID = "00000000-0000-0000-eeee-000000000014";
@@ -343,8 +384,11 @@ async function seedReviewCard(
   await client.query(`DELETE FROM source_records WHERE changeset_id = $1`, [
     changesetId,
   ]);
-  const organizationId = await organizationFor(client, ocdid);
+  const defaultOrganizationId = await organizationFor(client, ocdid);
   for (const person of people) {
+    const organizationId = person.organization
+      ? await namedOrganization(client, ocdid, person.organization)
+      : defaultOrganizationId;
     const { rows } = await client.query(
       `INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url,
                                    url, phone, email, image, start_date, end_date, organization_id)
@@ -387,50 +431,54 @@ const roleSlug = (name) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
-async function seatPerson(client, ocdid, person) {
-  const organizationId = await organizationFor(client, ocdid);
-
-  // The person's own ward when the fixture gave them one, else the jurisdiction itself.
-  const division = person.office?.division_ocdid ?? ocdid.replace("/government", "");
+/** The three rows a seat is: the division it is in, the post itself, and the membership.
+ *
+ * The post's id is the one the fold would derive, not a fresh one — the card's derived side
+ * names posts by `PostKey`, so a fixture post with a random id is a different post from the
+ * same office. Term dates live on the membership, not on `people`: `PERSON_START_DATE` reads
+ * `memberships.start_date`, and seeding them on the person left every record with null terms,
+ * so every proposed person differed on Term start / Term end and nothing folded.
+ */
+async function seatAt(client, ocdid, { organizationId, personId, roleId, division, startDate = null, endDate = null }) {
   await client.query(
     `INSERT INTO divisions (ocdid, jurisdiction_ocdid) VALUES ($1, $2)
      ON CONFLICT (ocdid) DO NOTHING`,
     [division, ocdid],
   );
+  const { rows: post } = await client.query(
+    `INSERT INTO posts (id, jurisdiction_ocdid, organization_id, role_id, division_ocdid)
+     VALUES ($1, $2, $3, $4, $5)
+     ON CONFLICT (organization_id, role_id, division_ocdid)
+       DO UPDATE SET role_id = EXCLUDED.role_id
+     RETURNING id`,
+    [postUuid(organizationId, roleId, division), ocdid, organizationId, roleId, division],
+  );
+  await client.query(
+    `INSERT INTO memberships (post_id, organization_id, person_id, start_date, end_date,
+                              first_seen_at, last_seen_at)
+     VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
+     ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL DO NOTHING`,
+    [post[0].id, organizationId, personUuid(personId), startDate, endDate],
+  );
+}
 
+async function seatPerson(client, ocdid, person) {
+  const organizationId = await organizationFor(client, ocdid);
   // Fall back rather than fail: a fixture office that slugs to no seeded role would otherwise
   // break seeding on a foreign key, which reads as a schema fault rather than a fixture one.
   const wanted = roleSlug(person.office?.name);
   const { rows: role } = await client.query(`SELECT id FROM roles WHERE id = $1`, [
     wanted,
   ]);
-  const roleId = role.length ? wanted : SEAT_ROLE_FALLBACK;
-
-  const { rows: post } = await client.query(
-    `INSERT INTO posts (jurisdiction_ocdid, organization_id, role_id, division_ocdid)
-     VALUES ($1, $2, $3, $4)
-     ON CONFLICT (organization_id, role_id, division_ocdid)
-       DO UPDATE SET role_id = EXCLUDED.role_id
-     RETURNING id`,
-    [ocdid, organizationId, roleId, division],
-  );
-
-  // Term dates live on the membership, not on `people` — `PERSON_START_DATE` reads
-  // `memberships.start_date`. Seeding them only on the person left every existing record with
-  // null terms, so every proposed person differed on Term start / Term end and nothing folded.
-  await client.query(
-    `INSERT INTO memberships (post_id, organization_id, person_id, start_date, end_date,
-                              first_seen_at, last_seen_at)
-     VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
-     ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL DO NOTHING`,
-    [
-      post[0].id,
-      organizationId,
-      personUuid(person.id),
-      person.start_date ?? null,
-      person.end_date ?? null,
-    ],
-  );
+  await seatAt(client, ocdid, {
+    organizationId,
+    personId: person.id,
+    roleId: role.length ? wanted : SEAT_ROLE_FALLBACK,
+    // The person's own ward when the fixture gave them one, else the jurisdiction itself.
+    division: person.office?.division_ocdid ?? divisionOf(ocdid),
+    startDate: person.start_date ?? null,
+    endDate: person.end_date ?? null,
+  });
 }
 
 /** A jurisdiction's whole roster: the people and the four rows that seat them.
@@ -454,6 +502,92 @@ async function clearRoster(client, ocdid) {
   ]);
   await client.query(`DELETE FROM divisions WHERE jurisdiction_ocdid = $1`, [ocdid]);
   await client.query(`DELETE FROM people WHERE jurisdiction_ocdid = $1`, [ocdid]);
+}
+
+/** Seat somebody in a *named* body, minting it if this jurisdiction has none by that name.
+ *
+ * `seatPerson` takes whichever organization the jurisdiction happens to have, which is all a
+ * one-body fixture needs. Holding an office in two bodies is a different shape, and the
+ * `(person_id, organization_id)` partial unique index is what makes it legal: one open
+ * membership per body, several bodies per person.
+ */
+async function namedOrganization(client, ocdid, name) {
+  const { rows } = await client.query(
+    `INSERT INTO organizations (jurisdiction_ocdid, name) VALUES ($1, $2)
+     ON CONFLICT (jurisdiction_ocdid, name) DO UPDATE SET name = EXCLUDED.name
+     RETURNING id`,
+    [ocdid, name],
+  );
+  return rows[0].id;
+}
+
+async function seatIn(client, ocdid, { organizationName, personId, roleId, division }) {
+  await seatAt(client, ocdid, {
+    organizationId: await namedOrganization(client, ocdid, organizationName),
+    personId,
+    roleId,
+    division,
+  });
+}
+
+/** The facts behind a published roster: a published changeset, and one sighting per person.
+ *
+ * Projection rows alone are no longer enough. Since the card's `existing` side became
+ * `published_card_rows` it is derived from facts, and a roster seeded only into `people` and
+ * `memberships` reads as an empty roster there — so every scraped person diffed as New, and
+ * nobody could depart. The published changeset is the prior collection, which a review also
+ * needs to render in RECONCILE mode, so this is one row rather than two.
+ */
+async function seedPublishedFacts(client, ocdid, people) {
+  await seedPriorCollection(client, ocdid);
+  const changesetId = priorCollectionId(ocdid);
+  const organizationId = await organizationFor(client, ocdid);
+  await client.query(`DELETE FROM source_records WHERE changeset_id = $1`, [changesetId]);
+  for (const person of people) {
+    const { rows } = await client.query(
+      `INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url,
+                                   url, phone, email, image, start_date, end_date,
+                                   organization_id, created_at)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12, NOW() - INTERVAL '30 days')
+       RETURNING id`,
+      [
+        changesetId,
+        ocdid,
+        person.name,
+        // The office as a page would have printed it, ward and all — `sightingLabel`, the same
+        // rendering the proposed side uses. The office name alone derives a post in the
+        // jurisdiction's own division, so every ward member would read as having moved.
+        sightingLabel(person.office) || "Council Member",
+        (person.source_urls ?? [])[0] ?? "https://example.gov/roster",
+        (person.urls ?? [])[0] ?? null,
+        (person.phones ?? [])[0] ?? null,
+        (person.emails ?? [])[0] ?? null,
+        person.image ?? null,
+        person.start_date ?? null,
+        person.end_date ?? null,
+        organizationId,
+      ],
+    );
+    await client.query(
+      `INSERT INTO source_record_identities (source_record_id, person_id, resolved_at)
+       VALUES ($1, $2, NOW() - INTERVAL '30 days')`,
+      [rows[0].id, personUuid(person.id)],
+    );
+  }
+}
+
+/** A published roster: the facts it derives from, and the projection rows those facts produce.
+ *
+ * Both, because two readers disagree about where a published roster lives — the review card
+ * derives it, the jurisdiction page reads the stored rows. Production keeps them in step by
+ * folding; a fixture keeps them in step by writing the same office twice, which is why
+ * `seatPerson` computes the post id the fold would.
+ */
+async function seedPublishedRoster(client, ocdid, people) {
+  for (const person of people) {
+    await seedPerson(client, ocdid, person);
+  }
+  await seedPublishedFacts(client, ocdid, people);
 }
 
 /** A published person. `people.data` and `people.status` are gone — these are real columns now,
@@ -682,9 +816,7 @@ export async function seedE2eFixtures() {
     // people PK is an auto-uuid, so re-seeding can't ON CONFLICT — clear first
     // to keep the row set deterministic if a prior run didn't tear down cleanly.
     await clearRoster(client, RECONCILE_JURISDICTION_OCDID);
-    for (const person of reconcileExisting) {
-      await seedPerson(client, RECONCILE_JURISDICTION_OCDID, person);
-    }
+    await seedPublishedRoster(client, RECONCILE_JURISDICTION_OCDID, reconcileExisting);
     // Proposed: maria changed (office + added email + removed phone), tom added.
     const reconcileProposed = [
       {
@@ -728,11 +860,8 @@ export async function seedE2eFixtures() {
        DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
       [SCALE_JURISDICTION_OCDID],
     );
-    await seedPriorCollection(client, SCALE_JURISDICTION_OCDID);
     await clearRoster(client, SCALE_JURISDICTION_OCDID);
-    for (const person of buildScaleExisting()) {
-      await seedPerson(client, SCALE_JURISDICTION_OCDID, person);
-    }
+    await seedPublishedRoster(client, SCALE_JURISDICTION_OCDID, buildScaleExisting());
     await seedReviewCard(client, {
       changesetId: SCALE_CHANGESET_ID,
       ocdid: SCALE_JURISDICTION_OCDID,
@@ -785,9 +914,7 @@ export async function seedE2eFixtures() {
       },
     ];
     await clearRoster(client, MARKERS_JURISDICTION_OCDID);
-    for (const person of markersPublished) {
-      await seedPerson(client, MARKERS_JURISDICTION_OCDID, person);
-    }
+    await seedPublishedRoster(client, MARKERS_JURISDICTION_OCDID, markersPublished);
     const markersProposed = [
       {
         id: "markers-alice",
@@ -824,6 +951,85 @@ export async function seedE2eFixtures() {
       changesetId: MARKERS_CHANGESET_ID,
       ocdid: MARKERS_JURISDICTION_OCDID,
       people: asSightings(markersProposed),
+    });
+
+    // A published roster where one person sits in two bodies, for the jurisdiction page's
+    // own editor. No changeset: this page edits live data, so the fixture is the roster.
+    await client.query(
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
+       VALUES ($1, 'nj', 'active', '{"name":"E2E Two Body City","geoid":"0600009"}')
+       ON CONFLICT (jurisdiction_ocdid)
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
+      [TWO_BODY_JURISDICTION_OCDID],
+    );
+    await clearRoster(client, TWO_BODY_JURISDICTION_OCDID);
+    for (const person of [
+      { id: "two-body-ada", name: "Ada Two-Body" },
+      { id: "two-body-bo", name: "Bo Council-Only" },
+    ]) {
+      // `source_urls` is not decoration: the roster editor blocks Publish on it
+      // (`blockingErrors`), so a person seeded without one can never be published.
+      await client.query(
+        `INSERT INTO people (id, jurisdiction_ocdid, name, source_urls, updated_at)
+         VALUES ($1, $2, $3, $4, NOW())
+         ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name,
+                                        source_urls = EXCLUDED.source_urls`,
+        [
+          personUuid(person.id),
+          TWO_BODY_JURISDICTION_OCDID,
+          person.name,
+          ["https://e2e-two-body.example.gov/roster"],
+        ],
+      );
+    }
+    const twoBodyDivision = divisionOf(TWO_BODY_JURISDICTION_OCDID);
+    // Ada in both bodies, Bo in one: the second row is what proves a removal took only the
+    // row it was pressed on.
+    await seatIn(client, TWO_BODY_JURISDICTION_OCDID, {
+      organizationName: TWO_BODY_COUNCIL,
+      personId: "two-body-ada",
+      roleId: "council-member",
+      division: twoBodyDivision,
+    });
+    await seatIn(client, TWO_BODY_JURISDICTION_OCDID, {
+      organizationName: TWO_BODY_SCHOOL_BOARD,
+      personId: "two-body-ada",
+      roleId: "trustee",
+      division: twoBodyDivision,
+    });
+    await seatIn(client, TWO_BODY_JURISDICTION_OCDID, {
+      organizationName: TWO_BODY_COUNCIL,
+      personId: "two-body-bo",
+      roleId: "council-member",
+      division: twoBodyDivision,
+    });
+
+    // A scrape of both bodies in one changeset: Ada listed under each, Bo under the council
+    // only. Source records name their own organization, so one changeset spans two.
+    await seedReviewCard(client, {
+      changesetId: TWO_BODY_CHANGESET_ID,
+      ocdid: TWO_BODY_JURISDICTION_OCDID,
+      people: [
+        {
+          person_id: "two-body-ada",
+          name: "Ada Two-Body",
+          label: "Council Member",
+          organization: TWO_BODY_COUNCIL,
+          email: "ada@twobody.example.gov",
+        },
+        {
+          person_id: "two-body-ada",
+          name: "Ada Two-Body",
+          label: "Trustee",
+          organization: TWO_BODY_SCHOOL_BOARD,
+        },
+        {
+          person_id: "two-body-bo",
+          name: "Bo Council-Only",
+          label: "Council Member",
+          organization: TWO_BODY_COUNCIL,
+        },
+      ],
     });
 
     // Read-only card — merged PR, so the card renders in its terminal state.
@@ -967,6 +1173,7 @@ export async function teardownE2eFixtures() {
       TX_JURISDICTION_OCDID,
       MARKERS_JURISDICTION_OCDID,
       READ_ONLY_JURISDICTION_OCDID,
+      TWO_BODY_JURISDICTION_OCDID,
     ]) {
       // source_records cascades from changesets; identities cascade from source_records.
       await client.query(`DELETE FROM changesets WHERE jurisdiction_ocdid = $1`, [jOcdid]);
@@ -989,6 +1196,15 @@ export async function teardownE2eFixtures() {
         [stateOcdid(code)],
       );
     }
+    // Claims outlive the jurisdictions they are about: `assertions.created_by` is NOT NULL and
+    // points at the user, so deleting the test user first fails on the foreign key. Every edit
+    // a spec makes files one now, which is why this was not needed before the edit route.
+    await client.query(
+      `DELETE FROM assertions WHERE created_by IN (
+         SELECT id FROM users WHERE provider = $1
+       )`,
+      [TEST_USER_PROVIDER],
+    );
     await client.query(
       `DELETE FROM users WHERE provider = $1 AND provider_user_id = $2`,
       [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID],

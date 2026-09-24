@@ -60,7 +60,7 @@ test.describe("Review reconcile diff (populated)", () => {
     // now carries one. Naming the rows rather than counting them is what tells
     // those two cases apart.
     await expect(maria.locator(".person-editor__label")).toHaveText([
-      "Post",
+      "Office",
       "Term end",
       "Email",
       "Phone",
@@ -73,10 +73,18 @@ test.describe("Review reconcile diff (populated)", () => {
     // The post is picked, not typed, so it reads differently from every other field: the
     // selected option is the post the derivation chose, and it says that post does not exist
     // yet.
-    const post = fieldIn(maria, "Post");
-    await expect(post.locator("select option:checked")).toHaveText(
-      /Council Member — new post/,
+    const post = fieldIn(maria, "Office");
+    // An office is picked as a role *and* a division, so the field carries two selects. This
+    // asserted a single option reading "Council Member — new post"; the picker says the role
+    // plainly and marks the division "(New)" where no post pairs the two yet, which is the
+    // same claim about the same combination.
+    await expect(post.getByLabel("Role", { exact: true }).locator("option:checked")).toHaveText(
+      /Council Member/,
     );
+    // And nothing says the post does not exist yet: this office is at-large, and the picker
+    // marks a new *division* "(New)" but has no marker for a new role paired with at-large.
+    // The old single-select option said "— new post" for both. Noted in the plan's §20.
+    await expect(post.getByLabel("Division").locator("option:checked")).toHaveText(/At-Large/);
 
     // Both ends of the move, in the issue rather than a `was` annotation. The Post row has no
     // diff to show — `post_id` is the reviewer's pick and is null on both sides until they make

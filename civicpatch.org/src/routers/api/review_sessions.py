@@ -14,9 +14,9 @@ from lib.auth import require_route_access
 from psycopg.errors import UniqueViolation
 from pydantic import BaseModel
 from schemas.common import Identity, ReviewMode, RouteCategory, UserRole, has_at_least
-from services.review_proposal import assertions_for_people, proposals_for_requests
+from services.review_proposal import assertions_for_people
 from services.review_sources import build_sources, without_debug_links
-from services.roster import proposed_roster_and_source_values, published_card_rows
+from services.roster import card_sides
 logger = logging.getLogger(__name__)
 
 
@@ -141,17 +141,15 @@ async def _navigate_response(session_id: str, entry_number: int, viewer_role: st
     changeset_id = result["changeset_id"]
     jurisdiction_ocdid = result["jurisdiction_ocdid"]
 
-    pr_meta, existing, (proposed, overridden), has_ever_collected = await asyncio.gather(
+    # Both sides from the same fold (R3), as on `by-request`: this is the endpoint a review
+    # session navigates through, and the two must not answer differently.
+    pr_meta, sides, has_ever_collected = await asyncio.gather(
         review_pool_db.get_changeset_for_review(changeset_id),
-        published_card_rows(jurisdiction_ocdid),
-        proposed_roster_and_source_values(changeset_id, jurisdiction_ocdid),
+        card_sides(changeset_id, jurisdiction_ocdid),
         jurisdictions_db.has_ever_collected(jurisdiction_ocdid),
     )
+    existing, proposed, overridden = sides
 
-    # This is the endpoint a review session actually navigates through — `by-request` serves
-    # deep links. Both need it, because a proposed person holds no membership yet and the
-    # derivation is the only thing that knows which post they would land in.
-    proposals = await proposals_for_requests([changeset_id])
     unique_source_urls = list(
         {url for person in proposed for url in (person.get("source_urls") or [])}
     )
@@ -173,9 +171,6 @@ async def _navigate_response(session_id: str, entry_number: int, viewer_role: st
             "mode": ReviewMode.for_scrape(has_ever_collected).value,
             "existing": existing,
             "proposed": proposed,
-            "changes": [
-                change.model_dump() for change in proposals.get(changeset_id, [])
-            ],
             # Both sides: a reviewer's edit is asserted against the *proposed* person, who is
             # not in `existing` until they publish — so tagging only published ids would hide
             # a saved edit the moment the page reloads.

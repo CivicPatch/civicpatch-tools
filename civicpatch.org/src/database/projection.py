@@ -181,10 +181,29 @@ async def derived_roster(
     folds of a review also share one `as_of`, so a claim filed between them cannot land on one
     side only.
     """
+    roster, _facts = await derived_roster_and_facts(
+        cur, jurisdiction_ocdid, including=including, as_of=as_of, taxonomy=taxonomy
+    )
+    return roster
+
+
+async def derived_roster_and_facts(
+    cur,
+    jurisdiction_ocdid: str,
+    *,
+    including: str | None = None,
+    as_of: datetime | None = None,
+    taxonomy: Taxonomy | None = None,
+) -> tuple[Roster, Facts]:
+    """`derived_roster` plus the facts it folded, for a caller that needs both from one load.
+
+    The card's lock disclosure does: the roster resolves each field, and the same facts answer
+    what the records alone say, which is what the lock discloses beside it.
+    """
     facts = await load_facts(
         cur, jurisdiction_ocdid, as_of or datetime.now(timezone.utc), including
     )
-    return _fold(facts, jurisdiction_ocdid, await _taxonomy(taxonomy))
+    return _fold(facts, jurisdiction_ocdid, await _taxonomy(taxonomy)), facts
 
 
 async def rebuild_from_facts(

@@ -182,6 +182,11 @@
     background: color-mix(in srgb, var(--tile-issue) 16%, transparent);
     color: var(--tile-issue);
   }
+
+  /* The field an issue is anchored to — the card's chip says it has one, this says which. */
+  .review-overview .pv--issue .pvk {
+    color: var(--tile-issue);
+  }
   .review-overview .review-row--ghost {
     display: flex;
     align-items: center;

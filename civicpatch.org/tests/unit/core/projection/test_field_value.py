@@ -11,7 +11,12 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 from core.projection.facts import Claim, ClaimKind, EntityType, Facts, SourceRecord
-from core.projection.field_value import list_value, scalar_value
+from core.projection.field_value import (
+    list_value,
+    overridden_source_values,
+    scalar_value,
+    without_claims,
+)
 
 _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
 ALICE = {"alice"}
@@ -339,3 +344,100 @@ def test_the_answer_does_not_depend_on_the_order_the_facts_arrive():
 
     assert list_value(ALICE, "phones", forwards) == list_value(ALICE, "phones", backwards)
     assert scalar_value(ALICE, "name", forwards) == scalar_value(ALICE, "name", backwards)
+
+
+# What the records alone say — the same resolvers asked with the claims taken away, which is
+# what the card discloses under a lock beside the value a human chose.
+
+
+@pytest.mark.unit
+def test_evidence_is_what_the_page_says_with_the_claims_taken_away():
+    facts = Facts(
+        records=(record("r1", name="Alice Ng"),),
+        claims=(claim("k1", "name", "Alice Nguyen"),),
+    )
+
+    assert scalar_value(ALICE, "name", facts) == "Alice Nguyen"
+    assert scalar_value(ALICE, "name", without_claims(facts)) == "Alice Ng"
+
+
+@pytest.mark.unit
+def test_evidence_ignores_a_reject_too():
+    """A reject is a claim, and this answers with the claims taken away — so the page's own
+    value still shows through one."""
+    facts = Facts(
+        records=(record("r1", name="Alice Ng"),),
+        claims=(claim("k1", "name", "Alice Ng", kind=ClaimKind.REJECT),),
+    )
+
+    assert scalar_value(ALICE, "name", facts) is None
+    assert scalar_value(ALICE, "name", without_claims(facts)) == "Alice Ng"
+
+
+@pytest.mark.unit
+def test_evidence_is_the_newest_read_like_every_other_scalar():
+    facts = Facts(
+        records=(record("r1", name="Alice Ng"), record("r2", minutes=10, name="A. Ng")),
+    )
+
+    assert scalar_value(ALICE, "name", without_claims(facts)) == "A. Ng"
+
+
+# The card's lock disclosure: "the page says X, a human said Y". The page as it reads *now* —
+# what the reviewer would be looking at if nobody had intervened.
+
+
+@pytest.mark.unit
+def test_nothing_is_disclosed_when_no_claim_disagrees_with_the_page():
+    facts = Facts(records=(record("r1", name="Alice Ng", phone="555-1111"),))
+
+    assert overridden_source_values(ALICE, facts) == {}
+
+
+@pytest.mark.unit
+def test_a_scalar_a_claim_overrode_discloses_what_the_page_says():
+    facts = Facts(
+        records=(record("r1", name="Alice Ng"),),
+        claims=(claim("k1", "name", "Alice Nguyen"),),
+    )
+
+    assert overridden_source_values(ALICE, facts) == {"name": "Alice Ng"}
+
+
+@pytest.mark.unit
+def test_the_disclosure_follows_the_page_rather_than_the_moment_the_claim_was_filed():
+    """The disclosure follows the page, not the moment somebody overrode it: what it answers is
+    what the reviewer would be seeing if nobody had intervened."""
+    facts = Facts(
+        records=(
+            record("r1", name="Alice Ng"),
+            record("r2", minutes=10, name="A. Ng"),
+        ),
+        claims=(claim("k1", "name", "Alice Nguyen"),),
+    )
+
+    assert overridden_source_values(ALICE, facts) == {"name": "A. Ng"}
+
+
+@pytest.mark.unit
+def test_a_list_the_page_still_carries_is_disclosed_when_a_claim_rejected_it():
+    # A full number: `normalize_phone_number` answers None for a seven-digit one, so both
+    # sides would be empty and there would be nothing to disclose.
+    facts = Facts(
+        records=(record("r1", phone="(206) 555-0111"),),
+        claims=(claim("k1", "phones", "(206) 555-0111", kind=ClaimKind.REJECT),),
+    )
+
+    assert overridden_source_values(ALICE, facts)["phones"] == ["(206) 555-0111"]
+
+
+@pytest.mark.unit
+def test_a_value_only_a_claim_carries_discloses_the_empty_page():
+    """A hand-added phone: the page never said it, so the disclosure is what the page has —
+    nothing. The lock still has something to say, which is that this came from a person."""
+    facts = Facts(
+        records=(record("r1"),),
+        claims=(claim("k1", "phones", "(206) 555-0999"),),
+    )
+
+    assert overridden_source_values(ALICE, facts)["phones"] == []

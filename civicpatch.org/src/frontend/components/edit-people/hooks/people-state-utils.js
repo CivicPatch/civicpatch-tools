@@ -1,3 +1,5 @@
+import { personIdIn } from "../../people/person-cards.ts";
+
 export const PERSON_FIELDS = {
   // `post_id` is the post a reviewer picked, `membership_label` the office label beside it —
   // both scalars like any other here, so a merge takes the first non-empty and a survivor
@@ -61,25 +63,25 @@ export function mergeFields(survivor, absorbed) {
 // Returns the same Set when nothing was stale, so callers can skip the update.
 export function pruneIds(ids, livingIds) {
   const living = livingIds instanceof Set ? livingIds : new Set(livingIds);
-  const kept = [...ids].filter((id) => living.has(id));
+  const kept = [...ids].filter((id) => living.has(personIdIn(id)));
   return kept.length === ids.size ? ids : new Set(kept);
 }
 
-// Build the publish payload: one patch item per non-deleted person. Existing rows send
+// Build the publish payload: one patch item per person still on the list. Existing rows send
 // only their changed fields; new or re-identified rows (id changed) send the whole entry.
 // The backend keys by id — a known id overlays the fields, an unknown id inserts the whole
-// entry, and a base person absent from the list is a deletion. Deleted rows are omitted here.
+// entry. Removal is not absence: `rosterEditPayload` says it as `offices: []`. A row removed
+// by person id drops out here (a review says they are not on the roster at all); a roster row
+// removed in one body does not, because their name correction still stands.
 export function buildPeoplePatch(currentPeople, changesById, removedIds) {
   return currentPeople
     .filter(p => !removedIds.has(p.id))
     .map(p => toPatchItem(p, changesById.get(p.id)));
 }
 
-// An existing person's post/office pick is applied via `memberships.assign`
-// (office-edits.ts), never through this patch — including it here would let the
-// backend's assertion pipeline durably pin it, which is exactly what that direct write
-// is for avoiding. A brand-new person still needs `post_id` in their patch: nothing else
-// tells `edit_published` which post their first sighting belongs to.
+// An existing person's office pick travels as `offices` (roster-edit-payload.ts), not as a
+// person field. A brand-new person still needs `post_id` in their patch: `officeEditsIn` only
+// answers for somebody who already holds something.
 const OFFICE_ONLY_FIELDS = ["post_id", "membership_label"];
 
 function toPatchItem(person, changes) {

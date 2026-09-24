@@ -19,7 +19,7 @@ test.describe("Review baseline mode (first capture)", () => {
     // boot() resolves it via the by-request endpoint, which carries `mode`).
     await page.goto(`/review/session?changeset_id=${BASELINE_CHANGESET_ID}`);
 
-    const banner = page.locator(".review-page__baseline-banner");
+    const banner = page.locator(".review-session__baseline-banner");
     await expect(banner).toBeVisible();
     await expect(banner).toContainText("First capture for E2E Baseline City");
 

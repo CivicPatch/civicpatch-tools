@@ -9,7 +9,7 @@ import {
   EMPTY_FROZEN,
   INITIAL_FROZEN_STATE,
   type FrozenFields,
-} from "../pages/review-session-page/frozen-fields.js";
+} from "../components/person-editor/frozen-fields.js";
 import {
   type FieldReason,
   type FieldSpec,

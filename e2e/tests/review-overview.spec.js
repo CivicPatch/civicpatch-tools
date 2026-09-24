@@ -118,10 +118,14 @@ test.describe("Review overview", () => {
     // Councillor 09 carries duplicate_unique_role, anchored to post_id. The
     // issue colours the field it is anchored to, ahead of that field's own diff
     // state — and the card says so once more in its own chip.
+    // The markup moved to `.pv` in the 2026-09 redesign; the claim is unchanged — the field
+    // the issue names is marked, not just the card.
     const row = rowFor(page, "Councillor 09 Scale");
-    const seat = row.locator(".review-row__field").filter({ hasText: "Post" });
-    await expect(seat).toHaveClass(/review-row__field--issue/);
-    await expect(row.locator(".review-row__attn")).toContainText("Has an issue");
+    await expect(row.locator(".pv--post")).toHaveClass(/pv--issue/);
+    // This verified the chip read "Has an issue". It now verifies it names the issue, because
+    // the chip carries the issue's own code — a generic label said nothing the card's colour
+    // had not already said.
+    await expect(row.locator(".review-row__attn")).toContainText("duplicate unique role");
   });
 
   test("a departing person is one decision — struck, and no field list", async ({

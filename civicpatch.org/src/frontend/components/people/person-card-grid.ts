@@ -1,7 +1,9 @@
 import { html, nothing } from "lit-html";
 import "../person-image.js";
 import "./person-card-grid.css";
-import { type PersonCard, personOf } from "./person-cards.js";
+import { type PersonCard, personOf,
+  cardKey,
+} from "./person-cards.js";
 import { postName, type RoleOption } from "../posts-list/posts-model.js";
 import { type DiffRecord, type FieldSpec } from "../fields/field-model.js";
 import { PERSON_LINK_TARGET } from "../../utils/source-links.js";
@@ -146,7 +148,9 @@ function renderPerson(
   const record = personOf(card);
   const name = record?.name || "(unnamed)";
   const { postLabel, membershipLabel } = subtitleFor(record);
-  const isOpen = onOpenPerson ? card.personId === openPersonId : false;
+  // By card key, not person id: a person on two bodies has a row in each, and only the one
+  // that was clicked opens. The two are the same string for a card with no body.
+  const isOpen = onOpenPerson ? cardKey(card) === openPersonId : false;
   const ariaSubtitle = [postLabel, membershipLabel].filter(Boolean).join(", ");
   const nameBlock = html`<span class="pc-name">${name}</span>
     ${postLabel ? html`<span class="pc-sub">${postLabel}</span>` : nothing}
@@ -269,7 +273,7 @@ export function renderPersonCardGrid(
       renderRoleGroup(
         group.roleLabel,
         group.people,
-        ({ card }) => card.personId,
+        ({ card }) => cardKey(card),
         (people) => people.map(({ card }) => renderPerson(card, sources, options)),
         openPersonId,
         renderEditor && ((item) => renderEditor(item.card)),

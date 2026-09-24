@@ -62,55 +62,6 @@ def test_list_directory_empty_returns_zero(client):
 
 
 @pytest.mark.unit
-def test_delete_person_returns_200(client):
-    with patch(
-        "database.people.delete_person",
-        new_callable=AsyncMock,
-        return_value=None,
-    ):
-        response = client.delete("/people/person-id-123")
-
-    assert response.status_code == 200
-    data = response.json()
-    assert data["data"] is None
-
-
-# An Official-valid person on `main`, in on-disk order; a patch overlays the edited fields.
-BASE_PERSON = {
-    "name": "Original Person",
-    "phones": [],
-    "emails": [],
-    "urls": [],
-    "office": {"name": "Mayor", "division_ocdid": None},
-    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland/government",
-    "source_urls": ["https://x.gov/council"],
-    "updated_at": "2025-11-18T19:49:42+00:00",
-    "id": "p-1",
-}
-
-
-def _contributor():
-    return Identity(
-        type="session", provider="github", provider_user_id="u1",
-        email="u@x.com", role=UserRole.CONTRIBUTORS, user_id="user-123",
-    )
-
-
-def _default():
-    return Identity(
-        type="session", provider="github", provider_user_id="u2",
-        email="d@x.com", role=UserRole.DEFAULT, user_id="user-456",
-    )
-
-
-def _maintainer():
-    return Identity(
-        type="session", provider="github", provider_user_id="u3",
-        email="m@x.com", role=UserRole.MAINTAINERS, user_id="user-789",
-    )
-
-
-@pytest.mark.unit
 @pytest.mark.unit
 def test_the_public_read_stays_one_jurisdiction_and_unpaged(client):
     """It backs the public jurisdiction page, where a roster is eighteen people at most."""

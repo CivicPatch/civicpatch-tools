@@ -24,17 +24,17 @@ const SAVE_ENDPOINT = "**/api/v1/reviews/*/save";
 async function openFirstCardAndEdit(page) {
   await page.goto("/review");
   await page.locator(".review-page__start-btn").click();
-  await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
+  await expect(page.locator(".review-session__jurisdiction")).toContainText("E2E Test City");
 
   // Save only appears once there is something to save.
-  await expect(page.locator(".review-page__save-btn")).toHaveCount(0);
+  await expect(page.locator(".review-session__save-btn")).toHaveCount(0);
 
   // Any edit will do — this is about the save wiring, not the field. Other names because it is
   // plain text a reviewer really does correct: the seat is picked from a select now, so there is
   // no office text to type into.
   await editField(page, "Jane Smith", "Other names", "Janey Smith");
 
-  await expect(page.locator(".review-page__save-btn")).toBeVisible();
+  await expect(page.locator(".review-session__save-btn")).toBeVisible();
 }
 
 test.describe("Save updates", () => {
@@ -52,7 +52,7 @@ test.describe("Save updates", () => {
     });
 
     await openFirstCardAndEdit(page);
-    await page.locator(".review-page__save-btn").click();
+    await page.locator(".review-session__save-btn").click();
 
     await expect.poll(() => savedBody).not.toBeNull();
     expect(savedBody.changeset_id).toBe("00000000-0000-0000-eeee-000000000001");
@@ -72,12 +72,12 @@ test.describe("Save updates", () => {
     );
 
     await openFirstCardAndEdit(page);
-    await page.locator(".review-page__save-btn").click();
+    await page.locator(".review-session__save-btn").click();
 
     // Saving advances, same as publishing does.
-    await expect(page.locator(".review-page__progress")).toContainText("2");
-    await expect(page.locator(".review-page__dot").nth(0)).toHaveClass(
-      /review-page__dot--saved/,
+    await expect(page.locator(".review-session__progress")).toContainText("2");
+    await expect(page.locator(".review-session__dot").nth(0)).toHaveClass(
+      /review-session__dot--saved/,
     );
   });
 
@@ -93,18 +93,18 @@ test.describe("Save updates", () => {
     );
 
     await openFirstCardAndEdit(page);
-    await page.locator(".review-page__save-btn").click();
+    await page.locator(".review-session__save-btn").click();
 
     // Stay put so the reviewer can fix and retry.
-    await expect(page.locator(".review-page__progress")).toContainText("1");
-    await expect(page.locator(".review-page__error")).toBeVisible();
+    await expect(page.locator(".review-session__progress")).toContainText("1");
+    await expect(page.locator(".review-session__error")).toBeVisible();
 
     // The dot only reads as failed from elsewhere — while you are on the card,
     // "current" takes precedence over "failed" in the status ladder.
-    await page.locator(".review-page__next-btn").click();
-    await expect(page.locator(".review-page__progress")).toContainText("2");
-    await expect(page.locator(".review-page__dot").nth(0)).toHaveClass(
-      /review-page__dot--failed/,
+    await page.locator(".review-session__next-btn").click();
+    await expect(page.locator(".review-session__progress")).toContainText("2");
+    await expect(page.locator(".review-session__dot").nth(0)).toHaveClass(
+      /review-session__dot--failed/,
     );
   });
 });

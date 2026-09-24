@@ -1,11 +1,13 @@
 import { useState, useMemo } from 'haunted';
 import { changedFieldKeys, listChanged, mergeFields, buildPeoplePatch, pruneIds } from './people-state-utils.js';
+import { personIdIn } from '../../people/person-cards.ts';
 
 export function usePeopleState({ people }) {
   const [currentPeople, setCurrentPeople] = useState(people || []);
   const [originalPeople, setOriginalPeople] = useState([]);
-  // "Drop this person on publish" is a reviewer decision about a record, not a
-  // field of it, so it lives beside the list rather than on the row.
+  // "Drop this on publish" is a reviewer decision about a record, not a field of
+  // it, so it lives beside the list rather than on the row. Keyed the way the page
+  // keys its cards: a person id in a review, a person-in-a-body on a roster.
   const [removedIds, setRemovedIds] = useState(new Set());
   // Someone the scrape didn't find, whom the reviewer restored. It has to be
   // remembered rather than derived: restoring copies their old record into the
@@ -22,8 +24,9 @@ export function usePeopleState({ people }) {
   const { changesById, dirtyIds, dirty, peoplePatch } = useMemo(() => {
     const originalById = new Map(originalPeople.map(p => [p.id, p]));
     const changesById = new Map(currentPeople.map(p => [p.id, changedFieldKeys(p, originalById.get(p.id))]));
+    const removedPeople = new Set([...removedIds].map(personIdIn));
     const dirtyIds = new Set(
-      currentPeople.filter(p => removedIds.has(p.id) || changesById.get(p.id).length > 0).map(p => p.id)
+      currentPeople.filter(p => removedPeople.has(p.id) || changesById.get(p.id).length > 0).map(p => p.id)
     );
     return {
       changesById,
@@ -96,10 +99,14 @@ export function usePeopleState({ people }) {
     setCurrentPeople(current => current.map(p => ({ ...p, _selected: false })));
   }
 
+  // Takes whichever rows the key names: one row on a roster, or — given a bare person id, which
+  // is what Reset has — every row of theirs.
   function handleUnremove(key) {
     setRemovedIds(current => {
       const next = new Set(current);
-      next.delete(key);
+      for (const removed of current) {
+        if (removed === key || personIdIn(removed) === key) next.delete(removed);
+      }
       return next;
     });
   }

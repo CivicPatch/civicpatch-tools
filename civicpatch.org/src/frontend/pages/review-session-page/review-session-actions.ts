@@ -33,10 +33,23 @@ type ReviewSessionActionsHost = HTMLElement & {
   isRejecting: boolean;
   hasSession: boolean;
   officeEdits: OfficeEdit[];
+  // Who the reviewer took off the roster. Carried because absence no longer means removal:
+  // the edit route reads `offices`, and silence about a person leaves them as they are.
+  removedIds: string[];
 };
 
 function ReviewSessionActions(host: ReviewSessionActionsHost) {
-  const { isReadOnly, dirty, peoplePatch, blockers, canReject, isRejecting, hasSession, officeEdits } = host;
+  const {
+    isReadOnly,
+    dirty,
+    peoplePatch,
+    blockers,
+    canReject,
+    isRejecting,
+    hasSession,
+    officeEdits,
+    removedIds,
+  } = host;
 
   const blockerTitle = blockers
     .map((b) => `${b.name} — ${b.fieldLabel}: ${b.message}`)
@@ -49,7 +62,7 @@ function ReviewSessionActions(host: ReviewSessionActionsHost) {
   const handleApprove = () =>
     host.dispatchEvent(
       new CustomEvent(APPROVE_EVENT, {
-        detail: { people: dirty ? peoplePatch : null, officeEdits },
+        detail: { people: dirty ? peoplePatch : null, officeEdits, removedIds },
         bubbles: true,
         composed: true,
       }),
@@ -58,7 +71,7 @@ function ReviewSessionActions(host: ReviewSessionActionsHost) {
   const handleSave = () =>
     host.dispatchEvent(
       new CustomEvent(SAVE_EVENT, {
-        detail: { people: peoplePatch, officeEdits },
+        detail: { people: peoplePatch, officeEdits, removedIds },
         bubbles: true,
         composed: true,
       }),

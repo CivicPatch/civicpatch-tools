@@ -3,11 +3,7 @@
 // usually one line, and the grouping is what makes two bodies read as two commitments rather than
 // one list of posts.
 
-import {
-  MEMBERSHIP_REMOVAL,
-  type MembershipRemoval,
-  type RosterMembership,
-} from "../../schemas/membership-removal.js";
+import type { RosterMembership } from "../../schemas/roster-membership.js";
 
 export interface OrganizationMemberships {
   organizationId: string;
@@ -58,13 +54,4 @@ export function pageWordings(
     seen.add(wording);
     return true;
   });
-}
-
-// Picking the claim already made withdraws it. The two claims contradict each other, so the
-// server withdraws the other one itself and the screen never has to send two requests.
-export function nextRemoval(
-  current: MembershipRemoval,
-  act: MembershipRemoval,
-): MembershipRemoval {
-  return current === act ? MEMBERSHIP_REMOVAL.NONE : act;
 }

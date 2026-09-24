@@ -23,7 +23,6 @@ import {
   adjacentPeer,
   postsFor,
   personOf,
-  proposalsByPersonId,
   STATUS_LABEL,
   type PersonCard,
 } from "../people/person-cards.js";
@@ -31,11 +30,9 @@ import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { focusOnMount } from "../../utils/focus-on-mount.js";
 import { altArrowDirection } from "../../utils/keyboard.js";
 import { type Post } from "../posts-list/posts-model.js";
-import { type ProposedChange } from "../../schemas/membership-proposal.js";
 
 export interface ReviewModalProps {
   cards: PersonCard[];
-  changes?: ProposedChange[];
   posts: Post[];
   openPersonId: string | null;
   focusFieldKey: string | null;
@@ -56,7 +53,6 @@ export type EditorFactory = (card: PersonCard) => PersonEditorProps;
 function ReviewModal(props: ReviewModalProps) {
   const {
     cards,
-    changes,
     posts,
     openPersonId,
     focusFieldKey,
@@ -91,7 +87,6 @@ function ReviewModal(props: ReviewModalProps) {
   };
   if (!open || !card) return nothing;
   const editedCount = cards.filter((c) => c.surviving.length > 0).length;
-  const proposals = proposalsByPersonId(changes ?? []);
   const editorProps = editor(card);
   const name = personOf(card)?.name || "(unnamed)";
   const head = html`
@@ -139,7 +134,7 @@ function ReviewModal(props: ReviewModalProps) {
             <span class="review-modal__person-who">
               <span class="review-modal__person-name">${record?.name || "(unnamed)"}</span>
               <span class="review-modal__person-sub"
-                >${postsFor(entry, proposals, posts)}</span
+                >${postsFor(entry, posts)}</span
               >
             </span>
             <span class="review-modal__person-meta">

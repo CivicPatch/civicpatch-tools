@@ -1,10 +1,24 @@
-"""Pure activity helpers: the field diff a payload carries, and the formatter that turns a
-(type, changes) pair into a human-readable summary string for the activity feed."""
+"""Pure activity helpers: what a roster change says to the feed, the field diff a payload
+carries, and the formatter that turns a (type, changes) pair into a summary string.
+
+`changes_from_diff` is the one source for "what happened": an edit, a publish and a rollback
+are the same question asked of a different pair of rosters, so none of them diffs its own
+payload, which is what the old hand-edit path did and why it needed the whole roster in
+every request."""
 
 from collections.abc import Mapping, Sequence
 from datetime import datetime
 
-from schemas.activity import MEMBERSHIP_POST_FIELD, FieldChange, RosterChange
+from core.projection.diff import RosterDiff
+from core.projection.roster import Roster
+from schemas.activity import (
+    MEMBERSHIP_POST_FIELD,
+    Change,
+    FieldChange,
+    PersonChange,
+    RosterChange,
+)
+from schemas.assertions import EntityType
 from shared.utils.statuses import GROUPABLE_ACTIVITY_TYPES, LIVE_ACTIVITY_TYPES, ActivityType
 
 # Below this, grouping buys nothing — a lone pipeline_run_start reads better as itself than as
@@ -192,3 +206,103 @@ def summarize_activity(type_: str, changes: dict | None) -> str:
         return f"Included '{role}' as role"
 
     return type_
+
+
+def _names(*rosters: Roster) -> dict[str, str]:
+    """Who each id is, from whichever roster still has them: a removed person is named only by
+    the roster they left, and an added one only by the roster they arrived in."""
+    return {
+        person.id: person.name or person.id
+        for roster in rosters
+        for person in roster.people
+    }
+
+
+def _person_change(person_id: str, names: dict[str, str], fields: list[FieldChange]) -> Change:
+    return Change(
+        entity_type=EntityType.PERSON,
+        entity_id=person_id,
+        subject=names.get(person_id, person_id),
+        fields=fields,
+    )
+
+
+def _moves(diff: RosterDiff) -> dict[str, tuple[str | None, str | None]]:
+    """Per person, the post they left and the post they arrived in.
+
+    Both halves together are a move; one alone is a seating or a retirement. The fold keeps one
+    membership per organization, so a move arrives as exactly this pair rather than as anything
+    that says "moved".
+    """
+    moved: dict[str, tuple[str | None, str | None]] = {}
+    for person_id, post_id in diff.memberships_only_before:
+        before, after = moved.get(person_id, (None, None))
+        moved[person_id] = (post_id, after)
+    for person_id, post_id in diff.memberships_only_after:
+        before, after = moved.get(person_id, (None, None))
+        moved[person_id] = (before, post_id)
+    return moved
+
+
+def changes_from_diff(
+    before: Roster, after: Roster, diff: RosterDiff
+) -> list[PersonChange]:
+    """Every row the feed should carry for this change, in a stable order.
+
+    Order is people added, people removed, fields edited, then memberships, each by id: two
+    runs over the same rosters must produce the same feed (R6).
+    """
+    names = _names(before, after)
+    changes: list[PersonChange] = []
+
+    for person_id in sorted(diff.only_after):
+        changes.append(
+            PersonChange(
+                type=ActivityType.ADD_PERSON, payload=_person_change(person_id, names, [])
+            )
+        )
+    for person_id in sorted(diff.only_before):
+        changes.append(
+            PersonChange(
+                type=ActivityType.DELETE_PERSON,
+                payload=_person_change(person_id, names, []),
+            )
+        )
+
+    edited: dict[str, list[FieldChange]] = {}
+    for difference in diff.fields:
+        edited.setdefault(difference.person_id, []).append(
+            FieldChange(
+                field=difference.field, before=difference.before, after=difference.after
+            )
+        )
+    for person_id in sorted(edited):
+        # Somebody added or removed is already accounted for; their fields are not news.
+        if person_id in diff.only_after or person_id in diff.only_before:
+            continue
+        changes.append(
+            PersonChange(
+                type=ActivityType.EDIT_PERSON,
+                payload=_person_change(person_id, names, edited[person_id]),
+            )
+        )
+
+    for person_id, (left, arrived) in sorted(_moves(diff).items()):
+        if person_id in diff.only_after or person_id in diff.only_before:
+            continue
+        changes.append(
+            PersonChange(
+                type=ActivityType.ASSIGN_MEMBERSHIP,
+                payload=_person_change(
+                    person_id,
+                    names,
+                    [
+                        FieldChange(
+                            field=MEMBERSHIP_POST_FIELD, before=left, after=arrived
+                        )
+                    ],
+                ),
+            )
+        )
+
+    return changes

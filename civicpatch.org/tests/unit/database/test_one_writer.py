@@ -29,8 +29,9 @@ _WRITE = re.compile(
 
 # (file, statement prefix): how many times it appears. Step numbers are the projector plan's.
 ALLOWED: dict[tuple[str, str], int] = {
-    # Deleting a person becomes withdrawing the records that name them at step 9.
-    ("database/people.py", "DELETE FROM people"): 1,
+    # Deleting a person became withdrawing the records that name them (step 9c, 2026-09-23),
+    # so nothing deletes a `people` row any more. The row outlives the person the fold stops
+    # deriving, until step 8 makes delete-and-insert the only path for people too.
     # Mints the persistent post row. Stays: a post's id is stable and the row persists (R1, R4).
     ("database/posts.py", "INSERT INTO posts"): 1,
     # Derived columns enter the fold at step 10.

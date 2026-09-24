@@ -25,6 +25,7 @@ from database.projection import derived_roster, rebuild, stored_roster
 from database.publications import publish_changeset
 from database.roles import get_roles
 from database.source_records import insert_source_records
+from services.roster import card_sides, published_card_rows
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zr/place:rebuildton/government"
@@ -220,6 +221,26 @@ async def test_the_preview_of_a_changeset_is_what_publishing_it_produces():
         published = await derived_roster(cur, _OCDID)
 
     assert roster_diff(on_roster(preview), on_roster(published)).empty
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_card_s_two_sides_are_the_same_fold():
+    """The rows the review card renders, one layer above the preview: `existing` is what the
+    facts derive today and `proposed` what they derive with this changeset counted in. Here
+    rather than beside the service, because the seeding this claim needs is all in this file."""
+    ids = await _seed()
+    await _scrape(ids, _T0, {"ana": "Mayor"})
+    await _rebuild()
+    proposed = await _unpublished_scrape(ids, {"ana": "Mayor", "ben": "Council Member"})
+
+    existing = await published_card_rows(_OCDID)
+    preview = (await card_sides(proposed, _OCDID)).proposed
+
+    assert [row["id"] for row in existing] == [ids["ana"]]
+    assert sorted(row["id"] for row in preview) == sorted([ids["ana"], ids["ben"]])
+    # `PERSON_JSON`'s shape, which is what makes this a swap and not a payload change.
+    assert [membership["post_label"] for membership in preview[0]["memberships"]]
 
 
 @pytest.mark.asyncio
