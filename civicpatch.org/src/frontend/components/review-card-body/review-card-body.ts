@@ -7,7 +7,6 @@ import { component } from "haunted";
 import "../review-overview/review-overview.js";
 import {
   buildPersonCards,
-  proposalsByPersonId,
   type PersonCard,
 } from "../people/person-cards.js";
 import type { PersonEditorProps } from "../person-editor/person-editor.js";
@@ -53,13 +52,11 @@ function ReviewCardBody(host: ReviewCardBodyHost) {
     removedIds: NOBODY_REMOVED,
     restoredIds: NOBODY_REMOVED,
     issues: card.review.issues,
-    proposals: proposalsByPersonId(card.changes),
   });
 
   return html`
     <review-overview
       .cards=${cards}
-      .changes=${card.changes}
       .isReadOnly=${true}
       .onOpenPerson=${() => editOnReviewPage(card)}
       .openPersonId=${NOBODY_OPEN}

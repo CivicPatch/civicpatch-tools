@@ -1,20 +1,18 @@
-import { MEMBERSHIP_DISPOSITION } from "../../schemas/membership-proposal.js";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
 import {
   DEPARTING,
   personOf,
   PersonStatus,
-  soleProposalFor,
   type PersonCard,
 } from "../people/person-cards.js";
 import { UNMATCHED_ROLE_ID } from "../../schemas/role-types.js";
+import { type HeldMembership } from "../posts-list/posts-model.js";
 import { isContextField, type SurvivingField } from "../fields/field-model.js";
 import {
   groupByRole,
   type RoleGroup,
   type PostRole,
 } from "../people/person-card-grid-model.js";
-import { type ProposedChange } from "../../schemas/membership-proposal.js";
 
 const FIELD_ORDER = [
   "labels",
@@ -151,12 +149,26 @@ export function runsOf(cards: PersonCard[]): Run[] {
 }
 
 
-/** One person as one organization sees them: the card, and the change proposed for them there.
- * A person holding posts in two organizations is two of these, which puts them in both sections. */
+/** One person as one organization sees them: the card, and the office they hold there. A person
+ * holding posts in two organizations is two of these, which puts them in both sections. */
 export interface CardInOrganization {
   card: PersonCard;
-  proposal: ProposedChange;
+  /** What this scrape would leave them holding here — or, when it leaves them out of this
+   * body, the office they are losing, so the row can still name what is going. */
+  office: PostRole;
+  leaving: boolean;
 }
+
+interface MembershipRow extends HeldMembership {
+  role_label: string;
+}
+
+const asOffice = (membership: MembershipRow): PostRole => ({
+  role_id: membership.role_id,
+  role_label: membership.role_label,
+  post_label: membership.post_label,
+  membership_label: membership.label,
+});
 
 export interface OrganizationSection {
   organizationId: string;
@@ -166,68 +178,84 @@ export interface OrganizationSection {
 
 export interface ReviewOrganizationSections {
   organizations: OrganizationSection[];
-  /** Nobody proposed anything for these: people leaving, and cards with no proposal at all. */
+  /** People leaving: the scrape did not find them, or a reviewer took them off. */
   departing: PersonCard[];
+  /** Nobody has given them an office yet — somebody a reviewer just added. They used to be
+   * filed with the departing, which read as "not found" about a person who had just arrived. */
+  unplaced: PersonCard[];
 }
 
-/** Nothing was found in this organization: every proposal in it is someone leaving. Publishing
+/** Nothing was found in this organization: everyone listed here is leaving it. Publishing
  * changes nothing here, whether the scrape read no page for it or read one and returned nobody,
  * because closing skips an organization with nobody in it. */
 export function foundNobody(entries: CardInOrganization[]): boolean {
-  return (
-    entries.length > 0 &&
-    entries.every((entry) => entry.proposal.disposition === MEMBERSHIP_DISPOSITION.ABSENT)
-  );
+  return entries.length > 0 && entries.every((entry) => entry.leaving);
 }
 
 /** The same grouping one level down: a section per organization, roles inside it. A person is
- * listed in each organization that proposed something for them, carrying that organization's own
- * proposal, so the council section shows their council post and the mayor's office the mayoralty.
+ * listed in each organization they hold a post in on either side, carrying that organization's
+ * own office, so the council section shows their council post and the mayor's office the
+ * mayoralty. Both sides, so a body this scrape emptied still has a section saying so.
  *
- * Organizations come out in the order their proposals arrive, which is the derivation's order.
+ * Until 2026-09-23 the sections came from `ProposedChange`, which is why a proposed post could
+ * be named before the post existed; the fold names it from `PostKey` and the rows carry it.
  */
 export function sectionsByOrganization(
   cards: PersonCard[],
-  proposals: Map<string, ProposedChange[]>,
   roleOrder: string[],
+  organizationOrder: string[] = [],
 ): ReviewOrganizationSections {
   const departing = cards.filter((card) => DEPARTING.has(card.status));
   const staying = cards.filter((card) => !DEPARTING.has(card.status));
 
   const byOrganization = new Map<string, CardInOrganization[]>();
-  const unproposed: PersonCard[] = [];
+  const unplaced: PersonCard[] = [];
   for (const card of staying) {
-    const proposed = proposals.get(card.personId) ?? [];
-    if (!proposed.length) unproposed.push(card);
-    for (const proposal of proposed) {
-      const listed = byOrganization.get(proposal.organization_id) ?? [];
-      listed.push({ card, proposal });
-      byOrganization.set(proposal.organization_id, listed);
+    const proposed: MembershipRow[] = card.newRecord?.memberships ?? [];
+    const held: MembershipRow[] = card.oldRecord?.memberships ?? [];
+    const organizationIds = [
+      ...new Set(
+        [...proposed, ...held]
+          .map((membership) => membership.organization_id)
+          .filter((id): id is string => !!id),
+      ),
+    ];
+    if (!organizationIds.length) unplaced.push(card);
+    for (const organizationId of organizationIds) {
+      const inHere = (membership: MembershipRow) =>
+        membership.organization_id === organizationId;
+      const office = proposed.find(inHere) ?? held.find(inHere)!;
+      const listed = byOrganization.get(organizationId) ?? [];
+      listed.push({
+        card,
+        office: asOffice(office),
+        leaving: !proposed.some(inHere),
+      });
+      byOrganization.set(organizationId, listed);
     }
   }
 
-  const organizations = [...byOrganization].map(([organizationId, listed]) => {
-    const isUnmatched = (entry: CardInOrganization) =>
-      entry.proposal.post.role_id === UNMATCHED_ROLE_ID;
-    const ranked = groupByRole(
-      listed
-        .filter((entry) => !isUnmatched(entry))
-        .map((entry) => ({
-          id: entry.card.personId,
-          memberships: [
-            {
-              role_id: entry.proposal.post.role_id,
-              role_label: entry.proposal.post.role_label,
-              post_label: entry.proposal.post.label,
-              membership_label: entry.proposal.membership_label,
-            },
-          ],
-          entry,
-        })),
-      roleOrder,
-    ).map((group) => ({ ...group, people: group.people.map(({ entry }) => entry) }));
-    return { organizationId, ranked, unmatched: listed.filter(isUnmatched) };
-  });
+  const rank = (organizationId: string) => {
+    const index = organizationOrder.indexOf(organizationId);
+    return index === -1 ? organizationOrder.length : index;
+  };
+  const organizations = [...byOrganization]
+    .sort(([a], [b]) => rank(a) - rank(b))
+    .map(([organizationId, listed]) => {
+      const isUnmatched = (entry: CardInOrganization) =>
+        entry.office.role_id === UNMATCHED_ROLE_ID;
+      const ranked = groupByRole(
+        listed
+          .filter((entry) => !isUnmatched(entry))
+          .map((entry) => ({
+            id: entry.card.personId,
+            memberships: [entry.office],
+            entry,
+          })),
+        roleOrder,
+      ).map((group) => ({ ...group, people: group.people.map(({ entry }) => entry) }));
+      return { organizationId, ranked, unmatched: listed.filter(isUnmatched) };
+    });
 
-  return { organizations, departing: [...departing, ...unproposed] };
+  return { organizations, departing, unplaced };
 }

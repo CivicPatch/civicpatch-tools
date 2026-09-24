@@ -29,6 +29,6 @@ test.describe("Duplicate person ids", () => {
   }) => {
     await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
     await expect(page.locator("review-overview")).toBeVisible();
-    await expect(page.locator(".review-page__duplicate-banner")).toHaveCount(0);
+    await expect(page.locator(".review-session__duplicate-banner")).toHaveCount(0);
   });
 });

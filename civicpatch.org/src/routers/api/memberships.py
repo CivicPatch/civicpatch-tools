@@ -1,39 +1,15 @@
 from datetime import date
 
 from database import memberships
-from services import membership_assertions
 from fastapi import APIRouter, Depends, Query
 from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory
 from schemas.pagination import pagination_offset, pagination_total_pages
-from schemas.posts import MembershipRemovalRequest
 
 
 def get_router() -> APIRouter:
     router = APIRouter()
-
-    # One endpoint, not four: the three claims contradict each other, so the request names which
-    # one is being made and the service withdraws the others. Reversible by picking `none` again,
-    # which is why any signed-in user may claim it while deleting a person (people.py) is
-    # maintainers-only.
-    @router.put("/{membership_id}/assertion")
-    async def set_membership_assertion_endpoint(
-        membership_id: str,
-        body: MembershipRemovalRequest,
-        user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
-    ):
-        # 401 rather than a NULL author, as `routers/api/assertions.py`: a claim nobody made is
-        # not a claim, and `assertions.created_by` is NOT NULL.
-        if not user.user_id:
-            return JSONResponse(
-                {"error": "Assertions must be attributable to a signed-in user."},
-                status_code=401,
-            )
-        await membership_assertions.set_assertion(
-            membership_id, body.assertion, user.user_id, body.reason, body.changeset_id
-        )
-        return {"data": {"ok": True}}
 
     @router.get("/unmatched")
     async def unmatched_text_endpoint(

@@ -4,17 +4,13 @@ from typing import Optional
 
 import database.jurisdictions as jurisdictions_db
 import database.people as database
-import services.roster_edits as roster_edits
 import shared.utils.id_utils
 import shared.utils.name_utils
-from core.people_edits import PeopleValidationError, PersonPatch
 from fastapi import APIRouter, Depends, HTTPException, Query
 from lib.auth import require_route_access
 from pydantic import BaseModel
-from schemas.posts import MembershipRemovalRequest
-from schemas.common import Identity, RouteCategory, UserRole
+from schemas.common import Identity, RouteCategory
 from schemas.pagination import paginated_response, pagination_offset
-from services import membership_assertions
 from services.review_proposal import assertions_for_people
 from shared.utils.person_id_utils import resolve_people_ids
 
@@ -109,22 +105,6 @@ def get_router() -> APIRouter:
     ):
         people = await jurisdictions_db.get_people_by_geo(lat, long)
         return {"data": people}
-
-    # The one irreversible act on a person: the row goes, their memberships with it, and the next
-    # scrape resolves that human to a new id. Everything else a reviewer can do is a withdrawable
-    # claim, which is why this alone is maintainers-only (raised from contributors 2026-09-17,
-    # where it sat below editing the same person's fields).
-    @router.delete("/{person_id}")
-    async def delete_person_endpoint(
-        person_id: str,
-        user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
-        ),
-    ):
-        # The activity row this writes is what the outward mirrors sweep on; nothing here calls
-        # out to them.
-        await database.delete_person(person_id, user.user_id)
-        return {"data": None}
 
     @router.get("/directory")
     async def list_directory_endpoint(

@@ -51,7 +51,7 @@ test.describe("Review issue markers", () => {
       await showPerson(page, name);
       const seat = editorFor(page, name)
         .locator(".person-editor__field")
-        .filter({ hasText: "Post" });
+        .filter({ hasText: "Office" });
       await expect(seat).toHaveCount(1);
       await expect(seat.locator(".person-editor__issue")).toContainText(
         "marked as unique",

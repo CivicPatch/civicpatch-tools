@@ -17,6 +17,7 @@ from core.people_edits import (
     patch_people,
 )
 from core.projection.diff import on_roster
+from core.projection.roster import Roster
 from database import assertions as assertions_db
 from database import memberships as memberships_db
 from database import posts as posts_db
@@ -24,13 +25,13 @@ from database import projection as projection_db
 from database.changesets import register_people_edit_changeset
 from database.database import get_pool
 from database.roles import get_roles
-from schemas.assertions import Assertion
+from schemas.assertions import Assertion, EntityType
 from schemas.jurisdictions import PersonEdit
 from services.publish import publish_roster
 from shared.schemas import RoleConfig
 from shared.utils.id_utils import make_id
 from shared.utils.membership_ids import membership_id
-from shared.utils.taxonomy import build_taxonomy
+from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
 
 class AnonymousEdit(Exception):
@@ -88,9 +89,14 @@ async def edit_published_roster(
     if not claims and not labels:
         return ""
 
+    # Read before the claims are filed: this changeset is born published, so once they are
+    # written the roster already reflects them and there is no "before" left to read.
+    before = on_roster(await _roster(jurisdiction_ocdid))
     await register_people_edit_changeset(changeset_id, jurisdiction_ocdid, user_id)
     await _write(claims, labels, user_id, changeset_id)
-    await publish_roster(changeset_id, jurisdiction_ocdid, user_id)
+    # `publish_roster` reads the feed off that against the roster after (9d), so this path
+    # records what it changed without diffing its own payload.
+    await publish_roster(changeset_id, jurisdiction_ocdid, user_id, before=before)
     return changeset_id
 
 
@@ -202,25 +208,34 @@ async def _refuse_unknown_posts(people: list[PersonEdit]) -> None:
         raise UnknownPost(missing)
 
 
-async def _derived_rows(
-    jurisdiction_ocdid: str, including: str | None = None
-) -> dict[str, dict]:
-    """The roster this edit is measured against, keyed by person id.
+async def _roster(jurisdiction_ocdid: str, including: str | None = None) -> Roster:
+    """The roster the facts derive, as the fold answers it.
 
     `including` names the review being edited, so the base is what that review proposes rather
     than what is published.
     """
+    roster, _taxonomy = await _roster_and_taxonomy(jurisdiction_ocdid, including)
+    return roster
+
+
+async def _roster_and_taxonomy(
+    jurisdiction_ocdid: str, including: str | None = None
+) -> tuple[Roster, Taxonomy]:
+    """Both, because the caller that turns a roster into rows needs the taxonomy that derived
+    it — asking twice is two `get_roles()` round trips for one edit."""
     taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         roster = await projection_db.derived_roster(
             cur, jurisdiction_ocdid, including=including, taxonomy=taxonomy
         )
+    return roster, taxonomy
+
+
+async def _derived_rows(
+    jurisdiction_ocdid: str, including: str | None = None
+) -> dict[str, dict]:
+    """The same roster as the shape `assertions_from_edit` diffs against, keyed by person id."""
+    roster, taxonomy = await _roster_and_taxonomy(jurisdiction_ocdid, including)
     rows = card_rows(on_roster(roster), jurisdiction_ocdid, taxonomy)
     return {row["id"]: row for row in rows}
-
-
-async def _new_changeset(jurisdiction_ocdid: str, user_id: str) -> str:
-    changeset_id = make_id()
-    await register_people_edit_changeset(changeset_id, jurisdiction_ocdid, user_id)
-    return changeset_id

@@ -6,7 +6,7 @@ import {
   renderPersonSummary,
   type PersonEditorProps,
 } from "./person-editor.js";
-import { type PersonCard } from "../people/person-cards.js";
+import { type PersonCard, cardKey } from "../people/person-cards.js";
 
 export interface InlinePersonEditorProps {
   card: PersonCard;
@@ -23,7 +23,7 @@ export function renderInlinePersonEditor({
   editorFor,
   idPrefix,
 }: InlinePersonEditorProps) {
-  if (card.personId !== openPersonId) return nothing;
+  if (cardKey(card) !== openPersonId) return nothing;
   const editorProps = editorFor(card);
   const focusWrapper = (el?: Element) => {
     el?.scrollIntoView({ block: "center", behavior: "smooth" });
@@ -31,7 +31,12 @@ export function renderInlinePersonEditor({
   };
   const id = `${idPrefix}${card.personId}`;
   return html`
-    <div class="person-editor-inline" id=${id} tabindex="-1" ${ref(focusWrapper)}>
+    <div
+      class="person-editor-inline"
+      id=${id}
+      tabindex="-1"
+      ${ref(focusWrapper)}
+    >
       <div class="person-editor-inline__inner person-editor-list">
         <div class="person-editor-inline__summary">
           ${renderPersonSummary(editorProps)}

@@ -126,3 +126,22 @@ def test_memberships_come_out_in_the_order_the_query_used_to_return_them():
         "council-member",
         "mayor",
     ]
+
+
+@pytest.mark.unit
+def test_people_come_out_in_the_order_the_card_reads_them():
+    """By name, as `get_roster` returned them. The fold has no opinion about order, and the
+    review card renders these in sequence — a departing person past the second collapses to a
+    chip, so which one that is depends on this."""
+    rows = card_rows(
+        Roster(
+            people=(
+                Person(id="p2", name="Zoe Vance"),
+                Person(id="p1", name="Ann Lee"),
+            )
+        ),
+        _JURISDICTION,
+        TAXONOMY,
+    )
+
+    assert [row["name"] for row in rows] == ["Ann Lee", "Zoe Vance"]

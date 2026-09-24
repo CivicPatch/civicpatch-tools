@@ -30,10 +30,7 @@ import {
 import { renderPersonFace } from "../review/person-face.js";
 import { editorSummary } from "./editor-summary.js";
 import { renderRosterMemberships } from "./person-memberships.js";
-import type {
-  MembershipRemoval,
-  RosterMembership,
-} from "../../schemas/membership-removal.js";
+import type { RosterMembership } from "../../schemas/roster-membership.js";
 
 const BANNER: Record<string, { title: string; body: string }> = {
   [PersonStatus.REMOVED]: {
@@ -70,7 +67,6 @@ export interface PersonEditorProps {
   // Every organization this person sits in, for the removal claims. Not `oldRecord.memberships`:
   // that payload carries no membership id, and a claim has to name the row it is about.
   memberships: RosterMembership[];
-  onSetRemoval: ((membershipId: string, assertion: MembershipRemoval) => void) | null;
   isDirty: boolean;
   isExpanded: boolean;
   onToggleExpand: () => void;
@@ -309,8 +305,6 @@ export function renderPersonEditor(props: PersonEditorProps) {
       ${renderRosterMemberships({
         personId: props.personId,
         memberships: props.memberships,
-        isReadOnly: props.isReadOnly,
-        onSetRemoval: props.onSetRemoval,
       })}
     </div>
   `;

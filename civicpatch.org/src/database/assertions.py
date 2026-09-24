@@ -9,8 +9,7 @@ from typing import Any
 
 from core.people_edits import LIST_FIELDS, POSTS_FIELD
 from database.database import get_pool
-from schemas.assertions import DefaultNote, Assertion, AssertionKind, EntityType, Source
-
+from schemas.assertions import Assertion, AssertionKind, DefaultNote, EntityType, Source
 
 # Fields whose accepts are per value rather than one answer for the whole field: the list
 # fields, and the posts somebody holds — two organizations, two claims, neither superseding
@@ -73,7 +72,9 @@ async def _unchanged(cur, claims: list[Assertion]) -> set[tuple]:
     current: dict[str, dict] = {}
     for entity_type_value, entity_ids in by_entity.items():
         current.update(
-            await asserted_values(cur, EntityType(entity_type_value), sorted(entity_ids))
+            await asserted_values(
+                cur, EntityType(entity_type_value), sorted(entity_ids)
+            )
         )
 
     def already_true(claim: Assertion) -> bool:
@@ -200,7 +201,9 @@ async def withdraw(
         ),
     )
     withdrawn = [row[0] for row in await cur.fetchall()]
-    await _insert_withdraws(cur, withdrawn, withdrawn_by, withdrawn_by_changeset_id, reason)
+    await _insert_withdraws(
+        cur, withdrawn, withdrawn_by, withdrawn_by_changeset_id, reason
+    )
     return len(withdrawn)
 
 
@@ -226,21 +229,39 @@ async def _insert_withdraws(
     changeset_id: str | None,
     reason: str | None = None,
 ) -> None:
-    if not assertion_ids:
+    await withdraw_facts(
+        cur, EntityType.CLAIM, assertion_ids, withdrawn_by, changeset_id, reason
+    )
+
+
+async def withdraw_facts(
+    cur,
+    entity_type: EntityType,
+    entity_ids: list[str],
+    withdrawn_by: str,
+    changeset_id: str | None,
+    reason: str | None = None,
+) -> None:
+    """File a withdraw against each of these facts: claims, source records or source pages.
+
+    A withdraw names a whole row rather than a value, which is why it carries no field and no
+    value. Withdrawing one is itself a fact, so undoing a withdrawal is withdrawing it.
+    """
+    if not entity_ids:
         return
     sources = json.dumps([Source(note=reason or DefaultNote.WITHDRAWN).model_dump()])
     await cur.executemany(
         _INSERT_WITHDRAW,
         [
             {
-                "entity_type": EntityType.CLAIM.value,
-                "entity_id": assertion_id,
+                "entity_type": entity_type.value,
+                "entity_id": entity_id,
                 "kind": AssertionKind.WITHDRAW.value,
                 "sources": sources,
                 "created_by": withdrawn_by,
                 "changeset_id": changeset_id,
             }
-            for assertion_id in assertion_ids
+            for entity_id in entity_ids
         ],
     )
 
@@ -342,8 +363,11 @@ async def withdraw_assertions(
         (withdrawn_by, reason, withdrawn_by_changeset_id, assertion_ids),
     )
     withdrawn = [row[0] for row in await cur.fetchall()]
-    await _insert_withdraws(cur, withdrawn, withdrawn_by, withdrawn_by_changeset_id, reason)
+    await _insert_withdraws(
+        cur, withdrawn, withdrawn_by, withdrawn_by_changeset_id, reason
+    )
     return len(withdrawn)
+
 
 async def create(assertion: Assertion, created_by: str) -> str:
     """Set one assertion, owning the connection. Returns its id.

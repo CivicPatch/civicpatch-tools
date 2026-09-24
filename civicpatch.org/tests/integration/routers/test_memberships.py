@@ -267,6 +267,22 @@ async def test_the_person_axis_read_names_the_person(client):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_the_person_axis_read_names_the_organization(client):
+    """The person editor groups a person's rows by the body they are in, so each row has to
+    name its own. Moved here on 2026-09-23 from `test_membership_assertions.py`, whose route is
+    gone; the claim it makes about this read is unchanged."""
+    person_id, mayor, _ = await _seed()
+    await _seat(person_id, mayor, "Mayor")
+
+    rows = client.get(f"{_PREFIX}/{_OCDID}").json()["data"]["memberships"]
+
+    [seated] = [row for row in rows if row["role_id"] == "mayor"]
+    assert seated["organization_id"]
+    assert seated["organization_name"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_both_axes_answer_the_same_moment(client):
     """The screen toggles between by-post and by-person, so a date meaning one thing on one
     axis and another on the other would make switching the view silently switch the moment."""

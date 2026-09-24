@@ -11,11 +11,17 @@ import logging
 
 import lib.buckets as buckets
 import lib.storage as storage_service
+import services.activity as activity_service
+from core.activity import changes_from_diff
 from core.images import artifacts_key, promoted_key
 from core.post_derivation import ChosenPost, DerivedPost, RosterEntry, derived_posts
+from core.projection.diff import on_roster, roster_diff
+from core.projection.roster import Roster
 from database import posts as posts_db
+from database import projection as projection_db
 from database.database import get_pool
 from database import source_records as source_records_db
+from database.users import SYSTEM_USER_ID
 from database.publications import (
     dismiss_changeset,
     publish_changeset,
@@ -111,6 +117,7 @@ async def publish_roster(
     jurisdiction_ocdid: str,
     resolved_by_user_id: str | None = None,
     changes: Change | None = None,
+    before: Roster | None = None,
 ) -> int:
     """Make a changeset live: promote its photos, then rebuild the roster from the facts.
 
@@ -118,13 +125,42 @@ async def publish_roster(
     how they publish, so there is no second entry point to keep in step.
 
     `changes`, when given, rides on the publish's own activity row — see `roster_edits.publish`.
+
+    The feed's per-person rows are read off the roster before against the roster after (9d), so
+    a scrape's moves and a hand edit's are reported the same way, by what the rebuild actually
+    changed rather than by what anybody asked for.
+
+    `before` is for a caller whose facts already count by the time it gets here: a hand edit
+    mints a changeset that is born published, so reading the roster now would answer with the
+    edit already applied and report nothing. A review's changeset is unpublished until this
+    call, so it passes none.
     """
     await promote_changeset_images(changeset_id)
+    if before is None:
+        before = await _published_roster(jurisdiction_ocdid)
     written = await publish_changeset(
         changeset_id, jurisdiction_ocdid, resolved_by_user_id, changes
     )
+    after = await _published_roster(jurisdiction_ocdid)
+    await activity_service.write_person_changes(
+        changeset_id,
+        jurisdiction_ocdid,
+        resolved_by_user_id or SYSTEM_USER_ID,
+        changes_from_diff(before, after, roster_diff(before, after)),
+    )
     logger.info(f"[{changeset_id}] Published {written} people for {jurisdiction_ocdid}")
     return written
+
+
+async def _published_roster(jurisdiction_ocdid: str) -> Roster:
+    """Who is on the roster right now, as the fold answers it."""
+    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        roster = await projection_db.derived_roster(
+            cur, jurisdiction_ocdid, taxonomy=taxonomy
+        )
+    return on_roster(roster)
 
 
 async def dismiss_people(

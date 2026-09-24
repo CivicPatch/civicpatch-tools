@@ -25,7 +25,7 @@ from core.people_edits import (
 )
 from core.changeset_lifecycle import REVIEW_POOL_KINDS
 from core.people_roster import reviewer_source_records
-from database import assertions, memberships as memberships_db, posts
+from database import assertions, posts
 from database.changesets import get_changeset_kind, register_people_edit_changeset
 from database.database import get_pool
 from database.people import get_roster
@@ -35,7 +35,6 @@ from schemas.common import Identity
 from services.publish import publish_roster
 from services.roster import proposed_roster, scraped_roster
 from shared.schemas import Post
-from shared.utils.id_utils import make_id
 
 logger = logging.getLogger(__name__)
 
@@ -98,30 +97,6 @@ async def _posts_for_additions(new_people: List[dict]) -> dict[str, Post]:
     chosen = await _chosen_posts(new_people)
     _refuse_postless_additions(new_people, chosen)
     return chosen
-
-
-async def _reject_memberships_of(
-    removed_person_ids: List[str], changeset_id: str, user_id: str
-) -> None:
-    """Somebody the editor left out: a reject of each post they hold.
-
-    The claim, not a close — publishing derives the roster from the facts, so "they are not on
-    it" has to be a fact. Until step 9's edit route, this is where that is said.
-    """
-    if not removed_person_ids:
-        return
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        held = await memberships_db.open_memberships_for_persons(cur, removed_person_ids)
-        for membership in held:
-            await memberships_db.reject(
-                cur,
-                membership["person_id"],
-                membership["post_id"],
-                user_id,
-                changeset_id=changeset_id,
-            )
-        await conn.commit()
 
 
 async def _record_edits(

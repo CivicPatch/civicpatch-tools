@@ -3,7 +3,6 @@
 import type { Issue } from "../components/fields/field-model.js";
 import type { PersonAssertion } from "../components/person-editor/field-provenance.js";
 import type { Post } from "../components/posts-list/posts-model.js";
-import type { ProposedChange } from "./membership-proposal.js";
 
 export interface RosterPresence {
   name: string;
@@ -33,7 +32,6 @@ export interface ReviewCard {
   jurisdiction_ocdid: string;
   existing: any[];
   proposed: any[];
-  changes: ProposedChange[];
   sources: ReviewSource[];
   overridden_source_values: Record<string, Record<string, unknown>>;
   review: ReviewSummary;

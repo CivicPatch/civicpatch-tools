@@ -2,13 +2,9 @@ import { describe, it, expect } from "vitest";
 import {
   membershipTitle,
   membershipsByOrganization,
-  nextRemoval,
   pageWordings,
 } from "../components/person-editor/person-memberships-model.js";
-import {
-  MEMBERSHIP_REMOVAL,
-  type RosterMembership,
-} from "../schemas/membership-removal.js";
+import { type RosterMembership } from "../schemas/roster-membership.js";
 
 const membership = (over: Partial<RosterMembership> = {}): RosterMembership => ({
   id: "m1",
@@ -19,14 +15,13 @@ const membership = (over: Partial<RosterMembership> = {}): RosterMembership => (
   post_label: "Council Member, District 3",
   label: null,
   source_labels: [],
-  removal_assertion: MEMBERSHIP_REMOVAL.NONE,
   ...over,
 });
 
 describe("membershipsByOrganization", () => {
   it("gives a person in two bodies a section each", () => {
-    // The whole reason the editor groups at all: two bodies are two commitments, and closing
-    // one says nothing about the other.
+    // The whole reason the editor groups at all: two bodies are two commitments, and removing
+    // somebody from one says nothing about the other.
     const sections = membershipsByOrganization(
       [
         membership(),
@@ -81,27 +76,8 @@ describe("membershipTitle", () => {
   });
 });
 
-describe("nextRemoval", () => {
-  it("withdraws the claim already made", () => {
-    // What makes each button its own undo: there is no separate "take it back" act.
-    expect(
-      nextRemoval(MEMBERSHIP_REMOVAL.CLOSED, MEMBERSHIP_REMOVAL.CLOSED),
-    ).toBe(MEMBERSHIP_REMOVAL.NONE);
-  });
-
-  it("swaps one claim for the other", () => {
-    expect(
-      nextRemoval(MEMBERSHIP_REMOVAL.CLOSED, MEMBERSHIP_REMOVAL.NEVER_HELD),
-    ).toBe(MEMBERSHIP_REMOVAL.NEVER_HELD);
-  });
-
-  it("files the claim when nothing was chosen", () => {
-    expect(nextRemoval(MEMBERSHIP_REMOVAL.NONE, MEMBERSHIP_REMOVAL.CLOSED)).toBe(
-      MEMBERSHIP_REMOVAL.CLOSED,
-    );
-  });
-});
-
+// The three-state removal control ("closed" / "never held") was retired on 2026-09-23: a
+// removal is the roster row dropping its office, covered by `roster-edit-payload.test.ts`.
 
 describe("pageWordings", () => {
   it("drops a wording the title already says", () => {

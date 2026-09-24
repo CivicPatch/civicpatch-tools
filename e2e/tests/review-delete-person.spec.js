@@ -88,7 +88,7 @@ test.describe("Delete a person", () => {
     // page control and the editor is a modal over it, so close it first — as a reviewer
     // does, and as Playwright requires: the dialog swallows the click otherwise.
     await openOverview(page);
-    const approveBtn = page.locator(".review-page__approve-btn");
+    const approveBtn = page.locator(".review-session__approve-btn");
     await expect(approveBtn).toHaveText(/Save and approve/);
     await approveBtn.click();
 
@@ -118,7 +118,7 @@ test.describe("Delete a person", () => {
     // That is a stronger check than Maria reappearing in a payload — it proves
     // the deletion left no residue anywhere in the state.
     await openOverview(page);
-    const approveBtn = page.locator(".review-page__approve-btn");
+    const approveBtn = page.locator(".review-session__approve-btn");
     await expect(approveBtn).not.toHaveText(/Save and approve/);
     await approveBtn.click();
 
@@ -210,7 +210,7 @@ test.describe("Delete a person", () => {
     ).toBeVisible();
 
     await openOverview(page);
-    await page.locator(".review-page__approve-btn").click();
+    await page.locator(".review-session__approve-btn").click();
     await expect.poll(() => merge.body).not.toBeNull();
     expect(publishedIds(merge.body)).not.toContain(personUuid("recon-tom"));
   });

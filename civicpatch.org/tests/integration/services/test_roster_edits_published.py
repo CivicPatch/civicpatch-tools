@@ -608,3 +608,27 @@ async def _open_posts(person_id: str) -> list[str]:
             (person_id,),
         )
         return [row[0] for row in await cur.fetchall()]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_edit_is_reported_from_what_the_rebuild_changed():
+    """9d. Replaces the two tests dropped when `edit_published` went, which asserted the same
+    rows from a diff of the *payload*. The feed now reads the roster before against the roster
+    after, so it reports what actually changed rather than what was asked for."""
+    person_id, user = await _seed()
+
+    changeset_id = await edit_published_roster(
+        _OCDID, [PersonEdit(id=person_id, fields={"name": "Ada M. Chen"})], user.user_id
+    )
+
+    rows = await _activity_rows(changeset_id)
+    edits = [changes for type_, changes in rows if type_ == "edit_person"]
+    assert len(edits) == 1, [type_ for type_, _ in rows]
+    assert edits[0]["entity_id"] == person_id
+    # Two fields, though the edit named one: renaming moves the name the records carry into
+    # `other_names`. A diff of the payload could not see that, which is why this reads the
+    # rosters.
+    fields = {field["field"]: field["after"] for field in edits[0]["fields"]}
+    assert fields["name"] == "Ada M. Chen"
+    assert "Ada Chen" in fields["other_names"]

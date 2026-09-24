@@ -102,11 +102,24 @@ describe("buildPeoplePatch", () => {
     ]);
   });
 
-  it("omits deleted people (the backend reads omission as a deletion)", () => {
+  // This verified that a deleted person is omitted because the backend reads omission as a
+  // deletion. It now verifies that somebody removed by person id is omitted because that is
+  // what a review's Remove means — they are not on this roster at all — while the removal
+  // itself is said out loud as `offices: []` in `rosterEditPayload`.
+  it("omits somebody removed by person id", () => {
     const people = [{ id: "a" }, { id: "b" }];
     expect(
       buildPeoplePatch(people, changes([["a", []], ["b", []]]), deleted("b")).map((p: { id: string }) => p.id)
     ).toEqual(["a"]);
+  });
+
+  it("keeps somebody removed from one body, since their field edits still stand", () => {
+    // A roster removal names a row, `person:organization`. Taking their council seat away is
+    // no reason to drop a correction to their name, which is a fact about the person.
+    const people = [{ id: "a", name: "Ann Lee" }];
+    expect(
+      buildPeoplePatch(people, changes([["a", ["name"]]]), deleted("a:org-council")),
+    ).toEqual([{ id: "a", fields: { name: "Ann Lee" } }]);
   });
 
   it("preserves order", () => {
@@ -132,6 +145,13 @@ describe("pruneIds", () => {
 
   it("accepts a plain list of living ids", () => {
     expect([...pruneIds(new Set(["a", "gone"]), ["a"])]).toEqual(["a"]);
+  });
+
+  it("keeps a roster row whose person is still live", () => {
+    // Row keys name a person in a body, so liveness is about the person the key starts with.
+    expect([...pruneIds(new Set(["a:org-council", "gone:org-council"]), ["a"])]).toEqual([
+      "a:org-council",
+    ]);
   });
 });
 

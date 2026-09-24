@@ -246,31 +246,6 @@ export const fetchMemberships = async (jurisdictionOcdid, asOf = null) => {
   return res.json();
 };
 
-// One of "none" | "closed" | "never_held" — the server withdraws whichever claim this one
-// contradicts, so the caller never files two.
-export const setMembershipRemoval = async (
-  membershipId,
-  assertion,
-  reason = null,
-  changesetId = null,
-) => {
-  const res = await fetch(`/api/v1/memberships/${membershipId}/assertion`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRF-Token": getCsrfCookie(),
-    },
-    credentials: "include",
-    body: JSON.stringify({
-      assertion,
-      reason,
-      changeset_id: changesetId,
-    }),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-};
-
 
 // One hand edit to a jurisdiction's roster. With a `changesetId` it is a save inside that
 // review and publishes nothing; without one it edits the live roster and publishes on the spot,

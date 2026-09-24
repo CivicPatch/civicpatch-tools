@@ -89,7 +89,9 @@ def current_records(members: Iterable[str], facts: Facts) -> list[SourceRecord]:
 def stands(value, accepts: list[Claim], rejects: list[Claim]) -> bool:
     """Whether a value survives what people have said about it: the newest claim naming that
     value decides, and no claim about it means it stands."""
-    claims = sorted((k for k in accepts + rejects if k.value == value), key=latest_first)
+    claims = sorted(
+        (k for k in accepts + rejects if k.value == value), key=latest_first
+    )
     return not claims or claims[-1].kind != ClaimKind.REJECT
 
 
@@ -132,6 +134,25 @@ def list_value(members: Iterable[str], field: str, facts: Facts) -> tuple[str, .
             continue
         values.append(value)
     return tuple(values)
+
+
+def without_claims(facts: Facts) -> Facts:
+    """The same facts with nobody's say-so in them — the page's own answer."""
+    return facts.model_copy(update={"claims": ()})
+
+
+def overridden_source_values(members: Iterable[str], facts: Facts) -> dict[str, object]:
+    page = without_claims(facts)
+    overridden: dict[str, object] = {}
+    for field in SCALAR_FIELDS:
+        evidence = scalar_value(members, field, page)
+        if evidence != scalar_value(members, field, facts):
+            overridden[field] = evidence
+    for field in LIST_FIELDS:
+        evidence = list_value(members, field, page)
+        if evidence != list_value(members, field, facts):
+            overridden[field] = list(evidence)
+    return overridden
 
 
 def source_urls(members: Iterable[str], facts: Facts) -> tuple[str, ...]:

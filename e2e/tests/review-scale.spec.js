@@ -47,7 +47,7 @@ test.describe("Review card at scale", () => {
         editor.locator(".person-editor__issue").filter({ hasText: "marked as unique" }),
       ).toHaveCount(1);
       await expect(
-        editor.locator(".person-editor__field").filter({ hasText: "Post" }),
+        editor.locator(".person-editor__field").filter({ hasText: "Office" }),
       ).toHaveCount(1);
       await page.keyboard.press("Escape");
     }
@@ -62,11 +62,15 @@ test.describe("Review card at scale", () => {
     // Ingest mints no posts, so a promotion names a post no row holds. The picker has to offer
     // it anyway — otherwise the derivation's answer is simply missing and the field reads as
     // unanswered — and has to say that accepting it creates the post.
+    // It says so on the division: the picker is two selects now, and a role paired with a
+    // division no post holds yet is marked there. (An at-large pairing gets no marker at all —
+    // noted in the plan's §20.)
+    // The group, not `.field-control__office` — that class is on each of the two selects.
     const picker = editorFor(page, "Councillor 09 Scale").locator(
-      ".field-control__office",
+      ".field-control__office-group",
     );
-    await expect(picker.locator("option[selected], option:checked")).toContainText(
-      "new post",
-    );
+    await expect(picker.getByLabel("Role", { exact: true }).locator("option:checked"))
+      .toContainText("Council President");
+    await expect(picker.getByLabel("Division").locator("option:checked")).toContainText("(New)");
   });
 });

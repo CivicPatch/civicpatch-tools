@@ -7,7 +7,6 @@ import { type PersonEditorProps } from "../person-editor/person-editor.js";
 import { type Post, type RoleOption } from "../posts-list/posts-model.js";
 import { renderRoleGroup } from "../people/person-card-grid.js";
 import {
-  proposalsByPersonId,
   personOf,
   type PersonCard,
 } from "../people/person-cards.js";
@@ -27,11 +26,9 @@ import {
   type CardInOrganization,
   type SourceMap,
 } from "./overview-model.js";
-import { type ProposedChange } from "../../schemas/membership-proposal.js";
 
 export interface ReviewOverviewProps {
   cards: PersonCard[];
-  changes?: ProposedChange[];
   isReadOnly: boolean;
   onOpenPerson: (personId: string, fieldKey: string | null) => void;
   onAdd?: () => void;
@@ -48,6 +45,7 @@ export interface ReviewOverviewProps {
 
 const UNMATCHED_SECTION_LABEL = "Unmatched role";
 const DEPARTING_SECTION_LABEL = "Not found or removed";
+const UNPLACED_SECTION_LABEL = "No office yet";
 // How many departing cards show in full before the rest collapse to name chips — the same
 // "less detail up front, not click-through-first" idea `runsOf`'s fold already uses for a
 // long run of unchanged people, applied to a long run of dropped ones instead.
@@ -75,14 +73,13 @@ function renderCardRuns(
   cards: PersonCard[],
   props: ReviewOverviewProps,
   sources: SourceMap,
-  proposals: Map<string, ProposedChange[]>,
 ) {
   return runsOf(cards).map((run) =>
     run.folded
       ? html`<div class="review-overview__strip">
-          ${run.cards.map((card) => renderFold(card, props, proposals))}
+          ${run.cards.map((card) => renderFold(card, props))}
         </div>`
-      : run.cards.map((card) => renderDiffCard(card, props, sources, proposals)),
+      : run.cards.map((card) => renderDiffCard(card, props, sources)),
   );
 }
 
@@ -91,27 +88,16 @@ function renderSection(
   entries: CardInOrganization[],
   props: ReviewOverviewProps,
   sources: SourceMap,
-  proposals: Map<string, ProposedChange[]>,
 ) {
   return renderRoleGroup(
     heading,
     entries,
     (entry: CardInOrganization) => entry.card.personId,
     (subset: CardInOrganization[]) =>
-      renderCardRuns(subset.map((entry) => entry.card), props, sources, proposals),
+      renderCardRuns(subset.map((entry) => entry.card), props, sources),
     props.openPersonId,
     (entry: CardInOrganization) => renderInlineEditor(entry.card, props),
   );
-}
-
-/** The proposals of one organization, keyed by person: a card rendered inside that section shows
- * the post it holds there, not the one it holds in another. */
-function proposalsIn(entries: CardInOrganization[]): Map<string, ProposedChange[]> {
-  const scoped = new Map<string, ProposedChange[]>();
-  for (const { card, proposal } of entries) {
-    scoped.set(card.personId, [...(scoped.get(card.personId) ?? []), proposal]);
-  }
-  return scoped;
 }
 
 // A long "dropped" list shows the same way a long unchanged run does elsewhere — a couple in
@@ -131,6 +117,28 @@ function renderDepartingChips(cards: PersonCard[], props: ReviewOverviewProps) {
   </p>`;
 }
 
+/** Somebody a reviewer just added, before they have been given an office. Their own group, at
+ * the end: they used to sit with the departing, where "not found" read as a verdict on a person
+ * who had just arrived.
+ *
+ * A plain list of cards, so `renderRoleGroup` serves it — unlike departing, which collapses
+ * past the second into chips and needs its own shape. */
+function renderUnplacedSection(
+  cards: PersonCard[],
+  props: ReviewOverviewProps,
+  sources: SourceMap,
+) {
+  return renderRoleGroup(
+    UNPLACED_SECTION_LABEL,
+    cards,
+    (card: PersonCard) => card.personId,
+    (subset: PersonCard[]) =>
+      subset.map((card) => renderDiffCard(card, props, sources)),
+    props.openPersonId,
+    (card: PersonCard) => renderInlineEditor(card, props),
+  );
+}
+
 // Shaped like `renderRoleGroup`'s split, but by hand: departing has its own hybrid layout
 // (full cards, then collapsed chips) that doesn't fit the plain "list of cards" shape
 // `renderRoleGroup` expects. Only `shown` has real positions worth preserving around the open
@@ -140,7 +148,6 @@ function renderDepartingSection(
   cards: PersonCard[],
   props: ReviewOverviewProps,
   sources: SourceMap,
-  proposals: Map<string, ProposedChange[]>,
 ) {
   if (!cards.length) return nothing;
   const shown = cards.slice(0, DEPARTING_SHOWN);
@@ -160,7 +167,7 @@ function renderDepartingSection(
       <div class="rgroup" style="--group-cards: ${shown.length}">
         ${head}
         <div class="rgrid">
-          ${shown.map((card) => renderDiffCard(card, props, sources, proposals))}
+          ${shown.map((card) => renderDiffCard(card, props, sources))}
         </div>
         ${rest.length ? renderDepartingChips(rest, props) : nothing}
       </div>
@@ -174,7 +181,7 @@ function renderDepartingSection(
     <div class="rgroup" style="--group-cards: ${shown.length}">
       ${head}
       <div class="rgrid">
-        ${upToOpen.map((card) => renderDiffCard(card, props, sources, proposals))}
+        ${upToOpen.map((card) => renderDiffCard(card, props, sources))}
       </div>
     </div>
     ${renderInlineEditor(shown[openIndex], props)}
@@ -182,7 +189,7 @@ function renderDepartingSection(
       ? html`
           <div class="rgroup" style="--group-cards: ${shown.length}">
             <div class="rgrid">
-              ${after.map((card) => renderDiffCard(card, props, sources, proposals))}
+              ${after.map((card) => renderDiffCard(card, props, sources))}
             </div>
             ${rest.length ? renderDepartingChips(rest, props) : nothing}
           </div>
@@ -205,7 +212,6 @@ function renderOrganization(
     props.organizations?.find((organization) => organization.id === organizationId)?.name ??
     "This jurisdiction";
   const people = new Set(entries.map((entry) => entry.card.personId)).size;
-  const scoped = proposalsIn(entries);
   return html`
     <section class="panel review-overview__organization">
       <div class="panel__cap">
@@ -218,9 +224,9 @@ function renderOrganization(
       </div>
       <div class="rgroup-list">
         ${ranked.map((group) =>
-          renderSection(group.roleLabel, group.people, props, sources, scoped),
+          renderSection(group.roleLabel, group.people, props, sources),
         )}
-        ${renderSection(UNMATCHED_SECTION_LABEL, unmatched, props, sources, scoped)}
+        ${renderSection(UNMATCHED_SECTION_LABEL, unmatched, props, sources)}
       </div>
     </section>
   `;
@@ -228,11 +234,14 @@ function renderOrganization(
 
 function ReviewOverview(props: ReviewOverviewProps) {
   const { cards, isReadOnly, onAdd, roles } = props;
-  const proposals = proposalsByPersonId(props.changes ?? []);
   const list = cards ?? [];
   const sources = sourceMapFor(list);
   const roleOrder = roles.map((role) => role.id);
-  const sections = sectionsByOrganization(list, proposals, roleOrder);
+  const sections = sectionsByOrganization(
+    list,
+    roleOrder,
+    (props.organizations ?? []).map((organization) => organization.id),
+  );
 
   return html`
     <div class="review-overview">
@@ -249,7 +258,8 @@ function ReviewOverview(props: ReviewOverviewProps) {
                 sources,
               ),
             )}
-            ${renderDepartingSection(sections.departing, props, sources, proposals)}
+            ${renderDepartingSection(sections.departing, props, sources)}
+            ${renderUnplacedSection(sections.unplaced, props, sources)}
             ${!isReadOnly && onAdd
               ? html`<button class="review-row review-row--ghost" @click=${onAdd}>
                   <span aria-hidden="true">+</span>

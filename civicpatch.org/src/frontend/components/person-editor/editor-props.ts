@@ -1,7 +1,7 @@
 import {
   visibleFields,
   type FrozenFields,
-} from "../../pages/review-session-page/frozen-fields.js";
+} from "./frozen-fields.js";
 import { type Save } from "../fields/field-controls.js";
 import {
   postsFor,
@@ -15,18 +15,13 @@ import { canMerge, mergeCandidates } from "../review/merge-model.js";
 import { acceptsByField, type PersonAssertion } from "./field-provenance.js";
 import { type PersonEditorProps } from "./person-editor.js";
 import {
-  heldPost,
-  heldMembershipLabel,
+  heldOffice,
   type DerivedPost,
   type Post,
   type ProposedPost,
   type RoleOption,
 } from "../posts-list/posts-model.js";
-import { type ProposedChange } from "../../schemas/membership-proposal.js";
-import {
-  type MembershipRemoval,
-  type RosterMembership,
-} from "../../schemas/membership-removal.js";
+import { type RosterMembership } from "../../schemas/roster-membership.js";
 
 export type EditorContextBase = Omit<
   EditorContext,
@@ -45,8 +40,6 @@ export interface EditorContext {
   canCreatePost: boolean;
   // The whole jurisdiction's open memberships; each editor takes its own person's out of it.
   rosterMemberships: RosterMembership[];
-  onSetRemoval: ((membershipId: string, assertion: MembershipRemoval) => void) | null;
-  proposals: Map<string, ProposedChange[]>;
   assertions: Record<string, PersonAssertion[]>;
   overriddenSourceValues: Record<string, Record<string, unknown>>;
   isExpanded: (personId: string) => boolean;
@@ -62,53 +55,50 @@ export interface EditorContext {
   onPickPartner: (anchorId: string, partnerId: string) => void;
 }
 
-// A proposal with no recognized role is a vocabulary gap, not an answer to show as one.
-function derivedPostFromProposal(proposal: ProposedChange): DerivedPost | null {
-  if (proposal.post.role_id === UNMATCHED_ROLE_ID) return null;
+/** What the office picker opens on: the office this card's record holds in this body.
+ *
+ * The record is the proposed one where there is one, so a scrape's detected move defaults the
+ * picker the way its own proposal used to. A post the fold names but no `posts` row exists for
+ * yet cannot be looked up by id, so it is offered by role and division instead — which is the
+ * one thing `DerivedPost`'s `post_id` half cannot express. No recognised role is a vocabulary
+ * gap, not an answer to show as one.
+ */
+function derivedPostFor(
+  card: PersonCard,
+  organizationId: string,
+  posts: Post[],
+): DerivedPost | null {
+  const held = heldOffice(personOf(card)?.memberships, organizationId);
+  if (!held || held.role_id === UNMATCHED_ROLE_ID) return null;
+  // An empty list is "not loaded yet", not "the post is not there" — `useJurisdictionPosts`
+  // answers empty while it loads and on failure, and reading that as absent would offer every
+  // published person's long-standing post as one the scrape is about to mint.
+  const known = !posts.length || posts.some((post) => post.id === held.post_id);
   return {
-    post_id: proposal.post.id,
-    label: proposal.post.label,
-    membershipLabel: proposal.membership_label,
-    // Only meaningful when there's no `post_id` for the picker to look up instead (see
-    // `DerivedPost`'s own comment) — carried regardless, since it costs nothing unused.
-    role_id: proposal.post.role_id,
-    division_ocdid: proposal.post.division_ocdid,
+    post_id: known ? held.post_id : null,
+    label: held.post_label ?? "",
+    membershipLabel: held.label ?? null,
+    role_id: held.role_id,
+    division_ocdid: held.division_ocdid,
   };
 }
 
-function derivedPostFromHeld(
-  memberships: PersonMembership[] | undefined,
-): DerivedPost | null {
-  const held = heldPost(memberships);
-  return held
-    ? { ...held, membershipLabel: heldMembershipLabel(memberships) }
-    : null;
-}
-
-function derivedPostFor(
-  card: PersonCard,
-  proposals: Map<string, ProposedChange[]>,
-): DerivedPost | null {
-  const proposed = proposals.get(card.personId) ?? [];
-  // Two or more proposals is no single answer — unlike `soleProposalFor`'s other callers,
-  // this does not fall through to the held membership below the way "no proposal at all"
-  // does: picking either of two would show a decision nobody made.
-  if (proposed.length > 1) return null;
-  return proposed[0]
-    ? derivedPostFromProposal(proposed[0])
-    : derivedPostFromHeld(personOf(card)?.memberships);
-}
-
-function allProposedPosts(
-  proposals: Map<string, ProposedChange[]>,
-): ProposedPost[] {
-  return Array.from(proposals.values())
-    .flat()
-    .filter((proposal) => proposal.post.role_id !== UNMATCHED_ROLE_ID)
-    .map((proposal) => ({
-      role_id: proposal.post.role_id,
-      role_label: proposal.post.role_label,
-      division_ocdid: proposal.post.division_ocdid,
+/** Every post this card's people would land in that has no `posts` row yet, so the picker can
+ * offer one scrape's new post to the next person in the same card. */
+function proposedPosts(cards: PersonCard[], posts: Post[]): ProposedPost[] {
+  const known = new Set(posts.map((post) => post.id));
+  return (cards ?? [])
+    .flatMap((card) => personOf(card)?.memberships ?? [])
+    .filter(
+      (membership: any) =>
+        membership.role_id &&
+        membership.role_id !== UNMATCHED_ROLE_ID &&
+        !known.has(membership.post_id),
+    )
+    .map((membership: any) => ({
+      role_id: membership.role_id,
+      role_label: membership.role_label,
+      division_ocdid: membership.division_ocdid,
     }));
 }
 
@@ -120,7 +110,6 @@ export function personEditorPropsFor(
   return {
     personId: card.personId,
     memberships: ctx.rosterMemberships,
-    onSetRemoval: ctx.onSetRemoval,
     status: card.status,
     oldRecord: card.oldRecord,
     newRecord: card.newRecord,
@@ -129,9 +118,9 @@ export function personEditorPropsFor(
     issues: card.issues,
     isReadOnly: ctx.isReadOnly,
     jurisdictionOcdid: ctx.jurisdictionOcdid,
-    subtitle: postsFor(card, ctx.proposals, ctx.posts),
-    derivedPost: derivedPostFor(card, ctx.proposals),
-    proposedPosts: allProposedPosts(ctx.proposals),
+    subtitle: postsFor(card, ctx.posts),
+    derivedPost: derivedPostFor(card, ctx.organizationId, ctx.posts),
+    proposedPosts: proposedPosts(ctx.cards, ctx.posts),
     accepts: acceptsByField(ctx.assertions[card.personId] ?? []),
     assertions: ctx.assertions[card.personId] ?? [],
     overriddenSourceValues: ctx.overriddenSourceValues[card.personId] ?? {},

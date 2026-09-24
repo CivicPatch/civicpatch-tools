@@ -7,7 +7,7 @@
  * And the header stays pinned as I scroll through a long list of people
  *
  * The header's stickiness depends on custom-element hosts dissolving with
- * `display: contents` so .review-page__header (wide) and .review-page__step-nav
+ * `display: contents` so .review-session__header (wide) and .review-session__step-nav
  * (narrow) end up as direct flex items of .review-page. That is invisible to
  * markup assertions and to the DOM snapshot: nesting the header one level deeper
  * silently un-sticks it while every other test still passes.
@@ -20,7 +20,7 @@ const NARROW_VIEWPORT = { width: 375, height: 800 };
 async function openFirstCard(page) {
   await page.goto("/review");
   await page.locator(".review-page__start-btn").click();
-  await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
+  await expect(page.locator(".review-session__jurisdiction")).toContainText("E2E Test City");
 }
 
 const positionOf = (page, selector) =>
@@ -41,10 +41,10 @@ test.describe("Review header layout", () => {
   }) => {
     await openFirstCard(page);
 
-    expect(await positionOf(page, ".review-page__header")).toBe("sticky");
+    expect(await positionOf(page, ".review-session__header")).toBe("sticky");
 
-    const nav = await page.locator(".review-page__step-nav").boundingBox();
-    const actions = await page.locator(".review-page__actions").boundingBox();
+    const nav = await page.locator(".review-session__step-nav").boundingBox();
+    const actions = await page.locator(".review-session__actions").boundingBox();
 
     // Same row: each one's vertical midpoint falls inside the other's box.
     const navMid = nav.y + nav.height / 2;
@@ -63,11 +63,11 @@ test.describe("Review header layout", () => {
 
     // The header stops being a box so the nav and actions become siblings in
     // the page's own flex flow.
-    expect(await displayOf(page, ".review-page__header")).toBe("contents");
-    expect(await positionOf(page, ".review-page__step-nav")).toBe("sticky");
+    expect(await displayOf(page, ".review-session__header")).toBe("contents");
+    expect(await positionOf(page, ".review-session__step-nav")).toBe("sticky");
 
-    const nav = await page.locator(".review-page__step-nav").boundingBox();
-    const actions = await page.locator(".review-page__actions").boundingBox();
+    const nav = await page.locator(".review-session__step-nav").boundingBox();
+    const actions = await page.locator(".review-session__actions").boundingBox();
 
     // Actions drop below the nav rather than sharing its row.
     expect(actions.y).toBeGreaterThanOrEqual(nav.y + nav.height);
@@ -79,10 +79,10 @@ test.describe("Review header layout", () => {
     await page.setViewportSize({ width: 1280, height: 400 });
     await openFirstCard(page);
 
-    const before = await page.locator(".review-page__header").boundingBox();
+    const before = await page.locator(".review-session__header").boundingBox();
     await page.mouse.wheel(0, 600);
 
-    const after = await page.locator(".review-page__header").boundingBox();
+    const after = await page.locator(".review-session__header").boundingBox();
     // Pinned to the top of the viewport, not scrolled away with the content.
     expect(after.y).toBeLessThanOrEqual(before.y + 1);
     expect(after.y).toBeLessThan(10);

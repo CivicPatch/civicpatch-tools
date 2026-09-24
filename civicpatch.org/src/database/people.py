@@ -3,21 +3,7 @@ import uuid
 from typing import Any, AsyncGenerator, List, LiteralString
 
 from core.membership_label import derive_post_label
-from database import assertions
-from database.activity import record_change
-from database.changesets import register_people_edit_changeset
 from database.database import get_pool
-from database.users import SYSTEM_USER_ID
-from schemas.assertions import (
-    DefaultNote,
-    Assertion,
-    AssertionKind,
-    EntityType,
-    Source,
-)
-from schemas.activity import Change
-from shared.utils.id_utils import make_id
-from shared.utils.statuses import ActivityType
 from shared.schemas import Person
 
 logger = logging.getLogger(__name__)
@@ -414,42 +400,5 @@ async def stream_for_state(
                 yield [dict(zip(columns, row)) for row in rows]
 
 
-async def delete_person(person_id: str, user_id: str | None = None) -> str | None:
-    """Returns the jurisdiction they were in, or None when there was no such person.
-
-    Returned rather than discarded because the caller mirrors the removal outward, and once
-    the row is gone there is nothing left to ask.
-
-    Mints a `PEOPLE_EDIT` changeset, born published — the same shape `edit_published` uses for
-    any other synchronous hand edit to the live roster. It used to mint none: the activity row
-    carried `changeset_id=NULL`, which is what let a deletion through this route slip past
-    step 9's changeset-scoped rollback surface with nothing to roll back from.
-
-    `RETURNING name` too, because after the delete there is nobody left to name in the log.
-    """
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "DELETE FROM people WHERE id = %s RETURNING jurisdiction_ocdid, name",
-            (person_id,),
-        )
-        row = await cur.fetchone()
-        if row is None:
-            return None
-        jurisdiction_ocdid, name = row
-
-        changeset_id = make_id()
-        await register_people_edit_changeset(
-            changeset_id, jurisdiction_ocdid, user_id or SYSTEM_USER_ID
-        )
-        await record_change(
-            cur,
-            ActivityType.DELETE_PERSON,
-            user_id,
-            jurisdiction_ocdid,
-            Change(entity_type=EntityType.PERSON, entity_id=person_id, subject=name),
-            changeset_id=changeset_id,
-        )
-    return jurisdiction_ocdid
 
 

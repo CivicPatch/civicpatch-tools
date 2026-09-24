@@ -43,7 +43,7 @@ async function stubNoExistingIssues(page) {
 async function openFirstCard(page) {
   await page.goto("/review");
   await page.locator(".review-page__start-btn").click();
-  await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
+  await expect(page.locator(".review-session__jurisdiction")).toContainText("E2E Test City");
 }
 
 test.describe("Report issue", () => {
@@ -98,7 +98,7 @@ test.describe("Report issue", () => {
 
     await expect(page.locator(".report-issue-modal__textarea")).toHaveCount(0);
 
-    const reported = page.locator(".review-page__reported-issues");
+    const reported = page.locator(".review-session__reported-issues");
     await expect(reported).toContainText("Issue #42");
     await expect(reported.locator("a")).toHaveAttribute(
       "href",
@@ -127,7 +127,7 @@ test.describe("Report issue", () => {
     // Modal stays up so the description isn't lost, with the reason shown.
     await expect(page.locator(".report-issue-modal__textarea")).toBeVisible();
     await expect(
-      page.locator(".report-issue-modal__form .review-page__error"),
+      page.locator(".report-issue-modal__form .review-session__error"),
     ).toContainText("Failed to file issue");
   });
 
@@ -145,7 +145,7 @@ test.describe("Report issue", () => {
 
     await openFirstCard(page);
 
-    await expect(page.locator(".review-page__reported-issues")).toContainText(
+    await expect(page.locator(".review-session__reported-issues")).toContainText(
       "Issue #7",
     );
   });

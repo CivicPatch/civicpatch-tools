@@ -27,7 +27,7 @@ const FIRST_CARD_CHANGESET_ID = "00000000-0000-0000-eeee-000000000001";
 async function openFirstCard(page) {
   await page.goto("/review");
   await page.locator(".review-page__start-btn").click();
-  await expect(page.locator(".review-page__jurisdiction")).toHaveText("E2E Test City");
+  await expect(page.locator(".review-session__jurisdiction")).toContainText("E2E Test City");
 }
 
 test.describe("Approve", () => {
@@ -45,7 +45,7 @@ test.describe("Approve", () => {
     });
 
     await openFirstCard(page);
-    await page.locator(".review-page__approve-btn").click();
+    await page.locator(".review-session__approve-btn").click();
 
     await expect.poll(() => approveBody).not.toBeNull();
     expect(approveBody.changeset_id).toBe(FIRST_CARD_CHANGESET_ID);
@@ -72,7 +72,7 @@ test.describe("Approve", () => {
     await editField(page, "Jane Smith", "Other names", "Janey Smith");
 
     // A dirty card approves under different wording — and must send the patch.
-    const approveBtn = page.locator(".review-page__approve-btn");
+    const approveBtn = page.locator(".review-session__approve-btn");
     await expect(approveBtn).toHaveText(/Save and approve/);
     await approveBtn.click();
 
@@ -92,11 +92,11 @@ test.describe("Approve", () => {
     );
 
     await openFirstCard(page);
-    await page.locator(".review-page__approve-btn").click();
+    await page.locator(".review-session__approve-btn").click();
 
-    await expect(page.locator(".review-page__progress")).toContainText("2");
-    await expect(page.locator(".review-page__dot").nth(0)).toHaveClass(
-      /review-page__dot--resolved/,
+    await expect(page.locator(".review-session__progress")).toContainText("2");
+    await expect(page.locator(".review-session__dot").nth(0)).toHaveClass(
+      /review-session__dot--resolved/,
     );
   });
 
@@ -112,10 +112,10 @@ test.describe("Approve", () => {
     );
 
     await openFirstCard(page);
-    await page.locator(".review-page__approve-btn").click();
+    await page.locator(".review-session__approve-btn").click();
 
-    await expect(page.locator(".review-page__progress")).toContainText("1");
-    await expect(page.locator(".review-page__error")).toBeVisible();
+    await expect(page.locator(".review-session__progress")).toContainText("1");
+    await expect(page.locator(".review-session__error")).toBeVisible();
   });
 });
 
@@ -141,6 +141,6 @@ test.describe("Reject", () => {
     expect(rejectUrl).toContain(`/reviews/${FIRST_CARD_CHANGESET_ID}`);
 
     // Rejecting is a completed review action, so it advances like approving.
-    await expect(page.locator(".review-page__progress")).toContainText("2");
+    await expect(page.locator(".review-session__progress")).toContainText("2");
   });
 });

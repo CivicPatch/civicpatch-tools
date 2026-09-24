@@ -128,5 +128,5 @@ def card_rows(
     role_labels = {role_id: label for label, role_id in taxonomy.role_ids.items()}
     return [
         _person_row(person, jurisdiction_ocdid, role_labels, taxonomy.role_priority)
-        for person in roster.people
+        for person in sorted(roster.people, key=lambda person: (person.name or "", person.id))
     ]

@@ -130,12 +130,14 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
       >${postLabelFor(diffValue(record, field), posts)}</span
     >`;
   }
-  // Prefer the proposal over the held membership: a scrape's detected move is the newer
-  // claim, and defaulting the picker to it is what keeps this control from contradicting
-  // the "Moved from X to Y" issue shown alongside it. `heldPost`/`heldMembershipLabel` both
-  // return null for a brand-new person's absent `oldRecord`, so this reads the same either way.
-  const current = derivedPost ?? heldPost(oldRecord?.memberships);
-  if (!isNewPerson && !canAssignMembership) {
+  // Prefer the office the proposed record holds over the published one: a scrape's detected
+  // move is the newer claim, and defaulting the picker to it is what keeps this control from
+  // contradicting the "Moved from X to Y" note shown alongside it. `heldPost` returns null for
+  // a brand-new person's absent `oldRecord`, so this reads the same either way.
+  const current = derivedPost ?? heldPost(oldRecord?.memberships, organizationId);
+  // Read-only outranks the permission: a published card is a historical record, so it offers
+  // no control even to somebody who may assign memberships elsewhere.
+  if (!isNewPerson && (isReadOnly || !canAssignMembership)) {
     return html`<span class="person-editor__readonly">${current?.label ?? DASH}</span>`;
   }
   return renderOfficeNewSide({
@@ -144,7 +146,9 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
     posts,
     roles,
     currentPostId: current?.post_id ?? null,
-    currentLabel: current?.membershipLabel ?? heldMembershipLabel(oldRecord?.memberships),
+    currentLabel:
+      current?.membershipLabel ??
+      heldMembershipLabel(oldRecord?.memberships, organizationId),
     focusRef,
     // No "overridden source value" concept for a label — it is authored or derived, never
     // scraped-then-overridden, so there is nothing to disclose; a lock here always reads as
@@ -236,7 +240,7 @@ function renderWas(props: EditorFieldProps) {
     ? ""
     : field.key === POST_FIELD
       ? postLabelFor(diffValue(oldRecord, field), props.posts) ||
-        (heldPost(oldRecord.memberships)?.label ?? "")
+        (heldPost(oldRecord.memberships, props.organizationId)?.label ?? "")
       : displayScalar(field, oldRecord);
   if (!oldText.trim()) return nothing;
   const canRestore = !isReadOnly && !!newRecord && field.key !== PHOTO_KEY;

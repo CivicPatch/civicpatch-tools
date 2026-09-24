@@ -2,6 +2,7 @@ import { computePeopleDiff, DiffType } from "../../utils/diff-utils.js";
 import {
   divisionOf,
   heldMembershipLabel,
+  type HeldMembership,
   postLabelFor,
   postName,
   postsHeld,
@@ -23,7 +24,6 @@ import {
   parseDivision,
   DIVISION_AT_LARGE,
 } from "../edit-people/person-edit-utils.js";
-import { MEMBERSHIP_DISPOSITION, type ProposedChange } from "../../schemas/membership-proposal.js";
 
 // `deleted` and `restored` are reviewer decisions, not diff verdicts — hence not DiffType values.
 export const PersonStatus = Object.freeze({
@@ -53,53 +53,28 @@ export const DEPARTING = new Set<string>([
   PersonStatus.DELETED,
 ]);
 
-// The proposal or membership this card's post field currently resolves to — a proposal is the
-// newer claim, so it outranks a held membership. Shared by the three functions below, each of
-// which formats it differently; a reviewer's own explicit pick has no such source (it names an
-// id, not a label pair), which is why each checks for one before ever calling this.
-function heldSourceFor(
-  card: PersonCard,
-  proposedByPersonId?: Map<string, ProposedChange[]>,
-): { post_label: string; label: string | null }[] {
-  const proposed = proposedByPersonId?.get(card.personId) ?? [];
-  if (proposed.length) {
-    return proposed.map((change) => ({
-      post_label: change.post.label,
-      label: change.membership_label,
-    }));
-  }
-  return personOf(card)?.memberships ?? [];
-}
-
 // The post's own label alone, no membership label — for a diff that should only ever compare
 // whether the post itself changed, not two independently-changing pieces of text at once (see
 // diff-card.ts's own comment on `renderPostFieldValue`).
-export function postNameFor(
-  card: PersonCard,
-  proposedByPersonId?: Map<string, ProposedChange[]>,
-  posts: Post[] = [],
-): string {
+export function postNameFor(card: PersonCard, posts: Post[] = []): string {
   const record = personOf(card);
   const pickedPostId = record ? getFieldValue(record, POST_FIELD) : null;
   const pickedLabel = pickedPostId ? postLabelFor(pickedPostId, posts) : "";
   if (pickedLabel) return pickedLabel;
 
-  const source = heldSourceFor(card, proposedByPersonId);
+  const source = personOf(card)?.memberships ?? [];
   if (source.length) return source.map(postName).join("; ");
   return record?.labels?.join("; ") ?? "";
 }
 
 // What the occupant's own labels said beyond the post's own name — rendered plainly, on its
 // own line, never diffed against anything.
-export function membershipLabelFor(
-  card: PersonCard,
-  proposedByPersonId?: Map<string, ProposedChange[]>,
-): string {
+export function membershipLabelFor(card: PersonCard): string {
   const record = personOf(card);
   // A reviewer's own explicit pick names a post, not a label — the label input beside the
   // picker is a separate, later action (office-edits.ts), so there is nothing to show yet.
   if (record && getFieldValue(record, POST_FIELD)) return "";
-  return heldSourceFor(card, proposedByPersonId)
+  return (personOf(card)?.memberships ?? [])
     .map((entry) => entry.label || "")
     .filter(Boolean)
     .join("; ");
@@ -107,33 +82,15 @@ export function membershipLabelFor(
 
 // The two above, combined into one line — for the two remaining spots too tight for a
 // two-line card (review-modal.ts's person switcher, the folded review chip).
-export function postsFor(
-  card: PersonCard,
-  proposedByPersonId?: Map<string, ProposedChange[]>,
-  posts: Post[] = [],
-): string {
+export function postsFor(card: PersonCard, posts: Post[] = []): string {
   const record = personOf(card);
   const pickedPostId = record ? getFieldValue(record, POST_FIELD) : null;
   const pickedLabel = pickedPostId ? postLabelFor(pickedPostId, posts) : "";
   if (pickedLabel) return pickedLabel;
 
-  const source = heldSourceFor(card, proposedByPersonId);
+  const source = personOf(card)?.memberships ?? [];
   if (source.length) return postsHeld(source);
   return record?.labels?.join("; ") ?? "";
-}
-
-// A list per person: a person can be proposed onto more than one post.
-export function proposalsByPersonId(
-  changes: ProposedChange[],
-): Map<string, ProposedChange[]> {
-  const byPerson = new Map<string, ProposedChange[]>();
-  for (const change of changes) {
-    byPerson.set(change.person_id, [
-      ...(byPerson.get(change.person_id) ?? []),
-      change,
-    ]);
-  }
-  return byPerson;
 }
 
 export const personOf = (card: PersonCard) => card.newRecord ?? card.oldRecord;
@@ -145,11 +102,33 @@ export interface CardsResult {
 
 export interface PersonCard {
   personId: string;
+  organizationId?: string;
   status: PersonStatusKey;
   oldRecord: DiffRecord;
   newRecord: DiffRecord;
   surviving: SurvivingField[];
   issues: Issue[];
+}
+
+export function cardKey(card: {
+  personId: string;
+  organizationId?: string;
+}): string {
+  return card.organizationId
+    ? `${card.personId}:${card.organizationId}`
+    : card.personId;
+}
+
+/** Whom a card key is about. A review card is one person, so its key is their id; a roster row
+ * is a person in one body, so one person may have several keys. */
+export function personIdIn(key: string): string {
+  return key.split(":")[0];
+}
+
+/** Which body a card key names, or null for a key that names the person whole — which is what
+ * a review card's key is, and what Reset hands back. */
+export function organizationIn(key: string): string | null {
+  return key.split(":")[1] ?? null;
 }
 
 export interface BuildCardsInput {
@@ -158,50 +137,44 @@ export interface BuildCardsInput {
   removedIds: Set<string>;
   restoredIds: Set<string>;
   issues: Issue[];
-  // Which post each person would land in — a field diff can't see a post move on its own.
-  proposals?: Map<string, ProposedChange[]>;
 }
 
-// A card's one unambiguous proposed change, when it has exactly one — two or more is no
-// single answer, so callers fall back to whatever they already hold. The same rule was
-// being re-derived at three call sites (here, the office picker's default, and review's
-// role grouping); this is the one place it is written.
-export function soleProposalFor(
-  personId: string,
-  proposals: Map<string, ProposedChange[]> | undefined,
-): ProposedChange | null {
-  const proposed = proposals?.get(personId) ?? [];
-  return proposed.length === 1 ? proposed[0] : null;
+const postIdsIn = (memberships: HeldMembership[] | undefined): string =>
+  [...new Set((memberships ?? []).map((membership) => membership.post_id))]
+    .sort()
+    .join("|");
+
+/** Whether this scrape changed which posts somebody holds. Both sides are the same fold, so a
+ * body this scrape never read derives identically on each and cannot read as a move. */
+function postMoved(
+  before: HeldMembership[] | undefined,
+  after: HeldMembership[] | undefined,
+): boolean {
+  return !!after?.length && postIdsIn(before) !== postIdsIn(after);
 }
 
-const postMoved = (
-  personId: string,
-  proposals?: Map<string, ProposedChange[]>,
-): boolean =>
-  (proposals?.get(personId) ?? []).some(
-    (change) => change.disposition !== MEMBERSHIP_DISPOSITION.UNCHANGED,
-  );
-
-// `survivingFields` cannot see the office on its own — `post_id` is never a raw scraped
-// value (nothing writes it onto a record until a reviewer picks one), so there is nothing
-// for a field diff to compare. `postMoved` already covers a move or a first appearance via
-// its disposition; this adds the one case the disposition alone misses: the post stayed put, but
-// this scrape recomposed the membership label.
+// `survivingFields` cannot see the office on its own — `post_id` is never a raw scraped value
+// (nothing writes it onto a record until a reviewer picks one), so there is nothing for a field
+// diff to compare. A move or a first appearance is the post set changing; the case that misses
+// is the post staying put while this scrape recomposed the membership label.
 function officeSurvivingField(
-  personId: string,
-  proposals: Map<string, ProposedChange[]> | undefined,
-  oldMemberships: { post_id: string; label: string | null }[] | undefined,
+  before: HeldMembership[] | undefined,
+  after: HeldMembership[] | undefined,
 ): SurvivingField | null {
-  const change = soleProposalFor(personId, proposals);
-  if (!change) return null;
-  const labelChanged =
-    (change.membership_label ?? null) !== (heldMembershipLabel(oldMemberships) ?? null);
-  if (!postMoved(personId, proposals) && !labelChanged) return null;
+  if (!after?.length) return null;
+  const moved = postMoved(before, after);
+  // Per body, as the office itself is: a person on two bodies has a label in each.
+  const labelChanged = after.some(
+    (membership) =>
+      (membership.label ?? null) !==
+      (heldMembershipLabel(before, membership.organization_id ?? null) ?? null),
+  );
+  if (!moved && !labelChanged) return null;
   return {
     field: FIELD_SCHEMA.find((field) => field.key === POST_FIELD)!,
     // Matches every other field's own state on the same card: "added" for a first
     // appearance, "changed" for a move or a recomposed label on a seat that stayed put.
-    state: change.disposition === MEMBERSHIP_DISPOSITION.NEW ? "added" : "changed",
+    state: before?.length ? "changed" : "added",
     reason: "diff",
     error: null,
   };
@@ -214,17 +187,13 @@ export interface MovedNote {
 
 // postMoved already folds a seat change into one CHANGED card; this says which
 // post it left and which it landed in.
-export function movedNote(
-  card: PersonCard,
-  proposals: Map<string, ProposedChange[]> | undefined,
-  posts: Post[],
-): MovedNote | null {
-  if (!postMoved(card.personId, proposals)) return null;
+export function movedNote(card: PersonCard, posts: Post[]): MovedNote | null {
   const oldMemberships = card.oldRecord?.memberships;
+  if (!postMoved(oldMemberships, card.newRecord?.memberships)) return null;
   const from = oldMemberships?.length
     ? oldMemberships.map(postName).join("; ")
     : (card.oldRecord?.labels?.join("; ") ?? "");
-  const to = postNameFor(card, proposals, posts);
+  const to = postNameFor(card, posts);
   return from && from !== to ? { from, to } : null;
 }
 
@@ -246,7 +215,6 @@ export function buildPersonCards({
   removedIds,
   restoredIds,
   issues,
-  proposals,
 }: BuildCardsInput): PersonCard[] {
   const olds = Array.isArray(existing) ? existing : [];
   const news = Array.isArray(currentPeople) ? currentPeople : [];
@@ -270,7 +238,7 @@ export function buildPersonCards({
   return ordered.map((entry) => {
     const personId = entry.person?.id;
     const cardIssues = issuesByPersonId.get(personId) ?? [];
-    const moved = postMoved(personId, proposals);
+    const moved = postMoved(entry.from?.memberships, entry.person?.memberships);
     let status = statusFor(entry.type, personId, removedIds, restoredIds);
     // A move is a change even when every field matches.
     if (status === PersonStatus.UNCHANGED && moved) {
@@ -278,8 +246,16 @@ export function buildPersonCards({
     }
     // Only the scrape dropping someone leaves no new-side record.
     const newRecord = status === PersonStatus.REMOVED ? null : entry.person;
-    const surviving = survivingFields(entry.from, newRecord, cardIssues);
-    const office = officeSurvivingField(personId, proposals, entry.from?.memberships);
+    // Departing is one decision, so it carries no field list: against a null new side every
+    // field they had reads "cleared", and nine cleared fields would say nine things to review
+    // about a card that asks one question.
+    const surviving = DEPARTING.has(status)
+      ? []
+      : survivingFields(entry.from, newRecord, cardIssues);
+    const office = officeSurvivingField(
+      entry.from?.memberships,
+      newRecord?.memberships,
+    );
     return {
       personId,
       status,

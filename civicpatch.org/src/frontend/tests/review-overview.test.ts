@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   attentionOf,
   byRank,
+  foundNobody,
   issueTypesOf,
   runsOf,
   sectionsByOrganization,
@@ -15,7 +16,7 @@ import {
   type PersonCard,
 } from "../components/people/person-cards.js";
 import { FIELD_SCHEMA, type SurvivingField } from "../components/fields/field-model.js";
-import { postsFor, proposalsByPersonId } from "../components/people/person-cards.js";
+import { postsFor } from "../components/people/person-cards.js";
 
 const spec = (key: string) => {
   const found = FIELD_SCHEMA.find((field) => field.key === key);
@@ -203,99 +204,41 @@ describe("postsFor", () => {
     issues: [],
     ...over,
   }) as never;
-  it("names the proposed post, because a proposed person holds no membership yet", () => {
-    const proposals = proposalsByPersonId([
-      {
-        person_id: "p1",
-        organization_id: "org-1",
-        disposition: "new",
-        post: {
-          id: null,
-          role_id: "council-member",
-          role_label: "Council Member",
-          division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
-          label: "Council Member, District 5",
-          meta_is_tracked: true,
-        },
-        membership_label: null,
-        from_post: null,
-      },
-    ]);
-    expect(postsFor(card(), proposals)).toBe("Council Member, District 5");
+  const office = (over = {}) => ({
+    post_id: "post-5",
+    organization_id: "org-1",
+    role_id: "council-member",
+    role_label: "Council Member",
+    post_label: "Council Member, District 5",
+    division_ocdid: "ocd-division/country:us/state:wa/place:x/council_district:5",
+    label: null,
+    source_labels: [],
+    ...over,
   });
-  it("composes the post label with the membership's own label", () => {
-    const proposals = proposalsByPersonId([
-      {
-        person_id: "p1",
-        organization_id: "org-1",
-        disposition: "new",
-        post: {
-          id: null,
-          role_id: "council-member",
-          role_label: "Council Member",
-          division_ocdid: "ocd-division/country:us/state:wa/place:x",
-          label: "Council Member, At-Large",
-          meta_is_tracked: true,
-        },
-        membership_label: "Seat 3",
-        from_post: null,
-      },
-    ]);
-    expect(postsFor(card(), proposals)).toBe("Council Member, At-Large, Seat 3");
-  });
-  it("falls back to a published person's memberships when nothing is proposed", () =>
+  const withOffices = (memberships: unknown[]) =>
+    card({ newRecord: { id: "p1", name: "A", memberships } });
+
+  // These three verified that a proposed post was named from `ProposedChange`, because a
+  // proposed person held no membership for the card to read. They now verify the same
+  // rendering from the record's own memberships: the proposed record is the fold's, and the
+  // fold names a post from `PostKey` whether or not a row exists for it yet.
+  it("names the post the record holds", () =>
+    expect(postsFor(withOffices([office()]))).toBe("Council Member, District 5"));
+
+  it("composes the post label with the membership's own label", () =>
     expect(
       postsFor(
-        card({
-          newRecord: {
-            id: "p1",
-            name: "A",
-            memberships: [
-              {
-                post_id: "x",
-                role_id: "mayor",
-                division_ocdid: "ocd-division/country:us/state:wa/place:x",
-                label: null,
-                post_label: "Mayor",
-                role_label: "Mayor",
-                source_labels: ["Mayor"],
-              },
-            ],
-          },
-        }),
-        proposalsByPersonId([]),
+        withOffices([office({ post_label: "Council Member, At-Large", label: "Seat 3" })]),
       ),
-    ).toBe("Mayor"));
-  it("says nothing rather than repeating the joined office string", () =>
-    expect(postsFor(card(), proposalsByPersonId([]))).toBe(""));
-});
+    ).toBe("Council Member, At-Large, Seat 3"));
 
-describe("proposalsByPersonId", () => {
-  const change = (postOver = {}) => ({
-    person_id: "p1",
-    organization_id: "org-1",
-    disposition: "new" as const,
-    post: {
-      id: null,
-      role_id: "council-member",
-      role_label: "Council Member",
-      division_ocdid: "ocd-division/country:us/state:wa/place:x",
-      label: "Council Member, At-Large",
-      meta_is_tracked: true,
-      ...postOver,
-    },
-    membership_label: null,
-    from_post: null,
-  });
-  it("keeps every proposal for a person, not just the last", () => {
-    const byPerson = proposalsByPersonId([
-      change({ role_id: "mayor", role_label: "Mayor" }),
-      change({ role_id: "council-member" }),
-    ]);
-    expect(byPerson.get("p1")).toHaveLength(2);
-  });
-  it("has no entry for a person nothing was proposed for", () =>
-    expect(proposalsByPersonId([]).get("p1")).toBeUndefined());
+  it("reads a published person's memberships the same way", () =>
+    expect(postsFor(withOffices([office({ post_label: "Mayor", role_id: "mayor" })]))).toBe(
+      "Mayor",
+    ));
+
+  it("says nothing rather than repeating the joined office string", () =>
+    expect(postsFor(card())).toBe(""));
 });
 
 describe("tallyOf — the roster's shape, at a glance", () => {
@@ -333,35 +276,37 @@ describe("tallyOf — the roster's shape, at a glance", () => {
 
 describe("sectionsByOrganization — a section per organization, roles inside it", () => {
   const roleOrder = ["mayor", "council-member"];
-  const proposedIn = (
-    personId: string,
+  // Sections came from `ProposedChange` until 2026-09-23. They come from the records' own
+  // memberships now, which is why these read a card with a proposed side rather than a
+  // separate list of proposals.
+  const office = (
     organizationId: string,
     roleId: string,
     roleLabel = roleId,
   ) => ({
-    person_id: personId,
+    post_id: `${organizationId}:${roleId}`,
     organization_id: organizationId,
-    disposition: "unchanged" as const,
-    post: {
-      id: null,
-      role_id: roleId,
-      role_label: roleLabel,
-      division_ocdid: "ocd-division/country:us/state:wa/place:x",
-      label: roleLabel,
-      meta_is_tracked: true,
-    },
-    membership_label: null,
-    from_post: null,
+    role_id: roleId,
+    role_label: roleLabel,
+    post_label: roleLabel,
+    division_ocdid: "ocd-division/country:us/state:wa/place:x",
+    label: null,
   });
+  const holding = (personId: string, offices: unknown[], over = {}) =>
+    card({
+      personId,
+      newRecord: { id: personId, name: personId, memberships: offices } as never,
+      ...over,
+    });
 
-  it("lists a person once per organization they were proposed in", () => {
-    const ana = card({ personId: "ana" });
+  it("lists a person once per organization they hold an office in", () => {
     const { organizations } = sectionsByOrganization(
-      [ana],
-      proposalsByPersonId([
-        proposedIn("ana", "council", "council-member", "Council Member"),
-        proposedIn("ana", "mayors-office", "mayor", "Mayor"),
-      ]),
+      [
+        holding("ana", [
+          office("council", "council-member", "Council Member"),
+          office("mayors-office", "mayor", "Mayor"),
+        ]),
+      ],
       roleOrder,
     );
 
@@ -383,11 +328,10 @@ describe("sectionsByOrganization — a section per organization, roles inside it
 
   it("groups by role inside an organization, ranked first", () => {
     const { organizations } = sectionsByOrganization(
-      [card({ personId: "ana" }), card({ personId: "bo" })],
-      proposalsByPersonId([
-        proposedIn("ana", "council", "council-member", "Council Member"),
-        proposedIn("bo", "council", "mayor", "Mayor"),
-      ]),
+      [
+        holding("ana", [office("council", "council-member", "Council Member")]),
+        holding("bo", [office("council", "mayor", "Mayor")]),
+      ],
       roleOrder,
     );
 
@@ -399,8 +343,7 @@ describe("sectionsByOrganization — a section per organization, roles inside it
 
   it("keeps a post no role matched out of the ranked groups", () => {
     const { organizations } = sectionsByOrganization(
-      [card({ personId: "fay" })],
-      proposalsByPersonId([proposedIn("fay", "council", "unmatched")]),
+      [holding("fay", [office("council", "unmatched")])],
       roleOrder,
     );
 
@@ -408,14 +351,48 @@ describe("sectionsByOrganization — a section per organization, roles inside it
     expect(organizations[0].unmatched.map((entry) => entry.card.personId)).toEqual(["fay"]);
   });
 
-  it("leaves people nobody proposed anything for out of every organization", () => {
-    const { organizations, departing } = sectionsByOrganization(
+  it("leaves people holding nothing out of every organization", () => {
+    // This verified that both landed in `departing`. It now separates them, because somebody a
+    // reviewer just added holds nothing *yet* — filing them under "not found or removed" read
+    // as a verdict on a person who had just arrived.
+    const { organizations, departing, unplaced } = sectionsByOrganization(
       [card({ personId: "cy", status: PersonStatus.REMOVED }), card({ personId: "dee" })],
-      proposalsByPersonId([]),
       roleOrder,
     );
 
     expect(organizations).toEqual([]);
-    expect(departing.map((entry) => entry.personId).sort()).toEqual(["cy", "dee"]);
+    expect(departing.map((entry) => entry.personId)).toEqual(["cy"]);
+    expect(unplaced.map((entry) => entry.personId)).toEqual(["dee"]);
+  });
+
+  it("keeps a section for a body this scrape emptied, and says nobody was found", () => {
+    // The reviewer has to be able to tell "we read this page and it listed nobody" from "we
+    // never read it". The section survives because the held side still names the body.
+    const leaving = card({
+      personId: "gus",
+      oldRecord: { id: "gus", memberships: [office("council", "mayor", "Mayor")] } as never,
+      newRecord: { id: "gus", name: "gus", memberships: [] } as never,
+    });
+
+    const { organizations } = sectionsByOrganization([leaving], roleOrder);
+
+    expect(organizations[0].organizationId).toBe("council");
+    expect(foundNobody(organizations[0].ranked.flatMap((group) => group.people))).toBe(true);
+  });
+
+  it("orders sections the way the card lists its organizations", () => {
+    const { organizations } = sectionsByOrganization(
+      [
+        holding("ana", [office("council", "council-member", "Council Member")]),
+        holding("bo", [office("mayors-office", "mayor", "Mayor")]),
+      ],
+      roleOrder,
+      ["mayors-office", "council"],
+    );
+
+    expect(organizations.map((organization) => organization.organizationId)).toEqual([
+      "mayors-office",
+      "council",
+    ]);
   });
 });

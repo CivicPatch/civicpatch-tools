@@ -35,30 +35,3 @@ class UpdatePostRequest(BaseModel):
     # a default would let an omission silently re-track a post somebody turned off.
     meta_headcount: int = Field(gt=0)
     meta_is_tracked: bool
-
-
-class MembershipRemovalAssertion(StrEnum):
-    """Which assertion takes a membership off the roster. Narrower than "an assertion about a
-    membership", which also covers its label and whatever else a person can claim about one.
-
-    One of three, because the two removals contradict each other: a membership that never held did
-    not also close, and either withdraws the other."""
-
-    NONE = "none"
-    CLOSED = "closed"
-    NEVER_HELD = "never_held"
-
-
-class MembershipRemovalRequest(BaseModel):
-    """What a person says about a membership, or about someone being a member here at all.
-
-    `reason` rides as the assertion's `sources` note, the "phoned the clerk" case. `changeset_id`
-    files it under a review in progress, so dismissing that review takes it with it.
-    """
-
-    assertion: MembershipRemovalAssertion = MembershipRemovalAssertion.NONE
-    reason: str | None = None
-    changeset_id: str | None = None
-
-
-
