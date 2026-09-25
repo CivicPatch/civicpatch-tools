@@ -233,7 +233,7 @@ async def test_the_edit_mints_a_changeset_born_published():
             "FROM changesets c WHERE c.id::text = %s",
             (changeset_id,),
         )
-        assert await cur.fetchone() == ("people_edit", True, True, True)
+        assert await cur.fetchone() == ("roster_edit", True, True, True)
 
 @pytest.mark.asyncio
 @pytest.mark.integration

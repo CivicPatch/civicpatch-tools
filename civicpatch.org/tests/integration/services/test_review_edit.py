@@ -152,7 +152,7 @@ async def test_saving_twice_files_under_one_edit_parented_to_the_scrape():
             "WHERE id::text = %s",
             (first,),
         )
-        assert await cur.fetchone() == ("people_edit", "open", scrape_id)
+        assert await cur.fetchone() == ("roster_edit", "open", scrape_id)
         await cur.execute(
             "SELECT count(*) FROM claims WHERE changeset_id::text = %s", (scrape_id,)
         )

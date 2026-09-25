@@ -16,7 +16,7 @@ import pytest_asyncio
 from core.projection.people import Person
 from database import claims as claims_db
 from database import projection as projection_db
-from database.changesets import register_people_edit_changeset
+from database.changesets import register_roster_edit_changeset
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
 from schemas.claims import Claim, ClaimKind, DefaultNote, EntityType, Source
@@ -105,7 +105,7 @@ async def _split(record_id: str, person_id: str) -> str:
     """Re-link one record to another person. No route files this yet; the fold and the
     loader are what is under test."""
     changeset_id = str(uuid.uuid4())
-    await register_people_edit_changeset(changeset_id, _OCDID, SYSTEM_USER_ID)
+    await register_roster_edit_changeset(changeset_id, _OCDID, SYSTEM_USER_ID)
     await claims_db.create_all(
         [
             Claim(

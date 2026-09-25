@@ -20,7 +20,7 @@ describe("verbFor", () => {
   });
 
   it("names a hand edit an edit, not a review", () => {
-    expect(verbFor("people_edit")).toBe("was edited");
+    expect(verbFor("roster_edit")).toBe("was edited");
   });
 
   it("names a rollback", () => {

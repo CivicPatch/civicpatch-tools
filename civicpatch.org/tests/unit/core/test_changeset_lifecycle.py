@@ -27,7 +27,7 @@ def test_every_kind_is_born_where_the_table_says():
     assert INITIAL_STATE == {
         ChangesetKind.SCRAPE: ChangesetState.OPEN,
         ChangesetKind.SHEET_IMPORT: ChangesetState.OPEN,
-        ChangesetKind.PEOPLE_EDIT: ChangesetState.PUBLISHED,
+        ChangesetKind.ROSTER_EDIT: ChangesetState.PUBLISHED,
         ChangesetKind.JURISDICTION_EDIT: ChangesetState.PUBLISHED,
         ChangesetKind.ROLLBACK: ChangesetState.OPEN,
     }

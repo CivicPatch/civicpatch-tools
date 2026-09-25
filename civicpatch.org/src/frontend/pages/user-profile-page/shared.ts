@@ -30,7 +30,7 @@ export type RollbackCandidate = {
 const KIND_LABELS: Record<string, string> = {
   scrape: "Scrape",
   sheet_import: "Sheet import",
-  people_edit: "Roster edit",
+  roster_edit: "Roster edit",
   jurisdiction_edit: "Jurisdiction edit",
   rollback: "Rollback",
 };

@@ -508,12 +508,12 @@ _OTHER_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_assert_other/gover
 
 
 async def _mint_changeset(cur, jurisdiction_ocdid: str, created_by_user_id: str) -> str:
-    """A bare `people_edit` changeset with a real jurisdiction — what 9d's rollback service
+    """A bare `roster_edit` changeset with a real jurisdiction — what 9d's rollback service
     mints claims under, minimal enough not to need the full register function's lineage
     lookups."""
     await cur.execute(
         "INSERT INTO changesets (kind, jurisdiction_ocdid, created_by_user_id) "
-        "VALUES ('people_edit', %s, %s) RETURNING id::text",
+        "VALUES ('roster_edit', %s, %s) RETURNING id::text",
         (jurisdiction_ocdid, created_by_user_id),
     )
     row = await cur.fetchone()

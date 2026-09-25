@@ -205,7 +205,7 @@ async def _seed_request() -> str:
         )
         await cur.execute(
             "INSERT INTO changesets (id, jurisdiction_ocdid, kind) "
-            "VALUES (%s, %s, 'people_edit')",
+            "VALUES (%s, %s, 'roster_edit')",
             (changeset_id, _OCDID),
         )
         await conn.commit()

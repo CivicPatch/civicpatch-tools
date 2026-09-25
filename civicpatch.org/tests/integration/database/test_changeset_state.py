@@ -16,7 +16,7 @@ import database.changeset_batches as batches_db
 from core.changeset_lifecycle import INITIAL_STATE, ChangesetState
 from database.changesets import (
     register_jurisdiction_edit_changeset,
-    register_people_edit_changeset,
+    register_roster_edit_changeset,
     register_rollback_changeset,
     register_sheet_import_changeset,
 )
@@ -141,7 +141,7 @@ async def test_every_kind_is_born_where_INITIAL_STATE_says():
         str(uuid.uuid4()),
         str(uuid.uuid4()),
     )
-    await register_people_edit_changeset(people_edit_id, _OCDID, SYSTEM_USER_ID)
+    await register_roster_edit_changeset(people_edit_id, _OCDID, SYSTEM_USER_ID)
     await register_sheet_import_changeset(import_id, _OCDID, SYSTEM_USER_ID, batch_id)
     await register_jurisdiction_edit_changeset(
         jurisdiction_edit_id, _OCDID, "https://example.test/commit/1", SYSTEM_USER_ID
@@ -157,7 +157,7 @@ async def test_every_kind_is_born_where_INITIAL_STATE_says():
         ChangesetKind.SCRAPE: await _registered_state(
             await factories.complete_run(run_id)
         ),
-        ChangesetKind.PEOPLE_EDIT: await _registered_state(people_edit_id),
+        ChangesetKind.ROSTER_EDIT: await _registered_state(people_edit_id),
         ChangesetKind.SHEET_IMPORT: await _registered_state(import_id),
         ChangesetKind.JURISDICTION_EDIT: await _registered_state(jurisdiction_edit_id),
         ChangesetKind.ROLLBACK: await _registered_state(rollback_id),

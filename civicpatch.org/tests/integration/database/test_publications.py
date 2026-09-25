@@ -517,7 +517,7 @@ async def sentinel_hand_edit():
         await cur.execute(
             """
             INSERT INTO changesets (kind, jurisdiction_ocdid)
-            VALUES ('people_edit', %s) RETURNING id::text
+            VALUES ('roster_edit', %s) RETURNING id::text
             """,
             (_SENTINEL_OCDID,),
         )

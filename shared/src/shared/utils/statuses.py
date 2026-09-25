@@ -152,7 +152,7 @@ class ChangesetKind(StrEnum):
 
     SCRAPE = "scrape"
     SHEET_IMPORT = "sheet_import"
-    PEOPLE_EDIT = "people_edit"
+    ROSTER_EDIT = "roster_edit"
     JURISDICTION_EDIT = "jurisdiction_edit"
     ROLLBACK = "rollback"
 
