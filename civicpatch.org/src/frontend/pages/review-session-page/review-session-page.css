@@ -151,6 +151,22 @@
     font-size: var(--font-size-md);
     color: var(--diff-removed);
   }
+
+  /* Confirmation of a save. Shaped like `__baseline-banner` below rather than as a new idiom,
+     and persistent on purpose: it was a bottom-fixed toast that timed out after ten seconds,
+     which is a time limit on reading (WCAG 2.2.1) and the spot most likely to be off screen at
+     high zoom. It is rendered from `saved && !dirty`, so the next keystroke removes it. */
+  .review-session__saved {
+    max-width: var(--page-width);
+    width: 100%;
+    margin-inline: auto;
+    padding: 0.55rem 0.7rem;
+    font-size: var(--font-size-sm);
+    color: var(--text-default);
+    background: color-mix(in srgb, var(--diff-added) 14%, var(--surface));
+    border: 1px solid var(--diff-added);
+    border-radius: var(--radius);
+  }
   .review-session__info-row {
     display: flex;
     flex-wrap: wrap;

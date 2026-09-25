@@ -17,12 +17,14 @@ import pytest_asyncio
 
 from core.people_edits import POSTS_FIELD
 from core.post_derivation import ChosenPost, DerivedMembership
+from core.roster_changes import ChangeKind, changes_of
 from database import assertions, divisions, memberships, organizations, posts
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from database.review_priority import issue_count, issue_priority
 from database.source_records import insert_source_records
 from schemas.assertions import Assertion, AssertionKind, DefaultNote, EntityType, Source
+from services.roster import card_sides
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
@@ -1125,40 +1127,36 @@ async def test_a_move_in_one_organization_leaves_the_others_membership_open():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_reviewing_a_roster_restating_two_bodies_proposes_no_move():
-    from services.review_proposal import proposals_for_requests
-
+    """This read `proposals_for_requests`, which compared a hand-built roster against the
+    memberships we held. It now reads the fold's own two sides, because that is what the card
+    and the import report compare and a second answer could disagree with them."""
     person_id = await _seed_person("Ana Reyes")
     council, mayors_office = await _two_bodies()
     await _publish(
         (council, person_id, "Council Member Ward 3"),
         (mayors_office, person_id, "Mayor"),
     )
-    changeset_id = await _published_changeset()
-    roster = [
-        {
-            "id": person_id,
-            "name": "Ana Reyes",
-            "labels": ["Council Member Ward 3", "Mayor"],
-            "sightings": [
-                {"label": "Council Member Ward 3", "organization_id": council},
-                {"label": "Mayor", "organization_id": mayors_office},
-            ],
-        }
-    ]
-
-    proposals = await proposals_for_requests([changeset_id], {changeset_id: roster})
-
-    assert sorted((c.organization_id, c.post.role_id, c.disposition.value) for c in proposals[changeset_id]) == sorted(
-        [(council, "council-member", "unchanged"), (mayors_office, "mayor", "unchanged")]
+    changeset_id = await _restating(
+        (council, person_id, "Council Member Ward 3"),
+        (mayors_office, person_id, "Mayor"),
     )
+
+    existing, proposed, _overridden = await card_sides(changeset_id, _OCDID)
+
+    [change] = changes_of(existing, proposed)
+    assert change.offices == []
+    assert change.kind is ChangeKind.UNCHANGED
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
-    """Both ends: the post a scrape restates, and the post someone would leave."""
-    from services.review_proposal import proposals_for_requests
+    """Both ends: the post a scrape restates, and the post someone would leave.
 
+    Moved onto the fold with the test above. It is also what caught the fold rendering a
+    derived name over a curator's: naming a post is a claim on the POST entity, which
+    `database/facts.py` does not load, so `display_rows` takes the names as an overlay.
+    """
     staying = await _seed_person("Ana Reyes")
     leaving = await _seed_person("Bo Chen")
     pool = await get_pool()
@@ -1176,20 +1174,32 @@ async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
         for person_id in (staying, leaving):
             await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, council, _T0)
         await conn.commit()
-    changeset_id = await _published_changeset()
-    roster = [
-        {
-            "id": staying,
-            "name": "Ana Reyes",
-            "sightings": [{"label": "Council Member", "organization_id": council}],
-        }
-    ]
-
-    proposals = await proposals_for_requests([changeset_id], {changeset_id: roster})
-
-    assert sorted((c.person_id, c.disposition.value, c.post.label) for c in proposals[changeset_id]) == sorted(
-        [(staying, "unchanged", "Position 8"), (leaving, "absent", "Position 8")]
+    await _publish(
+        (council, staying, "Council Member"), (council, leaving, "Council Member")
     )
+    changeset_id = await _restating((council, staying, "Council Member"))
+
+    existing, proposed, _overridden = await card_sides(changeset_id, _OCDID)
+
+    changes = {change.person_id: change for change in changes_of(existing, proposed)}
+    assert changes[staying].kind is ChangeKind.UNCHANGED
+    assert changes[leaving].kind is ChangeKind.ABSENT
+    assert [office.post_label for office in changes[leaving].offices] == ["Position 8"]
+    assert _post_label_of(existing, staying) == "Position 8"
+
+
+async def _restating(*sightings: tuple[str, str, str]) -> str:
+    """An unpublished scrape that read these `(organization, person, label)` sightings — what a
+    reviewer is looking at when they open its card."""
+    changeset_id = await _published_changeset()
+    for organization_id, person_id, label in sightings:
+        await _record_for(changeset_id, organization_id, person_id, label)
+    return changeset_id
+
+
+def _post_label_of(rows: list[dict], person_id: str) -> str:
+    [row] = [row for row in rows if row["id"] == person_id]
+    return row["memberships"][0]["post_label"]
 
 
 async def _record_for(changeset_id: str, organization_id: str, person_id: str, label: str) -> None:

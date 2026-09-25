@@ -60,7 +60,7 @@ test.describe("Save updates", () => {
     expect(JSON.stringify(savedBody.data)).toContain("Janey Smith");
   });
 
-  test("a saved card is marked saved and the reviewer moves on", async ({
+  test("a saved card says so and stays put", async ({
     authenticatedPage: page,
   }) => {
     await page.route(SAVE_ENDPOINT, (route) =>
@@ -74,11 +74,22 @@ test.describe("Save updates", () => {
     await openFirstCardAndEdit(page);
     await page.locator(".review-session__save-btn").click();
 
-    // Saving advances, same as publishing does.
-    await expect(page.locator(".review-session__progress")).toContainText("2");
-    await expect(page.locator(".review-session__dot").nth(0)).toHaveClass(
-      /review-session__dot--saved/,
-    );
+    // This asserted the reviewer moved on to entry 2, "same as publishing does". They do not:
+    // `saveCurrent` has never advanced, and Save updates on a card you are still editing
+    // should not move you. The spec and the code had disagreed since the action was written.
+    //
+    // Nor is the dot the evidence. `getDotStatus` checks `current` before `saved`, so the card
+    // you are on reads current whatever else is true of it — the saved tint only appears once
+    // you have left. That is what made the old assertion unsatisfiable rather than merely wrong.
+    await expect(page.locator(".review-session__progress")).toContainText("1 of");
+
+    // What a save actually does now, and what it did not before: say so, and re-read the card
+    // so it stops reading dirty. Until 2026-09-24 the only visible effect was the dot above —
+    // the button stayed, the edits stayed local, and only a refresh showed the saved state.
+    const saved = page.locator(".review-session__saved");
+    await expect(saved).toContainText("Updates saved.");
+    await expect(saved).toHaveAttribute("role", "status");
+    await expect(page.locator(".review-session__save-btn")).toHaveCount(0);
   });
 
   test("a rejected save keeps the reviewer on the card and shows why", async ({

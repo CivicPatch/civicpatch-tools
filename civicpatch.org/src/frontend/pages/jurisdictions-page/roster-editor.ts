@@ -14,10 +14,8 @@ import { emptyPerson } from "../../components/edit-people/people-editing.js";
 import {
   blockingErrors,
   buildPersonCards,
-  navHintFor,
   type PersonCard,
   cardKey,
-  personIdIn,
 } from "../../components/people/person-cards.js";
 import { personEditorPropsFor } from "../../components/person-editor/editor-props.js";
 import { focusOnMount } from "../../utils/focus-on-mount.js";
@@ -27,7 +25,6 @@ import { useOrganizations } from "../../hooks/use-organizations.js";
 import type { Organization } from "../../components/organizations-list/organizations-model.js";
 import { useRosterMemberships } from "../../hooks/use-roster-memberships.js";
 import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
-import { useAltArrowPeerNav } from "../../hooks/use-alt-arrow-peer-nav.js";
 import { officeEditsIn } from "../../components/person-editor/office-edits.js";
 import { groupCardsByOrganization } from "./roster-organization-grouping.js";
 
@@ -36,7 +33,6 @@ interface RosterEditorProps {
   jurisdictionOcdid: string;
   canEdit: boolean;
   canAssignMembership: boolean;
-  canCreatePost: boolean;
   isLoading: boolean;
   blockedReason: string | null;
   onPublished: () => void;
@@ -57,7 +53,6 @@ function RosterEditor({
   jurisdictionOcdid,
   canEdit,
   canAssignMembership,
-  canCreatePost,
   isLoading,
   blockedReason,
   onPublished,
@@ -144,8 +139,8 @@ function RosterEditor({
       (blocker) => `${blocker.name}, ${blocker.fieldLabel}: ${blocker.message}`,
     )
     .join("\n");
-  // Same mechanism as review-session.ts: alt-arrow steps to the next/previous card while
-  // one is open, and the opened field autofocuses once the inline editor has mounted.
+  // Same mechanism as review-session.ts: the opened field autofocuses once the inline editor
+  // has mounted. Alt-arrow peer navigation went on 2026-09-24 with the scroll hijack it needed.
   const openRow = (key: string, fieldKey: string | null) => {
     const opening = openCardKey !== key;
     setOpenCardKey(opening ? key : null);
@@ -153,10 +148,6 @@ function RosterEditor({
   };
   const handleOpenPerson = (card: PersonCard, fieldKey: string | null) =>
     openRow(cardKey(card), fieldKey);
-  useAltArrowPeerNav(openCardKey ? personIdIn(openCardKey) : null, cards, (next) => {
-    setOpenCardKey(cardKey(next));
-    setFocusFieldKey(null);
-  });
   const focusOnOpen = useCallback(focusOnMount, [focusFieldKey]);
   const handlePersonSave = (id: string, updates: Record<string, unknown>) =>
     updatePerson(id, updates);
@@ -213,7 +204,6 @@ function RosterEditor({
       organizationId: cardOrganization?.organizationId ?? "",
       roles,
       canAssignMembership,
-      canCreatePost,
       rosterMemberships: memberships,
       assertions,
       overriddenSourceValues: {},
@@ -237,7 +227,6 @@ function RosterEditor({
     });
     return {
       ...base,
-      navHint: navHintFor(cards, card.personId),
       focusField:
         cardKey(card) === openCardKey && focusFieldKey
           ? { key: focusFieldKey, attach: focusOnOpen }

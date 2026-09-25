@@ -1,18 +1,24 @@
-"""The fold's roster as the review card's display rows.
+"""The fold's roster as the rows a person reads.
 
-Verbatim on purpose: the card already renders the shape `database.people`'s `PERSON_JSON` builds,
-so moving it to the fold changes where the values come from, not what the browser reads. Pure —
+Every human-facing surface renders these: the review card, the batch page, and the sheet
+import's note column and report tab. One shape on purpose — three presenters over three shapes
+is three chances to tell a volunteer something the card would deny.
+
+Verbatim on purpose too: the shape is the one `database.people`'s `PERSON_JSON` builds, so
+moving it to the fold changes where the values come from, not what the browser reads. Pure —
 the taxonomy is passed in. `updated_at` is null: the fold has no opinion about it. One reader
 exists, `components/review/merge-model.ts`, which takes the newer of two merged records' values
 and leaves the key off when neither has one. `updated_at` is not editable, so nothing downstream
 reads what it wrote.
 """
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
+from types import MappingProxyType
 
 from shared.utils.taxonomy import Taxonomy
 
-from core.membership_label import derive_post_label
+from core.membership_label import post_label
+from core.projection.facts import PostKey
 from core.projection.membership_details import MembershipSource
 from core.projection.people import Membership, Person
 from core.projection.roster import Roster
@@ -48,11 +54,22 @@ def _latest(memberships: Sequence[Membership]) -> Membership | None:
     )
 
 
+# The name a human gave a post, keyed by the post's identity. `database.posts._with_label`
+# spells the same rule: a derived name is the fallback, not the display name.
+PostLabels = Mapping[tuple[str, str, str], str]
+
+
+def _post_label(post: PostKey, role_label: str, asserted: PostLabels) -> str:
+    named = asserted.get((post.organization_id, post.role_id, post.division_ocdid))
+    return post_label(role_label, post.division_ocdid, named)
+
+
 def _membership_row(
     membership: Membership,
     jurisdiction_ocdid: str,
     role_labels: dict[str, str],
     role_priorities: dict[str, int],
+    asserted: PostLabels,
 ) -> dict:
     role_label = role_labels.get(membership.post.role_id, membership.post.role_id)
     return {
@@ -74,7 +91,7 @@ def _membership_row(
         "end_date": membership.end_date,
         "first_seen_at": membership.first_seen_at,
         "last_seen_at": membership.last_seen_at,
-        "post_label": derive_post_label(role_label, membership.post.division_ocdid),
+        "post_label": _post_label(membership.post, role_label, asserted),
     }
 
 
@@ -83,6 +100,7 @@ def _person_row(
     jurisdiction_ocdid: str,
     role_labels: dict[str, str],
     role_priorities: dict[str, int],
+    asserted: PostLabels,
 ) -> dict:
     memberships = list(person.memberships)
     latest = _latest(memberships)
@@ -115,18 +133,27 @@ def _person_row(
         "division_ocdid": latest.post.division_ocdid if latest else None,
         "memberships": [
             _membership_row(
-                membership, jurisdiction_ocdid, role_labels, role_priorities
+                membership, jurisdiction_ocdid, role_labels, role_priorities, asserted
             )
             for membership in ordered_memberships
         ],
     }
 
 
-def card_rows(
-    roster: Roster, jurisdiction_ocdid: str, taxonomy: Taxonomy
+def display_rows(
+    roster: Roster,
+    jurisdiction_ocdid: str,
+    taxonomy: Taxonomy,
+    asserted_post_labels: PostLabels = MappingProxyType({}),
 ) -> list[dict]:
     role_labels = {role_id: label for label, role_id in taxonomy.role_ids.items()}
     return [
-        _person_row(person, jurisdiction_ocdid, role_labels, taxonomy.role_priority)
+        _person_row(
+            person,
+            jurisdiction_ocdid,
+            role_labels,
+            taxonomy.role_priority,
+            asserted_post_labels,
+        )
         for person in sorted(roster.people, key=lambda person: (person.name or "", person.id))
     ]

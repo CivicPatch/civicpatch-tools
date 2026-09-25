@@ -415,8 +415,8 @@ async def test_creating_a_post_is_open_to_any_signed_in_user(default_role_client
     verifies default role can create one (200), because the tier was lowered 2026-09-15 to
     match assigning an *existing* post to someone (test_memberships.py) — a reviewer who knows
     somebody sits in a seat that does not exist yet should not need a maintainer to mint it.
-    This is its own flag (`can_create_post`), not `can_edit_jurisdiction_data` reused — editing
-    a post's headcount/tracked state (`update_post_endpoint`) stays maintainer+, unchanged."""
+    Not `can_edit_jurisdiction_data` reused — editing a post's headcount/tracked state
+    (`update_post_endpoint`) stays maintainer+, unchanged."""
     assert (await _create(default_role_client, division=_WARD_3)).status_code == 200
 
 

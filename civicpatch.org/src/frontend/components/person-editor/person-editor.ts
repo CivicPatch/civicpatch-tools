@@ -63,7 +63,6 @@ export interface PersonEditorProps {
   derivedPost: DerivedPost | null;
   proposedPosts: ProposedPost[];
   canAssignMembership: boolean;
-  canCreatePost: boolean;
   // Every organization this person sits in, for the removal claims. Not `oldRecord.memberships`:
   // that payload carries no membership id, and a claim has to name the row it is about.
   memberships: RosterMembership[];
@@ -80,7 +79,6 @@ export interface PersonEditorProps {
   onToggleCandidates: () => void;
   onPickPartner: (partnerId: string) => void;
   focusField: FieldFocus | null;
-  navHint?: { hasPrev: boolean; hasNext: boolean };
 }
 
 const PHOTO_SIZE = "7.5rem";
@@ -189,7 +187,6 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
     derivedPost,
     proposedPosts,
     canAssignMembership,
-    canCreatePost,
     onSave,
   } = props;
   const survivingByKey = new Map(surviving.map((s) => [s.field.key, s]));
@@ -225,7 +222,6 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
       derivedPost,
       proposedPosts,
       canAssignMembership,
-      canCreatePost,
       focusRef: focus && field.key === focusKey ? focus.attach : null,
     });
   });
@@ -246,29 +242,6 @@ function renderStrip(props: PersonEditorProps) {
       <button class="person-editor__expander" @click=${onToggleExpand}>Show fields</button>
     </div>
     ${renderMergeCandidates(props)}
-  `;
-}
-
-function renderNavHint(props: PersonEditorProps) {
-  const hint = props.navHint;
-  if (!hint || (!hint.hasPrev && !hint.hasNext)) return nothing;
-  return html`
-    <div class="person-editor__nav-hint">
-      ${hint.hasPrev
-        ? html`<span class="person-editor__nav-chip"
-            ><kbd>Alt</kbd><kbd
-              ><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></kbd
-            >
-            previous</span
-          >`
-        : nothing}
-      ${hint.hasNext
-        ? html`<span class="person-editor__nav-chip"
-            >next <kbd>Alt</kbd
-            ><kbd><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></kbd
-          ></span>`
-        : nothing}
-    </div>
   `;
 }
 
@@ -300,7 +273,6 @@ export function renderPersonEditor(props: PersonEditorProps) {
                 : `+ ${hiddenCount} unchanged field${hiddenCount === 1 ? "" : "s"}`}
             </button>`
           : nothing}
-        ${renderNavHint(props)}
       </div>
       ${renderRosterMemberships({
         personId: props.personId,

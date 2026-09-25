@@ -4,7 +4,7 @@ import pytest
 from shared.schemas import Role, RoleConfig, RoleStatus
 from shared.utils.taxonomy import build_taxonomy
 
-from core.card_rows import card_rows
+from core.display_rows import display_rows
 from core.projection.facts import PostKey
 from core.projection.membership_details import MembershipSource
 from core.projection.people import Membership, Person
@@ -50,7 +50,7 @@ def test_a_person_row_carries_the_columns_the_card_reads():
         memberships=(_membership(label="Interim", start_date="2020-01-01"),),
     )
 
-    [row] = card_rows(Roster(people=(person,)), _JURISDICTION, TAXONOMY)
+    [row] = display_rows(Roster(people=(person,)), _JURISDICTION, TAXONOMY)
 
     assert row["id"] == "p1"
     assert row["name"] == "Ann Lee"
@@ -72,7 +72,7 @@ def test_a_person_row_carries_the_columns_the_card_reads():
 def test_a_membership_row_carries_its_post_and_role_labels():
     person = Person(id="p1", name="Ann Lee", memberships=(_membership(label="Interim"),))
 
-    [row] = card_rows(Roster(people=(person,)), _JURISDICTION, TAXONOMY)
+    [row] = display_rows(Roster(people=(person,)), _JURISDICTION, TAXONOMY)
     [membership] = row["memberships"]
 
     assert membership["post_id"] == _MAYOR.post_id
@@ -89,7 +89,7 @@ def test_a_membership_row_carries_its_post_and_role_labels():
 def test_a_person_with_no_membership_has_no_tenure_fields():
     person = Person(id="p1", name="Ann Lee")
 
-    [row] = card_rows(Roster(people=(person,)), _JURISDICTION, TAXONOMY)
+    [row] = display_rows(Roster(people=(person,)), _JURISDICTION, TAXONOMY)
 
     assert row["memberships"] == []
     assert row["start_date"] is None
@@ -120,7 +120,7 @@ def test_memberships_come_out_in_the_order_the_query_used_to_return_them():
         ),
     )
 
-    rows = card_rows(Roster(people=(person,)), _JURISDICTION, TAXONOMY)
+    rows = display_rows(Roster(people=(person,)), _JURISDICTION, TAXONOMY)
 
     assert [membership["role_id"] for membership in rows[0]["memberships"]] == [
         "council-member",
@@ -133,7 +133,7 @@ def test_people_come_out_in_the_order_the_card_reads_them():
     """By name, as `get_roster` returned them. The fold has no opinion about order, and the
     review card renders these in sequence — a departing person past the second collapses to a
     chip, so which one that is depends on this."""
-    rows = card_rows(
+    rows = display_rows(
         Roster(
             people=(
                 Person(id="p2", name="Zoe Vance"),
@@ -145,3 +145,33 @@ def test_people_come_out_in_the_order_the_card_reads_them():
     )
 
     assert [row["name"] for row in rows] == ["Ann Lee", "Zoe Vance"]
+
+
+@pytest.mark.unit
+def test_a_post_shows_the_name_a_human_gave_it():
+    """`database.posts._with_label`'s rule, which the fold cannot apply itself: naming a post
+    writes a claim on the POST entity, and `database/facts.py` does not load those yet."""
+    person = Person(id="p1", name="Ann Lee", memberships=(_membership(),))
+
+    [row] = display_rows(
+        Roster(people=(person,)),
+        _JURISDICTION,
+        TAXONOMY,
+        {("org-1", "mayor", _BASE): "Position 8"},
+    )
+
+    assert row["memberships"][0]["post_label"] == "Position 8"
+
+
+@pytest.mark.unit
+def test_a_post_nobody_named_keeps_the_derived_label():
+    person = Person(id="p1", name="Ann Lee", memberships=(_membership(),))
+
+    [row] = display_rows(
+        Roster(people=(person,)),
+        _JURISDICTION,
+        TAXONOMY,
+        {("org-1", "council-member", _BASE): "Position 8"},
+    )
+
+    assert row["memberships"][0]["post_label"] == "Mayor"

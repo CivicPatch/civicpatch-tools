@@ -2,7 +2,7 @@
 
 Ported from `test_roster_diff.py` on 2026-09-24. Each test's claim is unchanged; what moved is
 the input. It used to take a roster plus the membership proposals `propose()` computed against
-what we already held; it now takes the two sides `card_rows` presents, because the fold already
+what we already held; it now takes the two sides `display_rows` presents, because the fold already
 answers who holds what and a second membership comparison could disagree with it.
 """
 

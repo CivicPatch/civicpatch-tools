@@ -3,7 +3,7 @@ import logging
 from datetime import datetime, timezone
 from typing import NamedTuple
 
-from core.card_rows import card_rows
+from core.display_rows import PostLabels, display_rows
 from core.changeset_lifecycle import PARTIAL_KINDS
 from core.people_edits import source_values_overridden, with_asserted_values
 from core.people_roster import partial_roster, roster_from_sightings
@@ -84,7 +84,9 @@ async def _fold_for_card(
         roster, facts = await projection_db.derived_roster_and_facts(
             cur, jurisdiction_ocdid, including=including, taxonomy=taxonomy
         )
-    return card_rows(on_roster(roster), jurisdiction_ocdid, taxonomy), facts, taxonomy
+        post_labels = await posts_db.asserted_labels_by_key(cur, jurisdiction_ocdid)
+    rows = display_rows(on_roster(roster), jurisdiction_ocdid, taxonomy, post_labels)
+    return rows, facts, taxonomy
 
 
 async def published_card_rows(jurisdiction_ocdid: str) -> list[dict]:
@@ -120,6 +122,9 @@ class CardFold(NamedTuple):
     proposed: Roster
     proposed_facts: Facts
     taxonomy: Taxonomy
+    # A post a human named. The fold cannot see these — naming a post is a claim on the POST
+    # entity and `database/facts.py` does not load those until step 10 — so they overlay here.
+    post_labels: PostLabels
 
 
 async def card_fold(changeset_id: str, jurisdiction_ocdid: str) -> CardFold:
@@ -144,18 +149,24 @@ async def card_fold(changeset_id: str, jurisdiction_ocdid: str) -> CardFold:
             as_of=as_of,
             taxonomy=taxonomy,
         )
+        post_labels = await posts_db.asserted_labels_by_key(cur, jurisdiction_ocdid)
     return CardFold(
         published=on_roster(published),
         proposed=on_roster(proposed),
         proposed_facts=proposed_facts,
         taxonomy=taxonomy,
+        post_labels=post_labels,
     )
 
 
 def sides_of(fold: CardFold, jurisdiction_ocdid: str) -> CardSides:
     return CardSides(
-        existing=card_rows(fold.published, jurisdiction_ocdid, fold.taxonomy),
-        proposed=card_rows(fold.proposed, jurisdiction_ocdid, fold.taxonomy),
+        existing=display_rows(
+            fold.published, jurisdiction_ocdid, fold.taxonomy, fold.post_labels
+        ),
+        proposed=display_rows(
+            fold.proposed, jurisdiction_ocdid, fold.taxonomy, fold.post_labels
+        ),
         overridden=overridden_by_person(fold.proposed_facts),
     )
 

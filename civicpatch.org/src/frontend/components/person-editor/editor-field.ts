@@ -97,7 +97,6 @@ export interface EditorFieldProps {
   proposedPosts: ProposedPost[];
   focusRef: FocusRef | null;
   canAssignMembership: boolean;
-  canCreatePost: boolean;
   lock: FieldLock | null;
   assertionSummary: FieldAssertionSummary | null;
 }
@@ -120,7 +119,6 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
     proposedPosts,
     focusRef,
     canAssignMembership,
-    canCreatePost,
     accepts,
     assertions,
   } = props;
@@ -157,7 +155,6 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
     labelAssertionSummary: assertionSummaryFor(assertions, LABEL_FIELD),
     jurisdictionOcdid,
     organizationId,
-    canCreatePost,
     // A proposal naming a role/division with no post yet — nothing for the picker to look up
     // by `post_id` above, so this is the only way it can show what's actually proposed instead
     // of a blank "Choose a role…".

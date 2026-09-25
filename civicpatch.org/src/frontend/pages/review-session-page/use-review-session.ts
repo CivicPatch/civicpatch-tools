@@ -4,7 +4,7 @@ import {
   navigateToEntry,
   fetchReview,
   endReviewSession,
-  fetchPullRequestByRequestId,
+  fetchReviewCard,
   fetchReviewStats,
   saveReviewData,
 } from "../../api.js";
@@ -28,7 +28,7 @@ export function useReviewSession(
   const [state, dispatch] = useReducer(reduceReview, initialPageState(stateCode));
 
   const effects: Effects = {
-    api: { fetchActiveReviewSession, navigateToEntry, fetchReview, endReviewSession, fetchPullRequestByRequestId, saveReviewData },
+    api: { fetchActiveReviewSession, navigateToEntry, fetchReview, endReviewSession, fetchReviewCard, saveReviewData },
     dispatch,
     navigate: deps.navigate ?? ((url) => { window.location.href = url; }),
     setRequestIdParam: (changesetId) => updateParams({ [CHANGESET_ID_PARAM]: changesetId }),
@@ -59,7 +59,10 @@ export function useReviewSession(
     back: () => { if (ready) goToEntry(sessionId, entryNumber - 1, stateCode, effects); },
     navigateTo: (n: number) => { if (ready) goToEntry(sessionId, n, stateCode, effects); },
     merge: (people: any[] | null) => { if (ready && reviewing) mergeCurrent(reviewing.current_entry, sessionId, entryNumber, people, stateCode, effects); },
-    save: (people: any[]) => { if (ready && reviewing) saveCurrent(reviewing.current_entry, sessionId, entryNumber, people, stateCode, effects); },
+    save: async (people: any[]) =>
+      ready && reviewing
+        ? saveCurrent(reviewing.current_entry, sessionId, entryNumber, people, stateCode, effects)
+        : false,
     rejectScrape: () => { if (ready && reviewing) closeCurrent(reviewing.current_entry, sessionId, entryNumber, stateCode, effects); },
     endSession: () => { if (reviewing) endSessionAndExit(reviewing.session?.id ?? null, stateCode, effects); },
   };

@@ -108,7 +108,6 @@ function JurisdictionPage({
   // Its own flag, not `hasEditPermission` reused — creating a post is a distinct capability
   // that happens to sit at the same tier today, not the same permission as editing the
   // jurisdiction's own published data.
-  const canCreatePost = !!permissions.can_create_post;
   // Only what is still in flight, plus two scalars. This used to fetch every changeset the
   // jurisdiction has ever had in order to derive four things from the array.
   const [inFlight, setInFlight] = useState<InFlightEntry[]>([]);
@@ -239,7 +238,6 @@ function JurisdictionPage({
                 .jurisdictionOcdid=${jurisdiction_ocdid}
                 .canEdit=${hasEditPermission && !peopleBlockers.length}
                 .canAssignMembership=${hasEditPermission && !peopleBlockers.length}
-                .canCreatePost=${canCreatePost && !peopleBlockers.length}
                 .isLoading=${peopleLoading}
                 .blockedReason=${editingBlockedReason(peopleBlockers)}
                 .onPublished=${refetchPeople}
