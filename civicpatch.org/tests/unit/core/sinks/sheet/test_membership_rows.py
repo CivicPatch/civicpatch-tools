@@ -32,7 +32,6 @@ def _membership(**overrides) -> dict:
         "membership_start_date": "2024",
         "membership_end_date": None,
         "membership_opened_at": _SEEN,
-        "membership_last_seen_at": _SEEN,
         "membership_closed_at": None,
         "membership_source_labels": [],
     }

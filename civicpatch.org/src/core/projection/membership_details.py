@@ -28,10 +28,6 @@ def first_seen(facts: Sequence[SourceRecord | Claim]) -> datetime:
     return min(fact.created_at for fact in facts)
 
 
-def last_seen(facts: Sequence[SourceRecord | Claim]) -> datetime:
-    return max(fact.created_at for fact in facts)
-
-
 def membership_sources(records: Sequence[SourceRecord]) -> tuple[MembershipSource, ...]:
     pairs = dict.fromkeys(
         (record.label, record.source_url)

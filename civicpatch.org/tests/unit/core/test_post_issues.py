@@ -63,7 +63,6 @@ def _membership(
             organization_id=organization_id, role_id=role_id, division_ocdid=division
         ),
         opened_at=_T,
-        last_seen_at=_T,
     )
 
 

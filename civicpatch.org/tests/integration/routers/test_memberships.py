@@ -344,20 +344,20 @@ async def test_the_person_axis_reads_without_signing_in(anonymous_client):
 
 
 # ── Seat timestamps ─────────────────────────────────────────────────────
-# `last_seen_at` is the changeset's `updated_at`: a scrape's run date, `now()` for a hand edit
-# or a sheet import. Every registrar stamps it at creation, so nothing downstream branches on
-# kind — and `assign`, which mints no changeset, uses the same `now()` a hand edit would get.
+# `opened_at` is when the facts behind a membership were observed: a scrape's run date, the
+# moment of a hand edit.
 
 
 async def _seat_seen_at(person_id: str, post_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT opened_at, last_seen_at FROM memberships "
+            "SELECT opened_at FROM memberships "
             "WHERE person_id = %s AND post_id = %s AND closed_at IS NULL",
             (person_id, post_id),
         )
-        return await cur.fetchone()
+        row = await cur.fetchone()
+        return row[0] if row else None
 
 
 @pytest.mark.asyncio
@@ -368,6 +368,5 @@ async def test_a_manual_seat_is_dated_when_the_human_seated_them(client):
 
     await _seat(person_id, mayor)
 
-    opened_at, last_seen_at = await _seat_seen_at(person_id, mayor)
-    assert opened_at >= before
-    assert last_seen_at >= before
+    # It also checked `last_seen_at`; that column went at 228.
+    assert await _seat_seen_at(person_id, mayor) >= before

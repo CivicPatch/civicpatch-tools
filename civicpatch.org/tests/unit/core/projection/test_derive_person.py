@@ -158,7 +158,6 @@ def test_a_membership_carries_what_its_records_said():
     [membership] = derive(ALICE, facts).memberships
 
     assert membership.opened_at == _T + timedelta(minutes=1)
-    assert membership.last_seen_at == _T + timedelta(minutes=2)
     assert membership.start_date == "2024-01-01"
     assert membership.extra_roles == ("council-member",)
     assert [source.note for source in membership.sources] == [

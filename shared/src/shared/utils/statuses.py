@@ -147,7 +147,7 @@ class ChangesetKind(StrEnum):
     not own, so there is nothing here to review.
 
     ROLLBACK (189) is deliberately excluded from `COLLECTION_KINDS`: a rollback reads no
-    source, so `advances_last_seen` must not treat it as a sighting.
+    source, so it must not date a jurisdiction's last collection.
     """
 
     SCRAPE = "scrape"

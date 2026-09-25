@@ -1,13 +1,8 @@
 """Database queries for `memberships` — a person holding a post over time.
 
-Three cases, and they are the whole model:
-
-  found on the same post       advance `last_seen_at`
-  found on a different post    close the old membership, open a new one
-  not found at all             close it
-
-Closing rather than moving preserves history: a move leaves a closed row with its own window,
-which is what the roster timeline reads. One *open* membership per person per body.
+A row is one period held: holding a post twice is two rows. A move closes one and opens
+another, so history is every row, and the roster timeline reads it. One *open* membership per
+person per body. The writer (`database/projection.py`) rebuilds them all from facts.
 
 `closed_at` is ours and `end_date` is the source's — disappearing from a page says someone is
 gone, not when they went.
@@ -41,7 +36,7 @@ async def list_for_jurisdiction(
                -- range is half-open and a reader can draw it without inferring the end from a
                -- sighting. This is the pair `as_of` filters on below, so a row explains why
                -- it was included.
-               m.opened_at, m.closed_at, m.last_seen_at,
+               m.opened_at, m.closed_at,
                pe.name AS person_name,
                membership_source_labels(m.sources) AS source_labels,
                m.designations, m.meta_unmatched_text,
@@ -133,8 +128,7 @@ _STATE_ROWS = """
                    m.label          AS membership_label,
                    m.start_date     AS membership_start_date,
                    m.end_date       AS membership_end_date,
-                   m.opened_at  AS membership_opened_at,
-                   m.last_seen_at   AS membership_last_seen_at,
+                   m.opened_at      AS membership_opened_at,
                    m.closed_at      AS membership_closed_at,
                    membership_source_labels(m.sources) AS membership_source_labels
             FROM memberships m

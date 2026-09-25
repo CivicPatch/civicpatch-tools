@@ -127,16 +127,16 @@ async def collect_and_publish(jurisdiction_ocdid: str, collected_at) -> str:
 _INSERT_MEMBERSHIP = """
     INSERT INTO memberships
         (id, post_id, organization_id, person_id, label, start_date, end_date,
-         opened_at, last_seen_at, designations, meta_unmatched_text, sources)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb)
+         opened_at, designations, meta_unmatched_text, sources)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb)
     ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
-    DO UPDATE SET last_seen_at = EXCLUDED.last_seen_at
+    DO UPDATE SET opened_at = memberships.opened_at
     RETURNING id::text
 """
 
 
 async def bind_membership(
-    cur, member: DerivedMembership, post_id: str, organization_id: str, last_seen_at
+    cur, member: DerivedMembership, post_id: str, organization_id: str, opened_at
 ) -> str:
     """One open membership, as the writer would lay it down. Returns its id.
 
@@ -153,8 +153,7 @@ async def bind_membership(
             member.membership_label,
             member.start_date,
             member.end_date,
-            last_seen_at,
-            last_seen_at,
+            opened_at,
             member.designations,
             member.meta_unmatched_text,
             json.dumps([source.model_dump() for source in member.sources]),

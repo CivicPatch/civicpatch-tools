@@ -218,8 +218,7 @@ async def test_the_edit_mints_a_changeset_born_published():
     Born published, and it has to be: it writes `source_records` for anyone added, so a pending
     one would satisfy AVAILABLE_FOR_REVIEW and flash into the queue between the two writes.
 
-    What it must *not* do is advance `last_seen_at` — that is `publish_changeset`'s rule, claimed
-    separately below."""
+    What it must *not* do is reopen the membership, claimed separately below."""
     person_id, user = await _seed()
 
     changeset_id = await edit_published_roster(
@@ -465,16 +464,16 @@ async def test_a_hand_edit_supersedes_a_pending_scrape():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_hand_edit_does_not_advance_last_seen_at():
-    """The whole reason a hand edit's changeset is treated differently: it read nothing, so it
-    must not claim the source still lists everyone it touched. `last_seen_at` comes from the
-    records and the accepts behind a membership, and a hand edit adds neither."""
+async def test_a_hand_edit_does_not_reopen_the_membership():
+    """A name edit changes the person, not the period they hold the post. This checked that
+    `last_seen_at` did not move; that column went at 228, so it now checks the row keeps its
+    `opened_at`, which a rebuild that re-dated the period would move."""
     person_id, user = await _seed()
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT last_seen_at FROM memberships "
+            "SELECT opened_at FROM memberships "
             " WHERE person_id = %s AND closed_at IS NULL",
             (person_id,),
         )
@@ -486,13 +485,13 @@ async def test_a_hand_edit_does_not_advance_last_seen_at():
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT last_seen_at FROM memberships "
+            "SELECT opened_at FROM memberships "
             " WHERE person_id = %s AND closed_at IS NULL",
             (person_id,),
         )
         after = (await cur.fetchone())[0]
 
-    assert after == before, "a hand edit advanced last_seen_at"
+    assert after == before, "a hand edit reopened the membership"
 
 
 @pytest.mark.asyncio

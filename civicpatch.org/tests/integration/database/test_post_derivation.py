@@ -165,27 +165,6 @@ async def test_a_match_never_overwrites_a_human_edit():
         await conn.rollback()
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_same_post_advances_the_window_without_a_second_row():
-    person_id = await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-
-        first = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
-        second = await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T1)
-        assert first == second
-
-        await cur.execute(
-            "SELECT opened_at, last_seen_at FROM memberships WHERE id = %s", (first,)
-        )
-        assert await cur.fetchone() == (_T0, _T1)
-        await conn.rollback()
-
-
 async def _already_published() -> None:
     """Put the jurisdiction past its first publish, by holding a seat that is not under test.
 
@@ -750,23 +729,23 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT closed_at, last_seen_at FROM memberships WHERE person_id = %s",
+            "SELECT closed_at FROM memberships WHERE person_id = %s",
             (person_id,),
         )
-        closed_at, last_seen_at = await cur.fetchone()
+        [closed_at] = await cur.fetchone()
+    # It also checked `last_seen_at` stayed put; that column went at 228.
     assert closed_at is None, "an unreviewed scrape closed a published membership"
-    assert last_seen_at == _T0, "an unreviewed scrape moved a published last_seen_at"
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_scrape_that_re_confirms_the_roster_publishes_and_moves_last_seen_at():
+async def test_a_scrape_that_re_confirms_the_roster_publishes():
     """The complement of the test above, and the thing that was silently broken.
 
     A scrape proposing nothing new used to be dismissed as `unchanged`, so `publish_changeset`
-    never ran and `last_seen_at` never moved — leaving it frozen at the last scrape that
-    *changed* something. Ellensburg read 2025-06-22 after a 2026-09 scrape saw all fourteen of
-    its people on the page.
+    never ran and the jurisdiction's freshness froze at the last scrape that *changed*
+    something. Ellensburg read 2025-06-22 after a 2026-09 scrape saw all fourteen of its
+    people on the page. It also asserted `last_seen_at` advanced; that column went at 228.
 
     Re-confirmation is the one case where "we still see them" is the only thing the scrape has
     to say, and it was the one case that recorded nothing.
@@ -821,15 +800,9 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes_and_moves_last_see
             (changeset_id,),
         )
         published, dismissed = await cur.fetchone()
-        await cur.execute(
-            "SELECT min(last_seen_at) FROM memberships WHERE person_id = ANY(%s)",
-            (people,),
-        )
-        last_seen_at = (await cur.fetchone())[0]
 
     assert published, "a re-confirmed roster should publish, not sit unresolved"
     assert not dismissed, "it should no longer be dismissed as unchanged"
-    assert last_seen_at > _T0, "publishing is what advances last_seen_at"
 
 
 @pytest.mark.asyncio

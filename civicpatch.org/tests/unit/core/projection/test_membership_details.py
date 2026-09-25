@@ -13,7 +13,6 @@ from core.projection.facts import Claim, ClaimKind, EntityType, SourceRecord
 from core.projection.membership_details import (
     MembershipSource,
     first_seen,
-    last_seen,
     membership_sources,
 )
 
@@ -64,23 +63,21 @@ def exists_accept(id: str, minutes: int = 0) -> Claim:
 
 @pytest.mark.unit
 def test_seen_dates_span_the_records_whatever_order_they_arrive_in():
+    """Checked both ends; `last_seen` went with its column (228), so now the start only."""
     records = [record("r2", minutes=20), record("r0", minutes=0), record("r1", minutes=10)]
     assert first_seen(records) == _T
-    assert last_seen(records) == _T + timedelta(minutes=20)
 
 
 @pytest.mark.unit
 def test_a_membership_only_a_claim_holds_is_seen_when_the_claim_was_made():
     claim = exists_accept("a0", minutes=5)
     assert first_seen([claim]) == _T + timedelta(minutes=5)
-    assert last_seen([claim]) == _T + timedelta(minutes=5)
 
 
 @pytest.mark.unit
 def test_records_and_claims_are_one_span():
     evidence = [record("r0", minutes=10), exists_accept("a0", minutes=0)]
     assert first_seen(evidence) == _T
-    assert last_seen(evidence) == _T + timedelta(minutes=10)
 
 
 @pytest.mark.unit

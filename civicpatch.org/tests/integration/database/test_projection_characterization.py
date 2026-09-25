@@ -7,8 +7,8 @@ a characterization test earns its keep by failing when anything moves, so update
 only alongside a change that means to move it.
 
 The first three cases cover two bodies in one jurisdiction, a re-scrape of one of them, and a
-person dropped from the body that was read: between them they pin the `last_seen_at` ratchet,
-the org-scoped close, and the body nothing looked at. Nothing in them changes between scrapes,
+person dropped from the body that was read: between them they pin the org-scoped close and
+the body nothing looked at. Nothing in them changes between scrapes,
 so four more exercise the field and post rules: contact details that change, a value a human
 rejected that the page keeps printing, a label that maps to no role, and a person who is mayor,
 then a member, then mayor again.
@@ -191,7 +191,7 @@ async def _projection(ids: dict) -> dict:
         await cur.execute(
             """
             SELECT pe.id::text, p.organization_id::text, p.role_id, p.division_ocdid,
-                   m.label, m.opened_at, m.last_seen_at, m.closed_at
+                   m.label, m.opened_at, m.closed_at
             FROM memberships m
             JOIN posts p ON p.id = m.post_id
             JOIN people pe ON pe.id = m.person_id
@@ -254,8 +254,7 @@ async def _projection(ids: dict) -> dict:
                 "division_ocdid": row[3],
                 "label": row[4],
                 "opened_at": row[5],
-                "last_seen_at": row[6],
-                "closed_at": row[7],
+                "closed_at": row[6],
             }
             for row in rows
         ],
@@ -335,7 +334,6 @@ async def test_publishing_two_bodies_derives_this_projection():
                 "division_ocdid": _WARD_2,
                 "label": None,
                 "opened_at": _T0,
-                "last_seen_at": _T0,
                 "closed_at": None,
             },
             {
@@ -345,7 +343,6 @@ async def test_publishing_two_bodies_derives_this_projection():
                 "division_ocdid": _BASE,
                 "label": None,
                 "opened_at": _T0,
-                "last_seen_at": _T0,
                 "closed_at": None,
             },
         ]
@@ -358,8 +355,9 @@ async def test_publishing_two_bodies_derives_this_projection():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
-    """The `last_seen_at` ratchet and the org-scoped close, both visible at once: Ana is re-seen
-    and her clock advances, Ben is untouched because nothing read his body."""
+    """The org-scoped close: Ana is re-seen and keeps her period, Ben is untouched because
+    nothing read his body. It also pinned Ana's `last_seen_at` advancing; that column went at
+    228."""
     ids = await _seed()
     first = await _changeset(_T0)
     await _record_evidence(first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
@@ -419,7 +417,6 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
                 "division_ocdid": _WARD_2,
                 "label": None,
                 "opened_at": _T0,
-                "last_seen_at": _T1,
                 "closed_at": None,
             },
             {
@@ -429,7 +426,6 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
                 "division_ocdid": _BASE,
                 "label": None,
                 "opened_at": _T0,
-                "last_seen_at": _T0,
                 "closed_at": None,
             },
         ]

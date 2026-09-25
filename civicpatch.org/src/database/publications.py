@@ -116,7 +116,7 @@ class SupersededRoster(ValueError):
 
 
 async def _refuse_if_superseded(
-    cur, changeset_id: str, jurisdiction_ocdid: str, last_seen_at
+    cur, changeset_id: str, jurisdiction_ocdid: str, updated_at
 ) -> None:
     """Refuse a roster older than one already published — a reviewer working an old card did not
     go and look at the source again."""
@@ -131,13 +131,13 @@ async def _refuse_if_superseded(
         ORDER BY changesets.updated_at DESC
         LIMIT 1
         """,
-        (jurisdiction_ocdid, changeset_id, last_seen_at),
+        (jurisdiction_ocdid, changeset_id, updated_at),
     )
     newer = await cur.fetchone()
     if newer:
         raise SupersededRoster(
             f"Refusing to publish {changeset_id}: request {newer[0]} already published a "
-            f"newer roster for {jurisdiction_ocdid} ({newer[1]} > {last_seen_at})."
+            f"newer roster for {jurisdiction_ocdid} ({newer[1]} > {updated_at})."
         )
 
 
@@ -173,9 +173,8 @@ async def _record_publish(
 ) -> None:
     # No `jurisdictions.scraped_at` stamp any more. It was written here on *every* publish
     # with no filter, so ten hand edits had dated a "scrape" for jurisdictions where nothing
-    # was scraped — while `advances_last_seen`, computed a few lines up, was already asking
-    # exactly that question for `memberships.last_seen_at`. Freshness derives now, from
-    # published collection changesets: `LAST_COLLECTED_JOIN`.
+    # was scraped. Freshness derives now, from published collection changesets:
+    # `LAST_COLLECTED_JOIN`.
     await cur.execute(
         """
         UPDATE changesets
@@ -204,9 +203,9 @@ async def _record_publish(
 
 async def _supersede_stale_cards(cur, changeset_id: str, jurisdiction_ocdid: str) -> None:
     """Same transaction, so a published roster and the cards it obsoletes cannot disagree."""
-    last_seen_at = await get_updated_at(cur, changeset_id)
+    updated_at = await get_updated_at(cur, changeset_id)
     stale = await dismissals_db.dismiss_superseded_by(
-        cur, changeset_id, jurisdiction_ocdid, last_seen_at
+        cur, changeset_id, jurisdiction_ocdid, updated_at
     )
     if stale:
         logger.info(
@@ -240,8 +239,8 @@ async def publish_changeset(
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        last_seen_at = await get_updated_at(cur, changeset_id)
-        await _refuse_if_superseded(cur, changeset_id, jurisdiction_ocdid, last_seen_at)
+        updated_at = await get_updated_at(cur, changeset_id)
+        await _refuse_if_superseded(cur, changeset_id, jurisdiction_ocdid, updated_at)
         await _refuse_if_not_publishable(cur, changeset_id)
         await _record_publish(
             cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id, changes

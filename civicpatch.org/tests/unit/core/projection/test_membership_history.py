@@ -19,7 +19,7 @@ MEMBER = PostKey(organization_id=_COUNCIL, role_id="council-member", division_oc
 
 
 def _holding(post: PostKey, label: str | None = None) -> Roster:
-    membership = Membership(post=post, opened_at=_T0, last_seen_at=_T0, label=label)
+    membership = Membership(post=post, opened_at=_T0, label=label)
     return Roster(people=(Person(id="jane", memberships=(membership,)),))
 
 

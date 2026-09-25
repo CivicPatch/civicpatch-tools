@@ -56,9 +56,7 @@ PERSON_MEMBERSHIPS = """COALESCE((
         'meta_unmatched_text', to_jsonb(memberships.meta_unmatched_text),
         'start_date', memberships.start_date,
         'end_date', memberships.end_date,
-        -- When this seat was first and last observed. Both NOT NULL.
-        'opened_at', memberships.opened_at,
-        'last_seen_at', memberships.last_seen_at
+        'opened_at', memberships.opened_at
     ) ORDER BY posts.role_id, posts.division_ocdid, posts.id)
     FROM memberships
     JOIN posts ON posts.id = memberships.post_id

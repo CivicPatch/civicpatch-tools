@@ -53,7 +53,6 @@ _WIDTHS = {
     "membership_start_date": 110,
     "membership_end_date": 110,
     "membership_opened_at": 175,
-    "membership_last_seen_at": 175,
     "membership_closed_at": 175,
     "person_updated_at": 175,
     "post_headcount": 90,

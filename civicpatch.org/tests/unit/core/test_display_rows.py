@@ -35,7 +35,6 @@ def _membership(**overrides) -> Membership:
     return Membership(
         post=_MAYOR,
         opened_at=_T,
-        last_seen_at=_T,
         sources=(MembershipSource(note="Mayor", url="https://example.gov/council"),),
         **overrides,
     )
@@ -114,7 +113,6 @@ def test_memberships_come_out_in_the_order_the_query_used_to_return_them():
             Membership(
                 post=council,
                 opened_at=_T,
-                last_seen_at=_T,
                 sources=(MembershipSource(note="Council Member", url=None),),
             ),
         ),
