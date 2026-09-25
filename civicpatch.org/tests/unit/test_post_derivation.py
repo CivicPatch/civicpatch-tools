@@ -242,8 +242,8 @@ def test_a_single_role_demotes_nothing():
 
 @pytest.mark.unit
 def test_a_second_role_the_taxonomy_does_not_know_is_not_demoted():
-    """`membership_roles.role_id` is a foreign key, so a role with no id has nowhere to go —
-    it stays in `meta_unmatched_text`, where triage can act on it."""
+    """A role with no id is not demoted — it stays in `meta_unmatched_text`, where triage can
+    act on it."""
     derived = derived_posts(
         [_person("p1", "Council Member - Harbormaster")], _TAXONOMY, _ROLES
     )

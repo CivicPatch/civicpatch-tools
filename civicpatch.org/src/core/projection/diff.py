@@ -35,7 +35,6 @@ COMPARED_MEMBERSHIP_FIELDS = (
     "designations",
     "unmatched_text",
     "sources",
-    "extra_roles",
 )
 
 

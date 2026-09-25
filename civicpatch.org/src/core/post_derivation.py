@@ -94,8 +94,8 @@ def _demoted_roles(
 ) -> list[tuple[str, str]]:
     """Every role the label named except the one the post is defined by, as (label, id) pairs.
 
-    Only known ids: `membership_roles.role_id` is a foreign key, so an unrecognised role has
-    nowhere to go and stays in `meta_unmatched_text`, which is where triage can act on it.
+    Only known ids: an unrecognised role stays in `meta_unmatched_text`, which is where triage
+    can act on it.
 
     Order follows `parsed.roles`, which `derive_roles` builds in the order the text gives
     them, so a reader sees them as the source wrote them.

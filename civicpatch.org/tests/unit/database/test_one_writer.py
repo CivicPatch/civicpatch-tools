@@ -1,6 +1,6 @@
 """Only `database/projection.py` writes the projection (R5 of the projector plan).
 
-`people`, `memberships`, `membership_roles`, `posts` and `organizations` are derived tables.
+`people`, `memberships`, `posts` and `organizations` are derived tables.
 Once the fold rebuilds them (step 8), any other write is a patch the next rebuild silently
 undoes, or a value the facts never said. The guard is a scan of the source tree rather than
 a runtime check: a write that never runs in a test still has to be caught.
@@ -24,7 +24,7 @@ THE_WRITER = "database/projection.py"
 
 _WRITE = re.compile(
     r"\b(INSERT INTO|UPDATE|DELETE FROM)\s+"
-    r"(people|memberships|membership_roles|posts|organizations)\b([^\n]*)"
+    r"(people|memberships|posts|organizations)\b([^\n]*)"
 )
 
 # (file, statement prefix): how many times it appears. Step numbers are the projector plan's.

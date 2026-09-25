@@ -16,12 +16,10 @@ from shared.schemas import RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 
 from core.projection.diff import on_roster, roster_diff
-from core.projection.live_facts import live_facts
-from core.projection.posts import post_keys
 from core.projection.roster import derive_roster
 from database.database import get_pool
 from database.facts import load_facts
-from database.projection import derived_roster, rebuild, stored_roster
+from database.projection import derived_roster, rebuild_from_facts, stored_roster
 from database.publications import publish_changeset
 from database.roles import get_roles
 from database.source_records import insert_source_records
@@ -94,14 +92,11 @@ async def _scrape(ids: dict, at, listing: dict[str, str]) -> None:
 
 
 async def _rebuild() -> None:
-    roles = await get_roles()
-    taxonomy = build_taxonomy(RoleConfig(roles=roles))
+    """The writer's own path: it took a hand-folded roster, and now needs the history only
+    `rebuild_from_facts` computes."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        facts = await load_facts(cur, _OCDID, datetime.datetime.now(datetime.timezone.utc))
-        roster = derive_roster(facts, _OCDID, taxonomy)
-        keys = post_keys(live_facts(facts).records, _OCDID, taxonomy)
-        await rebuild(cur, _OCDID, roster, keys)
+        await rebuild_from_facts(cur, _OCDID)
         await conn.commit()
 
 
@@ -157,7 +152,10 @@ async def test_rebuilding_twice_changes_no_row():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_person_the_latest_read_dropped_loses_the_row_not_a_closed_at():
+async def test_a_person_the_latest_read_dropped_keeps_a_closed_row():
+    """This verified that a dropped person lost their row, since the writer kept only what was
+    current. It now verifies the row stays, closed at the read that dropped them: a membership
+    row is a period held (step 15), and history is every row."""
     ids = await _seed()
     await _scrape(ids, _T0, {"ana": "Mayor", "ben": "Council Member"})
     await _rebuild()
@@ -165,10 +163,10 @@ async def test_a_person_the_latest_read_dropped_loses_the_row_not_a_closed_at():
 
     await _rebuild()
 
-    rows = await _membership_rows()
-    assert [row[1] for row in rows] == [ids["ben"]]
-    assert rows[0][3] == _T0
-    assert rows[0][4] is None
+    rows = {row[1]: row for row in await _membership_rows()}
+    assert set(rows) == {ids["ana"], ids["ben"]}
+    assert rows[ids["ana"]][3:] == (_T0, _T1)
+    assert rows[ids["ben"]][3:] == (_T0, None)
     stored, derived = await _stored_and_derived()
     assert roster_diff(stored, derived).empty
 

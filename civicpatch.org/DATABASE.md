@@ -261,7 +261,7 @@ erDiagram
         uuid            id                  PK "218: uuid5 over (organization_id, role_id, division_ocdid), the fold's PostKey.post_id, minted by the caller; also unique (id, organization_id) so memberships can FK the pair — kept: that column feeds a partial unique index and its failure would be silent"
         text            jurisdiction_ocdid  FK "denormalised for direct queries; 121 dropped the composite FK — a mismatch is visible, not silent"
         uuid            organization_id     FK
-        text            role_id             FK "ON UPDATE CASCADE; the POST's own role — other roles the label named live in membership_roles"
+        text            role_id             FK "ON UPDATE CASCADE; the POST's own role — other roles the label named are parsed from it, not stored (226)"
         text            division_ocdid      FK "ON UPDATE CASCADE"
         int             meta_headcount      "check: > 0, default: 1; human-owned. meta_-marked: Popolo has no headcount — our Post is a group of interchangeable seats"
         bool            meta_is_tracked     "default: true; a roster omitting this post is meaningful — gates the review queue, not the record. Orthogonal to lifecycle"
@@ -269,7 +269,7 @@ erDiagram
     }
 
     memberships {
-        uuid            id                  PK
+        uuid            id                  PK "227: PK (id, opened_at). uuid5(person, post), the key claims name, so every row of one membership shares it"
         uuid            post_id             FK "ON UPDATE CASCADE (218), and composite FK (post_id, organization_id) ON UPDATE CASCADE"
         uuid            organization_id     "unique idx: (person_id, organization_id) WHERE closed_at IS NULL — one open post per body"
         uuid            person_id           FK
@@ -279,15 +279,10 @@ erDiagram
         text_null       label               "the source's words for what the post label cannot say — seeded on INSERT, then human-owned. Absent from upsert()'s ON CONFLICT SET, which is its whole protection. NULL = the post says it all"
         text_null       start_date          "144: text, not date — sources give partial dates and Popolo allows them (3,513 of 4,547 on dev are partial). From the source; we do not infer it"
         text_null       end_date            "144: text, as start_date. From the source — NOT set when someone stops appearing"
-        timestamptz     opened_at           "225: was first_seen_at. When we first carried this stint; ours, never a page's date"
+        timestamptz     opened_at           "225: was first_seen_at. PK part (227). When this period opened: stamped with when its facts were observed, never a page's date"
         timestamptz     last_seen_at        "the changeset's sourced_at, advanced by GREATEST on every publish that still seats them"
-        timestamptz_null closed_at          "When we stopped carrying it; NULL = open. Not end_date, which is often a future term end"
+        timestamptz_null closed_at          "When this period closed; NULL = open. Not end_date, which is often a future term end"
         timestamptz     created_at          "default: now()"
-    }
-
-    membership_roles {
-        uuid            membership_id       FK "PK (membership_id, role_id); ON DELETE CASCADE"
-        text            role_id             FK "PK; idx; ON UPDATE CASCADE — renaming a role follows into closed history"
     }
 
     claims {
@@ -334,8 +329,6 @@ erDiagram
     divisions ||--o{ posts : "division_ocdid"
     posts ||--o{ memberships : "post_id"
     people ||--o{ memberships : "person_id"
-    roles ||--o{ membership_roles : "role_id"
-    memberships ||--o{ membership_roles : "membership_id"
     users ||--o{ claims : "created_by"
     users ||--o{ claims : "withdrawn_by"
     changesets ||--o{ claims : "changeset_id"
@@ -397,11 +390,16 @@ erDiagram
   dropped rather than migrated: nothing had been able to raise one since 2026-09-04, when
   rosters moved to committing straight to `main`.
 
-- **A membership is a stint, migration 225 (step 15).** Holding a post twice is two rows;
-  history is every row, open is `closed_at IS NULL`. 225 only renames `first_seen_at` to
-  `opened_at`, pairing it with `closed_at` and the "open membership" the code already says.
+- **One membership row per period held, migrations 225-227 (step 15).** Holding a post twice
+  is two rows; history is every row, open is `closed_at IS NULL`. 225 renames `first_seen_at`
+  to `opened_at`, pairing it with `closed_at` and the "open membership" the code already says.
   Both are ours, and cannot be merged with `start_date` / `end_date`, which a page states and
-  which is often a future term end for someone sitting now.
+  which is often a future term end for someone sitting now. 227 keys a row by `(id, opened_at)`:
+  `id` stays `uuid5(person, post)` because claims are filed against the pair, so an override
+  applies to every period of it. The writer rebuilds every row from facts, one fold per publish,
+  so rows before deploy B's closed ones are replaced by history recomputed from facts.
+  226 dropped `membership_roles`: nothing read it but the projection diff checking it against
+  itself, and the extra roles a label names are parsed from the verbatim label (step 10a).
 
 - **`source_record_identities` folded into `source_records.person_id`, migration 224.** It was
   kept apart so re-linking could rewrite it without touching evidence, but nothing ever rewrote
