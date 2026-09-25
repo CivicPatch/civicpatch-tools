@@ -1,7 +1,7 @@
 """What a reviewer does with a card: approve it, reject it, save corrections, report an issue.
 
 The reads are `review_cards.py`. Every handler here is thin — it turns a service exception into
-a status code and nothing else; `services/roster_edits.py` owns what the actions mean.
+a status code and nothing else; `services/publish.py` owns what the actions mean.
 """
 
 import logging
@@ -14,7 +14,6 @@ import database.review_session_entries as review_session_entries_db
 import database.users
 import services.bulk_review as bulk_review_service
 import services.review_issue_report as review_issue_report_service
-import services.roster_edits as roster_edits
 from database.publications import SupersededRoster
 from core.people_edits import PeopleValidationError, PersonPatch
 from fastapi import (
@@ -32,7 +31,9 @@ from schemas.common import (
     UserRole,
 )
 from services.publish import (
+    MissingRoster,
     dismiss_people,
+    publish_review,
 )
 
 logger = logging.getLogger(__name__)
@@ -191,12 +192,12 @@ def get_router(api_key_header):
             # retries on its own — git is the projection, not the record.
             # Any kind: an import reaches a card only through its batch page's Edit link.
             # `None`: the reviewer's edits are already claims, so the roster to publish is
-            # the one the facts derive, which `publish` reads for itself.
-            await roster_edits.publish(
+            # the one the facts derive, which `publish_review` reads for itself.
+            await publish_review(
                 request.changeset_id, request.jurisdiction_ocdid, None, user.user_id
             )
         except (
-            roster_edits.MissingRoster,
+            MissingRoster,
             PeopleValidationError,
             SupersededRoster,
         ) as exc:

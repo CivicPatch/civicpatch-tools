@@ -84,7 +84,7 @@ function renderListDiff(f) {
 
 // Person edits get a field-level diff under the summary line; everything else
 // relies on the server-rendered `summary` string alone. A publish_review row carries one too
-// when it's a hand edit's own publish (see roster_edits.edit_published) rather than a plain
+// when it's a hand edit's own publish (see roster_edits.edit_published_roster) rather than a plain
 // scrape-review approval, which never has a payload.
 const FIELD_DIFF_TYPES = new Set(["edit_person", "publish_review"]);
 

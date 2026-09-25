@@ -1,6 +1,7 @@
+import re
 from typing import Any, List
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from schemas.activity import RosterChange
 
 
@@ -8,16 +9,30 @@ class JurisdictionsByOcdidsRequest(BaseModel):
     ocdids: List[str]
 
 
+# Sources give partial dates, so a term date is text: `SubmittedPersonRecord`'s three shapes.
+_PARTIAL_DATE = re.compile(r"^\d{4}(-\d{2}(-\d{2})?)?$")
+
+
 class OfficeEdit(BaseModel):
-    """A post this person should hold, and what to call their seat in it.
+    """A post this person should hold, what to call their seat in it, and their term.
 
     `membership_label` is what this person's seat is called. A post's own name is
-    `post_label`, a maintainer's act on the posts route, and is never edited here. Absent
-    means "leave it as it is"; null clears it back to the derived guess.
+    `post_label`, a maintainer's act on the posts route, and is never edited here.
+    `start_date` / `end_date` are the term, per membership: a person in two bodies has two.
+    An omitted field is left alone; null clears it back to what the page says.
     """
 
     id: str
     membership_label: str | None = None
+    start_date: str | None = None
+    end_date: str | None = None
+
+    @field_validator("start_date", "end_date")
+    @classmethod
+    def _a_partial_date(cls, value: str | None) -> str | None:
+        if value is not None and not _PARTIAL_DATE.match(value):
+            raise ValueError("a term date is YYYY, YYYY-MM or YYYY-MM-DD")
+        return value
 
 
 class PersonEdit(BaseModel):

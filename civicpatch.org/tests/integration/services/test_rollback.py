@@ -22,7 +22,7 @@ from schemas.common import Identity, UserRole
 from schemas.jurisdictions import PersonEdit
 from shared.utils.statuses import ChangesetKind
 from services import rollback
-from services.jurisdiction_edits import edit_published_roster
+from services.roster_edits import edit_published_roster
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:rollbackville/government"

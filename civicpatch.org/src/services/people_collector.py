@@ -15,7 +15,7 @@ from schemas.pipeline_runs import (
     HandleSubmitPipelineRunArtifactsRequest,
     SubmitPipelineRunArtifactsResponse,
 )
-from services import roster_edits, roster_ingest
+from services import publish, roster_ingest
 from services import pipeline_runs as pipeline_run_service
 from services.jurisdiction_url import record_resolved_url, resolved_url
 from services.review_summary import review_summary_for_changeset
@@ -131,7 +131,7 @@ async def _publish_if_nothing_to_review(
     summary = await review_summary_for_changeset(changeset_id)
     if summary.issues:
         return
-    await roster_edits.publish(
+    await publish.publish_review(
         changeset_id, jurisdiction_ocdid, None, resolved_by_user_id=None
     )
     logger.info(f"[{changeset_id}] Published: nothing for a reviewer to look at")

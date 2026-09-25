@@ -56,10 +56,10 @@ export function buildPeoplePatch(currentPeople, changesById, removedIds, survivo
     .map(p => survivorIds.has(p.id) ? survivorPatchItem(p) : toPatchItem(p, changesById.get(p.id)));
 }
 
-// An existing person's office pick travels as `offices` (roster-edit-payload.ts), not as a
-// person field. A brand-new person still needs `post_id` in their patch: `officeEditsIn` only
+// An existing person's office pick and term travel as `offices` (roster-edit-payload.ts), not as
+// person fields. A brand-new person still needs `post_id` in their patch: `officeEditsIn` only
 // answers for somebody who already holds something.
-const OFFICE_ONLY_FIELDS = ["post_id", "membership_label"];
+const OFFICE_ONLY_FIELDS = ["post_id", "membership_label", "start_date", "end_date"];
 
 function toPatchItem(person, changes) {
   const { _selected, _isNew, ...entry } = person;

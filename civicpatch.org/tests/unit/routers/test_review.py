@@ -138,14 +138,14 @@ def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
     recorded one would resolve to [] and retire every person in the jurisdiction."""
     with (
         patch(
-            "services.roster_edits.publish_roster", new_callable=AsyncMock
+            "services.publish.publish_roster", new_callable=AsyncMock
         ) as mock_publish,
         patch(
             "database.review_session_entries.resolve_entries_for_changeset",
             new_callable=AsyncMock,
         ),
         patch(
-            "services.roster_edits.proposed_roster",
+            "services.publish.proposed_roster",
             new_callable=AsyncMock,
             return_value=[],
         ),
@@ -169,10 +169,10 @@ def test_publish_returns_200_and_queues_no_merge(client):
             new_callable=AsyncMock,
         ) as mock_resolve,
         patch(
-            "services.roster_edits.publish_roster", new_callable=AsyncMock
+            "services.publish.publish_roster", new_callable=AsyncMock
         ) as mock_publish,
         patch(
-            "services.roster_edits.proposed_roster",
+            "services.publish.proposed_roster",
             new_callable=AsyncMock,
             return_value=[{**BASE_PERSON}],
         ),
@@ -394,9 +394,9 @@ def test_publish_allows_default_role():
             "database.review_session_entries.resolve_entries_for_changeset",
             new_callable=AsyncMock,
         ),
-        patch("services.roster_edits.publish_roster", new_callable=AsyncMock),
+        patch("services.publish.publish_roster", new_callable=AsyncMock),
         patch(
-            "services.roster_edits.proposed_roster",
+            "services.publish.proposed_roster",
             new_callable=AsyncMock,
             return_value=[{**BASE_PERSON}],
         ),
@@ -547,7 +547,7 @@ def test_publishing_a_superseded_roster_is_a_409_not_a_500(client):
             new_callable=AsyncMock,
         ),
         patch(
-            "routers.api.review_actions.roster_edits.publish",
+            "routers.api.review_actions.publish_review",
             new_callable=AsyncMock,
             side_effect=SupersededRoster("A newer roster was already published"),
         ),
@@ -571,12 +571,12 @@ def test_a_sheet_import_publishes_from_its_review_card(client):
             new_callable=AsyncMock,
         ),
         patch(
-            "services.roster_edits.proposed_roster",
+            "services.publish.proposed_roster",
             new_callable=AsyncMock,
             return_value=[{"id": "p1", "name": "Ana Reyes"}],
         ),
         patch(
-            "services.roster_edits.publish_roster", new_callable=AsyncMock
+            "services.publish.publish_roster", new_callable=AsyncMock
         ) as mock_publish,
     ):
         response = client.post(

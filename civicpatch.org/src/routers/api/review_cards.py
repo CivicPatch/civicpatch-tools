@@ -15,7 +15,6 @@ import database.people
 import database.pipeline_runs
 import database.review_pool as review_pool_db
 import database.users
-import services.roster_edits as roster_edits
 import shared.utils.data_path_utils
 import shared.utils.id_utils
 import shared.utils.url_utils

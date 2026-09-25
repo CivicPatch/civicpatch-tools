@@ -16,7 +16,7 @@ from database.source_records import insert_source_records
 from database.users import SYSTEM_USER_ID
 from schemas.jurisdictions import PersonEdit
 from services import rollback
-from services.jurisdiction_edits import edit_in_review
+from services.roster_edits import edit_in_review
 from shared.utils.statuses import DismissalReason
 from tests.integration import factories
 

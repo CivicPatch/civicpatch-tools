@@ -20,7 +20,7 @@ from database import activity, divisions, memberships, organizations, posts, pro
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
 from schemas.jurisdictions import OfficeEdit, PersonEdit
-from services.jurisdiction_edits import edit_published_roster
+from services.roster_edits import edit_published_roster
 from lib.auth import get_optional_user
 from routers.api import memberships as memberships_router
 from schemas.common import Identity

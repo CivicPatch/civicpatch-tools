@@ -11,11 +11,14 @@ import { organizationIn, personIdIn } from "../people/person-cards.js";
 
 // A brand-new person's pick rides in their fields, because `officeEditsIn` only answers for
 // somebody who already holds something. These two are posts, not person fields.
-const OFFICE_FIELDS = ["post_id", "membership_label"];
+const OFFICE_FIELDS = ["post_id", "membership_label", "start_date", "end_date"];
 
 export interface OfficeEditPayload {
   id: string;
   membership_label: string | null;
+  // Sent only for an office whose term changed: an omitted date is left alone.
+  start_date?: string | null;
+  end_date?: string | null;
 }
 
 // The same, plus the body it is in — carried while the payload is assembled so an edit can
@@ -46,8 +49,19 @@ function pickInFields(fields: Record<string, unknown>): OfficeEditPayload | null
   const postId = fields.post_id;
   if (typeof postId !== "string" || !postId) return null;
   const label = fields.membership_label;
-  return { id: postId, membership_label: typeof label === "string" ? label : null };
+  const pick: OfficeEditPayload = {
+    id: postId,
+    membership_label: typeof label === "string" ? label : null,
+  };
+  for (const key of ["start_date", "end_date"] as const) {
+    const value = fields[key];
+    if (typeof value === "string" && value) pick[key] = value;
+  }
+  return pick;
 }
+
+// The body rides along while the payload is assembled and is dropped before it goes on the wire.
+const onWire = ({ organizationId: _, ...office }: HeldOffice): OfficeEditPayload => office;
 
 export interface RosterEditInputs {
   patch: PatchItem[];
@@ -83,6 +97,8 @@ export function rosterEditPayload({
     const office: HeldOffice = {
       id: change.postId,
       membership_label: change.membershipLabel,
+      ...(change.startDate !== undefined ? { start_date: change.startDate } : {}),
+      ...(change.endDate !== undefined ? { end_date: change.endDate } : {}),
       organizationId: change.organizationId,
     };
     const base =
@@ -99,7 +115,7 @@ export function rosterEditPayload({
   }
   for (const [personId, offices] of officesInProgress) {
     const person = byPerson.get(personId)!;
-    person.offices = offices.map(({ id, membership_label }) => ({ id, membership_label }));
+    person.offices = offices.map(onWire);
   }
 
   // A removal names a row: this person, in this body. So it takes that body's office out of
@@ -119,7 +135,7 @@ export function rosterEditPayload({
           ? held.organizationId !== organizationId
           : false,
       )
-      .map(({ id, membership_label }) => ({ id, membership_label }));
+      .map(onWire);
     byPerson.set(personId, person);
   }
 
