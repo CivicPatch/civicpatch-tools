@@ -52,7 +52,7 @@ _WIDTHS = {
     # Fixed-shape values. A partial date is at most `YYYY-MM-DD`, a timestamp ~25 characters.
     "membership_start_date": 110,
     "membership_end_date": 110,
-    "membership_first_seen_at": 175,
+    "membership_opened_at": 175,
     "membership_last_seen_at": 175,
     "membership_closed_at": 175,
     "person_updated_at": 175,

@@ -22,7 +22,7 @@ MEMBER = PostKey(
 
 
 def membership(post: PostKey, **fields) -> Membership:
-    return Membership(post=post, first_seen_at=_T, last_seen_at=_LATER, **fields)
+    return Membership(post=post, opened_at=_T, last_seen_at=_LATER, **fields)
 
 
 @pytest.mark.unit
@@ -66,7 +66,7 @@ def test_a_row_carries_every_column_the_fold_derived():
     assert row["label"] == "Mayor Pro Tem"
     assert row["start_date"] == "2024-01-01"
     assert row["end_date"] == "2028-01-01"
-    assert row["first_seen_at"] == _T
+    assert row["opened_at"] == _T
     assert row["last_seen_at"] == _LATER
     assert row["designations"] == ["Place 3"]
     assert row["meta_unmatched_text"] == ["Harbor Commissioner"]

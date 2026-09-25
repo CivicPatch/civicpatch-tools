@@ -209,7 +209,7 @@ async def _seed(count: int):
                 """
                 INSERT INTO memberships
                     (post_id, organization_id, person_id,
-                     first_seen_at, last_seen_at, closed_at, sources)
+                     opened_at, last_seen_at, closed_at, sources)
                 VALUES (%s, %s, %s, %s, %s, %s, %s::jsonb)
                 """,
                 # All but the last are closed, so most rows are history — the thing git omits.
@@ -454,7 +454,7 @@ async def _seed_two_stints() -> None:
                 """
                 INSERT INTO memberships
                     (post_id, organization_id, person_id,
-                     first_seen_at, last_seen_at, closed_at, sources)
+                     opened_at, last_seen_at, closed_at, sources)
                 VALUES (%s, %s, %s, %s, %s, %s, %s::jsonb)
                 """,
                 (post_id, organization_id, person_id, _SEEN, _SEEN, closed_at, factories.sources_of(["Mayor"])),

@@ -31,7 +31,7 @@ def _membership(**overrides) -> dict:
         "membership_label": "Select Board Chair",
         "membership_start_date": "2024",
         "membership_end_date": None,
-        "membership_first_seen_at": _SEEN,
+        "membership_opened_at": _SEEN,
         "membership_last_seen_at": _SEEN,
         "membership_closed_at": None,
         "membership_source_labels": [],
@@ -85,9 +85,9 @@ def test_a_timestamp_is_rendered_in_utc():
     """psycopg hands back whatever tz the column carries; the sheet shows one."""
     eastern = timezone(timedelta(hours=-5))
     row = to_row(
-        _membership(membership_first_seen_at=datetime(2026, 1, 2, 3, 4, 5, tzinfo=eastern))
+        _membership(membership_opened_at=datetime(2026, 1, 2, 3, 4, 5, tzinfo=eastern))
     )
-    assert _cell(row, "membership_first_seen_at") == "2026-01-02T08:04:05+00:00"
+    assert _cell(row, "membership_opened_at") == "2026-01-02T08:04:05+00:00"
 
 
 @pytest.mark.unit

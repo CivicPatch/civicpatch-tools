@@ -157,7 +157,7 @@ def test_a_membership_carries_what_its_records_said():
 
     [membership] = derive(ALICE, facts).memberships
 
-    assert membership.first_seen_at == _T + timedelta(minutes=1)
+    assert membership.opened_at == _T + timedelta(minutes=1)
     assert membership.last_seen_at == _T + timedelta(minutes=2)
     assert membership.start_date == "2024-01-01"
     assert membership.extra_roles == ("council-member",)
@@ -246,7 +246,7 @@ def test_a_move_within_an_organization_keeps_only_the_new_post():
     person = derive(ALICE, facts)
 
     assert [m.post.post_id for m in person.memberships] == [COUNCIL_MEMBER]
-    assert person.memberships[0].first_seen_at == _T + timedelta(minutes=2)
+    assert person.memberships[0].opened_at == _T + timedelta(minutes=2)
     assert person.edited is True
 
 
@@ -262,7 +262,7 @@ def test_a_read_after_the_move_wins_it_back():
     [membership] = derive(ALICE, facts).memberships
 
     assert membership.post.post_id == MAYOR
-    assert membership.first_seen_at == _T + timedelta(minutes=1)
+    assert membership.opened_at == _T + timedelta(minutes=1)
 
 
 @pytest.mark.unit

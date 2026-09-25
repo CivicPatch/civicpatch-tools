@@ -390,7 +390,7 @@ async def list_for_jurisdictions(cur, jurisdiction_ocdids: list[str]) -> dict[st
 
     Undated on purpose. A post is not a temporal fact — one minted last week still belongs in
     a June answer — and who holds it at a given moment is the memberships read, which windows
-    on `first_seen_at` and `closed_at`. Vouching is not dated either: winding the clock back
+    on `opened_at` and `closed_at`. Vouching is not dated either: winding the clock back
     does not un-vouch a post.
     """
     await cur.execute(

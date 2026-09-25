@@ -89,7 +89,7 @@ async def _seed(count: int, closed: int = 0):
             )
             await cur.execute(
                 "INSERT INTO memberships "
-                "(post_id, organization_id, person_id, first_seen_at, last_seen_at, closed_at) "
+                "(post_id, organization_id, person_id, opened_at, last_seen_at, closed_at) "
                 "VALUES (%s, %s, %s, %s, %s, %s)",
                 (
                     post_id,

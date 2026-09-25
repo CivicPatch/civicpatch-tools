@@ -48,7 +48,7 @@ def _latest(memberships: Sequence[Membership]) -> Membership | None:
     """The tenure the person-level dates and division come from: open first, then most recent.
     Every membership here is open, so it is the most recently first-seen seat."""
     return (
-        max(memberships, key=lambda membership: membership.first_seen_at)
+        max(memberships, key=lambda membership: membership.opened_at)
         if memberships
         else None
     )
@@ -89,7 +89,7 @@ def _membership_row(
         "meta_unmatched_text": list(membership.unmatched_text),
         "start_date": membership.start_date,
         "end_date": membership.end_date,
-        "first_seen_at": membership.first_seen_at,
+        "opened_at": membership.opened_at,
         "last_seen_at": membership.last_seen_at,
         "post_label": _post_label(membership.post, role_label, claimed),
     }

@@ -62,7 +62,7 @@ def _membership(
         post=PostKey(
             organization_id=organization_id, role_id=role_id, division_ocdid=division
         ),
-        first_seen_at=_T,
+        opened_at=_T,
         last_seen_at=_T,
     )
 

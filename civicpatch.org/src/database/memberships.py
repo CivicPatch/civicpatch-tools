@@ -41,7 +41,7 @@ async def list_for_jurisdiction(
                -- range is half-open and a reader can draw it without inferring the end from a
                -- sighting. This is the pair `as_of` filters on below, so a row explains why
                -- it was included.
-               m.first_seen_at, m.closed_at, m.last_seen_at,
+               m.opened_at, m.closed_at, m.last_seen_at,
                pe.name AS person_name,
                membership_source_labels(m.sources) AS source_labels,
                m.designations, m.meta_unmatched_text,
@@ -54,7 +54,7 @@ async def list_for_jurisdiction(
         JOIN organizations o ON o.id = p.organization_id
         JOIN roles r ON r.id = p.role_id
         WHERE p.jurisdiction_ocdid = %(jurisdiction_ocdid)s
-          AND m.first_seen_at < COALESCE(%(as_of)s::date + 1, now())
+          AND m.opened_at < COALESCE(%(as_of)s::date + 1, now())
           AND (m.closed_at IS NULL OR m.closed_at >= COALESCE(%(as_of)s::date + 1, now()))
         ORDER BY pe.name, p.role_id
         """,
@@ -133,7 +133,7 @@ _STATE_ROWS = """
                    m.label          AS membership_label,
                    m.start_date     AS membership_start_date,
                    m.end_date       AS membership_end_date,
-                   m.first_seen_at  AS membership_first_seen_at,
+                   m.opened_at  AS membership_opened_at,
                    m.last_seen_at   AS membership_last_seen_at,
                    m.closed_at      AS membership_closed_at,
                    membership_source_labels(m.sources) AS membership_source_labels
@@ -142,7 +142,7 @@ _STATE_ROWS = """
             JOIN people pe ON pe.id = m.person_id
             JOIN roles r ON r.id = p.role_id
             WHERE p.jurisdiction_ocdid LIKE %(prefix)s
-            ORDER BY p.jurisdiction_ocdid, pe.name, pe.id, m.first_seen_at
+            ORDER BY p.jurisdiction_ocdid, pe.name, pe.id, m.opened_at
 """
 
 

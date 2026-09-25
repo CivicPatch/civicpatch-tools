@@ -119,7 +119,7 @@ async def _membership_rows() -> list[tuple]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT m.id::text, m.person_id::text, m.post_id::text, m.first_seen_at, m.closed_at "
+            "SELECT m.id::text, m.person_id::text, m.post_id::text, m.opened_at, m.closed_at "
             "FROM memberships m JOIN posts p ON p.id = m.post_id "
             "WHERE p.jurisdiction_ocdid = %s ORDER BY m.id",
             (_OCDID,),

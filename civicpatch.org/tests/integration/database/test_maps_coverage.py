@@ -94,7 +94,7 @@ async def _insert(ocdid, *, collected_at, people, level="local"):
                     RETURNING id, organization_id
                 )
                 INSERT INTO memberships
-                    (post_id, organization_id, person_id, first_seen_at, last_seen_at)
+                    (post_id, organization_id, person_id, opened_at, last_seen_at)
                 SELECT s.id, s.organization_id, p.id, now(), now() FROM s, p
                 """,
                 {"ocdid": ocdid, "division": ocdid.replace("ocd-jurisdiction", "ocd-division")},

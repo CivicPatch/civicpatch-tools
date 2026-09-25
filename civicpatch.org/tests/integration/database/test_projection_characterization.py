@@ -191,7 +191,7 @@ async def _projection(ids: dict) -> dict:
         await cur.execute(
             """
             SELECT pe.id::text, p.organization_id::text, p.role_id, p.division_ocdid,
-                   m.label, m.first_seen_at, m.last_seen_at, m.closed_at,
+                   m.label, m.opened_at, m.last_seen_at, m.closed_at,
                    COALESCE((
                        SELECT array_agg(mr.role_id ORDER BY mr.role_id)
                        FROM membership_roles mr WHERE mr.membership_id = m.id
@@ -200,7 +200,7 @@ async def _projection(ids: dict) -> dict:
             JOIN posts p ON p.id = m.post_id
             JOIN people pe ON pe.id = m.person_id
             WHERE p.jurisdiction_ocdid = %s
-            ORDER BY pe.name, p.role_id, m.first_seen_at
+            ORDER BY pe.name, p.role_id, m.opened_at
             """,
             (_OCDID,),
         )
@@ -257,7 +257,7 @@ async def _projection(ids: dict) -> dict:
                 "role_id": row[2],
                 "division_ocdid": row[3],
                 "label": row[4],
-                "first_seen_at": row[5],
+                "opened_at": row[5],
                 "last_seen_at": row[6],
                 "closed_at": row[7],
                 "extra_roles": list(row[8]),
@@ -339,7 +339,7 @@ async def test_publishing_two_bodies_derives_this_projection():
                 "role_id": "council-member",
                 "division_ocdid": _WARD_2,
                 "label": None,
-                "first_seen_at": _T0,
+                "opened_at": _T0,
                 "last_seen_at": _T0,
                 "closed_at": None,
                 "extra_roles": [],
@@ -350,7 +350,7 @@ async def test_publishing_two_bodies_derives_this_projection():
                 "role_id": "mayor",
                 "division_ocdid": _BASE,
                 "label": None,
-                "first_seen_at": _T0,
+                "opened_at": _T0,
                 "last_seen_at": _T0,
                 "closed_at": None,
                 "extra_roles": [],
@@ -425,7 +425,7 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
                 "role_id": "council-member",
                 "division_ocdid": _WARD_2,
                 "label": None,
-                "first_seen_at": _T0,
+                "opened_at": _T0,
                 "last_seen_at": _T1,
                 "closed_at": None,
                 "extra_roles": [],
@@ -436,7 +436,7 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
                 "role_id": "mayor",
                 "division_ocdid": _BASE,
                 "label": None,
-                "first_seen_at": _T0,
+                "opened_at": _T0,
                 "last_seen_at": _T0,
                 "closed_at": None,
                 "extra_roles": [],

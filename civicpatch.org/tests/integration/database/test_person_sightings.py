@@ -54,7 +54,7 @@ async def _membership(cur, person_id: str, organization_name: str, role_id: str,
     await cur.execute(
         """
         INSERT INTO memberships
-            (post_id, organization_id, person_id, sources, first_seen_at, last_seen_at, closed_at)
+            (post_id, organization_id, person_id, sources, opened_at, last_seen_at, closed_at)
         VALUES (%s, %s, %s, %s::jsonb, now(), now(), CASE WHEN %s THEN now() END)
         """,
         (post_id, organization_id, person_id, factories.sources_of(labels), closed),
