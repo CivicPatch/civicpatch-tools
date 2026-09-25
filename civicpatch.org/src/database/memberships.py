@@ -32,10 +32,8 @@ async def list_for_jurisdiction(
         """
         SELECT m.id::text, m.person_id::text, m.post_id::text, m.label,
                m.start_date, m.end_date,
-               -- The interval, both ends. `closed_at IS NULL` is an open membership, so the
-               -- range is half-open and a reader can draw it without inferring the end from a
-               -- sighting. This is the pair `as_of` filters on below, so a row explains why
-               -- it was included.
+               -- The period, both ends; `closed_at IS NULL` is open. The pair `as_of` filters
+               -- on below, so a row explains why it was included.
                m.opened_at, m.closed_at,
                pe.name AS person_name,
                membership_source_labels(m.sources) AS source_labels,
@@ -69,7 +67,7 @@ async def list_for_jurisdiction(
 async def list_by_person(
     jurisdiction_ocdid: str, as_of: date | None = None
 ) -> list[dict]:
-    """The roster by person rather than by post. `as_of` is None for now."""
+    """The roster by person rather than by post; `as_of` picks the period covering that day."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         return await list_for_jurisdiction(cur, jurisdiction_ocdid, as_of)

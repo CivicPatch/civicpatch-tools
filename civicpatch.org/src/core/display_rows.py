@@ -89,7 +89,6 @@ def _membership_row(
         "meta_unmatched_text": list(membership.unmatched_text),
         "start_date": membership.start_date,
         "end_date": membership.end_date,
-        "opened_at": membership.opened_at,
         "post_label": _post_label(membership.post, role_label, claimed),
     }
 

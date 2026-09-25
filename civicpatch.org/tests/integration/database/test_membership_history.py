@@ -4,11 +4,12 @@ Isolation: sentinel state 'zz', cleaned before and after each test.
 """
 
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 
 import pytest
 import pytest_asyncio
 
+from database import memberships as memberships_db
 from database import projection as projection_db
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
@@ -95,6 +96,25 @@ async def test_jane_mayor_then_member_then_mayor_is_three_rows():
         ("council-member", _T1, _T2),
         ("mayor", _T2, None),
     ]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+@pytest.mark.parametrize(
+    "day, role_id",
+    [(date(2026, 3, 15), "mayor"), (date(2026, 4, 10), "council-member"), (date(2026, 5, 10), "mayor")],
+    ids=["first-mayor-period", "member-period", "second-mayor-period"],
+)
+async def test_as_of_a_date_returns_the_period_that_covers_it(day, role_id):
+    council = await _council()
+    jane = str(uuid.uuid4())
+    await _scrape(_T0, jane, "Mayor", council)
+    await _scrape(_T1, jane, "Council Member", council)
+    await _scrape(_T2, jane, "Mayor", council)
+
+    rows = await memberships_db.list_by_person(_OCDID, day)
+
+    assert [(row["person_id"], row["role_id"]) for row in rows] == [(jane, role_id)]
 
 
 @pytest.mark.asyncio
