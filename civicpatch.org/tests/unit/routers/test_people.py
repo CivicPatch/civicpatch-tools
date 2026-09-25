@@ -139,7 +139,7 @@ def test_bulk_requires_a_state(client):
 
 
 @pytest.mark.unit
-def test_assertions_are_keyed_by_person_for_the_roster(client):
+def test_claims_are_keyed_by_person_for_the_roster(client):
     with (
         patch(
             "database.people.get_roster",
@@ -147,20 +147,20 @@ def test_assertions_are_keyed_by_person_for_the_roster(client):
             return_value=[{"id": "p-1", "name": "Jane Doe"}],
         ),
         patch(
-            "routers.api.people.assertions_for_people",
+            "routers.api.people.claims_for_people",
             new_callable=AsyncMock,
             return_value={"p-1": [{"field_path": "phones", "kind": "accept"}]},
-        ) as mock_assertions,
+        ) as mock_claims,
     ):
-        response = client.get("/people/assertions", params={"jurisdiction_ocdid": TEST_OCDID})
+        response = client.get("/people/claims", params={"jurisdiction_ocdid": TEST_OCDID})
 
     assert response.status_code == 200
     assert response.json()["data"]["p-1"][0]["field_path"] == "phones"
-    mock_assertions.assert_awaited_once_with(["p-1"])
+    mock_claims.assert_awaited_once_with(["p-1"])
 
 
 @pytest.mark.unit
-def test_assertions_are_not_public_though_the_roster_beside_them_is(client):
+def test_claims_are_not_public_though_the_roster_beside_them_is(client):
     """The reason this is its own route. `GET /people` is public — "the public page's own
     data" — but an assertion carries `created_by_name`, so folding it in would tell an
     anonymous visitor who edited which field of which official."""
@@ -168,7 +168,7 @@ def test_assertions_are_not_public_though_the_roster_beside_them_is(client):
 
     with patch("database.people.get_roster", new_callable=AsyncMock, return_value=[]):
         assert client.get(
-            "/people/assertions", params={"jurisdiction_ocdid": TEST_OCDID}
+            "/people/claims", params={"jurisdiction_ocdid": TEST_OCDID}
         ).status_code in (401, 403)
         # ...while the roster itself still answers.
         assert client.get(

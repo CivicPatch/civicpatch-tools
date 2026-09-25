@@ -24,7 +24,7 @@ from services.jurisdiction_edits import UnknownPost, edit_published_roster
 from database.changeset_predicates import DISMISSED_SUPERSEDED
 from database.dismissals import supersede_stacked_changesets
 from database.source_records import insert_source_records
-from schemas.assertions import EntityType
+from schemas.claims import EntityType
 from schemas.common import Identity, UserRole
 from tests.integration import factories
 
@@ -48,7 +48,7 @@ async def _wipe():
         # so "the claims about these people" catches neither: take everything this maintainer
         # said, whatever it was about.
         await cur.execute(
-            "DELETE FROM assertions WHERE created_by IN "
+            "DELETE FROM claims WHERE created_by IN "
             "(SELECT id FROM users WHERE email = %s) "
             "   OR entity_id IN (SELECT id FROM people WHERE jurisdiction_ocdid = %s)",
             (_EMAIL, _OCDID),
@@ -180,10 +180,10 @@ async def test_an_edit_is_recorded_as_an_assertion_so_a_scrape_cannot_revert_it(
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        # Every row, because `phones` is a list field: assertions on those key on the value,
+        # Every row, because `phones` is a list field: claims on those key on the value,
         # so an edit leaves one per number rather than one per field.
         await cur.execute(
-            "SELECT value::text FROM assertions "
+            "SELECT value::text FROM claims "
             "WHERE entity_type = %s AND entity_id::text = %s AND field_path = 'phones'",
             (EntityType.PERSON.value, person_id),
         )
@@ -218,7 +218,7 @@ async def test_the_edit_mints_a_changeset_born_published():
     Born published, and it has to be: it writes `source_records` for anyone added, so a pending
     one would satisfy AVAILABLE_FOR_REVIEW and flash into the queue between the two writes.
 
-    What it must *not* do is advance `last_seen_at` — that is `publish_changeset`'s rule, asserted
+    What it must *not* do is advance `last_seen_at` — that is `publish_changeset`'s rule, claimed
     separately below."""
     person_id, user = await _seed()
 
@@ -613,7 +613,7 @@ async def _open_posts(person_id: str) -> list[str]:
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_an_edit_is_reported_from_what_the_rebuild_changed():
-    """9d. Replaces the two tests dropped when `edit_published` went, which asserted the same
+    """9d. Replaces the two tests dropped when `edit_published` went, which claimed the same
     rows from a diff of the *payload*. The feed now reads the roster before against the roster
     after, so it reports what actually changed rather than what was asked for."""
     person_id, user = await _seed()

@@ -3,28 +3,9 @@ from typing import Any
 
 from pydantic import BaseModel, field_validator, model_validator
 
-
-class EntityType(StrEnum):
-    POST = "post"
-    MEMBERSHIP = "membership"
-    PERSON = "person"
-    JURISDICTION = "jurisdiction"
-    ORGANIZATION = "organization"
-    # What a withdraw names: a fact, by its row id.
-    SOURCE_RECORD = "source_record"
-    SOURCE_PAGE = "source_page"
-    CLAIM = "claim"
-
-
-class AssertionKind(StrEnum):
-    # "This value stands." One per scalar field; one per element on a list field.
-    ACCEPT = "accept"
-    # "Never this value." Suppresses that value only, so the scraper keeps looking and a
-    # genuinely new answer still reaches review.
-    REJECT = "reject"
-    # "This fact no longer counts." Names a whole row (entity_type claim, source_record or
-    # source_page), carries no field and no value, and can itself be withdrawn: that is undo.
-    WITHDRAW = "withdraw"
+# Re-exported: the fold reads the same two enums from `shared`, and 15 call sites import
+# them from here.
+from shared.utils.statuses import ClaimKind, EntityType
 
 
 class Source(BaseModel):
@@ -54,11 +35,11 @@ class DefaultNote(StrEnum):
     WITHDRAWN = "withdrawn"
 
 
-class Assertion(BaseModel):
+class Claim(BaseModel):
     entity_type: EntityType
     entity_id: str
     field_path: str
-    kind: AssertionKind
+    kind: ClaimKind
     value: Any
     # Where the claim came from — a url or a note. Required: a claim nobody can trace is the
     # thing this field exists to prevent (§5).

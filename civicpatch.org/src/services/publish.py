@@ -176,12 +176,12 @@ async def _post_labels(
     role_labels = {role_id: label for label, role_id in taxonomy.role_ids.items()}
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        asserted = await posts_db.asserted_labels_by_key(cur, jurisdiction_ocdid)
+        claimed = await posts_db.claimed_labels_by_key(cur, jurisdiction_ocdid)
     return {
         post_id: post_label(
             role_labels.get(post.role_id, post.role_id),
             post.division_ocdid,
-            asserted.get((post.organization_id, post.role_id, post.division_ocdid)),
+            claimed.get((post.organization_id, post.role_id, post.division_ocdid)),
         )
         for post_id, post in posts.items()
     }

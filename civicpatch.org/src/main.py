@@ -16,7 +16,7 @@ import routers.api.data as api_data_router
 import routers.api.elections as api_elections_router
 import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.leaderboard as api_leaderboard_router
-import routers.api.assertions as api_assertions_router
+import routers.api.claims as api_claims_router
 import routers.api.memberships as api_memberships_router
 import routers.api.people as api_people_router
 import routers.api.changeset_summaries as api_changeset_summaries_router
@@ -192,9 +192,9 @@ app.include_router(
 # Seating a person. Always a transition — landing on a different post closes the old
 # membership and opens a new one, so membership history survives.
 app.include_router(
-    api_assertions_router.get_router(),
-    prefix="/api/v1/assertions",
-    tags=["assertions"],
+    api_claims_router.get_router(),
+    prefix="/api/v1/claims",
+    tags=["claims"],
     include_in_schema=False,
 )
 

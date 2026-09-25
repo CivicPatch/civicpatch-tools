@@ -2,22 +2,22 @@ from dataclasses import dataclass
 from enum import StrEnum
 
 
-class AssertionState(StrEnum):
+class ClaimState(StrEnum):
     ACTIVE = "active"
     SUPERSEDED = "superseded"
     WITHDRAWN = "withdrawn"
 
 
-class AssertionEvent(StrEnum):
+class ClaimEvent(StrEnum):
     WITHDRAW = "withdraw"
     RESTORE = "restore"
 
 
 @dataclass(frozen=True)
 class Transition:
-    frm: AssertionState
-    event: AssertionEvent
-    to: AssertionState | None
+    frm: ClaimState
+    event: ClaimEvent
+    to: ClaimState | None
 
 
 # Every legal edge. A pair absent from both this tuple and a test's explicit deny-list is an
@@ -26,17 +26,17 @@ TRANSITIONS: tuple[Transition, ...] = (
     # A claim already superseded by a later one is not the current answer, so withdrawing it
     # too would claim a moderator retracted something a later claim had already replaced.
     Transition(
-        AssertionState.ACTIVE, AssertionEvent.WITHDRAW, AssertionState.WITHDRAWN
+        ClaimState.ACTIVE, ClaimEvent.WITHDRAW, ClaimState.WITHDRAWN
     ),
-    Transition(AssertionState.WITHDRAWN, AssertionEvent.RESTORE, None),
+    Transition(ClaimState.WITHDRAWN, ClaimEvent.RESTORE, None),
 )
 
 
-def state_of(withdrawn: bool, superseded: bool) -> AssertionState:
+def state_of(withdrawn: bool, superseded: bool) -> ClaimState:
     if withdrawn:
-        return AssertionState.WITHDRAWN
-    return AssertionState.SUPERSEDED if superseded else AssertionState.ACTIVE
+        return ClaimState.WITHDRAWN
+    return ClaimState.SUPERSEDED if superseded else ClaimState.ACTIVE
 
 
-def states_accepting(event: AssertionEvent) -> frozenset[AssertionState]:
+def states_accepting(event: ClaimEvent) -> frozenset[ClaimState]:
     return frozenset(t.frm for t in TRANSITIONS if t.event is event)

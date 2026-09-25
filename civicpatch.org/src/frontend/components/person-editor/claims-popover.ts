@@ -6,7 +6,7 @@ import { type FieldAssertionSummary, type FieldLock } from "./field-provenance.j
 const VISIBLE_MS = 4000;
 const FADE_MS = 400;
 
-interface AssertionsPopoverProps {
+interface ClaimsPopoverProps {
   lock: FieldLock;
   summary: FieldAssertionSummary | null;
 }
@@ -14,7 +14,7 @@ interface AssertionsPopoverProps {
 function renderChip(kind: "accept" | "reject", value: string | null) {
   if (!value) return nothing;
   return html`<div>
-    <span class="person-editor__assertions-chip person-editor__assertions-chip--${kind}">
+    <span class="person-editor__claims-chip person-editor__claims-chip--${kind}">
       <i class="fa-solid fa-${kind === "accept" ? "check" : "xmark"}" aria-hidden="true"></i>
       ${value}
     </span>
@@ -24,7 +24,7 @@ function renderChip(kind: "accept" | "reject", value: string | null) {
 // The lock is the trigger for the full accept/reject breakdown; the popover shows briefly
 // then fades on its own, unless something reopens it first. State (not a stashed timer id on
 // a DOM node) is what a haunted component actually has to work with.
-function AssertionsPopover({ lock, summary }: AssertionsPopoverProps) {
+function ClaimsPopover({ lock, summary }: ClaimsPopoverProps) {
   const [open, setOpen] = useState(false);
   const [fading, setFading] = useState(false);
 
@@ -57,10 +57,10 @@ function AssertionsPopover({ lock, summary }: AssertionsPopoverProps) {
     .join(". ");
 
   return html`
-    <div class="person-editor__assertions">
+    <div class="person-editor__claims">
       <button
         type="button"
-        class="person-editor__assertions-toggle"
+        class="person-editor__claims-toggle"
         title=${title}
         @click=${toggle}
       >
@@ -72,13 +72,13 @@ function AssertionsPopover({ lock, summary }: AssertionsPopoverProps) {
       ${open
         ? html`
             <div
-              class="person-editor__assertions-list ${fading
-                ? "person-editor__assertions-list--fading"
+              class="person-editor__claims-list ${fading
+                ? "person-editor__claims-list--fading"
                 : ""}"
             >
               ${renderChip("accept", summary?.accept ?? null)}
               ${renderChip("reject", summary?.reject ?? null)}
-              <div class="person-editor__assertions-who">${lock.label}</div>
+              <div class="person-editor__claims-who">${lock.label}</div>
             </div>
           `
         : nothing}
@@ -87,6 +87,6 @@ function AssertionsPopover({ lock, summary }: AssertionsPopoverProps) {
 }
 
 customElements.define(
-  "civ-assertions-popover",
-  component(AssertionsPopover as unknown as () => unknown, { useShadowDOM: false }),
+  "civ-claims-popover",
+  component(ClaimsPopover as unknown as () => unknown, { useShadowDOM: false }),
 );

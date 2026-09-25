@@ -43,7 +43,7 @@ async def _wipe():
         # Claims and changesets before the organizations their records name (205, ON DELETE
         # RESTRICT); the records go with the changeset.
         await cur.execute(
-            "DELETE FROM assertions WHERE changeset_id IN "
+            "DELETE FROM claims WHERE changeset_id IN "
             "(SELECT id FROM changesets WHERE jurisdiction_ocdid = %s)",
             (_OCDID,),
         )
@@ -261,14 +261,14 @@ async def test_a_pick_made_mid_review_files_under_that_review():
 
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
-                "SELECT 1 FROM assertions WHERE changeset_id = %s AND field_path = 'posts'",
+                "SELECT 1 FROM claims WHERE changeset_id = %s AND field_path = 'posts'",
                 (review_changeset_id,),
             )
             assert await cur.fetchone() is not None
     finally:
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
-                "DELETE FROM assertions WHERE changeset_id = %s", (review_changeset_id,)
+                "DELETE FROM claims WHERE changeset_id = %s", (review_changeset_id,)
             )
             await cur.execute(
                 "DELETE FROM changesets WHERE id::text = %s", (review_changeset_id,)

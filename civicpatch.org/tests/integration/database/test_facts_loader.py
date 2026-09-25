@@ -34,12 +34,12 @@ async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "DELETE FROM assertions WHERE entity_type = 'membership' AND created_by = %s "
+            "DELETE FROM claims WHERE entity_type = 'membership' AND created_by = %s "
             "AND value::text LIKE %s",
             (SYSTEM_USER_ID, '%"zl-%'),
         )
         await cur.execute(
-            "DELETE FROM assertions WHERE kind = 'withdraw' AND created_by = %s",
+            "DELETE FROM claims WHERE kind = 'withdraw' AND created_by = %s",
             (SYSTEM_USER_ID,),
         )
         for ocdid in (_OCDID, _OTHER):
@@ -77,7 +77,7 @@ async def _label_claim(entity_id: str, label: str, changeset_id: str | None = No
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO assertions "
+            "INSERT INTO claims "
             "  (entity_type, entity_id, field_path, kind, value, sources, created_by, "
             "   created_at, changeset_id) "
             "VALUES ('membership', %s, 'label', 'accept', to_jsonb(%s::text), "
@@ -94,7 +94,7 @@ async def _withdraw(fact_id: str, changeset_id: str) -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO assertions "
+            "INSERT INTO claims "
             "  (id, entity_type, entity_id, field_path, kind, value, sources, created_by, "
             "   created_at, changeset_id) "
             "VALUES (%s, 'claim', %s, NULL, 'withdraw', 'null'::jsonb, "

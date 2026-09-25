@@ -295,7 +295,7 @@ erDiagram
         text            role_id             FK "PK; idx; ON UPDATE CASCADE — renaming a role follows into closed history"
     }
 
-    assertions {
+    claims {
         uuid            id                  PK
         text            entity_type         "CHECK post|membership|person|jurisdiction|organization|source_record|source_page|claim (last three 214: what a withdraw can name); no FK — heterogeneous subjects, the price of an event log"
         uuid            entity_id           "no FK; deletes are refused rather than cascaded. For entity_type membership, since 216: membership_id(person, post) = uuid5 over the person and the fold's post id (SQL function, twin of shared.utils.membership_ids); rows keyed by a memberships row id are the pre-216 originals, read by today's publish until the fold replaces it"
@@ -303,7 +303,7 @@ erDiagram
         text            kind                "CHECK accept|reject|withdraw (214). A withdraw's entity is the fact it cancels: entity_type claim|source_record|source_page, entity_id that row's id, value 'null'; idx: (changeset_id) WHERE kind = 'withdraw' (218)"
         jsonb_null      value               "corrections only; NULL = deliberately empty, which is why kind exists"
         jsonb           sources             "[{note, url}] — note may stand alone: 'phoned the clerk'. NOT NULL and non-empty since 220: a claim says where it came from, and an internal action records its own name"
-        uuid            created_by          FK "NOT NULL — an assertion nobody made is not an assertion. Permanent since 187: a re-assert inserts, it never overwrites this. Renamed from asserted_by in 191, same reasoning as created_at below"
+        uuid            created_by          FK "NOT NULL — a claim nobody made is not a claim. Permanent since 187: a re-statement inserts, it never overwrites this. Renamed from asserted_by in 191, same reasoning as created_at below"
         timestamptz     created_at          "idx: (entity_type, entity_id, field_path, created_at DESC), widened in 187 to serve `asserted_values`. APPEND-ONLY since 187 — history is only trustworthy if rows never change. Renamed from asserted_at in 191: the table is insert-only, so there is no separate created/asserted moment, and this matches every other table's naming"
         timestamptz_null withdrawn_at       "187. Set together with withdrawn_by (CHECK). NULL = still applies"
         uuid_null       withdrawn_by        FK "187. Who retracted this claim — distinct from created_by, the one who made it"
@@ -341,10 +341,10 @@ erDiagram
     people ||--o{ memberships : "person_id"
     roles ||--o{ membership_roles : "role_id"
     memberships ||--o{ membership_roles : "membership_id"
-    users ||--o{ assertions : "created_by"
-    users ||--o{ assertions : "withdrawn_by"
-    changesets ||--o{ assertions : "changeset_id"
-    changesets ||--o{ assertions : "withdrawn_by_changeset_id"
+    users ||--o{ claims : "created_by"
+    users ||--o{ claims : "withdrawn_by"
+    changesets ||--o{ claims : "changeset_id"
+    changesets ||--o{ claims : "withdrawn_by_changeset_id"
     changesets ||--o{ changesets : "parent_changeset_id"
     users ||--o{ changeset_batches : "started_by_user_id"
     changeset_batches ||--o{ changesets : "batch_id"
@@ -412,12 +412,12 @@ erDiagram
   source records behind them — so 221 deletes the residue and the endpoint went with it.
   Removal of a person from a post is `memberships.reject`, per post, and always was.
 
-- **`post_id` became a list-valued assertion field in migration 159.** A reviewer picks one post, so a scalar assertion looks right — but its uniqueness is per `(person, field_path)`, and a person holds one open membership per _organization_. With a second body in a jurisdiction, picking their school-board post would overwrite their council post on the same key, silently. A post names its own organization, so a list is self-scoping and one-per-organization stays enforced by `memberships_one_open_per_organization`. **The array of list fields is written in three places** — `core/people_edits.LIST_FIELDS`, these two partial indexes, and the `ON CONFLICT` predicates in `database/assertions.py` (now derived from the first). They must agree exactly: postgres matches a conflict predicate against an index's, and a mismatch fails with "no unique or exclusion constraint matching the ON CONFLICT specification".
+- **`post_id` became a list-valued claim field in migration 159.** A reviewer picks one post, so a scalar claim looks right — but its uniqueness is per `(person, field_path)`, and a person holds one open membership per _organization_. With a second body in a jurisdiction, picking their school-board post would overwrite their council post on the same key, silently. A post names its own organization, so a list is self-scoping and one-per-organization stays enforced by `memberships_one_open_per_organization`. **The array of list fields is written in three places** — `core/people_edits.LIST_FIELDS`, these two partial indexes, and the `ON CONFLICT` predicates in `database/claims.py` (now derived from the first). They must agree exactly: postgres matches a conflict predicate against an index's, and a mismatch fails with "no unique or exclusion constraint matching the ON CONFLICT specification".
 
 - **Actors: the system got a user in migration 160.** `change_logs.user_id`,
   `changesets.created_by_user_id` and `changesets.resolved_by_user_id` all used NULL to mean
   "no person did this" — so a supersede sweep or an auto-publish was indistinguishable from an
-  unattributed write, and every reader had to know the convention. `assertions.asserted_by` had
+  unattributed write, and every reader had to know the convention. `claims.claimed_by` had
   already refused nulls for the same reason. A fixed row
   (`00000000-0000-4000-8000-000000000001`, username **CivicPatch**) is now that actor;
   `database.users.SYSTEM_USER_ID` names it, and the write paths coalesce onto it.

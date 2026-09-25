@@ -58,7 +58,7 @@ async def test_handle_submit_pipeline_run_artifacts_updates_status_to_error_on_f
             None,
             "ocd-division/country:us/state:ca/place:oakland",
         )
-        # The status and the issue both go on the run. This asserted the *changeset* until
+        # The status and the issue both go on the run. This claimed the *changeset* until
         # migration 186: the issue was filed against whatever the run had minted, falling back
         # to the run only when it had minted nothing — which is how one table came to hold two
         # kinds of id, and why an issue from a run that died before ingest matched no changeset

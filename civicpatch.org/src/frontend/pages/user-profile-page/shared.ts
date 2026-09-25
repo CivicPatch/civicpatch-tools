@@ -10,16 +10,16 @@ export type AdminUser = {
   last_login_at: string | null;
 };
 
-// Mirrors `AssertionState` (core/assertion_lifecycle.py) — only "active" is a real rollback
+// Mirrors `ClaimState` (core/claim_lifecycle.py) — only "active" is a real rollback
 // candidate; "superseded"/"withdrawn" are history the row shows but can't be selected.
 export const ASSERTION_STATUS_ACTIVE = "active";
 
-// Mirrors the `kind` check constraint on `assertions` (database/assertions.py) — a "reject"
+// Mirrors the `kind` check constraint on `claims` (database/claims.py) — a "reject"
 // row pairs with an "accept" row on the same field rather than competing with it.
 export const ASSERTION_KIND_REJECT = "reject";
 
 export type RollbackCandidate = {
-  assertion_id: string;
+  claim_id: string;
   entity_id: string;
   entity_label: string;
   field_path: string;

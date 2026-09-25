@@ -5,12 +5,12 @@ from typing import NamedTuple
 
 from core.display_rows import PostLabels, display_rows
 from core.changeset_lifecycle import PARTIAL_KINDS
-from core.people_edits import source_values_overridden, with_asserted_values
+from core.people_edits import source_values_overridden, with_claimed_values
 from core.people_roster import partial_roster, roster_from_sightings
 from core.projection.diff import on_roster
 from core.projection.facts import Facts
 from core.projection.roster import Roster, overridden_by_person
-from database import assertions, source_records
+from database import claims, source_records
 from database import changesets as changesets_db
 from database import posts as posts_db
 from database import projection as projection_db
@@ -21,7 +21,7 @@ from database.source_records import (
     get_earliest_source_records_for_people,
     get_source_records_for_changeset,
 )
-from schemas.assertions import EntityType
+from schemas.claims import EntityType
 from shared.schemas import POST_FIELD, RoleConfig
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
@@ -38,10 +38,10 @@ async def _roster(
     person_ids = list({sighting["person_id"] for sighting in sightings})
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        published, roles, asserted = await asyncio.gather(
+        published, roles, claimed = await asyncio.gather(
             get_people_by_ids(person_ids),
             get_roles(),
-            assertions.asserted_values(cur, EntityType.PERSON, person_ids),
+            claims.claimed_values(cur, EntityType.PERSON, person_ids),
         )
     return roster_from_sightings(
         sightings,
@@ -49,15 +49,15 @@ async def _roster(
         build_taxonomy(RoleConfig(roles=roles)),
         jurisdiction_ocdid,
         logger,
-    ), asserted
+    ), claimed
 
 
 async def origin_roster_for(
     entity_ids: list[str], jurisdiction_ocdid: str
 ) -> list[dict]:
     """These people's fields as their earliest sighting recorded them — the pristine base a
-    rollback overlays currently-active assertions onto. Not the live roster: that already has
-    every assertion (withdrawn ones included) baked in, so there's nothing left to fall back to.
+    rollback overlays currently-active claims onto. Not the live roster: that already has
+    every claim (withdrawn ones included) baked in, so there's nothing left to fall back to.
     `published={}` deliberately — `canonical_name` would otherwise keep the live name over the
     sighting's, defeating the whole point."""
     sightings = await get_earliest_source_records_for_people(entity_ids)
@@ -83,7 +83,7 @@ async def _fold_for_card(
         roster, facts = await projection_db.derived_roster_and_facts(
             cur, jurisdiction_ocdid, including=including, taxonomy=taxonomy
         )
-        post_labels = await posts_db.asserted_labels_by_key(cur, jurisdiction_ocdid)
+        post_labels = await posts_db.claimed_labels_by_key(cur, jurisdiction_ocdid)
     rows = display_rows(on_roster(roster), jurisdiction_ocdid, taxonomy, post_labels)
     return rows, facts, taxonomy
 
@@ -148,7 +148,7 @@ async def card_fold(changeset_id: str, jurisdiction_ocdid: str) -> CardFold:
             as_of=as_of,
             taxonomy=taxonomy,
         )
-        post_labels = await posts_db.asserted_labels_by_key(cur, jurisdiction_ocdid)
+        post_labels = await posts_db.claimed_labels_by_key(cur, jurisdiction_ocdid)
     return CardFold(
         published=on_roster(published),
         proposed=on_roster(proposed),
@@ -184,23 +184,23 @@ async def proposed_roster(changeset_id: str, jurisdiction_ocdid: str) -> list[di
 async def proposed_roster_and_source_values(
     changeset_id: str, jurisdiction_ocdid: str
 ) -> tuple[list[dict], dict[str, dict]]:
-    """The roster a reviewer sees, and what the source said where an assertion changed it.
+    """The roster a reviewer sees, and what the source said where a claim changed it.
 
     Both from one pass: the pre-overlay roster is `_roster`'s own answer, so the second half
     costs nothing beyond the comparison. Asking for it separately would re-read every sighting.
     """
-    roster, asserted = await _roster(changeset_id, jurisdiction_ocdid)
+    roster, claimed = await _roster(changeset_id, jurisdiction_ocdid)
     overridden = {
         person["id"]: source_values
         for person in roster
         if (
             source_values := source_values_overridden(
-                person, asserted.get(person["id"], {})
+                person, claimed.get(person["id"], {})
             )
         )
     }
     people = [
-        with_asserted_values(person, asserted.get(person["id"], {}))
+        with_claimed_values(person, claimed.get(person["id"], {}))
         for person in roster
     ]
     if await changesets_db.get_changeset_kind(changeset_id) in PARTIAL_KINDS:

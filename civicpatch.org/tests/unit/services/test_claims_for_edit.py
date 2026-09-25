@@ -7,7 +7,7 @@ loading the roster, minting a changeset and publishing.
 import pytest
 
 from core.people_edits import POSTS_FIELD, PeopleValidationError
-from schemas.assertions import AssertionKind
+from schemas.claims import ClaimKind
 from schemas.jurisdictions import PersonEdit, OfficeEdit
 from services.jurisdiction_edits import claims_for_edit, membership_label_edits
 
@@ -54,7 +54,7 @@ def test_a_changed_field_accepts_the_new_value():
     edit = PersonEdit(id="p1", fields={"name": "Ann Lee-Park"})
 
     assert _pairs(claims_for_edit(_derived(), [edit], CHANGESET)) == [
-        ("name", AssertionKind.ACCEPT, "Ann Lee-Park")
+        ("name", ClaimKind.ACCEPT, "Ann Lee-Park")
     ]
 
 
@@ -64,7 +64,7 @@ def test_clearing_a_field_rejects_what_was_there():
     edit = PersonEdit(id="p1", fields={"name": ""})
 
     assert _pairs(claims_for_edit(_derived(), [edit], CHANGESET)) == [
-        ("name", AssertionKind.REJECT, "Ann Lee")
+        ("name", ClaimKind.REJECT, "Ann Lee")
     ]
 
 
@@ -82,7 +82,7 @@ def test_an_empty_posts_list_removes_them_from_the_roster():
     edit = PersonEdit(id="p1", offices=[])
 
     assert _pairs(claims_for_edit(_derived(), [edit], CHANGESET)) == [
-        (POSTS_FIELD, AssertionKind.REJECT, MAYOR)
+        (POSTS_FIELD, ClaimKind.REJECT, MAYOR)
     ]
 
 
@@ -91,8 +91,8 @@ def test_a_move_is_an_accept_and_a_reject():
     edit = PersonEdit(id="p1", offices=[OfficeEdit(id=CLERK)])
 
     assert _pairs(claims_for_edit(_derived(), [edit], CHANGESET)) == [
-        (POSTS_FIELD, AssertionKind.ACCEPT, CLERK),
-        (POSTS_FIELD, AssertionKind.REJECT, MAYOR),
+        (POSTS_FIELD, ClaimKind.ACCEPT, CLERK),
+        (POSTS_FIELD, ClaimKind.REJECT, MAYOR),
     ]
 
 
@@ -111,8 +111,8 @@ def test_somebody_the_roster_does_not_derive_is_an_addition():
     )
 
     assert _pairs(claims_for_edit(_derived(), [edit], CHANGESET)) == [
-        ("name", AssertionKind.ACCEPT, "Bo Nguyen"),
-        (POSTS_FIELD, AssertionKind.ACCEPT, CLERK),
+        ("name", ClaimKind.ACCEPT, "Bo Nguyen"),
+        (POSTS_FIELD, ClaimKind.ACCEPT, CLERK),
     ]
 
 
@@ -233,6 +233,6 @@ def test_a_person_added_by_hand_is_claims_not_evidence():
     claims = claims_for_edit(_derived(), [edit], CHANGESET)
 
     assert _pairs(claims) == [
-        ("name", AssertionKind.ACCEPT, "Bo Nguyen"),
-        (POSTS_FIELD, AssertionKind.ACCEPT, CLERK),
+        ("name", ClaimKind.ACCEPT, "Bo Nguyen"),
+        (POSTS_FIELD, ClaimKind.ACCEPT, CLERK),
     ]

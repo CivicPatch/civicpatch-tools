@@ -1,5 +1,5 @@
 // What a card's local Office pick means, computed by diffing against the office that person
-// holds in the body this card is about — never against an assertion, since none exists.
+// holds in the body this card is about — never against an claim, since none exists.
 // Shared by roster-editor.ts and review-session.ts, whose Publish/Save actions both need to
 // turn "what a reviewer picked" into the edit that makes it real.
 //

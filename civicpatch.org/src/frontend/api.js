@@ -466,9 +466,9 @@ export const patchJurisdictionData = async (jurisdictionOcdid, data) => {
   return res.json();
 };
 
-export const fetchPeopleAssertions = async (jurisdictionOcdid) => {
+export const fetchPeopleClaims = async (jurisdictionOcdid) => {
   const params = new URLSearchParams({ jurisdiction_ocdid: jurisdictionOcdid });
-  const res = await fetch(`/api/v1/people/assertions?${params}`, {
+  const res = await fetch(`/api/v1/people/claims?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -804,7 +804,7 @@ export const fetchRollbackCandidates = async (userId) => {
   return res.json();
 };
 
-export const rollbackUserAssertions = async (userId, assertionIds, reason) => {
+export const rollbackUserClaims = async (userId, claimIds, reason) => {
   const res = await fetch(`/api/admin/users/${userId}/rollback`, {
     credentials: "include",
     method: "POST",
@@ -813,7 +813,7 @@ export const rollbackUserAssertions = async (userId, assertionIds, reason) => {
       "X-CSRF-Token": getCsrfCookie(),
     },
     body: JSON.stringify({
-      assertion_ids: assertionIds,
+      claim_ids: claimIds,
       reason: reason || null,
     }),
   });

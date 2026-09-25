@@ -32,7 +32,7 @@ from database.roles import get_roles
 from shared.schemas import RoleConfig
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 from schemas.activity import Change
-from schemas.assertions import EntityType
+from schemas.claims import EntityType
 
 _PERSON_COLUMNS = (
     "name",

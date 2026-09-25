@@ -101,7 +101,7 @@ def test_a_page_that_stopped_listing_them_is_still_their_last_source():
 
 @pytest.mark.unit
 def test_a_claim_is_not_a_source():
-    """`NOT_ASSERTABLE` today: a human typing a value cites no page."""
+    """`NOT_CLAIMABLE` today: a human typing a value cites no page."""
     facts = Facts(claims=(claim("k1", "source_urls", "https://typed.example"),))
 
     assert source_urls(ALICE, facts) == ()

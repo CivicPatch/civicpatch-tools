@@ -25,7 +25,7 @@ import pytest
 from shared.utils.statuses import ActivityType, DismissalReason
 import pytest_asyncio
 
-from database import assertions, organizations
+from database import claims, organizations
 from database import people as people_db
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
@@ -34,7 +34,7 @@ from database.publications import (
     dismiss_changeset,
     publish_changeset,
 )
-from schemas.assertions import Assertion, AssertionKind, EntityType, Source
+from schemas.claims import Claim, ClaimKind, EntityType, Source
 
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_publish/government"
 _SENTINEL_DIVISION = "ocd-division/country:us/state:zz/place:zz_publish"
@@ -46,7 +46,7 @@ async def _cleanup():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "DELETE FROM assertions WHERE created_by IN "
+            "DELETE FROM claims WHERE created_by IN "
             "(SELECT id FROM users WHERE email = %s)",
             (_CURATOR,),
         )
@@ -379,7 +379,7 @@ async def test_publish_does_not_blank_an_existing_resolver(sentinel_request):
             # Defensive: nothing in a clean publish asserts on this user's behalf, but
             # `created_by` is NOT NULL REFERENCES users — clear first in case that ever
             # changes, since no production path deletes a user.
-            await cur.execute("DELETE FROM assertions WHERE created_by = %s", (user_id,))
+            await cur.execute("DELETE FROM claims WHERE created_by = %s", (user_id,))
             await cur.execute("DELETE FROM users WHERE id = %s", (user_id,))
             await conn.commit()
 
@@ -427,7 +427,7 @@ async def _seed_publisher() -> str:
     return user_id
 
 
-async def _assert_field(person_id: str, field: str, value, kind: AssertionKind) -> None:
+async def _assert_field(person_id: str, field: str, value, kind: ClaimKind) -> None:
     """One human assertion about one field, recorded the way an edit records it."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -439,9 +439,9 @@ async def _assert_field(person_id: str, field: str, value, kind: AssertionKind) 
             (_CURATOR, _CURATOR, _CURATOR.replace("@", "-")),
         )
         curator_id = (await cur.fetchone())[0]
-        await assertions.upsert(
+        await claims.upsert(
             cur,
-            Assertion(
+            Claim(
                 entity_type=EntityType.PERSON,
                 entity_id=person_id,
                 field_path=field,
@@ -461,7 +461,7 @@ async def test_publish_applies_what_a_human_accepted(sentinel_request):
     publish rather than at ingest — so the scrape stays what the source said, and the judgement
     is re-applied every time instead of being baked in once."""
     person = _person("Ann")
-    await _assert_field(person["id"], "name", "Ann Rodriguez", AssertionKind.ACCEPT)
+    await _assert_field(person["id"], "name", "Ann Rodriguez", ClaimKind.ACCEPT)
 
     await _scraped(person)
     await publish_changeset(sentinel_request, _SENTINEL_OCDID)
@@ -478,7 +478,7 @@ async def test_publish_drops_a_rejected_value_but_keeps_the_rest(sentinel_reques
     """A rejection suppresses one value, never the field. The wrong number stays gone however
     often it is scraped; a number nobody has judged still gets through."""
     person = {**_person("Bob"), "phones": ["(206) 555-0001", "(206) 555-9999"]}
-    await _assert_field(person["id"], "phones", "(206) 555-0001", AssertionKind.REJECT)
+    await _assert_field(person["id"], "phones", "(206) 555-0001", ClaimKind.REJECT)
 
     await _scraped(person)
     await publish_changeset(sentinel_request, _SENTINEL_OCDID)
@@ -493,7 +493,7 @@ async def _accepted_for(person_id: str) -> list[tuple[str, object]]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT field_path, value FROM assertions "
+            "SELECT field_path, value FROM claims "
             "WHERE entity_type = 'person' AND entity_id::text = %s AND kind = 'accept' "
             "ORDER BY field_path, value",
             (person_id,),
@@ -530,7 +530,7 @@ async def sentinel_hand_edit():
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_a_hand_edit_does_not_vouch_for_the_rest_of_the_roster(sentinel_hand_edit):
-    """Publishing asserts nothing on its own — only `assertions_from_edit`, at edit time, does.
+    """Publishing asserts nothing on its own — only `claims_from_edit`, at edit time, does.
     A hand edit that touches one field must not leave every other field looking accepted."""
     user_id = await _seed_publisher()
     person = {**_person("Ann"), "phones": ["(206) 555-0001"]}

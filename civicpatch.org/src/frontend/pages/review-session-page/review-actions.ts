@@ -69,7 +69,7 @@ export async function buildEntry(
     pr: data.pr,
     mode: data.mode ?? ReviewMode.RECONCILE,
     pr_people: { existing: data.existing, proposed: data.proposed },
-    // Keyed by person id, then field: what the source said where an assertion changed it.
+    // Keyed by person id, then field: what the source said where an claim changed it.
     overriddenSourceValues: data.overridden_source_values ?? {},
     // What the scrape would change about who holds what. A proposed person has no
     // membership — the post does not exist yet — so this is the only thing that can name

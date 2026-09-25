@@ -276,7 +276,7 @@ async def wipe_existing_data(conn: AsyncConnection) -> None:
     keyed to it without an enforced FK (`review_sessions`/`activity` reference jurisdictions and
     changesets by plain text, not a foreign key, so they survive a cascade and would otherwise
     point at ids this run just erased). Everything else — organizations, posts, memberships,
-    changesets, assertions, pipeline_runs, and so on — cascades from these five roots.
+    changesets, claims, pipeline_runs, and so on — cascades from these five roots.
 
     Deliberate: an `ON CONFLICT DO NOTHING` insert cannot recover from a dev database that
     already holds *different* rows colliding on a constraint other than the one it targets (a

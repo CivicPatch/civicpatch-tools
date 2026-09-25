@@ -12,7 +12,7 @@ import type {
   ProposedPost,
   RoleOption,
 } from "../posts-list/posts-model.js";
-import "../person-editor/assertions-popover.js";
+import "../person-editor/claims-popover.js";
 import "../person-editor/office-picker.js";
 export {
   inputValue,
@@ -188,7 +188,7 @@ export interface OfficeFieldProps {
   currentLabel: string | null;
   focusRef: FocusRef | null;
   labelLock: FieldLock | null;
-  labelAssertionSummary: FieldAssertionSummary | null;
+  labelClaimSummary: FieldAssertionSummary | null;
   jurisdictionOcdid: string | null | undefined;
   organizationId: string;
   // A proposed role/division with no post yet — see this prop's only caller
@@ -203,9 +203,9 @@ export interface OfficeFieldProps {
 
 // An existing person: a local pick like every other field, applied via `memberships.assign`
 // when the card is saved/published, so a scrape stays free to move or end the membership
-// again. Grouped by role, mirroring `posts-list.ts`'s own picker. The label *is* an assertion
+// again. Grouped by role, mirroring `posts-list.ts`'s own picker. The label *is* an claim
 // once saved — `memberships.set_label` records it against the membership — `labelLock`/
-// `labelAssertionSummary` are how that comes back to show the lock icon other fields get.
+// `labelClaimSummary` are how that comes back to show the lock icon other fields get.
 export function renderOfficeNewSide(props: OfficeFieldProps) {
   const {
     record,
@@ -216,7 +216,7 @@ export function renderOfficeNewSide(props: OfficeFieldProps) {
     currentLabel,
     focusRef,
     labelLock,
-    labelAssertionSummary,
+    labelClaimSummary,
     jurisdictionOcdid,
     organizationId,
     initialRoleId,
@@ -262,10 +262,10 @@ export function renderOfficeNewSide(props: OfficeFieldProps) {
           />`
         : nothing}
       ${labelLock
-        ? html`<civ-assertions-popover
+        ? html`<civ-claims-popover
             .lock=${labelLock}
-            .summary=${labelAssertionSummary}
-          ></civ-assertions-popover>`
+            .summary=${labelClaimSummary}
+          ></civ-claims-popover>`
         : nothing}
     </div>
   `;

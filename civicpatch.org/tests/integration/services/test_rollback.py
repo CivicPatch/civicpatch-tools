@@ -1,8 +1,8 @@
-"""Rolling back a user's hand-made assertions.
+"""Rolling back a user's hand-made claims.
 
 Real Postgres: what this exists to prove is that a rollback is *visible*, not just recorded —
 the withdrawn assertion has to stop winning the fold and the live `people` row has to change,
-not only `assertions.withdrawn_at`.
+not only `claims.withdrawn_at`.
 
 Run with: mise run tcp-integration
 Isolation: sentinel state 'zz', cleaned before/after.
@@ -43,7 +43,7 @@ async def _wipe():
             )
             await cur.execute("DELETE FROM posts WHERE jurisdiction_ocdid = %s", (ocdid,))
             await cur.execute(
-                "DELETE FROM assertions WHERE entity_id IN "
+                "DELETE FROM claims WHERE entity_id IN "
                 "(SELECT id FROM people WHERE jurisdiction_ocdid = %s)",
                 (ocdid,),
             )
@@ -55,7 +55,7 @@ async def _wipe():
             await cur.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
         # A withdraw row is filed by the user too (214), and it names a claim, not a person.
         await cur.execute(
-            "DELETE FROM assertions WHERE created_by IN "
+            "DELETE FROM claims WHERE created_by IN "
             "(SELECT id FROM users WHERE email IN (%s, %s))",
             (_EMAIL, _OTHER_EMAIL),
         )
@@ -162,9 +162,9 @@ async def _rollback_user(created_by: str, user_id: str) -> int:
     """What a UI offering "roll back everything shown" does: list the user's candidates
     (flat, no jurisdiction chosen), then hand every id to the one executor — the same shape a
     selective call would use too, just with the full list rather than a hand-picked subset."""
-    candidates = await rollback.list_user_assertions(created_by)
-    return await rollback.rollback_assertions(
-        [candidate.assertion_id for candidate in candidates], user_id
+    candidates = await rollback.list_user_claims(created_by)
+    return await rollback.rollback_claims(
+        [candidate.claim_id for candidate in candidates], user_id
     )
 
 
@@ -192,7 +192,7 @@ async def test_rollback_reverts_the_edit_and_republishes():
 
         await cur.execute(
             "SELECT withdrawn_at IS NOT NULL, withdrawn_by_changeset_id IS NOT NULL "
-            "FROM assertions WHERE changeset_id::text = %s",
+            "FROM claims WHERE changeset_id::text = %s",
             (changeset_id,),
         )
         assert await cur.fetchall() == [(True, True)]
@@ -272,7 +272,7 @@ async def test_rollback_user_in_jurisdiction_raises_when_nothing_to_roll_back():
 @pytest.mark.integration
 async def test_rollback_spans_multiple_jurisdictions_in_one_call():
     """No jurisdiction picker anywhere: a user's edits in two different places both revert from
-    a single `list_user_assertions` + `rollback_assertions` call, each getting its own
+    a single `list_user_claims` + `rollback_claims` call, each getting its own
     rollback changeset since a changeset belongs to exactly one jurisdiction."""
     user_id = await _create_user(_EMAIL)
     user = _identity(_EMAIL, user_id)
@@ -296,11 +296,11 @@ async def test_rollback_spans_multiple_jurisdictions_in_one_call():
         user.user_id,
     )
 
-    candidates = await rollback.list_user_assertions(user_id)
+    candidates = await rollback.list_user_claims(user_id)
     assert {c.jurisdiction_ocdid for c in candidates} == {_OCDID, _OTHER_OCDID}
 
-    withdrawn = await rollback.rollback_assertions(
-        [c.assertion_id for c in candidates], user_id
+    withdrawn = await rollback.rollback_claims(
+        [c.claim_id for c in candidates], user_id
     )
     assert withdrawn == 2
 

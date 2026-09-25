@@ -11,7 +11,7 @@ import {
   personOf,
   type PersonCard,
 } from "../people/person-cards.js";
-import { type PersonAssertion } from "../person-editor/field-provenance.js";
+import { type PersonClaim } from "../person-editor/field-provenance.js";
 import {
   rowLabel,
   renderDiffCard,
@@ -37,7 +37,7 @@ export interface ReviewOverviewProps {
   editorFor: (card: PersonCard) => PersonEditorProps;
   posts: Post[];
   roles: RoleOption[];
-  assertions: Record<string, PersonAssertion[]>;
+  claims: Record<string, PersonClaim[]>;
   overriddenSourceValues: Record<string, Record<string, unknown>>;
   // Named so a section heading can say whose roster it is. A proposal names its organization by
   // id only, and an id is not a heading.

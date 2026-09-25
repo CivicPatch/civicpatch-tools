@@ -127,7 +127,7 @@ function renderFieldRow(
 ) {
   const { field } = surviving;
   const record = personOf(card);
-  const accepts = acceptsByField(props.assertions[card.personId] ?? []);
+  const accepts = acceptsByField(props.claims[card.personId] ?? []);
   const overrides = props.overriddenSourceValues[card.personId] ?? {};
   const lock = fieldLock(
     accepts.get(field.key),

@@ -5,7 +5,7 @@ from schemas.activity import FieldChange
 
 
 class CreatePostRequest(BaseModel):
-    """A post a person is asserting exists, under the organization named by the route.
+    """A post a person claims exists, under the organization named by the route.
 
     `division_ocdid` is required and creates the division if it is new — a division is minted
     exactly when a post needs one, so folding it in here avoids an endpoint whose only purpose
@@ -16,7 +16,7 @@ class CreatePostRequest(BaseModel):
     division_ocdid: str
     # Defaulted, unlike the update route's: a new post is one seat unless someone says otherwise.
     meta_headcount: int = Field(default=1, gt=0)
-    # Overrides the derived guess ("Position 8" instead of the bare role) — asserted, like
+    # Overrides the derived guess ("Position 8" instead of the bare role) — claimed, like
     # `meta_headcount`, not stored as its own column (148 dropped `posts.label`).
     label: str | None = None
 

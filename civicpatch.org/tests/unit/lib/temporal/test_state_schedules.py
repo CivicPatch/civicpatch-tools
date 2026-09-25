@@ -1,6 +1,6 @@
 """Declaring one schedule per state from `state_settings`.
 
-The Temporal client is mocked because it is a real process boundary. What is asserted is the
+The Temporal client is mocked because it is a real process boundary. What is claimed is the
 declaration itself: which states get a schedule, what the retire pass is told about them, and
 that a manual state is removed rather than left firing.
 """

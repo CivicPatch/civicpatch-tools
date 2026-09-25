@@ -543,7 +543,7 @@ def test_posting_an_edit_returns_the_changeset_it_was_filed_under(client):
 
 @pytest.mark.unit
 def test_an_edit_with_no_author_is_refused(client):
-    """`assertions.created_by` is NOT NULL, so the service raises rather than filing a claim
+    """`claims.created_by` is NOT NULL, so the service raises rather than filing a claim
     nobody made."""
     client.app.dependency_overrides[get_optional_user] = _maintainer
     with patch.object(

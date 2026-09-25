@@ -16,7 +16,7 @@ from schemas.activity import (
     PersonChange,
     RosterChange,
 )
-from schemas.assertions import EntityType
+from schemas.claims import EntityType
 from shared.utils.statuses import (
     GROUPABLE_ACTIVITY_TYPES,
     LIVE_ACTIVITY_TYPES,

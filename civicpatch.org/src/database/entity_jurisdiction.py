@@ -1,11 +1,11 @@
-"""What an asserted entity is — which jurisdiction it belongs to, and what to call it."""
+"""What an claimed entity is — which jurisdiction it belongs to, and what to call it."""
 
 from collections.abc import Mapping
 
-from schemas.assertions import EntityType
+from schemas.claims import EntityType
 
 # Keyed on `entity_type` rather than assuming person: the CHECK permits all three, so assuming
-# would break silently on the first post assertion.
+# would break silently on the first post claim.
 _SOURCES: dict[EntityType | str, str] = {
     EntityType.PERSON: "SELECT jurisdiction_ocdid FROM people WHERE id::text = %s",
     EntityType.POST: "SELECT jurisdiction_ocdid FROM posts WHERE id::text = %s",
@@ -15,7 +15,7 @@ _SOURCES: dict[EntityType | str, str] = {
     ),
 }
 
-# An assertion payload stores only ids, unlike person and post payloads which carry their own
+# A claim payload stores only ids, unlike person and post payloads which carry their own
 # name. So a badge for one has to look its subject up — same keying, for the same reason.
 #
 # A post has no name of its own since migration 148 dropped `posts.label`; `roles.label` is what
@@ -47,7 +47,7 @@ async def _lookup(
 
 
 async def jurisdiction_for(cur, entity_type: EntityType, entity_id: str) -> str | None:
-    """None when the entity is gone — an assertion still records, it just names no jurisdiction."""
+    """None when the entity is gone — a claim still records, it just names no jurisdiction."""
     return await _lookup(cur, _SOURCES, entity_type, entity_id)
 
 

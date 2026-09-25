@@ -7,7 +7,7 @@ matched across a write or told apart when a seat closes.
 
 from pydantic import BaseModel, JsonValue
 
-from schemas.assertions import EntityType
+from schemas.claims import EntityType
 
 
 class Entity(BaseModel):

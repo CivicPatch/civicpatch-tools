@@ -1,4 +1,4 @@
-"""Route-level integration tests for the assertions endpoint.
+"""Route-level integration tests for the claims endpoint.
 
 TestClient against the real DB with auth mocked. The DB-layer tests cover the constraints and
 the derivation; these cover what only crosses the wire — that the payload model accepts the
@@ -14,15 +14,15 @@ import pytest_asyncio
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from database import assertions, divisions, organizations, posts
+from database import claims, divisions, organizations, posts
 from database.database import get_pool
 from lib.auth import get_optional_user
-from schemas.assertions import AssertionKind
-from routers.api import assertions as assertions_router
-from schemas.assertions import EntityType
+from schemas.claims import ClaimKind
+from routers.api import claims as claims_router
+from schemas.claims import EntityType
 from schemas.common import Identity
 
-_PREFIX = "/api/v1/assertions"
+_PREFIX = "/api/v1/claims"
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_aroute/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_aroute"
 _EMAIL = "zz-assert-route@example.com"
@@ -44,7 +44,7 @@ def _identity() -> Identity:
 @pytest.fixture
 def client():
     app = FastAPI()
-    app.include_router(assertions_router.get_router(), prefix=_PREFIX)
+    app.include_router(claims_router.get_router(), prefix=_PREFIX)
     app.dependency_overrides[get_optional_user] = lambda: _identity()
     return TestClient(app)
 
@@ -53,7 +53,7 @@ async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "DELETE FROM assertions WHERE created_by IN "
+            "DELETE FROM claims WHERE created_by IN "
             "(SELECT id FROM users WHERE email = %s)",
             (_EMAIL,),
         )
@@ -160,8 +160,8 @@ async def test_an_accepted_value_carries_its_type_across_the_wire(client):
     assert response.status_code == 200, response.text
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        asserted = (await assertions.asserted_values(cur, EntityType.PERSON, [person_id])).get(person_id, {})
-    assert asserted["name"][AssertionKind.ACCEPT] == ["Jane Q. Clerk"]
+        claimed = (await claims.claimed_values(cur, EntityType.PERSON, [person_id])).get(person_id, {})
+    assert claimed["name"][ClaimKind.ACCEPT] == ["Jane Q. Clerk"]
 
 
 @pytest.mark.asyncio
@@ -208,7 +208,7 @@ async def test_an_unattributable_assertion_is_refused(client):
     assert response.status_code == 401, response.text
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("SELECT count(*) FROM assertions WHERE entity_id::text = %s", (post_id,))
+        await cur.execute("SELECT count(*) FROM claims WHERE entity_id::text = %s", (post_id,))
         assert (await cur.fetchone())[0] == 0
 
 

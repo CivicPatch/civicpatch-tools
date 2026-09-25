@@ -19,7 +19,7 @@ import pytest_asyncio
 
 from database.database import get_pool
 from database.entity_jurisdiction import name_for
-from schemas.assertions import EntityType
+from schemas.claims import EntityType
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_names/government"

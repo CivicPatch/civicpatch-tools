@@ -4,7 +4,7 @@ import "./jurisdiction-page.css";
 import "../../components/status-toast/status-toast.js";
 import "../../components/status-toast/status-toast.css";
 import { editJurisdictionRoster, generatePersonId } from "../../api.js";
-import { fetchPeopleAssertions } from "../../api.js";
+import { fetchPeopleClaims } from "../../api.js";
 import { usePeopleState } from "../../components/edit-people/hooks/use-people-state.js";
 import {
   heldOfficesByPerson,
@@ -119,12 +119,12 @@ function RosterEditor({
   useEffect(() => {
     assignPeople(published);
   }, [people]);
-  const [assertions, setAssertions] = useState<Record<string, any[]>>({});
+  const [claims, setClaims] = useState<Record<string, any[]>>({});
   useEffect(() => {
     if (!canEdit || !jurisdictionOcdid) return;
-    fetchPeopleAssertions(jurisdictionOcdid)
-      .then((body) => setAssertions(body.data ?? {}))
-      .catch(() => setAssertions({}));
+    fetchPeopleClaims(jurisdictionOcdid)
+      .then((body) => setClaims(body.data ?? {}))
+      .catch(() => setClaims({}));
   }, [jurisdictionOcdid, canEdit]);
   const cards: PersonCard[] = buildPersonCards({
     existing: published,
@@ -205,7 +205,7 @@ function RosterEditor({
       roles,
       canAssignMembership,
       rosterMemberships: memberships,
-      assertions,
+      claims,
       overriddenSourceValues: {},
       isExpanded: (id: string) => !collapsedIds.has(id),
       onToggleExpand: () => {

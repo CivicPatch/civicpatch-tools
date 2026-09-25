@@ -1,20 +1,20 @@
-"""Batching a roster's worth of assertions.
+"""Batching a roster's worth of claims.
 
 A single save can state claims for several people at once — `roster_edits.py` builds one list of
-`Assertion`s across the whole patched roster and writes it in one call. Written one at a time
+`Claim`s across the whole patched roster and writes it in one call. Written one at a time
 that was two statements each, in series inside one transaction.
 """
 
 import pytest
 
-from database.assertions import latest_of_each
-from schemas.assertions import Assertion, AssertionKind, EntityType, Source
+from database.claims import latest_of_each
+from schemas.claims import Claim, ClaimKind, EntityType, Source
 
 pytestmark = pytest.mark.unit
 
 
-def _claim(field: str, value, kind=AssertionKind.ACCEPT, entity="p1") -> Assertion:
-    return Assertion(
+def _claim(field: str, value, kind=ClaimKind.ACCEPT, entity="p1") -> Claim:
+    return Claim(
         entity_type=EntityType.PERSON,
         entity_id=entity,
         field_path=field,
@@ -52,10 +52,10 @@ def test_accepting_and_rejecting_one_list_value_keeps_only_the_later_word():
     every list field, so `kind` is not part of the key: the two claims are one index row, which
     is why `_DROP_THE_OPPOSITE` exists at all. Last word wins, either way round."""
     accept = _claim("phones", "(253) 931-3041")
-    reject = _claim("phones", "(253) 931-3041", kind=AssertionKind.REJECT)
+    reject = _claim("phones", "(253) 931-3041", kind=ClaimKind.REJECT)
 
-    assert [c.kind for c in latest_of_each([accept, reject])] == [AssertionKind.REJECT]
-    assert [c.kind for c in latest_of_each([reject, accept])] == [AssertionKind.ACCEPT]
+    assert [c.kind for c in latest_of_each([accept, reject])] == [ClaimKind.REJECT]
+    assert [c.kind for c in latest_of_each([reject, accept])] == [ClaimKind.ACCEPT]
 
 
 def test_accepting_and_rejecting_a_scalar_are_separate_rows():
@@ -63,7 +63,7 @@ def test_accepting_and_rejecting_a_scalar_are_separate_rows():
     unlike the list case above these are two rows and both survive."""
     claims = [
         _claim("name", "Nancy Backus"),
-        _claim("name", "Nancy Backus", kind=AssertionKind.REJECT),
+        _claim("name", "Nancy Backus", kind=ClaimKind.REJECT),
     ]
 
     assert len(latest_of_each(claims)) == 2

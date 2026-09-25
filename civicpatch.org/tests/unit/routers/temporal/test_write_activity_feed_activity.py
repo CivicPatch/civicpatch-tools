@@ -91,6 +91,6 @@ async def test_an_empty_sweep_publishes_nothing_but_still_advances_the_watermark
     mock_set.assert_awaited_once()
     key, value = mock_set.call_args.args
     assert key == _ACTIVITY_FEED_WATERMARK_KEY
-    # A valid, recent watermark — the exact instant isn't asserted since the activity reads the
+    # A valid, recent watermark — the exact instant isn't claimed since the activity reads the
     # real clock; freezing it would test the mock, not the behavior.
     assert datetime.fromisoformat(value) <= datetime.now(timezone.utc)

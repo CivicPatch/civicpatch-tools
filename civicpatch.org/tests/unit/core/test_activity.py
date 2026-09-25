@@ -249,7 +249,7 @@ def test_an_assertion_carries_the_name_it_was_made_against():
 
 
 def test_an_assertion_with_no_resolvable_name_falls_back_to_its_type():
-    """`POST /assertions` writes the type when the lookup finds nothing — better a bare
+    """`POST /claims` writes the type when the lookup finds nothing — better a bare
     "person" than a uuid nobody can read."""
     change = _change(
         ActivityType.ASSERT_FIELD,

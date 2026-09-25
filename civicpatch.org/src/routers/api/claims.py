@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
-from database import assertions
+from database import claims
 from database.activity import record_change
 from database.changesets import live_roster_changeset
 from database.database import get_pool
 from database.entity_jurisdiction import jurisdiction_for, name_for
 from lib.auth import require_route_access
-from schemas.assertions import Assertion
+from schemas.claims import Claim
 from schemas.activity import Change, FieldChange
 from schemas.common import Identity, RouteCategory, UserRole
 from shared.utils.statuses import ActivityType
@@ -17,8 +17,8 @@ def get_router() -> APIRouter:
     router = APIRouter()
 
     @router.post("")
-    async def create_assertion_endpoint(
-        body: Assertion,
+    async def create_claim_endpoint(
+        body: Claim,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
@@ -30,7 +30,7 @@ def get_router() -> APIRouter:
         a superseded request can never be published, so the rows most needing judgement had no
         way to receive it.
 
-        401 rather than a NULL author: `assertions.created_by` is NOT NULL, because an
+        401 rather than a NULL author: `claims.created_by` is NOT NULL, because an
         assertion nobody made is not an assertion.
         """
         if not user.user_id:
@@ -51,8 +51,8 @@ def get_router() -> APIRouter:
                 else None
             )
             claim = body.model_copy(update={"changeset_id": changeset_id})
-            assertion_id = await assertions.upsert(cur, claim, user.user_id)
-            # Logged in the same transaction. The assertion row itself is the permanent record
+            claim_id = await claims.upsert(cur, claim, user.user_id)
+            # Logged in the same transaction. The claim row itself is the permanent record
             # now (187), but the activity feed still wants the narration alongside it.
             await record_change(
                 cur,
@@ -64,7 +64,7 @@ def get_router() -> APIRouter:
                     entity_type=body.entity_type,
                     entity_id=body.entity_id,
                     # Resolved here, once, rather than by every reader on every page load. The
-                    # history used to look this up per row because an assertion payload carried
+                    # history used to look this up per row because a claim payload carried
                     # only ids — and it is the one name that must be captured now, since the
                     # entity can be deleted before anybody reads the log.
                     subject=(
@@ -81,6 +81,6 @@ def get_router() -> APIRouter:
                                 ),
             )
             await conn.commit()
-        return {"data": {"id": assertion_id}}
+        return {"data": {"id": claim_id}}
 
     return router

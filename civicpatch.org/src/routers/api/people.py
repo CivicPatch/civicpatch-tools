@@ -11,7 +11,7 @@ from lib.auth import require_route_access
 from pydantic import BaseModel
 from schemas.common import Identity, RouteCategory
 from schemas.pagination import paginated_response, pagination_offset
-from services.assertions import assertions_for_people
+from services.claims import claims_for_people
 from shared.schemas import Person
 from shared.utils.person_id_utils import resolve_people_ids
 
@@ -47,21 +47,21 @@ def get_router() -> APIRouter:
         people = await database.get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
         return {"data": _to_people(people)}
 
-    @router.get("/assertions", include_in_schema=False)
-    async def list_assertions_endpoint(
+    @router.get("/claims", include_in_schema=False)
+    async def list_claims_endpoint(
         jurisdiction_ocdid: str,
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
-        """Every assertion on this jurisdiction's seated roster, keyed by person id.
+        """Every claim on this jurisdiction's roster, keyed by person id.
 
-        Its own route rather than a field on `GET ""`, which is public: an assertion carries
+        Its own route rather than a field on `GET ""`, which is public: a claim carries
         `created_by_name`, so folding it in would tell anonymous visitors who edited which
         field of which official. Signed-in only, and the page asks for it only where the
         editor is offered.
         """
         people = await database.get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
         return {
-            "data": await assertions_for_people(
+            "data": await claims_for_people(
                 [person["id"] for person in people if person.get("id")]
             )
         }

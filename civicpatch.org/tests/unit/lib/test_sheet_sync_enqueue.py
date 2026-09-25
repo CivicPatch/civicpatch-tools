@@ -1,6 +1,6 @@
 """How a sheet sync is asked for — the workflow id and the start semantics.
 
-Nothing here runs a workflow. What is asserted is the two decisions that make coalescing safe,
+Nothing here runs a workflow. What is claimed is the two decisions that make coalescing safe,
 because both are invisible at runtime until data goes missing:
 
   * the id is the *state*, so every publish in one state collapses into one tab rewrite;
