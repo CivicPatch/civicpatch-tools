@@ -12,6 +12,7 @@ from pydantic import BaseModel
 from schemas.common import Identity, RouteCategory
 from schemas.pagination import paginated_response, pagination_offset
 from services.assertions import assertions_for_people
+from shared.schemas import Person
 from shared.utils.person_id_utils import resolve_people_ids
 
 
@@ -27,6 +28,10 @@ class PeopleBatchResolveRequest(BaseModel):
     with_data: bool = False
 
 
+def _to_people(rows: list[dict]) -> list[Person]:
+    return [Person(**row) for row in rows]
+
+
 def get_router() -> APIRouter:
     router = APIRouter()
 
@@ -40,7 +45,7 @@ def get_router() -> APIRouter:
         largest in the database is eighteen. Bulk reads belong on `/bulk`, which is paged.
         """
         people = await database.get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
-        return {"data": people}
+        return {"data": _to_people(people)}
 
     @router.get("/assertions")
     async def list_assertions_endpoint(
@@ -83,7 +88,7 @@ def get_router() -> APIRouter:
         total, people = await database.get_roster_page(
             None, state.lower(), per_page, pagination_offset(page, per_page)
         )
-        return paginated_response(total, page, per_page, people)
+        return paginated_response(total, page, per_page, _to_people(people))
 
     @router.get("/search")
     async def search_people_endpoint(

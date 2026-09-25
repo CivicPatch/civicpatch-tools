@@ -9,8 +9,6 @@ every request."""
 from collections.abc import Mapping, Sequence
 from datetime import datetime
 
-from core.projection.diff import RosterDiff
-from core.projection.roster import Roster
 from schemas.activity import (
     MEMBERSHIP_POST_FIELD,
     Change,
@@ -19,7 +17,14 @@ from schemas.activity import (
     RosterChange,
 )
 from schemas.assertions import EntityType
-from shared.utils.statuses import GROUPABLE_ACTIVITY_TYPES, LIVE_ACTIVITY_TYPES, ActivityType
+from shared.utils.statuses import (
+    GROUPABLE_ACTIVITY_TYPES,
+    LIVE_ACTIVITY_TYPES,
+    ActivityType,
+)
+
+from core.projection.diff import RosterDiff
+from core.projection.roster import Roster
 
 # Below this, grouping buys nothing — a lone pipeline_run_start reads better as itself than as
 # "1 scrape started".
@@ -56,7 +61,9 @@ def group_live_activity(rows: Sequence[Mapping[str, object]]) -> list[dict]:
         if type_ in grouped_types
     ]
     result.extend(
-        {"type": row["type"], "count": 1} for row in rows if row["type"] not in grouped_types
+        {"type": row["type"], "count": 1}
+        for row in rows
+        if row["type"] not in grouped_types
     )
     return result
 
@@ -170,7 +177,9 @@ def summarize_activity(type_: str, changes: dict | None) -> str:
         return "Dismissed review"
 
     if type_ in ("pipeline_run_start", "pipeline_run_end"):
-        return "Started a scrape" if type_ == "pipeline_run_start" else "Finished a scrape"
+        return (
+            "Started a scrape" if type_ == "pipeline_run_start" else "Finished a scrape"
+        )
     if type_ == "sheet_import":
         return "Imported from sheet"
 
@@ -218,13 +227,25 @@ def _names(*rosters: Roster) -> dict[str, str]:
     }
 
 
-def _person_change(person_id: str, names: dict[str, str], fields: list[FieldChange]) -> Change:
+def _person_change(
+    person_id: str,
+    names: dict[str, str],
+    fields: list[FieldChange],
+    detail: str | None = None,
+) -> Change:
     return Change(
         entity_type=EntityType.PERSON,
         entity_id=person_id,
         subject=names.get(person_id, person_id),
+        detail=detail,
         fields=fields,
     )
+
+
+def _named(post_id: str | None, post_labels: Mapping[str, str]) -> str | None:
+    if post_id is None:
+        return None
+    return post_labels.get(post_id, post_id)
 
 
 def _moves(diff: RosterDiff) -> dict[str, tuple[str | None, str | None]]:
@@ -245,20 +266,21 @@ def _moves(diff: RosterDiff) -> dict[str, tuple[str | None, str | None]]:
 
 
 def changes_from_diff(
-    before: Roster, after: Roster, diff: RosterDiff
+    before: Roster,
+    after: Roster,
+    diff: RosterDiff,
+    post_labels: Mapping[str, str] | None = None,
 ) -> list[PersonChange]:
-    """Every row the feed should carry for this change, in a stable order.
-
-    Order is people added, people removed, fields edited, then memberships, each by id: two
-    runs over the same rosters must produce the same feed (R6).
-    """
+    """Every row the feed should carry for this change, in a stable order."""
+    labels_of_post = post_labels or {}
     names = _names(before, after)
     changes: list[PersonChange] = []
 
     for person_id in sorted(diff.only_after):
         changes.append(
             PersonChange(
-                type=ActivityType.ADD_PERSON, payload=_person_change(person_id, names, [])
+                type=ActivityType.ADD_PERSON,
+                payload=_person_change(person_id, names, []),
             )
         )
     for person_id in sorted(diff.only_before):
@@ -290,6 +312,8 @@ def changes_from_diff(
     for person_id, (left, arrived) in sorted(_moves(diff).items()):
         if person_id in diff.only_after or person_id in diff.only_before:
             continue
+        seat_left = _named(left, labels_of_post)
+        seat_arrived = _named(arrived, labels_of_post)
         changes.append(
             PersonChange(
                 type=ActivityType.ASSIGN_MEMBERSHIP,
@@ -298,9 +322,12 @@ def changes_from_diff(
                     names,
                     [
                         FieldChange(
-                            field=MEMBERSHIP_POST_FIELD, before=left, after=arrived
+                            field=MEMBERSHIP_POST_FIELD,
+                            before=seat_left,
+                            after=seat_arrived,
                         )
                     ],
+                    detail=seat_arrived or seat_left,
                 ),
             )
         )

@@ -81,10 +81,13 @@ test.describe("Review reconcile diff (populated)", () => {
     await expect(post.getByLabel("Role", { exact: true }).locator("option:checked")).toHaveText(
       /Council Member/,
     );
-    // And nothing says the post does not exist yet: this office is at-large, and the picker
-    // marks a new *division* "(New)" but has no marker for a new role paired with at-large.
-    // The old single-select option said "— new post" for both. Noted in the plan's §20.
-    await expect(post.getByLabel("Division").locator("option:checked")).toHaveText(/At-Large/);
+    // And it says the post does not exist yet. At-large is the division select's first option
+    // and its default, and until 2026-09-24 it was the only one carrying no "(New)" — so the
+    // commonest way to mint a post was the one that said nothing about minting it. This
+    // asserted only /At-Large/, which is what let that through. Was the plan's §20.
+    await expect(post.getByLabel("Division").locator("option:checked")).toHaveText(
+      /At-Large \(New\)/,
+    );
 
     // Both ends of the move, in the issue rather than a `was` annotation. The Post row has no
     // diff to show — `post_id` is the reviewer's pick and is null on both sides until they make

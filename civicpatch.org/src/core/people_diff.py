@@ -1,27 +1,16 @@
 from collections.abc import Mapping
 from typing import Any
 
-from core.activity import field_changes
-from core.people_edits import EDITABLE_FIELDS
-from shared.schemas import POST_FIELD
-from schemas.assertions import EntityType
 from schemas.activity import Change, FieldChange, PersonChange
+from schemas.assertions import EntityType
+from shared.schemas import POST_FIELD
 from shared.utils.statuses import ActivityType
 
+from core.activity import field_changes
+from core.people_edits import EDITABLE_FIELDS
 
-# `id` is the match key, not a field. Everything else a reviewer can touch is here, because a
-# field left out is an edit the feed silently never mentions — which is what `office.name` and
-# `office.division_ocdid` became when the editor started writing `post_id` instead, and what
-# `image`, `source_urls` and `other_names` were all along, excluded as noise back when the
-# reviewer could not edit them.
+
 def _comparable(person: dict, post_labels: Mapping[str, str] = {}) -> dict[str, Any]:
-    """The person as the feed compares them — with the picked post named, not identified.
-
-    A `post_id` is a uuid, and the feed prints what it is given: "post_id: ∅ → 3b0c2e2d-…" says
-    nothing a reader can act on. Labels are resolved by the caller and substituted here, so the
-    log records what the change *meant* at the time, which is what an append-only history is
-    for.
-    """
     comparable = {field: person.get(field) for field in EDITABLE_FIELDS}
     post_id = comparable.get(POST_FIELD) or _held_post(person)
     if post_id:
@@ -30,16 +19,6 @@ def _comparable(person: dict, post_labels: Mapping[str, str] = {}) -> dict[str, 
 
 
 def _held_post(person: dict) -> str | None:
-    """The seat this person already holds, read off `get_roster`'s shape — a seat is
-    `memberships[].post_id`, not a flat `post_id` on the person.
-
-    `post_id` is not in `EDITABLE_FIELDS`: a manual edit never changes which post someone
-    holds (that goes through `memberships.assign`, logged as its own `ASSIGN_MEMBERSHIP`
-    entry), so both sides of this diff resolve the same way and a move never surfaces here.
-
-    First membership: a person can hold more than one, so there is no single "current" one to
-    compare against, and the first is the one `get_roster` orders to the top.
-    """
     seats = person.get("memberships") or []
     for seat in seats:
         held = seat.get(POST_FIELD)
@@ -82,13 +61,19 @@ def diff_people(
     return changes
 
 
-def _cancel_relinks(added: list[dict], removed: list[dict]) -> tuple[list[dict], list[dict]]:
+def _cancel_relinks(
+    added: list[dict], removed: list[dict]
+) -> tuple[list[dict], list[dict]]:
     remaining_removed = list(removed)
     real_added: list[dict] = []
     for after_person in added:
         match = next(
             # Unlabelled on both sides: this only asks whether two records are the same person.
-            (p for p in remaining_removed if _comparable(p) == _comparable(after_person)),
+            (
+                p
+                for p in remaining_removed
+                if _comparable(p) == _comparable(after_person)
+            ),
             None,
         )
         if match is None:
@@ -113,7 +98,9 @@ def _removed(person: dict, post_labels: Mapping[str, str]) -> PersonChange:
         for field, value in _comparable(person, post_labels).items()
         if value
     ]
-    return PersonChange(type=ActivityType.DELETE_PERSON, payload=_payload(person, fields))
+    return PersonChange(
+        type=ActivityType.DELETE_PERSON, payload=_payload(person, fields)
+    )
 
 
 def _edited(person: dict, fields: list[FieldChange]) -> PersonChange:

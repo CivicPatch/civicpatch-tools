@@ -14,6 +14,7 @@ import lib.storage as storage_service
 import services.activity as activity_service
 from core.activity import changes_from_diff
 from core.images import artifacts_key, promoted_key
+from core.membership_label import post_label
 from core.post_derivation import ChosenPost, DerivedPost, RosterEntry, derived_posts
 from core.projection.diff import on_roster, roster_diff
 from core.projection.roster import Roster
@@ -146,10 +147,44 @@ async def publish_roster(
         changeset_id,
         jurisdiction_ocdid,
         resolved_by_user_id or SYSTEM_USER_ID,
-        changes_from_diff(before, after, roster_diff(before, after)),
+        changes_from_diff(
+            before,
+            after,
+            roster_diff(before, after),
+            await _post_labels(jurisdiction_ocdid, before, after),
+        ),
     )
     logger.info(f"[{changeset_id}] Published {written} people for {jurisdiction_ocdid}")
     return written
+
+
+async def _post_labels(
+    jurisdiction_ocdid: str, *rosters: Roster
+) -> dict[str, str]:
+    """Every post these rosters name, by id, as a person should read it: the name a human gave
+    it where there is one, else the derived one. What keeps a membership move out of the log as
+    `post: <uuid> -> <uuid>`."""
+    posts = {
+        membership.post.post_id: membership.post
+        for roster in rosters
+        for person in roster.people
+        for membership in person.memberships
+    }
+    if not posts:
+        return {}
+    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    role_labels = {role_id: label for label, role_id in taxonomy.role_ids.items()}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        asserted = await posts_db.asserted_labels_by_key(cur, jurisdiction_ocdid)
+    return {
+        post_id: post_label(
+            role_labels.get(post.role_id, post.role_id),
+            post.division_ocdid,
+            asserted.get((post.organization_id, post.role_id, post.division_ocdid)),
+        )
+        for post_id, post in posts.items()
+    }
 
 
 async def _published_roster(jurisdiction_ocdid: str) -> Roster:

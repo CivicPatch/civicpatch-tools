@@ -21,6 +21,13 @@ MOCK_IDENTITY = Identity(
 TEST_OCDID = "ocd-jurisdiction/country:us/state:ca/place:oakland"
 
 
+def _row(person_id: str, name: str) -> dict:
+    """A row as `PERSON_JSON` builds one, narrowed. `jurisdiction_ocdid` is here because
+    `as_people` validates against `Person`, which requires it — a bare `{"id", "name"}` no
+    longer stands in for a person."""
+    return {"id": person_id, "name": name, "jurisdiction_ocdid": TEST_OCDID}
+
+
 @pytest.fixture
 def client():
     app = FastAPI()
@@ -68,13 +75,33 @@ def test_the_public_read_stays_one_jurisdiction_and_unpaged(client):
     with patch(
         "routers.api.people.database.get_roster",
         new_callable=AsyncMock,
-        return_value=[{"id": "1", "name": "Ada Whitfield"}],
+        return_value=[_row("1", "Ada Whitfield")],
     ) as get_roster:
         response = client.get(f"/people?jurisdiction_ocdid={TEST_OCDID}")
 
     assert response.status_code == 200
-    assert response.json() == {"data": [{"id": "1", "name": "Ada Whitfield"}]}
+    [row] = response.json()["data"]
+    assert (row["id"], row["name"]) == ("1", "Ada Whitfield")
     get_roster.assert_awaited_once_with(jurisdiction_ocdid=TEST_OCDID)
+
+
+@pytest.mark.unit
+def test_the_public_read_withholds_what_a_reader_is_not_owed(client):
+    """`sightings` and `labels` are post-derivation input, declared server-owned in
+    `core.people_edits.SERVER_OWNED_FIELDS`, and a membership's `meta_unmatched_text` is parser
+    diagnostics. All three were on this public unpaged endpoint until 2026-09-24, because the
+    route returned `PERSON_JSON`'s dicts and nothing filtered them. `Person` declares none of
+    them, so answering with the model is the filter."""
+    with patch(
+        "routers.api.people.database.get_roster",
+        new_callable=AsyncMock,
+        return_value=[dict(_row("1", "Ada Whitfield"), sightings=[{"label": "Mayor"}], labels=["Mayor"])],
+    ):
+        response = client.get(f"/people?jurisdiction_ocdid={TEST_OCDID}")
+
+    [row] = response.json()["data"]
+    assert "sightings" not in row
+    assert "labels" not in row
 
 
 @pytest.mark.unit
@@ -83,7 +110,7 @@ def test_bulk_pages_a_whole_state(client):
     with patch(
         "routers.api.people.database.get_roster_page",
         new_callable=AsyncMock,
-        return_value=(1416, [{"id": "1", "name": "Ada Whitfield"}]),
+        return_value=(1416, [_row("1", "Ada Whitfield")]),
     ) as get_roster_page:
         response = client.get("/people/bulk?state=WA&page=2&per_page=200")
 
