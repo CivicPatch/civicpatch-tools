@@ -191,11 +191,7 @@ async def _projection(ids: dict) -> dict:
         await cur.execute(
             """
             SELECT pe.id::text, p.organization_id::text, p.role_id, p.division_ocdid,
-                   m.label, m.opened_at, m.last_seen_at, m.closed_at,
-                   COALESCE((
-                       SELECT array_agg(mr.role_id ORDER BY mr.role_id)
-                       FROM membership_roles mr WHERE mr.membership_id = m.id
-                   ), '{}')
+                   m.label, m.opened_at, m.last_seen_at, m.closed_at
             FROM memberships m
             JOIN posts p ON p.id = m.post_id
             JOIN people pe ON pe.id = m.person_id
@@ -260,7 +256,6 @@ async def _projection(ids: dict) -> dict:
                 "opened_at": row[5],
                 "last_seen_at": row[6],
                 "closed_at": row[7],
-                "extra_roles": list(row[8]),
             }
             for row in rows
         ],
@@ -342,7 +337,6 @@ async def test_publishing_two_bodies_derives_this_projection():
                 "opened_at": _T0,
                 "last_seen_at": _T0,
                 "closed_at": None,
-                "extra_roles": [],
             },
             {
                 "person": "ben",
@@ -353,7 +347,6 @@ async def test_publishing_two_bodies_derives_this_projection():
                 "opened_at": _T0,
                 "last_seen_at": _T0,
                 "closed_at": None,
-                "extra_roles": [],
             },
         ]
     }
@@ -428,7 +421,6 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
                 "opened_at": _T0,
                 "last_seen_at": _T1,
                 "closed_at": None,
-                "extra_roles": [],
             },
             {
                 "person": "ben",
@@ -439,7 +431,6 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
                 "opened_at": _T0,
                 "last_seen_at": _T0,
                 "closed_at": None,
-                "extra_roles": [],
             },
         ]
     }
@@ -455,9 +446,8 @@ async def test_a_body_read_without_someone_drops_them_there():
     council membership, while Ben's, in an organization nothing read, stands.
 
     This test verified that her membership was closed, with `closed_at` set to the scrape's
-    date. It now verifies that the membership is gone, because the writer replaces a
-    jurisdiction's open memberships with what the facts derive rather than closing what they
-    drop. The interval it used to leave behind is `membership_terms`, at step 15."""
+    date; then, for a while, that it was gone, when the writer kept only open rows. It verifies
+    the closed row again: step 15 made every row a period held, so history is kept."""
     ids = await _seed()
     first = await _changeset(_T0)
     await _record_evidence(first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
@@ -468,12 +458,12 @@ async def test_a_body_read_without_someone_drops_them_there():
     await _record_evidence(second, ids["council"], ids["ben"], "Ben Ortiz", "Council Member")
     await publish_changeset(second, _OCDID)
 
-    held = {
-        (row["person"], row["organization"])
+    closed_at = {
+        (row["person"], row["organization"]): row["closed_at"]
         for row in (await _projection(ids))["memberships"]
     }
-    assert ("ana", "council") not in held
-    assert ("ben", "mayors_office") in held
+    assert closed_at[("ana", "council")] == _T1
+    assert closed_at[("ben", "mayors_office")] is None
 
     diff = await _projection_diff()
     assert diff.empty, diff

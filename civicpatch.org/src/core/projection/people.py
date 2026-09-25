@@ -43,7 +43,7 @@ class Membership(BaseModel, frozen=True):
     designations: tuple[str, ...] = ()
     unmatched_text: tuple[str, ...] = ()
     sources: tuple[MembershipSource, ...] = ()
-    # Roles beyond the post's own, parsed from the labels (`membership_roles`).
+    # Roles beyond the post's own, parsed from the labels; not stored (226), they feed the label.
     extra_roles: tuple[str, ...] = ()
 
 

@@ -20,7 +20,7 @@ class MembershipSource(BaseModel, frozen=True):
 class LabelDetails(BaseModel, frozen=True):
     designations: tuple[str, ...] = ()
     unmatched_text: tuple[str, ...] = ()
-    # Role ids beyond the post's own, for `membership_roles`.
+    # Role ids beyond the post's own; not stored, they feed the membership label (10a).
     extra_roles: tuple[str, ...] = ()
 
 

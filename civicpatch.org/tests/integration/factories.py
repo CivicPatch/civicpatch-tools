@@ -129,7 +129,8 @@ _INSERT_MEMBERSHIP = """
         (id, post_id, organization_id, person_id, label, start_date, end_date,
          opened_at, last_seen_at, designations, meta_unmatched_text, sources)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb)
-    ON CONFLICT (id) DO UPDATE SET last_seen_at = EXCLUDED.last_seen_at
+    ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
+    DO UPDATE SET last_seen_at = EXCLUDED.last_seen_at
     RETURNING id::text
 """
 
@@ -161,12 +162,6 @@ async def bind_membership(
     )
     row = await cur.fetchone()
     assert row is not None
-    if member.role_ids:
-        await cur.executemany(
-            "INSERT INTO membership_roles (membership_id, role_id) VALUES (%s, %s) "
-            "ON CONFLICT DO NOTHING",
-            [(row[0], role_id) for role_id in member.role_ids],
-        )
     return row[0]
 
 

@@ -1,6 +1,6 @@
 """The one writer of the projection.
 
-Every row a publish puts in `people`, `memberships` and `membership_roles` is written from
+Every row a publish puts in `people` and `memberships` is written from
 here and nowhere else, so what "publishing a roster" changes is one place to read. Still
 upsert-shaped: the statements are the ones the publish path always ran, moved under one roof
 unchanged. The delete-and-rebuild writer replaces them at step 8 of the projector plan.
@@ -19,7 +19,9 @@ import lib.buckets as buckets
 from shared.utils.membership_ids import membership_id
 from shared.utils.statuses import ActivityType
 
+from core.projection.as_of import facts_as_of, snapshot_times
 from core.projection.canonical_ids import with_merges, without_merges
+from core.projection.membership_history import MembershipRow, membership_history
 from core.projection.membership_details import MembershipSource
 from core.projection.people import Membership, Person
 from core.projection.live_facts import live_facts
@@ -108,14 +110,14 @@ def person_rows(people: Iterable[Person], jurisdiction_ocdid: str) -> list[dict]
 # would each insert the other's rows. Transaction-scoped, so a failed publish releases it.
 _LOCK_JURISDICTION = "SELECT pg_advisory_xact_lock(hashtext(%s))"
 
-_INSERT_MEMBERSHIP_ROLE = """
-    INSERT INTO membership_roles (membership_id, role_id) VALUES (%s, %s)
-    ON CONFLICT DO NOTHING
+_DELETE_MEMBERSHIPS = """
+    DELETE FROM memberships m USING posts p
+    WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s
 """
 
-_DELETE_OPEN_MEMBERSHIPS = """
-    DELETE FROM memberships m USING posts p
-    WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s AND m.closed_at IS NULL
+_PUBLISHED_AT = """
+    SELECT id::text, published_at FROM changesets
+    WHERE id::text = ANY(%s) AND published_at IS NOT NULL
 """
 
 # `organization_id` is the post's, joined here rather than carried: a membership cannot
@@ -123,9 +125,9 @@ _DELETE_OPEN_MEMBERSHIPS = """
 _INSERT_MEMBERSHIP = """
     INSERT INTO memberships
         (id, post_id, organization_id, person_id, label, start_date, end_date,
-         opened_at, last_seen_at, designations, meta_unmatched_text, sources)
+         opened_at, last_seen_at, closed_at, designations, meta_unmatched_text, sources)
     SELECT %(id)s, p.id, p.organization_id, %(person_id)s, %(label)s, %(start_date)s,
-           %(end_date)s, %(opened_at)s, %(last_seen_at)s, %(designations)s,
+           %(end_date)s, %(opened_at)s, %(last_seen_at)s, %(closed_at)s, %(designations)s,
            %(meta_unmatched_text)s, %(sources)s::jsonb
     FROM posts p WHERE p.id = %(post_id)s
 """
@@ -233,61 +235,73 @@ async def rebuild_from_facts(
     taxonomy = await _taxonomy(None)
     facts = await load_facts(cur, jurisdiction_ocdid, datetime.now(timezone.utc))
     roster = _fold(facts, jurisdiction_ocdid, taxonomy)
+    history = await _history(cur, facts, jurisdiction_ocdid, taxonomy)
     keys = post_keys(live_facts(facts).records, jurisdiction_ocdid, taxonomy)
-    await rebuild(cur, jurisdiction_ocdid, roster, keys, changeset_id)
+    await rebuild(cur, jurisdiction_ocdid, roster, history, keys, changeset_id)
     return len(roster.people)
+
+
+async def _history(
+    cur, facts: Facts, jurisdiction_ocdid: str, taxonomy: Taxonomy
+) -> list[MembershipRow]:
+    """Every membership row the facts imply: one fold per moment they changed, diffed. Loaded once and cut
+    in Python, so it costs folds, not queries."""
+    changeset_ids = sorted(
+        {record.changeset_id for record in facts.records}
+        | {claim.changeset_id for claim in (*facts.claims, *facts.withdraws) if claim.changeset_id}
+    )
+    await cur.execute(_PUBLISHED_AT, (changeset_ids,))
+    published_at = {row[0]: row[1] for row in await cur.fetchall()}
+    times = snapshot_times(facts, published_at)
+    if not times:
+        return []
+    snapshots = [
+        (stamp, derive_roster(facts_as_of(facts, published_at, cut), jurisdiction_ocdid, taxonomy))
+        for cut, stamp in times
+    ]
+    # Everything, at the last moment: a claim with no changeset still reaches the open rows.
+    snapshots.append((times[-1][1], derive_roster(facts, jurisdiction_ocdid, taxonomy)))
+    return membership_history(snapshots)
 
 
 async def rebuild(
     cur,
     jurisdiction_ocdid: str,
     roster: Roster,
+    history: Sequence[MembershipRow],
     keys: Sequence[PostKey],
     changeset_id: str | None = None,
 ) -> None:
-    """Replace the jurisdiction's projection with `roster`: every person row upserted, every
-    open membership deleted and re-inserted. Closed rows are history and are left alone."""
+    """Replace the jurisdiction's projection: every person in `roster` upserted, and every
+    membership row, open or closed, deleted and re-inserted from `history`."""
     await cur.execute(_LOCK_JURISDICTION, (jurisdiction_ocdid,))
     await _ensure_posts(cur, jurisdiction_ocdid, keys, changeset_id)
     people = person_rows(roster.people, jurisdiction_ocdid)
     if people:
         await cur.executemany(PERSON_UPSERT, people)
-    await cur.execute(_DELETE_OPEN_MEMBERSHIPS, (jurisdiction_ocdid,))
-    memberships = membership_rows(roster.people)
+    await cur.execute(_DELETE_MEMBERSHIPS, (jurisdiction_ocdid,))
+    memberships = membership_rows(history)
     if memberships:
         await cur.executemany(_INSERT_MEMBERSHIP, memberships)
-    roles = membership_role_rows(roster.people)
-    if roles:
-        await cur.executemany(_INSERT_MEMBERSHIP_ROLE, roles)
 
 
-def membership_rows(people: Iterable[Person]) -> list[dict]:
+def membership_rows(history: Iterable[MembershipRow]) -> list[dict]:
     return [
         {
-            "id": membership_id(person.id, membership.post.post_id),
-            "person_id": person.id,
-            "post_id": membership.post.post_id,
-            "label": membership.label,
-            "start_date": membership.start_date,
-            "end_date": membership.end_date,
-            "opened_at": membership.opened_at,
-            "last_seen_at": membership.last_seen_at,
-            "designations": list(membership.designations),
-            "meta_unmatched_text": list(membership.unmatched_text),
-            "sources": json.dumps([source.model_dump() for source in membership.sources]),
+            "id": membership_id(row.person_id, row.membership.post.post_id),
+            "person_id": row.person_id,
+            "post_id": row.membership.post.post_id,
+            "label": row.membership.label,
+            "start_date": row.membership.start_date,
+            "end_date": row.membership.end_date,
+            "opened_at": row.opened_at,
+            "last_seen_at": row.membership.last_seen_at,
+            "closed_at": row.closed_at,
+            "designations": list(row.membership.designations),
+            "meta_unmatched_text": list(row.membership.unmatched_text),
+            "sources": json.dumps([source.model_dump() for source in row.membership.sources]),
         }
-        for person in people
-        for membership in person.memberships
-    ]
-
-
-def membership_role_rows(people: Iterable[Person]) -> list[tuple[str, str]]:
-    """`(membership_id, role_id)` for each extra role of each open membership."""
-    return [
-        (membership_id(person.id, membership.post.post_id), role_id)
-        for person in people
-        for membership in person.memberships
-        for role_id in membership.extra_roles
+        for row in history
     ]
 
 
@@ -307,11 +321,7 @@ _STORED_PEOPLE = """
 _STORED_OPEN_MEMBERSHIPS = """
     SELECT m.person_id::text, p.organization_id::text, p.role_id, p.division_ocdid, m.label,
            m.start_date, m.end_date, m.opened_at, m.last_seen_at,
-           m.designations, m.meta_unmatched_text, m.sources,
-           array(
-               SELECT r.role_id FROM membership_roles r
-               WHERE r.membership_id = m.id ORDER BY r.role_id
-           )
+           m.designations, m.meta_unmatched_text, m.sources
     FROM memberships m JOIN posts p ON p.id = m.post_id
     WHERE p.jurisdiction_ocdid = %s AND m.closed_at IS NULL
 """
@@ -336,7 +346,6 @@ def _stored_membership(row) -> Membership:
         designations,
         unmatched_text,
         sources,
-        extra_roles,
     ) = row
     return Membership(
         post=PostKey(
@@ -352,7 +361,6 @@ def _stored_membership(row) -> Membership:
         designations=tuple(designations),
         unmatched_text=tuple(unmatched_text),
         sources=tuple(MembershipSource(**source) for source in sources),
-        extra_roles=tuple(extra_roles),
     )
 
 

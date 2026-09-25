@@ -18,7 +18,7 @@ import pytest_asyncio
 from core.people_edits import POSTS_FIELD
 from core.post_derivation import ChosenPost, DerivedMembership
 from core.roster_changes import ChangeKind, changes_of
-from database import claims, divisions, memberships, organizations, posts
+from database import claims, divisions, memberships, organizations, posts, projection
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from database.review_priority import issue_count, issue_priority
@@ -543,7 +543,9 @@ async def test_a_label_naming_two_offices_keeps_the_loser_on_the_membership():
     treasurer published as a clerk, and the treasurership vanished.
 
     This test drove the two writes by hand. It now publishes the labels that carry them,
-    because the fold parses the extra roles out of the page's own words."""
+    because the fold parses the extra roles out of the page's own words. It read them from
+    `membership_roles`; it now reads the derived membership, since 226 dropped that table and
+    the fold is where the loser survives (it feeds the membership label, 10a)."""
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -561,13 +563,14 @@ async def test_a_label_naming_two_offices_keeps_the_loser_on_the_membership():
 async def _extra_roles(person_id: str) -> list[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT r.role_id FROM membership_roles r "
-            "JOIN memberships m ON m.id = r.membership_id "
-            "WHERE m.person_id = %s ORDER BY r.role_id",
-            (person_id,),
-        )
-        return [row[0] for row in await cur.fetchall()]
+        roster = await projection.derived_roster(cur, _OCDID)
+    return sorted(
+        role_id
+        for person in roster.people
+        if person.id == person_id
+        for membership in person.memberships
+        for role_id in membership.extra_roles
+    )
 
 
 async def _add_post_logs(changeset_id: str) -> list[dict]:
