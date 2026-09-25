@@ -270,7 +270,7 @@ async def test_a_pick_made_mid_review_files_under_that_review():
                 "WHERE changesets.parent_changeset_id = %s AND claims.field_path = 'posts'",
                 (review_changeset_id,),
             )
-            assert await cur.fetchone() == ("people_edit", None)
+            assert await cur.fetchone() == ("roster_edit", None)
     finally:
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(

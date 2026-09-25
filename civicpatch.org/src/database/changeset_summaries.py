@@ -41,7 +41,7 @@ BUCKET_FAILED_RUNS = "failed_runs"
 # `PUBLISHED` and the rest come from `database.changesets`, the one definition.
 
 # `status` too: a run that errored before recording a reason still errored.
-# Only collection attempts get an outcome. A hand edit has no run to fail — 8 dev `people_edit`
+# Only collection attempts get an outcome. A hand edit has no run to fail — 8 dev `roster_edit`
 # rows, none with a status — so it would land in `ok` and pad the green band with something that
 # never ran. `jurisdiction_edit` is outside `AVAILABLE_FOR_REVIEW` besides, so it could never be
 # "to review" and would skew one band permanently.

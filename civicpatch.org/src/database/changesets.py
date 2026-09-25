@@ -121,7 +121,7 @@ async def _register_changeset(
     return parent_changeset_id
 
 
-async def register_people_edit_changeset(
+async def register_roster_edit_changeset(
     changeset_id: str,
     jurisdiction_ocdid: str,
     created_by_user_id: str,
@@ -137,7 +137,7 @@ async def register_people_edit_changeset(
         await _register_changeset(
             cur,
             changeset_id,
-            ChangesetKind.PEOPLE_EDIT,
+            ChangesetKind.ROSTER_EDIT,
             jurisdiction_ocdid,
             created_by_user_id,
         )
@@ -146,7 +146,7 @@ async def register_people_edit_changeset(
 
 # `OPEN_REVIEW_EDIT` unqualified, as `ON CONFLICT` needs; the two must match migration 223.
 _OPEN_REVIEW_EDIT_INDEX = (
-    f"kind = '{ChangesetKind.PEOPLE_EDIT.value}' "
+    f"kind = '{ChangesetKind.ROSTER_EDIT.value}' "
     "AND published_at IS NULL AND dismissed_at IS NULL"
 )
 
@@ -171,7 +171,7 @@ async def find_or_create_review_edit(
         """,
         (
             make_id(),
-            ChangesetKind.PEOPLE_EDIT,
+            ChangesetKind.ROSTER_EDIT,
             jurisdiction_ocdid,
             created_by_user_id,
             scrape_changeset_id,
@@ -305,7 +305,7 @@ async def live_roster_changeset(cur, jurisdiction_ocdid: str) -> str | None:
 
     Any kind except JURISDICTION_EDIT (`TOUCHES_THE_ROSTER`): that one edits a registry
     civicpatch does not own and never touches posts/memberships, so it is never "the changeset
-    this edit belongs to". Every other kind, PEOPLE_EDIT included, does — a hand edit filed
+    this edit belongs to". Every other kind, ROSTER_EDIT included, does — a hand edit filed
     here must find a prior hand edit rather than a stale scrape (189).
     """
     await cur.execute(

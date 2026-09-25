@@ -43,7 +43,7 @@ erDiagram
 
     changesets {
         uuid            id                  PK
-        text            kind                "CHECK scrape|sheet_import|people_edit|jurisdiction_edit|rollback (189). No default — a writer that does not say its producer should fail"
+        text            kind                "CHECK scrape|sheet_import|roster_edit|jurisdiction_edit|rollback (189; people_edit renamed roster_edit in 229). No default — a writer that does not say its producer should fail"
         text_null       jurisdiction_ocdid  FK  "idx"
         uuid_null       created_by_user_id FK  "the system user for a scrape nobody asked for; see Actors"
         timestamptz_null published_at       "set when a reviewer approves; this is the publish state"
@@ -387,6 +387,12 @@ erDiagram
   both sides collapsed five user reports into three on the first backfill. `merge_failed` was
   dropped rather than migrated: nothing had been able to raise one since 2026-09-04, when
   rosters moved to committing straight to `main`.
+
+- **`people_edit` became `roster_edit`, migration 229.** The kind carries post assignments,
+  labels, term dates and merges as well as person fields, so it is named for the roster, like
+  the route (`roster-edits`) and modules (`core/`/`services/roster_edits.py`) that write it; it
+  pairs with `jurisdiction_edit`, which edits the jurisdiction itself. 229 rewrites the rows, the
+  `kind` CHECK and 223's partial index. A wire change: kinds reach API responses.
 
 - **One membership row per period held, migrations 225-228 (step 15).** Holding a post twice
   is two rows; history is every row, open is `closed_at IS NULL`. 225 renames `first_seen_at`

@@ -59,7 +59,7 @@ export interface TimelineEntry {
 const KIND_LABEL: Record<string, string> = {
   scrape: "Scrape",
   sheet_import: "Import",
-  people_edit: "Edit",
+  roster_edit: "Edit",
   jurisdiction_edit: "Details",
 };
 

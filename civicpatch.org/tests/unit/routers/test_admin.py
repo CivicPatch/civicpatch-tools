@@ -274,7 +274,7 @@ def test_get_user_forbidden_without_admins_role():
 # ids, because that is what the screen selects and what one undo spans.
 _CANDIDATE = RollbackCandidate(
     changeset_id="2026-09-10-ab12",
-    kind="people_edit",
+    kind="roster_edit",
     jurisdiction_ocdid="ocd-jurisdiction/country:us/state:zz/place:x/government",
     jurisdiction_name="Xville",
     comment=None,

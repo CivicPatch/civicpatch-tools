@@ -447,7 +447,7 @@ async def test_only_a_scrape_carries_pipeline_run_timestamps():
         )
         await cur.execute(
             "INSERT INTO changesets (id, jurisdiction_ocdid, kind, created_at, updated_at, "
-            "published_at) VALUES (%s, %s, 'people_edit', now(), now(), now())",
+            "published_at) VALUES (%s, %s, 'roster_edit', now(), now(), now())",
             (changeset_id, _OCDID),
         )
         await conn.commit()

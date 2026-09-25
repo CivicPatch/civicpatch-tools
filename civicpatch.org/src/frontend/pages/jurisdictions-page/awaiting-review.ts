@@ -16,7 +16,7 @@ import { LOGIN_PATH, reviewSessionUrl } from "../review-routes.js";
 export const CHANGESET_KIND = Object.freeze({
   SCRAPE: "scrape",
   SHEET_IMPORT: "sheet_import",
-  PEOPLE_EDIT: "people_edit",
+  ROSTER_EDIT: "roster_edit",
   JURISDICTION_EDIT: "jurisdiction_edit",
 });
 

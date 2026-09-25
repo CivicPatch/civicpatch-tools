@@ -77,7 +77,7 @@ async def get_recent_publications(limit: int) -> list[dict]:
     a single row (the latest one), with `review_count` saying how many. Without this, one
     actively-touched town could fill the whole feed and crowd out everything else.
 
-    `kind` names the changeset that went live (`scrape`, `people_edit`, `sheet_import`,
+    `kind` names the changeset that went live (`scrape`, `roster_edit`, `sheet_import`,
     `rollback`) — every publish writes the *same* `publish_review` activity type regardless of
     what actually produced it (a scrape a reviewer approved, a maintainer's hand edit, a
     rollback), so `kind` is the only column that tells them apart for display.

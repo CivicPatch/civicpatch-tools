@@ -23,7 +23,7 @@ function formatDate(iso: string) {
 // as something that happened *to* it, not something an unnamed actor did *to* an object.
 const KIND_VERBS: Record<string, string> = {
   scrape: "was published",
-  people_edit: "was edited",
+  roster_edit: "was edited",
   sheet_import: "had data imported",
   jurisdiction_edit: "was edited",
   rollback: "had changes rolled back",

@@ -322,10 +322,10 @@ async def test_the_calendar_also_says_what_kind_ran():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_hand_edit_is_not_a_collection_attempt():
-    """`ok` and `failed` describe a run reading a source. A `people_edit` has no run — 8 dev
+    """`ok` and `failed` describe a run reading a source. A `roster_edit` has no run — 8 dev
     rows, none with a status — so counting it would pad the green band with something that
     never ran, and `jurisdiction_edit` could never be "to review" at all."""
-    await _changeset(published=True, kind="people_edit", status=None, days_ago=6)
+    await _changeset(published=True, kind="roster_edit", status=None, days_ago=6)
 
     row = await _row()
     assert row.published == 0

@@ -107,7 +107,7 @@ async def test_returns_and_records_the_changeset_it_rolled_back():
         target_id = make_id()
         await cur.execute(
             "INSERT INTO changesets (id, kind, jurisdiction_ocdid, created_by_user_id, "
-            "published_at, created_at) VALUES (%s, 'people_edit', %s, %s, now(), now())",
+            "published_at, created_at) VALUES (%s, 'roster_edit', %s, %s, now(), now())",
             (target_id, _OCDID, user_id),
         )
         await conn.commit()
