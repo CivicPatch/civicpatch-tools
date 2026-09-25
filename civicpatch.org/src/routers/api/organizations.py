@@ -11,7 +11,7 @@ from schemas.posts import CreatePostRequest
 def get_router() -> APIRouter:
     router = APIRouter()
 
-    @router.post("/{organization_id}/posts")
+    @router.post("/{organization_id}/posts", include_in_schema=False)
     async def create_post_endpoint(
         organization_id: str,
         body: CreatePostRequest,
@@ -42,7 +42,7 @@ def get_router() -> APIRouter:
             )
         return {"data": {"id": post_id}}
 
-    @router.post("/{organization_id}/default")
+    @router.post("/{organization_id}/default", include_in_schema=False)
     async def set_default_organization_endpoint(
         organization_id: str,
         _: Identity = Depends(
@@ -61,7 +61,7 @@ def get_router() -> APIRouter:
         reads — every write below is gated on its own."""
         return {"data": {"organizations": await posts.list_by_organization(jurisdiction_ocdid)}}
 
-    @router.post("/{jurisdiction_ocdid:path}")
+    @router.post("/{jurisdiction_ocdid:path}", include_in_schema=False)
     async def create_organization_endpoint(
         jurisdiction_ocdid: str,
         body: CreateOrganizationRequest,
@@ -79,7 +79,7 @@ def get_router() -> APIRouter:
             )
         return {"data": {"id": organization_id}}
 
-    @router.patch("/{organization_id}")
+    @router.patch("/{organization_id}", include_in_schema=False)
     async def update_organization_endpoint(
         organization_id: str,
         body: UpdateOrganizationRequest,
@@ -92,7 +92,7 @@ def get_router() -> APIRouter:
             return JSONResponse({"error": "No such organization."}, status_code=404)
         return {"data": {"ok": True}}
 
-    @router.delete("/{organization_id}")
+    @router.delete("/{organization_id}", include_in_schema=False)
     async def delete_organization_endpoint(
         organization_id: str,
         _: Identity = Depends(

@@ -197,7 +197,7 @@ def get_router() -> APIRouter:
         results = await database.get_jurisdictions_by_ocdids(body.ocdids)
         return {"data": results}
 
-    @router.patch("/data")
+    @router.patch("/data", include_in_schema=False)
     async def patch_jurisdiction_data_endpoint(
         request: PatchJurisdictionDataRequest,
         background_tasks: BackgroundTasks,
@@ -230,7 +230,7 @@ def get_router() -> APIRouter:
 
     # `:path` because an ocdid carries slashes. The literal suffix anchors it, so this cannot
     # swallow the sibling routes.
-    @router.post("/{jurisdiction_ocdid:path}/roster-edits")
+    @router.post("/{jurisdiction_ocdid:path}/roster-edits", include_in_schema=False)
     async def edit_jurisdiction_roster_endpoint(
         jurisdiction_ocdid: str,
         body: JurisdictionRosterEditRequest,

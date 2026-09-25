@@ -11,7 +11,7 @@ from schemas.pagination import pagination_offset, pagination_total_pages
 def get_router() -> APIRouter:
     router = APIRouter()
 
-    @router.get("/unmatched")
+    @router.get("/unmatched", include_in_schema=False)
     async def unmatched_text_endpoint(
         page: int = Query(1, ge=1),
         per_page: int = Query(20, ge=1, le=100),
