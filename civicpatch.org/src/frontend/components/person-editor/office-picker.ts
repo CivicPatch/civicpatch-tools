@@ -52,7 +52,6 @@ type OfficePickerHost = HTMLElement & {
 };
 
 const NO_ROLE = "";
-const NO_DIVISION = "";
 
 const byLabel = (a: RoleOption, b: RoleOption) =>
   a.label.localeCompare(b.label);
@@ -71,13 +70,8 @@ function OfficePicker(host: OfficePickerHost) {
   const currentPost = posts.find((post) => post.id === host.postId) ?? null;
 
   const initialRoleId = currentPost?.role_id ?? host.initialRoleId ?? NO_ROLE;
-  const initialDivisionOcdid = currentPost
-    ? currentPost.division_ocdid !== atLarge
-      ? currentPost.division_ocdid
-      : NO_DIVISION
-    : host.initialDivisionOcdid && host.initialDivisionOcdid !== atLarge
-      ? host.initialDivisionOcdid
-      : NO_DIVISION;
+  const initialDivisionOcdid =
+    currentPost?.division_ocdid ?? host.initialDivisionOcdid ?? atLarge;
   const [roleId, setRoleId] = useState(initialRoleId);
   const [divisionOcdid, setDivisionOcdid] = useState(initialDivisionOcdid);
   // `useState`'s own initializer only ever runs once — if this element's identity doesn't
@@ -118,13 +112,18 @@ function OfficePicker(host: OfficePickerHost) {
   // Every division any role uses, not just this one's — a jurisdiction's divisions are a
   // geographic fact (Council Member minting District 4 means District 4 exists, full stop),
   // so Mayor offers it too, marked new since no post pairs Mayor with it yet.
+  //
+  // At-large is in the list rather than filtered out and hardcoded ahead of it. It was the
+  // exception, so it was also the one option that never said "(New)" — and it is the default,
+  // which made it the commonest way to mint a post without being told. Seeded unconditionally
+  // because it is always offerable, whether or not a post uses it yet.
   const divisionOptions = [
     ...new Set([
+      atLarge,
       ...posts.map((post) => post.division_ocdid),
       ...proposedPosts.map((p) => p.division_ocdid),
     ]),
   ]
-    .filter((ocdid) => ocdid !== atLarge)
     .map((ocdid) => ({ ocdid, isNew: !matchFor(roleId, ocdid) }))
     .sort((a, b) => divisionName(a.ocdid).localeCompare(divisionName(b.ocdid)));
 
@@ -186,14 +185,14 @@ function OfficePicker(host: OfficePickerHost) {
   const handleRole = (e: Event) => {
     const id = inputValue(e);
     setRoleId(id);
-    setDivisionOcdid(NO_DIVISION);
+    setDivisionOcdid(atLarge);
     const match = matchFor(id, atLarge);
     if (match) notifyPicked(match.id);
     else void createAndPick(id, atLarge);
   };
   const handleDivision = (e: Event) => {
     const division = inputValue(e) || atLarge;
-    setDivisionOcdid(division === atLarge ? NO_DIVISION : division);
+    setDivisionOcdid(division);
     const match = matchFor(roleId, division);
     if (match) notifyPicked(match.id);
     else void createAndPick(roleId, division);
@@ -213,7 +212,7 @@ function OfficePicker(host: OfficePickerHost) {
       meta_is_verified: true,
     });
     setRoleId(role_id);
-    setDivisionOcdid(division_ocdid === atLarge ? NO_DIVISION : division_ocdid);
+    setDivisionOcdid(division_ocdid);
     // Not `label` — that's the new post's own name (civ-post-add's own field, ignored by the
     // API since 148 anyway), never the occupant's membership label. Picking a post never sets
     // one (see office-edits.ts/field-controls.ts's own comments on this).
@@ -247,12 +246,6 @@ function OfficePicker(host: OfficePickerHost) {
             ?disabled=${creating}
             @change=${handleDivision}
           >
-            <option
-              value=${NO_DIVISION}
-              .selected=${divisionOcdid === NO_DIVISION}
-            >
-              ${divisionName("")}
-            </option>
             ${divisionOptions.map(
               ({ ocdid, isNew }) =>
                 html`<option
@@ -285,7 +278,7 @@ function OfficePicker(host: OfficePickerHost) {
           .organizationId=${host.organizationId ?? ""}
           .roles=${roles}
           .initialRoleId=${roleId}
-          .initialDivisionOcdid=${divisionOcdid || atLarge}
+          .initialDivisionOcdid=${divisionOcdid}
           @added=${handleAdded}
           @cancel=${() => setAddOpen(false)}
         ></civ-post-add>`

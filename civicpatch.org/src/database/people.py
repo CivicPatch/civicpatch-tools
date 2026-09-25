@@ -161,25 +161,25 @@ class UnscopedRead(Exception):
 async def get_roster(
     jurisdiction_ocdid: str | None = None, state: str | None = None
 ) -> list[dict]:
-    """Everyone currently seated — the published roster.
+    """Everyone on the roster — the published one.
 
     What `status='active'` used to mean, asked of memberships instead of a column that
     mirrored them.
     """
-    return await _people(jurisdiction_ocdid, state, seated_only=True)
+    return await _people(jurisdiction_ocdid, state, is_active=True)
 
 
 async def get_people(
     jurisdiction_ocdid: str | None = None, state: str | None = None
 ) -> list[dict]:
-    """Everyone we hold here, seated or not. The admin and search view."""
-    return await _people(jurisdiction_ocdid, state, seated_only=False)
+    """Everyone we hold here, on the roster or not. The admin and search view."""
+    return await _people(jurisdiction_ocdid, state, is_active=False)
 
 
 def _scope(
     jurisdiction_ocdid: str | None,
     state: str | None,
-    seated_only: bool,
+    is_active: bool,
 ) -> tuple[list[LiteralString], list[Any]]:
     """The WHERE clauses and their values, shared by the whole read and the paged one.
 
@@ -198,7 +198,7 @@ def _scope(
     if state is not None:
         clauses.append("jurisdiction_ocdid LIKE %s")
         values.append(f"ocd-jurisdiction/country:us/state:{state.lower()}%")
-    if seated_only:
+    if is_active:
         clauses.append(IS_ON_THE_ROSTER)
     return clauses, values
 
@@ -206,11 +206,11 @@ def _scope(
 async def get_roster_page(
     jurisdiction_ocdid: str | None, state: str | None, limit: int, offset: int
 ) -> tuple[int, list[dict]]:
-    """One page of the seated roster, and the total behind it.
+    """One page of the roster, and the total behind it.
 
     Same filters and ordering as `get_roster`, so paging through it walks the same list.
     """
-    clauses, values = _scope(jurisdiction_ocdid, state, seated_only=True)
+    clauses, values = _scope(jurisdiction_ocdid, state, is_active=True)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -231,9 +231,9 @@ async def get_roster_page(
 async def _people(
     jurisdiction_ocdid: str | None,
     state: str | None,
-    seated_only: bool,
+    is_active: bool,
 ) -> list[dict]:
-    clauses, values = _scope(jurisdiction_ocdid, state, seated_only)
+    clauses, values = _scope(jurisdiction_ocdid, state, is_active)
 
     people: list[dict] = []
     pool = await get_pool()
@@ -398,7 +398,3 @@ async def stream_for_state(
             while rows := await cur.fetchmany(chunk_size):
                 columns = [column.name for column in cur.description or []]
                 yield [dict(zip(columns, row)) for row in rows]
-
-
-
-

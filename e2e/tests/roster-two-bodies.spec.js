@@ -77,6 +77,16 @@ test.describe("Roster editor — one person, two bodies", () => {
       section(page, TWO_BODY_COUNCIL).locator(".person-editor__restore-person"),
     ).toHaveCount(1);
 
+    // And the row itself says so. Until 2026-09-24 it did not: `renderPersonCardGrid` ignored
+    // `status`, so a staged removal showed only in the open editor and a roster with one
+    // queued looked untouched to anyone who had scrolled past. The struck name is what
+    // `.review-row--removed` already means, so the two pages read alike. Was the plan's §20.
+    await expect(row(page, TWO_BODY_COUNCIL, ADA)).toHaveClass(/rperson--removing/);
+    // Only the row that was pressed: the same person on the school board is not going away.
+    await expect(row(page, TWO_BODY_SCHOOL_BOARD, ADA)).not.toHaveClass(
+      /rperson--removing/,
+    );
+
     // The school board row is untouched: opening it still offers Remove, not Restore.
     await row(page, TWO_BODY_SCHOOL_BOARD, ADA).click();
     await expect(

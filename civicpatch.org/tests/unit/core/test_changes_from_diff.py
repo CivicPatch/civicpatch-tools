@@ -31,9 +31,9 @@ def _person(person_id: str, name: str, post: PostKey = MAYOR, **overrides) -> Pe
     )
 
 
-def _changes(before: list[Person], after: list[Person]):
+def _changes(before: list[Person], after: list[Person], post_labels=None):
     first, second = Roster(people=tuple(before)), Roster(people=tuple(after))
-    return changes_from_diff(first, second, roster_diff(first, second))
+    return changes_from_diff(first, second, roster_diff(first, second), post_labels)
 
 
 def _types(changes):
@@ -100,6 +100,37 @@ def test_a_move_names_the_post_it_left_and_the_one_it_arrived_in():
     assert _types(changes) == [ActivityType.ASSIGN_MEMBERSHIP]
     field = changes[0].payload.fields[0]
     assert (field.before, field.after) == (MAYOR.post_id, CLERK.post_id)
+
+
+@pytest.mark.unit
+def test_a_move_says_which_seats_when_it_is_given_their_names():
+    """The whole point of `post_labels`. Without them the history page renders this row as
+    `post: <uuid> -> <uuid>` and its collapsed badge as the bare field name, which is what
+    `schemas.activity.RosterChange` warns about and what the fold path did until 2026-09-24."""
+    changes = _changes(
+        [_person("p1", "Ann Lee", MAYOR)],
+        [_person("p1", "Ann Lee", CLERK)],
+        {MAYOR.post_id: "Mayor", CLERK.post_id: "Clerk"},
+    )
+
+    field = changes[0].payload.fields[0]
+    assert (field.before, field.after) == ("Mayor", "Clerk")
+    # The badge shows `detail` where there is one, so it reads the seat rather than "post".
+    assert changes[0].payload.detail == "Clerk"
+
+
+@pytest.mark.unit
+def test_a_seat_with_no_name_stays_identified_rather_than_blank():
+    """Falling back to the id keeps the row truthful. Dropping it would lose the half of a move
+    that does have a name."""
+    changes = _changes(
+        [_person("p1", "Ann Lee", MAYOR)],
+        [_person("p1", "Ann Lee", CLERK)],
+        {CLERK.post_id: "Clerk"},
+    )
+
+    field = changes[0].payload.fields[0]
+    assert (field.before, field.after) == (MAYOR.post_id, "Clerk")
 
 
 @pytest.mark.unit

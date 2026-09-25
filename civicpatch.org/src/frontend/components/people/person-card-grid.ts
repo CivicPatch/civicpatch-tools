@@ -1,8 +1,11 @@
 import { html, nothing } from "lit-html";
 import "../person-image.js";
 import "./person-card-grid.css";
-import { type PersonCard, personOf,
+import {
+  type PersonCard,
+  personOf,
   cardKey,
+  DEPARTING,
 } from "./person-cards.js";
 import { postName, type RoleOption } from "../posts-list/posts-model.js";
 import { type DiffRecord, type FieldSpec } from "../fields/field-model.js";
@@ -59,7 +62,14 @@ export interface CardShellOptions {
 // the click ended a selection, not a click) or a real link's own click (it navigates; this
 // must not also open the card).
 export function renderCardShell(
-  { card, ariaLabel, isOpen, onOpenPerson, editorId, extraClass = "" }: CardShellOptions,
+  {
+    card,
+    ariaLabel,
+    isOpen,
+    onOpenPerson,
+    editorId,
+    extraClass = "",
+  }: CardShellOptions,
   content: unknown,
 ) {
   const handleCardClick = (e: MouseEvent) => {
@@ -99,8 +109,8 @@ function renderFieldValue(field: FieldSpec, list: string[]) {
     return list.map(
       (value, i) =>
         html`${i > 0 ? ", " : ""}<a class="pc-link" href="${scheme}${value}"
-          >${value}</a
-        >`,
+            >${value}</a
+          >`,
     );
   return list.join(", ");
 }
@@ -137,7 +147,10 @@ function subtitleFor(record: DiffRecord): Subtitle {
       | { post_label: string; label: string | null }[]
       | undefined
   )?.[0];
-  return { postLabel: held ? postName(held) : "", membershipLabel: held?.label ?? "" };
+  return {
+    postLabel: held ? postName(held) : "",
+    membershipLabel: held?.label ?? "",
+  };
 }
 
 function renderPerson(
@@ -152,9 +165,12 @@ function renderPerson(
   // that was clicked opens. The two are the same string for a card with no body.
   const isOpen = onOpenPerson ? cardKey(card) === openCardKey : false;
   const ariaSubtitle = [postLabel, membershipLabel].filter(Boolean).join(", ");
-  const nameBlock = html`<span class="pc-name">${name}</span>
-    ${postLabel ? html`<span class="pc-sub">${postLabel}</span>` : nothing}
-    ${membershipLabel ? html`<span class="pc-sub">${membershipLabel}</span>` : nothing}`;
+  const nameBlock = html`<span class="pc-name">${name}</span> ${postLabel
+      ? html`<span class="pc-sub">${postLabel}</span>`
+      : nothing}
+    ${membershipLabel
+      ? html`<span class="pc-sub">${membershipLabel}</span>`
+      : nothing}`;
   return renderCardShell(
     {
       card,
@@ -162,6 +178,7 @@ function renderPerson(
       isOpen,
       onOpenPerson,
       editorId: idPrefix ? `${idPrefix}${cardKey(card)}` : undefined,
+      extraClass: DEPARTING.has(card.status) ? "rperson--removing" : "",
     },
     html`
       <span class="pc-av">
@@ -187,7 +204,9 @@ function renderPerson(
 function renderGroupHead(roleLabel: string, count: number) {
   return html`
     <div class="rgrouphead">
-      ${roleLabel}${count > 1 ? html` <span class="sub">${count}</span>` : nothing}
+      ${roleLabel}${count > 1
+        ? html` <span class="sub">${count}</span>`
+        : nothing}
     </div>
   `;
 }
@@ -274,7 +293,8 @@ export function renderPersonCardGrid(
         group.roleLabel,
         group.people,
         ({ card }) => cardKey(card),
-        (people) => people.map(({ card }) => renderPerson(card, sources, options)),
+        (people) =>
+          people.map(({ card }) => renderPerson(card, sources, options)),
         openCardKey,
         renderEditor && ((item) => renderEditor(item.card)),
       ),
