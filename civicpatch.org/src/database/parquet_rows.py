@@ -56,12 +56,12 @@ TABLES: dict[str, LiteralString] = {
                m.id::text, m.person_id::text, m.post_id::text, m.organization_id::text,
                p.jurisdiction_ocdid,
                m.label, m.start_date, m.end_date,
-               m.opened_at, m.last_seen_at, m.closed_at, m.created_at,
+               m.opened_at, m.closed_at,
                m.designations, membership_source_labels(m.sources) AS source_labels,
                (m.closed_at IS NULL) AS is_open
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
-        ORDER BY state, m.id
+        ORDER BY state, m.id, m.opened_at
     """,
     "posts": f"""
         SELECT {_STATE_OF.format(col="jurisdiction_ocdid")} AS state,

@@ -35,7 +35,6 @@ def _membership(role_id="mayor", division=f"{_BASE}/council_district:1"):
     return Membership(
         post=PostKey(organization_id="org-1", role_id=role_id, division_ocdid=division),
         opened_at=_T,
-        last_seen_at=_T,
     )
 
 

@@ -14,7 +14,6 @@ from core.projection.field_value import (
 from core.projection.membership_details import (
     MembershipSource,
     first_seen,
-    last_seen,
     membership_sources,
 )
 from core.projection.memberships import (
@@ -35,7 +34,6 @@ class Membership(BaseModel, frozen=True):
     # hash cannot be read back to either.
     post: PostKey
     opened_at: datetime
-    last_seen_at: datetime
     label: str | None = None
     start_date: str | None = None
     end_date: str | None = None
@@ -78,7 +76,6 @@ def derive_membership(
             members, post.post_id, MEMBERSHIP_END_DATE_FIELD, own_records, facts
         ),
         opened_at=first_seen(seen),
-        last_seen_at=last_seen(seen),
         designations=held.details.designations,
         unmatched_text=held.details.unmatched_text,
         sources=membership_sources(own_records),

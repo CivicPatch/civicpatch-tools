@@ -112,3 +112,33 @@ async def test_rolling_back_a_reject_removes_the_boundary_it_made():
     await rollback.rollback_changeset(reject, SYSTEM_USER_ID, "she is still mayor")
 
     assert await _periods(jane) == [("mayor", _T0, None)]
+
+
+async def _start_date(person_id: str) -> str | None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT start_date FROM memberships WHERE person_id = %s AND closed_at IS NULL",
+            (person_id,),
+        )
+        row = await cur.fetchone()
+        assert row is not None
+        return row[0]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+@pytest.mark.xfail(
+    strict=True,
+    reason="known bug: the editor files dates as person claims, the fold reads membership claims",
+)
+async def test_a_start_date_saved_in_the_editor_reaches_the_membership():
+    council = await _council()
+    jane = str(uuid.uuid4())
+    await _scrape(_T0, jane, "Mayor", council)
+
+    await edit_published_roster(
+        _OCDID, [PersonEdit(id=jane, fields={"start_date": "2024-01-01"})], SYSTEM_USER_ID
+    )
+
+    assert await _start_date(jane) == "2024-01-01"

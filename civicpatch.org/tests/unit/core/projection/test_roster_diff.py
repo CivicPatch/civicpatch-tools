@@ -30,7 +30,7 @@ _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
 
 
 def membership(post: PostKey, **fields) -> Membership:
-    return Membership(post=post, opened_at=_T, last_seen_at=_T, **fields)
+    return Membership(post=post, opened_at=_T, **fields)
 
 
 def person(id: str, *posts: str, **fields) -> Person:
@@ -109,7 +109,7 @@ def test_seen_dates_are_not_compared():
     after = Person(
         id="alice",
         memberships=(
-            Membership(post=MAYOR, opened_at=later, last_seen_at=later),
+            Membership(post=MAYOR, opened_at=later),
         ),
     )
 

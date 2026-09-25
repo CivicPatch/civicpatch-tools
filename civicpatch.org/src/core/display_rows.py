@@ -90,7 +90,6 @@ def _membership_row(
         "start_date": membership.start_date,
         "end_date": membership.end_date,
         "opened_at": membership.opened_at,
-        "last_seen_at": membership.last_seen_at,
         "post_label": _post_label(membership.post, role_label, claimed),
     }
 

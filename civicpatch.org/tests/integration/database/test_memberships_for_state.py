@@ -88,15 +88,14 @@ async def _add_membership(cur, ocdid, division, state, name, stints) -> str:
             """
             INSERT INTO memberships
                 (post_id, organization_id, person_id,
-                 opened_at, last_seen_at, closed_at, label, sources)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s::jsonb)
+                 opened_at, closed_at, label, sources)
+            VALUES (%s, %s, %s, %s, %s, %s, %s::jsonb)
             """,
             (
                 post_id,
                 organization_id,
                 person_id,
                 opened_at,
-                closed_at or opened_at,
                 closed_at,
                 "Acting",
                 factories.sources_of(["Mayor", "Acting Mayor"]),

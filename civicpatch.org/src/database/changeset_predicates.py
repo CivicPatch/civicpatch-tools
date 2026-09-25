@@ -115,9 +115,8 @@ HELD_BY_REVIEWER = (
 # so ten hand edits had dated a "scrape" for jurisdictions where nothing was scraped.
 #
 # `updated_at`, not `created_at`: that is when the content was confirmed, and the key
-# superseding already orders on. Collection kinds only, which is the same rule
-# `publish_changeset`'s `advances_last_seen` applies to `memberships.last_seen_at` — a hand edit
-# reads no source, so it may not date one.
+# superseding already orders on. Collection kinds only: a hand edit reads no source, so it may
+# not date one.
 #
 # A join, not a correlated subquery: one aggregate scan, and it needs no alias on
 # `jurisdictions`, so a query that already aliases it `j` takes it unchanged. **One per

@@ -288,7 +288,7 @@ async def update_pipeline_run_status(
         )
         params.extend([status, [s.value for s in _TERMINAL]])
 
-    # Every report re-stamps it: this is what dates `last_seen_at` on every membership.
+    # Every report re-stamps it: this is the scrape's collection time.
     set_clauses.append("updated_at = CURRENT_TIMESTAMP")
 
     if not set_clauses:

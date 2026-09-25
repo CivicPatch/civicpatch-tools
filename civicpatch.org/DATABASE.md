@@ -280,9 +280,7 @@ erDiagram
         text_null       start_date          "144: text, not date — sources give partial dates and Popolo allows them (3,513 of 4,547 on dev are partial). From the source; we do not infer it"
         text_null       end_date            "144: text, as start_date. From the source — NOT set when someone stops appearing"
         timestamptz     opened_at           "225: was first_seen_at. PK part (227). When this period opened: stamped with when its facts were observed, never a page's date"
-        timestamptz     last_seen_at        "the changeset's sourced_at, advanced by GREATEST on every publish that still seats them"
         timestamptz_null closed_at          "When this period closed; NULL = open. Not end_date, which is often a future term end"
-        timestamptz     created_at          "default: now()"
     }
 
     claims {
@@ -390,7 +388,7 @@ erDiagram
   dropped rather than migrated: nothing had been able to raise one since 2026-09-04, when
   rosters moved to committing straight to `main`.
 
-- **One membership row per period held, migrations 225-227 (step 15).** Holding a post twice
+- **One membership row per period held, migrations 225-228 (step 15).** Holding a post twice
   is two rows; history is every row, open is `closed_at IS NULL`. 225 renames `first_seen_at`
   to `opened_at`, pairing it with `closed_at` and the "open membership" the code already says.
   Both are ours, and cannot be merged with `start_date` / `end_date`, which a page states and
@@ -398,7 +396,8 @@ erDiagram
   `id` stays `uuid5(person, post)` because claims are filed against the pair, so an override
   applies to every period of it. The writer rebuilds every row from facts, one fold per publish,
   so rows before deploy B's closed ones are replaced by history recomputed from facts.
-  226 dropped `membership_roles`: nothing read it but the projection diff checking it against
+  228 dropped `last_seen_at` (the latest record confirming a row) and `created_at` (reset on
+  every rebuild): neither bounds a period, and nothing read them. 226 dropped `membership_roles`: nothing read it but the projection diff checking it against
   itself, and the extra roles a label names are parsed from the verbatim label (step 10a).
 
 - **`source_record_identities` folded into `source_records.person_id`, migration 224.** It was

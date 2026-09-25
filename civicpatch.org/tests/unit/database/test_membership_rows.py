@@ -30,7 +30,7 @@ MEMBER = PostKey(
 def row(post: PostKey, closed_at: datetime | None = None, **fields) -> MembershipRow:
     return MembershipRow(
         person_id="alice",
-        membership=Membership(post=post, opened_at=_T, last_seen_at=_LATER, **fields),
+        membership=Membership(post=post, opened_at=_T, **fields),
         opened_at=_T,
         closed_at=closed_at,
     )
@@ -74,7 +74,6 @@ def test_a_row_carries_every_column_the_fold_derived():
     assert written["start_date"] == "2024-01-01"
     assert written["end_date"] == "2028-01-01"
     assert written["opened_at"] == _T
-    assert written["last_seen_at"] == _LATER
     assert written["designations"] == ["Place 3"]
     assert written["meta_unmatched_text"] == ["Harbor Commissioner"]
     assert json.loads(written["sources"]) == [{"note": "Mayor", "url": "https://example.gov"}]

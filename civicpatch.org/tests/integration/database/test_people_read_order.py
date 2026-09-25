@@ -80,10 +80,10 @@ async def _membership(cur, organization_id: str, person_id: str, role_id: str, l
     await cur.execute(
         """
         INSERT INTO memberships
-            (post_id, organization_id, person_id, opened_at, last_seen_at, sources)
-        VALUES (%s, %s, %s, %s, %s, %s::jsonb)
+            (post_id, organization_id, person_id, opened_at, sources)
+        VALUES (%s, %s, %s, %s, %s::jsonb)
         """,
-        (post_id, organization_id, person_id, _SEEN_AT, _SEEN_AT, factories.sources_of([label])),
+        (post_id, organization_id, person_id, _SEEN_AT, factories.sources_of([label])),
     )
     return post_id
 
@@ -139,12 +139,12 @@ async def _rewrite_rows():
         )
         await cur.execute(
             """
-            UPDATE memberships m SET last_seen_at = %s
+            UPDATE memberships m SET label = m.label
             FROM organizations o
             WHERE m.organization_id = o.id AND o.jurisdiction_ocdid = %s
               AND o.name = 'Council'
             """,
-            (_SEEN_AT, _OCDID),
+            (_OCDID,),
         )
         await conn.commit()
 

@@ -28,7 +28,6 @@ HEADERS = [
     "membership_start_date",
     "membership_end_date",
     "membership_opened_at",
-    "membership_last_seen_at",
     # Empty means they still hold it. No `is_open`: that is this column with a NOT on it.
     "membership_closed_at",
     # Verbatim. `designations` is absent: it is `parse_label` run over these.
@@ -67,7 +66,6 @@ def to_row(membership: dict) -> list[str]:
         _text(membership.get("membership_start_date")),
         _text(membership.get("membership_end_date")),
         _timestamp(membership.get("membership_opened_at")),
-        _timestamp(membership.get("membership_last_seen_at")),
         _timestamp(membership.get("membership_closed_at")),
         _joined(membership.get("membership_source_labels")),
     ]

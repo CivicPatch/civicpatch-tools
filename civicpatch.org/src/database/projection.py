@@ -125,9 +125,9 @@ _PUBLISHED_AT = """
 _INSERT_MEMBERSHIP = """
     INSERT INTO memberships
         (id, post_id, organization_id, person_id, label, start_date, end_date,
-         opened_at, last_seen_at, closed_at, designations, meta_unmatched_text, sources)
+         opened_at, closed_at, designations, meta_unmatched_text, sources)
     SELECT %(id)s, p.id, p.organization_id, %(person_id)s, %(label)s, %(start_date)s,
-           %(end_date)s, %(opened_at)s, %(last_seen_at)s, %(closed_at)s, %(designations)s,
+           %(end_date)s, %(opened_at)s, %(closed_at)s, %(designations)s,
            %(meta_unmatched_text)s, %(sources)s::jsonb
     FROM posts p WHERE p.id = %(post_id)s
 """
@@ -295,7 +295,6 @@ def membership_rows(history: Iterable[MembershipRow]) -> list[dict]:
             "start_date": row.membership.start_date,
             "end_date": row.membership.end_date,
             "opened_at": row.opened_at,
-            "last_seen_at": row.membership.last_seen_at,
             "closed_at": row.closed_at,
             "designations": list(row.membership.designations),
             "meta_unmatched_text": list(row.membership.unmatched_text),
@@ -320,7 +319,7 @@ _STORED_PEOPLE = """
 
 _STORED_OPEN_MEMBERSHIPS = """
     SELECT m.person_id::text, p.organization_id::text, p.role_id, p.division_ocdid, m.label,
-           m.start_date, m.end_date, m.opened_at, m.last_seen_at,
+           m.start_date, m.end_date, m.opened_at,
            m.designations, m.meta_unmatched_text, m.sources
     FROM memberships m JOIN posts p ON p.id = m.post_id
     WHERE p.jurisdiction_ocdid = %s AND m.closed_at IS NULL
@@ -342,7 +341,6 @@ def _stored_membership(row) -> Membership:
         start_date,
         end_date,
         opened_at,
-        last_seen_at,
         designations,
         unmatched_text,
         sources,
@@ -354,7 +352,6 @@ def _stored_membership(row) -> Membership:
             division_ocdid=division_ocdid,
         ),
         opened_at=opened_at,
-        last_seen_at=last_seen_at,
         label=label,
         start_date=start_date,
         end_date=end_date,

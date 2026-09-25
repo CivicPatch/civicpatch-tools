@@ -26,7 +26,7 @@ def _person(person_id: str, name: str, post: PostKey = MAYOR, **overrides) -> Pe
     return Person(
         id=person_id,
         name=name,
-        memberships=(Membership(post=post, opened_at=_T, last_seen_at=_T),),
+        memberships=(Membership(post=post, opened_at=_T),),
         **overrides,
     )
 

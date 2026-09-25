@@ -84,15 +84,14 @@ async def _seed_succession() -> str:
                 """
                 INSERT INTO memberships
                     (post_id, organization_id, person_id,
-                     opened_at, last_seen_at, closed_at, sources)
-                VALUES (%s, %s, %s, %s, %s, %s, %s::jsonb)
+                     opened_at, closed_at, sources)
+                VALUES (%s, %s, %s, %s, %s, %s::jsonb)
                 """,
                 (
                     post_id,
                     organization_id,
                     person_id,
                     opened_at,
-                    closed_at or opened_at,
                     closed_at,
                     factories.sources_of([_LABEL]),
                 ),
