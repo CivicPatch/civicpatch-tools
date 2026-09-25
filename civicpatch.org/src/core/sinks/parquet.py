@@ -55,7 +55,6 @@ SCHEMAS: dict[str, pa.Schema] = {
             ("closed_at", _TIMESTAMP),
             ("designations", _STRINGS),
             ("source_labels", _STRINGS),
-            ("is_open", pa.bool_()),
         ]
     ),
     "posts": pa.schema(

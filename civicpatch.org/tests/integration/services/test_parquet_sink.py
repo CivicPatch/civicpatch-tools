@@ -146,7 +146,9 @@ async def test_every_declared_table_round_trips_from_live_rows():
 @pytest.mark.integration
 async def test_a_closed_seat_is_published_and_marked():
     """The reason to publish memberships at all: a former officeholder stays legible. Open-data
-    git renders the live roster only, so this sink is the one that carries the history."""
+    git renders the live roster only, so this sink is the one that carries the history.
+    It read the closed seat off `is_open`; that column was `closed_at IS NULL` written twice and
+    is gone (step 15), so it reads `closed_at`."""
     await _seed(3, closed=1)
 
     recorder = await _sync()
@@ -155,7 +157,7 @@ async def test_a_closed_seat_is_published_and_marked():
     )
 
     assert seats.num_rows == 3
-    assert seats.column("is_open").to_pylist().count(False) == 1
+    assert seats.column("closed_at").null_count == 2
 
 
 @pytest.mark.asyncio

@@ -55,8 +55,7 @@ PERSON_MEMBERSHIPS = """COALESCE((
         'designations', to_jsonb(memberships.designations),
         'meta_unmatched_text', to_jsonb(memberships.meta_unmatched_text),
         'start_date', memberships.start_date,
-        'end_date', memberships.end_date,
-        'opened_at', memberships.opened_at
+        'end_date', memberships.end_date
     ) ORDER BY posts.role_id, posts.division_ocdid, posts.id)
     FROM memberships
     JOIN posts ON posts.id = memberships.post_id
