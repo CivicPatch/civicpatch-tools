@@ -128,7 +128,7 @@ async def test_identities_come_from_cp_orgs_own_people_when_it_has_any():
     """Its own published people are the better prior — they are confirmed, and the scrape's
     research is a guess."""
     with patch(
-        "services.roster_ingest.get_person_models",
+        "services.roster_ingest.matcher_pool",
         new_callable=AsyncMock,
         return_value=[Person(name="Ann Lee", other_names=["A. Lee"], jurisdiction_ocdid="x")],
     ):
@@ -143,7 +143,7 @@ async def test_identities_fall_back_to_the_scrapes_own_research():
     """A jurisdiction cp.org has never published has nobody to compare against, which is
     exactly when the pipeline's research is worth reading."""
     with patch(
-        "services.roster_ingest.get_person_models",
+        "services.roster_ingest.matcher_pool",
         new_callable=AsyncMock,
         return_value=[],
     ):
@@ -157,7 +157,7 @@ async def test_identities_fall_back_to_the_scrapes_own_research():
 async def test_no_prior_at_all_is_not_an_error():
     """Grouping falls back to fuzzy matching on the records alone."""
     with patch(
-        "services.roster_ingest.get_person_models",
+        "services.roster_ingest.matcher_pool",
         new_callable=AsyncMock,
         return_value=[],
     ):

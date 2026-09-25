@@ -1,6 +1,6 @@
 from typing import Any, List
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from schemas.activity import RosterChange
 
 
@@ -26,12 +26,25 @@ class PersonEdit(BaseModel):
     `fields` holds only what changed; the server diffs it against the person the facts derive,
     so sending a value that already stands files nothing. `offices` is the whole set of posts
     they should hold, absent when the edit does not touch them and `[]` to remove the person
-    from the roster.
+    from the roster. `same_as` merges this person into another and says nothing else.
     """
 
     id: str
     fields: dict[str, Any] | None = None
     offices: list[OfficeEdit] | None = None
+    same_as: str | None = None
+
+    @model_validator(mode="after")
+    def _a_merge_stands_alone(self) -> "PersonEdit":
+        if self.same_as is None:
+            return self
+        if self.same_as == self.id:
+            raise ValueError("a person cannot be merged into themselves")
+        # Claims filed against the merged id land on the survivor, so `offices: []` here would
+        # remove the survivor.
+        if self.fields is not None or self.offices is not None:
+            raise ValueError("a merge carries no fields or offices")
+        return self
 
 
 class JurisdictionRosterEditRequest(BaseModel):

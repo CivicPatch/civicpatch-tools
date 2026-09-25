@@ -122,8 +122,8 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
         organization_id = await factories.default_organization(cur, ocdid)
         await cur.execute(
             # The review pool is "this scrape saw somebody" — one sighting is a roster.
-            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id) "
-            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council', %s)",
+            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id, person_id) "
+            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council', %s, gen_random_uuid())",
             (changeset_id, ocdid, organization_id),
         )
         await cur.execute(
@@ -139,7 +139,13 @@ async def _cleanup_open_pr(changeset_id: str, ocdid: str) -> None:
     async with pool.connection() as conn:
         # The run lives on the request now; deleting the request takes it.
         await conn.execute("DELETE FROM changesets WHERE id::text = %s", (changeset_id,))
-        await conn.execute("DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (ocdid,))
+        await conn.execute(
+            "DELETE FROM memberships m USING posts p "
+            "WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s",
+            (ocdid,),
+        )
+        for table in ("posts", "divisions", "people", "organizations"):
+            await conn.execute(f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (ocdid,))
         await conn.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (ocdid,))
 
 
@@ -623,8 +629,8 @@ async def test_a_dismissal_loses_the_race_to_a_reviewer_publishing():
         organization_id = await factories.default_organization(cur, ocdid)
         await cur.execute(
             # The review pool is "this scrape saw somebody" — one sighting is a roster.
-            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id) "
-            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council', %s)",
+            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id, person_id) "
+            "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council', %s, gen_random_uuid())",
             (changeset_id, ocdid, organization_id),
         )
 

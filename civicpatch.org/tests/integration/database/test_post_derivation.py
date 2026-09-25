@@ -736,14 +736,10 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         organization_id = await factories.default_organization(cur, _OCDID)
         await cur.execute(
             "INSERT INTO source_records "
-            "  (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id) "
-            "VALUES (%s, %s, 'Someone Else', 'Clerk', 'https://zz.gov/clerk', %s) RETURNING id",
-            (changeset_id, _OCDID, organization_id),
-        )
-        await cur.execute(
-            "INSERT INTO source_record_identities (source_record_id, person_id) "
-            "VALUES (%s, %s)",
-            ((await cur.fetchone())[0], other_id),
+            "  (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id, "
+            "   person_id) "
+            "VALUES (%s, %s, 'Someone Else', 'Clerk', 'https://zz.gov/clerk', %s, %s)",
+            (changeset_id, _OCDID, organization_id, other_id),
         )
         await conn.commit()
 
@@ -802,14 +798,13 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes_and_moves_last_see
             # these, so without them `proposed_roster` is empty and the publish refuses.
             await cur.execute(
                 "INSERT INTO source_records "
-                "  (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id) "
-                "VALUES (%s, %s, %s, %s, %s, %s) RETURNING id",
-                (changeset_id, _OCDID, f"Seed {role_label}", role_label, _ROSTER_URL, org),
-            )
-            await cur.execute(
-                "INSERT INTO source_record_identities (source_record_id, person_id) "
-                "VALUES (%s, %s)",
-                ((await cur.fetchone())[0], person_id),
+                "  (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id, "
+                "   person_id) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                (
+                    changeset_id, _OCDID, f"Seed {role_label}", role_label, _ROSTER_URL, org,
+                    person_id,
+                ),
             )
         await conn.commit()
 
@@ -870,14 +865,13 @@ async def test_a_scrape_the_pipeline_reported_an_issue_on_does_not_publish():
             )
             await cur.execute(
                 "INSERT INTO source_records "
-                "  (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id) "
-                "VALUES (%s, %s, %s, %s, %s, %s) RETURNING id",
-                (changeset_id, _OCDID, f"Seed {role_label}", role_label, _ROSTER_URL, org),
-            )
-            await cur.execute(
-                "INSERT INTO source_record_identities (source_record_id, person_id) "
-                "VALUES (%s, %s)",
-                ((await cur.fetchone())[0], person_id),
+                "  (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id, "
+                "   person_id) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                (
+                    changeset_id, _OCDID, f"Seed {role_label}", role_label, _ROSTER_URL, org,
+                    person_id,
+                ),
             )
         await conn.commit()
 

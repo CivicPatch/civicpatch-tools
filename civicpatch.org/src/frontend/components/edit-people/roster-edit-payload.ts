@@ -1,10 +1,10 @@
 // What the roster editor sends to `POST /api/v1/jurisdictions/roster-edits`: one entry per
 // person, carrying the fields they changed and the whole set of posts that person should hold.
 //
-// Three sources become one list. A patch item is what `buildPeoplePatch` produced. An office
+// Four sources become one list. A patch item is what `buildPeoplePatch` produced. An office
 // change is an existing person's pick, diffed against the post they hold. A removed person is
 // `offices: []`, which rejects every post they hold — the old patch dropped them and let the
-// server infer removal from absence.
+// server infer removal from absence. A merged person is `same_as` and nothing else.
 
 import type { OfficeEdit } from "../person-editor/office-edits.js";
 import { organizationIn, personIdIn } from "../people/person-cards.js";
@@ -28,6 +28,7 @@ export interface PersonEdit {
   id: string;
   fields?: Record<string, unknown>;
   offices?: OfficeEditPayload[];
+  same_as?: string;
 }
 
 interface PatchItem {
@@ -48,12 +49,21 @@ function pickInFields(fields: Record<string, unknown>): OfficeEditPayload | null
   return { id: postId, membership_label: typeof label === "string" ? label : null };
 }
 
-export function rosterEditPayload(
-  patch: PatchItem[],
-  officeEdits: OfficeEdit[],
-  removedIds: Iterable<string>,
-  heldOffices: Map<string, HeldOffice[]> = new Map(),
-): PersonEdit[] {
+export interface RosterEditInputs {
+  patch: PatchItem[];
+  officeEdits: OfficeEdit[];
+  removedIds: Iterable<string>;
+  mergedInto: Map<string, string>;
+  heldOffices?: Map<string, HeldOffice[]>;
+}
+
+export function rosterEditPayload({
+  patch,
+  officeEdits,
+  removedIds,
+  mergedInto,
+  heldOffices = new Map(),
+}: RosterEditInputs): PersonEdit[] {
   const byPerson = new Map<string, PersonEdit>();
 
   for (const item of patch) {
@@ -111,6 +121,11 @@ export function rosterEditPayload(
       )
       .map(({ id, membership_label }) => ({ id, membership_label }));
     byPerson.set(personId, person);
+  }
+
+  // Last, and replacing: anything else filed against the absorbed id would land on the survivor.
+  for (const [absorbedId, survivorId] of mergedInto) {
+    byPerson.set(absorbedId, { id: absorbedId, same_as: survivorId });
   }
 
   return [...byPerson.values()];

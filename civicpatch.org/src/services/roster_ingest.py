@@ -12,6 +12,7 @@ sheet has no analogue.
 
 import logging
 
+from core.display_rows import display_rows
 from core.people_roster import (
     identified,
     in_known_organizations,
@@ -19,21 +20,31 @@ from core.people_roster import (
     roster_from_rows,
 )
 from core.post_derivation import DerivedPost, RosterEntry, derived_posts
-from database import organizations
+from database import organizations, projection
 from database.database import get_pool
-from database.people import get_person_models
+from database.roles import get_roles
 from services.publish import chosen_posts, picks_in
 from shared.utils.name_utils import person_list_to_identities
-from shared.schemas import Role
+from shared.schemas import Person, Role, RoleConfig
 from shared.utils.person_id_utils import resolve_people_ids
-from shared.utils.taxonomy import Taxonomy
+from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
 logger = logging.getLogger(__name__)
 
 
+async def matcher_pool(jurisdiction_ocdid: str) -> list[Person]:
+    """Who a new record may be linked to: one person per base identity, never a merged cluster,
+    so an unmerge leaves each record with the half it was linked to (plan §8)."""
+    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        roster = await projection.base_identities(cur, jurisdiction_ocdid, taxonomy)
+    return [Person(**row) for row in display_rows(roster, jurisdiction_ocdid, taxonomy)]
+
+
 async def published_identities(jurisdiction_ocdid: str) -> dict:
-    """The prior reconciliation groups against: our own published people."""
-    existing = await get_person_models(jurisdiction_ocdid)
+    """The prior reconciliation groups against: the people we already know."""
+    existing = await matcher_pool(jurisdiction_ocdid)
     return person_list_to_identities(existing) if existing else {}
 
 
@@ -54,7 +65,7 @@ async def assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]:
     two entries claiming one person, and only sees the collision if it sees both. Matched
     against inactive people too, so someone returning after a term away keeps their id.
     """
-    everyone = await get_person_models(jurisdiction_ocdid)
+    everyone = await matcher_pool(jurisdiction_ocdid)
     resolutions = resolve_people_ids(
         roster, everyone, person_list_to_identities(everyone)
     )

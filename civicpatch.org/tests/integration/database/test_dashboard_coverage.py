@@ -181,8 +181,8 @@ async def test_needs_review_counts_open_review_pool_changesets():
         await cur.execute(
             """
             INSERT INTO source_records
-                (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id)
-            VALUES (%s, 'zt-awaiting', 'A Name', 'Mayor', 'https://a', %s)
+                (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id, person_id)
+            VALUES (%s, 'zt-awaiting', 'A Name', 'Mayor', 'https://a', %s, gen_random_uuid())
             """,
             (changeset_id, organization_id),
         )

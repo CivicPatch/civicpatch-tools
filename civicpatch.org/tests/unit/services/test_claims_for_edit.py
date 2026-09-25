@@ -9,7 +9,7 @@ import pytest
 from core.people_edits import POSTS_FIELD, PeopleValidationError
 from schemas.claims import ClaimKind
 from schemas.jurisdictions import PersonEdit, OfficeEdit
-from services.jurisdiction_edits import claims_for_edit, membership_label_edits
+from services.jurisdiction_edits import claims_for_edit, membership_label_edits, new_merges
 
 MAYOR = "11111111-1111-5111-8111-111111111111"
 CLERK = "22222222-2222-5222-8222-222222222222"
@@ -236,3 +236,39 @@ def test_a_person_added_by_hand_is_claims_not_evidence():
         ("name", ClaimKind.ACCEPT, "Bo Nguyen"),
         (POSTS_FIELD, ClaimKind.ACCEPT, CLERK),
     ]
+
+
+@pytest.mark.unit
+def test_a_merge_is_new_while_the_absorbed_person_still_derives_a_row():
+    assert new_merges(_derived(), [PersonEdit(id="p1", same_as="p2")]) == {"p1": "p2"}
+
+
+@pytest.mark.unit
+def test_repeating_a_merge_files_nothing():
+    """Once merged, the absorbed id derives no row of its own."""
+    assert new_merges(_derived(), [PersonEdit(id="p9", same_as="p1")]) == {}
+
+
+@pytest.mark.unit
+def test_the_field_diff_leaves_merge_entries_alone():
+    """`_edit` files the `same_as` itself, from `new_merges`."""
+    assert claims_for_edit(_derived(), [PersonEdit(id="p1", same_as="p2")], CHANGESET) == []
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "extra",
+    [{"offices": []}, {"fields": {"name": "x"}}],
+    ids=["offices", "fields"],
+)
+def test_a_merge_carries_nothing_else(extra):
+    """Claims filed against the absorbed id land on the survivor, so `offices: []` would remove
+    the survivor."""
+    with pytest.raises(ValueError):
+        PersonEdit(id="p1", same_as="p2", **extra)
+
+
+@pytest.mark.unit
+def test_nobody_is_merged_into_themselves():
+    with pytest.raises(ValueError):
+        PersonEdit(id="p1", same_as="p1")

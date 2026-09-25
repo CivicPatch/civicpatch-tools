@@ -3,7 +3,6 @@ import {
   buildPeoplePatch,
   changedFieldKeys,
   listChanged,
-  mergeFields,
   pruneIds,
 } from "../components/edit-people/hooks/people-state-utils.js";
 
@@ -61,22 +60,24 @@ describe("listChanged", () => {
 });
 
 describe("buildPeoplePatch", () => {
+  const NO_SURVIVORS = new Set<string>();
+
   it("sends only the changed fields for an edited existing person", () => {
     const people = [{ id: "a", name: "Alice", phones: ["x"] }];
-    expect(buildPeoplePatch(people, changes([["a", ["phones"]]]), deleted())).toEqual([
+    expect(buildPeoplePatch(people, changes([["a", ["phones"]]]), deleted(), NO_SURVIVORS)).toEqual([
       { id: "a", fields: { phones: ["x"] } },
     ]);
   });
 
   it("sends empty fields for an untouched person", () => {
-    expect(buildPeoplePatch([{ id: "a", name: "Alice" }], changes([["a", []]]), deleted())).toEqual([
+    expect(buildPeoplePatch([{ id: "a", name: "Alice" }], changes([["a", []]]), deleted(), NO_SURVIVORS)).toEqual([
       { id: "a", fields: {} },
     ]);
   });
 
   it("sends the whole entry for a new person", () => {
     const person = { id: "new1", name: "Bob", phones: [], _isNew: true };
-    expect(buildPeoplePatch([person], changes([["new1", []]]), deleted())).toEqual([
+    expect(buildPeoplePatch([person], changes([["new1", []]]), deleted(), NO_SURVIVORS)).toEqual([
       { id: "new1", fields: { id: "new1", name: "Bob", phones: [] } },
     ]);
   });
@@ -84,20 +85,20 @@ describe("buildPeoplePatch", () => {
   it("excludes an existing person's office pick — it's applied via memberships.assign, never this patch", () => {
     const people = [{ id: "a", name: "Alice", post_id: "p2", membership_label: "Ward 2" }];
     expect(
-      buildPeoplePatch(people, changes([["a", ["post_id", "membership_label"]]]), deleted()),
+      buildPeoplePatch(people, changes([["a", ["post_id", "membership_label"]]]), deleted(), NO_SURVIVORS),
     ).toEqual([{ id: "a", fields: {} }]);
   });
 
   it("still sends a new person's office pick — edit_published needs it for their first sighting", () => {
     const person = { id: "new1", name: "Bob", post_id: "p1", _isNew: true };
-    expect(buildPeoplePatch([person], changes([["new1", []]]), deleted())).toEqual([
+    expect(buildPeoplePatch([person], changes([["new1", []]]), deleted(), NO_SURVIVORS)).toEqual([
       { id: "new1", fields: { id: "new1", name: "Bob", post_id: "p1" } },
     ]);
   });
 
   it("sends the whole entry when the id changed (re-id)", () => {
     const person = { id: "canonical", name: "Bob" };
-    expect(buildPeoplePatch([person], changes([["canonical", ["id", "name"]]]), deleted())).toEqual([
+    expect(buildPeoplePatch([person], changes([["canonical", ["id", "name"]]]), deleted(), NO_SURVIVORS)).toEqual([
       { id: "canonical", fields: { id: "canonical", name: "Bob" } },
     ]);
   });
@@ -109,7 +110,7 @@ describe("buildPeoplePatch", () => {
   it("omits somebody removed by person id", () => {
     const people = [{ id: "a" }, { id: "b" }];
     expect(
-      buildPeoplePatch(people, changes([["a", []], ["b", []]]), deleted("b")).map((p: { id: string }) => p.id)
+      buildPeoplePatch(people, changes([["a", []], ["b", []]]), deleted("b"), NO_SURVIVORS).map((p: { id: string }) => p.id)
     ).toEqual(["a"]);
   });
 
@@ -118,14 +119,21 @@ describe("buildPeoplePatch", () => {
     // no reason to drop a correction to their name, which is a fact about the person.
     const people = [{ id: "a", name: "Ann Lee" }];
     expect(
-      buildPeoplePatch(people, changes([["a", ["name"]]]), deleted("a:org-council")),
+      buildPeoplePatch(people, changes([["a", ["name"]]]), deleted("a:org-council"), NO_SURVIVORS),
     ).toEqual([{ id: "a", fields: { name: "Ann Lee" } }]);
+  });
+
+  it("sends a merge survivor's whole record, since the server diffs it against the merged person", () => {
+    const person = { id: "a", name: "Ada", phones: ["x"], post_id: "p1" };
+    expect(buildPeoplePatch([person], changes([["a", []]]), deleted(), new Set(["a"]))).toEqual([
+      { id: "a", fields: { name: "Ada", phones: ["x"] } },
+    ]);
   });
 
   it("preserves order", () => {
     const people = [{ id: "c" }, { id: "a" }, { id: "b" }];
     expect(
-      buildPeoplePatch(people, changes([["c", []], ["a", []], ["b", []]]), deleted()).map((p: { id: string }) => p.id)
+      buildPeoplePatch(people, changes([["c", []], ["a", []], ["b", []]]), deleted(), NO_SURVIVORS).map((p: { id: string }) => p.id)
     ).toEqual(["c", "a", "b"]);
   });
 });
@@ -153,26 +161,4 @@ describe("pruneIds", () => {
       "a:org-council",
     ]);
   });
-});
-
-describe("mergeFields", () => {
-  const person = (over = {}) => ({ id: "a", name: "Alice", ...over });
-
-  it("keeps the survivor's post", () =>
-    expect(
-      mergeFields(person({ post_id: "survivor-post" }), [person({ id: "b", post_id: "other" })])
-        .post_id,
-    ).toBe("survivor-post"));
-
-  // Two records of one human hold one post between them. The old code concatenated their
-  // `office.name` strings, which is only sane for free text — a post has identity.
-  it("inherits a post when the survivor has none, rather than losing it", () =>
-    expect(
-      mergeFields(person({ post_id: null }), [person({ id: "b", post_id: "found" })]).post_id,
-    ).toBe("found"));
-
-  it("keeps the absorbed name as an other_name", () =>
-    expect(mergeFields(person(), [person({ id: "b", name: "Alice R." })]).other_names).toEqual([
-      "Alice R.",
-    ]));
 });

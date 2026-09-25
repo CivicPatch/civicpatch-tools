@@ -11,6 +11,7 @@ from datetime import datetime
 from core.changeset_lifecycle import PARTIAL_KINDS
 from core.people_edits import POSTS_FIELD
 from core.projection.facts import Claim, ClaimKind, Facts, PostKey, SourceRecord
+from core.projection.person_ids import PERSON_ID
 from database.changeset_predicates import OPEN_REVIEW_EDIT
 from database.database import get_pool
 from shared.utils.statuses import ChangesetKind
@@ -40,7 +41,7 @@ _PUBLISHED_OR_UNATTRIBUTED = f"""
 
 _RECORDS = f"""
     SELECT source_records.id::text, source_records.changeset_id::text,
-           source_records.created_at, source_record_identities.person_id::text,
+           source_records.created_at, source_records.person_id::text,
            source_records.organization_id::text, source_records.name, source_records.label,
            source_records.source_url, source_records.other_names, source_records.url,
            source_records.phone, source_records.email, source_records.image,
@@ -48,11 +49,6 @@ _RECORDS = f"""
            changesets.kind
     FROM source_records
     JOIN changesets ON changesets.id = source_records.changeset_id
-    -- Inner join, not left: a record nobody matched names no one, so it can derive no person.
-    -- Step 6 moves `person_id` onto the record and deletes this join; its ⚠ is to count the
-    -- unmatched rows first, because that count is exactly what this join drops today.
-    JOIN source_record_identities
-      ON source_record_identities.source_record_id = source_records.id
     WHERE source_records.jurisdiction_ocdid = %(jurisdiction_ocdid)s
       AND (changesets.published_at <= %(as_of)s OR {_INCLUDED})
 """
@@ -60,6 +56,8 @@ _RECORDS = f"""
 # A `posts` claim's value is a post's id, and the fold works in post keys, so the join is the
 # translation. A claim naming a post that no longer exists keeps its id and matches none of the
 # fold's posts, which is the same as placing nobody.
+#
+# By person id for people a record names, and by changeset for a hand-add, whom no record names.
 _PERSON_CLAIMS = f"""
     SELECT claims.id::text, claims.changeset_id::text, claims.created_at,
            claims.entity_type, claims.entity_id::text, claims.field_path,
@@ -70,7 +68,20 @@ _PERSON_CLAIMS = f"""
                    AND posts.id::text = claims.value #>> '{{}}'
     {_PUBLISHED_OR_UNATTRIBUTED}
       AND claims.entity_type = 'person'
-      AND claims.entity_id::text = ANY(%(person_ids)s)
+      AND (claims.entity_id::text = ANY(%(person_ids)s)
+           OR changesets.jurisdiction_ocdid = %(jurisdiction_ocdid)s)
+"""
+
+# A split: a record re-linked to another person (§8). Its value names the person, who may be
+# known to no record, so these load before the person claims.
+_RECORD_CLAIMS = f"""
+    SELECT claims.id::text, claims.changeset_id::text, claims.created_at,
+           claims.entity_type, claims.entity_id::text, claims.field_path,
+           claims.kind, claims.value, NULL, NULL, NULL
+    FROM claims
+    {_PUBLISHED_OR_UNATTRIBUTED}
+      AND claims.entity_type = 'source_record'
+      AND claims.entity_id::text = ANY(%(record_ids)s)
 """
 
 # By the jurisdiction the claim was made in, not by the membership's id: the id is a hash of
@@ -160,7 +171,7 @@ async def load_facts(
     what makes a proposed roster `derive(published facts + this changeset)` (R3), its open
     review edit included. Nothing is written either way.
 
-    Claims about people and memberships; post, organization and taxonomy claims join as their
+    Claims about records, people and memberships; post, organization and taxonomy claims join as their
     write paths move onto the model (steps 10, 11 and 18).
 
     `reads` stays empty until `source_pages` exists: `core.projection.reads.reads_of` infers a
@@ -176,13 +187,19 @@ async def load_facts(
     rows = await cur.fetchall()
     records = tuple(_record(row) for row in rows)
 
-    person_ids = sorted({record.person_id for record in records})
     claims: tuple[Claim, ...] = ()
-    if person_ids:
-        await cur.execute(_PERSON_CLAIMS, {**scope, "person_ids": person_ids})
+    if records:
+        await cur.execute(_RECORD_CLAIMS, {**scope, "record_ids": [record.id for record in records]})
         claims = tuple(_claim(row) for row in await cur.fetchall())
-        await cur.execute(_MEMBERSHIP_CLAIMS, scope)
-        claims += tuple(_claim(row) for row in await cur.fetchall())
+
+    person_ids = sorted(
+        {record.person_id for record in records}
+        | {str(claim.value) for claim in claims if claim.field_path == PERSON_ID}
+    )
+    await cur.execute(_PERSON_CLAIMS, {**scope, "person_ids": person_ids})
+    claims += tuple(_claim(row) for row in await cur.fetchall())
+    await cur.execute(_MEMBERSHIP_CLAIMS, scope)
+    claims += tuple(_claim(row) for row in await cur.fetchall())
 
     await cur.execute(_WITHDRAWS, scope)
     withdraws = tuple(_claim(row) for row in await cur.fetchall())

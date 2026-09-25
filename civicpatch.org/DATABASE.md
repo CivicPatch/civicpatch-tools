@@ -219,14 +219,9 @@ erDiagram
         text_null       cdn_image           "where we put it (R2). Stored, not composed from a template — where a file lives is a fact"
         text_null       start_date          "text, not date: sources give partial dates (2024, 2024-01)"
         text_null       end_date
+        uuid            person_id           "224: NOT NULL, idx; moved here from source_record_identities. The matcher's answer at ingest, never rewritten: a re-link is a source_record/person_id claim. No FK: ids are minted at ingest, the people row arrives at publish"
         uuid            organization_id     FK "203: idx; 205: NOT NULL, ON DELETE RESTRICT (organizations.delete moves a body's rows to the default first) — which body's extraction produced it; 204 backfilled pre-203 rows; ingest stamps unstamped rows with the default and fails on an id that is not a current body"
         timestamptz     created_at          "default: now()"
-    }
-
-    source_record_identities {
-        uuid            source_record_id    PK, FK "ON DELETE CASCADE"
-        uuid            person_id           "144: uuid, not text — as text it accepted the ambiguous-match sentinel and the card reached the pool with a broken cluster id. No FK: ids are minted at ingest, the people row arrives at publish. idx; SEPARATE FROM THE EVIDENCE deliberately — linkage is not a fact about a page and is not stable across runs (#2480), so re-linking rewrites this table and never touches a record"
-        timestamptz     resolved_at         "default: now()"
     }
 
     roles {
@@ -350,7 +345,6 @@ erDiagram
     changeset_batches ||--o{ changesets : "batch_id"
     changesets ||--o{ source_records : "changeset_id"
     jurisdictions ||--o{ source_records : "jurisdiction_ocdid"
-    source_records ||--o| source_record_identities : "source_record_id"
     jurisdictions ||--o{ changesets : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
     jurisdictions ||--o{ pipeline_runs : "jurisdiction_ocdid"
@@ -402,6 +396,11 @@ erDiagram
   both sides collapsed five user reports into three on the first backfill. `merge_failed` was
   dropped rather than migrated: nothing had been able to raise one since 2026-09-04, when
   rosters moved to committing straight to `main`.
+
+- **`source_record_identities` folded into `source_records.person_id`, migration 224.** It was
+  kept apart so re-linking could rewrite it without touching evidence, but nothing ever rewrote
+  it, and a re-link is now a `source_record` / `person_id` claim the fold applies. The up
+  migration refuses if any record has no identity rather than dropping it.
 
 - **A person's `exists` claim is gone, migration 221.** `field_path = 'exists'` on an
   `entity_type = 'person'` row meant "not a member of anything in this jurisdiction", written by

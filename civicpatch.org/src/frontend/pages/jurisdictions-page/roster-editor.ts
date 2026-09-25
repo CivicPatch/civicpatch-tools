@@ -74,6 +74,7 @@ function RosterEditor({
     currentPeople,
     removedIds,
     restoredIds,
+    mergedInto,
     dirtyIds,
     dirty,
     peoplePatch,
@@ -168,14 +169,15 @@ function RosterEditor({
       // on the spot, which is what this button has always meant.
       await editJurisdictionRoster(
         jurisdictionOcdid,
-        rosterEditPayload(
-          peoplePatch,
-          groups.flatMap((group) =>
+        rosterEditPayload({
+          patch: peoplePatch,
+          officeEdits: groups.flatMap((group) =>
             officeEditsIn(group.cards, () => group.organization.id),
           ),
           removedIds,
-          heldOfficesByPerson(cards),
-        ),
+          mergedInto,
+          heldOffices: heldOfficesByPerson(cards),
+        }),
       );
       setOpenCardKey(null);
       setFocusFieldKey(null);

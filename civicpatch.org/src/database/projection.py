@@ -10,7 +10,7 @@ each named there with the step that deletes them.
 """
 
 import json
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from datetime import datetime, timezone
 
 import environment
@@ -19,6 +19,7 @@ import lib.buckets as buckets
 from shared.utils.membership_ids import membership_id
 from shared.utils.statuses import ActivityType
 
+from core.projection.canonical_ids import with_merges, without_merges
 from core.projection.membership_details import MembershipSource
 from core.projection.people import Membership, Person
 from core.projection.live_facts import live_facts
@@ -171,6 +172,7 @@ async def derived_roster(
     including: str | None = None,
     as_of: datetime | None = None,
     taxonomy: Taxonomy | None = None,
+    merged_into: Mapping[str, str] | None = None,
 ) -> Roster:
     """The roster this jurisdiction's facts derive. Nothing is written.
 
@@ -182,7 +184,12 @@ async def derived_roster(
     side only.
     """
     roster, _facts = await derived_roster_and_facts(
-        cur, jurisdiction_ocdid, including=including, as_of=as_of, taxonomy=taxonomy
+        cur,
+        jurisdiction_ocdid,
+        including=including,
+        as_of=as_of,
+        taxonomy=taxonomy,
+        merged_into=merged_into,
     )
     return roster
 
@@ -194,16 +201,24 @@ async def derived_roster_and_facts(
     including: str | None = None,
     as_of: datetime | None = None,
     taxonomy: Taxonomy | None = None,
+    merged_into: Mapping[str, str] | None = None,
 ) -> tuple[Roster, Facts]:
     """`derived_roster` plus the facts it folded, for a caller that needs both from one load.
 
     The card's lock disclosure does: the roster resolves each field, and the same facts answer
     what the records alone say, which is what the lock discloses beside it.
     """
-    facts = await load_facts(
-        cur, jurisdiction_ocdid, as_of or datetime.now(timezone.utc), including
-    )
+    cutoff = as_of or datetime.now(timezone.utc)
+    facts = await load_facts(cur, jurisdiction_ocdid, cutoff, including)
+    if merged_into:
+        facts = with_merges(facts, merged_into, cutoff)
     return _fold(facts, jurisdiction_ocdid, await _taxonomy(taxonomy)), facts
+
+
+async def base_identities(cur, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> Roster:
+    """Everyone the facts name, merges left apart, on or off the roster. The matcher's pool."""
+    facts = await load_facts(cur, jurisdiction_ocdid, datetime.now(timezone.utc))
+    return _fold(without_merges(facts), jurisdiction_ocdid, taxonomy)
 
 
 async def rebuild_from_facts(

@@ -39,6 +39,15 @@ async def _wipe():
             "DELETE FROM review_sessions WHERE state_code = 'zz'",
         )
         await cur.execute(
+            "DELETE FROM memberships m USING posts p "
+            "WHERE m.post_id = p.id AND p.jurisdiction_ocdid IN (%s, %s)",
+            (_OCDID, _OTHER),
+        )
+        for table in ("posts", "divisions"):
+            await cur.execute(
+                f"DELETE FROM {table} WHERE jurisdiction_ocdid IN (%s, %s)", (_OCDID, _OTHER)
+            )
+        await cur.execute(
             "DELETE FROM people WHERE jurisdiction_ocdid IN (%s, %s)", (_OCDID, _OTHER)
         )
         await cur.execute(
@@ -92,8 +101,8 @@ async def _request(updated_at: str, ocdid: str = _OCDID) -> str:
         organization_id = await factories.default_organization(cur, ocdid)
         await cur.execute(
             """
-            INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id)
-            VALUES (%s, %s, 'Ann Lee', 'Mayor', 'https://zz.gov/council', %s)
+            INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id, person_id)
+            VALUES (%s, %s, 'Ann Lee', 'Mayor', 'https://zz.gov/council', %s, gen_random_uuid())
             """,
             (changeset_id, ocdid, organization_id),
         )

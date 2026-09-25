@@ -136,6 +136,7 @@ function ReviewSession(host: ReviewSessionHost) {
     dirtyIds,
     removedIds,
     restoredIds,
+    mergedInto,
     dirty,
     peoplePatch,
     handleAdd,
@@ -304,6 +305,7 @@ function ReviewSession(host: ReviewSessionHost) {
           .hasSession=${hasSession}
           .officeEdits=${officeEdits}
           .removedIds=${[...removedIds]}
+          .mergedInto=${mergedInto}
         ></review-session-actions>
         <div class="review-session__header-tools">
           ${canViewSourceDebug && hasSourceContent
