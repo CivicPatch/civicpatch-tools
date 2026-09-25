@@ -13,7 +13,7 @@ from datetime import timedelta
 
 from core.changeset_lifecycle import ChangesetEvent, ChangesetState, states_accepting
 from database.activity import record_dismissal
-from database.changeset_predicates import HELD_BY_REVIEWER, SWEEPABLE
+from database.changeset_predicates import HELD_BY_REVIEWER, OPEN_REVIEW_EDIT, SWEEPABLE
 from database.database import get_pool
 from database.review_sessions import SESSION_IDLE_TIMEOUT_MINUTES
 from database.users import SYSTEM_USER_ID
@@ -68,7 +68,24 @@ async def mark_dismissed(
         await record_dismissal(
             cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id, reason
         )
+    await _dismiss_review_edits(cur, [row[0] for row in dismissed], reason)
     return [(row[0], row[1]) for row in dismissed]
+
+
+async def _dismiss_review_edits(
+    cur, changeset_ids: list[str], reason: DismissalReason
+) -> None:
+    """A dismissed scrape takes its open review edit with it (9f); nothing else ever would."""
+    if not changeset_ids:
+        return
+    await cur.execute(
+        f"""
+        UPDATE changesets
+           SET dismissed_at = now(), dismissed_reason = %s
+         WHERE changesets.parent_changeset_id::text = ANY(%s) AND {OPEN_REVIEW_EDIT}
+        """,
+        (reason, changeset_ids),
+    )
 
 
 async def dismiss_all(

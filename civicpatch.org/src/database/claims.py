@@ -246,6 +246,11 @@ async def withdraw_facts(
 
     A withdraw names a whole row rather than a value, which is why it carries no field and no
     value. Withdrawing one is itself a fact, so undoing a withdrawal is withdrawing it.
+
+    Writes both mechanisms, so no caller has to know there are two: the withdraw row the fold
+    reads, and — for a claim — the `withdrawn_*` columns the readers that have not moved onto
+    facts still filter on (`claimed_values`, `_unchanged`, the label reads). Those columns go at
+    step 19 and this function loses its second half with them.
     """
     if not entity_ids:
         return
@@ -263,6 +268,20 @@ async def withdraw_facts(
             }
             for entity_id in entity_ids
         ],
+    )
+    if entity_type is not EntityType.CLAIM:
+        return
+    # Unconditional beyond "not already withdrawn": which of these deserved it was decided by
+    # the caller against the facts, and a superseded claim of a rolled-back changeset must be
+    # stamped too, or it would return the moment the claim that superseded it was rolled back.
+    await cur.execute(
+        """
+        UPDATE claims
+           SET withdrawn_at = now(), withdrawn_by = %s, withdrawn_reason = %s,
+               withdrawn_by_changeset_id = %s
+         WHERE id = ANY(%s) AND withdrawn_at IS NULL
+        """,
+        (withdrawn_by, reason, changeset_id, entity_ids),
     )
 
 
@@ -340,33 +359,6 @@ async def get_entity_ids_for_claims(
     )
     rows = await cur.fetchall()
     return [row[0] for row in rows]
-
-
-async def withdraw_claims(
-    cur,
-    claim_ids: list[str],
-    withdrawn_by: str,
-    withdrawn_by_changeset_id: str,
-    reason: str | None = None,
-) -> int:
-    """Withdraw exactly these claims, whichever are still ACTIVE — the one primitive a bulk
-    rollback and a selective one share. Re-checks `_IS_ACTIVE` rather than trusting the caller's
-    list is still current, since it may have been read moments earlier."""
-    await cur.execute(
-        f"""
-        UPDATE claims a
-           SET withdrawn_at = now(), withdrawn_by = %s, withdrawn_reason = %s,
-               withdrawn_by_changeset_id = %s
-         WHERE a.id = ANY(%s) AND {_IS_ACTIVE}
-        RETURNING a.id::text
-        """,
-        (withdrawn_by, reason, withdrawn_by_changeset_id, claim_ids),
-    )
-    withdrawn = [row[0] for row in await cur.fetchall()]
-    await _insert_withdraws(
-        cur, withdrawn, withdrawn_by, withdrawn_by_changeset_id, reason
-    )
-    return len(withdrawn)
 
 
 async def create(claim: Claim, created_by: str) -> str:

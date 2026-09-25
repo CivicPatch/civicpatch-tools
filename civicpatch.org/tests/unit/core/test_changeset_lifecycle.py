@@ -1,4 +1,10 @@
-"""The changeset lifecycle. Pure — a state and an event in, a state out, no mocks."""
+"""What varies by changeset kind, and which states an event may leave. Pure, no mocks.
+
+`advance` and `is_terminal` went on 2026-09-25 with their three tests: neither had a production
+caller. Every fact those tests asserted --- open publishes or is dismissed, and published and
+dismissed are finished --- is still pinned, by `test_every_pair_is_declared_or_denied` classifying
+every (state, event) pair and by `test_only_an_open_changeset_accepts_any_event`.
+"""
 
 import pytest
 
@@ -7,39 +13,25 @@ from core.changeset_lifecycle import (
     TRANSITIONS,
     ChangesetEvent,
     ChangesetState,
-    advance,
     states_accepting,
-    is_terminal,
 )
-from shared.utils.statuses import ChangesetKind, DismissalReason
+from shared.utils.statuses import ChangesetKind
 
 
 @pytest.mark.unit
-def test_every_kind_is_born_with_something_to_show():
-    """No kind waits on a run any more. A scrape's changeset is minted at ingest by a run that
-    already succeeded, so it starts where an import does."""
-    assert INITIAL_STATE[ChangesetKind.SCRAPE] == ChangesetState.OPEN
-    assert INITIAL_STATE[ChangesetKind.SHEET_IMPORT] == ChangesetState.OPEN
-    assert INITIAL_STATE[ChangesetKind.PEOPLE_EDIT] == ChangesetState.PUBLISHED
-
-
-@pytest.mark.unit
-def test_a_reviewable_changeset_publishes_or_is_dismissed():
-    assert (
-        advance(ChangesetState.OPEN, ChangesetEvent.PUBLISHED)
-        == ChangesetState.PUBLISHED
-    )
-    assert (
-        advance(ChangesetState.OPEN, ChangesetEvent.DISMISSED)
-        == ChangesetState.DISMISSED
-    )
-
-
-@pytest.mark.unit
-def test_published_and_dismissed_are_finished():
-    assert is_terminal(ChangesetState.PUBLISHED)
-    assert is_terminal(ChangesetState.DISMISSED)
-    assert advance(ChangesetState.PUBLISHED, ChangesetEvent.DISMISSED) is None
+def test_every_kind_is_born_where_the_table_says():
+    """This verified three kinds' birth states. It now verifies all five, because a kind missing
+    from `INITIAL_STATE` was invisible to it --- `rollback` and `jurisdiction_edit` were both
+    absent --- and rollback moved to born-open on 2026-09-25, which is the change most worth
+    catching if it ever moved back."""
+    assert INITIAL_STATE == {
+        ChangesetKind.SCRAPE: ChangesetState.OPEN,
+        ChangesetKind.SHEET_IMPORT: ChangesetState.OPEN,
+        ChangesetKind.PEOPLE_EDIT: ChangesetState.PUBLISHED,
+        ChangesetKind.JURISDICTION_EDIT: ChangesetState.PUBLISHED,
+        ChangesetKind.ROLLBACK: ChangesetState.OPEN,
+    }
+    assert set(INITIAL_STATE) == set(ChangesetKind), "every kind has a birth state"
 
 
 @pytest.mark.unit
@@ -77,11 +69,3 @@ def test_every_pair_is_declared_or_denied():
         "unclassified: " + str(every_pair - declared - NOT_A_TRANSITION)
     )
     assert not (declared & NOT_A_TRANSITION), "a pair is both an edge and denied"
-
-
-@pytest.mark.unit
-def test_terminal_is_derived_from_the_edges_not_declared_beside_them():
-    """`TERMINAL` used to be a second set naming the same fact. A state is terminal exactly
-    when nothing leaves it, which the edges already say."""
-    leaves = {t.frm for t in TRANSITIONS}
-    assert {s for s in ChangesetState if is_terminal(s)} == set(ChangesetState) - leaves

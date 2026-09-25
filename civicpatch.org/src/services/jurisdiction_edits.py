@@ -22,7 +22,10 @@ from database import claims as claims_db
 from database import memberships as memberships_db
 from database import posts as posts_db
 from database import projection as projection_db
-from database.changesets import register_people_edit_changeset
+from database.changesets import (
+    find_or_create_review_edit,
+    register_people_edit_changeset,
+)
 from database.database import get_pool
 from database.roles import get_roles
 from schemas.claims import Claim, EntityType
@@ -64,8 +67,17 @@ async def edit_in_review(
     correction that happens to match what is already live would file nothing and the publish
     would take the scrape's wrong value.
     """
-    await _file(jurisdiction_ocdid, people, user_id, changeset_id, including=changeset_id)
-    return changeset_id
+    if not user_id:
+        raise AnonymousEdit(jurisdiction_ocdid)
+    # Under the review's own changeset (9f), so it is attributed and undone on its own.
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        edit_id = await find_or_create_review_edit(
+            cur, changeset_id, jurisdiction_ocdid, user_id
+        )
+        await conn.commit()
+    await _file(jurisdiction_ocdid, people, user_id, edit_id, including=changeset_id)
+    return edit_id
 
 
 async def edit_published_roster(

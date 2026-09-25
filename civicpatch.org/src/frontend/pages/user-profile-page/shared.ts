@@ -10,47 +10,33 @@ export type AdminUser = {
   last_login_at: string | null;
 };
 
-// Mirrors `ClaimState` (core/claim_lifecycle.py) — only "active" is a real rollback
-// candidate; "superseded"/"withdrawn" are history the row shows but can't be selected.
-export const ASSERTION_STATUS_ACTIVE = "active";
+// Mirrors `ChangesetKind.ROLLBACK` (shared/utils/statuses.py). A rollback is listed --- undoing
+// an undo is rolling back the rollback --- but never swept by "select all", or select-all would
+// alternate between doing and undoing.
+export const CHANGESET_KIND_ROLLBACK = "rollback";
 
-// Mirrors the `kind` check constraint on `claims` (database/claims.py) — a "reject"
-// row pairs with an "accept" row on the same field rather than competing with it.
-export const ASSERTION_KIND_REJECT = "reject";
-
+// One changeset, the rollback unit since 2026-09-24. It replaced a per-claim candidate: one
+// action is undone or it is not, and a changeset is the only thing spanning the facts one action
+// filed. `comment` is set on a rollback and null on everything else.
 export type RollbackCandidate = {
-  claim_id: string;
-  entity_id: string;
-  entity_label: string;
-  field_path: string;
+  changeset_id: string;
   kind: string;
-  value: unknown;
   jurisdiction_ocdid: string;
-  status: string;
-  created_at: string;
+  jurisdiction_name: string;
+  comment: string | null;
+  published_at: string;
 };
 
-const FIELD_LABELS: Record<string, string> = {
-  name: "Name",
-  other_names: "Other names",
-  phones: "Phone",
-  emails: "Email",
-  urls: "Website",
-  source_urls: "Source",
-  image: "Photo",
-  start_date: "Start date",
-  end_date: "End date",
-  post_id: "Post",
+const KIND_LABELS: Record<string, string> = {
+  scrape: "Scrape",
+  sheet_import: "Sheet import",
+  people_edit: "Roster edit",
+  jurisdiction_edit: "Jurisdiction edit",
+  rollback: "Rollback",
 };
 
-export function fieldLabel(fieldPath: string): string {
-  return FIELD_LABELS[fieldPath] ?? fieldPath.replace(/_/g, " ");
-}
-
-export function formatValue(value: unknown): string {
-  if (value === null || value === undefined) return "—";
-  if (typeof value === "string") return value;
-  return JSON.stringify(value);
+export function changesetKindLabel(kind: string): string {
+  return KIND_LABELS[kind] ?? kind.replace(/_/g, " ");
 }
 
 export function userLabel(user: AdminUser | null, fallback: string): string {

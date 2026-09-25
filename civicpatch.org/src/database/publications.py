@@ -15,7 +15,7 @@ import database.dismissals as dismissals_db
 from core.sinks.open_data_commit import ChangesetAttribution
 from database import projection
 from database.activity import record_change
-from database.changeset_predicates import PUBLISHED
+from database.changeset_predicates import OPEN_REVIEW_EDIT, PUBLISHED
 from database.changesets import get_updated_at
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
@@ -215,6 +215,17 @@ async def _supersede_stale_cards(cur, changeset_id: str, jurisdiction_ocdid: str
         )
 
 
+async def _publish_review_edit(cur, changeset_id: str) -> None:
+    """A review's edit goes live with its scrape, in the same transaction (9f)."""
+    await cur.execute(
+        f"""
+        UPDATE changesets SET published_at = now()
+         WHERE changesets.parent_changeset_id::text = %s AND {OPEN_REVIEW_EDIT}
+        """,
+        (changeset_id,),
+    )
+
+
 async def publish_changeset(
     changeset_id: str,
     jurisdiction_ocdid: str,
@@ -235,7 +246,8 @@ async def publish_changeset(
         await _record_publish(
             cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id, changes
         )
-        # After `_record_publish`, so this changeset's own facts are part of what it derives.
+        await _publish_review_edit(cur, changeset_id)
+        # After both publishes, so their facts are part of what this derives.
         written = await projection.rebuild_from_facts(cur, jurisdiction_ocdid, changeset_id)
         await _supersede_stale_cards(cur, changeset_id, jurisdiction_ocdid)
     return written

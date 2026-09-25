@@ -58,29 +58,41 @@ async def _seed_user_and_jurisdiction() -> str:
     return row[0]
 
 
-async def test_mints_a_born_published_rollback_changeset():
+_COMMENT = "rolled back: vandalism"
+
+
+async def test_mints_a_born_open_rollback_changeset():
+    """This verified a rollback was born published. It now verifies it is born open, because
+    on 2026-09-25 the rollback moved to publishing through `publish_changeset` like every other
+    kind: its withdraws stay inert under R3 until that call marks it published and rebuilds the
+    projection in one transaction, which removes the window where the facts had reverted and the
+    stored roster had not --- and lets the activity feed see a real "before"."""
     user_id = await _seed_user_and_jurisdiction()
     changeset_id = make_id()
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await register_rollback_changeset(cur, changeset_id, _OCDID, user_id)
+        await register_rollback_changeset(cur, changeset_id, _OCDID, user_id, _COMMENT)
         await conn.commit()
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT kind, published_at, created_by_user_id::text, parent_changeset_id "
+            "SELECT kind, published_at, created_by_user_id::text, parent_changeset_id, "
+            "comment "
             "FROM changesets WHERE id::text = %s",
             (changeset_id,),
         )
         row = await cur.fetchone()
 
     assert row is not None
-    kind, published_at, created_by_user_id, parent_changeset_id = row
+    kind, published_at, created_by_user_id, parent_changeset_id, comment = row
     assert kind == "rollback"
-    assert published_at is not None, "born published — a rollback needs no review"
+    assert published_at is None, "born open — publishing is what makes its withdraws count"
     assert created_by_user_id == user_id
     assert parent_changeset_id is None, "nothing was ever live for this jurisdiction before it"
+    # Added 2026-09-24 with step 13: a rollback holds only withdraws, so its reason cannot be
+    # read off its content the way every other changeset's can.
+    assert comment == _COMMENT
 
 
 async def test_returns_and_records_the_changeset_it_rolled_back():
@@ -102,7 +114,9 @@ async def test_returns_and_records_the_changeset_it_rolled_back():
 
     rollback_id = make_id()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rolled_back = await register_rollback_changeset(cur, rollback_id, _OCDID, user_id)
+        rolled_back = await register_rollback_changeset(
+            cur, rollback_id, _OCDID, user_id, _COMMENT
+        )
         await conn.commit()
 
     assert rolled_back == target_id

@@ -41,15 +41,9 @@
   min-width: 0;
 }
 
-/* activity-page.css's own quarantine marker includes a left inset border — history drops it,
-   keeping only the tinted background to flag superseded/withdrawn rows. */
-.candidate-row.activity-row--quarantined {
-  box-shadow: none;
-}
-
-/* A reject row isn't a competing claim — it's paired with an accept elsewhere in the list —
-   but it still reads as "this value is wrong," so it gets the same tint-only treatment. */
-.candidate-row--reject {
+/* An undo, tinted so a reader can tell it from the edit it undid. Pickable on its own --- undoing
+   an undo is rolling it back --- but never swept by "select all". */
+.candidate-row--rollback {
   background: var(--error-tint);
 }
 

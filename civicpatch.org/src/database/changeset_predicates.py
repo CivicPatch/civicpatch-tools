@@ -178,3 +178,10 @@ OFF_COOLDOWN = (
     "days => COALESCE(ss.cadence_days, 30))"
     f" OR {LAST_RESOLVED_AT} > {LAST_ATTEMPT_AT})"
 )
+
+
+# A review pass's open `people_edit` (9f). Qualified: callers join `claims`, which has a `kind`.
+OPEN_REVIEW_EDIT = (
+    f"changesets.kind = '{ChangesetKind.PEOPLE_EDIT.value}' "
+    "AND changesets.published_at IS NULL AND changesets.dismissed_at IS NULL"
+)

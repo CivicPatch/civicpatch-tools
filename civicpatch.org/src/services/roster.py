@@ -17,10 +17,7 @@ from database import projection as projection_db
 from database.database import get_pool
 from database.people import get_people_by_ids, get_roster
 from database.roles import get_roles
-from database.source_records import (
-    get_earliest_source_records_for_people,
-    get_source_records_for_changeset,
-)
+from database.source_records import get_source_records_for_changeset
 from schemas.claims import EntityType
 from shared.schemas import POST_FIELD, RoleConfig
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
@@ -50,27 +47,6 @@ async def _roster(
         jurisdiction_ocdid,
         logger,
     ), claimed
-
-
-async def origin_roster_for(
-    entity_ids: list[str], jurisdiction_ocdid: str
-) -> list[dict]:
-    """These people's fields as their earliest sighting recorded them — the pristine base a
-    rollback overlays currently-active claims onto. Not the live roster: that already has
-    every claim (withdrawn ones included) baked in, so there's nothing left to fall back to.
-    `published={}` deliberately — `canonical_name` would otherwise keep the live name over the
-    sighting's, defeating the whole point."""
-    sightings = await get_earliest_source_records_for_people(entity_ids)
-    if not sightings:
-        return []
-    roles = await get_roles()
-    return roster_from_sightings(
-        sightings,
-        {},
-        build_taxonomy(RoleConfig(roles=roles)),
-        jurisdiction_ocdid,
-        logger,
-    )
 
 
 async def _fold_for_card(
