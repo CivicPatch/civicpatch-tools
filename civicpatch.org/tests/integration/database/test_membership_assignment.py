@@ -20,7 +20,7 @@ from database import divisions, organizations, posts, projection
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
 from schemas.jurisdictions import OfficeEdit, PersonEdit
-from services.jurisdiction_edits import UnknownPost, edit_in_review, edit_published_roster
+from services.roster_edits import UnknownPost, edit_in_review, edit_published_roster
 from shared.utils.membership_ids import membership_id
 from tests.integration import factories
 

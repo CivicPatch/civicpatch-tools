@@ -3,7 +3,7 @@ import urllib.parse
 import database.changesets as changesets
 import database.jurisdictions as database
 import lib.cache as cache_service
-import services.jurisdiction_edits as jurisdiction_edits
+import services.roster_edits as roster_edits
 import services.jurisdiction_pull_request as jurisdiction_pr_service
 import services.jurisdiction_scrape_candidate as candidate_service
 from core.jurisdiction_search import build_fuzzy_tokens, build_tsquery
@@ -248,18 +248,18 @@ def get_router() -> APIRouter:
             )
         try:
             if body.changeset_id:
-                changeset_id = await jurisdiction_edits.edit_in_review(
+                changeset_id = await roster_edits.edit_in_review(
                     jurisdiction_ocdid, body.people, user.user_id, body.changeset_id
                 )
             else:
-                changeset_id = await jurisdiction_edits.edit_published_roster(
+                changeset_id = await roster_edits.edit_published_roster(
                     jurisdiction_ocdid, body.people, user.user_id
                 )
         except PeopleValidationError as exc:
             raise HTTPException(status_code=422, detail=exc.failures)
-        except jurisdiction_edits.UnknownPost as exc:
+        except roster_edits.UnknownPost as exc:
             raise HTTPException(status_code=404, detail=f"No such post: {exc.args[0]}")
-        except jurisdiction_edits.AnonymousEdit:
+        except roster_edits.AnonymousEdit:
             raise HTTPException(status_code=401, detail="Sign in to record an edit.")
         return {"data": {"changeset_id": changeset_id}}
 

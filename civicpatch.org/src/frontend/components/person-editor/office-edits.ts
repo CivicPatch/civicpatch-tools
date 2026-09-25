@@ -7,13 +7,16 @@
 // named: without it, a person on two bodies diffed against nothing and their pick was lost.
 // `organizationOf` is the card's body — one per card today, one per (person, body) at 9b(c).
 
-import { heldPost, heldMembershipLabel } from "../posts-list/posts-model.js";
+import { heldOffice } from "../posts-list/posts-model.js";
 import { type PersonCard, personOf } from "../people/person-cards.js";
 
 export interface OfficeEdit {
   personId: string;
   postId: string;
   membershipLabel: string | null;
+  // The term, per membership. Omitted from an edit when it matches what they hold here.
+  startDate?: string | null;
+  endDate?: string | null;
   // Which body this edit is about. A move replaces the office they hold *here*, so the payload
   // cannot key on the post id: the post is the thing that changed.
   organizationId: string | null;
@@ -25,14 +28,42 @@ function officeEditFor(
 ): OfficeEdit | null {
   const record = personOf(card);
   if (!card.oldRecord || !record) return null; // no prior membership to move
-  const heldPostId = heldPost(record.memberships, organizationId)?.post_id;
-  const heldLabel = heldMembershipLabel(record.memberships, organizationId);
-  const postId = record.post_id ?? heldPostId;
-  // A cleared label is `null`, a real change; only `undefined` means untouched.
-  const label = record.membership_label === undefined ? heldLabel : record.membership_label;
-  if (!postId) return null; // a label-only edit needs an existing post to attach to
-  if (postId === heldPostId && label === heldLabel) return null;
-  return { personId: card.personId, postId, membershipLabel: label, organizationId };
+  const held = heldOffice(record.memberships, organizationId);
+  const was = {
+    postId: held?.post_id ?? null,
+    label: held?.label ?? null,
+    startDate: held?.start_date ?? null,
+    endDate: held?.end_date ?? null,
+  };
+  const now = {
+    postId: record.post_id ?? was.postId,
+    label: edited(record.membership_label, was.label),
+    startDate: edited(record.start_date, was.startDate),
+    endDate: edited(record.end_date, was.endDate),
+  };
+  if (!now.postId) return null; // a label-only edit needs an existing post to attach to
+
+  const officeChanged = now.postId !== was.postId || now.label !== was.label;
+  const datesChanged = now.startDate !== was.startDate || now.endDate !== was.endDate;
+  if (!officeChanged && !datesChanged) return null;
+
+  const edit: OfficeEdit = {
+    personId: card.personId,
+    postId: now.postId,
+    membershipLabel: now.label,
+    organizationId,
+  };
+  if (datesChanged) {
+    edit.startDate = now.startDate;
+    edit.endDate = now.endDate;
+  }
+  return edit;
+}
+
+// Untouched (`undefined`) keeps what they hold; emptied (`""` or `null`) is cleared.
+function edited(value: unknown, held: string | null): string | null {
+  if (value === undefined) return held;
+  return typeof value === "string" && value ? value : null;
 }
 
 export function officeEditsIn(

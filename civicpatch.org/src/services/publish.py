@@ -8,11 +8,13 @@ made the repo the authority for what is live and meant a dead merge worker meant
 
 import asyncio
 import logging
+from typing import List
 
 import lib.buckets as buckets
 import lib.storage as storage_service
 import services.activity as activity_service
 from core.activity import changes_from_diff
+from core.changeset_lifecycle import REVIEW_POOL_KINDS
 from core.images import artifacts_key, promoted_key
 from core.membership_label import post_label
 from core.post_derivation import ChosenPost, DerivedPost, RosterEntry, derived_posts
@@ -20,6 +22,7 @@ from core.projection.diff import on_roster, roster_diff
 from core.projection.roster import Roster
 from database import posts as posts_db
 from database import projection as projection_db
+from database.changesets import get_changeset_kind
 from database.database import get_pool
 from database import source_records as source_records_db
 from database.users import SYSTEM_USER_ID
@@ -29,6 +32,7 @@ from database.publications import (
 )
 from database.roles import get_roles
 from schemas.activity import Change
+from services.roster import proposed_roster
 from shared.schemas import RoleConfig
 from shared.utils.statuses import DismissalReason
 from shared.utils.taxonomy import build_taxonomy
@@ -125,7 +129,7 @@ async def publish_roster(
     One call for every kind. A scrape and a hand edit differ in what facts they filed, not in
     how they publish, so there is no second entry point to keep in step.
 
-    `changes`, when given, rides on the publish's own activity row — see `roster_edits.publish`.
+    `changes`, when given, rides on the publish's own activity row — see `publish_review`.
 
     The feed's per-person rows are read off the roster before against the roster after (9d), so
     a scrape's moves and a hand edit's are reported the same way, by what the rebuild actually
@@ -206,3 +210,55 @@ async def dismiss_people(
     # dismissal has one, not just the reviewer's. That is what retires `record_close`.
     await dismiss_changeset(changeset_id, DismissalReason.REJECTED, resolved_by_user_id)
     logger.info(f"[{changeset_id}] Dismissed without publishing")
+
+
+class MissingRoster(Exception):
+    """The scrape has no recorded roster, so there is nothing to edit or publish."""
+
+
+class NotInReviewPool(Exception):
+    """A sheet import is not bulk-published from the queue."""
+
+
+async def publish_from_review(
+    changeset_id: str,
+    jurisdiction_ocdid: str,
+    edited: List[dict] | None,
+    resolved_by_user_id: str,
+) -> None:
+    """`publish_review`, for bulk review — which offers only the kinds the review pool does."""
+    kind = await get_changeset_kind(changeset_id)
+    if kind is None:
+        raise MissingRoster(changeset_id)
+    if kind not in REVIEW_POOL_KINDS:
+        raise NotInReviewPool(changeset_id)
+    await publish_review(changeset_id, jurisdiction_ocdid, edited, resolved_by_user_id)
+
+
+async def publish_review(
+    changeset_id: str,
+    jurisdiction_ocdid: str,
+    edited: List[dict] | None,
+    resolved_by_user_id: str | None,
+    changes: Change | None = None,
+) -> None:
+    """Make a reviewed scrape's roster live.
+
+    A reviewer's edits are filed as claims by `services/roster_edits.py::edit_in_review`, so
+    by now they are facts and the roster to publish is the one the facts derive.
+
+    Nothing here commits: `WriteRecentChangesWorkflow` mirrors to open-data and the sheets from
+    `activity`. `changes`, when given, rides on the publish's own activity row instead of a
+    separate one.
+    """
+    roster = edited
+    if roster is None:
+        # `proposed_roster`, not `scraped_roster`: publishing without editing still has to
+        # carry what a human stated on an earlier visit.
+        roster = await proposed_roster(changeset_id, jurisdiction_ocdid)
+    # Publishing an empty roster retires every person in the jurisdiction. That was unreachable
+    # while the review pool required an open PR; the request is the only record now.
+    if not roster:
+        raise MissingRoster(changeset_id)
+    # Photos promote with the data: publishing is what moves them off the artifacts bucket.
+    await publish_roster(changeset_id, jurisdiction_ocdid, resolved_by_user_id, changes)

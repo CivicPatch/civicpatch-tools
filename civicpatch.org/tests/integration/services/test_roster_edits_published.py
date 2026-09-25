@@ -14,13 +14,12 @@ import uuid
 import pytest
 import pytest_asyncio
 
-import services.roster_edits as roster_edits
 from core.people_edits import PeopleValidationError
 from core.post_derivation import DerivedMembership, MembershipSource
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 from schemas.jurisdictions import OfficeEdit, PersonEdit
-from services.jurisdiction_edits import UnknownPost, edit_published_roster
+from services.roster_edits import UnknownPost, edit_published_roster
 from database.changeset_predicates import DISMISSED_SUPERSEDED
 from database.dismissals import supersede_stacked_changesets
 from database.source_records import insert_source_records

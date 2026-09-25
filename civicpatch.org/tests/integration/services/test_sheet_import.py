@@ -35,7 +35,7 @@ from lib.csv import parse_csv
 from database import activity, changeset_batches, dismissals, divisions, organizations, posts
 from database.database import get_pool
 from database.publications import publish_attributions
-from services import roster_edits
+from services import publish
 from services.batch_review import batch_review, dismiss_selected, publish_selected
 from services.review_cards import with_card_data
 from services.review_summary import review_summary_for_changeset
@@ -654,7 +654,7 @@ async def test_a_town_that_refused_to_publish_stays_out_of_the_sweep(user_id, ba
     )
     await import_rows(rows, user_id, batch_id)
 
-    real_publish = roster_edits.publish
+    real_publish = publish.publish_review
     refused = []
 
     async def refuse_the_first(*args):
@@ -663,7 +663,7 @@ async def test_a_town_that_refused_to_publish_stays_out_of_the_sweep(user_id, ba
             raise RuntimeError("supersede guard")
         return await real_publish(*args)
 
-    with patch("services.batch_review.roster_edits.publish", side_effect=refuse_the_first):
+    with patch("services.batch_review.publish.publish_review", side_effect=refuse_the_first):
         results = await publish_selected(batch_id, await _selected(batch_id, *_OCDIDS), user_id)
 
     assert sorted(result.published for result in results) == [False, True]

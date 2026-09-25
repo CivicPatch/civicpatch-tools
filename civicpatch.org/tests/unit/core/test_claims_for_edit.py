@@ -9,7 +9,7 @@ import pytest
 from core.people_edits import POSTS_FIELD, PeopleValidationError
 from schemas.claims import ClaimKind
 from schemas.jurisdictions import PersonEdit, OfficeEdit
-from services.jurisdiction_edits import claims_for_edit, membership_label_edits, new_merges
+from core.roster_edits import claims_for_edit, membership_claim_edits, new_merges
 
 MAYOR = "11111111-1111-5111-8111-111111111111"
 CLERK = "22222222-2222-5222-8222-222222222222"
@@ -143,14 +143,16 @@ def test_a_renamed_seat_is_a_membership_label_change():
     maintainer's act on the posts route."""
     edit = PersonEdit(id="p1", offices=[OfficeEdit(id=MAYOR, membership_label="Acting Mayor")])
 
-    assert [label for _, label in membership_label_edits(_derived(), [edit])] == ["Acting Mayor"]
+    assert [(field, value) for _, field, value in membership_claim_edits(_derived(), [edit])] == [
+        ("label", "Acting Mayor")
+    ]
 
 
 @pytest.mark.unit
 def test_an_unchanged_seat_name_changes_nothing():
     edit = PersonEdit(id="p1", offices=[OfficeEdit(id=MAYOR, membership_label="Mayor")])
 
-    assert membership_label_edits(_derived(), [edit]) == []
+    assert membership_claim_edits(_derived(), [edit]) == []
 
 
 @pytest.mark.unit
@@ -159,7 +161,9 @@ def test_clearing_a_seat_name_asks_for_the_derived_guess_back():
     row, not a value."""
     edit = PersonEdit(id="p1", offices=[OfficeEdit(id=MAYOR, membership_label=None)])
 
-    assert [label for _, label in membership_label_edits(_derived(), [edit])] == [None]
+    assert [(field, value) for _, field, value in membership_claim_edits(_derived(), [edit])] == [
+        ("label", None)
+    ]
 
 
 @pytest.mark.unit
@@ -168,9 +172,37 @@ def test_a_seat_name_is_keyed_on_the_person_and_the_post():
 
     edit = PersonEdit(id="p1", offices=[OfficeEdit(id=MAYOR, membership_label="Acting Mayor")])
 
-    assert [entity for entity, _ in membership_label_edits(_derived(), [edit])] == [
+    assert [entity for entity, _, _ in membership_claim_edits(_derived(), [edit])] == [
         membership_id("p1", MAYOR)
     ]
+
+
+@pytest.mark.unit
+def test_a_term_date_is_filed_on_the_membership_not_the_person():
+    """The bug this fixes: dates were person fields, and the fold reads them per membership."""
+    edit = PersonEdit(
+        id="p1", offices=[OfficeEdit(id=MAYOR, membership_label="Mayor", start_date="2024-01")]
+    )
+
+    assert [(field, value) for _, field, value in membership_claim_edits(_derived(), [edit])] == [
+        ("start_date", "2024-01")
+    ]
+    assert claims_for_edit(_derived(), [PersonEdit(id="p1", fields={"start_date": "2024"})], CHANGESET) == []
+
+
+@pytest.mark.unit
+def test_an_office_that_names_no_dates_leaves_them_alone():
+    """Offices are sent whole to keep a person's other body; that must not clear its dates."""
+    derived = _derived(memberships=[{"post_id": MAYOR, "label": "Mayor", "start_date": "2020"}])
+    edit = PersonEdit(id="p1", offices=[OfficeEdit(id=MAYOR, membership_label="Mayor")])
+
+    assert membership_claim_edits(derived, [edit]) == []
+
+
+@pytest.mark.unit
+def test_a_term_date_is_a_partial_date():
+    with pytest.raises(ValueError):
+        OfficeEdit(id=MAYOR, start_date="January 2024")
 
 
 # Moved here 2026-09-23 from tests/unit/routers/test_review.py, where the same claims were made

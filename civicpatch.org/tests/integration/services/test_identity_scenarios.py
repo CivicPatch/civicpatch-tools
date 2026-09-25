@@ -22,7 +22,7 @@ from database.users import SYSTEM_USER_ID
 from schemas.claims import Claim, ClaimKind, DefaultNote, EntityType, Source
 from schemas.jurisdictions import OfficeEdit, PersonEdit
 from services import rollback
-from services.jurisdiction_edits import edit_published_roster
+from services.roster_edits import edit_published_roster
 from services.roster_ingest import assign_ids
 from tests.integration import factories
 

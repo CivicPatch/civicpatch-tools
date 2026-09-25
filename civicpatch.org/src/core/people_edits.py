@@ -29,8 +29,6 @@ EDITABLE_FIELDS = (
     "urls",
     "source_urls",
     "image",
-    "start_date",
-    "end_date",
 )
 
 # Fields whose change during a scrape raises a review issue — not what the diff shows,
@@ -46,9 +44,6 @@ LIST_FIELDS = frozenset({"other_names", "phones", "emails", "urls", "source_urls
 POSTS_FIELD = "posts"
 # Derived from the sightings now, so editing it states nothing about the world.
 NOT_CLAIMABLE = frozenset({"source_urls"})
-
-# A blank date means unknown/still-serving, not wrong — suppress the reject only.
-NOT_REJECTABLE = frozenset({"start_date", "end_date"})
 
 
 def _values_of(value: object) -> list:
@@ -258,20 +253,18 @@ def claims_from_edit(
         if field in NOT_CLAIMABLE:
             continue
         was, now = scraped.get(field), edited.get(field)
-        rejectable = field not in NOT_REJECTABLE
 
         if field in LIST_FIELDS:
             was, now = set(_values_of(was)), set(_values_of(now))
             claims.extend(
                 claim_for(field, ClaimKind.ACCEPT, v) for v in sorted(now - was)
             )
-            if rejectable:
-                claims.extend(
-                    claim_for(field, ClaimKind.REJECT, v) for v in sorted(was - now)
-                )
+            claims.extend(
+                claim_for(field, ClaimKind.REJECT, v) for v in sorted(was - now)
+            )
         elif now not in (None, "") and now != was:
             claims.append(claim_for(field, ClaimKind.ACCEPT, now))
-        elif was and now in (None, "") and rejectable:
+        elif was and now in (None, ""):
             claims.append(claim_for(field, ClaimKind.REJECT, was))
 
     return claims

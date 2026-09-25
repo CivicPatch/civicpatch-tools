@@ -15,7 +15,7 @@ from schemas.imports import (
     PublishResult,
     ReviewJurisdiction,
 )
-from services import roster_edits
+from services import publish
 from core.changeset_lifecycle import ChangesetState
 from core.roster_changes import ProposalCounts
 from shared.utils.statuses import DismissalReason
@@ -82,7 +82,7 @@ async def publish_selected(
     results = []
     for item in wanted:
         try:
-            await roster_edits.publish(
+            await publish.publish_review(
                 item["changeset_id"], item["jurisdiction_ocdid"], None, user_id
             )
         except Exception as e:

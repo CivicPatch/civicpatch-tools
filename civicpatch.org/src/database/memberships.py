@@ -300,31 +300,46 @@ async def set_membership_label(
     user_id: str,
     changeset_id: str | None = None,
 ) -> None:
-    """Name this person's post, or clear it back to the derived guess.
+    """Name this person's post, or clear it back to the derived guess."""
+    await set_membership_field(
+        cur, membership_id, MEMBERSHIP_LABEL_FIELD, label, user_id, changeset_id
+    )
+
+
+async def set_membership_field(
+    cur,
+    membership_id: str,
+    field_path: str,
+    value: str | None,
+    user_id: str,
+    changeset_id: str | None = None,
+) -> None:
+    """Set a membership's label or term date, or clear it back to what the facts derive.
 
     The claim is the whole value: the row is rewritten from the facts at the next rebuild, so
     a column written here would be a copy the next publish disagrees with.
     """
-    if label is None:
+    if value is None:
         # An ordinary withdrawal, not a rollback's — withdrawn_by_changeset_id stays NULL.
         await claims.withdraw(
             cur,
             EntityType.MEMBERSHIP,
             membership_id,
-            MEMBERSHIP_LABEL_FIELD,
+            field_path,
             ClaimKind.ACCEPT,
             user_id,
         )
         return
+    note = DefaultNote.LABEL_SET if field_path == MEMBERSHIP_LABEL_FIELD else DefaultNote.EDITED
     await claims.upsert(
         cur,
         Claim(
             entity_type=EntityType.MEMBERSHIP,
             entity_id=membership_id,
-            field_path=MEMBERSHIP_LABEL_FIELD,
+            field_path=field_path,
             kind=ClaimKind.ACCEPT,
-            value=label,
-            sources=[Source(note=DefaultNote.LABEL_SET)],
+            value=value,
+            sources=[Source(note=note)],
             changeset_id=changeset_id,
         ),
         user_id,

@@ -185,6 +185,8 @@ export interface HeldMembership {
   post_id: string;
   post_label?: string;
   label?: string | null;
+  start_date?: string | null;
+  end_date?: string | null;
   organization_id?: string;
   role_id?: string;
   division_ocdid?: string;

@@ -529,7 +529,7 @@ def test_posting_an_edit_returns_the_changeset_it_was_filed_under(client):
     """The id is the whole outcome: undoing the edit is rolling that changeset back."""
     client.app.dependency_overrides[get_optional_user] = _maintainer
     with patch.object(
-        jurisdictions_router.jurisdiction_edits,
+        jurisdictions_router.roster_edits,
         "edit_published_roster",
         new=AsyncMock(return_value=CHANGESET_ID),
     ) as edit:
@@ -547,9 +547,9 @@ def test_an_edit_with_no_author_is_refused(client):
     nobody made."""
     client.app.dependency_overrides[get_optional_user] = _maintainer
     with patch.object(
-        jurisdictions_router.jurisdiction_edits,
+        jurisdictions_router.roster_edits,
         "edit_published_roster",
-        new=AsyncMock(side_effect=jurisdictions_router.jurisdiction_edits.AnonymousEdit("x")),
+        new=AsyncMock(side_effect=jurisdictions_router.roster_edits.AnonymousEdit("x")),
     ):
         response = client.post(EDIT_URL, json=EDIT_BODY)
 
@@ -561,7 +561,7 @@ def test_anyone_signed_in_may_edit_inside_their_own_review(client):
     """A review is open to any signed-in user, and an edit made during one is part of it."""
     client.app.dependency_overrides[get_optional_user] = _default
     with patch.object(
-        jurisdictions_router.jurisdiction_edits,
+        jurisdictions_router.roster_edits,
         "edit_in_review",
         new=AsyncMock(return_value=CHANGESET_ID),
     ) as save:
@@ -586,11 +586,11 @@ def test_saving_inside_a_review_publishes_nothing(client):
     act, on its own route."""
     client.app.dependency_overrides[get_optional_user] = _default
     with patch.object(
-        jurisdictions_router.jurisdiction_edits,
+        jurisdictions_router.roster_edits,
         "edit_published_roster",
         new=AsyncMock(return_value=CHANGESET_ID),
     ) as publish, patch.object(
-        jurisdictions_router.jurisdiction_edits,
+        jurisdictions_router.roster_edits,
         "edit_in_review",
         new=AsyncMock(return_value=CHANGESET_ID),
     ):
@@ -606,7 +606,7 @@ def test_an_invalid_field_is_a_422_with_the_failures(client):
     client.app.dependency_overrides[get_optional_user] = _default
     failures = [{"id": "p1", "name": "Ann", "field": "emails", "message": "bad"}]
     with patch.object(
-        jurisdictions_router.jurisdiction_edits,
+        jurisdictions_router.roster_edits,
         "edit_in_review",
         new=AsyncMock(
             side_effect=jurisdictions_router.PeopleValidationError(failures)
@@ -624,10 +624,10 @@ def test_an_unknown_post_is_a_404(client):
     cannot find, so a typo'd id would otherwise file a claim and do nothing silently."""
     client.app.dependency_overrides[get_optional_user] = _default
     with patch.object(
-        jurisdictions_router.jurisdiction_edits,
+        jurisdictions_router.roster_edits,
         "edit_in_review",
         new=AsyncMock(
-            side_effect=jurisdictions_router.jurisdiction_edits.UnknownPost(["nope"])
+            side_effect=jurisdictions_router.roster_edits.UnknownPost(["nope"])
         ),
     ):
         response = client.post(EDIT_URL, json={**EDIT_BODY, "changeset_id": CHANGESET_ID})

@@ -53,6 +53,43 @@ describe("officeEditsIn", () => {
       officeEditsIn([card({ newRecord: { id: "p1", memberships: HELD, post_id: "council-1" } })]),
     ).toEqual([]));
 
+  // Dates were person fields the fold never read; they are the membership's now.
+  it("carries a changed term date on the office", () =>
+    expect(
+      officeEditsIn([card({ newRecord: { id: "p1", memberships: HELD, start_date: "2024-01" } })]),
+    ).toEqual([
+      {
+        personId: "p1",
+        postId: "council-1",
+        membershipLabel: "District 3",
+        startDate: "2024-01",
+        endDate: null,
+        organizationId: null,
+      },
+    ]));
+
+  it("is empty when the dates match what they hold", () =>
+    expect(
+      officeEditsIn([
+        card({
+          newRecord: {
+            id: "p1",
+            memberships: [{ ...HELD[0], start_date: "2024" }],
+            start_date: "2024",
+          },
+        }),
+      ]),
+    ).toEqual([]));
+
+  it("reads an emptied date input as cleared", () =>
+    expect(
+      officeEditsIn([
+        card({
+          newRecord: { id: "p1", memberships: [{ ...HELD[0], end_date: "2028" }], end_date: "" },
+        }),
+      ])[0],
+    ).toMatchObject({ endDate: null }));
+
   it("carries an explicitly cleared label through as null, not as unchanged", () =>
     expect(
       officeEditsIn([card({ newRecord: { id: "p1", memberships: HELD, membership_label: null } })]),

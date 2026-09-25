@@ -12,7 +12,7 @@ from core.changeset_lifecycle import REVIEW_POOL_KINDS
 from database import changesets as changesets_db
 from database import dismissals
 from schemas.imports import PublishResult
-from services import roster_edits
+from services import publish
 from shared.utils.statuses import DismissalReason
 
 logger = logging.getLogger(__name__)
@@ -25,7 +25,7 @@ async def publish_selected(changeset_ids: list[str], user_id: str) -> list[Publi
     for changeset_id in changeset_ids:
         ocdid = ocdids.get(changeset_id, "")
         try:
-            await roster_edits.publish_from_review(changeset_id, ocdid, None, user_id)
+            await publish.publish_from_review(changeset_id, ocdid, None, user_id)
         except Exception as e:
             logger.error(f"[{changeset_id}] {ocdid}: publish failed: {e}", exc_info=True)
             results.append(

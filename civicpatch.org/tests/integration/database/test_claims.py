@@ -20,7 +20,7 @@ from core.projection.memberships import MEMBERSHIP_LABEL_FIELD
 from schemas.claims import Claim, ClaimKind, EntityType, Source
 from services.claims import claims_for_people
 from schemas.jurisdictions import OfficeEdit, PersonEdit
-from services.jurisdiction_edits import edit_published_roster
+from services.roster_edits import edit_published_roster
 from shared.utils.membership_ids import membership_id
 from tests.integration import factories
 

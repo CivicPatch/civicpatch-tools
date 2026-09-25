@@ -256,4 +256,54 @@ describe("rosterEditPayload", () => {
       { id: "p2", same_as: "p1" },
     ]);
   });
+
+  it("sends a term date only on the office whose term changed", () => {
+    // An omitted date is left alone by the server, so the other body keeps its own.
+    const held = new Map([
+      [
+        "p1",
+        [
+          { id: MAYOR, membership_label: null, organizationId: "org-council" },
+          { id: TRUSTEE, membership_label: null, organizationId: "org-schools" },
+        ],
+      ],
+    ]);
+
+    const payload = rosterEditPayload({
+      patch: [patch("p1", {})],
+      officeEdits: [
+        {
+          personId: "p1",
+          postId: MAYOR,
+          membershipLabel: null,
+          startDate: "2024-01",
+          endDate: null,
+          organizationId: "org-council",
+        },
+      ],
+      removedIds: [],
+      mergedInto: NOBODY_MERGED,
+      heldOffices: held,
+    });
+
+    expect(payload[0].offices).toEqual([
+      { id: TRUSTEE, membership_label: null },
+      { id: MAYOR, membership_label: null, start_date: "2024-01", end_date: null },
+    ]);
+  });
+
+  it("carries a new person's term with their pick", () => {
+    const [person] = rosterEditPayload({
+      patch: [patch("new-1", { name: "Bo Nguyen", post_id: MAYOR, start_date: "2025" })],
+      officeEdits: [],
+      removedIds: [],
+      mergedInto: NOBODY_MERGED,
+    });
+
+    expect(person).toEqual({
+      id: "new-1",
+      fields: { name: "Bo Nguyen" },
+      offices: [{ id: MAYOR, membership_label: null, start_date: "2025" }],
+    });
+  });
 });

@@ -1,6 +1,5 @@
 import pytest
 from core.people_edits import PeopleValidationError
-import services.roster_edits as roster_edits
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch

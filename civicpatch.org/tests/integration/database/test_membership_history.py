@@ -13,9 +13,9 @@ from database import memberships as memberships_db
 from database import projection as projection_db
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
-from schemas.jurisdictions import PersonEdit
+from schemas.jurisdictions import OfficeEdit, PersonEdit
 from services import rollback
-from services.jurisdiction_edits import edit_published_roster
+from services.roster_edits import edit_published_roster
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_history/government"
@@ -148,17 +148,28 @@ async def _start_date(person_id: str) -> str | None:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-@pytest.mark.xfail(
-    strict=True,
-    reason="known bug: the editor files dates as person claims, the fold reads membership claims",
-)
 async def test_a_start_date_saved_in_the_editor_reaches_the_membership():
+    """It was xfail: the editor filed dates as person claims, which the fold never reads. Dates
+    now travel on the office, as membership claims."""
     council = await _council()
     jane = str(uuid.uuid4())
     await _scrape(_T0, jane, "Mayor", council)
+    [post_id] = await _post_ids(jane)
 
     await edit_published_roster(
-        _OCDID, [PersonEdit(id=jane, fields={"start_date": "2024-01-01"})], SYSTEM_USER_ID
+        _OCDID,
+        [PersonEdit(id=jane, offices=[OfficeEdit(id=post_id, start_date="2024-01-01")])],
+        SYSTEM_USER_ID,
     )
 
     assert await _start_date(jane) == "2024-01-01"
+
+
+async def _post_ids(person_id: str) -> list[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT post_id::text FROM memberships WHERE person_id = %s AND closed_at IS NULL",
+            (person_id,),
+        )
+        return [row[0] for row in await cur.fetchall()]

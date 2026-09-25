@@ -167,7 +167,7 @@ def summarize_activity(type_: str, changes: dict | None) -> str:
 
     if type_ == "publish_review":
         # A hand edit to an already-live roster folds its own diff onto this row instead of a
-        # separate edit_person one — see roster_edits.edit_published — so a payload here means
+        # separate edit_person one — see roster_edits.edit_published_roster — so a payload here means
         # this publish *is* that edit, not a plain scrape-review approval.
         if c:
             name = c.get("subject") or "record"
