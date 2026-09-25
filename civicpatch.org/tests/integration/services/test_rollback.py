@@ -20,6 +20,7 @@ from database.database import get_pool
 from database.source_records import insert_source_records
 from schemas.common import Identity, UserRole
 from schemas.jurisdictions import PersonEdit
+from shared.utils.statuses import ChangesetKind
 from services import rollback
 from services.jurisdiction_edits import edit_published_roster
 from tests.integration import factories
@@ -158,13 +159,23 @@ def _identity(email: str, user_id: str) -> Identity:
     )
 
 
+_COMMENT = "rolled back in a test"
+
+
 async def _rollback_user(created_by: str, user_id: str) -> int:
     """What a UI offering "roll back everything shown" does: list the user's candidates
     (flat, no jurisdiction chosen), then hand every id to the one executor — the same shape a
-    selective call would use too, just with the full list rather than a hand-picked subset."""
-    candidates = await rollback.list_user_claims(created_by)
-    return await rollback.rollback_claims(
-        [candidate.claim_id for candidate in candidates], user_id
+    selective call would use too, just with the full list rather than a hand-picked subset.
+
+    Rollbacks are listed but excluded from "everything": undoing an undo is picking that one
+    changeset deliberately, and sweeping them in would make select-all alternate between doing
+    and undoing (settled 2026-09-24 with step 13). The screen does the same.
+    """
+    candidates = await rollback.list_user_changesets(created_by)
+    return await rollback.rollback_changesets(
+        [c.changeset_id for c in candidates if c.kind != ChangesetKind.ROLLBACK],
+        user_id,
+        _COMMENT,
     )
 
 
@@ -272,8 +283,8 @@ async def test_rollback_user_in_jurisdiction_raises_when_nothing_to_roll_back():
 @pytest.mark.integration
 async def test_rollback_spans_multiple_jurisdictions_in_one_call():
     """No jurisdiction picker anywhere: a user's edits in two different places both revert from
-    a single `list_user_claims` + `rollback_claims` call, each getting its own
-    rollback changeset since a changeset belongs to exactly one jurisdiction."""
+    a single `list_user_changesets` + `rollback_changesets` call, each getting its own rollback
+    changeset since a changeset belongs to exactly one jurisdiction."""
     user_id = await _create_user(_EMAIL)
     user = _identity(_EMAIL, user_id)
 
@@ -296,11 +307,11 @@ async def test_rollback_spans_multiple_jurisdictions_in_one_call():
         user.user_id,
     )
 
-    candidates = await rollback.list_user_claims(user_id)
+    candidates = await rollback.list_user_changesets(user_id)
     assert {c.jurisdiction_ocdid for c in candidates} == {_OCDID, _OTHER_OCDID}
 
-    withdrawn = await rollback.rollback_claims(
-        [c.claim_id for c in candidates], user_id
+    withdrawn = await rollback.rollback_changesets(
+        [c.changeset_id for c in candidates], user_id, _COMMENT
     )
     assert withdrawn == 2
 

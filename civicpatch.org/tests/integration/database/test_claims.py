@@ -598,10 +598,14 @@ async def test_get_claims_by_creator_scopes_to_the_user_not_a_place():
 
             candidate_ids = [c["id"] for c in candidates]
             rollback_id = await _mint_rollback_changeset(cur)
-            withdrawn = await claims.withdraw_claims(
-                cur, candidate_ids, user_id, rollback_id
+            # `withdraw_claims` went on 2026-09-25: it differed from `withdraw_facts` only by an
+            # `_IS_ACTIVE` filter and had no caller left. This verified that withdrawing a set of
+            # claims hides them from `claimed_values` across jurisdictions, and it still does ---
+            # through the one primitive, which writes both the withdraw row the fold reads and
+            # the `withdrawn_*` columns `claimed_values` filters on.
+            await claims.withdraw_facts(
+                cur, EntityType.CLAIM, candidate_ids, user_id, rollback_id
             )
-            assert withdrawn == 3
             await conn.commit()
 
         async with pool.connection() as conn, conn.cursor() as cur:

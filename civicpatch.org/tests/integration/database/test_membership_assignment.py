@@ -243,7 +243,11 @@ async def test_an_unknown_post_is_refused_rather_than_seating_nobody():
 @pytest.mark.integration
 async def test_a_pick_made_mid_review_files_under_that_review():
     """A pick made from inside an in-progress review belongs to it, rather than showing up as
-    an unrelated jurisdiction edit."""
+    an unrelated jurisdiction edit.
+
+    This verified the claim was filed under the scrape. It now verifies it is filed under the
+    review's own open edit, parented to that scrape, because 9f gave a review pass its own
+    changeset so it can be attributed and rolled back alone."""
     # A different office from the one the page already put them in, or the edit says nothing.
     person_id, _, second = await _seed()
     review_changeset_id = str(uuid.uuid4())
@@ -261,14 +265,21 @@ async def test_a_pick_made_mid_review_files_under_that_review():
 
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
-                "SELECT 1 FROM claims WHERE changeset_id = %s AND field_path = 'posts'",
+                "SELECT changesets.kind, changesets.published_at FROM claims "
+                "JOIN changesets ON changesets.id = claims.changeset_id "
+                "WHERE changesets.parent_changeset_id = %s AND claims.field_path = 'posts'",
                 (review_changeset_id,),
             )
-            assert await cur.fetchone() is not None
+            assert await cur.fetchone() == ("people_edit", None)
     finally:
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
-                "DELETE FROM claims WHERE changeset_id = %s", (review_changeset_id,)
+                "DELETE FROM claims WHERE changeset_id IN "
+                "(SELECT id FROM changesets WHERE parent_changeset_id = %s)",
+                (review_changeset_id,),
+            )
+            await cur.execute(
+                "DELETE FROM changesets WHERE parent_changeset_id = %s", (review_changeset_id,)
             )
             await cur.execute(
                 "DELETE FROM changesets WHERE id::text = %s", (review_changeset_id,)

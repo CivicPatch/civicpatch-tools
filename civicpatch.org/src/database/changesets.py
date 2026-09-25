@@ -12,6 +12,7 @@ from typing import Optional
 from core.roster_changes import ProposalCounts
 from database.activity import create_activity_row
 from database.changeset_predicates import (
+    OPEN_REVIEW_EDIT,
     AVAILABLE_FOR_REVIEW,
     RUN_IN_FLIGHT,
     RUN_PROGRESS,
@@ -77,8 +78,8 @@ async def mark_published(cur, changeset_id: str) -> None:
 
     Deliberately narrow — this is not `publications.py`'s `_record_publish`, which also stamps
     `verified_at`/`resolved_by_user_id` and writes a `PUBLISH_REVIEW` activity row. Right for a
-    reviewer publishing a proposed roster; wrong for a synchronous hand edit or a deletion,
-    neither of which is a review. `COALESCE` makes this idempotent: a changeset already
+    reviewer publishing a proposed roster; wrong for a synchronous hand edit, which is not a
+    review. `COALESCE` makes this idempotent: a changeset already
     published (by a real review) keeps its original stamp.
     """
     await cur.execute(
@@ -87,13 +88,15 @@ async def mark_published(cur, changeset_id: str) -> None:
     )
 
 
-async def _register_born_published_changeset(
+async def _register_changeset(
     cur,
     changeset_id: str,
     kind: ChangesetKind,
     jurisdiction_ocdid: str,
     created_by_user_id: str,
+    comment: str | None = None,
 ) -> str | None:
+    """The row, open. Returns the changeset it follows."""
     # Before the insert: this changeset must not find itself.
     parent_changeset_id = await live_roster_changeset(cur, jurisdiction_ocdid)
     await cur.execute(
@@ -101,9 +104,9 @@ async def _register_born_published_changeset(
         INSERT INTO changesets (
             id, kind, jurisdiction_ocdid, created_by_user_id,
             resolved_by_user_id, created_at, updated_at,
-            parent_changeset_id
+            parent_changeset_id, comment
         )
-        VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, %s)
+        VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, %s, %s)
         """,
         (
             changeset_id,
@@ -112,9 +115,9 @@ async def _register_born_published_changeset(
             created_by_user_id,
             created_by_user_id,
             parent_changeset_id,
+            comment,
         ),
     )
-    await mark_published(cur, changeset_id)
     return parent_changeset_id
 
 
@@ -123,20 +126,77 @@ async def register_people_edit_changeset(
     jurisdiction_ocdid: str,
     created_by_user_id: str,
 ):
-    """A maintainer's hand edit of a live roster. Nothing ran, so no run.
+    """A hand edit of a live roster, from the jurisdictions page. Nothing ran, so no run.
 
-    Born published: the edit writes sightings for anyone added, and a pending changeset holding
-    those would land straight in the review pool.
+    Born published because that page has no staging: pressing Publish is the whole action. A
+    review pass is the other kind of hand edit and is staged, which is why step 9f makes its
+    changeset born open instead.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await _register_born_published_changeset(
+        await _register_changeset(
             cur,
             changeset_id,
             ChangesetKind.PEOPLE_EDIT,
             jurisdiction_ocdid,
             created_by_user_id,
         )
+        await mark_published(cur, changeset_id)
+
+
+# `OPEN_REVIEW_EDIT` unqualified, as `ON CONFLICT` needs; the two must match migration 223.
+_OPEN_REVIEW_EDIT_INDEX = (
+    f"kind = '{ChangesetKind.PEOPLE_EDIT.value}' "
+    "AND published_at IS NULL AND dismissed_at IS NULL"
+)
+
+
+async def find_or_create_review_edit(
+    cur, scrape_changeset_id: str, jurisdiction_ocdid: str, created_by_user_id: str
+) -> str:
+    """This person's changeset for this review (9f): opened on their first save, reused after.
+
+    One per person, so each reviewer's pass is attributed and undone on its own. Born open and
+    parented to the scrape, so it publishes and dismisses with it.
+    """
+    await cur.execute(
+        f"""
+        INSERT INTO changesets (
+            id, kind, jurisdiction_ocdid, created_by_user_id, created_at, updated_at,
+            parent_changeset_id
+        )
+        VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, %s)
+        ON CONFLICT (parent_changeset_id, created_by_user_id) WHERE {_OPEN_REVIEW_EDIT_INDEX}
+        DO NOTHING
+        """,
+        (
+            make_id(),
+            ChangesetKind.PEOPLE_EDIT,
+            jurisdiction_ocdid,
+            created_by_user_id,
+            scrape_changeset_id,
+        ),
+    )
+    edit_id = await review_edit_of(cur, scrape_changeset_id, created_by_user_id)
+    if edit_id is None:
+        raise RuntimeError(f"no open review edit for {scrape_changeset_id} after inserting one")
+    return edit_id
+
+
+async def review_edit_of(
+    cur, scrape_changeset_id: str, created_by_user_id: str
+) -> str | None:
+    """This person's open edit on this review, if they have saved anything yet."""
+    await cur.execute(
+        f"""
+        SELECT changesets.id::text FROM changesets
+         WHERE changesets.parent_changeset_id::text = %s
+           AND changesets.created_by_user_id::text = %s AND {OPEN_REVIEW_EDIT}
+        """,
+        (scrape_changeset_id, created_by_user_id),
+    )
+    row = await cur.fetchone()
+    return row[0] if row else None
 
 
 async def register_rollback_changeset(
@@ -144,17 +204,15 @@ async def register_rollback_changeset(
     changeset_id: str,
     jurisdiction_ocdid: str,
     created_by_user_id: str,
+    comment: str,
 ) -> str | None:
-    """A rollback, undoing whatever is currently live. Born published, and takes a caller's
-    cursor rather than owning a connection — it must commit in the same transaction as the
-    withdraw it accompanies, or a published rollback could end up changing nothing while
-    claiming it had. Returns the id of the changeset being rolled back."""
-    return await _register_born_published_changeset(
+    return await _register_changeset(
         cur,
         changeset_id,
         ChangesetKind.ROLLBACK,
         jurisdiction_ocdid,
         created_by_user_id,
+        comment,
     )
 
 
@@ -430,3 +488,30 @@ async def get_updated_at(cur, changeset_id: str) -> datetime:
     if row is None:
         raise ValueError(f"No changeset {changeset_id}")
     return row[0]
+
+
+async def by_creator_since(cur, created_by_user_id: str, since: datetime) -> list[dict]:
+    """This user's published changesets from `since` onwards, newest first.
+
+    The rollback unit is the changeset (§17), so this is what a "roll back this user" screen
+    lists. Published only: an open changeset has changed nothing to undo, and a dismissed one
+    was already refused. Rollbacks are included --- undoing an undo is rolling back the
+    rollback, and it has to be listed to be picked.
+    """
+    await cur.execute(
+        """
+        SELECT changesets.id::text, changesets.kind, changesets.jurisdiction_ocdid,
+               jurisdictions.data->>'name' AS jurisdiction_name,
+               changesets.published_at, changesets.comment
+        FROM changesets
+        LEFT JOIN jurisdictions
+               ON jurisdictions.jurisdiction_ocdid = changesets.jurisdiction_ocdid
+        WHERE changesets.created_by_user_id::text = %s
+          AND changesets.published_at IS NOT NULL
+          AND changesets.published_at >= %s
+        ORDER BY changesets.published_at DESC
+        """,
+        (created_by_user_id, since),
+    )
+    columns = [column.name for column in cur.description or []]
+    return [dict(zip(columns, row)) for row in await cur.fetchall()]

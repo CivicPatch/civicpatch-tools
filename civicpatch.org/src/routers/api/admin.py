@@ -81,7 +81,7 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
         ),
     ):
-        candidates = await rollback.list_user_claims(str(user_id))
+        candidates = await rollback.list_user_changesets(str(user_id))
         return {"data": candidates}
 
     @router.post("/users/{user_id}/rollback", include_in_schema=False)
@@ -101,13 +101,13 @@ def get_router() -> APIRouter:
         # outright — the url names whose edits this is meant to undo, and the ids acted
         # on must actually be theirs, not whatever a stray or malicious request sent.
         theirs = {
-            candidate.claim_id
-            for candidate in await rollback.list_user_claims(str(user_id))
+            candidate.changeset_id
+            for candidate in await rollback.list_user_changesets(str(user_id))
         }
-        claim_ids = [cid for cid in payload.claim_ids if cid in theirs]
+        mine = [cid for cid in payload.changeset_ids if cid in theirs]
         try:
-            withdrawn = await rollback.rollback_claims(
-                claim_ids, identity.user_id, payload.reason
+            withdrawn = await rollback.rollback_changesets(
+                mine, identity.user_id, payload.comment
             )
         except rollback.NothingToRollBack:
             raise HTTPException(status_code=409, detail="Nothing to roll back")

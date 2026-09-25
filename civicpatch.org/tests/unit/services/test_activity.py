@@ -1,7 +1,18 @@
+"""`write_person_changes`: the activity writer publish calls once its own write has landed.
+
+The `record_manual_edits` / `diff_manual_edits` tests went on 2026-09-24. They verified that
+publishing diffed the roster itself and logged the result. That path no longer exists: its only
+caller was `edit_published`, deleted with step 9, and the diff is now the fold's own
+`core/activity.changes_from_diff` (pinned in `test_changes_from_diff.py`), which publish hands
+straight to the writer below. What is left to test here is the forwarding and the swallowing.
+"""
+
 from unittest.mock import AsyncMock, patch
 
 import pytest
 
+from schemas.activity import Change, FieldChange, PersonChange
+from schemas.claims import EntityType
 from services import activity
 from shared.utils.statuses import ActivityType
 
@@ -10,72 +21,38 @@ JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/governm
 USER_ID = "user-123"
 
 
-# ── record_manual_edits (the publish-time diff) ──────────────────────────────
-
-# All three patch `create_activity_rows`, the batch writer. They patched `create_activity_row`
-# until 2026-09-06, when the loop became one `executemany` — a connection was being checked
-# out of a pool of twenty *per changed field*.
-
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-@patch("services.activity.create_activity_rows", new_callable=AsyncMock)
-async def test_record_manual_edits_logs_diff_rows(mock_create):
-    before = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
-    after = [{"id": "p1", "name": "Jane Doe", "office": {"name": "Mayor"}}]
-    await activity.record_manual_edits(CHANGESET_ID, JURISDICTION_OCDID, USER_ID, before, after)
-    mock_create.assert_awaited_once()
-    entries, *rest = mock_create.call_args.args
-    assert [change_type for change_type, _payload in entries] == [ActivityType.EDIT_PERSON]
-    assert tuple(rest) == (USER_ID, JURISDICTION_OCDID, CHANGESET_ID)
+def _renamed() -> PersonChange:
+    return PersonChange(
+        type=ActivityType.EDIT_PERSON,
+        payload=Change(
+            entity_type=EntityType.PERSON,
+            entity_id="p1",
+            subject="Jane Doe",
+            fields=[FieldChange(field="name", before="Jane", after="Jane Doe")],
+        ),
+    )
 
 
-@pytest.mark.unit
-@pytest.mark.asyncio
-@patch("services.activity.create_activity_rows", new_callable=AsyncMock)
-async def test_record_manual_edits_no_diff_logs_nothing(mock_create):
-    """An unchanged roster yields no entries. The writer is still called and returns early on
-    an empty batch, so this asserts the rows rather than the call."""
-    people = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
-    await activity.record_manual_edits(CHANGESET_ID, JURISDICTION_OCDID, USER_ID, people, people)
-    assert mock_create.call_args.args[0] == []
-
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-@patch("services.activity.create_activity_rows", new_callable=AsyncMock)
-async def test_record_manual_edits_swallows_errors(mock_create):
-    mock_create.side_effect = RuntimeError("db down")
-    before = []
-    after = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
-    await activity.record_manual_edits(CHANGESET_ID, JURISDICTION_OCDID, USER_ID, before, after)  # must not raise
-
-
-# ── diff_manual_edits / write_person_changes (the split roster_edits.edit_published uses) ────
-
-
-@pytest.mark.unit
-@pytest.mark.asyncio
-async def test_diff_manual_edits_returns_the_typed_changes():
-    before = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
-    after = [{"id": "p1", "name": "Jane Doe", "office": {"name": "Mayor"}}]
-    changes = await activity.diff_manual_edits(before, after)
-    assert [c.type for c in changes] == [ActivityType.EDIT_PERSON]
-    assert changes[0].payload.subject == "Jane Doe"
+# Patches `create_activity_rows`, the batch writer. It patched `create_activity_row` until
+# 2026-09-06, when the loop became one `executemany` — a connection was being checked out of a
+# pool of twenty *per changed field*.
 
 
 @pytest.mark.unit
 @pytest.mark.asyncio
 @patch("services.activity.create_activity_rows", new_callable=AsyncMock)
 async def test_write_person_changes_forwards_type_and_payload(mock_create):
-    before = [{"id": "p1", "name": "Jane", "office": {"name": "Mayor"}}]
-    after = [{"id": "p1", "name": "Jane Doe", "office": {"name": "Mayor"}}]
-    changes = await activity.diff_manual_edits(before, after)
+    """This verified the forwarding of what `diff_manual_edits` produced. It now verifies the
+    forwarding of a `PersonChange` built here, because that function is deleted and publish
+    supplies the changes itself."""
+    change = _renamed()
 
-    await activity.write_person_changes(CHANGESET_ID, JURISDICTION_OCDID, USER_ID, changes)
+    await activity.write_person_changes(
+        CHANGESET_ID, JURISDICTION_OCDID, USER_ID, [change]
+    )
 
     mock_create.assert_awaited_once_with(
-        [(ActivityType.EDIT_PERSON, changes[0].payload)],
+        [(ActivityType.EDIT_PERSON, change.payload)],
         USER_ID,
         JURISDICTION_OCDID,
         CHANGESET_ID,

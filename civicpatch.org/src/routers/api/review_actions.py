@@ -77,8 +77,6 @@ MISSING_ROSTER_DETAIL = "This scrape recorded no roster. Re-run it before review
 def _http_error(exc: Exception) -> HTTPException:
     if isinstance(exc, PeopleValidationError):
         return HTTPException(status_code=422, detail=exc.failures)
-    if isinstance(exc, roster_edits.AnonymousEdit):
-        return HTTPException(status_code=401, detail="Sign in to record an edit.")
     if isinstance(exc, SupersededRoster):
         return HTTPException(status_code=409, detail=str(exc))
     return HTTPException(status_code=409, detail=MISSING_ROSTER_DETAIL)
@@ -199,7 +197,6 @@ def get_router(api_key_header):
             )
         except (
             roster_edits.MissingRoster,
-            roster_edits.AnonymousEdit,
             PeopleValidationError,
             SupersededRoster,
         ) as exc:

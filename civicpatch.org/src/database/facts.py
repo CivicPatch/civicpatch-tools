@@ -11,6 +11,7 @@ from datetime import datetime
 from core.changeset_lifecycle import PARTIAL_KINDS
 from core.people_edits import POSTS_FIELD
 from core.projection.facts import Claim, ClaimKind, Facts, PostKey, SourceRecord
+from database.changeset_predicates import OPEN_REVIEW_EDIT
 from database.database import get_pool
 from shared.utils.statuses import ChangesetKind
 
@@ -18,19 +19,26 @@ from shared.utils.statuses import ChangesetKind
 # as though it had published, which is what a proposed roster is. `including` is NULL for the
 # live roster, and `id = NULL` is never true, so that caller pays nothing for the clause.
 #
+# The scrape's open review edit comes along, because publishing the scrape publishes it (9f).
+_INCLUDED = f"""(
+    changesets.id = %(including)s
+    OR (changesets.parent_changeset_id = %(including)s AND {OPEN_REVIEW_EDIT})
+)"""
+
+#
 # `claims.changeset_id` is still nullable today — a direct field assert or an edit made
 # outside review has none — and those claims are live, so they must not be dropped by the
 # join. Step 16 makes the column NOT NULL and this becomes a plain inner join.
-_PUBLISHED_OR_UNATTRIBUTED = """
+_PUBLISHED_OR_UNATTRIBUTED = f"""
     LEFT JOIN changesets ON changesets.id = claims.changeset_id
     WHERE (
         (claims.changeset_id IS NULL AND claims.created_at <= %(as_of)s)
         OR changesets.published_at <= %(as_of)s
-        OR changesets.id = %(including)s
+        OR {_INCLUDED}
     )
 """
 
-_RECORDS = """
+_RECORDS = f"""
     SELECT source_records.id::text, source_records.changeset_id::text,
            source_records.created_at, source_record_identities.person_id::text,
            source_records.organization_id::text, source_records.name, source_records.label,
@@ -46,7 +54,7 @@ _RECORDS = """
     JOIN source_record_identities
       ON source_record_identities.source_record_id = source_records.id
     WHERE source_records.jurisdiction_ocdid = %(jurisdiction_ocdid)s
-      AND (changesets.published_at <= %(as_of)s OR changesets.id = %(including)s)
+      AND (changesets.published_at <= %(as_of)s OR {_INCLUDED})
 """
 
 # A `posts` claim's value is a post's id, and the fold works in post keys, so the join is the
@@ -95,7 +103,7 @@ _WITHDRAWS = f"""
       AND (
           claims.changeset_id IS NULL
           OR (
-              (changesets.published_at IS NOT NULL OR changesets.id = %(including)s)
+              (changesets.published_at IS NOT NULL OR {_INCLUDED})
               AND (changesets.jurisdiction_ocdid = %(jurisdiction_ocdid)s
                    OR changesets.jurisdiction_ocdid IS NULL)
           )
@@ -149,8 +157,8 @@ async def load_facts(
     """Every live fact this jurisdiction's roster derives from, as at `as_of`.
 
     `including` names one unpublished changeset to read as though it had published, which is
-    what makes a proposed roster `derive(published facts + this changeset)` (R3). Nothing is
-    written either way.
+    what makes a proposed roster `derive(published facts + this changeset)` (R3), its open
+    review edit included. Nothing is written either way.
 
     Claims about people and memberships; post, organization and taxonomy claims join as their
     write paths move onto the model (steps 10, 11 and 18).

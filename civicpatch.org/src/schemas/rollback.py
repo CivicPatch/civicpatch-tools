@@ -1,31 +1,31 @@
 from datetime import datetime
-from typing import Any
 
 from pydantic import BaseModel, Field
 
 
 class RollbackCandidate(BaseModel):
-    """One claim in a user's history — what a UI lists and checks boxes against.
-    `jurisdiction_ocdid` rides along for display only; selecting and executing never requires
-    picking one first. `status` is the claim's `ClaimState` value ("active",
-    "superseded", "withdrawn"); only "active" rows are real rollback candidates. `kind`
-    ("accept"/"reject") is what makes an accept-new-value row and a reject-old-value row on
-    the same field both legitimately "active" at once — without it they read as duplicates."""
+    """One changeset in a user's recent history --- what a rollback screen lists.
 
-    claim_id: str
-    entity_id: str
-    entity_label: str
-    field_path: str
+    The unit is the changeset, not the claim (§17): one action is undone or it is not, and a
+    changeset is the only thing that spans the facts one action filed. `jurisdiction_ocdid` rides
+    along for display; `comment` is set on a rollback and null on everything else, which is how a
+    list distinguishes an undo from the edit it undid.
+    """
+
+    changeset_id: str
     kind: str
-    value: Any
     jurisdiction_ocdid: str
-    status: str
-    created_at: datetime
+    jurisdiction_name: str
+    comment: str | None
+    published_at: datetime
 
 
 class RollbackRequest(BaseModel):
-    """Which of a user's candidate claims to roll back — always explicit, whether that's
-    every id a listing returned ("select all") or a hand-picked subset."""
+    """Which of a user's changesets to roll back, and why.
 
-    claim_ids: list[str] = Field(min_length=1)
-    reason: str | None = None
+    `comment` is required and non-empty: a rollback's content is only withdraws, so its reason
+    cannot be reconstructed from what it holds the way every other changeset's can.
+    """
+
+    changeset_ids: list[str] = Field(min_length=1)
+    comment: str = Field(min_length=1)

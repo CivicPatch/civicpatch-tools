@@ -1,23 +1,20 @@
-"""The changeset lifecycle, as a state machine.
+"""What varies by changeset kind, and the vocabulary for where a changeset is.
 
-Pure — no cursor, no clock. Callers pass in whatever context a rule needs.
+Pure — no cursor, no clock.
 
-**The edge is the unit.** A transition carries its own qualifiers, rather than a state carrying
-them in a parallel map. Keyed by state, adding a state meant touching several dicts and hoping;
-here it means adding rows. `publish_is_verified` and per-edge effects, both queued in
-`.scratch/2026-09-05-plan-autopublish-and-supersede.md`, become fields rather than maps — and
-the publish edges are where that earns itself, since `PUBLISHED`, `AUTO_PUBLISHED` and
-`DISPLACED` all land in the same state and differ only in what they verify and write.
+**Publishing does not vary by kind.** There is no `ChangesetKind` branch in `services/publish.py`
+or `database/publications.py`: a scrape and a hand edit differ in what facts they filed, not in
+how they publish. So if you came here looking for "what happens when this kind publishes", the
+answer is that the four tables below are the whole of it, and the rest is uniform.
 
-**A qualifier that cannot reject is not a qualifier.** `reasons` was deleted on 2026-09-05 for
-holding the whole `DismissalReason` enum — see `Transition`.
+**Why the state vocabulary lives here.** `changeset_state` is a generated column, and what a
+changeset is *in* used to be written out by hand in SQL across three modules, each expression
+free to disagree with the others. `database/changeset_predicates.py` now derives `RESOLVED` and
+`WORK_IN_FLIGHT` from `ChangesetState`, and `mark_dismissed` guards its UPDATE with
+`states_accepting` rather than restating the rule in a second language.
 
-What the machine is for: what a changeset is *in* was written out by hand in SQL across three
-modules, each expression free to disagree with this one. `database/changesets.py` now derives
-`PUBLISHED`, `RESOLVED` and `WORK_IN_FLIGHT` from `ChangesetState` instead, and
-`mark_dismissed` guards its UPDATE with `states_accepting_dismissal` rather than restating the
-rule. `AVAILABLE_FOR_REVIEW`, `SWEEPABLE`, `RUN_IN_FLIGHT` and `HELD_BY_REVIEWER` stay in SQL:
-they join other tables, so they are eligibility predicates, not states of a changeset.
+`AVAILABLE_FOR_REVIEW`, `SWEEPABLE`, `RUN_IN_FLIGHT` and `HELD_BY_REVIEWER` stay in SQL: they
+join other tables, so they are eligibility predicates, not states of a changeset.
 """
 
 from dataclasses import dataclass
@@ -28,19 +25,8 @@ from shared.utils.statuses import ChangesetKind
 
 
 class ChangesetState(StrEnum):
-    """Where a changeset is.
-
-    Three, not five. `RUNNING` and `FAILED` described the *run*, back when one row was both; a
-    changeset is now minted only by a run that succeeded, so it is born with content to review.
-
-    `OPEN`, settled by migration 178. `RequestReviewStatus` held a second copy of this
-    vocabulary saying 'pending' and is gone. 'pending' lost because `issues.status` already
-    means something else by it, and the two appear in one sentence constantly: an *open*
-    changeset with *pending* issues. 'open' is the word this table is named after — an OSM
-    changeset is open or closed — and it is the complement of the `RESOLVED` predicate that
-    already exists. 'ready' fails on its own terms: the two hand-edit kinds are born published
-    and never are.
-    """
+    """Where a changeset is. Three, not five: `RUNNING` and `FAILED` described the *run*, back
+    when one row was both."""
 
     OPEN = "open"
     PUBLISHED = "published"
@@ -56,24 +42,16 @@ class ChangesetEvent(StrEnum):
 
 @dataclass(frozen=True)
 class Transition:
-    """One edge. Qualifiers belong here rather than in a map beside the machine — but only
-    qualifiers that can actually reject something.
-
-    `reasons: frozenset[DismissalReason]` lived here until 2026-09-05 and was deleted: it held
-    the *entire* enum, so it could never reject, and `states_accepting_dismissal` returned
-    `('open',)` whatever it was asked. The fact it was reaching for — a failed run must not be
-    labelled a human rejection — is keyed on the **run's** status, not the changeset's state,
-    and `core.pipeline_runs.dismissal_for` already models it there.
-    """
+    """One edge: which state an event may leave, and where it lands."""
 
     frm: ChangesetState
     event: ChangesetEvent
     to: ChangesetState
 
 
-# Every legal edge. A pair absent from this tuple is not a transition — `advance` returns None
-# rather than guessing, and `test_every_pair_is_declared_or_denied` fails if a pair is neither
-# here nor in that test's explicit deny-list.
+# Every legal edge. Two, because there are only two ways out of `OPEN` and nothing leaves the
+# states they land in. `test_every_pair_is_declared_or_denied` fails if a pair is neither here
+# nor in that test's explicit deny-list.
 TRANSITIONS: tuple[Transition, ...] = (
     Transition(ChangesetState.OPEN, ChangesetEvent.PUBLISHED, ChangesetState.PUBLISHED),
     # A human read the roster and said no, a newer one won, or the run that produced it never
@@ -94,6 +72,9 @@ INITIAL_STATE: dict[ChangesetKind, ChangesetState] = {
     ChangesetKind.SHEET_IMPORT: ChangesetState.OPEN,
     ChangesetKind.PEOPLE_EDIT: ChangesetState.PUBLISHED,
     ChangesetKind.JURISDICTION_EDIT: ChangesetState.PUBLISHED,
+    # Open, so its withdraws stay inert (R3) until publishing marks it and rebuilds the
+    # projection in one transaction. See `register_rollback_changeset`.
+    ChangesetKind.ROLLBACK: ChangesetState.OPEN,
 }
 
 
@@ -107,27 +88,6 @@ PARTIAL_KINDS: frozenset[ChangesetKind] = frozenset({ChangesetKind.SHEET_IMPORT}
 
 # How long a sheet import may wait on its batch page before the reaper dismisses it as expired.
 UNPUBLISHED_IMPORT_MAX_AGE = timedelta(days=7)
-
-
-def advance(state: ChangesetState, event: ChangesetEvent) -> ChangesetState | None:
-    """The next state, or None when the event does not apply.
-
-    None rather than an exception: callers ask this to decide, and a scrape reporting after it
-    was cancelled is ordinary rather than exceptional.
-    """
-    for transition in TRANSITIONS:
-        if transition.frm is state and transition.event is event:
-            return transition.to
-    return None
-
-
-def is_terminal(state: ChangesetState) -> bool:
-    """Nothing leaves it. Derived rather than declared — a second `TERMINAL` set beside the
-    edges is one more thing that can disagree with them."""
-    for transition in TRANSITIONS:
-        if transition.frm is state:
-            return False
-    return True
 
 
 def states_accepting(event: ChangesetEvent) -> tuple[str, ...]:

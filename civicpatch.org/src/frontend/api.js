@@ -804,7 +804,7 @@ export const fetchRollbackCandidates = async (userId) => {
   return res.json();
 };
 
-export const rollbackUserClaims = async (userId, claimIds, reason) => {
+export const rollbackUserChangesets = async (userId, changesetIds, comment) => {
   const res = await fetch(`/api/admin/users/${userId}/rollback`, {
     credentials: "include",
     method: "POST",
@@ -813,8 +813,8 @@ export const rollbackUserClaims = async (userId, claimIds, reason) => {
       "X-CSRF-Token": getCsrfCookie(),
     },
     body: JSON.stringify({
-      claim_ids: claimIds,
-      reason: reason || null,
+      changeset_ids: changesetIds,
+      comment,
     }),
   });
   if (!res.ok) {

@@ -149,11 +149,6 @@ def test_publish_refuses_when_the_scrape_recorded_no_roster(client):
             new_callable=AsyncMock,
             return_value=[],
         ),
-        patch(
-            "services.roster_edits.scraped_roster",
-            new_callable=AsyncMock,
-            return_value=[],
-        ),
     ):
         response = client.post(
             f"/pull_requests/{TEST_CHANGESET_ID}/publish",
@@ -178,11 +173,6 @@ def test_publish_returns_200_and_queues_no_merge(client):
         ) as mock_publish,
         patch(
             "services.roster_edits.proposed_roster",
-            new_callable=AsyncMock,
-            return_value=[{**BASE_PERSON}],
-        ),
-        patch(
-            "services.roster_edits.scraped_roster",
             new_callable=AsyncMock,
             return_value=[{**BASE_PERSON}],
         ),
@@ -407,11 +397,6 @@ def test_publish_allows_default_role():
         patch("services.roster_edits.publish_roster", new_callable=AsyncMock),
         patch(
             "services.roster_edits.proposed_roster",
-            new_callable=AsyncMock,
-            return_value=[{**BASE_PERSON}],
-        ),
-        patch(
-            "services.roster_edits.scraped_roster",
             new_callable=AsyncMock,
             return_value=[{**BASE_PERSON}],
         ),

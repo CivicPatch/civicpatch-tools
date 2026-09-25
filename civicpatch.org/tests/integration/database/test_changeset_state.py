@@ -17,6 +17,7 @@ from core.changeset_lifecycle import INITIAL_STATE, ChangesetState
 from database.changesets import (
     register_jurisdiction_edit_changeset,
     register_people_edit_changeset,
+    register_rollback_changeset,
     register_sheet_import_changeset,
 )
 from database.database import get_pool
@@ -120,16 +121,22 @@ async def _registered_state(changeset_id: str) -> str:
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_every_kind_is_born_where_INITIAL_STATE_says():
-    """`INITIAL_STATE` is the fifth copy of "born published": the other four are `published_at`
-    in two INSERTs and its absence in the other two. Nothing read the map, so nothing forced
-    them to agree. This is what makes it authoritative — change a register function without
-    the map and this fails."""
+    """`INITIAL_STATE` is the sixth copy of "where a kind is born": the other five are
+    `published_at` set or left NULL in each register function. Nothing read the map, so nothing
+    forced them to agree. This is what makes it authoritative — change a register function
+    without the map and this fails.
+
+    This verified four kinds. It now verifies all five, because `rollback` was absent from both
+    the map and this test, and it moved to born-open on 2026-09-25 (its withdraws must stay
+    inert until publishing rebuilds the projection in the same transaction) --- exactly the kind
+    of change this test exists to catch."""
     run_id = await factories.start_run(_OCDID)
     batch_id = await batches_db.start(
         batches_db.BatchKind.SHEET_IMPORT, _BATCH_LOCK_KEY, SYSTEM_USER_ID, {}
     )
 
-    people_edit_id, import_id, jurisdiction_edit_id = (
+    people_edit_id, import_id, jurisdiction_edit_id, rollback_id = (
+        str(uuid.uuid4()),
         str(uuid.uuid4()),
         str(uuid.uuid4()),
         str(uuid.uuid4()),
@@ -139,6 +146,12 @@ async def test_every_kind_is_born_where_INITIAL_STATE_says():
     await register_jurisdiction_edit_changeset(
         jurisdiction_edit_id, _OCDID, "https://example.test/commit/1", SYSTEM_USER_ID
     )
+    # Takes a cursor, unlike the other three: it must share the transaction its withdraws are
+    # in. Here it shares one with nothing, which is fine for asking where it was born.
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await register_rollback_changeset(cur, rollback_id, _OCDID, SYSTEM_USER_ID, "test")
+        await conn.commit()
 
     born = {
         ChangesetKind.SCRAPE: await _registered_state(
@@ -147,6 +160,7 @@ async def test_every_kind_is_born_where_INITIAL_STATE_says():
         ChangesetKind.PEOPLE_EDIT: await _registered_state(people_edit_id),
         ChangesetKind.SHEET_IMPORT: await _registered_state(import_id),
         ChangesetKind.JURISDICTION_EDIT: await _registered_state(jurisdiction_edit_id),
+        ChangesetKind.ROLLBACK: await _registered_state(rollback_id),
     }
 
     assert born == {kind: state.value for kind, state in INITIAL_STATE.items()}
