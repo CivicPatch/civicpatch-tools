@@ -16,8 +16,8 @@ def get_router() -> APIRouter:
         organization_id: str,
         body: CreatePostRequest,
         # Any signed-in user, same tier as assigning someone to an existing post
-        # (routers/api/memberships.py) — its own flag (`can_create_post`), not
-        # `can_edit_jurisdiction_data` reused, so lowering this didn't touch that one.
+        # (routers/api/memberships.py). Not `can_edit_jurisdiction_data`, which stays
+        # maintainer+ and governs editing a post rather than creating one.
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         """Create a post under this organization. 409 if the triple is taken — silently
@@ -65,7 +65,7 @@ def get_router() -> APIRouter:
     async def create_organization_endpoint(
         jurisdiction_ocdid: str,
         body: CreateOrganizationRequest,
-        # Maintainer+, unlike creating a post (`can_create_post`, any signed-in user).
+        # Maintainer+, unlike creating a post, which any signed-in user may do.
         _: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),

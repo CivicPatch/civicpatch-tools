@@ -9,7 +9,7 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
-from core.roster_changes import ChangeKind, PersonChange
+from core.roster_changes import ChangeKind, PersonDiff
 from schemas.sheets import SheetCell
 
 REPORT_TAB_PREFIX = "Live[Import]"
@@ -79,7 +79,7 @@ def _post_labels(record: dict) -> str:
     )
 
 
-def _post_cell(change: PersonChange, published: dict, proposed: dict | None) -> ReportCell:
+def _post_cell(change: PersonDiff, published: dict, proposed: dict | None) -> ReportCell:
     """What they hold now, and — when an office moved, was created or was left — what they held
     before. Both read off the rows, so the cell says what the roster says."""
     value = _post_labels(proposed or {})
@@ -92,7 +92,7 @@ def _person_row(
     jurisdiction_ocdid: str,
     published: dict,
     proposed: dict | None,
-    change: PersonChange,
+    change: PersonDiff,
     likely_same_as: str | None,
 ) -> ImportReportRow:
     # An absent person is only in the published roster, and is shown as they last were.
@@ -117,7 +117,7 @@ def report_rows(
     jurisdiction_ocdid: str,
     published: list[dict],
     proposed: list[dict],
-    changes: list[PersonChange],
+    changes: list[PersonDiff],
     likely_same: dict[str, str],
 ) -> list[ImportReportRow]:
     """One row per person the import changes: added, edited, moved, given a post, or absent."""

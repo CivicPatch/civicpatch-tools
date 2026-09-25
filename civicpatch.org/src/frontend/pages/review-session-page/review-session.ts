@@ -5,7 +5,6 @@ import "../../components/review/review-modal.js";
 import "../../components/review-sidebar/review-sidebar.js";
 import { checkedCount } from "../../components/review-sidebar/sidebar-model.js";
 import { focusOnMount } from "../../utils/focus-on-mount.js";
-import { useAltArrowPeerNav } from "../../hooks/use-alt-arrow-peer-nav.js";
 import "../../components/source-content/source-content-debug-modal.js";
 import { type Progress } from "./review-session-controls.js";
 import "./review-session-controls.js";
@@ -24,15 +23,14 @@ import {
 import { useFrozenFields } from "./use-frozen-fields.js";
 import { useRosterMemberships } from "../../hooks/use-roster-memberships.js";
 import { ReviewMode, type ReviewModeValue } from "./review-state.js";
+
+const SAVED_MESSAGE = "Updates saved.";
 import {
   blockingErrors,
   buildPersonCards,
   cardFields,
   cardKey,
-  personIdIn,
   duplicateIdsFor,
-  navHintFor,
-  needsReview,
   type PersonCard,
 } from "../../components/people/person-cards.js";
 import {
@@ -80,33 +78,27 @@ type ReviewSessionHost = HTMLElement & {
   progress: Progress;
   hasSession: boolean;
   currentEntry: CurrentEntry | null;
+  // The changeset whose last save succeeded, not a flag: navigating to another card shows no
+  // notice without anything having to clear one.
+  savedChangesetId: string | null;
   error: string | null;
   canReject: boolean;
   canViewSourceDebug: boolean;
   isRejecting: boolean;
   canAssignMembership: boolean;
-  canCreatePost: boolean;
 };
-
-const peersOf = (
-  openCard: PersonCard | undefined,
-  cards: PersonCard[],
-): PersonCard[] =>
-  openCard
-    ? cards.filter((card) => needsReview(card) === needsReview(openCard))
-    : [];
 
 function ReviewSession(host: ReviewSessionHost) {
   const {
     progress,
     hasSession,
     currentEntry,
+    savedChangesetId,
     error,
     canReject,
     canViewSourceDebug,
     isRejecting,
     canAssignMembership,
-    canCreatePost,
   } = host;
   const {
     jurisdiction,
@@ -191,8 +183,6 @@ function ReviewSession(host: ReviewSessionHost) {
   const [openCardKey, setOpenCardKey] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const [focusFieldKey, setFocusFieldKey] = useState<string | null>(null);
-  const openCard = cards.find((c) => cardKey(c) === openCardKey);
-  const openPeers = peersOf(openCard, cards);
   const handleOpenPerson = (card: PersonCard, fieldKey: string | null) => {
     const key = cardKey(card);
     const opening = openCardKey !== key;
@@ -206,10 +196,6 @@ function ReviewSession(host: ReviewSessionHost) {
     setOpenCardKey(card ? cardKey(card) : personId);
     setFocusFieldKey(null);
   };
-  useAltArrowPeerNav(openCardKey ? personIdIn(openCardKey) : null, openPeers, (next) => {
-    setOpenCardKey(cardKey(next));
-    setFocusFieldKey(null);
-  });
   const focusOnOpen = useCallback(focusOnMount, [focusFieldKey]);
   const editorFor = (card: (typeof cards)[number]) => {
     const base = personEditorPropsFor(card, {
@@ -223,10 +209,8 @@ function ReviewSession(host: ReviewSessionHost) {
         setExpandedIds(next);
       },
     });
-    const peers = cardKey(card) === openCardKey ? openPeers : peersOf(card, cards);
     return {
       ...base,
-      navHint: navHintFor(peers, card.personId),
       focusField:
         cardKey(card) === openCardKey && focusFieldKey
           ? { key: focusFieldKey, attach: focusOnOpen }
@@ -238,9 +222,13 @@ function ReviewSession(host: ReviewSessionHost) {
   // Handed to `review-session-actions`, which folds it into the same `publish`/`save` event
   // that already carries `peoplePatch` — the page applies both under one action.
   //
-  // One body: a review card is scoped to the changeset's organization, so every card here is
-  // about the same one. 9b(c) is where a card becomes per (person, body).
-  const officeEdits = officeEditsIn(cards, () => organizationId);
+  // Each card names its own organization since 9b(c). Reading the changeset's instead left a
+  // card about any other one diffing its pick against nothing: `heldOffice` filters by
+  // organization, found none, and the pick was dropped.
+  const officeEdits = officeEditsIn(
+    cards,
+    (card) => card.organizationId ?? organizationId,
+  );
   const [candidatesOpen, setCandidatesOpen] = useState(false);
   const handleToggleCandidates = () => setCandidatesOpen((open) => !open);
   // The anchor outlives the partner: merge is a *screen* in the person's modal, so going Back
@@ -282,7 +270,6 @@ function ReviewSession(host: ReviewSessionHost) {
     organizationId,
     roles,
     canAssignMembership,
-    canCreatePost,
     rosterMemberships: memberships,
     assertions: assertions ?? {},
     overriddenSourceValues: overriddenSourceValues ?? {},
@@ -333,6 +320,11 @@ function ReviewSession(host: ReviewSessionHost) {
         </div>
       </div>
       ${error ? html`<p class="review-session__error">${error}</p>` : ""}
+      ${savedChangesetId === changesetId && !dirty
+        ? html`<p class="review-session__saved" role="status" aria-live="polite">
+            ${SAVED_MESSAGE}
+          </p>`
+        : ""}
       ${is_read_only
         ? html`<div
             class="review-session__status-banner review-session__status-banner--${reviewStatus}"

@@ -69,7 +69,7 @@ def _fake_default_user() -> Identity:
 @pytest.fixture
 def default_role_client():
     """Signed in, no elevated role — too low a tier for any organization write (maintainer+,
-    unlike `can_create_post`)."""
+    unlike creating a post)."""
     app = FastAPI()
     app.include_router(organizations_router.get_router(), prefix=_PREFIX)
     app.dependency_overrides[get_optional_user] = lambda: _fake_default_user()
@@ -169,7 +169,7 @@ async def test_creating_without_signing_in_is_refused(anonymous_client):
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_creating_an_organization_requires_maintainer_or_above(default_role_client):
-    """Unlike creating a post (`can_create_post`, any signed-in user), an organization is a
+    """Unlike creating a post, which any signed-in user may do, an organization is a
     structural change to how a jurisdiction's bodies are divided — maintainer+."""
     assert _create(default_role_client).status_code == 403
 

@@ -25,7 +25,7 @@ from core.sheet_import_rows import (
     Sighting,
     build_jurisdiction_index,
 )
-from core.membership_proposal import MembershipDisposition
+from core.roster_changes import ChangeKind, OfficeChangeKind, changes_of
 from shared.schemas import POST_FIELD
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID
 from shared.utils.statuses import ActivityType, ChangesetKind
@@ -38,9 +38,8 @@ from database.publications import publish_attributions
 from services import roster_edits
 from services.batch_review import batch_review, dismiss_selected, publish_selected
 from services.review_cards import with_card_data
-from services.review_proposal import proposals_for_requests
 from services.review_summary import review_summary_for_changeset
-from services.roster import proposed_roster, proposed_roster_and_source_values
+from services.roster import card_sides, proposed_roster, proposed_roster_and_source_values
 from services.sheet_import import import_rows, read_rows
 from tests.integration import factories
 
@@ -320,11 +319,15 @@ async def test_a_blank_label_keeps_the_current_post(user_id, batch_id):
     [result] = await import_rows(_rows(("Ana Reyes", "")), user_id, batch_id)
     assert result.changeset_id is not None
     [ana] = await proposed_roster(result.changeset_id, _OCDID)
-    changes = (await proposals_for_requests([result.changeset_id]))[result.changeset_id]
+    _existing, proposed, _overridden = await card_sides(result.changeset_id, _OCDID)
 
     assert ana["id"] == person_id
     assert ana[POST_FIELD] == post_id
-    assert [change.disposition for change in changes] == [MembershipDisposition.UNCHANGED]
+    # The fold's own answer, beside the loader's: the blank cell inherits the label, so the
+    # office she holds is the office the import leaves her in.
+    [change] = changes_of(_existing, proposed)
+    assert change.offices == []
+    assert change.kind is ChangeKind.UNCHANGED
 
 
 @pytest.mark.integration
@@ -400,11 +403,16 @@ async def test_someone_new_with_no_label_is_unmatched(user_id, batch_id):
     for a reviewer to place later."""
     [result] = await import_rows(_rows(("Nobody Yet", "")), user_id, batch_id)
     assert result.changeset_id is not None
-    changes = (await proposals_for_requests([result.changeset_id]))[result.changeset_id]
+    existing, proposed, _overridden = await card_sides(result.changeset_id, _OCDID)
 
-    assert [(change.disposition, change.post.role_id) for change in changes] == [
-        (MembershipDisposition.NEW, UNMATCHED_ROLE_ID)
+    [change] = changes_of(existing, proposed)
+    assert change.kind is ChangeKind.ADDED
+    [office] = change.offices
+    assert office.kind is OfficeChangeKind.NEW
+    [membership] = [
+        row["memberships"][0] for row in proposed if row["id"] == change.person_id
     ]
+    assert membership["role_id"] == UNMATCHED_ROLE_ID
 
 
 @pytest.mark.integration

@@ -6,7 +6,13 @@
 import { REVIEW_STATUS } from "../../components/review-status.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 import { landingUrl } from "../review-routes.js";
-import { ActionType, ReviewMode, type CurrentEntry, type SessionMeta, type ReviewAction } from "./review-state.js";
+import {
+  ActionType,
+  ReviewMode,
+  type CurrentEntry,
+  type SessionMeta,
+  type ReviewAction,
+} from "./review-state.js";
 
 const errMessage = (err: any) => err?.message ?? String(err);
 
@@ -19,7 +25,8 @@ const isTerminalStatus = (status: string | null | undefined) =>
   status === REVIEW_STATUS.PUBLISHED || status === REVIEW_STATUS.DISMISSED;
 
 const belongsToSession = (active: any, changesetId: string | null) =>
-  changesetId != null && (active?.session_changeset_ids ?? []).includes(changesetId);
+  changesetId != null &&
+  (active?.session_changeset_ids ?? []).includes(changesetId);
 
 // The injected boundary: everything the action functions touch that isn't pure.
 // The hook fills this with the real api/DOM; tests pass fakes.
@@ -28,8 +35,12 @@ export type ReviewApi = {
   navigateToEntry: (sessionId: string, entryNumber: number) => Promise<any>;
   fetchReview: (changesetId: string) => Promise<any>;
   endReviewSession: (sessionId: string) => Promise<any>;
-  fetchPullRequestByRequestId: (changesetId: string) => Promise<any>;
-  saveReviewData: (changesetId: string, jurisdictionOcdid: string, people: any[]) => Promise<any>;
+  fetchReviewCard: (changesetId: string) => Promise<any>;
+  saveReviewData: (
+    changesetId: string,
+    jurisdictionOcdid: string,
+    people: any[],
+  ) => Promise<any>;
 };
 
 export type Effects = {
@@ -37,12 +48,20 @@ export type Effects = {
   dispatch: (a: ReviewAction) => void;
   navigate: (url: string) => void;
   setRequestIdParam: (changesetId: string | null) => void;
-  trackApprove: (changesetId: string, jurisdictionOcdid: string, people: any[] | null, jurisdictionName: string) => Promise<{ ok: boolean; error?: string }>;
+  trackApprove: (
+    changesetId: string,
+    jurisdictionOcdid: string,
+    people: any[] | null,
+    jurisdictionName: string,
+  ) => Promise<{ ok: boolean; error?: string }>;
   trackReject: (changesetId: string, jurisdictionName: string) => void;
 };
 
 // Assemble a CurrentEntry from a navigate/by-request response plus its review json.
-export async function buildEntry(data: any, api: ReviewApi): Promise<CurrentEntry> {
+export async function buildEntry(
+  data: any,
+  api: ReviewApi,
+): Promise<CurrentEntry> {
   const review = await api.fetchReview(data.changeset_id).catch(() => null);
   return {
     changeset_id: data.changeset_id,
@@ -64,17 +83,31 @@ export async function buildEntry(data: any, api: ReviewApi): Promise<CurrentEntr
 
 // The first card of the page is always a SESSION_LOADED — session is null for a
 // standalone deeplink. setRequestIdParam reflects the card into the URL for shareability.
-async function loadFirstEntry(data: any, session: SessionMeta | null, resolvedEntryNumbers: number[], e: Effects): Promise<void> {
+async function loadFirstEntry(
+  data: any,
+  session: SessionMeta | null,
+  resolvedEntryNumbers: number[],
+  e: Effects,
+): Promise<void> {
   const entry = await buildEntry(data, e.api);
   e.dispatch({
     type: ActionType.SESSION_LOADED,
-    payload: { current_entry: entry, entry_number: data.entry_number ?? 1, total: data.total ?? data.entry_number ?? 1, session, resolved_entry_numbers: resolvedEntryNumbers },
+    payload: {
+      current_entry: entry,
+      entry_number: data.entry_number ?? 1,
+      total: data.total ?? data.entry_number ?? 1,
+      session,
+      resolved_entry_numbers: resolvedEntryNumbers,
+    },
   });
   e.setRequestIdParam(entry.changeset_id ?? null);
 }
 
 // `session_changeset_ids` is ordered by entry number, so position n is entry n + 1.
-const entryNumberOf = (active: any, changesetId: string | null): number | null => {
+const entryNumberOf = (
+  active: any,
+  changesetId: string | null,
+): number | null => {
   const at = (active?.session_changeset_ids ?? []).indexOf(changesetId);
   return at < 0 ? null : at + 1;
 };
@@ -88,23 +121,37 @@ async function resumeSession(
   e: Effects,
   changesetId: string | null = null,
 ): Promise<void> {
-  const entryNumber = entryNumberOf(active, changesetId) ?? active.current_entry_number;
-  const data = (await e.api.navigateToEntry(active.session_id, entryNumber))?.data;
+  const entryNumber =
+    entryNumberOf(active, changesetId) ?? active.current_entry_number;
+  const data = (await e.api.navigateToEntry(active.session_id, entryNumber))
+    ?.data;
   if (!data) return e.navigate(landingUrl(stateCode));
-  await loadFirstEntry(data, { id: active.session_id, session_length: active.session_length }, active.resolved_entry_numbers ?? [], e);
+  await loadFirstEntry(
+    data,
+    { id: active.session_id, session_length: active.session_length },
+    active.resolved_entry_numbers ?? [],
+    e,
+  );
 }
 
 // A standalone deeplink may point at a stale/missing PR; treat a 404 as "no PR".
-async function fetchPrOrNull(changesetId: string, api: ReviewApi): Promise<any> {
+async function reviewCardOrNull(
+  changesetId: string,
+  api: ReviewApi,
+): Promise<any> {
   try {
-    return (await api.fetchPullRequestByRequestId(changesetId))?.data ?? null;
+    return (await api.fetchReviewCard(changesetId))?.data ?? null;
   } catch {
     return null;
   }
 }
 
-async function showStandaloneCard(changesetId: string, stateCode: string, e: Effects): Promise<void> {
-  const data = await fetchPrOrNull(changesetId, e.api);
+async function showStandaloneCard(
+  changesetId: string,
+  stateCode: string,
+  e: Effects,
+): Promise<void> {
+  const data = await reviewCardOrNull(changesetId, e.api);
   if (!data) return e.navigate(landingUrl(stateCode));
   await loadFirstEntry(data, null, [], e);
 }
@@ -112,35 +159,65 @@ async function showStandaloneCard(changesetId: string, stateCode: string, e: Eff
 // The url names a card and nothing else. A card the active session holds opens inside it, at
 // that card; one it does not opens standalone; naming none resumes where the session was
 // parked, or lands. Nothing about the session is in the url, because the session knows.
-export async function boot(stateCode: string, changesetId: string | null, e: Effects): Promise<void> {
+export async function boot(
+  stateCode: string,
+  changesetId: string | null,
+  e: Effects,
+): Promise<void> {
   try {
     const active = (await e.api.fetchActiveReviewSession(stateCode))?.data;
-    if (active && (changesetId == null || belongsToSession(active, changesetId))) {
+    if (
+      active &&
+      (changesetId == null || belongsToSession(active, changesetId))
+    ) {
       return resumeSession(active, stateCode, e, changesetId);
     }
-    if (changesetId != null) return showStandaloneCard(changesetId, stateCode, e);
+    if (changesetId != null)
+      return showStandaloneCard(changesetId, stateCode, e);
     e.navigate(landingUrl(stateCode));
   } catch (err) {
-    e.dispatch({ type: ActionType.LOAD_FAILED, payload: { message: errMessage(err) } });
+    e.dispatch({
+      type: ActionType.LOAD_FAILED,
+      payload: { message: errMessage(err) },
+    });
   }
 }
 
 // No session means no queue, so there is nowhere to step to.
-export async function goToEntry(sessionId: string | null, targetEntry: number, stateCode: string, e: Effects): Promise<void> {
+export async function goToEntry(
+  sessionId: string | null,
+  targetEntry: number,
+  stateCode: string,
+  e: Effects,
+): Promise<void> {
   if (!sessionId) return;
   e.dispatch({ type: ActionType.NAV_STARTED });
   try {
     const data = (await e.api.navigateToEntry(sessionId, targetEntry))?.data;
     if (!data) return endSessionAndExit(sessionId, stateCode, e); // exhausted: server already ended it
     const entry = await buildEntry(data, e.api);
-    e.dispatch({ type: ActionType.ENTRY_LOADED, payload: { current_entry: entry, entry_number: data.entry_number, total: data.total ?? data.entry_number } });
+    e.dispatch({
+      type: ActionType.ENTRY_LOADED,
+      payload: {
+        current_entry: entry,
+        entry_number: data.entry_number,
+        total: data.total ?? data.entry_number,
+      },
+    });
     e.setRequestIdParam(entry.changeset_id ?? null);
   } catch (err) {
-    e.dispatch({ type: ActionType.LOAD_FAILED, payload: { message: errMessage(err) } });
+    e.dispatch({
+      type: ActionType.LOAD_FAILED,
+      payload: { message: errMessage(err) },
+    });
   }
 }
 
-export async function endSessionAndExit(sessionId: string | null, stateCode: string, e: Effects): Promise<void> {
+export async function endSessionAndExit(
+  sessionId: string | null,
+  stateCode: string,
+  e: Effects,
+): Promise<void> {
   if (sessionId) await e.api.endReviewSession(sessionId).catch(() => {});
   e.navigate(landingUrl(stateCode));
 }
@@ -158,16 +235,34 @@ async function advanceOrReturn(
   e.navigate(jurisdictionUrl(current.jurisdiction.ocdid!));
 }
 
-export async function mergeCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, people: any[] | null, stateCode: string, e: Effects): Promise<void> {
+export async function mergeCurrent(
+  current: CurrentEntry,
+  sessionId: string | null,
+  entryNumber: number,
+  people: any[] | null,
+  stateCode: string,
+  e: Effects,
+): Promise<void> {
   const { changeset_id, jurisdiction } = current;
   // No pull request check: publishing is keyed on the request, and a scrape committed
   // straight to open-data has no pull request to guard on.
   if (!changeset_id) return;
-  const result = await e.trackApprove(changeset_id, jurisdiction.ocdid!, people, jurisdiction.name ?? changeset_id);
+  const result = await e.trackApprove(
+    changeset_id,
+    jurisdiction.ocdid!,
+    people,
+    jurisdiction.name ?? changeset_id,
+  );
   if (!result.ok) {
     // Publishing is synchronous now, so a rejection is the whole outcome: flag the entry
     // red and keep the reviewer here to fix it.
-    e.dispatch({ type: ActionType.MARK_FAILED, payload: { entry_number: entryNumber, message: result.error ?? "Publish failed." } });
+    e.dispatch({
+      type: ActionType.MARK_FAILED,
+      payload: {
+        entry_number: entryNumber,
+        message: result.error ?? "Publish failed.",
+      },
+    });
     return;
   }
   e.dispatch({ type: ActionType.MARK_RESOLVED });
@@ -177,19 +272,49 @@ export async function mergeCurrent(current: CurrentEntry, sessionId: string | nu
 // Commit without publishing: the server has written `data_json` by the time this resolves,
 // so the outcome is known here. A rejection keeps the reviewer on the entry, same as a
 // failed publish.
-export async function saveCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, people: any[], stateCode: string, e: Effects): Promise<void> {
+export async function saveCurrent(
+  current: CurrentEntry,
+  sessionId: string | null,
+  entryNumber: number,
+  people: any[],
+  stateCode: string,
+  e: Effects,
+): Promise<boolean> {
   const { changeset_id, jurisdiction } = current;
-  if (!changeset_id) return;
+  if (!changeset_id) return false;
   try {
     await e.api.saveReviewData(changeset_id, jurisdiction.ocdid!, people);
   } catch (err) {
-    e.dispatch({ type: ActionType.MARK_FAILED, payload: { entry_number: entryNumber, message: errMessage(err) } });
-    return;
+    e.dispatch({
+      type: ActionType.MARK_FAILED,
+      payload: { entry_number: entryNumber, message: errMessage(err) },
+    });
+    return false;
   }
   e.dispatch({ type: ActionType.MARK_SAVED });
+  await rereadCurrent(changeset_id, sessionId, entryNumber, stateCode, e);
+  return true;
 }
 
-export async function closeCurrent(current: CurrentEntry, sessionId: string | null, entryNumber: number, stateCode: string, e: Effects): Promise<void> {
+async function rereadCurrent(
+  changesetId: string,
+  sessionId: string | null,
+  entryNumber: number,
+  stateCode: string,
+  e: Effects,
+): Promise<void> {
+  if (sessionId) return goToEntry(sessionId, entryNumber, stateCode, e);
+  const data = await reviewCardOrNull(changesetId, e.api);
+  if (data) await loadFirstEntry(data, null, [], e);
+}
+
+export async function closeCurrent(
+  current: CurrentEntry,
+  sessionId: string | null,
+  entryNumber: number,
+  stateCode: string,
+  e: Effects,
+): Promise<void> {
   const { changeset_id, jurisdiction } = current;
   if (!changeset_id) return;
   e.trackReject(changeset_id, jurisdiction.name ?? changeset_id);

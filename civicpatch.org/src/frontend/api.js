@@ -746,7 +746,10 @@ export const fetchAllJurisdictionsForState = async (stateCode) => {
   return res.json();
 };
 
-export const fetchPullRequestByRequestId = async (changesetId) => {
+// One review card, by the changeset it is about. `by-request` in the path is the old name for
+// a changeset (migration 152 renamed the table); the route is a contract, so it stays until it
+// is deprecated deliberately. Nothing here is a pull request — `pull_requests` went in 141.
+export const fetchReviewCard = async (changesetId) => {
   const res = await fetch(
     `/api/v1/reviews/by-request/${changesetId}`,
     {

@@ -93,8 +93,7 @@ async def derive_posts(
 
     A scrape proposes seats; publishing creates them (`publications._bind_memberships`). Nothing
     is persisted here, so a changeset that is dismissed leaves nothing behind and there is no
-    reaper. `ProposedChange` has always worked this way — it carries the identity and attaches a
-    `post_id` only "when it already exists as a row".
+    reaper.
 
     Raises: both callers want the failure but do different things with it, so the policy stays
     with them. `chosen_posts` is empty at ingest and returns without a query, but a re-submit of

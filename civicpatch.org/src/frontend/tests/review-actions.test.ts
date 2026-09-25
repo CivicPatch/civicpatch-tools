@@ -21,7 +21,7 @@ function fakeApi(overrides: Partial<ReviewApi> = {}): ReviewApi {
     navigateToEntry: vi.fn(async () => ({ data: null })),
     fetchReview: vi.fn(async () => ({ data: { issues: [] } })),
     endReviewSession: vi.fn(async () => ({ data: null })),
-    fetchPullRequestByRequestId: vi.fn(async () => ({ data: null })),
+    fetchReviewCard: vi.fn(async () => ({ data: null })),
     saveReviewData: vi.fn(async () => ({ status: "saved" })),
     ...overrides,
   };
@@ -94,7 +94,7 @@ describe("boot", () => {
     const e = fakeEffects(api);
     await boot(STATE, "req-1", e);
 
-    expect(api.fetchPullRequestByRequestId).not.toHaveBeenCalled();
+    expect(api.fetchReviewCard).not.toHaveBeenCalled();
     expect(lastAction(e).payload.session).toEqual({ id: "s1", session_length: 10 });
   });
 
@@ -118,24 +118,24 @@ describe("boot", () => {
     expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 2);
     expect(lastAction(e).payload.current_entry.changeset_id).toBe("req-7");
     expect(lastAction(e).payload.session).toEqual({ id: "s1", session_length: 10 });
-    expect(api.fetchPullRequestByRequestId).not.toHaveBeenCalled();
+    expect(api.fetchReviewCard).not.toHaveBeenCalled();
   });
 
   it("shows a standalone PR when the deeplink is not part of the active session", async () => {
     const api = fakeApi({
       fetchActiveReviewSession: vi.fn(async () => ({ data: activeSession() })),
-      fetchPullRequestByRequestId: vi.fn(async () => ({ data: cardData({ entry_number: 1, has_next: false }) })),
+      fetchReviewCard: vi.fn(async () => ({ data: cardData({ entry_number: 1, has_next: false }) })),
     });
     const e = fakeEffects(api);
     await boot(STATE, "req-999", e);
 
-    expect(api.fetchPullRequestByRequestId).toHaveBeenCalledWith("req-999");
+    expect(api.fetchReviewCard).toHaveBeenCalledWith("req-999");
     expect(lastAction(e).payload.session).toBeNull();
   });
 
   it("shows a standalone PR when there is no active session", async () => {
     const api = fakeApi({
-      fetchPullRequestByRequestId: vi.fn(async () => ({ data: cardData({ entry_number: 1, has_next: false }) })),
+      fetchReviewCard: vi.fn(async () => ({ data: cardData({ entry_number: 1, has_next: false }) })),
     });
     const e = fakeEffects(api);
     await boot(STATE, "req-999", e);
@@ -152,7 +152,7 @@ describe("boot", () => {
   });
 
   it("falls back to the landing when a standalone deeplink PR is stale (404)", async () => {
-    const api = fakeApi({ fetchPullRequestByRequestId: vi.fn(async () => { throw new Error("HTTP 404"); }) });
+    const api = fakeApi({ fetchReviewCard: vi.fn(async () => { throw new Error("HTTP 404"); }) });
     const e = fakeEffects(api);
     await boot(STATE, "req-stale", e);
     expect(e.navigate).toHaveBeenCalledWith(landingUrl(STATE));
@@ -321,7 +321,7 @@ describe("mergeCurrent", () => {
 
 describe("saveCurrent", () => {
   it("commits the edits and marks the entry saved, staying on the card", async () => {
-    const api = fakeApi({ navigateToEntry: vi.fn(async () => ({ data: cardData({ entry_number: 3 }) })) });
+    const api = fakeApi({ navigateToEntry: vi.fn(async () => ({ data: cardData({ entry_number: 2 }) })) });
     const e = fakeEffects(api);
     const people = [{ id: "p1" }];
     await saveCurrent(current, "s1", 2, people, STATE, e);
@@ -330,8 +330,30 @@ describe("saveCurrent", () => {
     expect(dispatchedTypes(e)).toContain(ActionType.MARK_SAVED);
     // Saving leaves the PR open and still being edited, so it advances nothing — even in a
     // session, where advancing would drop the reviewer into the queue or the overview.
-    expect(api.navigateToEntry).not.toHaveBeenCalled();
+    //
+    // This asserted `navigateToEntry` was never called. It now asserts the entry it was
+    // called with, because re-reading the card uses the same call: a save re-navigates to the
+    // entry it is already on, so the card shows what the server now holds rather than the
+    // reviewer's local copy. Advancing would be entry 3.
+    expect(api.navigateToEntry).toHaveBeenCalledWith("s1", 2);
     expect(e.navigate).not.toHaveBeenCalled();
+  });
+
+  it("re-reads a card opened by url, which has no session to navigate", async () => {
+    // The re-read went only through `goToEntry`, which returns immediately without a session
+    // ("no session means no queue, so there is nowhere to step to"). A card reached by
+    // `?changeset_id=` is exactly that case, and it is how a reviewer opens one card — so the
+    // save landed, the toast showed, and the card kept the reviewer's local copy anyway.
+    const api = fakeApi({
+      fetchReviewCard: vi.fn(async () => ({ data: cardData({ entry_number: 1 }) })),
+    });
+    const e = fakeEffects(api);
+
+    expect(await saveCurrent(current, null, 1, [{ id: "p1" }], STATE, e)).toBe(true);
+
+    expect(api.fetchReviewCard).toHaveBeenCalledWith("req-1");
+    expect(api.navigateToEntry).not.toHaveBeenCalled();
+    expect(dispatchedTypes(e)).toContain(ActionType.SESSION_LOADED);
   });
 
   it("does not credit the entry as resolved", async () => {

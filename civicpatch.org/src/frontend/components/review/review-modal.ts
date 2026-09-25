@@ -20,7 +20,6 @@ import {
   type PersonEditorProps,
 } from "../person-editor/person-editor.js";
 import {
-  adjacentPeer,
   postsFor,
   personOf,
   STATUS_LABEL,
@@ -28,7 +27,6 @@ import {
 } from "../people/person-cards.js";
 import { divisionOcdidToFriendly } from "../ocdid-utils.js";
 import { focusOnMount } from "../../utils/focus-on-mount.js";
-import { altArrowDirection } from "../../utils/keyboard.js";
 import { type Post } from "../posts-list/posts-model.js";
 
 export interface ReviewModalProps {
@@ -79,12 +77,6 @@ function ReviewModal(props: ReviewModalProps) {
     setPersonId(open ? openPersonId : null);
   }, [openPersonId]);
   const focusOnOpen = useCallback(focusOnMount, [openPersonId, focusFieldKey]);
-  const onKey = (e: KeyboardEvent) => {
-    const direction = altArrowDirection(e);
-    if (!direction || !card) return;
-    const next = adjacentPeer(cards, card.personId, direction);
-    if (next) goTo(next.personId);
-  };
   if (!open || !card) return nothing;
   const editedCount = cards.filter((c) => c.surviving.length > 0).length;
   const editorProps = editor(card);
@@ -96,7 +88,7 @@ function ReviewModal(props: ReviewModalProps) {
       <span class="review-modal__nav">
         <button
           class="review-modal__nav-btn"
-          title="Previous person (Alt + Left)"
+          title="Previous person"
           ?disabled=${index <= 0}
           @click=${() => goTo(cards[index - 1].personId)}
         >
@@ -105,7 +97,7 @@ function ReviewModal(props: ReviewModalProps) {
         <span class="review-modal__pos">${index + 1} of ${cards.length}</span>
         <button
           class="review-modal__nav-btn"
-          title="Next person (Alt + Right)"
+          title="Next person"
           ?disabled=${index >= cards.length - 1}
           @click=${() => goTo(cards[index + 1].personId)}
         >
@@ -115,7 +107,7 @@ function ReviewModal(props: ReviewModalProps) {
     </div>
   `;
   const content = html`
-    <div class="review-modal__main" @keydown=${onKey}>
+    <div class="review-modal__main">
       <nav class="review-modal__people" aria-label="People in this review">
         <div class="review-modal__people-head">${editedCount} of ${cards.length} to review</div>
         ${cards.map((entry) => {

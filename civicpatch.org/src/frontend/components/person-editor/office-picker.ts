@@ -9,7 +9,11 @@ import "../posts-list/post-add.js";
 import { html } from "lit-html";
 import { component, useEffect, useState } from "haunted";
 import { createPost } from "../../api.js";
-import { attachFocus, inputValue, type FocusRef } from "../fields/field-utils.js";
+import {
+  attachFocus,
+  inputValue,
+  type FocusRef,
+} from "../fields/field-utils.js";
 import { hostDispatch } from "../../utils/host-dispatch.js";
 import {
   AT_LARGE_DIVISION,
@@ -32,7 +36,6 @@ type OfficePickerHost = HTMLElement & {
   roles?: RoleOption[];
   jurisdictionOcdid?: string | null;
   organizationId?: string;
-  canCreatePost?: boolean;
   postId?: string | null;
   // Fallback initial pick when `postId` doesn't resolve to a real post — a proposal naming a
   // role/division nobody holds yet, so there's no row to look up. Ignored once `postId` does
@@ -51,7 +54,8 @@ type OfficePickerHost = HTMLElement & {
 const NO_ROLE = "";
 const NO_DIVISION = "";
 
-const byLabel = (a: RoleOption, b: RoleOption) => a.label.localeCompare(b.label);
+const byLabel = (a: RoleOption, b: RoleOption) =>
+  a.label.localeCompare(b.label);
 
 function OfficePicker(host: OfficePickerHost) {
   const roles = host.roles ?? [];
@@ -61,7 +65,9 @@ function OfficePicker(host: OfficePickerHost) {
   // refetch — without this, a role/division nobody had before `handleAdded`'s own pick doesn't
   // match anything in `posts` yet, so the select it just set shows nothing selected at all.
   const [justAdded, setJustAdded] = useState<Post | null>(null);
-  const posts = justAdded ? [...(host.posts ?? []), justAdded] : (host.posts ?? []);
+  const posts = justAdded
+    ? [...(host.posts ?? []), justAdded]
+    : (host.posts ?? []);
   const currentPost = posts.find((post) => post.id === host.postId) ?? null;
 
   const initialRoleId = currentPost?.role_id ?? host.initialRoleId ?? NO_ROLE;
@@ -89,7 +95,10 @@ function OfficePicker(host: OfficePickerHost) {
 
   const proposedPosts = host.proposedPosts ?? [];
   const roleOptions = [
-    ...new Set([...posts.map((post) => post.role_id), ...proposedPosts.map((p) => p.role_id)]),
+    ...new Set([
+      ...posts.map((post) => post.role_id),
+      ...proposedPosts.map((p) => p.role_id),
+    ]),
   ]
     .map((id) => ({
       id,
@@ -100,7 +109,11 @@ function OfficePicker(host: OfficePickerHost) {
     }))
     .sort(byLabel);
   const matchFor = (role: string, division: string) =>
-    role ? posts.find((post) => post.role_id === role && post.division_ocdid === division) ?? null : null;
+    role
+      ? (posts.find(
+          (post) => post.role_id === role && post.division_ocdid === division,
+        ) ?? null)
+      : null;
 
   // Every division any role uses, not just this one's — a jurisdiction's divisions are a
   // geographic fact (Council Member minting District 4 means District 4 exists, full stop),
@@ -119,7 +132,9 @@ function OfficePicker(host: OfficePickerHost) {
     hostDispatch(
       host,
       PICKED_EVENT,
-      membership_label === undefined ? { post_id } : { post_id, membership_label },
+      membership_label === undefined
+        ? { post_id }
+        : { post_id, membership_label },
     );
 
   const [creating, setCreating] = useState(false);
@@ -172,18 +187,16 @@ function OfficePicker(host: OfficePickerHost) {
     const id = inputValue(e);
     setRoleId(id);
     setDivisionOcdid(NO_DIVISION);
-    // Not `createAndPick` here — a role alone does not say whether it needs a division, so
-    // this only ever matches an existing at-large post. `handleDivision` covers the rest,
-    // including at-large, once the reviewer answers that question (even as "none").
     const match = matchFor(id, atLarge);
     if (match) notifyPicked(match.id);
+    else void createAndPick(id, atLarge);
   };
   const handleDivision = (e: Event) => {
     const division = inputValue(e) || atLarge;
     setDivisionOcdid(division === atLarge ? NO_DIVISION : division);
     const match = matchFor(roleId, division);
     if (match) notifyPicked(match.id);
-    else if (host.canCreatePost) void createAndPick(roleId, division);
+    else void createAndPick(roleId, division);
   };
   const handleAdded = (e: CustomEvent) => {
     const { post_id, role_id, division_ocdid, label } = e.detail;
@@ -193,7 +206,8 @@ function OfficePicker(host: OfficePickerHost) {
       organization_id: host.organizationId ?? "",
       role_id,
       division_ocdid,
-      label: label ?? roles.find((role) => role.id === role_id)?.label ?? role_id,
+      label:
+        label ?? roles.find((role) => role.id === role_id)?.label ?? role_id,
       meta_headcount: 1,
       meta_is_tracked: true,
       meta_is_verified: true,
@@ -216,11 +230,14 @@ function OfficePicker(host: OfficePickerHost) {
         ?disabled=${creating}
         @change=${handleRole}
       >
-        <option value=${NO_ROLE} .selected=${roleId === NO_ROLE} disabled>Choose a role…</option>
+        <option value=${NO_ROLE} .selected=${roleId === NO_ROLE} disabled>
+          Choose a role…
+        </option>
         ${roleOptions.map(
-          (role) => html`<option value=${role.id} .selected=${role.id === roleId}>
-            ${role.label}
-          </option>`,
+          (role) =>
+            html`<option value=${role.id} .selected=${role.id === roleId}>
+              ${role.label}
+            </option>`,
         )}
       </select>
       ${roleId
@@ -230,25 +247,34 @@ function OfficePicker(host: OfficePickerHost) {
             ?disabled=${creating}
             @change=${handleDivision}
           >
-            <option value=${NO_DIVISION} .selected=${divisionOcdid === NO_DIVISION}>
+            <option
+              value=${NO_DIVISION}
+              .selected=${divisionOcdid === NO_DIVISION}
+            >
               ${divisionName("")}
             </option>
             ${divisionOptions.map(
-              ({ ocdid, isNew }) => html`<option
-                value=${ocdid}
-                .selected=${ocdid === divisionOcdid}
-              >
-                ${divisionName(ocdid)}${isNew ? " (New)" : ""}
-              </option>`,
+              ({ ocdid, isNew }) =>
+                html`<option
+                  value=${ocdid}
+                  .selected=${ocdid === divisionOcdid}
+                >
+                  ${divisionName(ocdid)}${isNew ? " (New)" : ""}
+                </option>`,
             )}
           </select>`
         : ""}
-      ${creating ? html`<span class="office-picker__status">Adding…</span>` : ""}
-      ${host.canCreatePost
-        ? html`<button type="button" class="btn btn-sm" ?disabled=${creating} @click=${() => setAddOpen(true)}>
-            Add a new office
-          </button>`
+      ${creating
+        ? html`<span class="office-picker__status">Adding…</span>`
         : ""}
+      <button
+        type="button"
+        class="btn btn-sm"
+        ?disabled=${creating}
+        @click=${() => setAddOpen(true)}
+      >
+        Add a new office
+      </button>
     </span>
     ${createError
       ? html`<p class="office-picker__error">${createError}</p>`
@@ -267,4 +293,7 @@ function OfficePicker(host: OfficePickerHost) {
   `;
 }
 
-customElements.define("civ-office-picker", component(OfficePicker, { useShadowDOM: false }));
+customElements.define(
+  "civ-office-picker",
+  component(OfficePicker, { useShadowDOM: false }),
+);

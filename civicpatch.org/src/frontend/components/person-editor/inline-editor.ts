@@ -26,7 +26,6 @@ export function renderInlinePersonEditor({
   if (cardKey(card) !== openCardKey) return nothing;
   const editorProps = editorFor(card);
   const focusWrapper = (el?: Element) => {
-    el?.scrollIntoView({ block: "center", behavior: "smooth" });
     if (!editorProps.focusField) focusOnMount(el);
   };
   const id = `${idPrefix}${cardKey(card)}`;

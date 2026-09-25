@@ -1,19 +1,16 @@
 """A review card's issue list, from rosters already loaded.
 
-Pure: `services.review_proposal` loads the inputs, this decides. The rosters are plain inputs so
+Pure: `services.review_summary` loads the inputs, this decides. The rosters are plain inputs so
 a projection's output can feed it unchanged.
 """
 
 from collections import defaultdict
 
 from pydantic import BaseModel
-from shared.schemas import POST_FIELD, Issue, Person
+from shared.schemas import Issue
 from shared.utils.divisions import numbered_division_label
-from shared.utils.name_utils import person_list_to_identities
 from shared.utils.review_utils import (
-    ReviewInputs,
     absent_person_issue,
-    build_review_summary,
     changed_field_issue,
     division_numbering_issues,
     duplicate_unique_role_issue,
@@ -21,12 +18,9 @@ from shared.utils.review_utils import (
     too_few_people_issues,
 )
 
-from core.membership_proposal import ProposedChange
 from core.people_edits import SURFACED_FIELDS
 from core.post_issues import (
-    moved_person_issues,
     moved_person_issues_from_roster,
-    organizations_nobody_was_found_in,
     organizations_nobody_was_found_in_from_roster,
 )
 from core.projection.diff import RosterDiff
@@ -46,62 +40,6 @@ class ReviewSummary(BaseModel):
 
     issues: list[Issue] = []
     people_by_source: list[PeopleBySourceRow] = []
-
-
-def picked_from_rows(rows: list[dict]) -> dict[str, str]:
-    """The post each roster row was picked for, by person id. `proposed` carries only the picks
-    in the organizations this changeset read, so a `post_id` here applies to the review in front
-    of the reviewer — which keeps `moved_person_issues` from raising a move twice."""
-    return {
-        person["id"]: person[POST_FIELD] for person in rows if person.get(POST_FIELD)
-    }
-
-
-def _with_post_checks(
-    roster_issues: list[Issue],
-    changes: list[ProposedChange],
-    picked: dict[str, str],
-    unverified_posts: list[Issue],
-    organization_names: dict[str, str],
-) -> list[Issue]:
-    return [
-        *roster_issues,
-        *unverified_posts,
-        *moved_person_issues(changes, picked),
-        *organizations_nobody_was_found_in(changes, organization_names),
-    ]
-
-
-def build_card_summary(
-    published: list[dict],
-    proposed: list[dict],
-    changes: list[ProposedChange],
-    unique_roles: list[str],
-    unverified_posts: list[Issue],
-    organization_names: dict[str, str],
-) -> ReviewSummary:
-    """The roster checks first, then the post checks."""
-    roster_checks = build_review_summary(
-        published,
-        proposed,
-        ReviewInputs(
-            identities=person_list_to_identities([Person(**p) for p in published]),
-            unique_roles=unique_roles,
-            changed_field_names=list(SURFACED_FIELDS),
-        ),
-    )
-    return ReviewSummary(
-        issues=_with_post_checks(
-            roster_checks["issues"],
-            changes,
-            picked_from_rows(proposed),
-            unverified_posts,
-            organization_names,
-        ),
-        people_by_source=[
-            PeopleBySourceRow(**row) for row in roster_checks["people_by_source"]
-        ],
-    )
 
 
 def _name_of(person: FoldPerson | None) -> str:

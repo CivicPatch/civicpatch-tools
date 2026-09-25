@@ -1,4 +1,4 @@
-from core.membership_label import derive_post_label
+from core.membership_label import post_label
 from core.post_derivation import DerivedPost
 from shared.schemas import Post
 from core.post_grouping import group_by_organization
@@ -44,7 +44,7 @@ def _with_label(post: dict, asserted_label: str | None = None) -> dict:
     role_label = post.pop("role_label", None) or post["role_id"]
     return {
         **post,
-        "label": asserted_label or derive_post_label(role_label, post["division_ocdid"]),
+        "label": post_label(role_label, post["division_ocdid"], asserted_label),
     }
 
 
@@ -56,6 +56,34 @@ async def asserted_labels(cur, post_ids: list[str]) -> dict[str, str]:
         for post_id, by_field in asserted.items()
         for accepted in [by_field.get(POST_LABEL_FIELD, {}).get(AssertionKind.ACCEPT) or []]
         if accepted
+    }
+
+
+async def asserted_labels_by_key(
+    cur, jurisdiction_ocdid: str
+) -> dict[tuple[str, str, str], str]:
+    """The name a human gave each post in this jurisdiction, keyed by the post's identity.
+
+    By key rather than by id because the fold names a post `uuid5` over that key while the
+    stored row's id is random, so the two sides cannot be joined on an id. Through
+    `asserted_labels` rather than its own join: clearing a name writes a withdraw, and that
+    is the function that knows it.
+    """
+    await cur.execute(
+        """
+        SELECT id::text, organization_id::text, role_id, division_ocdid
+        FROM posts WHERE jurisdiction_ocdid = %s
+        """,
+        (jurisdiction_ocdid,),
+    )
+    rows = await cur.fetchall()
+    if not rows:
+        return {}
+    labels = await asserted_labels(cur, [row[0] for row in rows])
+    return {
+        (organization_id, role_id, division_ocdid): labels[post_id]
+        for post_id, organization_id, role_id, division_ocdid in rows
+        if post_id in labels
     }
 
 

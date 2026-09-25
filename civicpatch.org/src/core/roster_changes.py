@@ -1,6 +1,6 @@
 """What one roster changes against another, person by person.
 
-Pure, and over the two sides a review card already presents (`core.card_rows`): the sheet's
+Pure, and over the two sides a review card already presents (`core.display_rows`): the sheet's
 `note` column, the report tab and the batch page's counts all read one answer, so the three
 cannot disagree about what an import did.
 
@@ -48,8 +48,13 @@ class ChangeKind(StrEnum):
     UNCHANGED = "unchanged"
 
 
-class PersonChange(BaseModel):
-    """What this roster changes about one person: what happened to them, and to their offices."""
+class PersonDiff(BaseModel):
+    """What this roster changes about one person: what happened to them, and to their offices.
+
+    Not `schemas.activity.PersonChange`, which is one activity-log event. This is a comparison,
+    and it has an entry for everyone either roster lists, `UNCHANGED` included — the sheet's
+    note column needs a line per row, not only per change.
+    """
 
     person_id: str
     name: str
@@ -116,9 +121,9 @@ def _office_changes(before: dict, after: dict) -> list[OfficeChange]:
     return changes
 
 
-def _change_of(before: dict | None, after: dict | None) -> PersonChange:
+def _change_of(before: dict | None, after: dict | None) -> PersonDiff:
     record = after or before or {}
-    return PersonChange(
+    return PersonDiff(
         person_id=record["id"],
         name=record.get("name") or "",
         added=before is None,
@@ -128,7 +133,7 @@ def _change_of(before: dict | None, after: dict | None) -> PersonChange:
     )
 
 
-def changes_of(published: list[dict], proposed: list[dict]) -> list[PersonChange]:
+def changes_of(published: list[dict], proposed: list[dict]) -> list[PersonDiff]:
     """One entry per person either side lists: the proposed roster in its own order, then
     whoever it drops."""
     published_by_id = {person["id"]: person for person in published}
@@ -150,7 +155,7 @@ def _office_note(office: OfficeChange) -> str | None:
     return None
 
 
-def note_of(change: PersonChange, likely_same_as: str | None) -> str:
+def note_of(change: PersonDiff, likely_same_as: str | None) -> str:
     parts = []
     if change.added:
         parts.append("new person")
@@ -166,7 +171,7 @@ def note_of(change: PersonChange, likely_same_as: str | None) -> str:
 
 
 def person_notes(
-    changes: list[PersonChange], likely_same: dict[str, str]
+    changes: list[PersonDiff], likely_same: dict[str, str]
 ) -> dict[str, str]:
     """What this roster changes about each person still listed, most important first: new
     person, then offices, then fields. A dropped person has no row to note."""
@@ -177,7 +182,7 @@ def person_notes(
     }
 
 
-def likely_same_people(changes: list[PersonChange]) -> dict[str, str]:
+def likely_same_people(changes: list[PersonDiff]) -> dict[str, str]:
     """Each added person this roster may have mistaken for a dropped one, and the reverse: id to
     the other person's name.
 
@@ -217,7 +222,7 @@ class ProposalCounts(BaseModel):
     change_counts: ChangeCounts
 
 
-def count_changes(changes: list[PersonChange]) -> ChangeCounts:
+def count_changes(changes: list[PersonDiff]) -> ChangeCounts:
     return ChangeCounts(
         added_people=sum(1 for change in changes if change.added),
         changed_people=sum(
@@ -232,7 +237,7 @@ def count_changes(changes: list[PersonChange]) -> ChangeCounts:
     )
 
 
-def proposal_counts(changes: list[PersonChange]) -> ProposalCounts:
+def proposal_counts(changes: list[PersonDiff]) -> ProposalCounts:
     return ProposalCounts(
         people=sum(1 for change in changes if change.listed),
         change_counts=count_changes(changes),

@@ -112,6 +112,31 @@ test.describe("Review reconcile diff (populated)", () => {
     );
   });
 
+  test("picking a role with no post yet still registers as a change", async ({
+    authenticatedPage: page,
+  }) => {
+    // 2026-09-24: `handleRole` emitted a pick only when an at-large post for that role already
+    // existed. Mayor had one and worked; a role that had to be minted selected and then did
+    // nothing — no pick, nothing dirty, no Save — and the reviewer could not complete it,
+    // because the line above had just set the division to At-Large and a <select> fires no
+    // change event for the value it already shows.
+    await openCard(page, "Maria González");
+    const role = fieldIn(editorFor(page, "Maria González"), "Office").getByLabel(
+      "Role",
+      { exact: true },
+    );
+    const values = await role.locator("option").evaluateAll((options) =>
+      options.map((option) => ({ value: option.value, text: option.textContent ?? "" })),
+    );
+    const unheld = values.find(
+      (option) => option.value && !/Council Member/.test(option.text),
+    );
+
+    await role.selectOption(unheld.value);
+
+    await expect(page.locator(".review-session__save-btn")).toBeVisible();
+  });
+
   test("a person the scrape dropped is one decision, not a column of dashes", async ({
     authenticatedPage: page,
   }) => {

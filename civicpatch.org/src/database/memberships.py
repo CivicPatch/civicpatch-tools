@@ -18,19 +18,9 @@ from datetime import date
 from typing import AsyncGenerator
 
 from core.membership_label import derive_post_label
-from core.membership_proposal import ExistingMembership, MembershipPost
 from core.projection.memberships import MEMBERSHIP_LABEL_FIELD
-from database import assertions, posts
-from database.activity import record_change
-from database.changesets import live_roster_changeset
+from database import assertions
 from database.database import get_pool
-from database.projection import rebuild_from_facts
-from database.users import SYSTEM_USER_ID
-from schemas.activity import (
-    MEMBERSHIP_POST_FIELD,
-    Change,
-    FieldChange,
-)
 from schemas.assertions import (
     DefaultNote,
     Assertion,
@@ -38,8 +28,6 @@ from schemas.assertions import (
     EntityType,
     Source,
 )
-from shared.utils.membership_ids import membership_id
-from shared.utils.statuses import ActivityType
 
 
 async def list_for_jurisdiction(
@@ -287,57 +275,6 @@ async def meta_unmatched_text(limit: int, offset: int) -> tuple[int, list[dict]]
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         return await _count_triage_terms(cur), await _triage_page(cur, limit, offset)
-
-
-async def open_memberships(
-    cur, jurisdiction_ocdids: list[str]
-) -> list[ExistingMembership]:
-    """Every open membership in these jurisdictions, with its post's role and division."""
-    if not jurisdiction_ocdids:
-        return []
-    await cur.execute(
-        """
-        SELECT m.id::text, p.jurisdiction_ocdid, m.person_id::text, m.organization_id::text,
-               m.label, m.post_id::text, p.role_id, r.label, p.division_ocdid, p.meta_is_tracked
-        FROM memberships m
-        JOIN posts p ON p.id = m.post_id
-        JOIN roles r ON r.id = p.role_id
-        WHERE p.jurisdiction_ocdid = ANY(%s) AND m.closed_at IS NULL
-        """,
-        (jurisdiction_ocdids,),
-    )
-    rows = await cur.fetchall()
-    names = await posts.asserted_labels(cur, [row[5] for row in rows])
-    return [
-        ExistingMembership(
-            id=membership_id,
-            jurisdiction_ocdid=jurisdiction_ocdid,
-            person_id=person_id,
-            organization_id=organization_id,
-            membership_label=membership_label,
-            post=MembershipPost(
-                id=post_id,
-                role_id=role_id,
-                role_label=role_label,
-                division_ocdid=division_ocdid,
-                label=names.get(post_id)
-                or derive_post_label(role_label, division_ocdid),
-                meta_is_tracked=meta_is_tracked,
-            ),
-        )
-        for (
-            membership_id,
-            jurisdiction_ocdid,
-            person_id,
-            organization_id,
-            membership_label,
-            post_id,
-            role_id,
-            role_label,
-            division_ocdid,
-            meta_is_tracked,
-        ) in rows
-    ]
 
 
 async def _assert(

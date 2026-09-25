@@ -9,7 +9,7 @@ Step 9 of the projector plan. It replaces `PATCH /people/data`, `PUT /membership
 shape for the same act.
 """
 
-from core.card_rows import card_rows
+from core.display_rows import display_rows
 from core.people_edits import (
     PersonPatch,
     assertions_from_edit,
@@ -237,5 +237,5 @@ async def _derived_rows(
 ) -> dict[str, dict]:
     """The same roster as the shape `assertions_from_edit` diffs against, keyed by person id."""
     roster, taxonomy = await _roster_and_taxonomy(jurisdiction_ocdid, including)
-    rows = card_rows(on_roster(roster), jurisdiction_ocdid, taxonomy)
+    rows = display_rows(on_roster(roster), jurisdiction_ocdid, taxonomy)
     return {row["id"]: row for row in rows}

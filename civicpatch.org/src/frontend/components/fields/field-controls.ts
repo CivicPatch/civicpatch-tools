@@ -191,7 +191,6 @@ export interface OfficeFieldProps {
   labelAssertionSummary: FieldAssertionSummary | null;
   jurisdictionOcdid: string | null | undefined;
   organizationId: string;
-  canCreatePost: boolean;
   // A proposed role/division with no post yet — see this prop's only caller
   // (editor-field.ts's renderOfficeControl) for why. Ignored once a real post id is picked;
   // `civ-office-picker` only ever consults them while unset.
@@ -220,7 +219,6 @@ export function renderOfficeNewSide(props: OfficeFieldProps) {
     labelAssertionSummary,
     jurisdictionOcdid,
     organizationId,
-    canCreatePost,
     initialRoleId,
     initialDivisionOcdid,
     proposedPosts,
@@ -249,7 +247,6 @@ export function renderOfficeNewSide(props: OfficeFieldProps) {
         .initialRoleId=${initialRoleId}
         .initialDivisionOcdid=${initialDivisionOcdid}
         .proposedPosts=${proposedPosts}
-        .canCreatePost=${canCreatePost}
         .focusRef=${focusRef}
         @picked=${handlePicked}
       ></civ-office-picker>

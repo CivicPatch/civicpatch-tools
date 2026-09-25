@@ -37,7 +37,6 @@ export interface EditorContext {
   organizationId: string;
   roles: RoleOption[];
   canAssignMembership: boolean;
-  canCreatePost: boolean;
   // The whole jurisdiction's open memberships; each editor takes its own person's out of it.
   rosterMemberships: RosterMembership[];
   assertions: Record<string, PersonAssertion[]>;
@@ -128,7 +127,6 @@ export function personEditorPropsFor(
     organizationId: ctx.organizationId,
     roles: ctx.roles,
     canAssignMembership: ctx.canAssignMembership,
-    canCreatePost: ctx.canCreatePost,
     isDirty: ctx.dirtyIds.has(card.personId),
     isExpanded: ctx.isExpanded(card.personId),
     onToggleExpand: () => ctx.onToggleExpand(card.personId),

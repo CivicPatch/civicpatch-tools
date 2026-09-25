@@ -1,5 +1,5 @@
-import { html } from "lit-html";
-import { component } from "haunted";
+import { html, nothing } from "lit-html";
+import { component, useState } from "haunted";
 import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.js";
 import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { useAuth } from "../../hooks/useAuth.js";
@@ -13,6 +13,7 @@ import { REVIEW_ACTION } from "../../components/review-card/review-action.js";
 import { useReviewSession } from "./use-review-session.js";
 import { landingUrl, STATE_PARAM } from "../review-routes.js";
 import { StateKind } from "./review-state.js";
+
 import "./review-session.js";
 import "../../components/review-log/index.js";
 import "./review-session-page.css";
@@ -72,8 +73,11 @@ function ReviewSessionPage() {
   const handlePublish = async (e: CustomEvent) => {
     if (await applyEdits(e)) merge(e.detail.people);
   };
+  const [savedChangesetId, setSavedChangesetId] = useState<string | null>(null);
   const handleSave = async (e: CustomEvent) => {
-    if (await applyEdits(e)) save(e.detail.people);
+    if (!(await applyEdits(e))) return;
+    const ok = await save(e.detail.people);
+    setSavedChangesetId(ok ? (changesetId ?? null) : null);
   };
   const handleNavigateTo = (e: CustomEvent) => navigateTo(e.detail.entry_number);
 
@@ -105,6 +109,7 @@ function ReviewSessionPage() {
     }
     return html`<review-session
       .currentEntry=${currentEntry}
+      .savedChangesetId=${savedChangesetId}
       .hasSession=${session != null}
       .progress=${progress}
       .error=${publishError}
@@ -112,7 +117,6 @@ function ReviewSessionPage() {
       .canViewSourceDebug=${permissions.can_view_source_debug}
       .isRejecting=${isRejecting}
       .canAssignMembership=${canAssignMembership}
-      .canCreatePost=${permissions.can_create_post}
       @back=${back}
       @advance=${advance}
       @navigate-to=${handleNavigateTo}

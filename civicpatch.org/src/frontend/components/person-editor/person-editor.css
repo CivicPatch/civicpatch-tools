@@ -408,30 +408,7 @@ civ-assertions-popover {
   cursor: pointer;
   width: auto;
 }
-.person-editor__nav-hint {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.4rem;
-  font-size: var(--font-size-xs);
-  color: var(--text-muted);
-}
-.person-editor__nav-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-.person-editor__nav-chip kbd {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 1.1rem;
-  font-family: var(--font-mono);
-  font-size: var(--font-size-xs);
-  line-height: 1;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 0 0.3rem;
-}
+
 .person-editor__banner {
   display: flex;
   flex-direction: column;

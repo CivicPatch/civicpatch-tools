@@ -65,10 +65,11 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         "can_view_issues_page": has_at_least(role, UserRole.ADMINS),
         "can_view_activity_page": has_at_least(role, UserRole.DEFAULT),
         "can_edit_jurisdiction_data": has_at_least(role, UserRole.MAINTAINERS),
-        # Any signed-in user — a reviewer who knows somebody sits in a seat that does not
-        # exist yet should not need a maintainer to mint it. Editing a post stays maintainer+,
-        # under `can_edit_jurisdiction_data`; creating one is this, its own flag.
-        "can_create_post": has_at_least(role, UserRole.DEFAULT),
+        # No `can_create_post`: it resolved to `has_at_least(role, DEFAULT)`, which is the
+        # ladder's floor, and its route is `AUTHENTICATED` — the same condition. It gated
+        # nothing, and the frontend threaded it through eight files to reach one button.
+        # Creating a post stays open to any signed-in user; editing one stays maintainer+,
+        # under `can_edit_jurisdiction_data`.
         # Create/edit/delete an organization (routers/api/organizations.py) — a structural
         # change to how a jurisdiction's bodies are divided, unlike creating a post within one.
         "can_manage_organizations": has_at_least(role, UserRole.MAINTAINERS),

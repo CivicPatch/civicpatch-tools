@@ -36,6 +36,12 @@ def derive_post_label(role_label: str, division_ocdid: str) -> str:
     return _SEPARATOR.join(part for part in parts if part)
 
 
+def post_label(
+    role_label: str, division_ocdid: str, asserted: str | None = None
+) -> str:
+    return asserted or derive_post_label(role_label, division_ocdid)
+
+
 class MembershipLabel(BaseModel):
     """What one occupant's own labels said beyond their seat's name."""
 
@@ -57,5 +63,10 @@ def render_with_post_label(post_label: str, label: MembershipLabel) -> str:
     table (`batch_review.py`), not the per-person card, which shows the two beside each other
     and calls `render` directly instead.
     """
-    parts = [post_label, *label.demoted_roles, *label.designations, *label.meta_unmatched_text]
+    parts = [
+        post_label,
+        *label.demoted_roles,
+        *label.designations,
+        *label.meta_unmatched_text,
+    ]
     return _SEPARATOR.join(part for part in parts if part)

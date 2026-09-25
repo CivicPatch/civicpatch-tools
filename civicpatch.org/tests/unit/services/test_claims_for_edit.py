@@ -23,7 +23,7 @@ def _derived(**overrides) -> dict[str, dict]:
         "name": "Ann Lee",
         "emails": ["ann@example.gov"],
         "phones": [],
-        # `card_rows` fills these, and validation requires them: a person needs a jurisdiction
+        # `display_rows` fills these, and validation requires them: a person needs a jurisdiction
         # and somewhere they were seen.
         "jurisdiction_ocdid": OCDID,
         "source_urls": ["https://alpha.gov/council"],
