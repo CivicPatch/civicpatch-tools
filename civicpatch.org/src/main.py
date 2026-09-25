@@ -167,6 +167,7 @@ app.include_router(
     dependencies=[
         Depends(require_route_access(RouteCategory.AUTHENTICATED))
     ],
+    include_in_schema=False,
 )
 
 # Two routers, one prefix: reading a card and acting on one are the same surface to the
@@ -177,6 +178,7 @@ app.include_router(
     prefix="/api/v1/reviews",
     tags=["review"],
     # Dependencies set within router
+    include_in_schema=False,
 )
 
 app.include_router(
@@ -184,6 +186,7 @@ app.include_router(
     prefix="/api/v1/reviews",
     tags=["review"],
     # Dependencies set within router
+    include_in_schema=False,
 )
 
 # Seating a person. Always a transition — landing on a different post closes the old
@@ -192,6 +195,7 @@ app.include_router(
     api_assertions_router.get_router(),
     prefix="/api/v1/assertions",
     tags=["assertions"],
+    include_in_schema=False,
 )
 
 app.include_router(
@@ -205,6 +209,7 @@ app.include_router(
     api_posts_router.get_router(),
     prefix="/api/v1/posts",
     tags=["posts"],
+    include_in_schema=False,
 )
 
 # Create/edit/delete a jurisdiction's non-default bodies (Council, School Board).
@@ -219,6 +224,7 @@ app.include_router(
     api_imports_router.get_router(),
     prefix="/api/v1/imports",
     tags=["imports"],
+    include_in_schema=False,
 )
 
 # Changeset activity across every state: the per-state rows, the calendar bands, and the
@@ -227,6 +233,7 @@ app.include_router(
     api_changeset_summaries_router.get_router(),
     prefix="/api/v1/changeset_summaries",
     tags=["changeset_summaries"],
+    include_in_schema=False,
 )
 
 # Allow you to create your api keys
@@ -251,6 +258,7 @@ app.include_router(
     api_scrape_settings_router.get_router(),
     prefix="/api/v1/scrape_settings",
     tags=["scrape_settings"],
+    include_in_schema=False,
 )
 
 app.include_router(
@@ -278,6 +286,7 @@ app.include_router(
     api_summary_router.get_router(),
     prefix="/api/v1/summary",
     tags=["summary"],
+    include_in_schema=False,
 )
 
 app.include_router(
@@ -308,6 +317,7 @@ app.include_router(
     dependencies=[
         Depends(require_route_access(RouteCategory.AUTHENTICATED))
     ],
+    include_in_schema=False,
 )
 
 app.include_router(
@@ -315,6 +325,7 @@ app.include_router(
     prefix="/api/v1/user",
     tags=["user"],
     dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))],
+    include_in_schema=False,
 )
 
 app.include_router(
@@ -328,16 +339,18 @@ app.include_router(
     github_webhook_router.get_router(),
     prefix="/webhooks/github",
     tags=["webhooks"],
+    include_in_schema=False,
 )
 
 app.include_router(
     blog_sync_webhook_router.get_router(),
     prefix="/webhooks/blog-sync",
     tags=["webhooks"],
+    include_in_schema=False,
 )
 
 
-@app.get("/api/v1/me", tags=["auth"])
+@app.get("/api/v1/me", tags=["auth"], include_in_schema=False)
 async def get_me(user: Identity = Depends(get_optional_user)):
     """
     Returns the authenticated user's identity info.

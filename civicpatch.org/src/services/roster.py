@@ -23,7 +23,6 @@ from database.source_records import (
 )
 from schemas.assertions import EntityType
 from shared.schemas import POST_FIELD, RoleConfig
-from shared.utils.batching import gather_in_batches
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
 logger = logging.getLogger(__name__)
@@ -262,23 +261,3 @@ async def scraped_roster(changeset_id: str, jurisdiction_ocdid: str) -> list[dic
 # either way: the work is CPU.
 ROSTERS_AT_A_TIME = 4
 
-
-async def proposed_rosters(changeset_ids: list[str]) -> dict[str, list[dict]]:
-    """One roster per request, for a page of review cards."""
-    both = await proposed_rosters_and_source_values(changeset_ids)
-    return {changeset_id: roster for changeset_id, (roster, _) in both.items()}
-
-
-async def proposed_rosters_and_source_values(
-    changeset_ids: list[str],
-) -> dict[str, tuple[list[dict], dict[str, dict]]]:
-    """`proposed_roster_and_source_values` for a page of review cards."""
-    if not changeset_ids:
-        return {}
-    ocdids = await changesets_db.jurisdictions_for_changesets(changeset_ids)
-    results = await gather_in_batches(
-        list(ocdids.items()),
-        ROSTERS_AT_A_TIME,
-        lambda pair: proposed_roster_and_source_values(*pair),
-    )
-    return dict(zip(ocdids, results))

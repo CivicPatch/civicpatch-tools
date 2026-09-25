@@ -47,7 +47,7 @@ def get_router() -> APIRouter:
         people = await database.get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
         return {"data": _to_people(people)}
 
-    @router.get("/assertions")
+    @router.get("/assertions", include_in_schema=False)
     async def list_assertions_endpoint(
         jurisdiction_ocdid: str,
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
@@ -66,7 +66,7 @@ def get_router() -> APIRouter:
             )
         }
 
-    @router.get("/bulk")
+    @router.get("/bulk", include_in_schema=False)
     async def bulk_people_endpoint(
         state: str,
         page: int = Query(1, ge=1),
@@ -90,7 +90,7 @@ def get_router() -> APIRouter:
         )
         return paginated_response(total, page, per_page, _to_people(people))
 
-    @router.get("/search")
+    @router.get("/search", include_in_schema=False)
     async def search_people_endpoint(
         jurisdiction_ocdid: str,
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
@@ -111,7 +111,7 @@ def get_router() -> APIRouter:
         people = await jurisdictions_db.get_people_by_geo(lat, long)
         return {"data": people}
 
-    @router.get("/directory")
+    @router.get("/directory", include_in_schema=False)
     async def list_directory_endpoint(
         jurisdiction_ocdid: str,
         page: int = Query(1, ge=1),
@@ -123,7 +123,7 @@ def get_router() -> APIRouter:
         )
         return paginated_response(total, page, per_page, people)
 
-    @router.post("/batch-resolve")
+    @router.post("/batch-resolve", include_in_schema=False)
     async def batch_resolve_people_endpoint(
         request: PeopleBatchResolveRequest,
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
@@ -142,7 +142,7 @@ def get_router() -> APIRouter:
 
         return {"data": results}
 
-    @router.post("/generate-id")
+    @router.post("/generate-id", include_in_schema=False)
     async def generate_person_id(
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):

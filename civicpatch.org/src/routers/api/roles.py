@@ -15,7 +15,7 @@ def get_router() -> APIRouter:
         roles = await role_config_service.load_roles()
         return {"data": {"roles": [r.model_dump() for r in roles]}}
 
-    @router.put("")
+    @router.put("", include_in_schema=False)
     async def put_roles_endpoint(
         body: SetRolesRequest,
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
@@ -31,7 +31,7 @@ def get_router() -> APIRouter:
             return JSONResponse({"error": str(e)}, status_code=409)
         return {"data": {"ok": True}}
 
-    @router.put("/reorder")
+    @router.put("/reorder", include_in_schema=False)
     async def reorder_roles_endpoint(
         body: ReorderRolesRequest,
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)),
@@ -44,7 +44,7 @@ def get_router() -> APIRouter:
             return JSONResponse({"error": str(e)}, status_code=409)
         return {"data": {"ok": True}}
 
-    @router.delete("/{role_id}")
+    @router.delete("/{role_id}", include_in_schema=False)
     async def deactivate_role_endpoint(
         role_id: str,
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),

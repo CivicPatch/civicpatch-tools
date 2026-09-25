@@ -16,7 +16,7 @@ def _safe_path(jurisdiction_ocdid: str | None) -> str | None:
 def get_router() -> APIRouter:
     router = APIRouter()
 
-    @router.get("")
+    @router.get("", include_in_schema=False)
     async def get_activity_endpoint(
         authors: ActivityAuthors = Query(ActivityAuthors.ALL),
         page: int = Query(1, ge=1),
