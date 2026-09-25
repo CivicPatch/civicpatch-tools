@@ -12,20 +12,20 @@ shape for the same act.
 from core.display_rows import display_rows
 from core.people_edits import (
     PersonPatch,
-    assertions_from_edit,
-    assertions_from_posts,
+    claims_from_edit,
+    claims_from_posts,
     patch_people,
 )
 from core.projection.diff import on_roster
 from core.projection.roster import Roster
-from database import assertions as assertions_db
+from database import claims as claims_db
 from database import memberships as memberships_db
 from database import posts as posts_db
 from database import projection as projection_db
 from database.changesets import register_people_edit_changeset
 from database.database import get_pool
 from database.roles import get_roles
-from schemas.assertions import Assertion, EntityType
+from schemas.claims import Claim, EntityType
 from schemas.jurisdictions import PersonEdit
 from services.publish import publish_roster
 from shared.schemas import RoleConfig
@@ -35,7 +35,7 @@ from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
 
 class AnonymousEdit(Exception):
-    """`assertions.created_by` is NOT NULL, and a claim nobody made is not a claim."""
+    """`claims.created_by` is NOT NULL, and a claim nobody made is not a claim."""
 
 
 class UnknownPost(Exception):
@@ -122,7 +122,7 @@ async def _file(
 async def _write(claims, labels, user_id: str, changeset_id: str) -> None:
     # One transaction, inside `create_all`: half an edit is worse than none, because the half
     # that landed looks like a decision somebody made.
-    await assertions_db.create_all(claims, user_id)
+    await claims_db.create_all(claims, user_id)
     if labels:
         pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:
@@ -135,7 +135,7 @@ async def _write(claims, labels, user_id: str, changeset_id: str) -> None:
 
 def claims_for_edit(
     derived: dict[str, dict], people: list[PersonEdit], changeset_id: str
-) -> list[Assertion]:
+) -> list[Claim]:
     """Pure: the derived roster keyed by person id, and what the client says, in; claims out.
 
     A person the roster does not derive is an addition, so they have nothing to diff against.
@@ -153,18 +153,18 @@ def claims_for_edit(
         for entry in (patch_people(list(derived.values()), patches) if patches else [])
     }
 
-    claims: list[Assertion] = []
+    claims: list[Claim] = []
     for person in people:
         published = derived.get(person.id, {"id": person.id})
         if person.id in desired:
             claims.extend(
-                assertions_from_edit(
+                claims_from_edit(
                     person.id, published, desired[person.id], changeset_id
                 )
             )
         if person.offices is not None:
             claims.extend(
-                assertions_from_posts(
+                claims_from_posts(
                     person.id,
                     [post["post_id"] for post in published.get("memberships") or []],
                     [office.id for office in person.offices],
@@ -235,7 +235,7 @@ async def _roster_and_taxonomy(
 async def _derived_rows(
     jurisdiction_ocdid: str, including: str | None = None
 ) -> dict[str, dict]:
-    """The same roster as the shape `assertions_from_edit` diffs against, keyed by person id."""
+    """The same roster as the shape `claims_from_edit` diffs against, keyed by person id."""
     roster, taxonomy = await _roster_and_taxonomy(jurisdiction_ocdid, including)
     rows = display_rows(on_roster(roster), jurisdiction_ocdid, taxonomy)
     return {row["id"]: row for row in rows}

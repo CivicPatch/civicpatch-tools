@@ -18,12 +18,12 @@ import pytest_asyncio
 from core.people_edits import POSTS_FIELD
 from core.post_derivation import ChosenPost, DerivedMembership
 from core.roster_changes import ChangeKind, changes_of
-from database import assertions, divisions, memberships, organizations, posts
+from database import claims, divisions, memberships, organizations, posts
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from database.review_priority import issue_count, issue_priority
 from database.source_records import insert_source_records
-from schemas.assertions import Assertion, AssertionKind, DefaultNote, EntityType, Source
+from schemas.claims import Claim, ClaimKind, DefaultNote, EntityType, Source
 from services.roster import card_sides
 from tests.integration import factories
 
@@ -60,11 +60,11 @@ async def _wipe():
         # takes the whole module down — and takes new breakage with it, silently.
         # `source_records` and `pipeline_runs` cascade from the request.
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zz'")
-        # The curator, and the assertions pointing at them. `created_by` is a FK, so the user
-        # cannot go first — and `assertions` has none to memberships, so its rows outlive the
+        # The curator, and the claims pointing at them. `created_by` is a FK, so the user
+        # cannot go first — and `claims` has none to memberships, so its rows outlive the
         # memberships they describe and would otherwise accumulate across runs.
         await cur.execute(
-            "DELETE FROM assertions WHERE created_by IN "
+            "DELETE FROM claims WHERE created_by IN "
             "(SELECT id FROM users WHERE email = %s)",
             (_CURATOR,),
         )
@@ -504,7 +504,7 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
 async def _human_sets_label(cur, membership_id: str, label: str) -> None:
     """What `assign` does. `set_membership_label` with a user is the whole human edit: the value and the
     assertion saying somebody chose it, which is what survives the next scrape."""
-    # `assertions.created_by` is a foreign key, so an assertion needs somebody to have made it.
+    # `claims.created_by` is a foreign key, so an assertion needs somebody to have made it.
     await cur.execute(
         "INSERT INTO users (email, provider, provider_user_id, username, role) "
         "VALUES (%s, 'email', %s, %s, 'admins') RETURNING id::text",
@@ -616,7 +616,7 @@ async def test_minting_a_post_is_logged_against_the_scrape_that_caused_it():
     logs = await _add_post_logs(changeset_id)
     assert len(logs) == 1
     assert logs[0]["changes"]["subject"] == "mayor"
-    # The system, not a person: nobody asserted this, a scrape did it. Since 160 that is said
+    # The system, not a person: nobody claimed this, a scrape did it. Since 160 that is said
     # by naming the system user rather than by leaving the column null.
     assert str(logs[0]["user_id"]) == SYSTEM_USER_ID
 
@@ -1262,7 +1262,7 @@ async def test_a_body_whose_extraction_returned_nobody_closes_nobody():
 
 
 async def _curator_id(cur) -> str:
-    """`assertions.created_by` is a foreign key, so a claim needs somebody to have made it."""
+    """`claims.created_by` is a foreign key, so a claim needs somebody to have made it."""
     await cur.execute("SELECT id::text FROM users WHERE email = %s", (_CURATOR,))
     row = await cur.fetchone()
     if row:
@@ -1287,8 +1287,8 @@ async def _held_post_id(person_id: str) -> str:
         return (await cur.fetchone())[0]
 
 
-def _posts_claim(person_id: str, post_id: str, kind: AssertionKind) -> Assertion:
-    return Assertion(
+def _posts_claim(person_id: str, post_id: str, kind: ClaimKind) -> Claim:
+    return Claim(
         entity_type=EntityType.PERSON,
         entity_id=person_id,
         field_path=POSTS_FIELD,
@@ -1307,9 +1307,9 @@ async def _reject_post(person_id: str) -> str:
     post_id = await _held_post_id(person_id)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await assertions.upsert(
+        await claims.upsert(
             cur,
-            _posts_claim(person_id, post_id, AssertionKind.REJECT),
+            _posts_claim(person_id, post_id, ClaimKind.REJECT),
             await _curator_id(cur),
         )
         await conn.commit()
@@ -1346,12 +1346,12 @@ async def test_withdrawing_the_claim_reopens_the_membership_on_the_next_publish(
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await assertions.withdraw(
+        await claims.withdraw(
             cur,
             EntityType.PERSON,
             person_id,
             POSTS_FIELD,
-            AssertionKind.REJECT,
+            ClaimKind.REJECT,
             await _curator_id(cur),
             value=post_id,
         )

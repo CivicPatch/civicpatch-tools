@@ -19,7 +19,7 @@ import pytest
 from database.changeset_batches import BatchKind, BatchStatus
 from database.database import get_pool
 from database.review_sessions import ReviewSessionEntryStatus
-from schemas.assertions import AssertionKind, EntityType
+from schemas.claims import ClaimKind, EntityType
 from schemas.common import UserRole
 from shared.schemas import RoleStatus
 from shared.utils.statuses import ChangesetKind, DismissalReason, PipelineIssueStatus
@@ -32,8 +32,8 @@ EXACT = {
     # Two tables since migration 186, each with its own copy of the same vocabulary.
     "pipeline_run_issues_status_check": PipelineIssueStatus,
     "changeset_issues_status_check": PipelineIssueStatus,
-    "assertions_kind_check": AssertionKind,
-    "assertions_entity_type_check": EntityType,
+    "claims_kind_check": ClaimKind,
+    "claims_entity_type_check": EntityType,
     "changeset_batches_kind_check": BatchKind,
     "changeset_batches_status_check": BatchStatus,
     "roles_status_check": RoleStatus,

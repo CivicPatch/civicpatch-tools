@@ -121,6 +121,6 @@ def test_the_writer_writes_only_projection_tables():
     with open(os.path.join(_SRC, THE_WRITER)) as handle:
         text = handle.read()
     fact_write = re.compile(
-        r"\b(INSERT INTO|UPDATE|DELETE FROM)\s+(source_records|assertions|claims|source_pages|changesets)\b"
+        r"\b(INSERT INTO|UPDATE|DELETE FROM)\s+(source_records|claims|source_pages|changesets)\b"
     )
     assert not fact_write.findall(text), "database/projection.py must not write a fact table"

@@ -37,7 +37,7 @@ from schemas.common import (
     UserRole,
     has_at_least,
 )
-from services.assertions import assertions_for_people
+from services.claims import claims_for_people
 from services.review_summary import review_summary_for_changeset
 import services.review_cards as review_cards_service
 from services.review_sources import build_sources, without_debug_links
@@ -259,10 +259,10 @@ def get_router(api_key_header):
                 "mode": ReviewMode.for_scrape(has_ever_collected).value,
                 "existing": existing,
                 "proposed": proposed,
-                "assertions": await assertions_for_people(
+                "claims": await claims_for_people(
                     [person["id"] for person in existing if person.get("id")]
                 ),
-                # See the same key on the session endpoint: the fields an assertion changed,
+                # See the same key on the session endpoint: the fields a claim changed,
                 # with what the source had said.
                 "overridden_source_values": overridden,
                 "sources": sources,

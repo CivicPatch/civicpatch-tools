@@ -1,6 +1,6 @@
 """Unit tests for the Sheets read/write helpers.
 
-Nothing here reaches Google — the service is a mock, and what is asserted is the A1 notation we
+Nothing here reaches Google — the service is a mock, and what is claimed is the A1 notation we
 hand it. That is where the risk actually is: a malformed range is rejected wholesale, and the
 first time anyone would notice is the first real import.
 """

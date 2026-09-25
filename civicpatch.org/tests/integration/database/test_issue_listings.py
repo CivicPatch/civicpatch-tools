@@ -113,7 +113,7 @@ async def test_another_states_filter_excludes_them():
 @pytest.mark.integration
 async def test_the_type_filter_keeps_only_that_type():
     """The `IN` clause. Its previous test filtered on `unrecognized_role`, retired by migration
-    179, and asserted `isinstance(rows, list)` — so it matched nothing and passed either way."""
+    179, and claimed `isinstance(rows, list)` — so it matched nothing and passed either way."""
     run_id, _ = await _seed_both()
     await issues_db.upsert_issue(run_id, PipelineIssueType.COST_CAP_REACHED, [{}])
 

@@ -63,7 +63,7 @@ function ReviewCardBody(host: ReviewCardBodyHost) {
       .editorFor=${noEditor}
       .posts=${postsOf(card)}
       .roles=${host.roles}
-      .assertions=${card.assertions}
+      .claims=${card.claims}
       .overriddenSourceValues=${card.overridden_source_values}
       .organizations=${card.organizations}
     ></review-overview>

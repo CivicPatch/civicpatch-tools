@@ -3,7 +3,7 @@ from enum import StrEnum
 from typing import Any
 
 from pydantic import BaseModel
-from schemas.assertions import EntityType
+from schemas.claims import EntityType
 from shared.utils.statuses import ActivityType
 
 
@@ -12,7 +12,7 @@ class FieldChange(BaseModel):
     before: Any | None = None
     after: Any | None = None
     # Why somebody said so — "phoned the clerk, there really are five trustees". Only an
-    # assertion carries one, and this is the single place it is recorded: `assertions` is
+    # claim carries one, and this is the single place it is recorded: `claims` is
     # current state and gets overwritten, so the log is what keeps a superseded justification.
     sources: list[dict] = []
 

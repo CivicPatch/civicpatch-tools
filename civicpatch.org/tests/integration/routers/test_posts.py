@@ -396,7 +396,7 @@ async def test_a_patch_must_state_whether_the_post_is_tracked(client):
 async def test_the_roster_reads_without_signing_in(client, anonymous_client):
     """The jurisdiction page is public, so the posts on it are too — reads open, writes gated.
 
-    Both halves are asserted together because they are one policy: opening the whole router is
+    Both halves are claimed together because they are one policy: opening the whole router is
     the plausible way this breaks, and a read-only assertion would not notice.
     """
     await _create(client)

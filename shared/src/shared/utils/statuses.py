@@ -248,3 +248,31 @@ GROUPABLE_ACTIVITY_TYPES = frozenset({
     ActivityType.PIPELINE_RUN_END,
     ActivityType.SHEET_IMPORT,
 })
+
+
+class EntityType(StrEnum):
+    """What a claim is about. One definition: the fold and the write side both read this one.
+
+    Facts can be claimed about too -- a withdraw names one, and a split is a `person_id` claim
+    on a record.
+    """
+
+    PERSON = "person"
+    POST = "post"
+    MEMBERSHIP = "membership"
+    JURISDICTION = "jurisdiction"
+    ORGANIZATION = "organization"
+    SOURCE_RECORD = "source_record"
+    SOURCE_PAGE = "source_page"
+    CLAIM = "claim"
+
+
+class ClaimKind(StrEnum):
+    # "This value stands." One per scalar field; one per element on a list field.
+    ACCEPT = "accept"
+    # "Never this value." Suppresses that value only, so the scraper keeps looking and a
+    # genuinely new answer still reaches review.
+    REJECT = "reject"
+    # "This fact no longer counts." Names a whole row, carries no field and no value, and can
+    # itself be withdrawn: that is undo.
+    WITHDRAW = "withdraw"

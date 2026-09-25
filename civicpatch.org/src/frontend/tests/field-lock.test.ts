@@ -24,7 +24,7 @@ describe("fieldLock", () => {
     expect(fieldLock([], undefined, ["(253) 931-3041"])).toBeNull();
   });
 
-  it("is quiet when the assertion agrees with the source", () => {
+  it("is quiet when the claim agrees with the source", () => {
     // The common case: a review accepts every non-null value, so most locks disclose nothing.
     const lock = fieldLock(accept(), undefined, ["(253) 931-3041"]);
 

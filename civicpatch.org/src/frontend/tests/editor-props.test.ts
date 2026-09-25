@@ -24,7 +24,7 @@ const context = (over = {}) =>
     posts: [],
     roles: [],
     canAssignMembership: false,
-    assertions: {},
+    claims: {},
     overriddenSourceValues: {},
     isExpanded: () => false,
     onToggleExpand: () => {},

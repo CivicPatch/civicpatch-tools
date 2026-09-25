@@ -8,7 +8,7 @@ import { usePagerRef } from "../../hooks/use-pager-ref.js";
 import {
   fetchAdminUser,
   fetchRollbackCandidates,
-  rollbackUserAssertions,
+  rollbackUserClaims,
 } from "../../api.js";
 import {
   type AdminUser,
@@ -86,22 +86,22 @@ function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
     window.setTimeout(() => setToast(null), TOAST_TIMEOUT_MS);
   };
 
-  const toggleOne = (assertionId: string) => {
+  const toggleOne = (claimId: string) => {
     setSelected((prev) => {
       const next = new Set(prev);
-      if (next.has(assertionId)) next.delete(assertionId);
-      else next.add(assertionId);
+      if (next.has(claimId)) next.delete(claimId);
+      else next.add(claimId);
       return next;
     });
   };
 
   const totalPages = Math.max(1, Math.ceil(candidates.length / PER_PAGE));
   const pageCandidates = candidates.slice((page - 1) * PER_PAGE, page * PER_PAGE);
-  // Only an ACTIVE assertion is a real rollback candidate — superseded/withdrawn rows are
+  // Only an ACTIVE claim is a real rollback candidate — superseded/withdrawn rows are
   // history the page shows but never lets you (re-)select.
   const pageActiveIds = pageCandidates
     .filter((c) => c.status === ASSERTION_STATUS_ACTIVE)
-    .map((c) => c.assertion_id);
+    .map((c) => c.claim_id);
 
   // "Select all" is scoped to this page's visible rows, not the whole history — a second
   // page's items are selected by turning to that page, same as checking each box by hand.
@@ -145,7 +145,7 @@ function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
   const handleConfirmed = async () => {
     setSubmitting(true);
     try {
-      const result = await rollbackUserAssertions(target_user_id, Array.from(selected), reason);
+      const result = await rollbackUserClaims(target_user_id, Array.from(selected), reason);
       const withdrawn = result.data.withdrawn as number;
       showToast(`Rolled back ${withdrawn} change${withdrawn === 1 ? "" : "s"} for ${label}`);
       setReason("");
@@ -201,9 +201,9 @@ function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
                         <input
                           type="checkbox"
                           class="candidate-row__checkbox"
-                          .checked=${selected.has(candidate.assertion_id)}
+                          .checked=${selected.has(candidate.claim_id)}
                           ?disabled=${candidate.status !== ASSERTION_STATUS_ACTIVE}
-                          @change=${() => toggleOne(candidate.assertion_id)}
+                          @change=${() => toggleOne(candidate.claim_id)}
                         />
                         <div class="activity-row__head">
                           <span class="activity-row__type"

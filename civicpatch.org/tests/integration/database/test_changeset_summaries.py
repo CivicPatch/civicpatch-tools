@@ -5,7 +5,7 @@ unit-testing a mapper. What is worth locking down is the arithmetic — which ou
 which column, and which rows are counted once versus several times.
 
 Isolation: sentinel state 'zy', its own state code so the rollup's per-state grouping can be
-asserted without another suite's fixtures leaking into the row.
+claimed without another suite's fixtures leaking into the row.
 """
 
 import pytest

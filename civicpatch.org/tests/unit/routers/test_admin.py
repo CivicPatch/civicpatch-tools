@@ -270,7 +270,7 @@ def test_get_user_forbidden_without_admins_role():
 # ── Rollback ─────────────────────────────────────────────────────────────────
 
 _CANDIDATE = RollbackCandidate(
-    assertion_id="assertion-1",
+    claim_id="assertion-1",
     entity_id="person-1",
     entity_label="Ada M. Chen",
     field_path="name",
@@ -283,9 +283,9 @@ _CANDIDATE = RollbackCandidate(
 
 
 @pytest.mark.unit
-def test_list_user_assertions_happy_path():
+def test_list_user_claims_happy_path():
     with patch(
-        "services.rollback.list_user_assertions",
+        "services.rollback.list_user_claims",
         new_callable=AsyncMock,
         return_value=[_CANDIDATE],
     ) as mock_list:
@@ -298,7 +298,7 @@ def test_list_user_assertions_happy_path():
 
 
 @pytest.mark.unit
-def test_list_user_assertions_forbidden_without_admins_role():
+def test_list_user_claims_forbidden_without_admins_role():
     client = _client(NON_ADMIN_IDENTITY)
     response = client.get(f"/api/admin/users/{TARGET_USER_ID}/rollback-candidates")
 
@@ -309,12 +309,12 @@ def test_list_user_assertions_forbidden_without_admins_role():
 def test_rollback_user_happy_path():
     with (
         patch(
-            "services.rollback.list_user_assertions",
+            "services.rollback.list_user_claims",
             new_callable=AsyncMock,
             return_value=[_CANDIDATE],
         ),
         patch(
-            "services.rollback.rollback_assertions",
+            "services.rollback.rollback_claims",
             new_callable=AsyncMock,
             return_value=1,
         ) as mock_rollback,
@@ -322,13 +322,13 @@ def test_rollback_user_happy_path():
         client = _client(ADMIN_WITH_USER_ID)
         response = client.post(
             f"/api/admin/users/{TARGET_USER_ID}/rollback",
-            json={"assertion_ids": [_CANDIDATE.assertion_id]},
+            json={"claim_ids": [_CANDIDATE.claim_id]},
         )
 
     assert response.status_code == 200
     assert response.json() == {"data": {"withdrawn": 1}}
     mock_rollback.assert_awaited_once_with(
-        [_CANDIDATE.assertion_id], ADMIN_WITH_USER_ID.user_id, None
+        [_CANDIDATE.claim_id], ADMIN_WITH_USER_ID.user_id, None
     )
 
 
@@ -336,12 +336,12 @@ def test_rollback_user_happy_path():
 def test_rollback_user_filters_out_ids_not_belonging_to_the_user():
     with (
         patch(
-            "services.rollback.list_user_assertions",
+            "services.rollback.list_user_claims",
             new_callable=AsyncMock,
             return_value=[_CANDIDATE],
         ),
         patch(
-            "services.rollback.rollback_assertions",
+            "services.rollback.rollback_claims",
             new_callable=AsyncMock,
             return_value=1,
         ) as mock_rollback,
@@ -349,12 +349,12 @@ def test_rollback_user_filters_out_ids_not_belonging_to_the_user():
         client = _client(ADMIN_WITH_USER_ID)
         response = client.post(
             f"/api/admin/users/{TARGET_USER_ID}/rollback",
-            json={"assertion_ids": [_CANDIDATE.assertion_id, "not-theirs"]},
+            json={"claim_ids": [_CANDIDATE.claim_id, "not-theirs"]},
         )
 
     assert response.status_code == 200
     mock_rollback.assert_awaited_once_with(
-        [_CANDIDATE.assertion_id], ADMIN_WITH_USER_ID.user_id, None
+        [_CANDIDATE.claim_id], ADMIN_WITH_USER_ID.user_id, None
     )
 
 
@@ -362,20 +362,20 @@ def test_rollback_user_filters_out_ids_not_belonging_to_the_user():
 def test_rollback_user_returns_409_when_nothing_to_roll_back():
     with (
         patch(
-            "services.rollback.list_user_assertions",
+            "services.rollback.list_user_claims",
             new_callable=AsyncMock,
             return_value=[_CANDIDATE],
         ),
         patch(
-            "services.rollback.rollback_assertions",
+            "services.rollback.rollback_claims",
             new_callable=AsyncMock,
-            side_effect=rollback.NothingToRollBack([_CANDIDATE.assertion_id]),
+            side_effect=rollback.NothingToRollBack([_CANDIDATE.claim_id]),
         ),
     ):
         client = _client(ADMIN_WITH_USER_ID)
         response = client.post(
             f"/api/admin/users/{TARGET_USER_ID}/rollback",
-            json={"assertion_ids": [_CANDIDATE.assertion_id]},
+            json={"claim_ids": [_CANDIDATE.claim_id]},
         )
 
     assert response.status_code == 409
@@ -386,7 +386,7 @@ def test_rollback_user_rejects_empty_assertion_ids():
     client = _client(ADMIN_WITH_USER_ID)
     response = client.post(
         f"/api/admin/users/{TARGET_USER_ID}/rollback",
-        json={"assertion_ids": []},
+        json={"claim_ids": []},
     )
 
     assert response.status_code == 422
@@ -395,11 +395,11 @@ def test_rollback_user_rejects_empty_assertion_ids():
 @pytest.mark.unit
 def test_rollback_user_forbidden_without_admins_role():
     rollback_mock = AsyncMock()
-    with patch("services.rollback.rollback_assertions", rollback_mock):
+    with patch("services.rollback.rollback_claims", rollback_mock):
         client = _client(NON_ADMIN_IDENTITY)
         response = client.post(
             f"/api/admin/users/{TARGET_USER_ID}/rollback",
-            json={"assertion_ids": [_CANDIDATE.assertion_id]},
+            json={"claim_ids": [_CANDIDATE.claim_id]},
         )
 
     assert response.status_code == 403

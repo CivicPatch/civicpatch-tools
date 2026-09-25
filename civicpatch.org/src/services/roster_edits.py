@@ -1,16 +1,16 @@
 """A reviewer's edits to a scrape's roster, and making that roster live.
 
-An edit is an assertion: the scrape's own answer stays in `source_records`, and what a human
+An edit is a claim: the scrape's own answer stays in `source_records`, and what a human
 said sits beside it. Nothing here overwrites what was scraped.
 
-Adding somebody is a sighting, not an assertion — a human is a source, and a roster is derived
+Adding somebody is a sighting, not a claim — a human is a source, and a roster is derived
 from sightings.
 
 That sighting is filed under the live roster's changeset, not a future scrape's, so it does NOT
 make the addition survive the next scrape: `_roster` reads one changeset's sightings, and a
 scrape that does not list the person retires them. Accepted — their field values live on as
-assertions, their seat does not. An edit to an *existing* person does survive, because
-`publish_changeset` re-applies `asserted_values` over whatever the scrape says.
+claims, their post does not. An edit to an *existing* person does survive, because
+`publish_changeset` re-applies `claimed_values` over whatever the scrape says.
 """
 
 import logging
@@ -20,12 +20,12 @@ import services.activity as activity_service
 from core.people_edits import (
     PeopleValidationError,
     PersonPatch,
-    assertions_from_edit,
+    claims_from_edit,
     patch_people,
 )
 from core.changeset_lifecycle import REVIEW_POOL_KINDS
 from core.people_roster import reviewer_source_records
-from database import assertions, posts
+from database import claims as claims_db, posts
 from database.changesets import get_changeset_kind, register_people_edit_changeset
 from database.database import get_pool
 from database.people import get_roster
@@ -44,7 +44,7 @@ class MissingRoster(Exception):
 
 
 class AnonymousEdit(Exception):
-    """`assertions.created_by` is NOT NULL: an assertion nobody made is not an assertion."""
+    """`claims.created_by` is NOT NULL: a claim nobody made is not a claim."""
 
 
 class EmptyEdit(Exception):
@@ -128,11 +128,11 @@ async def _record_edits(
     claims = [
         claim
         for person in patched
-        for claim in assertions_from_edit(
+        for claim in claims_from_edit(
             person["id"], base_by_id.get(person["id"], {}), person, changeset_id
         )
     ]
-    await assertions.create_all(claims, user_id)
+    await claims_db.create_all(claims, user_id)
 
 
 async def publish_from_review(

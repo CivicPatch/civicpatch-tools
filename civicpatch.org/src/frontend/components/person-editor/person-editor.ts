@@ -4,9 +4,9 @@ import "../person-image.js";
 import "./person-editor.css";
 import type { DerivedPost, Post, ProposedPost, RoleOption } from "../posts-list/posts-model.js";
 import {
-  assertionSummaryFor,
+  claimSummaryFor,
   fieldLock,
-  type PersonAssertion,
+  type PersonClaim,
 } from "./field-provenance.js";
 import {
   FIELD_SCHEMA,
@@ -54,8 +54,8 @@ export interface PersonEditorProps {
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
   subtitle: string;
-  accepts: Map<string, PersonAssertion[]>;
-  assertions: PersonAssertion[];
+  accepts: Map<string, PersonClaim[]>;
+  claims: PersonClaim[];
   overriddenSourceValues: Record<string, unknown>;
   posts: Post[];
   organizationId: string;
@@ -211,9 +211,9 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
         props.overriddenSourceValues[field.key],
         diffValue(newRecord ?? oldRecord, field),
       ),
-      assertionSummary: assertionSummaryFor(props.assertions, field.key),
+      claimSummary: claimSummaryFor(props.claims, field.key),
       accepts: props.accepts,
-      assertions: props.assertions,
+      claims: props.claims,
       isReadOnly,
       jurisdictionOcdid,
       posts,

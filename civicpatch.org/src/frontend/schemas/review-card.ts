@@ -1,7 +1,7 @@
 // Mirrors `schemas/review_cards.py` ReviewCard and `core/review_summary.py` ReviewSummary.
 
 import type { Issue } from "../components/fields/field-model.js";
-import type { PersonAssertion } from "../components/person-editor/field-provenance.js";
+import type { PersonClaim } from "../components/person-editor/field-provenance.js";
 import type { Post } from "../components/posts-list/posts-model.js";
 
 export interface RosterPresence {
@@ -36,5 +36,5 @@ export interface ReviewCard {
   overridden_source_values: Record<string, Record<string, unknown>>;
   review: ReviewSummary;
   organizations: CardOrganization[];
-  assertions: Record<string, PersonAssertion[]>;
+  claims: Record<string, PersonClaim[]>;
 }

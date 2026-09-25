@@ -108,8 +108,8 @@ async def insert_source_records(
 
 async def get_earliest_source_records_for_people(person_ids: list[str]) -> list[dict]:
     """Each person's sightings from whichever changeset first introduced them — the pristine,
-    pre-assertion base a rollback republish overlays currently-active assertions onto, instead
-    of the live `people` row (which already has every assertion, withdrawn or not, baked in).
+    pre-assertion base a rollback republish overlays currently-active claims onto, instead
+    of the live `people` row (which already has every claim, withdrawn or not, baked in).
     """
     if not person_ids:
         return []

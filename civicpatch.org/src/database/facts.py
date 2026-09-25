@@ -10,22 +10,21 @@ from datetime import datetime
 
 from core.changeset_lifecycle import PARTIAL_KINDS
 from core.people_edits import POSTS_FIELD
-from core.projection.facts import Claim, Facts, PostKey, SourceRecord
+from core.projection.facts import Claim, ClaimKind, Facts, PostKey, SourceRecord
 from database.database import get_pool
-from schemas.assertions import AssertionKind
 from shared.utils.statuses import ChangesetKind
 
 # Only a published changeset's facts derive (R3), plus the one changeset a caller asks to see
 # as though it had published, which is what a proposed roster is. `including` is NULL for the
 # live roster, and `id = NULL` is never true, so that caller pays nothing for the clause.
 #
-# `assertions.changeset_id` is still nullable today — a direct field assert or an edit made
+# `claims.changeset_id` is still nullable today — a direct field assert or an edit made
 # outside review has none — and those claims are live, so they must not be dropped by the
 # join. Step 16 makes the column NOT NULL and this becomes a plain inner join.
 _PUBLISHED_OR_UNATTRIBUTED = """
-    LEFT JOIN changesets ON changesets.id = assertions.changeset_id
+    LEFT JOIN changesets ON changesets.id = claims.changeset_id
     WHERE (
-        (assertions.changeset_id IS NULL AND assertions.created_at <= %(as_of)s)
+        (claims.changeset_id IS NULL AND claims.created_at <= %(as_of)s)
         OR changesets.published_at <= %(as_of)s
         OR changesets.id = %(including)s
     )
@@ -54,16 +53,16 @@ _RECORDS = """
 # translation. A claim naming a post that no longer exists keeps its id and matches none of the
 # fold's posts, which is the same as placing nobody.
 _PERSON_CLAIMS = f"""
-    SELECT assertions.id::text, assertions.changeset_id::text, assertions.created_at,
-           assertions.entity_type, assertions.entity_id::text, assertions.field_path,
-           assertions.kind, assertions.value,
+    SELECT claims.id::text, claims.changeset_id::text, claims.created_at,
+           claims.entity_type, claims.entity_id::text, claims.field_path,
+           claims.kind, claims.value,
            posts.organization_id::text, posts.role_id, posts.division_ocdid
-    FROM assertions
-    LEFT JOIN posts ON assertions.field_path = '{POSTS_FIELD}'
-                   AND posts.id::text = assertions.value #>> '{{}}'
+    FROM claims
+    LEFT JOIN posts ON claims.field_path = '{POSTS_FIELD}'
+                   AND posts.id::text = claims.value #>> '{{}}'
     {_PUBLISHED_OR_UNATTRIBUTED}
-      AND assertions.entity_type = 'person'
-      AND assertions.entity_id::text = ANY(%(person_ids)s)
+      AND claims.entity_type = 'person'
+      AND claims.entity_id::text = ANY(%(person_ids)s)
 """
 
 # By the jurisdiction the claim was made in, not by the membership's id: the id is a hash of
@@ -71,14 +70,14 @@ _PERSON_CLAIMS = f"""
 # claim about somebody else's membership is inert — `changeset_id IS NULL` is the pre-review
 # claims, which name no jurisdiction until step 16.
 _MEMBERSHIP_CLAIMS = f"""
-    SELECT assertions.id::text, assertions.changeset_id::text, assertions.created_at,
-           assertions.entity_type, assertions.entity_id::text, assertions.field_path,
-           assertions.kind, assertions.value, NULL, NULL, NULL
-    FROM assertions
+    SELECT claims.id::text, claims.changeset_id::text, claims.created_at,
+           claims.entity_type, claims.entity_id::text, claims.field_path,
+           claims.kind, claims.value, NULL, NULL, NULL
+    FROM claims
     {_PUBLISHED_OR_UNATTRIBUTED}
-      AND assertions.entity_type = 'membership'
+      AND claims.entity_type = 'membership'
       AND (changesets.jurisdiction_ocdid = %(jurisdiction_ocdid)s
-           OR assertions.changeset_id IS NULL)
+           OR claims.changeset_id IS NULL)
 """
 
 # Every published withdraw that can affect this jurisdiction. Scoping by the changeset's own
@@ -87,14 +86,14 @@ _MEMBERSHIP_CLAIMS = f"""
 # other withdrawal (a cleared label, a taken-back rejection) leaves `changeset_id` NULL and is
 # loaded unconditionally. Never cut by date: a rolled-back edit is gone from every as-of.
 _WITHDRAWS = f"""
-    SELECT assertions.id::text, assertions.changeset_id::text, assertions.created_at,
-           assertions.entity_type, assertions.entity_id::text, assertions.field_path,
-           assertions.kind, assertions.value, NULL, NULL, NULL
-    FROM assertions
-    LEFT JOIN changesets ON changesets.id = assertions.changeset_id
-    WHERE assertions.kind = '{AssertionKind.WITHDRAW.value}'
+    SELECT claims.id::text, claims.changeset_id::text, claims.created_at,
+           claims.entity_type, claims.entity_id::text, claims.field_path,
+           claims.kind, claims.value, NULL, NULL, NULL
+    FROM claims
+    LEFT JOIN changesets ON changesets.id = claims.changeset_id
+    WHERE claims.kind = '{ClaimKind.WITHDRAW.value}'
       AND (
-          assertions.changeset_id IS NULL
+          claims.changeset_id IS NULL
           OR (
               (changesets.published_at IS NOT NULL OR changesets.id = %(including)s)
               AND (changesets.jurisdiction_ocdid = %(jurisdiction_ocdid)s

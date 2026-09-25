@@ -10,7 +10,7 @@ from core.review_summary import ReviewSummary
 from database import changesets as changesets_db
 from database import posts as posts_db
 from schemas.review_cards import ReviewCard, ReviewSource
-from services.assertions import assertions_for_people
+from services.claims import claims_for_people
 from services.review_summary import summary_of
 from services.review_sources import build_sources
 from services.roster import ROSTERS_AT_A_TIME, CardSides, card_fold, sides_of
@@ -41,11 +41,11 @@ async def with_card_data(changeset_ids: list[str]) -> list[ReviewCard]:
         person_id for part in parts for person_id in _person_ids(part.sides.existing)
     ]
     # One read each for the whole page rather than a round trip per card.
-    organizations, assertions = await asyncio.gather(
+    organizations, claims = await asyncio.gather(
         posts_db.list_by_organization_for_jurisdictions(list(set(ocdids.values()))),
-        assertions_for_people(everyone),
+        claims_for_people(everyone),
     )
-    return [_card(part, organizations, assertions) for part in parts]
+    return [_card(part, organizations, claims) for part in parts]
 
 
 async def _parts_of(changeset_id: str, jurisdiction_ocdid: str) -> CardParts:
@@ -63,7 +63,7 @@ async def _parts_of(changeset_id: str, jurisdiction_ocdid: str) -> CardParts:
 def _card(
     part: CardParts,
     organizations: dict[str, list[dict]],
-    assertions: dict[str, list[dict]],
+    claims: dict[str, list[dict]],
 ) -> ReviewCard:
     sources = build_sources(
         part.changeset_id, part.jurisdiction_ocdid, _source_urls(part.sides.proposed)
@@ -77,10 +77,10 @@ def _card(
         overridden_source_values=part.sides.overridden,
         review=part.review,
         organizations=organizations.get(part.jurisdiction_ocdid, []),
-        assertions={
-            person_id: assertions[person_id]
+        claims={
+            person_id: claims[person_id]
             for person_id in _person_ids(part.sides.existing)
-            if person_id in assertions
+            if person_id in claims
         },
     )
 

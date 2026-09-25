@@ -31,7 +31,9 @@ src/
     people_diff.py           ← a reviewer's edits as add/edit/delete change payloads
     post_derivation.py       ← the roster turned into posts and memberships
     post_grouping.py, post_issues.py
-    membership_proposal.py   ← what a scrape would change about who holds what
+    projection/              ← the fold: facts (records + claims) → the roster, pure and frozen
+    display_rows.py          ← the fold's roster as the rows a card renders
+    roster_changes.py        ← what changes between two rosters, per person and office
     membership_label.py      ← what to call a post when nobody has said
     images.py                ← `local://` refs → urls (ingest); artifacts → cdn key (publish)
     jurisdiction_patch.py, jurisdiction_search.py, coverage.py

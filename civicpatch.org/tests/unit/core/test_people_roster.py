@@ -104,7 +104,7 @@ def test_each_roster_entry_keeps_its_labels_paired_with_page_and_organization():
 
 @pytest.mark.unit
 def test_labels_are_carried_verbatim_and_office_is_not_rendered():
-    """Was `test_the_rendered_office_name_splits_back_into_its_labels`, which asserted the
+    """Was `test_the_rendered_office_name_splits_back_into_its_labels`, which claimed the
     join could be undone; then that the list sat beside it. Now `office` is not rendered at
     all — the list is the only answer, which is what removing the join means."""
     kept = _reconcile(
@@ -457,7 +457,7 @@ def test_nothing_is_recorded_without_somewhere_it_came_from():
 
 @pytest.mark.unit
 def test_only_the_identifying_columns_are_evidence():
-    """Everything else the reviewer typed is a claim, recorded by `assertions_from_edit`. Copying
+    """Everything else the reviewer typed is a claim, recorded by `claims_from_edit`. Copying
     it here too would make the sighting a second, competing answer."""
     record = reviewer_source_records(
         {

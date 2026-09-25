@@ -43,7 +43,7 @@ import { useJurisdictionPosts } from "../../hooks/use-jurisdiction-posts.js";
 import { useOrganizations } from "../../hooks/use-organizations.js";
 import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
 import { officeEditsIn } from "../../components/person-editor/office-edits.js";
-import type { PersonAssertion } from "../../components/person-editor/field-provenance.js";
+import type { PersonClaim } from "../../components/person-editor/field-provenance.js";
 import {
   jurisdictionOcdidToPath,
   jurisdictionOcdidToState,
@@ -66,7 +66,7 @@ type CurrentEntry = {
   };
   mode: ReviewModeValue;
   pr_people: { existing: any[]; proposed: any[] };
-  assertions?: Record<string, PersonAssertion[]>;
+  claims?: Record<string, PersonClaim[]>;
   overriddenSourceValues?: Record<string, Record<string, unknown>>;
   review_data: any;
   source_content_urls: any[];
@@ -105,7 +105,7 @@ function ReviewSession(host: ReviewSessionHost) {
     pr,
     mode,
     pr_people,
-    assertions,
+    claims,
     overriddenSourceValues,
     review_data,
     source_content_urls,
@@ -271,7 +271,7 @@ function ReviewSession(host: ReviewSessionHost) {
     roles,
     canAssignMembership,
     rosterMemberships: memberships,
-    assertions: assertions ?? {},
+    claims: claims ?? {},
     overriddenSourceValues: overriddenSourceValues ?? {},
     onPersonSave: handlePersonSave,
     onRemovePerson: handleRemovePerson,
@@ -398,7 +398,7 @@ function ReviewSession(host: ReviewSessionHost) {
         .editorFor=${editorFor}
         .posts=${posts}
         .roles=${roles}
-        .assertions=${assertions ?? {}}
+        .claims=${claims ?? {}}
         .overriddenSourceValues=${overriddenSourceValues ?? {}}
         .organizations=${organizations}
       ></review-overview>

@@ -41,7 +41,7 @@ export const isContextField = (field: FieldSpec) => field.context === true;
 // to, and the one field whose two sides are not both read off the record.
 export const POST_FIELD = "post_id";
 
-// Mirrors `LABEL_FIELD` in database/memberships.py — the assertion `field_path` a membership
+// Mirrors `LABEL_FIELD` in database/memberships.py — the claim `field_path` a membership
 // label is filed under. Not a `FIELD_SCHEMA` entry: the label has no post-derived "was" side
 // and is rendered inline inside the Office control, not as its own row.
 export const LABEL_FIELD = "label";

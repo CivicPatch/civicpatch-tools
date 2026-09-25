@@ -32,7 +32,7 @@ async def _wipe():
         await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
-        # Assertion badges resolve their subject against `people`, so those tests seed one.
+        # Claim badges resolve their subject against `people`, so those tests seed one.
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_OCDID,))
         # This row only — `state = 'zz'` is shared with every other sentinel suite, and
         # deleting theirs takes their organizations' foreign keys down with it.
@@ -284,7 +284,7 @@ async def test_a_dismissal_nobody_asked_for_is_credited_to_the_system():
     """A supersede sweep is an actor. Before 160 this left `resolved_by_user_id` null, which
     read the same as a person whose display name is unset.
 
-    This replaced `test_nobody_is_named_when_nobody_resolved_it`, which asserted the opposite —
+    This replaced `test_nobody_is_named_when_nobody_resolved_it`, which claimed the opposite —
     that such a dismissal reports no resolver. That shape is unreachable: `dismiss_changeset`
     COALESCEs to the system user, and 0 of 381 resolved changesets on dev have a null resolver.
     """
@@ -302,7 +302,7 @@ async def test_a_dismissal_nobody_asked_for_is_credited_to_the_system():
 async def test_the_first_dismissal_reason_stands():
     """A second close cannot rewrite why the first one happened.
 
-    This inverts `test_the_latest_close_wins`, which asserted that a later `dismiss_review` log
+    This inverts `test_the_latest_close_wins`, which claimed that a later `dismiss_review` log
     overrode the earlier reason. It could, while the log was the source. Now the reason sits
     beside `dismissed_at` and both are COALESCEd on write: a dismissal is one event, so it
     cannot have the time of the first and the reason of the second.
@@ -358,7 +358,7 @@ async def test_a_changeset_with_nothing_logged_carries_an_empty_list():
     assert await _changes_for(changeset_id) == []
 
 
-# ── Assertion subjects: the one badge whose name is not in its payload ──
+# ── Claim subjects: the one badge whose name is not in its payload ──
 
 
 async def _seed_person(name: str) -> str:

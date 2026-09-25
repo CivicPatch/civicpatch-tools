@@ -14,7 +14,7 @@ rejected that the page keeps printing, a label that maps to no role, and a perso
 then a member, then mayor again.
 
 `memberships.label` reads NULL throughout, and that is the behaviour: it holds the name a human
-asserted (`set_membership_label`), never the source's note, which lives in `sources`.
+claimed (`set_membership_label`), never the source's note, which lives in `sources`.
 
 Each case ends with the projection diff: the fold, run over the same facts, must derive the same
 people and open memberships that today's path wrote. Everyone it compares has been scraped at
@@ -35,14 +35,14 @@ from shared.utils.taxonomy import UNMATCHED_ROLE_ID, build_taxonomy
 
 from core.projection.diff import RosterDiff, roster_diff
 from core.projection.roster import derive_roster
-from database import assertions, divisions, posts
+from database import claims, divisions, posts
 from database.database import get_pool
 from database.facts import load_facts
 from database.projection import stored_roster
 from database.publications import publish_changeset
 from database.roles import get_roles
 from database.source_records import insert_source_records
-from schemas.assertions import Assertion, AssertionKind, EntityType, Source
+from schemas.claims import Claim, ClaimKind, EntityType, Source
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zc/place:charville/government"
@@ -72,7 +72,7 @@ async def _wipe():
         await cur.execute("DELETE FROM people WHERE jurisdiction_ocdid = %s", (_OCDID,))
         await cur.execute("DELETE FROM jurisdictions WHERE state = 'zc'")
         await cur.execute(
-            "DELETE FROM assertions WHERE created_by IN (SELECT id FROM users WHERE email = %s)",
+            "DELETE FROM claims WHERE created_by IN (SELECT id FROM users WHERE email = %s)",
             (_USER,),
         )
         await cur.execute("DELETE FROM users WHERE email = %s", (_USER,))
@@ -516,7 +516,7 @@ async def test_a_rescrape_that_changes_the_pages_details():
 @pytest.mark.integration
 async def test_a_rejected_value_stays_gone_when_the_page_keeps_printing_it():
     """A human rejects Ana's phone; the next scrape says it again. Publish drops it through
-    `with_asserted_values`, the fold through `stands`, and the projection diff is empty."""
+    `with_claimed_values`, the fold through `stands`, and the projection diff is empty."""
     ids = await _seed()
     user_id = await _reject_user()
     first = await _changeset(_T0)
@@ -525,12 +525,12 @@ async def test_a_rejected_value_stays_gone_when_the_page_keeps_printing_it():
     )
     await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
     await publish_changeset(first, _OCDID)
-    await assertions.create(
-        Assertion(
+    await claims.create(
+        Claim(
             entity_type=EntityType.PERSON,
             entity_id=ids["ana"],
             field_path="phones",
-            kind=AssertionKind.REJECT,
+            kind=ClaimKind.REJECT,
             value="(206) 555-0001",
             sources=[Source(note="test")],
         ),
@@ -612,12 +612,12 @@ async def test_a_withdrawn_claim_no_longer_counts():
     first = await _changeset(_T0)
     await _record_evidence(first, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
     await _record_evidence(first, ids["mayors_office"], ids["ben"], "Ben Ortiz", "Mayor")
-    await assertions.create(
-        Assertion(
+    await claims.create(
+        Claim(
             entity_type=EntityType.PERSON,
             entity_id=ids["ana"],
             field_path="name",
-            kind=AssertionKind.ACCEPT,
+            kind=ClaimKind.ACCEPT,
             value="Ana M. Reyes",
             sources=[Source(note="test")],
         ),
@@ -629,8 +629,8 @@ async def test_a_withdrawn_claim_no_longer_counts():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        withdrawn = await assertions.withdraw(
-            cur, EntityType.PERSON, ids["ana"], "name", AssertionKind.ACCEPT, user_id, "typo"
+        withdrawn = await claims.withdraw(
+            cur, EntityType.PERSON, ids["ana"], "name", ClaimKind.ACCEPT, user_id, "typo"
         )
         await conn.commit()
     assert withdrawn == 1

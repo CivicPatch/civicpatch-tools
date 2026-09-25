@@ -59,8 +59,8 @@ def _latest(memberships: Sequence[Membership]) -> Membership | None:
 PostLabels = Mapping[tuple[str, str, str], str]
 
 
-def _post_label(post: PostKey, role_label: str, asserted: PostLabels) -> str:
-    named = asserted.get((post.organization_id, post.role_id, post.division_ocdid))
+def _post_label(post: PostKey, role_label: str, claimed: PostLabels) -> str:
+    named = claimed.get((post.organization_id, post.role_id, post.division_ocdid))
     return post_label(role_label, post.division_ocdid, named)
 
 
@@ -69,7 +69,7 @@ def _membership_row(
     jurisdiction_ocdid: str,
     role_labels: dict[str, str],
     role_priorities: dict[str, int],
-    asserted: PostLabels,
+    claimed: PostLabels,
 ) -> dict:
     role_label = role_labels.get(membership.post.role_id, membership.post.role_id)
     return {
@@ -91,7 +91,7 @@ def _membership_row(
         "end_date": membership.end_date,
         "first_seen_at": membership.first_seen_at,
         "last_seen_at": membership.last_seen_at,
-        "post_label": _post_label(membership.post, role_label, asserted),
+        "post_label": _post_label(membership.post, role_label, claimed),
     }
 
 
@@ -100,7 +100,7 @@ def _person_row(
     jurisdiction_ocdid: str,
     role_labels: dict[str, str],
     role_priorities: dict[str, int],
-    asserted: PostLabels,
+    claimed: PostLabels,
 ) -> dict:
     memberships = list(person.memberships)
     latest = _latest(memberships)
@@ -133,7 +133,7 @@ def _person_row(
         "division_ocdid": latest.post.division_ocdid if latest else None,
         "memberships": [
             _membership_row(
-                membership, jurisdiction_ocdid, role_labels, role_priorities, asserted
+                membership, jurisdiction_ocdid, role_labels, role_priorities, claimed
             )
             for membership in ordered_memberships
         ],
@@ -144,7 +144,7 @@ def display_rows(
     roster: Roster,
     jurisdiction_ocdid: str,
     taxonomy: Taxonomy,
-    asserted_post_labels: PostLabels = MappingProxyType({}),
+    claimed_post_labels: PostLabels = MappingProxyType({}),
 ) -> list[dict]:
     role_labels = {role_id: label for label, role_id in taxonomy.role_ids.items()}
     return [
@@ -153,7 +153,7 @@ def display_rows(
             jurisdiction_ocdid,
             role_labels,
             taxonomy.role_priority,
-            asserted_post_labels,
+            claimed_post_labels,
         )
         for person in sorted(roster.people, key=lambda person: (person.name or "", person.id))
     ]

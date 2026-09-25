@@ -1,10 +1,10 @@
 from collections.abc import Iterable
 
 from pydantic import BaseModel, ValidationError
-from schemas.assertions import (
+from schemas.claims import (
     DefaultNote,
-    Assertion,
-    AssertionKind,
+    Claim,
+    ClaimKind,
     EntityType,
     Source,
 )
@@ -44,7 +44,7 @@ LIST_FIELDS = frozenset({"other_names", "phones", "emails", "urls", "source_urls
 # patch cannot set it, because a scrape stays free to move or end a membership.
 POSTS_FIELD = "posts"
 # Derived from the sightings now, so editing it states nothing about the world.
-NOT_ASSERTABLE = frozenset({"source_urls"})
+NOT_CLAIMABLE = frozenset({"source_urls"})
 
 # A blank date means unknown/still-serving, not wrong — suppress the reject only.
 NOT_REJECTABLE = frozenset({"start_date", "end_date"})
@@ -55,25 +55,25 @@ def _values_of(value: object) -> list:
     return list(value) if isinstance(value, (list, tuple, set)) else []
 
 
-def source_values_overridden(person: dict, asserted: dict) -> dict:
-    """What the source said, for fields an assertion overrode — only where they differ."""
-    published = with_asserted_values(person, asserted)
+def source_values_overridden(person: dict, claimed: dict) -> dict:
+    """What the source said, for fields a claim overrode — only where they differ."""
+    published = with_claimed_values(person, claimed)
     return {
         field: person.get(field)
-        for field in asserted
+        for field in claimed
         if field in EDITABLE_FIELDS and published.get(field) != person.get(field)
     }
 
 
-def with_asserted_values(person: dict, asserted: dict) -> dict:
+def with_claimed_values(person: dict, claimed: dict) -> dict:
     """`published = (scraped ∪ accepted) − rejected`, per field. A scalar accept replaces
     it; a reject empties it."""
     published = dict(person)
-    for field, by_kind in asserted.items():
+    for field, by_kind in claimed.items():
         if field not in EDITABLE_FIELDS:
             continue
-        accepted = by_kind.get(AssertionKind.ACCEPT) or []
-        rejected = by_kind.get(AssertionKind.REJECT) or []
+        accepted = by_kind.get(ClaimKind.ACCEPT) or []
+        rejected = by_kind.get(ClaimKind.REJECT) or []
 
         if field in LIST_FIELDS:
             kept = [
@@ -186,12 +186,12 @@ def patch_people(base: list[dict], edits: list[PersonPatch]) -> list[dict]:
     return [order_person_fields(person) for person in patched]
 
 
-def assertions_from_posts(
+def claims_from_posts(
     person_id: str,
     held: Iterable[str],
     wanted: Iterable[str],
     changeset_id: str | None = None,
-) -> list[Assertion]:
+) -> list[Claim]:
     """The posts a person should hold, as claims: a new id accepts, a dropped one rejects.
 
     `wanted` is the whole set, not a delta, so the caller never has to say which way a move
@@ -200,8 +200,8 @@ def assertions_from_posts(
     """
     held, wanted = set(held), set(wanted)
 
-    def claim(post_id: str, kind: AssertionKind) -> Assertion:
-        return Assertion(
+    def claim(post_id: str, kind: ClaimKind) -> Claim:
+        return Claim(
             entity_type=EntityType.PERSON,
             entity_id=person_id,
             field_path=POSTS_FIELD,
@@ -212,15 +212,15 @@ def assertions_from_posts(
         )
 
     return [
-        *(claim(post_id, AssertionKind.ACCEPT) for post_id in sorted(wanted - held)),
-        *(claim(post_id, AssertionKind.REJECT) for post_id in sorted(held - wanted)),
+        *(claim(post_id, ClaimKind.ACCEPT) for post_id in sorted(wanted - held)),
+        *(claim(post_id, ClaimKind.REJECT) for post_id in sorted(held - wanted)),
     ]
 
 
-def assertions_from_edit(
+def claims_from_edit(
     person_id: str, scraped: dict, edited: dict, changeset_id: str | None = None
-) -> list[Assertion]:
-    """A reviewer's save as assertions, diffed against the scrape so repeat saves stay
+) -> list[Claim]:
+    """A reviewer's save as claims, diffed against the scrape so repeat saves stay
     idempotent."""
     urls = [
         url
@@ -229,8 +229,8 @@ def assertions_from_edit(
     ]
     sources = [Source(url=urls[0])] if urls else [Source(note=DefaultNote.EDITED)]
 
-    def assertion(field: str, kind: AssertionKind, value: object) -> Assertion:
-        return Assertion(
+    def claim_for(field: str, kind: ClaimKind, value: object) -> Claim:
+        return Claim(
             entity_type=EntityType.PERSON,
             entity_id=person_id,
             field_path=field,
@@ -240,9 +240,9 @@ def assertions_from_edit(
             changeset_id=changeset_id,
         )
 
-    claims: list[Assertion] = []
+    claims: list[Claim] = []
     for field in EDITABLE_FIELDS:
-        if field in NOT_ASSERTABLE:
+        if field in NOT_CLAIMABLE:
             continue
         was, now = scraped.get(field), edited.get(field)
         rejectable = field not in NOT_REJECTABLE
@@ -250,15 +250,15 @@ def assertions_from_edit(
         if field in LIST_FIELDS:
             was, now = set(_values_of(was)), set(_values_of(now))
             claims.extend(
-                assertion(field, AssertionKind.ACCEPT, v) for v in sorted(now - was)
+                claim_for(field, ClaimKind.ACCEPT, v) for v in sorted(now - was)
             )
             if rejectable:
                 claims.extend(
-                    assertion(field, AssertionKind.REJECT, v) for v in sorted(was - now)
+                    claim_for(field, ClaimKind.REJECT, v) for v in sorted(was - now)
                 )
         elif now not in (None, "") and now != was:
-            claims.append(assertion(field, AssertionKind.ACCEPT, now))
+            claims.append(claim_for(field, ClaimKind.ACCEPT, now))
         elif was and now in (None, "") and rejectable:
-            claims.append(assertion(field, AssertionKind.REJECT, was))
+            claims.append(claim_for(field, ClaimKind.REJECT, was))
 
     return claims

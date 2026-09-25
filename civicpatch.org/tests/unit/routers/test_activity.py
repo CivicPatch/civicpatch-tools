@@ -151,7 +151,7 @@ def test_pull_request_url_null_when_no_pr(client):
 def test_jurisdiction_path_is_the_ocdid(client):
     """A jurisdiction page's URL is its ocdid.
 
-    This asserted `jurisdiction_ocdid_to_folder(ocdid)`, which was true while the URL was the
+    This claimed `jurisdiction_ocdid_to_folder(ocdid)`, which was true while the URL was the
     `{state}/local/{place}` folder form. That encoding is now only the open-data repo's
     directory layout — deriving a URL from it meant two encoders, one Python and one
     JavaScript, that had to agree.

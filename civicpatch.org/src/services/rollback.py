@@ -1,17 +1,17 @@
-"""Rolling back a user's hand-made assertions: withdraw them under a freshly minted rollback
+"""Rolling back a user's hand-made claims: withdraw them under a freshly minted rollback
 changeset per jurisdiction touched, then republish so the withdrawal is actually visible.
 
 Scoped to `EntityType.PERSON` only (`POST`/`MEMBERSHIP` need a recompute step that doesn't
 exist yet, see `.scratch/TODO.md`) and to field values, not additions — a hand-added person's
-sighting re-seats them via their own label regardless of withdrawn assertions, so undoing an
+sighting re-seats them via their own label regardless of withdrawn claims, so undoing an
 addition needs the sighting invalidated, which nothing here does.
 """
 
-from core.assertion_lifecycle import state_of
-from database import assertions, changesets as changesets_db
+from core.claim_lifecycle import state_of
+from database import claims, changesets as changesets_db
 from database.database import get_pool
 from database.people import get_people_by_ids
-from schemas.assertions import EntityType
+from schemas.claims import EntityType
 from schemas.rollback import RollbackCandidate
 from services.publish import publish_roster
 from shared.utils.id_utils import make_id
@@ -27,18 +27,18 @@ def _entity_label(entity_id: str, people: dict) -> str:
     return person.name if person else entity_id
 
 
-async def list_user_assertions(created_by: str) -> list[RollbackCandidate]:
+async def list_user_claims(created_by: str) -> list[RollbackCandidate]:
     """Every `PERSON` claim this user ever made, anywhere — active or not, each tagged with its
-    `AssertionState` so the UI can tell a real rollback candidate (ACTIVE) from history it can
+    `ClaimState` so the UI can tell a real rollback candidate (ACTIVE) from history it can
     only show (SUPERSEDED/WITHDRAWN). Empty means nothing to show, not an error —
-    `rollback_assertions` is what raises once a selection is acted on."""
+    `rollback_claims` is what raises once a selection is acted on."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await assertions.get_assertions_by_creator(cur, created_by, EntityType.PERSON)
+        rows = await claims.get_claims_by_creator(cur, created_by, EntityType.PERSON)
     people = await get_people_by_ids(list({row["entity_id"] for row in rows}))
     return [
         RollbackCandidate(
-            assertion_id=row["id"],
+            claim_id=row["id"],
             entity_id=row["entity_id"],
             entity_label=_entity_label(row["entity_id"], people),
             field_path=row["field_path"],
@@ -53,9 +53,9 @@ async def list_user_assertions(created_by: str) -> list[RollbackCandidate]:
 
 
 async def _rollback_in_jurisdiction(
-    assertion_ids: list[str], jurisdiction_ocdid: str, user_id: str, reason: str | None
+    claim_ids: list[str], jurisdiction_ocdid: str, user_id: str, reason: str | None
 ) -> int:
-    """Withdraw exactly these assertions (one jurisdiction — a rollback changeset belongs to
+    """Withdraw exactly these claims (one jurisdiction — a rollback changeset belongs to
     exactly one), then republish. Raises `NothingToRollBack` before `commit()` if none are
     still ACTIVE, so the minted changeset is never left published with nothing behind it."""
     pool = await get_pool()
@@ -64,11 +64,11 @@ async def _rollback_in_jurisdiction(
         await changesets_db.register_rollback_changeset(
             cur, rollback_id, jurisdiction_ocdid, user_id
         )
-        withdrawn = await assertions.withdraw_assertions(
-            cur, assertion_ids, user_id, rollback_id, reason
+        withdrawn = await claims.withdraw_claims(
+            cur, claim_ids, user_id, rollback_id, reason
         )
         if not withdrawn:
-            raise NothingToRollBack(assertion_ids)
+            raise NothingToRollBack(claim_ids)
         await conn.commit()
 
     # Publishing the rollback changeset is what makes the withdrawal visible: the fold sees
@@ -77,18 +77,18 @@ async def _rollback_in_jurisdiction(
     return withdrawn
 
 
-async def rollback_assertions(
-    assertion_ids: list[str], user_id: str, reason: str | None = None
+async def rollback_claims(
+    claim_ids: list[str], user_id: str, reason: str | None = None
 ) -> int:
-    """Withdraw exactly these assertions, then republish — the one executor for both a bulk
+    """Withdraw exactly these claims, then republish — the one executor for both a bulk
     rollback and a hand-picked selection. Groups ids by jurisdiction internally since a rollback
     changeset belongs to exactly one; raises `NothingToRollBack` only if nothing in the whole
     selection was still active."""
-    if not assertion_ids:
-        raise NothingToRollBack(assertion_ids)
+    if not claim_ids:
+        raise NothingToRollBack(claim_ids)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        by_jurisdiction = await assertions.get_jurisdictions_for_assertions(cur, assertion_ids)
+        by_jurisdiction = await claims.get_jurisdictions_for_claims(cur, claim_ids)
 
     total = 0
     for jurisdiction_ocdid, ids in by_jurisdiction.items():
@@ -97,5 +97,5 @@ async def rollback_assertions(
         except NothingToRollBack:
             continue
     if not total:
-        raise NothingToRollBack(assertion_ids)
+        raise NothingToRollBack(claim_ids)
     return total

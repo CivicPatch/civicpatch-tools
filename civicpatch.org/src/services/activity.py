@@ -6,7 +6,7 @@ from core.people_diff import diff_people
 from database import posts
 from database.activity import create_activity_row, create_activity_rows
 from database.database import get_pool
-from schemas.assertions import EntityType
+from schemas.claims import EntityType
 from schemas.activity import Change, PersonChange
 from shared.schemas import POST_FIELD
 from shared.utils.statuses import ActivityType

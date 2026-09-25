@@ -43,7 +43,7 @@ async def _taxonomy() -> Taxonomy:
 
 # Every list whose order carries no meaning. Sorted at this boundary so the same values always
 # render the same way: `core.people_edits` builds these as `kept + accepted` — stored array order
-# then assertion order — so accepting a value a reviewer already had could reorder the list and
+# then claim order — so accepting a value a reviewer already had could reorder the list and
 # diff a file that did not change.
 _UNORDERED_LISTS = ("other_names", "phones", "emails", "urls", "source_urls")
 

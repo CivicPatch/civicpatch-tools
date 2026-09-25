@@ -142,7 +142,7 @@ def labelled(person: dict) -> dict:
 # exactly this, and one that could drift from it. Measured before removing: `inactive` matched
 # "no open membership" for 48 of 48, and `active` for 20,644 of 20,664.
 #
-# The NOT EXISTS (189): a retracted membership (memberships.retract — a reject assertion,
+# The NOT EXISTS (189): a retracted membership (memberships.retract — a reject claim,
 # entity_type='membership') is not closed and its row is not deleted, so `closed_at IS NULL`
 # alone would still count it. Alias-free throughout, per CLAUDE.md, so any caller that already
 # does `FROM people`/`FROM memberships` unaliased can splice this in unchanged.

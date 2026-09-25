@@ -3,14 +3,14 @@ from core.post_derivation import DerivedPost
 from shared.schemas import Post
 from core.post_grouping import group_by_organization
 from core.projection.facts import PostKey
-from database import assertions, divisions, organizations
+from database import claims, divisions, organizations
 from database.activity import record_change
 from database.changesets import live_roster_changeset
 from database.database import get_pool
-from schemas.assertions import (
+from schemas.claims import (
     DefaultNote,
-    Assertion,
-    AssertionKind,
+    Claim,
+    ClaimKind,
     EntityType,
     Source,
 )
@@ -36,7 +36,7 @@ _HUMAN_FIELDS = ("meta_headcount", "meta_is_tracked")
 
 # Not a column — 148 dropped `posts.label` in favor of composing it from role and division on
 # read. A human can still override that guess ("Position 8" instead of the bare role), the same
-# way `memberships.label` overrides its own derivation: as an assertion, read back here.
+# way `memberships.label` overrides its own derivation: as a claim, read back here.
 POST_LABEL_FIELD = "label"
 
 
@@ -48,25 +48,25 @@ def _with_label(post: dict, asserted_label: str | None = None) -> dict:
     }
 
 
-async def asserted_labels(cur, post_ids: list[str]) -> dict[str, str]:
+async def claimed_labels(cur, post_ids: list[str]) -> dict[str, str]:
     """The name a human gave each post, where one did."""
-    asserted = await assertions.asserted_values(cur, EntityType.POST, post_ids)
+    claimed = await claims.claimed_values(cur, EntityType.POST, post_ids)
     return {
         post_id: accepted[0]
-        for post_id, by_field in asserted.items()
-        for accepted in [by_field.get(POST_LABEL_FIELD, {}).get(AssertionKind.ACCEPT) or []]
+        for post_id, by_field in claimed.items()
+        for accepted in [by_field.get(POST_LABEL_FIELD, {}).get(ClaimKind.ACCEPT) or []]
         if accepted
     }
 
 
-async def asserted_labels_by_key(
+async def claimed_labels_by_key(
     cur, jurisdiction_ocdid: str
 ) -> dict[tuple[str, str, str], str]:
     """The name a human gave each post in this jurisdiction, keyed by the post's identity.
 
     By key rather than by id because the fold names a post `uuid5` over that key while the
     stored row's id is random, so the two sides cannot be joined on an id. Through
-    `asserted_labels` rather than its own join: clearing a name writes a withdraw, and that
+    `claimed_labels` rather than its own join: clearing a name writes a withdraw, and that
     is the function that knows it.
     """
     await cur.execute(
@@ -79,7 +79,7 @@ async def asserted_labels_by_key(
     rows = await cur.fetchall()
     if not rows:
         return {}
-    labels = await asserted_labels(cur, [row[0] for row in rows])
+    labels = await claimed_labels(cur, [row[0] for row in rows])
     return {
         (organization_id, role_id, division_ocdid): labels[post_id]
         for post_id, organization_id, role_id, division_ocdid in rows
@@ -97,17 +97,17 @@ async def set_post_label(
     """Name this post, or clear it back to the derived guess. No column to write — this is
     the whole effect, unlike `update_human_fields`'s pair."""
     if label is None:
-        await assertions.withdraw(
-            cur, EntityType.POST, post_id, POST_LABEL_FIELD, AssertionKind.ACCEPT, user_id
+        await claims.withdraw(
+            cur, EntityType.POST, post_id, POST_LABEL_FIELD, ClaimKind.ACCEPT, user_id
         )
         return
-    await assertions.upsert(
+    await claims.upsert(
         cur,
-        Assertion(
+        Claim(
             entity_type=EntityType.POST,
             entity_id=post_id,
             field_path=POST_LABEL_FIELD,
-            kind=AssertionKind.ACCEPT,
+            kind=ClaimKind.ACCEPT,
             value=label,
             sources=[Source(note=DefaultNote.LABEL_SET)],
             changeset_id=changeset_id,
@@ -141,14 +141,14 @@ async def _accept_fields(
     """
     if not user_id:
         return
-    await assertions.upsert_all(
+    await claims.upsert_all(
         cur,
         [
-            Assertion(
+            Claim(
                 entity_type=EntityType.POST,
                 entity_id=post_id,
                 field_path=field,
-                kind=AssertionKind.ACCEPT,
+                kind=ClaimKind.ACCEPT,
                 value=value,
                 sources=[Source(note=DefaultNote.EDITED)],
                 changeset_id=changeset_id,
@@ -265,11 +265,11 @@ async def delete_if_unheld(cur, post_id: str) -> bool:
     anyway; this makes it a 409 rather than a 500.
 
     Nothing else refuses: whoever vouched for a post and now wants it gone is the same person.
-    Its assertions go with it, since `assertions` has no foreign key to orphan them by.
+    Its claims go with it, since `claims` has no foreign key to orphan them by.
     """
     await cur.execute(
         """
-        DELETE FROM assertions
+        DELETE FROM claims
         WHERE entity_type = 'post' AND entity_id::text = %s
           AND NOT EXISTS (SELECT 1 FROM memberships m WHERE m.post_id::text = %s)
         """,
@@ -323,7 +323,7 @@ async def get_many(cur, post_ids: list[str]) -> dict[str, Post]:
     )
     columns = [column.name for column in cur.description or []]
     rows = [dict(zip(columns, row)) for row in await cur.fetchall()]
-    labels = await asserted_labels(cur, [row["id"] for row in rows])
+    labels = await claimed_labels(cur, [row["id"] for row in rows])
     found = [Post(**_with_label(row, labels.get(row["id"]))) for row in rows]
     return {post.id: post for post in found}
 
@@ -334,14 +334,8 @@ async def get(cur, post_id: str) -> Post | None:
     return (await get_many(cur, [post_id])).get(post_id)
 
 
-# Members mean a publish accepted it; an assertion means a human did. The second reaches posts
-# no publish can — a vacant seat is real, and a superseded request can never be published.
-#
-# Not as-of filtered: winding the clock back does not un-vouch a post. Unaliased, so a caller
-# cannot be required to spell `posts` any particular way.
-# Nobody holds a seat here yet. Not a fact about a post — the reporting rule beside
-# `POST_IS_VERIFIED`, since every seat is new on a first scrape.
-# Unaliased `posts`: spliced into several queries, per CLAUDE.md.
+# Nobody holds a post here yet, so every one of them is new: a reporting rule, not a fact about
+# a post. Unaliased `posts`, spliced into several queries, per CLAUDE.md.
 JURISDICTIONS_FIRST_SCRAPE = """NOT EXISTS (
     SELECT 1 FROM memberships
     JOIN posts held ON held.id = memberships.post_id
@@ -349,11 +343,19 @@ JURISDICTIONS_FIRST_SCRAPE = """NOT EXISTS (
 )"""
 
 
+# Members mean a publish accepted this post; a claim on `_HUMAN_FIELDS` means a human did, which
+# reaches posts no publish can — a vacant post is real, and a superseded request can never be
+# published. Naming a post is not vouching for it, so a `label` claim does not count.
+#
+# Not as-of filtered: winding the clock back does not un-vouch a post. The field list is
+# `_HUMAN_FIELDS`, spelled out because a LiteralString cannot be joined, and pinned to it by
+# `test_the_verified_arm_names_the_human_fields`.
 POST_IS_VERIFIED = """(
     EXISTS (SELECT 1 FROM memberships WHERE memberships.post_id = posts.id)
     OR EXISTS (
-        SELECT 1 FROM assertions
-        WHERE assertions.entity_type = 'post' AND assertions.entity_id = posts.id
+        SELECT 1 FROM claims
+        WHERE claims.entity_type = 'post' AND claims.entity_id = posts.id
+          AND claims.field_path IN ('meta_headcount', 'meta_is_tracked')
     )
 )"""
 
@@ -408,7 +410,7 @@ async def list_for_jurisdictions(cur, jurisdiction_ocdids: list[str]) -> dict[st
     )
     columns = [column.name for column in cur.description or []]
     rows = [dict(zip(columns, row)) for row in await cur.fetchall()]
-    labels = await asserted_labels(cur, [row["id"] for row in rows])
+    labels = await claimed_labels(cur, [row["id"] for row in rows])
     by_jurisdiction: dict[str, list[dict]] = {}
     for row in rows:
         by_jurisdiction.setdefault(row["jurisdiction_ocdid"], []).append(
@@ -451,7 +453,7 @@ async def list_page_for_state(
         if not rows:
             return 0, []
         dict_rows = [{k: v for k, v in zip(columns, row) if k != "total"} for row in rows]
-        labels = await asserted_labels(cur, [row["id"] for row in dict_rows])
+        labels = await claimed_labels(cur, [row["id"] for row in dict_rows])
     total = rows[0][0]
     return total, [_with_label(row, labels.get(row["id"])) for row in dict_rows]
 
@@ -485,7 +487,7 @@ async def unverified_by_jurisdiction(
     """Posts nobody has vouched for, grouped by jurisdiction.
 
     A scrape mints a post at ingest; a membership only lands at publish. So an unverified post
-    is an office some scrape asserted exists and no human has answered for — and it stays that
+    is an office some scrape claimed exists and no human has answered for — and it stays that
     way after the scrape that minted it is superseded, which is why it hangs off the
     jurisdiction rather than off a request. (Keying it on "created by *this* request" would
     lose exactly that: a seat minted by a superseded scrape would go unmentioned forever.)
@@ -596,7 +598,7 @@ async def create(
     organization's existing bodies, never named separately by the caller. The division is
     found-or-created on the way, since it exists because a post needs it, never on its own.
 
-    `label` overrides the derived guess ("Position 8" instead of the bare role) — asserted,
+    `label` overrides the derived guess ("Position 8" instead of the bare role) — claimed,
     like `meta_headcount`, not stored as its own column.
     """
     pool = await get_pool()

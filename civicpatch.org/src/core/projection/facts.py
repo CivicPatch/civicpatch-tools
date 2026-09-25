@@ -1,9 +1,10 @@
 import uuid
 from datetime import datetime
-from enum import StrEnum
 from typing import Any
 
 from pydantic import BaseModel
+
+from shared.utils.statuses import ClaimKind, EntityType
 
 POST_NAMESPACE = uuid.UUID("c8374c67-da4d-4aac-a0d9-4f353c803eca")
 
@@ -27,25 +28,6 @@ class PostKey(BaseModel, frozen=True):
                 f"{self.organization_id}|{self.role_id}|{self.division_ocdid}",
             )
         )
-
-
-class EntityType(StrEnum):
-    PERSON = "person"
-    POST = "post"
-    MEMBERSHIP = "membership"
-    JURISDICTION = "jurisdiction"
-    ORGANIZATION = "organization"
-    # Facts can be claimed about too: a withdraw names one, and a split is a `person_id` claim
-    # on a record.
-    SOURCE_RECORD = "source_record"
-    SOURCE_PAGE = "source_page"
-    CLAIM = "claim"
-
-
-class ClaimKind(StrEnum):
-    ACCEPT = "accept"
-    REJECT = "reject"
-    WITHDRAW = "withdraw"
 
 
 class SourceRecord(BaseModel, frozen=True):
@@ -108,7 +90,7 @@ class Facts(BaseModel, frozen=True):
 def latest_first(fact: SourceRecord | Claim) -> tuple[datetime, str]:
     """The one total order the whole fold means by "latest".
 
-    `created_at` alone ties: `assertions` inserts with `clock_timestamp()` so a batch's claims
+    `created_at` alone ties: `claims` inserts with `clock_timestamp()` so a batch's claims
     differ, but `source_records` uses the column default, which is `now()` and therefore
     identical across a whole scrape. `id` is a random uuid, so the tiebreak is arbitrary but
     stable, which is what keeps two rebuilds of the same facts identical (R6).

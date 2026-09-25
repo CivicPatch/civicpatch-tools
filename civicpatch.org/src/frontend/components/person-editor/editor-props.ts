@@ -12,7 +12,7 @@ import {
 import { UNMATCHED_ROLE_ID } from "../../schemas/role-types.js";
 import { type PersonMembership } from "../edit-people/person-edit-utils.js";
 import { canMerge, mergeCandidates } from "../review/merge-model.js";
-import { acceptsByField, type PersonAssertion } from "./field-provenance.js";
+import { acceptsByField, type PersonClaim } from "./field-provenance.js";
 import { type PersonEditorProps } from "./person-editor.js";
 import {
   heldOffice,
@@ -39,7 +39,7 @@ export interface EditorContext {
   canAssignMembership: boolean;
   // The whole jurisdiction's open memberships; each editor takes its own person's out of it.
   rosterMemberships: RosterMembership[];
-  assertions: Record<string, PersonAssertion[]>;
+  claims: Record<string, PersonClaim[]>;
   overriddenSourceValues: Record<string, Record<string, unknown>>;
   isExpanded: (personId: string) => boolean;
   onToggleExpand: (personId: string) => void;
@@ -120,8 +120,8 @@ export function personEditorPropsFor(
     subtitle: postsFor(card, ctx.posts),
     derivedPost: derivedPostFor(card, ctx.organizationId, ctx.posts),
     proposedPosts: proposedPosts(ctx.cards, ctx.posts),
-    accepts: acceptsByField(ctx.assertions[card.personId] ?? []),
-    assertions: ctx.assertions[card.personId] ?? [],
+    accepts: acceptsByField(ctx.claims[card.personId] ?? []),
+    claims: ctx.claims[card.personId] ?? [],
     overriddenSourceValues: ctx.overriddenSourceValues[card.personId] ?? {},
     posts: ctx.posts,
     organizationId: ctx.organizationId,

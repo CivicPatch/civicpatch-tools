@@ -33,13 +33,13 @@ import {
 } from "../fields/field-controls.js";
 import { multiValueDiff } from "../fields/field-model.js";
 import {
-  assertionSummaryFor,
+  claimSummaryFor,
   fieldLock,
   type FieldAssertionSummary,
   type FieldLock,
-  type PersonAssertion,
+  type PersonClaim,
 } from "./field-provenance.js";
-import "./assertions-popover.js";
+import "./claims-popover.js";
 import {
   heldPost,
   heldMembershipLabel,
@@ -86,8 +86,8 @@ export interface EditorFieldProps {
   // Raw, not a precomputed lock: every field's `lock` below is derived from the same two —
   // renderOfficeControl is just the one control that also derives a second lock from them,
   // for the membership label, which has no `FIELD_SCHEMA` row of its own to carry one on.
-  accepts: Map<string, PersonAssertion[]>;
-  assertions: PersonAssertion[];
+  accepts: Map<string, PersonClaim[]>;
+  claims: PersonClaim[];
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
   posts: Post[];
@@ -98,7 +98,7 @@ export interface EditorFieldProps {
   focusRef: FocusRef | null;
   canAssignMembership: boolean;
   lock: FieldLock | null;
-  assertionSummary: FieldAssertionSummary | null;
+  claimSummary: FieldAssertionSummary | null;
 }
 
 // A person already on the roster has a real membership `memberships.assign` can move — a
@@ -120,7 +120,7 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
     focusRef,
     canAssignMembership,
     accepts,
-    assertions,
+    claims,
   } = props;
   const isNewPerson = !oldRecord;
   if (isNewPerson && isReadOnly) {
@@ -152,7 +152,7 @@ function renderOfficeControl(props: EditorFieldProps, record: PresentRecord) {
     // scraped-then-overridden, so there is nothing to disclose; a lock here always reads as
     // "held", never "overrode".
     labelLock: fieldLock(accepts.get(LABEL_FIELD), undefined, undefined),
-    labelAssertionSummary: assertionSummaryFor(assertions, LABEL_FIELD),
+    labelClaimSummary: claimSummaryFor(claims, LABEL_FIELD),
     jurisdictionOcdid,
     organizationId,
     // A proposal naming a role/division with no post yet — nothing for the picker to look up
@@ -258,17 +258,17 @@ function renderWas(props: EditorFieldProps) {
 }
 
 // To the right of the field: just the lock, plus the accept/reject values in a popover —
-// <civ-assertions-popover> owns that interaction (open/fade state, its own hooks), not this
+// <civ-claims-popover> owns that interaction (open/fade state, its own hooks), not this
 // file, which has none of its own.
 function renderAssertionSummary(
-  assertionSummary: FieldAssertionSummary | null,
+  claimSummary: FieldAssertionSummary | null,
   lock: FieldLock | null,
 ) {
   if (!lock) return nothing;
-  return html`<civ-assertions-popover
+  return html`<civ-claims-popover
     .lock=${lock}
-    .summary=${assertionSummary}
-  ></civ-assertions-popover>`;
+    .summary=${claimSummary}
+  ></civ-claims-popover>`;
 }
 
 function renderAttention(props: EditorFieldProps) {
@@ -309,7 +309,7 @@ export function renderEditorField(props: EditorFieldProps) {
       >
         ${newRecord ? renderControl(props, newRecord) : DASH}
       </div>
-      ${renderAssertionSummary(props.assertionSummary, props.lock)}
+      ${renderAssertionSummary(props.claimSummary, props.lock)}
       ${renderWas(props)} ${renderAttention(props)}
     </div>
   `;

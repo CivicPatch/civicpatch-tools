@@ -192,7 +192,7 @@ async def test_a_retired_person_still_reads_as_the_post_they_last_held():
     — with `PERSON_START_DATE` and `PERSON_END_DATE`, which share its ordering — is what keeps
     them from vanishing entirely.
 
-    Both people are asserted, because the fallback must not outrank an open membership: order
+    Both people are claimed, because the fallback must not outrank an open membership: order
     it wrong and everyone reads as whatever they held longest ago.
     """
     await _seed_succession()

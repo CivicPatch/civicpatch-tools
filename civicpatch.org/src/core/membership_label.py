@@ -37,9 +37,9 @@ def derive_post_label(role_label: str, division_ocdid: str) -> str:
 
 
 def post_label(
-    role_label: str, division_ocdid: str, asserted: str | None = None
+    role_label: str, division_ocdid: str, claimed: str | None = None
 ) -> str:
-    return asserted or derive_post_label(role_label, division_ocdid)
+    return claimed or derive_post_label(role_label, division_ocdid)
 
 
 class MembershipLabel(BaseModel):

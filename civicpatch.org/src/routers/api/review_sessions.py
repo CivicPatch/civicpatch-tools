@@ -14,7 +14,7 @@ from lib.auth import require_route_access
 from psycopg.errors import UniqueViolation
 from pydantic import BaseModel
 from schemas.common import Identity, ReviewMode, RouteCategory, UserRole, has_at_least
-from services.assertions import assertions_for_people
+from services.claims import claims_for_people
 from services.review_sources import build_sources, without_debug_links
 from services.roster import card_sides
 logger = logging.getLogger(__name__)
@@ -171,10 +171,10 @@ async def _navigate_response(session_id: str, entry_number: int, viewer_role: st
             "mode": ReviewMode.for_scrape(has_ever_collected).value,
             "existing": existing,
             "proposed": proposed,
-            # Both sides: a reviewer's edit is asserted against the *proposed* person, who is
+            # Both sides: a reviewer's edit is claimed against the *proposed* person, who is
             # not in `existing` until they publish — so tagging only published ids would hide
             # a saved edit the moment the page reloads.
-            "assertions": await assertions_for_people(
+            "claims": await claims_for_people(
                 list(
                     {
                         person["id"]
@@ -183,7 +183,7 @@ async def _navigate_response(session_id: str, entry_number: int, viewer_role: st
                     }
                 )
             ),
-            # What the source said, for the fields an assertion then changed. Only those: the
+            # What the source said, for the fields a claim then changed. Only those: the
             # card shows the published value and a lock, and a lock over a value the scrape
             # agrees with has nothing to disclose.
             "overridden_source_values": overridden,

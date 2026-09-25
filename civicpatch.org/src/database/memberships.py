@@ -19,12 +19,12 @@ from typing import AsyncGenerator
 
 from core.membership_label import derive_post_label
 from core.projection.memberships import MEMBERSHIP_LABEL_FIELD
-from database import assertions
+from database import claims
 from database.database import get_pool
-from schemas.assertions import (
+from schemas.claims import (
     DefaultNote,
-    Assertion,
-    AssertionKind,
+    Claim,
+    ClaimKind,
     EntityType,
     Source,
 )
@@ -281,14 +281,14 @@ async def _assert(
     cur,
     membership_id: str,
     field_path: str,
-    kind: AssertionKind,
+    kind: ClaimKind,
     user_id: str,
     reason: str | None,
     changeset_id: str | None,
 ) -> str:
-    return await assertions.upsert(
+    return await claims.upsert(
         cur,
-        Assertion(
+        Claim(
             entity_type=EntityType.MEMBERSHIP,
             entity_id=membership_id,
             field_path=field_path,
@@ -315,22 +315,22 @@ async def set_membership_label(
     """
     if label is None:
         # An ordinary withdrawal, not a rollback's — withdrawn_by_changeset_id stays NULL.
-        await assertions.withdraw(
+        await claims.withdraw(
             cur,
             EntityType.MEMBERSHIP,
             membership_id,
             MEMBERSHIP_LABEL_FIELD,
-            AssertionKind.ACCEPT,
+            ClaimKind.ACCEPT,
             user_id,
         )
         return
-    await assertions.upsert(
+    await claims.upsert(
         cur,
-        Assertion(
+        Claim(
             entity_type=EntityType.MEMBERSHIP,
             entity_id=membership_id,
             field_path=MEMBERSHIP_LABEL_FIELD,
-            kind=AssertionKind.ACCEPT,
+            kind=ClaimKind.ACCEPT,
             value=label,
             sources=[Source(note=DefaultNote.LABEL_SET)],
             changeset_id=changeset_id,
@@ -341,7 +341,7 @@ async def set_membership_label(
 
 async def open_memberships_for_persons(cur, person_ids: list[str]) -> list[dict]:
     """Every open membership these people hold: the post it is in, and the row id the
-    proposal layer still looks label assertions up by (step 2).
+    proposal layer still looks label claims up by (step 2).
 
     Person id, not entity id: the editor's per-person payload carries neither. One person can
     hold more than one open membership, so this is a row per membership, not per person.

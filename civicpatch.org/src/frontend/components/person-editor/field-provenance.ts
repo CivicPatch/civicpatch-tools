@@ -1,6 +1,6 @@
 // Who last stood behind a field's value, for the editor's per-field tag.
 
-export interface PersonAssertion {
+export interface PersonClaim {
   field_path: string;
   kind: string;
   value: unknown;
@@ -18,21 +18,21 @@ const UNNAMED = "someone";
  * Rejects are left out: they explain an *absence*, so there is no value on screen to tag.
  */
 export function acceptsByField(
-  assertions: PersonAssertion[],
-): Map<string, PersonAssertion[]> {
-  const byField = new Map<string, PersonAssertion[]>();
-  for (const assertion of assertions) {
-    if (assertion.kind !== ACCEPT) continue;
-    byField.set(assertion.field_path, [
-      ...(byField.get(assertion.field_path) ?? []),
-      assertion,
+  claims: PersonClaim[],
+): Map<string, PersonClaim[]> {
+  const byField = new Map<string, PersonClaim[]>();
+  for (const claim of claims) {
+    if (claim.kind !== ACCEPT) continue;
+    byField.set(claim.field_path, [
+      ...(byField.get(claim.field_path) ?? []),
+      claim,
     ]);
   }
   return byField;
 }
 
 export function provenanceLabel(
-  accepts: PersonAssertion[] | undefined,
+  accepts: PersonClaim[] | undefined,
 ): string | null {
   if (!accepts?.length) return null;
   const newest = accepts.reduce((latest, next) =>
@@ -59,7 +59,7 @@ export interface FieldLock {
   state: typeof LOCK_HELD | typeof LOCK_OVERRODE;
   /** Who published it, always — this is what the provenance line used to say. */
   label: string;
-  /** What the source said, when an assertion changed it. Null when it agrees. */
+  /** What the source said, when an claim changed it. Null when it agrees. */
   disclosure: string | null;
 }
 
@@ -84,11 +84,11 @@ function disclose(sourceValue: unknown, publishedValue: unknown): string | null 
 
 /** The lock on one field, or null where nobody has stood behind it.
  *
- * `sourceValue` is `undefined` for a field no assertion moved — most fields on most people,
+ * `sourceValue` is `undefined` for a field no claim moved — most fields on most people,
  * since only a field someone actually edited carries a claim at all.
  */
 export function fieldLock(
-  accepts: PersonAssertion[] | undefined,
+  accepts: PersonClaim[] | undefined,
   sourceValue: unknown,
   publishedValue: unknown,
 ): FieldLock | null {
@@ -102,7 +102,7 @@ export function fieldLock(
   };
 }
 
-// ── the assertion summary ────────────────────────────────────────────────────
+// ── the claim summary ────────────────────────────────────────────────────
 
 export interface FieldAssertionSummary {
   accept: string | null;
@@ -110,10 +110,10 @@ export interface FieldAssertionSummary {
 }
 
 function latestOfKind(
-  assertions: PersonAssertion[],
+  claims: PersonClaim[],
   kind: string,
-): PersonAssertion | null {
-  const matches = assertions.filter((assertion) => assertion.kind === kind);
+): PersonClaim | null {
+  const matches = claims.filter((claim) => claim.kind === kind);
   if (!matches.length) return null;
   return matches.reduce((latest, next) =>
     next.created_at > latest.created_at ? next : latest,
@@ -127,11 +127,11 @@ function formatAssertionValue(value: unknown): string {
 /** The latest accepted and rejected value on one field, when either exists — an accept and a
  * reject from the same edit are two claims about two different values, not a contradiction,
  * so both show, regardless of whether either still matches what the field displays now. */
-export function assertionSummaryFor(
-  assertions: PersonAssertion[],
+export function claimSummaryFor(
+  claims: PersonClaim[],
   fieldPath: string,
 ): FieldAssertionSummary | null {
-  const relevant = assertions.filter((a) => a.field_path === fieldPath);
+  const relevant = claims.filter((a) => a.field_path === fieldPath);
   const accept = latestOfKind(relevant, ACCEPT);
   const reject = latestOfKind(relevant, REJECT);
   if (!accept && !reject) return null;

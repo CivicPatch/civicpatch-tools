@@ -2,7 +2,7 @@ from collections.abc import Mapping
 from typing import Any
 
 from schemas.activity import Change, FieldChange, PersonChange
-from schemas.assertions import EntityType
+from schemas.claims import EntityType
 from shared.schemas import POST_FIELD
 from shared.utils.statuses import ActivityType
 

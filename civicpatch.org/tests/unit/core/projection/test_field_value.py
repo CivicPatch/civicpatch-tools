@@ -2,7 +2,7 @@
 
 Scalar cases come from scenarios 2, 3 and 15 of the simulator: a claim beats evidence, the
 newest claim beats an older one, and withdrawing the newest reveals the one underneath.
-The list cases come from today's `core/people_edits.with_asserted_values`, which is the
+The list cases come from today's `core/people_edits.with_claimed_values`, which is the
 behaviour the fold has to keep.
 """
 

@@ -35,7 +35,7 @@ const TARGET_USER = {
 
 const CANDIDATES = [
   {
-    assertion_id: "a1",
+    claim_id: "a1",
     entity_id: "person-1",
     entity_label: "Ada Chen",
     field_path: "name",
@@ -45,7 +45,7 @@ const CANDIDATES = [
     created_at: "2026-09-01T12:00:00+00:00",
   },
   {
-    assertion_id: "a2",
+    claim_id: "a2",
     entity_id: "person-1",
     entity_label: "Ada Chen",
     field_path: "phones",
@@ -159,7 +159,7 @@ test.describe("User history page rollback", () => {
       .click();
 
     await expect.poll(() => rollbackBody).not.toBeNull();
-    expect(rollbackBody.assertion_ids).toEqual(["a1"]);
+    expect(rollbackBody.claim_ids).toEqual(["a1"]);
 
     await expect(page.locator("confirm-rollback-modal")).toHaveCount(0);
     await expect(page.locator(".status-toast")).toContainText("Rolled back 1 change");

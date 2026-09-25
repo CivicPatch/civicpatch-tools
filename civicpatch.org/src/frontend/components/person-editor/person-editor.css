@@ -30,7 +30,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   --editor-state: var(--border);
-  /* Lets the assertions popover size itself off the real panel width (see its `cqw` use)
+  /* Lets the claims popover size itself off the real panel width (see its `cqw` use)
      instead of guessing a fixed value that's either too narrow on a wide panel or
      overflows — and still clipped — on a narrow one. */
   container-type: inline-size;
@@ -293,13 +293,13 @@
   color: var(--editor-lock);
   opacity: 1;
 }
-/* The custom element wraps .person-editor__assertions, which needs to be the direct grid
+/* The custom element wraps .person-editor__claims, which needs to be the direct grid
    item (`grid-column: 3` below) — without this the element itself (inline by default) would
    sit in that slot instead, the same trap a plain page-level custom element hits. */
-civ-assertions-popover {
+civ-claims-popover {
   display: contents;
 }
-.person-editor__assertions {
+.person-editor__claims {
   grid-column: 3;
   /* Fixed height, not content-sized — a content-sized box's own auto height (and so the
      whole row's) would change when the popover toggles open, shifting every row below it
@@ -310,7 +310,7 @@ civ-assertions-popover {
   align-self: center;
   position: relative;
 }
-.person-editor__assertions-toggle {
+.person-editor__claims-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -321,18 +321,18 @@ civ-assertions-popover {
   background: none;
   cursor: pointer;
 }
-.person-editor__assertions-chip {
+.person-editor__claims-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.2em;
 }
-.person-editor__assertions-chip--accept {
+.person-editor__claims-chip--accept {
   color: var(--editor-added);
 }
-.person-editor__assertions-chip--reject {
+.person-editor__claims-chip--reject {
   color: var(--editor-cleared);
 }
-.person-editor__assertions-list {
+.person-editor__claims-list {
   /* Opens to the right of the lock rather than below it — this is the last column, so
      nothing sits to its right, and popping sideways means it never covers the row below. */
   position: absolute;
@@ -361,13 +361,13 @@ civ-assertions-popover {
   opacity: 1;
   transition: opacity 400ms ease;
 }
-.person-editor__assertions-list--fading {
+.person-editor__claims-list--fading {
   opacity: 0;
 }
-.person-editor__assertions-list[hidden] {
+.person-editor__claims-list[hidden] {
   display: none;
 }
-.person-editor__assertions-who {
+.person-editor__claims-who {
   color: var(--text-muted);
 }
 .person-editor__disclosure {
