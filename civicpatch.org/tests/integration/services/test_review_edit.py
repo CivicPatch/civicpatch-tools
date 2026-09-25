@@ -213,3 +213,70 @@ async def test_rolling_back_the_review_leaves_the_scrape_live():
 
     assert await _live_name(person_id) == "Ada"
     assert await _state(scrape_id) == "published"
+
+
+async def _people_ids() -> set[str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text FROM people WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        return {row[0] for row in await cur.fetchall()}
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_merge_in_review_publishes_as_one_person_and_rolls_back_as_two():
+    """The matcher minted a second id for Ada; the reviewer says they are one person."""
+    person_id, scrape_id = await _seed()
+    duplicate_id = await _seed_duplicate(scrape_id)
+
+    edit_id = await edit_in_review(
+        _OCDID, [PersonEdit(id=duplicate_id, same_as=person_id)], SYSTEM_USER_ID, scrape_id
+    )
+    await _publish(scrape_id)
+
+    assert await _people_ids() == {person_id}
+
+    await rollback.rollback_changeset(edit_id, SYSTEM_USER_ID, "not the same person")
+
+    assert await _people_ids() == {person_id, duplicate_id}
+
+
+async def _organization_id() -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        return await organizations.find_or_create(cur, _OCDID)
+
+
+async def _seed_duplicate(scrape_id: str) -> str:
+    """A second id the matcher minted for Ada in the open scrape."""
+    duplicate_id = str(uuid.uuid4())
+    await insert_source_records(
+        scrape_id,
+        _OCDID,
+        {duplicate_id: [{"name": "Ada M.", "label": "Mayor", "source_url": _PAGE,
+                         "organization_id": await _organization_id()}]},
+    )
+    return duplicate_id
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_merge_keeps_the_survivors_name_over_one_saved_on_the_absorbed_person():
+    """Merging moves the absorbed claims onto the survivor, so the survivor is diffed against
+    the merged person: a name the reviewer kept must still be claimed."""
+    person_id, scrape_id = await _seed()
+    duplicate_id = await _seed_duplicate(scrape_id)
+    await _rename(duplicate_id, scrape_id, "Ada Marie")
+
+    await edit_in_review(
+        _OCDID,
+        [PersonEdit(id=duplicate_id, same_as=person_id),
+         PersonEdit(id=person_id, fields={"name": "Ada"})],
+        SYSTEM_USER_ID,
+        scrape_id,
+    )
+    await _publish(scrape_id)
+
+    assert await _live_name(person_id) == "Ada"

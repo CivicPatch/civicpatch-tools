@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'haunted';
-import { changedFieldKeys, listChanged, mergeFields, buildPeoplePatch, pruneIds } from './people-state-utils.js';
+import { changedFieldKeys, listChanged, buildPeoplePatch, pruneIds } from './people-state-utils.js';
 import { personIdIn } from '../../people/person-cards.ts';
 
 export function usePeopleState({ people }) {
@@ -15,6 +15,9 @@ export function usePeopleState({ people }) {
   // person nothing happened to. removedIds can't express it either, since a
   // person the scrape didn't find was never removed by the reviewer.
   const [restoredIds, setRestoredIds] = useState(new Set());
+  // Absorbed id → survivor id. Kept apart from the list because the absorbed row is gone
+  // from it, and the server has to be told who they were merged into.
+  const [mergedInto, setMergedInto] = useState(new Map());
 
   const selectedPeople = currentPeople.filter(p => p._selected).map(p => p.id);
 
@@ -35,9 +38,9 @@ export function usePeopleState({ people }) {
       // on anyone — it used to stamp _dirty directly — and a merge drops a row
       // from the list, so the id sequence is checked separately.
       dirty: dirtyIds.size > 0 || listChanged(currentPeople, originalPeople),
-      peoplePatch: buildPeoplePatch(currentPeople, changesById, removedIds),
+      peoplePatch: buildPeoplePatch(currentPeople, changesById, removedIds, new Set(mergedInto.values())),
     };
-  }, [currentPeople, originalPeople, removedIds]);
+  }, [currentPeople, originalPeople, removedIds, mergedInto]);
 
   function assignPeople(peopleToAssign) {
     setCurrentPeople(peopleToAssign);
@@ -45,6 +48,7 @@ export function usePeopleState({ people }) {
     // A new baseline carries none of the previous card's decisions.
     setRemovedIds(new Set());
     setRestoredIds(new Set());
+    setMergedInto(new Map());
   }
 
   function updatePerson(key, updates) {
@@ -69,6 +73,7 @@ export function usePeopleState({ people }) {
         return [p];
       })
     );
+    setMergedInto(current => new Map([...current, [absorbedId, survivorId]]));
   }
 
   // An id that no longer names anyone must leave every id-keyed set, or it
@@ -135,21 +140,6 @@ export function usePeopleState({ people }) {
     handleRemove(selectedPeople);
   }
 
-  function handleMerge() {
-    const selected = currentPeople.filter(p => p._selected);
-    // Prefer a non-new person as survivor; fall back to the last selected
-    const survivor = selected.find(p => !p._isNew) ?? selected[selected.length - 1];
-    if (!survivor) return;
-    const absorbed = selected.filter(p => p.id !== survivor.id);
-    const merged = mergeFields(survivor, absorbed);
-    const absorbedIds = new Set(absorbed.map(p => p.id));
-    setPeopleAndPruneIds(
-      currentPeople
-        .filter(p => !absorbedIds.has(p.id))
-        .map(p => p.id === survivor.id ? merged : { ...p, _selected: false })
-    );
-  }
-
   // Reset returns one person to how the card loaded. For someone restored that
   // means leaving the list again — they had no place in it at load, so
   // there is no baseline record to return them to.
@@ -157,6 +147,8 @@ export function usePeopleState({ people }) {
   // Otherwise it restores the baseline record, which never carried a removal,
   // so it un-removes too. That was implicit when the flag lived on the row (the
   // baseline copy simply had no flag); with a Set it has to be said.
+  //
+  // A survivor's reset also undoes the merges into them, bringing the absorbed rows back.
   //
   // A person with no baseline record at all was added this session, not loaded
   // from the server — resetting them means undoing the add.
@@ -167,7 +159,12 @@ export function usePeopleState({ people }) {
     }
     const original = originalPeople.find(p => p.id === key);
     if (original) {
-      setCurrentPeople(current => current.map(p => p.id === key ? { ...original } : p));
+      const unmerged = originalPeople.filter(p => mergedInto.get(p.id) === key);
+      setCurrentPeople(current => [
+        ...current.map(p => p.id === key ? { ...original } : p),
+        ...unmerged.map(p => ({ ...p })),
+      ]);
+      setMergedInto(current => new Map([...current].filter(([, survivorId]) => survivorId !== key)));
       handleUnremove(key);
       return;
     }
@@ -178,6 +175,7 @@ export function usePeopleState({ people }) {
     setCurrentPeople([...originalPeople]);
     setRemovedIds(new Set());
     setRestoredIds(new Set());
+    setMergedInto(new Map());
   }
 
   function handleTableDataChange(e) {
@@ -208,6 +206,7 @@ export function usePeopleState({ people }) {
     dirtyIds,
     removedIds,
     restoredIds,
+    mergedInto,
     dirty,
     peoplePatch,
     assignPeople,
@@ -220,7 +219,6 @@ export function usePeopleState({ people }) {
     handleRestore,
     handleUndoRestore,
     handleBulkRemove,
-    handleMerge,
     handleReset,
     handleResetAll,
     handleTableDataChange,

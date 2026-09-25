@@ -255,28 +255,6 @@ async def test_an_import_writes_sightings_and_waits_unpublished(user_id, batch_i
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_every_sighting_gets_an_identity(user_id, batch_id):
-    """Linkage is written with the evidence, in one transaction — a record with no identity
-    would be evidence nothing can find."""
-    rows = await _parsed(("Ana Reyes", "Select Board Chair"))
-
-    [result] = await import_rows(rows, user_id, batch_id)
-
-    assert (
-        await _scalar(
-            """
-            SELECT count(*) FROM source_records sr
-            JOIN source_record_identities i ON i.source_record_id = sr.id
-            WHERE sr.changeset_id = %s::uuid
-            """,
-            (result.changeset_id,),
-        )
-        == 1
-    )
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
 async def test_a_label_mints_the_post_it_implies(user_id, batch_id):
     """The sheet carries no post id, so the label is the only thing that can imply a seat — and
     projecting it is what makes the 194 MA jurisdictions with no posts importable at all.

@@ -12,6 +12,7 @@ shape for the same act.
 from core.display_rows import display_rows
 from core.people_edits import (
     PersonPatch,
+    claim_same_as,
     claims_from_edit,
     claims_from_posts,
     patch_people,
@@ -90,14 +91,12 @@ async def edit_published_roster(
     if not user_id:
         raise AnonymousEdit(jurisdiction_ocdid)
     await _refuse_unknown_posts(people)
-    derived = await _derived_rows(jurisdiction_ocdid)
 
     # Nothing to say, nothing to record. The editor sends every person on the screen, so a save
     # that changed nothing is the normal case, and minting a changeset for it would put an
     # empty edit on the jurisdiction's timeline every time somebody pressed the button.
     changeset_id = make_id()
-    claims = claims_for_edit(derived, people, changeset_id)
-    labels = membership_label_edits(derived, people)
+    claims, labels = await _edit(jurisdiction_ocdid, people, changeset_id)
     if not claims and not labels:
         return ""
 
@@ -122,13 +121,41 @@ async def _file(
     if not user_id:
         raise AnonymousEdit(jurisdiction_ocdid)
     await _refuse_unknown_posts(people)
+    claims, labels = await _edit(jurisdiction_ocdid, people, changeset_id, including)
+    await _write(claims, labels, user_id, changeset_id)
+
+
+async def _edit(
+    jurisdiction_ocdid: str,
+    people: list[PersonEdit],
+    changeset_id: str,
+    including: str | None = None,
+) -> tuple[list[Claim], list[tuple[str, str | None]]]:
+    """The claims and labels an edit files.
+
+    A merge moves the absorbed person's claims onto the survivor, so the survivor is diffed
+    against the person the merge will make, not the one they were: otherwise an absorbed name
+    saved earlier would outrank the survivor's name the reviewer kept.
+    """
     derived = await _derived_rows(jurisdiction_ocdid, including)
-    await _write(
-        claims_for_edit(derived, people, changeset_id),
-        membership_label_edits(derived, people),
-        user_id,
-        changeset_id,
-    )
+    merged_into = new_merges(derived, people)
+    if merged_into:
+        derived = await _derived_rows(jurisdiction_ocdid, including, merged_into)
+    claims = [
+        *(claim_same_as(absorbed_id, survivor_id, changeset_id)
+          for absorbed_id, survivor_id in merged_into.items()),
+        *claims_for_edit(derived, people, changeset_id),
+    ]
+    return claims, membership_label_edits(derived, people)
+
+
+def new_merges(derived: dict[str, dict], people: list[PersonEdit]) -> dict[str, str]:
+    """Absorbed id to survivor id, for merges not yet filed: once merged, an id derives no row."""
+    return {
+        person.id: person.same_as
+        for person in people
+        if person.same_as is not None and person.id in derived
+    }
 
 
 async def _write(claims, labels, user_id: str, changeset_id: str) -> None:
@@ -167,6 +194,8 @@ def claims_for_edit(
 
     claims: list[Claim] = []
     for person in people:
+        if person.same_as is not None:
+            continue
         published = derived.get(person.id, {"id": person.id})
         if person.id in desired:
             claims.extend(
@@ -231,7 +260,9 @@ async def _roster(jurisdiction_ocdid: str, including: str | None = None) -> Rost
 
 
 async def _roster_and_taxonomy(
-    jurisdiction_ocdid: str, including: str | None = None
+    jurisdiction_ocdid: str,
+    including: str | None = None,
+    merged_into: dict[str, str] | None = None,
 ) -> tuple[Roster, Taxonomy]:
     """Both, because the caller that turns a roster into rows needs the taxonomy that derived
     it — asking twice is two `get_roles()` round trips for one edit."""
@@ -239,15 +270,21 @@ async def _roster_and_taxonomy(
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         roster = await projection_db.derived_roster(
-            cur, jurisdiction_ocdid, including=including, taxonomy=taxonomy
+            cur,
+            jurisdiction_ocdid,
+            including=including,
+            taxonomy=taxonomy,
+            merged_into=merged_into,
         )
     return roster, taxonomy
 
 
 async def _derived_rows(
-    jurisdiction_ocdid: str, including: str | None = None
+    jurisdiction_ocdid: str,
+    including: str | None = None,
+    merged_into: dict[str, str] | None = None,
 ) -> dict[str, dict]:
     """The same roster as the shape `claims_from_edit` diffs against, keyed by person id."""
-    roster, taxonomy = await _roster_and_taxonomy(jurisdiction_ocdid, including)
+    roster, taxonomy = await _roster_and_taxonomy(jurisdiction_ocdid, including, merged_into)
     rows = display_rows(on_roster(roster), jurisdiction_ocdid, taxonomy)
     return {row["id"]: row for row in rows}

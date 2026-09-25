@@ -34,8 +34,7 @@ class SourceRecord(BaseModel, frozen=True):
     id: str
     changeset_id: str
     created_at: datetime
-    # Who the matcher said this is. A column on the row from step 6; until then
-    # `database/facts.py` joins `source_record_identities` to fill it.
+    # Who the matcher said at ingest; `with_person_ids` applies any re-link claim over it.
     person_id: str
     organization_id: str
     name: str

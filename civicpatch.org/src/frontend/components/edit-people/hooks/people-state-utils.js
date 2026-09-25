@@ -1,10 +1,8 @@
 import { personIdIn } from "../../people/person-cards.ts";
 
 export const PERSON_FIELDS = {
-  // `post_id` is the post a reviewer picked, `membership_label` the office label beside it —
-  // both scalars like any other here, so a merge takes the first non-empty and a survivor
-  // with no pick inherits one instead of losing it. Neither is sent to `patchPeopleData`/
-  // `merge`/`save` for an existing person, though — see `toPatchItem` below.
+  // `post_id` and `membership_label` are an office pick; for an existing person they travel
+  // as `offices`, not in the patch (see `toPatchItem`).
   single: ["name", "post_id", "membership_label", "image", "cdn_image", "start_date", "end_date", "updated_at"],
   array:  ["other_names", "phones", "emails", "urls", "source_urls"],
 };
@@ -35,28 +33,6 @@ export function listChanged(currentPeople, originalPeople) {
   return currentOrder.join("|") !== originalOrder.join("|");
 }
 
-export function mergeFields(survivor, absorbed) {
-  const all = [survivor, ...absorbed];
-  const merged = { ...survivor };
-
-  for (const field of PERSON_FIELDS.single) {
-    const firstNonEmpty = all.map(p => p[field]).find(v => v != null && v !== "");
-    merged[field] = firstNonEmpty ?? null;
-  }
-
-  for (const field of PERSON_FIELDS.array) {
-    merged[field] = Array.from(new Set(
-      all.flatMap(p => (p[field] || []).filter(Boolean))
-    ));
-  }
-
-  const absorbedNames = absorbed.map(p => p.name).filter(Boolean);
-  merged.other_names = Array.from(new Set([...merged.other_names, ...absorbedNames]))
-    .filter(n => n !== merged.name);
-
-  return { ...merged, _selected: false };
-}
-
 // Ids stop naming a person when a merge collapses two rows into one.
 // A stale entry is not inert: `removedIds` is read when building the publish
 // payload, so an id that later belongs to someone else drops them silently.
@@ -68,15 +44,16 @@ export function pruneIds(ids, livingIds) {
 }
 
 // Build the publish payload: one patch item per person still on the list. Existing rows send
-// only their changed fields; new or re-identified rows (id changed) send the whole entry.
+// only their changed fields; new or re-identified rows (id changed) send the whole entry, and
+// so does a merge survivor, since the server diffs it against the merged person, not its baseline.
 // The backend keys by id — a known id overlays the fields, an unknown id inserts the whole
 // entry. Removal is not absence: `rosterEditPayload` says it as `offices: []`. A row removed
 // by person id drops out here (a review says they are not on the roster at all); a roster row
 // removed in one body does not, because their name correction still stands.
-export function buildPeoplePatch(currentPeople, changesById, removedIds) {
+export function buildPeoplePatch(currentPeople, changesById, removedIds, survivorIds) {
   return currentPeople
     .filter(p => !removedIds.has(p.id))
-    .map(p => toPatchItem(p, changesById.get(p.id)));
+    .map(p => survivorIds.has(p.id) ? survivorPatchItem(p) : toPatchItem(p, changesById.get(p.id)));
 }
 
 // An existing person's office pick travels as `offices` (roster-edit-payload.ts), not as a
@@ -92,6 +69,16 @@ function toPatchItem(person, changes) {
   const fields = {};
   for (const field of changes) {
     if (OFFICE_ONLY_FIELDS.includes(field)) continue;
+    fields[field] = entry[field];
+  }
+  return { id: entry.id, fields };
+}
+
+function survivorPatchItem(person) {
+  const { _selected, _isNew, ...entry } = person;
+  const fields = {};
+  for (const field of TRACKED_FIELDS) {
+    if (field === "id" || OFFICE_ONLY_FIELDS.includes(field) || !(field in entry)) continue;
     fields[field] = entry[field];
   }
   return { id: entry.id, fields };

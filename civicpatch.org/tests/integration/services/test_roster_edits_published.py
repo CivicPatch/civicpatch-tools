@@ -427,8 +427,8 @@ async def _pending_scrape(updated_at: datetime.datetime) -> str:
         changeset_id = row[0]
         organization_id = await factories.default_organization(cur, _OCDID)
         await cur.execute(
-            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id) "
-            "VALUES (%s, %s, 'Cy Okonkwo', 'Clerk', 'https://editville.gov/clerk', %s)",
+            "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id, person_id) "
+            "VALUES (%s, %s, 'Cy Okonkwo', 'Clerk', 'https://editville.gov/clerk', %s, gen_random_uuid())",
             (changeset_id, _OCDID, organization_id),
         )
         await conn.commit()

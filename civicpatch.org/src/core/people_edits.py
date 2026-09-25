@@ -12,6 +12,7 @@ from shared.schemas import SubmittedPersonRecord
 from shared.utils.person_fields import order_person_fields
 
 from core.post_derivation import LABELS_FIELD, SIGHTINGS_FIELD
+from core.projection.canonical_ids import SAME_AS
 
 # Keys a client patch may not set: they come from source records, and a client-sent value would
 # decide which organization a person is published into.
@@ -184,6 +185,18 @@ def validate_and_normalize(patched: list[dict], edits: list[PersonPatch]) -> lis
 def patch_people(base: list[dict], edits: list[PersonPatch]) -> list[dict]:
     patched = validate_and_normalize(apply_people_patch(base, edits), edits)
     return [order_person_fields(person) for person in patched]
+
+
+def claim_same_as(person_id: str, survivor_id: str, changeset_id: str | None) -> Claim:
+    return Claim(
+        entity_type=EntityType.PERSON,
+        entity_id=person_id,
+        field_path=SAME_AS,
+        kind=ClaimKind.ACCEPT,
+        value=survivor_id,
+        sources=[Source(note=DefaultNote.EDITED)],
+        changeset_id=changeset_id,
+    )
 
 
 def claims_from_posts(

@@ -75,7 +75,7 @@ def roster_from_sightings(
     """The roster a scrape's stored sightings imply — the same document `roster_from_rows`
     produced at ingest, rebuilt from what was kept.
 
-    Grouping is read, not re-derived: `source_record_identities` already answered who is whom,
+    Grouping is read, not re-derived: each record's `person_id` already answered who is whom,
     and running the name matcher again could answer differently. `published` is who we already
     hold under each resolved id, and is what `identities` was at ingest — it decides the name
     and carries confirmed aliases forward.

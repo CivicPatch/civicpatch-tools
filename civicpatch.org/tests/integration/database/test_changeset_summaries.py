@@ -122,8 +122,8 @@ async def _changeset(
             await cur.execute(
                 """
                 INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label,
-                                            source_url, organization_id)
-                VALUES (%s, %s, 'Someone', 'Mayor', 'https://example.test', %s)
+                                            source_url, organization_id, person_id)
+                VALUES (%s, %s, 'Someone', 'Mayor', 'https://example.test', %s, gen_random_uuid())
                 """,
                 (changeset_id, ocdid, organization_id),
             )

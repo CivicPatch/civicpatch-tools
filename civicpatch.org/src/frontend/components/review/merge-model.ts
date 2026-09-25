@@ -1,9 +1,8 @@
 // Merging two people into one. Pure — no DOM, no state. The picker renders a
 // plan and toggles choices on it; nothing here knows that a picker exists.
 //
-// Replaces the *policy* in `mergeFields`, not the plumbing: the absorbed person
-// simply leaves `currentPeople`, and `buildPeoplePatch` already reads that as a
-// deletion.
+// Only the policy lives here. The plumbing is `usePeopleState.mergePeople`: the absorbed
+// row leaves `currentPeople` and the merge is sent as `same_as`.
 
 import {
   FIELD_SCHEMA,
@@ -212,7 +211,7 @@ function resolve(entry: MergeFieldPlan): unknown {
 }
 
 // A displaced name is never lost — it becomes an alias, which is what
-// `other_names` is for, and what mergeFields already does.
+// `other_names` is for.
 function foldAliases(merged: any, survivorName: unknown, candidateName: unknown): void {
   const primary = String(merged.name ?? "").trim();
   const aliases = unique([

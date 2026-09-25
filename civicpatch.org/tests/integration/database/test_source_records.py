@@ -24,7 +24,7 @@ from database.source_records import (
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_test/government"
 _SENTINEL_ORGANIZATION = "00000000-0000-4000-8000-0000000000aa"
 
-# Real uuids: `source_record_identities.person_id` is a uuid column since 145, because a
+# Real uuids: `source_records.person_id` is a uuid column, because a
 # cluster id that is not one is `_resolution`'s ambiguous-match sentinel.
 _ANN = "00000000-0000-4000-8000-000000000001"
 _BOB = "00000000-0000-4000-8000-000000000002"
@@ -141,9 +141,8 @@ async def test_labels_are_queryable_as_a_column(sentinel_request):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT i.person_id::text
+            SELECT s.person_id::text
             FROM source_records s
-            JOIN source_record_identities i ON i.source_record_id = s.id
             WHERE s.changeset_id = %s AND s.label = 'City Attorney'
             """,
             (sentinel_request,),
@@ -186,7 +185,7 @@ async def test_every_sighting_of_one_person_is_its_own_row(sentinel_request):
     assert len(rows) == 2
     assert [r["label"] for r in rows] == ["Council Member", "Mayor"]
     assert [r["source_url"] for r in rows] == ["https://zz.gov/0", "https://zz.gov/1"]
-    # Two rows, one human: the link lives in source_record_identities.
+    # Two rows, one human.
     assert {r["person_id"] for r in rows} == {_DEE}
 
 
@@ -214,29 +213,6 @@ async def test_photo_urls_are_stored_on_the_sighting(sentinel_request):
 
     assert rows[0]["image"] == "https://zz.gov/eve.png"
     assert rows[0]["cdn_image"] == "https://cdn.example/eve.png"
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_a_record_is_never_written_without_its_identity(sentinel_request):
-    """The two inserts share a transaction. A record nothing can link to a person is evidence
-    no reader would ever find."""
-    await insert_source_records(
-        sentinel_request, _SENTINEL_OCDID, _records("Fay", "Mayor")
-    )
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT count(*)
-            FROM source_records s
-            LEFT JOIN source_record_identities i ON i.source_record_id = s.id
-            WHERE s.changeset_id = %s AND i.source_record_id IS NULL
-            """,
-            (sentinel_request,),
-        )
-        assert (await cur.fetchone())[0] == 0
 
 
 async def _organization(jurisdiction_ocdid: str, name: str) -> str:

@@ -52,12 +52,13 @@ function ReviewSessionPage() {
   const applyEdits = async (e: CustomEvent): Promise<boolean> => {
     const ocdid = currentEntry?.jurisdiction?.ocdid;
     if (!ocdid || !changesetId) return true;
-    const payload = rosterEditPayload(
-      e.detail.people ?? [],
-      e.detail.officeEdits ?? [],
-      e.detail.removedIds ?? [],
-      heldOfficesByPerson(e.detail.cards ?? []),
-    );
+    const payload = rosterEditPayload({
+      patch: e.detail.people ?? [],
+      officeEdits: e.detail.officeEdits ?? [],
+      removedIds: e.detail.removedIds ?? [],
+      mergedInto: e.detail.mergedInto ?? new Map(),
+      heldOffices: heldOfficesByPerson(e.detail.cards ?? []),
+    });
     if (!payload.length) return true;
     try {
       await editJurisdictionRoster(ocdid, payload, changesetId);
