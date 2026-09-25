@@ -80,7 +80,7 @@ async def _membership(cur, organization_id: str, person_id: str, role_id: str, l
     await cur.execute(
         """
         INSERT INTO memberships
-            (post_id, organization_id, person_id, first_seen_at, last_seen_at, sources)
+            (post_id, organization_id, person_id, opened_at, last_seen_at, sources)
         VALUES (%s, %s, %s, %s, %s, %s::jsonb)
         """,
         (post_id, organization_id, person_id, _SEEN_AT, _SEEN_AT, factories.sources_of([label])),
@@ -92,7 +92,7 @@ async def _seed() -> dict[str, str]:
     """A council, plus one person sitting on two bodies at once. Returns that person's two
     post ids and what each one is called.
 
-    Both of their memberships open on the same `first_seen_at`, which is what a single ingest
+    Both of their memberships open on the same `opened_at`, which is what a single ingest
     produces — and `PERSON_OFFICE` orders on exactly that before taking one.
     """
     pool = await get_pool()

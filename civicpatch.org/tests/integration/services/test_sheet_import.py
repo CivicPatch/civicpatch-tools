@@ -178,7 +178,7 @@ async def _seed_open_membership(name: str, source_labels: list[str]) -> None:
         await cur.execute(
             """
             INSERT INTO memberships
-                (post_id, organization_id, person_id, sources, first_seen_at, last_seen_at)
+                (post_id, organization_id, person_id, sources, opened_at, last_seen_at)
             VALUES (%s, %s, %s, %s::jsonb, now(), now())
             """,
             (post_id, org, person_id, factories.sources_of(source_labels)),

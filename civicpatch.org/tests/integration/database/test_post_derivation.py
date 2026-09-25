@@ -180,7 +180,7 @@ async def test_same_post_advances_the_window_without_a_second_row():
         assert first == second
 
         await cur.execute(
-            "SELECT first_seen_at, last_seen_at FROM memberships WHERE id = %s", (first,)
+            "SELECT opened_at, last_seen_at FROM memberships WHERE id = %s", (first,)
         )
         assert await cur.fetchone() == (_T0, _T1)
         await conn.rollback()
@@ -382,7 +382,7 @@ async def test_publish_writes_memberships_for_the_roster():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT p.role_id, m.first_seen_at, m.closed_at, m.start_date, m.end_date
+            SELECT p.role_id, m.opened_at, m.closed_at, m.start_date, m.end_date
             FROM memberships m JOIN posts p ON p.id = m.post_id
             WHERE p.jurisdiction_ocdid = %s
             """,
@@ -390,11 +390,11 @@ async def test_publish_writes_memberships_for_the_roster():
         )
         rows = await cur.fetchall()
         assert len(rows) == 1
-        role_id, first_seen_at, closed_at, start_date, end_date = rows[0]
+        role_id, opened_at, closed_at, start_date, end_date = rows[0]
         assert role_id == "mayor"
         assert closed_at is None
         # The record's own date, not the moment publish ran.
-        assert first_seen_at == _T0
+        assert opened_at == _T0
         # Valid time, what the source claims about the term, beside transaction time above.
         assert (start_date, end_date) == ("2025", "2029-12-31")
 

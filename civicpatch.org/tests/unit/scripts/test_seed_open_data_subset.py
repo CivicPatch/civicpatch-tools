@@ -196,7 +196,7 @@ def test_membership_row_drops_derived_and_unexported_columns():
             "label": "Council Member",
             "start_date": "2024-01-01",
             "end_date": None,
-            "first_seen_at": "2026-01-01T00:00:00Z",
+            "opened_at": "2026-01-01T00:00:00Z",
             "last_seen_at": "2026-01-01T00:00:00Z",
             "closed_at": None,
             "created_at": "2026-01-01T00:00:00Z",

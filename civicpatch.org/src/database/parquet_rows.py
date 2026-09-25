@@ -56,7 +56,7 @@ TABLES: dict[str, LiteralString] = {
                m.id::text, m.person_id::text, m.post_id::text, m.organization_id::text,
                p.jurisdiction_ocdid,
                m.label, m.start_date, m.end_date,
-               m.first_seen_at, m.last_seen_at, m.closed_at, m.created_at,
+               m.opened_at, m.last_seen_at, m.closed_at, m.created_at,
                m.designations, membership_source_labels(m.sources) AS source_labels,
                (m.closed_at IS NULL) AS is_open
         FROM memberships m

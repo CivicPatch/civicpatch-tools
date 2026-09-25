@@ -51,7 +51,7 @@ SCHEMAS: dict[str, pa.Schema] = {
             # or "Jan 2024" as often as a real date. Parsing here would invent precision.
             ("start_date", pa.string()),
             ("end_date", pa.string()),
-            ("first_seen_at", _TIMESTAMP),
+            ("opened_at", _TIMESTAMP),
             ("last_seen_at", _TIMESTAMP),
             ("closed_at", _TIMESTAMP),
             ("created_at", _TIMESTAMP),

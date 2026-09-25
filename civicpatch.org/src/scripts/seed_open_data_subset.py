@@ -183,7 +183,7 @@ def membership_row(row: dict[str, Any], post_ids: dict[str, str]) -> dict[str, A
         "label": row["label"],
         "start_date": row["start_date"],
         "end_date": row["end_date"],
-        "first_seen_at": row["first_seen_at"],
+        "opened_at": row["opened_at"],
         "last_seen_at": row["last_seen_at"],
         "closed_at": row["closed_at"],
         "created_at": row["created_at"],
@@ -245,10 +245,10 @@ INSERT_SQL: dict[str, LiteralString] = {
     "memberships": """
         INSERT INTO memberships
             (id, post_id, organization_id, person_id, label, start_date, end_date,
-             first_seen_at, last_seen_at, closed_at, created_at, designations, sources)
+             opened_at, last_seen_at, closed_at, created_at, designations, sources)
         VALUES
             (%(id)s, %(post_id)s, %(organization_id)s, %(person_id)s, %(label)s, %(start_date)s,
-             %(end_date)s, %(first_seen_at)s, %(last_seen_at)s, %(closed_at)s, %(created_at)s,
+             %(end_date)s, %(opened_at)s, %(last_seen_at)s, %(closed_at)s, %(created_at)s,
              %(designations)s, %(sources)s::jsonb)
         -- No conflict target: `memberships_one_open_per_organization` (person_id,
         -- organization_id) WHERE closed_at IS NULL can collide independently of the id PK —

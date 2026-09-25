@@ -34,7 +34,7 @@ class Membership(BaseModel, frozen=True):
     # The key, not its hash: a membership is read for the role and division it is in, and the
     # hash cannot be read back to either.
     post: PostKey
-    first_seen_at: datetime
+    opened_at: datetime
     last_seen_at: datetime
     label: str | None = None
     start_date: str | None = None
@@ -77,7 +77,7 @@ def derive_membership(
         end_date=membership_date(
             members, post.post_id, MEMBERSHIP_END_DATE_FIELD, own_records, facts
         ),
-        first_seen_at=first_seen(seen),
+        opened_at=first_seen(seen),
         last_seen_at=last_seen(seen),
         designations=held.details.designations,
         unmatched_text=held.details.unmatched_text,

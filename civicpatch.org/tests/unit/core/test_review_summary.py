@@ -34,7 +34,7 @@ _BASE = "ocd-division/country:us/state:tx/place:alpha"
 def _membership(role_id="mayor", division=f"{_BASE}/council_district:1"):
     return Membership(
         post=PostKey(organization_id="org-1", role_id=role_id, division_ocdid=division),
-        first_seen_at=_T,
+        opened_at=_T,
         last_seen_at=_T,
     )
 

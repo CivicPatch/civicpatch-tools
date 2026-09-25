@@ -1,6 +1,6 @@
 """Integration tests for `?as_of` on the memberships read — who held a post at a date.
 
-The window is the membership's own interval: open at `first_seen_at`, closed at `closed_at`.
+The window is the membership's own interval: open at `opened_at`, closed at `closed_at`.
 It lives here and not on the posts read, which is undated — a post is stable, so every one of
 them belongs in the answer whatever date is asked about.
 
@@ -70,7 +70,7 @@ async def _seed_succession() -> str:
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, organization_id, "mayor", _BASE)
 
-        for name, first_seen_at, closed_at in (
+        for name, opened_at, closed_at in (
             ("Outgoing", _TOOK_OFFICE, _HANDOVER),
             ("Incoming", _HANDOVER, None),
         ):
@@ -84,15 +84,15 @@ async def _seed_succession() -> str:
                 """
                 INSERT INTO memberships
                     (post_id, organization_id, person_id,
-                     first_seen_at, last_seen_at, closed_at, sources)
+                     opened_at, last_seen_at, closed_at, sources)
                 VALUES (%s, %s, %s, %s, %s, %s, %s::jsonb)
                 """,
                 (
                     post_id,
                     organization_id,
                     person_id,
-                    first_seen_at,
-                    closed_at or first_seen_at,
+                    opened_at,
+                    closed_at or opened_at,
                     closed_at,
                     factories.sources_of([_LABEL]),
                 ),
@@ -162,7 +162,7 @@ async def test_before_we_ever_looked_the_seat_is_empty_but_still_there_and_still
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_membership_carries_the_interval_it_was_selected_on():
-    """`as_of` filters on `first_seen_at`/`closed_at`, so a row has to show both — a reader
+    """`as_of` filters on `opened_at`/`closed_at`, so a row has to show both — a reader
     drawing a tenure must not have to infer its end from a sighting."""
     await _seed_succession()
 
@@ -171,12 +171,12 @@ async def test_a_membership_carries_the_interval_it_was_selected_on():
         rows = await memberships.list_for_jurisdiction(cur, _OCDID, date(2026, 4, 1))
 
     outgoing = next(row for row in rows if row["person_name"] == "Outgoing")
-    assert outgoing["first_seen_at"] == _TOOK_OFFICE
+    assert outgoing["opened_at"] == _TOOK_OFFICE
     assert outgoing["closed_at"] == _HANDOVER
 
     open_now = await _rows_at(None)
     incoming = next(row for row in open_now if row["person_name"] == "Incoming")
-    assert incoming["first_seen_at"] == _HANDOVER
+    assert incoming["opened_at"] == _HANDOVER
     assert incoming["closed_at"] is None
 
 

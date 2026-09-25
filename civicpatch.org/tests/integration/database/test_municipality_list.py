@@ -102,7 +102,7 @@ async def _add_people(ocdid, count):
             )
             await cur.execute(
                 "INSERT INTO memberships "
-                "(post_id, organization_id, person_id, first_seen_at, last_seen_at) "
+                "(post_id, organization_id, person_id, opened_at, last_seen_at) "
                 "VALUES (%s, %s, %s, now(), now())",
                 (post_id, organization_id, person_id),
             )

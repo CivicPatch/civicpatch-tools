@@ -18,7 +18,7 @@ PERSON_START_DATE = """(
     SELECT memberships.start_date
     FROM memberships
     WHERE memberships.person_id = people.id
-    ORDER BY (memberships.closed_at IS NULL) DESC, memberships.first_seen_at DESC
+    ORDER BY (memberships.closed_at IS NULL) DESC, memberships.opened_at DESC
     LIMIT 1
 )"""
 
@@ -26,7 +26,7 @@ PERSON_END_DATE = """(
     SELECT memberships.end_date
     FROM memberships
     WHERE memberships.person_id = people.id
-    ORDER BY (memberships.closed_at IS NULL) DESC, memberships.first_seen_at DESC
+    ORDER BY (memberships.closed_at IS NULL) DESC, memberships.opened_at DESC
     LIMIT 1
 )"""
 
@@ -57,7 +57,7 @@ PERSON_MEMBERSHIPS = """COALESCE((
         'start_date', memberships.start_date,
         'end_date', memberships.end_date,
         -- When this seat was first and last observed. Both NOT NULL.
-        'first_seen_at', memberships.first_seen_at,
+        'opened_at', memberships.opened_at,
         'last_seen_at', memberships.last_seen_at
     ) ORDER BY posts.role_id, posts.division_ocdid, posts.id)
     FROM memberships
@@ -73,7 +73,7 @@ PERSON_DIVISION = """(
     SELECT posts.division_ocdid
     FROM memberships JOIN posts ON posts.id = memberships.post_id
     WHERE memberships.person_id = people.id
-    ORDER BY (memberships.closed_at IS NULL) DESC, memberships.first_seen_at DESC, posts.id
+    ORDER BY (memberships.closed_at IS NULL) DESC, memberships.opened_at DESC, posts.id
     LIMIT 1
 )"""
 

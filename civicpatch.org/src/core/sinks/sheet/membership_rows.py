@@ -24,10 +24,10 @@ HEADERS = [
     "post_division_ocdid",
     "membership_id",
     "membership_label",
-    # The source's dates; `first_seen_at` below is ours.
+    # The source's dates; `opened_at` below is ours.
     "membership_start_date",
     "membership_end_date",
-    "membership_first_seen_at",
+    "membership_opened_at",
     "membership_last_seen_at",
     # Empty means they still hold it. No `is_open`: that is this column with a NOT on it.
     "membership_closed_at",
@@ -66,7 +66,7 @@ def to_row(membership: dict) -> list[str]:
         _text(membership.get("membership_label")),
         _text(membership.get("membership_start_date")),
         _text(membership.get("membership_end_date")),
-        _timestamp(membership.get("membership_first_seen_at")),
+        _timestamp(membership.get("membership_opened_at")),
         _timestamp(membership.get("membership_last_seen_at")),
         _timestamp(membership.get("membership_closed_at")),
         _joined(membership.get("membership_source_labels")),

@@ -353,7 +353,7 @@ async def _seat_seen_at(person_id: str, post_id: str):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT first_seen_at, last_seen_at FROM memberships "
+            "SELECT opened_at, last_seen_at FROM memberships "
             "WHERE person_id = %s AND post_id = %s AND closed_at IS NULL",
             (person_id, post_id),
         )
@@ -368,6 +368,6 @@ async def test_a_manual_seat_is_dated_when_the_human_seated_them(client):
 
     await _seat(person_id, mayor)
 
-    first_seen_at, last_seen_at = await _seat_seen_at(person_id, mayor)
-    assert first_seen_at >= before
+    opened_at, last_seen_at = await _seat_seen_at(person_id, mayor)
+    assert opened_at >= before
     assert last_seen_at >= before

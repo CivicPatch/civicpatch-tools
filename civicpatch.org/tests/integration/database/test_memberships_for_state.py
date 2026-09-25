@@ -83,20 +83,20 @@ async def _add_membership(cur, ocdid, division, state, name, stints) -> str:
         "VALUES (%s, %s, %s, %s)",
         (person_id, ocdid, name, ["mayor@zz.gov"]),
     )
-    for first_seen_at, closed_at in stints:
+    for opened_at, closed_at in stints:
         await cur.execute(
             """
             INSERT INTO memberships
                 (post_id, organization_id, person_id,
-                 first_seen_at, last_seen_at, closed_at, label, sources)
+                 opened_at, last_seen_at, closed_at, label, sources)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s::jsonb)
             """,
             (
                 post_id,
                 organization_id,
                 person_id,
-                first_seen_at,
-                closed_at or first_seen_at,
+                opened_at,
+                closed_at or opened_at,
                 closed_at,
                 "Acting",
                 factories.sources_of(["Mayor", "Acting Mayor"]),

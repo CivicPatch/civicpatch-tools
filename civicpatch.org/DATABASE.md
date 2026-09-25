@@ -279,9 +279,9 @@ erDiagram
         text_null       label               "the source's words for what the post label cannot say — seeded on INSERT, then human-owned. Absent from upsert()'s ON CONFLICT SET, which is its whole protection. NULL = the post says it all"
         text_null       start_date          "144: text, not date — sources give partial dates and Popolo allows them (3,513 of 4,547 on dev are partial). From the source; we do not infer it"
         text_null       end_date            "144: text, as start_date. From the source — NOT set when someone stops appearing"
-        timestamptz     first_seen_at       "the changeset's sourced_at when the seat first appeared"
+        timestamptz     opened_at           "225: was first_seen_at. When we first carried this stint; ours, never a page's date"
         timestamptz     last_seen_at        "the changeset's sourced_at, advanced by GREATEST on every publish that still seats them"
-        timestamptz_null closed_at          "set when a scrape stops listing them; NULL = currently open"
+        timestamptz_null closed_at          "When we stopped carrying it; NULL = open. Not end_date, which is often a future term end"
         timestamptz     created_at          "default: now()"
     }
 
@@ -396,6 +396,12 @@ erDiagram
   both sides collapsed five user reports into three on the first backfill. `merge_failed` was
   dropped rather than migrated: nothing had been able to raise one since 2026-09-04, when
   rosters moved to committing straight to `main`.
+
+- **A membership is a stint, migration 225 (step 15).** Holding a post twice is two rows;
+  history is every row, open is `closed_at IS NULL`. 225 only renames `first_seen_at` to
+  `opened_at`, pairing it with `closed_at` and the "open membership" the code already says.
+  Both are ours, and cannot be merged with `start_date` / `end_date`, which a page states and
+  which is often a future term end for someone sitting now.
 
 - **`source_record_identities` folded into `source_records.person_id`, migration 224.** It was
   kept apart so re-linking could rewrite it without touching evidence, but nothing ever rewrote

@@ -127,7 +127,7 @@ async def collect_and_publish(jurisdiction_ocdid: str, collected_at) -> str:
 _INSERT_MEMBERSHIP = """
     INSERT INTO memberships
         (id, post_id, organization_id, person_id, label, start_date, end_date,
-         first_seen_at, last_seen_at, designations, meta_unmatched_text, sources)
+         opened_at, last_seen_at, designations, meta_unmatched_text, sources)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb)
     ON CONFLICT (id) DO UPDATE SET last_seen_at = EXCLUDED.last_seen_at
     RETURNING id::text

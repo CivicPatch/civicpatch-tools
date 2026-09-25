@@ -123,9 +123,9 @@ _DELETE_OPEN_MEMBERSHIPS = """
 _INSERT_MEMBERSHIP = """
     INSERT INTO memberships
         (id, post_id, organization_id, person_id, label, start_date, end_date,
-         first_seen_at, last_seen_at, designations, meta_unmatched_text, sources)
+         opened_at, last_seen_at, designations, meta_unmatched_text, sources)
     SELECT %(id)s, p.id, p.organization_id, %(person_id)s, %(label)s, %(start_date)s,
-           %(end_date)s, %(first_seen_at)s, %(last_seen_at)s, %(designations)s,
+           %(end_date)s, %(opened_at)s, %(last_seen_at)s, %(designations)s,
            %(meta_unmatched_text)s, %(sources)s::jsonb
     FROM posts p WHERE p.id = %(post_id)s
 """
@@ -270,7 +270,7 @@ def membership_rows(people: Iterable[Person]) -> list[dict]:
             "label": membership.label,
             "start_date": membership.start_date,
             "end_date": membership.end_date,
-            "first_seen_at": membership.first_seen_at,
+            "opened_at": membership.opened_at,
             "last_seen_at": membership.last_seen_at,
             "designations": list(membership.designations),
             "meta_unmatched_text": list(membership.unmatched_text),
@@ -306,7 +306,7 @@ _STORED_PEOPLE = """
 
 _STORED_OPEN_MEMBERSHIPS = """
     SELECT m.person_id::text, p.organization_id::text, p.role_id, p.division_ocdid, m.label,
-           m.start_date, m.end_date, m.first_seen_at, m.last_seen_at,
+           m.start_date, m.end_date, m.opened_at, m.last_seen_at,
            m.designations, m.meta_unmatched_text, m.sources,
            array(
                SELECT r.role_id FROM membership_roles r
@@ -331,7 +331,7 @@ def _stored_membership(row) -> Membership:
         label,
         start_date,
         end_date,
-        first_seen_at,
+        opened_at,
         last_seen_at,
         designations,
         unmatched_text,
@@ -344,7 +344,7 @@ def _stored_membership(row) -> Membership:
             role_id=role_id,
             division_ocdid=division_ocdid,
         ),
-        first_seen_at=first_seen_at,
+        opened_at=opened_at,
         last_seen_at=last_seen_at,
         label=label,
         start_date=start_date,
