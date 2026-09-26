@@ -1,11 +1,16 @@
--- open-data moved 1091 jurisdiction OCD-IDs to the registry's (migrate_to_registry.py,
--- 2026-09-25). Renaming here first means the sync after the open-data merge upserts onto these
--- rows instead of inserting fresh ones and deactivating the old ones with all their history.
+-- open-data moved 1091 jurisdiction OCD-IDs to the ones the opencivicdata registry assigns
+-- (open-data scripts/ocdids/migrate_to_registry.py, 2026-09-25). Mostly MA/ME/NH places losing
+-- their county segment, `st.` becoming `st`, and apostrophes becoming `~`.
 --
--- Copy the row under the new id, repoint every column naming a jurisdiction, delete the old
--- row. Division ids derive from the jurisdiction id, so they are rewritten by prefix and posts
--- follow through their cascading FK. A pair whose new id already exists beside its old one
--- aborts; a pair whose old id is gone is dropped, which is what makes a re-run a no-op.
+-- This renames the same rows here so the sync that follows the open-data merge upserts onto
+-- them instead of inserting fresh rows and deactivating the old ones with all their history.
+--
+-- Nothing has an ON UPDATE CASCADE path for the whole graph, so the rename is: copy the row
+-- under the new id, repoint every column that names a jurisdiction, then delete the old row.
+-- Division ids derive from the jurisdiction id (shared/utils/divisions.py), so they are
+-- rewritten by prefix; posts follow through their cascading FK. Idempotent: a pair whose old
+-- id is gone is dropped from the map before anything runs, and a pair whose new id already
+-- exists beside its old one aborts the transaction.
 
 BEGIN;
 
@@ -1106,6 +1111,25 @@ INSERT INTO ocdid_renames (old_id, new_id) VALUES
 
 DELETE FROM ocdid_renames r
 WHERE NOT EXISTS (SELECT 1 FROM jurisdictions j WHERE j.jurisdiction_ocdid = r.old_id);
+
+-- An earlier naming pass can have left an inactive shell under a new id: no data, only the
+-- organization row every jurisdiction gets. Those go; anything else under a new id aborts below.
+CREATE TEMP TABLE IF NOT EXISTS ocdid_shells ON COMMIT DROP AS
+SELECT j.jurisdiction_ocdid
+  FROM jurisdictions j
+  JOIN ocdid_renames r ON r.new_id = j.jurisdiction_ocdid
+ WHERE j.status = 'inactive'
+   AND NOT EXISTS (SELECT 1 FROM source_records t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM people t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM posts t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM divisions t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM changesets t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM pipeline_runs t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM activity t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM review_session_entries t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid);
+
+DELETE FROM organizations o USING ocdid_shells s WHERE o.jurisdiction_ocdid = s.jurisdiction_ocdid;
+DELETE FROM jurisdictions j USING ocdid_shells s WHERE j.jurisdiction_ocdid = s.jurisdiction_ocdid;
 
 DO $$
 DECLARE
