@@ -58,13 +58,6 @@ def test_a_person_row_carries_the_columns_the_card_reads():
     assert row["start_date"] == "2020-01-01"
     assert row["division_ocdid"] == _BASE
     assert row["labels"] == ["Mayor"]
-    assert row["sightings"] == [
-        {
-            "label": "Mayor",
-            "source_url": "https://example.gov/council",
-            "organization_id": "org-1",
-        }
-    ]
 
 
 @pytest.mark.unit
@@ -93,7 +86,6 @@ def test_a_person_with_no_membership_has_no_tenure_fields():
     assert row["memberships"] == []
     assert row["start_date"] is None
     assert row["division_ocdid"] is None
-    assert row["sightings"] == []
 
 
 @pytest.mark.unit

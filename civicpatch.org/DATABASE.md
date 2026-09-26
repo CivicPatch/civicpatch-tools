@@ -211,7 +211,7 @@ erDiagram
         text            name                "verbatim, as the page spelled it"
         text_array      other_names         "210: default '{}'; names the source states outright (a sheet row); empty for a scrape"
         text            label               "idx; verbatim. ONE RECORD PER LABEL is the contract with the pipeline — a person seen under two titles is two rows"
-        text            source_url          "the page this sighting came from"
+        text            source_url          "the page this source record came from"
         text_null       url                 "the person's own link"
         text_null       phone
         text_null       email

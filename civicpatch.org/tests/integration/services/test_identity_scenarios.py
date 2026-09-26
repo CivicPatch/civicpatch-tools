@@ -174,7 +174,7 @@ async def test_scenario_6_a_record_scraped_during_a_merge_stays_with_its_base_id
     assert set(roster) == {a2}
     assert _organizations_of(roster[a2]) == {council, school}
 
-    # The matcher links a new sighting to the base identity, never the merged cluster.
+    # The matcher links a new source record to the base identity, never the merged cluster.
     [linked] = await assign_ids(_OCDID, [{"name": "A. Smith"}])
     assert linked["id"] == a1
     await _scrape(_T1, {a1: [_record("A. Smith", "Mayor", council, "(415) 555-0101")]})

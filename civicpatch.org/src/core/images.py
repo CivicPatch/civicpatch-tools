@@ -17,7 +17,7 @@ The two halves meet on one string: `cdn_urls` builds `https://{artifacts}.{domai
 ingest and `artifacts_key` parses it back at publish. They have to change together, which is
 why they live in one file.
 
-Nothing here is specific to a person: a sighting and a roster entry are both dicts with an
+Nothing here is specific to a person: a source record and a roster entry are both dicts with an
 `image` key, which is what lets one pass serve both.
 """
 
@@ -83,7 +83,7 @@ def resolve_images(
     resolved = [with_images(person, source_urls, cdn_urls) for person in people]
     # Asked of the *result*: a photo the pipeline never downloaded arrives as a plain url, so
     # `local_image_basename` finds nothing and the old check skipped it silently. Buckley's
-    # mayor was the case — one sighting, an `image`, no `cdn_image`, no warning.
+    # mayor was the case — one source record, an `image`, no `cdn_image`, no warning.
     unserved = [
         str(person.get("name"))
         for person in resolved
@@ -95,9 +95,9 @@ def resolve_images(
 def records_with_images(
     records_by_person: dict[str, list[dict]], source_urls: dict, cdn_urls: dict
 ) -> dict[str, list[dict]]:
-    """The same resolution `resolve_images` does to a roster, applied to the sightings behind it.
+    """The same resolution `resolve_images` does to a roster, applied to the source records behind it.
 
-    A sighting stores both urls itself, so the photo does not have to be looked up through the
+    A source record stores both urls itself, so the photo does not have to be looked up through the
     person it was resolved to.
     """
     return {

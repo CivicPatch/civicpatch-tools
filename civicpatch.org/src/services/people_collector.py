@@ -109,7 +109,7 @@ async def _store_source_records(
     jurisdiction_ocdid: str,
     records_by_person: dict[str, list[dict]],
 ) -> None:
-    """Every sighting as the page gave it. Never fatal."""
+    """Every source record as the page gave it. Never fatal."""
     try:
         stored = await insert_source_records(
             changeset_id, jurisdiction_ocdid, records_by_person
@@ -168,7 +168,7 @@ async def _ingest_roster(
     with open(data_file_path, "r") as f:
         data = yaml_load(f.read())
 
-    # Reconciliation classifies each sighting's label against this. Post derivation used to
+    # Reconciliation classifies each source record's label against this. Post derivation used to
     # read it here too and no longer does — `review_summary_for_changeset` builds its own, at the
     # point it needs one.
     taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))

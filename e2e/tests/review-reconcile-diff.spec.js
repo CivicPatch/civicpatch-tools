@@ -45,7 +45,7 @@ test.describe("Review reconcile diff (populated)", () => {
     // moved, so nothing else is on screen — which the old view could not do,
     // since it rendered all eleven fields regardless.
     //
-    // Email is back: `asSightings` emits one sighting per address, so "an email was added" is
+    // Email is back: `asSourceRecords` emits one source record per address, so "an email was added" is
     // expressible again. It was briefly not, and this list briefly said so.
     //
     // The fourth row is Source urls, and it is not a change: `diff: false` makes

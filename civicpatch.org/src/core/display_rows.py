@@ -28,22 +28,6 @@ def _source_labels(sources: Sequence[MembershipSource]) -> list[str | None]:
     return list(dict.fromkeys(source.note for source in sources))
 
 
-def _sightings(memberships: Sequence[Membership]) -> list[dict]:
-    seen: dict[tuple, dict] = {}
-    for membership in memberships:
-        for source in membership.sources:
-            key = (source.note, source.url, membership.post.organization_id)
-            seen.setdefault(
-                key,
-                {
-                    "label": source.note,
-                    "source_url": source.url,
-                    "organization_id": membership.post.organization_id,
-                },
-            )
-    return list(seen.values())
-
-
 def _latest(memberships: Sequence[Membership]) -> Membership | None:
     """The tenure the person-level dates and division come from: open first, then most recent.
     Every membership here is open, so it is the most recently first-seen seat."""
@@ -127,7 +111,6 @@ def _person_row(
             ),
             key=lambda label: (label is None, label or ""),
         ),
-        "sightings": _sightings(memberships),
         "division_ocdid": latest.post.division_ocdid if latest else None,
         "memberships": [
             _membership_row(

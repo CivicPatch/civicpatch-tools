@@ -81,7 +81,7 @@ def merge_jurisdiction_notes(
     for row in rows:
         if not row.jurisdiction_note:
             continue
-        key = row_key(row.jurisdiction_ocdid, row.sighting.name)
+        key = row_key(row.jurisdiction_ocdid, row.source_record.name)
         already = merged.get(key, "")
         merged[key] = f"{row.jurisdiction_note}; {already}" if already else row.jurisdiction_note
     return merged

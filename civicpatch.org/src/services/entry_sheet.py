@@ -19,7 +19,7 @@ class SheetNotConfigured(Exception):
 
 def spreadsheet_url() -> str:
     """Where a volunteer goes to look at or fix the rows. One place builds it, so the link on
-    the import page and the `source_url` stamped onto every sighting cannot disagree."""
+    the import page and the `source_url` stamped onto every source record cannot disagree."""
     return f"https://docs.google.com/spreadsheets/d/{spreadsheet_id()}"
 
 

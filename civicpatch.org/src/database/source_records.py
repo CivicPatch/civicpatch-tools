@@ -1,4 +1,4 @@
-"""Database queries for `source_records` — one row per sighting, and who each sighting is.
+"""Database queries for `source_records` — one row per source record, and who each source record is.
 
 A row is what one page said about one person, once, verbatim. Write-once: there is deliberately
 no update and no delete here.
@@ -72,7 +72,7 @@ async def changeset_images(changeset_id: str) -> list[str]:
 async def insert_source_records(
     changeset_id: str, jurisdiction_ocdid: str, records_by_person: dict[str, list[dict]]
 ) -> int:
-    """Every sighting the scrape saw, and which person each one was resolved to."""
+    """Every source record the scrape saw, and which person each one was resolved to."""
     rows = [
         _record_row(str(uuid.uuid4()), changeset_id, jurisdiction_ocdid, person_id, record)
         for person_id, records in records_by_person.items()
@@ -88,7 +88,7 @@ async def insert_source_records(
 
 
 async def get_source_records_for_changeset(changeset_id: str) -> list[dict]:
-    """Every sighting one scrape saw, each with the person it was resolved to."""
+    """Every source record one scrape saw, each with the person it was resolved to."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(

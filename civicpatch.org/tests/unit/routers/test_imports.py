@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from unittest.mock import AsyncMock, patch
 
 import pytest
-from core.sheet_import_rows import ImportRow, RowError, Sighting
+from core.sheet_import_rows import ImportRow, RowError, SheetRecord
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from lib.auth import get_optional_user
@@ -31,7 +31,7 @@ _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_test/government"
 _ROW = ImportRow(
     line=2,
     jurisdiction_ocdid=_OCDID,
-    sighting=Sighting(name="Ana Reyes", label="Chair", source_url="https://example.gov"),
+    source_record=SheetRecord(name="Ana Reyes", label="Chair", source_url="https://example.gov"),
 )
 _READY_PREVIEW = ImportPreview(
     jurisdictions_ready=[_OCDID],

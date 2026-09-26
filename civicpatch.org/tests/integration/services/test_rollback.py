@@ -139,7 +139,7 @@ async def _seed_person(
         )
         await conn.commit()
 
-    # A real person always has a sighting behind them — a rollback republish falls back to it,
+    # A real person always has a source record behind them — a rollback republish falls back to it,
     # so a person seeded with none has nothing to test that fallback against.
     await insert_source_records(
         scrape_id,

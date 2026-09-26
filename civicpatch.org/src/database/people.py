@@ -82,19 +82,6 @@ PERSON_LABELS = """COALESCE((
 ), '[]'::jsonb)"""
 
 
-# `PERSON_LABELS` without the pooling: each open membership's sources keep the organization they
-# are held in, so re-deriving a published roster puts a person back into each body separately.
-PERSON_SIGHTINGS = """COALESCE((
-    SELECT jsonb_agg(DISTINCT jsonb_build_object(
-        'label', source->>'note',
-        'source_url', source->>'url',
-        'organization_id', memberships.organization_id::text
-    ))
-    FROM memberships, jsonb_array_elements(memberships.sources) AS source
-    WHERE memberships.person_id = people.id AND memberships.closed_at IS NULL
-), '[]'::jsonb)"""
-
-
 # The shape `data` had, assembled from columns. Verified byte-identical across all 20,712 dev
 # rows, so readers moved without their callers noticing.
 PERSON_JSON = f"""jsonb_build_object(
@@ -112,7 +99,6 @@ PERSON_JSON = f"""jsonb_build_object(
     'jurisdiction_ocdid', people.jurisdiction_ocdid,
     'updated_at', to_char(people.updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS') || '+00:00',
     'labels', {PERSON_LABELS},
-    'sightings', {PERSON_SIGHTINGS},
     'division_ocdid', {PERSON_DIVISION},
     'memberships', {PERSON_MEMBERSHIPS}
 )"""

@@ -108,7 +108,7 @@ async def _rows_at(as_of: date | None) -> list[dict]:
 
 async def _holders(as_of: date | None) -> int:
     """Occupancy is the number of memberships open at that moment — the posts read used to
-    send a count of its own, windowed on sightings rather than on the interval."""
+    send a count of its own, windowed on source records rather than on the interval."""
     return len(await _rows_at(as_of))
 
 
@@ -162,7 +162,7 @@ async def test_before_we_ever_looked_the_seat_is_empty_but_still_there_and_still
 @pytest.mark.integration
 async def test_a_membership_carries_the_interval_it_was_selected_on():
     """`as_of` filters on `opened_at`/`closed_at`, so a row has to show both — a reader
-    drawing a tenure must not have to infer its end from a sighting."""
+    drawing a tenure must not have to infer its end from a source record."""
     await _seed_succession()
 
     pool = await get_pool()

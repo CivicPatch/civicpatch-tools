@@ -146,7 +146,7 @@ class ExtractedPersonRecord(BaseModel):
 
 
 class PersonSourceRecord(ExtractedPersonRecord):
-    """One sighting, stamped with the page it came from.
+    """One source record, stamped with the page it came from.
 
     The unit that crosses the pipeline/cp.org boundary. Several may describe one person —
     reconciling them is cp.org's job, because that is where the taxonomy, the role priorities
@@ -219,7 +219,7 @@ class Membership(BaseModel):
 
 
 class DerivedPerson(PersonBase):
-    """One person's sightings combined — what `people_derivation` produces.
+    """One person's source records combined — what `people_derivation` produces.
 
     Not a people row: nothing is written yet, and no post has been derived, so it carries the
     raw `labels` and no membership.
@@ -230,9 +230,6 @@ class DerivedPerson(PersonBase):
     # Verbatim, one per office. Decomposition into role + division + unmatched happens later,
     # in `derive_roles`.
     labels: List[str] = []
-    # The records behind `labels` and `source_urls`, each label still paired with its page and the
-    # organization whose extraction produced it — the pairing those flat lists lose.
-    sightings: List[PersonSourceRecord] = []
 
 
 class Person(PersonBase):

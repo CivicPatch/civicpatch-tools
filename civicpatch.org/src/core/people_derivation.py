@@ -1,4 +1,4 @@
-"""The people a scrape's sightings imply. `projection.posts` is the same step for posts.
+"""The people a scrape's source records imply. `projection.posts` is the same step for posts.
 
 Pure over records, identities and a taxonomy, bar the log it writes to.
 
@@ -59,7 +59,7 @@ def merge_field(values: List[str]) -> str:
 
 
 def merge_image(values: List[str]) -> str:
-    """A photo the pipeline downloaded, when any sighting has one. Only those are ever served,
+    """A photo the pipeline downloaded, when any source record has one. Only those are ever served,
     and `merge_field`'s alphabetical tie-break would otherwise hand the win to any `/…` or
     `https://…` value, since both sort before `local://`."""
     downloaded = [value for value in values if value.startswith(LOCAL_IMAGE_PREFIX)]
@@ -148,7 +148,7 @@ def merge_weak_tie_groups(
 
 
 def get_source_urls(person_records: List[PersonSourceRecord]) -> List[str]:
-    """Every page the person was seen on — a sighting exists because that page named them."""
+    """Every page the person was seen on — a source record exists because that page named them."""
     return sorted({record.source_url for record in person_records if record.source_url})
 
 
@@ -189,7 +189,7 @@ def merge_records_to_person(
     urls = merge_field_to_list([r.url for r in records if r.url is not None])
     # Case-insensitive both ways: a source that writes the name differently on two pages is
     # spelling one name, not naming an alias.
-    # Every spelling a sighting used, and every name a source stated outright.
+    # Every spelling a source record used, and every name a source stated outright.
     seen_names = [
         name for record in records for name in [record.name, *record.other_names]
     ]
@@ -214,12 +214,6 @@ def merge_records_to_person(
         jurisdiction_ocdid=jurisdiction_ocdid,
         source_urls=[],
         updated_at=datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        # Sorted: ingest reads records in page order and the read in row order, and the person must
-        # come out the same either way.
-        sightings=sorted(
-            records,
-            key=lambda r: (r.source_url, r.label, r.organization_id or "", r.name),
-        ),
     )
 
     person.source_urls = get_source_urls(records)
@@ -233,7 +227,7 @@ def derived_people(
     jurisdiction_ocdid: str,
     log: Log,
 ) -> List[Tuple[DerivedPerson, List[PersonSourceRecord]]]:
-    """Group a scrape's sightings into people, each with the records behind it.
+    """Group a scrape's source records into people, each with the records behind it.
 
     Everyone seen comes back: scope lives on the post, as `posts.meta_is_tracked`, not on whether
     a label resolved.

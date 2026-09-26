@@ -86,20 +86,18 @@ def test_the_public_read_stays_one_jurisdiction_and_unpaged(client):
 
 @pytest.mark.unit
 def test_the_public_read_withholds_what_a_reader_is_not_owed(client):
-    """`sightings` and `labels` are post-derivation input, declared server-owned in
-    `core.people_edits.SERVER_OWNED_FIELDS`, and a membership's `meta_unmatched_text` is parser
-    diagnostics. All three were on this public unpaged endpoint until 2026-09-24, because the
-    route returned `PERSON_JSON`'s dicts and nothing filtered them. `Person` declares none of
-    them, so answering with the model is the filter."""
+    """`labels` is server-owned input (`core.people_edits.SERVER_OWNED_FIELDS`), and a
+    membership's `meta_unmatched_text` is parser diagnostics. Both were on this public unpaged
+    endpoint until 2026-09-24, because the route returned `PERSON_JSON`'s dicts and nothing
+    filtered them. `Person` declares neither, so answering with the model is the filter."""
     with patch(
         "routers.api.people.database.get_roster",
         new_callable=AsyncMock,
-        return_value=[dict(_row("1", "Ada Whitfield"), sightings=[{"label": "Mayor"}], labels=["Mayor"])],
+        return_value=[dict(_row("1", "Ada Whitfield"), labels=["Mayor"])],
     ):
         response = client.get(f"/people?jurisdiction_ocdid={TEST_OCDID}")
 
     [row] = response.json()["data"]
-    assert "sightings" not in row
     assert "labels" not in row
 
 

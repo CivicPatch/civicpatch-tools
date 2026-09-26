@@ -97,7 +97,7 @@ async def _request(updated_at: str, ocdid: str = _OCDID) -> str:
     changeset_id = await factories.complete_run(run_id)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        # One sighting, because `AVAILABLE_FOR_REVIEW` is now "this scrape saw somebody".
+        # One source record, because `AVAILABLE_FOR_REVIEW` is now "this scrape saw somebody".
         organization_id = await factories.default_organization(cur, ocdid)
         await cur.execute(
             """

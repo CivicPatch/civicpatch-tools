@@ -24,7 +24,7 @@ src/
   core/             ← PURE domain logic, no I/O (unit-testable with zero mocks)
                        Named `<subject>_<thing>`; a subject gets a suffix only when it has
                        more than one module here, so `coverage.py` is bare and `people_*` is not.
-    people_derivation.py     ← a scrape's sightings grouped into people
+    people_derivation.py     ← a scrape's source records grouped into people
     people_roster.py         ← those people as the document a reviewer reads
     people_roles.py          ← which office a person's labels imply
     people_edits.py          ← what a reviewer may change: field patches and accept/reject

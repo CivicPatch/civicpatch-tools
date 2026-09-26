@@ -365,7 +365,7 @@ def test_duplicate_records_merged_within_same_name():
 
 
 def test_a_stated_other_name_becomes_an_alias():
-    """A sheet row's `other_names` survive normalisation and join the sighting spellings."""
+    """A sheet row's `other_names` survive normalisation and join the source record spellings."""
     record = _make_llm_person(
         name="Jennifer Fisk-Becker",
         label="Council Member",

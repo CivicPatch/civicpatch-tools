@@ -85,7 +85,7 @@ def test_local_image_basename_reads_either_shape():
     assert local_image_basename({"image": "https://alpha.gov/ann.png"}) is None
 
 
-# --- a whole roster, and the sightings behind it ---
+# --- a whole roster, and the source records behind it ---
 
 # Downloaded, so the source url is known; whether it was served is the other lookup.
 BOTH_SOURCE_URLS = {**SOURCE_URLS, "bo.png": "https://beta.gov/photos/bo.png"}
@@ -142,8 +142,8 @@ def test_a_roster_the_pipeline_already_resolved_reports_nothing():
 
 
 @pytest.mark.unit
-def test_every_sighting_behind_a_person_resolves_too():
-    """A sighting stores both urls itself, so a photo does not have to be looked up through
+def test_every_source_record_behind_a_person_resolves_too():
+    """A source record stores both urls itself, so a photo does not have to be looked up through
     the person it was resolved to."""
     records = {"person-1": [{"image": "local://ann.png"}, {"image": "local://ann.png"}]}
     resolved = records_with_images(records, SOURCE_URLS, CDN_URLS)
@@ -152,7 +152,7 @@ def test_every_sighting_behind_a_person_resolves_too():
 
 
 @pytest.mark.unit
-def test_a_person_with_no_sightings_keeps_an_empty_list():
+def test_a_person_with_no_source_records_keeps_an_empty_list():
     assert records_with_images({"person-1": []}, SOURCE_URLS, CDN_URLS) == {
         "person-1": []
     }

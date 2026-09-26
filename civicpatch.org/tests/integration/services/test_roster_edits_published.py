@@ -169,7 +169,7 @@ async def _seed() -> tuple[str, Identity]:
 @pytest.mark.integration
 async def test_an_edit_is_recorded_as_an_assertion_so_a_scrape_cannot_revert_it():
     """The reason this path changed. It used to write only the open-data file, so nothing said
-    a human had chosen the value and the next publish overwrote it from the sightings."""
+    a human had chosen the value and the next publish overwrote it from the source records."""
     person_id, user = await _seed()
 
     await edit_published_roster(
@@ -239,7 +239,7 @@ async def test_the_edit_mints_a_changeset_born_published():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_an_addition_with_no_office_puts_nobody_on_the_roster():
-    """This test verified that an addition with no post was refused, because a sighting with
+    """This test verified that an addition with no post was refused, because a source record with
     nothing to say would have published somebody into the `unmatched` seat. It now verifies
     that nothing lands: being on the roster is holding an office, so an addition that names
     none says a person exists and places them nowhere."""
@@ -434,7 +434,7 @@ async def _seed_second_person() -> str:
 
 
 async def _pending_scrape(updated_at: datetime.datetime) -> str:
-    """A scrape awaiting review: a request with a run behind it and one sighting."""
+    """A scrape awaiting review: a request with a run behind it and one source record."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(

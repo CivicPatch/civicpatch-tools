@@ -8,7 +8,7 @@ from core.people_roster import (
     in_known_organizations,
     named_like_a_person,
     roster_from_rows,
-    roster_from_sightings,
+    roster_from_source_records,
     reviewer_source_records,
 )
 from shared.schemas import Person, PersonSourceRecord, Role, RoleConfig, RoleStatus
@@ -70,7 +70,7 @@ def test_no_rows_is_not_an_error():
 
 
 @pytest.mark.unit
-def test_two_sightings_of_one_person_become_one_official():
+def test_two_source_records_of_one_person_become_one_official():
     kept = _reconcile(
         [
             _record("Ann Lee", "Council Member Place 2", phone="(512) 978-2100"),
@@ -81,23 +81,6 @@ def test_two_sightings_of_one_person_become_one_official():
     assert kept[0]["phones"] == ["(512) 978-2100"]
     assert kept[0]["emails"] == ["ann@alpha.gov"]
     assert sorted(kept[0]["labels"]) == ["Council Member Place 2", "Mayor Pro-Tem"]
-
-
-@pytest.mark.unit
-def test_each_roster_entry_keeps_its_labels_paired_with_page_and_organization():
-    """The flat `labels` cannot say which organization each came from; publish needs that to
-    put a person who holds posts in two bodies into both."""
-    [entry] = _reconcile(
-        [
-            _record("Ann Lee", "Council Member Place 2", phone="(512) 978-2100", organization_id="council"),
-            {**_record("Ann Lee", "Mayor", organization_id="mayor"), "source_url": "https://alpha.gov/mayor"},
-        ]
-    )
-
-    assert sorted(entry["sightings"], key=lambda s: s["label"]) == [
-        {"label": "Council Member Place 2", "source_url": "https://alpha.gov/council", "organization_id": "council"},
-        {"label": "Mayor", "source_url": "https://alpha.gov/mayor", "organization_id": "mayor"},
-    ]
 
 
 @pytest.mark.unit
@@ -270,8 +253,8 @@ def test_a_url_of_their_own_is_kept():
 
 
 @pytest.mark.unit
-def test_every_sighting_is_kept_against_the_person_it_reconciled_into():
-    """`source_records` stores one row per sighting, so the merge has to say which rows it
+def test_every_source_record_is_kept_against_the_person_it_reconciled_into():
+    """`source_records` stores one row per source record, so the merge has to say which rows it
     merged — a person alone cannot say which page gave it a phone number."""
     records = _records_behind(
         [
@@ -285,10 +268,10 @@ def test_every_sighting_is_kept_against_the_person_it_reconciled_into():
     ]
 
 
-# --- reading the roster back out of stored sightings ---
+# --- reading the roster back out of stored source records ---
 
 
-def _sighting(person_id: str, name: str, label: str, **fields) -> dict:
+def _source_record(person_id: str, name: str, label: str, **fields) -> dict:
     return {
         "person_id": person_id,
         "name": name,
@@ -300,21 +283,21 @@ def _sighting(person_id: str, name: str, label: str, **fields) -> dict:
     }
 
 
-def _roster_back(sightings: list[dict], published=None):
-    return roster_from_sightings(
-        sightings, published or {}, TAXONOMY, JURISDICTION, MagicMock()
+def _roster_back(source_records: list[dict], published=None):
+    return roster_from_source_records(
+        source_records, published or {}, TAXONOMY, JURISDICTION, MagicMock()
     )
 
 
 @pytest.mark.unit
-def test_stored_sightings_rebuild_the_roster_ingest_produced():
+def test_stored_source_records_rebuild_the_roster_ingest_produced():
     rows = [
         _record("Ann Lee", "Council Member Place 2", phone="(512) 978-2100"),
         _record("Ann Lee", "Mayor Pro-Tem", email="ann@alpha.gov"),
     ]
     at_ingest = _reconcile(rows)
     read_back = _roster_back(
-        [_sighting("p1", row["name"], row["label"], **{k: v for k, v in row.items()
+        [_source_record("p1", row["name"], row["label"], **{k: v for k, v in row.items()
                                                       if k not in ("name", "label")})
          for row in rows]
     )
@@ -332,8 +315,8 @@ def test_grouping_is_read_from_the_identity_not_guessed_again():
     scrape already decided they are one person, and that answer is stored."""
     kept = _roster_back(
         [
-            _sighting("p1", "Bob Kettle", "Mayor"),
-            _sighting("p1", "Robert Kettle", "Mayor"),
+            _source_record("p1", "Bob Kettle", "Mayor"),
+            _source_record("p1", "Robert Kettle", "Mayor"),
         ]
     )
     assert len(kept) == 1
@@ -344,7 +327,7 @@ def test_grouping_is_read_from_the_identity_not_guessed_again():
 def test_two_identities_stay_two_people_even_under_one_name():
     """The mirror of the above: the identity splits as well as joins."""
     kept = _roster_back(
-        [_sighting("p1", "Ann Lee", "Mayor"), _sighting("p2", "Ann Lee", "Council Member")]
+        [_source_record("p1", "Ann Lee", "Mayor"), _source_record("p2", "Ann Lee", "Council Member")]
     )
     assert sorted(person["id"] for person in kept) == ["p1", "p2"]
 
@@ -354,7 +337,7 @@ def test_the_published_name_wins_over_what_the_pages_spelled():
     """`published` is the read-time half of `identities` — the human's answer, taken from
     `people` rather than from the run context."""
     kept = _roster_back(
-        [_sighting("p1", "Katie B. Wilson", "Council Member") for _ in range(3)],
+        [_source_record("p1", "Katie B. Wilson", "Council Member") for _ in range(3)],
         published={"p1": _person("Katie Wilson")},
     )
     assert kept[0]["name"] == "Katie Wilson"
@@ -363,11 +346,11 @@ def test_the_published_name_wins_over_what_the_pages_spelled():
 
 @pytest.mark.unit
 def test_confirmed_aliases_survive_a_scrape_that_never_saw_them():
-    """Every sighting spells him "Bob Kettle"; `["Robert Kettle"]` is a human's answer living
+    """Every source record spells him "Bob Kettle"; `["Robert Kettle"]` is a human's answer living
     on the person. At ingest `identified` carries it forward — the read groups by a stored id
     and does no matching, so without this it comes back empty."""
     kept = _roster_back(
-        [_sighting("p1", "Bob Kettle", "Council Member")],
+        [_source_record("p1", "Bob Kettle", "Council Member")],
         published={"p1": _person("Bob Kettle", ["Robert Kettle"])},
     )
     assert kept[0]["other_names"] == ["Robert Kettle"]
@@ -377,24 +360,24 @@ def test_confirmed_aliases_survive_a_scrape_that_never_saw_them():
 def test_a_person_nobody_has_published_takes_the_most_frequent_spelling():
     kept = _roster_back(
         [
-            _sighting("p1", "Bob Kettle", "Mayor"),
-            _sighting("p1", "Robert Kettle", "Mayor"),
-            _sighting("p1", "Bob Kettle", "Mayor"),
+            _source_record("p1", "Bob Kettle", "Mayor"),
+            _source_record("p1", "Robert Kettle", "Mayor"),
+            _source_record("p1", "Bob Kettle", "Mayor"),
         ]
     )
     assert kept[0]["name"] == "Bob Kettle"
 
 
 @pytest.mark.unit
-def test_the_photo_and_its_cdn_url_come_from_the_same_sighting():
+def test_the_photo_and_its_cdn_url_come_from_the_same_source_record():
     """Merging them independently can credit one page for a photo served from another."""
     kept = _roster_back(
         [
-            _sighting("p1", "Ann Lee", "Mayor",
+            _source_record("p1", "Ann Lee", "Mayor",
                       image="https://alpha.gov/a.png", cdn_image="https://cdn/a.png"),
-            _sighting("p1", "Ann Lee", "Council Member",
+            _source_record("p1", "Ann Lee", "Council Member",
                       image="https://alpha.gov/a.png", cdn_image="https://cdn/a.png"),
-            _sighting("p1", "Ann Lee", "Mayor Pro-Tem",
+            _source_record("p1", "Ann Lee", "Mayor Pro-Tem",
                       image="https://alpha.gov/b.png", cdn_image="https://cdn/b.png"),
         ]
     )
@@ -403,7 +386,7 @@ def test_the_photo_and_its_cdn_url_come_from_the_same_sighting():
 
 
 @pytest.mark.unit
-def test_no_sightings_is_not_an_error():
+def test_no_source_records_is_not_an_error():
     assert _roster_back([]) == []
 
 
@@ -413,7 +396,7 @@ def test_no_sightings_is_not_an_error():
 @pytest.mark.unit
 def test_an_added_person_becomes_one_record_per_page():
     """A row is what one page said about one person, so a reviewer listing two sources saw
-    them twice. The label is the seat they chose — a human is a source, so the sighting says
+    them twice. The label is the seat they chose — a human is a source, so the source record says
     what they said, and the derivation reads a role out of it like any other."""
     added = {
         "name": "Ann Lee",
@@ -447,7 +430,7 @@ def test_one_page_listed_twice_is_still_one_record():
 
 @pytest.mark.unit
 def test_nothing_is_recorded_without_somewhere_it_came_from():
-    """`source_url` is NOT NULL because provenance is what a sighting is for. The editor makes
+    """`source_url` is NOT NULL because provenance is what a source record is for. The editor makes
     it required, so this is the last guard rather than the only one."""
     assert reviewer_source_records({"name": "Ann Lee", "source_urls": []}, "Mayor", "council") == []
     assert reviewer_source_records({"name": "", "source_urls": ["https://alpha.gov"]}, "Mayor", "council") == []
@@ -456,7 +439,7 @@ def test_nothing_is_recorded_without_somewhere_it_came_from():
 @pytest.mark.unit
 def test_only_the_identifying_columns_are_evidence():
     """Everything else the reviewer typed is a claim, recorded by `claims_from_edit`. Copying
-    it here too would make the sighting a second, competing answer."""
+    it here too would make the source record a second, competing answer."""
     record = reviewer_source_records(
         {
             "name": "Ann Lee",
