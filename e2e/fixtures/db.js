@@ -30,7 +30,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 /**
  * Fixture people are named by readable slugs — "recon-maria", "dup-shared" — but
- * `source_record_identities.person_id` became a uuid in migration 144, so the slug can no
+ * `source_records.person_id` is a uuid (144, on the record since 224), so the slug can no
  * longer be inserted. Hashing keeps the fixtures readable and stable: the same slug always
  * yields the same id, which is what lets two sightings deliberately share a person.
  */
@@ -396,11 +396,11 @@ async function seedReviewCard(
     const organizationId = person.organization
       ? await namedOrganization(client, ocdid, person.organization)
       : defaultOrganizationId;
-    const { rows } = await client.query(
+    await client.query(
       `INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url,
-                                   url, phone, email, image, start_date, end_date, organization_id)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
-       RETURNING id`,
+                                   url, phone, email, image, start_date, end_date, organization_id,
+                                   person_id)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
       [
         changesetId,
         ocdid,
@@ -414,12 +414,8 @@ async function seedReviewCard(
         person.start_date ?? null,
         person.end_date ?? null,
         organizationId,
+        personUuid(person.person_id),
       ],
-    );
-    await client.query(
-      `INSERT INTO source_record_identities (source_record_id, person_id, resolved_at)
-       VALUES ($1, $2, NOW())`,
-      [rows[0].id, personUuid(person.person_id)],
     );
   }
 }
@@ -462,8 +458,8 @@ async function seatAt(client, ocdid, { organizationId, personId, roleId, divisio
   );
   await client.query(
     `INSERT INTO memberships (post_id, organization_id, person_id, start_date, end_date,
-                              first_seen_at, last_seen_at)
-     VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
+                              opened_at)
+     VALUES ($1, $2, $3, $4, $5, NOW())
      ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL DO NOTHING`,
     [post[0].id, organizationId, personUuid(personId), startDate, endDate],
   );
@@ -551,12 +547,11 @@ async function seedPublishedFacts(client, ocdid, people) {
   const organizationId = await organizationFor(client, ocdid);
   await client.query(`DELETE FROM source_records WHERE changeset_id = $1`, [changesetId]);
   for (const person of people) {
-    const { rows } = await client.query(
+    await client.query(
       `INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url,
                                    url, phone, email, image, start_date, end_date,
-                                   organization_id, created_at)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12, NOW() - INTERVAL '30 days')
-       RETURNING id`,
+                                   organization_id, person_id, created_at)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13, NOW() - INTERVAL '30 days')`,
       [
         changesetId,
         ocdid,
@@ -573,12 +568,8 @@ async function seedPublishedFacts(client, ocdid, people) {
         person.start_date ?? null,
         person.end_date ?? null,
         organizationId,
+        personUuid(person.id),
       ],
-    );
-    await client.query(
-      `INSERT INTO source_record_identities (source_record_id, person_id, resolved_at)
-       VALUES ($1, $2, NOW() - INTERVAL '30 days')`,
-      [rows[0].id, personUuid(person.id)],
     );
   }
 }
@@ -1213,11 +1204,11 @@ export async function teardownE2eFixtures() {
         [stateOcdid(code)],
       );
     }
-    // Claims outlive the jurisdictions they are about: `assertions.created_by` is NOT NULL and
+    // Claims outlive the jurisdictions they are about: `claims.created_by` is NOT NULL and
     // points at the user, so deleting the test user first fails on the foreign key. Every edit
     // a spec makes files one now, which is why this was not needed before the edit route.
     await client.query(
-      `DELETE FROM assertions WHERE created_by IN (
+      `DELETE FROM claims WHERE created_by IN (
          SELECT id FROM users WHERE provider = $1
        )`,
       [TEST_USER_PROVIDER],
