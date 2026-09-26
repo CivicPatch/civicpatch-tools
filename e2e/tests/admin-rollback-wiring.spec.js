@@ -1,16 +1,20 @@
 /**
- * User story: an admin rolls back a user's hand-made edits, from that user's history page
+ * User story: an admin rolls back a user's changesets, from that user's history page
  *
  * Given I open a user's history page (/~{username}/history)
- * Then their currently-active claims load into a list, none pre-selected
- * When I select some and click "Roll back N selected"
- * Then a confirm step appears first — rollback has no built-in undo, so this is one-way
- * And only on confirming are exactly the selected ids sent to the rollback endpoint
+ * Then their recent changesets load into a list, none pre-selected
+ * When I select some, give a reason and click "Roll back N selected"
+ * Then a confirm step appears first
+ * And only on confirming are exactly the selected changeset ids and the reason sent
  * But if there's nothing left to roll back, the failure is shown, not silently dropped
+ *
+ * These tests verified per-claim candidates and `claim_ids`. They now verify per-changeset
+ * candidates, `changeset_ids` and a required `comment`, because step 13 made the changeset the
+ * unit of rollback and a rollback needs a reason nothing else records.
  *
  * The page itself does a real, unstubbable server-side username lookup (`/~{username}` resolves
  * against the DB, not the API), so it targets the seeded e2e test user rather than a fake one.
- * The user, candidates and rollback endpoints still touch real assertions/roster state the e2e
+ * The user, candidates and rollback endpoints still touch real changeset/roster state the e2e
  * stack has no fixtures for, so those three stay stubbed (wildcarded on user id, since the
  * seeded user's id is DB-assigned, not fixed): this tests the client wiring — that the page
  * reaches the right endpoints with the right payloads and drives the right UI state — not the
@@ -33,26 +37,24 @@ const TARGET_USER = {
   last_login_at: null,
 };
 
+const REASON = "vandalism";
+
 const CANDIDATES = [
   {
-    claim_id: "a1",
-    entity_id: "person-1",
-    entity_label: "Ada Chen",
-    field_path: "name",
-    value: "Ada M. Chen",
+    changeset_id: "c1",
+    kind: "roster_edit",
     jurisdiction_ocdid: "ocd-jurisdiction/country:us/state:nj/place:e2e/government",
-    status: "active",
-    created_at: "2026-09-01T12:00:00+00:00",
+    jurisdiction_name: "E2E",
+    comment: null,
+    published_at: "2026-09-01T12:00:00+00:00",
   },
   {
-    claim_id: "a2",
-    entity_id: "person-1",
-    entity_label: "Ada Chen",
-    field_path: "phones",
-    value: "555-0100",
+    changeset_id: "c2",
+    kind: "roster_edit",
     jurisdiction_ocdid: "ocd-jurisdiction/country:us/state:nj/place:e2e/government",
-    status: "active",
-    created_at: "2026-09-02T12:00:00+00:00",
+    jurisdiction_name: "E2E",
+    comment: null,
+    published_at: "2026-09-02T12:00:00+00:00",
   },
 ];
 
@@ -85,6 +87,10 @@ async function selectAll(page) {
   await page.locator(".candidate-row-list__select-all input[type=checkbox]").check();
 }
 
+async function giveReason(page) {
+  await page.locator("#user-history-comment").fill(REASON);
+}
+
 test.describe("User history page rollback", () => {
   test("loads a user's candidates, unselected", async ({ adminPage: page }) => {
     await stubUser(page);
@@ -101,6 +107,9 @@ test.describe("User history page rollback", () => {
 
     await expect(page.locator(".candidate-row input[type=checkbox]").nth(0)).toBeChecked();
     await expect(page.locator(".candidate-row input[type=checkbox]").nth(1)).toBeChecked();
+    // No reason yet: a rollback records nothing else about why.
+    await expect(page.getByRole("button", { name: "Roll back 2 selected" })).toBeDisabled();
+    await giveReason(page);
     await expect(page.getByRole("button", { name: "Roll back 2 selected" })).toBeEnabled();
   });
 
@@ -121,6 +130,7 @@ test.describe("User history page rollback", () => {
 
     await openHistoryPage(page);
     await selectAll(page);
+    await giveReason(page);
     await page.getByRole("button", { name: "Roll back 2 selected" }).click();
 
     // Not `.toBeVisible()` on the wrapper itself: `<dialog>` opened via `showModal()` renders
@@ -136,7 +146,9 @@ test.describe("User history page rollback", () => {
     expect(rollbackCalled).toBe(false);
   });
 
-  test("confirming sends exactly the selected assertion ids", async ({ adminPage: page }) => {
+  test("confirming sends exactly the selected changeset ids and the reason", async ({
+    adminPage: page,
+  }) => {
     await stubUser(page);
     await stubCandidates(page);
     let rollbackBody = null;
@@ -152,6 +164,7 @@ test.describe("User history page rollback", () => {
     await openHistoryPage(page);
     // Check only the first candidate — only it should be sent.
     await page.locator(".candidate-row input[type=checkbox]").nth(0).check();
+    await giveReason(page);
     await page.getByRole("button", { name: "Roll back 1 selected" }).click();
     await page
       .locator("confirm-rollback-modal")
@@ -159,10 +172,10 @@ test.describe("User history page rollback", () => {
       .click();
 
     await expect.poll(() => rollbackBody).not.toBeNull();
-    expect(rollbackBody.claim_ids).toEqual(["a1"]);
+    expect(rollbackBody).toEqual({ changeset_ids: ["c1"], comment: REASON });
 
     await expect(page.locator("confirm-rollback-modal")).toHaveCount(0);
-    await expect(page.locator(".status-toast")).toContainText("Rolled back 1 change");
+    await expect(page.locator(".status-toast")).toContainText("Rolled back 1 fact");
   });
 
   test("a failed rollback surfaces the error instead of closing silently", async ({
@@ -180,6 +193,7 @@ test.describe("User history page rollback", () => {
 
     await openHistoryPage(page);
     await selectAll(page);
+    await giveReason(page);
     await page.getByRole("button", { name: "Roll back 2 selected" }).click();
     await page
       .locator("confirm-rollback-modal")
