@@ -7,6 +7,7 @@
 import { component } from "haunted";
 import { html, nothing } from "lit-html";
 import "./timeline.css";
+import "./history.css";
 import {
   dateStringToFriendly,
   durationBetween,
@@ -19,7 +20,7 @@ import {
   type RosterChange,
 } from "../../../components/roster-change/index.js";
 
-// Re-exported: `timeline.ts` and the history page type their entries from here, and a roster
+// Re-exported: `timeline.ts` and the activity page type their entries from here, and a roster
 // change is part of that shape.
 export type { FieldChange, RosterChange } from "../../../components/roster-change/index.js";
 

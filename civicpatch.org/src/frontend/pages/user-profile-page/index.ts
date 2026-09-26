@@ -1,4 +1,4 @@
-// A light, admin-only view of one user: who they are, with a link into their history (where
+// A light, admin-only view of one user: who they are, with a link into their activity (where
 // rollback lives). No profile bio, no activity feed inline — just enough to confirm this is
 // the right person before going further.
 
@@ -56,13 +56,13 @@ function UserProfilePage({ target_user_id, username }: UserProfilePageProps) {
               : null}
           </div>
 
-          <a class="history-widget" href="${profilePath}/history">
-            <i class="fa-solid fa-clock-rotate-left history-widget__icon"></i>
-            <span class="history-widget__text">
-              <span class="history-widget__title">History</span>
-              <span class="history-widget__hint">View edits and roll back changes</span>
+          <a class="activity-widget" href="${profilePath}/activity">
+            <i class="fa-solid fa-clock-rotate-left activity-widget__icon"></i>
+            <span class="activity-widget__text">
+              <span class="activity-widget__title">Activity</span>
+              <span class="activity-widget__hint">View edits and roll back changes</span>
             </span>
-            <i class="fa-solid fa-arrow-right history-widget__arrow"></i>
+            <i class="fa-solid fa-arrow-right activity-widget__arrow"></i>
           </a>
         </div>
       </div>

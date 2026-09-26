@@ -1,7 +1,7 @@
 /**
- * User story: an admin rolls back a user's changesets, from that user's history page
+ * User story: an admin rolls back a user's changesets, from that user's activity page
  *
- * Given I open a user's history page (/~{username}/history)
+ * Given I open a user's activity page (/~{username}/activity)
  * Then their recent changesets load into a list, none pre-selected
  * When I select some, give a reason and click "Roll back N selected"
  * Then a confirm step appears first
@@ -79,7 +79,7 @@ async function stubCandidates(page, candidates = CANDIDATES) {
 }
 
 async function openHistoryPage(page) {
-  await page.goto(`/~${TARGET_USERNAME}/history`);
+  await page.goto(`/~${TARGET_USERNAME}/activity`);
   await expect(page.locator(".candidate-row")).toHaveCount(CANDIDATES.length);
 }
 
@@ -88,10 +88,10 @@ async function selectAll(page) {
 }
 
 async function giveReason(page) {
-  await page.locator("#user-history-comment").fill(REASON);
+  await page.locator("#user-activity-comment").fill(REASON);
 }
 
-test.describe("User history page rollback", () => {
+test.describe("User activity page rollback", () => {
   test("loads a user's candidates, unselected", async ({ adminPage: page }) => {
     await stubUser(page);
     await stubCandidates(page);

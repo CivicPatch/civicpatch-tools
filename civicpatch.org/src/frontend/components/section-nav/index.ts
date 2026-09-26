@@ -59,14 +59,14 @@ export function manageSection(permissions: object, openPrCount?: number): Sectio
 export function userSection(username: string): SectionNavItem[] {
   return [
     { label: "Profile", href: `/~${username}` },
-    { label: "History", href: `/~${username}/history` },
+    { label: "Activity", href: `/~${username}/activity` },
   ];
 }
 
-export function jurisdictionSection(jurisdictionPath: string, historyHref: string): SectionNavItem[] {
+export function jurisdictionSection(jurisdictionPath: string, activityHref: string): SectionNavItem[] {
   return [
     { label: "Details", href: `/${jurisdictionPath}` },
-    { label: "History", href: historyHref },
+    { label: "Activity", href: activityHref },
   ];
 }
 

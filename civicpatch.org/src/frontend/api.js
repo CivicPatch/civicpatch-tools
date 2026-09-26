@@ -334,7 +334,7 @@ export const deleteRole = async (roleId) => {
   return res.json();
 };
 
-export const fetchJurisdictionHistory = async (
+export const fetchJurisdictionActivity = async (
   jurisdictionOcdid,
   page = 1,
   perPage = 25,
@@ -344,7 +344,7 @@ export const fetchJurisdictionHistory = async (
     page,
     per_page: perPage,
   });
-  const res = await fetch(`/api/v1/jurisdictions/history?${params}`, {
+  const res = await fetch(`/api/v1/jurisdictions/activity?${params}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

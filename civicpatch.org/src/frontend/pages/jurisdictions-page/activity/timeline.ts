@@ -1,4 +1,4 @@
-// One jurisdiction's history, as a page of its own.
+// One jurisdiction's activity, as a page of its own.
 //
 // Two sections, because they answer different questions. "In progress" is what somebody still
 // has to act on — short, unpaged, structurally bounded. "Past" is the complete record, paged.
@@ -15,7 +15,7 @@ import { usePagerRef } from "../../../hooks/use-pager-ref.js";
 import "../jurisdiction-page.css";
 import "./timeline.css";
 import "./timeline-entry.ts";
-import { IN_PROGRESS_ANCHOR, historyUrl } from "./history-routes.js";
+import { IN_PROGRESS_ANCHOR, activityUrl } from "./activity-routes.js";
 import { SectionNav, jurisdictionSection } from "../../../components/section-nav/index.js";
 import "../../../components/panel/panel.css";
 import type { InFlightEntry } from "../awaiting-review.js";
@@ -23,7 +23,7 @@ import "./scrape-in-progress.ts";
 import { Pagination } from "../../../components/pagination/index.js";
 import {
   cancelPipelineRun,
-  fetchJurisdictionHistory,
+  fetchJurisdictionActivity,
   fetchJurisdictionInFlight,
 } from "../../../api.js";
 import { dateStringToFriendly } from "../../../utils/date-utils.js";
@@ -31,7 +31,7 @@ import { jurisdictionOcdidToState, jurisdictionOcdidToPath } from "../../../comp
 import { LOGIN_PATH, reviewSessionUrl } from "../../review-routes.js";
 import type { TimelineEntry } from "./timeline-entry.ts";
 
-// Mirrors DEFAULT_HISTORY_LIMIT in database/jurisdictions.py.
+// Mirrors DEFAULT_ACTIVITY_LIMIT in database/jurisdictions.py.
 const PER_PAGE = 25;
 
 // How often to re-read while a cancel is outstanding. Cancelling asks Temporal to stop; the
@@ -91,7 +91,7 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
 
   useEffect(() => {
     if (!jurisdictionOcdid) return;
-    fetchJurisdictionHistory(jurisdictionOcdid, page, PER_PAGE)
+    fetchJurisdictionActivity(jurisdictionOcdid, page, PER_PAGE)
       .then((body: any) => {
         setEntries(body.data ?? []);
         setTotalPages(body.total_pages ?? 1);
@@ -165,7 +165,7 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
   return html`
     <main class="jurisdiction-page page-content">
       <div class="page-focal">
-        <h1 class="page-focal__title">History</h1>
+        <h1 class="page-focal__title">Activity</h1>
         <span class="page-focal__end jurisdiction-page__published">
           ${jurisdictionName}, ${totalChangesets}
           ${totalChangesets === 1 ? "changeset" : "changesets"}
@@ -175,8 +175,8 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
       <div class="sectioned">
         ${SectionNav(
           "jurisdiction",
-          jurisdictionSection(jurisdictionPath, historyUrl(jurisdictionPath)),
-          historyUrl(jurisdictionPath),
+          jurisdictionSection(jurisdictionPath, activityUrl(jurisdictionPath)),
+          activityUrl(jurisdictionPath),
         )}
         <div class="secbody">
           ${running.length || awaiting.length
@@ -205,7 +205,7 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
           <section class="panel" ${ref(pastRef)}>
             <div class="panel__cap"><b>Past</b></div>
             ${loadFailed
-              ? html`<p class="tl-empty">That history could not be loaded.</p>`
+              ? html`<p class="tl-empty">That activity could not be loaded.</p>`
               : entries.length
                 ? html`
                     ${totalPages > 1 ? pastPager : nothing}
@@ -230,7 +230,7 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
 }
 
 customElements.define(
-  "civ-jurisdiction-history",
+  "civ-jurisdiction-activity",
   component(CivTimeline as any, {
     useShadowDOM: false,
     observedAttributes: ["jurisdiction_ocdid", "jurisdiction_name"],

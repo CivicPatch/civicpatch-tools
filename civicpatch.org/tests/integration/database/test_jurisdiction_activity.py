@@ -142,12 +142,12 @@ async def _seed_resolved() -> str:
 
 
 async def _entry_for(changeset_id: str):
-    _, history = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    _, history = await db_jurisdictions.get_jurisdiction_activity(_OCDID)
     return next(e for e in history if e.changeset_id == changeset_id)
 
 
 async def _changes_for(changeset_id: str):
-    _, history = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    _, history = await db_jurisdictions.get_jurisdiction_activity(_OCDID)
     entry = next(e for e in history if e.changeset_id == changeset_id)
     return entry.changes
 
@@ -229,7 +229,7 @@ async def test_a_pending_changeset_is_not_in_the_history_at_all():
     from "it has no outcome" to "it is not here"."""
     changeset_id = await _seed_changeset()
 
-    _, history = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    _, history = await db_jurisdictions.get_jurisdiction_activity(_OCDID)
 
     assert [entry.changeset_id for entry in history] == []
     assert changeset_id is not None
@@ -423,7 +423,7 @@ async def test_a_scrape_entry_carries_its_run_s_clock_not_the_changeset_s():
         )
         await conn.commit()
 
-    _total, entries = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    _total, entries = await db_jurisdictions.get_jurisdiction_activity(_OCDID)
     entry = next(e for e in entries if e.changeset_id == changeset_id)
 
     assert entry.pipeline_run_started_at is not None
@@ -452,7 +452,7 @@ async def test_only_a_scrape_carries_pipeline_run_timestamps():
         )
         await conn.commit()
 
-    _total, entries = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    _total, entries = await db_jurisdictions.get_jurisdiction_activity(_OCDID)
     entry = next(e for e in entries if e.changeset_id == changeset_id)
 
     assert entry.pipeline_run_started_at is None
@@ -494,7 +494,7 @@ async def test_an_entry_carries_what_the_run_reported():
         )
         await conn.commit()
 
-    _total, entries = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    _total, entries = await db_jurisdictions.get_jurisdiction_activity(_OCDID)
     entry = next(e for e in entries if e.changeset_id == changeset_id)
 
     assert [(i.issue_type, i.status) for i in entry.issues] == [
@@ -535,7 +535,7 @@ async def test_a_settled_issue_still_appears_on_the_entry():
         )
         await conn.commit()
 
-    _total, entries = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    _total, entries = await db_jurisdictions.get_jurisdiction_activity(_OCDID)
     entry = next(e for e in entries if e.changeset_id == changeset_id)
 
     assert len(entry.issues) == 1
@@ -564,7 +564,7 @@ async def test_a_dismissal_says_why():
         )
         await conn.commit()
 
-    _total, entries = await db_jurisdictions.get_jurisdiction_history(_OCDID)
+    _total, entries = await db_jurisdictions.get_jurisdiction_activity(_OCDID)
     entry = next(e for e in entries if e.changeset_id == changeset_id)
 
     assert entry.dismissed_reason == "rejected"

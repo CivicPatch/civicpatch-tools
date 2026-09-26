@@ -28,7 +28,7 @@ from schemas.common import (
     StateJurisdictionSets,
 )
 from schemas.jurisdictions import (
-    JurisdictionHistoryEntry,
+    JurisdictionActivityEntry,
     JurisdictionSearchResult,
     TimelineIssue,
 )
@@ -741,14 +741,14 @@ ROSTER_CHANGE_TYPES = [
 # A jurisdiction scraped weekly for a few years, plus imports and hand edits, runs to the
 # hundreds. Dev's max is 24, which is why an earlier pass concluded no pager was needed — but
 # dev holds 400 changesets in total, so it is the wrong place to measure this.
-DEFAULT_HISTORY_LIMIT = 25
+DEFAULT_ACTIVITY_LIMIT = 25
 
 
-async def get_jurisdiction_history(
+async def get_jurisdiction_activity(
     jurisdiction_ocdid,
-    limit: int = DEFAULT_HISTORY_LIMIT,
+    limit: int = DEFAULT_ACTIVITY_LIMIT,
     offset: int = 0,
-) -> tuple[int, List[JurisdictionHistoryEntry]]:
+) -> tuple[int, List[JurisdictionActivityEntry]]:
     """`(total, page)`, matching `get_activity_for_roles` — the caller needs the count to
     render a pager, and taking it here keeps it on the same connection as the page."""
     pool = await get_pool()
@@ -836,7 +836,7 @@ async def get_jurisdiction_history(
         )
         rows = await cur.fetchall()
         history = [
-            JurisdictionHistoryEntry(
+            JurisdictionActivityEntry(
                 changeset_id=row["changeset_id"],
                 created_at=to_iso(row["created_at"]),
                 # `updated_at`: when the source was read, which a duration measures against.

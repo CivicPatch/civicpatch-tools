@@ -13,7 +13,7 @@ PUBLIC_ROUTES = {
     ("GET", "/api/v1/jurisdictions/geojson"),
     ("POST", "/api/v1/jurisdictions/by-ocdids"),
     ("GET", "/api/v1/jurisdictions/search"),
-    ("GET", "/api/v1/jurisdictions/history"),
+    ("GET", "/api/v1/jurisdictions/activity"),
     ("GET", "/api/v1/jurisdictions/in-flight"),
     ("GET", "/api/v1/people"),
     ("GET", "/api/v1/people/geo"),
