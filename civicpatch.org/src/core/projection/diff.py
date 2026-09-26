@@ -2,7 +2,7 @@
 
 One function for every "what changed" in the model:
 
-    roster_diff(stored, derived)                       the projection diff, R6, step 8's dry run
+    roster_diff(stored, derived)                       the projection diff, R6, the prod dry run
     roster_diff(derive(published), derive(+ X))        a review card, a batch count, a rollback preview
     roster_diff(roster at t, roster at t + 1)          the history loop
 

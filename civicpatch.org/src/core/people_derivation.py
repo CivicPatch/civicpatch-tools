@@ -1,4 +1,4 @@
-"""The people a scrape's sightings imply. `post_derivation` is the same step for posts.
+"""The people a scrape's sightings imply. `projection.posts` is the same step for posts.
 
 Pure over records, identities and a taxonomy, bar the log it writes to.
 

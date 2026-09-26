@@ -19,13 +19,11 @@ from core.people_roster import (
     records_by_person,
     roster_from_rows,
 )
-from core.post_derivation import DerivedPost, RosterEntry, derived_posts
 from database import organizations, projection
 from database.database import get_pool
 from database.roles import get_roles
-from services.publish import chosen_posts, picks_in
 from shared.utils.name_utils import person_list_to_identities
-from shared.schemas import Person, Role, RoleConfig
+from shared.schemas import Person, RoleConfig
 from shared.utils.person_id_utils import resolve_people_ids
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
@@ -93,22 +91,3 @@ async def reconcile_roster(
     )
     identified_roster = await assign_ids(jurisdiction_ocdid, roster)
     return identified_roster, records_by_person(identified_roster, records_by_name)
-
-
-async def derive_posts(
-    roster: list[dict],
-    roles: list[Role],
-    taxonomy: Taxonomy,
-) -> list[DerivedPost]:
-    """The seats this roster's labels imply — *projected*, not written.
-
-    A scrape proposes seats; publishing creates them (`publications._bind_memberships`). Nothing
-    is persisted here, so a changeset that is dismissed leaves nothing behind and there is no
-    reaper.
-
-    Raises: both callers want the failure but do different things with it, so the policy stays
-    with them. `chosen_posts` is empty at ingest and returns without a query, but a re-submit of
-    an edited roster must not undo a reviewer's pick.
-    """
-    records = [RosterEntry(**person) for person in roster]
-    return derived_posts(records, taxonomy, roles, await chosen_posts(picks_in(records)))

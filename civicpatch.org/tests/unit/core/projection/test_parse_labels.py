@@ -195,3 +195,43 @@ def test_residue_from_a_label_with_no_role_is_unmatched_text():
 @pytest.mark.unit
 def test_labels_across_records_are_parsed_together():
     assert details("Council Member", "Council Member Place 3").designations == ("Place 3",)
+
+
+@pytest.mark.unit
+def test_at_large_with_no_value_names_the_whole_jurisdiction_and_leaves_nothing_over():
+    assert post_for([record("r1", "Council Member At-Large")]) == key("council-member")
+    assert details("Council Member At-Large") == LabelDetails()
+
+
+@pytest.mark.unit
+def test_every_losing_role_is_kept_in_rank_order():
+    """The corpus has labels naming five roles; keeping only the first loser dropped the rest."""
+    roles = [
+        _role("mayor", "Mayor", [], 10),
+        _role("chair", "Chair", [], 200),
+        _role("vice-chair", "Vice Chair", [], 300),
+        _role("council-member", "Council Member", [], 500),
+    ]
+    records = [
+        record("r1", "Chair", minutes=1),
+        record("r2", "Vice Chair", minutes=2),
+        record("r3", "Council Member", minutes=3),
+    ]
+
+    post, found = parse_labels(records, JURISDICTION, build_taxonomy(RoleConfig(roles=roles)))
+
+    assert post == key("chair")
+    assert found.extra_roles == ("vice-chair", "council-member")
+
+
+@pytest.mark.unit
+def test_a_second_label_naming_no_known_role_is_unmatched_not_an_extra_role():
+    found = details("Council Member", "Harbormaster")
+
+    assert found.extra_roles == ()
+    assert found.unmatched_text == ("Harbormaster",)
+
+
+@pytest.mark.unit
+def test_an_unknown_label_beside_a_known_one_still_reaches_triage():
+    assert details("Mayor", "Dogcatcher").unmatched_text == ("Dogcatcher",)

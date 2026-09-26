@@ -1,7 +1,7 @@
 """The projection diff for every jurisdiction with a roster: stored rows against what the
 facts derive.
 
-Read-only: nothing is written. The step 8 dry run, and the proof of a backfill. Run in the
+Read-only: nothing is written. The prod dry run, R6's check, and the proof of a backfill. Run in the
 app container so it reads the same database the app does:
 
     docker exec -w /app civicpatch-org python src/scripts/projection_diff.py

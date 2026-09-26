@@ -16,7 +16,8 @@ import pytest
 import pytest_asyncio
 
 from core.people_edits import POSTS_FIELD
-from core.post_derivation import ChosenPost, DerivedMembership
+from core.projection.facts import PostKey
+from tests.integration.factories import SeededMembership
 from core.roster_changes import ChangeKind, changes_of
 from database import claims, divisions, memberships, organizations, posts, projection
 from database.users import SYSTEM_USER_ID
@@ -178,7 +179,7 @@ async def _already_published() -> None:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         other = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), other, org, _T0)
+        await factories.bind_membership(cur, SeededMembership(person_id=person_id), other, org, _T0)
         await conn.commit()
 
 
@@ -231,7 +232,7 @@ async def test_a_post_is_unverified_until_a_publish_puts_somebody_in_it():
         unverified = await posts.unverified_by_jurisdiction(cur, [_OCDID])
         assert [post["id"] for post in unverified[_OCDID]] == [post_id]
 
-        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
+        await factories.bind_membership(cur, SeededMembership(person_id=person_id), post_id, org, _T0)
         assert await posts.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
         await conn.rollback()
 
@@ -302,10 +303,10 @@ async def test_unmatched_people_share_one_post_per_division():
         assert bucket == again
 
         await factories.bind_membership(
-            cur, DerivedMembership(person_id=first_person, meta_unmatched_text=["Town Moderator"]), bucket, org, _T0
+            cur, SeededMembership(person_id=first_person, meta_unmatched_text=["Town Moderator"]), bucket, org, _T0
         )
         await factories.bind_membership(
-            cur, DerivedMembership(person_id=second, meta_unmatched_text=["Supervisor of the Checklist"]), bucket, org, _T0
+            cur, SeededMembership(person_id=second, meta_unmatched_text=["Supervisor of the Checklist"]), bucket, org, _T0
         )
 
         await cur.execute(
@@ -448,7 +449,7 @@ async def test_delete_refuses_a_post_that_has_ever_been_held():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         held = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         unheld = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
-        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), held, org, _T0)
+        await factories.bind_membership(cur, SeededMembership(person_id=person_id), held, org, _T0)
 
         assert await posts.delete_if_unheld(cur, held) is False
         assert await posts.delete_if_unheld(cur, unheld) is True
@@ -505,7 +506,7 @@ async def test_the_membership_read_still_selects_every_column_it_names():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
+        await factories.bind_membership(cur, SeededMembership(person_id=person_id), post_id, org, _T0)
 
         rows = await memberships.list_for_jurisdiction(cur, _OCDID)
         assert len(rows) == 1
@@ -564,24 +565,15 @@ async def _add_post_logs(changeset_id: str) -> list[dict]:
 
 
 async def _mint(identities: list[tuple[str, str]], changeset_id: str) -> None:
-    """Create posts the way publishing does, as (role_id, division_ocdid) in the default body."""
-    from core.post_derivation import DerivedPost
-
+    """Create posts the way a rebuild does, as (role_id, division_ocdid) in the default body."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         organization_id = await organizations.get_default(cur, _OCDID)
-        derived = [
-            DerivedPost(
-                organization_id=organization_id,
-                role_id=role_id,
-                role_label=role_id.title(),
-                division_ocdid=division_ocdid,
-                headcount=1,
-                members=[],
-            )
+        keys = [
+            PostKey(organization_id=organization_id, role_id=role_id, division_ocdid=division_ocdid)
             for role_id, division_ocdid in identities
         ]
-        await posts.create_all(cur, _OCDID, derived, changeset_id)
+        await projection._ensure_posts(cur, _OCDID, keys, changeset_id)
         await conn.commit()
 
 
@@ -684,7 +676,6 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
     Asserted through `_apply_scrape_changes`, which is what ingest actually runs: the old
     tests called the writes directly and so stayed green when ingest stopped calling them.
     """
-    from core.post_derivation import DerivedMembership
     from services.people_collector import _apply_scrape_changes
 
     person_id = await _seed_person()
@@ -693,7 +684,7 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, org, _T0)
+        await factories.bind_membership(cur, SeededMembership(person_id=person_id), post_id, org, _T0)
         await cur.execute(
             "INSERT INTO changesets (id, jurisdiction_ocdid, kind) "
             "VALUES (%s, %s, 'scrape')",
@@ -750,7 +741,6 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes():
     Re-confirmation is the one case where "we still see them" is the only thing the scrape has
     to say, and it was the one case that recorded nothing.
     """
-    from core.post_derivation import DerivedMembership
     from services.people_collector import _apply_scrape_changes
 
     # Three, because `MIN_EXPECTED_PEOPLE` is 3: a one-person roster is itself a review issue,
@@ -774,7 +764,7 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes():
         for person_id, (role_id, role_label) in zip(people, seats):
             post_id = await posts.find_or_create(cur, _OCDID, org, role_id, _BASE)
             await factories.bind_membership(
-                cur, DerivedMembership(person_id=person_id), post_id, org, _T0
+                cur, SeededMembership(person_id=person_id), post_id, org, _T0
             )
             # The sighting, resolved to the seated person. Publishing renders its roster from
             # these, so without them `proposed_roster` is empty and the publish refuses.
@@ -817,7 +807,6 @@ async def test_a_scrape_the_pipeline_reported_an_issue_on_does_not_publish():
     issues were also filed *after* the publish decision, so they could not have gated it even
     if it had asked.
     """
-    from core.post_derivation import DerivedMembership
     from database.issues import upsert_issue
     from services.people_collector import _apply_scrape_changes
     from shared.utils.statuses import PipelineIssueType
@@ -837,7 +826,7 @@ async def test_a_scrape_the_pipeline_reported_an_issue_on_does_not_publish():
         for person_id, (role_id, role_label) in zip(people, seats):
             post_id = await posts.find_or_create(cur, _OCDID, org, role_id, _BASE)
             await factories.bind_membership(
-                cur, DerivedMembership(person_id=person_id), post_id, org, _T0
+                cur, SeededMembership(person_id=person_id), post_id, org, _T0
             )
             await cur.execute(
                 "INSERT INTO source_records "
@@ -894,7 +883,7 @@ async def test_a_partial_term_date_is_stored_as_the_source_gave_it():
 
         membership_id = await factories.bind_membership(
             cur,
-            DerivedMembership(person_id=person_id, start_date="2024", end_date="2028-01"),
+            SeededMembership(person_id=person_id, start_date="2024", end_date="2028-01"),
             post_id,
             org,
             _T0,
@@ -906,57 +895,6 @@ async def test_a_partial_term_date_is_stored_as_the_source_gave_it():
         )
         assert await cur.fetchone() == ("2024", "2028-01")
         await conn.rollback()
-
-
-# --- a reviewer's pick ------------------------------------------------------------
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_pick_is_keyed_on_the_person_not_the_post():
-    """`chosen_posts` used to key on `post_id`, which meant the pick had to ride on the record
-    the derivation reads. Keyed on the person, the derivation's input can be purely what the
-    source said."""
-    from core.post_derivation import RosterEntry
-    from services.publish import chosen_posts, picks_in
-
-    await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        await conn.commit()
-
-    roster = [
-        RosterEntry(
-            id="p1",
-            jurisdiction_ocdid=_OCDID,
-            post_id=post_id,
-        )
-    ]
-
-    assert await chosen_posts(picks_in(roster)) == {
-        "p1": ChosenPost(organization_id=org, role_id="mayor", division_ocdid=_BASE)
-    }
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_pick_at_a_post_that_is_gone_is_simply_absent():
-    """Not an error and not a lost person: the derivation falls back to the label."""
-    from core.post_derivation import RosterEntry
-    from services.publish import chosen_posts, picks_in
-
-    roster = [
-        RosterEntry(
-            id="p1",
-            jurisdiction_ocdid=_OCDID,
-            post_id="00000000-0000-4000-8000-00000000dead",
-        )
-    ]
-
-    assert await chosen_posts(picks_in(roster)) == {}
 
 
 @pytest.mark.asyncio
@@ -974,7 +912,7 @@ async def test_a_persons_term_is_read_off_the_seat_they_hold():
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         await factories.bind_membership(
             cur,
-            DerivedMembership(person_id=person_id, start_date="2024", end_date="2028-01"),
+            SeededMembership(person_id=person_id, start_date="2024", end_date="2028-01"),
             post_id,
             org,
             _T0,
@@ -1142,7 +1080,7 @@ async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
         curator_id = (await cur.fetchone())[0]
         await posts.set_post_label(cur, post_id, "Position 8", curator_id)
         for person_id in (staying, leaving):
-            await factories.bind_membership(cur, DerivedMembership(person_id=person_id), post_id, council, _T0)
+            await factories.bind_membership(cur, SeededMembership(person_id=person_id), post_id, council, _T0)
         await conn.commit()
     await _publish(
         (council, staying, "Council Member"), (council, leaving, "Council Member")
@@ -1204,12 +1142,13 @@ async def test_a_body_the_scrape_never_read_keeps_its_people():
     read.
     """
     person_id = await _seed_person("Ana Reyes")
-    other_id = await _seed_person("Bo Chen")
     council, mayors_office = await _two_bodies()
     await _publish(
         (council, person_id, "Council Member Ward 3"),
         (mayors_office, person_id, "Mayor"),
     )
+    # Seeded with his record: a rebuild keeps only who the facts derive.
+    other_id = await _seed_person("Bo Chen")
 
     await _publish((mayors_office, other_id, "Mayor"), at=_T1)
 

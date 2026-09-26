@@ -329,3 +329,90 @@ def test_the_answer_does_not_depend_on_the_order_the_facts_arrive():
     )
 
     assert forwards == backwards
+
+
+@pytest.mark.unit
+def test_people_with_the_same_bare_label_share_one_post():
+    posts = {
+        derive(
+            {name},
+            Facts(records=(record(f"r-{name}", "Council Member", person=name),)),
+            person_id=name,
+        ).memberships[0].post
+        for name in ("alice", "bob", "carol")
+    }
+
+    assert posts == {COUNCIL_MEMBER_KEY}
+
+
+@pytest.mark.unit
+def test_positions_share_one_post_and_each_keeps_its_own():
+    alice = derive(ALICE, Facts(records=(record("r1", "Council Member Position 1"),)))
+    bob = derive(
+        {"bob"},
+        Facts(records=(record("r2", "Council Member Position 2", person="bob"),)),
+        person_id="bob",
+    )
+
+    assert alice.memberships[0].post == bob.memberships[0].post == COUNCIL_MEMBER_KEY
+    assert alice.memberships[0].designations == ("Position 1",)
+    assert bob.memberships[0].designations == ("Position 2",)
+
+
+@pytest.mark.unit
+def test_claims_keep_two_bare_labels_on_their_own_wards():
+    ward = {
+        n: PostKey(
+            organization_id=COUNCIL, role_id="council-member",
+            division_ocdid=f"{BASE}/council_district:{n}",
+        )
+        for n in (1, 2)
+    }
+    alice = derive(ALICE, Facts(
+        records=(record("r1", "Council Member", minutes=1),),
+        claims=(holds("k1", ward[1], minutes=2),),
+    ))
+    bob = derive({"bob"}, Facts(
+        records=(record("r2", "Council Member", person="bob", minutes=1),),
+        claims=(holds("k2", ward[2], person="bob", minutes=2),),
+    ), person_id="bob")
+
+    assert [m.post for m in alice.memberships] == [ward[1]]
+    assert [m.post for m in bob.memberships] == [ward[2]]
+
+
+@pytest.mark.unit
+def test_a_claimed_post_carries_no_role_the_parse_demoted():
+    facts = Facts(
+        records=(record("r1", "Mayor and Council Member", minutes=1),),
+        claims=(holds("k1", COUNCIL_MEMBER_KEY, minutes=2),),
+    )
+
+    [membership] = derive(ALICE, facts).memberships
+
+    assert membership.post == COUNCIL_MEMBER_KEY
+    assert membership.extra_roles == ()
+
+
+@pytest.mark.unit
+def test_a_claim_naming_a_post_that_is_gone_leaves_the_parsed_post():
+    """The loader resolves no key for a deleted post, so the claim names nothing the fold has."""
+    gone = person_claim("k1", "posts", "00000000-0000-4000-8000-00000000dead", minutes=2)
+    facts = Facts(records=(record("r1", "Mayor", minutes=1),), claims=(gone,))
+
+    assert [m.post for m in derive(ALICE, facts).memberships] == [MAYOR_KEY]
+
+
+@pytest.mark.unit
+def test_each_organizations_membership_keeps_only_its_own_sources():
+    facts = Facts(records=(
+        record("r1", "Mayor"),
+        record("r2", "Council Member", organization=SCHOOL),
+    ))
+
+    by_organization = {
+        m.post.organization_id: [source.note for source in m.sources]
+        for m in derive(ALICE, facts).memberships
+    }
+
+    assert by_organization == {COUNCIL: ["Mayor"], SCHOOL: ["Council Member"]}

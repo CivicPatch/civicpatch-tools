@@ -11,7 +11,7 @@ from schemas.claims import (
 from shared.schemas import SubmittedPersonRecord
 from shared.utils.person_fields import order_person_fields
 
-from core.post_derivation import LABELS_FIELD, SIGHTINGS_FIELD
+from core.people_roster import LABELS_FIELD, SIGHTINGS_FIELD
 from core.projection.canonical_ids import SAME_AS
 
 # Keys a client patch may not set: they come from source records, and a client-sent value would

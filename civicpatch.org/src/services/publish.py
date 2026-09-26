@@ -17,7 +17,6 @@ from core.activity import changes_from_diff
 from core.changeset_lifecycle import REVIEW_POOL_KINDS
 from core.images import artifacts_key, promoted_key
 from core.membership_label import post_label
-from core.post_derivation import ChosenPost, DerivedPost, RosterEntry, derived_posts
 from core.projection.diff import on_roster, roster_diff
 from core.projection.roster import Roster
 from database import posts as posts_db
@@ -78,43 +77,6 @@ def _promote_image(cdn_image: str) -> None:
         )
     except Exception as e:
         logger.error(f"Failed to promote image {source_key}: {e}", exc_info=True)
-
-
-def picks_in(roster: list[RosterEntry]) -> dict[str, str]:
-    """The post each person was picked for, by person id."""
-    return {record.id: record.post_id for record in roster if record.id and record.post_id}
-
-
-async def chosen_posts(picks: dict[str, str]) -> dict[str, ChosenPost]:
-    """The seat a reviewer picked, **by person id**.
-
-    Keyed on the person so the derivation's input can be purely what the source said: a pick is
-    a human's answer and travels here instead of riding on the record.
-
-    A pick naming a post that no longer exists is simply absent, and the derivation falls back
-    to the labels rather than losing the person.
-    """
-    if not picks:
-        return {}
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await posts_db.identities_by_id(cur, list(set(picks.values())))
-    return {
-        person_id: ChosenPost(
-            organization_id=rows[post_id]["organization_id"],
-            role_id=rows[post_id]["role_id"],
-            division_ocdid=rows[post_id]["division_ocdid"],
-        )
-        for person_id, post_id in picks.items()
-        if post_id in rows
-    }
-
-
-async def _get_derived_posts(people: list[dict]) -> list[DerivedPost]:
-    roles = await get_roles()
-    taxonomy = build_taxonomy(RoleConfig(roles=roles))
-    roster = [RosterEntry(**person) for person in people]
-    return derived_posts(roster, taxonomy, roles, await chosen_posts(picks_in(roster)))
 
 
 async def publish_roster(

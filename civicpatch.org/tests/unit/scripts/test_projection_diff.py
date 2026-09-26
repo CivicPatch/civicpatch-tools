@@ -1,4 +1,4 @@
-"""The pure piece of the step 8 dry run: telling a label the taxonomy cannot place from one it
+"""The pure piece of the prod dry run: telling a label the taxonomy cannot place from one it
 walked past. The diff itself is the script run against a real database, not a mocked one."""
 
 import pytest

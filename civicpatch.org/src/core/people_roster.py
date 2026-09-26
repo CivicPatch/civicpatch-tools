@@ -1,7 +1,7 @@
 """The roster a submit implies: the document a reviewer reads, in the order they read it.
 
 `people_derivation` decides who the people are; this decides how they are presented — sorted,
-identified, and rendered. `post_derivation` reads what comes out.
+identified, and rendered.
 
 A submit carries `PersonSourceRecord`s, one per sighting.
 
@@ -25,7 +25,12 @@ from core.people_derivation import (
     term_dates,
 )
 from core.people_roles import derive_roles
-from core.post_derivation import LABELS_FIELD, SIGHTINGS_FIELD
+
+
+# Roster keys written here from source records, and stripped from client patches by
+# `people_edits`: a client-sent label would have no organization behind it.
+SIGHTINGS_FIELD = "sightings"
+LABELS_FIELD = "labels"
 
 
 def roster_from_rows(
@@ -191,7 +196,7 @@ def _rendered(person: DerivedPerson, records: list[PersonSourceRecord], taxonomy
     return {
         "name": person.name,
         "other_names": person.other_names,
-        # Self-contained, unlike `post_derivation.py`'s own `label`: `batch_review.py` shows
+        # Self-contained, unlike a membership's own label: `batch_review.py` shows
         # this alone in a dense multi-town table, with no separate place for the seat's name.
         "label": render_with_post_label(
             derive_post_label(derived.role or "", derived.division_ocdid),
