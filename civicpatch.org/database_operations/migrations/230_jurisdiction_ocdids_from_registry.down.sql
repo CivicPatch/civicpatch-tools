@@ -1100,6 +1100,25 @@ INSERT INTO ocdid_renames (old_id, new_id) VALUES
 DELETE FROM ocdid_renames r
 WHERE NOT EXISTS (SELECT 1 FROM jurisdictions j WHERE j.jurisdiction_ocdid = r.old_id);
 
+-- An earlier naming pass can have left an inactive shell under a new id: no data, only the
+-- organization row every jurisdiction gets. Those go; anything else under a new id aborts below.
+CREATE TEMP TABLE IF NOT EXISTS ocdid_shells ON COMMIT DROP AS
+SELECT j.jurisdiction_ocdid
+  FROM jurisdictions j
+  JOIN ocdid_renames r ON r.new_id = j.jurisdiction_ocdid
+ WHERE j.status = 'inactive'
+   AND NOT EXISTS (SELECT 1 FROM source_records t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM people t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM posts t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM divisions t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM changesets t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM pipeline_runs t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM activity t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid)
+   AND NOT EXISTS (SELECT 1 FROM review_session_entries t WHERE t.jurisdiction_ocdid = j.jurisdiction_ocdid);
+
+DELETE FROM organizations o USING ocdid_shells s WHERE o.jurisdiction_ocdid = s.jurisdiction_ocdid;
+DELETE FROM jurisdictions j USING ocdid_shells s WHERE j.jurisdiction_ocdid = s.jurisdiction_ocdid;
+
 DO $$
 DECLARE
     collisions text;
