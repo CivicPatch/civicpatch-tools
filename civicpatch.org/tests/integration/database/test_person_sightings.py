@@ -12,7 +12,8 @@ from datetime import datetime, timezone
 import pytest
 import pytest_asyncio
 
-from core.post_derivation import DerivedMembership, MembershipSource
+from core.projection.membership_details import MembershipSource
+from tests.integration.factories import SeededMembership
 from database import divisions, organizations, people, posts
 from database.database import get_pool
 from tests.integration import factories
@@ -111,7 +112,7 @@ async def test_a_published_sighting_keeps_the_page_its_membership_recorded():
         post_id = await posts.find_or_create(cur, _OCDID, mayor, "mayor", _DIVISION)
         await factories.bind_membership(
             cur,
-            DerivedMembership(
+            SeededMembership(
                 person_id=person_id,
                 sources=[MembershipSource(url="https://zz.gov/mayor", note="Mayor")],
             ),

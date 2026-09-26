@@ -14,7 +14,8 @@ import uuid
 import pytest
 import pytest_asyncio
 
-from core.post_derivation import DerivedMembership, MembershipSource
+from core.projection.membership_details import MembershipSource
+from tests.integration.factories import SeededMembership
 from database import divisions, organizations, posts
 from database.database import get_pool
 from database.source_records import insert_source_records
@@ -131,7 +132,7 @@ async def _seed_person(
         post_id = await posts.find_or_create(cur, jurisdiction_ocdid, org, post_slug, base)
         await factories.bind_membership(
             cur,
-            DerivedMembership(person_id=person_id, sources=[MembershipSource(note=label)]),
+            SeededMembership(person_id=person_id, sources=[MembershipSource(note=label)]),
             post_id,
             org,
             datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc),

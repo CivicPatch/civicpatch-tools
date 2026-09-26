@@ -171,6 +171,30 @@ async def test_a_person_the_latest_read_dropped_keeps_a_closed_row():
     assert roster_diff(stored, derived).empty
 
 
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_person_no_fact_derives_loses_their_row():
+    """R4: a person row outliving every fact behind it is a patch the rebuild must not keep."""
+    ids = await _seed()
+    await _scrape(ids, _T0, {"ben": "Council Member"})
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO people (id, jurisdiction_ocdid, name, updated_at) "
+            "VALUES (%s, %s, 'Ana', now())",
+            (ids["ana"], _OCDID),
+        )
+        await conn.commit()
+
+    await _rebuild()
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text FROM people WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        assert await cur.fetchall() == [(ids["ben"],)]
+
 async def _unpublished_scrape(ids: dict, listing: dict[str, str]) -> str:
     """A scrape awaiting review: its records are stored, and no roster derives them yet."""
     changeset_id = str(uuid.uuid4())

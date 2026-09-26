@@ -1,9 +1,9 @@
 """The one writer of the projection.
 
 Every row a publish puts in `people` and `memberships` is written from
-here and nowhere else, so what "publishing a roster" changes is one place to read. Still
-upsert-shaped: the statements are the ones the publish path always ran, moved under one roof
-unchanged. The delete-and-rebuild writer replaces them at step 8 of the projector plan.
+here and nowhere else, so what "publishing a roster" changes is one place to read. Each publish
+rebuilds the jurisdiction from its facts: people upserted and anyone else removed, memberships
+deleted and re-inserted.
 
 `tests/unit/database/test_one_writer.py` holds the boundary. The writes still outside it are
 each named there with the step that deletes them.
@@ -117,6 +117,11 @@ _LOCK_JURISDICTION = "SELECT pg_advisory_xact_lock(hashtext(%s))"
 _DELETE_MEMBERSHIPS = """
     DELETE FROM memberships m USING posts p
     WHERE m.post_id = p.id AND p.jurisdiction_ocdid = %s
+"""
+
+# After the membership delete, so no row still points at a person it removes.
+_DELETE_PEOPLE_NOT_DERIVED = """
+    DELETE FROM people WHERE jurisdiction_ocdid = %s AND id <> ALL(%s::uuid[])
 """
 
 _PUBLISHED_AT = """
@@ -282,14 +287,18 @@ async def rebuild(
     keys: Sequence[PostKey],
     changeset_id: str | None = None,
 ) -> None:
-    """Replace the jurisdiction's projection: every person in `roster` upserted, and every
-    membership row, open or closed, deleted and re-inserted from `history`."""
+    """Replace the jurisdiction's projection: every person in `roster` upserted and nobody else
+    kept, and every membership row, open or closed, deleted and re-inserted from `history`."""
     await cur.execute(_LOCK_JURISDICTION, (jurisdiction_ocdid,))
     await _ensure_posts(cur, jurisdiction_ocdid, keys, changeset_id)
     people = person_rows(roster.people, jurisdiction_ocdid)
     if people:
         await cur.executemany(PERSON_UPSERT, people)
     await cur.execute(_DELETE_MEMBERSHIPS, (jurisdiction_ocdid,))
+    await cur.execute(
+        _DELETE_PEOPLE_NOT_DERIVED,
+        (jurisdiction_ocdid, [person.id for person in roster.people]),
+    )
     memberships = membership_rows(history)
     if memberships:
         await cur.executemany(_INSERT_MEMBERSHIP, memberships)

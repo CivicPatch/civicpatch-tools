@@ -17,7 +17,9 @@ a row through time.
 import json
 import uuid
 
-from core.post_derivation import DerivedMembership
+from pydantic import BaseModel
+
+from core.projection.membership_details import MembershipSource
 from shared.utils.membership_ids import membership_id
 from database import memberships, organizations, projection
 from database.changesets import register_scrape_changeset
@@ -25,6 +27,18 @@ from database.database import get_pool
 from database.pipeline_runs import register_run, update_pipeline_run_status
 from database.source_records import insert_source_records
 from shared.utils.statuses import PipelineRunStatus
+
+
+class SeededMembership(BaseModel):
+    """What `bind_membership` lays down: one open membership row, as a test wants it."""
+
+    person_id: str
+    membership_label: str | None = None
+    start_date: str | None = None
+    end_date: str | None = None
+    designations: list[str] = []
+    meta_unmatched_text: list[str] = []
+    sources: list[MembershipSource] = []
 
 
 async def seed_jurisdiction(
@@ -136,7 +150,7 @@ _INSERT_MEMBERSHIP = """
 
 
 async def bind_membership(
-    cur, member: DerivedMembership, post_id: str, organization_id: str, opened_at
+    cur, member: SeededMembership, post_id: str, organization_id: str, opened_at
 ) -> str:
     """One open membership, as the writer would lay it down. Returns its id.
 

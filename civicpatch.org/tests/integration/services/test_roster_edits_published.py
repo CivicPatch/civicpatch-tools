@@ -15,7 +15,8 @@ import pytest
 import pytest_asyncio
 
 from core.people_edits import PeopleValidationError
-from core.post_derivation import DerivedMembership, MembershipSource
+from core.projection.membership_details import MembershipSource
+from tests.integration.factories import SeededMembership
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 from schemas.jurisdictions import OfficeEdit, PersonEdit
@@ -117,7 +118,7 @@ async def _seed() -> tuple[str, Identity]:
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
         await factories.bind_membership(
             cur,
-            DerivedMembership(person_id=person_id, sources=[MembershipSource(note="Mayor")]),
+            SeededMembership(person_id=person_id, sources=[MembershipSource(note="Mayor")]),
             post_id,
             org,
             datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc),
@@ -323,7 +324,7 @@ async def test_leaving_somebody_out_retires_them():
         seat = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
         await factories.bind_membership(
             cur,
-            DerivedMembership(person_id=other_id, sources=[MembershipSource(note="Clerk")]),
+            SeededMembership(person_id=other_id, sources=[MembershipSource(note="Clerk")]),
             seat,
             org,
             datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc),
@@ -402,12 +403,33 @@ async def _seed_second_person() -> str:
         post_id = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
         await factories.bind_membership(
             cur,
-            DerivedMembership(person_id=person_id, sources=[MembershipSource(note="Clerk")]),
+            SeededMembership(person_id=person_id, sources=[MembershipSource(note="Clerk")]),
             post_id,
             org,
             datetime.datetime(2026, 3, 1, tzinfo=datetime.timezone.utc),
         )
+        await cur.execute(
+            "SELECT id::text FROM changesets WHERE jurisdiction_ocdid = %s AND kind = 'scrape'",
+            (_OCDID,),
+        )
+        row = await cur.fetchone()
+        assert row is not None
         await conn.commit()
+    # A rebuild keeps only who the facts derive, so Bo needs the record `_seed` gives Ada.
+    await insert_source_records(
+        row[0],
+        _OCDID,
+        {
+            person_id: [
+                {
+                    "name": "Bo Nguyen",
+                    "label": "Clerk",
+                    "source_url": "https://editville.gov/clerk",
+                    "organization_id": org,
+                }
+            ]
+        },
+    )
     return person_id
 
 

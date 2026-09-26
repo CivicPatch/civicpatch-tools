@@ -11,7 +11,6 @@ from core.people_roster import (
     roster_from_sightings,
     reviewer_source_records,
 )
-from core.post_derivation import RosterEntry
 from shared.schemas import Person, PersonSourceRecord, Role, RoleConfig, RoleStatus
 from shared.utils.taxonomy import build_taxonomy
 
@@ -99,7 +98,6 @@ def test_each_roster_entry_keeps_its_labels_paired_with_page_and_organization():
         {"label": "Council Member Place 2", "source_url": "https://alpha.gov/council", "organization_id": "council"},
         {"label": "Mayor", "source_url": "https://alpha.gov/mayor", "organization_id": "mayor"},
     ]
-    assert RosterEntry(**entry).sightings[0].organization_id in {"council", "mayor"}
 
 
 @pytest.mark.unit

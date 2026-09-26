@@ -13,7 +13,7 @@ import pytest
 import pytest_asyncio
 from psycopg.errors import CheckViolation, ForeignKeyViolation, NotNullViolation
 
-from core.post_derivation import DerivedMembership
+from tests.integration.factories import SeededMembership
 from database import claims, divisions, memberships, organizations, posts
 from database.database import get_pool
 from core.projection.memberships import MEMBERSHIP_LABEL_FIELD
@@ -98,7 +98,7 @@ async def _seed() -> tuple[str, str]:
         other = await posts.find_or_create(
             cur, _OCDID, organization_id, "assessor", _BASE
         )
-        await factories.bind_membership(cur, DerivedMembership(person_id=seated), other, organization_id, _SEEN_AT)
+        await factories.bind_membership(cur, SeededMembership(person_id=seated), other, organization_id, _SEEN_AT)
         await conn.commit()
     return user_id, post_id
 
@@ -773,7 +773,7 @@ async def test_a_post_someone_holds_cannot_be_deleted():
             (person_id := str(uuid.uuid4()), _OCDID, "Holder"),
         )
         await factories.bind_membership(
-            cur, DerivedMembership(person_id=person_id), post_id, organization_id, datetime.now(timezone.utc)
+            cur, SeededMembership(person_id=person_id), post_id, organization_id, datetime.now(timezone.utc)
         )
         assert await posts.delete_if_unheld(cur, post_id) is False
         await conn.rollback()

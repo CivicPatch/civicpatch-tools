@@ -1,5 +1,4 @@
 from core.membership_label import post_label
-from core.post_derivation import DerivedPost
 from shared.schemas import Post
 from core.post_grouping import group_by_organization
 from core.projection.facts import PostKey
@@ -538,50 +537,6 @@ async def list_by_organization_for_jurisdictions(
         )
         for jurisdiction_ocdid in jurisdiction_ocdids
     }
-
-
-async def create_all(
-    cur,
-    jurisdiction_ocdid: str,
-    derived: list[DerivedPost],
-    changeset_id: str,
-) -> dict[tuple[str, str, str], str]:
-    """Each derived post's id by `(organization_id, role_id, division_ocdid)`, minting the missing."""
-    ids: dict[tuple[str, str, str], str] = {}
-    for post in derived:
-        organization_id = post.organization_id
-        await divisions.find_or_create(cur, post.division_ocdid, jurisdiction_ocdid)
-        minted = await create_if_absent(
-            cur,
-            jurisdiction_ocdid,
-            organization_id,
-            post.role_id,
-            post.division_ocdid,
-            headcount=post.headcount,
-        )
-        if minted:
-            await record_change(
-                cur,
-                ActivityType.ADD_POST,
-                None,
-                jurisdiction_ocdid,
-                Change(
-                    entity_type=EntityType.POST,
-                    entity_id=minted,
-                    # Derived posts carry no label; the role slug is what names them.
-                    subject=post.role_id,
-                ),
-                changeset_id=changeset_id,
-            )
-        ids[(organization_id, post.role_id, post.division_ocdid)] = minted or await find_or_create(
-            cur,
-            jurisdiction_ocdid,
-            organization_id,
-            post.role_id,
-            post.division_ocdid,
-            headcount=post.headcount,
-        )
-    return ids
 
 
 async def create(

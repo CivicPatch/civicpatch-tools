@@ -7,7 +7,7 @@ Pure — labels and a taxonomy in, structure out — and never stored. A parser 
 changes what history means without any row needing to be rewritten, which is why
 `source_records` keeps labels verbatim and nothing derived.
 
-The decision, not its rendering: `post_derivation` turns this into posts, and
+The decision, not its rendering: `projection.posts` turns this into posts, and
 `membership_label` turns it into words.
 """
 

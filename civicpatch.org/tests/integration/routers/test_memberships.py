@@ -15,7 +15,8 @@ import pytest_asyncio
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from core.post_derivation import DerivedMembership, MembershipSource
+from core.projection.membership_details import MembershipSource
+from tests.integration.factories import SeededMembership
 from database import activity, divisions, memberships, organizations, posts, projection
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
@@ -206,7 +207,7 @@ async def test_unmatched_text_reaches_the_wire_with_its_counts(client):
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await factories.bind_membership(
             cur,
-            DerivedMembership(person_id=person_id, meta_unmatched_text=["Zz Route Liaison"]),
+            SeededMembership(person_id=person_id, meta_unmatched_text=["Zz Route Liaison"]),
             mayor,
             organization_id,
             _SEEN_AT,
@@ -311,7 +312,7 @@ async def test_the_person_axis_read_carries_the_whole_parse(client):
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await factories.bind_membership(
             cur,
-            DerivedMembership(
+            SeededMembership(
                 person_id=person_id,
                 sources=[MembershipSource(note="Mayor Position 8 (Zz Route Liaison)")],
                 designations=["Position 8"],

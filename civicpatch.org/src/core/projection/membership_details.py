@@ -1,7 +1,7 @@
 """What a membership's own records say about it, beyond which post it is.
 
 `LabelDetails` is filled by `posts.parse_labels`, which reads the labels once for both
-answers. Ported from `core/post_derivation.py`, which deploy B deletes.
+answers.
 """
 
 from collections.abc import Sequence

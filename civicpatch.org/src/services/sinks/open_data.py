@@ -22,7 +22,7 @@ import lib.github.git_data as git_data
 import shared.utils.id_utils
 from core.membership_label import derive_post_label
 from core.output_hash import hash_text
-from core.post_derivation import SIGHTINGS_FIELD
+from core.people_roster import SIGHTINGS_FIELD
 from core.sinks.open_data_commit import commit_body
 from database import output_hashes as output_hashes_db
 from database.people import get_roster

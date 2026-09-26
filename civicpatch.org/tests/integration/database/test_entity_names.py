@@ -21,6 +21,7 @@ from database.database import get_pool
 from database.entity_jurisdiction import name_for
 from schemas.claims import EntityType
 from tests.integration import factories
+from tests.integration.factories import SeededMembership
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_names/government"
 
@@ -93,7 +94,6 @@ async def test_an_entity_that_is_gone_has_no_name():
 @pytest.mark.integration
 async def test_a_membership_is_named_by_who_holds_it():
     """A seat has no name of its own — it is read as the person in it."""
-    from core.post_derivation import DerivedMembership
     from database import divisions, organizations, posts
 
     person_id = await _person("Ada Lovelace")
@@ -104,7 +104,7 @@ async def test_a_membership_is_named_by_who_holds_it():
         await divisions.find_or_create(cur, base, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", base)
         membership_id = await factories.bind_membership(
-            cur, DerivedMembership(person_id=person_id), post_id, org, "2026-01-01"
+            cur, SeededMembership(person_id=person_id), post_id, org, "2026-01-01"
         )
         await conn.commit()
 

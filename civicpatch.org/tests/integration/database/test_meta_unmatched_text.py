@@ -12,7 +12,8 @@ from datetime import datetime, timezone
 import pytest
 import pytest_asyncio
 
-from core.post_derivation import DerivedMembership, MembershipSource
+from core.projection.membership_details import MembershipSource
+from tests.integration.factories import SeededMembership
 from database import divisions, memberships, organizations, posts
 from database.database import get_pool
 from tests.integration import factories
@@ -71,7 +72,7 @@ async def _seed_member(
     )
     return await factories.bind_membership(
         cur,
-        DerivedMembership(
+        SeededMembership(
             person_id=person_id,
             meta_unmatched_text=unmatched,
             sources=[MembershipSource(note=label) for label in source_labels or []],

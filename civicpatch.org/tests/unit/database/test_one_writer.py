@@ -1,8 +1,8 @@
 """Only `database/projection.py` writes the projection (R5 of the projector plan).
 
 `people`, `memberships`, `posts` and `organizations` are derived tables.
-Once the fold rebuilds them (step 8), any other write is a patch the next rebuild silently
-undoes, or a value the facts never said. The guard is a scan of the source tree rather than
+The fold rebuilds the first two on every publish, so any other write is a patch the next rebuild
+silently undoes, or a value the facts never said. The guard is a scan of the source tree rather than
 a runtime check: a write that never runs in a test still has to be caught.
 
 Writes still outside the writer are allow-listed by file and statement with the plan step
@@ -29,9 +29,6 @@ _WRITE = re.compile(
 
 # (file, statement prefix): how many times it appears. Step numbers are the projector plan's.
 ALLOWED: dict[tuple[str, str], int] = {
-    # Deleting a person became withdrawing the records that name them (step 9c, 2026-09-23),
-    # so nothing deletes a `people` row any more. The row outlives the person the fold stops
-    # deriving, until step 8 makes delete-and-insert the only path for people too.
     # Mints the persistent post row. Stays: a post's id is stable and the row persists (R1, R4).
     ("database/posts.py", "INSERT INTO posts"): 1,
     # Derived columns enter the fold at step 10.
@@ -43,8 +40,8 @@ ALLOWED: dict[tuple[str, str], int] = {
     ("database/organizations.py", "UPDATE organizations SET name"): 1,
     ("database/organizations.py", "UPDATE organizations SET meta_is_default"): 2,
     ("database/organizations.py", "DELETE FROM organizations"): 1,
-    # Dev-only seed that truncates and reloads an export. Becomes "insert the facts, rebuild"
-    # at step 8.
+    # Dev-only seed that truncates and reloads an export, then backfills the facts behind it
+    # (migration 215), so a publish rebuilds those rows rather than wiping them.
     ("scripts/seed_open_data_subset.py", "INSERT INTO organizations"): 1,
     ("scripts/seed_open_data_subset.py", "INSERT INTO posts"): 1,
     ("scripts/seed_open_data_subset.py", "INSERT INTO people"): 1,

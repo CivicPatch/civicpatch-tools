@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 import pytest
 import pytest_asyncio
 
-from core.post_derivation import DerivedMembership
+from tests.integration.factories import SeededMembership
 from database import divisions, organizations, posts, projection
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID

@@ -39,8 +39,11 @@ from core.roster_changes import (
     person_notes,
     proposal_counts,
 )
+from core.projection.live_facts import live_facts
+from core.projection.posts import post_keys
 from core.source_sites import SiteIndex, build_site_index
 from database.changesets import register_sheet_import_changeset, set_proposal_counts
+from database.facts import load_facts_for
 from database import changeset_batches, dismissals
 from database import sites as sites_db
 from database.jurisdictions import get_jurisdiction_geoids
@@ -52,7 +55,7 @@ from lib.csv import READ_ONLY_MARKER, REQUIRED_MARKER
 from schemas.imports import ImportPreview
 from services import entry_sheet, import_report, roster_ingest
 from services.roster import card_fold, sides_of
-from shared.schemas import Role, RoleConfig
+from shared.schemas import RoleConfig
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
 logger = logging.getLogger(__name__)
@@ -123,7 +126,7 @@ async def import_rows(
             continue
         results.append(
             await _import_jurisdiction(
-                jurisdiction_ocdid, jurisdiction_rows, user_id, batch_id, roles, taxonomy
+                jurisdiction_ocdid, jurisdiction_rows, user_id, batch_id, taxonomy
             )
         )
     return results
@@ -134,7 +137,6 @@ async def _import_jurisdiction(
     rows: list[ImportRow],
     user_id: str,
     batch_id: str,
-    roles: list[Role],
     taxonomy: Taxonomy,
 ) -> JurisdictionResult:
     changeset_id = str(uuid.uuid4())
@@ -164,9 +166,7 @@ async def _import_jurisdiction(
             error=str(e),
         )
 
-    posts, error = await _derive_posts(
-        changeset_id, jurisdiction_ocdid, roster, roles, taxonomy
-    )
+    posts, error = await _derive_posts(changeset_id, jurisdiction_ocdid, taxonomy)
     changes = await _changes(changeset_id, jurisdiction_ocdid, records_by_person)
     if changes.counts is not None:
         await set_proposal_counts(changeset_id, changes.counts)
@@ -220,17 +220,20 @@ async def _changes(
 async def _derive_posts(
     changeset_id: str,
     jurisdiction_ocdid: str,
-    roster: list[dict],
-    roles: list[Role],
     taxonomy: Taxonomy,
 ) -> tuple[int, str | None]:
-    """How many seats this import projects. Nothing is written — publishing creates them.
+    """How many posts this import's own records derive. Nothing is written — publishing mints them.
 
     Reported rather than swallowed: a card without posts still shows its people, so this is
     a `partial`, not a `failed`."""
     try:
-        derived = await roster_ingest.derive_posts(roster, roles, taxonomy)
-        return len(derived), None
+        facts = live_facts(
+            await load_facts_for(
+                jurisdiction_ocdid, datetime.now(timezone.utc), including=changeset_id
+            )
+        )
+        records = [record for record in facts.records if record.changeset_id == changeset_id]
+        return len(post_keys(records, jurisdiction_ocdid, taxonomy)), None
     except Exception as e:
         logger.error(
             f"[{changeset_id}] {jurisdiction_ocdid}: post derivation failed: {e}",
