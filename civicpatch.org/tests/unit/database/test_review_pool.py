@@ -38,7 +38,7 @@ async def test_returns_row_for_a_pending_review():
     """Sourced from `requests` now, so the row is the request's own columns: the commit URL
     it published to and a status derived from published_at/dismissed_at. There is no pull
     request number because publishing no longer opens one, and no roster because that is derived
-    from the request's sightings rather than stored beside it."""
+    from the request's source records rather than stored beside it."""
     row = (
         "req-abc",          # id
         None,               # change_url — nothing published yet

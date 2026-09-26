@@ -75,7 +75,7 @@ async def _an_import() -> str:
         return (await cur.fetchone())[0]
 
 
-async def _add_sighting(changeset_id: str) -> None:
+async def _add_source_record(changeset_id: str) -> None:
     """What puts a changeset in the review pool — `AVAILABLE_FOR_REVIEW` is an EXISTS on this."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -102,7 +102,7 @@ async def _publish(changeset_id: str) -> None:
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_a_running_scrape_is_in_flight_but_not_awaiting_review():
-    """The lanes are disjoint: a scrape still running has written no sightings yet, so it
+    """The lanes are disjoint: a scrape still running has written no source records yet, so it
     cannot satisfy `AVAILABLE_FOR_REVIEW`."""
     changeset_id = await _a_scrape("SCRAPE_PAGE")
 
@@ -153,9 +153,9 @@ async def test_a_run_that_has_just_minted_its_changeset_appears_once():
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_finished_scrape_with_sightings_awaits_review():
+async def test_a_finished_scrape_with_source_records_awaits_review():
     changeset_id = await _a_scrape("SUCCESS")
-    await _add_sighting(changeset_id)
+    await _add_source_record(changeset_id)
 
     result = await get_in_flight(_OCDID)
 
@@ -170,7 +170,7 @@ async def test_a_pending_import_is_in_neither_lane():
     """Only its batch page decides an import, so it never awaits review here. It reaches the
     jurisdiction's history once published or dismissed."""
     changeset_id = await _an_import()
-    await _add_sighting(changeset_id)
+    await _add_source_record(changeset_id)
 
     result = await get_in_flight(_OCDID)
 
@@ -179,7 +179,7 @@ async def test_a_pending_import_is_in_neither_lane():
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_finished_scrape_with_no_sightings_is_in_neither_lane():
+async def test_a_finished_scrape_with_no_source_records_is_in_neither_lane():
     """It produced nothing and is not running, so nobody is waiting on it. It still counts
     toward the total — it happened."""
     await _a_scrape("SUCCESS")
@@ -194,7 +194,7 @@ async def test_a_finished_scrape_with_no_sightings_is_in_neither_lane():
 @pytest.mark.asyncio
 async def test_a_resolved_changeset_is_not_in_flight():
     changeset_id = await _a_scrape("SUCCESS")
-    await _add_sighting(changeset_id)
+    await _add_source_record(changeset_id)
     await _publish(changeset_id)
 
     result = await get_in_flight(_OCDID)

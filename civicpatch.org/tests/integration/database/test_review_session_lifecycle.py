@@ -121,7 +121,7 @@ async def _seed_open_pr(suffix: str) -> tuple[str, str]:
         changeset_id = (await cur.fetchone())[0]
         organization_id = await factories.default_organization(cur, ocdid)
         await cur.execute(
-            # The review pool is "this scrape saw somebody" — one sighting is a roster.
+            # The review pool is "this scrape saw somebody" — one source record is a roster.
             "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id, person_id) "
             "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council', %s, gen_random_uuid())",
             (changeset_id, ocdid, organization_id),
@@ -628,7 +628,7 @@ async def test_a_dismissal_loses_the_race_to_a_reviewer_publishing():
         changeset_id = (await cur.fetchone())[0]
         organization_id = await factories.default_organization(cur, ocdid)
         await cur.execute(
-            # The review pool is "this scrape saw somebody" — one sighting is a roster.
+            # The review pool is "this scrape saw somebody" — one source record is a roster.
             "INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url, organization_id, person_id) "
             "VALUES (%s, %s, 'Jane Doe', 'Mayor', 'https://zz.gov/council', %s, gen_random_uuid())",
             (changeset_id, ocdid, organization_id),

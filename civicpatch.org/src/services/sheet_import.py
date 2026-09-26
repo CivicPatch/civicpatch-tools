@@ -77,7 +77,7 @@ class JurisdictionResult(BaseModel):
     status: ImportStatus
     changeset_id: str | None = None
     people: int = 0
-    sightings: int = 0
+    source_records: int = 0
     posts: int = 0
     error: str | None = None
     # By `row_key`'s lowercased name.
@@ -144,19 +144,19 @@ async def _import_jurisdiction(
         identities = await roster_ingest.published_identities(jurisdiction_ocdid)
         roster, records_by_person = await roster_ingest.reconcile_roster(
             jurisdiction_ocdid,
-            [row.sighting.model_dump() for row in rows],
+            [row.source_record.model_dump() for row in rows],
             identities,
             taxonomy,
         )
         await register_sheet_import_changeset(
             changeset_id, jurisdiction_ocdid, user_id, batch_id
         )
-        sightings = await insert_source_records(
+        source_records = await insert_source_records(
             changeset_id, jurisdiction_ocdid, records_by_person
         )
     except Exception as e:
-        # Fatal for this jurisdiction only. A request registered before the sightings failed is
-        # inert — no sightings means no card.
+        # Fatal for this jurisdiction only. A request registered before the source records failed is
+        # inert — no source records means no card.
         logger.error(
             f"[{changeset_id}] {jurisdiction_ocdid}: import failed: {e}", exc_info=True
         )
@@ -175,7 +175,7 @@ async def _import_jurisdiction(
         status=ImportStatus.IMPORTED if error is None else ImportStatus.PARTIAL,
         changeset_id=changeset_id,
         people=len(roster),
-        sightings=sightings,
+        source_records=source_records,
         posts=posts,
         error=error,
         notes=changes.notes,

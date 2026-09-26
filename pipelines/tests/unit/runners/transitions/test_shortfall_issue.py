@@ -17,7 +17,7 @@ from shared.utils.statuses import PipelineIssueType
 
 pytestmark = pytest.mark.unit
 
-_RECORDS = ["a sighting"]
+_RECORDS = ["a source record"]
 
 
 def _progress(found, expected):

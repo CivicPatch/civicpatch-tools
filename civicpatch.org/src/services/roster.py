@@ -6,7 +6,7 @@ from typing import NamedTuple
 from core.display_rows import PostLabels, display_rows
 from core.changeset_lifecycle import PARTIAL_KINDS
 from core.people_edits import source_values_overridden, with_claimed_values
-from core.people_roster import partial_roster, roster_from_sightings
+from core.people_roster import partial_roster, roster_from_source_records
 from core.projection.diff import on_roster
 from core.projection.facts import Facts
 from core.projection.roster import Roster, overridden_by_person
@@ -28,11 +28,11 @@ logger = logging.getLogger(__name__)
 async def _roster(
     changeset_id: str, jurisdiction_ocdid: str
 ) -> tuple[list[dict], dict]:
-    sightings = await get_source_records_for_changeset(changeset_id)
-    if not sightings:
+    source_records = await get_source_records_for_changeset(changeset_id)
+    if not source_records:
         return [], {}
 
-    person_ids = list({sighting["person_id"] for sighting in sightings})
+    person_ids = list({source_record["person_id"] for source_record in source_records})
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         published, roles, claimed = await asyncio.gather(
@@ -40,8 +40,8 @@ async def _roster(
             get_roles(),
             claims.claimed_values(cur, EntityType.PERSON, person_ids),
         )
-    return roster_from_sightings(
-        sightings,
+    return roster_from_source_records(
+        source_records,
         published,
         build_taxonomy(RoleConfig(roles=roles)),
         jurisdiction_ocdid,
@@ -163,7 +163,7 @@ async def proposed_roster_and_source_values(
     """The roster a reviewer sees, and what the source said where a claim changed it.
 
     Both from one pass: the pre-overlay roster is `_roster`'s own answer, so the second half
-    costs nothing beyond the comparison. Asking for it separately would re-read every sighting.
+    costs nothing beyond the comparison. Asking for it separately would re-read every source record.
     """
     roster, claimed = await _roster(changeset_id, jurisdiction_ocdid)
     overridden = {

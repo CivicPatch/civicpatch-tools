@@ -83,7 +83,7 @@ async def reconcile_roster(
 
     Fatal on failure, unlike the writes that follow it: everything downstream consumes this.
     """
-    # Before the roster is built from them, so every sighting carries its organization. An id that
+    # Before the roster is built from them, so every source record carries its organization. An id that
     # is no longer a body here raises — a scrape run against a deleted organization fails.
     stamped = await _with_organizations(jurisdiction_ocdid, rows)
     roster, records_by_name = roster_from_rows(

@@ -82,7 +82,7 @@ INITIAL_STATE: dict[ChangesetKind, ChangesetState] = {
 # its own batch page only, so it is not one of them.
 REVIEW_POOL_KINDS: frozenset[ChangesetKind] = frozenset({ChangesetKind.SCRAPE})
 
-# Kinds whose sightings state only the fields they fill: a blank cell means "no information",
+# Kinds whose source records state only the fields they fill: a blank cell means "no information",
 # not "clear it", so the proposal keeps the published value. A scrape states a whole page.
 PARTIAL_KINDS: frozenset[ChangesetKind] = frozenset({ChangesetKind.SHEET_IMPORT})
 

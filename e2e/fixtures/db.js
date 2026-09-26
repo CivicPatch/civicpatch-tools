@@ -32,7 +32,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
  * Fixture people are named by readable slugs — "recon-maria", "dup-shared" — but
  * `source_records.person_id` is a uuid (144, on the record since 224), so the slug can no
  * longer be inserted. Hashing keeps the fixtures readable and stable: the same slug always
- * yields the same id, which is what lets two sightings deliberately share a person.
+ * yields the same id, which is what lets two source records deliberately share a person.
  */
 /** The division a jurisdiction's own posts sit in, spelled the way the fold spells it.
  *
@@ -165,7 +165,7 @@ function buildScaleProposed() {
               },
             }
           : {}),
-        // An added email — two sightings of one person, which `asSightings` emits.
+        // An added email — two source records of one person, which `asSourceRecords` emits.
         ...(changed && i % 3 === 1
           ? { emails: [`ward${i}@scale.gov`, `c${i}@scale.gov`] }
           : {}),
@@ -291,30 +291,30 @@ const stateOcdid = (code) => `ocd-jurisdiction/country:us/state:${code}/governme
 
 /**
  * The fixtures describe people as the old `data_json` did — name, office, contact lists. A
- * sighting is flatter and singular, which is what `source_records` stores.
+ * source record is flatter and singular, which is what `source_records` stores.
  */
-// A sighting carries label text, and the roster derives the division by parsing it — a raw
-// `division_ocdid` on the sighting is discarded. So a ward seat has to be spelled out, or the
+// A source record carries label text, and the roster derives the division by parsing it — a raw
+// `division_ocdid` on the source record is discarded. So a ward seat has to be spelled out, or the
 // seat derives to the jurisdiction's own division while `seatPerson` seated them in a ward,
 // and every carried person reads as moved.
-function sightingLabel(office) {
+function sourceRecordLabel(office) {
   if (!office?.name) return "";
   const ward = office.division_ocdid?.match(/\/ward:(.+)$/)?.[1];
   return ward ? `${office.name} Ward ${ward}` : office.name;
 }
 
-// One sighting per email: a sighting is one appearance on one page and carries one contact, so
-// somebody listed with two addresses was seen twice. `roster_from_sightings` groups by person and
+// One source record per email: a source record is one appearance on one page and carries one contact, so
+// somebody listed with two addresses was seen twice. `roster_from_source_records` groups by person and
 // merges them — which is the only way a fixture can propose an *added* value, and the
 // multi-value provenance tests depend on it.
-function asSightings(proposed) {
+function asSourceRecords(proposed) {
   return proposed.flatMap(function (person) {
     const emails = person.emails?.length ? person.emails : [null];
     return emails.map(function (email) {
       return {
         person_id: person.id,
         name: person.name,
-        label: sightingLabel(person.office),
+        label: sourceRecordLabel(person.office),
         email,
         phone: person.phones?.[0] ?? null,
         url: person.urls?.[0] ?? null,
@@ -329,10 +329,10 @@ function asSightings(proposed) {
 /**
  * A review card as the current schema models one.
  *
- * `AVAILABLE_FOR_REVIEW` is `EXISTS (source_records for this request)`, so the sightings are
+ * `AVAILABLE_FOR_REVIEW` is `EXISTS (source_records for this request)`, so the source records are
  * what put a card in the pool — the open `pull_requests` row that used to do it went with
  * migration 141, and `requests.data_json` with 142. The roster a reviewer sees is derived from
- * these sightings, not stored.
+ * these source records, not stored.
  */
 // What puts a card in RECONCILE rather than BASELINE mode: `has_ever_collected` asks whether the
 // jurisdiction has a published changeset of a collection kind. Replaces `jurisdictions.scraped_at`
@@ -386,7 +386,7 @@ async function seedReviewCard(
      ON CONFLICT (id) DO NOTHING`,
     [changesetId, ocdid, publishedAt, ageSeconds, changeUrl],
   );
-  // Re-seeding must not double the sightings: source_records has an auto id, so there is
+  // Re-seeding must not double the source records: source_records has an auto id, so there is
   // nothing to ON CONFLICT on.
   await client.query(`DELETE FROM source_records WHERE changeset_id = $1`, [
     changesetId,
@@ -533,7 +533,7 @@ async function seatIn(client, ocdid, { organizationName, personId, roleId, divis
   });
 }
 
-/** The facts behind a published roster: a published changeset, and one sighting per person.
+/** The facts behind a published roster: a published changeset, and one source record per person.
  *
  * Projection rows alone are no longer enough. Since the card's `existing` side became
  * `published_card_rows` it is derived from facts, and a roster seeded only into `people` and
@@ -556,10 +556,10 @@ async function seedPublishedFacts(client, ocdid, people) {
         changesetId,
         ocdid,
         person.name,
-        // The office as a page would have printed it, ward and all — `sightingLabel`, the same
+        // The office as a page would have printed it, ward and all — `sourceRecordLabel`, the same
         // rendering the proposed side uses. The office name alone derives a post in the
         // jurisdiction's own division, so every ward member would read as having moved.
-        sightingLabel(person.office) || "Council Member",
+        sourceRecordLabel(person.office) || "Council Member",
         (person.source_urls ?? [])[0] ?? "https://example.gov/roster",
         (person.urls ?? [])[0] ?? null,
         (person.phones ?? [])[0] ?? null,
@@ -597,7 +597,7 @@ async function seedPerson(client, ocdid, person) {
      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,NOW())
      ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name`,
     [
-      // Same slug-to-uuid mapping as the sightings, so an existing person and a sighting that
+      // Same slug-to-uuid mapping as the source records, so an existing person and a source record that
       // proposes a change to them resolve to the same id.
       personUuid(person.id),
       ocdid,
@@ -847,7 +847,7 @@ export async function seedE2eFixtures() {
     await seedReviewCard(client, {
       changesetId: RECONCILE_CHANGESET_ID,
       ocdid: RECONCILE_JURISDICTION_OCDID,
-      people: asSightings(reconcileProposed),
+      people: asSourceRecords(reconcileProposed),
     });
 
     // Scale card — 38 existing, 40 proposed (3 dropped, 5 added, 10 changed).
@@ -863,7 +863,7 @@ export async function seedE2eFixtures() {
     await seedReviewCard(client, {
       changesetId: SCALE_CHANGESET_ID,
       ocdid: SCALE_JURISDICTION_OCDID,
-      people: asSightings(buildScaleProposed()),
+      people: asSourceRecords(buildScaleProposed()),
     });
 
     // Issue-markers card — reconcile mode, all proposed render as added cards.
@@ -948,7 +948,7 @@ export async function seedE2eFixtures() {
     await seedReviewCard(client, {
       changesetId: MARKERS_CHANGESET_ID,
       ocdid: MARKERS_JURISDICTION_OCDID,
-      people: asSightings(markersProposed),
+      people: asSourceRecords(markersProposed),
     });
 
     // A published roster where one person sits in two bodies, for the jurisdiction page's

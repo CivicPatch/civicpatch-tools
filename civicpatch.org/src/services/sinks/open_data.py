@@ -22,7 +22,6 @@ import lib.github.git_data as git_data
 import shared.utils.id_utils
 from core.membership_label import derive_post_label
 from core.output_hash import hash_text
-from core.people_roster import SIGHTINGS_FIELD
 from core.sinks.open_data_commit import commit_body
 from database import output_hashes as output_hashes_db
 from database.people import get_roster
@@ -101,10 +100,7 @@ def _as_published(person: dict) -> dict:
 
 
 def _sort_key(person: dict, taxonomy: Taxonomy) -> tuple:
-    # A published person's `sightings` are post-derivation input with no `name`, not the
-    # `PersonSourceRecord`s `DerivedPerson` declares; the sort reads only labels and name.
-    sortable = {key: value for key, value in person.items() if key != SIGHTINGS_FIELD}
-    return (person_sort_key(DerivedPerson(**sortable), taxonomy), person.get("id") or "")
+    return (person_sort_key(DerivedPerson(**person), taxonomy), person.get("id") or "")
 
 
 def open_data_records(roster: list[dict], taxonomy: Taxonomy) -> list[dict]:

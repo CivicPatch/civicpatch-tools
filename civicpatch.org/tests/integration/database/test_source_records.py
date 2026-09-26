@@ -79,7 +79,7 @@ _IDS = {
 
 
 def _records(name: str, *labels: str) -> dict:
-    """One person, one sighting per label. Keyed by the id reconciliation resolved them to."""
+    """One person, one source record per label. Keyed by the id reconciliation resolved them to."""
     return {
         _IDS[name.lower()]: [
             {
@@ -95,7 +95,7 @@ def _records(name: str, *labels: str) -> dict:
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_stores_each_sighting_verbatim(sentinel_request):
+async def test_stores_each_source_record_verbatim(sentinel_request):
     await insert_source_records(
         sentinel_request,
         _SENTINEL_OCDID,
@@ -129,7 +129,7 @@ async def test_a_replay_adds_rows_rather_than_being_rejected(sentinel_request):
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_labels_are_queryable_as_a_column(sentinel_request):
-    """The reason the table has this shape. Finding every sighting under one label used to mean
+    """The reason the table has this shape. Finding every source record under one label used to mean
     unnesting a jsonb array; it is now a WHERE clause against an indexed column."""
     await insert_source_records(
         sentinel_request,
@@ -171,7 +171,7 @@ async def test_no_records_writes_nothing(sentinel_request):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_every_sighting_of_one_person_is_its_own_row(sentinel_request):
+async def test_every_source_record_of_one_person_is_its_own_row(sentinel_request):
     """The grain the table exists at. One person seen under two titles is two rows, each still
     holding the page it came from — which is what a merged row loses."""
     await insert_source_records(
@@ -191,7 +191,7 @@ async def test_every_sighting_of_one_person_is_its_own_row(sentinel_request):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_photo_urls_are_stored_on_the_sighting(sentinel_request):
+async def test_photo_urls_are_stored_on_the_source_record(sentinel_request):
     """Both urls are columns: where the photo came from, and where we serve it. The pipeline's
     `local://` ref is resolved before the write, because it means nothing once the zip is gone."""
     records = {

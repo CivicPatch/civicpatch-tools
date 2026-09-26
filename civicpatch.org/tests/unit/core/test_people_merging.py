@@ -66,7 +66,7 @@ def test_merge_field():
 
 
 def test_merge_image_prefers_a_downloaded_photo():
-    """Seattle, 2026-09-19: Joy Hollingsworth's sightings held two downloaded photos and one
+    """Seattle, 2026-09-19: Joy Hollingsworth's source records held two downloaded photos and one
     relative `src` nobody fetched. The alphabetical tie-break chose the `/images/...` path, so
     she published with no served photo."""
     images = [
@@ -84,7 +84,7 @@ def test_merge_image_falls_back_to_a_url_when_nothing_was_downloaded():
 
 
 def test_canonical_name_prefers_the_name_we_already_know():
-    """Measured on dev 2026-08-25: every sighting of one Seattle councilmember spelled her
+    """Measured on dev 2026-08-25: every source record of one Seattle councilmember spelled her
     "Katie B. Wilson", but she is published as "Katie Wilson". Frequency alone renames her on
     every scrape — the identity is what stops that."""
     records = [make_llm_person("Katie B. Wilson") for _ in range(3)]
@@ -239,22 +239,6 @@ def test_merge_records_to_person():
     assert set(result.emails) == {"eve@city.org"}
     assert set(result.source_urls) == {"http://source1.com", "http://source2.com"}
     assert result.jurisdiction_ocdid == "jurisdiction_id"
-
-
-def test_merge_records_to_person_keeps_each_label_with_its_page_and_organization():
-    """The flat lists cannot say which office came from which page and organization; a person
-    holding posts in two bodies needs exactly that."""
-    council = make_llm_person(name="Eve", label="Council Member Ward 5", source_url="http://council.gov")
-    mayor = make_llm_person(name="Eve", label="Mayor", source_url="http://mayor.gov")
-    council.organization_id = "council-org"
-    mayor.organization_id = "mayor-org"
-
-    result = merge_records_to_person(MagicMock(), "Eve", [council, mayor], "jurisdiction_id", TAXONOMY)
-
-    assert sorted((s.label, s.source_url, s.organization_id) for s in result.sightings) == [
-        ("Council Member Ward 5", "http://council.gov", "council-org"),
-        ("Mayor", "http://mayor.gov", "mayor-org"),
-    ]
 
 
 def test_normalize_record_keeps_the_organization():

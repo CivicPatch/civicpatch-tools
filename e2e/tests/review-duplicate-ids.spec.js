@@ -6,8 +6,8 @@
  * `review-session.ts` and is still worth keeping, because the collapse is deliberate: the frozen
  * field set, expansion, deletions and restorations are all keyed by person id.
  *
- * What changed is that no fixture can manufacture the input any more. Two sightings sharing a
- * `person_id` are two sightings of ONE person, and `roster_from_sightings` merges them upstream
+ * What changed is that no fixture can manufacture the input any more. Two source records sharing a
+ * `person_id` are two source records of ONE person, and `roster_from_source_records` merges them upstream
  * of the diff — so the API returns one entry, not two colliding ones. `resolve_people_ids` was
  * fixed on 2026-07-31 not to mint colliding ids either.
  *

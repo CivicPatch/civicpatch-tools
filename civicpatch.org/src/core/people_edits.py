@@ -11,12 +11,11 @@ from schemas.claims import (
 from shared.schemas import SubmittedPersonRecord
 from shared.utils.person_fields import order_person_fields
 
-from core.people_roster import LABELS_FIELD, SIGHTINGS_FIELD
+from core.people_roster import LABELS_FIELD
 from core.projection.canonical_ids import SAME_AS
 
-# Keys a client patch may not set: they come from source records, and a client-sent value would
-# decide which organization a person is published into.
-SERVER_OWNED_FIELDS = (SIGHTINGS_FIELD, LABELS_FIELD)
+# Keys a client patch may not set: they come from source records.
+SERVER_OWNED_FIELDS = (LABELS_FIELD,)
 
 # Fields a reviewer can edit — a missing one goes unrecorded in the change log. Not
 # cdn_image; publish derives it from image. Which posts somebody holds is `POSTS_FIELD`, its
@@ -42,7 +41,7 @@ LIST_FIELDS = frozenset({"other_names", "phones", "emails", "urls", "source_urls
 # reject. Multi-valued for the same reason a phone is — somebody can hold two. Not editable: a
 # patch cannot set it, because a scrape stays free to move or end a membership.
 POSTS_FIELD = "posts"
-# Derived from the sightings now, so editing it states nothing about the world.
+# Derived from the source records now, so editing it states nothing about the world.
 NOT_CLAIMABLE = frozenset({"source_urls"})
 
 

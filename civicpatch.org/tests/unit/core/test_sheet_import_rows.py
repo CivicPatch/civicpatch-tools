@@ -2,7 +2,7 @@ import pytest
 
 from core.sheet_import_rows import (
     ImportRow,
-    Sighting,
+    SheetRecord,
     already_handled,
     build_jurisdiction_index,
     parse_rows,
@@ -47,7 +47,7 @@ def _parsed_row(
     return ImportRow(
         line=line,
         jurisdiction_ocdid=ocdid,
-        sighting=Sighting(name=name, label="Chair", source_url="s"),
+        source_record=SheetRecord(name=name, label="Chair", source_url="s"),
         status=status,
     )
 
@@ -69,11 +69,11 @@ _SITES = build_site_index(
 
 
 @pytest.mark.unit
-def test_a_row_becomes_a_sighting():
+def test_a_row_becomes_a_source_record():
     rows, errors = _parse([_row()])
     assert errors == []
-    assert rows[0].sighting.name == "Ana Reyes"
-    assert rows[0].sighting.source_url == "https://example.gov/select-board"
+    assert rows[0].source_record.name == "Ana Reyes"
+    assert rows[0].source_record.source_url == "https://example.gov/select-board"
     assert rows[0].jurisdiction_ocdid == _OCDID
 
 
@@ -83,13 +83,13 @@ def test_a_blank_label_is_allowed():
     post (`people_roster.partial_roster`), so it is not a mistake to catch."""
     rows, errors = _parse([_row(label="")])
     assert errors == []
-    assert rows[0].sighting.label == ""
+    assert rows[0].source_record.label == ""
 
 
 @pytest.mark.unit
 def test_a_present_label_still_works():
     rows, _ = _parse([_row(label="Select Board Chair")])
-    assert rows[0].sighting.label == "Select Board Chair"
+    assert rows[0].source_record.label == "Select Board Chair"
 
 
 @pytest.mark.unit
@@ -102,9 +102,9 @@ def test_line_numbers_count_the_header():
 @pytest.mark.unit
 def test_blanks_become_none_and_whitespace_is_stripped():
     rows, _ = _parse([_row(name="  Ana Reyes  ", phone="  ", email="a@b.gov")])
-    assert rows[0].sighting.name == "Ana Reyes"
-    assert rows[0].sighting.phone is None
-    assert rows[0].sighting.email == "a@b.gov"
+    assert rows[0].source_record.name == "Ana Reyes"
+    assert rows[0].source_record.phone is None
+    assert rows[0].source_record.email == "a@b.gov"
 
 
 @pytest.mark.unit
@@ -113,7 +113,7 @@ def test_the_sheet_carries_no_ids():
     value nothing can validate, so the model has nowhere to put one."""
     rows, _ = _parse([_row(person_id="anything", post_id="anything")])
     assert not hasattr(rows[0], "person_id")
-    assert not hasattr(rows[0].sighting, "post_id")
+    assert not hasattr(rows[0].source_record, "post_id")
 
 
 @pytest.mark.unit
@@ -212,7 +212,7 @@ def test_a_mixed_jurisdiction_is_not_skipped():
     """One cleared row brings the whole town back — including rows still carrying a status, so
     the roster submitted together is complete, not missing whoever already had one."""
     rows, errors = _parse([_row(status="imported"), _row(name="Bo Chen", status="")])
-    assert [row.sighting.name for row in rows] == ["Ana Reyes", "Bo Chen"]
+    assert [row.source_record.name for row in rows] == ["Ana Reyes", "Bo Chen"]
     assert errors == []
 
 
@@ -298,7 +298,7 @@ def test_a_blank_jurisdiction_is_the_one_whose_site_the_source_is_on():
 
     assert errors == []
     assert row.jurisdiction_ocdid == _OCDID
-    assert row.sighting.organization_id is None
+    assert row.source_record.organization_id is None
 
 
 @pytest.mark.unit
@@ -307,14 +307,14 @@ def test_a_source_on_a_bodys_site_takes_that_body():
         [_row(jurisdiction_ocdid="", source_url="https://schools.gov/board")], _SITES
     )
 
-    assert row.sighting.organization_id == "org-schools"
+    assert row.source_record.organization_id == "org-schools"
 
 
 @pytest.mark.unit
 def test_a_typed_jurisdiction_still_takes_the_body_whose_site_it_is():
     [row], _ = _parse([_row(source_url="https://schools.gov/board")], _SITES)
 
-    assert (row.jurisdiction_ocdid, row.sighting.organization_id) == (_OCDID, "org-schools")
+    assert (row.jurisdiction_ocdid, row.source_record.organization_id) == (_OCDID, "org-schools")
 
 
 @pytest.mark.unit
@@ -347,7 +347,7 @@ def test_a_site_that_names_no_single_jurisdiction_asks_for_one(source_url, expec
 def test_other_names_split_on_the_bar(cell, names):
     rows, errors = _parse([_row(other_names=cell)])
     assert errors == []
-    assert rows[0].sighting.other_names == names
+    assert rows[0].source_record.other_names == names
 
 
 # ── Geoids ───────────────────────────────────────────────────────────────────

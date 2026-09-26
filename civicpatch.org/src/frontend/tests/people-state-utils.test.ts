@@ -89,7 +89,7 @@ describe("buildPeoplePatch", () => {
     ).toEqual([{ id: "a", fields: {} }]);
   });
 
-  it("still sends a new person's office pick — edit_published needs it for their first sighting", () => {
+  it("still sends a new person's office pick — edit_published needs it for their first source record", () => {
     const person = { id: "new1", name: "Bob", post_id: "p1", _isNew: true };
     expect(buildPeoplePatch([person], changes([["new1", []]]), deleted(), NO_SURVIVORS)).toEqual([
       { id: "new1", fields: { id: "new1", name: "Bob", post_id: "p1" } },

@@ -68,7 +68,7 @@ class ErrorResponse(BaseModel):
     error: str
 
 
-# A scrape that recorded no sightings has nothing to review: the roster is derived from them,
+# A scrape that recorded no source records has nothing to review: the roster is derived from them,
 # so there is no other copy to fall back to.
 MISSING_ROSTER_DETAIL = "This scrape recorded no roster. Re-run it before reviewing."
 

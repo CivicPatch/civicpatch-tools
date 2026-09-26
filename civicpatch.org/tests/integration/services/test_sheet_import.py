@@ -1,7 +1,7 @@
 """Integration tests for `services.sheet_import`.
 
 Against the real test DB, because what is worth checking here is what a mock cannot show: that
-sightings and identities land as a pair, that the changeset lands **unpublished** and waits on
+source records and identities land as a pair, that the changeset lands **unpublished** and waits on
 the batch page, and that labels actually mint posts.
 
 Run with:
@@ -22,7 +22,7 @@ import pytest_asyncio
 from core.sheet_import_rows import (
     ImportRow,
     ImportStatus,
-    Sighting,
+    SheetRecord,
     build_jurisdiction_index,
 )
 from core.roster_changes import ChangeKind, OfficeChangeKind, changes_of
@@ -146,7 +146,7 @@ def _rows(*people, ocdid: str = _OCDID) -> list[ImportRow]:
         ImportRow(
             line=0,
             jurisdiction_ocdid=ocdid,
-            sighting=Sighting(name=name, label=label, source_url=_SHEET),
+            source_record=SheetRecord(name=name, label=label, source_url=_SHEET),
         )
         for name, label in people
     ]
@@ -224,8 +224,8 @@ async def _scalar(sql: LiteralString, params: tuple):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_an_import_writes_sightings_and_waits_unpublished(user_id, batch_id):
-    """The sightings are the only write — no publish. It waits on the batch page, never in the
+async def test_an_import_writes_source_records_and_waits_unpublished(user_id, batch_id):
+    """The source records are the only write — no publish. It waits on the batch page, never in the
     review pool (`test_jurisdiction_in_flight` covers that it stays out)."""
     rows = await _parsed(
         ("Ana Reyes", "Select Board Chair"), ("Bo Chen", "Select Board Member")
@@ -235,7 +235,7 @@ async def test_an_import_writes_sightings_and_waits_unpublished(user_id, batch_i
 
     assert result.status is ImportStatus.IMPORTED
     assert result.people == 2
-    assert result.sightings == 2
+    assert result.source_records == 2
 
     assert (
         await _scalar(
@@ -359,7 +359,7 @@ async def test_a_blank_cell_keeps_the_published_value(user_id, batch_id):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_sightings_belong_to_the_default_organization(user_id, batch_id):
+async def test_source_records_belong_to_the_default_organization(user_id, batch_id):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         default = await organizations.get_default(cur, _OCDID)
@@ -414,7 +414,7 @@ async def test_the_batch_is_recorded_on_the_request(user_id, batch_id):
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_one_jurisdiction_failing_does_not_cost_the_others(user_id, batch_id):
-    """Jurisdictions are independent — own request, own sightings. An unknown ocdid violates
+    """Jurisdictions are independent — own request, own source records. An unknown ocdid violates
     the requests foreign key, and the good one must still import."""
     good = _rows(("Ana Reyes", "Select Board Chair"))
     missing = "ocd-jurisdiction/country:us/state:zz/place:zz_not_registered/government"
@@ -458,7 +458,7 @@ async def test_end_to_end_from_csv_text(user_id, batch_id):
     assert result.status is ImportStatus.IMPORTED
     assert result.people == 2
     assert result.posts >= 1
-    # A quoted comma survives the whole way to the sighting.
+    # A quoted comma survives the whole way to the source record.
     assert (
         await _scalar(
             "SELECT count(*) FROM source_records WHERE changeset_id = %s::uuid AND name = %s",
@@ -471,7 +471,7 @@ async def test_end_to_end_from_csv_text(user_id, batch_id):
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_the_batch_review_shows_the_towns_it_made(user_id, batch_id):
-    """One pass over what the run produced, counting people from the sightings."""
+    """One pass over what the run produced, counting people from the source records."""
     rows = await _parsed(
         ("Ana Reyes", "Select Board Chair"), ("Bo Chen", "Select Board Member")
     )

@@ -1,11 +1,11 @@
-"""The import sheet's rows in: a spreadsheet row becomes the sighting `source_records` stores.
+"""The import sheet's rows in: a spreadsheet row becomes the source record `source_records` stores.
 
 What goes back out — each row's status, error and note — is `sheet_import_columns`. Pure: the
 Sheets calls are the caller's. Which sheet and which tabs is `services.entry_sheet`. Spec:
 `.scratch/2026-08-25-sheet-import-shape.md`.
 
 The sheet carries no ids — matching is ingest's job, so there is nowhere to paste a uuid wrong.
-One row is one sighting; `roster_from_rows` groups by name, so two rows for one person would
+One row is one source record; `roster_from_rows` groups by name, so two rows for one person would
 invite "Bob Smith" and "Robert Smith" to become two people.
 
 Which town a row belongs to is answered in order: `jurisdiction_ocdid` typed or pasted directly,
@@ -34,7 +34,7 @@ class ImportStatus(StrEnum):
     that succeeds or fails, because a town is the unit that gets imported."""
 
     IMPORTED = "imported"
-    # People stored, posts not. Re-derivable from the sightings, so not a failure.
+    # People stored, posts not. Re-derivable from the source records, so not a failure.
     PARTIAL = "partial"
     FAILED = "failed"
     # The sheet says exactly what it said last run, so no card was raised.
@@ -65,7 +65,7 @@ class RowError(BaseModel):
     message: str
 
 
-class Sighting(BaseModel):
+class SheetRecord(BaseModel):
     """Exactly what `insert_source_records` writes, keyed as `source_records` names it."""
 
     name: str
@@ -85,7 +85,7 @@ class Sighting(BaseModel):
 class ImportRow(BaseModel):
     line: int
     jurisdiction_ocdid: str
-    sighting: Sighting
+    source_record: SheetRecord
     # What the last run wrote here. Blank for a row nobody has imported, and blank again when a
     # volunteer clears it to say "look at this one again".
     status: str = ""
@@ -314,7 +314,7 @@ def _import_row(
         jurisdiction_ocdid=jurisdiction,
         status=clean_cell(row.get("status")),
         jurisdiction_note=jurisdiction_note(row, jurisdiction, jurisdictions),
-        sighting=Sighting(
+        source_record=SheetRecord(
             name=clean_cell(row["name"]),
             other_names=_names(row.get("other_names")),
             label=clean_cell(row.get("label")),
@@ -333,7 +333,7 @@ def _duplicate_errors(rows: list[ImportRow]) -> list[RowError]:
     seen: dict[tuple, int] = {}
     errors = []
     for row in rows:
-        key = row_key(row.jurisdiction_ocdid, row.sighting.name)
+        key = row_key(row.jurisdiction_ocdid, row.source_record.name)
         if key in seen:
             errors.append(
                 RowError(

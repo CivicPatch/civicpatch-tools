@@ -3,7 +3,7 @@
 `people_derivation` decides who the people are; this decides how they are presented — sorted,
 identified, and rendered.
 
-A submit carries `PersonSourceRecord`s, one per sighting.
+A submit carries `PersonSourceRecord`s, one per source record.
 
 Pure: rows and a taxonomy in, a roster out.
 """
@@ -27,9 +27,7 @@ from core.people_derivation import (
 from core.people_roles import derive_roles
 
 
-# Roster keys written here from source records, and stripped from client patches by
-# `people_edits`: a client-sent label would have no organization behind it.
-SIGHTINGS_FIELD = "sightings"
+# Written here from source records, and stripped from client patches by `people_edits`.
 LABELS_FIELD = "labels"
 
 
@@ -70,14 +68,14 @@ def roster_from_rows(
     return _render(derived, taxonomy), records_by_name
 
 
-def roster_from_sightings(
-    sightings: list[dict],
+def roster_from_source_records(
+    source_records: list[dict],
     published: dict[str, Person],
     taxonomy: Taxonomy,
     jurisdiction_ocdid: str,
     log: Log,
 ) -> list[dict]:
-    """The roster a scrape's stored sightings imply — the same document `roster_from_rows`
+    """The roster a scrape's stored source records imply — the same document `roster_from_rows`
     produced at ingest, rebuilt from what was kept.
 
     Grouping is read, not re-derived: each record's `person_id` already answered who is whom,
@@ -86,11 +84,11 @@ def roster_from_sightings(
     and carries confirmed aliases forward.
     """
     groups: dict[str, list[dict]] = defaultdict(list)
-    for sighting in sightings:
-        groups[sighting["person_id"]].append(sighting)
+    for source_record in source_records:
+        groups[source_record["person_id"]].append(source_record)
 
     people = [
-        _person_from_sightings(
+        _person_from_source_records(
             person_id, rows, published.get(person_id), jurisdiction_ocdid, taxonomy, log
         )
         for person_id, rows in groups.items()
@@ -98,7 +96,7 @@ def roster_from_sightings(
     return _render(people, taxonomy)
 
 
-def _person_from_sightings(
+def _person_from_source_records(
     person_id: str,
     rows: list[dict],
     published: Person | None,
@@ -220,16 +218,6 @@ def _rendered(person: DerivedPerson, records: list[PersonSourceRecord], taxonomy
         "cdn_image": person.cdn_image,
         "jurisdiction_ocdid": person.jurisdiction_ocdid,
         "source_urls": person.source_urls,
-        # `labels` and `source_urls` flattened, still paired with the organization whose
-        # extraction produced each — what publish needs to derive posts per organization.
-        SIGHTINGS_FIELD: [
-            {
-                "label": sighting.label,
-                "source_url": sighting.source_url,
-                "organization_id": sighting.organization_id,
-            }
-            for sighting in person.sightings
-        ],
         "updated_at": person.updated_at or "",
         "id": person.id,
     }

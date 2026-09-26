@@ -23,7 +23,7 @@ async def save_output(context: PeopleCollectorContext):
 
 
 def save_data_to_file(records: List[PersonSourceRecord], file_path: str):
-    """One row per sighting, labels verbatim, each stamped with the page it came from.
+    """One row per source record, labels verbatim, each stamped with the page it came from.
 
     Not a roster: several rows can describe one person, and which ones do is cp.org's to
     decide.

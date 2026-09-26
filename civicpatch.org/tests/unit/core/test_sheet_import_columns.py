@@ -9,7 +9,7 @@ from core.sheet_import_columns import (
 from core.sheet_import_rows import (
     ImportRow,
     RowError,
-    Sighting,
+    SheetRecord,
     build_jurisdiction_index,
     parse_rows,
 )
@@ -56,7 +56,7 @@ def _parsed_row(
     return ImportRow(
         line=line,
         jurisdiction_ocdid=ocdid,
-        sighting=Sighting(name=name, label="Chair", source_url="s"),
+        source_record=SheetRecord(name=name, label="Chair", source_url="s"),
         status=status,
     )
 

@@ -438,7 +438,7 @@ async def kinds_for_changesets(changeset_ids: list[str]) -> dict[str, ChangesetK
 
 async def jurisdictions_for_changesets(changeset_ids: list[str]) -> dict[str, str]:
     """Which jurisdiction each request is about. The roster itself is derived from that
-    request's sightings, so this is all a caller needs to ask for one."""
+    request's source records, so this is all a caller needs to ask for one."""
     if not changeset_ids:
         return {}
     pool = await get_pool()

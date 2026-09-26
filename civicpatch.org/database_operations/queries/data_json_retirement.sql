@@ -30,7 +30,7 @@ SELECT
         AND NOT EXISTS (SELECT 1 FROM source_records s
                         WHERE s.changeset_id = r.id))                      AS roster_only,
     (SELECT count(*) FROM source_records
-      WHERE jsonb_typeof(raw) = 'array')                                 AS sighting_shape,
+      WHERE jsonb_typeof(raw) = 'array')                                 AS record_shape,
     (SELECT count(*) FROM source_records
       WHERE jsonb_typeof(raw) = 'object')                                AS old_person_shape,
     (SELECT count(*) FROM source_records

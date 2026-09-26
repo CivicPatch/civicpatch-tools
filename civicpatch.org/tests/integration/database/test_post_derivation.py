@@ -701,7 +701,7 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
         await conn.commit()
 
     # A scrape naming somebody else entirely: the seated person is absent from it. Expressed
-    # as a sighting rather than a derived post, because `_apply_scrape_changes` now reads the
+    # as a source record rather than a derived post, because `_apply_scrape_changes` now reads the
     # scrape back through `proposed_roster` instead of being handed a derivation.
     other_id = await _seed_person()
     pool = await get_pool()
@@ -747,7 +747,7 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes():
     # and the gate would rightly refuse it.
     seats = [("mayor", "Mayor"), ("clerk", "Clerk"), ("treasurer", "Treasurer")]
     # Seeded under the names the source records carry. They used to differ — every person
-    # was "Test Person" against a "Seed Mayor" sighting — which made the fixture a
+    # was "Test Person" against a "Seed Mayor" source record — which made the fixture a
     # *renaming* scrape rather than a re-confirming one. Invisible while the review checks
     # only read the set of people; `_check_changed_fields` reads values.
     people = [await _seed_person(f"Seed {label}") for _, label in seats]
@@ -766,7 +766,7 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes():
             await factories.bind_membership(
                 cur, SeededMembership(person_id=person_id), post_id, org, _T0
             )
-            # The sighting, resolved to the seated person. Publishing renders its roster from
+            # The source record, resolved to the seated person. Publishing renders its roster from
             # these, so without them `proposed_roster` is empty and the publish refuses.
             await cur.execute(
                 "INSERT INTO source_records "
@@ -965,14 +965,14 @@ async def _two_bodies() -> tuple[str, str]:
     return council, mayors_office
 
 
-async def _publish(*sightings: tuple[str, str, str], at: datetime.datetime = _T0) -> str:
-    """A published scrape that read these `(organization, person, label)` sightings.
+async def _publish(*source_records: tuple[str, str, str], at: datetime.datetime = _T0) -> str:
+    """A published scrape that read these `(organization, person, label)` source records.
 
     Publish takes no roster: the records are the input, so a test says what the page said and
     publishing is what lets the fold see it.
     """
     changeset_id = await _published_changeset(at)
-    for organization_id, person_id, label in sightings:
+    for organization_id, person_id, label in source_records:
         await _record_for(changeset_id, organization_id, person_id, label)
     await _date_records(changeset_id, at)
     from database.publications import publish_changeset
@@ -1096,11 +1096,11 @@ async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
     assert _post_label_of(existing, staying) == "Position 8"
 
 
-async def _restating(*sightings: tuple[str, str, str]) -> str:
-    """An unpublished scrape that read these `(organization, person, label)` sightings — what a
+async def _restating(*source_records: tuple[str, str, str]) -> str:
+    """An unpublished scrape that read these `(organization, person, label)` source records — what a
     reviewer is looking at when they open its card."""
     changeset_id = await _published_changeset()
-    for organization_id, person_id, label in sightings:
+    for organization_id, person_id, label in source_records:
         await _record_for(changeset_id, organization_id, person_id, label)
     return changeset_id
 
