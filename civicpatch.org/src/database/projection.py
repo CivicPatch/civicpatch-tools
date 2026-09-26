@@ -10,6 +10,8 @@ each named there with the step that deletes them.
 """
 
 import json
+import logging
+import time
 from collections.abc import Iterable, Mapping, Sequence
 from datetime import datetime, timezone
 
@@ -36,6 +38,8 @@ from shared.schemas import RoleConfig
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 from schemas.activity import Change
 from schemas.claims import EntityType
+
+logger = logging.getLogger(__name__)
 
 _PERSON_COLUMNS = (
     "name",
@@ -255,13 +259,19 @@ async def _history(
     times = snapshot_times(facts, published_at)
     if not times:
         return []
+    started = time.perf_counter()
     snapshots = [
         (stamp, derive_roster(facts_as_of(facts, published_at, cut), jurisdiction_ocdid, taxonomy))
         for cut, stamp in times
     ]
     # Everything, at the last moment: a claim with no changeset still reaches the open rows.
     snapshots.append((times[-1][1], derive_roster(facts, jurisdiction_ocdid, taxonomy)))
-    return membership_history(snapshots)
+    history = membership_history(snapshots)
+    elapsed_ms = round((time.perf_counter() - started) * 1000)
+    logger.info(
+        f"membership history {jurisdiction_ocdid}: {len(snapshots)} folds, {elapsed_ms}ms"
+    )
+    return history
 
 
 async def rebuild(

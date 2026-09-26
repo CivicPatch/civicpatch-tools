@@ -215,8 +215,8 @@ async def test_get_jurisdictions_by_ocdids_empty():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_jurisdiction_history_not_found():
-    _, result = await db_jurisdictions.get_jurisdiction_history(_FAKE_OCDID)
+async def test_get_jurisdiction_activity_not_found():
+    _, result = await db_jurisdictions.get_jurisdiction_activity(_FAKE_OCDID)
     assert isinstance(result, list)
 
 

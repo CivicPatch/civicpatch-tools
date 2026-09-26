@@ -1,6 +1,6 @@
 """Changeset activity rolled up per state, for the cross-state summary page.
 
-The per-jurisdiction view of the same subject is `get_jurisdiction_history`; this is the same
+The per-jurisdiction view of the same subject is `get_jurisdiction_activity`; this is the same
 question one zoom level out. Where the two overlap they must agree, so the outcome is read the
 same way in both: off `changesets.dismissed_reason`, the changeset's own state.
 """

@@ -354,21 +354,21 @@ def get_router() -> APIRouter:
     # The house pagination shape: `page` + `per_page` in, `paginated_response`'s
     # `{total_items, page, total_pages, data}` out — 9 of 12 paged endpoints take these params
     # and 5 return this envelope.
-    @router.get("/history")
-    async def get_jurisdiction_history_endpoint(
+    @router.get("/activity")
+    async def get_jurisdiction_activity_endpoint(
         jurisdiction_ocdid: str = Query(
             ..., description="The OCD ID of the jurisdiction"
         ),
         page: int = Query(1, ge=1),
-        per_page: int = Query(database.DEFAULT_HISTORY_LIMIT, ge=1, le=100),
+        per_page: int = Query(database.DEFAULT_ACTIVITY_LIMIT, ge=1, le=100),
     ):
-        total, history = await database.get_jurisdiction_history(
+        total, activity = await database.get_jurisdiction_activity(
             jurisdiction_ocdid, limit=per_page, offset=pagination_offset(page, per_page)
         )
-        return paginated_response(total, page, per_page, history)
+        return paginated_response(total, page, per_page, activity)
 
-    # Public, like the history it summarises: the jurisdiction page is public and each action
-    # gates itself. This is the whole-history fetch that page used to do, narrowed to the rows
+    # Public, like the activity it summarises: the jurisdiction page is public and each action
+    # gates itself. This is the whole-activity fetch that page used to do, narrowed to the rows
     # it actually derives from.
     @router.get("/in-flight")
     async def get_jurisdiction_in_flight_endpoint(

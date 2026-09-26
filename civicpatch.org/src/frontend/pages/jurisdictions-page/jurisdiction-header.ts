@@ -6,7 +6,7 @@
 import { html, nothing } from "lit-html";
 import { dateStringToFriendly } from "../../utils/date-utils.js";
 import { jurisdictionOcdidToState } from "../../components/ocdid-utils.js";
-import { IN_PROGRESS_ANCHOR } from "./history/history-routes.js";
+import { IN_PROGRESS_ANCHOR } from "./activity/activity-routes.js";
 import { municipalitiesUrl } from "../municipalities-page/municipalities-routes.js";
 
 // Mirrors FRESH_SINCE_SQL in database/jurisdictions.py, which is what actually decides
@@ -42,7 +42,7 @@ export interface JurisdictionHeaderProps {
   isScraped: boolean;
   hasUrl: boolean;
   publishedAt?: string | null;
-  historyHref: string;
+  activityHref: string;
   canStartScrape: boolean;
   isScrapeBlocked: boolean;
   isRunInProgress: boolean;
@@ -78,7 +78,7 @@ export function renderJurisdictionHeader(props: JurisdictionHeaderProps) {
     isScraped,
     hasUrl,
     publishedAt,
-    historyHref,
+    activityHref,
     canStartScrape,
     isScrapeBlocked,
     isRunInProgress,
@@ -104,7 +104,7 @@ export function renderJurisdictionHeader(props: JurisdictionHeaderProps) {
         ${isRunInProgress
           ? html`<a
               class="jurisdiction-status jurisdiction-status--running"
-              href="${historyHref}#${IN_PROGRESS_ANCHOR}"
+              href="${activityHref}#${IN_PROGRESS_ANCHOR}"
             >
               <span class="jurisdiction-status__dot"></span>
               Scrape running <i class="fa-solid fa-arrow-right"></i>

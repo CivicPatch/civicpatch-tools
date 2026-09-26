@@ -119,7 +119,7 @@
   flex-shrink: 0;
 }
 
-/* A scrape is running: a link to the history page's In progress section rather than the
+/* A scrape is running: a link to the activity page's In progress section rather than the
    progress bar itself, so cancelling lives in one place and this page has no live state to
    tear down mid-click. Wears the status pill's shape because it sits beside it. */
 

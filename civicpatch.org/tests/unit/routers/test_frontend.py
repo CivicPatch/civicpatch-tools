@@ -218,13 +218,13 @@ def test_catch_all_still_handles_three_segment_jurisdiction_paths(permissions_cl
     assert response.status_code == 404
 
 
-# ── GET /{path}/history ───────────────────────────────────────────────────────
+# ── GET /{path}/activity ──────────────────────────────────────────────────────
 # Must be registered ahead of the /{path:path} catch-all. `folder_to_jurisdiction_ocdid`
-# checks only `len < 3` and reads segments 0 and 2, so a 4-segment history path parses
+# checks only `len < 3` and reads segments 0 and 2, so a 4-segment activity path parses
 # happily there — the catch-all would render the jurisdiction page rather than 404.
 
 @pytest.mark.unit
-def test_history_page_takes_priority_over_catch_all(permissions_client):
+def test_activity_page_takes_priority_over_catch_all(permissions_client):
     permissions_client.dependency_overrides[get_optional_user] = lambda: None
     client = TestClient(permissions_client)
     with patch(
@@ -232,19 +232,19 @@ def test_history_page_takes_priority_over_catch_all(permissions_client):
         new_callable=AsyncMock,
         return_value={"data": {"name": "Carbonado"}},
     ):
-        response = client.get("/wa/local/place_carbonado/history")
+        response = client.get("/wa/local/place_carbonado/activity")
     assert response.status_code == 200
     assert "text/html" in response.headers["content-type"]
     # The proof it did not fall through: the catch-all renders civ-jurisdiction-page.
-    assert "civ-jurisdiction-history" in response.text
+    assert "civ-jurisdiction-activity" in response.text
 
 
 @pytest.mark.unit
-def test_history_page_404s_for_a_jurisdiction_that_does_not_exist(permissions_client):
+def test_activity_page_404s_for_a_jurisdiction_that_does_not_exist(permissions_client):
     permissions_client.dependency_overrides[get_optional_user] = lambda: None
     client = TestClient(permissions_client)
     with patch("routers.frontend.get_jurisdiction", new_callable=AsyncMock, return_value=None):
-        response = client.get("/wa/local/place_nowhere/history")
+        response = client.get("/wa/local/place_nowhere/activity")
     assert response.status_code == 404
 
 

@@ -117,7 +117,7 @@ class TimelineIssue(BaseModel):
     data: dict = {}
 
 
-class JurisdictionHistoryEntry(BaseModel):
+class JurisdictionActivityEntry(BaseModel):
     """One changeset on a jurisdiction's timeline: what it was, how it ended, what it changed.
 
     Replaces `PeoplePipelineRunHistory`, which this query claimed to return and never did: it

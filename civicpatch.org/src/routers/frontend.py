@@ -265,11 +265,11 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         )
 
     @router.get(
-        "/~{username}/history",
+        "/~{username}/activity",
         response_class=HTMLResponse,
         include_in_schema=False,
     )
-    async def user_history_page(
+    async def user_activity_page(
         request: Request,
         username: str,
         user: dict = Depends(require_page_permission("can_manage_roles")),
@@ -278,7 +278,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         if not target_user:
             raise HTTPException(status_code=404, detail="User not found")
         return templates.TemplateResponse(
-            "pages/user-history.html",
+            "pages/user-activity.html",
             {
                 "request": request,
                 "user": user,
@@ -328,15 +328,15 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             {"request": request, "user": user, "state": state, "level": "counties"},
         )
 
-    @router.get("/{path:path}/history", response_class=HTMLResponse, include_in_schema=False)
-    async def jurisdiction_history_page(
+    @router.get("/{path:path}/activity", response_class=HTMLResponse, include_in_schema=False)
+    async def jurisdiction_activity_page(
         request: Request,
         path: str,
         identity: Optional[Identity] = Depends(get_optional_user),
     ):
         # Registered ahead of the /{path:path} catch-all, and this one is not optional.
         # `folder_to_jurisdiction_ocdid` only checks `len < 3` — it reads segments 0 and 2 and
-        # ignores the rest — so "wa/local/place_seattle/history" parses happily there and would
+        # ignores the rest — so "wa/local/place_seattle/activity" parses happily there and would
         # render the jurisdiction page instead of 404ing. Ordering is the only thing between
         # this route and a silently wrong page.
         try:
@@ -350,7 +350,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         if needs_username(user):
             return RedirectResponse("/login/username", status_code=303)
         return templates.TemplateResponse(
-            "pages/jurisdiction-history.html",
+            "pages/jurisdiction-activity.html",
             {
                 "request": request,
                 "jurisdiction_ocdid": jurisdiction_ocdid,

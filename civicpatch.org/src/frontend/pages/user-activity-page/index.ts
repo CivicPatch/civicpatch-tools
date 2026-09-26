@@ -1,4 +1,4 @@
-// The candidate list the profile page's history widget links into: the user's published
+// The candidate list the profile page's activity widget links into: the user's published
 // changesets from the last week, one flat list, no jurisdiction picker.
 //
 // One row is one changeset, the rollback unit since 2026-09-24. It used to be one claim per row,
@@ -34,18 +34,18 @@ import "../user-profile-page/user-profile-page.css";
 // never drift from what `/activity` itself renders.
 import "../activity-page/activity-page.css";
 import "./confirm-rollback-modal.js";
-import "./user-history-page.css";
+import "./user-activity-page.css";
 import { formatDateTime } from "../../utils/date-utils.js";
 
 const TOAST_TIMEOUT_MS = 10_000;
 const PER_PAGE = 20;
 
-interface UserHistoryPageProps {
+interface UserActivityPageProps {
   target_user_id: string;
   username: string;
 }
 
-function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
+function UserActivityPage({ target_user_id, username }: UserActivityPageProps) {
   const [user, setUser] = useState<AdminUser | null>(null);
 
   const [candidates, setCandidates] = useState<RollbackCandidate[]>([]);
@@ -169,9 +169,9 @@ function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
   return html`
     <main class="user-profile-page page-content">
       <div class="sectioned">
-        ${SectionNav("user", userSection(username), `/~${username}/history`)}
+        ${SectionNav("user", userSection(username), `/~${username}/activity`)}
         <div class="secbody">
-          <h1 class="user-profile-page__title">History</h1>
+          <h1 class="user-profile-page__title">Activity</h1>
 
           ${candidatesLoading ? html`<p class="user-profile-page__status">Loading…</p>` : null}
           ${candidatesLoadError
@@ -180,7 +180,7 @@ function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
               </p>`
             : null}
           ${!candidatesLoading && !candidatesLoadError && candidates.length === 0
-            ? html`<p class="user-profile-page__status">No history yet.</p>`
+            ? html`<p class="user-profile-page__status">No activity yet.</p>`
             : null}
           ${!candidatesLoading && !candidatesLoadError && candidates.length > 0
             ? html`
@@ -234,11 +234,11 @@ function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
                   )}
                 </div>
                 ${pager}
-                <label class="candidate-list__reason-label" for="user-history-comment">
+                <label class="candidate-list__reason-label" for="user-activity-comment">
                   Reason
                 </label>
                 <input
-                  id="user-history-comment"
+                  id="user-activity-comment"
                   class="candidate-list__reason-input"
                   type="text"
                   required
@@ -277,10 +277,10 @@ function UserHistoryPage({ target_user_id, username }: UserHistoryPageProps) {
 }
 
 customElements.define(
-  "user-history-page",
-  component(UserHistoryPage as any, {
+  "user-activity-page",
+  component(UserActivityPage as any, {
     useShadowDOM: false,
     observedAttributes: ["target_user_id", "username"],
   }),
 );
-export default UserHistoryPage;
+export default UserActivityPage;

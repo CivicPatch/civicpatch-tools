@@ -6,7 +6,7 @@ import { useWebSocket } from "../../hooks/use-websocket.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { usePeople } from "../../hooks/usePeople.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
-import { historyUrl } from "./history/history-routes.js";
+import { activityUrl } from "./activity/activity-routes.js";
 import {
   SectionNav,
   jurisdictionSection,
@@ -182,7 +182,7 @@ function JurisdictionPage({
   // Both sources answer it themselves now — the socket payload and the in-flight row carry
   // `is_running`, so this no longer has to know which statuses are terminal.
   const isRunInProgress = pipelineRunStatus?.is_running ?? !!liveEntry;
-  const historyHref = historyUrl(jurisdictionOcdidToPath(jurisdiction_ocdid));
+  const activityHref = activityUrl(jurisdictionOcdidToPath(jurisdiction_ocdid));
 
   const canStartScrape = permissions.can_scrape;
 
@@ -194,7 +194,7 @@ function JurisdictionPage({
         isScraped: people?.length > 0,
         hasUrl: !!jurisdictionData?.data?.url,
         publishedAt: publishedAtDate,
-        historyHref,
+        activityHref,
         canStartScrape,
         isScrapeBlocked: peopleBlockers.length > 0,
         isRunInProgress: !!isRunInProgress || isTriggering,
@@ -212,7 +212,7 @@ function JurisdictionPage({
           "jurisdiction",
           jurisdictionSection(
             jurisdictionOcdidToPath(jurisdiction_ocdid),
-            historyHref,
+            activityHref,
           ),
           `/${jurisdictionOcdidToPath(jurisdiction_ocdid)}`,
         )}

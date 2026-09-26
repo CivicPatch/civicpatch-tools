@@ -1,5 +1,5 @@
-// Shared between user-profile-page and user-history-page: the user shape both fetch, and the
-// candidate-row formatting the history page renders.
+// Shared between user-profile-page and user-activity-page: the user shape both fetch, and the
+// candidate-row formatting the activity page renders.
 
 export type AdminUser = {
   id: string;
