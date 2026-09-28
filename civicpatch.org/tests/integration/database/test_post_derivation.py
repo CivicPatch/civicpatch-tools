@@ -1299,7 +1299,7 @@ async def test_withdrawing_the_claim_reopens_the_membership_on_the_next_publish(
         curator_id = await _curator_id(cur)
         await cur.execute(
             "SELECT id::text FROM claims WHERE entity_id = %s AND field_path = %s "
-            "AND kind = 'reject' AND value #>> '{}' = %s AND withdrawn_at IS NULL",
+            "AND kind = 'reject' AND value #>> '{}' = %s AND claim_is_live(id)",
             (person_id, POSTS_FIELD, post_id),
         )
         [(reject_id,)] = await cur.fetchall()

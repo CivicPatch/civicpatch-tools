@@ -2,7 +2,7 @@
 
 Real Postgres: what this exists to prove is that a rollback is *visible*, not just recorded —
 the withdrawn assertion has to stop winning the fold and the live `people` row has to change,
-not only `claims.withdrawn_at`.
+not only a withdraw row.
 
 Run with: mise run tcp-integration
 Isolation: sentinel state 'zz', cleaned before/after.
@@ -203,11 +203,13 @@ async def test_rollback_reverts_the_edit_and_republishes():
         assert row is not None and row[0] == "Ada Chen", "the live row did not revert"
 
         await cur.execute(
-            "SELECT withdrawn_at IS NOT NULL, withdrawn_by_changeset_id IS NOT NULL "
-            "FROM claims WHERE changeset_id::text = %s",
+            "SELECT claim_is_live(c.id), k.kind FROM claims c "
+            "JOIN claims w ON w.entity_id = c.id AND w.kind = 'withdraw' "
+            "JOIN changesets k ON k.id = w.changeset_id "
+            "WHERE c.changeset_id::text = %s",
             (changeset_id,),
         )
-        assert await cur.fetchall() == [(True, True)]
+        assert await cur.fetchall() == [(False, "rollback")]
 
         await cur.execute(
             "SELECT kind, published_at IS NOT NULL FROM changesets "

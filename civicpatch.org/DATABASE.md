@@ -286,16 +286,12 @@ erDiagram
         text            entity_type         "CHECK post|membership|person|jurisdiction|organization|source_record|source_page|claim (last three 214: what a withdraw can name); no FK — heterogeneous subjects, the price of an event log"
         uuid            entity_id           "no FK; deletes are refused rather than cascaded. For entity_type membership, since 216: membership_id(person, post) = uuid5 over the person and the fold's post id (SQL function, twin of shared.utils.membership_ids); rows keyed by a memberships row id are the pre-216 originals, read by today's publish until the fold replaces it"
         text_null       field_path          "NULL only on a withdraw, which names a whole fact (CHECK, 214). Otherwise the field: list fields (incl. post_id since 159) key on the value, scalars on the field; the two partial indexes from 137 that enforced this were DROPPED in 187, since history means several rows can now exist per key"
-        text            kind                "CHECK accept|reject|withdraw (214). A withdraw's entity is the fact it cancels: entity_type claim|source_record|source_page, entity_id that row's id, value 'null'; idx: (changeset_id) WHERE kind = 'withdraw' (218)"
+        text            kind                "CHECK accept|reject|withdraw (214). A withdraw's entity is the fact it cancels: entity_type claim|source_record|source_page, entity_id that row's id, value 'null'; idx: (changeset_id) WHERE kind = 'withdraw' (218). A claim applies while claim_is_live(id) (236: SQL function, twin of core/projection/live_facts.py; a withdraw can itself be withdrawn). The withdrawn_* columns went in 236"
         jsonb_null      value               "corrections only; NULL = deliberately empty, which is why kind exists"
         jsonb           sources             "[{note, url}] — note may stand alone: 'phoned the clerk'. NOT NULL and non-empty since 220: a claim says where it came from, and an internal action records its own name"
         uuid            created_by          FK "NOT NULL — a claim nobody made is not a claim. Permanent since 187: a re-statement inserts, it never overwrites this. Renamed from asserted_by in 191, same reasoning as created_at below"
         timestamptz     created_at          "idx: (entity_type, entity_id, field_path, created_at DESC), widened in 187 to serve `asserted_values`. APPEND-ONLY since 187 — history is only trustworthy if rows never change. Renamed from asserted_at in 191: the table is insert-only, so there is no separate created/asserted moment, and this matches every other table's naming"
-        timestamptz_null withdrawn_at       "187. Set together with withdrawn_by (CHECK). NULL = still applies"
-        uuid_null       withdrawn_by        FK "187. Who retracted this claim — distinct from created_by, the one who made it"
-        text_null       withdrawn_reason    "187"
         uuid            changeset_id        FK "188. idx. Which changeset CREATED this claim — write-once, nothing updates it after insert. NOT NULL since 235 (234 attached the old ones); ON DELETE CASCADE, as source_records"
-        uuid_null       withdrawn_by_changeset_id  FK "188. idx. Which ROLLBACK changeset withdrew this claim — symmetric to changeset_id. NULL for an ordinary withdrawal (e.g. clearing a hand-set label back to derived)"
     }
 
     state_settings {
@@ -326,9 +322,7 @@ erDiagram
     posts ||--o{ memberships : "post_id"
     people ||--o{ memberships : "person_id"
     users ||--o{ claims : "created_by"
-    users ||--o{ claims : "withdrawn_by"
     changesets ||--o{ claims : "changeset_id"
-    changesets ||--o{ claims : "withdrawn_by_changeset_id"
     changesets ||--o{ changesets : "parent_changeset_id"
     users ||--o{ changeset_batches : "started_by_user_id"
     changeset_batches ||--o{ changesets : "batch_id"

@@ -592,8 +592,7 @@ async def test_mayor_then_member_then_mayor_again():
 @pytest.mark.integration
 async def test_a_withdrawn_claim_no_longer_counts():
     """A human accepts a name, then it is withdrawn (an admin's rollback, or clearing an
-    override today). Today's publish reads `withdrawn_at`; the fold reads the withdraw row that
-    214 files alongside it. Both must fall back to what the page says."""
+    override). The fold reads the withdraw row and must fall back to what the page says."""
     ids = await _seed()
     user_id = await _reject_user()
     first = await _changeset(_T0)
@@ -619,7 +618,7 @@ async def test_a_withdrawn_claim_no_longer_counts():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT id::text FROM claims WHERE entity_id = %s AND field_path = 'name' "
-            "AND kind = 'accept' AND withdrawn_at IS NULL",
+            "AND kind = 'accept' AND claim_is_live(id)",
             (ids["ana"],),
         )
         [(claim_id,)] = await cur.fetchall()
