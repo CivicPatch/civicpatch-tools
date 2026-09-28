@@ -21,12 +21,12 @@ def _pairs(claims):
 def test_an_unchanged_set_files_nothing():
     """The editor sends every person, so most calls say the same thing twice. Saying it again
     must not fill the audit trail with claims nobody made."""
-    assert claims_from_posts("p1", [MAYOR], [MAYOR]) == []
+    assert claims_from_posts("p1", [MAYOR], [MAYOR], "c1") == []
 
 
 @pytest.mark.unit
 def test_a_new_post_is_an_accept():
-    claims = claims_from_posts("p1", [], [MAYOR])
+    claims = claims_from_posts("p1", [], [MAYOR], "c1")
 
     assert _pairs(claims) == [(ClaimKind.ACCEPT, MAYOR)]
     assert claims[0].entity_type is EntityType.PERSON
@@ -36,7 +36,7 @@ def test_a_new_post_is_an_accept():
 
 @pytest.mark.unit
 def test_a_dropped_post_is_a_reject():
-    assert _pairs(claims_from_posts("p1", [MAYOR], [])) == [
+    assert _pairs(claims_from_posts("p1", [MAYOR], [], "c1")) == [
         (ClaimKind.REJECT, MAYOR)
     ]
 
@@ -45,7 +45,7 @@ def test_a_dropped_post_is_a_reject():
 def test_a_move_is_both_halves():
     """One id arrives, another leaves. The fold's collapse decides which survives, so the
     route never has to name the move."""
-    assert _pairs(claims_from_posts("p1", [MAYOR], [CLERK])) == [
+    assert _pairs(claims_from_posts("p1", [MAYOR], [CLERK], "c1")) == [
         (ClaimKind.ACCEPT, CLERK),
         (ClaimKind.REJECT, MAYOR),
     ]
@@ -54,7 +54,7 @@ def test_a_move_is_both_halves():
 @pytest.mark.unit
 def test_removing_a_person_rejects_every_post_they_hold():
     """"Remove person" is `posts: []` — the same claim per post, not a special act."""
-    assert _pairs(claims_from_posts("p1", [CLERK, MAYOR], [])) == [
+    assert _pairs(claims_from_posts("p1", [CLERK, MAYOR], [], "c1")) == [
         (ClaimKind.REJECT, MAYOR),
         (ClaimKind.REJECT, CLERK),
     ]
@@ -63,8 +63,8 @@ def test_removing_a_person_rejects_every_post_they_hold():
 @pytest.mark.unit
 def test_the_claims_do_not_depend_on_the_order_they_were_given():
     """R6: two identical edits file identical claims, whatever order the client listed them."""
-    forwards = claims_from_posts("p1", [MAYOR, CLERK], [CLERK])
-    backwards = claims_from_posts("p1", [CLERK, MAYOR], [CLERK])
+    forwards = claims_from_posts("p1", [MAYOR, CLERK], [CLERK], "c1")
+    backwards = claims_from_posts("p1", [CLERK, MAYOR], [CLERK], "c1")
 
     assert _pairs(forwards) == _pairs(backwards)
 

@@ -35,7 +35,9 @@ class DefaultNote(StrEnum):
     WITHDRAWN = "withdrawn"
 
 
-class Claim(BaseModel):
+class ClaimRequest(BaseModel):
+    """A claim as a client files it: the server decides which changeset it belongs to."""
+
     entity_type: EntityType
     entity_id: str
     field_path: str
@@ -44,9 +46,6 @@ class Claim(BaseModel):
     # Where the claim came from — a url or a note. Required: a claim nobody can trace is the
     # thing this field exists to prevent (§5).
     sources: list[Source]
-    # Which changeset this claim was made under, if any — a direct field assert or an edit
-    # outside review has none. Write-once in practice; nothing updates it after insert.
-    changeset_id: str | None = None
 
     @field_validator("sources")
     @classmethod
@@ -54,3 +53,8 @@ class Claim(BaseModel):
         if not sources:
             raise ValueError("a claim needs a source")
         return sources
+
+
+class Claim(ClaimRequest):
+    # The act that filed it, which rollback undoes as one. Write-once.
+    changeset_id: str

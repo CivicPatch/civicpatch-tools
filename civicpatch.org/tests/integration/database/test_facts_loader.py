@@ -73,7 +73,7 @@ async def _changeset_of(jurisdiction_ocdid: str) -> str:
         return row[0]
 
 
-async def _label_claim(entity_id: str, label: str, changeset_id: str | None = None) -> None:
+async def _label_claim(entity_id: str, label: str, changeset_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -164,32 +164,6 @@ async def test_a_claim_on_another_jurisdictions_membership_is_not():
     facts = await load_facts_for(_OCDID, datetime.datetime.now(datetime.timezone.utc))
 
     assert _labels_of(facts, entity_id) == []
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_claim_made_under_no_changeset_is_loaded():
-    """Why the scope has an `OR`: a label set outside a review names no jurisdiction, and it
-    still has to reach the fold. The fold matches it to its own memberships, so one about
-    somebody else's is inert rather than wrong."""
-    person_id = str(uuid.uuid4())
-    await factories.seed_jurisdiction(_OCDID, "zl")
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await factories.default_organization(cur, _OCDID)
-        await conn.commit()
-    await factories.published_source_record(
-        _OCDID, organization_id, person_id, "Lia Load", "Mayor", _PAGE, _T0
-    )
-    post_id = PostKey(
-        organization_id=organization_id, role_id="mayor", division_ocdid=_BASE
-    ).post_id
-    entity_id = membership_id(person_id, post_id)
-    await _label_claim(entity_id, "zl-Mayor (unattributed)")
-
-    facts = await load_facts_for(_OCDID, datetime.datetime.now(datetime.timezone.utc))
-
-    assert _labels_of(facts, entity_id) == ["zl-Mayor (unattributed)"]
 
 
 async def _unpublished_scrape(person_id: str, organization_id: str, label: str) -> str:

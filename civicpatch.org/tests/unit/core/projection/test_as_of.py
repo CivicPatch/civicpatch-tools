@@ -50,14 +50,6 @@ def test_a_changesets_facts_count_from_when_it_published_not_when_they_were_made
 
 
 @pytest.mark.unit
-def test_a_claim_with_no_changeset_counts_from_when_it_was_made():
-    facts = Facts(claims=(_claim(None, made=3),))
-
-    assert facts_as_of(facts, {}, _at(2)).claims == ()
-    assert len(facts_as_of(facts, {}, _at(3)).claims) == 1
-
-
-@pytest.mark.unit
 def test_a_merge_applies_to_every_moment():
     """A merge says who someone always was, so history shows one person throughout."""
     facts = Facts(claims=(_claim("edit", made=9, field_path=SAME_AS),))
@@ -82,10 +74,3 @@ def test_a_date_never_goes_back():
         (_at(6), _at(5)),
         (_at(7), _at(5)),
     ]
-
-
-@pytest.mark.unit
-def test_a_claim_with_no_changeset_makes_no_moment_of_its_own():
-    facts = Facts(records=(_record("scrape", observed=1),), claims=(_claim(None, made=3),))
-
-    assert snapshot_times(facts, {"scrape": _at(2)}) == [(_at(2), _at(1))]

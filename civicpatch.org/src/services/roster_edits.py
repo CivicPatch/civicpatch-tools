@@ -24,7 +24,7 @@ from database import posts as posts_db
 from database import projection as projection_db
 from database.changesets import (
     find_or_create_review_edit,
-    register_roster_edit_changeset,
+    create_roster_edit_changeset,
 )
 from database.database import get_pool
 from database.roles import get_roles
@@ -101,7 +101,9 @@ async def edit_published_roster(
     # Read before the claims are filed: this changeset is born published, so once they are
     # written the roster already reflects them and there is no "before" left to read.
     before = on_roster(await _roster(jurisdiction_ocdid))
-    await register_roster_edit_changeset(changeset_id, jurisdiction_ocdid, user_id)
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await create_roster_edit_changeset(cur, changeset_id, jurisdiction_ocdid, user_id)
     await _write(claims, edits, user_id, changeset_id)
     # `publish_roster` reads the feed off that against the roster after (9d), so this path
     # records what it changed without diffing its own payload.

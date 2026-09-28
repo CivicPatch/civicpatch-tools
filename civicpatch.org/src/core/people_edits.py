@@ -181,7 +181,7 @@ def patch_people(base: list[dict], edits: list[PersonPatch]) -> list[dict]:
     return [order_person_fields(person) for person in patched]
 
 
-def claim_same_as(person_id: str, survivor_id: str, changeset_id: str | None) -> Claim:
+def claim_same_as(person_id: str, survivor_id: str, changeset_id: str) -> Claim:
     return Claim(
         entity_type=EntityType.PERSON,
         entity_id=person_id,
@@ -197,7 +197,7 @@ def claims_from_posts(
     person_id: str,
     held: Iterable[str],
     wanted: Iterable[str],
-    changeset_id: str | None = None,
+    changeset_id: str,
 ) -> list[Claim]:
     """The posts a person should hold, as claims: a new id accepts, a dropped one rejects.
 
@@ -225,7 +225,7 @@ def claims_from_posts(
 
 
 def claims_from_edit(
-    person_id: str, scraped: dict, edited: dict, changeset_id: str | None = None
+    person_id: str, scraped: dict, edited: dict, changeset_id: str
 ) -> list[Claim]:
     """A reviewer's save as claims, diffed against the scrape so repeat saves stay
     idempotent."""

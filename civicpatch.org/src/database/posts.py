@@ -4,7 +4,8 @@ from core.post_grouping import group_by_organization
 from core.projection.facts import PostKey
 from database import claims, divisions, organizations
 from database.activity import record_change
-from database.changesets import live_roster_changeset
+from database.changesets import create_roster_edit_changeset
+from shared.utils.id_utils import make_id
 from database.database import get_pool
 from schemas.claims import (
     DefaultNote,
@@ -87,19 +88,10 @@ async def claimed_labels_by_key(
 
 
 async def set_post_label(
-    cur,
-    post_id: str,
-    label: str | None,
-    user_id: str,
-    changeset_id: str | None = None,
+    cur, post_id: str, label: str, user_id: str, changeset_id: str
 ) -> None:
-    """Name this post, or clear it back to the derived guess. No column to write — this is
-    the whole effect, unlike `update_human_fields`'s pair."""
-    if label is None:
-        await claims.withdraw(
-            cur, EntityType.POST, post_id, POST_LABEL_FIELD, ClaimKind.ACCEPT, user_id
-        )
-        return
+    """Name this post. No column to write — this is the whole effect, unlike
+    `update_human_fields`'s pair."""
     await claims.upsert(
         cur,
         Claim(
@@ -129,17 +121,14 @@ async def _accept_fields(
     cur,
     post_id: str,
     values: dict,
-    user_id: str | None,
-    changeset_id: str | None = None,
+    user_id: str,
+    changeset_id: str,
 ) -> None:
     """Accept this post's human fields on somebody's behalf — what makes a hand-made post
     verified. A no-op edit claims nothing new: `upsert_all` skips a value already the current
-    answer, so re-saving does not insert a row.
-
-    Skipped without a user: the derivation's path claims nothing, so its posts stay unverified.
+    answer, so re-saving does not insert a row. Only for a person's act: the derivation's path
+    claims nothing, so its posts stay unverified.
     """
-    if not user_id:
-        return
     await claims.upsert_all(
         cur,
         [
@@ -572,13 +561,15 @@ async def create(
         )
         # Nothing to log when the triple was taken: no post was created.
         if post_id:
-            # A seat somebody added by hand belongs to the roster they added it to.
-            changeset_id = await live_roster_changeset(cur, jurisdiction_ocdid)
-            await _accept_fields(
-                cur, post_id, {"meta_headcount": headcount}, user_id, changeset_id
-            )
-            if label and user_id:
-                await set_post_label(cur, post_id, label, user_id, changeset_id)
+            changeset_id = None
+            if user_id:
+                changeset_id = make_id()
+                await create_roster_edit_changeset(cur, changeset_id, jurisdiction_ocdid, user_id)
+                await _accept_fields(
+                    cur, post_id, {"meta_headcount": headcount}, user_id, changeset_id
+                )
+                if label:
+                    await set_post_label(cur, post_id, label, user_id, changeset_id)
             minted = await get(cur, post_id)
             await record_change(
                 cur,
@@ -616,15 +607,18 @@ async def update(
         if before is None:
             return None
 
-        changeset_id = await live_roster_changeset(cur, before.jurisdiction_ocdid)
         await update_human_fields(cur, post_id, headcount, is_tracked)
-        await _accept_fields(
-            cur,
-            post_id,
-            {"meta_headcount": headcount, "meta_is_tracked": is_tracked},
-            user_id,
-            changeset_id,
-        )
+        changeset_id = None
+        if user_id:
+            changeset_id = make_id()
+            await create_roster_edit_changeset(cur, changeset_id, before.jurisdiction_ocdid, user_id)
+            await _accept_fields(
+                cur,
+                post_id,
+                {"meta_headcount": headcount, "meta_is_tracked": is_tracked},
+                user_id,
+                changeset_id,
+            )
         await record_change(
             cur,
             ActivityType.EDIT_POST,

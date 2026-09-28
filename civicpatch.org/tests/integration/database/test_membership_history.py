@@ -61,7 +61,7 @@ async def _council() -> str:
 
 
 async def _scrape(at: datetime, jane: str, label: str, council: str) -> None:
-    """Rebuilt directly: `publish_changeset` would refuse a backdated scrape after an edit."""
+    """Rebuilt directly, so its facts count from `at`: publishing would date them now."""
     record = {"name": "Jane Doe", "label": label, "source_url": _PAGE, "organization_id": council}
     await factories.published_scrape(_OCDID, at, {jane: [record]})
     pool = await get_pool()

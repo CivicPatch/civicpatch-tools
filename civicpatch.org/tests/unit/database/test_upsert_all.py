@@ -21,6 +21,7 @@ def _claim(field: str, value, kind=ClaimKind.ACCEPT, entity="p1") -> Claim:
         kind=kind,
         value=value,
         sources=[Source(note="test")],
+        changeset_id="c1",
     )
 
 

@@ -16,27 +16,17 @@ from database.changeset_predicates import OPEN_REVIEW_EDIT
 from database.database import get_pool
 from shared.utils.statuses import ChangesetKind
 
-# Only a published changeset's facts derive (R3), plus the one changeset a caller asks to see
+# Only a published changeset's facts derive, plus the one changeset a caller asks to see
 # as though it had published, which is what a proposed roster is. `including` is NULL for the
 # live roster, and `id = NULL` is never true, so that caller pays nothing for the clause.
-#
-# The scrape's open review edit comes along, because publishing the scrape publishes it (9f).
 _INCLUDED = f"""(
     changesets.id = %(including)s
     OR (changesets.parent_changeset_id = %(including)s AND {OPEN_REVIEW_EDIT})
 )"""
 
-#
-# `claims.changeset_id` is still nullable today — a direct field assert or an edit made
-# outside review has none — and those claims are live, so they must not be dropped by the
-# join. Step 16 makes the column NOT NULL and this becomes a plain inner join.
-_PUBLISHED_OR_UNATTRIBUTED = f"""
-    LEFT JOIN changesets ON changesets.id = claims.changeset_id
-    WHERE (
-        (claims.changeset_id IS NULL AND claims.created_at <= %(as_of)s)
-        OR changesets.published_at <= %(as_of)s
-        OR {_INCLUDED}
-    )
+_PUBLISHED_OR_INCLUDED = f"""
+    JOIN changesets ON changesets.id = claims.changeset_id
+    WHERE (changesets.published_at <= %(as_of)s OR {_INCLUDED})
 """
 
 _RECORDS = f"""
@@ -66,7 +56,7 @@ _PERSON_CLAIMS = f"""
     FROM claims
     LEFT JOIN posts ON claims.field_path = '{POSTS_FIELD}'
                    AND posts.id::text = claims.value #>> '{{}}'
-    {_PUBLISHED_OR_UNATTRIBUTED}
+    {_PUBLISHED_OR_INCLUDED}
       AND claims.entity_type = 'person'
       AND (claims.entity_id::text = ANY(%(person_ids)s)
            OR changesets.jurisdiction_ocdid = %(jurisdiction_ocdid)s)
@@ -74,51 +64,42 @@ _PERSON_CLAIMS = f"""
 
 # A split: a record re-linked to another person (§8). Its value names the person, who may be
 # known to no record, so these load before the person claims.
-_RECORD_CLAIMS = f"""
+_SOURCE_RECORD_CLAIMS = f"""
     SELECT claims.id::text, claims.changeset_id::text, claims.created_at,
            claims.entity_type, claims.entity_id::text, claims.field_path,
            claims.kind, claims.value, NULL, NULL, NULL
     FROM claims
-    {_PUBLISHED_OR_UNATTRIBUTED}
+    {_PUBLISHED_OR_INCLUDED}
       AND claims.entity_type = 'source_record'
-      AND claims.entity_id::text = ANY(%(record_ids)s)
+      AND claims.entity_id::text = ANY(%(source_record_ids)s)
 """
 
 # By the jurisdiction the claim was made in, not by the membership's id: the id is a hash of
 # `(person, post)` that no query can join on. The fold matches them to its own posts, so a
-# claim about somebody else's membership is inert — `changeset_id IS NULL` is the pre-review
-# claims, which name no jurisdiction until step 16.
+# claim about somebody else's membership is inert.
 _MEMBERSHIP_CLAIMS = f"""
     SELECT claims.id::text, claims.changeset_id::text, claims.created_at,
            claims.entity_type, claims.entity_id::text, claims.field_path,
            claims.kind, claims.value, NULL, NULL, NULL
     FROM claims
-    {_PUBLISHED_OR_UNATTRIBUTED}
+    {_PUBLISHED_OR_INCLUDED}
       AND claims.entity_type = 'membership'
-      AND (changesets.jurisdiction_ocdid = %(jurisdiction_ocdid)s
-           OR claims.changeset_id IS NULL)
+      AND changesets.jurisdiction_ocdid = %(jurisdiction_ocdid)s
 """
 
 # Every published withdraw that can affect this jurisdiction. Scoping by the changeset's own
 # jurisdiction is safe because only `services/rollback.py` files a withdraw under one, and it
-# takes that jurisdiction from the target's own `people` row, so the two always agree. Every
-# other withdrawal (a cleared label, a taken-back rejection) leaves `changeset_id` NULL and is
-# loaded unconditionally. Never cut by date: a rolled-back edit is gone from every as-of.
+# takes that jurisdiction from the target's own `people` row, so the two always agree. Never
+# cut by date: a rolled-back edit is gone from every as-of.
 _WITHDRAWS = f"""
     SELECT claims.id::text, claims.changeset_id::text, claims.created_at,
            claims.entity_type, claims.entity_id::text, claims.field_path,
            claims.kind, claims.value, NULL, NULL, NULL
     FROM claims
-    LEFT JOIN changesets ON changesets.id = claims.changeset_id
+    JOIN changesets ON changesets.id = claims.changeset_id
     WHERE claims.kind = '{ClaimKind.WITHDRAW.value}'
-      AND (
-          claims.changeset_id IS NULL
-          OR (
-              (changesets.published_at IS NOT NULL OR {_INCLUDED})
-              AND (changesets.jurisdiction_ocdid = %(jurisdiction_ocdid)s
-                   OR changesets.jurisdiction_ocdid IS NULL)
-          )
-      )
+      AND (changesets.published_at IS NOT NULL OR {_INCLUDED})
+      AND changesets.jurisdiction_ocdid = %(jurisdiction_ocdid)s
 """
 
 
@@ -189,7 +170,9 @@ async def load_facts(
 
     claims: tuple[Claim, ...] = ()
     if records:
-        await cur.execute(_RECORD_CLAIMS, {**scope, "record_ids": [record.id for record in records]})
+        await cur.execute(
+            _SOURCE_RECORD_CLAIMS, {**scope, "source_record_ids": [record.id for record in records]}
+        )
         claims = tuple(_claim(row) for row in await cur.fetchall())
 
     person_ids = sorted(

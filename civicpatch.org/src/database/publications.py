@@ -15,7 +15,7 @@ import database.dismissals as dismissals_db
 from core.sinks.open_data_commit import ChangesetAttribution
 from database import projection
 from database.activity import record_change
-from database.changeset_predicates import OPEN_REVIEW_EDIT, PUBLISHED
+from database.changeset_predicates import COLLECTION_KIND_VALUES_SQL, OPEN_REVIEW_EDIT, PUBLISHED
 from database.changesets import get_updated_at
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
@@ -119,13 +119,15 @@ async def _refuse_if_superseded(
     cur, changeset_id: str, jurisdiction_ocdid: str, updated_at
 ) -> None:
     """Refuse a roster older than one already published — a reviewer working an old card did not
-    go and look at the source again."""
+    go and look at the source again. Only a newer read counts: a hand edit or rollback published
+    meanwhile adds claims the fold ranks above the page, so it leaves nothing to protect."""
     await cur.execute(
-        """
+        f"""
         SELECT changesets.id::text, changesets.updated_at
         FROM changesets
         WHERE changesets.jurisdiction_ocdid = %s
           AND changesets.published_at IS NOT NULL
+          AND changesets.kind IN ({COLLECTION_KIND_VALUES_SQL})
           AND changesets.id::text <> %s
           AND changesets.updated_at > %s
         ORDER BY changesets.updated_at DESC

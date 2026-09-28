@@ -15,6 +15,7 @@ from psycopg.errors import CheckViolation, ForeignKeyViolation, NotNullViolation
 
 from tests.integration.factories import SeededMembership
 from database import claims, divisions, memberships, organizations, posts
+from database import changesets as changesets_db
 from database.database import get_pool
 from core.projection.memberships import MEMBERSHIP_LABEL_FIELD
 from schemas.claims import Claim, ClaimKind, EntityType, Source
@@ -110,7 +111,7 @@ def _verified(rows: list[dict], post_id: str) -> bool:
     return next(row for row in rows if row["id"] == post_id)["meta_is_verified"]
 
 
-def _vouch(post_id: str, **overrides) -> Claim:
+def _vouch(post_id: str, changeset_id: str, **overrides) -> Claim:
     """"There really are five trustees" — a claim about `meta_headcount`, with why attached.
 
     Vouching has no shape of its own since 137: it is an ordinary field assertion, which is why
@@ -123,6 +124,7 @@ def _vouch(post_id: str, **overrides) -> Claim:
         value=5,
         kind=ClaimKind.ACCEPT,
         sources=[Source(note="phoned the clerk, there really are five trustees")],
+        changeset_id=changeset_id,
         **overrides,
     )
 
@@ -145,7 +147,7 @@ async def test_vouching_for_a_post_verifies_it_without_a_publish():
         unverified = await posts.unverified_by_jurisdiction(cur, [_OCDID])
         assert [post["id"] for post in unverified[_OCDID]] == [post_id]
 
-    await claims.create(_vouch(post_id), user_id)
+    await claims.create(_vouch(post_id, await factories.hand_edit(_OCDID, user_id)), user_id)
 
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = await posts.list_for_jurisdiction(cur, _OCDID)
@@ -167,7 +169,9 @@ async def test_naming_a_post_does_not_verify_it():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await posts.set_post_label(cur, post_id, "Position 8", user_id)
+        edit = str(uuid.uuid4())
+        await changesets_db.create_roster_edit_changeset(cur, edit, _OCDID, user_id)
+        await posts.set_post_label(cur, post_id, "Position 8", user_id, edit)
         await conn.commit()
 
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -280,7 +284,7 @@ async def test_the_evidence_survives():
     """`sources` is the reason vouching is not just `posts.updated_by`. A column records who,
     never why, and "phoned the clerk" exists nowhere else — it came from outside a publish."""
     user_id, post_id = await _seed()
-    await claims.create(_vouch(post_id), user_id)
+    await claims.create(_vouch(post_id, await factories.hand_edit(_OCDID, user_id)), user_id)
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -310,6 +314,7 @@ async def test_stating_a_scalar_field_twice_keeps_both_but_resolves_to_the_lates
                 kind=ClaimKind.ACCEPT,
                 value=value,
                 sources=[Source(note="test")],
+                changeset_id=await factories.hand_edit(_OCDID, user_id),
             ),
             user_id,
         )
@@ -334,6 +339,8 @@ async def test_stating_a_claim_drops_only_its_opposite_about_the_same_value():
     user_id, _ = await _seed()
     person_id = str(uuid.uuid4())
 
+    edit = await factories.hand_edit(_OCDID, user_id)
+
     def claim(field, kind, value):
         return Claim(
             entity_type=EntityType.PERSON,
@@ -342,6 +349,7 @@ async def test_stating_a_claim_drops_only_its_opposite_about_the_same_value():
             kind=kind,
             value=value,
             sources=[Source(note="test")],
+            changeset_id=edit,
         )
 
     pool = await get_pool()
@@ -382,6 +390,7 @@ async def test_a_list_field_accumulates_one_row_per_element():
                 kind=ClaimKind.ACCEPT,
                 value=value,
                 sources=[Source(note="test")],
+                changeset_id=await factories.hand_edit(_OCDID, user_id),
             ),
             user_id,
         )
@@ -392,6 +401,23 @@ async def test_a_list_field_accumulates_one_row_per_element():
 
     assert sorted(claimed["phones"][ClaimKind.ACCEPT]) == ["(555) 0001", "(555) 0002"]
 
+
+
+async def _withdraw_newest(cur, person_id: str, field_path: str, user_id: str, reason=None) -> int:
+    """A person taking back their value: the newest standing accept, withdrawn under an edit of
+    its own. What `claims.withdraw` did in place, before every withdraw named its changeset."""
+    await cur.execute(
+        "SELECT id::text FROM claims WHERE entity_type = 'person' AND entity_id = %s "
+        "AND field_path = %s AND kind = 'accept' AND withdrawn_at IS NULL "
+        "ORDER BY created_at DESC LIMIT 1",
+        (person_id, field_path),
+    )
+    row = await cur.fetchone()
+    if row is None:
+        return 0
+    edit = await factories.hand_edit(_OCDID, user_id)
+    await claims.withdraw_facts(cur, EntityType.CLAIM, [row[0]], user_id, edit, reason)
+    return 1
 
 @pytest.mark.asyncio
 @pytest.mark.integration
@@ -411,15 +437,14 @@ async def test_withdrawing_stops_the_claim_without_deleting_it():
             kind=ClaimKind.ACCEPT,
             value="Wrong Name",
             sources=[Source(note="test")],
+            changeset_id=await factories.hand_edit(_OCDID, user_id),
         ),
         user_id,
     )
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        withdrawn = await claims.withdraw(
-            cur, EntityType.PERSON, person_id, "name", ClaimKind.ACCEPT, user_id, "typo"
-        )
+        withdrawn = await _withdraw_newest(cur, person_id, "name", user_id, "typo")
         assert withdrawn == 1
         await conn.commit()
 
@@ -467,6 +492,7 @@ async def test_withdrawing_falls_back_to_the_earlier_claim_not_the_scrape():
                 kind=ClaimKind.ACCEPT,
                 value=value,
                 sources=[Source(note="test")],
+                changeset_id=await factories.hand_edit(_OCDID, user_id),
             ),
             user_id,
         )
@@ -474,9 +500,7 @@ async def test_withdrawing_falls_back_to_the_earlier_claim_not_the_scrape():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         assert (
-            await claims.withdraw(
-                cur, EntityType.PERSON, person_id, "name", ClaimKind.ACCEPT, user_id
-            )
+            await _withdraw_newest(cur, person_id, "name", user_id)
             == 1
         )
         await conn.commit()
@@ -493,15 +517,13 @@ async def test_withdrawing_falls_back_to_the_earlier_claim_not_the_scrape():
         assert len(rows) == 2
 
 
-async def _mint_rollback_changeset(cur) -> str:
-    """A bare changeset row, standing in for `register_rollback_changeset` (9c, not yet built)
-    — all this needs is something real for `withdrawn_by_changeset_id`'s FK to point at."""
-    await cur.execute(
-        "INSERT INTO changesets (kind) VALUES ('rollback') RETURNING id::text"
-    )
-    row = await cur.fetchone()
-    assert row is not None
-    return row[0]
+async def _mint_rollback_changeset(cur, user_id: str) -> str:
+    """A real rollback changeset, for `withdrawn_by_changeset_id`'s FK to point at. It used to
+    be a bare row with no jurisdiction, standing in for `register_rollback_changeset` before
+    that existed; since 233 every changeset names one."""
+    rollback_id = str(uuid.uuid4())
+    await changesets_db.register_rollback_changeset(cur, rollback_id, _OCDID, user_id, "test")
+    return rollback_id
 
 
 _OTHER_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_assert_other/government"
@@ -597,7 +619,7 @@ async def test_get_claims_by_creator_scopes_to_the_user_not_a_place():
             assert all(not c["withdrawn"] and not c["superseded"] for c in candidates)
 
             candidate_ids = [c["id"] for c in candidates]
-            rollback_id = await _mint_rollback_changeset(cur)
+            rollback_id = await _mint_rollback_changeset(cur, user_id)
             # `withdraw_claims` went on 2026-09-25: it differed from `withdraw_facts` only by an
             # `_IS_ACTIVE` filter and had no caller left. This verified that withdrawing a set of
             # claims hides them from `claimed_values` across jurisdictions, and it still does ---
@@ -662,6 +684,7 @@ async def test_get_claims_by_creator_reports_withdrawn_and_superseded():
                     kind=ClaimKind.ACCEPT,
                     value=value,
                     sources=[Source(note="test")],
+                    changeset_id=await factories.hand_edit(_OCDID, user_id),
                 ),
                 user_id,
             )
@@ -669,9 +692,7 @@ async def test_get_claims_by_creator_reports_withdrawn_and_superseded():
     oldest_id, middle_id, newest_id = ids
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        await claims.withdraw(
-            cur, EntityType.PERSON, person_id, "name", ClaimKind.ACCEPT, user_id
-        )
+        await _withdraw_newest(cur, person_id, "name", user_id)
         await conn.commit()
 
     try:
@@ -694,10 +715,11 @@ async def test_get_claims_by_creator_reports_withdrawn_and_superseded():
 async def test_an_assertion_nobody_made_is_refused():
     """`created_by` is NOT NULL, unlike `requests.resolved_by_user_id` where NULL means a
     machine gave up. Nothing machine-generated belongs in here."""
-    _, post_id = await _seed()
+    user_id, post_id = await _seed()
+    edit = await factories.hand_edit(_OCDID, user_id)
 
     with pytest.raises(ForeignKeyViolation):
-        await claims.create(_vouch(post_id), str(uuid.uuid4()))
+        await claims.create(_vouch(post_id, edit), str(uuid.uuid4()))
 
 
 @pytest.mark.asyncio
@@ -706,16 +728,18 @@ async def test_an_unknown_entity_type_is_refused():
     """A CHECK rather than free text: `entity_type` is joined against by every reader, and a
     typo would silently make an assertion invisible instead of failing."""
     user_id, post_id = await _seed()
+    # A real changeset, so the row reaches the CHECK rather than stopping at NOT NULL (235).
+    edit = await factories.hand_edit(_OCDID, user_id)
 
     pool = await get_pool()
     with pytest.raises(CheckViolation):
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
                 "INSERT INTO claims "
-                "(entity_type, entity_id, field_path, value, kind, sources, created_by) "
+                "(entity_type, entity_id, field_path, value, kind, sources, created_by, changeset_id) "
                 "VALUES ('organisation', %s, 'name', '\"x\"', 'accept', "
-                "'[{\"note\": \"test\"}]'::jsonb, %s)",
-                (post_id, user_id),
+                "'[{\"note\": \"test\"}]'::jsonb, %s, %s)",
+                (post_id, user_id, edit),
             )
             await conn.commit()
 
@@ -748,7 +772,7 @@ async def test_a_vouch_does_not_stop_the_voucher_deleting_the_post():
     would orphan a row pointing at nothing.
     """
     user_id, post_id = await _seed()
-    await claims.create(_vouch(post_id), user_id)
+    await claims.create(_vouch(post_id, await factories.hand_edit(_OCDID, user_id)), user_id)
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

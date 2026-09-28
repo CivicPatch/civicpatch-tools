@@ -459,8 +459,8 @@ async def _pending_scrape(updated_at: datetime.datetime) -> str:
 @pytest.mark.integration
 async def test_a_hand_edit_supersedes_a_pending_scrape():
     """Deliberate: the edit is the newest word on the roster. Publishing the older scrape over
-    it would retire anyone the edit added, and `_refuse_if_superseded` would refuse it anyway —
-    so publishing dismisses it rather than leaving a card nobody can publish.
+    it would retire anyone the edit added, so publishing the edit dismisses it. The dismissal is
+    the whole guard: `_refuse_if_superseded` counts only a newer read since 2026-09-27.
 
     This is what the edit's `updated_at = now()` buys, and why it keeps it even though the same
     column must not date a seat."""

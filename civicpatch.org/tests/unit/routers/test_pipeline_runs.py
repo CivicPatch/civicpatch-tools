@@ -193,7 +193,7 @@ TEST_MINTED_CHANGESET_ID = "minted-changeset-id-456"
 
 def _cancel_mocks(
     pipeline_run={
-        "arguments_json": {"jurisdiction_ocdid": TEST_OCDID},
+        "jurisdiction_ocdid": TEST_OCDID,
         "changeset_id": TEST_MINTED_CHANGESET_ID,
     },
 ):
@@ -216,7 +216,7 @@ def test_cancelling_before_ingest_settles_nothing():
 
     get_run, cancel_wf, update_status, get_user, dismiss = _cancel_mocks(
         pipeline_run={
-            "arguments_json": {"jurisdiction_ocdid": TEST_OCDID},
+            "jurisdiction_ocdid": TEST_OCDID,
             "changeset_id": None,
         }
     )

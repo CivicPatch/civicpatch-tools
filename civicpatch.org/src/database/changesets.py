@@ -121,27 +121,33 @@ async def _register_changeset(
     return parent_changeset_id
 
 
-async def register_roster_edit_changeset(
-    changeset_id: str,
-    jurisdiction_ocdid: str,
-    created_by_user_id: str,
-):
-    """A hand edit of a live roster, from the jurisdictions page. Nothing ran, so no run.
-
-    Born published because that page has no staging: pressing Publish is the whole action. A
-    review pass is the other kind of hand edit and is staged, which is why step 9f makes its
-    changeset born open instead.
-    """
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await _register_changeset(
-            cur,
-            changeset_id,
-            ChangesetKind.ROSTER_EDIT,
-            jurisdiction_ocdid,
-            created_by_user_id,
+async def create_roster_edit_changeset(
+    cur, changeset_id: str, jurisdiction_ocdid: str, created_by_user_id: str
+) -> None:
+    """A hand edit, born published: one row per human act, so its claims roll back on their own
+    and a scrape's rollback never takes them. Its parent is the changeset behind the live roster."""
+    await cur.execute(
+        f"""
+        INSERT INTO changesets (
+            id, kind, jurisdiction_ocdid, created_by_user_id, resolved_by_user_id,
+            created_at, updated_at, published_at, parent_changeset_id
         )
-        await mark_published(cur, changeset_id)
+        VALUES (
+            %(id)s, %(kind)s, %(jurisdiction_ocdid)s, %(user_id)s, %(user_id)s,
+            CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
+            (SELECT id FROM changesets
+              WHERE jurisdiction_ocdid = %(jurisdiction_ocdid)s AND published_at IS NOT NULL
+                AND {TOUCHES_THE_ROSTER}
+              ORDER BY published_at DESC LIMIT 1)
+        )
+        """,
+        {
+            "id": changeset_id,
+            "kind": ChangesetKind.ROSTER_EDIT,
+            "jurisdiction_ocdid": jurisdiction_ocdid,
+            "user_id": created_by_user_id,
+        },
+    )
 
 
 # `OPEN_REVIEW_EDIT` unqualified, as `ON CONFLICT` needs; the two must match migration 223.

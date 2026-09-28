@@ -519,6 +519,7 @@ async def test_a_rejected_value_stays_gone_when_the_page_keeps_printing_it():
             kind=ClaimKind.REJECT,
             value="(206) 555-0001",
             sources=[Source(note="test")],
+            changeset_id=await factories.hand_edit(_OCDID, user_id),
         ),
         user_id,
     )
@@ -606,6 +607,7 @@ async def test_a_withdrawn_claim_no_longer_counts():
             kind=ClaimKind.ACCEPT,
             value="Ana M. Reyes",
             sources=[Source(note="test")],
+            changeset_id=await factories.hand_edit(_OCDID, user_id),
         ),
         user_id,
     )
@@ -615,11 +617,16 @@ async def test_a_withdrawn_claim_no_longer_counts():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        withdrawn = await claims.withdraw(
-            cur, EntityType.PERSON, ids["ana"], "name", ClaimKind.ACCEPT, user_id, "typo"
+        await cur.execute(
+            "SELECT id::text FROM claims WHERE entity_id = %s AND field_path = 'name' "
+            "AND kind = 'accept' AND withdrawn_at IS NULL",
+            (ids["ana"],),
         )
+        [(claim_id,)] = await cur.fetchall()
+    edit = await factories.hand_edit(_OCDID, user_id)
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await claims.withdraw_facts(cur, EntityType.CLAIM, [claim_id], user_id, edit, "typo")
         await conn.commit()
-    assert withdrawn == 1
 
     second = await _changeset(_T1)
     await _record_evidence(second, ids["council"], ids["ana"], "Ana Reyes", "Council Member Ward 2")
