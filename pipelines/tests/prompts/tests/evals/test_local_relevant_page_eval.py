@@ -21,6 +21,7 @@ from eval_utils import (
     write_comparison_report,
 )
 from utils.dispositions import Disposition, classify_membership, tally
+from shared.schemas import GovernmentForm
 
 pytestmark = [pytest.mark.evals_relevant]
 
@@ -91,9 +92,18 @@ async def run_eval(model_client, case, ocdid="ocd-jurisdiction/country:us/state:
     # The bodies cp.org holds for this jurisdiction. A case that omits them is asking the
     # cold-start question, where nothing is known yet.
     known_organizations = expected.get("known_organizations", [])
+    # Absent on every case written before forms existed, which is the no-line prompt they ran on.
+    raw_form = expected.get("government_form")
+    government_form = GovernmentForm(raw_form) if raw_form else None
     make_prompt = model_client["make_prompt"]
 
-    prompt = make_prompt(page_url, jurisdiction_name, known_roles, known_organizations)
+    prompt = make_prompt(
+        page_url,
+        jurisdiction_name,
+        known_roles,
+        known_organizations,
+        government_form=government_form,
+    )
     extra_kwargs = model_client.get("extra_kwargs", {})
     response = await run_prompt(
         _eval_run_id(model_client["name"]),
@@ -247,6 +257,8 @@ def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), 
             "<jurisdiction, per case>",
             ["<known roles, per case>"],
             ["<governing bodies, per case>"],
+            # A real form, since the parameter is typed: only which form varies per case.
+            government_form=GovernmentForm.OPEN_TOWN_MEETING,
         ),
     )
     record_history(

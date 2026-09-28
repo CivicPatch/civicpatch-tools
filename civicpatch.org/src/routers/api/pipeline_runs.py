@@ -9,6 +9,7 @@ import lib.files as file_utils
 import lib.buckets as buckets
 import lib.storage as storage_service
 import lib.temporal.client as temporal_service
+import services.government_form as government_form_service
 import services.jurisdiction_scrape_candidate as candidate_service
 import services.pipeline_runs as pipeline_run_service
 import services.spend_budget as spend_budget_service
@@ -266,6 +267,11 @@ def get_router(api_key_header):
             # between here and the scraper has to pass it along — not the workflow, not the
             # activities, not the Actions workflow in the other repo. Null means inherit.
             "pipeline_run_cap_usd": pipeline_run.get("pipeline_run_cap_usd"),
+            # Resolved when asked, like the cap: every trigger gets it without carrying it,
+            # and the run sees the registry and config as of its start.
+            "government_form": await government_form_service.resolved_government_form(
+                pipeline_run["jurisdiction_ocdid"]
+            ),
         }
 
     # ── Pipeline Runs: Status & Progress ──────────────

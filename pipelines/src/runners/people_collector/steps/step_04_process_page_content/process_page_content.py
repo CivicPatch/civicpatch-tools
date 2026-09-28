@@ -55,6 +55,7 @@ from shared.utils import (
 )
 from shared.utils import merge_utils
 from utils import log_utils
+from shared.utils.government_forms import office_labels
 from shared.utils.label_parser import ParsedLabel, parse_label
 from shared.utils.taxonomy import Taxonomy, build_taxonomy, lookup_key
 
@@ -296,6 +297,7 @@ async def check_page_relevance(
         context.data.config.name or "",
         known_roles,
         [organization.name for organization in known_organizations],
+        government_form=context.data.config.government_form,
     )
     raw_response = await open_router_llm.run_prompt(
         context.pipeline_run_id,
@@ -369,7 +371,7 @@ async def organizations_covered(
                 context.data.jurisdiction_ocdid,
                 open_router_prompt.page_covers_organization_prompt(
                     organization.name,
-                    [post.label for post in organization.posts],
+                    office_labels(organization, context.data.config.government_form),
                     context.data.config.name or "",
                 ),
                 prompt_name="page_covers_organization",
@@ -402,7 +404,7 @@ async def collect_page_records(
     found: List[PersonSourceRecord] = []
     any_passed = False
     covers = await organizations_covered(context, page_to_process, content, organizations)
-    for scope in extraction_scopes(organizations, covers):
+    for scope in extraction_scopes(organizations, context.data.config.government_form, covers):
         scoped = await _extract_for_scope(context, page_to_process, content, known_roles, scope, logger)
         if scoped is not None:
             found.extend(scoped)

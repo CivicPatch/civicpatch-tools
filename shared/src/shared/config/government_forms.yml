@@ -1,0 +1,40 @@
+# Which government forms a jurisdiction may have, by level and by the last word of its
+# registry name ("Millbury town" -> "town"). Exactly one allowed form decides it without the
+# LLM; several narrow the LLM's choices. A jurisdiction's own government form beats all of it.
+#
+# Lookup: states.<state>.<level>.<suffix>, then its "*", then country.<level>.<suffix>, then
+# country's "*". A state list must be a subset of country's "*" for that level.
+country:
+  local:
+    "*":
+      - mayor_council
+      - council_manager
+      - commission
+      - township_board
+      - open_town_meeting
+      - representative_town_meeting
+  counties:
+    "*":
+      - commission
+      - council_manager
+      - county_executive
+
+states:
+  mi:
+    local:
+      township: [township_board]
+  nd:
+    local:
+      township: [township_board]
+  ma:
+    local:
+      town: [open_town_meeting, representative_town_meeting]
+  tx:
+    counties:
+      "*": [commission]
+  tn:
+    counties:
+      "*": [county_executive]
+  hi:
+    counties:
+      "*": [county_executive]

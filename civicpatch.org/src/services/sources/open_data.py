@@ -7,6 +7,7 @@ import database.organizations as organizations_db
 import database.synced_files as synced_files_db
 import environment
 import lib.github.api as github_service
+import services.government_form as government_form_service
 import yaml
 from core.sources.open_data.paths import (
     SyncFileKind,
@@ -119,6 +120,9 @@ async def read_all():
     # drop cursors for files that left the tree
     for path in jurisdiction_diffs.deleted:
         await synced_files_db.delete_synced_files(paths=[path])
+    # Every run, not only for files that changed: a config edit or a newly saved form changes no
+    # registry file. Cheap when there is nothing to do, which is nearly every run.
+    await government_form_service.ensure_government_form_organizations()
 
 
 # --- Targeted refresh (specific jurisdictions) — used by publish_side_effects (post-merge),

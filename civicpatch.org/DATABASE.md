@@ -26,6 +26,7 @@ erDiagram
         jsonb_null      data                "idx: (data->>'geoid'), LOWER(data->>'name')"
         text            search_text         "idx: GIN to_tsvector('simple',_), GIN gin_trgm_ops; default: ''; name+display_name+state code+state name, maintained by sync"
         text_array      meta_parent_ocdids  "idx: GIN; default: '{}'; ancestry most-specific-first, incl. the implied state; written by GenerateMapsWorkflow's boundary overlay"
+        text_null       meta_government_form "check: the seven GovernmentForm values; the one saved copy, set when the sync first builds organizations from a config rule, or by hand; null = config/government_forms.yml decides"
         timestamptz_null updated_at
     }
 

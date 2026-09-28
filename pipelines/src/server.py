@@ -70,6 +70,7 @@ async def _run(pipeline_run_id: str, jurisdiction_ocdid: str, url: Optional[str]
             source_urls=source_urls or config_data.get("source_urls"),
             # The run's own ceiling, from the same fetch. Nothing had to carry it here.
             pipeline_run_cap_usd=_cap(config_data),
+            government_form=config_data.get("government_form"),
         )
     except Exception:
         logger.exception("pipeline run %s failed during config fetch", pipeline_run_id)

@@ -17,7 +17,7 @@ from runners.people_collector.steps.step_04_process_page_content.extraction_scop
 from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
     collect_page_records,
 )
-from shared.schemas import KnownOrganization, Post
+from shared.schemas import GovernmentForm, KnownOrganization, Post
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
 pytestmark = pytest.mark.unit
@@ -102,25 +102,39 @@ def _stamps(records) -> dict[str, str | None]:
 
 
 def test_no_organizations_is_one_unscoped_run():
-    [scope] = extraction_scopes([])
+    [scope] = extraction_scopes([], None)
 
     assert scope.organization_id is None
     assert scope.prompt_organization is None
 
 
 def test_one_organization_runs_unscoped_but_is_stamped_with_its_id():
-    [scope] = extraction_scopes([_COUNCIL])
+    [scope] = extraction_scopes([_COUNCIL], None)
 
     assert scope.organization_id == "council"
     assert scope.prompt_organization is None
 
 
 def test_several_organizations_each_get_a_scoped_run_with_their_post_labels():
-    scopes = extraction_scopes([_COUNCIL, _MAYOR])
+    scopes = extraction_scopes([_COUNCIL, _MAYOR], None)
 
     assert [(s.organization_id, s.prompt_organization.name, s.prompt_organization.posts) for s in scopes if s.prompt_organization] == [
         ("council", "City Council", ["Council Member District 1"]),
         ("mayor", "Office of the Mayor", ["Mayor"]),
+    ]
+
+
+def test_organizations_with_no_posts_yet_take_their_pick_list_from_the_form():
+    select_board = KnownOrganization(id="select", name="Select Board")
+    town_meeting = KnownOrganization(id="meeting", name="Town Meeting")
+
+    scopes = extraction_scopes(
+        [select_board, town_meeting], GovernmentForm.OPEN_TOWN_MEETING
+    )
+
+    assert [s.prompt_organization.posts for s in scopes if s.prompt_organization] == [
+        ["Select Board Chair", "Select Board Vice Chair", "Select Board Member"],
+        ["Moderator"],
     ]
 
 

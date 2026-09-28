@@ -1,0 +1,24 @@
+page_url: https://www.millburyma.gov/1506/Board-of-Selectmen
+jurisdiction_name: Millbury town
+government_form: open_town_meeting
+known_roles:
+- Select Board Chair
+- Select Board Vice Chair
+- Select Board Member
+- Moderator
+known_organizations:
+- Select Board
+- Town Meeting
+page:
+  is_relevant: true
+  relevant_urls:
+  - https://www.millburyma.gov/m/directory
+  - https://www.millburyma.gov/1479/Boards-Committees
+  thoughts: >-
+    The Board of Selectmen roster: five members with titles, phones and terms. "Board of
+    Selectmen" is the old name for the Select Board this form names, so the page is the
+    governing body's own. The Town Manager and assistant listed above it are appointed
+    staff and do not change the answer.
+
+    The directory under "Contact Us" is where the run found each selectman's own page, so it
+    must be followed; the Boards & Committees hub links onward to the other bodies.

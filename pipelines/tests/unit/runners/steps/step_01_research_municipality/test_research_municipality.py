@@ -15,7 +15,15 @@ from runners.people_collector.steps.step_01_research_municipality.research_munic
     _source_urls,
 )
 from runners.people_collector.schemas import ExpectedMembership, ResearchedPerson
-from shared.schemas import KnownOrganization, Membership, Person, Post, Role, RoleConfig
+from shared.schemas import (
+    GovernmentForm,
+    KnownOrganization,
+    Membership,
+    Person,
+    Post,
+    Role,
+    RoleConfig,
+)
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID, build_taxonomy
 
 pytestmark = pytest.mark.unit
@@ -106,6 +114,7 @@ def test_research_is_expected_in_the_default_organization():
         [_researched("Council Member, Ward 3"), _researched("Mayor")],
         [_OTHER, _DEFAULT],
         build_taxonomy(_ROLE_CONFIG),
+        None,
     )
 
     assert expected == [
@@ -114,10 +123,43 @@ def test_research_is_expected_in_the_default_organization():
     ]
 
 
+def test_the_form_puts_each_researched_role_in_its_own_organization():
+    """Under mayor_council the Mayor is not a Council post, so research must not expect them
+    there just because Council is the default."""
+    council = KnownOrganization(id="council", name="Council", meta_is_default=True, posts=[])
+    mayor = KnownOrganization(id="mayor", name="Office of the Mayor", posts=[])
+
+    expected = _researched_memberships(
+        [_researched("Council Member, Ward 3"), _researched("Mayor")],
+        [council, mayor],
+        build_taxonomy(_ROLE_CONFIG),
+        GovernmentForm.MAYOR_COUNCIL,
+    )
+
+    assert [(e.organization_id, e.role_label) for e in expected] == [
+        ("council", "Council Member"),
+        ("mayor", "Mayor"),
+    ]
+
+
+def test_a_role_the_form_does_not_place_stays_in_the_default():
+    council = KnownOrganization(id="council", name="Council", meta_is_default=True, posts=[])
+    mayor = KnownOrganization(id="mayor", name="Office of the Mayor", posts=[])
+
+    expected = _researched_memberships(
+        [_researched("Council President")],
+        [mayor, council],
+        build_taxonomy(_ROLE_CONFIG),
+        GovernmentForm.MAYOR_COUNCIL,
+    )
+
+    assert [e.organization_id for e in expected] == ["council"]
+
+
 def test_a_researched_label_naming_no_role_is_not_expected():
     """Progress counts by role, so it would count toward nothing."""
     expected = _researched_memberships(
-        [_researched("Friend of the Library")], [_DEFAULT], build_taxonomy(_ROLE_CONFIG)
+        [_researched("Friend of the Library")], [_DEFAULT], build_taxonomy(_ROLE_CONFIG), None
     )
 
     assert expected == []
@@ -125,7 +167,7 @@ def test_a_researched_label_naming_no_role_is_not_expected():
 
 def test_a_researched_designation_naming_no_division_is_search_wording_only():
     [council] = _researched_memberships(
-        [_researched("Council Member, Position 1")], [_DEFAULT], build_taxonomy(_ROLE_CONFIG)
+        [_researched("Council Member, Position 1")], [_DEFAULT], build_taxonomy(_ROLE_CONFIG), None
     )
 
     assert (council.division, council.designations) == (None, ["Position 1"])
