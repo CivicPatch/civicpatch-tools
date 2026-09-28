@@ -18,6 +18,8 @@ from eval_utils import (
     record_history,
     record_provider_failure,
     record_run,
+    sample_generated_cases,
+    sample_settings,
     write_comparison_report,
 )
 from utils.dispositions import Disposition, classify_membership, tally
@@ -161,7 +163,8 @@ def load_cases_from_dir(base_dir: str) -> list:
             "expected": expected_content,
         })
 
-    return cases
+    sample_size, seed = sample_settings()
+    return sample_generated_cases(cases, sample_size, seed)
 
 
 # Load cases at collection time so pytest can see them for parametrization
