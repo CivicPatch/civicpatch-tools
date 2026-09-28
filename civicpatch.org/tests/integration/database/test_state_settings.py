@@ -17,7 +17,7 @@ import pytest_asyncio
 
 from core.spend_limits import Cap
 from database.database import get_pool
-from database.pipeline_runs import register_run
+from database.pipeline_runs import get_pipeline_run, register_run
 from services.scrape_settings import get_state_panel
 from services.spend_budget import cap_reached_for_state
 from database.state_settings import (
@@ -172,6 +172,13 @@ async def test_a_run_records_the_cap_its_state_was_set_to():
             )
             row = await cur.fetchone()
         assert row is not None and row[0] == Decimal("0.0500")
+
+        # What the scraper's config endpoint reads. It returned no cap at all, so every run
+        # inherited the pipeline's default whatever the state was set to.
+        run = await get_pipeline_run(run_id)
+        assert run is not None
+        assert run["pipeline_run_cap_usd"] == Decimal("0.0500")
+        assert run["jurisdiction_ocdid"] == ocdid
     finally:
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute("DELETE FROM pipeline_runs WHERE id = %s", (run_id,))

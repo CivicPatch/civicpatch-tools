@@ -44,7 +44,7 @@ erDiagram
     changesets {
         uuid            id                  PK
         text            kind                "CHECK scrape|sheet_import|roster_edit|jurisdiction_edit|rollback (189; people_edit renamed roster_edit in 229). No default — a writer that does not say its producer should fail"
-        text_null       jurisdiction_ocdid  FK  "idx"
+        text            jurisdiction_ocdid  FK  "idx"
         uuid_null       created_by_user_id FK  "the system user for a scrape nobody asked for; see Actors"
         timestamptz_null published_at       "set when a reviewer approves; this is the publish state"
         timestamptz_null dismissed_at       "set when a reviewer rejects. check: not both set"
@@ -294,7 +294,7 @@ erDiagram
         timestamptz_null withdrawn_at       "187. Set together with withdrawn_by (CHECK). NULL = still applies"
         uuid_null       withdrawn_by        FK "187. Who retracted this claim — distinct from created_by, the one who made it"
         text_null       withdrawn_reason    "187"
-        uuid_null       changeset_id        FK "188. idx. Which changeset CREATED this claim — write-once, nothing updates it after insert. NULL for a direct field assert or an edit outside any review"
+        uuid            changeset_id        FK "188. idx. Which changeset CREATED this claim — write-once, nothing updates it after insert. NOT NULL since 235 (234 attached the old ones); ON DELETE CASCADE, as source_records"
         uuid_null       withdrawn_by_changeset_id  FK "188. idx. Which ROLLBACK changeset withdrew this claim — symmetric to changeset_id. NULL for an ordinary withdrawal (e.g. clearing a hand-set label back to derived)"
     }
 

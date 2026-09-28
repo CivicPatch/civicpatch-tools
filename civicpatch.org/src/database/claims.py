@@ -154,59 +154,6 @@ def _sources(claim: Claim) -> str:
     return json.dumps([source.model_dump() for source in claim.sources])
 
 
-async def withdraw(
-    cur,
-    entity_type: EntityType,
-    entity_id: str,
-    field_path: str,
-    kind: ClaimKind,
-    withdrawn_by: str,
-    reason: str | None = None,
-    withdrawn_by_changeset_id: str | None = None,
-    value: Any = _WHOLE_FIELD,
-) -> int:
-    """Retract the current claim of this kind on a field, or 0 rows if nothing was live.
-
-    `kind` is explicit since reject and accept can both be live on the same field at once, and
-    only the winning (newest, non-withdrawn) row is touched. `value` names which claim on a
-    multi-valued field, where the newest claim on the field need not be about the value the
-    caller means. `withdrawn_by_changeset_id` is set only when a rollback changeset caused
-    this; ordinary withdrawals leave it NULL."""
-    wanted = None if value is _WHOLE_FIELD else json.dumps(value)
-    await cur.execute(
-        f"""
-        UPDATE claims
-           SET withdrawn_at = now(), withdrawn_by = %s, withdrawn_reason = %s,
-               withdrawn_by_changeset_id = %s
-         WHERE id = (
-             SELECT id FROM claims
-              WHERE entity_type = %s AND entity_id = %s AND field_path = %s
-                AND kind = %s AND withdrawn_at IS NULL
-                AND (%s::jsonb IS NULL OR value = %s::jsonb)
-              {LATEST_FIRST}
-              LIMIT 1
-         )
-        RETURNING id::text
-        """,
-        (
-            withdrawn_by,
-            reason,
-            withdrawn_by_changeset_id,
-            entity_type.value,
-            entity_id,
-            field_path,
-            kind.value,
-            wanted,
-            wanted,
-        ),
-    )
-    withdrawn = [row[0] for row in await cur.fetchall()]
-    await _insert_withdraws(
-        cur, withdrawn, withdrawn_by, withdrawn_by_changeset_id, reason
-    )
-    return len(withdrawn)
-
-
 # The fold reads withdrawals as rows (214), today's readers as the `withdrawn_*` columns; both
 # are written until every reader has moved. Idempotent per target, so a rerun files no second
 # withdraw for a fact that is already dead.
@@ -222,24 +169,12 @@ _INSERT_WITHDRAW = """
 """
 
 
-async def _insert_withdraws(
-    cur,
-    claim_ids: list[str],
-    withdrawn_by: str,
-    changeset_id: str | None,
-    reason: str | None = None,
-) -> None:
-    await withdraw_facts(
-        cur, EntityType.CLAIM, claim_ids, withdrawn_by, changeset_id, reason
-    )
-
-
 async def withdraw_facts(
     cur,
     entity_type: EntityType,
     entity_ids: list[str],
     withdrawn_by: str,
-    changeset_id: str | None,
+    changeset_id: str,
     reason: str | None = None,
 ) -> None:
     """File a withdraw against each of these facts: claims, source records or source pages.

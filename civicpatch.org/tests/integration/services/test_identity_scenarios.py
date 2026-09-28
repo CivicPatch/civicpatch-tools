@@ -16,7 +16,7 @@ import pytest_asyncio
 from core.projection.people import Person
 from database import claims as claims_db
 from database import projection as projection_db
-from database.changesets import register_roster_edit_changeset
+from database.changesets import create_roster_edit_changeset
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
 from schemas.claims import Claim, ClaimKind, DefaultNote, EntityType, Source
@@ -30,6 +30,12 @@ _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_identity/government"
 _PAGE = "https://zz-identity.gov/council"
 _T0 = datetime(2026, 3, 1, tzinfo=timezone.utc)
 _T1 = _T0 + timedelta(days=7)
+
+async def _create_roster_edit_changeset(changeset_id: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await create_roster_edit_changeset(cur, changeset_id, _OCDID, SYSTEM_USER_ID)
+
 
 
 async def _wipe():
@@ -86,8 +92,8 @@ def _record(name: str, label: str, organization_id: str, phone: str | None = Non
 
 
 async def _scrape(at: datetime, records: dict[str, list[dict]]) -> None:
-    """Published at `at`. Rebuilt directly: `publish_changeset` would refuse a scrape dated
-    before an edit, and these scrapes are backdated so their records have a known timestamp."""
+    """Published at `at` and rebuilt directly, so the records count from a known timestamp:
+    publishing would date them now."""
     await factories.published_scrape(_OCDID, at, records)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -105,7 +111,7 @@ async def _split(record_id: str, person_id: str) -> str:
     """Re-link one record to another person. No route files this yet; the fold and the
     loader are what is under test."""
     changeset_id = str(uuid.uuid4())
-    await register_roster_edit_changeset(changeset_id, _OCDID, SYSTEM_USER_ID)
+    await _create_roster_edit_changeset(changeset_id)
     await claims_db.create_all(
         [
             Claim(

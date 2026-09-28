@@ -65,7 +65,7 @@ async def _wipe():
         await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
-        for table in ("posts", "divisions", "organizations"):
+        for table in ("posts", "divisions", "organizations", "people"):
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_OCDID,)
             )
@@ -144,6 +144,15 @@ async def test_an_accepted_value_carries_its_type_across_the_wire(client):
     merge that applies it needs the real type, not its rendering."""
     await _seed()
     person_id = str(uuid.uuid4())
+    # A real person: since every claim names a changeset, a claim about nobody has no
+    # jurisdiction to file under and is refused.
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, 'Jane Clerk')",
+            (person_id, _OCDID),
+        )
+        await conn.commit()
 
     response = client.post(
         _PREFIX,
@@ -238,13 +247,27 @@ async def _assert_field_log(entity_id: str) -> tuple:
         return await cur.fetchone()
 
 
+async def _changeset(changeset_id: str) -> tuple:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT kind, jurisdiction_ocdid, published_at IS NOT NULL FROM changesets "
+            "WHERE id::text = %s",
+            (changeset_id,),
+        )
+        return await cur.fetchone()
+
+
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_an_assertion_names_its_jurisdiction_and_the_live_roster(client):
-    """Without both, an assertion reaches no jurisdiction's timeline. The jurisdiction is
-    resolved from `entity_type` — assuming person breaks on the first post assertion."""
+async def test_an_assertion_files_under_its_own_edit_not_the_live_roster(client):
+    """This verified the claim was filed under the live scrape. It now verifies it files under a
+    born-published roster edit of its own, because under the scrape a rollback of that scrape
+    took the person's claim with it and their own rollback screen never listed it (2026-09-27).
+    The jurisdiction is resolved from `entity_type` — assuming person breaks on the first post
+    assertion."""
     post_id = await _seed()
-    changeset_id = await _published_changeset()
+    scrape_id = await _published_changeset()
 
     response = client.post(
         _PREFIX,
@@ -259,14 +282,17 @@ async def test_an_assertion_names_its_jurisdiction_and_the_live_roster(client):
     )
     assert response.status_code == 200, response.text
 
-    assert await _assert_field_log(post_id) == (_OCDID, changeset_id)
+    jurisdiction_ocdid, changeset_id = await _assert_field_log(post_id)
+    assert jurisdiction_ocdid == _OCDID
+    assert changeset_id != scrape_id
+    assert await _changeset(changeset_id) == ("roster_edit", _OCDID, True)
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_an_assertion_before_any_publish_still_names_its_jurisdiction(client):
-    """No live roster to join yet — the jurisdiction is still known, so the log is not orphaned
-    on both counts."""
+async def test_an_assertion_before_any_publish_still_has_a_changeset(client):
+    """This verified the claim had no changeset before a first publish. It now verifies it has
+    its own, because every claim names the act that filed it (2026-09-27)."""
     post_id = await _seed()
 
     client.post(
@@ -281,7 +307,9 @@ async def test_an_assertion_before_any_publish_still_names_its_jurisdiction(clie
         },
     )
 
-    assert await _assert_field_log(post_id) == (_OCDID, None)
+    jurisdiction_ocdid, changeset_id = await _assert_field_log(post_id)
+    assert jurisdiction_ocdid == _OCDID
+    assert await _changeset(changeset_id) == ("roster_edit", _OCDID, True)
 
 
 @pytest.mark.asyncio

@@ -16,7 +16,7 @@ import database.changeset_batches as batches_db
 from core.changeset_lifecycle import INITIAL_STATE, ChangesetState
 from database.changesets import (
     register_jurisdiction_edit_changeset,
-    register_roster_edit_changeset,
+    create_roster_edit_changeset,
     register_rollback_changeset,
     register_sheet_import_changeset,
 )
@@ -28,6 +28,12 @@ from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_state/government"
 _BATCH_LOCK_KEY = "zz_changeset_state"
+
+async def _create_roster_edit_changeset(changeset_id: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await create_roster_edit_changeset(cur, changeset_id, _OCDID, SYSTEM_USER_ID)
+
 
 
 async def _wipe():
@@ -141,7 +147,7 @@ async def test_every_kind_is_born_where_INITIAL_STATE_says():
         str(uuid.uuid4()),
         str(uuid.uuid4()),
     )
-    await register_roster_edit_changeset(people_edit_id, _OCDID, SYSTEM_USER_ID)
+    await _create_roster_edit_changeset(people_edit_id)
     await register_sheet_import_changeset(import_id, _OCDID, SYSTEM_USER_ID, batch_id)
     await register_jurisdiction_edit_changeset(
         jurisdiction_edit_id, _OCDID, "https://example.test/commit/1", SYSTEM_USER_ID

@@ -62,7 +62,7 @@ class Claim(BaseModel, frozen=True):
     """
 
     id: str
-    changeset_id: str | None
+    changeset_id: str
     created_at: datetime
     entity_type: EntityType
     entity_id: str

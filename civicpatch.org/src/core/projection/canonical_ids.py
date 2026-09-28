@@ -33,12 +33,17 @@ def canonical_ids(same_as: Iterable[Claim]) -> dict[str, str]:
     return {person_id: find(person_id) for person_id in parent}
 
 
+# The changeset an unfiled merge will get. Only ever in memory: identity counts at every moment,
+# so nothing reads it.
+_UNFILED = "unfiled"
+
+
 def with_merges(facts: Facts, merged_into: Mapping[str, str], at: datetime) -> Facts:
     """Facts as they will be once these merges are filed, so an edit can diff against them."""
     merges = tuple(
         Claim(
             id=f"{SAME_AS}:{absorbed_id}",
-            changeset_id=None,
+            changeset_id=_UNFILED,
             created_at=at,
             entity_type=EntityType.PERSON,
             entity_id=absorbed_id,

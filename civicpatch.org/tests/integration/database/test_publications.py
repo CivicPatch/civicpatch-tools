@@ -27,6 +27,7 @@ import pytest_asyncio
 
 from database import claims, organizations
 from database import people as people_db
+from database.changesets import create_roster_edit_changeset
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from database.publications import (
@@ -439,6 +440,8 @@ async def _assert_field(person_id: str, field: str, value, kind: ClaimKind) -> N
             (_CURATOR, _CURATOR, _CURATOR.replace("@", "-")),
         )
         curator_id = (await cur.fetchone())[0]
+        edit = str(uuid.uuid4())
+        await create_roster_edit_changeset(cur, edit, _SENTINEL_OCDID, curator_id)
         await claims.upsert(
             cur,
             Claim(
@@ -448,6 +451,7 @@ async def _assert_field(person_id: str, field: str, value, kind: ClaimKind) -> N
                 kind=kind,
                 value=value,
                 sources=[Source(note="test")],
+                changeset_id=edit,
             ),
             curator_id,
         )

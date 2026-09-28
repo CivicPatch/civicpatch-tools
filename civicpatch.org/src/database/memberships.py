@@ -242,30 +242,6 @@ async def open_membership_labels() -> list[LabelUsage]:
     ]
 
 
-async def _assert(
-    cur,
-    membership_id: str,
-    field_path: str,
-    kind: ClaimKind,
-    user_id: str,
-    reason: str | None,
-    changeset_id: str | None,
-) -> str:
-    return await claims.upsert(
-        cur,
-        Claim(
-            entity_type=EntityType.MEMBERSHIP,
-            entity_id=membership_id,
-            field_path=field_path,
-            kind=kind,
-            value=True,
-            sources=[Source(note=reason or DefaultNote.NO_REASON)],
-            changeset_id=changeset_id,
-        ),
-        user_id,
-    )
-
-
 async def set_membership_label(
     cur, membership_id: str, label: str | None, user_id: str, changeset_id: str
 ) -> None:

@@ -141,7 +141,8 @@ async def get_pipeline_run(run_id: str):
         await cur.execute(
             """
             SELECT r.status, r.progress, r.arguments_json,
-                   r.created_at, r.updated_at, c.change_url, r.changeset_id::text
+                   r.created_at, r.updated_at, c.change_url, r.changeset_id::text,
+                   r.jurisdiction_ocdid, r.pipeline_run_cap_usd
             FROM pipeline_runs r
             LEFT JOIN changesets c ON c.id = r.changeset_id
             WHERE r.id = %s;
@@ -160,6 +161,8 @@ async def get_pipeline_run(run_id: str):
                 "created_at": to_iso(row[3]),
                 "updated_at": to_iso(row[4]),
                 "pull_request_url": row[5],
+                "jurisdiction_ocdid": row[7],
+                "pipeline_run_cap_usd": row[8],
             }
         return None
 

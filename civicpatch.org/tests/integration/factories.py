@@ -22,7 +22,7 @@ from pydantic import BaseModel
 from core.projection.membership_details import MembershipSource
 from shared.utils.membership_ids import membership_id
 from database import memberships, organizations, projection
-from database.changesets import register_scrape_changeset
+from database.changesets import create_roster_edit_changeset, register_scrape_changeset
 from database.database import get_pool
 from database.pipeline_runs import register_run, update_pipeline_run_status
 from database.source_records import insert_source_records
@@ -188,6 +188,15 @@ async def default_organization(cur, jurisdiction_ocdid: str) -> str:
         return row[0]
     return await organizations.find_or_create(cur, jurisdiction_ocdid)
 
+
+async def hand_edit(jurisdiction_ocdid: str, user_id: str) -> str:
+    """A born-published roster edit to file a test's claims under: every claim names its act."""
+    changeset_id = str(uuid.uuid4())
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await create_roster_edit_changeset(cur, changeset_id, jurisdiction_ocdid, user_id)
+        await conn.commit()
+    return changeset_id
 
 async def published_scrape(
     jurisdiction_ocdid: str, at, records: dict[str, list[dict]]

@@ -20,8 +20,10 @@ from core.projection.facts import PostKey
 from tests.integration.factories import SeededMembership
 from core.roster_changes import ChangeKind, changes_of
 from database import claims, divisions, memberships, organizations, posts, projection
+from database import changesets as changesets_db
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
+from database.publications import SupersededRoster, publish_changeset
 from database.review_priority import issue_count, issue_priority
 from database.source_records import insert_source_records
 from schemas.claims import Claim, ClaimKind, DefaultNote, EntityType, Source
@@ -1075,7 +1077,9 @@ async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
             (_CURATOR, _CURATOR, _CURATOR.replace("@", "-")),
         )
         curator_id = (await cur.fetchone())[0]
-        await posts.set_post_label(cur, post_id, "Position 8", curator_id)
+        edit = str(uuid.uuid4())
+        await changesets_db.create_roster_edit_changeset(cur, edit, _OCDID, curator_id)
+        await posts.set_post_label(cur, post_id, "Position 8", curator_id, edit)
         for person_id in (staying, leaving):
             await factories.bind_membership(cur, SeededMembership(person_id=person_id), post_id, council, _T0)
         await conn.commit()
@@ -1092,6 +1096,44 @@ async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
     assert [office.post_label for office in changes[leaving].offices] == ["Position 8"]
     assert _post_label_of(existing, staying) == "Position 8"
 
+
+
+async def _pending_scrape(at: datetime.datetime, person_id: str, label: str) -> str:
+    changeset_id = await _published_changeset(at)
+    await _record_for(changeset_id, await _organization(), person_id, label)
+    return changeset_id
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_hand_edit_published_meanwhile_does_not_supersede_a_pending_scrape():
+    """Only a newer read makes a card stale. A hand edit adds claims the fold ranks above the
+    page, so publishing the older scrape after it cannot undo it (2026-09-27)."""
+    person_id = await _seed_person("Ana Reyes")
+    pending = await _pending_scrape(_T1, person_id, "Mayor")
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await changesets_db.create_roster_edit_changeset(cur, str(uuid.uuid4()), _OCDID, SYSTEM_USER_ID)
+        await conn.commit()
+
+    await publish_changeset(pending, _OCDID)
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_newer_scrape_published_meanwhile_supersedes_a_pending_one():
+    person_id = await _seed_person("Ana Reyes")
+    pending = await _pending_scrape(_T0, person_id, "Mayor")
+    await _publish((await _organization(), person_id, "Council Member"), at=_T1)
+
+    with pytest.raises(SupersededRoster):
+        await publish_changeset(pending, _OCDID)
+
+
+async def _organization() -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        return await organizations.find_or_create(cur, _OCDID)
 
 async def _restating(*source_records: tuple[str, str, str]) -> str:
     """An unpublished scrape that read these `(organization, person, label)` source records — what a
@@ -1193,7 +1235,7 @@ async def _held_post_id(person_id: str) -> str:
         return (await cur.fetchone())[0]
 
 
-def _posts_claim(person_id: str, post_id: str, kind: ClaimKind) -> Claim:
+def _posts_claim(person_id: str, post_id: str, kind: ClaimKind, changeset_id: str) -> Claim:
     return Claim(
         entity_type=EntityType.PERSON,
         entity_id=person_id,
@@ -1201,6 +1243,7 @@ def _posts_claim(person_id: str, post_id: str, kind: ClaimKind) -> Claim:
         kind=kind,
         value=post_id,
         sources=[Source(note=DefaultNote.EDITED)],
+        changeset_id=changeset_id,
     )
 
 
@@ -1213,10 +1256,11 @@ async def _reject_post(person_id: str) -> str:
     post_id = await _held_post_id(person_id)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        curator_id = await _curator_id(cur)
+    edit = await factories.hand_edit(_OCDID, curator_id)
+    async with pool.connection() as conn, conn.cursor() as cur:
         await claims.upsert(
-            cur,
-            _posts_claim(person_id, post_id, ClaimKind.REJECT),
-            await _curator_id(cur),
+            cur, _posts_claim(person_id, post_id, ClaimKind.REJECT, edit), curator_id
         )
         await conn.commit()
     return post_id
@@ -1252,15 +1296,16 @@ async def test_withdrawing_the_claim_reopens_the_membership_on_the_next_publish(
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await claims.withdraw(
-            cur,
-            EntityType.PERSON,
-            person_id,
-            POSTS_FIELD,
-            ClaimKind.REJECT,
-            await _curator_id(cur),
-            value=post_id,
+        curator_id = await _curator_id(cur)
+        await cur.execute(
+            "SELECT id::text FROM claims WHERE entity_id = %s AND field_path = %s "
+            "AND kind = 'reject' AND value #>> '{}' = %s AND withdrawn_at IS NULL",
+            (person_id, POSTS_FIELD, post_id),
         )
+        [(reject_id,)] = await cur.fetchall()
+    edit = await factories.hand_edit(_OCDID, curator_id)
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await claims.withdraw_facts(cur, EntityType.CLAIM, [reject_id], curator_id, edit)
         await conn.commit()
 
     await _publish(at=_T2)

@@ -267,8 +267,6 @@ async def _history(
         (stamp, derive_roster(facts_as_of(facts, published_at, cut), jurisdiction_ocdid, taxonomy))
         for cut, stamp in times
     ]
-    # Everything, at the last moment: a claim with no changeset still reaches the open rows.
-    snapshots.append((times[-1][1], derive_roster(facts, jurisdiction_ocdid, taxonomy)))
     history = membership_history(snapshots)
     elapsed_ms = round((time.perf_counter() - started) * 1000)
     logger.info(

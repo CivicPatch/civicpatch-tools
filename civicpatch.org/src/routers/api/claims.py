@@ -1,15 +1,15 @@
-from fastapi import APIRouter, Depends
-from fastapi.responses import JSONResponse
-
 from database import claims
 from database.activity import record_change
-from database.changesets import live_roster_changeset
+from database.changesets import create_roster_edit_changeset
 from database.database import get_pool
 from database.entity_jurisdiction import jurisdiction_for, name_for
+from fastapi import APIRouter, Depends
+from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
-from schemas.claims import Claim
 from schemas.activity import Change, FieldChange
+from schemas.claims import Claim, ClaimRequest
 from schemas.common import Identity, RouteCategory, UserRole
+from shared.utils.id_utils import make_id
 from shared.utils.statuses import ActivityType
 
 
@@ -18,7 +18,7 @@ def get_router() -> APIRouter:
 
     @router.post("")
     async def create_claim_endpoint(
-        body: Claim,
+        body: ClaimRequest,
         user: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
@@ -43,14 +43,17 @@ def get_router() -> APIRouter:
             jurisdiction_ocdid = await jurisdiction_for(
                 cur, body.entity_type, body.entity_id
             )
-            # Resolved once, and never taken from the client: `changeset_id` names which
-            # changeset created this claim, so it has to be the server's own answer.
-            changeset_id = (
-                await live_roster_changeset(cur, jurisdiction_ocdid)
-                if jurisdiction_ocdid
-                else None
+            if not jurisdiction_ocdid:
+                return JSONResponse(
+                    {"error": f"No {body.entity_type.value} {body.entity_id}."},
+                    status_code=404,
+                )
+            # Never taken from the client: it names the act that filed this claim.
+            changeset_id = make_id()
+            await create_roster_edit_changeset(
+                cur, changeset_id, jurisdiction_ocdid, user.user_id
             )
-            claim = body.model_copy(update={"changeset_id": changeset_id})
+            claim = Claim(**body.model_dump(), changeset_id=changeset_id)
             claim_id = await claims.upsert(cur, claim, user.user_id)
             # Logged in the same transaction. The claim row itself is the permanent record
             # now (187), but the activity feed still wants the narration alongside it.
@@ -63,10 +66,6 @@ def get_router() -> APIRouter:
                 changes=Change(
                     entity_type=body.entity_type,
                     entity_id=body.entity_id,
-                    # Resolved here, once, rather than by every reader on every page load. The
-                    # history used to look this up per row because a claim payload carried
-                    # only ids — and it is the one name that must be captured now, since the
-                    # entity can be deleted before anybody reads the log.
                     subject=(
                         await name_for(cur, body.entity_type, body.entity_id)
                         or body.entity_type.value
@@ -78,7 +77,7 @@ def get_router() -> APIRouter:
                             sources=[source.model_dump() for source in body.sources],
                         )
                     ],
-                                ),
+                ),
             )
             await conn.commit()
         return {"data": {"id": claim_id}}

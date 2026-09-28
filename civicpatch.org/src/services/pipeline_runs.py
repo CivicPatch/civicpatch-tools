@@ -73,9 +73,7 @@ async def apply_pipeline_run_status(
         pipeline_run = await get_pipeline_run(pipeline_run_id)
 
     if not jurisdiction_ocdid and pipeline_run:
-        jurisdiction_ocdid = (pipeline_run.get("arguments_json") or {}).get(
-            "jurisdiction_ocdid"
-        )
+        jurisdiction_ocdid = pipeline_run["jurisdiction_ocdid"]
 
     if final:
         changeset_id = pipeline_run.get("changeset_id") if pipeline_run else None

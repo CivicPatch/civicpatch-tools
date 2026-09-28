@@ -370,18 +370,8 @@ def get_router(api_key_header):
                 content=ErrorResponse(error="Pipeline run not found").model_dump(),
                 status_code=404,
             )
-        jurisdiction_ocdid = (pipeline_run.get("arguments_json") or {}).get(
-            "jurisdiction_ocdid"
-        )
-        if not jurisdiction_ocdid:
-            return JSONResponse(
-                content=ErrorResponse(
-                    error="No jurisdiction_ocdid for pipeline run"
-                ).model_dump(),
-                status_code=422,
-            )
         try:
-            await temporal_service.cancel_workflow(jurisdiction_ocdid)
+            await temporal_service.cancel_workflow(pipeline_run["jurisdiction_ocdid"])
         except Exception as e:
             logger.exception(f"Error cancelling workflow: {e}")
             return JSONResponse(
@@ -425,13 +415,8 @@ def get_router(api_key_header):
                 content=ErrorResponse(error="Pipeline run not found").model_dump(),
                 status_code=404,
             )
-        jurisdiction_ocdid = (pipeline_run.get("arguments_json") or {}).get(
-            "jurisdiction_ocdid"
-        )
-        if not jurisdiction_ocdid:
-            return {"data": None}
         try:
-            state = await temporal_service.describe_workflow(jurisdiction_ocdid)
+            state = await temporal_service.describe_workflow(pipeline_run["jurisdiction_ocdid"])
         except Exception as e:
             # Diagnostics must not take the page down with them: a maintainer looking at a
             # stuck scrape still needs the history that renders beside this.
