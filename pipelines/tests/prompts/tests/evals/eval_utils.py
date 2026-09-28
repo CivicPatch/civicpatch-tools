@@ -3,6 +3,7 @@ import hashlib
 import os
 import re
 import pathlib
+import random
 from datetime import datetime, timezone
 
 import yaml
@@ -313,3 +314,34 @@ def record_history(
     path.write_text(yaml.safe_dump({"runs": runs}, sort_keys=False), encoding="utf-8")
     _prune_run_archive(evals_dir, runs)
     _prune_prompt_archive(evals_dir, runs)
+
+
+# A case's expected.yml says `generated: true` when a script wrote it rather than a person.
+GENERATED_KEY = "generated"
+SAMPLE_SIZE_ENV = "EVAL_SAMPLE"
+SAMPLE_SEED_ENV = "EVAL_SEED"
+
+
+def sample_generated_cases(cases: list[dict], sample_size: int | None, seed: int) -> list[dict]:
+    """Every hand-written case, plus `sample_size` generated ones picked at random.
+
+    Hand-written cases are the regression anchor and always run. The seed is fixed by default so
+    two runs pick the same generated cases and their reports compare; change it to look elsewhere.
+    None keeps every case.
+    """
+    if sample_size is None:
+        return cases
+    written = [case for case in cases if not case["expected"].get(GENERATED_KEY)]
+    generated = sorted(
+        (case for case in cases if case["expected"].get(GENERATED_KEY)), key=lambda case: case["id"]
+    )
+    if sample_size >= len(generated):
+        return written + generated
+    return written + random.Random(seed).sample(generated, sample_size)
+
+
+def sample_settings() -> tuple[int | None, int]:
+    """`EVAL_SAMPLE` and `EVAL_SEED` from the environment: unset sample means every case."""
+    raw_size = os.environ.get(SAMPLE_SIZE_ENV)
+    return (int(raw_size) if raw_size else None, int(os.environ.get(SAMPLE_SEED_ENV, "0")))
+
