@@ -61,6 +61,7 @@ async def _run_pipeline_async(args):
         )
         raw_cap = config_data.get("pipeline_run_cap_usd")
         cap = Decimal(str(raw_cap)) if raw_cap is not None else None
+        government_form = config_data.get("government_form")
 
     request = PeopleCollectorRequest(
         jurisdiction_ocdid=args.jurisdiction_ocdid,
@@ -71,6 +72,7 @@ async def _run_pipeline_async(args):
             # The run's own ceiling, read back from the run this dispatch just registered.
             # Nothing carries it here — not the Actions workflow, not the Temporal args.
             pipeline_run_cap_usd=cap,
+            government_form=government_form,
         ),
     )
     await run_pipeline_cli(pipeline_run_id, request)

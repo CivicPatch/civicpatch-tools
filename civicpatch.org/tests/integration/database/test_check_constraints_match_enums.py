@@ -21,7 +21,7 @@ from database.database import get_pool
 from database.review_sessions import ReviewSessionEntryStatus
 from schemas.claims import ClaimKind, EntityType
 from schemas.common import UserRole
-from shared.schemas import RoleStatus
+from shared.schemas import GovernmentForm, RoleStatus
 from shared.utils.statuses import ChangesetKind, DismissalReason, PipelineIssueStatus
 
 # Constraint name → the enum it copies. `exact` says the constraint holds every member;
@@ -39,6 +39,7 @@ EXACT = {
     "roles_status_check": RoleStatus,
     "users_role_valid": UserRole,
     "review_session_entries_status_check": ReviewSessionEntryStatus,
+    "jurisdictions_meta_government_form_check": GovernmentForm,
 }
 
 # Deliberate subsets. An alias may only be proposed or accepted, never excluded — exclusion is

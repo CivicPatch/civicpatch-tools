@@ -4,7 +4,8 @@ from typing import List
 
 from pydantic import BaseModel
 from services.open_router.prompts import PromptOrganization
-from shared.schemas import KnownOrganization
+from shared.schemas import GovernmentForm, KnownOrganization
+from shared.utils.government_forms import office_labels
 
 
 class ExtractionScope(BaseModel):
@@ -18,7 +19,9 @@ class ExtractionScope(BaseModel):
 
 
 def extraction_scopes(
-    organizations: List[KnownOrganization], covers: List[str] | None = None
+    organizations: List[KnownOrganization],
+    government_form: GovernmentForm | None,
+    covers: List[str] | None = None,
 ) -> List[ExtractionScope]:
     """One unscoped run unless there are several organizations to tell apart.
 
@@ -40,7 +43,7 @@ def extraction_scopes(
         ExtractionScope(
             organization_id=organization.id,
             prompt_organization=PromptOrganization(
-                name=organization.name, posts=[post.label for post in organization.posts]
+                name=organization.name, posts=office_labels(organization, government_form)
             ),
         )
         for organization in (named or organizations)

@@ -146,6 +146,13 @@ async def update(organization_id: str, name: str, url: str | None) -> bool:
         return cur.rowcount > 0
 
 
+async def rename(cur, organization_id: str, name: str) -> None:
+    """On the caller's transaction, unlike `update`, which opens its own."""
+    await cur.execute(
+        "UPDATE organizations SET name = %s WHERE id = %s", (name, organization_id)
+    )
+
+
 async def set_default(organization_id: str) -> bool:
     """False if no such organization."""
     pool = await get_pool()

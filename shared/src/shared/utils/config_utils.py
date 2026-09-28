@@ -74,6 +74,10 @@ def get_designations():
     return _load_config_file("designations.yml", "designations", {})
 
 
+def get_government_forms():
+    return _load_config_file("government_forms.yml")
+
+
 def get_role_names(role_config_override: Optional[RoleConfig] = None) -> List[str]:
     names = []
     for entry in get_role_configs(role_config_override):

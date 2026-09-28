@@ -341,6 +341,16 @@ class JurisdictionLevel(StrEnum):
     LOCAL = "local"
 
 
+class GovernmentForm(StrEnum):
+    MAYOR_COUNCIL = "mayor_council"
+    COUNCIL_MANAGER = "council_manager"
+    COMMISSION = "commission"
+    TOWNSHIP_BOARD = "township_board"
+    OPEN_TOWN_MEETING = "open_town_meeting"
+    REPRESENTATIVE_TOWN_MEETING = "representative_town_meeting"
+    COUNTY_EXECUTIVE = "county_executive"
+
+
 class JurisdictionId(BaseModel):
     country: str
     state: str
@@ -390,6 +400,9 @@ class PipelineRunConfig(BaseModel):
     # context records the ceiling it ran under, which is the first thing worth knowing when
     # asking why a scrape stopped early.
     pipeline_run_cap_usd: Optional[Decimal] = None
+    # Resolved by cp.org when the run starts: the registry value, else what
+    # `config/government_forms.yml` decides. None means nobody has decided yet.
+    government_form: Optional[GovernmentForm] = None
 
 
 class IssueCode(str, Enum):

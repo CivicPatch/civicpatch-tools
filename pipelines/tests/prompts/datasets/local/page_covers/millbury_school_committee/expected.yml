@@ -1,0 +1,18 @@
+page_url: https://www.millburyma.gov/1655/School-Committee
+jurisdiction_name: Millbury town
+organizations:
+- name: Select Board
+  posts:
+  - Select Board Chair
+  - Select Board Vice Chair
+  - Select Board Member
+- name: Town Meeting
+  posts:
+  - Moderator
+covers:
+  Select Board: false
+  Town Meeting: false
+thoughts: >-
+  The page is a roster of the School Committee. None of its five members holds a Select Board
+  or Town Meeting office, and neither body is named anywhere on the page. A chair and vice
+  chair of a different body must not read as the Select Board's.

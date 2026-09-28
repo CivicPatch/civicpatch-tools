@@ -21,8 +21,9 @@ from runners.people_collector.schemas import (
     ResearchedPerson,
     ResearchMunicipalityStep,
 )
-from shared.schemas import KnownOrganization, Membership, Person, Post, RoleConfig
+from shared.schemas import GovernmentForm, KnownOrganization, Membership, Person, Post, RoleConfig
 from shared.utils import divisions
+from shared.utils.government_forms import derived_organization_for_role
 from shared.utils.label_parser import parse_label
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID, Taxonomy, build_taxonomy
 from shared.utils.name_utils import person_list_to_identities
@@ -64,7 +65,9 @@ async def research_municipality(
                 context.data.role_config,
                 jurisdiction_ocdid,
             )
-            or _researched_memberships(researched, organizations, taxonomy)
+            or _researched_memberships(
+                researched, organizations, taxonomy, context.data.config.government_form
+            )
         ),
         # Whoever cp.org has published, else whoever research named. Separate from the offices
         # above: a jurisdiction can have posts and nobody accepted onto them yet.
@@ -124,13 +127,33 @@ def _first_division(designations: List[str]) -> Optional[str]:
     return found[0] if found else None
 
 
+def _organization_for_role(
+    role_label: str,
+    government_form: GovernmentForm | None,
+    organizations: List[KnownOrganization],
+    default: KnownOrganization,
+) -> KnownOrganization:
+    """The organization the form puts this role in, found by its derived name; else the default.
+    A maintainer who renames a derived organization sends its roles back to the default."""
+    if government_form is None:
+        return default
+    derived = derived_organization_for_role(government_form, role_label)
+    if derived is None:
+        return default
+    for organization in organizations:
+        if organization.name == derived.name:
+            return organization
+    return default
+
+
 def _researched_memberships(
     researched: List[ResearchedPerson],
     organizations: List[KnownOrganization],
     taxonomy: Taxonomy,
+    government_form: GovernmentForm | None,
 ) -> List[ExpectedMembership]:
-    """Research knows no organizations, so everyone it named belongs to the default one. A label
-    naming no role counts toward nothing, since progress is counted by role."""
+    """Research knows no organizations, so the form places each role, and the default takes what
+    it does not. A label naming no role counts toward nothing, since progress is counted by role."""
     default = next(
         (organization for organization in organizations if organization.meta_is_default),
         organizations[0],
@@ -145,7 +168,9 @@ def _researched_memberships(
         )
         expected.append(
             ExpectedMembership(
-                organization_id=default.id,
+                organization_id=_organization_for_role(
+                    parsed.role, government_form, organizations, default
+                ).id,
                 role_label=parsed.role,
                 division=_first_division(designations),
                 designations=parsed.other_designations,

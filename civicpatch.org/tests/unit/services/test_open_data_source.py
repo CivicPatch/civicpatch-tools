@@ -189,6 +189,11 @@ def _patch_sync_all(stack, tree, stored, contents):
     _patch(stack, "organizations_db.ensure_defaults_exist", new_callable=AsyncMock)
     _patch(
         stack,
+        "government_form_service.ensure_government_form_organizations",
+        new_callable=AsyncMock,
+    )
+    _patch(
+        stack,
         "jurisdictions_db.deactivate_jurisdictions_not_in",
         new_callable=AsyncMock,
     )

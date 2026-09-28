@@ -37,7 +37,8 @@ ALLOWED: dict[tuple[str, str], int] = {
     ("database/posts.py", "DELETE FROM posts"): 1,
     # Organizations become claims at step 11.
     ("database/organizations.py", "INSERT INTO organizations"): 3,
-    ("database/organizations.py", "UPDATE organizations SET name"): 1,
+    # The second is `rename`, applying a government form to the default organization.
+    ("database/organizations.py", "UPDATE organizations SET name"): 2,
     ("database/organizations.py", "UPDATE organizations SET meta_is_default"): 2,
     ("database/organizations.py", "DELETE FROM organizations"): 1,
     # Dev-only seed that truncates and reloads an export, then backfills the facts behind it

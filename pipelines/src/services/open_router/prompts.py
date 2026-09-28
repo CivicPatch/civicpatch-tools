@@ -2,6 +2,8 @@ from datetime import datetime
 from typing import List
 
 from pydantic import BaseModel
+from shared.schemas import GovernmentForm
+from shared.utils.government_forms import describe_government_form
 
 
 def relevant_page_prompt(
@@ -13,9 +15,17 @@ def relevant_page_prompt(
     # `/government/mayorsoffice`, a sibling of `/government/departments/*`, and reads exactly
     # like the auxiliary pages the Irrelevant section is written to reject.
     known_organizations: List[str] = [],
+    # The jurisdiction's form, when one is saved or decided by the config. It tells the model
+    # which bodies govern here, so a School Committee under an open town meeting is not one.
+    government_form: GovernmentForm | None = None,
 ):
     jurisdiction_line = (
         f"    Target jurisdiction: {jurisdiction_name}\n" if jurisdiction_name else ""
+    )
+    government_form_line = (
+        f"    Government form: {describe_government_form(government_form)}\n"
+        if government_form
+        else ""
     )
     known_roles_line = (
         f"    Known elected roles for this municipality: {', '.join(known_roles)}\n"
@@ -52,7 +62,7 @@ def relevant_page_prompt(
     Commissioners and others who make up the municipality's **primary governing body**.
 
     Page URL: {page_url}
-{jurisdiction_line}{known_roles_line}{known_organizations_line}
+{jurisdiction_line}{government_form_line}{known_roles_line}{known_organizations_line}
     The URL tells you which links share the municipality's domain. It tells you nothing about
     `is_relevant`, which comes from the page content alone.
 
