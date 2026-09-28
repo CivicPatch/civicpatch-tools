@@ -53,7 +53,6 @@ SCHEMAS: dict[str, pa.Schema] = {
             ("end_date", pa.string()),
             ("opened_at", _TIMESTAMP),
             ("closed_at", _TIMESTAMP),
-            ("designations", _STRINGS),
             ("source_labels", _STRINGS),
         ]
     ),

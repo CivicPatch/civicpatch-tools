@@ -207,7 +207,9 @@ async def test_unmatched_text_reaches_the_wire_with_its_counts(client):
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await factories.bind_membership(
             cur,
-            SeededMembership(person_id=person_id, meta_unmatched_text=["Zz Route Liaison"]),
+            SeededMembership(
+                person_id=person_id, sources=[MembershipSource(note="Zz Route Liaison")]
+            ),
             mayor,
             organization_id,
             _SEEN_AT,
@@ -315,8 +317,6 @@ async def test_the_person_axis_read_carries_the_whole_parse(client):
             SeededMembership(
                 person_id=person_id,
                 sources=[MembershipSource(note="Mayor Position 8 (Zz Route Liaison)")],
-                designations=["Position 8"],
-                meta_unmatched_text=["Zz Route Liaison"],
             ),
             mayor,
             organization_id,
@@ -327,8 +327,6 @@ async def test_the_person_axis_read_carries_the_whole_parse(client):
     row = client.get(f"{_PREFIX}/{_OCDID}").json()["data"]["memberships"][0]
 
     assert row["source_labels"] == ["Mayor Position 8 (Zz Route Liaison)"]
-    assert row["designations"] == ["Position 8"]
-    assert row["meta_unmatched_text"] == ["Zz Route Liaison"]
     assert row["role_id"] == "mayor"
 
 

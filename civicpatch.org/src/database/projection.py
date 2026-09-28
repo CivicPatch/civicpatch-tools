@@ -26,9 +26,7 @@ from core.projection.canonical_ids import with_merges, without_merges
 from core.projection.membership_history import MembershipRow, membership_history
 from core.projection.membership_details import MembershipSource
 from core.projection.people import Membership, Person
-from core.projection.live_facts import live_facts
 from core.projection.facts import Facts, PostKey
-from core.projection.posts import post_keys
 from core.projection.roster import Roster, derive_roster, with_published_images
 from database import divisions, posts
 from database.activity import record_change
@@ -134,10 +132,9 @@ _PUBLISHED_AT = """
 _INSERT_MEMBERSHIP = """
     INSERT INTO memberships
         (id, post_id, organization_id, person_id, label, start_date, end_date,
-         opened_at, closed_at, designations, meta_unmatched_text, sources)
+         opened_at, closed_at, sources)
     SELECT %(id)s, p.id, p.organization_id, %(person_id)s, %(label)s, %(start_date)s,
-           %(end_date)s, %(opened_at)s, %(closed_at)s, %(designations)s,
-           %(meta_unmatched_text)s, %(sources)s::jsonb
+           %(end_date)s, %(opened_at)s, %(closed_at)s, %(sources)s::jsonb
     FROM posts p WHERE p.id = %(post_id)s
 """
 
@@ -238,14 +235,15 @@ async def rebuild_from_facts(
     """The roster every live fact derives, written over the jurisdiction's projection.
 
     Call it after whatever made a fact true is published, so the fold can see it. Returns the
-    number of people written. `post_keys` is read here and nowhere else: its only job is to let
-    `rebuild` mint the posts the roster names, which a preview does not do.
+    number of people written.
     """
     taxonomy = await _taxonomy(None)
     facts = await load_facts(cur, jurisdiction_ocdid, datetime.now(timezone.utc))
     roster = _fold(facts, jurisdiction_ocdid, taxonomy)
     history = await _history(cur, facts, jurisdiction_ocdid, taxonomy)
-    keys = post_keys(live_facts(facts).records, jurisdiction_ocdid, taxonomy)
+    # From the fold's memberships, not the raw records: a split moves a record to a person whose
+    # labels then parse alone, into a post the records as stored never name.
+    keys = sorted({row.membership.post for row in history}, key=lambda key: key.post_id)
     await rebuild(cur, jurisdiction_ocdid, roster, history, keys, changeset_id)
     return len(roster.people)
 
@@ -315,8 +313,6 @@ def membership_rows(history: Iterable[MembershipRow]) -> list[dict]:
             "end_date": row.membership.end_date,
             "opened_at": row.opened_at,
             "closed_at": row.closed_at,
-            "designations": list(row.membership.designations),
-            "meta_unmatched_text": list(row.membership.unmatched_text),
             "sources": json.dumps([source.model_dump() for source in row.membership.sources]),
         }
         for row in history
@@ -338,8 +334,7 @@ _STORED_PEOPLE = """
 
 _STORED_OPEN_MEMBERSHIPS = """
     SELECT m.person_id::text, p.organization_id::text, p.role_id, p.division_ocdid, m.label,
-           m.start_date, m.end_date, m.opened_at,
-           m.designations, m.meta_unmatched_text, m.sources
+           m.start_date, m.end_date, m.opened_at, m.sources
     FROM memberships m JOIN posts p ON p.id = m.post_id
     WHERE p.jurisdiction_ocdid = %s AND m.closed_at IS NULL
 """
@@ -360,8 +355,6 @@ def _stored_membership(row) -> Membership:
         start_date,
         end_date,
         opened_at,
-        designations,
-        unmatched_text,
         sources,
     ) = row
     return Membership(
@@ -374,8 +367,6 @@ def _stored_membership(row) -> Membership:
         label=label,
         start_date=start_date,
         end_date=end_date,
-        designations=tuple(designations),
-        unmatched_text=tuple(unmatched_text),
         sources=tuple(MembershipSource(**source) for source in sources),
     )
 

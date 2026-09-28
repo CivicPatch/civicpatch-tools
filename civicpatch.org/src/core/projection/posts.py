@@ -7,19 +7,12 @@ A post is `(organization, role, division)`. One read of the labels answers both 
 
 from collections.abc import Sequence
 
-from pydantic import BaseModel
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID, Taxonomy
 
+from core.membership_label import MembershipLabel, render
 from core.people_roles import derive_roles
 from core.projection.facts import PostKey, SourceRecord, latest_first
-from core.projection.membership_details import LabelDetails
-
-
-class PostRecords(BaseModel, frozen=True):
-    """One cluster's records in one post, and what the newest read's labels said."""
-
-    records: tuple[SourceRecord, ...] = ()
-    details: LabelDetails = LabelDetails()
+from core.projection.membership_details import LabelDetails, MembershipRecords
 
 
 def parse_labels(
@@ -39,21 +32,32 @@ def parse_labels(
         role_id=winner_id or UNMATCHED_ROLE_ID,
         division_ocdid=parsed.division_ocdid,
     )
+    designations = tuple(parsed.other_designations)
+    unmatched_text = tuple(
+        dict.fromkeys(
+            term
+            for part in parsed.parts
+            if not part.parsed.role
+            for term in part.parsed.unmatched
+        )
+    )
+    extra_role_labels = [
+        label
+        for label in parsed.roles
+        if label in ids_by_label and ids_by_label[label] != winner_id
+    ]
     details = LabelDetails(
-        designations=tuple(parsed.other_designations),
-        unmatched_text=tuple(
-            dict.fromkeys(
-                term
-                for part in parsed.parts
-                if not part.parsed.role
-                for term in part.parsed.unmatched
+        designations=designations,
+        unmatched_text=unmatched_text,
+        extra_roles=tuple(ids_by_label[label] for label in extra_role_labels),
+        derived_membership_label=render(
+            MembershipLabel(
+                designations=list(designations),
+                demoted_roles=extra_role_labels,
+                meta_unmatched_text=list(unmatched_text),
             )
-        ),
-        extra_roles=tuple(
-            ids_by_label[label]
-            for label in parsed.roles
-            if label in ids_by_label and ids_by_label[label] != winner_id
-        ),
+        )
+        or None,
     )
     return post, details
 
@@ -79,7 +83,7 @@ def post_keys(
 
 def records_by_post(
     records: Sequence[SourceRecord], jurisdiction_ocdid: str, taxonomy: Taxonomy
-) -> dict[PostKey, PostRecords]:
+) -> dict[PostKey, MembershipRecords]:
     """One cluster's live records, bucketed by the post each one landed in, each bucket
     carrying the parse of the newest read that put them there.
 
@@ -93,11 +97,11 @@ def records_by_post(
         bucket = (record.changeset_id, record.organization_id)
         batches.setdefault(bucket, []).append(record)
 
-    by_post: dict[PostKey, PostRecords] = {}
+    by_post: dict[PostKey, MembershipRecords] = {}
     for batch in batches.values():
         post, details = parse_labels(batch, jurisdiction_ocdid, taxonomy)
-        held = by_post.get(post, PostRecords())
-        by_post[post] = PostRecords(
-            records=(*held.records, *batch), details=details
+        earlier_records = by_post[post].records if post in by_post else ()
+        by_post[post] = MembershipRecords(
+            records=(*earlier_records, *batch), details=details
         )
     return by_post

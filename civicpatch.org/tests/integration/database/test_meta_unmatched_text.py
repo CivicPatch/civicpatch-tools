@@ -1,7 +1,7 @@
 """Integration tests for the cross-jurisdiction unmatched-text triage list.
 
-Real Postgres: the query is `unnest` + `GROUP BY` over a `text[]`, and the ordering is the
-product decision under test.
+Real Postgres and the real parser: the terms are worked out from open memberships' verbatim
+labels, and the ordering is the product decision under test.
 
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
@@ -14,8 +14,9 @@ import pytest_asyncio
 
 from core.projection.membership_details import MembershipSource
 from tests.integration.factories import SeededMembership
-from database import divisions, memberships, organizations, posts
+from database import divisions, organizations, posts
 from database.database import get_pool
+from services.unmatched_terms import unmatched_terms_page
 from tests.integration import factories
 
 _TOWNS = ("zz_alfa", "zz_bravo", "zz_charlie")
@@ -26,8 +27,8 @@ _SEEN_AT = datetime(2026, 8, 1, tzinfo=timezone.utc)
 
 # In three towns once each vs. in one town three times: same occurrence count, different
 # leverage. This is the pair the ordering has to tell apart.
-_WIDESPREAD = "At-Large"
-_LOCAL = "Ward 3 (interim)"
+_WIDESPREAD = "Harbormaster"
+_LOCAL = "Keeper of the Pound"
 
 
 async def _wipe():
@@ -57,7 +58,7 @@ async def clean_sentinels():
 
 
 async def _seed_member(
-    cur, ocdid: str, division: str, unmatched: list[str], source_labels: list[str] | None = None
+    cur, ocdid: str, division: str, labels: list[str]
 ) -> str:
     person_id = str(uuid.uuid4())
     await cur.execute(
@@ -74,8 +75,7 @@ async def _seed_member(
         cur,
         SeededMembership(
             person_id=person_id,
-            meta_unmatched_text=unmatched,
-            sources=[MembershipSource(note=label) for label in source_labels or []],
+            sources=[MembershipSource(note=label) for label in labels],
         ),
         post_id,
         organization_id,
@@ -103,9 +103,9 @@ async def _seed_spread():
 _WHOLE_PAGE = (100, 0)
 
 
-async def _rows() -> list[dict]:
-    _total, rows = await memberships.meta_unmatched_text(*_WHOLE_PAGE)
-    return [row for row in rows if row["text"] in (_WIDESPREAD, _LOCAL)]
+async def _rows():
+    _total, rows = await unmatched_terms_page(*_WHOLE_PAGE)
+    return [row for row in rows if row.text in (_WIDESPREAD, _LOCAL)]
 
 
 @pytest.mark.asyncio
@@ -118,10 +118,10 @@ async def test_breadth_outranks_frequency():
 
     rows = await _rows()
 
-    assert [row["text"] for row in rows] == [_WIDESPREAD, _LOCAL]
-    assert rows[0]["occurrences"] == rows[1]["occurrences"] == 3
-    assert rows[0]["jurisdictions"] == 3
-    assert rows[1]["jurisdictions"] == 1
+    assert [row.text for row in rows] == [_WIDESPREAD, _LOCAL]
+    assert rows[0].occurrences == rows[1].occurrences == 3
+    assert rows[0].jurisdictions == 3
+    assert rows[1].jurisdictions == 1
 
 
 @pytest.mark.asyncio
@@ -132,14 +132,14 @@ async def test_examples_name_the_towns_to_go_look_at():
 
     rows = await _rows()
 
-    assert sorted(rows[0]["examples"]) == sorted(_OCDIDS)
-    assert rows[1]["examples"] == [_OCDIDS[0]]
+    assert sorted(rows[0].examples) == sorted(_OCDIDS)
+    assert rows[1].examples == [_OCDIDS[0]]
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_spelling_variants_are_one_gap_not_three():
-    """`meta_unmatched_text` keeps the source's raw casing and punctuation on purpose. Three towns
+    """The parser keeps the source's raw casing and punctuation on purpose. Three towns
     writing the same phrase three ways is still one taxonomy gap, and grouping on the exact
     string would show three rows each looking a third as urgent as the real one.
 
@@ -156,11 +156,11 @@ async def test_spelling_variants_are_one_gap_not_three():
             await _seed_member(cur, ocdid, f"{base}/ward:1", [spelling])
         await conn.commit()
 
-    _total, rows = await memberships.meta_unmatched_text(*_WHOLE_PAGE)
+    _total, rows = await unmatched_terms_page(*_WHOLE_PAGE)
 
     assert len(rows) == 1
-    assert rows[0]["jurisdictions"] == 3
-    assert rows[0]["occurrences"] == 3
+    assert rows[0].jurisdictions == 3
+    assert rows[0].occurrences == 3
 
 
 @pytest.mark.asyncio
@@ -180,21 +180,16 @@ async def test_a_vacated_seat_drops_off_the_list():
 
     rows = await _rows()
 
-    assert rows[0]["text"] == _LOCAL
-    assert [row["jurisdictions"] for row in rows if row["text"] == _WIDESPREAD] == [1]
+    assert rows[0].text == _LOCAL
+    assert [row.jurisdictions for row in rows if row.text == _WIDESPREAD] == [1]
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_the_example_label_is_what_the_term_came_out_of():
     """The context a curator judges "is this a role?" on — and the *one* label carrying the
-    term, not every office the person holds. Storing `parsed.labels` as parts rather than the
-    joined `office.name` is what makes that answerable.
-
-    Written beside `meta_unmatched_text` in one statement rather than joined back to
-    `source_records`, which can disagree — source records land at ingest, memberships are
-    written at publish, so a stacked unpublished scrape would show a label that no longer
-    produces this term."""
+    term, not every office the person holds. Read from the membership's own sources, which are
+    written at publish, so an unpublished scrape's labels never show here."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -207,17 +202,16 @@ async def test_the_example_label_is_what_the_term_came_out_of():
             cur,
             _OCDIDS[0],
             f"{base}/ward:1",
-            ["Finance Liaison"],
-            source_labels=["Council Member Ward 1, Finance Liaison", "Planning Board Member"],
+            ["Finance Liaison, Ward 1", "Mayor"],
         )
         await conn.commit()
 
-    _total, rows = await memberships.meta_unmatched_text(*_WHOLE_PAGE)
+    _total, rows = await unmatched_terms_page(*_WHOLE_PAGE)
 
-    row = next(r for r in rows if r["text"] == "Finance Liaison")
-    assert row["example_label"] == "Council Member Ward 1, Finance Liaison"
+    row = next(r for r in rows if r.text == "Finance Liaison")
+    assert row.example_label == "Finance Liaison, Ward 1"
     # The label carrying the term, not the other one the person also holds.
-    assert row["text"] in row["example_label"]
+    assert row.text in row.example_label
 
 
 @pytest.mark.asyncio
@@ -227,12 +221,12 @@ async def test_a_page_reports_the_whole_total():
     the answer at every offset and the control would never advance."""
     await _seed_spread()
 
-    total, first = await memberships.meta_unmatched_text(1, 0)
-    _total, second = await memberships.meta_unmatched_text(1, 1)
+    total, first = await unmatched_terms_page(1, 0)
+    _total, second = await unmatched_terms_page(1, 1)
 
     assert len(first) == 1 and len(second) == 1
     assert total >= 2
-    assert first[0]["text"] != second[0]["text"]
+    assert first[0].text != second[0].text
 
 
 @pytest.mark.asyncio
@@ -242,7 +236,7 @@ async def test_an_offset_past_the_end_still_knows_the_total():
     row to read it from once the offset overruns, and the pager would collapse to zero pages."""
     await _seed_spread()
 
-    total, rows = await memberships.meta_unmatched_text(10, 10_000)
+    total, rows = await unmatched_terms_page(10, 10_000)
 
     assert rows == []
     assert total >= 2

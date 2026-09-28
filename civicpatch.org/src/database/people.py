@@ -52,8 +52,6 @@ PERSON_MEMBERSHIPS = """COALESCE((
             FROM jsonb_array_elements(memberships.sources) AS source
             WHERE source->>'url' IS NOT NULL
         ), '[]'::jsonb),
-        'designations', to_jsonb(memberships.designations),
-        'meta_unmatched_text', to_jsonb(memberships.meta_unmatched_text),
         'start_date', memberships.start_date,
         'end_date', memberships.end_date
     ) ORDER BY posts.role_id, posts.division_ocdid, posts.id)

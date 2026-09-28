@@ -90,8 +90,10 @@ async def _insert(ocdid, *, url, collected_at, people=False, level="local"):
                     VALUES (%(division)s, %(ocdid)s) RETURNING ocdid
                 ), s AS (
                     INSERT INTO posts
-                        (jurisdiction_ocdid, organization_id, role_id, division_ocdid)
-                    SELECT %(ocdid)s, o.id, 'mayor', d.ocdid FROM o, d
+                        (id, jurisdiction_ocdid, organization_id, role_id, division_ocdid)
+                    SELECT post_id_of_key(o.id, 'mayor', d.ocdid), %(ocdid)s, o.id, 'mayor',
+                           d.ocdid
+                    FROM o, d
                     RETURNING id, organization_id
                 )
                 INSERT INTO memberships

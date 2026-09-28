@@ -13,7 +13,11 @@ from core.display_rows import display_rows
 from core.people_edits import claim_same_as
 from core.projection.diff import on_roster
 from core.projection.roster import Roster
-from core.roster_edits import claims_for_edit, membership_claim_edits, new_merges
+from core.roster_edits import (
+    claims_for_edit,
+    membership_claim_edits,
+    new_merges,
+)
 from database import claims as claims_db
 from database import memberships as memberships_db
 from database import posts as posts_db
@@ -90,15 +94,15 @@ async def edit_published_roster(
     # that changed nothing is the normal case, and minting a changeset for it would put an
     # empty edit on the jurisdiction's timeline every time somebody pressed the button.
     changeset_id = make_id()
-    claims, membership_edits = await _edit(jurisdiction_ocdid, people, changeset_id)
-    if not claims and not membership_edits:
+    claims, edits = await _edit(jurisdiction_ocdid, people, changeset_id)
+    if not (claims or edits):
         return ""
 
     # Read before the claims are filed: this changeset is born published, so once they are
     # written the roster already reflects them and there is no "before" left to read.
     before = on_roster(await _roster(jurisdiction_ocdid))
     await register_roster_edit_changeset(changeset_id, jurisdiction_ocdid, user_id)
-    await _write(claims, membership_edits, user_id, changeset_id)
+    await _write(claims, edits, user_id, changeset_id)
     # `publish_roster` reads the feed off that against the roster after (9d), so this path
     # records what it changed without diffing its own payload.
     await publish_roster(changeset_id, jurisdiction_ocdid, user_id, before=before)
@@ -115,8 +119,8 @@ async def _file(
     if not user_id:
         raise AnonymousEdit(jurisdiction_ocdid)
     await _refuse_unknown_posts(people)
-    claims, membership_edits = await _edit(jurisdiction_ocdid, people, changeset_id, including)
-    await _write(claims, membership_edits, user_id, changeset_id)
+    claims, edits = await _edit(jurisdiction_ocdid, people, changeset_id, including)
+    await _write(claims, edits, user_id, changeset_id)
 
 
 async def _edit(
@@ -125,7 +129,7 @@ async def _edit(
     changeset_id: str,
     including: str | None = None,
 ) -> tuple[list[Claim], list[tuple[str, str, str | None]]]:
-    """The claims and membership edits (labels, term dates) an edit files.
+    """The claims, and the membership labels and term dates set, that an edit files.
 
     A merge moves the absorbed person's claims onto the survivor, so the survivor is diffed
     against the person the merge will make, not the one they were: otherwise an absorbed name
@@ -143,18 +147,24 @@ async def _edit(
     return claims, membership_claim_edits(derived, people)
 
 
-async def _write(claims, membership_edits, user_id: str, changeset_id: str) -> None:
+async def _write(
+    claims: list[Claim],
+    edits: list[tuple[str, str, str | None]],
+    user_id: str,
+    changeset_id: str,
+) -> None:
     # One transaction, inside `create_all`: half an edit is worse than none, because the half
     # that landed looks like a decision somebody made.
     await claims_db.create_all(claims, user_id)
-    if membership_edits:
-        pool = await get_pool()
-        async with pool.connection() as conn, conn.cursor() as cur:
-            for entity_id, field_path, value in membership_edits:
-                await memberships_db.set_membership_field(
-                    cur, entity_id, field_path, value, user_id, changeset_id
-                )
-            await conn.commit()
+    if not edits:
+        return
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        for membership_id, field_path, value in edits:
+            await memberships_db.claim_membership_field(
+                cur, membership_id, field_path, value, user_id, changeset_id
+            )
+        await conn.commit()
 
 
 async def _refuse_unknown_posts(people: list[PersonEdit]) -> None:

@@ -204,8 +204,6 @@ class Membership(BaseModel):
     # Where the pages that recorded this membership were. The pipeline seeds each body's next
     # crawl from these, which is why they ride the roster rather than a query of their own.
     source_urls: List[str] = []
-    designations: List[str] = []
-    unmatched_text: List[str] = []
     start_date: Optional[str] = None
     end_date: Optional[str] = None
 

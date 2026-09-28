@@ -5,7 +5,7 @@ and 18. Where the model differs from the simulator: phones are a set here, so th
 scenarios edit `name` and `image`; a person holds one membership per organization, so 9 adds a
 post in a second one; 14 files one rollback changeset per changeset rolled back, and its third act of vandalism is
 an image rather than a removal, since the edit route cannot edit or merge anyone off the roster. 16 has no
-twin: removing your own override withdraws in place, under no changeset, so nothing can undo it.
+twin: there is no way to withdraw your own override, only to replace it or roll the edit back.
 
 Isolation: sentinel state 'zz', cleaned before and after each test.
 """
@@ -375,6 +375,28 @@ async def test_scenario_17_rolling_back_the_same_changeset_twice_writes_nothing(
 
     await _roll_back(first)
     assert set(await _on_roster()) == {alice}
+
+
+async def _label_of(person_id: str) -> str | None:
+    [membership] = (await _roster())[person_id].memberships
+    return membership.label
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_clearing_a_label_says_there_is_none_and_rolling_that_back_restores_the_label():
+    council, _ = await _organizations()
+    alice, _ = _ids()
+    carol, dave = await _user("carol"), await _user("dave")
+    await _scrape(_T0, {alice: [_record("Alice Ng", "Council Member Place 3", council)]})
+    post = await _post_of(council)
+
+    await _edit(carol, PersonEdit(id=alice, offices=[OfficeEdit(id=post, membership_label="Chair")]))
+    cleared = await _edit(dave, PersonEdit(id=alice, offices=[OfficeEdit(id=post, membership_label=None)]))
+    assert await _label_of(alice) is None, "nothing, though the page says Place 3"
+
+    await _roll_back(cleared)
+    assert await _label_of(alice) == "Chair", "carol's value shows through again"
 
 
 @pytest.mark.asyncio

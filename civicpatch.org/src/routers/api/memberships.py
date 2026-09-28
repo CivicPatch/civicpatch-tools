@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory
 from schemas.pagination import pagination_offset, pagination_total_pages
+from services.unmatched_terms import unmatched_terms_page
 
 
 def get_router() -> APIRouter:
@@ -17,9 +18,9 @@ def get_router() -> APIRouter:
         per_page: int = Query(20, ge=1, le=100),
         user: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED)),
     ):
-        total, rows = await memberships.meta_unmatched_text(per_page, pagination_offset(page, per_page))
+        total, terms = await unmatched_terms_page(per_page, pagination_offset(page, per_page))
         return {
-            "data": {"meta_unmatched_text": rows},
+            "data": {"meta_unmatched_text": [term.model_dump() for term in terms]},
             "total_items": total,
             "page": page,
             "total_pages": pagination_total_pages(total, per_page),

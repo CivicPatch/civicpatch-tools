@@ -22,6 +22,7 @@ describe("officeEditsIn", () => {
   it("is empty when nothing was picked", () =>
     expect(officeEditsIn([card()])).toEqual([]));
 
+
   // A label never names the post itself (core/membership_label.py's `render` no longer folds
   // it in), so changing which post someone holds has no bearing on it — it rides along as-is.
   it("keeps the held label when only the post changed", () =>

@@ -235,3 +235,40 @@ def test_a_second_label_naming_no_known_role_is_unmatched_not_an_extra_role():
 @pytest.mark.unit
 def test_an_unknown_label_beside_a_known_one_still_reaches_triage():
     assert details("Mayor", "Dogcatcher").unmatched_text == ("Dogcatcher",)
+
+
+_LABEL_ROLES = [
+    _role("mayor", "Mayor", [], 10),
+    _role("chair", "Chair", [], 200),
+    _role("vice-chair", "Vice Chair", [], 300),
+    _role("mayor-pro-tem", "Mayor Pro Tem", [], 400),
+    _role("council-member", "Council Member", [], 500),
+]
+
+
+def _label(*labels: str) -> str | None:
+    records = [record(f"r{i}", label, minutes=i) for i, label in enumerate(labels)]
+    taxonomy = build_taxonomy(RoleConfig(roles=_LABEL_ROLES))
+    return parse_labels(records, JURISDICTION, taxonomy)[1].derived_membership_label
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    ("labels", "expected"),
+    [
+        (("Council Member Place 3",), "Place 3"),
+        (("Chair", "Vice Chair", "Council Member"), "Vice Chair, Council Member"),
+        (("Council Member Position 2", "Mayor Pro Tem"), "Position 2, Council Member"),
+        (("Mayor",), None),
+        (("Council Member District 3",), None),
+        (("Council Member, District 3, Place 1",), "Place 1"),
+    ],
+)
+def test_the_derived_label_is_designations_then_extra_roles_then_unmatched_text(labels, expected):
+    """Only what the post does not already say: its role and its division never appear."""
+    assert _label(*labels) == expected
+
+
+@pytest.mark.unit
+def test_unmatched_text_comes_last_in_the_derived_label():
+    assert _label("Council Member Place 3", "Harbormaster") == "Place 3, Harbormaster"

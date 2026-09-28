@@ -90,8 +90,10 @@ async def _insert_jurisdiction(
                     ON CONFLICT DO NOTHING RETURNING ocdid
                 ), s AS (
                     INSERT INTO posts
-                        (jurisdiction_ocdid, organization_id, role_id, division_ocdid)
-                    SELECT %(ocdid)s, o.id, 'mayor', %(division)s FROM o
+                        (id, jurisdiction_ocdid, organization_id, role_id, division_ocdid)
+                    SELECT post_id_of_key(o.id, 'mayor', %(division)s), %(ocdid)s, o.id, 'mayor',
+                           %(division)s
+                    FROM o
                     RETURNING id, organization_id
                 )
                 INSERT INTO memberships

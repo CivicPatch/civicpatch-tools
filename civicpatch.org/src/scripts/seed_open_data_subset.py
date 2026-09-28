@@ -185,7 +185,6 @@ def membership_row(row: dict[str, Any], post_ids: dict[str, str]) -> dict[str, A
         "end_date": row["end_date"],
         "opened_at": row["opened_at"],
         "closed_at": row["closed_at"],
-        "designations": row["designations"],
         # The export has labels without pages; the page is unknown here, as for 206's backfill.
         "sources": json.dumps([{"url": None, "note": label} for label in row["source_labels"]]),
     }
@@ -243,10 +242,10 @@ INSERT_SQL: dict[str, LiteralString] = {
     "memberships": """
         INSERT INTO memberships
             (id, post_id, organization_id, person_id, label, start_date, end_date,
-             opened_at, closed_at, designations, sources)
+             opened_at, closed_at, sources)
         VALUES
             (%(id)s, %(post_id)s, %(organization_id)s, %(person_id)s, %(label)s, %(start_date)s,
-             %(end_date)s, %(opened_at)s, %(closed_at)s, %(designations)s, %(sources)s::jsonb)
+             %(end_date)s, %(opened_at)s, %(closed_at)s, %(sources)s::jsonb)
         -- No conflict target: `memberships_one_open_per_organization` (person_id,
         -- organization_id) WHERE closed_at IS NULL can collide independently of the id PK —
         -- same reasoning as organizations above.
