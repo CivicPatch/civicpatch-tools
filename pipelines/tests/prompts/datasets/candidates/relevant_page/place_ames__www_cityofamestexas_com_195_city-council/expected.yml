@@ -1,7 +1,10 @@
 page_url: https://www.cityofamestexas.com/195/City-Council
 jurisdiction_name: Ames city
+known_organizations:
+- Government
 generated: true
 page:
   is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: relevant.'
+  thoughts: 'Reviewed 2026-09-28, label confirmed: ''Elected City Council Members''
+    lists council Positions 1-5 by name.'

@@ -1,9 +1,11 @@
 page_url: https://bridgeportwashington.net/team/esiquio-martinez/
 jurisdiction_name: Bridgeport city
+known_organizations:
+- Government
 generated: true
 page:
-  is_relevant: false
+  is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: irrelevant by absence,
-    the saved run said relevant. Nobody published cites this page, which is weak evidence
-    it is irrelevant.'
+  thoughts: 'Reviewed 2026-09-28, label flipped to true: Individual official page:
+    Esiquio Martinez, Council Position 5, council email. The bio text is template
+    filler but the role is real.'

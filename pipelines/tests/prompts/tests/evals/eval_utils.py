@@ -38,7 +38,7 @@ PROVIDERS_BY_MODEL = {
         "open_router:DigitalOcean",   # $0.10/$0.20, no seed — prices read 2026-09-16
         "open_router:AtlasCloud",     # $0.14/$0.28, seed, fp4
         "open_router:Alibaba",        # $0.13/$0.27, seed, fp8 — added 2026-09-16
-        "open_router:NextBit",        # $0.15/$0.35, seed, fp8 — added 2026-09-16
+        # NextBit dropped 2026-09-28: returned nothing (0 tokens) for a whole evalsr run.
     ],
     "deepseek/deepseek-v4.1-flash": [
         "open_router:Morph",      # $0.18/$0.72, seed, fp8 — catalogue read 2026-09-16
@@ -194,17 +194,36 @@ def record_run(evals_dir: str, prompt: str) -> dict:
             "the archive is the record of what produced these numbers."
         )
 
-    directory = pathlib.Path(evals_dir) / "_prompts"
-    directory.mkdir(parents=True, exist_ok=True)
-    digest = hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:12]
-    path = directory / f"{digest}.txt"
-    if not path.exists():
-        path.write_text(prompt, encoding="utf-8")
+    digest = _archive_prompt_text(evals_dir, prompt)
     return {
         "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "prompt_sha256": digest,
-        "prompt_file": str(path.relative_to(evals_dir)),
+        "prompt_file": f"_prompts/{digest}.txt",
     }
+
+
+def _archive_prompt_text(evals_dir: str, text: str) -> str:
+    """Write `text` to `_prompts/<hash>.txt` unless it is already there; return the hash."""
+    directory = pathlib.Path(evals_dir) / "_prompts"
+    directory.mkdir(parents=True, exist_ok=True)
+    digest = hashlib.sha256(text.encode("utf-8")).hexdigest()[:12]
+    path = directory / f"{digest}.txt"
+    if not path.exists():
+        path.write_text(text, encoding="utf-8")
+    return digest
+
+
+# Page covers asks one prompt per body, so its case prompts are keyed "<case id>|<body>".
+CASE_PROMPT_KEY_SEPARATOR = "|"
+
+
+def archive_case_prompts(evals_dir: str, prompts: dict[str, str]) -> dict[str, str]:
+    """Each case's exact prompt, stored once by hash beside the template; case key -> hash.
+
+    The template shows placeholders; this is what each case was actually sent, so the dashboard
+    can show a case's real prompt without re-deriving it, and a case deleted later keeps it.
+    """
+    return {key: _archive_prompt_text(evals_dir, prompt) for key, prompt in sorted(prompts.items())}
 
 
 HISTORY_DEPTH = 30
@@ -221,6 +240,8 @@ def _prune_prompt_archive(evals_dir: str, runs: list) -> None:
     if not runs:
         return
     keep = {f"{run.get('prompt_sha256')}.txt" for run in runs}
+    for run in runs:
+        keep.update(f"{digest}.txt" for digest in (run.get("case_prompts") or {}).values())
     _delete_files_not_named(pathlib.Path(evals_dir) / "_prompts", "*.txt", keep)
 
 
@@ -277,6 +298,7 @@ def record_history(
     *,
     accuracy: dict,
     mismatches: dict | None,
+    case_prompts: dict[str, str] | None = None,
 ) -> None:
     """Append this run to `history.yml`, keeping the last HISTORY_DEPTH per (model, provider).
 
@@ -294,6 +316,7 @@ def record_history(
     committed on every run is its own problem.
 
     `mismatches` is None for an eval that doesn't record them; `{}` is a run that had none.
+    `case_prompts` is `archive_case_prompts`' case key -> prompt hash.
     """
     path = pathlib.Path(evals_dir) / "history.yml"
     existing = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}) if path.exists() else {}
@@ -308,6 +331,8 @@ def record_history(
         "cases": dict(sorted((cases or {}).items())),
         "dispositions": _dispositions(accuracy),
     }
+    if case_prompts is not None:
+        entry["case_prompts"] = case_prompts
     if mismatches is not None:
         entry["mismatches_file"] = _write_mismatches(evals_dir, entry, mismatches)
     runs = _keep_recent(existing.get("runs") or [], entry, HISTORY_DEPTH)
@@ -320,6 +345,10 @@ def record_history(
 GENERATED_KEY = "generated"
 SAMPLE_SIZE_ENV = "EVAL_SAMPLE"
 SAMPLE_SEED_ENV = "EVAL_SEED"
+# Enough generated cases for about ±10 points on a pass rate, on top of every hand-written case.
+DEFAULT_SAMPLE_SIZE = 40
+# `EVAL_SAMPLE=all` runs every generated case, e.g. before merging a prompt change.
+ALL_CASES = "all"
 
 
 def sample_generated_cases(cases: list[dict], sample_size: int | None, seed: int) -> list[dict]:
@@ -341,7 +370,9 @@ def sample_generated_cases(cases: list[dict], sample_size: int | None, seed: int
 
 
 def sample_settings() -> tuple[int | None, int]:
-    """`EVAL_SAMPLE` and `EVAL_SEED` from the environment: unset sample means every case."""
-    raw_size = os.environ.get(SAMPLE_SIZE_ENV)
-    return (int(raw_size) if raw_size else None, int(os.environ.get(SAMPLE_SEED_ENV, "0")))
+    """`EVAL_SAMPLE` and `EVAL_SEED` from the environment. Unset samples the default; `all` samples
+    nothing out."""
+    raw_size = os.environ.get(SAMPLE_SIZE_ENV, str(DEFAULT_SAMPLE_SIZE))
+    size = None if raw_size == ALL_CASES else int(raw_size)
+    return size, int(os.environ.get(SAMPLE_SEED_ENV, "0"))
 

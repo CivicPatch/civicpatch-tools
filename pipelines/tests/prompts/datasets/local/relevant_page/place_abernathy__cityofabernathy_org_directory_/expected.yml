@@ -1,0 +1,10 @@
+page_url: https://cityofabernathy.org/directory/
+jurisdiction_name: Abernathy city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: false
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Staff directory lists only employees
+    (City Secretary, City Manager, police, public works); no mayor or council.'

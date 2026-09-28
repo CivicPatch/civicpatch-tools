@@ -1,0 +1,16 @@
+mismatches:
+  gatesville_ordinance_vote_records:
+  - actual: false
+    expected: true
+    field: is_relevant
+    subject: page
+  place_omak__www_omakcity_com_directory_aspx_did_19:
+  - actual: true
+    expected: false
+    field: is_relevant
+    subject: page
+  quitaque_council:
+  - actual: "\u2014"
+    expected: present
+    field: relevant_urls
+    subject: https://quitaque.us/cityofficials.html

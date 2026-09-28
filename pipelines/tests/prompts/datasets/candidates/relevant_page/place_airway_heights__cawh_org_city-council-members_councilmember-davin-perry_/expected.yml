@@ -1,7 +1,10 @@
 page_url: https://cawh.org/city-council-members/councilmember-davin-perry/
 jurisdiction_name: Airway Heights city
+known_organizations:
+- Government
 generated: true
 page:
   is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: relevant.'
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Councilmember''s own page: Davin
+    Perry ''currently hold position #6'' on the City Council.'

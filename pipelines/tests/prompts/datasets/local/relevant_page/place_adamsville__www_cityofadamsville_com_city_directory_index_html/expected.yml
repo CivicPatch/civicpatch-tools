@@ -1,0 +1,10 @@
+page_url: https://www.cityofadamsville.com/city_directory/index.html
+jurisdiction_name: Adamsville town
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: false
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: City Directory lists only department
+    phone numbers and extensions; no officials named.'

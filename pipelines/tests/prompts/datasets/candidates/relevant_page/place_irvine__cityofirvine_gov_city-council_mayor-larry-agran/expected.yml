@@ -1,9 +1,11 @@
 page_url: https://cityofirvine.gov/city-council/mayor-larry-agran
 jurisdiction_name: Irvine city
+known_organizations:
+- Government
 generated: true
 page:
-  is_relevant: false
+  is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: irrelevant by absence,
-    the saved run said relevant. Nobody published cites this page, which is weak evidence
-    it is irrelevant.'
+  thoughts: 'Reviewed 2026-09-28, label flipped to true: The current mayor''s own
+    page, ''Meet Mayor Larry Agran'', with email and bio (elected Mayor 2024); it
+    also links the full council.'

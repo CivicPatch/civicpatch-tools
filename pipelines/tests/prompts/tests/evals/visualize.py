@@ -6,8 +6,11 @@ import pathlib
 from dashboard_data import (
     DATASET_DIRS,
     EVAL_DIRS,
+    read_case_inputs,
     read_history,
+    read_latest_case_prompts,
     read_latest_mismatches,
+    prompts_dir,
     read_prompt_texts,
     read_results,
     read_run_mismatches,
@@ -34,6 +37,9 @@ def _eval_section(name: str, directory: pathlib.Path, results: EvalResults, runs
         prompt_versions=build_prompt_versions(runs, read_prompt_texts(directory, runs)),
         detail=eval_detail(results, runs),
         latest_mismatches=latest_mismatches,
+        case_inputs=read_case_inputs(name),
+        prompts_dir=prompts_dir(directory),
+        latest_case_prompts=read_latest_case_prompts(directory),
     )
 
 

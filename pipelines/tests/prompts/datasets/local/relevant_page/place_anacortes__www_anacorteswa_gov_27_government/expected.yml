@@ -1,0 +1,10 @@
+page_url: https://www.anacorteswa.gov/27/Government
+jurisdiction_name: Anacortes city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: false
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Government landing page of section
+    links; council names are only in the nav, and the mayor appears as a link caption.'

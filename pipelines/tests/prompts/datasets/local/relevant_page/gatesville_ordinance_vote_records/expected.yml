@@ -1,7 +1,19 @@
 page_url: https://gatesvilletx.com/government/city_council/index.php
 jurisdiction_name: Gatesville city
+government_form: council_manager
+known_roles:
+- Council Member
+- Mayor
+known_organizations:
+- Council
 page:
-  is_relevant: false
+  is_relevant: true
   relevant_urls:
   - https://gatesvilletx.com/government/city_council/mayor_and_council/index.php
   - https://gatesvilletx.com/government/index.php
+  thoughts: >-
+    Flipped to true 2026-09-28. The page is ordinances with roll-call votes, which the prompt's
+    rules call irrelevant, but each vote names every current council member with their ward
+    and place, so a model cannot tell it from a roster. Policy is to keep a page when unsure:
+    a wrong "relevant" costs one extraction that returns nobody, a wrong "irrelevant" loses
+    the page. Providers split on it run to run (Alibaba then AtlasCloud said relevant).

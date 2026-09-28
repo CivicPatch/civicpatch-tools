@@ -230,6 +230,264 @@ runs:
       spurious: 0
       wrong: 0
   mismatches_file: _runs/20260918T023843Z-open_router-Alibaba.yml
+- timestamp: '2026-09-28T19:55:28+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 6fba07669e1b
+  cost_usd: 0.0178700256
+  elapsed_seconds: 153.56
+  scores:
+    is_relevant: 0.8947368421052632
+    relevant_urls: 1.0
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 1.0
+    gatesville_ordinances: 0.0
+    jackson_mayors_office: 0.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee_irrelevant: 1.0
+    olton_newslist_irrelevant: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
+  dispositions:
+    is_relevant:
+      correct: 17
+      missing: 0
+      spurious: 0
+      wrong: 2
+    relevant_urls:
+      correct: 32
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260928T195528Z-open_router-Alibaba.yml
+- timestamp: '2026-09-28T20:44:56+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 739ea2221794
+  cost_usd: 0.015876186
+  elapsed_seconds: 108.66
+  scores:
+    is_relevant: 0.9411764705882353
+    relevant_urls: 1.0
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 0.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee_irrelevant: 1.0
+    olton_newslist_irrelevant: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
+  dispositions:
+    is_relevant:
+      correct: 16
+      missing: 0
+      spurious: 0
+      wrong: 1
+    relevant_urls:
+      correct: 26
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260928T204456Z-open_router-Alibaba.yml
+- timestamp: '2026-09-28T20:58:51+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 739ea2221794
+  cost_usd: 0.014912726
+  elapsed_seconds: 102.26
+  scores:
+    is_relevant: 1.0
+    relevant_urls: 1.0
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 1.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee_irrelevant: 1.0
+    olton_newslist_irrelevant: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
+  dispositions:
+    is_relevant:
+      correct: 17
+      missing: 0
+      spurious: 0
+      wrong: 0
+    relevant_urls:
+      correct: 26
+      missing: 0
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260928T205851Z-open_router-Alibaba.yml
+- timestamp: '2026-09-28T21:35:59+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 739ea2221794
+  cost_usd: 0.0558937048
+  elapsed_seconds: 305.1
+  scores:
+    is_relevant: 0.9473684210526315
+    relevant_urls: 1.0
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 0.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee_irrelevant: 1.0
+    olton_newslist_irrelevant: 1.0
+    place_abernathy__cityofabernathy_org_directory_: 1.0
+    place_abilene__abilenetx_gov_526_city-council: 1.0
+    place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html: 1.0
+    place_airway_heights__cawh_org_city-manager_: 1.0
+    place_algona__algonawa_gov_: 1.0
+    place_ames__www_cityofamestexas_com_171_mayor-council: 1.0
+    place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php: 1.0
+    place_amherst__www_cityofamherst_com_contact_us_index_php: 1.0
+    place_anacortes__www_anacorteswa_gov_756_mayor: 1.0
+    place_anahuac__anahuac_us_government_city-council: 1.0
+    place_anahuac__anahuac_us_government_greetings-from-the-mayor_: 1.0
+    place_anahuac__www_anahuac_us: 1.0
+    place_apple_valley__applevalley_org_council-member-info_larry-cusack_: 1.0
+    place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14: 1.0
+    place_bellevue__bellevuewa_gov_: 1.0
+    place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers: 1.0
+    place_bridgeport__bridgeportwashington_net_city-council_: 1.0
+    place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office: 1.0
+    place_cathlamet__www_townofcathlamet_com_about-us: 1.0
+    place_cathlamet__www_townofcathlamet_com_elected-officials-1: 1.0
+    place_colville__www_colville_wa_us_: 1.0
+    place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462: 0.0
+    place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601: 1.0
+    place_crescent_city__www_crescentcity_org_directory_citycouncil: 1.0
+    ? place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir
+    : 1.0
+    place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council: 1.0
+    place_ephrata__www_ephrata_org_27_government: 1.0
+    place_goldthwaite__www_visitgoldthwaite_com_: 1.0
+    place_goldthwaite__www_visitgoldthwaite_com_city-hall: 1.0
+    place_lookout_mountain__www_lookoutmtn_us_directory_index_php: 1.0
+    place_manchester__www_cityofmanchestertn_com: 1.0
+    place_omak__www_omakcity_com: 1.0
+    place_omak__www_omakcity_com_1382_departments: 1.0
+    place_omak__www_omakcity_com_directory_aspx_did_19: 0.0
+    place_republic__www_republicwa_org_: 1.0
+    place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php: 1.0
+    place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php: 1.0
+    place_walla_walla__www_wallawallawa_gov_government_city-directory: 1.0
+    place_wilbur__www_wilburwa_gov_: 1.0
+    place_wilbur__www_wilburwa_gov_27_government: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
+  dispositions:
+    is_relevant:
+      correct: 54
+      missing: 0
+      spurious: 0
+      wrong: 3
+    relevant_urls:
+      correct: 26
+      missing: 0
+      spurious: 0
+      wrong: 0
+  case_prompts:
+    austin_city_manager_irrelevant: 93132f2475bb
+    beeville_water_supply_district_irrelevant: 073984d648bc
+    castroville_airport_board_irrelevant: 953302aab7bd
+    dish_irrelevant: ec7d7ecb905e
+    eastpointe_home: bfe4fc4df262
+    ellago_mayor_history_irrelevant: fa636e12a777
+    gatesville_ordinance_vote_records: 3616c01865f6
+    mcgregor_city_announcement_irrelevant: 315d9a1bbaa7
+    mikado_township_home: 05081c5caedf
+    millbury_board_of_selectmen: c93b7ce66c3e
+    millbury_school_committee_irrelevant: 82ed8721faee
+    olton_newslist_irrelevant: 496f0cf167f5
+    place_abernathy__cityofabernathy_org_directory_: 5233ffe9943a
+    place_abilene__abilenetx_gov_526_city-council: 4540327706e5
+    place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html: 438e89eee28e
+    place_airway_heights__cawh_org_city-manager_: 88cb4f14b5dc
+    place_algona__algonawa_gov_: eff30698aef1
+    place_ames__www_cityofamestexas_com_171_mayor-council: 4d607adaa96d
+    place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php: 87f76580eb25
+    place_amherst__www_cityofamherst_com_contact_us_index_php: 4f75417b78e7
+    place_anacortes__www_anacorteswa_gov_756_mayor: 0b3286b17758
+    place_anahuac__anahuac_us_government_city-council: c0b3ee3676cb
+    place_anahuac__anahuac_us_government_greetings-from-the-mayor_: beb6d42fb49a
+    place_anahuac__www_anahuac_us: b6fdaaa728b1
+    place_apple_valley__applevalley_org_council-member-info_larry-cusack_: d78f103cef5b
+    place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14: 06d8ef9266f0
+    place_bellevue__bellevuewa_gov_: 613fe1ec6c76
+    place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers: 048af7cca0f5
+    place_bridgeport__bridgeportwashington_net_city-council_: ef75f2d9eed9
+    place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office: f23e1d2f32be
+    place_cathlamet__www_townofcathlamet_com_about-us: 97f0aeb41d7f
+    place_cathlamet__www_townofcathlamet_com_elected-officials-1: d6ff8333bca1
+    place_colville__www_colville_wa_us_: 661f658dc538
+    place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462: ad6f00d88950
+    place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601: 460b0e4ddcc0
+    place_crescent_city__www_crescentcity_org_directory_citycouncil: 36edd011aa81
+    ? place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir
+    : 32741003dcd1
+    place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council: f75fe84f3e34
+    place_ephrata__www_ephrata_org_27_government: 39974e5dc1f9
+    place_goldthwaite__www_visitgoldthwaite_com_: 3a4138f690a6
+    place_goldthwaite__www_visitgoldthwaite_com_city-hall: b51aa218ea64
+    place_lookout_mountain__www_lookoutmtn_us_directory_index_php: c717e308e4fd
+    place_manchester__www_cityofmanchestertn_com: 93f48fcb2810
+    place_omak__www_omakcity_com: b3544a37fffa
+    place_omak__www_omakcity_com_1382_departments: 9185600539cc
+    place_omak__www_omakcity_com_directory_aspx_did_19: 74026d4be719
+    place_republic__www_republicwa_org_: 9cc44af6bee3
+    place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php: 5d23277e50ad
+    place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php: 03ce2ce000f7
+    place_walla_walla__www_wallawallawa_gov_government_city-directory: 0f663d0b8e95
+    place_wilbur__www_wilburwa_gov_: f7fa7ed7fe14
+    place_wilbur__www_wilburwa_gov_27_government: 23b427f9de16
+    quitaque_council: 119a64720dfa
+    raisin_township_clerk: 002a385e65a4
+    raisin_township_supervisor: aa0552992d21
+    san_antonio: 9232cf08a7ae
+    san_saba_airport_advisory_irrelevant: 2d6a8f0f1bf0
+  mismatches_file: _runs/20260928T213559Z-open_router-Alibaba.yml
 - timestamp: '2026-08-16T02:10:51+00:00'
   provider: open_router-AtlasCloud
   model: deepseek/deepseek-v4-flash
@@ -604,6 +862,264 @@ runs:
       spurious: 0
       wrong: 0
   mismatches_file: _runs/20260918T023843Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-28T19:55:28+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 6fba07669e1b
+  cost_usd: 0.01149488032
+  elapsed_seconds: 146.57
+  scores:
+    is_relevant: 1.0
+    relevant_urls: 0.9841269841269841
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 1.0
+    gatesville_ordinances: 1.0
+    jackson_mayors_office: 1.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee_irrelevant: 1.0
+    olton_newslist_irrelevant: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
+  dispositions:
+    is_relevant:
+      correct: 19
+      missing: 0
+      spurious: 0
+      wrong: 0
+    relevant_urls:
+      correct: 31
+      missing: 1
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260928T195528Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-28T20:44:56+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 739ea2221794
+  cost_usd: 0.009611749
+  elapsed_seconds: 112.9
+  scores:
+    is_relevant: 1.0
+    relevant_urls: 0.9803921568627451
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 1.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee_irrelevant: 1.0
+    olton_newslist_irrelevant: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
+  dispositions:
+    is_relevant:
+      correct: 17
+      missing: 0
+      spurious: 0
+      wrong: 0
+    relevant_urls:
+      correct: 25
+      missing: 1
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260928T204456Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-28T20:58:51+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 739ea2221794
+  cost_usd: 0.0093674182
+  elapsed_seconds: 229.15
+  scores:
+    is_relevant: 0.9411764705882353
+    relevant_urls: 0.9803921568627451
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 0.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee_irrelevant: 1.0
+    olton_newslist_irrelevant: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
+  dispositions:
+    is_relevant:
+      correct: 16
+      missing: 0
+      spurious: 0
+      wrong: 1
+    relevant_urls:
+      correct: 25
+      missing: 1
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260928T205851Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-28T21:35:59+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 739ea2221794
+  cost_usd: 0.03169261228
+  elapsed_seconds: 361.9
+  scores:
+    is_relevant: 0.9649122807017544
+    relevant_urls: 0.9803921568627451
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 0.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee_irrelevant: 1.0
+    olton_newslist_irrelevant: 1.0
+    place_abernathy__cityofabernathy_org_directory_: 1.0
+    place_abilene__abilenetx_gov_526_city-council: 1.0
+    place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html: 1.0
+    place_airway_heights__cawh_org_city-manager_: 1.0
+    place_algona__algonawa_gov_: 1.0
+    place_ames__www_cityofamestexas_com_171_mayor-council: 1.0
+    place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php: 1.0
+    place_amherst__www_cityofamherst_com_contact_us_index_php: 1.0
+    place_anacortes__www_anacorteswa_gov_756_mayor: 1.0
+    place_anahuac__anahuac_us_government_city-council: 1.0
+    place_anahuac__anahuac_us_government_greetings-from-the-mayor_: 1.0
+    place_anahuac__www_anahuac_us: 1.0
+    place_apple_valley__applevalley_org_council-member-info_larry-cusack_: 1.0
+    place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14: 1.0
+    place_bellevue__bellevuewa_gov_: 1.0
+    place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers: 1.0
+    place_bridgeport__bridgeportwashington_net_city-council_: 1.0
+    place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office: 1.0
+    place_cathlamet__www_townofcathlamet_com_about-us: 1.0
+    place_cathlamet__www_townofcathlamet_com_elected-officials-1: 1.0
+    place_colville__www_colville_wa_us_: 1.0
+    place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462: 1.0
+    place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601: 1.0
+    place_crescent_city__www_crescentcity_org_directory_citycouncil: 1.0
+    ? place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir
+    : 1.0
+    place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council: 1.0
+    place_ephrata__www_ephrata_org_27_government: 1.0
+    place_goldthwaite__www_visitgoldthwaite_com_: 1.0
+    place_goldthwaite__www_visitgoldthwaite_com_city-hall: 1.0
+    place_lookout_mountain__www_lookoutmtn_us_directory_index_php: 1.0
+    place_manchester__www_cityofmanchestertn_com: 1.0
+    place_omak__www_omakcity_com: 1.0
+    place_omak__www_omakcity_com_1382_departments: 1.0
+    place_omak__www_omakcity_com_directory_aspx_did_19: 0.0
+    place_republic__www_republicwa_org_: 1.0
+    place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php: 1.0
+    place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php: 1.0
+    place_walla_walla__www_wallawallawa_gov_government_city-directory: 1.0
+    place_wilbur__www_wilburwa_gov_: 1.0
+    place_wilbur__www_wilburwa_gov_27_government: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
+  dispositions:
+    is_relevant:
+      correct: 55
+      missing: 0
+      spurious: 0
+      wrong: 2
+    relevant_urls:
+      correct: 25
+      missing: 1
+      spurious: 0
+      wrong: 0
+  case_prompts:
+    austin_city_manager_irrelevant: 93132f2475bb
+    beeville_water_supply_district_irrelevant: 073984d648bc
+    castroville_airport_board_irrelevant: 953302aab7bd
+    dish_irrelevant: ec7d7ecb905e
+    eastpointe_home: bfe4fc4df262
+    ellago_mayor_history_irrelevant: fa636e12a777
+    gatesville_ordinance_vote_records: 3616c01865f6
+    mcgregor_city_announcement_irrelevant: 315d9a1bbaa7
+    mikado_township_home: 05081c5caedf
+    millbury_board_of_selectmen: c93b7ce66c3e
+    millbury_school_committee_irrelevant: 82ed8721faee
+    olton_newslist_irrelevant: 496f0cf167f5
+    place_abernathy__cityofabernathy_org_directory_: 5233ffe9943a
+    place_abilene__abilenetx_gov_526_city-council: 4540327706e5
+    place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html: 438e89eee28e
+    place_airway_heights__cawh_org_city-manager_: 88cb4f14b5dc
+    place_algona__algonawa_gov_: eff30698aef1
+    place_ames__www_cityofamestexas_com_171_mayor-council: 4d607adaa96d
+    place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php: 87f76580eb25
+    place_amherst__www_cityofamherst_com_contact_us_index_php: 4f75417b78e7
+    place_anacortes__www_anacorteswa_gov_756_mayor: 0b3286b17758
+    place_anahuac__anahuac_us_government_city-council: c0b3ee3676cb
+    place_anahuac__anahuac_us_government_greetings-from-the-mayor_: beb6d42fb49a
+    place_anahuac__www_anahuac_us: b6fdaaa728b1
+    place_apple_valley__applevalley_org_council-member-info_larry-cusack_: d78f103cef5b
+    place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14: 06d8ef9266f0
+    place_bellevue__bellevuewa_gov_: 613fe1ec6c76
+    place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers: 048af7cca0f5
+    place_bridgeport__bridgeportwashington_net_city-council_: ef75f2d9eed9
+    place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office: f23e1d2f32be
+    place_cathlamet__www_townofcathlamet_com_about-us: 97f0aeb41d7f
+    place_cathlamet__www_townofcathlamet_com_elected-officials-1: d6ff8333bca1
+    place_colville__www_colville_wa_us_: 661f658dc538
+    place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462: ad6f00d88950
+    place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601: 460b0e4ddcc0
+    place_crescent_city__www_crescentcity_org_directory_citycouncil: 36edd011aa81
+    ? place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir
+    : 32741003dcd1
+    place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council: f75fe84f3e34
+    place_ephrata__www_ephrata_org_27_government: 39974e5dc1f9
+    place_goldthwaite__www_visitgoldthwaite_com_: 3a4138f690a6
+    place_goldthwaite__www_visitgoldthwaite_com_city-hall: b51aa218ea64
+    place_lookout_mountain__www_lookoutmtn_us_directory_index_php: c717e308e4fd
+    place_manchester__www_cityofmanchestertn_com: 93f48fcb2810
+    place_omak__www_omakcity_com: b3544a37fffa
+    place_omak__www_omakcity_com_1382_departments: 9185600539cc
+    place_omak__www_omakcity_com_directory_aspx_did_19: 74026d4be719
+    place_republic__www_republicwa_org_: 9cc44af6bee3
+    place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php: 5d23277e50ad
+    place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php: 03ce2ce000f7
+    place_walla_walla__www_wallawallawa_gov_government_city-directory: 0f663d0b8e95
+    place_wilbur__www_wilburwa_gov_: f7fa7ed7fe14
+    place_wilbur__www_wilburwa_gov_27_government: 23b427f9de16
+    quitaque_council: 119a64720dfa
+    raisin_township_clerk: 002a385e65a4
+    raisin_township_supervisor: aa0552992d21
+    san_antonio: 9232cf08a7ae
+    san_saba_airport_advisory_irrelevant: 2d6a8f0f1bf0
+  mismatches_file: _runs/20260928T213559Z-open_router-AtlasCloud.yml
 - timestamp: '2026-08-16T02:10:51+00:00'
   provider: open_router-DigitalOcean
   model: deepseek/deepseek-v4-flash
@@ -978,6 +1494,264 @@ runs:
       spurious: 0
       wrong: 0
   mismatches_file: _runs/20260918T023843Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-28T19:55:28+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 6fba07669e1b
+  cost_usd: 0.009440144
+  elapsed_seconds: 166.14
+  scores:
+    is_relevant: 0.8947368421052632
+    relevant_urls: 0.9508196721311475
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 1.0
+    gatesville_ordinances: 1.0
+    jackson_mayors_office: 0.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee_irrelevant: 0.0
+    olton_newslist_irrelevant: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
+  dispositions:
+    is_relevant:
+      correct: 17
+      missing: 0
+      spurious: 0
+      wrong: 2
+    relevant_urls:
+      correct: 29
+      missing: 3
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260928T195528Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-28T20:44:55+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 739ea2221794
+  cost_usd: 0.007971222
+  elapsed_seconds: 140.21
+  scores:
+    is_relevant: 1.0
+    relevant_urls: 0.9387755102040817
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 1.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee_irrelevant: 1.0
+    olton_newslist_irrelevant: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
+  dispositions:
+    is_relevant:
+      correct: 17
+      missing: 0
+      spurious: 0
+      wrong: 0
+    relevant_urls:
+      correct: 23
+      missing: 3
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260928T204455Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-28T20:58:51+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 739ea2221794
+  cost_usd: 0.00810607
+  elapsed_seconds: 87.41
+  scores:
+    is_relevant: 1.0
+    relevant_urls: 0.96
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 1.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee_irrelevant: 1.0
+    olton_newslist_irrelevant: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
+  dispositions:
+    is_relevant:
+      correct: 17
+      missing: 0
+      spurious: 0
+      wrong: 0
+    relevant_urls:
+      correct: 24
+      missing: 2
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260928T205851Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-28T21:35:59+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 739ea2221794
+  cost_usd: 0.029124032
+  elapsed_seconds: 287.49
+  scores:
+    is_relevant: 0.9298245614035088
+    relevant_urls: 0.96
+  cases:
+    austin_city_manager_irrelevant: 1.0
+    beeville_water_supply_district_irrelevant: 1.0
+    castroville_airport_board_irrelevant: 1.0
+    dish_irrelevant: 1.0
+    eastpointe_home: 1.0
+    ellago_mayor_history_irrelevant: 1.0
+    gatesville_ordinance_vote_records: 0.0
+    mcgregor_city_announcement_irrelevant: 1.0
+    mikado_township_home: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee_irrelevant: 1.0
+    olton_newslist_irrelevant: 1.0
+    place_abernathy__cityofabernathy_org_directory_: 1.0
+    place_abilene__abilenetx_gov_526_city-council: 1.0
+    place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html: 1.0
+    place_airway_heights__cawh_org_city-manager_: 1.0
+    place_algona__algonawa_gov_: 1.0
+    place_ames__www_cityofamestexas_com_171_mayor-council: 1.0
+    place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php: 1.0
+    place_amherst__www_cityofamherst_com_contact_us_index_php: 1.0
+    place_anacortes__www_anacorteswa_gov_756_mayor: 1.0
+    place_anahuac__anahuac_us_government_city-council: 1.0
+    place_anahuac__anahuac_us_government_greetings-from-the-mayor_: 1.0
+    place_anahuac__www_anahuac_us: 1.0
+    place_apple_valley__applevalley_org_council-member-info_larry-cusack_: 1.0
+    place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14: 1.0
+    place_bellevue__bellevuewa_gov_: 1.0
+    place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers: 1.0
+    place_bridgeport__bridgeportwashington_net_city-council_: 1.0
+    place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office: 1.0
+    place_cathlamet__www_townofcathlamet_com_about-us: 1.0
+    place_cathlamet__www_townofcathlamet_com_elected-officials-1: 1.0
+    place_colville__www_colville_wa_us_: 1.0
+    place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462: 0.0
+    place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601: 1.0
+    place_crescent_city__www_crescentcity_org_directory_citycouncil: 1.0
+    ? place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir
+    : 0.0
+    place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council: 1.0
+    place_ephrata__www_ephrata_org_27_government: 1.0
+    place_goldthwaite__www_visitgoldthwaite_com_: 1.0
+    place_goldthwaite__www_visitgoldthwaite_com_city-hall: 1.0
+    place_lookout_mountain__www_lookoutmtn_us_directory_index_php: 1.0
+    place_manchester__www_cityofmanchestertn_com: 1.0
+    place_omak__www_omakcity_com: 1.0
+    place_omak__www_omakcity_com_1382_departments: 1.0
+    place_omak__www_omakcity_com_directory_aspx_did_19: 0.0
+    place_republic__www_republicwa_org_: 1.0
+    place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php: 1.0
+    place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php: 1.0
+    place_walla_walla__www_wallawallawa_gov_government_city-directory: 1.0
+    place_wilbur__www_wilburwa_gov_: 1.0
+    place_wilbur__www_wilburwa_gov_27_government: 1.0
+    quitaque_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    san_antonio: 1.0
+    san_saba_airport_advisory_irrelevant: 1.0
+  dispositions:
+    is_relevant:
+      correct: 53
+      missing: 0
+      spurious: 0
+      wrong: 4
+    relevant_urls:
+      correct: 24
+      missing: 2
+      spurious: 0
+      wrong: 0
+  case_prompts:
+    austin_city_manager_irrelevant: 93132f2475bb
+    beeville_water_supply_district_irrelevant: 073984d648bc
+    castroville_airport_board_irrelevant: 953302aab7bd
+    dish_irrelevant: ec7d7ecb905e
+    eastpointe_home: bfe4fc4df262
+    ellago_mayor_history_irrelevant: fa636e12a777
+    gatesville_ordinance_vote_records: 3616c01865f6
+    mcgregor_city_announcement_irrelevant: 315d9a1bbaa7
+    mikado_township_home: 05081c5caedf
+    millbury_board_of_selectmen: c93b7ce66c3e
+    millbury_school_committee_irrelevant: 82ed8721faee
+    olton_newslist_irrelevant: 496f0cf167f5
+    place_abernathy__cityofabernathy_org_directory_: 5233ffe9943a
+    place_abilene__abilenetx_gov_526_city-council: 4540327706e5
+    place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html: 438e89eee28e
+    place_airway_heights__cawh_org_city-manager_: 88cb4f14b5dc
+    place_algona__algonawa_gov_: eff30698aef1
+    place_ames__www_cityofamestexas_com_171_mayor-council: 4d607adaa96d
+    place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php: 87f76580eb25
+    place_amherst__www_cityofamherst_com_contact_us_index_php: 4f75417b78e7
+    place_anacortes__www_anacorteswa_gov_756_mayor: 0b3286b17758
+    place_anahuac__anahuac_us_government_city-council: c0b3ee3676cb
+    place_anahuac__anahuac_us_government_greetings-from-the-mayor_: beb6d42fb49a
+    place_anahuac__www_anahuac_us: b6fdaaa728b1
+    place_apple_valley__applevalley_org_council-member-info_larry-cusack_: d78f103cef5b
+    place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14: 06d8ef9266f0
+    place_bellevue__bellevuewa_gov_: 613fe1ec6c76
+    place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers: 048af7cca0f5
+    place_bridgeport__bridgeportwashington_net_city-council_: ef75f2d9eed9
+    place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office: f23e1d2f32be
+    place_cathlamet__www_townofcathlamet_com_about-us: 97f0aeb41d7f
+    place_cathlamet__www_townofcathlamet_com_elected-officials-1: d6ff8333bca1
+    place_colville__www_colville_wa_us_: 661f658dc538
+    place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462: ad6f00d88950
+    place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601: 460b0e4ddcc0
+    place_crescent_city__www_crescentcity_org_directory_citycouncil: 36edd011aa81
+    ? place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir
+    : 32741003dcd1
+    place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council: f75fe84f3e34
+    place_ephrata__www_ephrata_org_27_government: 39974e5dc1f9
+    place_goldthwaite__www_visitgoldthwaite_com_: 3a4138f690a6
+    place_goldthwaite__www_visitgoldthwaite_com_city-hall: b51aa218ea64
+    place_lookout_mountain__www_lookoutmtn_us_directory_index_php: c717e308e4fd
+    place_manchester__www_cityofmanchestertn_com: 93f48fcb2810
+    place_omak__www_omakcity_com: b3544a37fffa
+    place_omak__www_omakcity_com_1382_departments: 9185600539cc
+    place_omak__www_omakcity_com_directory_aspx_did_19: 74026d4be719
+    place_republic__www_republicwa_org_: 9cc44af6bee3
+    place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php: 5d23277e50ad
+    place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php: 03ce2ce000f7
+    place_walla_walla__www_wallawallawa_gov_government_city-directory: 0f663d0b8e95
+    place_wilbur__www_wilburwa_gov_: f7fa7ed7fe14
+    place_wilbur__www_wilburwa_gov_27_government: 23b427f9de16
+    quitaque_council: 119a64720dfa
+    raisin_township_clerk: 002a385e65a4
+    raisin_township_supervisor: aa0552992d21
+    san_antonio: 9232cf08a7ae
+    san_saba_airport_advisory_irrelevant: 2d6a8f0f1bf0
+  mismatches_file: _runs/20260928T213559Z-open_router-DigitalOcean.yml
 - timestamp: '2026-09-18T01:12:59+00:00'
   provider: open_router-NextBit
   model: deepseek/deepseek-v4-flash
@@ -1209,3 +1983,44 @@ runs:
       spurious: 0
       wrong: 0
   mismatches_file: _runs/20260918T023843Z-open_router-NextBit.yml
+- timestamp: '2026-09-28T19:55:28+00:00'
+  provider: open_router-NextBit
+  model: null
+  prompt_sha256: 6fba07669e1b
+  cost_usd: 0.0
+  elapsed_seconds: 172.86
+  scores:
+    is_relevant: 0.0
+    relevant_urls: 0.0
+  cases:
+    austin_city_manager_irrelevant: 0.0
+    beeville_water_supply_district_irrelevant: 0.0
+    castroville_airport_board_irrelevant: 0.0
+    dish_irrelevant: 0.0
+    eastpointe_home: 0.0
+    ellago_mayor_history_irrelevant: 0.0
+    gatesville_ordinance_vote_records: 0.0
+    gatesville_ordinances: 0.0
+    jackson_mayors_office: 0.0
+    mcgregor_city_announcement_irrelevant: 0.0
+    mikado_township_home: 0.0
+    millbury_board_of_selectmen: 0.0
+    millbury_school_committee_irrelevant: 0.0
+    olton_newslist_irrelevant: 0.0
+    quitaque_council: 0.0
+    raisin_township_clerk: 0.0
+    raisin_township_supervisor: 0.0
+    san_antonio: 0.0
+    san_saba_airport_advisory_irrelevant: 0.0
+  dispositions:
+    is_relevant:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 19
+    relevant_urls:
+      correct: 0
+      missing: 32
+      spurious: 0
+      wrong: 0
+  mismatches_file: _runs/20260928T195528Z-open_router-NextBit.yml

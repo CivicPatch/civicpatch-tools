@@ -13,6 +13,7 @@ import os
 from accuracy import as_report
 from eval_utils import (
     PROVIDER_COMPARISON,
+    archive_case_prompts,
     gather_capped,
     make_provider_client,
     record_history,
@@ -24,6 +25,7 @@ from eval_utils import (
 )
 from utils.dispositions import Disposition, classify_membership, tally
 from shared.schemas import GovernmentForm
+from shared.utils.government_forms import describe_government_form
 
 pytestmark = [pytest.mark.evals_relevant]
 
@@ -81,6 +83,20 @@ def _eval_run_id(provider_name: str) -> str:
     return f"run-eval-{provider_name}"
 
 
+def prompt_for_case(expected: dict) -> str:
+    """The exact prompt a case is sent: used by the run and archived with it."""
+    raw_form = expected.get("government_form")
+    return make_together_prompt(
+        expected.get("page_url", ""),
+        expected.get("jurisdiction_name", ""),
+        expected.get("known_roles", []),
+        # The bodies cp.org holds for this jurisdiction. A case that omits them is asking the
+        # cold-start question, where nothing is known yet.
+        expected.get("known_organizations", []),
+        government_form=GovernmentForm(raw_form) if raw_form else None,
+    )
+
+
 async def run_eval(model_client, case, ocdid="ocd-jurisdiction/country:us/state:tx/place:example/government"):
     """
     Runs the evaluation for a single test case.
@@ -88,24 +104,7 @@ async def run_eval(model_client, case, ocdid="ocd-jurisdiction/country:us/state:
     run_prompt = model_client["run_prompt"]
     case_input = case["input"]
     expected = case["expected"]
-    page_url = expected.get("page_url", "")
-    jurisdiction_name = expected.get("jurisdiction_name", "")
-    known_roles = expected.get("known_roles", [])
-    # The bodies cp.org holds for this jurisdiction. A case that omits them is asking the
-    # cold-start question, where nothing is known yet.
-    known_organizations = expected.get("known_organizations", [])
-    # Absent on every case written before forms existed, which is the no-line prompt they ran on.
-    raw_form = expected.get("government_form")
-    government_form = GovernmentForm(raw_form) if raw_form else None
-    make_prompt = model_client["make_prompt"]
-
-    prompt = make_prompt(
-        page_url,
-        jurisdiction_name,
-        known_roles,
-        known_organizations,
-        government_form=government_form,
-    )
+    prompt = prompt_for_case(expected)
     extra_kwargs = model_client.get("extra_kwargs", {})
     response = await run_prompt(
         _eval_run_id(model_client["name"]),
@@ -232,7 +231,7 @@ def _mismatch_rows(expected_page: dict, actual_output: dict) -> list[dict]:
     return rows
 
 
-def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), case_ids=(), mismatches=None):
+def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), case_ids=(), mismatches=None, case_prompts=None):
     llm_costs = cost_utils.get_cost_tracker(_eval_run_id(model_client["name"]))
     cost_summary = {
         "model": llm_costs[0].model if llm_costs else None,
@@ -253,17 +252,17 @@ def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), 
     # interpolated per case, and passing "" blanked the URL line and dropped the other two
     # blocks entirely — so the archived text was missing structure every real call sends.
     # Archive the template with what varies marked. Same fix as the officials eval.
-    run = record_run(
-        evals_dir,
-        make_together_prompt(
-            "<page url, per case>",
-            "<jurisdiction, per case>",
-            ["<known roles, per case>"],
-            ["<governing bodies, per case>"],
-            # A real form, since the parameter is typed: only which form varies per case.
-            government_form=GovernmentForm.OPEN_TOWN_MEETING,
-        ),
-    )
+    # The form parameter is typed, so render with one and swap its description for a
+    # placeholder: otherwise the archive reads as if every case had that form.
+    any_form = GovernmentForm.OPEN_TOWN_MEETING
+    template = make_together_prompt(
+        "<page url, per case>",
+        "<jurisdiction, per case>",
+        ["<known roles, per case>"],
+        ["<governing bodies, per case>"],
+        government_form=any_form,
+    ).replace(describe_government_form(any_form), "<government form, per case>")
+    run = record_run(evals_dir, template)
     record_history(
         evals_dir,
         model_client["name"],
@@ -273,6 +272,7 @@ def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), 
         {cid: 0.0 if cid in {f["case_id"] for f in failed_cases} else 1.0 for cid in case_ids},
         accuracy=accuracy,
         mismatches=mismatches or {},
+        case_prompts=case_prompts,
     )
     report_path = os.path.join(evals_dir, f"{model_client['name']}-eval-report.yml")
     with open(report_path, "w", encoding="utf-8") as f:
@@ -285,6 +285,8 @@ def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), 
                 # The dashboard's per-case detail reads this from the report, not from history:
                 # `dashboard_data.read_latest_mismatches` globs the report files.
                 "mismatches": mismatches or {},
+                # Case id -> hash of the exact prompt it was sent, in `_prompts/`.
+                "case_prompts": case_prompts or {},
             },
             f,
             sort_keys=False,
@@ -331,6 +333,9 @@ async def test_provider_comparison(load_eval_cases):
     results = await asyncio.gather(*[_run_provider(c, load_eval_cases) for c in clients], return_exceptions=True)
 
     evals_dir = "tests/prompts/tests/evals/relevant_page"
+    case_prompts = archive_case_prompts(
+        evals_dir, {case["id"]: prompt_for_case(case["expected"]) for case in load_eval_cases}
+    )
     comparison = {}
     failures = {}
     all_failed: list[dict] = []
@@ -342,7 +347,7 @@ async def test_provider_comparison(load_eval_cases):
             continue
         client, failed_cases, ocdid, elapsed_seconds, dispositions, mismatches = result
         cost_summary = _write_report(client, failed_cases, elapsed_seconds, dispositions,
-                                     [c['id'] for c in load_eval_cases], mismatches)
+                                     [c['id'] for c in load_eval_cases], mismatches, case_prompts)
         all_failed.extend(failed_cases)
         comparison[client["name"]] = {
             "elapsed_seconds": elapsed_seconds,

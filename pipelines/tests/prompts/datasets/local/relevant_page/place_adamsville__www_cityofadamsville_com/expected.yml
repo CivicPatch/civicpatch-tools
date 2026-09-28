@@ -1,0 +1,10 @@
+page_url: http://www.cityofadamsville.com
+jurisdiction_name: Adamsville town
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: false
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Homepage with welcome blurb, bill-pay
+    and quick links; no officials named.'

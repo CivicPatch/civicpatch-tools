@@ -1,7 +1,11 @@
 page_url: https://applevalley.org/government/meet-your-government/
 jurisdiction_name: Apple Valley town
+known_organizations:
+- Government
 generated: true
 page:
   is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: relevant.'
+  thoughts: 'Reviewed 2026-09-28, label confirmed: ''Your Elected Officials'' lists
+    Mayor Scott Nassif and four Council Members; a Town Manager also appearing does
+    not change it.'

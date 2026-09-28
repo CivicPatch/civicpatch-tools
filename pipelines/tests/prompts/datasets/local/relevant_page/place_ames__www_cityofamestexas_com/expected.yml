@@ -1,0 +1,10 @@
+page_url: https://www.cityofamestexas.com
+jurisdiction_name: Ames city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: false
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Homepage with placeholder news
+    and empty calendars; no officials named.'

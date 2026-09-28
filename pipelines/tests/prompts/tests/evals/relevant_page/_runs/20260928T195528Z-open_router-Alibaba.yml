@@ -1,0 +1,11 @@
+mismatches:
+  gatesville_ordinances:
+  - actual: true
+    expected: false
+    field: is_relevant
+    subject: page
+  jackson_mayors_office:
+  - actual: false
+    expected: true
+    field: is_relevant
+    subject: page

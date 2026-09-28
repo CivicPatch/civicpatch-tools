@@ -1,5 +1,11 @@
 page_url: https://www.eastpointemi.gov/
 jurisdiction_name: City of Eastpointe
+government_form: council_manager
+known_roles:
+- Council Member
+- Mayor
+known_organizations:
+- Council
 page:
   is_relevant: false
   relevant_urls:

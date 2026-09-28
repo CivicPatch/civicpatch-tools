@@ -1,5 +1,11 @@
 page_url: https://quitaque.us
 jurisdiction_name: Quitaque city
+government_form: council_manager
+known_roles:
+- Council Member
+- Mayor
+known_organizations:
+- Council
 page:
   is_relevant: true
   relevant_urls:

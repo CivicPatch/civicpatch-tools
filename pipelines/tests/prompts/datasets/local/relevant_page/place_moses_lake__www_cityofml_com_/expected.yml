@@ -1,0 +1,10 @@
+page_url: https://www.cityofml.com/
+jurisdiction_name: Moses Lake city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: false
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Homepage; "Mayor Swartz" appears
+    only inside an embedded Facebook news post.'

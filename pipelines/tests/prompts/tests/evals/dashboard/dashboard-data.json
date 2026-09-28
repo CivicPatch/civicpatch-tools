@@ -8183,7 +8183,48 @@
       }
      ]
     }
-   }
+   },
+   "case_inputs": {
+    "austin_city_manager_staff": {},
+    "austin_council": {},
+    "austin_district7_council_member": {},
+    "board_of_aldermen": {},
+    "coleman_council": {},
+    "golinda_mixed_city_county": {},
+    "inverted_name_format": {},
+    "jackson_mayors_office": {
+     "organization": "{\"name\": \"Office of the Mayor\", \"posts\": [\"Mayor\"]}"
+    },
+    "jackson_mayors_office_scoped_to_council": {
+     "organization": "{\"name\": \"City Council\", \"posts\": [\"Council Member District 1\", \"Council Member District 2\", \"Council Member District 3\", \"Council Member District 4\", \"Council Member District 5\", \"Council Member District 6\", \"Council Member District 7\", \"Council Member District 8\", \"Council Member District 9\"]}"
+    },
+    "la_porte_council": {},
+    "millbury_school_committee_scoped_to_select_board": {
+     "organization": "{\"name\": \"Select Board\", \"posts\": [\"Select Board Chair\", \"Select Board Vice Chair\", \"Select Board Member\"]}"
+    },
+    "mixed_current_past": {},
+    "nav_links_no_names": {},
+    "placeholder_name_council": {},
+    "raisin_township_clerk": {
+     "known_roles": "[\"Supervisor\", \"Clerk\", \"Treasurer\", \"Trustee\"]"
+    },
+    "raisin_township_supervisor": {
+     "known_roles": "[\"Supervisor\", \"Clerk\", \"Treasurer\", \"Trustee\"]"
+    },
+    "redundant_place_role": {},
+    "seattle_council_pick_list_missing_president": {
+     "organization": "{\"name\": \"City Council\", \"posts\": [\"Council Member District 1\", \"Council Member District 2\", \"Council Member District 3\", \"Council Member District 4\", \"Council Member District 5\", \"Council Member District 6\", \"Council Member District 7\", \"Council Member Position 8\", \"Council Member Position 9\"]}"
+    },
+    "seattle_council_scoped_to_mayor": {
+     "organization": "{\"name\": \"Office of the Mayor\", \"posts\": [\"Mayor\"]}"
+    },
+    "seattle_council_separate_mayor": {
+     "organization": "{\"name\": \"City Council\", \"posts\": [\"Council Member District 1\", \"Council Member District 2\", \"Council Member District 3\", \"Council Member District 4\", \"Council Member District 5\", \"Council Member District 6\", \"Council Member District 7\", \"Council Member Position 8\", \"Council Member Position 9\", \"Council President\"]}"
+    },
+    "vacant_positions_council": {}
+   },
+   "prompts_dir": "../municipal_officials/_prompts",
+   "latest_case_prompts": {}
   },
   {
    "eval_name": "relevant_page",
@@ -8194,46 +8235,45 @@
      "blocked": true,
      "gate_failures": [],
      "failed_case_ids": [
-      "gatesville_ordinances"
+      "gatesville_ordinance_vote_records",
+      "place_omak__www_omakcity_com_directory_aspx_did_19",
+      "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462"
      ],
-     "cases_passed": 16,
-     "cases_total": 17,
+     "cases_passed": 54,
+     "cases_total": 57,
      "priority_scores": {},
-     "cost_usd": 0.0166680456,
-     "ran_at": "2026-09-18T02:38:43+00:00"
+     "cost_usd": 0.0558937048,
+     "ran_at": "2026-09-28T21:35:59+00:00"
     },
     {
      "provider": "AtlasCloud",
-     "blocked": false,
+     "blocked": true,
      "gate_failures": [],
-     "failed_case_ids": [],
-     "cases_passed": 17,
-     "cases_total": 17,
+     "failed_case_ids": [
+      "gatesville_ordinance_vote_records",
+      "place_omak__www_omakcity_com_directory_aspx_did_19"
+     ],
+     "cases_passed": 55,
+     "cases_total": 57,
      "priority_scores": {},
-     "cost_usd": 0.016810864,
-     "ran_at": "2026-09-18T02:38:43+00:00"
+     "cost_usd": 0.03169261228,
+     "ran_at": "2026-09-28T21:35:59+00:00"
     },
     {
      "provider": "DigitalOcean",
-     "blocked": false,
+     "blocked": true,
      "gate_failures": [],
-     "failed_case_ids": [],
-     "cases_passed": 17,
-     "cases_total": 17,
+     "failed_case_ids": [
+      "gatesville_ordinance_vote_records",
+      "place_omak__www_omakcity_com_directory_aspx_did_19",
+      "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462",
+      "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir"
+     ],
+     "cases_passed": 53,
+     "cases_total": 57,
      "priority_scores": {},
-     "cost_usd": 0.008820784,
-     "ran_at": "2026-09-18T02:38:43+00:00"
-    },
-    {
-     "provider": "NextBit",
-     "blocked": false,
-     "gate_failures": [],
-     "failed_case_ids": [],
-     "cases_passed": 17,
-     "cases_total": 17,
-     "priority_scores": {},
-     "cost_usd": 0.01810899,
-     "ran_at": "2026-09-18T02:38:43+00:00"
+     "cost_usd": 0.029124032,
+     "ran_at": "2026-09-28T21:35:59+00:00"
     }
    ],
    "matrix": {
@@ -8253,9 +8293,61 @@
      {
       "model": "deepseek/deepseek-v4-flash",
       "provider": "NextBit"
+     },
+     {
+      "model": "unknown model",
+      "provider": "NextBit"
      }
     ],
     "rows": [
+     {
+      "prompt_sha256": "739ea2221794",
+      "cells": [
+       {
+        "mean_score": 0.9628482972136223,
+        "run_count": 3,
+        "mean_cost_usd": 0.0288942056
+       },
+       {
+        "mean_score": 0.9686962504299965,
+        "run_count": 3,
+        "mean_cost_usd": 0.016890593159999998
+       },
+       {
+        "mean_score": 0.9766081871345029,
+        "run_count": 3,
+        "mean_cost_usd": 0.015067108000000001
+       },
+       null,
+       null
+      ]
+     },
+     {
+      "prompt_sha256": "6fba07669e1b",
+      "cells": [
+       {
+        "mean_score": 0.8947368421052632,
+        "run_count": 1,
+        "mean_cost_usd": 0.0178700256
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.01149488032
+       },
+       {
+        "mean_score": 0.8947368421052632,
+        "run_count": 1,
+        "mean_cost_usd": 0.009440144
+       },
+       null,
+       {
+        "mean_score": 0.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.0
+       }
+      ]
+     },
      {
       "prompt_sha256": "cb8e073a37f3",
       "cells": [
@@ -8278,7 +8370,8 @@
         "mean_score": 1.0,
         "run_count": 1,
         "mean_cost_usd": 0.01810899
-       }
+       },
+       null
       ]
      },
      {
@@ -8303,7 +8396,8 @@
         "mean_score": 0.9607843137254902,
         "run_count": 3,
         "mean_cost_usd": 0.012139266666666666
-       }
+       },
+       null
       ]
      },
      {
@@ -8328,7 +8422,8 @@
         "mean_score": 0.8823529411764706,
         "run_count": 1,
         "mean_cost_usd": 0.01767064
-       }
+       },
+       null
       ]
      },
      {
@@ -8353,7 +8448,8 @@
         "mean_score": 0.9375,
         "run_count": 1,
         "mean_cost_usd": 0.01825143
-       }
+       },
+       null
       ]
      },
      {
@@ -8370,73 +8466,88 @@
         "run_count": 5,
         "mean_cost_usd": 0.0063238992
        },
+       null,
        null
       ]
      }
     ]
    },
    "comparison": {
-    "default_baseline_index": 3,
-    "default_candidate_index": 2,
+    "default_baseline_index": 2,
+    "default_candidate_index": 1,
     "pairs": [
      {
       "baseline_index": 0,
       "candidate_index": 1,
-      "prompt_sha256": "cb8e073a37f3",
+      "prompt_sha256": "739ea2221794",
       "baseline": {
-       "mean_score": 0.9411764705882353,
-       "run_count": 1,
-       "mean_cost_usd": 0.0166680456
+       "mean_score": 0.9628482972136223,
+       "run_count": 3,
+       "mean_cost_usd": 0.0288942056
       },
       "candidate": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.016810864
+       "mean_score": 0.9686962504299965,
+       "run_count": 3,
+       "mean_cost_usd": 0.016890593159999998
       },
       "regressed": [],
       "improved": [
        {
-        "case_id": "gatesville_ordinances",
+        "case_id": "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462",
         "baseline_score": 0.0,
         "candidate_score": 1.0
        }
       ],
-      "unchanged_count": 16,
+      "unchanged_count": 56,
       "has_value_detail": true,
-      "newly_wrong": [],
+      "newly_wrong": [
+       {
+        "case_id": "quitaque_council",
+        "subject": "https://quitaque.us/cityofficials.html",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       }
+      ],
       "fixed": [
        {
-        "case_id": "gatesville_ordinances",
+        "case_id": "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462",
         "subject": "page",
         "field": "is_relevant",
-        "expected": false,
-        "actual": true
+        "expected": true,
+        "actual": false
        }
       ]
      },
      {
       "baseline_index": 0,
       "candidate_index": 2,
-      "prompt_sha256": "cb8e073a37f3",
+      "prompt_sha256": "739ea2221794",
       "baseline": {
-       "mean_score": 0.9411764705882353,
-       "run_count": 1,
-       "mean_cost_usd": 0.0166680456
+       "mean_score": 0.9628482972136223,
+       "run_count": 3,
+       "mean_cost_usd": 0.0288942056
       },
       "candidate": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.008820784
+       "mean_score": 0.9766081871345029,
+       "run_count": 3,
+       "mean_cost_usd": 0.015067108000000001
       },
-      "regressed": [],
-      "improved": [
+      "regressed": [
        {
-        "case_id": "gatesville_ordinances",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
+        "case_id": "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
        }
       ],
-      "unchanged_count": 16,
+      "improved": [
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "baseline_score": 0.3333333333333333,
+        "candidate_score": 0.6666666666666666
+       }
+      ],
+      "unchanged_count": 55,
       "has_value_detail": true,
       "newly_wrong": [
        {
@@ -8447,6 +8558,13 @@
         "actual": "—"
        },
        {
+        "case_id": "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": true,
+        "actual": false
+       },
+       {
         "case_id": "san_saba_airport_advisory_irrelevant",
         "subject": "https://sansabatexas.com/city-hall/",
         "field": "relevant_urls",
@@ -8454,15 +8572,7 @@
         "actual": "—"
        }
       ],
-      "fixed": [
-       {
-        "case_id": "gatesville_ordinances",
-        "subject": "page",
-        "field": "is_relevant",
-        "expected": false,
-        "actual": true
-       }
-      ]
+      "fixed": []
      },
      {
       "baseline_index": 0,
@@ -8511,61 +8621,342 @@
         "field": "is_relevant",
         "expected": false,
         "actual": true
+       }
+      ]
+     },
+     {
+      "baseline_index": 0,
+      "candidate_index": 4,
+      "prompt_sha256": "6fba07669e1b",
+      "baseline": {
+       "mean_score": 0.8947368421052632,
+       "run_count": 1,
+       "mean_cost_usd": 0.0178700256
+      },
+      "candidate": {
+       "mean_score": 0.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.0
+      },
+      "regressed": [
+       {
+        "case_id": "austin_city_manager_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "beeville_water_supply_district_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "castroville_airport_board_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "dish_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "eastpointe_home",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "ellago_mayor_history_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "mikado_township_home",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "millbury_board_of_selectmen",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "millbury_school_committee_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "olton_newslist_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "quitaque_council",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "raisin_township_clerk",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "raisin_township_supervisor",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "san_antonio",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [],
+      "unchanged_count": 2,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "austin_city_manager_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "beeville_water_supply_district_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "castroville_airport_board_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "dish_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "eastpointe_home",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "ellago_mayor_history_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "gatesville_ordinances",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "mikado_township_home",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "millbury_board_of_selectmen",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "millbury_school_committee_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "olton_newslist_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "quitaque_council",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "raisin_township_clerk",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "raisin_township_supervisor",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "san_antonio",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       }
+      ],
+      "fixed": [
+       {
+        "case_id": "gatesville_ordinances",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": false,
+        "actual": true
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": true,
+        "actual": false
        }
       ]
      },
      {
       "baseline_index": 1,
       "candidate_index": 0,
-      "prompt_sha256": "cb8e073a37f3",
+      "prompt_sha256": "739ea2221794",
       "baseline": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.016810864
+       "mean_score": 0.9686962504299965,
+       "run_count": 3,
+       "mean_cost_usd": 0.016890593159999998
       },
       "candidate": {
-       "mean_score": 0.9411764705882353,
-       "run_count": 1,
-       "mean_cost_usd": 0.0166680456
+       "mean_score": 0.9628482972136223,
+       "run_count": 3,
+       "mean_cost_usd": 0.0288942056
       },
       "regressed": [
        {
-        "case_id": "gatesville_ordinances",
+        "case_id": "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462",
         "baseline_score": 1.0,
         "candidate_score": 0.0
        }
       ],
       "improved": [],
-      "unchanged_count": 16,
+      "unchanged_count": 56,
       "has_value_detail": true,
       "newly_wrong": [
        {
-        "case_id": "gatesville_ordinances",
+        "case_id": "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462",
         "subject": "page",
         "field": "is_relevant",
-        "expected": false,
-        "actual": true
+        "expected": true,
+        "actual": false
        }
       ],
-      "fixed": []
+      "fixed": [
+       {
+        "case_id": "quitaque_council",
+        "subject": "https://quitaque.us/cityofficials.html",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       }
+      ]
      },
      {
       "baseline_index": 1,
       "candidate_index": 2,
-      "prompt_sha256": "cb8e073a37f3",
+      "prompt_sha256": "739ea2221794",
       "baseline": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.016810864
+       "mean_score": 0.9686962504299965,
+       "run_count": 3,
+       "mean_cost_usd": 0.016890593159999998
       },
       "candidate": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.008820784
+       "mean_score": 0.9766081871345029,
+       "run_count": 3,
+       "mean_cost_usd": 0.015067108000000001
       },
-      "regressed": [],
-      "improved": [],
-      "unchanged_count": 17,
+      "regressed": [
+       {
+        "case_id": "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "baseline_score": 0.3333333333333333,
+        "candidate_score": 0.6666666666666666
+       }
+      ],
+      "unchanged_count": 54,
       "has_value_detail": true,
       "newly_wrong": [
        {
@@ -8576,6 +8967,20 @@
         "actual": "—"
        },
        {
+        "case_id": "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": true,
+        "actual": false
+       },
+       {
+        "case_id": "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": true,
+        "actual": false
+       },
+       {
         "case_id": "san_saba_airport_advisory_irrelevant",
         "subject": "https://sansabatexas.com/city-hall/",
         "field": "relevant_urls",
@@ -8583,7 +8988,15 @@
         "actual": "—"
        }
       ],
-      "fixed": []
+      "fixed": [
+       {
+        "case_id": "quitaque_council",
+        "subject": "https://quitaque.us/cityofficials.html",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       }
+      ]
      },
      {
       "baseline_index": 1,
@@ -8620,40 +9033,297 @@
        }
       ],
       "fixed": []
+     },
+     {
+      "baseline_index": 1,
+      "candidate_index": 4,
+      "prompt_sha256": "6fba07669e1b",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.01149488032
+      },
+      "candidate": {
+       "mean_score": 0.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.0
+      },
+      "regressed": [
+       {
+        "case_id": "austin_city_manager_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "beeville_water_supply_district_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "castroville_airport_board_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "dish_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "eastpointe_home",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "ellago_mayor_history_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "gatesville_ordinances",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "mikado_township_home",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "millbury_board_of_selectmen",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "millbury_school_committee_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "olton_newslist_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "quitaque_council",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "raisin_township_clerk",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "raisin_township_supervisor",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "san_antonio",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [],
+      "unchanged_count": 0,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "austin_city_manager_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "beeville_water_supply_district_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "castroville_airport_board_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "dish_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "eastpointe_home",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "ellago_mayor_history_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "gatesville_ordinances",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "mikado_township_home",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "millbury_board_of_selectmen",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "millbury_school_committee_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "olton_newslist_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "quitaque_council",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "raisin_township_clerk",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "raisin_township_supervisor",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "san_antonio",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       }
+      ],
+      "fixed": [
+       {
+        "case_id": "quitaque_council",
+        "subject": "https://quitaque.us/cityofficials.html",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       }
+      ]
      },
      {
       "baseline_index": 2,
       "candidate_index": 0,
-      "prompt_sha256": "cb8e073a37f3",
+      "prompt_sha256": "739ea2221794",
       "baseline": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.008820784
+       "mean_score": 0.9766081871345029,
+       "run_count": 3,
+       "mean_cost_usd": 0.015067108000000001
       },
       "candidate": {
-       "mean_score": 0.9411764705882353,
-       "run_count": 1,
-       "mean_cost_usd": 0.0166680456
+       "mean_score": 0.9628482972136223,
+       "run_count": 3,
+       "mean_cost_usd": 0.0288942056
       },
       "regressed": [
        {
-        "case_id": "gatesville_ordinances",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
+        "case_id": "gatesville_ordinance_vote_records",
+        "baseline_score": 0.6666666666666666,
+        "candidate_score": 0.3333333333333333
        }
       ],
-      "improved": [],
-      "unchanged_count": 16,
-      "has_value_detail": true,
-      "newly_wrong": [
+      "improved": [
        {
-        "case_id": "gatesville_ordinances",
-        "subject": "page",
-        "field": "is_relevant",
-        "expected": false,
-        "actual": true
+        "case_id": "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
        }
       ],
+      "unchanged_count": 55,
+      "has_value_detail": true,
+      "newly_wrong": [],
       "fixed": [
        {
         "case_id": "gatesville_ordinance_vote_records",
@@ -8661,6 +9331,13 @@
         "field": "relevant_urls",
         "expected": "present",
         "actual": "—"
+       },
+       {
+        "case_id": "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": true,
+        "actual": false
        },
        {
         "case_id": "san_saba_airport_advisory_irrelevant",
@@ -8674,22 +9351,47 @@
      {
       "baseline_index": 2,
       "candidate_index": 1,
-      "prompt_sha256": "cb8e073a37f3",
+      "prompt_sha256": "739ea2221794",
       "baseline": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.008820784
+       "mean_score": 0.9766081871345029,
+       "run_count": 3,
+       "mean_cost_usd": 0.015067108000000001
       },
       "candidate": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.016810864
+       "mean_score": 0.9686962504299965,
+       "run_count": 3,
+       "mean_cost_usd": 0.016890593159999998
       },
-      "regressed": [],
-      "improved": [],
-      "unchanged_count": 17,
+      "regressed": [
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "baseline_score": 0.6666666666666666,
+        "candidate_score": 0.3333333333333333
+       }
+      ],
+      "improved": [
+       {
+        "case_id": "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 54,
       "has_value_detail": true,
-      "newly_wrong": [],
+      "newly_wrong": [
+       {
+        "case_id": "quitaque_council",
+        "subject": "https://quitaque.us/cityofficials.html",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       }
+      ],
       "fixed": [
        {
         "case_id": "gatesville_ordinance_vote_records",
@@ -8697,6 +9399,20 @@
         "field": "relevant_urls",
         "expected": "present",
         "actual": "—"
+       },
+       {
+        "case_id": "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": true,
+        "actual": false
+       },
+       {
+        "case_id": "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": true,
+        "actual": false
        },
        {
         "case_id": "san_saba_airport_advisory_irrelevant",
@@ -8748,6 +9464,283 @@
         "field": "relevant_urls",
         "expected": "present",
         "actual": "—"
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "subject": "https://sansabatexas.com/city-hall/",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       }
+      ]
+     },
+     {
+      "baseline_index": 2,
+      "candidate_index": 4,
+      "prompt_sha256": "6fba07669e1b",
+      "baseline": {
+       "mean_score": 0.8947368421052632,
+       "run_count": 1,
+       "mean_cost_usd": 0.009440144
+      },
+      "candidate": {
+       "mean_score": 0.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.0
+      },
+      "regressed": [
+       {
+        "case_id": "austin_city_manager_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "beeville_water_supply_district_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "castroville_airport_board_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "dish_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "eastpointe_home",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "ellago_mayor_history_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "gatesville_ordinances",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "mikado_township_home",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "millbury_board_of_selectmen",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "olton_newslist_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "quitaque_council",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "raisin_township_clerk",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "raisin_township_supervisor",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "san_antonio",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [],
+      "unchanged_count": 2,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "austin_city_manager_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "beeville_water_supply_district_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "castroville_airport_board_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "dish_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "eastpointe_home",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "ellago_mayor_history_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "gatesville_ordinances",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "mikado_township_home",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "millbury_board_of_selectmen",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "millbury_school_committee_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "olton_newslist_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "quitaque_council",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "raisin_township_clerk",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "raisin_township_supervisor",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "san_antonio",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       }
+      ],
+      "fixed": [
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "https://gatesvilletx.com/government/index.php",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": true,
+        "actual": false
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "https://www.jacksontn.gov/government/citycouncil",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       },
+       {
+        "case_id": "millbury_school_committee_irrelevant",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": false,
+        "actual": true
        },
        {
         "case_id": "san_saba_airport_advisory_irrelevant",
@@ -8894,6 +9887,824 @@
         "actual": "—"
        }
       ]
+     },
+     {
+      "baseline_index": 3,
+      "candidate_index": 4,
+      "prompt_sha256": null,
+      "baseline": null,
+      "candidate": null,
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 0,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 4,
+      "candidate_index": 0,
+      "prompt_sha256": "6fba07669e1b",
+      "baseline": {
+       "mean_score": 0.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.0
+      },
+      "candidate": {
+       "mean_score": 0.8947368421052632,
+       "run_count": 1,
+       "mean_cost_usd": 0.0178700256
+      },
+      "regressed": [],
+      "improved": [
+       {
+        "case_id": "austin_city_manager_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "beeville_water_supply_district_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "castroville_airport_board_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "dish_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "eastpointe_home",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "ellago_mayor_history_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "mikado_township_home",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "millbury_board_of_selectmen",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "millbury_school_committee_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "olton_newslist_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "quitaque_council",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "raisin_township_clerk",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "raisin_township_supervisor",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "san_antonio",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 2,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "gatesville_ordinances",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": false,
+        "actual": true
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": true,
+        "actual": false
+       }
+      ],
+      "fixed": [
+       {
+        "case_id": "austin_city_manager_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "beeville_water_supply_district_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "castroville_airport_board_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "dish_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "eastpointe_home",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "ellago_mayor_history_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "gatesville_ordinances",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "mikado_township_home",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "millbury_board_of_selectmen",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "millbury_school_committee_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "olton_newslist_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "quitaque_council",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "raisin_township_clerk",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "raisin_township_supervisor",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "san_antonio",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       }
+      ]
+     },
+     {
+      "baseline_index": 4,
+      "candidate_index": 1,
+      "prompt_sha256": "6fba07669e1b",
+      "baseline": {
+       "mean_score": 0.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.0
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.01149488032
+      },
+      "regressed": [],
+      "improved": [
+       {
+        "case_id": "austin_city_manager_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "beeville_water_supply_district_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "castroville_airport_board_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "dish_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "eastpointe_home",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "ellago_mayor_history_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "gatesville_ordinances",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "mikado_township_home",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "millbury_board_of_selectmen",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "millbury_school_committee_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "olton_newslist_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "quitaque_council",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "raisin_township_clerk",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "raisin_township_supervisor",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "san_antonio",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 0,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "quitaque_council",
+        "subject": "https://quitaque.us/cityofficials.html",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       }
+      ],
+      "fixed": [
+       {
+        "case_id": "austin_city_manager_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "beeville_water_supply_district_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "castroville_airport_board_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "dish_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "eastpointe_home",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "ellago_mayor_history_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "gatesville_ordinances",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "mikado_township_home",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "millbury_board_of_selectmen",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "millbury_school_committee_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "olton_newslist_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "quitaque_council",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "raisin_township_clerk",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "raisin_township_supervisor",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "san_antonio",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       }
+      ]
+     },
+     {
+      "baseline_index": 4,
+      "candidate_index": 2,
+      "prompt_sha256": "6fba07669e1b",
+      "baseline": {
+       "mean_score": 0.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.0
+      },
+      "candidate": {
+       "mean_score": 0.8947368421052632,
+       "run_count": 1,
+       "mean_cost_usd": 0.009440144
+      },
+      "regressed": [],
+      "improved": [
+       {
+        "case_id": "austin_city_manager_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "beeville_water_supply_district_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "castroville_airport_board_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "dish_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "eastpointe_home",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "ellago_mayor_history_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "gatesville_ordinances",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "mikado_township_home",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "millbury_board_of_selectmen",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "olton_newslist_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "quitaque_council",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "raisin_township_clerk",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "raisin_township_supervisor",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "san_antonio",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 2,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "https://gatesvilletx.com/government/index.php",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": true,
+        "actual": false
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "https://www.jacksontn.gov/government/citycouncil",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       },
+       {
+        "case_id": "millbury_school_committee_irrelevant",
+        "subject": "page",
+        "field": "is_relevant",
+        "expected": false,
+        "actual": true
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "subject": "https://sansabatexas.com/city-hall/",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       }
+      ],
+      "fixed": [
+       {
+        "case_id": "austin_city_manager_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "beeville_water_supply_district_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "castroville_airport_board_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "dish_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "eastpointe_home",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "ellago_mayor_history_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "gatesville_ordinance_vote_records",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "gatesville_ordinances",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "mcgregor_city_announcement_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "mikado_township_home",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "millbury_board_of_selectmen",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "millbury_school_committee_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "olton_newslist_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "quitaque_council",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "raisin_township_clerk",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "raisin_township_supervisor",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "san_antonio",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       },
+       {
+        "case_id": "san_saba_airport_advisory_irrelevant",
+        "subject": "call",
+        "field": "error",
+        "expected": "an answer",
+        "actual": "HTTPError('404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions')"
+       }
+      ]
+     },
+     {
+      "baseline_index": 4,
+      "candidate_index": 3,
+      "prompt_sha256": null,
+      "baseline": null,
+      "candidate": null,
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 0,
+      "has_value_detail": false,
+      "newly_wrong": [],
+      "fixed": []
      }
     ]
    },
@@ -8942,6 +10753,26 @@
           "timestamp": "2026-09-18T02:38:43+00:00",
           "prompt_sha256": "cb8e073a37f3",
           "score": 0.9411764705882353
+         },
+         {
+          "timestamp": "2026-09-28T19:55:28+00:00",
+          "prompt_sha256": "6fba07669e1b",
+          "score": 0.8947368421052632
+         },
+         {
+          "timestamp": "2026-09-28T20:44:56+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 0.9411764705882353
+         },
+         {
+          "timestamp": "2026-09-28T20:58:51+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-28T21:35:59+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 0.9473684210526315
          }
         ]
        },
@@ -9002,6 +10833,26 @@
           "timestamp": "2026-09-18T02:38:43+00:00",
           "prompt_sha256": "cb8e073a37f3",
           "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-28T19:55:28+00:00",
+          "prompt_sha256": "6fba07669e1b",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-28T20:44:56+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-28T20:58:51+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 0.9411764705882353
+         },
+         {
+          "timestamp": "2026-09-28T21:35:59+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 0.9649122807017544
          }
         ]
        },
@@ -9062,6 +10913,26 @@
           "timestamp": "2026-09-18T02:38:43+00:00",
           "prompt_sha256": "cb8e073a37f3",
           "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-28T19:55:28+00:00",
+          "prompt_sha256": "6fba07669e1b",
+          "score": 0.8947368421052632
+         },
+         {
+          "timestamp": "2026-09-28T20:44:55+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-28T20:58:51+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-28T21:35:59+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 0.9298245614035088
          }
         ]
        },
@@ -9097,6 +10968,11 @@
           "timestamp": "2026-09-18T02:38:43+00:00",
           "prompt_sha256": "cb8e073a37f3",
           "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-28T19:55:28+00:00",
+          "prompt_sha256": "6fba07669e1b",
+          "score": 0.0
          }
         ]
        }
@@ -9138,6 +11014,26 @@
          {
           "timestamp": "2026-09-18T02:38:43+00:00",
           "prompt_sha256": "cb8e073a37f3",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-28T19:55:28+00:00",
+          "prompt_sha256": "6fba07669e1b",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-28T20:44:56+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-28T20:58:51+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-28T21:35:59+00:00",
+          "prompt_sha256": "739ea2221794",
           "score": 1.0
          }
         ]
@@ -9199,6 +11095,26 @@
           "timestamp": "2026-09-18T02:38:43+00:00",
           "prompt_sha256": "cb8e073a37f3",
           "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-28T19:55:28+00:00",
+          "prompt_sha256": "6fba07669e1b",
+          "score": 0.9841269841269841
+         },
+         {
+          "timestamp": "2026-09-28T20:44:56+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 0.9803921568627451
+         },
+         {
+          "timestamp": "2026-09-28T20:58:51+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 0.9803921568627451
+         },
+         {
+          "timestamp": "2026-09-28T21:35:59+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 0.9803921568627451
          }
         ]
        },
@@ -9259,6 +11175,26 @@
           "timestamp": "2026-09-18T02:38:43+00:00",
           "prompt_sha256": "cb8e073a37f3",
           "score": 0.9642857142857143
+         },
+         {
+          "timestamp": "2026-09-28T19:55:28+00:00",
+          "prompt_sha256": "6fba07669e1b",
+          "score": 0.9508196721311475
+         },
+         {
+          "timestamp": "2026-09-28T20:44:55+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 0.9387755102040817
+         },
+         {
+          "timestamp": "2026-09-28T20:58:51+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 0.96
+         },
+         {
+          "timestamp": "2026-09-28T21:35:59+00:00",
+          "prompt_sha256": "739ea2221794",
+          "score": 0.96
          }
         ]
        },
@@ -9294,15 +11230,213 @@
           "timestamp": "2026-09-18T02:38:43+00:00",
           "prompt_sha256": "cb8e073a37f3",
           "score": 0.9642857142857143
+         },
+         {
+          "timestamp": "2026-09-28T19:55:28+00:00",
+          "prompt_sha256": "6fba07669e1b",
+          "score": 0.0
          }
         ]
        }
       ]
      }
     ],
-    "run_count": 34
+    "run_count": 47
    },
    "prompt_versions": [
+    {
+     "prompt_sha256": "739ea2221794",
+     "text": "\n    Decide two things about the page content provided: whether it presents the **currently\n    serving main officials** of the target municipality, and which of its links a crawler should\n    follow to find more of them.\n\n    Main officials hold this municipality's known elected roles, which make up its\n    **primary governing body**: <known roles, per case>.\n\n    Page URL: <page url, per case>\n    Target jurisdiction: <jurisdiction, per case>\n    Government form: <government form, per case>\n    Governing bodies of this municipality: <governing bodies, per case>\n\n    The URL tells you which links share the municipality's domain. It tells you nothing about\n    `is_relevant`, which comes from the page content alone.\n\n    ---\n\n    ## is_relevant\n\n    True when the page exists to show who currently holds a primary governing role: a roster, a\n    directory, or one official's own page. Ask \"does this page exist to show who holds office\n    right now?\" and answer on the page's own heading and body.\n\n    Also true, and these are the ones most often got wrong:\n    - The heading names a known elected role and the page gives a person's name for it. A\n      site-wide navigation menu is not the page's purpose however much of the content it fills,\n      and a non-voting deputy appearing alongside does not change the answer.\n    - The page lists the municipality's own officials and also lists appointed staff. A small\n      town's \"City Officials\" page naming the Mayor and council members alongside the City\n      Manager, Water Supervisor and Fire Chief is the roster. Judge it by whether the governing\n      body's members are presented as such, not by who else shares the page.\n    - A page about a body named under \"Governing bodies of this municipality\" above, whatever its\n      URL or site section suggests. An Office of the Mayor page filed beside the departments is\n      still the mayor's office.\n\n    When a page names a person who holds one of the roles above and you cannot tell whether it is\n    a roster or a department landing page, answer true. The two mistakes do not cost the same: a\n    page wrongly called relevant costs one extraction that returns nobody, while a page wrongly\n    called irrelevant is never read again and its officials are never found.\n\n    False for these, whoever is named in them:\n    - Auxiliary committees, boards and commissions (Planning and Zoning, Parks and Recreation,\n      Airport Advisory), and pages about department heads or other non-elected staff. A Mayor or\n      Alderman sitting on such a body does not make its page relevant.\n    - Special districts, utility boards and other sub-municipal entities (Water Supply District,\n      Fire District, Library Board), which are separate legal entities. A structured roster of\n      their board members is still not this municipality's governing body.\n    - News, announcements and press releases, even a post naming newly elected members by ward.\n    - Meeting minutes, vote records, ordinances and legislative archives, even titled \"City\n      Council\" or living at a city council URL. Read the body, not the title.\n    - Historical rosters (\"Past Mayors\", \"Mayor History\"), even where the most recent entry is\n      the current holder.\n\n    ---\n\n    ## relevant_urls\n\n    These feed the crawler, so populate them whether or not the page itself is relevant: a page\n    already listing officials still links to more of them. Judge each link by its **anchor text\n    and surrounding context**, not by URL structure, since municipal CMS platforms use opaque\n    numeric paths (e.g. /179/Township-Board) where the slug is the only signal.\n\n    Include every link whose anchor text or context refers to:\n    - a governing body or elected role (\"Township Board\", \"City Council\", \"Mayor\", \"City\n      Officials\", \"Board of Trustees\", \"Aldermen\", \"Commissioners\", \"Select Board\")\n    - a government directory or index page likely to link onward to governance pages\n      (\"Government\", \"City Hall\", \"Our Government\", \"Administration\")\n    - a staff or personnel directory that may list elected officials (\"Staff Directory\",\n      \"Directory\", \"Elected Officials\")\n\n    These are not candidates to weigh against each other. A qualifying link left out is the worst\n    outcome here, because the crawler cannot reach a page it was never told about — include every\n    one, however few qualify and however much navigation surrounds them. A small site's menu may\n    offer exactly one, and returning nothing because one felt too few is the failure to avoid.\n    Stop at 20; beyond that you are including noise.\n\n    Leave out municipal services (library, parks, fire, utilities), individual news stories,\n    press releases and event pages, and non-municipal external domains. Copy each URL exactly as\n    it appears in the content, without normalizing or rewriting any part of it, and do not\n    include the current page's own URL.\n\n    ---\n\n    ## Output Format\n\n    Return a JSON object with the following fields:\n    {\n        \"relevant_urls\": [\"https://example.com/council\", \"https://example.com/directory/departments\"],\n        \"is_relevant\": true/false,\n    }\n    ",
+     "first_run_at": "2026-09-28T20:44:55+00:00",
+     "last_run_at": "2026-09-28T21:35:59+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-28T21:35:59+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "is_relevant": 0.9473684210526315,
+        "relevant_urls": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-28T21:35:59+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "is_relevant": 0.9649122807017544,
+        "relevant_urls": 0.9803921568627451
+       }
+      },
+      {
+       "timestamp": "2026-09-28T21:35:59+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "is_relevant": 0.9298245614035088,
+        "relevant_urls": 0.96
+       }
+      },
+      {
+       "timestamp": "2026-09-28T20:58:51+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-28T20:58:51+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "is_relevant": 0.9411764705882353,
+        "relevant_urls": 0.9803921568627451
+       }
+      },
+      {
+       "timestamp": "2026-09-28T20:58:51+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.96
+       }
+      },
+      {
+       "timestamp": "2026-09-28T20:44:56+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "is_relevant": 0.9411764705882353,
+        "relevant_urls": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-28T20:44:56+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.9803921568627451
+       }
+      },
+      {
+       "timestamp": "2026-09-28T20:44:55+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.9387755102040817
+       }
+      }
+     ],
+     "previous_sha256": "6fba07669e1b",
+     "diff": [
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    Main officials are the Mayor, City Council Members, Aldermen, Select Board Members,"
+      },
+      {
+       "kind": "removed",
+       "text": "-    Commissioners and others who make up the municipality's **primary governing body**."
+      },
+      {
+       "kind": "added",
+       "text": "+    Main officials hold this municipality's known elected roles, which make up its"
+      },
+      {
+       "kind": "added",
+       "text": "+    **primary governing body**: <known roles, per case>."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "context",
+       "text": "     Target jurisdiction: <jurisdiction, per case>"
+      },
+      {
+       "kind": "removed",
+       "text": "-    Government form: open town meeting (a select board or board of selectmen, with an open town meeting)"
+      },
+      {
+       "kind": "removed",
+       "text": "-    Known elected roles for this municipality: <known roles, per case>"
+      },
+      {
+       "kind": "added",
+       "text": "+    Government form: <government form, per case>"
+      },
+      {
+       "kind": "context",
+       "text": "     Governing bodies of this municipality: <governing bodies, per case>"
+      }
+     ]
+    },
+    {
+     "prompt_sha256": "6fba07669e1b",
+     "text": "\n    Decide two things about the page content provided: whether it presents the **currently\n    serving main officials** of the target municipality, and which of its links a crawler should\n    follow to find more of them.\n\n    Main officials are the Mayor, City Council Members, Aldermen, Select Board Members,\n    Commissioners and others who make up the municipality's **primary governing body**.\n\n    Page URL: <page url, per case>\n    Target jurisdiction: <jurisdiction, per case>\n    Government form: open town meeting (a select board or board of selectmen, with an open town meeting)\n    Known elected roles for this municipality: <known roles, per case>\n    Governing bodies of this municipality: <governing bodies, per case>\n\n    The URL tells you which links share the municipality's domain. It tells you nothing about\n    `is_relevant`, which comes from the page content alone.\n\n    ---\n\n    ## is_relevant\n\n    True when the page exists to show who currently holds a primary governing role: a roster, a\n    directory, or one official's own page. Ask \"does this page exist to show who holds office\n    right now?\" and answer on the page's own heading and body.\n\n    Also true, and these are the ones most often got wrong:\n    - The heading names a known elected role and the page gives a person's name for it. A\n      site-wide navigation menu is not the page's purpose however much of the content it fills,\n      and a non-voting deputy appearing alongside does not change the answer.\n    - The page lists the municipality's own officials and also lists appointed staff. A small\n      town's \"City Officials\" page naming the Mayor and council members alongside the City\n      Manager, Water Supervisor and Fire Chief is the roster. Judge it by whether the governing\n      body's members are presented as such, not by who else shares the page.\n    - A page about a body named under \"Governing bodies of this municipality\" above, whatever its\n      URL or site section suggests. An Office of the Mayor page filed beside the departments is\n      still the mayor's office.\n\n    When a page names a person who holds one of the roles above and you cannot tell whether it is\n    a roster or a department landing page, answer true. The two mistakes do not cost the same: a\n    page wrongly called relevant costs one extraction that returns nobody, while a page wrongly\n    called irrelevant is never read again and its officials are never found.\n\n    False for these, whoever is named in them:\n    - Auxiliary committees, boards and commissions (Planning and Zoning, Parks and Recreation,\n      Airport Advisory), and pages about department heads or other non-elected staff. A Mayor or\n      Alderman sitting on such a body does not make its page relevant.\n    - Special districts, utility boards and other sub-municipal entities (Water Supply District,\n      Fire District, Library Board), which are separate legal entities. A structured roster of\n      their board members is still not this municipality's governing body.\n    - News, announcements and press releases, even a post naming newly elected members by ward.\n    - Meeting minutes, vote records, ordinances and legislative archives, even titled \"City\n      Council\" or living at a city council URL. Read the body, not the title.\n    - Historical rosters (\"Past Mayors\", \"Mayor History\"), even where the most recent entry is\n      the current holder.\n\n    ---\n\n    ## relevant_urls\n\n    These feed the crawler, so populate them whether or not the page itself is relevant: a page\n    already listing officials still links to more of them. Judge each link by its **anchor text\n    and surrounding context**, not by URL structure, since municipal CMS platforms use opaque\n    numeric paths (e.g. /179/Township-Board) where the slug is the only signal.\n\n    Include every link whose anchor text or context refers to:\n    - a governing body or elected role (\"Township Board\", \"City Council\", \"Mayor\", \"City\n      Officials\", \"Board of Trustees\", \"Aldermen\", \"Commissioners\", \"Select Board\")\n    - a government directory or index page likely to link onward to governance pages\n      (\"Government\", \"City Hall\", \"Our Government\", \"Administration\")\n    - a staff or personnel directory that may list elected officials (\"Staff Directory\",\n      \"Directory\", \"Elected Officials\")\n\n    These are not candidates to weigh against each other. A qualifying link left out is the worst\n    outcome here, because the crawler cannot reach a page it was never told about — include every\n    one, however few qualify and however much navigation surrounds them. A small site's menu may\n    offer exactly one, and returning nothing because one felt too few is the failure to avoid.\n    Stop at 20; beyond that you are including noise.\n\n    Leave out municipal services (library, parks, fire, utilities), individual news stories,\n    press releases and event pages, and non-municipal external domains. Copy each URL exactly as\n    it appears in the content, without normalizing or rewriting any part of it, and do not\n    include the current page's own URL.\n\n    ---\n\n    ## Output Format\n\n    Return a JSON object with the following fields:\n    {\n        \"relevant_urls\": [\"https://example.com/council\", \"https://example.com/directory/departments\"],\n        \"is_relevant\": true/false,\n    }\n    ",
+     "first_run_at": "2026-09-28T19:55:28+00:00",
+     "last_run_at": "2026-09-28T19:55:28+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean",
+      "NextBit"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-28T19:55:28+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "is_relevant": 0.8947368421052632,
+        "relevant_urls": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-28T19:55:28+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 0.9841269841269841
+       }
+      },
+      {
+       "timestamp": "2026-09-28T19:55:28+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "is_relevant": 0.8947368421052632,
+        "relevant_urls": 0.9508196721311475
+       }
+      },
+      {
+       "timestamp": "2026-09-28T19:55:28+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "is_relevant": 0.0,
+        "relevant_urls": 0.0
+       }
+      }
+     ],
+     "previous_sha256": "cb8e073a37f3",
+     "diff": [
+      {
+       "kind": "context",
+       "text": "     Target jurisdiction: <jurisdiction, per case>"
+      },
+      {
+       "kind": "added",
+       "text": "+    Government form: open town meeting (a select board or board of selectmen, with an open town meeting)"
+      },
+      {
+       "kind": "context",
+       "text": "     Known elected roles for this municipality: <known roles, per case>"
+      }
+     ]
+    },
     {
      "prompt_sha256": "cb8e073a37f3",
      "text": "\n    Decide two things about the page content provided: whether it presents the **currently\n    serving main officials** of the target municipality, and which of its links a crawler should\n    follow to find more of them.\n\n    Main officials are the Mayor, City Council Members, Aldermen, Select Board Members,\n    Commissioners and others who make up the municipality's **primary governing body**.\n\n    Page URL: <page url, per case>\n    Target jurisdiction: <jurisdiction, per case>\n    Known elected roles for this municipality: <known roles, per case>\n    Governing bodies of this municipality: <governing bodies, per case>\n\n    The URL tells you which links share the municipality's domain. It tells you nothing about\n    `is_relevant`, which comes from the page content alone.\n\n    ---\n\n    ## is_relevant\n\n    True when the page exists to show who currently holds a primary governing role: a roster, a\n    directory, or one official's own page. Ask \"does this page exist to show who holds office\n    right now?\" and answer on the page's own heading and body.\n\n    Also true, and these are the ones most often got wrong:\n    - The heading names a known elected role and the page gives a person's name for it. A\n      site-wide navigation menu is not the page's purpose however much of the content it fills,\n      and a non-voting deputy appearing alongside does not change the answer.\n    - The page lists the municipality's own officials and also lists appointed staff. A small\n      town's \"City Officials\" page naming the Mayor and council members alongside the City\n      Manager, Water Supervisor and Fire Chief is the roster. Judge it by whether the governing\n      body's members are presented as such, not by who else shares the page.\n    - A page about a body named under \"Governing bodies of this municipality\" above, whatever its\n      URL or site section suggests. An Office of the Mayor page filed beside the departments is\n      still the mayor's office.\n\n    When a page names a person who holds one of the roles above and you cannot tell whether it is\n    a roster or a department landing page, answer true. The two mistakes do not cost the same: a\n    page wrongly called relevant costs one extraction that returns nobody, while a page wrongly\n    called irrelevant is never read again and its officials are never found.\n\n    False for these, whoever is named in them:\n    - Auxiliary committees, boards and commissions (Planning and Zoning, Parks and Recreation,\n      Airport Advisory), and pages about department heads or other non-elected staff. A Mayor or\n      Alderman sitting on such a body does not make its page relevant.\n    - Special districts, utility boards and other sub-municipal entities (Water Supply District,\n      Fire District, Library Board), which are separate legal entities. A structured roster of\n      their board members is still not this municipality's governing body.\n    - News, announcements and press releases, even a post naming newly elected members by ward.\n    - Meeting minutes, vote records, ordinances and legislative archives, even titled \"City\n      Council\" or living at a city council URL. Read the body, not the title.\n    - Historical rosters (\"Past Mayors\", \"Mayor History\"), even where the most recent entry is\n      the current holder.\n\n    ---\n\n    ## relevant_urls\n\n    These feed the crawler, so populate them whether or not the page itself is relevant: a page\n    already listing officials still links to more of them. Judge each link by its **anchor text\n    and surrounding context**, not by URL structure, since municipal CMS platforms use opaque\n    numeric paths (e.g. /179/Township-Board) where the slug is the only signal.\n\n    Include every link whose anchor text or context refers to:\n    - a governing body or elected role (\"Township Board\", \"City Council\", \"Mayor\", \"City\n      Officials\", \"Board of Trustees\", \"Aldermen\", \"Commissioners\", \"Select Board\")\n    - a government directory or index page likely to link onward to governance pages\n      (\"Government\", \"City Hall\", \"Our Government\", \"Administration\")\n    - a staff or personnel directory that may list elected officials (\"Staff Directory\",\n      \"Directory\", \"Elected Officials\")\n\n    These are not candidates to weigh against each other. A qualifying link left out is the worst\n    outcome here, because the crawler cannot reach a page it was never told about — include every\n    one, however few qualify and however much navigation surrounds them. A small site's menu may\n    offer exactly one, and returning nothing because one felt too few is the failure to avoid.\n    Stop at 20; beyond that you are including noise.\n\n    Leave out municipal services (library, parks, fire, utilities), individual news stories,\n    press releases and event pages, and non-municipal external domains. Copy each URL exactly as\n    it appears in the content, without normalizing or rewriting any part of it, and do not\n    include the current page's own URL.\n\n    ---\n\n    ## Output Format\n\n    Return a JSON object with the following fields:\n    {\n        \"relevant_urls\": [\"https://example.com/council\", \"https://example.com/directory/departments\"],\n        \"is_relevant\": true/false,\n    }\n    ",
@@ -10370,35 +12504,28 @@
     "providers": [
      "Alibaba",
      "AtlasCloud",
-     "DigitalOcean",
-     "NextBit"
+     "DigitalOcean"
     ],
     "metric_rows": [
      {
       "metric": "is_relevant",
       "cells": [
        {
-        "score": 0.9411764705882353,
+        "score": 0.9473684210526315,
+        "swing_is_wide": false,
+        "half_swing": 0.05263157894736842,
+        "missing_count": 0
+       },
+       {
+        "score": 0.9649122807017544,
         "swing_is_wide": false,
         "half_swing": 0.03125,
         "missing_count": 0
        },
        {
-        "score": 1.0,
+        "score": 0.9298245614035088,
         "swing_is_wide": false,
-        "half_swing": 0.03125,
-        "missing_count": 0
-       },
-       {
-        "score": 1.0,
-        "swing_is_wide": false,
-        "half_swing": 0.03125,
-        "missing_count": 0
-       },
-       {
-        "score": 1.0,
-        "swing_is_wide": false,
-        "half_swing": 0.02941176470588236,
+        "half_swing": 0.05263157894736842,
         "missing_count": 0
        }
       ]
@@ -10413,21 +12540,15 @@
         "missing_count": 0
        },
        {
-        "score": 1.0,
+        "score": 0.9803921568627451,
         "swing_is_wide": true,
         "half_swing": 0.2027027027027027,
-        "missing_count": 0
+        "missing_count": 1
        },
        {
-        "score": 0.9642857142857143,
+        "score": 0.96,
         "swing_is_wide": true,
         "half_swing": 0.31293349653202773,
-        "missing_count": 2
-       },
-       {
-        "score": 0.9642857142857143,
-        "swing_is_wide": true,
-        "half_swing": 0.17615957702475366,
         "missing_count": 2
        }
       ]
@@ -10436,25 +12557,19 @@
       "metric": "cases passed",
       "cells": [
        {
-        "score": 0.9411764705882353,
+        "score": 0.9473684210526315,
         "swing_is_wide": false,
         "half_swing": 0.0,
         "missing_count": null
        },
        {
-        "score": 1.0,
+        "score": 0.9649122807017544,
         "swing_is_wide": false,
         "half_swing": 0.0,
         "missing_count": null
        },
        {
-        "score": 1.0,
-        "swing_is_wide": false,
-        "half_swing": 0.0,
-        "missing_count": null
-       },
-       {
-        "score": 1.0,
+        "score": 0.9298245614035088,
         "swing_is_wide": false,
         "half_swing": 0.0,
         "missing_count": null
@@ -10470,24 +12585,14 @@
     ],
     "case_rows": [
      {
-      "case_id": "gatesville_ordinances",
-      "scores": [
-       0.0,
-       1.0,
-       1.0,
-       1.0
-      ],
-      "stability": "moves"
-     },
-     {
       "case_id": "austin_city_manager_irrelevant",
       "scores": [
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
       ],
-      "stability": "steady"
+      "stability": "moves"
      },
      {
       "case_id": "beeville_water_supply_district_irrelevant",
@@ -10495,9 +12600,9 @@
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
       ],
-      "stability": "steady"
+      "stability": "moves"
      },
      {
       "case_id": "castroville_airport_board_irrelevant",
@@ -10505,9 +12610,9 @@
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
       ],
-      "stability": "steady"
+      "stability": "moves"
      },
      {
       "case_id": "dish_irrelevant",
@@ -10515,9 +12620,9 @@
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
       ],
-      "stability": "steady"
+      "stability": "moves"
      },
      {
       "case_id": "eastpointe_home",
@@ -10525,9 +12630,9 @@
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
       ],
-      "stability": "steady"
+      "stability": "moves"
      },
      {
       "case_id": "ellago_mayor_history_irrelevant",
@@ -10535,27 +12640,37 @@
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
       ],
-      "stability": "steady"
+      "stability": "moves"
      },
      {
       "case_id": "gatesville_ordinance_vote_records",
       "scores": [
-       1.0,
-       1.0,
-       1.0,
-       1.0
+       0.0,
+       0.0,
+       0.0,
+       0.0
       ],
-      "stability": "steady"
+      "stability": "moves"
+     },
+     {
+      "case_id": "gatesville_ordinances",
+      "scores": [
+       null,
+       null,
+       null,
+       0.0
+      ],
+      "stability": "moves"
      },
      {
       "case_id": "jackson_mayors_office",
       "scores": [
-       1.0,
-       1.0,
-       1.0,
-       1.0
+       null,
+       null,
+       null,
+       0.0
       ],
       "stability": "moves"
      },
@@ -10565,7 +12680,7 @@
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
       ],
       "stability": "moves"
      },
@@ -10575,9 +12690,29 @@
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "millbury_board_of_selectmen",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       0.0
       ],
       "stability": "steady"
+     },
+     {
+      "case_id": "millbury_school_committee_irrelevant",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       0.0
+      ],
+      "stability": "moves"
      },
      {
       "case_id": "olton_newslist_irrelevant",
@@ -10585,9 +12720,39 @@
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
       ],
-      "stability": "steady"
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462",
+      "scores": [
+       0.0,
+       1.0,
+       0.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir",
+      "scores": [
+       1.0,
+       1.0,
+       0.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_omak__www_omakcity_com_directory_aspx_did_19",
+      "scores": [
+       0.0,
+       0.0,
+       0.0,
+       null
+      ],
+      "stability": "unknown"
      },
      {
       "case_id": "quitaque_council",
@@ -10595,7 +12760,7 @@
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
       ],
       "stability": "moves"
      },
@@ -10605,7 +12770,7 @@
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
       ],
       "stability": "moves"
      },
@@ -10615,9 +12780,9 @@
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
       ],
-      "stability": "steady"
+      "stability": "moves"
      },
      {
       "case_id": "san_antonio",
@@ -10625,7 +12790,7 @@
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
       ],
       "stability": "moves"
      },
@@ -10635,16 +12800,386 @@
        1.0,
        1.0,
        1.0,
-       1.0
+       0.0
       ],
       "stability": "moves"
+     },
+     {
+      "case_id": "place_abernathy__cityofabernathy_org_directory_",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_abilene__abilenetx_gov_526_city-council",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_airway_heights__cawh_org_city-manager_",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_algona__algonawa_gov_",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_ames__www_cityofamestexas_com_171_mayor-council",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_amherst__www_cityofamherst_com_contact_us_index_php",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_anacortes__www_anacorteswa_gov_756_mayor",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_anahuac__anahuac_us_government_city-council",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_anahuac__anahuac_us_government_greetings-from-the-mayor_",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_anahuac__www_anahuac_us",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_apple_valley__applevalley_org_council-member-info_larry-cusack_",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_bellevue__bellevuewa_gov_",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_bridgeport__bridgeportwashington_net_city-council_",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_cathlamet__www_townofcathlamet_com_about-us",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_cathlamet__www_townofcathlamet_com_elected-officials-1",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_colville__www_colville_wa_us_",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_crescent_city__www_crescentcity_org_directory_citycouncil",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_ephrata__www_ephrata_org_27_government",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_goldthwaite__www_visitgoldthwaite_com_",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_goldthwaite__www_visitgoldthwaite_com_city-hall",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_lookout_mountain__www_lookoutmtn_us_directory_index_php",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_manchester__www_cityofmanchestertn_com",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_omak__www_omakcity_com",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_omak__www_omakcity_com_1382_departments",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_republic__www_republicwa_org_",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_walla_walla__www_wallawallawa_gov_government_city-directory",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_wilbur__www_wilburwa_gov_",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "place_wilbur__www_wilburwa_gov_27_government",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "unknown"
      }
     ],
     "movements": [
      {
       "provider": "Alibaba",
       "regressed": [
-       "gatesville_ordinances"
+       "gatesville_ordinance_vote_records"
       ],
       "improved": []
      },
@@ -10655,21 +13190,91 @@
      },
      {
       "provider": "DigitalOcean",
-      "regressed": [],
+      "regressed": [
+       "gatesville_ordinance_vote_records"
+      ],
       "improved": []
      },
      {
       "provider": "NextBit",
-      "regressed": [],
-      "improved": [
-       "jackson_mayors_office"
-      ]
+      "regressed": [
+       "austin_city_manager_irrelevant",
+       "beeville_water_supply_district_irrelevant",
+       "castroville_airport_board_irrelevant",
+       "dish_irrelevant",
+       "eastpointe_home",
+       "ellago_mayor_history_irrelevant",
+       "gatesville_ordinance_vote_records",
+       "gatesville_ordinances",
+       "jackson_mayors_office",
+       "mcgregor_city_announcement_irrelevant",
+       "mikado_township_home",
+       "olton_newslist_irrelevant",
+       "quitaque_council",
+       "raisin_township_clerk",
+       "raisin_township_supervisor",
+       "san_antonio",
+       "san_saba_airport_advisory_irrelevant"
+      ],
+      "improved": []
      }
     ]
    },
    "latest_mismatches": {
     "Alibaba": {
-     "gatesville_ordinances": [
+     "gatesville_ordinance_vote_records": [
+      {
+       "subject": "page",
+       "field": "is_relevant",
+       "expected": true,
+       "actual": false,
+       "expected_label": null,
+       "actual_label": null
+      }
+     ],
+     "place_omak__www_omakcity_com_directory_aspx_did_19": [
+      {
+       "subject": "page",
+       "field": "is_relevant",
+       "expected": false,
+       "actual": true,
+       "expected_label": null,
+       "actual_label": null
+      }
+     ],
+     "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462": [
+      {
+       "subject": "page",
+       "field": "is_relevant",
+       "expected": true,
+       "actual": false,
+       "expected_label": null,
+       "actual_label": null
+      }
+     ]
+    },
+    "AtlasCloud": {
+     "gatesville_ordinance_vote_records": [
+      {
+       "subject": "page",
+       "field": "is_relevant",
+       "expected": true,
+       "actual": false,
+       "expected_label": null,
+       "actual_label": null
+      }
+     ],
+     "quitaque_council": [
+      {
+       "subject": "https://quitaque.us/cityofficials.html",
+       "field": "relevant_urls",
+       "expected": "present",
+       "actual": "—",
+       "expected_label": null,
+       "actual_label": null
+      }
+     ],
+     "place_omak__www_omakcity_com_directory_aspx_did_19": [
       {
        "subject": "page",
        "field": "is_relevant",
@@ -10682,6 +13287,14 @@
     },
     "DigitalOcean": {
      "gatesville_ordinance_vote_records": [
+      {
+       "subject": "page",
+       "field": "is_relevant",
+       "expected": true,
+       "actual": false,
+       "expected_label": null,
+       "actual_label": null
+      },
       {
        "subject": "https://gatesvilletx.com/government/index.php",
        "field": "relevant_urls",
@@ -10700,29 +13313,930 @@
        "expected_label": null,
        "actual_label": null
       }
-     ]
-    },
-    "NextBit": {
-     "quitaque_council": [
+     ],
+     "place_omak__www_omakcity_com_directory_aspx_did_19": [
       {
-       "subject": "https://quitaque.us/cityofficials.html",
-       "field": "relevant_urls",
-       "expected": "present",
-       "actual": "—",
+       "subject": "page",
+       "field": "is_relevant",
+       "expected": false,
+       "actual": true,
        "expected_label": null,
        "actual_label": null
       }
      ],
-     "san_antonio": [
+     "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462": [
       {
-       "subject": "https://www.sa.gov/Directory",
-       "field": "relevant_urls",
-       "expected": "present",
-       "actual": "—",
+       "subject": "page",
+       "field": "is_relevant",
+       "expected": true,
+       "actual": false,
+       "expected_label": null,
+       "actual_label": null
+      }
+     ],
+     "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir": [
+      {
+       "subject": "page",
+       "field": "is_relevant",
+       "expected": true,
+       "actual": false,
        "expected_label": null,
        "actual_label": null
       }
      ]
+    }
+   },
+   "case_inputs": {
+    "austin_city_manager_irrelevant": {
+     "page_url": "https://www.austintexas.gov/city-manager",
+     "jurisdiction_name": "Austin city",
+     "government_form": "council_manager",
+     "known_roles": "[\"Council Member\", \"Mayor\"]",
+     "known_organizations": "[\"Council\"]"
+    },
+    "beeville_water_supply_district_irrelevant": {
+     "page_url": "https://www.beevilletx.gov/departments/BWSD",
+     "jurisdiction_name": "Beeville city",
+     "government_form": "council_manager",
+     "known_roles": "[\"Council Member\", \"Mayor\"]",
+     "known_organizations": "[\"Council\"]"
+    },
+    "castroville_airport_board_irrelevant": {
+     "page_url": "https://castrovilletx.gov/2230/Airport-Advisory-Board",
+     "jurisdiction_name": "Castroville city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "dish_irrelevant": {
+     "page_url": "https://townofdish.com/government/planning-and-zoning-committee/",
+     "jurisdiction_name": "Dish town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "eastpointe_home": {
+     "page_url": "https://www.eastpointemi.gov/",
+     "jurisdiction_name": "City of Eastpointe",
+     "government_form": "council_manager",
+     "known_roles": "[\"Council Member\", \"Mayor\"]",
+     "known_organizations": "[\"Council\"]"
+    },
+    "ellago_mayor_history_irrelevant": {
+     "page_url": "https://ellago-tx.gov/city-council/mayor-history/",
+     "jurisdiction_name": "El Lago city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "gatesville_ordinance_vote_records": {
+     "page_url": "https://gatesvilletx.com/government/city_council/index.php",
+     "jurisdiction_name": "Gatesville city",
+     "government_form": "council_manager",
+     "known_roles": "[\"Council Member\", \"Mayor\"]",
+     "known_organizations": "[\"Council\"]"
+    },
+    "mcgregor_city_announcement_irrelevant": {
+     "page_url": "https://cityofmcgregor.com/city-announcement/",
+     "jurisdiction_name": "McGregor city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "mikado_township_home": {
+     "page_url": "https://mikadotwp.com/",
+     "jurisdiction_name": "Mikado Township",
+     "government_form": "township_board",
+     "known_roles": "[\"Supervisor\", \"Clerk\", \"Treasurer\", \"Trustee\"]",
+     "known_organizations": "[\"Board\"]"
+    },
+    "millbury_board_of_selectmen": {
+     "page_url": "https://www.millburyma.gov/1506/Board-of-Selectmen",
+     "jurisdiction_name": "Millbury town",
+     "government_form": "open_town_meeting",
+     "known_roles": "[\"Select Board Chair\", \"Select Board Vice Chair\", \"Select Board Member\", \"Moderator\"]",
+     "known_organizations": "[\"Select Board\", \"Town Meeting\"]"
+    },
+    "millbury_school_committee_irrelevant": {
+     "page_url": "https://www.millburyma.gov/1655/School-Committee",
+     "jurisdiction_name": "Millbury town",
+     "government_form": "open_town_meeting",
+     "known_roles": "[\"Select Board Chair\", \"Select Board Vice Chair\", \"Select Board Member\", \"Moderator\"]",
+     "known_organizations": "[\"Select Board\", \"Town Meeting\"]"
+    },
+    "olton_newslist_irrelevant": {
+     "page_url": "https://www.cityofolton.com/",
+     "jurisdiction_name": "Olton city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_aberdeen__www_aberdeenwa_gov_": {
+     "page_url": "https://www.aberdeenwa.gov/",
+     "jurisdiction_name": "Aberdeen city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_aberdeen__www_aberdeenwa_gov_275_city-council": {
+     "page_url": "https://www.aberdeenwa.gov/275/City-Council",
+     "jurisdiction_name": "Aberdeen city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_aberdeen__www_aberdeenwa_gov_27_government": {
+     "page_url": "https://www.aberdeenwa.gov/27/Government",
+     "jurisdiction_name": "Aberdeen city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_aberdeen__www_aberdeenwa_gov_367_mayor-orr": {
+     "page_url": "https://www.aberdeenwa.gov/367/Mayor-Orr",
+     "jurisdiction_name": "Aberdeen city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_abernathy__cityofabernathy_org": {
+     "page_url": "https://cityofabernathy.org",
+     "jurisdiction_name": "Abernathy city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_abernathy__cityofabernathy_org_directory_": {
+     "page_url": "https://cityofabernathy.org/directory/",
+     "jurisdiction_name": "Abernathy city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_abernathy__cityofabernathy_org_your-government_city-council": {
+     "page_url": "https://cityofabernathy.org/your-government/city-council",
+     "jurisdiction_name": "Abernathy city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_abilene__abilenetx_gov_": {
+     "page_url": "https://abilenetx.gov/",
+     "jurisdiction_name": "Abilene city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_abilene__abilenetx_gov_27_government": {
+     "page_url": "https://abilenetx.gov/27/Government",
+     "jurisdiction_name": "Abilene city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_abilene__abilenetx_gov_526_city-council": {
+     "page_url": "https://abilenetx.gov/526/City-Council",
+     "jurisdiction_name": "Abilene city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_abilene__abilenetx_gov_directory_aspx_did_124": {
+     "page_url": "https://abilenetx.gov/Directory.aspx?DID=124",
+     "jurisdiction_name": "Abilene city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_adamsville__www_cityofadamsville_com": {
+     "page_url": "http://www.cityofadamsville.com",
+     "jurisdiction_name": "Adamsville town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html": {
+     "page_url": "https://www.cityofadamsville.com/boards_commissions/city_commission/index.html",
+     "jurisdiction_name": "Adamsville town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_adamsville__www_cityofadamsville_com_city_directory_index_html": {
+     "page_url": "https://www.cityofadamsville.com/city_directory/index.html",
+     "jurisdiction_name": "Adamsville town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_airway_heights__cawh_org_": {
+     "page_url": "http://cawh.org/",
+     "jurisdiction_name": "Airway Heights city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_airway_heights__cawh_org_city-council-members": {
+     "page_url": "https://cawh.org/city-council-members",
+     "jurisdiction_name": "Airway Heights city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_airway_heights__cawh_org_city-council-members_council-chair-larry-bowman_": {
+     "page_url": "https://cawh.org/city-council-members/council-chair-larry-bowman/",
+     "jurisdiction_name": "Airway Heights city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_airway_heights__cawh_org_city-manager_": {
+     "page_url": "https://cawh.org/city-manager/",
+     "jurisdiction_name": "Airway Heights city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_algona__algonawa_gov_": {
+     "page_url": "https://algonawa.gov/",
+     "jurisdiction_name": "Algona city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_algona__algonawa_gov_government_city_council_index_php": {
+     "page_url": "https://algonawa.gov/government/city_council/index.php",
+     "jurisdiction_name": "Algona city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_algona__algonawa_gov_government_mayor_index_php": {
+     "page_url": "https://algonawa.gov/government/mayor/index.php",
+     "jurisdiction_name": "Algona city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_alpine__cityofalpine_com": {
+     "page_url": "https://cityofalpine.com",
+     "jurisdiction_name": "Alpine city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_alpine__cityofalpine_com_departments_administration_directory_index_php": {
+     "page_url": "https://cityofalpine.com/departments/administration/directory/index.php",
+     "jurisdiction_name": "Alpine city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_alpine__cityofalpine_com_government_city_council_members_index_php": {
+     "page_url": "https://cityofalpine.com/government/city_council_members/index.php",
+     "jurisdiction_name": "Alpine city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_alpine__cityofalpine_com_government_city_council_members_members_php": {
+     "page_url": "https://cityofalpine.com/government/city_council_members/members.php",
+     "jurisdiction_name": "Alpine city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_amador_city__amador-city_com_government-overview_": {
+     "page_url": "https://amador-city.com/government-overview/",
+     "jurisdiction_name": "Amador City city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_ames__www_cityofamestexas_com": {
+     "page_url": "https://www.cityofamestexas.com",
+     "jurisdiction_name": "Ames city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_ames__www_cityofamestexas_com_171_mayor-council": {
+     "page_url": "https://www.cityofamestexas.com/171/Mayor-Council",
+     "jurisdiction_name": "Ames city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_ames__www_cityofamestexas_com_194_mayor": {
+     "page_url": "https://www.cityofamestexas.com/194/Mayor",
+     "jurisdiction_name": "Ames city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_ames__www_cityofamestexas_com_27_government": {
+     "page_url": "https://www.cityofamestexas.com/27/Government",
+     "jurisdiction_name": "Ames city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_amherst__www_cityofamherst_com_": {
+     "page_url": "https://www.cityofamherst.com/",
+     "jurisdiction_name": "Amherst city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_amherst__www_cityofamherst_com_city_government_index_php": {
+     "page_url": "https://www.cityofamherst.com/city_government/index.php",
+     "jurisdiction_name": "Amherst city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php": {
+     "page_url": "https://www.cityofamherst.com/city_government/mayor___city_council.php",
+     "jurisdiction_name": "Amherst city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_amherst__www_cityofamherst_com_contact_us_index_php": {
+     "page_url": "https://www.cityofamherst.com/contact_us/index.php",
+     "jurisdiction_name": "Amherst city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_anacortes__www_anacorteswa_gov_": {
+     "page_url": "https://www.anacorteswa.gov/",
+     "jurisdiction_name": "Anacortes city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_anacortes__www_anacorteswa_gov_27_government": {
+     "page_url": "https://www.anacorteswa.gov/27/Government",
+     "jurisdiction_name": "Anacortes city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_anacortes__www_anacorteswa_gov_756_mayor": {
+     "page_url": "https://www.anacorteswa.gov/756/Mayor",
+     "jurisdiction_name": "Anacortes city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_anacortes__www_anacorteswa_gov_818_councilmembers": {
+     "page_url": "https://www.anacorteswa.gov/818/Councilmembers",
+     "jurisdiction_name": "Anacortes city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_anahuac__anahuac_us_government_city-council": {
+     "page_url": "https://anahuac.us/government/city-council",
+     "jurisdiction_name": "Anahuac city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_anahuac__anahuac_us_government_greetings-from-the-mayor_": {
+     "page_url": "https://anahuac.us/government/greetings-from-the-mayor/",
+     "jurisdiction_name": "Anahuac city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_anahuac__www_anahuac_us": {
+     "page_url": "https://www.anahuac.us",
+     "jurisdiction_name": "Anahuac city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_apple_valley__applevalley_org_council-member-info_art-bishop_": {
+     "page_url": "https://applevalley.org/council-member-info/art-bishop/",
+     "jurisdiction_name": "Apple Valley town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_apple_valley__applevalley_org_council-member-info_larry-cusack_": {
+     "page_url": "https://applevalley.org/council-member-info/larry-cusack/",
+     "jurisdiction_name": "Apple Valley town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_bainbridge_island__bainbridgewa_gov": {
+     "page_url": "https://bainbridgewa.gov",
+     "jurisdiction_name": "Bainbridge Island city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_bainbridge_island__bainbridgewa_gov_27_government": {
+     "page_url": "https://bainbridgewa.gov/27/Government",
+     "jurisdiction_name": "Bainbridge Island city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14": {
+     "page_url": "https://bainbridgewa.gov/Directory.aspx?did=14",
+     "jurisdiction_name": "Bainbridge Island city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_belle_meade__citybellemeade_org_about": {
+     "page_url": "https://citybellemeade.org/about",
+     "jurisdiction_name": "Belle Meade city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_belle_meade__citybellemeade_org_commissioners_": {
+     "page_url": "https://citybellemeade.org/commissioners/",
+     "jurisdiction_name": "Belle Meade city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_belle_meade__www_citybellemeade_org": {
+     "page_url": "http://www.citybellemeade.org",
+     "jurisdiction_name": "Belle Meade city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_bellevue__bellevuewa_gov_": {
+     "page_url": "https://bellevuewa.gov/",
+     "jurisdiction_name": "Bellevue city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_bellevue__bellevuewa_gov_city-government_city-council": {
+     "page_url": "https://bellevuewa.gov/city-government/city-council",
+     "jurisdiction_name": "Bellevue city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers": {
+     "page_url": "https://bellevuewa.gov/city-government/city-council/councilmembers",
+     "jurisdiction_name": "Bellevue city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_berkeley__berkeleyca_gov_your-government_city-council_council-roster": {
+     "page_url": "https://berkeleyca.gov/your-government/city-council/council-roster",
+     "jurisdiction_name": "Berkeley city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_bridgeport__bridgeportwashington_net_city-council_": {
+     "page_url": "https://bridgeportwashington.net/city-council/",
+     "jurisdiction_name": "Bridgeport city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_bridgeport__bridgeportwashington_net_government_": {
+     "page_url": "https://bridgeportwashington.net/government/",
+     "jurisdiction_name": "Bridgeport city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office": {
+     "page_url": "https://bridgeportwashington.net/ova_dep/mayors-office",
+     "jurisdiction_name": "Bridgeport city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_bridgeport__www_bridgeportwashington_net_": {
+     "page_url": "http://www.bridgeportwashington.net/",
+     "jurisdiction_name": "Bridgeport city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_buckley__www_cityofbuckley_com_250_city-council": {
+     "page_url": "https://www.cityofbuckley.com/250/City-Council",
+     "jurisdiction_name": "Buckley city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_buckley__www_cityofbuckley_com_m_directory_employee_eid_27": {
+     "page_url": "https://www.cityofbuckley.com/m/directory/employee?eid=27",
+     "jurisdiction_name": "Buckley city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_cathlamet__www_townofcathlamet_com_": {
+     "page_url": "https://www.townofcathlamet.com/",
+     "jurisdiction_name": "Cathlamet town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_cathlamet__www_townofcathlamet_com_about-us": {
+     "page_url": "https://www.townofcathlamet.com/about-us",
+     "jurisdiction_name": "Cathlamet town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_cathlamet__www_townofcathlamet_com_elected-officials-1": {
+     "page_url": "https://www.townofcathlamet.com/elected-officials-1",
+     "jurisdiction_name": "Cathlamet town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_colville__www_colville_wa_us_": {
+     "page_url": "http://www.colville.wa.us/",
+     "jurisdiction_name": "Colville city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_colville__www_colville_wa_us_pview_aspx_id_35814_catid_462": {
+     "page_url": "https://www.colville.wa.us/pview.aspx?id=35814&catid=462",
+     "jurisdiction_name": "Colville city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462": {
+     "page_url": "https://www.colville.wa.us/pview.aspx?id=35815&catid=462",
+     "jurisdiction_name": "Colville city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601": {
+     "page_url": "https://www.colville.wa.us/pview.aspx?id=35906&catid=601",
+     "jurisdiction_name": "Colville city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_crescent_city__www_crescentcity_org_candacetinkler": {
+     "page_url": "https://www.crescentcity.org/CandaceTinkler",
+     "jurisdiction_name": "Crescent City city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_crescent_city__www_crescentcity_org_departments_citycouncil": {
+     "page_url": "https://www.crescentcity.org/departments/CityCouncil",
+     "jurisdiction_name": "Crescent City city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_crescent_city__www_crescentcity_org_directory_citycouncil": {
+     "page_url": "https://www.crescentcity.org/directory/CityCouncil",
+     "jurisdiction_name": "Crescent City city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_davenport__davenportwa_us": {
+     "page_url": "https://davenportwa.us",
+     "jurisdiction_name": "Davenport city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_10e187b2-2880-4da3-9a55-cde959ee113c_type_b_dir": {
+     "page_url": "https://www.davenportwa.us/index.asp?SEC=A2951C48-519E-4AAC-A2C8-4E8E24C4010C&DE=10E187B2-2880-4DA3-9A55-CDE959EE113C&Type=B_DIR",
+     "jurisdiction_name": "Davenport city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir": {
+     "page_url": "https://www.davenportwa.us/index.asp?SEC=A2951C48-519E-4AAC-A2C8-4E8E24C4010C&DE=4AF1B45B-81CB-4EEE-8DC7-3C6BDB98EAAD&Type=B_DIR",
+     "jurisdiction_name": "Davenport city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_davenport__www_davenportwa_us_index_asp_sec_c177e0d1-c61e-4ad4-a339-ca10665ffd9a_type_b_basic": {
+     "page_url": "https://www.davenportwa.us/index.asp?SEC=C177E0D1-C61E-4AD4-A339-CA10665FFD9A&Type=B_BASIC",
+     "jurisdiction_name": "Davenport city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_ellensburg__ci_ellensburg_wa_us_100_city-council": {
+     "page_url": "https://ci.ellensburg.wa.us/100/City-Council",
+     "jurisdiction_name": "Ellensburg city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council": {
+     "page_url": "https://ci.ellensburg.wa.us/975/Meet-Your-City-Council",
+     "jurisdiction_name": "Ellensburg city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_ephrata__www_ephrata_org_": {
+     "page_url": "http://www.ephrata.org/",
+     "jurisdiction_name": "Ephrata city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_ephrata__www_ephrata_org_172_city-council": {
+     "page_url": "https://www.ephrata.org/172/City-Council",
+     "jurisdiction_name": "Ephrata city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_ephrata__www_ephrata_org_27_government": {
+     "page_url": "https://www.ephrata.org/27/Government",
+     "jurisdiction_name": "Ephrata city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_goldthwaite__www_visitgoldthwaite_com_": {
+     "page_url": "https://www.visitgoldthwaite.com/",
+     "jurisdiction_name": "Goldthwaite city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_goldthwaite__www_visitgoldthwaite_com_city-hall": {
+     "page_url": "https://www.visitgoldthwaite.com/city-hall",
+     "jurisdiction_name": "Goldthwaite city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_goldthwaite__www_visitgoldthwaite_com_council": {
+     "page_url": "https://www.visitgoldthwaite.com/council",
+     "jurisdiction_name": "Goldthwaite city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_goldthwaite__www_visitgoldthwaite_com_mayor": {
+     "page_url": "https://www.visitgoldthwaite.com/mayor",
+     "jurisdiction_name": "Goldthwaite city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_hawthorne__www_cityofhawthorne_org_government_elected-officials": {
+     "page_url": "https://www.cityofhawthorne.org/government/elected-officials",
+     "jurisdiction_name": "Hawthorne city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_hawthorne__www_cityofhawthorne_org_government_elected-officials_council-member-alex-monteiro": {
+     "page_url": "https://www.cityofhawthorne.org/government/elected-officials/council-member-alex-monteiro",
+     "jurisdiction_name": "Hawthorne city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_irvine__cityofirvine_gov_city-council": {
+     "page_url": "https://cityofirvine.gov/city-council",
+     "jurisdiction_name": "Irvine city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_irvine__cityofirvine_gov_city-council_councilmember-melinda-liu-district-1": {
+     "page_url": "https://cityofirvine.gov/city-council/councilmember-melinda-liu-district-1",
+     "jurisdiction_name": "Irvine city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_lookout_mountain__www_lookoutmtn_us_": {
+     "page_url": "https://www.lookoutmtn.us/",
+     "jurisdiction_name": "Lookout Mountain town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_lookout_mountain__www_lookoutmtn_us_directory_elected_officials_index_php": {
+     "page_url": "https://www.lookoutmtn.us/directory/elected_officials/index.php",
+     "jurisdiction_name": "Lookout Mountain town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_lookout_mountain__www_lookoutmtn_us_directory_index_php": {
+     "page_url": "https://www.lookoutmtn.us/directory/index.php",
+     "jurisdiction_name": "Lookout Mountain town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_lookout_mountain__www_lookoutmtn_us_elected_officials_index_php": {
+     "page_url": "https://www.lookoutmtn.us/elected_officials/index.php",
+     "jurisdiction_name": "Lookout Mountain town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_manchester__www_cityofmanchestertn_com": {
+     "page_url": "http://www.cityofmanchestertn.com",
+     "jurisdiction_name": "Manchester city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_manchester__www_cityofmanchestertn_com_55_government": {
+     "page_url": "https://www.cityofmanchestertn.com/55/Government",
+     "jurisdiction_name": "Manchester city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_manchester__www_cityofmanchestertn_com_59_board-of-mayor-aldermen": {
+     "page_url": "https://www.cityofmanchestertn.com/59/Board-of-Mayor-Aldermen",
+     "jurisdiction_name": "Manchester city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_moses_lake__www_cityofml_com_": {
+     "page_url": "https://www.cityofml.com/",
+     "jurisdiction_name": "Moses Lake city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_moses_lake__www_cityofml_com_27_government": {
+     "page_url": "https://www.cityofml.com/27/Government",
+     "jurisdiction_name": "Moses Lake city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_moses_lake__www_cityofml_com_directory_aspx_did_24": {
+     "page_url": "https://www.cityofml.com/Directory.aspx?did=24",
+     "jurisdiction_name": "Moses Lake city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_omak__www_omakcity_com": {
+     "page_url": "http://www.omakcity.com",
+     "jurisdiction_name": "Omak city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_omak__www_omakcity_com_1382_departments": {
+     "page_url": "https://www.omakcity.com/1382/Departments",
+     "jurisdiction_name": "Omak city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_omak__www_omakcity_com_1400_city-council": {
+     "page_url": "https://www.omakcity.com/1400/City-Council",
+     "jurisdiction_name": "Omak city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_omak__www_omakcity_com_1417_mayor": {
+     "page_url": "https://www.omakcity.com/1417/Mayor",
+     "jurisdiction_name": "Omak city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_omak__www_omakcity_com_directory_aspx_did_19": {
+     "page_url": "https://www.omakcity.com/Directory.aspx?did=19",
+     "jurisdiction_name": "Omak city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_othello__www_othellowa_gov_": {
+     "page_url": "https://www.othellowa.gov/",
+     "jurisdiction_name": "Othello city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_othello__www_othellowa_gov_city-council-meeting-schedule": {
+     "page_url": "https://www.othellowa.gov/city-council-meeting-schedule",
+     "jurisdiction_name": "Othello city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_othello__www_othellowa_gov_electedcityofficials": {
+     "page_url": "https://www.othellowa.gov/ELECTEDCITYOFFICIALS",
+     "jurisdiction_name": "Othello city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_republic__www_republicwa_org_": {
+     "page_url": "http://www.republicwa.org/",
+     "jurisdiction_name": "Republic city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_sedro-woolley__www_sedro-woolley_gov_": {
+     "page_url": "https://www.sedro-woolley.gov/",
+     "jurisdiction_name": "Sedro-Woolley city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php": {
+     "page_url": "https://www.sedro-woolley.gov/governing_bodies/city_council/index.php",
+     "jurisdiction_name": "Sedro-Woolley city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_shelton__sheltonwa_gov": {
+     "page_url": "https://sheltonwa.gov",
+     "jurisdiction_name": "Shelton city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php": {
+     "page_url": "https://sheltonwa.gov/government/city_council/city_council_members/councilmember_eric_onisko.php",
+     "jurisdiction_name": "Shelton city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_shelton__sheltonwa_gov_government_city_council_index_php": {
+     "page_url": "https://sheltonwa.gov/government/city_council/index.php",
+     "jurisdiction_name": "Shelton city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_torrance__www_torranceca_gov_government_city-council": {
+     "page_url": "https://www.torranceca.gov/Government/City-Council",
+     "jurisdiction_name": "Torrance city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_walla_walla__www_wallawallawa_gov_": {
+     "page_url": "https://www.wallawallawa.gov/",
+     "jurisdiction_name": "Walla Walla city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_walla_walla__www_wallawallawa_gov_government_city-council": {
+     "page_url": "https://www.wallawallawa.gov/government/city-council",
+     "jurisdiction_name": "Walla Walla city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_walla_walla__www_wallawallawa_gov_government_city-directory": {
+     "page_url": "https://www.wallawallawa.gov/government/city-directory",
+     "jurisdiction_name": "Walla Walla city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_walla_walla__www_wallawallawa_gov_government_city-manager": {
+     "page_url": "https://www.wallawallawa.gov/government/city-manager",
+     "jurisdiction_name": "Walla Walla city",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_wilbur__wilburwa_com_1222_town-hall-city-council": {
+     "page_url": "https://wilburwa.com/1222/Town-Hall-City-Council",
+     "jurisdiction_name": "Wilbur town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_wilbur__www_wilburwa_gov_": {
+     "page_url": "https://www.wilburwa.gov/",
+     "jurisdiction_name": "Wilbur town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_wilbur__www_wilburwa_gov_1222_town-hall-city-council": {
+     "page_url": "https://www.wilburwa.gov/1222/Town-Hall-City-Council",
+     "jurisdiction_name": "Wilbur town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "place_wilbur__www_wilburwa_gov_27_government": {
+     "page_url": "https://www.wilburwa.gov/27/Government",
+     "jurisdiction_name": "Wilbur town",
+     "known_organizations": "[\"Government\"]"
+    },
+    "quitaque_council": {
+     "page_url": "https://quitaque.us",
+     "jurisdiction_name": "Quitaque city",
+     "government_form": "council_manager",
+     "known_roles": "[\"Council Member\", \"Mayor\"]",
+     "known_organizations": "[\"Council\"]"
+    },
+    "raisin_township_clerk": {
+     "page_url": "https://raisinchartertownship.com/clerk",
+     "jurisdiction_name": "Raisin Charter Township",
+     "government_form": "township_board",
+     "known_organizations": "[\"Board\"]",
+     "known_roles": "[\"Supervisor\", \"Clerk\", \"Treasurer\", \"Trustee\"]"
+    },
+    "raisin_township_supervisor": {
+     "page_url": "https://raisinchartertownship.com/supervisor",
+     "jurisdiction_name": "Raisin Charter Township",
+     "government_form": "township_board",
+     "known_organizations": "[\"Board\"]",
+     "known_roles": "[\"Supervisor\", \"Clerk\", \"Treasurer\", \"Trustee\"]"
+    },
+    "san_antonio": {
+     "page_url": "https://www.sa.gov/",
+     "jurisdiction_name": "City of San Antonio",
+     "government_form": "council_manager",
+     "known_roles": "[\"Council Member\", \"Mayor\"]",
+     "known_organizations": "[\"Council\"]"
+    },
+    "san_saba_airport_advisory_irrelevant": {
+     "page_url": "https://sansabatexas.com/boards-commissions/airport-advisory/",
+     "jurisdiction_name": "San Saba city",
+     "known_organizations": "[\"Government\"]"
+    }
+   },
+   "prompts_dir": "../relevant_page/_prompts",
+   "latest_case_prompts": {
+    "Alibaba": {
+     "template_sha256": "739ea2221794",
+     "prompts": {
+      "austin_city_manager_irrelevant": "93132f2475bb",
+      "beeville_water_supply_district_irrelevant": "073984d648bc",
+      "castroville_airport_board_irrelevant": "953302aab7bd",
+      "dish_irrelevant": "ec7d7ecb905e",
+      "eastpointe_home": "bfe4fc4df262",
+      "ellago_mayor_history_irrelevant": "fa636e12a777",
+      "gatesville_ordinance_vote_records": "3616c01865f6",
+      "mcgregor_city_announcement_irrelevant": "315d9a1bbaa7",
+      "mikado_township_home": "05081c5caedf",
+      "millbury_board_of_selectmen": "c93b7ce66c3e",
+      "millbury_school_committee_irrelevant": "82ed8721faee",
+      "olton_newslist_irrelevant": "496f0cf167f5",
+      "place_abernathy__cityofabernathy_org_directory_": "5233ffe9943a",
+      "place_abilene__abilenetx_gov_526_city-council": "4540327706e5",
+      "place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html": "438e89eee28e",
+      "place_airway_heights__cawh_org_city-manager_": "88cb4f14b5dc",
+      "place_algona__algonawa_gov_": "eff30698aef1",
+      "place_ames__www_cityofamestexas_com_171_mayor-council": "4d607adaa96d",
+      "place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php": "87f76580eb25",
+      "place_amherst__www_cityofamherst_com_contact_us_index_php": "4f75417b78e7",
+      "place_anacortes__www_anacorteswa_gov_756_mayor": "0b3286b17758",
+      "place_anahuac__anahuac_us_government_city-council": "c0b3ee3676cb",
+      "place_anahuac__anahuac_us_government_greetings-from-the-mayor_": "beb6d42fb49a",
+      "place_anahuac__www_anahuac_us": "b6fdaaa728b1",
+      "place_apple_valley__applevalley_org_council-member-info_larry-cusack_": "d78f103cef5b",
+      "place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14": "06d8ef9266f0",
+      "place_bellevue__bellevuewa_gov_": "613fe1ec6c76",
+      "place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers": "048af7cca0f5",
+      "place_bridgeport__bridgeportwashington_net_city-council_": "ef75f2d9eed9",
+      "place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office": "f23e1d2f32be",
+      "place_cathlamet__www_townofcathlamet_com_about-us": "97f0aeb41d7f",
+      "place_cathlamet__www_townofcathlamet_com_elected-officials-1": "d6ff8333bca1",
+      "place_colville__www_colville_wa_us_": "661f658dc538",
+      "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462": "ad6f00d88950",
+      "place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601": "460b0e4ddcc0",
+      "place_crescent_city__www_crescentcity_org_directory_citycouncil": "36edd011aa81",
+      "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir": "32741003dcd1",
+      "place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council": "f75fe84f3e34",
+      "place_ephrata__www_ephrata_org_27_government": "39974e5dc1f9",
+      "place_goldthwaite__www_visitgoldthwaite_com_": "3a4138f690a6",
+      "place_goldthwaite__www_visitgoldthwaite_com_city-hall": "b51aa218ea64",
+      "place_lookout_mountain__www_lookoutmtn_us_directory_index_php": "c717e308e4fd",
+      "place_manchester__www_cityofmanchestertn_com": "93f48fcb2810",
+      "place_omak__www_omakcity_com": "b3544a37fffa",
+      "place_omak__www_omakcity_com_1382_departments": "9185600539cc",
+      "place_omak__www_omakcity_com_directory_aspx_did_19": "74026d4be719",
+      "place_republic__www_republicwa_org_": "9cc44af6bee3",
+      "place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php": "5d23277e50ad",
+      "place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php": "03ce2ce000f7",
+      "place_walla_walla__www_wallawallawa_gov_government_city-directory": "0f663d0b8e95",
+      "place_wilbur__www_wilburwa_gov_": "f7fa7ed7fe14",
+      "place_wilbur__www_wilburwa_gov_27_government": "23b427f9de16",
+      "quitaque_council": "119a64720dfa",
+      "raisin_township_clerk": "002a385e65a4",
+      "raisin_township_supervisor": "aa0552992d21",
+      "san_antonio": "9232cf08a7ae",
+      "san_saba_airport_advisory_irrelevant": "2d6a8f0f1bf0"
+     }
+    },
+    "AtlasCloud": {
+     "template_sha256": "739ea2221794",
+     "prompts": {
+      "austin_city_manager_irrelevant": "93132f2475bb",
+      "beeville_water_supply_district_irrelevant": "073984d648bc",
+      "castroville_airport_board_irrelevant": "953302aab7bd",
+      "dish_irrelevant": "ec7d7ecb905e",
+      "eastpointe_home": "bfe4fc4df262",
+      "ellago_mayor_history_irrelevant": "fa636e12a777",
+      "gatesville_ordinance_vote_records": "3616c01865f6",
+      "mcgregor_city_announcement_irrelevant": "315d9a1bbaa7",
+      "mikado_township_home": "05081c5caedf",
+      "millbury_board_of_selectmen": "c93b7ce66c3e",
+      "millbury_school_committee_irrelevant": "82ed8721faee",
+      "olton_newslist_irrelevant": "496f0cf167f5",
+      "place_abernathy__cityofabernathy_org_directory_": "5233ffe9943a",
+      "place_abilene__abilenetx_gov_526_city-council": "4540327706e5",
+      "place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html": "438e89eee28e",
+      "place_airway_heights__cawh_org_city-manager_": "88cb4f14b5dc",
+      "place_algona__algonawa_gov_": "eff30698aef1",
+      "place_ames__www_cityofamestexas_com_171_mayor-council": "4d607adaa96d",
+      "place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php": "87f76580eb25",
+      "place_amherst__www_cityofamherst_com_contact_us_index_php": "4f75417b78e7",
+      "place_anacortes__www_anacorteswa_gov_756_mayor": "0b3286b17758",
+      "place_anahuac__anahuac_us_government_city-council": "c0b3ee3676cb",
+      "place_anahuac__anahuac_us_government_greetings-from-the-mayor_": "beb6d42fb49a",
+      "place_anahuac__www_anahuac_us": "b6fdaaa728b1",
+      "place_apple_valley__applevalley_org_council-member-info_larry-cusack_": "d78f103cef5b",
+      "place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14": "06d8ef9266f0",
+      "place_bellevue__bellevuewa_gov_": "613fe1ec6c76",
+      "place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers": "048af7cca0f5",
+      "place_bridgeport__bridgeportwashington_net_city-council_": "ef75f2d9eed9",
+      "place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office": "f23e1d2f32be",
+      "place_cathlamet__www_townofcathlamet_com_about-us": "97f0aeb41d7f",
+      "place_cathlamet__www_townofcathlamet_com_elected-officials-1": "d6ff8333bca1",
+      "place_colville__www_colville_wa_us_": "661f658dc538",
+      "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462": "ad6f00d88950",
+      "place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601": "460b0e4ddcc0",
+      "place_crescent_city__www_crescentcity_org_directory_citycouncil": "36edd011aa81",
+      "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir": "32741003dcd1",
+      "place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council": "f75fe84f3e34",
+      "place_ephrata__www_ephrata_org_27_government": "39974e5dc1f9",
+      "place_goldthwaite__www_visitgoldthwaite_com_": "3a4138f690a6",
+      "place_goldthwaite__www_visitgoldthwaite_com_city-hall": "b51aa218ea64",
+      "place_lookout_mountain__www_lookoutmtn_us_directory_index_php": "c717e308e4fd",
+      "place_manchester__www_cityofmanchestertn_com": "93f48fcb2810",
+      "place_omak__www_omakcity_com": "b3544a37fffa",
+      "place_omak__www_omakcity_com_1382_departments": "9185600539cc",
+      "place_omak__www_omakcity_com_directory_aspx_did_19": "74026d4be719",
+      "place_republic__www_republicwa_org_": "9cc44af6bee3",
+      "place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php": "5d23277e50ad",
+      "place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php": "03ce2ce000f7",
+      "place_walla_walla__www_wallawallawa_gov_government_city-directory": "0f663d0b8e95",
+      "place_wilbur__www_wilburwa_gov_": "f7fa7ed7fe14",
+      "place_wilbur__www_wilburwa_gov_27_government": "23b427f9de16",
+      "quitaque_council": "119a64720dfa",
+      "raisin_township_clerk": "002a385e65a4",
+      "raisin_township_supervisor": "aa0552992d21",
+      "san_antonio": "9232cf08a7ae",
+      "san_saba_airport_advisory_irrelevant": "2d6a8f0f1bf0"
+     }
+    },
+    "DigitalOcean": {
+     "template_sha256": "739ea2221794",
+     "prompts": {
+      "austin_city_manager_irrelevant": "93132f2475bb",
+      "beeville_water_supply_district_irrelevant": "073984d648bc",
+      "castroville_airport_board_irrelevant": "953302aab7bd",
+      "dish_irrelevant": "ec7d7ecb905e",
+      "eastpointe_home": "bfe4fc4df262",
+      "ellago_mayor_history_irrelevant": "fa636e12a777",
+      "gatesville_ordinance_vote_records": "3616c01865f6",
+      "mcgregor_city_announcement_irrelevant": "315d9a1bbaa7",
+      "mikado_township_home": "05081c5caedf",
+      "millbury_board_of_selectmen": "c93b7ce66c3e",
+      "millbury_school_committee_irrelevant": "82ed8721faee",
+      "olton_newslist_irrelevant": "496f0cf167f5",
+      "place_abernathy__cityofabernathy_org_directory_": "5233ffe9943a",
+      "place_abilene__abilenetx_gov_526_city-council": "4540327706e5",
+      "place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html": "438e89eee28e",
+      "place_airway_heights__cawh_org_city-manager_": "88cb4f14b5dc",
+      "place_algona__algonawa_gov_": "eff30698aef1",
+      "place_ames__www_cityofamestexas_com_171_mayor-council": "4d607adaa96d",
+      "place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php": "87f76580eb25",
+      "place_amherst__www_cityofamherst_com_contact_us_index_php": "4f75417b78e7",
+      "place_anacortes__www_anacorteswa_gov_756_mayor": "0b3286b17758",
+      "place_anahuac__anahuac_us_government_city-council": "c0b3ee3676cb",
+      "place_anahuac__anahuac_us_government_greetings-from-the-mayor_": "beb6d42fb49a",
+      "place_anahuac__www_anahuac_us": "b6fdaaa728b1",
+      "place_apple_valley__applevalley_org_council-member-info_larry-cusack_": "d78f103cef5b",
+      "place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14": "06d8ef9266f0",
+      "place_bellevue__bellevuewa_gov_": "613fe1ec6c76",
+      "place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers": "048af7cca0f5",
+      "place_bridgeport__bridgeportwashington_net_city-council_": "ef75f2d9eed9",
+      "place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office": "f23e1d2f32be",
+      "place_cathlamet__www_townofcathlamet_com_about-us": "97f0aeb41d7f",
+      "place_cathlamet__www_townofcathlamet_com_elected-officials-1": "d6ff8333bca1",
+      "place_colville__www_colville_wa_us_": "661f658dc538",
+      "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462": "ad6f00d88950",
+      "place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601": "460b0e4ddcc0",
+      "place_crescent_city__www_crescentcity_org_directory_citycouncil": "36edd011aa81",
+      "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir": "32741003dcd1",
+      "place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council": "f75fe84f3e34",
+      "place_ephrata__www_ephrata_org_27_government": "39974e5dc1f9",
+      "place_goldthwaite__www_visitgoldthwaite_com_": "3a4138f690a6",
+      "place_goldthwaite__www_visitgoldthwaite_com_city-hall": "b51aa218ea64",
+      "place_lookout_mountain__www_lookoutmtn_us_directory_index_php": "c717e308e4fd",
+      "place_manchester__www_cityofmanchestertn_com": "93f48fcb2810",
+      "place_omak__www_omakcity_com": "b3544a37fffa",
+      "place_omak__www_omakcity_com_1382_departments": "9185600539cc",
+      "place_omak__www_omakcity_com_directory_aspx_did_19": "74026d4be719",
+      "place_republic__www_republicwa_org_": "9cc44af6bee3",
+      "place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php": "5d23277e50ad",
+      "place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php": "03ce2ce000f7",
+      "place_walla_walla__www_wallawallawa_gov_government_city-directory": "0f663d0b8e95",
+      "place_wilbur__www_wilburwa_gov_": "f7fa7ed7fe14",
+      "place_wilbur__www_wilburwa_gov_27_government": "23b427f9de16",
+      "quitaque_council": "119a64720dfa",
+      "raisin_township_clerk": "002a385e65a4",
+      "raisin_township_supervisor": "aa0552992d21",
+      "san_antonio": "9232cf08a7ae",
+      "san_saba_airport_advisory_irrelevant": "2d6a8f0f1bf0"
+     }
     }
    }
   },
@@ -12005,7 +15519,66 @@
       }
      ]
     }
-   }
+   },
+   "case_inputs": {
+    "irvine_council_roster": {
+     "page_url": "https://cityofirvine.gov/city-council",
+     "jurisdiction_name": "Irvine city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"posts\": [\"Mayor\"]}, {\"name\": \"City Council\", \"posts\": [\"Vice Mayor\", \"Council Member, District 1\", \"Council Member, District 2\", \"Council Member, District 4\", \"Council Member, District 5\", \"Council Member, At Large\"]}]"
+    },
+    "irvine_councilmember_bio": {
+     "page_url": "https://cityofirvine.gov/city-council/councilmember-william-go-district-2",
+     "jurisdiction_name": "Irvine city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"posts\": [\"Mayor\"]}, {\"name\": \"City Council\", \"posts\": [\"Vice Mayor\", \"Council Member, District 1\", \"Council Member, District 2\", \"Council Member, District 4\", \"Council Member, District 5\", \"Council Member, At Large\"]}]"
+    },
+    "jackson_council_agendas": {
+     "page_url": "https://www.jacksontn.gov/government/citycouncil/agendaandminutes",
+     "jurisdiction_name": "Jackson city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"posts\": [\"Mayor\"]}, {\"name\": \"City Council\", \"posts\": [\"Council Member, District 1\", \"Council Member, District 2\", \"Council Member, District 3\", \"Council Member, District 4\", \"Council Member, District 5\", \"Council Member, District 6\", \"Council Member, District 7\", \"Council Member, District 8\", \"Council Member, District 9\"]}]"
+    },
+    "jackson_council_member_bio": {
+     "page_url": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil/district4_donnell",
+     "jurisdiction_name": "Jackson city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"posts\": [\"Mayor\"]}, {\"name\": \"City Council\", \"posts\": [\"Council Member, District 1\", \"Council Member, District 2\", \"Council Member, District 3\", \"Council Member, District 4\", \"Council Member, District 5\", \"Council Member, District 6\", \"Council Member, District 7\", \"Council Member, District 8\", \"Council Member, District 9\"]}]"
+    },
+    "jackson_mayor_staff_directory": {
+     "page_url": "https://www.jacksontn.gov/government/mayorsoffice/staffdirectory",
+     "jurisdiction_name": "Jackson city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"posts\": [\"Mayor\"]}, {\"name\": \"City Council\", \"posts\": [\"Council Member, District 1\", \"Council Member, District 2\", \"Council Member, District 3\", \"Council Member, District 4\", \"Council Member, District 5\", \"Council Member, District 6\", \"Council Member, District 7\", \"Council Member, District 8\", \"Council Member, District 9\"]}]"
+    },
+    "jackson_mayors_office": {
+     "page_url": "https://www.jacksontn.gov/government/mayorsoffice",
+     "jurisdiction_name": "Jackson city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"posts\": [\"Mayor\"]}, {\"name\": \"City Council\", \"posts\": [\"Council Member, District 1\", \"Council Member, District 2\", \"Council Member, District 3\", \"Council Member, District 4\", \"Council Member, District 5\", \"Council Member, District 6\", \"Council Member, District 7\", \"Council Member, District 8\", \"Council Member, District 9\"]}]"
+    },
+    "jackson_meet_the_council": {
+     "page_url": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil",
+     "jurisdiction_name": "Jackson city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"posts\": [\"Mayor\"]}, {\"name\": \"City Council\", \"posts\": [\"Council Member, District 1\", \"Council Member, District 2\", \"Council Member, District 3\", \"Council Member, District 4\", \"Council Member, District 5\", \"Council Member, District 6\", \"Council Member, District 7\", \"Council Member, District 8\", \"Council Member, District 9\"]}]"
+    },
+    "millbury_board_of_selectmen": {
+     "page_url": "https://www.millburyma.gov/1506/Board-of-Selectmen",
+     "jurisdiction_name": "Millbury town",
+     "organizations": "[{\"name\": \"Select Board\", \"posts\": [\"Select Board Chair\", \"Select Board Vice Chair\", \"Select Board Member\"]}, {\"name\": \"Town Meeting\", \"posts\": [\"Moderator\"]}]"
+    },
+    "millbury_school_committee": {
+     "page_url": "https://www.millburyma.gov/1655/School-Committee",
+     "jurisdiction_name": "Millbury town",
+     "organizations": "[{\"name\": \"Select Board\", \"posts\": [\"Select Board Chair\", \"Select Board Vice Chair\", \"Select Board Member\"]}, {\"name\": \"Town Meeting\", \"posts\": [\"Moderator\"]}]"
+    },
+    "quitaque_city_officials": {
+     "page_url": "https://quitaque.us",
+     "jurisdiction_name": "Quitaque city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"posts\": [\"Mayor\", \"Mayor Pro Tem\"]}, {\"name\": \"City Council\", \"posts\": [\"Council Member\"]}]"
+    },
+    "seattle_mayor_page": {
+     "page_url": "https://seattle.gov/mayor",
+     "jurisdiction_name": "Seattle city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"posts\": [\"Mayor\"]}, {\"name\": \"City Council\", \"posts\": [\"Council President\", \"Council Member, District 1\", \"Council Member, District 2\", \"Council Member, District 3\", \"Council Member, Position 8\", \"Council Member, Position 9\"]}]"
+    }
+   },
+   "prompts_dir": "../page_covers/_prompts",
+   "latest_case_prompts": {}
   },
   {
    "eval_name": "find_jurisdiction_url",
@@ -12166,7 +15739,26 @@
      }
     ]
    },
-   "latest_mismatches": {}
+   "latest_mismatches": {},
+   "case_inputs": {
+    "harrison_mi": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/county:clare/place:harrison/government",
+     "municipality_name": "Harrison city",
+     "stale_url": "https://cityofharrisonmi.org"
+    },
+    "london_township_mi": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/county:monroe/township:london/government",
+     "municipality_name": "London Township",
+     "stale_url": "http://londontwp.org"
+    },
+    "milton_township_mi": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/county:antrim/place:milton/government",
+     "municipality_name": "Milton township",
+     "stale_url": "https://miltontownship.org/"
+    }
+   },
+   "prompts_dir": "../find_jurisdiction_url/_prompts",
+   "latest_case_prompts": {}
   }
  ],
  "issues": [
@@ -12195,7 +15787,43 @@
    "expected_count": null,
    "swing": null,
    "failed_case_ids": [
-    "gatesville_ordinances"
+    "gatesville_ordinance_vote_records",
+    "place_omak__www_omakcity_com_directory_aspx_did_19",
+    "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462"
+   ]
+  },
+  {
+   "kind": "cases_failed",
+   "severity": 0,
+   "eval_name": "relevant_page",
+   "provider": "AtlasCloud",
+   "metric": null,
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": null,
+   "failed_case_ids": [
+    "gatesville_ordinance_vote_records",
+    "place_omak__www_omakcity_com_directory_aspx_did_19"
+   ]
+  },
+  {
+   "kind": "cases_failed",
+   "severity": 0,
+   "eval_name": "relevant_page",
+   "provider": "DigitalOcean",
+   "metric": null,
+   "score": null,
+   "gate_floor": null,
+   "missing_count": null,
+   "expected_count": null,
+   "swing": null,
+   "failed_case_ids": [
+    "gatesville_ordinance_vote_records",
+    "place_omak__www_omakcity_com_directory_aspx_did_19",
+    "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462",
+    "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir"
    ]
   },
   {
@@ -12297,32 +15925,6 @@
    "eval_name": "officials",
    "provider": "Alibaba",
    "metric": "url",
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": 0.5,
-   "failed_case_ids": []
-  },
-  {
-   "kind": "wide_swing",
-   "severity": 2,
-   "eval_name": "officials",
-   "provider": "NextBit",
-   "metric": "email",
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": 0.5,
-   "failed_case_ids": []
-  },
-  {
-   "kind": "wide_swing",
-   "severity": 2,
-   "eval_name": "officials",
-   "provider": "NextBit",
-   "metric": "phone",
    "score": null,
    "gate_floor": null,
    "missing_count": null,

@@ -1,0 +1,10 @@
+page_url: https://www.cityofhawthorne.org/government/elected-officials
+jurisdiction_name: Hawthorne city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: true
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label flipped to true: Body of the ''Elected Officials''
+    page lists Mayor, Mayor Pro Tem and three Council Members by name.'

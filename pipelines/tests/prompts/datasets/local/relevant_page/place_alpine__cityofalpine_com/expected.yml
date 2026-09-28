@@ -1,0 +1,10 @@
+page_url: https://cityofalpine.com
+jurisdiction_name: Alpine city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: false
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Homepage whose only official mention
+    is a tourism greeting signed by Mayor Catherine Eaves; not a roster.'

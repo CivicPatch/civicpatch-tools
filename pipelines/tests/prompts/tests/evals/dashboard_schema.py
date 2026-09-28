@@ -4,7 +4,7 @@ from typing import Literal
 
 from pydantic import BaseModel
 
-from eval_records import CaseMismatches, MismatchValue
+from eval_records import CaseMismatches, CasePrompts, MismatchValue
 
 
 class CaseCount(BaseModel):
@@ -197,6 +197,10 @@ class EvalSection(BaseModel):
     prompt_versions: list[PromptVersion]
     detail: EvalDetail | None
     latest_mismatches: dict[str, CaseMismatches]
+    # Case id -> the inputs its prompt was given; the archived prompt shows only placeholders.
+    case_inputs: dict[str, dict[str, str]]
+    prompts_dir: str
+    latest_case_prompts: dict[str, CasePrompts]
 
 
 class DashboardPayload(BaseModel):

@@ -1,0 +1,11 @@
+page_url: https://cityofabernathy.org/your-government/city-council
+jurisdiction_name: Abernathy city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: true
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: City Council page with a Members
+    section listing Mayor Harold Bufe, the Mayor Pro-Tem and council members with
+    their terms.'

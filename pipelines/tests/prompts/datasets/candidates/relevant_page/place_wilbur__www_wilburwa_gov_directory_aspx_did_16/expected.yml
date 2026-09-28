@@ -1,9 +1,10 @@
 page_url: https://www.wilburwa.gov/directory.aspx?did=16
 jurisdiction_name: Wilbur town
+known_organizations:
+- Government
 generated: true
 page:
-  is_relevant: false
+  is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: irrelevant by absence,
-    the saved run said relevant. Nobody published cites this page, which is weak evidence
-    it is irrelevant.'
+  thoughts: 'Reviewed 2026-09-28, label flipped to true: Directory table lists Mayor
+    Erica Hearrean and Councilman No. 1-5 by name.'

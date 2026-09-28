@@ -15,10 +15,6 @@ const TIME_UNITS = [
 ];
 
 // Seconds kept: concurrent runs share a minute, and truncating made them look identical.
-export function formatWhen(timestamp, length = 19) {
-  return (timestamp || "").replace("T", " ").replace("+00:00", "").slice(0, length) || EMPTY_VALUE;
-}
-
 export function formatFriendly(timestamp) {
   return FRIENDLY_TIME.format(new Date(timestamp));
 }
@@ -50,6 +46,66 @@ export function lineageLabel(lineage) {
 
 export function caseInputUrl(section, caseId) {
   return `${section.dataset_dir}/${caseId}/input.md`;
+}
+
+// Only "per case" markers vary: `<canonical type>` and `<value>` are the officials prompt's own words.
+const PER_CASE_PLACEHOLDER = /(<[^<>\n]*per case>)/;
+// Must match CASE_PROMPT_KEY_SEPARATOR in eval_utils.py.
+const CASE_PROMPT_KEY_SEPARATOR = "|";
+
+export function promptWithPlaceholders(text) {
+  return text.split(PER_CASE_PLACEHOLDER).map((part) => (PER_CASE_PLACEHOLDER.test(part) ? html`<b>${part}</b>` : part));
+}
+
+// The case's prompt with whatever filled the template's placeholders in bold. Walks the template's
+// fixed text in order; fixed text the case prompt lacks ends up inside the next bold run.
+export function promptWithChanges(text, template) {
+  const fixedParts = template.split(PER_CASE_PLACEHOLDER).filter((part) => part && !PER_CASE_PLACEHOLDER.test(part));
+  const parts = [];
+  let cursor = 0;
+  for (const fixed of fixedParts) {
+    const at = text.indexOf(fixed, cursor);
+    if (at === -1) {
+      continue;
+    }
+    if (at > cursor) {
+      parts.push(html`<b>${text.slice(cursor, at)}</b>`);
+    }
+    parts.push(fixed);
+    cursor = at + fixed.length;
+  }
+  if (cursor < text.length) {
+    parts.push(html`<b>${text.slice(cursor)}</b>`);
+  }
+  return parts;
+}
+
+// One entry for most evals; page covers asks once per body, keyed "<case id>|<body>".
+export function casePrompts(section, provider, caseId) {
+  const saved = section.latest_case_prompts[provider];
+  if (!saved) {
+    return [];
+  }
+  return Object.entries(saved.prompts)
+    .filter(([key]) => key === caseId || key.startsWith(`${caseId}${CASE_PROMPT_KEY_SEPARATOR}`))
+    .map(([key, sha]) => ({
+      label: key.slice(caseId.length + CASE_PROMPT_KEY_SEPARATOR.length),
+      url: `${section.prompts_dir}/${sha}.txt`,
+      template_sha256: saved.template_sha256,
+    }));
+}
+
+// The inputs this case's prompt was given, since the archived prompt shows only placeholders.
+export function casePromptInputs(section, caseId) {
+  const inputs = Object.entries(section.case_inputs[caseId] || {});
+  if (!inputs.length) {
+    return html`<p class="note">No inputs recorded: the case is no longer in the dataset.</p>`;
+  }
+  return html`
+    <dl class="case-inputs">
+      ${inputs.map(([key, value]) => html`<dt>${key}</dt><dd>${value}</dd>`)}
+    </dl>
+  `;
 }
 
 export function caseLink(section, caseId) {

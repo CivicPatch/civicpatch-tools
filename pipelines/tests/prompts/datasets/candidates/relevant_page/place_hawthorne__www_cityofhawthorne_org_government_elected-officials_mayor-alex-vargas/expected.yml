@@ -1,7 +1,10 @@
 page_url: https://www.cityofhawthorne.org/government/elected-officials/mayor-alex-vargas
 jurisdiction_name: Hawthorne city
+known_organizations:
+- Government
 generated: true
 page:
   is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: relevant.'
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Current Mayor''s own bio page,
+    which says he was reelected in 2024.'

@@ -1,9 +1,10 @@
 page_url: https://bridgeportwashington.net/team/paul-anson/
 jurisdiction_name: Bridgeport city
+known_organizations:
+- Government
 generated: true
 page:
-  is_relevant: false
+  is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: irrelevant by absence,
-    the saved run said relevant. Nobody published cites this page, which is weak evidence
-    it is irrelevant.'
+  thoughts: 'Reviewed 2026-09-28, label flipped to true: One official''s own page:
+    Paul Anson, Council Position 4, with city email. The bio text is template filler.'

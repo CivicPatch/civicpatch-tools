@@ -1,5 +1,12 @@
 import pytest
-from eval_utils import GENERATED_KEY, sample_generated_cases
+from eval_utils import (
+    ALL_CASES,
+    DEFAULT_SAMPLE_SIZE,
+    GENERATED_KEY,
+    SAMPLE_SIZE_ENV,
+    sample_generated_cases,
+    sample_settings,
+)
 
 pytestmark = pytest.mark.unit
 
@@ -33,3 +40,15 @@ def test_the_same_seed_picks_the_same_cases():
 
 def test_a_sample_bigger_than_the_generated_cases_keeps_them_all():
     assert len(sample_generated_cases(WRITTEN + GENERATED, 50, seed=0)) == 12
+
+
+def test_unset_sample_size_uses_the_default(monkeypatch):
+    monkeypatch.delenv(SAMPLE_SIZE_ENV, raising=False)
+
+    assert sample_settings() == (DEFAULT_SAMPLE_SIZE, 0)
+
+
+def test_all_runs_every_generated_case(monkeypatch):
+    monkeypatch.setenv(SAMPLE_SIZE_ENV, ALL_CASES)
+
+    assert sample_settings()[0] is None

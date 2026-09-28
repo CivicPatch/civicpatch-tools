@@ -1,0 +1,10 @@
+page_url: http://www.omakcity.com
+jurisdiction_name: Omak city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: false
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Homepage with nav, news and calendar;
+    only a Mayor nav link, no name.'
