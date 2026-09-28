@@ -320,7 +320,7 @@ async def test_scenario_14_rolling_back_one_accounts_week_keeps_everyone_elses_w
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT count(*) FROM claims WHERE changeset_id::text = %s AND withdrawn_at IS NULL",
+            "SELECT count(*) FROM claims WHERE changeset_id::text = %s AND claim_is_live(id)",
             (carols,),
         )
         assert await cur.fetchone() == (1,), "carol's older fix is still underneath"
@@ -416,7 +416,7 @@ async def test_scenario_18_a_rollback_of_a_rollback_of_someone_elses_rollback():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             "SELECT DISTINCT changeset_id::text FROM claims "
-            "WHERE kind = 'withdraw' AND withdrawn_at IS NULL AND changeset_id IN "
+            "WHERE kind = 'withdraw' AND claim_is_live(id) AND changeset_id IN "
             "(SELECT id FROM changesets WHERE jurisdiction_ocdid = %s)",
             (_OCDID,),
         )

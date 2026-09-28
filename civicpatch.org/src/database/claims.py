@@ -1,7 +1,6 @@
 """Database queries for `claims` — the field values a human has accepted or rejected.
 
-Append-only: setting a value again inserts, withdrawing stamps a row rather than deleting it,
-and `created_by`/`created_at` are never rewritten — `claimed_values` resolves what applies now
+Append-only: setting a value again inserts, withdrawing files a withdraw row naming it, and `created_by`/`created_at` are never rewritten — `claimed_values` resolves what applies now
 by reading, not by holding one row per field."""
 
 import json
@@ -118,7 +117,7 @@ async def upsert_all(cur, claims: list[Claim], created_by: str) -> None:
 _CURRENT_ROW_FOR = f"""
     SELECT id::text FROM claims
     WHERE entity_type = %s AND entity_id = %s AND field_path = %s
-      AND kind = %s AND value = %s AND withdrawn_at IS NULL
+      AND kind = %s AND value = %s AND claim_is_live(id)
     {LATEST_FIRST}
     LIMIT 1
 """
@@ -154,9 +153,7 @@ def _sources(claim: Claim) -> str:
     return json.dumps([source.model_dump() for source in claim.sources])
 
 
-# The fold reads withdrawals as rows (214), today's readers as the `withdrawn_*` columns; both
-# are written until every reader has moved. Idempotent per target, so a rerun files no second
-# withdraw for a fact that is already dead.
+# Idempotent per target, so a rerun files no second withdraw for a fact that is already dead.
 _INSERT_WITHDRAW = """
     INSERT INTO claims
         (entity_type, entity_id, field_path, kind, value, sources, created_by, changeset_id)
@@ -164,7 +161,8 @@ _INSERT_WITHDRAW = """
            %(sources)s::jsonb, %(created_by)s, %(changeset_id)s
     WHERE NOT EXISTS (
         SELECT 1 FROM claims
-         WHERE kind = %(kind)s AND entity_id = %(entity_id)s::uuid AND withdrawn_at IS NULL
+         WHERE kind = %(kind)s AND entity_type = %(entity_type)s
+           AND entity_id = %(entity_id)s::uuid AND claim_is_live(id)
     )
 """
 
@@ -181,11 +179,6 @@ async def withdraw_facts(
 
     A withdraw names a whole row rather than a value, which is why it carries no field and no
     value. Withdrawing one is itself a fact, so undoing a withdrawal is withdrawing it.
-
-    Writes both mechanisms, so no caller has to know there are two: the withdraw row the fold
-    reads, and — for a claim — the `withdrawn_*` columns the readers that have not moved onto
-    facts still filter on (`claimed_values`, `_unchanged`, the label reads). Those columns go at
-    step 19 and this function loses its second half with them.
     """
     if not entity_ids:
         return
@@ -204,96 +197,6 @@ async def withdraw_facts(
             for entity_id in entity_ids
         ],
     )
-    if entity_type is not EntityType.CLAIM:
-        return
-    # Unconditional beyond "not already withdrawn": which of these deserved it was decided by
-    # the caller against the facts, and a superseded claim of a rolled-back changeset must be
-    # stamped too, or it would return the moment the claim that superseded it was rolled back.
-    await cur.execute(
-        """
-        UPDATE claims
-           SET withdrawn_at = now(), withdrawn_by = %s, withdrawn_reason = %s,
-               withdrawn_by_changeset_id = %s
-         WHERE id = ANY(%s) AND withdrawn_at IS NULL
-        """,
-        (withdrawn_by, reason, changeset_id, entity_ids),
-    )
-
-
-# "Which row currently wins," spelled as a predicate (not a Python fold) so a bulk rollback can
-# touch exactly these rows in one statement. Matches `ClaimState.ACTIVE`. Requires the
-# caller's query to alias the table `a` — unavoidable for a self-join.
-_IS_ACTIVE = """
-    a.withdrawn_at IS NULL
-    AND a.id = (
-        SELECT a2.id FROM claims a2
-         WHERE a2.entity_type = a.entity_type AND a2.entity_id = a.entity_id
-           AND a2.field_path = a.field_path AND a2.kind = a.kind
-           AND a2.withdrawn_at IS NULL
-         ORDER BY a2.created_at DESC, a2.id DESC LIMIT 1
-    )
-"""
-
-
-async def get_claims_by_creator(
-    cur, created_by: str, entity_type: EntityType
-) -> list[dict]:
-    """Every claim of one entity type this user ever made, anywhere, active or not — the
-    history a "roll back this user" UI shows, with `withdrawn`/`superseded` letting the caller
-    derive each row's `ClaimState` (only an ACTIVE one is a real rollback candidate).
-    Not scoped to one jurisdiction. Joined through `people`, not the nullable
-    `claims.changeset_id`, same source `entity_jurisdiction.jurisdiction_for` reads.
-    PERSON-specific."""
-    await cur.execute(
-        f"""
-        SELECT a.id::text, a.entity_id::text, a.field_path, a.kind, a.value, p.jurisdiction_ocdid,
-               a.created_at,
-               a.withdrawn_at IS NOT NULL AS withdrawn,
-               NOT ({_IS_ACTIVE}) AS superseded
-        FROM claims a
-        JOIN people p ON p.id = a.entity_id
-        WHERE a.entity_type = %s AND a.created_by = %s
-        ORDER BY a.created_at DESC
-        """,
-        (entity_type.value, created_by),
-    )
-    columns = [column.name for column in cur.description or []]
-    return [dict(zip(columns, row)) for row in await cur.fetchall()]
-
-
-async def get_jurisdictions_for_claims(
-    cur, claim_ids: list[str]
-) -> dict[str, list[str]]:
-    """These claim ids, grouped by which jurisdiction each one's entity belongs to — lets a
-    selection spanning several jurisdictions execute as several single-jurisdiction rollbacks.
-    PERSON-specific, same reasoning as `get_claims_by_creator`."""
-    await cur.execute(
-        """
-        SELECT p.jurisdiction_ocdid, a.id::text
-        FROM claims a
-        JOIN people p ON p.id = a.entity_id
-        WHERE a.id = ANY(%s)
-        """,
-        (claim_ids,),
-    )
-    grouped: dict[str, list[str]] = {}
-    for jurisdiction_ocdid, claim_id in await cur.fetchall():
-        grouped.setdefault(jurisdiction_ocdid, []).append(claim_id)
-    return grouped
-
-
-async def get_entity_ids_for_claims(
-    cur, entity_type: EntityType, claim_ids: list[str]
-) -> list[str]:
-    """Which distinct entities these claims are about — what a rollback republish needs to
-    know whose derived state to recompute, having only a list of withdrawn claim ids."""
-    await cur.execute(
-        "SELECT DISTINCT entity_id::text FROM claims "
-        "WHERE entity_type = %s AND id = ANY(%s)",
-        (entity_type.value, claim_ids),
-    )
-    rows = await cur.fetchall()
-    return [row[0] for row in rows]
 
 
 async def create(claim: Claim, created_by: str) -> str:
@@ -364,7 +267,7 @@ async def claimed_values(
         f"""
         SELECT entity_id::text, field_path, kind, value
         FROM claims
-        WHERE entity_type = %s AND entity_id::text = ANY(%s) AND withdrawn_at IS NULL
+        WHERE entity_type = %s AND entity_id::text = ANY(%s) AND claim_is_live(id)
         {LATEST_FIRST}
         """,
         (entity_type.value, entity_ids),

@@ -408,7 +408,7 @@ async def _withdraw_newest(cur, person_id: str, field_path: str, user_id: str, r
     its own. What `claims.withdraw` did in place, before every withdraw named its changeset."""
     await cur.execute(
         "SELECT id::text FROM claims WHERE entity_type = 'person' AND entity_id = %s "
-        "AND field_path = %s AND kind = 'accept' AND withdrawn_at IS NULL "
+        "AND field_path = %s AND kind = 'accept' AND claim_is_live(id) "
         "ORDER BY created_at DESC LIMIT 1",
         (person_id, field_path),
     )
@@ -422,7 +422,7 @@ async def _withdraw_newest(cur, person_id: str, field_path: str, user_id: str, r
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_withdrawing_stops_the_claim_without_deleting_it():
-    """A stamp, not a delete, since claims became append-only: `withdraw` must stop the
+    """A withdraw row, not a delete, since claims became append-only: withdrawing must stop the
     claim from applying while leaving the row — and its attribution — in place for the audit
     trail. `claimed_values` (what currently applies) must forget it; `list_for_entities`
     (the full history) must not."""
@@ -461,15 +461,16 @@ async def test_withdrawing_stops_the_claim_without_deleting_it():
         assert rows[0]["created_by"] == user_id
 
         await cur.execute(
-            "SELECT withdrawn_by::text, withdrawn_reason FROM claims "
-            "WHERE entity_type = 'person' AND entity_id::text = %s",
+            "SELECT w.created_by::text, w.sources->0->>'note' FROM claims w "
+            "JOIN claims c ON c.id = w.entity_id "
+            "WHERE w.kind = 'withdraw' AND c.entity_id::text = %s",
             (person_id,),
         )
         row = await cur.fetchone()
         assert row is not None
-        withdrawn_by, withdrawn_reason = row
+        withdrawn_by, reason = row
         assert withdrawn_by == user_id
-        assert withdrawn_reason == "typo"
+        assert reason == "typo"
 
 
 @pytest.mark.asyncio
@@ -517,197 +518,57 @@ async def test_withdrawing_falls_back_to_the_earlier_claim_not_the_scrape():
         assert len(rows) == 2
 
 
-async def _mint_rollback_changeset(cur, user_id: str) -> str:
-    """A real rollback changeset, for `withdrawn_by_changeset_id`'s FK to point at. It used to
-    be a bare row with no jurisdiction, standing in for `register_rollback_changeset` before
-    that existed; since 233 every changeset names one."""
-    rollback_id = str(uuid.uuid4())
-    await changesets_db.register_rollback_changeset(cur, rollback_id, _OCDID, user_id, "test")
-    return rollback_id
-
-
-_OTHER_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_assert_other/government"
-
-
-async def _mint_changeset(cur, jurisdiction_ocdid: str, created_by_user_id: str) -> str:
-    """A bare `roster_edit` changeset with a real jurisdiction — what 9d's rollback service
-    mints claims under, minimal enough not to need the full register function's lineage
-    lookups."""
+async def _live_withdraw_of(cur, fact_id: str) -> str:
     await cur.execute(
-        "INSERT INTO changesets (kind, jurisdiction_ocdid, created_by_user_id) "
-        "VALUES ('roster_edit', %s, %s) RETURNING id::text",
-        (jurisdiction_ocdid, created_by_user_id),
+        "SELECT id::text FROM claims WHERE kind = 'withdraw' AND entity_id = %s "
+        "AND claim_is_live(id)",
+        (fact_id,),
     )
     row = await cur.fetchone()
     assert row is not None
     return row[0]
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_get_claims_by_creator_scopes_to_the_user_not_a_place():
-    """Must list every one of a user's claims, spanning however many changesets *and*
-    jurisdictions — deliberately not scoped to one place (2026-09-10: no jurisdiction picker
-    anywhere in the rollback UI) — and nothing that belongs to a different user."""
-    user_id, _ = await _seed()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level) "
-            "VALUES (%s, 'zz', 'local')",
-            (_OTHER_OCDID,),
-        )
-        await cur.execute(
-            "INSERT INTO users (email, provider, provider_user_id, username, role) "
-            "VALUES ('zz-assert-other-user@example.com', 'email', "
-            "'zz-assert-other-user@example.com', 'zz-assert-other-user', 'admins') RETURNING id::text"
-        )
-        row = await cur.fetchone()
-        assert row is not None
-        other_user_id = row[0]
-
-        here_first = await _mint_changeset(cur, _OCDID, user_id)
-        here_second = await _mint_changeset(cur, _OCDID, user_id)
-        elsewhere = await _mint_changeset(cur, _OTHER_OCDID, user_id)
-        also_here = await _mint_changeset(cur, _OCDID, other_user_id)
-        await conn.commit()
-
-    mine_here_a, mine_here_b, mine_elsewhere, someone_elses = (
-        str(uuid.uuid4()) for _ in range(4)
-    )
-    async with pool.connection() as conn, conn.cursor() as cur:
-        # Jurisdiction is now read off the person, not the changeset — a real row per entity,
-        # in the jurisdiction each case is actually about.
-        for entity_id, jurisdiction_ocdid in (
-            (mine_here_a, _OCDID),
-            (mine_here_b, _OCDID),
-            (mine_elsewhere, _OTHER_OCDID),
-            (someone_elses, _OCDID),
-        ):
-            await cur.execute(
-                "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, 'Test')",
-                (entity_id, jurisdiction_ocdid),
-            )
-        await conn.commit()
-
-    for entity_id, changeset_id, asserted_by, value in (
-        (mine_here_a, here_first, user_id, "A"),
-        (mine_here_b, here_second, user_id, "B"),
-        (mine_elsewhere, elsewhere, user_id, "Elsewhere"),
-        (someone_elses, also_here, other_user_id, "Not Mine"),
-    ):
-        await claims.create(
-            Claim(
-                entity_type=EntityType.PERSON,
-                entity_id=entity_id,
-                field_path="name",
-                kind=ClaimKind.ACCEPT,
-                value=value,
-                changeset_id=changeset_id,
-                sources=[Source(note="test")],
-            ),
-            asserted_by,
-        )
-
-    try:
-        async with pool.connection() as conn, conn.cursor() as cur:
-            candidates = await claims.get_claims_by_creator(
-                cur, user_id, EntityType.PERSON
-            )
-            assert len(candidates) == 3, "this user's three active claims, across two places"
-            assert {c["jurisdiction_ocdid"] for c in candidates} == {_OCDID, _OTHER_OCDID}
-            assert all(not c["withdrawn"] and not c["superseded"] for c in candidates)
-
-            candidate_ids = [c["id"] for c in candidates]
-            rollback_id = await _mint_rollback_changeset(cur, user_id)
-            # `withdraw_claims` went on 2026-09-25: it differed from `withdraw_facts` only by an
-            # `_IS_ACTIVE` filter and had no caller left. This verified that withdrawing a set of
-            # claims hides them from `claimed_values` across jurisdictions, and it still does ---
-            # through the one primitive, which writes both the withdraw row the fold reads and
-            # the `withdrawn_*` columns `claimed_values` filters on.
-            await claims.withdraw_facts(
-                cur, EntityType.CLAIM, candidate_ids, user_id, rollback_id
-            )
-            await conn.commit()
-
-        async with pool.connection() as conn, conn.cursor() as cur:
-            claimed = await claims.claimed_values(
-                cur,
-                EntityType.PERSON,
-                [mine_here_a, mine_here_b, mine_elsewhere, someone_elses],
-            )
-        assert mine_here_a not in claimed
-        assert mine_here_b not in claimed
-        assert mine_elsewhere not in claimed, "this user's claim elsewhere must roll back too"
-        assert claimed[someone_elses]["name"][ClaimKind.ACCEPT] == ["Not Mine"]
-    finally:
-        async with pool.connection() as conn, conn.cursor() as cur:
-            await cur.execute(
-                "DELETE FROM claims WHERE entity_id::text = ANY(%s)",
-                ([mine_here_a, mine_here_b, mine_elsewhere, someone_elses],),
-            )
-            await cur.execute(
-                "DELETE FROM people WHERE id::text = ANY(%s)",
-                ([mine_here_a, mine_here_b, mine_elsewhere, someone_elses],),
-            )
-            await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OTHER_OCDID,))
-            await cur.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OTHER_OCDID,))
-            await cur.execute("DELETE FROM users WHERE id::text = %s", (other_user_id,))
-            await conn.commit()
+async def _names(cur, person_id: str) -> dict:
+    claimed = await claims.claimed_values(cur, EntityType.PERSON, [person_id])
+    return claimed.get(person_id, {}).get("name", {})
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_claims_by_creator_reports_withdrawn_and_superseded():
-    """Three claims on the same field, oldest to newest, then the newest withdrawn: the
-    withdrawn one reports `withdrawn`, the once-superseded-now-current one reports neither,
-    and the still-superseded oldest reports `superseded` — `state_of` reads both flags to
-    turn them into "active"/"superseded"/"withdrawn" for the UI."""
+async def test_withdrawing_a_withdraw_brings_the_claim_back_and_again_takes_it_away():
+    """Undoing a rollback, then undoing the undo: `claimed_values` follows the chain the way the
+    fold's `live_facts` does, not just the withdraw nearest the claim."""
     user_id, _ = await _seed()
     person_id = str(uuid.uuid4())
+    claim_id = await claims.create(
+        Claim(
+            entity_type=EntityType.PERSON,
+            entity_id=person_id,
+            field_path="name",
+            kind=ClaimKind.ACCEPT,
+            value="Lia Load",
+            sources=[Source(note="test")],
+            changeset_id=await factories.hand_edit(_OCDID, user_id),
+        ),
+        user_id,
+    )
+
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, 'Test')",
-            (person_id, _OCDID),
+        edit = await factories.hand_edit(_OCDID, user_id)
+        await claims.withdraw_facts(cur, EntityType.CLAIM, [claim_id], user_id, edit)
+        assert await _names(cur, person_id) == {}
+
+        rollback = await _live_withdraw_of(cur, claim_id)
+        await claims.withdraw_facts(cur, EntityType.CLAIM, [rollback], user_id, edit)
+        assert (await _names(cur, person_id))[ClaimKind.ACCEPT] == ["Lia Load"]
+
+        await claims.withdraw_facts(
+            cur, EntityType.CLAIM, [await _live_withdraw_of(cur, rollback)], user_id, edit
         )
-        await conn.commit()
-
-    ids = []
-    for value in ("first@town.gov", "second@town.gov", "third@town.gov"):
-        ids.append(
-            await claims.create(
-                Claim(
-                    entity_type=EntityType.PERSON,
-                    entity_id=person_id,
-                    field_path="name",
-                    kind=ClaimKind.ACCEPT,
-                    value=value,
-                    sources=[Source(note="test")],
-                    changeset_id=await factories.hand_edit(_OCDID, user_id),
-                ),
-                user_id,
-            )
-        )
-    oldest_id, middle_id, newest_id = ids
-
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await _withdraw_newest(cur, person_id, "name", user_id)
-        await conn.commit()
-
-    try:
-        async with pool.connection() as conn, conn.cursor() as cur:
-            rows = await claims.get_claims_by_creator(cur, user_id, EntityType.PERSON)
-        by_id = {row["id"]: row for row in rows}
-
-        assert (by_id[oldest_id]["withdrawn"], by_id[oldest_id]["superseded"]) == (False, True)
-        assert (by_id[middle_id]["withdrawn"], by_id[middle_id]["superseded"]) == (False, False)
-        assert by_id[newest_id]["withdrawn"] is True
-    finally:
-        async with pool.connection() as conn, conn.cursor() as cur:
-            await cur.execute("DELETE FROM claims WHERE entity_id::text = %s", (person_id,))
-            await cur.execute("DELETE FROM people WHERE id::text = %s", (person_id,))
-            await conn.commit()
+        assert await _names(cur, person_id) == {}
+        await conn.rollback()
 
 
 @pytest.mark.asyncio
