@@ -20,8 +20,18 @@ class MembershipSource(BaseModel, frozen=True):
 class LabelDetails(BaseModel, frozen=True):
     designations: tuple[str, ...] = ()
     unmatched_text: tuple[str, ...] = ()
-    # Role ids beyond the post's own; not stored, they feed the membership label (10a).
+    # Role ids beyond the post's own.
     extra_roles: tuple[str, ...] = ()
+    # The three above as one string, what a membership is called when nobody has said.
+    derived_membership_label: str | None = None
+
+
+class MembershipRecords(BaseModel, frozen=True):
+    """One person's records in one post, the evidence for one membership, and what the newest
+    read's labels said."""
+
+    records: tuple[SourceRecord, ...] = ()
+    details: LabelDetails = LabelDetails()
 
 
 def first_seen(facts: Sequence[SourceRecord | Claim]) -> datetime:

@@ -89,8 +89,6 @@ def _projected() -> dict:
                 "division_ocdid": "ocd-division/country:us/state:wa/place:zz",
                 "label": "Mayor",
                 "source_labels": ["Mayor"],
-                "designations": [],
-                "meta_unmatched_text": [],
                 "start_date": "2024",
                 "end_date": None,
             }

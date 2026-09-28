@@ -195,6 +195,27 @@ async def test_a_person_no_fact_derives_loses_their_row():
         )
         assert await cur.fetchall() == [(ids["ben"],)]
 
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_stored_label_is_what_the_page_said_beyond_the_post():
+    """10a: with no human label, `memberships.label` is the page's leftover words."""
+    ids = await _seed()
+    await _scrape(ids, _T0, {"ben": "Council Member Place 3", "ana": "Mayor"})
+
+    await _rebuild()
+
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT m.person_id::text, m.label FROM memberships m JOIN posts p ON p.id = m.post_id "
+            "WHERE p.jurisdiction_ocdid = %s",
+            (_OCDID,),
+        )
+        labels = dict(await cur.fetchall())
+    assert labels == {ids["ben"]: "Place 3", ids["ana"]: None}
+
+
 async def _unpublished_scrape(ids: dict, listing: dict[str, str]) -> str:
     """A scrape awaiting review: its records are stored, and no roster derives them yet."""
     changeset_id = str(uuid.uuid4())

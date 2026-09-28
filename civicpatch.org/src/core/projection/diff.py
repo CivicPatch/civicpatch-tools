@@ -32,8 +32,6 @@ COMPARED_MEMBERSHIP_FIELDS = (
     "label",
     "start_date",
     "end_date",
-    "designations",
-    "unmatched_text",
     "sources",
 )
 

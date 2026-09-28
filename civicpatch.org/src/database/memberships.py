@@ -14,6 +14,7 @@ from typing import AsyncGenerator
 
 from core.membership_label import derive_post_label
 from core.projection.memberships import MEMBERSHIP_LABEL_FIELD
+from core.unmatched_terms import LabelUsage
 from database import claims
 from database.database import get_pool
 from schemas.claims import (
@@ -37,7 +38,6 @@ async def list_for_jurisdiction(
                m.opened_at, m.closed_at,
                pe.name AS person_name,
                membership_source_labels(m.sources) AS source_labels,
-               m.designations, m.meta_unmatched_text,
                p.role_id, p.division_ocdid,
                p.organization_id::text, o.name AS organization_name,
                r.label AS role_label
@@ -217,56 +217,29 @@ async def list_for_state(state: str) -> list[dict]:
     return rows
 
 
-# Shared by the count and the page so the two cannot describe different sets.
-_TRIAGE_POPULATION = """
+# Grouped by the label's exact text, so each distinct wording is parsed once however many hold it.
+_OPEN_MEMBERSHIP_LABELS = """
+    SELECT source->>'note' AS label,
+           array_agg(DISTINCT m.id::text) AS membership_ids,
+           array_agg(DISTINCT p.jurisdiction_ocdid) AS jurisdiction_ocdids
     FROM memberships m
     JOIN posts p ON p.id = m.post_id
-    CROSS JOIN LATERAL unnest(m.meta_unmatched_text) AS term
-    WHERE m.closed_at IS NULL
-    GROUP BY lower(term)
+    CROSS JOIN LATERAL jsonb_array_elements(m.sources) AS source
+    WHERE m.closed_at IS NULL AND source->>'note' IS NOT NULL
+    GROUP BY source->>'note'
 """
 
 
-async def _count_triage_terms(cur) -> int:
-    await cur.execute(f"SELECT count(*) FROM (SELECT 1 {_TRIAGE_POPULATION}) t")
-    row = await cur.fetchone()
-    return row[0] if row is not None else 0
-
-
-async def _triage_page(cur, limit: int, offset: int) -> list[dict]:
-    await cur.execute(
-        f"""
-        SELECT mode() WITHIN GROUP (ORDER BY term) AS text,
-               count(*) AS occurrences,
-               count(DISTINCT p.jurisdiction_ocdid) AS jurisdictions,
-               (array_agg(DISTINCT p.jurisdiction_ocdid
-                          ORDER BY p.jurisdiction_ocdid))[1:3] AS examples,
-               -- The one label the term came out of, not the whole concatenation. Storing
-               -- the parts is what makes this answerable at all.
-               mode() WITHIN GROUP (ORDER BY (
-                   SELECT l FROM unnest(membership_source_labels(m.sources)) AS l
-                   WHERE strpos(lower(l), lower(term)) > 0 LIMIT 1
-               )) AS example_label
-        {_TRIAGE_POPULATION}
-        ORDER BY count(DISTINCT p.jurisdiction_ocdid) DESC, count(*) DESC, lower(term)
-        LIMIT %s OFFSET %s
-        """,
-        (limit, offset),
-    )
-    columns = [column.name for column in cur.description or []]
-    return [dict(zip(columns, row)) for row in await cur.fetchall()]
-
-
-async def meta_unmatched_text(limit: int, offset: int) -> tuple[int, list[dict]]:
-    """One page of triage terms, and how many there are in total.
-
-    Counted separately rather than with a window function so the total survives an `offset`
-    past the end — a window has no row to read the count from, and the pager would collapse
-    to zero pages.
-    """
+async def open_membership_labels() -> list[LabelUsage]:
+    """Every verbatim label on an open membership, with who carries it."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        return await _count_triage_terms(cur), await _triage_page(cur, limit, offset)
+        await cur.execute(_OPEN_MEMBERSHIP_LABELS)
+        rows = await cur.fetchall()
+    return [
+        LabelUsage(label=label, membership_ids=tuple(ids), jurisdiction_ocdids=tuple(ocdids))
+        for label, ids, ocdids in rows
+    ]
 
 
 async def _assert(
@@ -294,42 +267,28 @@ async def _assert(
 
 
 async def set_membership_label(
-    cur,
-    membership_id: str,
-    label: str | None,
-    user_id: str,
-    changeset_id: str | None = None,
+    cur, membership_id: str, label: str | None, user_id: str, changeset_id: str
 ) -> None:
-    """Name this person's post, or clear it back to the derived guess."""
-    await set_membership_field(
+    """Name this person's seat. `None` says it has no name beyond the post."""
+    await claim_membership_field(
         cur, membership_id, MEMBERSHIP_LABEL_FIELD, label, user_id, changeset_id
     )
 
 
-async def set_membership_field(
+async def claim_membership_field(
     cur,
     membership_id: str,
     field_path: str,
     value: str | None,
     user_id: str,
-    changeset_id: str | None = None,
+    changeset_id: str,
 ) -> None:
-    """Set a membership's label or term date, or clear it back to what the facts derive.
+    """A human's label or term date for a membership. `None` says there is none, and outranks
+    the page just as a value does.
 
     The claim is the whole value: the row is rewritten from the facts at the next rebuild, so
     a column written here would be a copy the next publish disagrees with.
     """
-    if value is None:
-        # An ordinary withdrawal, not a rollback's — withdrawn_by_changeset_id stays NULL.
-        await claims.withdraw(
-            cur,
-            EntityType.MEMBERSHIP,
-            membership_id,
-            field_path,
-            ClaimKind.ACCEPT,
-            user_id,
-        )
-        return
     note = DefaultNote.LABEL_SET if field_path == MEMBERSHIP_LABEL_FIELD else DefaultNote.EDITED
     await claims.upsert(
         cur,

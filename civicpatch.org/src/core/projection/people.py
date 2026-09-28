@@ -12,6 +12,7 @@ from core.projection.field_value import (
     source_urls,
 )
 from core.projection.membership_details import (
+    MembershipRecords,
     MembershipSource,
     first_seen,
     membership_sources,
@@ -23,10 +24,10 @@ from core.projection.memberships import (
     post_accepts,
     is_edited,
     membership_date,
-    membership_label,
+    membership_label_claim,
     membership_state,
 )
-from core.projection.posts import PostRecords, records_by_post
+from core.projection.posts import records_by_post
 
 
 class Membership(BaseModel, frozen=True):
@@ -62,13 +63,18 @@ class Person(BaseModel, frozen=True):
 
 
 def derive_membership(
-    members: Iterable[str], post: PostKey, held: PostRecords, facts: Facts
+    members: Iterable[str], post: PostKey, evidence: MembershipRecords, facts: Facts
 ) -> Membership:
-    own_records = held.records
+    own_records = evidence.records
     seen = [*own_records, *post_accepts(members, post, facts)]
+    label_claim = membership_label_claim(members, post.post_id, facts)
     return Membership(
         post=post,
-        label=membership_label(members, post.post_id, facts),
+        label=(
+            label_claim.value
+            if label_claim is not None
+            else evidence.details.derived_membership_label
+        ),
         start_date=membership_date(
             members, post.post_id, MEMBERSHIP_START_DATE_FIELD, own_records, facts
         ),
@@ -76,10 +82,10 @@ def derive_membership(
             members, post.post_id, MEMBERSHIP_END_DATE_FIELD, own_records, facts
         ),
         opened_at=first_seen(seen),
-        designations=held.details.designations,
-        unmatched_text=held.details.unmatched_text,
+        designations=evidence.details.designations,
+        unmatched_text=evidence.details.unmatched_text,
         sources=membership_sources(own_records),
-        extra_roles=held.details.extra_roles,
+        extra_roles=evidence.details.extra_roles,
     )
 
 
@@ -98,7 +104,7 @@ def _newest_membership_fact(
 def collapse_per_organization(
     members: Iterable[str],
     posts: Sequence[PostKey],
-    by_post: dict[PostKey, PostRecords],
+    by_post: dict[PostKey, MembershipRecords],
     facts: Facts,
 ) -> list[PostKey]:
     """The posts to keep, one per organization, which is all the projection allows.
@@ -156,7 +162,7 @@ def derive_person(
         other_names=other_names(members, facts),
         source_urls=source_urls(members, facts),
         memberships=tuple(
-            derive_membership(members, post, by_post.get(post, PostRecords()), facts)
+            derive_membership(members, post, by_post.get(post, MembershipRecords()), facts)
             for post in sorted(held, key=_by_post_id)
         ),
         edited=is_edited(members, [post.post_id for post in candidates], facts),
@@ -168,7 +174,7 @@ def _by_post_id(post: PostKey) -> str:
 
 
 def _records(
-    by_post: dict[PostKey, PostRecords], post: PostKey
+    by_post: dict[PostKey, MembershipRecords], post: PostKey
 ) -> tuple[SourceRecord, ...]:
     """A post only a claim named has no records, which is not the same as holding nothing."""
     return by_post[post].records if post in by_post else ()

@@ -69,8 +69,6 @@ def _membership_row(
         "source_urls": sorted(
             {source.url for source in membership.sources if source.url}
         ),
-        "designations": list(membership.designations),
-        "meta_unmatched_text": list(membership.unmatched_text),
         "start_date": membership.start_date,
         "end_date": membership.end_date,
         "post_label": _post_label(membership.post, role_label, claimed),

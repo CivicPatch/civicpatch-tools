@@ -36,8 +36,6 @@ class SeededMembership(BaseModel):
     membership_label: str | None = None
     start_date: str | None = None
     end_date: str | None = None
-    designations: list[str] = []
-    meta_unmatched_text: list[str] = []
     sources: list[MembershipSource] = []
 
 
@@ -141,8 +139,8 @@ async def collect_and_publish(jurisdiction_ocdid: str, collected_at) -> str:
 _INSERT_MEMBERSHIP = """
     INSERT INTO memberships
         (id, post_id, organization_id, person_id, label, start_date, end_date,
-         opened_at, designations, meta_unmatched_text, sources)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb)
+         opened_at, sources)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb)
     ON CONFLICT (person_id, organization_id) WHERE closed_at IS NULL
     DO UPDATE SET opened_at = memberships.opened_at
     RETURNING id::text
@@ -168,8 +166,6 @@ async def bind_membership(
             member.start_date,
             member.end_date,
             opened_at,
-            member.designations,
-            member.meta_unmatched_text,
             json.dumps([source.model_dump() for source in member.sources]),
         ),
     )

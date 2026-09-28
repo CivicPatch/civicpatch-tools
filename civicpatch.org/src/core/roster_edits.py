@@ -82,17 +82,11 @@ _CLAIMED_OFFICE_FIELDS = {
 def membership_claim_edits(
     derived: dict[str, dict], people: list[PersonEdit]
 ) -> list[tuple[str, str, str | None]]:
-    """`(membership_id, field, value)` for each label or term date this edit changes.
-
-    Not claims, because clearing one is a withdrawal, and a withdrawal names a row rather than a
-    value. `memberships.set_membership_field` files both halves, so the shell calls it.
-    """
+    """`(membership_id, field, value)` for each label or term date this edit sets. `None` says
+    there is none. Not claims: `memberships.claim_membership_field` files them by membership id."""
     changes = []
     for person in people:
-        held = {
-            post["post_id"]: post
-            for post in (derived.get(person.id) or {}).get("memberships") or []
-        }
+        held = _held(derived, person.id)
         for office in person.offices or []:
             was = held.get(office.id) or {}
             # Only what the client sent: an office sent to keep a person's other body names no dates.
@@ -101,3 +95,7 @@ def membership_claim_edits(
                 if now != was.get(field):
                     changes.append((membership_id(person.id, office.id), field, now))
     return changes
+
+
+def _held(derived: dict[str, dict], person_id: str) -> dict[str, dict]:
+    return {post["post_id"]: post for post in (derived.get(person_id) or {}).get("memberships") or []}

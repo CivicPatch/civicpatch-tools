@@ -9,7 +9,6 @@ Deliberately left out, and why — every one of them meta_-marked (or, for the o
 a query-time index) to say so at the column itself:
 
   posts.meta_headcount, posts.meta_is_tracked       internal, our own tool state
-  memberships.meta_unmatched_text                   internal, our own parsing residue
   jurisdictions.search_text                         a search index, not a fact about the place
 
 UUIDs are cast to text here rather than in the writer, per the project's rule that the database
@@ -57,7 +56,7 @@ TABLES: dict[str, LiteralString] = {
                p.jurisdiction_ocdid,
                m.label, m.start_date, m.end_date,
                m.opened_at, m.closed_at,
-               m.designations, membership_source_labels(m.sources) AS source_labels
+               membership_source_labels(m.sources) AS source_labels
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
         ORDER BY state, m.id, m.opened_at

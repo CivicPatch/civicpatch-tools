@@ -303,20 +303,17 @@ async def test_unmatched_people_share_one_post_per_division():
         assert bucket == again
 
         await factories.bind_membership(
-            cur, SeededMembership(person_id=first_person, meta_unmatched_text=["Town Moderator"]), bucket, org, _T0
+            cur, SeededMembership(person_id=first_person), bucket, org, _T0
         )
         await factories.bind_membership(
-            cur, SeededMembership(person_id=second, meta_unmatched_text=["Supervisor of the Checklist"]), bucket, org, _T0
+            cur, SeededMembership(person_id=second), bucket, org, _T0
         )
 
         await cur.execute(
-            "SELECT meta_unmatched_text FROM memberships WHERE post_id = %s ORDER BY meta_unmatched_text",
+            "SELECT person_id::text FROM memberships WHERE post_id = %s ORDER BY person_id",
             (bucket,),
         )
-        assert [row[0] for row in await cur.fetchall()] == [
-            ["Supervisor of the Checklist"],
-            ["Town Moderator"],
-        ]
+        assert [row[0] for row in await cur.fetchall()] == sorted([first_person, second])
         await conn.rollback()
 
 

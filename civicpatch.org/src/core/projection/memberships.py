@@ -92,14 +92,14 @@ def membership_claims(
     )
 
 
-def membership_label(members: Iterable[str], post_id: str, facts: Facts) -> str | None:
-    """A human's name for this membership, if one stands."""
+def membership_label_claim(members: Iterable[str], post_id: str, facts: Facts) -> Claim | None:
+    """A human's name for this membership, if one stands. Its value may be empty: "there is none"."""
     labels = [
         claim
         for claim in membership_claims(members, post_id, MEMBERSHIP_LABEL_FIELD, facts)
         if claim.kind == ClaimKind.ACCEPT
     ]
-    return labels[-1].value if labels else None
+    return labels[-1] if labels else None
 
 
 def membership_date(

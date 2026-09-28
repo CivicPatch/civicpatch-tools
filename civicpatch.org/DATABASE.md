@@ -273,10 +273,8 @@ erDiagram
         uuid            post_id             FK "ON UPDATE CASCADE (218), and composite FK (post_id, organization_id) ON UPDATE CASCADE"
         uuid            organization_id     "unique idx: (person_id, organization_id) WHERE closed_at IS NULL — one open post per body"
         uuid            person_id           FK
-        text_array      designations        "default: {}; how the source tells one post from another: Place 2, Position 8"
-        text_array      meta_unmatched_text "gin idx; default: {}; parts that produced NO role. Residue from a part that DID resolve rides on label instead — it is not unclassifiable and no rule fixes it. meta_-marked (201): our own triage residue, not a fact about the membership"
         jsonb           sources             "206: default []; Popolo sources — [{url, note}], one per label a source gave for this membership, note verbatim, url the page (null only on rows 206 backfilled without a matching source record). Replaced source_labels; SQL function membership_source_labels(sources) gives the distinct notes in order for readers still named source_labels"
-        text_null       label               "the source's words for what the post label cannot say — seeded on INSERT, then human-owned. Absent from upsert()'s ON CONFLICT SET, which is its whole protection. NULL = the post says it all"
+        text_null       label               "231 (10a): a human's label claim, else what the newest read's labels said beyond the post: designations, extra roles, unmatched text, joined with \", \". NULL = the post says it all"
         text_null       start_date          "144: text, not date — sources give partial dates and Popolo allows them (3,513 of 4,547 on dev are partial). From the source; we do not infer it"
         text_null       end_date            "144: text, as start_date. From the source — NOT set when someone stops appearing"
         timestamptz     opened_at           "225: was first_seen_at. PK part (227). When this period opened: stamped with when its facts were observed, never a page's date"

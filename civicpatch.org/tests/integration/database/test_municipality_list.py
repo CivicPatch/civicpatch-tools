@@ -89,9 +89,9 @@ async def _add_people(ocdid, count):
             (division, ocdid),
         )
         await cur.execute(
-            "INSERT INTO posts (jurisdiction_ocdid, organization_id, role_id, division_ocdid) "
-            "VALUES (%s, %s, 'mayor', %s) RETURNING id",
-            (ocdid, organization_id, division),
+            "INSERT INTO posts (id, jurisdiction_ocdid, organization_id, role_id, division_ocdid) "
+            "VALUES (post_id_of_key(%s, 'mayor', %s), %s, %s, 'mayor', %s) RETURNING id",
+            (organization_id, division, ocdid, organization_id, division),
         )
         post_id = (await cur.fetchone())[0]
         for _ in range(count):

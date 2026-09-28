@@ -416,3 +416,40 @@ def test_each_organizations_membership_keeps_only_its_own_sources():
     }
 
     assert by_organization == {COUNCIL: ["Mayor"], SCHOOL: ["Council Member"]}
+
+
+@pytest.mark.unit
+def test_with_no_claim_the_label_is_what_the_page_said_beyond_the_post():
+    person = derive(ALICE, Facts(records=(record("r1", "Council Member Place 3"),)))
+
+    assert person.memberships[0].label == "Place 3"
+
+
+@pytest.mark.unit
+def test_a_label_claim_outranks_the_derived_label():
+    facts = Facts(
+        records=(record("r1", "Council Member Place 3"),),
+        claims=(membership_claim("k1", COUNCIL_MEMBER_KEY, "label", "Interim"),),
+    )
+
+    assert derive(ALICE, facts).memberships[0].label == "Interim"
+
+
+@pytest.mark.unit
+def test_the_newest_read_decides_the_derived_label():
+    facts = Facts(records=(
+        record("r1", "Council Member Place 3", changeset="c1", minutes=1),
+        record("r2", "Council Member Place 4", changeset="c2", minutes=2),
+    ))
+
+    assert derive(ALICE, facts).memberships[0].label == "Place 4"
+
+
+@pytest.mark.unit
+def test_an_empty_label_claim_says_there_is_none_and_outranks_the_page():
+    facts = Facts(
+        records=(record("r1", "Council Member Place 3"),),
+        claims=(membership_claim("k1", COUNCIL_MEMBER_KEY, "label", None),),
+    )
+
+    assert derive(ALICE, facts).memberships[0].label is None

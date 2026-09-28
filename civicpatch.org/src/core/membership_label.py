@@ -43,16 +43,16 @@ def post_label(
 
 
 class MembershipLabel(BaseModel):
-    """What one occupant's own labels said beyond their seat's name."""
+    """What one occupant's own labels said beyond their seat's name, in the order it renders."""
 
-    demoted_roles: list[str] = []
     designations: list[str] = []
+    demoted_roles: list[str] = []
     meta_unmatched_text: list[str] = []
 
 
 def render(label: MembershipLabel) -> str:
     """One string, empty when the occupant's labels said nothing beyond the seat itself."""
-    parts = [*label.demoted_roles, *label.designations, *label.meta_unmatched_text]
+    parts = [*label.designations, *label.demoted_roles, *label.meta_unmatched_text]
     return _SEPARATOR.join(part for part in parts if part)
 
 
@@ -65,8 +65,8 @@ def render_with_post_label(post_label: str, label: MembershipLabel) -> str:
     """
     parts = [
         post_label,
-        *label.demoted_roles,
         *label.designations,
+        *label.demoted_roles,
         *label.meta_unmatched_text,
     ]
     return _SEPARATOR.join(part for part in parts if part)

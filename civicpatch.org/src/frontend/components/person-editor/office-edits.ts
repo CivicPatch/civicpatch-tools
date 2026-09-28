@@ -60,7 +60,7 @@ function officeEditFor(
   return edit;
 }
 
-// Untouched (`undefined`) keeps what they hold; emptied (`""` or `null`) is cleared.
+// Untouched (`undefined`) keeps what they hold; emptied (`""` or `null`) says there is none.
 function edited(value: unknown, held: string | null): string | null {
   if (value === undefined) return held;
   return typeof value === "string" && value ? value : null;

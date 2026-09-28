@@ -44,8 +44,6 @@ export interface Membership {
   division_ocdid: string;
 
   source_labels: string[];
-  designations: string[];
-  meta_unmatched_text: string[];
 }
 
 export interface PostRow extends Post {

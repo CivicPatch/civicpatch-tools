@@ -9,7 +9,12 @@ import pytest
 from core.people_edits import POSTS_FIELD, PeopleValidationError
 from schemas.claims import ClaimKind
 from schemas.jurisdictions import PersonEdit, OfficeEdit
-from core.roster_edits import claims_for_edit, membership_claim_edits, new_merges
+from core.roster_edits import (
+    claims_for_edit,
+    membership_claim_edits,
+    new_merges,
+)
+from shared.utils.membership_ids import membership_id
 
 MAYOR = "11111111-1111-5111-8111-111111111111"
 CLERK = "22222222-2222-5222-8222-222222222222"
@@ -156,9 +161,10 @@ def test_an_unchanged_seat_name_changes_nothing():
 
 
 @pytest.mark.unit
-def test_clearing_a_seat_name_asks_for_the_derived_guess_back():
-    """`None` is a withdrawal, which is why labels are not claims here: a withdrawal names a
-    row, not a value."""
+def test_clearing_a_seat_name_says_there_is_none():
+    """This verified that `None` asked for the derived label back (a withdrawal). It now
+    verifies `None` is a value of its own, "there is none", because 10a derives a label from
+    the page and a reviewer must be able to overrule it with nothing."""
     edit = PersonEdit(id="p1", offices=[OfficeEdit(id=MAYOR, membership_label=None)])
 
     assert [(field, value) for _, field, value in membership_claim_edits(_derived(), [edit])] == [
@@ -168,8 +174,6 @@ def test_clearing_a_seat_name_asks_for_the_derived_guess_back():
 
 @pytest.mark.unit
 def test_a_seat_name_is_keyed_on_the_person_and_the_post():
-    from shared.utils.membership_ids import membership_id
-
     edit = PersonEdit(id="p1", offices=[OfficeEdit(id=MAYOR, membership_label="Acting Mayor")])
 
     assert [entity for entity, _, _ in membership_claim_edits(_derived(), [edit])] == [

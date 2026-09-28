@@ -181,9 +181,8 @@ def test_person_row_drops_the_derived_state_column():
 @pytest.mark.unit
 def test_membership_row_drops_derived_and_unexported_columns():
     """`state` and `jurisdiction_ocdid` are the export's own join-time additions (not real
-    columns on `memberships`); `is_open` is computed from `closed_at` and not stored either;
-    `meta_unmatched_text` is not published at all (see `parquet_rows.py`) so it never appears
-    in the input in the first place. `post_id` is remapped: exports from before 218 carry
+    columns on `memberships`); `is_open` is computed from `closed_at` and not stored either.
+    `post_id` is remapped: exports from before 218 carry
     random post ids, and the seed re-keys them."""
     row = membership_row(
         {
@@ -198,7 +197,6 @@ def test_membership_row_drops_derived_and_unexported_columns():
             "end_date": None,
             "opened_at": "2026-01-01T00:00:00Z",
             "closed_at": None,
-            "designations": ["Place 2"],
             "source_labels": ["Council Member, Place 2"],
             "is_open": True,
         },
@@ -208,7 +206,6 @@ def test_membership_row_drops_derived_and_unexported_columns():
     assert "state" not in row
     assert "jurisdiction_ocdid" not in row
     assert "is_open" not in row
-    assert row["designations"] == ["Place 2"]
     assert row["post_id"] == "post-by-key"
 
 

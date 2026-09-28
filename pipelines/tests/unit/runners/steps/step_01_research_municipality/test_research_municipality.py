@@ -69,20 +69,20 @@ def test_an_unmatched_post_is_not_expected():
     assert [membership.role_label for membership in expected] == ["Mayor"]
 
 
-def _held(post: Post, designations: list[str]) -> Membership:
+def _held(post: Post, label: str) -> Membership:
     return Membership(
         post_id=post.id,
         role_id=post.role_id,
         division_ocdid=post.division_ocdid,
         role_label="Council Member",
-        designations=designations,
+        label=label,
     )
 
 
 def test_a_post_carries_the_designations_of_every_membership_held_on_it():
     """An at-large post is one expected membership, however many seat markers its holders have."""
     at_large, mayor = _post("council-member"), _post("mayor")
-    held = [_held(at_large, ["Seat 1"]), _held(at_large, ["Seat 2"]), _held(mayor, ["Seat 9"])]
+    held = [_held(at_large, "Seat 1"), _held(at_large, "Seat 2"), _held(mayor, "Seat 9")]
 
     [council] = _post_memberships([at_large], held, _ROLE_CONFIG, _OCDID)
 

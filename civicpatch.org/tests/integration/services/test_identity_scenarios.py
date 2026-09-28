@@ -297,3 +297,13 @@ async def test_scenario_26_the_matcher_finds_a_hand_added_person_and_a_split_sti
 
     resolved = await assign_ids(_OCDID, [{"name": "Bob Ito"}, {"name": "Bob Ito Sr"}])
     assert [person["id"] for person in resolved] == [bob, bob_sr], "no duplicate minted"
+
+    # The split's record parses alone into a post no stored record names; the rebuild still
+    # has to mint it, or the membership is never written.
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT p.role_id FROM memberships m JOIN posts p ON p.id = m.post_id "
+            "WHERE m.person_id::text = %s AND m.closed_at IS NULL",
+            (bob_sr,),
+        )
+        assert await cur.fetchall() == [("clerk",)]

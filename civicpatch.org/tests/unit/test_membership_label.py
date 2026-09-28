@@ -54,14 +54,15 @@ def test_a_designation_stands_on_its_own():
 
 
 @pytest.mark.unit
-def test_a_demoted_role_comes_before_a_designation():
+def test_a_designation_comes_before_a_demoted_role():
     """Someone who is Mayor and also a Council Member holds one seat and is described by
-    both. The losing role belongs to the occupant, so it renders here, not on the seat."""
+    both. The losing role belongs to the occupant, so it renders here, not on the seat; the
+    designation leads because it names the seat they sit in (settled 2026-09-25)."""
     assert (
         render(
             MembershipLabel(demoted_roles=["Council Member"], designations=["Position 8"])
         )
-        == "Council Member, Position 8"
+        == "Position 8, Council Member"
     )
 
 

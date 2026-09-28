@@ -90,25 +90,27 @@ def _post_memberships(
     """One per post, carrying the designations of every membership held on it. `unmatched` is
     skipped: it has no label worth searching a page for."""
     labels_by_id = {role.id: role.label for role in (role_config.roles if role_config else [])}
+    taxonomy = build_taxonomy(role_config)
     return [
         ExpectedMembership(
             organization_id=post.organization_id,
             role_label=labels_by_id[post.role_id],
             division=_division(post.division_ocdid, jurisdiction_ocdid),
-            designations=_designations_held_on(post, held),
+            designations=_designations_held_on(post, held, taxonomy),
         )
         for post in posts
         if post.role_id != UNMATCHED_ROLE_ID
     ]
 
 
-def _designations_held_on(post: Post, held: List[Membership]) -> List[str]:
+def _designations_held_on(post: Post, held: List[Membership], taxonomy: Taxonomy) -> List[str]:
+    """Read off each membership's label, which a human may have corrected, by the same parser."""
     return list(
         dict.fromkeys(
             designation
             for membership in held
-            if membership.post_id == post.id
-            for designation in membership.designations
+            if membership.post_id == post.id and membership.label
+            for designation in parse_label(membership.label, taxonomy).other_designations
         )
     )
 

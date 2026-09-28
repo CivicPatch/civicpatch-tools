@@ -142,7 +142,7 @@ async def _membership(person_id, post_id):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT label, designations FROM memberships WHERE id::text = %s",
+            "SELECT label, membership_source_labels(sources) FROM memberships WHERE id::text = %s",
             (membership_id(person_id, post_id),),
         )
         return await cur.fetchone()
@@ -179,14 +179,16 @@ async def test_moving_leaves_one_membership():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_naming_a_seat_keeps_what_the_page_said_about_it():
-    """Naming a membership must not cost what the parser found in the page's own label: the
-    label is the human's claim, the designations are the page's, and the rebuild re-derives
-    the second from the record every time."""
+    """Naming a membership must not cost what the page said: the label is the human's claim,
+    and the page's own wording stays on the membership's sources, re-derived from the record.
+
+    This verified the page's designations survived in their own column; it now verifies the
+    page's words survive in `sources`, because 10a drops the column and derives the label."""
     person_id, post_id, _ = await _seed(label="Mayor Position 8")
 
     await _seat(person_id, post_id, "Renamed")
 
-    assert await _membership(person_id, post_id) == ("Renamed", ["Position 8"])
+    assert await _membership(person_id, post_id) == ("Renamed", ["Mayor Position 8"])
 
 
 async def _activity_count() -> int:

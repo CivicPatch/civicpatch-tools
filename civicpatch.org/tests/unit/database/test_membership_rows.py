@@ -63,8 +63,6 @@ def test_a_row_carries_every_column_the_fold_derived():
                 label="Mayor Pro Tem",
                 start_date="2024-01-01",
                 end_date="2028-01-01",
-                designations=("Place 3",),
-                unmatched_text=("Harbor Commissioner",),
                 sources=(MembershipSource(note="Mayor", url="https://example.gov"),),
             )
         ]
@@ -74,6 +72,4 @@ def test_a_row_carries_every_column_the_fold_derived():
     assert written["start_date"] == "2024-01-01"
     assert written["end_date"] == "2028-01-01"
     assert written["opened_at"] == _T
-    assert written["designations"] == ["Place 3"]
-    assert written["meta_unmatched_text"] == ["Harbor Commissioner"]
     assert json.loads(written["sources"]) == [{"note": "Mayor", "url": "https://example.gov"}]

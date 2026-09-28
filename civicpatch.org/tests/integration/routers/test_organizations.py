@@ -283,9 +283,9 @@ async def test_deleting_an_organization_with_posts_is_refused(client):
             (division_ocdid, _OCDID),
         )
         await cur.execute(
-            "INSERT INTO posts (jurisdiction_ocdid, organization_id, role_id, division_ocdid) "
-            "VALUES (%s, %s, 'mayor', %s)",
-            (_OCDID, org_id, division_ocdid),
+            "INSERT INTO posts (id, jurisdiction_ocdid, organization_id, role_id, division_ocdid) "
+            "VALUES (post_id_of_key(%s, 'mayor', %s), %s, %s, 'mayor', %s)",
+            (org_id, division_ocdid, _OCDID, org_id, division_ocdid),
         )
         await conn.commit()
 

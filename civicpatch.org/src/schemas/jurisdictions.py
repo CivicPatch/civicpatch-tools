@@ -19,7 +19,7 @@ class OfficeEdit(BaseModel):
     `membership_label` is what this person's seat is called. A post's own name is
     `post_label`, a maintainer's act on the posts route, and is never edited here.
     `start_date` / `end_date` are the term, per membership: a person in two bodies has two.
-    An omitted field is left alone; null clears it back to what the page says.
+    An omitted field is left alone; null says there is none, outranking the page.
     """
 
     id: str
