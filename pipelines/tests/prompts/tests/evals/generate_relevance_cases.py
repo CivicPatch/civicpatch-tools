@@ -4,9 +4,11 @@ Offline: no network, no LLM, no cost. Writes to `datasets/candidates/relevant_pa
 to review and move into `datasets/local/relevant_page/`; nothing here is trusted on its own.
 
 A page is relevant if a published person cites it in `source_urls`: that is a reviewed answer.
-A page nobody cites is only *probably* irrelevant (a second roster page that was never picked
-as a source looks the same), so a negative is written only where the saved run judged the page
-relevant, and is marked for review. Pages both sides call irrelevant are skipped.
+A page nobody cites but the saved run judged relevant is proposed relevant too: a 2026-09-28
+review found 39 of 41 such pages were second rosters (a councilmember's own page when the roster
+cites the council page). Negatives are pages both the saved run and the rosters treat as
+irrelevant. At most two of each per jurisdiction, so one site cannot fill the set. A case already
+in staging is never overwritten, since it may have been reviewed.
 
     uv run python -m tests.prompts.tests.evals.generate_relevance_cases --open-data ../open-data
 """
@@ -21,6 +23,14 @@ from enum import Enum
 import yaml
 from pydantic import BaseModel
 from runners.people_collector.schemas import LinkStatus
+from shared.schemas import JurisdictionLevel
+from shared.utils.government_forms import (
+    GovernmentFormsConfig,
+    load_government_forms_config,
+    organizations_for,
+    resolve_government_form,
+)
+from shared.utils.id_utils import parse_jurisdiction_ocdid
 from shared.utils.url_utils import canonical_url
 from tests.prompts.tests.evals.eval_utils import GENERATED_KEY
 
@@ -31,6 +41,8 @@ CANDIDATES = "tests/prompts/datasets/candidates/relevant_page"
 # The statuses that carry the saved run's own relevance verdict; every other status never got one.
 _JUDGED_RELEVANT = {LinkStatus.DONE.value, LinkStatus.PROCESSED_HEURISTICS_FAIL.value}
 _JUDGED_IRRELEVANT = {LinkStatus.PROCESSED_IRRELEVANT.value}
+# What a jurisdiction with no form has in production: its one default organization.
+_DEFAULT_ORGANIZATION = "Government"
 
 
 # --- What the stages pass along ---
@@ -52,13 +64,27 @@ class SavedRun(BaseModel):
 class Candidate(Enum):
     RELEVANT = "relevant"
     RELEVANT_MODEL_DISAGREED = "relevant, the saved run said irrelevant"
-    IRRELEVANT_TO_REVIEW = "irrelevant by absence, the saved run said relevant"
+    RELEVANT_UNCITED = "relevant, not cited but the saved run said relevant"
+    IRRELEVANT = "irrelevant, the saved run and the rosters agree"
+
+
+MAX_PER_JURISDICTION = 2
+
+
+class PromptInputs(BaseModel):
+    """What production's relevance prompt is given besides the page: the form the config rules
+    decide, and the organizations and roles that form derives."""
+
+    government_form: str | None
+    known_roles: list[str]
+    known_organizations: list[str]
 
 
 class CandidateCase(BaseModel):
     case_id: str
     page_url: str
     jurisdiction_name: str
+    inputs: PromptInputs
     candidate: Candidate
     input_path: str
 
@@ -115,7 +141,7 @@ def read_dataset_page_urls() -> set[str]:
 
 
 def candidate_for(status: str, cited: bool) -> Candidate | None:
-    """None when the saved run gave no verdict, or when both sides call the page irrelevant."""
+    """None only when the saved run gave the page no verdict."""
     if status not in _JUDGED_RELEVANT and status not in _JUDGED_IRRELEVANT:
         return None
     if cited and status in _JUDGED_IRRELEVANT:
@@ -123,8 +149,8 @@ def candidate_for(status: str, cited: bool) -> Candidate | None:
     if cited:
         return Candidate.RELEVANT
     if status in _JUDGED_RELEVANT:
-        return Candidate.IRRELEVANT_TO_REVIEW
-    return None
+        return Candidate.RELEVANT_UNCITED
+    return Candidate.IRRELEVANT
 
 
 def case_id(run_folder: str, input_path: str) -> str:
@@ -132,22 +158,51 @@ def case_id(run_folder: str, input_path: str) -> str:
     return re.sub(r"[^a-z0-9_-]", "_", f"{run_folder}__{page_folder}".lower())
 
 
-def candidate_cases(run: SavedRun, cited: set[str], known: set[str]) -> list[CandidateCase]:
-    """This run's pages worth a case. A run whose jurisdiction has no published roster has none."""
+def prompt_inputs(config: GovernmentFormsConfig, run: SavedRun) -> PromptInputs:
+    parsed = parse_jurisdiction_ocdid(run.jurisdiction_ocdid)
+    form = None
+    if parsed.level != JurisdictionLevel.STATE:
+        form = resolve_government_form(config, parsed.state, parsed.level, run.jurisdiction_name, None)
+    if form is None:
+        return PromptInputs(government_form=None, known_roles=[], known_organizations=[_DEFAULT_ORGANIZATION])
+    derived = organizations_for(form)
+    return PromptInputs(
+        government_form=form.value,
+        known_roles=[role for organization in derived for role in organization.role_labels],
+        known_organizations=[organization.name for organization in derived],
+    )
+
+
+def candidate_cases(
+    run: SavedRun, cited: set[str], known: set[str], inputs: PromptInputs
+) -> list[CandidateCase]:
+    """This run's pages worth a case, at most `MAX_PER_JURISDICTION` relevant and as many
+    irrelevant. A run whose jurisdiction has no published roster has none."""
     if not cited:
         return []
     cases = []
+    relevant_count = 0
+    irrelevant_count = 0
     for page in run.pages:
         if canonical_url(page.url) in known:
             continue
         candidate = candidate_for(page.status, canonical_url(page.url) in cited)
         if candidate is None:
             continue
+        if candidate is Candidate.IRRELEVANT:
+            if irrelevant_count == MAX_PER_JURISDICTION:
+                continue
+            irrelevant_count += 1
+        else:
+            if relevant_count == MAX_PER_JURISDICTION:
+                continue
+            relevant_count += 1
         cases.append(
             CandidateCase(
                 case_id=case_id(run.folder, page.input_path),
                 page_url=page.url,
                 jurisdiction_name=run.jurisdiction_name,
+                inputs=inputs,
                 candidate=candidate,
                 input_path=page.input_path,
             )
@@ -157,30 +212,32 @@ def candidate_cases(run: SavedRun, cited: set[str], known: set[str]) -> list[Can
 
 def expected_yaml(case: CandidateCase) -> str:
     thoughts = f"GENERATED, review before moving into the dataset: {case.candidate.value}."
-    if case.candidate is Candidate.IRRELEVANT_TO_REVIEW:
-        thoughts += " Nobody published cites this page, which is weak evidence it is irrelevant."
-    is_relevant = case.candidate is not Candidate.IRRELEVANT_TO_REVIEW
-    return yaml.safe_dump(
-        {
-            "page_url": case.page_url,
-            "jurisdiction_name": case.jurisdiction_name,
-            GENERATED_KEY: True,
-            "page": {"is_relevant": is_relevant, "relevant_urls": [], "thoughts": thoughts},
-        },
-        sort_keys=False,
-    )
+    is_relevant = case.candidate is not Candidate.IRRELEVANT
+    expected: dict[str, object] = {"page_url": case.page_url, "jurisdiction_name": case.jurisdiction_name}
+    if case.inputs.government_form:
+        expected["government_form"] = case.inputs.government_form
+    if case.inputs.known_roles:
+        expected["known_roles"] = case.inputs.known_roles
+    expected["known_organizations"] = case.inputs.known_organizations
+    expected[GENERATED_KEY] = True
+    expected["page"] = {"is_relevant": is_relevant, "relevant_urls": [], "thoughts": thoughts}
+    return yaml.safe_dump(expected, sort_keys=False)
 
 
 # --- Writing ---
 
 
-def write_case(case: CandidateCase) -> None:
+def write_case(case: CandidateCase) -> bool:
+    """False, writing nothing, when the case is already staged: it may have been reviewed."""
     case_dir = os.path.join(CANDIDATES, case.case_id)
-    os.makedirs(case_dir, exist_ok=True)
+    if os.path.exists(case_dir):
+        return False
+    os.makedirs(case_dir)
     with open(case.input_path) as source, open(os.path.join(case_dir, "input.md"), "w") as target:
         target.write(source.read())
     with open(os.path.join(case_dir, "expected.yml"), "w") as f:
         f.write(expected_yaml(case))
+    return True
 
 
 # --- Entry point ---
@@ -194,18 +251,19 @@ def main() -> None:
     runs = read_saved_runs()
     cited = read_cited_urls(open_data)
     known = read_dataset_page_urls()
+    config = load_government_forms_config()
 
     cases = []
     for run in runs:
-        cases.extend(candidate_cases(run, cited.get(run.jurisdiction_ocdid, set()), known))
+        inputs = prompt_inputs(config, run)
+        cases.extend(candidate_cases(run, cited.get(run.jurisdiction_ocdid, set()), known, inputs))
 
-    for case in cases:
-        write_case(case)
+    written = [case for case in cases if write_case(case)]
 
     for candidate in Candidate:
-        count = len([case for case in cases if case.candidate is candidate])
+        count = len([case for case in written if case.candidate is candidate])
         print(f"{count:4d}  {candidate.value}")
-    print(f"written to {CANDIDATES}")
+    print(f"{len(written)} new cases written to {CANDIDATES}; {len(cases) - len(written)} already staged")
 
 
 if __name__ == "__main__":

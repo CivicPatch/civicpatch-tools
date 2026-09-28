@@ -1,9 +1,11 @@
 page_url: https://www.davenportwa.us/index.asp?SEC=A2951C48-519E-4AAC-A2C8-4E8E24C4010C&DE=650C0FDF-6762-4B89-90B4-347C4C3127CD&Type=B_DIR
 jurisdiction_name: Davenport city
+known_organizations:
+- Government
 generated: true
 page:
-  is_relevant: false
+  is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: irrelevant by absence,
-    the saved run said relevant. Nobody published cites this page, which is weak evidence
-    it is irrelevant.'
+  thoughts: 'Reviewed 2026-09-28, label flipped to true: Mayor and Council directory
+    entry: ''Mike Strite Council Member Position # 1''. Sparse, but it is one official''s
+    entry.'

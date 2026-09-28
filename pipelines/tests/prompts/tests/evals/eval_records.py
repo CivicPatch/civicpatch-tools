@@ -28,6 +28,12 @@ class Mismatch(BaseModel):
 CaseMismatches = dict[str, list[Mismatch]]
 
 
+class CasePrompts(BaseModel):
+    template_sha256: str | None
+    # Case key (see eval_utils.archive_case_prompts) -> hash of the exact prompt it was sent.
+    prompts: dict[str, str]
+
+
 class HistoryRun(BaseModel):
     """A row of history.yml as eval_utils.record_history writes it."""
 
@@ -42,6 +48,7 @@ class HistoryRun(BaseModel):
     # Set when the provider produced no numbers at all: a timeout or a refusal, recorded so the
     # run shows a failure rather than a provider that silently stopped appearing.
     error: str | None = None
+    case_prompts: dict[str, str] = {}
 
     @property
     def short_provider(self) -> str:

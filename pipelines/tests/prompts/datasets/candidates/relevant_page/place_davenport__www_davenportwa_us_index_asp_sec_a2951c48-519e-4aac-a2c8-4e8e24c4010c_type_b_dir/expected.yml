@@ -1,7 +1,10 @@
 page_url: https://www.davenportwa.us/index.asp?SEC=A2951C48-519E-4AAC-A2C8-4E8E24C4010C&Type=B_DIR
 jurisdiction_name: Davenport city
+known_organizations:
+- Government
 generated: true
 page:
   is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: relevant.'
+  thoughts: 'Reviewed 2026-09-28, label confirmed: ''Meet Our Mayor and Council''
+    lists the Mayor, Brad Sweet, and council members by position.'

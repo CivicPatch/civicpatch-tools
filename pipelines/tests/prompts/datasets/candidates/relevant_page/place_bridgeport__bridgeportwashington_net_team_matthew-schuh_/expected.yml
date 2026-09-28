@@ -1,9 +1,10 @@
 page_url: https://bridgeportwashington.net/team/matthew-schuh/
 jurisdiction_name: Bridgeport city
+known_organizations:
+- Government
 generated: true
 page:
-  is_relevant: false
+  is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: irrelevant by absence,
-    the saved run said relevant. Nobody published cites this page, which is weak evidence
-    it is irrelevant.'
+  thoughts: 'Reviewed 2026-09-28, label flipped to true: Official''s page names Matthew
+    Schuh, Council Position 1, with contact info; the bio is template filler.'

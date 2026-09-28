@@ -1,0 +1,11 @@
+page_url: https://ci.ellensburg.wa.us/100/City-Council
+jurisdiction_name: Ellensburg city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: true
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label flipped to true: Its ''Members'' section lists
+    ''the current Councilmembers'' with positions and terms, and names Rich Elliott
+    as Mayor.'

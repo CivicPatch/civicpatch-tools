@@ -1,9 +1,11 @@
 page_url: https://bridgeportwashington.net/team/jacqueline-hentges/
 jurisdiction_name: Bridgeport city
+known_organizations:
+- Government
 generated: true
 page:
-  is_relevant: false
+  is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: irrelevant by absence,
-    the saved run said relevant. Nobody published cites this page, which is weak evidence
-    it is irrelevant.'
+  thoughts: 'Reviewed 2026-09-28, label flipped to true: Official''s own page naming
+    Jacqueline Hentges, Council Position 3, with council email. The bio is template
+    filler text.'

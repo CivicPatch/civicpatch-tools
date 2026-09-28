@@ -1,0 +1,11 @@
+page_url: https://www.cityofamherst.com/contact_us/index.php
+jurisdiction_name: Amherst city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: true
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label flipped to true: Contact page lists "Mayor:
+    Clinton Sawyer" beside city staff; names a primary official, so the tie goes to
+    true.'

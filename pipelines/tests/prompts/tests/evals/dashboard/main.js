@@ -1,10 +1,7 @@
 import { html, render } from "lit-html";
 
-import { detailSection } from "./detail-section.js";
-import { caseInputUrl } from "./format.js";
-import { issuesSection } from "./issues-section.js";
+import { caseInputUrl, casePrompts } from "./format.js";
 import { modelsSection } from "./models-section.js";
-import { promptsSection } from "./prompts-section.js";
 import { RUN_BROWSER_ID, focusedCaseElementId, runBrowser } from "./run-browser.js";
 import { trendSection } from "./trend-section.js";
 import { verdictSection } from "./verdict-section.js";
@@ -58,7 +55,9 @@ const actions = {
     const shownCaseId = caseId === state.selection.case_id ? null : caseId;
     setState({ selection: { ...state.selection, case_id: shownCaseId } });
     if (shownCaseId) {
-      fetchCaseInput(caseInputUrl(sectionFor(state.selection.eval_name), shownCaseId));
+      const section = sectionFor(state.selection.eval_name);
+      fetchCaseInput(caseInputUrl(section, shownCaseId));
+      casePrompts(section, state.selection.provider, shownCaseId).forEach((prompt) => fetchCaseInput(prompt.url));
     }
   },
   chooseComparison: (evalName, choice) => setState({
@@ -75,12 +74,6 @@ function page(data) {
     ${modelsSection(sections, state.comparisonChoices, actions)}
     <h2 class="civ-section-label">What is the trend</h2>
     ${trendSection(sections, actions)}
-    <h2 class="civ-section-label">What do I fix</h2>
-    ${issuesSection(data.issues, sections)}
-    <h2 class="civ-section-label">Which prompt produced it</h2>
-    ${promptsSection(sections)}
-    <h2 class="civ-section-label">Detail</h2>
-    ${detailSection(sections)}
     ${runBrowser(sections, state.selection, state.caseInputs, actions)}
   `;
 }

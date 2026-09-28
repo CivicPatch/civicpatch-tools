@@ -1,7 +1,10 @@
 page_url: https://applevalley.org/council-member-info/scott-nassif/
 jurisdiction_name: Apple Valley town
+known_organizations:
+- Government
 generated: true
 page:
   is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: relevant.'
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Town Council member page for Scott
+    Nassif, re-elected 2024; the image names him Mayor.'

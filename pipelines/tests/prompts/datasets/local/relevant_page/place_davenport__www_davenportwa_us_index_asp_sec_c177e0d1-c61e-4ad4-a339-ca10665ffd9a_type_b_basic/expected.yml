@@ -1,0 +1,10 @@
+page_url: https://www.davenportwa.us/index.asp?SEC=C177E0D1-C61E-4AD4-A339-CA10665FFD9A&Type=B_BASIC
+jurisdiction_name: Davenport city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: false
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Government section page with navigation
+    links only; Mayor and Council is just a link, no names.'

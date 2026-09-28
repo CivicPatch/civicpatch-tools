@@ -1,0 +1,10 @@
+page_url: https://www.omakcity.com/1417/Mayor
+jurisdiction_name: Omak city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: true
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Mayor page with first-person bio;
+    name appears only in image alt ''cindy_gagne-mayor''. Kept true under the policy.'

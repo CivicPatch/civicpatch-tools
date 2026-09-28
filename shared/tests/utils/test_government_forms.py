@@ -2,7 +2,10 @@ import pytest
 from shared.schemas import GovernmentForm, JurisdictionLevel, Role, RoleConfig, RoleStatus
 from shared.utils.government_forms import (
     GovernmentFormsConfig,
+    CountyGovernment,
+    DerivedOrganization,
     allowed_forms,
+    derived_organizations,
     describe_government_form,
     load_government_forms_config,
     organizations_for,
@@ -33,6 +36,9 @@ _TAXONOMY = build_taxonomy(
             _role("moderator", "Moderator"),
             _role("town-meeting-member", "Town Meeting Member"),
             _role("county-executive", "County Executive"),
+            _role("chair", "Chair"),
+            _role("vice-chair", "Vice Chair"),
+            _role("council-president", "Council President"),
         ]
     )
 )
@@ -123,6 +129,10 @@ def test_every_derived_role_label_resolves(form):
 _LOCAL = JurisdictionLevel.LOCAL
 _COUNTIES = JurisdictionLevel.COUNTIES
 
+_TN_COMMISSION = DerivedOrganization(name="County Commission", role_labels=["Commissioner"])
+_TN_MAYOR = DerivedOrganization(name="Office of the County Mayor", role_labels=["Mayor"])
+_WA_BOARD = DerivedOrganization(name="Board of County Commissioners", role_labels=["Commissioner"])
+
 _CONFIG = GovernmentFormsConfig.model_validate(
     {
         "country": {
@@ -132,6 +142,10 @@ _CONFIG = GovernmentFormsConfig.model_validate(
         "states": {
             "mi": {"local": {"township": ["township_board"]}},
             "tx": {"counties": {"*": ["commission"]}},
+        },
+        "county_governments": {
+            "tn": CountyGovernment(board=_TN_COMMISSION, executive=_TN_MAYOR).model_dump(),
+            "wa": CountyGovernment(board=_WA_BOARD).model_dump(),
         },
     }
 )
@@ -164,6 +178,40 @@ def test_a_state_with_no_entry_gets_the_country_forms():
 def test_state_level_has_no_forms():
     with pytest.raises(ValueError):
         allowed_forms(_CONFIG, "wa", JurisdictionLevel.STATE, "Washington")
+
+
+def test_a_county_with_no_form_yet_gets_its_states_board():
+    assert derived_organizations(_CONFIG, "wa", _COUNTIES, None) == [_WA_BOARD]
+
+
+def test_a_commission_county_gets_only_its_board():
+    assert derived_organizations(_CONFIG, "tn", _COUNTIES, GovernmentForm.COMMISSION) == [_TN_COMMISSION]
+
+
+def test_a_county_executive_county_gets_its_states_executive():
+    organizations = derived_organizations(_CONFIG, "tn", _COUNTIES, GovernmentForm.COUNTY_EXECUTIVE)
+
+    assert organizations == [_TN_COMMISSION, _TN_MAYOR]
+
+
+def test_a_state_with_no_executive_title_gets_county_executive():
+    organizations = derived_organizations(_CONFIG, "wa", _COUNTIES, GovernmentForm.COUNTY_EXECUTIVE)
+
+    assert [o.name for o in organizations] == ["Board of County Commissioners", "County Executive"]
+
+
+def test_a_county_in_a_state_with_no_titles_gets_nothing():
+    assert derived_organizations(_CONFIG, "ca", _COUNTIES, GovernmentForm.COMMISSION) == []
+
+
+def test_a_local_jurisdiction_gets_its_forms_organizations():
+    organizations = derived_organizations(_CONFIG, "wa", _LOCAL, GovernmentForm.COUNCIL_MANAGER)
+
+    assert organizations == organizations_for(GovernmentForm.COUNCIL_MANAGER)
+
+
+def test_a_local_jurisdiction_with_no_form_gets_nothing():
+    assert derived_organizations(_CONFIG, "wa", _LOCAL, None) == []
 
 
 def test_the_government_form_beats_a_rule():
@@ -214,3 +262,13 @@ def test_the_shipped_config_loads():
     assert GovernmentForm.COUNTY_EXECUTIVE not in allowed_forms(
         config, "wa", _LOCAL, "Seattle city"
     )
+
+
+def test_every_county_role_label_resolves():
+    for state, government in load_government_forms_config().county_governments.items():
+        organizations = [government.board]
+        if government.executive is not None:
+            organizations.append(government.executive)
+        for organization in organizations:
+            for label in organization.role_labels:
+                assert label in _TAXONOMY.role_ids, f"{state}: {label!r} is not a role"

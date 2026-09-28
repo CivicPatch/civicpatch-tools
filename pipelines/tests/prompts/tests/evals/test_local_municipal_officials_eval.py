@@ -9,6 +9,7 @@ import pytest_asyncio
 import yaml
 from eval_utils import (
     PROVIDER_COMPARISON,
+    archive_case_prompts,
     make_provider_client,
     record_history,
     record_run,
@@ -269,6 +270,9 @@ async def test_provider_comparison(load_eval_cases):
 
     evals_dir = "tests/prompts/tests/evals/municipal_officials"
     os.makedirs(evals_dir, exist_ok=True)
+    case_prompts = archive_case_prompts(
+        evals_dir, {case["id"]: make_together_prompt(case["expected"]) for case in load_eval_cases}
+    )
 
     comparison = {}
     failures = {}
@@ -317,6 +321,7 @@ async def test_provider_comparison(load_eval_cases):
             {case_id: case_result["score"] for case_id, case_result in result["per_case_scores"]},
             accuracy=accuracy_report,
             mismatches=result["mismatches"],
+            case_prompts=case_prompts,
         )
         report_path = os.path.join(evals_dir, f"{client['name']}-eval-report.yml")
         with open(report_path, "w", encoding="utf-8") as f:
@@ -331,6 +336,7 @@ async def test_provider_comparison(load_eval_cases):
                         for case_id, case_result in result["per_case_scores"]
                     ],
                     "mismatches": result["mismatches"],
+                    "case_prompts": case_prompts,
                 },
                 f,
                 sort_keys=False,

@@ -1,0 +1,11 @@
+page_url: https://www.wallawallawa.gov/government/city-directory
+jurisdiction_name: Walla Walla city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: true
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label flipped to true: City Directory has a ''City
+    Council Members'' table naming the Mayor, Mayor Pro Tem and five councilmembers
+    above staff.'

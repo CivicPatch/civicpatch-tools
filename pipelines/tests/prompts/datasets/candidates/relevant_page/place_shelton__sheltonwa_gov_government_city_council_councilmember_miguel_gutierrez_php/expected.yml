@@ -1,7 +1,10 @@
 page_url: https://sheltonwa.gov/government/city_council/councilmember_miguel_gutierrez.php
 jurisdiction_name: Shelton city
+known_organizations:
+- Government
 generated: true
 page:
   is_relevant: true
   relevant_urls: []
-  thoughts: 'GENERATED, review before moving into the dataset: relevant.'
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Official''s own page: Councilmember
+    Miguel Gutierrez, Seat Seven, term expires 2029.'

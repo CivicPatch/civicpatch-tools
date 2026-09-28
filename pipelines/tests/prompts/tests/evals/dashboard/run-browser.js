@@ -1,6 +1,16 @@
 import { html } from "lit-html";
 
-import { caseInputUrl, formatAgo, formatCount, formatFriendly, formatValue } from "./format.js";
+import {
+  caseInputUrl,
+  casePromptInputs,
+  casePrompts,
+  formatAgo,
+  formatCount,
+  formatFriendly,
+  formatValue,
+  promptWithChanges,
+  promptWithPlaceholders,
+} from "./format.js";
 
 export const RUN_BROWSER_ID = "run-browser";
 
@@ -54,7 +64,7 @@ function valueCell(className, value, label, showLabel) {
   `;
 }
 
-function mismatchCase(caseId, mismatches, selection, actions) {
+function mismatchCase(section, caseId, mismatches, selection, actions) {
   const selected = caseId === selection.case_id;
   const highlighted = selected || caseId === selection.focused_case_id;
   return html`
@@ -65,6 +75,7 @@ function mismatchCase(caseId, mismatches, selection, actions) {
           ${selected ? "hide page" : "show prompt and page"}
         </button>
       </div>
+      ${casePromptInputs(section, caseId)}
       <table class="data-table mismatch-table">
         <colgroup>
           <col class="mismatch-table__col-subject"><col class="mismatch-table__col-field">
@@ -94,7 +105,32 @@ function mismatchList(section, selection, actions) {
   }
   return html`
     <p class="run-browser__note">${selection.provider}, latest run only. <code>—</code> means nothing was returned.</p>
-    ${caseIds.map((caseId) => mismatchCase(caseId, byCase[caseId], selection, actions))}
+    ${caseIds.map((caseId) => mismatchCase(section, caseId, byCase[caseId], selection, actions))}
+  `;
+}
+
+function savedPrompt(section, prompt, caseInputs) {
+  const text = caseInputs[prompt.url];
+  const template = section.prompt_versions.find((v) => v.prompt_sha256 === prompt.template_sha256);
+  return html`
+    ${prompt.label ? html`<p class="run-browser__note">${prompt.label}</p>` : ""}
+    <pre class="case-detail__prompt">${text == null ? LOADING : template ? promptWithChanges(text, template.text) : text}</pre>
+  `;
+}
+
+function casePromptBlock(section, version, selection, caseInputs) {
+  const prompts = selection.case_id ? casePrompts(section, selection.provider, selection.case_id) : [];
+  if (prompts.length) {
+    return html`
+      <p class="run-browser__note">The prompt this case was sent on ${selection.provider}&rsquo;s latest run, with this
+      case&rsquo;s page content as the user message. Bold marks what differs from the template.</p>
+      ${prompts.map((prompt) => savedPrompt(section, prompt, caseInputs))}
+    `;
+  }
+  return html`
+    <p class="run-browser__note">No saved prompt for this case, so this is the template;
+    <code>&lt;per case&gt;</code> marks what varies.</p>
+    <pre class="case-detail__prompt">${version ? promptWithPlaceholders(version.text) : NOT_ARCHIVED}</pre>
   `;
 }
 
@@ -106,9 +142,7 @@ function caseDetail(section, version, selection, caseInputs, actions) {
         <span>${caseId || ""}</span>
         <button type="button" class="secondary btn-sm" @click=${() => actions.toggleCase(null)}>close case</button>
       </div>
-      <p class="run-browser__note">System prompt, sent once per case with that case&rsquo;s page content as the user
-      message; <code>&lt;injected per case&gt;</code> marks the block that varies.</p>
-      <pre class="case-detail__prompt">${version ? version.text : NOT_ARCHIVED}</pre>
+      ${casePromptBlock(section, version, selection, caseInputs)}
       <p class="run-browser__note">Case input${caseId ? `, ${caseId}/input.md` : ""}</p>
       <pre class="case-detail__input">${caseId ? caseInputs[caseInputUrl(section, caseId)] || LOADING : ""}</pre>
     </div>

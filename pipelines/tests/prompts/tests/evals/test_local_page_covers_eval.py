@@ -38,7 +38,9 @@ import pytest
 import yaml
 from accuracy import as_report
 from eval_utils import (
+    CASE_PROMPT_KEY_SEPARATOR,
     PROVIDER_COMPARISON,
+    archive_case_prompts,
     gather_capped,
     make_provider_client,
     record_history,
@@ -105,11 +107,7 @@ async def run_eval(model_client, case, ocdid) -> tuple[dict, dict]:
             model_client["run_prompt"],
             _eval_run_id(model_client["name"]),
             ocdid,
-            page_covers_organization_prompt(
-                organization["name"],
-                organization.get("posts", []),
-                expected.get("jurisdiction_name", ""),
-            ),
+            prompt_for_body(expected, organization),
             prompt_name="page_covers_organization",
             response_schema=OrganizationCoverageResponseSchema,
             content=case["input"],
@@ -183,7 +181,25 @@ async def _run_provider(client, cases):
     return client, failed_cases, elapsed_seconds, found, mismatches
 
 
-def _write_report(model_client, failed_cases, elapsed_seconds, found, case_ids, mismatches):
+def prompt_for_body(expected: dict, organization: dict) -> str:
+    """The exact prompt a case is sent about one body: used by the run and archived with it."""
+    return page_covers_organization_prompt(
+        organization["name"], organization.get("posts", []), expected.get("jurisdiction_name", "")
+    )
+
+
+def case_body_prompts(cases: list[dict]) -> dict[str, str]:
+    """Case id and body joined by the separator -> that prompt, for every body each case asks about."""
+    return {
+        f"{case['id']}{CASE_PROMPT_KEY_SEPARATOR}{organization['name']}": prompt_for_body(
+            case["expected"], organization
+        )
+        for case in cases
+        for organization in case["expected"]["organizations"]
+    }
+
+
+def _write_report(model_client, failed_cases, elapsed_seconds, found, case_ids, mismatches, case_prompts):
     llm_costs = cost_utils.get_cost_tracker(_eval_run_id(model_client["name"]))
     cost_summary = {
         "model": llm_costs[0].model if llm_costs else None,
@@ -211,6 +227,7 @@ def _write_report(model_client, failed_cases, elapsed_seconds, found, case_ids, 
         {cid: 0.0 if cid in {f["case_id"] for f in failed_cases} else 1.0 for cid in case_ids},
         accuracy=accuracy,
         mismatches=mismatches,
+        case_prompts=case_prompts,
     )
     report_path = os.path.join(EVALS_DIR, f"{model_client['name']}-eval-report.yml")
     with open(report_path, "w", encoding="utf-8") as f:
@@ -223,6 +240,8 @@ def _write_report(model_client, failed_cases, elapsed_seconds, found, case_ids, 
                 # The dashboard's per-case detail reads this from the report, not from history:
                 # `dashboard_data.read_latest_mismatches` globs the report files.
                 "mismatches": mismatches,
+                # "<case id>|<body>" -> hash of the exact prompt, in `_prompts/`.
+                "case_prompts": case_prompts,
             },
             f,
             sort_keys=False,
@@ -241,6 +260,7 @@ async def test_provider_comparison(load_eval_cases):
         *[_run_provider(c, load_eval_cases) for c in clients], return_exceptions=True
     )
 
+    case_prompts = archive_case_prompts(EVALS_DIR, case_body_prompts(load_eval_cases))
     comparison = {}
     failures = {}
     all_failed: list[dict] = []
@@ -258,6 +278,7 @@ async def test_provider_comparison(load_eval_cases):
             found,
             [c["id"] for c in load_eval_cases],
             mismatches,
+            case_prompts,
         )
         all_failed.extend(failed_cases)
         comparison[client["name"]] = {

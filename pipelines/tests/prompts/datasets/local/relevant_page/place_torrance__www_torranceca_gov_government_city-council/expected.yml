@@ -1,0 +1,10 @@
+page_url: https://www.torranceca.gov/Government/City-Council
+jurisdiction_name: Torrance city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: true
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: ''City Council Members'' section
+    lists the Mayor and six district councilmembers, plus elected Clerk and Treasurer.'

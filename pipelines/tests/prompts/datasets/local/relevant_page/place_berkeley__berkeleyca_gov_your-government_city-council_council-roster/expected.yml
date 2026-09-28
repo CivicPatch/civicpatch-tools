@@ -1,0 +1,10 @@
+page_url: https://berkeleyca.gov/your-government/city-council/council-roster
+jurisdiction_name: Berkeley city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: true
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Council Roster names the Mayor
+    and District 1-8 councilmembers, with their term expirations.'

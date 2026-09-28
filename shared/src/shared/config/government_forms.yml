@@ -38,3 +38,44 @@ states:
   hi:
     counties:
       "*": [county_executive]
+
+# Each state's county titles. The board is in every county form, so a county gets it even before
+# its form is known; the executive only under county_executive. A state not listed keeps its
+# default organization.
+county_governments:
+  ca:
+    board: {name: Board of Supervisors, role_labels: [Supervisor, Chair, Vice Chair]}
+  co:
+    board: {name: Board of County Commissioners, role_labels: [Commissioner, Chair]}
+  de:
+    board: {name: County Council, role_labels: [Council Member, Council President]}
+  hi:
+    board: {name: County Council, role_labels: [Council Member, Chair, Vice Chair]}
+    executive: {name: Office of the Mayor, role_labels: [Mayor]}
+  id:
+    board: {name: Board of County Commissioners, role_labels: [Commissioner, Chair]}
+  ma:
+    board: {name: Board of County Commissioners, role_labels: [Commissioner, Chair]}
+  me:
+    board: {name: Board of County Commissioners, role_labels: [Commissioner, Chair]}
+  mi:
+    board: {name: Board of Commissioners, role_labels: [Commissioner, Chair, Vice Chair]}
+  nc:
+    board: {name: Board of Commissioners, role_labels: [Commissioner, Chair, Vice Chair]}
+  nd:
+    board: {name: Board of County Commissioners, role_labels: [Commissioner, Chair]}
+  nh:
+    board: {name: Board of Commissioners, role_labels: [Commissioner]}
+  nj:
+    board: {name: Board of County Commissioners, role_labels: [Commissioner, Chair]}
+  nm:
+    board: {name: Board of County Commissioners, role_labels: [Commissioner, Chair]}
+  sc:
+    board: {name: County Council, role_labels: [Council Member, Chair, Vice Chair]}
+  tn:
+    board: {name: County Commission, role_labels: [Commissioner, Chair]}
+    executive: {name: Office of the County Mayor, role_labels: [Mayor]}
+  tx:
+    board: {name: Commissioners Court, role_labels: [Commissioner]}
+  wa:
+    board: {name: Board of County Commissioners, role_labels: [Commissioner, Chair]}

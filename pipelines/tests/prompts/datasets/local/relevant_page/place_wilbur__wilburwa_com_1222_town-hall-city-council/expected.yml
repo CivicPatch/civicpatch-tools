@@ -1,0 +1,10 @@
+page_url: https://wilburwa.com/1222/Town-Hall-City-Council
+jurisdiction_name: Wilbur town
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: true
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label confirmed: Council page has a Members roster
+    for Mayor and Councilman 1 to 5, but the names are blank in preprocessing.'

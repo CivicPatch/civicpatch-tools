@@ -1,8 +1,18 @@
+import json
 import pathlib
 
 import yaml
 
-from eval_records import CaseMismatches, CaseTally, EvalResults, HistoryRun, MetricResult, Mismatch, short_provider
+from eval_records import (
+    CaseMismatches,
+    CasePrompts,
+    CaseTally,
+    EvalResults,
+    HistoryRun,
+    MetricResult,
+    Mismatch,
+    short_provider,
+)
 
 EVALS = pathlib.Path("tests/prompts/tests/evals")
 EVAL_DIRS = {
@@ -61,6 +71,23 @@ def read_latest_mismatches(directory: pathlib.Path) -> dict[str, CaseMismatches]
     }
 
 
+def read_latest_case_prompts(directory: pathlib.Path) -> dict[str, CasePrompts]:
+    """Latest run only, like `read_latest_mismatches`."""
+    return {
+        short_provider(_report_provider(path)): CasePrompts(
+            template_sha256=(report.get("run") or {}).get("prompt_sha256"),
+            prompts=report["case_prompts"],
+        )
+        for path, report in _reports(directory)
+        if report.get("case_prompts")
+    }
+
+
+def prompts_dir(directory: pathlib.Path) -> str:
+    """Relative to dashboard/, since the page fetches from it."""
+    return f"../{directory.name}/_prompts"
+
+
 def read_run_mismatches(directory: pathlib.Path, runs: list[HistoryRun]) -> dict[str, CaseMismatches]:
     """Keyed by HistoryRun.mismatches_file."""
     return {
@@ -102,6 +129,28 @@ def _report_cost(report: dict) -> float | None:
     return (report.get("cost_summary") or {}).get("total_cost_usd")
 
 
+_DASHBOARD_DIR = pathlib.Path(__file__).parent / "dashboard"
+# Keys in a case's expected.yml that hold its answer or a note, not something the prompt was given.
+_NOT_PROMPT_INPUTS = {"page", "covers", "people", "expected_url", "thought", "thoughts", "generated"}
+
+
+def _as_text(value) -> str:
+    if isinstance(value, str):
+        return value
+    return json.dumps(value, ensure_ascii=False)
+
+
+def read_case_inputs(eval_name: str) -> dict[str, dict[str, str]]:
+    """Each case's own prompt inputs, from its expected.yml: what fills the prompt's placeholders."""
+    inputs = {}
+    for expected_path in sorted((_DASHBOARD_DIR / DATASET_DIRS[eval_name]).glob("*/expected.yml")):
+        expected = _load_yaml(expected_path)
+        inputs[expected_path.parent.name] = {
+            key: _as_text(value) for key, value in expected.items() if key not in _NOT_PROMPT_INPUTS
+        }
+    return inputs
+
+
 def _case_tally(eval_name: str, provider: str, report: dict, comparison: dict) -> CaseTally:
     failed_ids = [f.get("case_id") for f in report["failed_cases"]]
     # Single-provider evals write no comparison.yml, so fall back to the report's own count.
@@ -110,7 +159,8 @@ def _case_tally(eval_name: str, provider: str, report: dict, comparison: dict) -
     if total is None and passed is not None:
         total = passed + len(failed_ids)
     return CaseTally(eval_name=eval_name, provider=short_provider(provider), passed=passed or 0, total=total,
-                     failed_case_ids=failed_ids, cost_usd=_report_cost(report), ran_at=_ran_at(report))
+                     failed_case_ids=failed_ids,
+                     cost_usd=_report_cost(report), ran_at=_ran_at(report))
 
 
 def read_pass_fail_results(eval_name: str) -> EvalResults:

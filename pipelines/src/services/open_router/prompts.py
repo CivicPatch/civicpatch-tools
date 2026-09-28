@@ -27,10 +27,15 @@ def relevant_page_prompt(
         if government_form
         else ""
     )
-    known_roles_line = (
-        f"    Known elected roles for this municipality: {', '.join(known_roles)}\n"
+    # The generic list only when nothing is known: a cold start whose research found nobody.
+    # Otherwise the roles cp.org holds or research named, so a School Committee chair is not read
+    # as a main official just because "chair" sounds like one.
+    main_officials = (
+        f"""Main officials hold this municipality's known elected roles, which make up its
+    **primary governing body**: {', '.join(known_roles)}."""
         if known_roles
-        else ""
+        else """Main officials are the Mayor, City Council Members, Aldermen, Select Board Members,
+    Commissioners and others who make up the municipality's **primary governing body**."""
     )
     known_organizations_line = (
         f"    Governing bodies of this municipality: {', '.join(known_organizations)}\n"
@@ -58,11 +63,10 @@ def relevant_page_prompt(
     serving main officials** of the target municipality, and which of its links a crawler should
     follow to find more of them.
 
-    Main officials are the Mayor, City Council Members, Aldermen, Select Board Members,
-    Commissioners and others who make up the municipality's **primary governing body**.
+    {main_officials}
 
     Page URL: {page_url}
-{jurisdiction_line}{government_form_line}{known_roles_line}{known_organizations_line}
+{jurisdiction_line}{government_form_line}{known_organizations_line}
     The URL tells you which links share the municipality's domain. It tells you nothing about
     `is_relevant`, which comes from the page content alone.
 

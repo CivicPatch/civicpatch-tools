@@ -1,0 +1,10 @@
+page_url: https://www.ephrata.org/172/City-Council
+jurisdiction_name: Ephrata city
+known_organizations:
+- Government
+generated: true
+page:
+  is_relevant: true
+  relevant_urls: []
+  thoughts: 'Reviewed 2026-09-28, label flipped to true: Members section lists Mayor
+    Steve Oliver and Council Positions 1-7 with term expirations.'
