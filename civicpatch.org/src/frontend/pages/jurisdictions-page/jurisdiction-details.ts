@@ -19,8 +19,16 @@ import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
 
 const WEBSITE_FIELD: FieldSpec = { key: "url", label: "Website", type: "text" };
 
+// The resolved form; null when no form is known yet.
+interface GovernmentForm {
+  value: string;
+  name: string;
+  description: string;
+}
+
 interface JurisdictionDetailsProps {
   data: any;
+  governmentForm: GovernmentForm | null;
   // The permission, not a page-wide edit mode — this widget owns its own Edit button and
   // decides on its own when to show the field as editable.
   canEditPermission: boolean;
@@ -43,6 +51,15 @@ function readOnlyRows(data: any): ReadOnlyRow[] {
     { label: "OCD ID", value: data?.id },
     { label: "Notes", value: data?.generated_comments },
   ];
+}
+
+function renderGovernmentForm(form: GovernmentForm | null) {
+  if (!form) return nothing;
+  return renderRow(
+    "Government form",
+    html`<span class="person-editor__readonly">${form.name}</span>
+      <div class="jurisdiction-details__hint">${form.description}</div>`,
+  );
 }
 
 function renderRow(label: string, control: unknown) {
@@ -84,6 +101,7 @@ function renderList(title: string, rows: [string, unknown][][]) {
 
 function JurisdictionDetails({
   data,
+  governmentForm,
   canEditPermission,
   onSave,
   blockedReason,
@@ -182,6 +200,7 @@ function JurisdictionDetails({
     ${cap}
     <div class="jurisdiction-details__fields">
       ${renderRow("Website", website)}
+      ${renderGovernmentForm(governmentForm)}
       ${readOnlyRows(data).map(renderReadOnly)}
       ${renderList("Term information", terms)}
       ${renderList("Sourcing", sourcing)}

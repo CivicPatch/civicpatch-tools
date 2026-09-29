@@ -190,6 +190,8 @@ class KnownOrganization(BaseModel):
     url: str | None = None
     meta_is_default: bool = False
     posts: list[Post] = []
+    # What its government form (or, for a county, its state) says it holds; empty if nothing does.
+    role_labels: list[str] = []
 
 
 class Membership(BaseModel):
@@ -400,7 +402,7 @@ class PipelineRunConfig(BaseModel):
     # context records the ceiling it ran under, which is the first thing worth knowing when
     # asking why a scrape stopped early.
     pipeline_run_cap_usd: Optional[Decimal] = None
-    # Resolved by cp.org when the run starts: the registry value, else what
+    # Resolved by cp.org when the run starts: the saved form, else what
     # `config/government_forms.yml` decides. None means nobody has decided yet.
     government_form: Optional[GovernmentForm] = None
 

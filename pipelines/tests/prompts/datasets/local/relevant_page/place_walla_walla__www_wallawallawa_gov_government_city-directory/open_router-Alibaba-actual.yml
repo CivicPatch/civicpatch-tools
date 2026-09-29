@@ -1,6 +1,5 @@
 is_relevant: true
 relevant_urls:
-- https://www.wallawallawa.gov/government/city-council
 - https://www.wallawallawa.gov/Home/Components/StaffDirectory/StaffDirectory/1066/3873
 - https://www.wallawallawa.gov/Home/Components/StaffDirectory/StaffDirectory/932/3873
 - https://www.wallawallawa.gov/Home/Components/StaffDirectory/StaffDirectory/937/3873
@@ -8,3 +7,7 @@ relevant_urls:
 - https://www.wallawallawa.gov/Home/Components/StaffDirectory/StaffDirectory/938/3873
 - https://www.wallawallawa.gov/Home/Components/StaffDirectory/StaffDirectory/935/3873
 - https://www.wallawallawa.gov/Home/Components/StaffDirectory/StaffDirectory/934/3873
+- https://www.wallawallawa.gov/government/city-council
+- https://www.wallawallawa.gov/government/city-manager
+- https://www.wallawallawa.gov/government
+- https://www.wallawallawa.gov/government/city-council/contact-the-city-council

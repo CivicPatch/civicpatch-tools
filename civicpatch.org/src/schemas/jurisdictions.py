@@ -3,6 +3,13 @@ from typing import Any, List
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 from schemas.activity import RosterChange
+from shared.schemas import GovernmentForm
+
+
+class GovernmentFormSummary(BaseModel):
+    value: GovernmentForm
+    name: str
+    description: str
 
 
 class JurisdictionsByOcdidsRequest(BaseModel):

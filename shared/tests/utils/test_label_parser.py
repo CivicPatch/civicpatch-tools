@@ -1,6 +1,6 @@
 import pytest
 from shared.schemas import Role, RoleConfig, RoleStatus
-from shared.utils.label_parser import division_ocdid, parse_label
+from shared.utils.label_parser import division_ocdid, parse_label, parse_label_preferring
 from shared.utils.taxonomy import build_taxonomy
 
 _JURISDICTION = "ocd-jurisdiction/country:us/state:tx/place:alpha/government"
@@ -373,3 +373,47 @@ def test_parse_label_gives_each_designation_its_own_value(label, division, desig
     actual = parsed.division and (parsed.division.designation, parsed.division.value)
     assert actual == division
     assert parsed.other_designations == designations
+
+
+_SELECT_BOARD_TAXONOMY = build_taxonomy(
+    RoleConfig(
+        roles=[
+            _role("chair", "Chair", ["Chairman"], 20),
+            _role("select-board-member", "Select Board Member", ["Board of Selectmen"], 300),
+            _role("council-member", "Council Member", ["Member"], 500),
+            _role("clerk", "Clerk", [], 600),
+        ]
+    )
+)
+
+
+@pytest.mark.parametrize(
+    "label, role",
+    [
+        # The preferred role wins over a higher-ranked generic title the label also names.
+        ("Chairman, Board of Selectmen", "Select Board Member"),
+        ("Member, Board of Selectmen", "Select Board Member"),
+        # Naming no preferred role, the label resolves as parse_label would.
+        ("Town Clerk", "Clerk"),
+    ],
+)
+def test_a_preferred_role_wins_over_higher_ranked_ones(label, role):
+    parsed = parse_label_preferring(label, _SELECT_BOARD_TAXONOMY, ["Select Board Member"])
+
+    assert parsed.role == role
+
+
+def test_preferring_keeps_every_role_the_label_names():
+    parsed = parse_label_preferring(
+        "Chairman, Board of Selectmen", _SELECT_BOARD_TAXONOMY, ["Select Board Member"]
+    )
+
+    assert set(parsed.roles) == {"Chair", "Select Board Member"}
+
+
+def test_no_preferred_roles_is_parse_label():
+    label = "Chairman, Board of Selectmen"
+
+    assert parse_label_preferring(label, _SELECT_BOARD_TAXONOMY, []) == parse_label(
+        label, _SELECT_BOARD_TAXONOMY
+    )

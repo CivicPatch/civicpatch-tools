@@ -1,4 +1,4 @@
-"""`resolved_government_form` against real jurisdiction rows: its government form wins, then
+"""`resolved_government` against real jurisdiction rows: its government form wins, then
 the shipped config, and a state or an unknown jurisdiction resolves to nothing.
 
 The config is the real `government_forms.yml`, so a rule edited there can move these cases.
@@ -13,7 +13,9 @@ from database.database import get_pool
 from database.organizations import ensure_defaults_exist
 from services.government_form import (
     ensure_government_form_organizations,
-    resolved_government_form,
+    government_form_summary,
+    organizations_with_role_labels,
+    resolved_government,
 )
 from shared.schemas import GovernmentForm
 
@@ -22,6 +24,9 @@ _WA_CITY = "ocd-jurisdiction/country:us/state:wa/place:zyform_city/government"
 _WA_STATE = "ocd-jurisdiction/country:us/state:wa/government"
 _UNKNOWN = "ocd-jurisdiction/country:us/state:wa/place:zyform_missing/government"
 _MA_TOWN = "ocd-jurisdiction/country:us/state:ma/place:zyform_town/government"
+_TX_COUNTY = "ocd-jurisdiction/country:us/state:tx/county:zyform/government"
+_TN_COUNTY = "ocd-jurisdiction/country:us/state:tn/county:zyform/government"
+_WA_COUNTY = "ocd-jurisdiction/country:us/state:wa/county:zyform/government"
 
 
 async def _seed(
@@ -47,7 +52,7 @@ async def _cleanup():
     yield
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        seeded = [_MI_TOWNSHIP, _WA_CITY, _MA_TOWN]
+        seeded = [_MI_TOWNSHIP, _WA_CITY, _MA_TOWN, _TX_COUNTY, _TN_COUNTY, _WA_COUNTY]
         await cur.execute("DELETE FROM activity WHERE jurisdiction_ocdid = ANY(%s)", (seeded,))
         await cur.execute("DELETE FROM organizations WHERE jurisdiction_ocdid = ANY(%s)", (seeded,))
         await cur.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = ANY(%s)", (seeded,))
@@ -59,7 +64,7 @@ async def _cleanup():
 async def test_a_config_rule_decides_a_michigan_township():
     await _seed(_MI_TOWNSHIP, "mi", {"name": "Zyform township"})
 
-    assert await resolved_government_form(_MI_TOWNSHIP) == GovernmentForm.TOWNSHIP_BOARD
+    assert (await resolved_government(_MI_TOWNSHIP)).government_form == GovernmentForm.TOWNSHIP_BOARD
 
 
 @pytest.mark.integration
@@ -67,7 +72,7 @@ async def test_a_config_rule_decides_a_michigan_township():
 async def test_the_government_form_beats_the_config_rule():
     await _seed(_MI_TOWNSHIP, "mi", {"name": "Zyform township"}, government_form="mayor_council")
 
-    assert await resolved_government_form(_MI_TOWNSHIP) == GovernmentForm.MAYOR_COUNCIL
+    assert (await resolved_government(_MI_TOWNSHIP)).government_form == GovernmentForm.MAYOR_COUNCIL
 
 
 @pytest.mark.integration
@@ -75,19 +80,33 @@ async def test_the_government_form_beats_the_config_rule():
 async def test_a_city_the_config_leaves_open_resolves_to_nothing():
     await _seed(_WA_CITY, "wa", {"name": "Zyform city"})
 
-    assert await resolved_government_form(_WA_CITY) is None
+    assert (await resolved_government(_WA_CITY)).government_form is None
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_a_state_resolves_to_nothing():
-    assert await resolved_government_form(_WA_STATE) is None
+    assert (await resolved_government(_WA_STATE)).government_form is None
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_an_unknown_jurisdiction_resolves_to_nothing():
-    assert await resolved_government_form(_UNKNOWN) is None
+    assert (await resolved_government(_UNKNOWN)).government_form is None
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_tennessee_county_resolves_to_its_board_and_mayors_office():
+    await _seed(_TN_COUNTY, "tn", {"name": "Zyform County"})
+
+    resolved = await resolved_government(_TN_COUNTY)
+
+    assert resolved.government_form == GovernmentForm.COUNTY_EXECUTIVE
+    assert [o.name for o in resolved.derived_organizations] == [
+        "County Commission",
+        "Office of the County Mayor",
+    ]
 
 
 async def _organizations(jurisdiction_ocdid: str) -> list[tuple[str, str, bool]]:
@@ -181,3 +200,99 @@ async def test_the_sync_pass_applies_forms_not_yet_applied_and_leaves_open_ones_
     assert await _saved_form(_MI_TOWNSHIP) == "township_board"
     assert [name for _, name, _ in await _organizations(_WA_CITY)] == ["Government"]
     assert await _saved_form(_WA_CITY) is None
+
+
+async def _rename_default(jurisdiction_ocdid: str, name: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE organizations SET name = %s WHERE jurisdiction_ocdid = %s AND meta_is_default",
+            (name, jurisdiction_ocdid),
+        )
+        await conn.commit()
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_default_renamed_by_hand_is_not_renamed_back():
+    await _seed(_MI_TOWNSHIP, "mi", {"name": "Zyform township"})
+    await ensure_defaults_exist([_MI_TOWNSHIP])
+    await _rename_default(_MI_TOWNSHIP, "Township Board of Trustees")
+
+    await ensure_government_form_organizations()
+
+    assert [name for _, name, _ in await _organizations(_MI_TOWNSHIP)] == ["Township Board of Trustees"]
+    assert await _saved_form(_MI_TOWNSHIP) == "township_board"
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_texas_county_gets_its_commissioners_court():
+    await _seed(_TX_COUNTY, "tx", {"name": "Zyform County"})
+    await ensure_defaults_exist([_TX_COUNTY])
+
+    await ensure_government_form_organizations()
+
+    assert [name for _, name, _ in await _organizations(_TX_COUNTY)] == ["Commissioners Court"]
+    assert await _saved_form(_TX_COUNTY) == "commission"
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_tennessee_county_also_gets_its_mayors_office():
+    await _seed(_TN_COUNTY, "tn", {"name": "Zyform County"})
+    await ensure_defaults_exist([_TN_COUNTY])
+
+    await ensure_government_form_organizations()
+
+    assert [name for _, name, _ in await _organizations(_TN_COUNTY)] == [
+        "County Commission",
+        "Office of the County Mayor",
+    ]
+    assert await _saved_form(_TN_COUNTY) == "county_executive"
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_county_with_no_form_yet_still_gets_its_board():
+    await _seed(_WA_COUNTY, "wa", {"name": "Zyform County"})
+    await ensure_defaults_exist([_WA_COUNTY])
+
+    await ensure_government_form_organizations()
+
+    assert [name for _, name, _ in await _organizations(_WA_COUNTY)] == ["Board of County Commissioners"]
+    assert await _saved_form(_WA_COUNTY) is None
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_the_organizations_carry_their_derived_role_labels():
+    await _seed(_TN_COUNTY, "tn", {"name": "Zyform County"})
+    await ensure_defaults_exist([_TN_COUNTY])
+    await ensure_government_form_organizations()
+
+    organizations = await organizations_with_role_labels(_TN_COUNTY)
+
+    assert {o["name"]: o["role_labels"] for o in organizations} == {
+        "County Commission": ["Commissioner", "Chair"],
+        "Office of the County Mayor": ["Mayor"],
+    }
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_the_page_shows_the_resolved_form_by_name():
+    await _seed(_TN_COUNTY, "tn", {"name": "Zyform County"})
+
+    summary = await government_form_summary(_TN_COUNTY)
+
+    assert summary is not None
+    assert (summary.value, summary.name) == (GovernmentForm.COUNTY_EXECUTIVE, "County executive")
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_the_page_shows_no_form_when_none_is_known():
+    await _seed(_WA_CITY, "wa", {"name": "Zyform city"})
+
+    assert await government_form_summary(_WA_CITY) is None

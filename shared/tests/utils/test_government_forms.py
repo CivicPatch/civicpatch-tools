@@ -110,8 +110,8 @@ def test_every_form_has_a_description(form):
 
 @pytest.mark.parametrize("form", list(GovernmentForm))
 def test_no_role_belongs_to_two_organizations_of_one_form(form):
-    """`derived_organization_for_role` takes the first organization holding a role, which is only
-    right while that organization is the only one."""
+    """Research files a role into the first organization whose role labels hold it, which is
+    only right while that organization is the only one."""
     seen: list[str] = []
     for organization in organizations_for(form):
         for label in organization.role_labels:

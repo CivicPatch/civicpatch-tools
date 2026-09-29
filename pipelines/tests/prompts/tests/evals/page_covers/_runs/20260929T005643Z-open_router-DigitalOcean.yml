@@ -1,0 +1,6 @@
+mismatches:
+  jackson_mayors_office:
+  - actual: false
+    expected: true
+    field: covers
+    subject: Office of the Mayor

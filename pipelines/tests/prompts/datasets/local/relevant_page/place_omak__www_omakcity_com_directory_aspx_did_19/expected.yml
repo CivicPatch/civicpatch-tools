@@ -4,8 +4,9 @@ known_organizations:
 - Government
 generated: true
 page:
-  is_relevant: false
+  is_relevant: true
   relevant_urls: []
-  thoughts: 'Reviewed 2026-09-28, label confirmed: Boards and Commissions contact
-    directory; the Mayor appears only as its contact, so it is not a governing-body
-    roster.'
+  thoughts: 'Flipped to true 2026-09-29: a directory row naming the current Mayor with
+    email and phone counts, the same rule as the Amherst contact page and the Colville
+    directory, which were labelled true. Was: Boards and Commissions contact directory; the
+    Mayor appears only as its contact.'

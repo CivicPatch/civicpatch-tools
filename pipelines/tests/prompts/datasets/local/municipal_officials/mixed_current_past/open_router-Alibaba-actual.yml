@@ -5,7 +5,7 @@ people:
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: null
+  end_date: '2026-05-02'
   image: null
 - name: Al Stephens
   label: Mayor Pro Tem
@@ -13,7 +13,7 @@ people:
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: null
+  end_date: '2026-05-02'
   image: null
 - name: Bobby Hanson
   label: Council Member
@@ -21,7 +21,7 @@ people:
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: null
+  end_date: '2026-05-02'
   image: null
 - name: Darrell Grintz
   label: Council Member

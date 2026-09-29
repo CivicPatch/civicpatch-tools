@@ -5,6 +5,7 @@ import pytest
 from runners.people_collector.utils.organization_terms import (
     as_tokens,
     organization_phrases,
+    roles_to_look_for,
     search_phrases,
 )
 from runners.people_collector.schemas import ExpectedMembership
@@ -78,3 +79,11 @@ def test_expected_roles_and_designations_are_searched_once_each():
         "Council Member",
         "Position 8",
     ]
+
+
+def test_roles_to_look_for_names_an_organization_nobody_is_expected_in():
+    select_board = KnownOrganization(id="select", name="Select Board", role_labels=["Select Board Member"])
+    town_meeting = KnownOrganization(id="meeting", name="Town Meeting", role_labels=["Moderator"])
+    expected = [ExpectedMembership(organization_id="select", role_label="Select Board Member")]
+
+    assert roles_to_look_for(expected, [select_board, town_meeting]) == ["Select Board Member", "Moderator"]

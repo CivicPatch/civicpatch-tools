@@ -27,7 +27,7 @@ from shared.schemas import JurisdictionLevel
 from shared.utils.government_forms import (
     GovernmentFormsConfig,
     load_government_forms_config,
-    organizations_for,
+    derived_organizations,
     resolve_government_form,
 )
 from shared.utils.id_utils import parse_jurisdiction_ocdid
@@ -163,11 +163,11 @@ def prompt_inputs(config: GovernmentFormsConfig, run: SavedRun) -> PromptInputs:
     form = None
     if parsed.level != JurisdictionLevel.STATE:
         form = resolve_government_form(config, parsed.state, parsed.level, run.jurisdiction_name, None)
-    if form is None:
+    derived = derived_organizations(config, parsed.state, parsed.level, form)
+    if not derived:
         return PromptInputs(government_form=None, known_roles=[], known_organizations=[_DEFAULT_ORGANIZATION])
-    derived = organizations_for(form)
     return PromptInputs(
-        government_form=form.value,
+        government_form=form.value if form is not None else None,
         known_roles=[role for organization in derived for role in organization.role_labels],
         known_organizations=[organization.name for organization in derived],
     )

@@ -334,6 +334,11 @@
   margin: 0.5rem 0 0 0;
 }
 
+.jurisdiction-details__hint {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
 /* ── Buttons ──────────────────────────────────────────────────────────────── */
 
 /* One height and one type size for every button on the page. Quiet and primary

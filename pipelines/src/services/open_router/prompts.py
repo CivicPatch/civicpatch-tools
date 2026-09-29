@@ -32,7 +32,7 @@ def relevant_page_prompt(
     # as a main official just because "chair" sounds like one.
     main_officials = (
         f"""Main officials hold this municipality's known elected roles, which make up its
-    **primary governing body**: {', '.join(known_roles)}."""
+    **primary governing body**: {", ".join(known_roles)}."""
         if known_roles
         else """Main officials are the Mayor, City Council Members, Aldermen, Select Board Members,
     Commissioners and others who make up the municipality's **primary governing body**."""
@@ -85,7 +85,10 @@ def relevant_page_prompt(
     - The page lists the municipality's own officials and also lists appointed staff. A small
       town's "City Officials" page naming the Mayor and council members alongside the City
       Manager, Water Supervisor and Fire Chief is the roster. Judge it by whether the governing
-      body's members are presented as such, not by who else shares the page.{known_organizations_rule}
+      body's members are presented as such, not by who else shares the page.
+    - A staff or contact directory that gives a row to a current holder of a primary role, such
+      as the Mayor with a phone number and email. That row is a directory entry for the official,
+      even when every other row is staff.{known_organizations_rule}
 
     When a page names a person who holds one of the roles above and you cannot tell whether it is
     a roster or a department landing page, answer true. The two mistakes do not cost the same: a
@@ -194,7 +197,9 @@ def _organization_scope(organization: PromptOrganization) -> str:
 """
 
 
-def _pick_list_label_rules(organization: PromptOrganization, page_label_rules: str) -> str:
+def _pick_list_label_rules(
+    organization: PromptOrganization, page_label_rules: str
+) -> str:
     return f"""    - Choose every post below that is this person's, and copy each exactly as written here —
       not as the page writes it:
 {_bullets(organization.posts, "        ")}
@@ -227,7 +232,9 @@ def municipality_officials_prompt(
     current_date = current_date or datetime.now().strftime("%Y-%m-%d")
 
     roles_hint_str = ""
-    if known_roles:
+    # A scoped run's pick list already names its organization's posts; the jurisdiction-wide list
+    # would name other organizations' roles beside it.
+    if known_roles and organization is None:
         roles_hint_str = (
             "- Known elected roles for this municipality: "
             + ", ".join(known_roles)
@@ -242,7 +249,9 @@ def municipality_officials_prompt(
 
     scope = _organization_scope(organization) if organization else ""
     label_rules = (
-        _pick_list_label_rules(organization, _PAGE_LABEL_RULES) if organization else _PAGE_LABEL_RULES
+        _pick_list_label_rules(organization, _PAGE_LABEL_RULES)
+        if organization
+        else _PAGE_LABEL_RULES
     )
 
     return f"""
@@ -267,8 +276,9 @@ def municipality_officials_prompt(
     "Councilmember, Place 1", "Alderman") is navigation, not a roster, and those labels are
     not person names.
     Only extract elected members of the governing body (e.g. Mayor, City Council, Board of
-    Aldermen, Board of Commissioners). Exclude appointed staff and officials from other
-    jurisdictions (county, precinct, special district), even when listed on the same page.
+    Aldermen, Board of Commissioners). Exclude appointed staff and officials of other
+    governments (another city or county, the state, a precinct or special district), even when
+    listed on the same page.
     Treat officials as currently serving unless the content says the roster is historical.
     If there are no valid sources, return an empty "people" array.
 
@@ -347,7 +357,8 @@ def page_covers_organization_prompt(
     jurisdiction_line = (
         f"    Municipality: {jurisdiction_name}\n" if jurisdiction_name else ""
     )
-    posts_line = f"    Offices in it: {', '.join(posts)}\n" if posts else ""
+    # One per line: a post's own label can carry a comma ("Council Member, District 1").
+    posts_line = f"    Offices in it:\n{_bullets(posts, '      ')}\n" if posts else ""
     return f"""
     Decide whether the provided page content carries people who currently hold office in one
     specific governing body.
@@ -376,9 +387,9 @@ def page_covers_organization_prompt(
     counting it would make every page of a site cover every body, which is no answer at all. The
     same list in the body of a page, as what that page exists to present, does count.
 
-    Someone who holds office in that body counts even if the page gives them a title that is not
-    among the offices listed above; the list is there to say what holding office in this body
-    looks like, not to limit it.
+    Only people who hold office in that body count. Once the page shows they are in it, their
+    title may be one not listed above; the list says what holding office in this body looks like,
+    not every title it has. 
 
     IMPORTANT: Return only valid JSON, {{"covers": true}} or {{"covers": false}}.
     """

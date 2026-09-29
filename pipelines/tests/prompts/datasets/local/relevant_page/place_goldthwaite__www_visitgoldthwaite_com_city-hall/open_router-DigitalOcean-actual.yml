@@ -1,4 +1,4 @@
-is_relevant: false
+is_relevant: true
 relevant_urls:
 - https://www.visitgoldthwaite.com/mayor-and-council
 - https://www.visitgoldthwaite.com/mayor
@@ -8,4 +8,4 @@ relevant_urls:
 - https://www.visitgoldthwaite.com/city-clerk
 - https://www.visitgoldthwaite.com/human-resources
 - https://www.visitgoldthwaite.com/departments
-- https://www.visitgoldthwaite.com/government
+- https://www.visitgoldthwaite.com/staff-directory

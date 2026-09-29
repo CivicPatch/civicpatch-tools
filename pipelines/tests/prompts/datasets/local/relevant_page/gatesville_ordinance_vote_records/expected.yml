@@ -7,12 +7,14 @@ known_roles:
 known_organizations:
 - Council
 page:
-  is_relevant: true
+  is_relevant: false
   relevant_urls:
   - https://gatesvilletx.com/government/city_council/mayor_and_council/index.php
   - https://gatesvilletx.com/government/index.php
   thoughts: >-
-    Flipped to true 2026-09-28. The page is ordinances with roll-call votes, which the prompt's
+    Back to false 2026-09-29: on the 136-case run all three providers said irrelevant, which is
+    what the prompt's own rule says (vote records are not a roster), and the council roster is
+    its own page. History: flipped to true 2026-09-28. The page is ordinances with roll-call votes, which the prompt's
     rules call irrelevant, but each vote names every current council member with their ward
     and place, so a model cannot tell it from a roster. Policy is to keep a page when unsure:
     a wrong "relevant" costs one extraction that returns nobody, a wrong "irrelevant" loses

@@ -36,6 +36,7 @@ from shared.schemas import LOCAL_IMAGE_PREFIX, KnownOrganization
 from runners.people_collector.utils.organization_terms import (
     as_tokens,
     expected_roles,
+    roles_to_look_for,
     search_phrases,
 )
 from runners.people_collector.utils.link_discovery import (
@@ -175,7 +176,7 @@ async def process_page_content(
 
     research = context.data.research_municipality_step
     taxonomy = build_taxonomy(context.data.role_config)
-    known_roles = expected_roles(research.expected_memberships)
+    known_roles = roles_to_look_for(research.expected_memberships, research.known_organizations)
     role_names = config_utils.get_role_names(context.data.role_config)
     setup_data = ProcessingSetup(
         roles=role_names,
@@ -371,7 +372,7 @@ async def organizations_covered(
                 context.data.jurisdiction_ocdid,
                 open_router_prompt.page_covers_organization_prompt(
                     organization.name,
-                    office_labels(organization, context.data.config.government_form),
+                    office_labels(organization),
                     context.data.config.name or "",
                 ),
                 prompt_name="page_covers_organization",
@@ -404,7 +405,7 @@ async def collect_page_records(
     found: List[PersonSourceRecord] = []
     any_passed = False
     covers = await organizations_covered(context, page_to_process, content, organizations)
-    for scope in extraction_scopes(organizations, context.data.config.government_form, covers):
+    for scope in extraction_scopes(organizations, covers):
         scoped = await _extract_for_scope(context, page_to_process, content, known_roles, scope, logger)
         if scoped is not None:
             found.extend(scoped)
