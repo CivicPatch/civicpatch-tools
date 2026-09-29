@@ -1,7 +1,8 @@
 """`resolved_government` against real jurisdiction rows: its government form wins, then
-the shipped config, and a state or an unknown jurisdiction resolves to nothing.
+the config, and a state or an unknown jurisdiction resolves to nothing.
 
-The config is the real `government_forms.yml`, so a rule edited there can move these cases.
+The config is a small set of `jurisdiction_configs` rows the fixture writes, shaped like
+open-data's files for the states used here.
 """
 
 import json
@@ -18,6 +19,8 @@ from services.government_form import (
     resolved_government,
 )
 from shared.schemas import GovernmentForm
+from shared.utils.government_forms import DerivedOrganization
+from shared.utils.layered_config import COUNTRY_ROLES_PATH, ConfigFile, ConfigRole, FormConfig
 
 _MI_TOWNSHIP = "ocd-jurisdiction/country:us/state:mi/place:zyform_township/government"
 _WA_CITY = "ocd-jurisdiction/country:us/state:wa/place:zyform_city/government"
@@ -44,6 +47,80 @@ async def _seed(
             """,
             (jurisdiction_ocdid, state, json.dumps(data), government_form),
         )
+        await conn.commit()
+
+
+def _organization(name: str, *role_labels: str) -> DerivedOrganization:
+    return DerivedOrganization(name=name, role_labels=list(role_labels))
+
+
+def _forms(**organizations_by_form: list[DerivedOrganization]) -> ConfigFile:
+    return ConfigFile(
+        government_forms={
+            GovernmentForm(form): FormConfig(organizations=organizations)
+            for form, organizations in organizations_by_form.items()
+        }
+    )
+
+
+_ROLE_LABELS = [
+    "Mayor", "Council Member", "Commissioner", "Supervisor", "Clerk", "Treasurer", "Trustee",
+    "Select Board Member", "Chair", "Vice Chair", "Moderator", "County Executive",
+]
+_CONFIGS = {
+    COUNTRY_ROLES_PATH: ConfigFile(
+        roles=[ConfigRole(id=label.lower().replace(" ", "-"), label=label) for label in _ROLE_LABELS]
+    ),
+    "data_source/local/config.yml": _forms(
+        mayor_council=[_organization("Council", "Council Member"), _organization("Office of the Mayor", "Mayor")],
+        council_manager=[_organization("Council", "Council Member", "Mayor")],
+        township_board=[_organization("Board", "Supervisor", "Clerk", "Treasurer", "Trustee")],
+        open_town_meeting=[
+            _organization("Select Board", "Select Board Member", "Chair", "Vice Chair"),
+            _organization("Town Meeting", "Moderator"),
+        ],
+    ),
+    "data_source/counties/config.yml": _forms(
+        commission=[_organization("Board of Commissioners", "Commissioner", "Chair")],
+        county_executive=[
+            _organization("County Council", "Council Member", "Chair"),
+            _organization("County Executive", "County Executive"),
+        ],
+    ),
+    "data_source/mi/local/config.yml": ConfigFile(
+        government_forms={GovernmentForm.TOWNSHIP_BOARD: FormConfig(suffixes=["township"])}
+    ),
+    "data_source/tx/counties/config.yml": _forms(
+        commission=[_organization("Commissioners Court", "Commissioner")]
+    ),
+    "data_source/tn/counties/config.yml": _forms(
+        county_executive=[
+            _organization("County Commission", "Commissioner", "Chair"),
+            _organization("Office of the County Mayor", "Mayor"),
+        ]
+    ),
+    "data_source/wa/counties/config.yml": _forms(
+        commission=[_organization("Board of County Commissioners", "Commissioner", "Chair")]
+    ),
+}
+
+
+@pytest_asyncio.fixture(autouse=True)
+async def _configs():
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        for path, config in _CONFIGS.items():
+            await cur.execute(
+                """
+                INSERT INTO jurisdiction_configs (path, content, commit_sha) VALUES (%s, %s, 'test')
+                ON CONFLICT (path) DO UPDATE SET content = EXCLUDED.content
+                """,
+                (path, config.model_dump_json()),
+            )
+        await conn.commit()
+    yield
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("DELETE FROM jurisdiction_configs WHERE path = ANY(%s)", (list(_CONFIGS),))
         await conn.commit()
 
 
@@ -254,14 +331,14 @@ async def test_a_tennessee_county_also_gets_its_mayors_office():
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_county_with_no_form_yet_still_gets_its_board():
+async def test_a_county_gets_its_states_one_form_and_board():
     await _seed(_WA_COUNTY, "wa", {"name": "Zyform County"})
     await ensure_defaults_exist([_WA_COUNTY])
 
     await ensure_government_form_organizations()
 
     assert [name for _, name, _ in await _organizations(_WA_COUNTY)] == ["Board of County Commissioners"]
-    assert await _saved_form(_WA_COUNTY) is None
+    assert await _saved_form(_WA_COUNTY) == "commission"
 
 
 @pytest.mark.integration

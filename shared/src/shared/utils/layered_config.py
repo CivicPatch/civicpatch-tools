@@ -1,7 +1,21 @@
+import re
+
 from pydantic import BaseModel, model_validator
-from shared.schemas import GovernmentForm, Role, RoleConfig
+from shared.schemas import GovernmentForm, JurisdictionLevel, Role, RoleConfig
 from shared.utils.government_forms import DerivedOrganization, name_suffix
 from shared.utils.taxonomy import lookup_key
+
+COUNTRY_ROLES_PATH = "data_source/config.yml"
+# Every layer's file. Mirrored by CONFIG_PATH in open-data's scripts/github_actions/merge_config_pr.py.
+CONFIG_PATH = re.compile(r"^data_source/(([a-z]{2}/)?(local|counties)/)?config\.yml$")
+
+
+def country_forms_path(level: JurisdictionLevel) -> str:
+    return f"data_source/{level}/config.yml"
+
+
+def state_config_path(state: str, level: JurisdictionLevel) -> str:
+    return f"data_source/{state}/{level}/config.yml"
 
 
 class ConfigRole(BaseModel):
@@ -21,7 +35,8 @@ FormsConfig = dict[GovernmentForm, FormConfig]
 
 
 class ConfigFile(BaseModel):
-    """One `data_source/.../config.yml`: the country's or one state's, for one level."""
+    """One `data_source/.../config.yml`: the country's roles (`data_source/config.yml`), the
+    country's forms for one level, or one state's roles and forms for one level."""
 
     roles: list[ConfigRole] = []
     government_forms: FormsConfig = {}
@@ -40,21 +55,43 @@ class MergedConfig(BaseModel):
     state_forms: FormsConfig
 
 
-def merged_config(country: ConfigFile, state: ConfigFile | None) -> MergedConfig:
+def merged_config(
+    country_roles: ConfigFile, country_forms: ConfigFile, state: ConfigFile | None
+) -> MergedConfig:
     state = state or ConfigFile()
-    config_roles = [*country.roles, *state.roles]
+    if country_roles.government_forms or country_forms.roles:
+        raise ValueError("country roles and country forms belong in separate files")
+    config_roles = [*country_roles.roles, *state.roles]
     _check_roles_distinct(config_roles)
-    _check_country_forms(country.government_forms)
-    _check_state_forms(state.government_forms, country.government_forms)
+    _check_country_forms(country_forms.government_forms)
+    _check_state_forms(state.government_forms, country_forms.government_forms)
     merged = MergedConfig(
         roles=RoleConfig(
             roles=[_role(config_role, priority) for priority, config_role in enumerate(config_roles)]
         ),
-        country_forms=country.government_forms,
+        country_forms=country_forms.government_forms,
         state_forms=state.government_forms,
     )
     _check_role_labels_resolve(merged)
+    _check_one_organization_per_role(merged)
     return merged
+
+
+def jurisdiction_config(
+    configs: dict[str, ConfigFile], state: str, level: JurisdictionLevel
+) -> MergedConfig:
+    """The merged config for one state and level, from every stored file keyed by its path."""
+    return merged_config(
+        configs.get(COUNTRY_ROLES_PATH, ConfigFile()),
+        configs.get(country_forms_path(level), ConfigFile()),
+        configs.get(state_config_path(state, level)),
+    )
+
+
+def check_roles_distinct_across(files: list[ConfigFile]) -> None:
+    """Role ids are global and the database keeps one alias per label, so no two files may
+    share an id, label or alias, even files that never merge."""
+    _check_roles_distinct([role for file in files for role in file.roles])
 
 
 def allowed_forms(config: MergedConfig, name: str) -> list[GovernmentForm]:
@@ -76,6 +113,27 @@ def form_organizations(config: MergedConfig, form: GovernmentForm) -> list[Deriv
     if state_form is not None and state_form.organizations:
         return state_form.organizations
     return config.country_forms[form].organizations
+
+
+def resolve_government_form(
+    config: MergedConfig, name: str, government_form: GovernmentForm | None
+) -> GovernmentForm | None:
+    """The saved form, else the only allowed one, else unknown."""
+    if government_form is not None:
+        return government_form
+    forms = allowed_forms(config, name)
+    if len(forms) == 1:
+        return forms[0]
+    return None
+
+
+def derived_organizations(
+    config: MergedConfig, government_form: GovernmentForm | None
+) -> list[DerivedOrganization]:
+    """Nothing until the form is known, or for a form saved at the wrong level."""
+    if government_form is None or government_form not in config.country_forms:
+        return []
+    return form_organizations(config, government_form)
 
 
 def _role(config_role: ConfigRole, priority: int) -> Role:
@@ -126,3 +184,15 @@ def _check_role_labels_resolve(config: MergedConfig) -> None:
                         raise ValueError(
                             f"{form.value}: {organization.name}'s role {label!r} is not a role"
                         )
+
+
+def _check_one_organization_per_role(config: MergedConfig) -> None:
+    """Research files a role into the first organization whose role labels hold it, which is
+    only right while that organization is the only one."""
+    for form in config.country_forms:
+        seen: set[str] = set()
+        for organization in form_organizations(config, form):
+            for label in organization.role_labels:
+                if label in seen:
+                    raise ValueError(f"{form.value}: {label!r} is in two organizations")
+                seen.add(label)

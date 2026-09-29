@@ -1,6 +1,5 @@
-from pydantic import BaseModel, model_validator
-from shared.schemas import GovernmentForm, JurisdictionLevel, KnownOrganization
-from shared.utils import config_utils
+from pydantic import BaseModel
+from shared.schemas import GovernmentForm, KnownOrganization
 
 
 class DerivedOrganization(BaseModel):
@@ -31,96 +30,6 @@ def describe_government_form(form: GovernmentForm) -> str:
     return f"{government_form_name(form)} ({GOVERNMENT_FORM_DESCRIPTIONS[form]})"
 
 
-ANY_SUFFIX = "*"
-
-FormsBySuffix = dict[str, list[GovernmentForm]]
-
-
-class CountyGovernment(BaseModel):
-    """A state's county titles. The board is in every county form; the executive only in
-    county_executive, named County Executive when a state gives no name."""
-
-    board: DerivedOrganization
-    executive: DerivedOrganization | None = None
-
-
-class GovernmentFormsConfig(BaseModel):
-    """`config/government_forms.yml`: which forms are allowed, by level and name suffix, and
-    each state's county titles."""
-
-    country: dict[JurisdictionLevel, FormsBySuffix]
-    states: dict[str, dict[JurisdictionLevel, FormsBySuffix]] = {}
-    county_governments: dict[str, CountyGovernment] = {}
-
-    @model_validator(mode="after")
-    def _states_narrow_the_country(self) -> "GovernmentFormsConfig":
-        for level, by_suffix in self.country.items():
-            if ANY_SUFFIX not in by_suffix:
-                raise ValueError(f"country.{level} needs a {ANY_SUFFIX!r} entry")
-        for state, levels in self.states.items():
-            for level, by_suffix in levels.items():
-                if level not in self.country:
-                    raise ValueError(
-                        f"states.{state}.{level}: no country forms for {level}"
-                    )
-                everything = self.country[level][ANY_SUFFIX]
-                for suffix, forms in by_suffix.items():
-                    for form in forms:
-                        if form not in everything:
-                            raise ValueError(
-                                f"states.{state}.{level}.{suffix}: {form} is not a {level} form"
-                            )
-        return self
-
-
-def load_government_forms_config() -> GovernmentFormsConfig:
-    return GovernmentFormsConfig.model_validate(config_utils.get_government_forms())
-
-
-_COUNTY_EXECUTIVE = DerivedOrganization(name="County Executive", role_labels=["County Executive"])
-
-# Role labels as the taxonomy spells them; test_government_forms checks each one resolves.
-_ORGANIZATIONS_BY_FORM: dict[GovernmentForm, list[DerivedOrganization]] = {
-    GovernmentForm.MAYOR_COUNCIL: [
-        DerivedOrganization(name="Council", role_labels=["Council Member"]),
-        DerivedOrganization(name="Office of the Mayor", role_labels=["Mayor"]),
-    ],
-    GovernmentForm.COUNCIL_MANAGER: [
-        DerivedOrganization(name="Council", role_labels=["Council Member", "Mayor"]),
-    ],
-    GovernmentForm.COMMISSION: [
-        DerivedOrganization(name="Commission", role_labels=["Commissioner", "Mayor"]),
-    ],
-    GovernmentForm.TOWNSHIP_BOARD: [
-        DerivedOrganization(
-            name="Board", role_labels=["Supervisor", "Clerk", "Treasurer", "Trustee"]
-        ),
-    ],
-    GovernmentForm.OPEN_TOWN_MEETING: [
-        DerivedOrganization(
-            name="Select Board", role_labels=["Select Board Member", "Chair", "Vice Chair"]
-        ),
-        DerivedOrganization(name="Town Meeting", role_labels=["Moderator"]),
-    ],
-    GovernmentForm.REPRESENTATIVE_TOWN_MEETING: [
-        DerivedOrganization(
-            name="Select Board", role_labels=["Select Board Member", "Chair", "Vice Chair"]
-        ),
-        DerivedOrganization(
-            name="Town Meeting", role_labels=["Moderator", "Town Meeting Member"]
-        ),
-    ],
-    GovernmentForm.COUNTY_EXECUTIVE: [
-        DerivedOrganization(name="Council", role_labels=["Council Member"]),
-        _COUNTY_EXECUTIVE,
-    ],
-}
-
-
-def organizations_for(form: GovernmentForm) -> list[DerivedOrganization]:
-    return _ORGANIZATIONS_BY_FORM[form]
-
-
 def office_labels(organization: KnownOrganization) -> list[str]:
     """What holding office in this organization looks like: its posts' labels, or on a cold
     start, before any post exists, its derived role labels."""
@@ -133,62 +42,3 @@ def name_suffix(name: str) -> str:
     """Millbury town -> town: the statutory type most registry names end with."""
     words = name.split()
     return words[-1].lower() if words else ""
-
-
-def allowed_forms(
-    config: GovernmentFormsConfig, state: str, level: JurisdictionLevel, name: str
-) -> list[GovernmentForm]:
-    if level not in config.country:
-        raise ValueError(f"no government forms for level {level!r}")
-    suffix = name_suffix(name)
-
-    state_forms = config.states.get(state, {}).get(level, {})
-    if suffix in state_forms:
-        return state_forms[suffix]
-    if ANY_SUFFIX in state_forms:
-        return state_forms[ANY_SUFFIX]
-
-    country_forms = config.country[level]
-    if suffix in country_forms:
-        return country_forms[suffix]
-    return country_forms[ANY_SUFFIX]
-
-
-def resolve_government_form(
-    config: GovernmentFormsConfig,
-    state: str,
-    level: JurisdictionLevel,
-    name: str,
-    government_form: GovernmentForm | None,
-) -> GovernmentForm | None:
-    if government_form is not None:
-        return government_form
-    forms = allowed_forms(config, state, level, name)
-    if len(forms) == 1:
-        return forms[0]
-    return None
-
-
-def derived_organizations(
-    config: GovernmentFormsConfig,
-    state: str,
-    level: JurisdictionLevel,
-    government_form: GovernmentForm | None,
-) -> list[DerivedOrganization]:
-    """The organizations a jurisdiction should have. A county gets its state's board even before
-    its form is known; a local jurisdiction gets nothing until then."""
-    if level == JurisdictionLevel.COUNTIES:
-        return _county_organizations(config.county_governments.get(state), government_form)
-    if government_form is None:
-        return []
-    return organizations_for(government_form)
-
-
-def _county_organizations(
-    government: CountyGovernment | None, government_form: GovernmentForm | None
-) -> list[DerivedOrganization]:
-    if government is None:
-        return []
-    if government_form != GovernmentForm.COUNTY_EXECUTIVE:
-        return [government.board]
-    return [government.board, government.executive or _COUNTY_EXECUTIVE]

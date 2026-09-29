@@ -190,6 +190,8 @@ class ActivityType(StrEnum):
     EDIT_ROLE = "edit_role"
     DELETE_ROLE = "delete_role"
     REORDER_ROLES = "reorder_roles"
+    # An open-data config file synced after its PR merged; its role changes get their own rows.
+    SYNC_JURISDICTION_CONFIG = "sync_jurisdiction_config"
     # Not a roster change — a run beginning or settling, not a change to what the roster is.
     # `changeset_id` is always null on start (nothing has been minted yet); on end it is set
     # only when the run succeeded far enough to mint one — a failed or cancelled run has none.
@@ -224,6 +226,7 @@ UNPUBLISHED_ACTIVITY_TYPES = frozenset({
     ActivityType.EDIT_ROLE,
     ActivityType.DELETE_ROLE,
     ActivityType.REORDER_ROLES,
+    ActivityType.SYNC_JURISDICTION_CONFIG,
     # Proposals: nothing is published until a later `PUBLISH_REVIEW`.
     ActivityType.PIPELINE_RUN_START,
     ActivityType.PIPELINE_RUN_END,

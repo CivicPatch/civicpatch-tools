@@ -24,10 +24,11 @@ import yaml
 from pydantic import BaseModel
 from runners.people_collector.schemas import LinkStatus
 from shared.schemas import JurisdictionLevel
-from shared.utils.government_forms import (
-    GovernmentFormsConfig,
-    load_government_forms_config,
+from shared.utils.layered_config import (
+    CONFIG_PATH,
+    ConfigFile,
     derived_organizations,
+    jurisdiction_config,
     resolve_government_form,
 )
 from shared.utils.id_utils import parse_jurisdiction_ocdid
@@ -128,6 +129,17 @@ def read_cited_urls(open_data: str) -> dict[str, set[str]]:
     return cited
 
 
+def read_jurisdiction_configs(open_data: str) -> dict[str, ConfigFile]:
+    """Every roles and government forms config file in the checkout, keyed by its repo path."""
+    configs = {}
+    for path in glob.glob(os.path.join(open_data, DATA_SOURCE, "**", "config.yml"), recursive=True):
+        repo_path = os.path.relpath(path, open_data)
+        if CONFIG_PATH.match(repo_path):
+            with open(path) as f:
+                configs[repo_path] = ConfigFile.model_validate(yaml.safe_load(f) or {})
+    return configs
+
+
 def read_dataset_page_urls() -> set[str]:
     """Pages already in the dataset, so they are not proposed twice."""
     urls = set()
@@ -158,12 +170,13 @@ def case_id(run_folder: str, input_path: str) -> str:
     return re.sub(r"[^a-z0-9_-]", "_", f"{run_folder}__{page_folder}".lower())
 
 
-def prompt_inputs(config: GovernmentFormsConfig, run: SavedRun) -> PromptInputs:
+def prompt_inputs(configs: dict[str, ConfigFile], run: SavedRun) -> PromptInputs:
     parsed = parse_jurisdiction_ocdid(run.jurisdiction_ocdid)
-    form = None
-    if parsed.level != JurisdictionLevel.STATE:
-        form = resolve_government_form(config, parsed.state, parsed.level, run.jurisdiction_name, None)
-    derived = derived_organizations(config, parsed.state, parsed.level, form)
+    if parsed.level == JurisdictionLevel.STATE:
+        return PromptInputs(government_form=None, known_roles=[], known_organizations=[_DEFAULT_ORGANIZATION])
+    config = jurisdiction_config(configs, parsed.state, parsed.level)
+    form = resolve_government_form(config, run.jurisdiction_name, None)
+    derived = derived_organizations(config, form)
     if not derived:
         return PromptInputs(government_form=None, known_roles=[], known_organizations=[_DEFAULT_ORGANIZATION])
     return PromptInputs(
@@ -251,11 +264,11 @@ def main() -> None:
     runs = read_saved_runs()
     cited = read_cited_urls(open_data)
     known = read_dataset_page_urls()
-    config = load_government_forms_config()
+    configs = read_jurisdiction_configs(open_data)
 
     cases = []
     for run in runs:
-        inputs = prompt_inputs(config, run)
+        inputs = prompt_inputs(configs, run)
         cases.extend(candidate_cases(run, cited.get(run.jurisdiction_ocdid, set()), known, inputs))
 
     written = [case for case in cases if write_case(case)]

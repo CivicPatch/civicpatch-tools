@@ -185,6 +185,8 @@ def summarize_activity(type_: str, changes: dict | None) -> str:
 
     if type_ == "reorder_roles":
         return _reorder_summary(c)
+    if type_ == "sync_jurisdiction_config":
+        return f"Synced {c.get('path', 'config')}"
 
     # ── Entity events ───────────────────────────────────────────────────
     # One shape, so one renderer. This used to be six branches, each pulling the subject out of

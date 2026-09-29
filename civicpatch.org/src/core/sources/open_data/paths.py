@@ -1,10 +1,13 @@
 """Reads meaning out of open-data repo paths. Pure — no I/O, no repo access.
 
-The sync only cares about two path shapes:
+The hourly sync only cares about one path shape:
 
     data_source/<state>/<level>/jurisdictions.yml   the list of jurisdictions for one
                                                     (state, level) slice
-    data/<state>/<level>/<place>.yml                the people for one jurisdiction
+
+Plus the config files, which a merge syncs by path rather than the hourly tree diff:
+
+    data_source/config.yml, data_source/[<state>/]<level>/config.yml
 
 Everything else in the repo (READMEs, jurisdictions_metadata.yml, validation output,
 scripts) is not synced. This module answers three questions about a path: what kind of
@@ -14,7 +17,8 @@ file is it, which (state, level) does it belong to, and in what order should lev
 from enum import StrEnum
 
 from shared.schemas import JurisdictionLevel
-from shared.utils.id_utils import UNREVIEWED_SUFFIX, parse_jurisdiction_ocdid
+from shared.utils.id_utils import parse_jurisdiction_ocdid
+from shared.utils.layered_config import CONFIG_PATH
 
 # Dependent levels are built from their state's stored row, so state syncs first.
 # Unknown levels sort last — they can sync, but nothing may depend on them.
@@ -27,24 +31,18 @@ LEVEL_SYNC_ORDER = (
 
 class SyncFileKind(StrEnum):
     JURISDICTIONS = "jurisdictions"
-    PEOPLE = "people"
+    CONFIG = "config"
 
 
 def classify_path(path: str) -> SyncFileKind | None:
+    if CONFIG_PATH.match(path):
+        return SyncFileKind.CONFIG
     if (
         path.startswith("data_source/")
         and path.endswith("/jurisdictions.yml")
         and path.count("/") == 3
     ):
         return SyncFileKind.JURISDICTIONS
-    if path.startswith("data/") and path.endswith(".yml") and path.count("/") == 3:
-        # An unreviewed scrape sits beside its reviewed counterpart and matches every clause
-        # above, so it has to be excluded by name — nobody has approved it, and syncing it
-        # would make it live.
-        _state, level, _place = path.split("/")[1:]
-        if level.endswith(UNREVIEWED_SUFFIX):
-            return None
-        return SyncFileKind.PEOPLE
     return None
 
 

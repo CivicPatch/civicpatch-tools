@@ -402,8 +402,8 @@ class PipelineRunConfig(BaseModel):
     # context records the ceiling it ran under, which is the first thing worth knowing when
     # asking why a scrape stopped early.
     pipeline_run_cap_usd: Optional[Decimal] = None
-    # Resolved by cp.org when the run starts: the saved form, else what
-    # `config/government_forms.yml` decides. None means nobody has decided yet.
+    # Resolved by cp.org when the run starts: the saved form, else what open-data's config
+    # files decide. None means nobody has decided yet.
     government_form: Optional[GovernmentForm] = None
 
 
