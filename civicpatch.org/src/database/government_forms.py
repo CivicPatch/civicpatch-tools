@@ -4,7 +4,10 @@ from core.organization_derivation import ExistingOrganization
 from database.database import get_pool
 from shared.schemas import GovernmentForm
 
-_INPUTS_SELECT = "SELECT jurisdiction_ocdid, data->>'name', meta_government_form FROM jurisdictions"
+# The form a person or a merged pull request set in open-data, under the entry's `extras`.
+_INPUTS_SELECT = (
+    "SELECT jurisdiction_ocdid, data->>'name', data->'extras'->>'government_form' FROM jurisdictions"
+)
 
 
 class GovernmentFormInputs(BaseModel):
@@ -61,16 +64,3 @@ async def list_organizations(
         )
     return by_jurisdiction
 
-
-async def save_government_form_if_unset(
-    cur, jurisdiction_ocdid: str, form: GovernmentForm
-) -> bool:
-    """True if this call saved it. A form already saved is never overwritten here."""
-    await cur.execute(
-        """
-        UPDATE jurisdictions SET meta_government_form = %s
-        WHERE jurisdiction_ocdid = %s AND meta_government_form IS NULL
-        """,
-        (form.value, jurisdiction_ocdid),
-    )
-    return cur.rowcount > 0

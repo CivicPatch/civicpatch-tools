@@ -49,6 +49,19 @@ def _synced_entry(entry: dict[str, str]) -> dict[str, str]:
     return {key: value for key, value in entry.items() if key != "parent_ocdids"}
 
 
+def _entry_columns(entry: dict) -> tuple:
+    """The entry's fields as their own columns, beside `data` until readers move off it."""
+    population = entry.get("population")
+    return (
+        entry.get("name"),
+        entry.get("url"),
+        int(population) if population is not None else None,
+        entry.get("geoid"),
+        entry.get("wiki_url"),
+        (entry.get("extras") or {}).get("government_form"),
+    )
+
+
 def jurisdiction_rows(
     entries: list[dict[str, str]],
     state: str,
@@ -64,6 +77,7 @@ def jurisdiction_rows(
             json.dumps(_synced_entry(entry)),
             updated_at,
             build_search_text(entry, state, state_name),
+            *_entry_columns(entry),
         )
         for entry in entries
     ]
@@ -901,27 +915,6 @@ async def get_jurisdiction_entry(jurisdiction_ocdid: str) -> dict | None:
     return row[0] if row else None
 
 
-async def patch_jurisdiction_entry(
-    jurisdiction_ocdid: str, patch: Mapping[str, object]
-) -> None:
-    """Merge a patch into the stored entry, leaving every other key alone.
-
-    `||` rather than a whole-row write: the patch carries only what the editor sent, and an
-    explicit null in it is a value to keep, not a key to drop.
-    """
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
-            """
-            UPDATE jurisdictions
-               SET data = data || %s::jsonb,
-                   updated_at = now()
-             WHERE jurisdiction_ocdid = %s
-            """,
-            (json.dumps(patch), jurisdiction_ocdid),
-        )
-
-
 async def mark_jurisdictions_inactive(jurisdiction_ocdids: list):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -934,14 +927,21 @@ async def mark_jurisdictions_inactive(jurisdiction_ocdids: list):
 async def bulk_update_jurisdictions(jurisdiction_records: list):
     query = """
         INSERT INTO jurisdictions
-            (jurisdiction_ocdid, state, level, data, updated_at, search_text)
-        VALUES (%s, %s, %s, %s, %s, %s)
+            (jurisdiction_ocdid, state, level, data, updated_at, search_text,
+             name, url, population, geoid, wiki_url, extras_government_form)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         ON CONFLICT (jurisdiction_ocdid)
         DO UPDATE SET
             level = EXCLUDED.level,
             data = EXCLUDED.data,
             updated_at = EXCLUDED.updated_at,
             search_text = EXCLUDED.search_text,
+            name = EXCLUDED.name,
+            url = EXCLUDED.url,
+            population = EXCLUDED.population,
+            geoid = EXCLUDED.geoid,
+            wiki_url = EXCLUDED.wiki_url,
+            extras_government_form = EXCLUDED.extras_government_form,
             status = 'active'
     """
     pool = await get_pool()

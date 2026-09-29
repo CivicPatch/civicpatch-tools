@@ -40,8 +40,8 @@ RESOLVED = (
     f"('{ChangesetState.PUBLISHED.value}', '{ChangesetState.DISMISSED.value}')"
 )
 
-# Open, minus the one kind that is never reviewed: a jurisdiction edit is born published, so it
-# has no in-flight phase to be in.
+# Open, minus the one kind that is never reviewed here: a jurisdiction edit waits on a pull request
+# a person merges on GitHub, and must not hold up the jurisdiction's scrapes meanwhile.
 WORK_IN_FLIGHT = (
     f"changesets.changeset_state IN ('{ChangesetState.OPEN.value}') "
     f"AND changesets.kind != '{ChangesetKind.JURISDICTION_EDIT.value}'"

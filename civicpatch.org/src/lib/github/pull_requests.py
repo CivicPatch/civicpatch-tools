@@ -22,6 +22,7 @@ async def open_attributed_pr(
     pull_request_title: str,
     pull_request_body: str,
     author: PrAuthor,
+    labels: tuple[str, ...] = (),
     base: str = "main",
     repo_url: str | None = None,
     headers: dict | None = None,
@@ -46,7 +47,7 @@ async def open_attributed_pr(
         return None, "Failed to write file to branch"
 
     attributed_body = f"{pull_request_body}\n\n---\n_Opened by {author.name} ({author.email}) via CivicPatch._"
-    labels = [f"team:{t}" for t in author.teams] or None
+    all_labels = [*labels, *(f"team:{t}" for t in author.teams)] or None
     return await github_api_service.create_pull_request(
         branch_name,
         title=pull_request_title,
@@ -54,5 +55,5 @@ async def open_attributed_pr(
         base=base,
         repo_url=repo_url,
         headers=headers,
-        labels=labels,
+        labels=all_labels,
     )

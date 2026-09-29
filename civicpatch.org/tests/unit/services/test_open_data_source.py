@@ -194,6 +194,11 @@ def _patch_sync_all(stack, tree, stored, contents):
     )
     _patch(
         stack,
+        "jurisdiction_pr_service.fetch_pull_request_outcomes",
+        new_callable=AsyncMock,
+    )
+    _patch(
+        stack,
         "jurisdictions_db.deactivate_jurisdictions_not_in",
         new_callable=AsyncMock,
     )

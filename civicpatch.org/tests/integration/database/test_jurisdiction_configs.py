@@ -15,7 +15,7 @@ from database.jurisdiction_configs import sync_jurisdiction_config
 from schemas.jurisdiction_configs import JurisdictionConfigVersion
 from shared.schemas import GovernmentForm
 from shared.utils.government_forms import DerivedOrganization
-from shared.utils.layered_config import ConfigFile, ConfigRole, FormConfig
+from shared.utils.layered_config import ConfigFile, ConfigRole, GovernmentFormConfig
 
 _PATH = "data_source/zz/local/config.yml"
 _SENTINEL_ID_PATTERN = "zz-test-%"
@@ -127,16 +127,16 @@ async def test_a_later_sync_renames_moves_aliases_and_deactivates():
 async def test_the_sync_row_names_the_forms_that_changed():
     mayor = DerivedOrganization(name="Office of the Mayor", role_labels=["Mayor"])
     await sync_jurisdiction_config(
-        _version(), ConfigFile(government_forms={GovernmentForm.COMMISSION: FormConfig()})
+        _version(), ConfigFile(government_forms={GovernmentForm.COMMISSION: GovernmentFormConfig()})
     )
 
     await sync_jurisdiction_config(
         _version("def456"),
-        ConfigFile(government_forms={GovernmentForm.MAYOR_COUNCIL: FormConfig(organizations=[mayor])}),
+        ConfigFile(government_forms={GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig(organizations=[mayor])}),
     )
 
     [last_sync] = [
         changes for type_, changes in await _activity()
         if type_ == "sync_jurisdiction_config" and changes["commit_sha"] == "def456"
     ]
-    assert last_sync["forms"] == {"added": ["mayor_council"], "removed": ["commission"], "changed": []}
+    assert last_sync["government_forms"] == {"added": ["mayor_council"], "removed": ["commission"], "changed": []}

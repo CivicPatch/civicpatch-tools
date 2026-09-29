@@ -1,4 +1,5 @@
 import re
+import urllib.parse
 from typing import Any, List
 
 from pydantic import BaseModel, Field, field_validator, model_validator
@@ -14,6 +15,45 @@ class GovernmentFormSummary(BaseModel):
 
 class JurisdictionsByOcdidsRequest(BaseModel):
     ocdids: List[str]
+
+
+class JurisdictionPullRequestRequest(BaseModel):
+    """Changes to the jurisdiction's entry, any of them, and the pages that support them. A field
+    left out stays as it is; an explicit null clears it."""
+
+    url: str | None = None
+    population: int | None = None
+    geoid: str | None = None
+    government_form: GovernmentForm | None = None
+    sources: List[str] = []
+
+    # Mirrors urlError in field-validation.ts, so the reviewer is told the same thing
+    # while typing as they would be on Save. Rejects rather than canonicalizing:
+    # url_utils.format_url would silently prepend a scheme to a typo.
+    #
+    # An emptied input arrives as "" and is normalised to None — the user clearing the box is
+    # the same decision as sending null, and null is what the patch writes. The field still
+    # counts as set, so exclude_unset keeps it and the value is cleared rather than skipped.
+    @field_validator("url")
+    @classmethod
+    def validate_url(cls, v):
+        if v is None or not v.strip():
+            return None
+        url = v.strip()
+        if not url.startswith(("http://", "https://")):
+            raise ValueError(
+                f"Website must start with 'http://' or 'https://', got: '{url}'"
+            )
+        parsed = urllib.parse.urlparse(url)
+        if not parsed.netloc or "." not in parsed.netloc or " " in url:
+            raise ValueError(f"Website must be a valid URL with a domain, got: '{url}'")
+        return url
+
+    @model_validator(mode="after")
+    def changes_something(self) -> "JurisdictionPullRequestRequest":
+        if not self.model_fields_set - {"sources"}:
+            raise ValueError("Name at least one field to change.")
+        return self
 
 
 # Sources give partial dates, so a term date is text: `SubmittedPersonRecord`'s three shapes.

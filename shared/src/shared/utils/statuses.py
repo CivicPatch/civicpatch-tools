@@ -168,6 +168,16 @@ class DismissalReason(StrEnum):
     EXPIRED = "expired"  # a sheet import nobody decided within a week
 
 
+class PullRequestLabel(StrEnum):
+    """What cp.org labels its open-data PRs with. A cross-repo contract: open-data's merge gate
+    (scripts/github_actions/merge_config_pr.py) merges the two person labels and never `system`,
+    so a rename here without the same change there stops merging silently."""
+
+    ADMIN = "civicpatch:admin"
+    MAINTAINER = "civicpatch:maintainer"
+    SYSTEM = "civicpatch:system"
+
+
 class ActivityType(StrEnum):
     PUBLISH_REVIEW = "publish_review"
     DISMISS_REVIEW = "dismiss_review"

@@ -1,238 +1,233 @@
-import base64
+"""Open a pull request changing one jurisdiction's entry in the jurisdictions repo, and track it as
+a changeset until a person merges or closes it.
+
+Every `jurisdictions.yml` edit comes through here, a maintainer's url fix and the pipeline's
+government government form answer alike; the label says who asked. `JURISDICTIONS_REPO_URL` points at
+open-data until the jurisdictions repo exists. After each hourly sync, every open PR's outcome
+is recorded: merged is published, closed is rejected.
+"""
+
 import logging
-from enum import StrEnum
 
 import environment
 import httpx
 import lib.github.api as github_service
 import shared.utils.id_utils as id_utils
+from core.sources.open_data.paths import jurisdictions_file_path
 from lib.github.auth import get_jurisdictions_sync_headers
 from lib.github.pull_requests import PrAuthor, open_attributed_pr
-from services.sources.open_data import read_jurisdictions_by_ocdids
+from pydantic import BaseModel
+from schemas.common import UserRole
+from shared.schemas import GovernmentForm, JurisdictionLevel
+from shared.utils.layered_config import jurisdiction_config
+from shared.utils.statuses import DismissalReason, PullRequestLabel
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
-import database.jurisdictions as jurisdictions_db
-import database.changesets as changesets_db
 import core.jurisdiction_patch as jurisdiction_patch
-import services.activity as activity_service
+import database.changesets as changesets_db
+import database.government_forms as government_forms_db
+import database.jurisdiction_configs as jurisdiction_configs_db
+import database.publications as publications_db
+import database.users as users_db
+from core.jurisdiction_patch import JurisdictionPatch
+from database.changesets import WaitingPullRequest
+from database.users import SYSTEM_USER_ID
 
 logger = logging.getLogger(__name__)
 
 
-# The only level with a hand-editable registry today; states and counties are upstream-owned.
-LOCAL_LEVEL = "local"
+class UnknownJurisdiction(Exception):
+    pass
 
 
-class EditRejection(StrEnum):
-    """A rejected edit that is the caller's mistake, not a server failure. The value
-    doubles as the message shown to them."""
-
-    NO_FIELDS = "No fields to update"
-    NO_CHANGES = "No changes to publish"
+class GovernmentFormNotAtLevel(Exception):
+    pass
 
 
-def _get_jurisdictions_repo_url() -> str:
-    return environment.get_env_vars()["JURISDICTIONS_REPO_URL"]
+class NothingToChange(Exception):
+    pass
 
 
-def _extract_state(jurisdiction_ocdid: str) -> str:
-    for part in jurisdiction_ocdid.split("/"):
-        if part.startswith("state:"):
-            return part.split(":")[1]
-    raise ValueError(f"Cannot extract state from: {jurisdiction_ocdid}")
+class PullRequestAlreadyOpen(Exception):
+    """args[0]: the open pull request's url."""
 
 
-def _apply_fields(entry: dict, fields: dict) -> None:
-    for key in ("url", "population", "geoid"):
-        if fields.get(key) is not None:
-            entry[key] = fields[key]
+class PullRequestFailed(Exception):
+    pass
 
 
-async def open_jurisdiction_edit_pr(
-    jurisdiction_ocdid: str,
-    fields: dict,
-    author: PrAuthor,
-) -> tuple[int, str] | tuple[None, str]:
-    """The jurisdictions-repo route. Not reachable from the app — the live path is
-    `commit_jurisdiction_patch` — but real code, so it can be exercised by pointing
-    JURISDICTIONS_REPO_URL at open-data rather than openstates/jurisdictions.
-    """
-    repo_url = _get_jurisdictions_repo_url()
-    state = _extract_state(jurisdiction_ocdid)
-    file_path = f"data/{state}/local/jurisdictions.yml"
+class JurisdictionEdit(BaseModel):
+    """What to change: top-level fields as a merge patch (absent is untouched, null clears), and
+    `extras.government_form`. `sources` go in the PR body."""
 
-    auth_headers = await get_jurisdictions_sync_headers()
-    async with httpx.AsyncClient(timeout=30.0) as client:
-        response = await client.get(
-            f"{repo_url}/contents/{file_path}",
-            headers=auth_headers,
-        )
-    if response.status_code == 404:
-        entries = [{"id": jurisdiction_ocdid}]
-        _apply_fields(entries[0], fields)
-    elif response.status_code != 200:
-        return (
-            None,
-            f"Failed to fetch {file_path}: {response.json().get('message', 'unknown')}",
-        )
-    else:
-        raw = base64.b64decode(response.json()["content"]).decode("utf-8")
-        entries = yaml_load(raw)
-
-        updated = False
-        for entry in entries:
-            if entry.get("id") == jurisdiction_ocdid:
-                _apply_fields(entry, fields)
-                updated = True
-                break
-
-        if not updated:
-            return None, f"Jurisdiction {jurisdiction_ocdid} not found in {file_path}"
-
-    content_str = yaml_dump(entries)
-    branch_name = f"civicpatch/jurisdiction-edit/{id_utils.make_id()}"
-
-    return await open_attributed_pr(
-        branch_name=branch_name,
-        file_path=file_path,
-        content=content_str,
-        commit_message=f"Update metadata: {jurisdiction_ocdid}",
-        pull_request_title=f"Jurisdiction edit: {state}/{jurisdiction_ocdid.split('/')[-2]}",
-        pull_request_body=f"Updating metadata for `{jurisdiction_ocdid}`.",
-        author=author,
-        repo_url=repo_url,
-        headers=auth_headers,
-    )
+    patch: JurisdictionPatch
+    government_form: GovernmentForm | None = None
+    sources: list[str] = []
 
 
-async def commit_jurisdiction_patch(
-    jurisdiction_ocdid: str,
-    fields: dict,
-    user_id: str | None,
-) -> tuple[str | None, str, str]:
-    """Patch a jurisdiction's fields and commit them, like editing a person: only what
-    was sent is written, and an absent field is left alone rather than cleared.
+class OpenedPullRequest(BaseModel):
+    pull_request_number: int
+    pull_request_url: str
+    changeset_id: str
 
-    Committed directly rather than proposed. A maintainer editing a field has already made
-    the decision a pull request exists to carry, and nothing downstream could reject it —
-    the PR was auto-merged on the caller's behalf anyway. Removing it makes the edit
-    synchronous, which is what retired the reconcile pass that used to answer
-    "has it landed yet?".
 
-    The file is read and patched in place, NOT rendered from the database — the opposite of
-    how people are published, and deliberately so. civicpatch owns its people; it does not own
-    the registry, which od_sync pulls from open-data on a schedule. The file is the source, so
-    reading it is reading the truth rather than taking a redundant round trip.
-
-    Measured 2026-08-17, the concrete cost of rendering instead: the real files carry YAML
-    comments a full render would delete — 36 in ca/local, 17 in ma/local, 28 in wa/counties,
-    9 in wa/state. Fields would survive (the DB stores entries verbatim, `generated_comments`
-    and `issues` included); the comments would not.
-
-    Returns (commit_url, url_or_error, changeset_id).
-    """
-    state = _extract_state(jurisdiction_ocdid)
-    file_path = f"data_source/{state}/{LOCAL_LEVEL}/jurisdictions.yml"
+async def open_jurisdiction_pull_request(
+    jurisdiction_ocdid: str, edit: JurisdictionEdit, label: PullRequestLabel, user_id: str
+) -> OpenedPullRequest:
+    """`user_id` is the person who asked, or the CivicPatch system user for the pipeline; either
+    way it is the commit's author and the changeset's creator."""
+    await _check_edit(jurisdiction_ocdid, edit)
+    waiting = await fetch_open_pull_request(jurisdiction_ocdid)
+    if waiting is not None:
+        raise PullRequestAlreadyOpen(waiting.pull_request_url)
+    number, url = await _open_pr(jurisdiction_ocdid, edit, label, await _author(user_id))
     changeset_id = id_utils.make_id()
+    await changesets_db.register_jurisdiction_pull_request_changeset(changeset_id, jurisdiction_ocdid, url, user_id)
+    return OpenedPullRequest(pull_request_number=number, pull_request_url=url, changeset_id=changeset_id)
 
-    patch = jurisdiction_patch.build_patch(fields)
-    if not patch:
-        return None, EditRejection.NO_FIELDS, changeset_id
 
-    raw = await github_service.get_github_file_contents(file_path)
+async def fetch_open_pull_request(jurisdiction_ocdid: str) -> WaitingPullRequest | None:
+    """The jurisdiction's PR still waiting: open, or merged but not published yet. One someone
+    closed is their answer: its changeset is dismissed as rejected, and None is returned."""
+    waiting = await changesets_db.get_open_jurisdiction_pull_request(jurisdiction_ocdid)
+    if waiting is None:
+        return None
+    try:
+        state = await _pull_request_state(waiting.pull_request_url)
+    except httpx.HTTPStatusError as exc:
+        raise PullRequestFailed(f"Could not read {waiting.pull_request_url}: {exc}") from exc
+    if state is not github_service.PullRequestState.CLOSED:
+        return waiting
+    await publications_db.dismiss_changeset(waiting.changeset_id, DismissalReason.REJECTED)
+    return None
+
+
+async def has_open_pull_request(jurisdiction_ocdid: str) -> bool:
+    """For a run's config. GitHub unreadable counts as waiting: better to skip one question
+    than to fail the run."""
+    try:
+        return await fetch_open_pull_request(jurisdiction_ocdid) is not None
+    except PullRequestFailed:
+        return True
+
+
+async def fetch_pull_request_outcomes() -> None:
+    """After each hourly sync: a merged PR is published (the sync has just read the merge), a
+    closed one rejected. A PR GitHub cannot report on waits for the next run."""
+    for waiting in await changesets_db.list_open_jurisdiction_pull_requests():
+        try:
+            state = await _pull_request_state(waiting.pull_request_url)
+        except httpx.HTTPStatusError:
+            logger.warning("fetch_pull_request_outcomes: could not read %s", waiting.pull_request_url)
+            continue
+        if state is github_service.PullRequestState.MERGED:
+            await changesets_db.mark_changeset_published(waiting.changeset_id)
+        elif state is github_service.PullRequestState.CLOSED:
+            await publications_db.dismiss_changeset(waiting.changeset_id, DismissalReason.REJECTED)
+
+
+def label_for(author_user_id: str, role: str | None) -> PullRequestLabel | None:
+    """The PR's author as the label the jurisdictions repo reads: the pipeline's are the system
+    user's, a person's carry their role. None: not allowed to open one."""
+    if author_user_id == SYSTEM_USER_ID:
+        return PullRequestLabel.SYSTEM
+    if role == UserRole.ADMINS:
+        return PullRequestLabel.ADMIN
+    if role == UserRole.MAINTAINERS:
+        return PullRequestLabel.MAINTAINER
+    return None
+
+
+def pull_request_body(edit: JurisdictionEdit, level: str) -> str:
+    changes = [
+        f"- `{field}`: {value if value is not None else '(cleared)'}" for field, value in edit.patch.items()
+    ]
+    if edit.government_form is not None:
+        changes.append(f"- `extras.government_form`: `{edit.government_form.value}` ({level})")
+    source_lines = "\n".join(f"- {source}" for source in edit.sources) or "- none given"
+    return "Changes:\n" + "\n".join(changes) + f"\n\nSources:\n{source_lines}"
+
+
+def pull_request_number(pull_request_url: str) -> int:
+    """https://github.com/<owner>/<repo>/pull/7 -> 7."""
+    return int(pull_request_url.rstrip("/").rsplit("/", 1)[1])
+
+
+async def _check_edit(jurisdiction_ocdid: str, edit: JurisdictionEdit) -> None:
+    if await government_forms_db.get_government_form_inputs(jurisdiction_ocdid) is None:
+        raise UnknownJurisdiction(jurisdiction_ocdid)
+    if edit.government_form is None:
+        return
+    parsed = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
+    if parsed.level == JurisdictionLevel.STATE:
+        raise GovernmentFormNotAtLevel("a state has no government form")
+    config = jurisdiction_config(
+        await jurisdiction_configs_db.get_jurisdiction_configs(), parsed.state, parsed.level
+    )
+    if edit.government_form not in config.country_government_forms:
+        raise GovernmentFormNotAtLevel(f"{edit.government_form.value} is not a {parsed.level} government form")
+
+
+async def _open_pr(
+    jurisdiction_ocdid: str, edit: JurisdictionEdit, label: PullRequestLabel, author: PrAuthor
+) -> tuple[int, str]:
+    repo_url = environment.get_env_vars()["JURISDICTIONS_REPO_URL"]
+    file_path = jurisdictions_file_path(jurisdiction_ocdid)
+    raw = await github_service.get_github_file_contents(file_path, repo_url=repo_url)
     if not raw:
-        return None, f"Failed to fetch {file_path}", changeset_id
-
-    # Round-tripped through ruamel so quotes, comments and layout survive: this touches one
-    # value in a file listing every jurisdiction in the state.
+        raise PullRequestFailed(f"Failed to fetch {file_path}")
     doc = yaml_load(raw)
     entry = jurisdiction_patch.find_jurisdiction(doc, jurisdiction_ocdid)
     if entry is None:
-        return None, f"Jurisdiction {jurisdiction_ocdid} not found in {file_path}", changeset_id
-
-    before = jurisdiction_patch.current_values(entry, patch)
-    if before == patch:
-        return None, EditRejection.NO_CHANGES, changeset_id
-
-    changed = ", ".join(sorted(patch))
-    commit_url = await github_service.upsert_github_file(
-        branch_name=github_service.DEFAULT_BRANCH,
+        raise UnknownJurisdiction(f"{jurisdiction_ocdid} is not in {file_path}")
+    changed = _changed_fields(entry, edit)
+    if not changed:
+        raise NothingToChange("No changes to publish")
+    number, url_or_error = await open_attributed_pr(
+        branch_name=f"civicpatch/jurisdiction-edit/{id_utils.make_id()}",
         file_path=file_path,
-        content_str=yaml_dump(jurisdiction_patch.apply_patch(doc, jurisdiction_ocdid, patch)),
-        commit_message=f"Update {changed}: {jurisdiction_ocdid}",
+        content=yaml_dump(_patched(doc, jurisdiction_ocdid, edit)),
+        commit_message=f"Update {', '.join(changed)}: {jurisdiction_ocdid}",
+        pull_request_title=f"Jurisdiction edit: {entry.get('name') or jurisdiction_ocdid}",
+        pull_request_body=pull_request_body(edit, id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid).level),
+        author=author,
+        labels=(label,),
+        repo_url=repo_url,
+        headers=await get_jurisdictions_sync_headers(),
     )
-    if not commit_url:
-        return None, f"Failed to commit {file_path}", changeset_id
+    if number is None:
+        raise PullRequestFailed(url_or_error)
+    return number, url_or_error
 
-    # Kept in step so the page reflects the edit immediately. od_sync would bring the same
-    # value back from the file on its next run; writing it here removes the wait, and is what
-    # replaced the reconcile pass rather than leaving the UI stale until a sync.
-    await jurisdictions_db.patch_jurisdiction_entry(jurisdiction_ocdid, patch)
 
-    # Published on commit: there is no review step between the edit and the file, so the
-    # request is born resolved rather than waiting for a merge to tell us.
-    await changesets_db.register_jurisdiction_edit_changeset(
-        changeset_id=changeset_id,
-        jurisdiction_ocdid=jurisdiction_ocdid,
-        change_url=commit_url,
-        created_by_user_id=user_id,
+def _patched(doc: dict, jurisdiction_ocdid: str, edit: JurisdictionEdit) -> dict:
+    patched = jurisdiction_patch.apply_patch(doc, jurisdiction_ocdid, edit.patch)
+    if edit.government_form is None:
+        return patched
+    return jurisdiction_patch.set_government_form(patched, jurisdiction_ocdid, edit.government_form.value)
+
+
+def _changed_fields(entry: dict, edit: JurisdictionEdit) -> list[str]:
+    """The fields whose value this edit actually changes in the file's current entry."""
+    changed = [field for field, value in edit.patch.items() if entry.get(field) != value]
+    if (
+        edit.government_form is not None
+        and jurisdiction_patch.current_government_form(entry) != edit.government_form.value
+    ):
+        changed.append("government_form")
+    return changed
+
+
+async def _pull_request_state(pull_request_url: str) -> github_service.PullRequestState:
+    return await github_service.get_pull_request_state(
+        pull_request_number(pull_request_url),
+        environment.get_env_vars()["JURISDICTIONS_REPO_URL"],
+        await get_jurisdictions_sync_headers(),
     )
 
-    # The change log records the url specifically, so it only fires when url moved.
-    if user_id:
-        await activity_service.record_jurisdiction_edit(
-            changeset_id=changeset_id,
-            jurisdiction_ocdid=jurisdiction_ocdid,
-            jurisdiction_name=entry["name"],
-            user_id=user_id,
-            before=before,
-            after=patch,
-        )
 
-    return commit_url, commit_url, changeset_id
-
-
-async def merge_jurisdiction_pr(
-    pull_request_number: str, approved_by: str | None, changeset_id: str
-) -> None:
-    # Best-effort auto-merge: any failure leaves the PR open for a manual merge.
-    # Auto-merging rather than waiting for review is deliberate (settled 2026-09-05) — a
-    # jurisdiction edit registers a changeset, but nothing holds it pending on purpose.
-    # open-data, not the jurisdictions repo — that is where the PR was opened.
-    try:
-        mergeable_state = await github_service.get_pull_request_mergeability(
-            pull_request_number
-        )
-        if mergeable_state != "clean":
-            logger.warning(
-                "Jurisdiction PR %s not mergeable (%s); leaving open",
-                pull_request_number,
-                mergeable_state,
-            )
-            return
-        merge_error = await github_service.merge_pull_request(
-            pull_request_number, approved_by=approved_by
-        )
-        if merge_error:
-            logger.warning(
-                "Jurisdiction PR %s merge failed: %s", pull_request_number, merge_error
-            )
-            return
-    except Exception:
-        logger.exception("Failed to auto-merge jurisdiction PR %s", pull_request_number)
-        return
-
-    # Sync the jurisdiction it just changed. Called directly rather than through a status
-    # write: this path merged the PR, so it already knows. A failure here is not a merge
-    # failure — the merge stands and the hourly od_sync is the backstop.
-    try:
-        jurisdiction_ocdid = await changesets_db.get_changeset_jurisdiction(changeset_id)
-        if jurisdiction_ocdid:
-            await read_jurisdictions_by_ocdids([jurisdiction_ocdid])
-    except Exception:
-        logger.exception(
-            "Merged jurisdiction PR %s but recording/syncing it failed for request %s; "
-            "the hourly od_sync will pick it up",
-            pull_request_number,
-            changeset_id,
-        )
+async def _author(user_id: str) -> PrAuthor:
+    user = await users_db.get_user_by_id(user_id)
+    if user is None:
+        raise PullRequestFailed(f"No user {user_id} to author the pull request")
+    return PrAuthor(name=user["username"] or user["email"], email=user["email"])

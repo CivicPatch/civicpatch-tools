@@ -27,7 +27,7 @@ EVALS_DIR = "tests/prompts/tests/evals/government_form"
 MODEL_NAME = "gemini"
 _EVAL_RUN_ID = "run-eval"
 
-LOCAL_FORMS = [
+LOCAL_GOVERNMENT_FORMS = [
     GovernmentForm.MAYOR_COUNCIL,
     GovernmentForm.COUNCIL_MANAGER,
     GovernmentForm.COMMISSION,
@@ -35,7 +35,7 @@ LOCAL_FORMS = [
     GovernmentForm.OPEN_TOWN_MEETING,
     GovernmentForm.REPRESENTATIVE_TOWN_MEETING,
 ]
-COUNTY_FORMS = [GovernmentForm.COMMISSION, GovernmentForm.COUNCIL_MANAGER, GovernmentForm.COUNTY_EXECUTIVE]
+COUNTY_GOVERNMENT_FORMS = [GovernmentForm.COMMISSION, GovernmentForm.COUNCIL_MANAGER, GovernmentForm.COUNTY_EXECUTIVE]
 
 
 def load_cases(base_dir: str) -> list[dict]:
@@ -55,8 +55,8 @@ _eval_cases = load_cases(EVAL_CASES_DIR)
 def prompt_for(expected: dict) -> str:
     ocdid = expected["jurisdiction_ocdid"]
     if parse_jurisdiction_ocdid(ocdid).level == JurisdictionLevel.COUNTIES:
-        return gemini_prompts.county_government_form_prompt(ocdid, expected["name"], COUNTY_FORMS)
-    return gemini_prompts.municipal_government_form_prompt(ocdid, expected["name"], LOCAL_FORMS)
+        return gemini_prompts.county_government_form_prompt(ocdid, expected["name"], COUNTY_GOVERNMENT_FORMS)
+    return gemini_prompts.municipal_government_form_prompt(ocdid, expected["name"], LOCAL_GOVERNMENT_FORMS)
 
 
 async def run_eval(case: dict) -> dict:

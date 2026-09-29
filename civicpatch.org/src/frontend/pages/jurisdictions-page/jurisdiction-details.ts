@@ -3,11 +3,11 @@
 // Same row shape as a person's editor field (label / control) and the same input
 // control, so a field looks and behaves the same wherever you meet it. What
 // differs is the save: a person's edits accumulate and publish together, while a
-// jurisdiction url patch is its own PR — so it commits on an explicit Save rather
-// than on every keystroke.
+// jurisdiction edit is a pull request a person merges — so it opens on an explicit
+// Save rather than on every keystroke.
 //
-// Only the website is editable. The rest are shown because they identify the
-// record, not because anyone edits them here.
+// The website and the government form are editable. The rest are shown because they
+// identify the record, not because anyone edits them here.
 
 import { html, nothing } from "lit-html";
 import { component, useState, useEffect } from "haunted";
@@ -16,10 +16,11 @@ import "../../components/fields/field-controls.css";
 import { renderScalarNewSide } from "../../components/fields/field-controls.js";
 import { urlError, type FieldSpec } from "../../components/fields/field-model.js";
 import { SOURCE_LINK_TARGET } from "../../utils/source-links.js";
+import { changedFields, type JurisdictionFields } from "./jurisdiction-edit.js";
 
 const WEBSITE_FIELD: FieldSpec = { key: "url", label: "Website", type: "text" };
 
-// The resolved form; null when no form is known yet.
+// The resolved government form; null when none is known yet.
 interface GovernmentForm {
   value: string;
   name: string;
@@ -29,10 +30,13 @@ interface GovernmentForm {
 interface JurisdictionDetailsProps {
   data: any;
   governmentForm: GovernmentForm | null;
+  // Every government form of the jurisdiction's level, for the picker.
+  governmentFormOptions: GovernmentForm[];
+  openPullRequestUrl: string | null;
   // The permission, not a page-wide edit mode — this widget owns its own Edit button and
   // decides on its own when to show the field as editable.
   canEditPermission: boolean;
-  onSave: (form: any) => Promise<any>;
+  onSave: (changes: any) => Promise<any>;
   blockedReason: string | null;
 }
 
@@ -53,13 +57,40 @@ function readOnlyRows(data: any): ReadOnlyRow[] {
   ];
 }
 
-function renderGovernmentForm(form: GovernmentForm | null) {
-  if (!form) return nothing;
+function renderGovernmentForm(governmentForm: GovernmentForm | null) {
+  if (!governmentForm) return nothing;
   return renderRow(
     "Government form",
-    html`<span class="person-editor__readonly">${form.name}</span>
-      <div class="jurisdiction-details__hint">${form.description}</div>`,
+    html`<span class="person-editor__readonly">${governmentForm.name}</span>
+      <div class="jurisdiction-details__hint">${governmentForm.description}</div>`,
   );
+}
+
+function renderGovernmentFormPicker(
+  options: GovernmentForm[],
+  selected: string,
+  onChange: (value: string) => void,
+) {
+  const description = options.find((option) => option.value === selected)?.description;
+  return renderRow(
+    "Government form",
+    html`<select @change=${(e: Event) => onChange((e.target as HTMLSelectElement).value)}>
+        <option value="" .selected=${!selected}>Not known</option>
+        ${options.map(
+          (option) =>
+            html`<option value=${option.value} .selected=${option.value === selected}>${option.name}</option>`,
+        )}
+      </select>
+      ${description ? html`<div class="jurisdiction-details__hint">${description}</div>` : nothing}`,
+  );
+}
+
+function renderWaitingPullRequest(url: string | null) {
+  if (!url) return nothing;
+  return html`<p class="jurisdiction-details__note">
+    Pull request open:
+    <a href=${url} target="_blank" rel="noopener noreferrer">${url}</a>
+  </p>`;
 }
 
 function renderRow(label: string, control: unknown) {
@@ -102,23 +133,30 @@ function renderList(title: string, rows: [string, unknown][][]) {
 function JurisdictionDetails({
   data,
   governmentForm,
+  governmentFormOptions,
+  openPullRequestUrl,
   canEditPermission,
   onSave,
   blockedReason,
 }: JurisdictionDetailsProps) {
-  const [url, setUrl] = useState<string>(data?.url ?? "");
+  const saved: JurisdictionFields = { url: data?.url ?? "", government_form: governmentForm?.value ?? "" };
+  const [draft, setDraft] = useState<JurisdictionFields>(saved);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [prResult, setPrResult] = useState<any>(null);
   const [editing, setEditing] = useState(false);
 
+  // A sync can change what is saved while the panel is open.
   useEffect(() => {
-    setUrl(data?.url ?? "");
-  }, [data?.url]);
+    setDraft(saved);
+  }, [saved.url, saved.government_form]);
 
-  const dirty = (url ?? "") !== (data?.url ?? "");
+  const changes = changedFields(saved, draft);
+  const hasChanges = Object.keys(changes).length > 0;
+  const editDraft = (field: keyof JurisdictionFields) => (value: string) =>
+    setDraft({ ...draft, [field]: value });
   const handleDiscard = () => {
-    setUrl(data?.url ?? "");
+    setDraft(saved);
     setEditing(false);
   };
   const cap = html`
@@ -128,7 +166,7 @@ function JurisdictionDetails({
         ? html`<span class="panel__cap-right">
             ${editing
               ? html`<button class="btn-quiet" @click=${handleDiscard}>
-                  ${dirty ? "Cancel" : "Done"}
+                  ${hasChanges ? "Cancel" : "Done"}
                 </button>`
               : html`<button class="btn-quiet" @click=${() => setEditing(true)}>Edit</button>`}
           </span>`
@@ -146,16 +184,14 @@ function JurisdictionDetails({
   const canEdit = canEditPermission && editing;
   // Clearing the website is allowed, so only a non-empty value is judged. Same
   // rule the person editor applies to a person's urls.
-  const websiteError = url.trim() ? urlError(url.trim()) : null;
+  const websiteError = draft.url.trim() ? urlError(draft.url.trim()) : null;
 
   const handleSave = async () => {
     setIsSaving(true);
     setError(null);
     try {
-      // Only the edited field. Spreading `data` would resend geoid and population as their
-      // current values, which is a write the user did not ask for — and once null means
-      // "cleared", resending is how untouched fields get clobbered.
-      setPrResult(await onSave({ url }));
+      // Only the changed fields: resending the others would write values nobody asked for.
+      setPrResult(await onSave(changes));
       setEditing(false);
     } catch (e: any) {
       setError(e.message ?? "Failed to save.");
@@ -166,8 +202,8 @@ function JurisdictionDetails({
   // The editor's scalar control saves on input; here that would open a PR per
   // keystroke, so it edits local state and Save commits.
   const website = canEdit
-    ? html`${renderScalarNewSide(WEBSITE_FIELD, { url } as any, (updates) =>
-        setUrl(String((updates as any).url ?? "")), { state: "same", error: websiteError }, null)}
+    ? html`${renderScalarNewSide(WEBSITE_FIELD, { url: draft.url } as any, (updates) =>
+        editDraft("url")(String((updates as any).url ?? "")), { state: "same", error: websiteError }, null)}
       ${websiteError
         ? html`<div class="person-editor__error">
             <i class="fa-solid fa-triangle-exclamation"></i><span>${websiteError}</span>
@@ -199,14 +235,17 @@ function JurisdictionDetails({
   return html`
     ${cap}
     <div class="jurisdiction-details__fields">
+      ${prResult ? nothing : renderWaitingPullRequest(openPullRequestUrl)}
       ${renderRow("Website", website)}
-      ${renderGovernmentForm(governmentForm)}
+      ${canEdit && governmentFormOptions.length
+        ? renderGovernmentFormPicker(governmentFormOptions, draft.government_form, editDraft("government_form"))
+        : renderGovernmentForm(governmentForm)}
       ${readOnlyRows(data).map(renderReadOnly)}
       ${renderList("Term information", terms)}
       ${renderList("Sourcing", sourcing)}
       ${renderList("Metadata", metadata)}
 
-      ${canEdit && dirty
+      ${canEdit && hasChanges
         ? html`<div class="jurisdiction-details__actions">
             <button class="btn-quiet" @click=${handleDiscard}>Discard</button>
             <button
@@ -215,7 +254,7 @@ function JurisdictionDetails({
               title=${websiteError ?? ""}
               @click=${handleSave}
             >
-              ${isSaving ? "Opening PR…" : "Save website"}
+              ${isSaving ? "Opening PR…" : "Open pull request"}
             </button>
           </div>`
         : nothing}
@@ -225,8 +264,7 @@ function JurisdictionDetails({
             Opened
             <a href=${prResult.pull_request_url} target="_blank" rel="noopener noreferrer"
               >#${prResult.pull_request_number}</a
-            >. It merges and syncs in the background — reload in a moment to see it
-            here.
+            >.
           </p>`
         : nothing}
       ${error ? html`<p style="color: var(--diff-removed);">${error}</p>` : nothing}

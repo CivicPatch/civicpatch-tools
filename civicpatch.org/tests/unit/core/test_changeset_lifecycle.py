@@ -28,7 +28,8 @@ def test_every_kind_is_born_where_the_table_says():
         ChangesetKind.SCRAPE: ChangesetState.OPEN,
         ChangesetKind.SHEET_IMPORT: ChangesetState.OPEN,
         ChangesetKind.ROSTER_EDIT: ChangesetState.PUBLISHED,
-        ChangesetKind.JURISDICTION_EDIT: ChangesetState.PUBLISHED,
+        # Open since 2026-09-29: a jurisdiction edit is a pull request waiting for a merge.
+        ChangesetKind.JURISDICTION_EDIT: ChangesetState.OPEN,
         ChangesetKind.ROLLBACK: ChangesetState.OPEN,
     }
     assert set(INITIAL_STATE) == set(ChangesetKind), "every kind has a birth state"

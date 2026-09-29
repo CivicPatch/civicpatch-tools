@@ -20,7 +20,7 @@ from services.government_form import (
 )
 from shared.schemas import GovernmentForm
 from shared.utils.government_forms import DerivedOrganization
-from shared.utils.layered_config import COUNTRY_ROLES_PATH, ConfigFile, ConfigRole, FormConfig
+from shared.utils.layered_config import COUNTRY_ROLES_PATH, ConfigFile, ConfigRole, GovernmentFormConfig
 
 _MI_TOWNSHIP = "ocd-jurisdiction/country:us/state:mi/place:zyform_township/government"
 _WA_CITY = "ocd-jurisdiction/country:us/state:wa/place:zyform_city/government"
@@ -35,17 +35,18 @@ _WA_COUNTY = "ocd-jurisdiction/country:us/state:wa/county:zyform/government"
 async def _seed(
     jurisdiction_ocdid: str, state: str, data: dict, government_form: str | None = None
 ) -> None:
+    """`government_form` is what open-data's entry sets under `extras`, as the sync stores it."""
+    if government_form is not None:
+        data = {**data, "extras": {"government_form": government_form}}
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO jurisdictions
-                (jurisdiction_ocdid, state, data, meta_government_form, updated_at)
-            VALUES (%s, %s, %s::jsonb, %s, now())
-            ON CONFLICT (jurisdiction_ocdid) DO UPDATE
-                SET data = EXCLUDED.data, meta_government_form = EXCLUDED.meta_government_form
+            INSERT INTO jurisdictions (jurisdiction_ocdid, state, data, updated_at)
+            VALUES (%s, %s, %s::jsonb, now())
+            ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET data = EXCLUDED.data
             """,
-            (jurisdiction_ocdid, state, json.dumps(data), government_form),
+            (jurisdiction_ocdid, state, json.dumps(data)),
         )
         await conn.commit()
 
@@ -57,7 +58,7 @@ def _organization(name: str, *role_labels: str) -> DerivedOrganization:
 def _forms(**organizations_by_form: list[DerivedOrganization]) -> ConfigFile:
     return ConfigFile(
         government_forms={
-            GovernmentForm(form): FormConfig(organizations=organizations)
+            GovernmentForm(form): GovernmentFormConfig(organizations=organizations)
             for form, organizations in organizations_by_form.items()
         }
     )
@@ -88,7 +89,7 @@ _CONFIGS = {
         ],
     ),
     "data_source/mi/local/config.yml": ConfigFile(
-        government_forms={GovernmentForm.TOWNSHIP_BOARD: FormConfig(suffixes=["township"])}
+        government_forms={GovernmentForm.TOWNSHIP_BOARD: GovernmentFormConfig(suffixes=["township"])}
     ),
     "data_source/tx/counties/config.yml": _forms(
         commission=[_organization("Commissioners Court", "Commissioner")]
@@ -199,20 +200,14 @@ async def _organizations(jurisdiction_ocdid: str) -> list[tuple[str, str, bool]]
         return list(await cur.fetchall())
 
 
-async def _saved_form(jurisdiction_ocdid: str) -> str | None:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT meta_government_form FROM jurisdictions WHERE jurisdiction_ocdid = %s",
-            (jurisdiction_ocdid,),
-        )
-        row = await cur.fetchone()
-        return row[0] if row else None
+async def _resolved_form(jurisdiction_ocdid: str) -> str | None:
+    form = (await resolved_government(jurisdiction_ocdid)).government_form
+    return form.value if form is not None else None
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_applying_a_rule_decided_form_renames_the_default_and_saves_the_form():
+async def test_a_rule_decided_form_renames_the_default():
     await _seed(_MI_TOWNSHIP, "mi", {"name": "Zyform township"})
     await ensure_defaults_exist([_MI_TOWNSHIP])
     [(default_id, _, _)] = await _organizations(_MI_TOWNSHIP)
@@ -220,12 +215,12 @@ async def test_applying_a_rule_decided_form_renames_the_default_and_saves_the_fo
     await ensure_government_form_organizations()
 
     assert await _organizations(_MI_TOWNSHIP) == [(default_id, "Board", True)]
-    assert await _saved_form(_MI_TOWNSHIP) == "township_board"
+    assert await _resolved_form(_MI_TOWNSHIP) == "township_board"
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_saved_form_creates_the_second_organization_beside_the_renamed_default():
+async def test_an_open_data_form_creates_the_second_organization_beside_the_renamed_default():
     await _seed(_MA_TOWN, "ma", {"name": "Zyform town"}, government_form="open_town_meeting")
     await ensure_defaults_exist([_MA_TOWN])
     [(default_id, _, _)] = await _organizations(_MA_TOWN)
@@ -261,7 +256,7 @@ async def test_a_jurisdiction_the_config_leaves_open_is_not_touched():
     await ensure_government_form_organizations()
 
     assert [name for _, name, _ in await _organizations(_WA_CITY)] == ["Government"]
-    assert await _saved_form(_WA_CITY) is None
+    assert await _resolved_form(_WA_CITY) is None
 
 
 @pytest.mark.integration
@@ -274,9 +269,9 @@ async def test_the_sync_pass_applies_forms_not_yet_applied_and_leaves_open_ones_
     await ensure_government_form_organizations()
 
     assert [name for _, name, _ in await _organizations(_MI_TOWNSHIP)] == ["Board"]
-    assert await _saved_form(_MI_TOWNSHIP) == "township_board"
+    assert await _resolved_form(_MI_TOWNSHIP) == "township_board"
     assert [name for _, name, _ in await _organizations(_WA_CITY)] == ["Government"]
-    assert await _saved_form(_WA_CITY) is None
+    assert await _resolved_form(_WA_CITY) is None
 
 
 async def _rename_default(jurisdiction_ocdid: str, name: str) -> None:
@@ -299,7 +294,7 @@ async def test_a_default_renamed_by_hand_is_not_renamed_back():
     await ensure_government_form_organizations()
 
     assert [name for _, name, _ in await _organizations(_MI_TOWNSHIP)] == ["Township Board of Trustees"]
-    assert await _saved_form(_MI_TOWNSHIP) == "township_board"
+    assert await _resolved_form(_MI_TOWNSHIP) == "township_board"
 
 
 @pytest.mark.integration
@@ -311,7 +306,7 @@ async def test_a_texas_county_gets_its_commissioners_court():
     await ensure_government_form_organizations()
 
     assert [name for _, name, _ in await _organizations(_TX_COUNTY)] == ["Commissioners Court"]
-    assert await _saved_form(_TX_COUNTY) == "commission"
+    assert await _resolved_form(_TX_COUNTY) == "commission"
 
 
 @pytest.mark.integration
@@ -326,7 +321,7 @@ async def test_a_tennessee_county_also_gets_its_mayors_office():
         "County Commission",
         "Office of the County Mayor",
     ]
-    assert await _saved_form(_TN_COUNTY) == "county_executive"
+    assert await _resolved_form(_TN_COUNTY) == "county_executive"
 
 
 @pytest.mark.integration
@@ -338,7 +333,7 @@ async def test_a_county_gets_its_states_one_form_and_board():
     await ensure_government_form_organizations()
 
     assert [name for _, name, _ in await _organizations(_WA_COUNTY)] == ["Board of County Commissioners"]
-    assert await _saved_form(_WA_COUNTY) == "commission"
+    assert await _resolved_form(_WA_COUNTY) == "commission"
 
 
 @pytest.mark.integration
@@ -373,3 +368,13 @@ async def test_the_page_shows_no_form_when_none_is_known():
     await _seed(_WA_CITY, "wa", {"name": "Zyform city"})
 
     assert await government_form_summary(_WA_CITY) is None
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_the_allowed_forms_are_what_an_undecided_jurisdiction_is_offered():
+    await _seed(_WA_CITY, "wa", {"name": "Zyform city"})
+    await _seed(_MI_TOWNSHIP, "mi", {"name": "Zyform township"})
+
+    assert len((await resolved_government(_WA_CITY)).allowed_government_forms) == 4
+    assert (await resolved_government(_MI_TOWNSHIP)).allowed_government_forms == [GovernmentForm.TOWNSHIP_BOARD]

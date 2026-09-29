@@ -39,7 +39,7 @@ EXACT = {
     "roles_status_check": RoleStatus,
     "users_role_valid": UserRole,
     "review_session_entries_status_check": ReviewSessionEntryStatus,
-    "jurisdictions_meta_government_form_check": GovernmentForm,
+    "jurisdictions_extras_government_form_check": GovernmentForm,
 }
 
 # Deliberate subsets. An alias may only be proposed or accepted, never excluded — exclusion is

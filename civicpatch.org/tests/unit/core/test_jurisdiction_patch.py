@@ -4,9 +4,11 @@ from shared.utils.yaml_utils import yaml_dump, yaml_load
 from core.jurisdiction_patch import (
     apply_patch,
     build_patch,
+    current_government_form,
     current_values,
     find_jurisdiction,
     patch_is_live,
+    set_government_form,
 )
 
 
@@ -173,3 +175,28 @@ def test_apply_patch_leaves_generated_comments_alone():
 
     assert "generated_comments:" in out
     assert "- population from ACS 5-year" in out
+
+
+@pytest.mark.unit
+def test_setting_the_form_adds_extras_and_keeps_every_comment():
+    out = yaml_dump(set_government_form(yaml_load(ANNOTATED_ENTRY), "ocd-a", "council_manager"))
+
+    assert "government_form: council_manager" in out
+    assert "# checked against the city clerk, 2025-03" in out
+    assert "# redirects to /home" in out
+
+
+@pytest.mark.unit
+def test_setting_the_form_keeps_other_extras():
+    doc = {"jurisdictions": [{"id": "ocd-a", "extras": {"charter": "home rule"}}]}
+
+    [entry] = set_government_form(doc, "ocd-a", "commission")["jurisdictions"]
+
+    assert entry["extras"] == {"charter": "home rule", "government_form": "commission"}
+    assert doc["jurisdictions"][0]["extras"] == {"charter": "home rule"}
+
+
+@pytest.mark.unit
+def test_an_entry_with_no_extras_has_no_form():
+    assert current_government_form({"id": "ocd-a"}) is None
+    assert current_government_form({"id": "ocd-a", "extras": {"government_form": "commission"}}) == "commission"

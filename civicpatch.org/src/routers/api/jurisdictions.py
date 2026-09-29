@@ -7,14 +7,17 @@ import services.roster_edits as roster_edits
 import services.jurisdiction_pull_request as jurisdiction_pr_service
 import services.jurisdiction_scrape_candidate as candidate_service
 import services.government_form as government_form_service
+from database.users import SYSTEM_USER_ID
 from core.jurisdiction_search import build_fuzzy_tokens, build_tsquery
 from core.people_edits import PeopleValidationError
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
-from lib.auth import require_route_access
+from core.jurisdiction_patch import build_patch
+from lib.auth import is_service_key, require_route_access
 from pydantic import BaseModel, field_validator
 from schemas.common import Identity, RouteCategory, UserRole, has_at_least
 from schemas.jurisdictions import (
+    JurisdictionPullRequestRequest,
     JurisdictionRosterEditRequest,
     JurisdictionsByOcdidsRequest,
     JurisdictionSearchResponse,
@@ -82,35 +85,6 @@ def _empty_search_response(
     )
 
 
-class PatchJurisdictionDataRequest(BaseModel):
-    jurisdiction_ocdid: str
-    url: str | None = None
-    geoid: str | None = None
-    population: int | None = None
-
-    # Mirrors urlError in field-validation.ts, so the reviewer is told the same thing
-    # while typing as they would be on Save. Rejects rather than canonicalizing:
-    # url_utils.format_url would silently prepend a scheme to a typo.
-    #
-    # An emptied input arrives as "" and is normalised to None — the user clearing the box is
-    # the same decision as sending null, and null is what the patch writes. The field still
-    # counts as set, so exclude_unset keeps it and the value is cleared rather than skipped.
-    @field_validator("url")
-    @classmethod
-    def validate_url(cls, v):
-        if v is None or not v.strip():
-            return None
-        url = v.strip()
-        if not url.startswith(("http://", "https://")):
-            raise ValueError(
-                f"Website must start with 'http://' or 'https://', got: '{url}'"
-            )
-        parsed = urllib.parse.urlparse(url)
-        if not parsed.netloc or "." not in parsed.netloc or " " in url:
-            raise ValueError(f"Website must be a valid URL with a domain, got: '{url}'")
-        return url
-
-
 def get_router() -> APIRouter:
     router = APIRouter()
 
@@ -129,10 +103,15 @@ def get_router() -> APIRouter:
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
 
         government_form = await government_form_service.government_form_summary(jurisdiction_ocdid)
+        options = await government_form_service.government_form_options(jurisdiction_ocdid)
+        waiting = await changesets.get_open_jurisdiction_pull_request(jurisdiction_ocdid)
         response = {
             "data": jurisdiction_data["data"],
             "last_collected_at": jurisdiction_data.get("last_collected_at"),
             "government_form": government_form.model_dump() if government_form else None,
+            "government_form_options": [option.model_dump() for option in options],
+            # From our table only: a PR closed on GitHub shows until the next hourly sync.
+            "open_pull_request_url": waiting.pull_request_url if waiting else None,
         }
 
         if with_geom:
@@ -200,36 +179,46 @@ def get_router() -> APIRouter:
         results = await database.get_jurisdictions_by_ocdids(body.ocdids)
         return {"data": results}
 
-    @router.patch("/data", include_in_schema=False)
-    async def patch_jurisdiction_data_endpoint(
-        request: PatchJurisdictionDataRequest,
-        background_tasks: BackgroundTasks,
-        user: Identity = Depends(
+    @router.post("/{jurisdiction_ocdid:path}/pull_requests", status_code=201, include_in_schema=False)
+    async def open_jurisdiction_pull_request(
+        jurisdiction_ocdid: str,
+        body: JurisdictionPullRequestRequest,
+        identity: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
-        if not user.email:
-            return JSONResponse({"error": "User email required"}, status_code=400)
-        # exclude_unset, not a dict literal: a field the caller omitted must stay omitted, or
-        # its None becomes indistinguishable from an explicit null and every edit would clear
-        # the two fields it did not mention.
-        (
-            commit_url,
-            url_or_error,
-            _changeset_id,
-        ) = await jurisdiction_pr_service.commit_jurisdiction_patch(
-            jurisdiction_ocdid=request.jurisdiction_ocdid,
-            fields=request.model_dump(exclude_unset=True),
-            user_id=user.user_id,
+        """Open a pull request changing the jurisdiction's entry in the jurisdictions repo. It
+        waits there for a person to merge or close it; the label says who asked."""
+        if is_service_key(identity):
+            author_user_id = SYSTEM_USER_ID
+        elif identity.user_id is None:
+            raise HTTPException(status_code=401, detail="Sign in to open a pull request.")
+        else:
+            author_user_id = identity.user_id
+        label = jurisdiction_pr_service.label_for(author_user_id, identity.role)
+        if label is None:
+            raise HTTPException(status_code=403, detail="Opening a pull request needs a maintainer.")
+        # exclude_unset: a field left out stays as it is, and an explicit null clears it.
+        edit = jurisdiction_pr_service.JurisdictionEdit(
+            patch=build_patch(body.model_dump(exclude_unset=True)),
+            government_form=body.government_form,
+            sources=body.sources,
         )
-        if commit_url is None:
-            # Nothing to write is the caller's mistake, not a server failure.
-            no_op = url_or_error in set(jurisdiction_pr_service.EditRejection)
-            return JSONResponse(
-                {"error": url_or_error}, status_code=400 if no_op else 500
+        try:
+            opened = await jurisdiction_pr_service.open_jurisdiction_pull_request(
+                jurisdiction_ocdid, edit, label, author_user_id
             )
-        # No background merge: the commit already landed, so the response is the outcome.
-        return {"data": {"change_url": commit_url}}
+        except jurisdiction_pr_service.UnknownJurisdiction:
+            raise HTTPException(status_code=404, detail=f"No such jurisdiction: {jurisdiction_ocdid}")
+        except jurisdiction_pr_service.NothingToChange as exc:
+            raise HTTPException(status_code=400, detail=str(exc))
+        except jurisdiction_pr_service.GovernmentFormNotAtLevel as exc:
+            raise HTTPException(status_code=422, detail=str(exc))
+        except jurisdiction_pr_service.PullRequestAlreadyOpen as exc:
+            raise HTTPException(status_code=409, detail=f"A pull request is already open: {exc.args[0]}")
+        except jurisdiction_pr_service.PullRequestFailed as exc:
+            raise HTTPException(status_code=502, detail=str(exc))
+        return {"data": opened.model_dump()}
 
     # `:path` because an ocdid carries slashes. The literal suffix anchors it, so this cannot
     # swallow the sibling routes.

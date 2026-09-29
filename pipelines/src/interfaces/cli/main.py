@@ -62,6 +62,7 @@ async def _run_pipeline_async(args):
         raw_cap = config_data.get("pipeline_run_cap_usd")
         cap = Decimal(str(raw_cap)) if raw_cap is not None else None
         government_form = config_data.get("government_form")
+        government_form_choices = config_data.get("government_form_choices") or []
 
     request = PeopleCollectorRequest(
         jurisdiction_ocdid=args.jurisdiction_ocdid,
@@ -73,6 +74,7 @@ async def _run_pipeline_async(args):
             # Nothing carries it here — not the Actions workflow, not the Temporal args.
             pipeline_run_cap_usd=cap,
             government_form=government_form,
+            government_form_choices=government_form_choices,
         ),
     )
     await run_pipeline_cli(pipeline_run_id, request)

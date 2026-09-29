@@ -8,6 +8,10 @@ from schemas.jurisdictions import GovernmentFormSummary, JurisdictionSearchResul
 from shared.schemas import GovernmentForm
 from lib.auth import get_optional_user
 from routers.api import jurisdictions as jurisdictions_router
+from database.changesets import WaitingPullRequest
+from database.users import SYSTEM_USER_ID
+from shared.utils.statuses import PullRequestLabel
+import services.jurisdiction_pull_request as jurisdiction_pr_service
 
 
 @pytest.fixture(autouse=True)
@@ -22,6 +26,17 @@ def always_miss_cache():
         jurisdictions_router.cache_service,
         "set_cached",
         new=AsyncMock(return_value=None),
+    ):
+        yield
+
+
+@pytest.fixture(autouse=True)
+def no_form_options_or_waiting_pull_request():
+    """The jurisdiction GET also asks for the form options and a waiting PR; both read the DB."""
+    with patch(
+        "services.government_form.government_form_options", new_callable=AsyncMock, return_value=[]
+    ), patch.object(
+        jurisdictions_router.changesets, "get_open_jurisdiction_pull_request", new=AsyncMock(return_value=None)
     ):
         yield
 
@@ -55,82 +70,6 @@ def _maintainer():
 
 
 CHANGESET_ID = "2026-07-31-abcd"
-
-PATCH_BODY = {
-    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland",
-    "url": "https://oakland.gov",
-}
-
-
-COMMIT_URL = "https://github.com/x/commit/abc123"
-
-
-@pytest.mark.unit
-def test_patch_jurisdiction_data_commits_for_maintainer(client):
-    """The edit lands within the request: there is no PR to open and no merge to wait on,
-    so the commit url is the whole outcome."""
-    client.app.dependency_overrides[get_optional_user] = _maintainer
-    with patch(
-        "services.jurisdiction_pull_request.commit_jurisdiction_patch",
-        new_callable=AsyncMock,
-        return_value=(COMMIT_URL, COMMIT_URL, CHANGESET_ID),
-    ):
-        response = client.patch("/jurisdictions/data", json=PATCH_BODY)
-
-    assert response.status_code == 200
-    assert response.json()["data"]["change_url"] == COMMIT_URL
-
-
-# The Website field is patched into the jurisdictions repo, so it never passes through
-# `Official` and gets none of the people validation. Rejects rather than canonicalizing:
-# silently prepending a scheme would publish a typo.
-@pytest.mark.unit
-@pytest.mark.parametrize(
-    "url", ["oakland.gov", "https://oakland", "https://oak land.gov", "ftp://oakland.gov"]
-)
-def test_patch_jurisdiction_data_rejects_a_malformed_url(client, url):
-    client.app.dependency_overrides[get_optional_user] = _maintainer
-    with patch(
-        "services.jurisdiction_pull_request.commit_jurisdiction_patch",
-        new_callable=AsyncMock,
-    ) as mock_open:
-        response = client.patch("/jurisdictions/data", json={**PATCH_BODY, "url": url})
-
-    assert response.status_code == 422
-    mock_open.assert_not_awaited()
-
-
-# Clearing the website is a legitimate edit, so an empty value is not a malformed one.
-@pytest.mark.unit
-def test_patch_jurisdiction_data_allows_clearing_the_url(client):
-    client.app.dependency_overrides[get_optional_user] = _maintainer
-    with (
-        patch(
-            "services.jurisdiction_pull_request.commit_jurisdiction_patch",
-            new_callable=AsyncMock,
-            return_value=(42, "https://github.com/x/pull/42", CHANGESET_ID),
-        ),
-    ):
-        response = client.patch("/jurisdictions/data", json={**PATCH_BODY, "url": ""})
-
-    assert response.status_code == 200
-
-
-@pytest.mark.unit
-@pytest.mark.parametrize("identity", [_default, _contributor])
-def test_patch_jurisdiction_data_requires_maintainer(client, identity):
-    # The Jurisdiction Details sidebar edits published data via an auto-merged PR,
-    # so it is gated to maintainers alongside the Current tab's people edits.
-    client.app.dependency_overrides[get_optional_user] = identity
-    with patch(
-        "services.jurisdiction_pull_request.commit_jurisdiction_patch",
-        new_callable=AsyncMock,
-    ) as mock_open:
-        response = client.patch("/jurisdictions/data", json=PATCH_BODY)
-
-    assert response.status_code == 403
-    mock_open.assert_not_awaited()
-
 
 @pytest.mark.unit
 def test_get_jurisdiction_states_returns_list(client):
@@ -257,6 +196,25 @@ def test_get_jurisdiction_returns_its_government_form(client):
         "name": "Open town meeting",
         "description": "a select board or board of selectmen, with an open town meeting",
     }
+
+
+@pytest.mark.unit
+def test_get_jurisdiction_returns_its_waiting_pull_request(client):
+    waiting = WaitingPullRequest(changeset_id=CHANGESET_ID, pull_request_url="https://example.test/pull/7")
+    with patch(
+        "database.jurisdictions.get_jurisdiction",
+        new_callable=AsyncMock,
+        return_value={"data": {"id": "ocd-jurisdiction/country:us/state:wa/place:seattle", "name": "Seattle"}},
+    ), patch(
+        "services.government_form.government_form_summary", new_callable=AsyncMock, return_value=None
+    ), patch.object(
+        jurisdictions_router.changesets, "get_open_jurisdiction_pull_request", new=AsyncMock(return_value=waiting)
+    ):
+        response = client.get(
+            "/jurisdictions", params={"jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:seattle"}
+        )
+
+    assert response.json()["open_pull_request_url"] == "https://example.test/pull/7"
 
 
 @pytest.mark.unit
@@ -663,3 +621,126 @@ def test_an_unknown_post_is_a_404(client):
         response = client.post(EDIT_URL, json={**EDIT_BODY, "changeset_id": CHANGESET_ID})
 
     assert response.status_code == 404, response.text
+
+
+# ── POST /jurisdictions/{ocdid}/pull_requests ─────────────────────────────────
+#
+# Every jurisdictions.yml edit, url and government form alike: a PR a person merges. The url
+# tests were the PATCH /jurisdictions/data tests until url edits moved onto pull requests.
+
+PULL_REQUEST_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+PULL_REQUEST_URL = f"/jurisdictions/{PULL_REQUEST_OCDID}/pull_requests"
+PULL_REQUEST_BODY = {"government_form": "mayor_council", "sources": ["https://seattle.gov"]}
+
+
+def _service_key():
+    return Identity(type="service_api_key", provider="system", provider_user_id="service_api_key", email=None)
+
+
+def _signed_in_without_a_user_row():
+    return Identity(type="cookie", provider="github", provider_user_id="u9", email="x@x.com", role=UserRole.MAINTAINERS)
+
+
+def _opened():
+    return jurisdiction_pr_service.OpenedPullRequest(
+        pull_request_number=7, pull_request_url="https://example.test/pull/7", changeset_id=CHANGESET_ID
+    )
+
+
+def _post(client, body, identity):
+    client.app.dependency_overrides[get_optional_user] = identity
+    with patch.object(
+        jurisdiction_pr_service, "open_jurisdiction_pull_request", new=AsyncMock(return_value=_opened())
+    ) as mock_open:
+        response = client.post(PULL_REQUEST_URL, json=body)
+    return response, mock_open
+
+
+@pytest.mark.unit
+def test_a_maintainer_opens_a_pull_request_labelled_as_a_maintainer(client):
+    response, mock_open = _post(client, PULL_REQUEST_BODY, _maintainer)
+
+    assert response.status_code == 201
+    assert response.json()["data"]["pull_request_number"] == 7
+    _ocdid, edit, label, author = mock_open.call_args.args
+    assert (edit.government_form, label, author) == (GovernmentForm.MAYOR_COUNCIL, PullRequestLabel.MAINTAINER, "user-789")
+
+
+@pytest.mark.unit
+def test_the_pipeline_opens_one_as_the_system_user(client):
+    response, mock_open = _post(client, PULL_REQUEST_BODY, _service_key)
+
+    assert response.status_code == 201
+    assert mock_open.call_args.args[2:] == (PullRequestLabel.SYSTEM, SYSTEM_USER_ID)
+
+
+@pytest.mark.unit
+def test_a_url_edit_carries_only_the_fields_sent(client):
+    response, mock_open = _post(client, {"url": "https://seattle.gov/new"}, _maintainer)
+
+    assert response.status_code == 201
+    edit = mock_open.call_args.args[1]
+    assert (edit.patch, edit.government_form) == ({"url": "https://seattle.gov/new"}, None)
+
+
+@pytest.mark.unit
+def test_clearing_the_url_is_an_edit(client):
+    """An emptied input arrives as "" and is sent as null, which clears the field."""
+    response, mock_open = _post(client, {"url": ""}, _maintainer)
+
+    assert response.status_code == 201
+    assert mock_open.call_args.args[1].patch == {"url": None}
+
+
+# The url is patched into the jurisdictions repo, so it never passes through `Official` and
+# gets none of the people validation. Rejected rather than canonicalized: silently prepending a
+# scheme would publish a typo.
+@pytest.mark.unit
+@pytest.mark.parametrize("url", ["oakland.gov", "https://oakland", "https://oak land.gov", "ftp://oakland.gov"])
+def test_a_malformed_url_is_rejected(client, url):
+    response, mock_open = _post(client, {"url": url}, _maintainer)
+
+    assert response.status_code == 422
+    mock_open.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_a_request_naming_no_field_is_rejected(client):
+    response, mock_open = _post(client, {"sources": ["https://seattle.gov"]}, _maintainer)
+
+    assert response.status_code == 422
+    mock_open.assert_not_awaited()
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("identity", [_default, _contributor])
+def test_it_needs_a_maintainer(client, identity):
+    response, mock_open = _post(client, PULL_REQUEST_BODY, identity)
+
+    assert response.status_code == 403
+    mock_open.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_a_person_with_no_user_row_cannot_pass_as_the_system(client):
+    response, mock_open = _post(client, PULL_REQUEST_BODY, _signed_in_without_a_user_row)
+
+    assert response.status_code == 401
+    mock_open.assert_not_awaited()
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "error, status",
+    [
+        (jurisdiction_pr_service.UnknownJurisdiction("x"), 404),
+        (jurisdiction_pr_service.NothingToChange("x"), 400),
+        (jurisdiction_pr_service.GovernmentFormNotAtLevel("x"), 422),
+        (jurisdiction_pr_service.PullRequestAlreadyOpen("https://example.test/pull/6"), 409),
+        (jurisdiction_pr_service.PullRequestFailed("x"), 502),
+    ],
+)
+def test_each_refusal_has_its_status(client, error, status):
+    client.app.dependency_overrides[get_optional_user] = _maintainer
+    with patch.object(jurisdiction_pr_service, "open_jurisdiction_pull_request", new=AsyncMock(side_effect=error)):
+        assert client.post(PULL_REQUEST_URL, json=PULL_REQUEST_BODY).status_code == status

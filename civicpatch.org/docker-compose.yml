@@ -19,7 +19,8 @@ services:
       # right and serve production's images for objects dev wrote somewhere else entirely.
       FRIENDLY_STORAGE_HOST: ${FRIENDLY_STORAGE_HOST:-https://civicpatch-nonprod.civicpatch.org}
       OPEN_DATA_REPO_URL: ${OPEN_DATA_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
-      JURISDICTIONS_REPO_URL: "https://api.github.com/repos/openstates/jurisdictions"
+      # open-data's own jurisdiction files until the jurisdictions repo exists.
+      JURISDICTIONS_REPO_URL: ${JURISDICTIONS_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
       JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID:-NO_KEY_PROVIDED}
       JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64: ${JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64:-NO_KEY_PROVIDED}
       JURISDICTIONS_SYNC_APP_INSTALLATION_ID: ${JURISDICTIONS_SYNC_APP_INSTALLATION_ID:-NO_KEY_PROVIDED}
@@ -142,7 +143,7 @@ services:
       CIVICPATCH_API_DB_PASSWORD: ${CIVICPATCH_API_DB_PASSWORD:-development_password}
       REDIS_HOST: civicpatch-org-redis
       OPEN_DATA_REPO_URL: ${OPEN_DATA_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
-      JURISDICTIONS_REPO_URL: "https://api.github.com/repos/openstates/jurisdictions"
+      JURISDICTIONS_REPO_URL: ${JURISDICTIONS_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
       JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID}
       JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64: ${JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64}
       JURISDICTIONS_SYNC_APP_INSTALLATION_ID: ${JURISDICTIONS_SYNC_APP_INSTALLATION_ID}
