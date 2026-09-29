@@ -71,7 +71,8 @@ INITIAL_STATE: dict[ChangesetKind, ChangesetState] = {
     ChangesetKind.SCRAPE: ChangesetState.OPEN,
     ChangesetKind.SHEET_IMPORT: ChangesetState.OPEN,
     ChangesetKind.ROSTER_EDIT: ChangesetState.PUBLISHED,
-    ChangesetKind.JURISDICTION_EDIT: ChangesetState.PUBLISHED,
+    # A pull request against the jurisdictions repo: open until a person merges or closes it.
+    ChangesetKind.JURISDICTION_EDIT: ChangesetState.OPEN,
     # Open, so its withdraws stay inert (R3) until publishing marks it and rebuilds the
     # projection in one transaction. See `register_rollback_changeset`.
     ChangesetKind.ROLLBACK: ChangesetState.OPEN,

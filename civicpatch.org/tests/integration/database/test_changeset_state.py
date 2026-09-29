@@ -15,7 +15,7 @@ import pytest_asyncio
 import database.changeset_batches as batches_db
 from core.changeset_lifecycle import INITIAL_STATE, ChangesetState
 from database.changesets import (
-    register_jurisdiction_edit_changeset,
+    register_jurisdiction_pull_request_changeset,
     create_roster_edit_changeset,
     register_rollback_changeset,
     register_sheet_import_changeset,
@@ -149,8 +149,8 @@ async def test_every_kind_is_born_where_INITIAL_STATE_says():
     )
     await _create_roster_edit_changeset(people_edit_id)
     await register_sheet_import_changeset(import_id, _OCDID, SYSTEM_USER_ID, batch_id)
-    await register_jurisdiction_edit_changeset(
-        jurisdiction_edit_id, _OCDID, "https://example.test/commit/1", SYSTEM_USER_ID
+    await register_jurisdiction_pull_request_changeset(
+        jurisdiction_edit_id, _OCDID, "https://example.test/pull/1", SYSTEM_USER_ID
     )
     # Takes a cursor, unlike the other three: it must share the transaction its withdraws are
     # in. Here it shares one with nothing, which is fine for asking where it was born.

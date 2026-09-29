@@ -405,6 +405,9 @@ class PipelineRunConfig(BaseModel):
     # Resolved by cp.org when the run starts: the saved form, else what open-data's config
     # files decide. None means nobody has decided yet.
     government_form: Optional[GovernmentForm] = None
+    # The forms research should ask the model to choose between; empty means do not ask.
+    # cp.org decides (form unknown, more than one allowed, no pull request waiting or rejected).
+    government_form_choices: List[GovernmentForm] = []
 
 
 class IssueCode(str, Enum):

@@ -10,6 +10,7 @@ from datetime import datetime
 from typing import Optional
 
 from core.roster_changes import ProposalCounts
+from pydantic import BaseModel
 from database.activity import create_activity_row
 from database.changeset_predicates import (
     OPEN_REVIEW_EDIT,
@@ -22,7 +23,7 @@ from database.changeset_predicates import (
 from database.database import get_pool, to_iso
 from schemas.common import InFlightEntry, InFlightEntryType, JurisdictionInFlight
 from shared.utils.id_utils import make_id
-from shared.utils.statuses import ActivityType, ChangesetKind
+from shared.utils.statuses import ActivityType, ChangesetKind, DismissalReason
 
 logger = logging.getLogger(__name__)
 
@@ -277,33 +278,83 @@ async def set_proposal_counts(changeset_id: str, counts: ProposalCounts) -> None
         )
 
 
-async def register_jurisdiction_edit_changeset(
+async def register_jurisdiction_pull_request_changeset(
     changeset_id: str,
     jurisdiction_ocdid: str,
-    change_url: str,
-    created_by_user_id: Optional[str] = None,
-):
-    """A hand-edited jurisdiction field. Born published: the edit is already committed."""
+    pull_request_url: str,
+    created_by_user_id: str | None,
+) -> None:
+    """A jurisdiction edit sent as a pull request. Born open: it waits for the merge."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO changesets (
-                id, kind, jurisdiction_ocdid, created_by_user_id,
-                change_url, resolved_by_user_id, created_at
-            )
-            VALUES (%s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
+            INSERT INTO changesets (id, kind, jurisdiction_ocdid, created_by_user_id, change_url, created_at)
+            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
             """,
-            (
-                changeset_id,
-                ChangesetKind.JURISDICTION_EDIT,
-                jurisdiction_ocdid,
-                created_by_user_id,
-                change_url,
-                created_by_user_id,
-            ),
+            (changeset_id, ChangesetKind.JURISDICTION_EDIT, jurisdiction_ocdid, created_by_user_id, pull_request_url),
         )
+
+
+class WaitingPullRequest(BaseModel):
+    changeset_id: str
+    pull_request_url: str
+
+
+async def get_open_jurisdiction_pull_request(jurisdiction_ocdid: str) -> WaitingPullRequest | None:
+    """The jurisdiction's pull request still waiting to merge, if it has one."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT id::text, change_url FROM changesets
+            WHERE jurisdiction_ocdid = %s AND kind = %s
+              AND published_at IS NULL AND dismissed_at IS NULL
+            ORDER BY created_at DESC
+            LIMIT 1
+            """,
+            (jurisdiction_ocdid, ChangesetKind.JURISDICTION_EDIT),
+        )
+        row = await cur.fetchone()
+    return WaitingPullRequest(changeset_id=row[0], pull_request_url=row[1]) if row else None
+
+
+async def list_open_jurisdiction_pull_requests() -> list[WaitingPullRequest]:
+    """Every jurisdiction pull request still waiting to merge: a handful at most."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT id::text, change_url FROM changesets
+            WHERE kind = %s AND published_at IS NULL AND dismissed_at IS NULL
+            """,
+            (ChangesetKind.JURISDICTION_EDIT,),
+        )
+        rows = await cur.fetchall()
+    return [WaitingPullRequest(changeset_id=row[0], pull_request_url=row[1]) for row in rows]
+
+
+async def mark_changeset_published(changeset_id: str) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
         await mark_published(cur, changeset_id)
+
+
+async def has_rejected_jurisdiction_pull_request(jurisdiction_ocdid: str) -> bool:
+    """Whether someone closed a pull request for this jurisdiction without merging it."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT EXISTS (
+                SELECT 1 FROM changesets
+                WHERE jurisdiction_ocdid = %s AND kind = %s AND dismissed_reason = %s
+            )
+            """,
+            (jurisdiction_ocdid, ChangesetKind.JURISDICTION_EDIT, DismissalReason.REJECTED),
+        )
+        row = await cur.fetchone()
+    return bool(row and row[0])
 
 
 async def live_roster_changeset(cur, jurisdiction_ocdid: str) -> str | None:

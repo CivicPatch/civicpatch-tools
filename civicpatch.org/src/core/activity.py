@@ -68,20 +68,6 @@ def group_live_activity(rows: Sequence[Mapping[str, object]]) -> list[dict]:
     return result
 
 
-def field_changes(
-    before: Mapping[str, object], after: Mapping[str, object]
-) -> list[FieldChange]:
-    """Only the keys `before` names — the caller decides what was in scope for the edit.
-
-    `object`, not `Any`: the values are compared and passed through, never inspected.
-    """
-    return [
-        FieldChange(field=field, before=before[field], after=after[field])
-        for field in before
-        if before[field] != after[field]
-    ]
-
-
 def _moved_seat(changes: Mapping) -> bool:
     """Whether an assignment vacated a seat. A first assignment has no `before`."""
     return any(

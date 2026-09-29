@@ -72,3 +72,18 @@ def patch_is_live(patch: dict, current: dict) -> bool:
     if not patch:
         return False
     return all(current.get(key) == value for key, value in patch.items())
+
+
+def current_government_form(entry: dict) -> str | None:
+    return (entry.get("extras") or {}).get("government_form")
+
+
+def set_government_form(doc: dict, jurisdiction_ocdid: str, form: str) -> dict:
+    """The entry's `extras.government_form` set, every other key and extra left as it was."""
+    patched = copy.deepcopy(doc)
+    for entry in patched.get("jurisdictions", []):
+        if entry.get("id") == jurisdiction_ocdid:
+            extras = entry.get("extras") or {}
+            extras["government_form"] = form
+            entry["extras"] = extras
+    return patched

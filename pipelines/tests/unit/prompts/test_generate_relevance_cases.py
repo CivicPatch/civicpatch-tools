@@ -13,7 +13,7 @@ from tests.prompts.tests.evals.generate_relevance_cases import (
 )
 from shared.schemas import GovernmentForm
 from shared.utils.government_forms import DerivedOrganization
-from shared.utils.layered_config import COUNTRY_ROLES_PATH, ConfigFile, ConfigRole, FormConfig
+from shared.utils.layered_config import COUNTRY_ROLES_PATH, ConfigFile, ConfigRole, GovernmentFormConfig
 
 pytestmark = pytest.mark.unit
 
@@ -100,7 +100,7 @@ def test_at_most_two_of_each_label_per_jurisdiction():
     assert [c.candidate for c in cases] == [Candidate.RELEVANT_UNCITED] * 2 + [Candidate.IRRELEVANT] * 2
 
 
-def _forms(forms: dict[GovernmentForm, FormConfig]) -> ConfigFile:
+def _forms(forms: dict[GovernmentForm, GovernmentFormConfig]) -> ConfigFile:
     return ConfigFile(government_forms=forms)
 
 
@@ -114,14 +114,14 @@ CONFIGS = {
     COUNTRY_ROLES_PATH: ConfigFile(roles=[ConfigRole(id=label.lower(), label=label) for label in _ROLES]),
     "data_source/local/config.yml": _forms(
         {
-            GovernmentForm.TOWNSHIP_BOARD: FormConfig(organizations=[_TOWNSHIP_BOARD]),
-            GovernmentForm.MAYOR_COUNCIL: FormConfig(organizations=[_COUNCIL]),
+            GovernmentForm.TOWNSHIP_BOARD: GovernmentFormConfig(organizations=[_TOWNSHIP_BOARD]),
+            GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig(organizations=[_COUNCIL]),
         }
     ),
-    "data_source/counties/config.yml": _forms({GovernmentForm.COMMISSION: FormConfig(organizations=[_WA_BOARD])}),
-    "data_source/mi/local/config.yml": _forms({GovernmentForm.TOWNSHIP_BOARD: FormConfig(suffixes=["township"])}),
+    "data_source/counties/config.yml": _forms({GovernmentForm.COMMISSION: GovernmentFormConfig(organizations=[_WA_BOARD])}),
+    "data_source/mi/local/config.yml": _forms({GovernmentForm.TOWNSHIP_BOARD: GovernmentFormConfig(suffixes=["township"])}),
     "data_source/wa/counties/config.yml": _forms(
-        {GovernmentForm.COMMISSION: FormConfig(organizations=[_WA_BOARD])}
+        {GovernmentForm.COMMISSION: GovernmentFormConfig(organizations=[_WA_BOARD])}
     ),
 }
 

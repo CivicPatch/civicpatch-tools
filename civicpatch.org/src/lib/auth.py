@@ -127,6 +127,11 @@ async def get_user_by_cookie(request, token: str) -> Identity:
     )
 
 
+def is_service_key(identity: Identity) -> bool:
+    """The pipeline's caller: no person behind it, so its writes are the CivicPatch system user's."""
+    return identity.type == "service_api_key"
+
+
 async def get_optional_user(
     request: Request,
     authorization: Optional[str] = Security(API_HEADER),

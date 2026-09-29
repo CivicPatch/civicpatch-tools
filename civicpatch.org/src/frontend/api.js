@@ -433,11 +433,12 @@ export const fetchPeopleDirectory = async (
   return res.json();
 };
 
-const PATCHABLE_JURISDICTION_FIELDS = ["url", "geoid", "population"];
+const JURISDICTION_PULL_REQUEST_FIELDS = ["url", "geoid", "population", "government_form"];
 
-const jurisdictionPatchBody = (jurisdictionOcdid, data) => {
-  const body = { jurisdiction_ocdid: jurisdictionOcdid };
-  for (const field of PATCHABLE_JURISDICTION_FIELDS) {
+// Only the fields the caller sent: one left out stays as it is, and null clears it.
+const jurisdictionPullRequestBody = (data) => {
+  const body = {};
+  for (const field of JURISDICTION_PULL_REQUEST_FIELDS) {
     if (!(field in data)) continue;
     const value = data[field];
     if (field === "population") {
@@ -449,21 +450,26 @@ const jurisdictionPatchBody = (jurisdictionOcdid, data) => {
   return body;
 };
 
-export const patchJurisdictionData = async (jurisdictionOcdid, data) => {
-  const res = await fetch(`/api/v1/jurisdictions/data`, {
-    method: "PATCH",
+// FastAPI answers a refusal with `detail`: a sentence, or a list of field errors on a 422.
+const errorDetail = (body, status) => {
+  if (Array.isArray(body.detail)) return body.detail.map((error) => error.msg).join("; ");
+  return body.detail || `HTTP ${status}`;
+};
+
+// Every change to a jurisdiction's entry is a pull request a person merges; the response names it.
+export const openJurisdictionPullRequest = async (jurisdictionOcdid, data) => {
+  const res = await fetch(`/api/v1/jurisdictions/${jurisdictionOcdid}/pull_requests`, {
+    method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
       "X-CSRF-Token": getCsrfCookie(),
     },
-    body: JSON.stringify(jurisdictionPatchBody(jurisdictionOcdid, data)),
+    body: JSON.stringify(jurisdictionPullRequestBody(data)),
   });
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.error || `HTTP ${res.status}`);
-  }
-  return res.json();
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(errorDetail(body, res.status));
+  return body;
 };
 
 export const fetchPeopleClaims = async (jurisdictionOcdid) => {

@@ -273,6 +273,10 @@ def get_router(api_key_header):
             # Resolved when asked, like the cap: every trigger gets it without carrying it,
             # and the run sees the saved form and config as of its start.
             "government_form": government.government_form,
+            # Non-empty only when the run should ask the model for the form; cp.org decides.
+            "government_form_choices": await government_form_service.government_form_choices(
+                pipeline_run["jurisdiction_ocdid"]
+            ),
         }
 
     # ── Pipeline Runs: Status & Progress ──────────────

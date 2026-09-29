@@ -1,10 +1,11 @@
 import os
+from http import HTTPStatus
 from typing import List, Optional
 
 import httpx
 from fastapi import Request
 from pipelines_environment import get_env_vars
-from shared.schemas import KnownOrganization
+from shared.schemas import GovernmentForm, KnownOrganization
 from shared.utils.config_utils import (
     RoleConfig,
 )
@@ -219,3 +220,22 @@ async def fetch_pipeline_run_config(
         return resp.json()
 
     return await with_retry(logger, _fetch)
+
+
+async def open_jurisdiction_pull_request(
+    client: httpx.AsyncClient,
+    jurisdiction_ocdid: str,
+    government_form: GovernmentForm,
+    sources: List[str],
+) -> Optional[dict]:
+    """Ask cp.org to open a pull request setting the jurisdiction's government form. None when
+    one is already open for it: that one is still waiting for a person."""
+    env = get_env_vars()
+    response = await client.post(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/pull_requests",
+        json={"government_form": government_form.value, "sources": sources},
+    )
+    if response.status_code == HTTPStatus.CONFLICT:
+        return None
+    response.raise_for_status()
+    return response.json()["data"]

@@ -6,7 +6,7 @@ from shared.utils.government_forms import GOVERNMENT_FORM_DESCRIPTIONS
 
 # A county's forms read differently from a city's: `commission` here is one board with no
 # separate executive, not commissioners who each run a department.
-COUNTY_FORM_DESCRIPTIONS: dict[GovernmentForm, str] = {
+COUNTY_GOVERNMENT_FORM_DESCRIPTIONS: dict[GovernmentForm, str] = {
     GovernmentForm.COMMISSION: "one elected board (commission, board of supervisors, commissioners "
     "court, police jury, legislature) and no separately elected executive",
     GovernmentForm.COUNCIL_MANAGER: "one elected board with an appointed administrator or manager",
@@ -120,7 +120,7 @@ def county_government_form_prompt(
 ) -> str:
     return _government_form_prompt(
         "county", _location(jurisdiction_ocdid, county_name), forms,
-        COUNTY_FORM_DESCRIPTIONS, _COUNTY_TEST,
+        COUNTY_GOVERNMENT_FORM_DESCRIPTIONS, _COUNTY_TEST,
     )
 
 

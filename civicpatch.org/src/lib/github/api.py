@@ -2,6 +2,7 @@ import asyncio
 import base64
 import logging
 import time
+from enum import StrEnum
 from typing import Any, Dict, List, Optional
 
 import httpx
@@ -97,10 +98,13 @@ async def cached_github_get(
 async def get_github_file_contents(
     github_file_path: str,
     ref: Optional[str] = None,
+    repo_url: str | None = None,
 ) -> str | None:
     _, _, _, open_data_repo_url = _get_github_config()
-    cache_key = f"github:file:{github_file_path}:{ref or 'main'}"
-    url = f"{open_data_repo_url}/contents/{github_file_path}"
+    target_repo = repo_url or open_data_repo_url
+    # The repo is part of the key: open-data and the jurisdictions repo share file paths.
+    cache_key = f"github:file:{target_repo}:{github_file_path}:{ref or 'main'}"
+    url = f"{target_repo}/contents/{github_file_path}"
     if ref:
         url += f"?ref={ref}"
     return await cached_github_get(
@@ -326,17 +330,45 @@ async def create_pull_request(
         data = response.json()
     pr_number = data["number"]
     logger.info(f"Created PR #{pr_number} from {branch_name!r}: {data['html_url']}")
-    if labels:
-        await add_pr_labels(
-            pr_number, labels, repo_url=target_repo, headers=auth_headers
-        )
+    # The label says who asked and decides whether the PR may merge, so an unlabelled PR would
+    # sit open looking like nobody's: close it and report the write as failed.
+    if labels and not await add_pr_labels(
+        pr_number, labels, repo_url=target_repo, headers=auth_headers
+    ):
+        await close_pull_request(pr_number, repo_url=target_repo, headers=auth_headers)
+        return None, f"Failed to label PR #{pr_number}; closed it"
     return pr_number, data["html_url"]
+
+
+class PullRequestState(StrEnum):
+    OPEN = "open"
+    CLOSED = "closed"  # closed without merging
+    MERGED = "merged"
+
+
+async def get_pull_request_state(pr_number: int, repo_url: str, headers: dict) -> PullRequestState:
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        response = await client.get(f"{repo_url}/pulls/{pr_number}", headers=headers)
+    response.raise_for_status()
+    data = response.json()
+    if data.get("merged_at"):
+        return PullRequestState.MERGED
+    return PullRequestState.OPEN if data["state"] == "open" else PullRequestState.CLOSED
+
+
+async def close_pull_request(pr_number: int, repo_url: str, headers: dict) -> None:
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        response = await client.patch(
+            f"{repo_url}/pulls/{pr_number}", headers=headers, json={"state": "closed"}
+        )
+    if response.status_code != 200:
+        logger.error(f"Failed to close unlabelled PR #{pr_number}: {response.status_code}")
 
 
 async def add_pr_labels(
     pr_number: int, labels: list[str], repo_url: str, headers: dict
-) -> None:
-    """Upserts labels on the repo then applies them to the PR. Best-effort — logs and returns on failure."""
+) -> bool:
+    """Upserts labels on the repo then applies them to the PR. True when they were applied."""
     async with httpx.AsyncClient(timeout=timeout) as client:
         for label in labels:
             response = await client.post(
@@ -357,6 +389,8 @@ async def add_pr_labels(
             logger.warning(
                 f"Failed to apply labels {labels} to PR #{pr_number}: {response.status_code}"
             )
+            return False
+    return True
 
 
 async def create_issue(

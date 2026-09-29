@@ -6,7 +6,7 @@ transaction around one file.
 
 import json
 
-from core.jurisdiction_config_sync import RoleChanges, StoredRole, form_changes, role_changes
+from core.jurisdiction_config_sync import RoleChanges, StoredRole, government_form_changes, role_changes
 from core.role_taxonomy import RoleOp, build_event_payload, change_log_type
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
@@ -39,9 +39,9 @@ async def sync_jurisdiction_config_on(cur, version: JurisdictionConfigVersion, c
     await _apply_role_changes(cur, changes, version)
     before = await _stored_config(cur, version.path)
     await _save_config(cur, version, config)
-    forms = form_changes(before.government_forms, config.government_forms)
+    government_forms = government_form_changes(before.government_forms, config.government_forms)
     await _emit(
-        cur, ActivityType.SYNC_JURISDICTION_CONFIG, {**version.model_dump(), "forms": forms.model_dump()}
+        cur, ActivityType.SYNC_JURISDICTION_CONFIG, {**version.model_dump(), "government_forms": government_forms.model_dump()}
     )
 
 

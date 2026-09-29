@@ -22,6 +22,7 @@ from runners.people_collector.schemas import (
     ResearchMunicipalityStep,
 )
 from shared.schemas import KnownOrganization, Membership, Person, Post, RoleConfig
+from runners.people_collector.steps.step_01_research_municipality import government_form
 from shared.utils import divisions
 from shared.utils.label_parser import parse_label, parse_label_preferring
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID, Taxonomy, build_taxonomy
@@ -46,6 +47,9 @@ async def research_municipality(
     existing = await civicpatch_api.get_active_people(api_client, jurisdiction_ocdid)
     organizations = await civicpatch_api.get_organizations(api_client, jurisdiction_ocdid)
     posts = [post for organization in organizations for post in organization.posts]
+
+    if _can_research() and context.data.config.government_form_choices:
+        await government_form.request_government_form(context, api_client, logger)
 
     researched: List[ResearchedPerson] = []
     if posts:

@@ -22,7 +22,7 @@ import "./scrape-modal/name-config-form.js";
 import {
   triggerPipelineRun,
   fetchJurisdictionInFlight,
-  patchJurisdictionData,
+  openJurisdictionPullRequest,
 } from "../../api.js";
 import { renderJurisdictionHeader } from "./jurisdiction-header.js";
 import "./roster-editor.js";
@@ -86,6 +86,8 @@ function renderDetailsSection(
       <civ-jurisdiction-details
         .data=${jurisdictionData?.data}
         .governmentForm=${jurisdictionData?.government_form}
+        .governmentFormOptions=${jurisdictionData?.government_form_options ?? []}
+        .openPullRequestUrl=${jurisdictionData?.open_pull_request_url ?? null}
         .canEditPermission=${canEditPermission}
         .onSave=${onSave}
         .blockedReason=${blockedReason}
@@ -176,7 +178,7 @@ function JurisdictionPage({
   };
 
   const handleJurisdictionSave = async (formData: any) => {
-    const result = await patchJurisdictionData(jurisdiction_ocdid, formData);
+    const result = await openJurisdictionPullRequest(jurisdiction_ocdid, formData);
     return result.data;
   };
 

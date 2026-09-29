@@ -1,5 +1,5 @@
 """What syncing one open-data config file changes: its roles in `roles` and `role_aliases`, and
-its government forms for the activity row. Pure.
+its government government forms for the activity row. Pure.
 
 Roles are matched by id, not label (unlike `role_taxonomy`, which serves the editor): the file
 carries ids, so a new label on a known id is a rename. A role the file used to define and no
@@ -10,7 +10,7 @@ from pydantic import BaseModel
 
 from core.role_taxonomy import RoleOp, diff_aliases
 from shared.schemas import Role, RoleStatus
-from shared.utils.layered_config import COUNTRY_ROLES_PATH, ConfigRole, FormsConfig
+from shared.utils.layered_config import COUNTRY_ROLES_PATH, ConfigRole, GovernmentFormsConfig
 
 
 class StoredRole(Role):
@@ -70,15 +70,15 @@ def _fields_changed(path: str, role: ConfigRole, stored: StoredRole) -> bool:
     )
 
 
-class FormChanges(BaseModel):
+class GovernmentFormChanges(BaseModel):
     added: list[str] = []
     removed: list[str] = []
     changed: list[str] = []
 
 
-def form_changes(before: FormsConfig, after: FormsConfig) -> FormChanges:
-    return FormChanges(
-        added=sorted(form.value for form in after if form not in before),
-        removed=sorted(form.value for form in before if form not in after),
-        changed=sorted(form.value for form in after if form in before and after[form] != before[form]),
+def government_form_changes(before: GovernmentFormsConfig, after: GovernmentFormsConfig) -> GovernmentFormChanges:
+    return GovernmentFormChanges(
+        added=sorted(government_form.value for government_form in after if government_form not in before),
+        removed=sorted(government_form.value for government_form in before if government_form not in after),
+        changed=sorted(government_form.value for government_form in after if government_form in before and after[government_form] != before[government_form]),
     )

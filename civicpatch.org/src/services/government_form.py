@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 
+import database.changesets as changesets_db
 import database.government_forms as government_forms_db
+import services.jurisdiction_pull_request as jurisdiction_pr_service
 import database.jurisdiction_configs as jurisdiction_configs_db
 from core.organization_derivation import (
     ExistingOrganization,
@@ -24,6 +26,7 @@ from shared.utils.government_forms import (
     government_form_name,
 )
 from shared.utils.layered_config import (
+    allowed_government_forms,
     derived_organizations,
     jurisdiction_config,
     resolve_government_form,
@@ -35,13 +38,15 @@ from shared.utils.statuses import ActivityType
 class ResolvedGovernment(BaseModel):
     government_form: GovernmentForm | None
     derived_organizations: list[DerivedOrganization]
+    # What the config allows for it: the choices an LLM is offered when the government form is unknown.
+    allowed_government_forms: list[GovernmentForm]
 
 
-_NOTHING_RESOLVED = ResolvedGovernment(government_form=None, derived_organizations=[])
+_NOTHING_RESOLVED = ResolvedGovernment(government_form=None, derived_organizations=[], allowed_government_forms=[])
 
 
 async def resolved_government(jurisdiction_ocdid: str) -> ResolvedGovernment:
-    """The jurisdiction's form as of now (its saved form, else what the config decides) and the
+    """The jurisdiction's government form as of now (open-data's value, else what the config decides) and the
     organizations it implies. Nothing for a state, or an unknown or inactive jurisdiction."""
     jurisdiction = await government_forms_db.get_government_form_inputs(jurisdiction_ocdid)
     if jurisdiction is None:
@@ -50,21 +55,37 @@ async def resolved_government(jurisdiction_ocdid: str) -> ResolvedGovernment:
     if layer is None:
         return _NOTHING_RESOLVED
     config = jurisdiction_config(await jurisdiction_configs_db.get_jurisdiction_configs(), *layer)
-    form = resolve_government_form(config, jurisdiction.name, jurisdiction.government_form)
+    government_form = resolve_government_form(config, jurisdiction.name, jurisdiction.government_form)
     return ResolvedGovernment(
-        government_form=form, derived_organizations=derived_organizations(config, form)
+        government_form=government_form,
+        derived_organizations=derived_organizations(config, government_form),
+        allowed_government_forms=allowed_government_forms(config, jurisdiction.name),
     )
 
 
 async def government_form_summary(jurisdiction_ocdid: str) -> GovernmentFormSummary | None:
-    """The resolved form as the jurisdiction page shows it; None when no form is known."""
-    form = (await resolved_government(jurisdiction_ocdid)).government_form
-    if form is None:
+    """The resolved government form as the jurisdiction page shows it; None when no government form is known."""
+    government_form = (await resolved_government(jurisdiction_ocdid)).government_form
+    if government_form is None:
         return None
+    return _summary(government_form)
+
+
+async def government_form_options(jurisdiction_ocdid: str) -> list[GovernmentFormSummary]:
+    """Every government form of the jurisdiction's level, which a maintainer may pick: not only the ones
+    its state allows, since a jurisdiction can differ from its state (a charter county)."""
+    parsed = parse_jurisdiction_ocdid(jurisdiction_ocdid)
+    if parsed.level == JurisdictionLevel.STATE:
+        return []
+    configs = await jurisdiction_configs_db.get_jurisdiction_configs()
+    return [_summary(government_form) for government_form in jurisdiction_config(configs, parsed.state, parsed.level).country_government_forms]
+
+
+def _summary(government_form: GovernmentForm) -> GovernmentFormSummary:
     return GovernmentFormSummary(
-        value=form,
-        name=government_form_name(form).capitalize(),
-        description=GOVERNMENT_FORM_DESCRIPTIONS[form],
+        value=government_form,
+        name=government_form_name(government_form).capitalize(),
+        description=GOVERNMENT_FORM_DESCRIPTIONS[government_form],
     )
 
 
@@ -76,8 +97,8 @@ async def organizations_with_role_labels(jurisdiction_ocdid: str) -> list[dict]:
 
 
 async def ensure_government_form_organizations() -> int:
-    """Build every active jurisdiction's derived organizations not built yet, and save a
-    rule-decided form. Returns how many changed.
+    """Build every active jurisdiction's derived organizations not built yet. Returns how many
+    changed. The government form itself is never saved: open-data's value or the config files decide it.
 
     Run on every open-data sync, like `ensure_defaults_exist`. Two reads decide everything in
     memory; only a jurisdiction with something to change gets a write, so a run with nothing to
@@ -97,20 +118,19 @@ async def ensure_government_form_organizations() -> int:
         if not existing or layer is None:
             continue
         config = config_by_layer[layer]
-        form = resolve_government_form(config, jurisdiction.name, jurisdiction.government_form)
+        government_form = resolve_government_form(config, jurisdiction.name, jurisdiction.government_form)
         changes = organization_changes(
-            derived_organizations(config, form), existing, DEFAULT_ORGANIZATION_NAME
+            derived_organizations(config, government_form), existing, DEFAULT_ORGANIZATION_NAME
         )
-        form_is_saved = form == jurisdiction.government_form
-        if changes.has_no_changes and form_is_saved:
+        if changes.has_no_changes:
             continue
-        await _apply(jurisdiction, form, existing[0], changes)
+        await _apply(jurisdiction, existing[0], changes)
         changed += 1
     return changed
 
 
 def _layer(jurisdiction: GovernmentFormInputs) -> tuple[str, JurisdictionLevel] | None:
-    """The (state, level) whose config files apply; None for a state, which has no form."""
+    """The (state, level) whose config files apply; None for a state, which has no government form."""
     parsed = parse_jurisdiction_ocdid(jurisdiction.jurisdiction_ocdid)
     if parsed.level == JurisdictionLevel.STATE:
         return None
@@ -119,11 +139,10 @@ def _layer(jurisdiction: GovernmentFormInputs) -> tuple[str, JurisdictionLevel] 
 
 async def _apply(
     jurisdiction: GovernmentFormInputs,
-    form: GovernmentForm | None,
     default: ExistingOrganization,
     changes: OrganizationChanges,
 ) -> None:
-    """Rename the default, create the rest, save the form, and log it: one transaction."""
+    """Rename the default, create the rest, and log it: one transaction."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         if changes.rename_default_to is not None:
@@ -133,10 +152,6 @@ async def _apply(
                 cur, jurisdiction.jurisdiction_ocdid, organization.name
             )
         fields = _organization_fields(default.name, changes)
-        if form is not None and await government_forms_db.save_government_form_if_unset(
-            cur, jurisdiction.jurisdiction_ocdid, form
-        ):
-            fields.insert(0, FieldChange(field="government_form", before=None, after=form.value))
         await record_change(
             cur,
             ActivityType.EDIT_JURISDICTION,
@@ -160,3 +175,17 @@ def _organization_fields(default_name: str, changes: OrganizationChanges) -> lis
     for organization in changes.organizations_to_create:
         fields.append(FieldChange(field="organization_created", after=organization.name))
     return fields
+
+
+async def government_form_choices(jurisdiction_ocdid: str) -> list[GovernmentForm]:
+    """The government forms a run should ask the model to choose between, or none when it should not ask:
+    the government form is known or decided by the config, a pull request is waiting, or a person closed
+    one before (after that, a person sets it)."""
+    government = await resolved_government(jurisdiction_ocdid)
+    if government.government_form is not None or len(government.allowed_government_forms) < 2:
+        return []
+    if await jurisdiction_pr_service.has_open_pull_request(jurisdiction_ocdid):
+        return []
+    if await changesets_db.has_rejected_jurisdiction_pull_request(jurisdiction_ocdid):
+        return []
+    return government.allowed_government_forms

@@ -6,11 +6,11 @@ from shared.utils.layered_config import (
     COUNTRY_ROLES_PATH,
     ConfigFile,
     ConfigRole,
-    FormConfig,
-    allowed_forms,
+    GovernmentFormConfig,
+    allowed_government_forms,
     check_roles_distinct_across,
     derived_organizations,
-    form_organizations,
+    government_form_organizations,
     jurisdiction_config,
     merged_config,
     resolve_government_form,
@@ -29,9 +29,9 @@ _COUNTRY_ROLES = ConfigFile(
 
 _COUNTRY_FORMS = ConfigFile(
     government_forms={
-        GovernmentForm.MAYOR_COUNCIL: FormConfig(organizations=[_COUNCIL]),
-        GovernmentForm.COUNCIL_MANAGER: FormConfig(organizations=[_COUNCIL]),
-        GovernmentForm.OPEN_TOWN_MEETING: FormConfig(organizations=[_SELECT_BOARD]),
+        GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig(organizations=[_COUNCIL]),
+        GovernmentForm.COUNCIL_MANAGER: GovernmentFormConfig(organizations=[_COUNCIL]),
+        GovernmentForm.OPEN_TOWN_MEETING: GovernmentFormConfig(organizations=[_SELECT_BOARD]),
     },
 )
 
@@ -98,23 +98,23 @@ def test_one_file_cannot_give_two_roles_one_alias():
 
 
 def test_a_state_form_must_be_a_country_form():
-    state = ConfigFile(government_forms={GovernmentForm.COMMISSION: FormConfig()})
+    state = ConfigFile(government_forms={GovernmentForm.COMMISSION: GovernmentFormConfig()})
 
-    with pytest.raises(ValueError, match="commission is not a form at this level"):
+    with pytest.raises(ValueError, match="commission is not a government form at this level"):
         merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state)
 
 
 def test_a_country_form_needs_organizations():
-    country = ConfigFile(government_forms={GovernmentForm.MAYOR_COUNCIL: FormConfig()})
+    country = ConfigFile(government_forms={GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig()})
 
-    with pytest.raises(ValueError, match="mayor_council has no organizations"):
+    with pytest.raises(ValueError, match="country government form mayor_council has no organizations"):
         merged_config(_COUNTRY_ROLES, country, None)
 
 
 def test_an_organization_role_must_be_a_role():
     state = ConfigFile(
         government_forms={
-            GovernmentForm.MAYOR_COUNCIL: FormConfig(
+            GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig(
                 organizations=[DerivedOrganization(name="Board of Aldermen", role_labels=["Alderman"])]
             )
         }
@@ -127,7 +127,7 @@ def test_an_organization_role_must_be_a_role():
 def test_an_organization_role_may_be_an_alias():
     state = ConfigFile(
         government_forms={
-            GovernmentForm.MAYOR_COUNCIL: FormConfig(
+            GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig(
                 organizations=[DerivedOrganization(name="Council", role_labels=["Councilmember"])]
             )
         }
@@ -139,7 +139,7 @@ def test_an_organization_role_may_be_an_alias():
 def test_without_state_forms_every_country_form_is_allowed():
     config = merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, None)
 
-    assert allowed_forms(config, "Springfield city") == [
+    assert allowed_government_forms(config, "Springfield city") == [
         GovernmentForm.MAYOR_COUNCIL,
         GovernmentForm.COUNCIL_MANAGER,
         GovernmentForm.OPEN_TOWN_MEETING,
@@ -148,18 +148,18 @@ def test_without_state_forms_every_country_form_is_allowed():
 
 def test_a_suffixed_state_form_decides_only_names_with_that_suffix():
     state = ConfigFile(
-        government_forms={GovernmentForm.OPEN_TOWN_MEETING: FormConfig(suffixes=["town"])}
+        government_forms={GovernmentForm.OPEN_TOWN_MEETING: GovernmentFormConfig(suffixes=["town"])}
     )
     config = merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state)
 
-    assert allowed_forms(config, "Millbury town") == [GovernmentForm.OPEN_TOWN_MEETING]
-    assert len(allowed_forms(config, "Worcester city")) == 3
+    assert allowed_government_forms(config, "Millbury town") == [GovernmentForm.OPEN_TOWN_MEETING]
+    assert len(allowed_government_forms(config, "Worcester city")) == 3
 
 
 def test_state_forms_without_suffixes_narrow_the_state():
-    state = ConfigFile(government_forms={GovernmentForm.COUNCIL_MANAGER: FormConfig()})
+    state = ConfigFile(government_forms={GovernmentForm.COUNCIL_MANAGER: GovernmentFormConfig()})
 
-    assert allowed_forms(merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state), "Springfield city") == [
+    assert allowed_government_forms(merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state), "Springfield city") == [
         GovernmentForm.COUNCIL_MANAGER
     ]
 
@@ -167,19 +167,19 @@ def test_state_forms_without_suffixes_narrow_the_state():
 def test_a_state_renames_a_forms_organizations():
     aldermen = DerivedOrganization(name="Board of Aldermen", role_labels=["Council Member"])
     state = ConfigFile(
-        government_forms={GovernmentForm.MAYOR_COUNCIL: FormConfig(organizations=[aldermen])}
+        government_forms={GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig(organizations=[aldermen])}
     )
     config = merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state)
 
-    assert form_organizations(config, GovernmentForm.MAYOR_COUNCIL) == [aldermen]
+    assert government_form_organizations(config, GovernmentForm.MAYOR_COUNCIL) == [aldermen]
 
 
 def test_a_state_form_without_organizations_keeps_the_countrys():
     state = ConfigFile(
-        government_forms={GovernmentForm.OPEN_TOWN_MEETING: FormConfig(suffixes=["town"])}
+        government_forms={GovernmentForm.OPEN_TOWN_MEETING: GovernmentFormConfig(suffixes=["town"])}
     )
 
-    assert form_organizations(merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state), GovernmentForm.OPEN_TOWN_MEETING) == [
+    assert government_form_organizations(merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state), GovernmentForm.OPEN_TOWN_MEETING) == [
         _SELECT_BOARD
     ]
 
@@ -193,7 +193,7 @@ def test_a_saved_form_beats_the_rules():
 
 
 def test_one_allowed_form_decides_it_and_several_leave_it_unknown():
-    state = ConfigFile(government_forms={GovernmentForm.OPEN_TOWN_MEETING: FormConfig(suffixes=["town"])})
+    state = ConfigFile(government_forms={GovernmentForm.OPEN_TOWN_MEETING: GovernmentFormConfig(suffixes=["town"])})
     config = merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state)
 
     assert resolve_government_form(config, "Millbury town", None) == GovernmentForm.OPEN_TOWN_MEETING
@@ -218,12 +218,12 @@ def test_a_known_form_derives_its_organizations():
 
 def test_a_role_in_two_organizations_of_one_form_is_rejected():
     """Research files a role into the first organization that holds it."""
-    country_forms = ConfigFile(
-        government_forms={GovernmentForm.MAYOR_COUNCIL: FormConfig(organizations=[_COUNCIL, _COUNCIL])}
+    country_government_forms = ConfigFile(
+        government_forms={GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig(organizations=[_COUNCIL, _COUNCIL])}
     )
 
     with pytest.raises(ValueError, match="'Council Member' is in two organizations"):
-        merged_config(_COUNTRY_ROLES, country_forms, None)
+        merged_config(_COUNTRY_ROLES, country_government_forms, None)
 
 
 def test_a_jurisdiction_takes_the_country_files_for_its_level_and_its_states_file():
@@ -231,12 +231,12 @@ def test_a_jurisdiction_takes_the_country_files_for_its_level_and_its_states_fil
         COUNTRY_ROLES_PATH: _COUNTRY_ROLES,
         "data_source/local/config.yml": _COUNTRY_FORMS,
         "data_source/ma/local/config.yml": ConfigFile(
-            government_forms={GovernmentForm.OPEN_TOWN_MEETING: FormConfig(suffixes=["town"])}
+            government_forms={GovernmentForm.OPEN_TOWN_MEETING: GovernmentFormConfig(suffixes=["town"])}
         ),
     }
 
     massachusetts = jurisdiction_config(configs, "ma", JurisdictionLevel.LOCAL)
     washington = jurisdiction_config(configs, "wa", JurisdictionLevel.LOCAL)
 
-    assert allowed_forms(massachusetts, "Millbury town") == [GovernmentForm.OPEN_TOWN_MEETING]
-    assert len(allowed_forms(washington, "Millbury town")) == 3
+    assert allowed_government_forms(massachusetts, "Millbury town") == [GovernmentForm.OPEN_TOWN_MEETING]
+    assert len(allowed_government_forms(washington, "Millbury town")) == 3
