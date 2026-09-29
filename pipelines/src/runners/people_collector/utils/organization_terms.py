@@ -47,6 +47,15 @@ def organization_phrases(organizations: List[KnownOrganization]) -> List[str]:
     return list(dict.fromkeys(phrase for phrase in phrases if phrase))
 
 
+def roles_to_look_for(
+    memberships: List[ExpectedMembership], organizations: List[KnownOrganization]
+) -> List[str]:
+    """Every expected membership's role, then each organization's role labels, so an organization
+    nobody is expected in yet (a Town Meeting and its Moderator) is still named to the prompts."""
+    organization_roles = [label for organization in organizations for label in organization.role_labels]
+    return list(dict.fromkeys(expected_roles(memberships) + organization_roles))
+
+
 def expected_roles(memberships: List[ExpectedMembership]) -> List[str]:
     return list(dict.fromkeys(membership.role_label for membership in memberships))
 

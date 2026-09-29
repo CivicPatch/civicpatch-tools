@@ -21,9 +21,14 @@ GOVERNMENT_FORM_DESCRIPTIONS: dict[GovernmentForm, str] = {
 }
 
 
+def government_form_name(form: GovernmentForm) -> str:
+    """open_town_meeting -> "open town meeting"."""
+    return form.value.replace("_", " ")
+
+
 def describe_government_form(form: GovernmentForm) -> str:
     """open_town_meeting -> "open town meeting (a select board or board of selectmen, ...)"."""
-    return f"{form.value.replace('_', ' ')} ({GOVERNMENT_FORM_DESCRIPTIONS[form]})"
+    return f"{government_form_name(form)} ({GOVERNMENT_FORM_DESCRIPTIONS[form]})"
 
 
 ANY_SUFFIX = "*"
@@ -126,28 +131,12 @@ def organizations_for(form: GovernmentForm) -> list[DerivedOrganization]:
     return _ORGANIZATIONS_BY_FORM[form]
 
 
-def derived_organization_for_role(
-    form: GovernmentForm, role_label: str
-) -> DerivedOrganization | None:
-    for organization in organizations_for(form):
-        if role_label in organization.role_labels:
-            return organization
-    return None
-
-
-def office_labels(
-    organization: KnownOrganization, form: GovernmentForm | None
-) -> list[str]:
+def office_labels(organization: KnownOrganization) -> list[str]:
     """What holding office in this organization looks like: its posts' labels, or on a cold
-    start, before any post exists, the role labels its form derives under the same name."""
+    start, before any post exists, its derived role labels."""
     if organization.posts:
         return [post.label for post in organization.posts]
-    if form is None:
-        return []
-    for derived in organizations_for(form):
-        if derived.name == organization.name:
-            return derived.role_labels
-    return []
+    return organization.role_labels
 
 
 def name_suffix(name: str) -> str:

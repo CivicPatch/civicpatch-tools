@@ -5,7 +5,7 @@ people:
   email: null
   url: http://laportetx.gov/691/Mayor
   start_date: null
-  end_date: '2027'
+  end_date: null
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=11136
 - name: Brandon Lunsford
   label: Council Member At-Large A
@@ -13,7 +13,7 @@ people:
   email: null
   url: http://laportetx.gov/692/At-Large-A
   start_date: null
-  end_date: '2025'
+  end_date: null
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6609
 - name: Brent McCaulley
   label: Council Member At-Large B
@@ -21,7 +21,7 @@ people:
   email: null
   url: http://laportetx.gov/693/At-Large-B
   start_date: null
-  end_date: '2026'
+  end_date: null
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6490
 - name: Mandi Williams
   label: Council Member District 1
@@ -29,7 +29,7 @@ people:
   email: null
   url: http://laportetx.gov/694/District-1
   start_date: null
-  end_date: '2026'
+  end_date: null
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6607
 - name: Chuck Engelken
   label: Council Member District 2
@@ -37,7 +37,7 @@ people:
   email: null
   url: http://laportetx.gov/695/District-2
   start_date: null
-  end_date: '2027'
+  end_date: null
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6487
 - name: Bill Bentley
   label: Council Member District 3
@@ -45,7 +45,7 @@ people:
   email: null
   url: http://laportetx.gov/696/District-3
   start_date: null
-  end_date: '2027'
+  end_date: null
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6492
 - name: Robert Guerra
   label: Council Member District 4
@@ -53,7 +53,7 @@ people:
   email: null
   url: https://www.laportetx.gov/883/District-4
   start_date: null
-  end_date: '2025'
+  end_date: null
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=11135
 - name: Jay Martin
   label: Council Member District 5
@@ -61,7 +61,7 @@ people:
   email: null
   url: http://laportetx.gov/698/District-5
   start_date: null
-  end_date: '2025'
+  end_date: null
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=11137
 - name: Robbie McLarrin
   label: Council Member District 6
@@ -69,5 +69,5 @@ people:
   email: null
   url: http://laportetx.gov/699/District-6
   start_date: null
-  end_date: '2026'
+  end_date: null
   image: https://www.laportetx.gov/ImageRepository/Document?documentID=6491

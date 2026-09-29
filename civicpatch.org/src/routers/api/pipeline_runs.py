@@ -259,6 +259,9 @@ def get_router(api_key_header):
         if not pipeline_run:
             raise HTTPException(status_code=404, detail="Pipeline run not found")
         args = pipeline_run.get("arguments_json") or {}
+        government = await government_form_service.resolved_government(
+            pipeline_run["jurisdiction_ocdid"]
+        )
         return {
             "name": args.get("name"),
             "url": args.get("url"),
@@ -268,10 +271,8 @@ def get_router(api_key_header):
             # activities, not the Actions workflow in the other repo. Null means inherit.
             "pipeline_run_cap_usd": pipeline_run.get("pipeline_run_cap_usd"),
             # Resolved when asked, like the cap: every trigger gets it without carrying it,
-            # and the run sees the registry and config as of its start.
-            "government_form": await government_form_service.resolved_government_form(
-                pipeline_run["jurisdiction_ocdid"]
-            ),
+            # and the run sees the saved form and config as of its start.
+            "government_form": government.government_form,
         }
 
     # ── Pipeline Runs: Status & Progress ──────────────

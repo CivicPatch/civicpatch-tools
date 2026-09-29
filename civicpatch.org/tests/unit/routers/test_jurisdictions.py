@@ -4,7 +4,8 @@ from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
 
 from schemas.common import Identity, UserRole
-from schemas.jurisdictions import JurisdictionSearchResult
+from schemas.jurisdictions import GovernmentFormSummary, JurisdictionSearchResult
+from shared.schemas import GovernmentForm
 from lib.auth import get_optional_user
 from routers.api import jurisdictions as jurisdictions_router
 
@@ -218,6 +219,8 @@ def test_get_jurisdiction_returns_data(client):
         "database.jurisdictions.get_jurisdiction",
         new_callable=AsyncMock,
         return_value={"data": {"id": "ocd-jurisdiction/country:us/state:ca/place:oakland", "name": "Oakland"}, "geo_center": None},
+    ), patch(
+        "services.government_form.government_form_summary", new_callable=AsyncMock, return_value=None
     ):
         response = client.get(
             "/jurisdictions",
@@ -227,6 +230,33 @@ def test_get_jurisdiction_returns_data(client):
     assert response.status_code == 200
     data = response.json()
     assert "data" in data
+    assert data["government_form"] is None
+
+
+@pytest.mark.unit
+def test_get_jurisdiction_returns_its_government_form(client):
+    summary = GovernmentFormSummary(
+        value=GovernmentForm.OPEN_TOWN_MEETING,
+        name="Open town meeting",
+        description="a select board or board of selectmen, with an open town meeting",
+    )
+    with patch(
+        "database.jurisdictions.get_jurisdiction",
+        new_callable=AsyncMock,
+        return_value={"data": {"id": "ocd-jurisdiction/country:us/state:ma/place:millbury", "name": "Millbury"}},
+    ), patch(
+        "services.government_form.government_form_summary", new_callable=AsyncMock, return_value=summary
+    ):
+        response = client.get(
+            "/jurisdictions",
+            params={"jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ma/place:millbury"},
+        )
+
+    assert response.json()["government_form"] == {
+        "value": "open_town_meeting",
+        "name": "Open town meeting",
+        "description": "a select board or board of selectmen, with an open town meeting",
+    }
 
 
 @pytest.mark.unit

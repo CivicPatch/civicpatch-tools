@@ -1,0 +1,21 @@
+mismatches:
+  gatesville_ordinance_vote_records:
+  - actual: false
+    expected: true
+    field: is_relevant
+    subject: page
+  place_amherst__www_cityofamherst_com_contact_us_index_php:
+  - actual: false
+    expected: true
+    field: is_relevant
+    subject: page
+  place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462:
+  - actual: false
+    expected: true
+    field: is_relevant
+    subject: page
+  quitaque_council:
+  - actual: "\u2014"
+    expected: present
+    field: relevant_urls
+    subject: https://quitaque.us/cityofficials.html

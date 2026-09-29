@@ -1,6 +1,7 @@
 from fastapi.responses import JSONResponse
 from fastapi import APIRouter, Depends
 
+import services.government_form as government_form_service
 from database import organizations, posts
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory, UserRole
@@ -57,9 +58,15 @@ def get_router() -> APIRouter:
 
     @router.get("/{jurisdiction_ocdid:path}")
     async def get_organizations_endpoint(jurisdiction_ocdid: str):
-        """Every body in a jurisdiction with its posts. Public, like the posts/people/role
-        reads — every write below is gated on its own."""
-        return {"data": {"organizations": await posts.list_by_organization(jurisdiction_ocdid)}}
+        """Every body in a jurisdiction with its posts, and the role labels its government form
+        gives it. Public, like the posts/people/role reads — every write below is gated on its own."""
+        return {
+            "data": {
+                "organizations": await government_form_service.organizations_with_role_labels(
+                    jurisdiction_ocdid
+                )
+            }
+        }
 
     @router.post("/{jurisdiction_ocdid:path}", include_in_schema=False)
     async def create_organization_endpoint(

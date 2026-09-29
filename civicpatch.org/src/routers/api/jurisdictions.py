@@ -6,6 +6,7 @@ import lib.cache as cache_service
 import services.roster_edits as roster_edits
 import services.jurisdiction_pull_request as jurisdiction_pr_service
 import services.jurisdiction_scrape_candidate as candidate_service
+import services.government_form as government_form_service
 from core.jurisdiction_search import build_fuzzy_tokens, build_tsquery
 from core.people_edits import PeopleValidationError
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
@@ -127,9 +128,11 @@ def get_router() -> APIRouter:
         if jurisdiction_data is None or jurisdiction_data.get("data") is None:
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
 
+        government_form = await government_form_service.government_form_summary(jurisdiction_ocdid)
         response = {
             "data": jurisdiction_data["data"],
             "last_collected_at": jurisdiction_data.get("last_collected_at"),
+            "government_form": government_form.model_dump() if government_form else None,
         }
 
         if with_geom:

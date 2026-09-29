@@ -1,13 +1,7 @@
 is_relevant: true
 relevant_urls:
-- https://bellevuewa.gov/
-- https://bellevuewa.gov/city-government
 - https://bellevuewa.gov/city-government/city-council
-- https://bellevuewa.gov/city-government/city-council/council-meetings
-- https://bellevuewa.gov/city-government/city-council/council-vision
-- https://bellevuewa.gov/city-government/city-council/council-pledge
-- https://bellevuewa.gov/city-government/city-council/serving-city-council
-- https://bellevuewa.gov/city-government/city-council/council-speaking-requests
+- https://bellevuewa.gov/city-government
 - https://bellevuewa.gov/city-government/city-council/councilmembers/mo-malakoutian
 - https://bellevuewa.gov/city-government/city-council/councilmembers/deputy-mayor-dave-hamilton
 - https://bellevuewa.gov/city-government/city-council/councilmembers/vishal-bhargava
@@ -15,6 +9,4 @@ relevant_urls:
 - https://bellevuewa.gov/city-government/city-council/councilmembers/jared-nieuwenhuis
 - https://bellevuewa.gov/city-government/city-council/councilmembers/lynne-robinson
 - https://bellevuewa.gov/city-government/city-council/councilmembers/claire-sumadiwirya
-- https://bellevuewa.gov/city-government/east-bellevue-community-council
-- https://bellevuewa.gov/city-government/boards-commissions-and-committees
 - https://bellevuewa.gov/contact-us

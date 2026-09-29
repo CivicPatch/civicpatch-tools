@@ -118,3 +118,14 @@ def test_no_form_gives_the_default_organization_and_no_roles():
     run = _run_in("ocd-jurisdiction/country:us/state:wa/place:seattle/government", "Seattle city")
 
     assert prompt_inputs(config, run) == NO_FORM
+
+
+def test_a_county_with_no_form_yet_gets_its_states_board():
+    config = load_government_forms_config()
+    run = _run_in("ocd-jurisdiction/country:us/state:wa/county:king/government", "King County")
+
+    inputs = prompt_inputs(config, run)
+
+    assert inputs.government_form is None
+    assert inputs.known_organizations == ["Board of County Commissioners"]
+    assert inputs.known_roles == ["Commissioner", "Chair"]

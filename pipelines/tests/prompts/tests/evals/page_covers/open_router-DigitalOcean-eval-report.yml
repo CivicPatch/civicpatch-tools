@@ -1,32 +1,55 @@
 run:
-  timestamp: '2026-09-18T02:51:34+00:00'
-  prompt_sha256: d318f76e0deb
-  prompt_file: _prompts/d318f76e0deb.txt
+  timestamp: '2026-09-29T00:56:43+00:00'
+  prompt_sha256: f0cf44bcb9bb
+  prompt_file: _prompts/f0cf44bcb9bb.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 135.43
-  total_input_tokens: 168980
-  total_output_tokens: 126
-  total_cost_usd: 0.0165445952
+  elapsed_seconds: 367.35
+  total_input_tokens: 177432
+  total_output_tokens: 154
+  total_cost_usd: 0.0173382384
 accuracy:
   covers:
-    correct: 17
+    correct: 21
     missing: 0
     spurious: 0
     wrong: 1
-    precision: 0.9444444444444444
-    recall: 0.9444444444444444
-    f1: 0.9444444444444444
+    precision: 0.9545454545454546
+    recall: 0.9545454545454546
+    f1: 0.9545454545454546
 failed_cases:
 - model_client: open_router-DigitalOcean
-  case_id: irvine_council_roster
+  case_id: jackson_mayors_office
   failures:
   - field: Office of the Mayor
     expected: true
     actual: false
 mismatches:
-  irvine_council_roster:
+  jackson_mayors_office:
   - subject: Office of the Mayor
     field: covers
     expected: true
     actual: false
+case_prompts:
+  irvine_council_roster|City Council: 5ca65fd6b6f3
+  irvine_council_roster|Office of the Mayor: 69b7c23b5a2b
+  irvine_councilmember_bio|City Council: 5ca65fd6b6f3
+  irvine_councilmember_bio|Office of the Mayor: 69b7c23b5a2b
+  jackson_council_agendas|City Council: 12f2e70dc158
+  jackson_council_agendas|Office of the Mayor: ea8a0d3c5413
+  jackson_council_member_bio|City Council: 12f2e70dc158
+  jackson_council_member_bio|Office of the Mayor: ea8a0d3c5413
+  jackson_mayor_staff_directory|City Council: 12f2e70dc158
+  jackson_mayor_staff_directory|Office of the Mayor: ea8a0d3c5413
+  jackson_mayors_office|City Council: 12f2e70dc158
+  jackson_mayors_office|Office of the Mayor: ea8a0d3c5413
+  jackson_meet_the_council|City Council: 12f2e70dc158
+  jackson_meet_the_council|Office of the Mayor: ea8a0d3c5413
+  millbury_board_of_selectmen|Select Board: cd0593849f0a
+  millbury_board_of_selectmen|Town Meeting: 1b1da1d5d1be
+  millbury_school_committee|Select Board: cd0593849f0a
+  millbury_school_committee|Town Meeting: 1b1da1d5d1be
+  quitaque_city_officials|City Council: ea7531b953f1
+  quitaque_city_officials|Office of the Mayor: e45993dd2e98
+  seattle_mayor_page|City Council: 9cc0fd5bb885
+  seattle_mayor_page|Office of the Mayor: 95a9475c2b3d

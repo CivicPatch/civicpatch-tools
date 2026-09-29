@@ -130,6 +130,106 @@ runs:
       spurious: 0
       wrong: 0
   mismatches_file: _runs/20260918T025134Z-open_router-Alibaba.yml
+- timestamp: '2026-09-29T00:27:55+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 24c2e1e9ef29
+  cost_usd: 0.024431148
+  elapsed_seconds: 413.32
+  scores:
+    covers: 1.0
+  cases:
+    irvine_council_roster: 1.0
+    irvine_councilmember_bio: 1.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayor_staff_directory: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee: 1.0
+    quitaque_city_officials: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 22
+      missing: 0
+      spurious: 0
+      wrong: 0
+  case_prompts:
+    irvine_council_roster|City Council: ddd9f12178da
+    irvine_council_roster|Office of the Mayor: 3048be6b94fe
+    irvine_councilmember_bio|City Council: ddd9f12178da
+    irvine_councilmember_bio|Office of the Mayor: 3048be6b94fe
+    jackson_council_agendas|City Council: b68a775dddee
+    jackson_council_agendas|Office of the Mayor: 5faa7b19c3a5
+    jackson_council_member_bio|City Council: b68a775dddee
+    jackson_council_member_bio|Office of the Mayor: 5faa7b19c3a5
+    jackson_mayor_staff_directory|City Council: b68a775dddee
+    jackson_mayor_staff_directory|Office of the Mayor: 5faa7b19c3a5
+    jackson_mayors_office|City Council: b68a775dddee
+    jackson_mayors_office|Office of the Mayor: 5faa7b19c3a5
+    jackson_meet_the_council|City Council: b68a775dddee
+    jackson_meet_the_council|Office of the Mayor: 5faa7b19c3a5
+    millbury_board_of_selectmen|Select Board: 7b8ded9df90a
+    millbury_board_of_selectmen|Town Meeting: 03f17ff2a988
+    millbury_school_committee|Select Board: 7b8ded9df90a
+    millbury_school_committee|Town Meeting: 03f17ff2a988
+    quitaque_city_officials|City Council: a93faee61ea5
+    quitaque_city_officials|Office of the Mayor: ff013425f9dc
+    seattle_mayor_page|City Council: ffad0780acb4
+    seattle_mayor_page|Office of the Mayor: 15dfb113ae46
+  mismatches_file: _runs/20260929T002755Z-open_router-Alibaba.yml
+- timestamp: '2026-09-29T00:56:43+00:00'
+  provider: open_router-Alibaba
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: f0cf44bcb9bb
+  cost_usd: 0.0242496048
+  elapsed_seconds: 291.3
+  scores:
+    covers: 1.0
+  cases:
+    irvine_council_roster: 1.0
+    irvine_councilmember_bio: 1.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayor_staff_directory: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee: 1.0
+    quitaque_city_officials: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 22
+      missing: 0
+      spurious: 0
+      wrong: 0
+  case_prompts:
+    irvine_council_roster|City Council: 5ca65fd6b6f3
+    irvine_council_roster|Office of the Mayor: 69b7c23b5a2b
+    irvine_councilmember_bio|City Council: 5ca65fd6b6f3
+    irvine_councilmember_bio|Office of the Mayor: 69b7c23b5a2b
+    jackson_council_agendas|City Council: 12f2e70dc158
+    jackson_council_agendas|Office of the Mayor: ea8a0d3c5413
+    jackson_council_member_bio|City Council: 12f2e70dc158
+    jackson_council_member_bio|Office of the Mayor: ea8a0d3c5413
+    jackson_mayor_staff_directory|City Council: 12f2e70dc158
+    jackson_mayor_staff_directory|Office of the Mayor: ea8a0d3c5413
+    jackson_mayors_office|City Council: 12f2e70dc158
+    jackson_mayors_office|Office of the Mayor: ea8a0d3c5413
+    jackson_meet_the_council|City Council: 12f2e70dc158
+    jackson_meet_the_council|Office of the Mayor: ea8a0d3c5413
+    millbury_board_of_selectmen|Select Board: cd0593849f0a
+    millbury_board_of_selectmen|Town Meeting: 1b1da1d5d1be
+    millbury_school_committee|Select Board: cd0593849f0a
+    millbury_school_committee|Town Meeting: 1b1da1d5d1be
+    quitaque_city_officials|City Council: ea7531b953f1
+    quitaque_city_officials|Office of the Mayor: e45993dd2e98
+    seattle_mayor_page|City Council: 9cc0fd5bb885
+    seattle_mayor_page|Office of the Mayor: 95a9475c2b3d
+  mismatches_file: _runs/20260929T005643Z-open_router-Alibaba.yml
 - timestamp: '2026-09-18T01:30:21+00:00'
   provider: open_router-AtlasCloud
   model: deepseek/deepseek-v4-flash
@@ -261,6 +361,106 @@ runs:
       spurious: 0
       wrong: 0
   mismatches_file: _runs/20260918T025134Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-29T00:27:54+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 24c2e1e9ef29
+  cost_usd: 0.01505031472
+  elapsed_seconds: 390.31
+  scores:
+    covers: 1.0
+  cases:
+    irvine_council_roster: 1.0
+    irvine_councilmember_bio: 1.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayor_staff_directory: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee: 1.0
+    quitaque_city_officials: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 22
+      missing: 0
+      spurious: 0
+      wrong: 0
+  case_prompts:
+    irvine_council_roster|City Council: ddd9f12178da
+    irvine_council_roster|Office of the Mayor: 3048be6b94fe
+    irvine_councilmember_bio|City Council: ddd9f12178da
+    irvine_councilmember_bio|Office of the Mayor: 3048be6b94fe
+    jackson_council_agendas|City Council: b68a775dddee
+    jackson_council_agendas|Office of the Mayor: 5faa7b19c3a5
+    jackson_council_member_bio|City Council: b68a775dddee
+    jackson_council_member_bio|Office of the Mayor: 5faa7b19c3a5
+    jackson_mayor_staff_directory|City Council: b68a775dddee
+    jackson_mayor_staff_directory|Office of the Mayor: 5faa7b19c3a5
+    jackson_mayors_office|City Council: b68a775dddee
+    jackson_mayors_office|Office of the Mayor: 5faa7b19c3a5
+    jackson_meet_the_council|City Council: b68a775dddee
+    jackson_meet_the_council|Office of the Mayor: 5faa7b19c3a5
+    millbury_board_of_selectmen|Select Board: 7b8ded9df90a
+    millbury_board_of_selectmen|Town Meeting: 03f17ff2a988
+    millbury_school_committee|Select Board: 7b8ded9df90a
+    millbury_school_committee|Town Meeting: 03f17ff2a988
+    quitaque_city_officials|City Council: a93faee61ea5
+    quitaque_city_officials|Office of the Mayor: ff013425f9dc
+    seattle_mayor_page|City Council: ffad0780acb4
+    seattle_mayor_page|Office of the Mayor: 15dfb113ae46
+  mismatches_file: _runs/20260929T002754Z-open_router-AtlasCloud.yml
+- timestamp: '2026-09-29T00:56:43+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: f0cf44bcb9bb
+  cost_usd: 0.01507159248
+  elapsed_seconds: 223.29
+  scores:
+    covers: 1.0
+  cases:
+    irvine_council_roster: 1.0
+    irvine_councilmember_bio: 1.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayor_staff_directory: 1.0
+    jackson_mayors_office: 1.0
+    jackson_meet_the_council: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee: 1.0
+    quitaque_city_officials: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 22
+      missing: 0
+      spurious: 0
+      wrong: 0
+  case_prompts:
+    irvine_council_roster|City Council: 5ca65fd6b6f3
+    irvine_council_roster|Office of the Mayor: 69b7c23b5a2b
+    irvine_councilmember_bio|City Council: 5ca65fd6b6f3
+    irvine_councilmember_bio|Office of the Mayor: 69b7c23b5a2b
+    jackson_council_agendas|City Council: 12f2e70dc158
+    jackson_council_agendas|Office of the Mayor: ea8a0d3c5413
+    jackson_council_member_bio|City Council: 12f2e70dc158
+    jackson_council_member_bio|Office of the Mayor: ea8a0d3c5413
+    jackson_mayor_staff_directory|City Council: 12f2e70dc158
+    jackson_mayor_staff_directory|Office of the Mayor: ea8a0d3c5413
+    jackson_mayors_office|City Council: 12f2e70dc158
+    jackson_mayors_office|Office of the Mayor: ea8a0d3c5413
+    jackson_meet_the_council|City Council: 12f2e70dc158
+    jackson_meet_the_council|Office of the Mayor: ea8a0d3c5413
+    millbury_board_of_selectmen|Select Board: cd0593849f0a
+    millbury_board_of_selectmen|Town Meeting: 1b1da1d5d1be
+    millbury_school_committee|Select Board: cd0593849f0a
+    millbury_school_committee|Town Meeting: 1b1da1d5d1be
+    quitaque_city_officials|City Council: ea7531b953f1
+    quitaque_city_officials|Office of the Mayor: e45993dd2e98
+    seattle_mayor_page|City Council: 9cc0fd5bb885
+    seattle_mayor_page|Office of the Mayor: 95a9475c2b3d
+  mismatches_file: _runs/20260929T005643Z-open_router-AtlasCloud.yml
 - timestamp: '2026-09-18T01:30:21+00:00'
   provider: open_router-DigitalOcean
   model: deepseek/deepseek-v4-flash
@@ -392,6 +592,106 @@ runs:
       spurious: 0
       wrong: 1
   mismatches_file: _runs/20260918T025134Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-29T00:27:54+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 24c2e1e9ef29
+  cost_usd: 0.0173623072
+  elapsed_seconds: 426.48
+  scores:
+    covers: 0.9090909090909091
+  cases:
+    irvine_council_roster: 1.0
+    irvine_councilmember_bio: 0.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayor_staff_directory: 1.0
+    jackson_mayors_office: 0.0
+    jackson_meet_the_council: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee: 1.0
+    quitaque_city_officials: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 20
+      missing: 0
+      spurious: 0
+      wrong: 2
+  case_prompts:
+    irvine_council_roster|City Council: ddd9f12178da
+    irvine_council_roster|Office of the Mayor: 3048be6b94fe
+    irvine_councilmember_bio|City Council: ddd9f12178da
+    irvine_councilmember_bio|Office of the Mayor: 3048be6b94fe
+    jackson_council_agendas|City Council: b68a775dddee
+    jackson_council_agendas|Office of the Mayor: 5faa7b19c3a5
+    jackson_council_member_bio|City Council: b68a775dddee
+    jackson_council_member_bio|Office of the Mayor: 5faa7b19c3a5
+    jackson_mayor_staff_directory|City Council: b68a775dddee
+    jackson_mayor_staff_directory|Office of the Mayor: 5faa7b19c3a5
+    jackson_mayors_office|City Council: b68a775dddee
+    jackson_mayors_office|Office of the Mayor: 5faa7b19c3a5
+    jackson_meet_the_council|City Council: b68a775dddee
+    jackson_meet_the_council|Office of the Mayor: 5faa7b19c3a5
+    millbury_board_of_selectmen|Select Board: 7b8ded9df90a
+    millbury_board_of_selectmen|Town Meeting: 03f17ff2a988
+    millbury_school_committee|Select Board: 7b8ded9df90a
+    millbury_school_committee|Town Meeting: 03f17ff2a988
+    quitaque_city_officials|City Council: a93faee61ea5
+    quitaque_city_officials|Office of the Mayor: ff013425f9dc
+    seattle_mayor_page|City Council: ffad0780acb4
+    seattle_mayor_page|Office of the Mayor: 15dfb113ae46
+  mismatches_file: _runs/20260929T002754Z-open_router-DigitalOcean.yml
+- timestamp: '2026-09-29T00:56:43+00:00'
+  provider: open_router-DigitalOcean
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: f0cf44bcb9bb
+  cost_usd: 0.0173382384
+  elapsed_seconds: 367.35
+  scores:
+    covers: 0.9545454545454546
+  cases:
+    irvine_council_roster: 1.0
+    irvine_councilmember_bio: 1.0
+    jackson_council_agendas: 1.0
+    jackson_council_member_bio: 1.0
+    jackson_mayor_staff_directory: 1.0
+    jackson_mayors_office: 0.0
+    jackson_meet_the_council: 1.0
+    millbury_board_of_selectmen: 1.0
+    millbury_school_committee: 1.0
+    quitaque_city_officials: 1.0
+    seattle_mayor_page: 1.0
+  dispositions:
+    covers:
+      correct: 21
+      missing: 0
+      spurious: 0
+      wrong: 1
+  case_prompts:
+    irvine_council_roster|City Council: 5ca65fd6b6f3
+    irvine_council_roster|Office of the Mayor: 69b7c23b5a2b
+    irvine_councilmember_bio|City Council: 5ca65fd6b6f3
+    irvine_councilmember_bio|Office of the Mayor: 69b7c23b5a2b
+    jackson_council_agendas|City Council: 12f2e70dc158
+    jackson_council_agendas|Office of the Mayor: ea8a0d3c5413
+    jackson_council_member_bio|City Council: 12f2e70dc158
+    jackson_council_member_bio|Office of the Mayor: ea8a0d3c5413
+    jackson_mayor_staff_directory|City Council: 12f2e70dc158
+    jackson_mayor_staff_directory|Office of the Mayor: ea8a0d3c5413
+    jackson_mayors_office|City Council: 12f2e70dc158
+    jackson_mayors_office|Office of the Mayor: ea8a0d3c5413
+    jackson_meet_the_council|City Council: 12f2e70dc158
+    jackson_meet_the_council|Office of the Mayor: ea8a0d3c5413
+    millbury_board_of_selectmen|Select Board: cd0593849f0a
+    millbury_board_of_selectmen|Town Meeting: 1b1da1d5d1be
+    millbury_school_committee|Select Board: cd0593849f0a
+    millbury_school_committee|Town Meeting: 1b1da1d5d1be
+    quitaque_city_officials|City Council: ea7531b953f1
+    quitaque_city_officials|Office of the Mayor: e45993dd2e98
+    seattle_mayor_page|City Council: 9cc0fd5bb885
+    seattle_mayor_page|Office of the Mayor: 95a9475c2b3d
+  mismatches_file: _runs/20260929T005643Z-open_router-DigitalOcean.yml
 - timestamp: '2026-09-18T01:30:21+00:00'
   provider: open_router-NextBit
   model: deepseek/deepseek-v4-flash

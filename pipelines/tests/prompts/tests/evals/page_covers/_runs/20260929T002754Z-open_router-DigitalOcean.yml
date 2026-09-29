@@ -1,0 +1,11 @@
+mismatches:
+  irvine_councilmember_bio:
+  - actual: true
+    expected: false
+    field: covers
+    subject: Office of the Mayor
+  jackson_mayors_office:
+  - actual: false
+    expected: true
+    field: covers
+    subject: Office of the Mayor

@@ -85,6 +85,7 @@ function renderDetailsSection(
     <section class="panel">
       <civ-jurisdiction-details
         .data=${jurisdictionData?.data}
+        .governmentForm=${jurisdictionData?.government_form}
         .canEditPermission=${canEditPermission}
         .onSave=${onSave}
         .blockedReason=${blockedReason}

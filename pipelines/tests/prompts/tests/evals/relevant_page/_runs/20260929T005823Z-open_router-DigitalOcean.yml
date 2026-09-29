@@ -1,0 +1,21 @@
+mismatches:
+  gatesville_ordinance_vote_records:
+  - actual: "\u2014"
+    expected: present
+    field: relevant_urls
+    subject: https://gatesvilletx.com/government/index.php
+  ? place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir
+  : - actual: false
+      expected: true
+      field: is_relevant
+      subject: page
+  place_goldthwaite__www_visitgoldthwaite_com_city-hall:
+  - actual: true
+    expected: false
+    field: is_relevant
+    subject: page
+  place_omak__www_omakcity_com_directory_aspx_did_19:
+  - actual: false
+    expected: true
+    field: is_relevant
+    subject: page

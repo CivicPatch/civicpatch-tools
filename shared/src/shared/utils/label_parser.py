@@ -268,6 +268,20 @@ def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:
     )
 
 
+def parse_label_preferring(
+    label: str, taxonomy: Taxonomy, preferred_roles: List[str]
+) -> ParsedLabel:
+    """`parse_label`, but a preferred role the label names wins over a higher-ranked one that is
+    not preferred: "Chairman, Board of Selectmen" is a Select Board Member when the jurisdiction's
+    posts are Select Board posts, not a generic Chair. Taxonomy priority still ranks within each
+    group, and the label resolves as `parse_label` would when it names no preferred role."""
+    parsed = parse_label(label, taxonomy)
+    preferred = [role for role in parsed.roles if role in preferred_roles]
+    if not preferred:
+        return parsed
+    return parsed.model_copy(update={"role": _highest_priority(preferred, taxonomy)})
+
+
 def _parse_segment(label: str, taxonomy: Taxonomy) -> ParsedLabel:
     words = _words(label)
     designation_aliases = taxonomy.designation_aliases

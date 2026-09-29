@@ -3,7 +3,7 @@ people:
   label: City Manager
   phone: null
   email: null
-  url: https://www.austintexas.gov/city-manager/tc-broadnax
+  url: https://www.austintexas.gov/city-manager
   start_date: null
   end_date: null
   image: local://b306fc6ea5a3.png

@@ -1,8 +1,6 @@
 is_relevant: false
 relevant_urls:
-- https://bellevuewa.gov/city-government
 - https://bellevuewa.gov/city-government/city-council
-- https://bellevuewa.gov/city-government/boards-commissions-and-committees
-- https://bellevuewa.gov/city-government/east-bellevue-community-council
-- https://bellevuewa.gov/city-government/city-council/council-meetings
+- https://bellevuewa.gov/city-government
 - https://bellevuewa.gov/contact-us
+- https://bellevuewa.gov/city-government/departments
