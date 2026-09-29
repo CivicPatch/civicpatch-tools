@@ -92,7 +92,7 @@ def test_each_organization_gets_the_role_labels_derived_under_its_name():
     labelled = with_role_labels(organizations, derived)
 
     assert [o["role_labels"] for o in labelled] == [
-        ["Select Board Chair", "Select Board Vice Chair", "Select Board Member"],
+        ["Select Board Member", "Chair", "Vice Chair"],
         ["Moderator"],
         [],
     ]

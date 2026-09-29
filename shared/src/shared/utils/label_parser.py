@@ -65,9 +65,8 @@ class ParsedLabel(BaseModel):
     # one office within a body, so they belong on `posts.label`, not the division.
     other_designations: List[str] = []
     # Text that matched no alias, in original case — vocabulary we do not have yet. Named
-    # for what the parser established, not for what happens next: triage promotes some to a
-    # role or a post and marks others `excluded` ("City Attorney" is not a role we are
-    # missing), and the text alone cannot say which. Empty means the label was understood.
+    # for what the parser established, not for what happens next: triage may promote some to
+    # a role or a post, and the text alone cannot say which. Empty means the label was understood.
     unmatched: List[str] = []
 
 

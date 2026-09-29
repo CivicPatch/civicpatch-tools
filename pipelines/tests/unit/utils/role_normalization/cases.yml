@@ -4,7 +4,6 @@
 #   <canonical role>  the matcher should resolve to this role
 #   NEW               no canonical exists yet; the matcher should PASS THROUGH the
 #                     raw string, NOT snap it onto an existing canonical
-#   DROP              noise / suppressed; the matcher should emit nothing for it
 #
 # Some NEW / canonical labels intentionally reflect what SHOULD happen even where
 # today's exact+fuzzy matcher misses (a tracked gap surfaces as a false_negative in
@@ -23,10 +22,6 @@
 - raw_string: Seattle City Councilmember
   scope: { state: WA, output_type: local, locality: Seattle }
   expected: Council Member
-
-- raw_string: City Hall
-  scope: { state: TN, output_type: local, locality: null }
-  expected: DROP
 
 - raw_string: City Recorder
   scope: { state: TN, output_type: local, locality: null }

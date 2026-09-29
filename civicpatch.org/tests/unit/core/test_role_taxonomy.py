@@ -89,7 +89,7 @@ def test_classify_same_is_unique_is_no_change():
 def test_classify_status_change_is_edit():
     op = classify_role_op(
         _entry("City Manager", status="active"),
-        _stored("City Manager", status="excluded"),
+        _stored("City Manager", status="candidate"),
     )
     assert op is RoleOp.EDIT
 

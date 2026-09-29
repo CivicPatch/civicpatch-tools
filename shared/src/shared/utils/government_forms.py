@@ -98,23 +98,13 @@ _ORGANIZATIONS_BY_FORM: dict[GovernmentForm, list[DerivedOrganization]] = {
     ],
     GovernmentForm.OPEN_TOWN_MEETING: [
         DerivedOrganization(
-            name="Select Board",
-            role_labels=[
-                "Select Board Chair",
-                "Select Board Vice Chair",
-                "Select Board Member",
-            ],
+            name="Select Board", role_labels=["Select Board Member", "Chair", "Vice Chair"]
         ),
         DerivedOrganization(name="Town Meeting", role_labels=["Moderator"]),
     ],
     GovernmentForm.REPRESENTATIVE_TOWN_MEETING: [
         DerivedOrganization(
-            name="Select Board",
-            role_labels=[
-                "Select Board Chair",
-                "Select Board Vice Chair",
-                "Select Board Member",
-            ],
+            name="Select Board", role_labels=["Select Board Member", "Chair", "Vice Chair"]
         ),
         DerivedOrganization(
             name="Town Meeting", role_labels=["Moderator", "Town Meeting Member"]

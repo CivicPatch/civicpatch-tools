@@ -16,7 +16,6 @@ def _role(label: str, status: RoleStatus) -> Role:
 def test_get_role_configs_keeps_only_active():
     config = RoleConfig(roles=[
         _role("Mayor", RoleStatus.ACTIVE),
-        _role("Webmaster", RoleStatus.EXCLUDED),
         _role("Alderman", RoleStatus.INACTIVE),
         _role("Dogcatcher", RoleStatus.CANDIDATE),
     ])

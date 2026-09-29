@@ -77,7 +77,7 @@ async def get_role(cur, role_id: str) -> Role | None:
 async def get_roles() -> list[Role]:
     """Every role, ordered.
 
-    Inactive and excluded roles are included: filtering those is the caller's
+    Inactive roles are included: filtering those is the caller's
     decision, since the admin UI needs to see them and the pipeline does not.
     """
     pool = await get_pool()
