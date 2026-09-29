@@ -30,8 +30,6 @@ _TAXONOMY = build_taxonomy(
             _role("clerk", "Clerk"),
             _role("treasurer", "Treasurer"),
             _role("trustee", "Trustee"),
-            _role("select-board-chair", "Select Board Chair"),
-            _role("select-board-vice-chair", "Select Board Vice Chair"),
             _role("select-board-member", "Select Board Member"),
             _role("moderator", "Moderator"),
             _role("town-meeting-member", "Town Meeting Member"),
@@ -81,7 +79,7 @@ def test_open_town_meeting_is_a_select_board_and_a_moderator():
     organizations = organizations_for(GovernmentForm.OPEN_TOWN_MEETING)
 
     assert [(o.name, o.role_labels) for o in organizations] == [
-        ("Select Board", ["Select Board Chair", "Select Board Vice Chair", "Select Board Member"]),
+        ("Select Board", ["Select Board Member", "Chair", "Vice Chair"]),
         ("Town Meeting", ["Moderator"]),
     ]
 

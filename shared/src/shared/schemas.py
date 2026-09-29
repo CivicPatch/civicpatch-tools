@@ -435,7 +435,6 @@ class Issue(BaseModel):
 class RoleStatus(str, Enum):
     ACTIVE = "active"
     CANDIDATE = "candidate"
-    EXCLUDED = "excluded"
     INACTIVE = "inactive"
 
 

@@ -13,13 +13,11 @@ import {
 
 const STATUS_ACTIVE = "active";
 const STATUS_CANDIDATE = "candidate";
-const STATUS_EXCLUDED = "excluded";
 const STATUS_INACTIVE = "inactive";
 
 const STATUS_OPTIONS = [
   STATUS_ACTIVE,
   STATUS_CANDIDATE,
-  STATUS_EXCLUDED,
   STATUS_INACTIVE,
 ];
 
