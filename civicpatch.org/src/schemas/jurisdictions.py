@@ -13,6 +13,15 @@ class GovernmentFormSummary(BaseModel):
     description: str
 
 
+class JurisdictionDetailsFields(BaseModel):
+    """What the jurisdiction page shows beside the entry, from both the page route and the GET."""
+
+    government_form: GovernmentFormSummary | None
+    government_form_options: List[GovernmentFormSummary]
+    # From our table only: a PR closed on GitHub shows until the next hourly sync.
+    open_pull_request_url: str | None
+
+
 class JurisdictionsByOcdidsRequest(BaseModel):
     ocdids: List[str]
 

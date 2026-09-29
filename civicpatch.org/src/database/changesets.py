@@ -513,7 +513,8 @@ async def get_issue_changeset_details(changeset_ids: list[str]) -> list[dict]:
         await cur.execute(
             """
             SELECT changesets.id::text, changesets.jurisdiction_ocdid, run.arguments_json,
-                   COALESCE(j.data->>'name', changesets.jurisdiction_ocdid) AS jurisdiction_name
+                   COALESCE(j.data->>'name', changesets.jurisdiction_ocdid) AS jurisdiction_name,
+                   run.id::text AS pipeline_run_id
             FROM changesets
             LEFT JOIN pipeline_runs run ON run.changeset_id = changesets.id
             LEFT JOIN jurisdictions j ON j.jurisdiction_ocdid = changesets.jurisdiction_ocdid
@@ -529,6 +530,7 @@ async def get_issue_changeset_details(changeset_ids: list[str]) -> list[dict]:
             "jurisdiction_ocdid": r[1],
             "arguments_json": r[2] or {},
             "jurisdiction_name": r[3],
+            "pipeline_run_id": r[4],
         }
         for r in rows
     ]

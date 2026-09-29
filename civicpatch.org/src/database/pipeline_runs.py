@@ -167,6 +167,23 @@ async def get_pipeline_run(run_id: str):
         return None
 
 
+async def pipeline_run_ids_for_changesets(changeset_ids: list[str]) -> dict[str, str]:
+    """Which run minted each changeset. A changeset that came from an import has none."""
+    if not changeset_ids:
+        return {}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT changeset_id::text, id::text
+            FROM pipeline_runs
+            WHERE changeset_id::text = ANY(%s)
+            """,
+            (changeset_ids,),
+        )
+        return {changeset_id: run_id for changeset_id, run_id in await cur.fetchall()}
+
+
 async def jurisdiction_ocdids_with_unfinished_runs() -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

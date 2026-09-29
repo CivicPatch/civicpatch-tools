@@ -7,6 +7,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from database.jurisdictions import get_jurisdiction
+from services.government_form import jurisdiction_details_fields
 from database.users import get_user_by_username
 from shared.utils.id_utils import OCDID_PREFIX, folder_to_jurisdiction_ocdid
 
@@ -380,7 +381,10 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             {
                 "request": request,
                 "jurisdiction_ocdid": jurisdiction_ocdid,
-                "jurisdiction_data": json.dumps(jurisdiction),
+                # The same fields the jurisdiction GET adds, so the page needs no second request.
+                "jurisdiction_data": json.dumps(
+                    {**jurisdiction, **(await jurisdiction_details_fields(jurisdiction_ocdid)).model_dump()}
+                ),
                 "user": user,
             },
         )

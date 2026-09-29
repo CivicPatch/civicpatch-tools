@@ -150,15 +150,18 @@ async def _navigate_response(session_id: str, entry_number: int, viewer_role: st
     )
     existing, proposed, overridden = sides
 
+    if pr_meta is None:
+        raise HTTPException(status_code=404, detail="Pull request metadata not found")
+
     unique_source_urls = list(
         {url for person in proposed for url in (person.get("source_urls") or [])}
     )
-    sources = build_sources(changeset_id, jurisdiction_ocdid, unique_source_urls)
+    sources = build_sources(
+        pr_meta["pipeline_run_id"], jurisdiction_ocdid, unique_source_urls
+    )
     if not has_at_least(viewer_role, UserRole.ADMINS):
         sources = without_debug_links(sources)
 
-    if pr_meta is None:
-        raise HTTPException(status_code=404, detail="Pull request metadata not found")
     return {
         "data": {
             "changeset_id": changeset_id,

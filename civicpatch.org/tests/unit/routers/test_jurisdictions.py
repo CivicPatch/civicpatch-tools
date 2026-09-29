@@ -35,8 +35,10 @@ def no_form_options_or_waiting_pull_request():
     """The jurisdiction GET also asks for the form options and a waiting PR; both read the DB."""
     with patch(
         "services.government_form.government_form_options", new_callable=AsyncMock, return_value=[]
-    ), patch.object(
-        jurisdictions_router.changesets, "get_open_jurisdiction_pull_request", new=AsyncMock(return_value=None)
+    ), patch(
+        "services.government_form.changesets_db.get_open_jurisdiction_pull_request",
+        new_callable=AsyncMock,
+        return_value=None,
     ):
         yield
 
@@ -207,8 +209,10 @@ def test_get_jurisdiction_returns_its_waiting_pull_request(client):
         return_value={"data": {"id": "ocd-jurisdiction/country:us/state:wa/place:seattle", "name": "Seattle"}},
     ), patch(
         "services.government_form.government_form_summary", new_callable=AsyncMock, return_value=None
-    ), patch.object(
-        jurisdictions_router.changesets, "get_open_jurisdiction_pull_request", new=AsyncMock(return_value=waiting)
+    ), patch(
+        "services.government_form.changesets_db.get_open_jurisdiction_pull_request",
+        new_callable=AsyncMock,
+        return_value=waiting,
     ):
         response = client.get(
             "/jurisdictions", params={"jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:seattle"}

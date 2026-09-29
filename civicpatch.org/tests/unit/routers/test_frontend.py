@@ -10,6 +10,8 @@ from frontend.vite import vite_asset, vite_css
 from routers.frontend import build_permissions, get_router, needs_username, register_page_redirects
 from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
+from schemas.jurisdictions import GovernmentFormSummary, JurisdictionDetailsFields
+from shared.schemas import GovernmentForm
 
 
 _LADDER_ORDER = [UserRole.DEFAULT, UserRole.CONTRIBUTORS, UserRole.MAINTAINERS, UserRole.ADMINS]
@@ -216,6 +218,30 @@ def test_catch_all_still_handles_three_segment_jurisdiction_paths(permissions_cl
     with patch("routers.frontend.get_jurisdiction", new_callable=AsyncMock, return_value=None):
         response = client.get("/nc/local/place_does_not_exist")
     assert response.status_code == 404
+
+
+@pytest.mark.unit
+def test_the_jurisdiction_page_carries_its_government_form(permissions_client):
+    """The page renders from this route, not the jurisdiction GET, so it needs the same fields:
+    without them it showed no government form, picker or waiting pull request."""
+    permissions_client.dependency_overrides[get_optional_user] = lambda: None
+    client = TestClient(permissions_client)
+    details = JurisdictionDetailsFields(
+        government_form=GovernmentFormSummary(
+            value=GovernmentForm.TOWNSHIP_BOARD, name="Township board", description="one elected board"
+        ),
+        government_form_options=[],
+        open_pull_request_url="https://example.test/pull/7",
+    )
+    with (
+        patch("routers.frontend.get_jurisdiction", new_callable=AsyncMock, return_value={"data": {"name": "Macomb"}}),
+        patch("routers.frontend.jurisdiction_details_fields", new_callable=AsyncMock, return_value=details),
+    ):
+        response = client.get("/mi/local/county_macomb__place_macomb")
+
+    assert response.status_code == 200
+    assert "township_board" in response.text
+    assert "https://example.test/pull/7" in response.text
 
 
 # ── GET /{path}/activity ──────────────────────────────────────────────────────

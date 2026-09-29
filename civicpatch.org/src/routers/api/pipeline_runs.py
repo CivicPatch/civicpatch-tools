@@ -97,6 +97,7 @@ def _build_request_row(r: dict) -> dict:
     url = args.get("url")
     return {
         "changeset_id": r.get("changeset_id"),
+        "pipeline_run_id": r.get("pipeline_run_id"),
         "jurisdiction_ocdid": r.get("jurisdiction_ocdid"),
         "jurisdiction_name": r.get("jurisdiction_name"),
         # The page's URL is its ocdid; the frontend encodes it.
@@ -600,7 +601,10 @@ def get_router(api_key_header):
             base_rows = [
                 _build_request_row(raw[0])
                 if raw
-                else {"changeset_id": changeset_id}
+                else {
+                    "changeset_id": changeset_id,
+                    "pipeline_run_id": issue.get("pipeline_run_id"),
+                }
             ]
             issue_data = issue.get("data") or {}
             error = issue_data.get("error")
@@ -614,10 +618,11 @@ def get_router(api_key_header):
 
         rows = []
         for row in base_rows:
-            req_id = row.get("changeset_id")
+            # The debug bucket is keyed by the run, which exists before any changeset does.
+            run_id = row.get("pipeline_run_id")
             folder = row.get("jurisdiction_path")
             debug_key_base = (
-                f"{req_id}/data_source/{folder}" if (req_id and folder) else None
+                f"{run_id}/data_source/{folder}" if (run_id and folder) else None
             )
             rows.append(
                 {
@@ -645,9 +650,9 @@ def get_router(api_key_header):
                     if debug_key_base
                     else None,
                     "debug_url": storage_service.get_bucket_url(
-                        buckets.DEBUG, req_id
+                        buckets.DEBUG, run_id
                     )
-                    if (is_admin and req_id)
+                    if (is_admin and run_id)
                     else None,
                 }
             )

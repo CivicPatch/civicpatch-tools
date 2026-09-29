@@ -17,12 +17,18 @@ def test_each_source_links_the_fetched_html_and_the_markdown_read_from_it():
         "services.review_sources.storage_service.get_presigned_url_cached",
         side_effect=lambda bucket, key: key,
     ):
-        [source] = build_sources("changeset-1", _OCDID, [_URL])
+        [source] = build_sources("run-1", _OCDID, [_URL])
 
     assert source["url"] == _URL
-    assert source["markdown"].startswith("changeset-1/data_source/")
+    assert source["markdown"].startswith("run-1/data_source/")
     assert source["markdown"].endswith("/preprocessed.md")
     assert source["html"].endswith("/original.html")
+
+
+def test_a_changeset_with_no_run_keeps_the_page_but_has_no_cached_copies():
+    [source] = build_sources(None, _OCDID, [_URL])
+
+    assert source == {"url": _URL, "markdown": None, "html": None}
 
 
 def test_a_non_admin_keeps_the_page_but_not_the_debug_links():

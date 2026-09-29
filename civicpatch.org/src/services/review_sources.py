@@ -20,10 +20,11 @@ READ_MARKDOWN = "preprocessed.md"
 
 
 def _cached_url(
-    changeset_id: str, jurisdiction_folder: str, source_url: str, file_name: str
+    pipeline_run_id: str, jurisdiction_folder: str, source_url: str, file_name: str
 ) -> Optional[str]:
+    # The debug bucket is keyed by the run that uploaded it, not the changeset it minted.
     relative_path = os.path.join(
-        changeset_id,
+        pipeline_run_id,
         "data_source",
         jurisdiction_folder,
         "cache",
@@ -34,14 +35,17 @@ def _cached_url(
 
 
 def build_sources(
-    changeset_id: str, jurisdiction_ocdid: str, source_urls: list[str]
+    pipeline_run_id: str | None, jurisdiction_ocdid: str, source_urls: list[str]
 ) -> list[dict]:
+    """A changeset with no run (a sheet import) has pages but no cached copies of them."""
+    if pipeline_run_id is None:
+        return [{"url": url, "markdown": None, "html": None} for url in source_urls]
     folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
     return [
         {
             "url": url,
-            "markdown": _cached_url(changeset_id, folder, url, READ_MARKDOWN),
-            "html": _cached_url(changeset_id, folder, url, FETCHED_HTML),
+            "markdown": _cached_url(pipeline_run_id, folder, url, READ_MARKDOWN),
+            "html": _cached_url(pipeline_run_id, folder, url, FETCHED_HTML),
         }
         for url in source_urls
     ]

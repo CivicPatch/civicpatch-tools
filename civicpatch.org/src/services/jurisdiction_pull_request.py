@@ -171,7 +171,8 @@ async def _check_edit(jurisdiction_ocdid: str, edit: JurisdictionEdit) -> None:
 async def _open_pr(
     jurisdiction_ocdid: str, edit: JurisdictionEdit, label: PullRequestLabel, author: PrAuthor
 ) -> tuple[int, str]:
-    repo_url = environment.get_env_vars()["JURISDICTIONS_REPO_URL"]
+    env = environment.get_env_vars()
+    repo_url = env["JURISDICTIONS_REPO_URL"]
     file_path = jurisdictions_file_path(jurisdiction_ocdid)
     raw = await github_service.get_github_file_contents(file_path, repo_url=repo_url)
     if not raw:
@@ -192,8 +193,11 @@ async def _open_pr(
         pull_request_body=pull_request_body(edit, id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid).level),
         author=author,
         labels=(label,),
+        # The jurisdictions-sync bot opens and labels the PR; the regular bot writes the fork.
         repo_url=repo_url,
         headers=await get_jurisdictions_sync_headers(),
+        fork_repo_url=env["JURISDICTIONS_FORK_REPO_URL"],
+        fork_headers=await github_service.get_default_headers(),
     )
     if number is None:
         raise PullRequestFailed(url_or_error)

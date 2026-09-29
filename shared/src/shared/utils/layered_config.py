@@ -95,17 +95,31 @@ def check_roles_distinct_across(files: list[ConfigFile]) -> None:
 
 
 def allowed_government_forms(config: MergedConfig, name: str) -> list[GovernmentForm]:
-    """State government forms for the name's suffix, then the state's other government forms, then the same from the
-    country. A state that lists government forms without suffixes narrows to them."""
+    """The state's government forms for the name's suffix, then its other ones, then the same from
+    the country. A state that lists government forms without suffixes narrows to them."""
     suffix = name_suffix(name)
     for government_forms in (config.state_government_forms, config.country_government_forms):
-        for_suffix = [government_form for government_form, form_config in government_forms.items() if suffix in form_config.suffixes]
+        for_suffix = [
+            government_form
+            for government_form, government_form_config in government_forms.items()
+            if suffix in government_form_config.suffixes
+        ]
         if for_suffix:
-            return for_suffix
-        for_any_name = [government_form for government_form, form_config in government_forms.items() if not form_config.suffixes]
+            return in_standard_order(for_suffix)
+        for_any_name = [
+            government_form
+            for government_form, government_form_config in government_forms.items()
+            if not government_form_config.suffixes
+        ]
         if for_any_name:
-            return for_any_name
+            return in_standard_order(for_any_name)
     return []
+
+
+def in_standard_order(government_forms) -> list[GovernmentForm]:
+    """As the enum lists them. Stored config comes back from jsonb, which does not keep key order."""
+    order = list(GovernmentForm)
+    return sorted(government_forms, key=order.index)
 
 
 def government_form_organizations(config: MergedConfig, government_form: GovernmentForm) -> list[DerivedOrganization]:

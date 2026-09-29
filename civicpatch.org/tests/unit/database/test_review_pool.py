@@ -46,6 +46,7 @@ async def test_returns_row_for_a_pending_review():
         "ocd-jurisdiction/country:us/state:tx/place:austin/government",  # jurisdiction_ocdid
         "Austin",           # jurisdiction_name
         "https://austintexas.gov",  # jurisdiction_website_url
+        "run-abc",          # pipeline_run_id — the debug bucket is keyed by it
     )
     cur = _make_cursor(row)
     with patch("database.review_pool.get_pool", AsyncMock(return_value=_make_pool(cur))):
@@ -53,6 +54,7 @@ async def test_returns_row_for_a_pending_review():
 
     assert result is not None
     assert result["changeset_id"] == "req-abc"
+    assert result["pipeline_run_id"] == "run-abc"
     assert result["pr"]["status"] == "pending"
     assert result["jurisdiction_ocdid"] == "ocd-jurisdiction/country:us/state:tx/place:austin/government"
     assert result["jurisdiction_name"] == "Austin"
@@ -68,12 +70,14 @@ async def test_returns_row_for_a_published_review():
         "ocd-jurisdiction/country:us/state:ca/place:oakland/government",
         "Oakland",
         None,
+        None,  # a sheet import has no run
     )
     cur = _make_cursor(row)
     with patch("database.review_pool.get_pool", AsyncMock(return_value=_make_pool(cur))):
         result = await get_changeset_data("req-xyz")
 
     assert result is not None
+    assert result["pipeline_run_id"] is None
     assert result["pr"]["status"] == "published"
     assert result["pr"]["url"] == "https://github.com/org/repo/commit/abc123"
 

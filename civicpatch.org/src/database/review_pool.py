@@ -100,9 +100,11 @@ async def get_changeset_for_review(changeset_id: str) -> Optional[dict]:
             SELECT changesets.change_url, changesets.changeset_state,
                    changesets.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
-                   jur.data->>'url' AS jurisdiction_website_url
+                   jur.data->>'url' AS jurisdiction_website_url,
+                   run.id::text AS pipeline_run_id
             FROM changesets
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = changesets.jurisdiction_ocdid
+            LEFT JOIN pipeline_runs run ON run.changeset_id = changesets.id
             WHERE changesets.id = %s AND changesets.kind != %s
             """,
             (changeset_id, ChangesetKind.JURISDICTION_EDIT),
@@ -112,6 +114,7 @@ async def get_changeset_for_review(changeset_id: str) -> Optional[dict]:
             return None
         return {
             "changeset_id": changeset_id,
+            "pipeline_run_id": row[5],
             "jurisdiction": {
                 "ocdid": row[2],
                 "name": row[3],
@@ -135,9 +138,11 @@ async def get_changeset_data(changeset_id: str) -> Optional[dict]:
             SELECT changesets.id::text, changesets.change_url, changesets.changeset_state,
                    changesets.jurisdiction_ocdid,
                    jur.data->>'name' AS jurisdiction_name,
-                   jur.data->>'url' AS jurisdiction_website_url
+                   jur.data->>'url' AS jurisdiction_website_url,
+                   run.id::text AS pipeline_run_id
             FROM changesets
             LEFT JOIN jurisdictions jur ON jur.jurisdiction_ocdid = changesets.jurisdiction_ocdid
+            LEFT JOIN pipeline_runs run ON run.changeset_id = changesets.id
             WHERE changesets.id::text = %s AND changesets.kind != %s
             """,
             (changeset_id, ChangesetKind.JURISDICTION_EDIT),
@@ -147,6 +152,7 @@ async def get_changeset_data(changeset_id: str) -> Optional[dict]:
             return None
         return {
             "changeset_id": row[0],
+            "pipeline_run_id": row[6],
             "jurisdiction_ocdid": row[3],
             "jurisdiction_name": row[4],
             "jurisdiction_website_url": row[5],
