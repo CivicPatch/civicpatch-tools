@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
 import database.government_forms as government_forms_db
+import database.jurisdiction_configs as jurisdiction_configs_db
 from core.organization_derivation import (
     ExistingOrganization,
     OrganizationChanges,
@@ -20,10 +21,11 @@ from shared.schemas import GovernmentForm, JurisdictionLevel
 from shared.utils.government_forms import (
     GOVERNMENT_FORM_DESCRIPTIONS,
     DerivedOrganization,
-    GovernmentFormsConfig,
-    derived_organizations,
     government_form_name,
-    load_government_forms_config,
+)
+from shared.utils.layered_config import (
+    derived_organizations,
+    jurisdiction_config,
     resolve_government_form,
 )
 from shared.utils.id_utils import parse_jurisdiction_ocdid
@@ -44,10 +46,13 @@ async def resolved_government(jurisdiction_ocdid: str) -> ResolvedGovernment:
     jurisdiction = await government_forms_db.get_government_form_inputs(jurisdiction_ocdid)
     if jurisdiction is None:
         return _NOTHING_RESOLVED
-    config = load_government_forms_config()
-    form = _resolve(config, jurisdiction)
+    layer = _layer(jurisdiction)
+    if layer is None:
+        return _NOTHING_RESOLVED
+    config = jurisdiction_config(await jurisdiction_configs_db.get_jurisdiction_configs(), *layer)
+    form = resolve_government_form(config, jurisdiction.name, jurisdiction.government_form)
     return ResolvedGovernment(
-        government_form=form, derived_organizations=_derived(config, jurisdiction, form)
+        government_form=form, derived_organizations=derived_organizations(config, form)
     )
 
 
@@ -78,19 +83,23 @@ async def ensure_government_form_organizations() -> int:
     memory; only a jurisdiction with something to change gets a write, so a run with nothing to
     do (nearly every run) writes nothing.
     """
-    config = load_government_forms_config()
+    configs = await jurisdiction_configs_db.get_jurisdiction_configs()
     jurisdictions = await government_forms_db.government_form_inputs_below_state()
+    layers = {layer for layer in map(_layer, jurisdictions) if layer is not None}
+    config_by_layer = {layer: jurisdiction_config(configs, *layer) for layer in layers}
     organizations = await government_forms_db.list_organizations(
         [jurisdiction.jurisdiction_ocdid for jurisdiction in jurisdictions]
     )
     changed = 0
     for jurisdiction in jurisdictions:
         existing = organizations.get(jurisdiction.jurisdiction_ocdid, [])
-        if not existing:
+        layer = _layer(jurisdiction)
+        if not existing or layer is None:
             continue
-        form = _resolve(config, jurisdiction)
+        config = config_by_layer[layer]
+        form = resolve_government_form(config, jurisdiction.name, jurisdiction.government_form)
         changes = organization_changes(
-            _derived(config, jurisdiction, form), existing, DEFAULT_ORGANIZATION_NAME
+            derived_organizations(config, form), existing, DEFAULT_ORGANIZATION_NAME
         )
         form_is_saved = form == jurisdiction.government_form
         if changes.has_no_changes and form_is_saved:
@@ -100,24 +109,12 @@ async def ensure_government_form_organizations() -> int:
     return changed
 
 
-def _resolve(
-    config: GovernmentFormsConfig, jurisdiction: GovernmentFormInputs
-) -> GovernmentForm | None:
+def _layer(jurisdiction: GovernmentFormInputs) -> tuple[str, JurisdictionLevel] | None:
+    """The (state, level) whose config files apply; None for a state, which has no form."""
     parsed = parse_jurisdiction_ocdid(jurisdiction.jurisdiction_ocdid)
     if parsed.level == JurisdictionLevel.STATE:
         return None
-    return resolve_government_form(
-        config, parsed.state, parsed.level, jurisdiction.name, jurisdiction.government_form
-    )
-
-
-def _derived(
-    config: GovernmentFormsConfig,
-    jurisdiction: GovernmentFormInputs,
-    form: GovernmentForm | None,
-) -> list[DerivedOrganization]:
-    parsed = parse_jurisdiction_ocdid(jurisdiction.jurisdiction_ocdid)
-    return derived_organizations(config, parsed.state, parsed.level, form)
+    return parsed.state, parsed.level
 
 
 async def _apply(

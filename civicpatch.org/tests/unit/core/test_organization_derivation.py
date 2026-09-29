@@ -1,17 +1,26 @@
 import pytest
 
 from core.organization_derivation import ExistingOrganization, organization_changes, with_role_labels
-from shared.schemas import GovernmentForm
-from shared.utils.government_forms import DerivedOrganization, organizations_for
+from shared.utils.government_forms import DerivedOrganization
 
 GOVERNMENT = ExistingOrganization(id="gov", name="Government", meta_is_default=True)
 ORIGINAL_DEFAULT_NAME = "Government"
+
+OPEN_TOWN_MEETING = [
+    DerivedOrganization(name="Select Board", role_labels=["Select Board Member", "Chair", "Vice Chair"]),
+    DerivedOrganization(name="Town Meeting", role_labels=["Moderator"]),
+]
+COUNCIL_MANAGER = [DerivedOrganization(name="Council", role_labels=["Council Member", "Mayor"])]
+MAYOR_COUNCIL = [
+    DerivedOrganization(name="Council", role_labels=["Council Member"]),
+    DerivedOrganization(name="Office of the Mayor", role_labels=["Mayor"]),
+]
 
 
 @pytest.mark.unit
 def test_the_default_is_renamed_and_the_rest_created():
     changes = organization_changes(
-        organizations_for(GovernmentForm.OPEN_TOWN_MEETING), [GOVERNMENT], ORIGINAL_DEFAULT_NAME
+        OPEN_TOWN_MEETING, [GOVERNMENT], ORIGINAL_DEFAULT_NAME
     )
 
     assert changes.rename_default_to == "Select Board"
@@ -21,7 +30,7 @@ def test_the_default_is_renamed_and_the_rest_created():
 @pytest.mark.unit
 def test_a_one_organization_form_only_renames():
     changes = organization_changes(
-        organizations_for(GovernmentForm.COUNCIL_MANAGER), [GOVERNMENT], ORIGINAL_DEFAULT_NAME
+        COUNCIL_MANAGER, [GOVERNMENT], ORIGINAL_DEFAULT_NAME
     )
 
     assert changes.rename_default_to == "Council"
@@ -34,7 +43,7 @@ def test_applying_the_same_organizations_again_changes_nothing():
     town_meeting = ExistingOrganization(id="tm", name="Town Meeting", meta_is_default=False)
 
     changes = organization_changes(
-        organizations_for(GovernmentForm.OPEN_TOWN_MEETING),
+        OPEN_TOWN_MEETING,
         [select_board, town_meeting],
         ORIGINAL_DEFAULT_NAME,
     )
@@ -47,7 +56,7 @@ def test_a_hand_made_organization_with_the_name_is_not_renamed_over():
     council = ExistingOrganization(id="council", name="Council", meta_is_default=False)
 
     changes = organization_changes(
-        organizations_for(GovernmentForm.MAYOR_COUNCIL), [GOVERNMENT, council], ORIGINAL_DEFAULT_NAME
+        MAYOR_COUNCIL, [GOVERNMENT, council], ORIGINAL_DEFAULT_NAME
     )
 
     assert changes.rename_default_to is None
@@ -59,7 +68,7 @@ def test_a_default_renamed_by_hand_keeps_its_name():
     aldermen = ExistingOrganization(id="gov", name="Board of Aldermen", meta_is_default=True)
 
     changes = organization_changes(
-        organizations_for(GovernmentForm.MAYOR_COUNCIL), [aldermen], ORIGINAL_DEFAULT_NAME
+        MAYOR_COUNCIL, [aldermen], ORIGINAL_DEFAULT_NAME
     )
 
     assert changes.rename_default_to is None
@@ -82,7 +91,7 @@ def test_a_county_board_renames_the_default():
 
 @pytest.mark.unit
 def test_each_organization_gets_the_role_labels_derived_under_its_name():
-    derived = organizations_for(GovernmentForm.OPEN_TOWN_MEETING)
+    derived = OPEN_TOWN_MEETING
     organizations = [
         {"id": "a", "name": "Select Board", "posts": []},
         {"id": "b", "name": "Town Meeting", "posts": []},

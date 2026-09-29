@@ -232,6 +232,14 @@ erDiagram
         bool            is_unique           "default: false"
         int_null        priority            "NULL = unranked, sorts last"
         timestamptz     created_at
+        text_null       config_path         "the open-data config file defining it; NULL = unmatched"
+    }
+
+    jurisdiction_configs {
+        text            path                PK "as in open-data: data_source/tn/counties/config.yml. check: path <> ''"
+        jsonb           content             "the whole file: roles, government_forms"
+        text            commit_sha          "the open-data commit it was read at"
+        timestamptz     synced_at           "default: now()"
     }
 
     role_aliases {

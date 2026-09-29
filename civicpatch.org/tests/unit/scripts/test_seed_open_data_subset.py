@@ -8,10 +8,12 @@ import tarfile
 
 import pytest
 
+from core.sources.open_data.paths import SyncFileKind
 from scripts.seed_open_data_subset import (
     NO_LIMIT,
+    archive_commit,
+    archive_files,
     division_row,
-    jurisdiction_files,
     limit_arg,
     membership_row,
     organization_row,
@@ -26,9 +28,11 @@ from scripts.seed_open_data_subset import (
 _OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
 
 
-def _archive(files: dict[str, str]) -> bytes:
+def _archive(files: dict[str, str], commit: str = "abc123") -> bytes:
     buffer = io.BytesIO()
-    with tarfile.open(fileobj=buffer, mode="w:gz") as tar:
+    with tarfile.open(
+        fileobj=buffer, mode="w:gz", format=tarfile.PAX_FORMAT, pax_headers={"comment": commit}
+    ) as tar:
         tar.addfile(tarfile.TarInfo("open-data-main/data_source"))
         for path, content in files.items():
             data = content.encode("utf-8")
@@ -48,9 +52,30 @@ def test_jurisdiction_files_strips_the_archive_directory_and_keeps_only_jurisdic
         }
     )
 
-    assert jurisdiction_files(archive) == {
+    assert archive_files(archive, SyncFileKind.JURISDICTIONS) == {
         "data_source/wa/local/jurisdictions.yml": "jurisdictions: []\n"
     }
+
+
+@pytest.mark.unit
+def test_config_files_come_from_every_layer():
+    archive = _archive(
+        {
+            "data_source/config.yml": "roles: []\n",
+            "data_source/tn/counties/config.yml": "roles: []\n",
+            "data_source/wa/local/jurisdictions.yml": "jurisdictions: []\n",
+        }
+    )
+
+    assert sorted(archive_files(archive, SyncFileKind.CONFIG)) == [
+        "data_source/config.yml",
+        "data_source/tn/counties/config.yml",
+    ]
+
+
+@pytest.mark.unit
+def test_the_archive_names_the_commit_it_was_made_from():
+    assert archive_commit(_archive({}, commit="69331c2b")) == "69331c2b"
 
 
 @pytest.mark.unit

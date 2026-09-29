@@ -39,6 +39,9 @@ from pydantic import BaseModel
 from core.projection.facts import PostKey
 from core.sources.open_data.paths import SyncFileKind, classify_path
 from database.database import get_pool
+from database.jurisdiction_configs import sync_jurisdiction_config_on
+from schemas.jurisdiction_configs import JurisdictionConfigVersion
+from services.jurisdiction_config_sync import parse_jurisdiction_config
 from services.sources.open_data import read_jurisdiction_files
 
 logger = logging.getLogger(__name__)
@@ -68,17 +71,23 @@ async def fetch_open_data_archive(client: httpx.AsyncClient) -> bytes:
     return response.content
 
 
-def jurisdiction_files(archive: bytes) -> dict[str, str]:
-    """Repo path → contents for every `jurisdictions.yml` the sync would read. The archive nests
-    everything under one `<repo>-<branch>/` directory, which the repo's own paths do not have."""
+def archive_files(archive: bytes, kind: SyncFileKind) -> dict[str, str]:
+    """Repo path → contents for every file of this kind. The archive nests everything under one
+    `<repo>-<branch>/` directory, which the repo's own paths do not have."""
     files = {}
     with tarfile.open(fileobj=io.BytesIO(archive), mode="r:gz") as tar:
         for member in tar.getmembers():
             path = member.name.partition("/")[2]
             extracted = tar.extractfile(member) if member.isfile() else None
-            if extracted and classify_path(path) is SyncFileKind.JURISDICTIONS:
+            if extracted and classify_path(path) is kind:
                 files[path] = extracted.read().decode("utf-8")
     return files
+
+
+def archive_commit(archive: bytes) -> str:
+    # `git archive` writes the commit it was made from into the tar's global header.
+    with tarfile.open(fileobj=io.BytesIO(archive), mode="r:gz") as tar:
+        return tar.pax_headers["comment"]
 
 
 def rows_in_jurisdictions(
@@ -280,7 +289,7 @@ async def wipe_existing_data(conn: AsyncConnection) -> None:
     id, say) — see the module docstring."""
     async with conn.cursor() as cur:
         await cur.execute(
-            "TRUNCATE jurisdictions, people, roles, review_sessions, activity CASCADE"
+            "TRUNCATE jurisdictions, people, roles, jurisdiction_configs, review_sessions, activity CASCADE"
         )
     await conn.commit()
 
@@ -317,6 +326,8 @@ class Downloads(BaseModel):
     roles: list[dict[str, Any]]
     role_aliases: list[dict[str, Any]]
     jurisdiction_files: dict[str, str]
+    config_files: dict[str, str]
+    commit_sha: str
     divisions: list[dict[str, Any]]
     organizations: list[dict[str, Any]]
     posts: list[dict[str, Any]]
@@ -338,7 +349,9 @@ async def download(client: httpx.AsyncClient) -> Downloads:
     return Downloads(
         roles=roles,
         role_aliases=aliases,
-        jurisdiction_files=jurisdiction_files(archive),
+        jurisdiction_files=archive_files(archive, SyncFileKind.JURISDICTIONS),
+        config_files=archive_files(archive, SyncFileKind.CONFIG),
+        commit_sha=archive_commit(archive),
         divisions=divisions,
         organizations=organizations,
         posts=posts,
@@ -356,6 +369,16 @@ async def load_roles(conn: AsyncConnection, downloads: Downloads) -> None:
     alias_rows = [role_alias_row(row) for row in downloads.role_aliases]
     await insert_ignoring_conflicts(conn, "role_aliases", alias_rows)
     logger.info("seed_open_data_subset: role_aliases: %d row(s)", len(alias_rows))
+
+
+async def load_configs(conn: AsyncConnection, downloads: Downloads) -> None:
+    """After roles: each config file applied the way a merge syncs it, which also gives every
+    role its `config_path`."""
+    async with conn.cursor() as cur:
+        for path, raw in downloads.config_files.items():
+            version = JurisdictionConfigVersion(path=path, commit_sha=downloads.commit_sha, pull_request_number=None)
+            await sync_jurisdiction_config_on(cur, version, parse_jurisdiction_config(raw))
+    logger.info("seed_open_data_subset: config files: %d", len(downloads.config_files))
 
 
 async def load_places(conn: AsyncConnection, downloads: Downloads) -> set[str]:
@@ -435,6 +458,7 @@ async def seed(states: list[str], limit: int | None) -> None:
         downloads = await download(client)
         await wipe_existing_data(conn)
         await load_roles(conn, downloads)
+        await load_configs(conn, downloads)
         jurisdiction_ocdids = await load_places(conn, downloads)
         if states:
             jurisdiction_ocdids = await jurisdiction_ocdids_in_states(conn, states)

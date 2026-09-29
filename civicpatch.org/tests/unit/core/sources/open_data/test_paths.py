@@ -1,14 +1,14 @@
 """Unit tests for classify_path — decides what kind of file a repo path is, so the sync
 knows (a) which tree paths it cares about and (b) how to route each change.
 
-classify_path(path) -> "jurisdictions" | "people" | None
+classify_path(path) -> "jurisdictions" | "config" | None
   - "jurisdictions" : a data_source/.../jurisdictions.yml (the per-state list file)
-  - "people"        : a data/....yml (a per-jurisdiction people file)
-  - None            : anything else (README, jurisdictions_metadata.yml, validation
-                      outputs, scripts, ...) — not synced
+  - "config"        : a data_source/[...]/config.yml (roles and government forms, by layer)
+  - None            : anything else (people files, README, jurisdictions_metadata.yml,
+                      validation outputs, scripts, ...) — not synced
 
 Example real paths:
-  data/tx/local/place_austin.yml                  -> "people"
+  data/tx/local/place_austin.yml                  -> None
   data_source/tx/local/jurisdictions.yml          -> "jurisdictions"
   data_source/tx/local/jurisdictions_metadata.yml -> None
   README.md                                        -> None
@@ -26,8 +26,9 @@ from core.sources.open_data.paths import (
 
 
 @pytest.mark.unit
-def test_people_file_syncs_returns_people():
-    assert classify_path("data/tx/local/place_austin.yml") is SyncFileKind.PEOPLE
+def test_people_file_is_not_synced():
+    """civicpatch.org renders `data/**` from its database, so reading it back would go the wrong way."""
+    assert classify_path("data/tx/local/place_austin.yml") is None
 
 
 @pytest.mark.unit
@@ -48,6 +49,26 @@ def test_metadata_file_is_not_jurisdictions():
     # The sneaky one: jurisdictions_metadata.yml contains the substring "jurisdictions"
     # but is NOT the list file. A naive `"jurisdictions" in path` would misclassify it.
     assert classify_path("data_source/tx/local/jurisdictions_metadata.yml") is None
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "path",
+    [
+        "data_source/config.yml",
+        "data_source/local/config.yml",
+        "data_source/counties/config.yml",
+        "data_source/tn/counties/config.yml",
+    ],
+)
+def test_config_files_at_every_layer_are_config(path):
+    assert classify_path(path) is SyncFileKind.CONFIG
+
+
+@pytest.mark.unit
+def test_old_per_place_and_state_level_config_files_are_not():
+    assert classify_path("data_source/mi/local/county_alcona__place_alcona/config.yml") is None
+    assert classify_path("data_source/wa/config.yml") is None
 
 
 # ── level_ordered_batches ────────────────────────────────────────────────────
@@ -153,27 +174,3 @@ def test_state_only_is_state():
     path = jurisdictions_file_path("ocd-jurisdiction/country:us/state:wa/government")
     assert path == "data_source/wa/state/jurisdictions.yml"
 
-
-# ── unreviewed scrapes are visible in the repo but must never sync ──────────
-
-
-@pytest.mark.unit
-def test_unreviewed_people_file_does_not_sync():
-    """It matches every clause a reviewed people file matches, so the exclusion is the only
-    thing keeping unapproved data out of `people`."""
-    assert classify_path("data/tx/local-unreviewed/place_austin.yml") is None
-
-
-@pytest.mark.unit
-def test_reviewed_sibling_still_syncs():
-    assert classify_path("data/tx/local/place_austin.yml") is SyncFileKind.PEOPLE
-
-
-@pytest.mark.unit
-def test_unreviewed_suffix_only_matches_the_level_segment():
-    """The suffix is meaningful on the level, not anywhere in the path — a place that happens
-    to end in it is still reviewed data."""
-    assert (
-        classify_path("data/tx/local/place_austin-unreviewed.yml")
-        is SyncFileKind.PEOPLE
-    )

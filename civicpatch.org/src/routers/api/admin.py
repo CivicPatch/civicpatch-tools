@@ -13,8 +13,9 @@ from schemas.common import (
     UserRole,
     UserWithRole,
 )
+from schemas.jurisdiction_configs import JurisdictionConfigSyncRequest
 from schemas.rollback import RollbackRequest
-from services import entry_sheet, rollback
+from services import entry_sheet, jurisdiction_config_sync, rollback
 
 
 def get_router() -> APIRouter:
@@ -28,6 +29,14 @@ def get_router() -> APIRouter:
     ):
         await cache_service.invalidate("dashboard_data")
         return {"status": "ok"}
+
+    @router.post("/jurisdiction_configs/sync", include_in_schema=False)
+    async def sync_jurisdiction_configs_endpoint(
+        request: JurisdictionConfigSyncRequest,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        await jurisdiction_config_sync.sync_jurisdiction_configs(request)
+        return {"data": {"paths": request.paths}}
 
     @router.get("/users", include_in_schema=False)
     async def list_users_endpoint(
