@@ -12,6 +12,7 @@ import pytest
 from eval_utils import record_run
 
 from services.google_gemini import prompts as gemini_prompts
+from shared.schemas import GovernmentForm
 from services.open_router.prompts import (
     municipality_officials_prompt,
     relevant_page_prompt,
@@ -60,5 +61,13 @@ def test_real_prompts_pass_the_guard(tmp_path):
         str(tmp_path),
         gemini_prompts.find_jurisdiction_url_prompt(
             "ocd-jurisdiction/country:us/state:mi/place:harrison/government", "Harrison city"
+        ),
+    )
+    record_run(
+        str(tmp_path),
+        gemini_prompts.county_government_form_prompt(
+            "ocd-jurisdiction/country:us/state:wa/county:king/government",
+            "King County",
+            [GovernmentForm.COMMISSION, GovernmentForm.COUNTY_EXECUTIVE],
         ),
     )

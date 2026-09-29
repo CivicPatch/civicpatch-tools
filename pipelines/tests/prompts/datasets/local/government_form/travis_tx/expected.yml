@@ -1,0 +1,5 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:tx/county:travis/government
+name: Travis County
+government_form: commission
+source: https://www.traviscountytx.gov/
+thoughts: Commissioners court; the county judge presides and votes.

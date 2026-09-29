@@ -1,0 +1,5 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:tn/place:jackson/government
+name: Jackson city
+government_form: mayor_council
+source: http://www.jacksontn.gov/
+thoughts: Separately elected mayor over a city council.

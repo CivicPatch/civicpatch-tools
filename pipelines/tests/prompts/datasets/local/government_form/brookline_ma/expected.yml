@@ -1,0 +1,5 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:ma/place:brookline/government
+name: Brookline town
+government_form: representative_town_meeting
+source: https://www.brooklinema.gov
+thoughts: Select Board with an elected representative town meeting.

@@ -1,0 +1,23 @@
+runs:
+- timestamp: '2026-09-29T04:58:33+00:00'
+  provider: gemini
+  model: gemini-2.5-flash
+  prompt_sha256: 11b1f6c05b1e
+  cost_usd: 0.0
+  elapsed_seconds: 100.74
+  scores:
+    cases_passed: 1.0
+  cases:
+    brookline_ma: 1.0
+    haralson_ga: 1.0
+    irvine_ca: 1.0
+    jackson_tn: 1.0
+    king_wa: 1.0
+    mansfield_nj: 1.0
+    maui_hi: 1.0
+    milford_mi: 1.0
+    millbury_ma: 1.0
+    nashua_nh: 1.0
+    seattle_wa: 1.0
+    travis_tx: 1.0
+  dispositions: {}

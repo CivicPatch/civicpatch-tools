@@ -235,6 +235,11 @@ dir = "pipelines"
 run = "uv run pytest tests/prompts/tests/evals/test_find_jurisdiction_url_eval.py"
 dir = "pipelines"
 
+[tasks.evalsg]
+description = "Government form eval: Gemini grounded, one call per case against the grounding quota"
+run = "uv run pytest tests/prompts/tests/evals/test_government_form_eval.py"
+dir = "pipelines"
+
 
 [tasks.e2e-install]
 description = "Install e2e dependencies and Playwright browsers (run once)"
