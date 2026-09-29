@@ -1,0 +1,5 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:wa/county:king/government
+name: King County
+government_form: county_executive
+source: https://kingcounty.gov
+thoughts: Metropolitan King County Council plus an elected county executive.

@@ -1,0 +1,5 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:wa/place:seattle/government
+name: Seattle city
+government_form: mayor_council
+source: https://seattle.gov
+thoughts: Separately elected mayor who does not sit on the council.

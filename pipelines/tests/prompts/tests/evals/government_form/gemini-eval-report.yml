@@ -1,0 +1,19 @@
+run:
+  timestamp: '2026-09-29T04:58:33+00:00'
+  prompt_sha256: 11b1f6c05b1e
+  prompt_file: _prompts/11b1f6c05b1e.txt
+cost_summary:
+  model: gemini-2.5-flash
+  elapsed_seconds: 100.74
+  total_input_tokens: 2686
+  total_output_tokens: 6047
+  total_cost_usd: 0.0
+by_level:
+  local:
+    passed: 8
+    total: 8
+  counties:
+    passed: 4
+    total: 4
+total_cases: 12
+failed_cases: []

@@ -1,0 +1,6 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:mi/place:milford/government
+name: Milford village
+government_form: council_manager
+source: https://www.villageofmilford.org/government/
+thoughts: 'Council/Manager: the village president sits on the council, which appoints a village manager.
+  Tests the line against township_board.'

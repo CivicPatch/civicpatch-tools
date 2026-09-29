@@ -1,0 +1,5 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:hi/county:maui/government
+name: Maui County
+government_form: county_executive
+source: https://www.mauicounty.gov/
+thoughts: County council plus a separately elected mayor.

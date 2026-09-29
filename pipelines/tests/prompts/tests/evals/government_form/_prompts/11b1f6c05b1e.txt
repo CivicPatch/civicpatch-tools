@@ -1,0 +1,20 @@
+
+    Which form of government does this municipality use: Brookline town, Massachusetts
+
+    Answer with exactly one of these values:
+    - mayor_council: a council plus a separately elected mayor who does not sit on it
+    - council_manager: a council with an appointed manager; any mayor sits on the council
+    - commission: elected commissioners who together govern and each head a department
+    - township_board: one elected board whose presiding officer sits and votes on it
+    - open_town_meeting: a select board or board of selectmen, with an open town meeting
+    - representative_town_meeting: a select board, with elected town meeting members
+
+    The test between mayor_council and the one-board forms: does the chief executive sit and vote on the governing body? If they do, it is not mayor_council. Township committees, boards of supervisors or trustees, and New York towns and villages are township_board.
+
+    Return a JSON object:
+    ```json
+    { "government_form": "<value>", "source": "<url you relied on>" }
+    ```
+
+    IMPORTANT: Return only valid JSON. Do not include any other text.
+    
