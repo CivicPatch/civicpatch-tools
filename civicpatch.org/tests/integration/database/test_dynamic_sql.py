@@ -352,6 +352,21 @@ async def test_get_issue_changeset_details_empty():
     assert isinstance(result, list)
 
 
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_get_issue_changeset_details_unknown_id():
+    """Runs the query, not the empty-list shortcut; catches a column/index mismatch."""
+    result = await db_requests.get_issue_changeset_details([_FAKE_UUID])
+    assert result == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_pipeline_run_ids_for_changesets_unknown_id():
+    result = await db_jobs.pipeline_run_ids_for_changesets([_FAKE_UUID])
+    assert result == {}
+
+
 # ---------------------------------------------------------------------------
 # database.issues — pipeline issues
 # ---------------------------------------------------------------------------

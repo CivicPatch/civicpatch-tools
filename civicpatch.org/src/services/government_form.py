@@ -18,7 +18,7 @@ from database.database import get_pool
 from database.government_forms import GovernmentFormInputs
 from schemas.activity import Change, FieldChange
 from schemas.claims import EntityType
-from schemas.jurisdictions import GovernmentFormSummary
+from schemas.jurisdictions import GovernmentFormSummary, JurisdictionDetailsFields
 from shared.schemas import GovernmentForm, JurisdictionLevel
 from shared.utils.government_forms import (
     GOVERNMENT_FORM_DESCRIPTIONS,
@@ -27,6 +27,7 @@ from shared.utils.government_forms import (
 )
 from shared.utils.layered_config import (
     allowed_government_forms,
+    in_standard_order,
     derived_organizations,
     jurisdiction_config,
     resolve_government_form,
@@ -78,7 +79,8 @@ async def government_form_options(jurisdiction_ocdid: str) -> list[GovernmentFor
     if parsed.level == JurisdictionLevel.STATE:
         return []
     configs = await jurisdiction_configs_db.get_jurisdiction_configs()
-    return [_summary(government_form) for government_form in jurisdiction_config(configs, parsed.state, parsed.level).country_government_forms]
+    level_forms = jurisdiction_config(configs, parsed.state, parsed.level).country_government_forms
+    return [_summary(government_form) for government_form in in_standard_order(level_forms)]
 
 
 def _summary(government_form: GovernmentForm) -> GovernmentFormSummary:
@@ -189,3 +191,12 @@ async def government_form_choices(jurisdiction_ocdid: str) -> list[GovernmentFor
     if await changesets_db.has_rejected_jurisdiction_pull_request(jurisdiction_ocdid):
         return []
     return government.allowed_government_forms
+
+
+async def jurisdiction_details_fields(jurisdiction_ocdid: str) -> JurisdictionDetailsFields:
+    waiting = await changesets_db.get_open_jurisdiction_pull_request(jurisdiction_ocdid)
+    return JurisdictionDetailsFields(
+        government_form=await government_form_summary(jurisdiction_ocdid),
+        government_form_options=await government_form_options(jurisdiction_ocdid),
+        open_pull_request_url=waiting.pull_request_url if waiting else None,
+    )

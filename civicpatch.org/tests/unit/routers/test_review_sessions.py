@@ -177,6 +177,7 @@ def test_navigate_to_open_entry_returns_card(client):
             new_callable=AsyncMock,
             return_value={
                 "changeset_id": test_changeset_id,
+                "pipeline_run_id": "run-1",
                 "jurisdiction": {
                     "ocdid": test_ocdid,
                     "name": "Oakland",

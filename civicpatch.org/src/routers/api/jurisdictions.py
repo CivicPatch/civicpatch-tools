@@ -102,16 +102,11 @@ def get_router() -> APIRouter:
         if jurisdiction_data is None or jurisdiction_data.get("data") is None:
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
 
-        government_form = await government_form_service.government_form_summary(jurisdiction_ocdid)
-        options = await government_form_service.government_form_options(jurisdiction_ocdid)
-        waiting = await changesets.get_open_jurisdiction_pull_request(jurisdiction_ocdid)
+        details = await government_form_service.jurisdiction_details_fields(jurisdiction_ocdid)
         response = {
             "data": jurisdiction_data["data"],
             "last_collected_at": jurisdiction_data.get("last_collected_at"),
-            "government_form": government_form.model_dump() if government_form else None,
-            "government_form_options": [option.model_dump() for option in options],
-            # From our table only: a PR closed on GitHub shows until the next hourly sync.
-            "open_pull_request_url": waiting.pull_request_url if waiting else None,
+            **details.model_dump(),
         }
 
         if with_geom:

@@ -255,6 +255,7 @@ def test_save_requires_data(client):
 
 OPEN_PR_DB_RESULT = {
     "changeset_id": TEST_CHANGESET_ID,
+    "pipeline_run_id": "run-1",
     "jurisdiction_ocdid": TEST_OCDID,
     "jurisdiction_name": "Oakland",
     "jurisdiction_website_url": "https://oaklandca.gov",

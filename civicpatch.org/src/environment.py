@@ -54,6 +54,8 @@ OPTIONAL_ENV_VARS = [
     # upstream jurisdictions route is being built — the code path stays real, only
     # the destination is temporary.
     "JURISDICTIONS_REPO_URL",
+    # The fork a jurisdiction edit's branch is pushed to; its PR then opens on the repo above.
+    "JURISDICTIONS_FORK_REPO_URL",
     "JURISDICTIONS_SYNC_APP_ID",
     "JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64",
     "JURISDICTIONS_SYNC_APP_INSTALLATION_ID",

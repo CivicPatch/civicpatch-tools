@@ -236,7 +236,9 @@ def get_router(api_key_header):
         unique_source_urls = list(
             {url for person in proposed for url in (person.get("source_urls") or [])}
         )
-        sources = build_sources(changeset_id, jurisdiction_ocdid, unique_source_urls)
+        sources = build_sources(
+            result["pipeline_run_id"], jurisdiction_ocdid, unique_source_urls
+        )
         if not has_at_least(user.role, UserRole.ADMINS):
             sources = without_debug_links(sources)
 

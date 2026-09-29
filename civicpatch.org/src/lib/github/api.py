@@ -259,15 +259,17 @@ async def create_branch(
     base_ref: str = "main",
     repo_url: str | None = None,
     headers: dict | None = None,
+    base_repo_url: str | None = None,
 ) -> str | None:
-    """Creates a new branch off base_ref in the target repo.
-    Returns None on success, or an error message string on failure."""
+    """Creates a new branch off base_ref in the target repo. With `base_repo_url`, base_ref is read
+    from that repo instead: a fork's branch starts at its parent's commit, which a fork can point
+    at because the two share objects. Returns None on success, or an error message string."""
     _, _, _, open_data_repo_url = _get_github_config()
     target_repo = repo_url or open_data_repo_url
     auth_headers = headers if headers is not None else await get_default_headers()
     async with httpx.AsyncClient(timeout=timeout) as client:
         ref_response = await client.get(
-            f"{target_repo}/git/ref/heads/{base_ref}",
+            f"{base_repo_url or target_repo}/git/ref/heads/{base_ref}",
             headers=auth_headers,
         )
         if ref_response.status_code != 200:
@@ -301,10 +303,12 @@ async def create_pull_request(
     repo_url: str | None = None,
     headers: dict | None = None,
     labels: list[str] | None = None,
+    head_repo: str | None = None,
 ) -> tuple[int, str] | tuple[None, str]:
     """Opens a PR in the target repo from branch_name into base.
     Returns (pr_number, pr_url) on success, or (None, error_message) on failure.
-    head overrides the PR head ref"""
+    `head_repo`: the fork's name when branch_name lives in a fork in the same org; GitHub
+    requires it then."""
     _, _, _, open_data_repo_url = _get_github_config()
     target_repo = repo_url or open_data_repo_url
     auth_headers = headers if headers is not None else await get_default_headers()
@@ -317,6 +321,7 @@ async def create_pull_request(
                 "body": body,
                 "head": branch_name,
                 "base": base,
+                **({"head_repo": head_repo} if head_repo else {}),
             },
         )
         if response.status_code != 201:

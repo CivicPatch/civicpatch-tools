@@ -240,3 +240,18 @@ def test_a_jurisdiction_takes_the_country_files_for_its_level_and_its_states_fil
 
     assert allowed_government_forms(massachusetts, "Millbury town") == [GovernmentForm.OPEN_TOWN_MEETING]
     assert len(allowed_government_forms(washington, "Millbury town")) == 3
+
+
+def test_allowed_forms_come_back_in_the_enums_order_whatever_the_file_order():
+    """Stored config is jsonb, which does not keep key order."""
+    country_forms = ConfigFile(
+        government_forms={
+            GovernmentForm.OPEN_TOWN_MEETING: GovernmentFormConfig(organizations=[_SELECT_BOARD]),
+            GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig(organizations=[_COUNCIL]),
+        }
+    )
+
+    assert allowed_government_forms(merged_config(_COUNTRY_ROLES, country_forms, None), "Springfield city") == [
+        GovernmentForm.MAYOR_COUNCIL,
+        GovernmentForm.OPEN_TOWN_MEETING,
+    ]

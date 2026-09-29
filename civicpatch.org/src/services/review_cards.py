@@ -8,6 +8,7 @@ from typing import NamedTuple
 
 from core.review_summary import ReviewSummary
 from database import changesets as changesets_db
+from database import pipeline_runs as pipeline_runs_db
 from database import posts as posts_db
 from schemas.review_cards import ReviewCard, ReviewSource
 from services.claims import claims_for_people
@@ -41,11 +42,12 @@ async def with_card_data(changeset_ids: list[str]) -> list[ReviewCard]:
         person_id for part in parts for person_id in _person_ids(part.sides.existing)
     ]
     # One read each for the whole page rather than a round trip per card.
-    organizations, claims = await asyncio.gather(
+    organizations, claims, run_ids = await asyncio.gather(
         posts_db.list_by_organization_for_jurisdictions(list(set(ocdids.values()))),
         claims_for_people(everyone),
+        pipeline_runs_db.pipeline_run_ids_for_changesets(known),
     )
-    return [_card(part, organizations, claims) for part in parts]
+    return [_card(part, organizations, claims, run_ids) for part in parts]
 
 
 async def _parts_of(changeset_id: str, jurisdiction_ocdid: str) -> CardParts:
@@ -64,9 +66,12 @@ def _card(
     part: CardParts,
     organizations: dict[str, list[dict]],
     claims: dict[str, list[dict]],
+    run_ids: dict[str, str],
 ) -> ReviewCard:
     sources = build_sources(
-        part.changeset_id, part.jurisdiction_ocdid, _source_urls(part.sides.proposed)
+        run_ids.get(part.changeset_id),
+        part.jurisdiction_ocdid,
+        _source_urls(part.sides.proposed),
     )
     return ReviewCard(
         changeset_id=part.changeset_id,

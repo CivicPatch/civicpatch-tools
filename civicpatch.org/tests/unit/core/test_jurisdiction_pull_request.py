@@ -27,7 +27,8 @@ from shared.utils.statuses import PullRequestLabel
 
 JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
 AUTHOR = PrAuthor(name="Test User", email="test@example.com")
-REPO_URL = "https://example.test/repos/jurisdictions"
+REPO_URL = "https://example.test/repos/CivicPatch/open-data"
+FORK_URL = "https://example.test/repos/CivicPatch/jurisdictions"
 ENTRY = {
     "id": JURISDICTION_OCDID,
     "name": "Austin",
@@ -45,7 +46,7 @@ async def _open(content: str | None, edit: JurisdictionEdit):
     with (
         patch(
             "services.jurisdiction_pull_request.environment.get_env_vars",
-            return_value={"JURISDICTIONS_REPO_URL": REPO_URL},
+            return_value={"JURISDICTIONS_REPO_URL": REPO_URL, "JURISDICTIONS_FORK_REPO_URL": FORK_URL},
         ),
         patch(
             "services.jurisdiction_pull_request.github_service.get_github_file_contents",
@@ -56,6 +57,11 @@ async def _open(content: str | None, edit: JurisdictionEdit):
             "services.jurisdiction_pull_request.get_jurisdictions_sync_headers",
             new_callable=AsyncMock,
             return_value={"Authorization": "Bearer sync-token"},
+        ),
+        patch(
+            "services.jurisdiction_pull_request.github_service.get_default_headers",
+            new_callable=AsyncMock,
+            return_value={"Authorization": "Bearer regular-token"},
         ),
         patch(
             "services.jurisdiction_pull_request.open_attributed_pr",
@@ -84,7 +90,9 @@ async def test_a_url_edit_patches_only_the_url():
     call = mock_open_pr.call_args.kwargs
     assert call["file_path"] == "data_source/tx/local/jurisdictions.yml"
     assert call["labels"] == (PullRequestLabel.MAINTAINER,)
-    assert call["repo_url"] == REPO_URL
+    # The jurisdictions bot opens the PR on the repo; the regular bot writes the fork.
+    assert (call["repo_url"], call["headers"]) == (REPO_URL, {"Authorization": "Bearer sync-token"})
+    assert (call["fork_repo_url"], call["fork_headers"]) == (FORK_URL, {"Authorization": "Bearer regular-token"})
 
 
 @pytest.mark.unit
