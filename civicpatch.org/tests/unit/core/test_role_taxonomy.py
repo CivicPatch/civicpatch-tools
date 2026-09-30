@@ -144,7 +144,7 @@ def test_names_are_clean_when_every_string_is_distinct():
 
 @pytest.mark.unit
 def test_alias_claiming_a_stored_roles_label_conflicts():
-    """The gap no index closes — role_aliases_label_lower_uq spans one table."""
+    """The gap no index closes: `roles` and `role_aliases` are two tables."""
     error = name_conflict_error([_aliased("Clerk", ["Mayor"])], {"Mayor": _stored("Mayor")})
     assert error is not None
     assert "claimed by both" in error
@@ -163,9 +163,11 @@ def test_name_matching_is_case_insensitive():
 
 
 @pytest.mark.unit
-def test_same_alias_on_two_roles_conflicts():
+def test_two_roles_may_share_an_alias():
+    """"member" is both Council Member and Select Board Member; the record's organization,
+    then priority, picks which one it means."""
     error = name_conflict_error([_aliased("Clerk", ["chief"])], {"Mayor": _stored("Mayor", aliases=["Chief"])})
-    assert error is not None
+    assert error is None
 
 
 @pytest.mark.unit

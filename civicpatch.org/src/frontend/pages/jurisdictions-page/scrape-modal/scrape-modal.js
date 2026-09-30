@@ -2,16 +2,30 @@ import "./scrape-modal.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import "../../../components/basic/modal.js";
+import { flattenPages } from "./previous-pages.ts";
+
+const TOP_LEVEL_SCOPE = "top-level-url";
+const SPECIFIC_URLS_SCOPE = "specific-urls";
 
 function ScrapeModal({
   onStartScrape,
   url = "",
-  sourceUrls = [],
+  previousPages = [],
   modalProps = {},
 }) {
-  const [scrapeScope, setScrapeScope] = useState("top-level-url");
+  const [scrapeScope, setScrapeScope] = useState(TOP_LEVEL_SCOPE);
   const [currentUrl, setCurrentUrl] = useState(url);
-  const [currentSourceUrls, setCurrentSourceUrls] = useState(sourceUrls);
+  const [pageGroups, setPageGroups] = useState(previousPages);
+
+  // Typed-in urls replace the previous pages, so each opening starts from them again, and on
+  // them when there are any: the person sees exactly what will be read.
+  useEffect(() => {
+    if (!modalProps.open) return;
+    setPageGroups(previousPages);
+    setScrapeScope(
+      flattenPages(previousPages).length ? SPECIFIC_URLS_SCOPE : TOP_LEVEL_SCOPE,
+    );
+  }, [modalProps.open]);
 
   const handleScopeChange = (event) => {
     setScrapeScope(event.target.value);
@@ -22,24 +36,33 @@ function ScrapeModal({
     setCurrentUrl(url);
   };
 
-  const addSourceUrl = () => {
-    setCurrentSourceUrls([...currentSourceUrls, ""]);
+  const updateGroupUrls = (groupIndex, updateUrls) => {
+    setPageGroups(
+      pageGroups.map((group, index) =>
+        index === groupIndex ? { ...group, urls: updateUrls(group.urls) } : group,
+      ),
+    );
   };
 
-  const removeSourceUrl = (index) => {
-    const updatedUrls = currentSourceUrls.filter((_, i) => i !== index);
-    setCurrentSourceUrls(updatedUrls);
+  const addSourceUrl = (groupIndex) => {
+    updateGroupUrls(groupIndex, (urls) => [...urls, ""]);
+  };
+
+  const removeSourceUrl = (groupIndex, urlIndex) => {
+    updateGroupUrls(groupIndex, (urls) => urls.filter((_, i) => i !== urlIndex));
   };
 
   const handleUrlChange = (event) => {
     setCurrentUrl(event.target.value);
   };
 
-  const handleSourceUrlChange = (index, event) => {
-    const updatedUrls = [...currentSourceUrls];
-    updatedUrls[index] = event.target.value;
-    setCurrentSourceUrls(updatedUrls);
+  const handleSourceUrlChange = (groupIndex, urlIndex, event) => {
+    updateGroupUrls(groupIndex, (urls) =>
+      urls.map((url, i) => (i === urlIndex ? event.target.value : url)),
+    );
   };
+
+  const currentSourceUrls = flattenPages(pageGroups);
 
   const isValidUrl = (urlString) => {
     if (!urlString || urlString.trim() === "") return false;
@@ -63,7 +86,7 @@ function ScrapeModal({
   };
 
   const canStartScrape =
-    scrapeScope === "top-level-url"
+    scrapeScope === TOP_LEVEL_SCOPE
       ? currentUrlIsValid()
       : currentSourceUrlsValid();
 
@@ -73,7 +96,7 @@ function ScrapeModal({
 
   const submitScrape = () => {
     let data = {};
-    if (scrapeScope == "top-level-url") {
+    if (scrapeScope === TOP_LEVEL_SCOPE) {
       data = {
         scrapeScope,
         data: {
@@ -99,8 +122,8 @@ function ScrapeModal({
           <input
             type="radio"
             name="scrape-scope"
-            value="top-level-url"
-            ?checked=${scrapeScope === "top-level-url"}
+            value=${TOP_LEVEL_SCOPE}
+            ?checked=${scrapeScope === TOP_LEVEL_SCOPE}
             @change=${handleScopeChange}
           />
           Top-level URL only
@@ -109,8 +132,8 @@ function ScrapeModal({
           <input
             type="radio"
             name="scrape-scope"
-            value="specific-urls"
-            ?checked=${scrapeScope === "specific-urls"}
+            value=${SPECIFIC_URLS_SCOPE}
+            ?checked=${scrapeScope === SPECIFIC_URLS_SCOPE}
             @change=${handleScopeChange}
           />
           Specific URLs
@@ -118,7 +141,7 @@ function ScrapeModal({
       </fieldset>
 
       <div class="scrape-modal__url-section">
-        ${scrapeScope === "top-level-url"
+        ${scrapeScope === TOP_LEVEL_SCOPE
           ? html`
               <fieldset role="group">
                 <input
@@ -132,33 +155,38 @@ function ScrapeModal({
                 </button>
               </fieldset>
             `
-          : html`
-              ${currentSourceUrls.map(
-                (url, index) => html`
-                  <fieldset role="group">
-                    <input
-                      type="url"
-                      .value="${url}"
-                      @input=${(e) => handleSourceUrlChange(index, e)}
-                      placeholder="https://…"
-                    />
-                    <button
-                      type="button"
-                      class="secondary destructive"
-                      @click=${() => removeSourceUrl(index)}
-                    >
-                      Delete
-                    </button>
-                  </fieldset>
-                `,
-              )}
-              <button
-                class="btn-ghost scrape-modal__add-url"
-                @click=${addSourceUrl}
-              >
-                + Add URL
-              </button>
-            `}
+          : pageGroups.map(
+              (group, groupIndex) => html`
+                <fieldset class="scrape-modal__group">
+                  <legend>${group.organizationName}</legend>
+                  ${group.urls.map(
+                    (url, urlIndex) => html`
+                      <fieldset role="group">
+                        <input
+                          type="url"
+                          .value="${url}"
+                          @input=${(e) => handleSourceUrlChange(groupIndex, urlIndex, e)}
+                          placeholder="https://…"
+                        />
+                        <button
+                          type="button"
+                          class="secondary destructive"
+                          @click=${() => removeSourceUrl(groupIndex, urlIndex)}
+                        >
+                          Delete
+                        </button>
+                      </fieldset>
+                    `,
+                  )}
+                  <button
+                    class="btn-ghost scrape-modal__add-url"
+                    @click=${() => addSourceUrl(groupIndex)}
+                  >
+                    + Add URL
+                  </button>
+                </fieldset>
+              `,
+            )}
       </div>
     </div>
   `;

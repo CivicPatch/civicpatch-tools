@@ -209,12 +209,6 @@ function renderActions(
             <i class="fa-brands fa-github"></i> View change
           </a>`
         : nothing}
-      ${entry.resolved_by
-        ? html`<span class="tl-quiet">
-            ${entry.outcome === "published" ? "Published" : "Dismissed"} by
-            ${entry.resolved_by}.
-          </span>`
-        : nothing}
     </div>
   `;
 }
@@ -270,6 +264,12 @@ function CivTimelineEntry({
           </span>
         </span>
         <span class="tl-entry__changes">${renderSummaryChanges(entry)}</span>
+        ${entry.resolved_by
+          ? html`<span class="tl-entry__by"
+              >by
+              <a href="/~${entry.resolved_by}">${entry.resolved_by}</a></span
+            >`
+          : nothing}
       </summary>
       <div class="tl-entry__body">
         ${renderChangeList(entry)} ${renderIssueDetails(entry)}

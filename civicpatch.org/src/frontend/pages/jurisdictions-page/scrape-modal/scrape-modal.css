@@ -13,7 +13,8 @@ dialog[open]:has(.scrape-modal__body) {
     gap: 1.25rem;
 }
 
-.scrape-modal__radio-group {
+.scrape-modal__radio-group,
+.scrape-modal__group {
     border: var(--border-width) solid var(--field-border);
     border-radius: var(--radius);
     padding: 0.6rem 0.9rem 0.75rem;
@@ -23,7 +24,8 @@ dialog[open]:has(.scrape-modal__body) {
     gap: 0.5rem;
 }
 
-.scrape-modal__radio-group legend {
+.scrape-modal__radio-group legend,
+.scrape-modal__group legend {
     font-size: var(--font-size-sm);
     font-weight: 400;
     text-transform: lowercase;

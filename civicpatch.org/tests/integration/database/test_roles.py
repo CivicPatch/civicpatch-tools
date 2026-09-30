@@ -220,14 +220,18 @@ async def test_candidate_alias_is_stored_but_not_returned():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_alias_is_unique_across_roles():
-    """The array could not enforce this: one string aliasing two roles makes the
-    matcher's answer arbitrary. Rejected before the write so the message can name
-    both roles; role_aliases_label_lower_uq remains the concurrency backstop."""
+async def test_two_roles_may_share_an_alias():
+    """The record's organization, then priority, decides which role a shared alias means."""
     await upsert_roles([_entry("Mayor", ["zz shared"])], None)
+    await upsert_roles([_entry("Clerk", ["zz shared"])], None)
 
-    with pytest.raises(RuntimeError, match="claimed by both"):
-        await upsert_roles([_entry("Clerk", ["zz shared"])], None)
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT role_id FROM role_aliases WHERE label = 'zz shared' ORDER BY role_id"
+        )
+        owners = [row[0] for row in await cur.fetchall()]
+    assert owners == sorted([slugify_label(_label("Mayor")), slugify_label(_label("Clerk"))])
 
 
 @pytest.mark.asyncio

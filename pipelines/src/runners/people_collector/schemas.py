@@ -6,6 +6,9 @@ from pydantic import BaseModel, ConfigDict, Field
 from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import (
     NavigationFailureReason,
 )
+from runners.people_collector.steps.step_04_process_page_content.heuristics_failure import (
+    HeuristicsFailure,
+)
 from shared.schemas import (
     ExtractedPersonRecord,
     KnownOrganization,
@@ -65,6 +68,20 @@ class Link(BaseModel):
     failure_source: Optional[str] = None  # raw Playwright/Chromium detail string
     visit_order: Optional[int] = None  # 1 = first page scraped, 2 = second, etc.
     attempts: int = 0  # scrape attempts spent, including the ones that failed
+    # One per extraction attempt that failed, across every organization; set even if a retry passed.
+    heuristics_failures: List[HeuristicsFailure] = []
+    # Organizations the relevance checks said this page carries people for; a fact about the
+    # page, set even when extraction then failed, so it is not by itself proof of a read.
+    organization_ids: List[str] = []
+    # None on each of these means the page never got that far.
+    is_relevant: Optional[bool] = None
+    # What the LLM proposed, before our own filtering, which depends on the run so far.
+    relevant_urls: Optional[List[str]] = None
+    page_hash: Optional[str] = None
+    prompt_hash: Optional[str] = None
+    # Set when both hashes matched a published row: the verdict and records came from the row
+    # where the LLM last actually read the page, and no LLM call ran for it this time.
+    unchanged_since_source_page_id: Optional[str] = None
 
 
 class LinkFrontier(BaseModel):

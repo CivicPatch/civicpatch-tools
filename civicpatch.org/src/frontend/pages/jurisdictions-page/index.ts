@@ -25,6 +25,8 @@ import {
   openJurisdictionPullRequest,
 } from "../../api.js";
 import { renderJurisdictionHeader } from "./jurisdiction-header.js";
+import { useOrganizations } from "../../hooks/use-organizations.js";
+import { previousPagesByOrganization } from "./scrape-modal/previous-pages.js";
 import "./roster-editor.js";
 import {
   pendingReviews,
@@ -105,6 +107,7 @@ function JurisdictionPage({
   const { user, permissions } = useAuth();
   const isSignedIn = !!user?.authenticated;
   const { people, isLoading: peopleLoading, refetch: refetchPeople } = usePeople(jurisdiction_ocdid);
+  const { organizations } = useOrganizations(jurisdiction_ocdid);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
   const [manageOrgsOpen, setManageOrgsOpen] = useState(false);
   const hasEditPermission = !!permissions.can_edit_jurisdiction_data;
@@ -254,6 +257,7 @@ function JurisdictionPage({
         ? html`<civ-scrape-modal
             .onStartScrape=${handleScrapeStartClick}
             .url=${jurisdictionData?.data?.url}
+            .previousPages=${previousPagesByOrganization(people, organizations)}
             .modalProps=${{
               open: scrapeModalOpen,
               onClose: () => setScrapeModalOpen(false),

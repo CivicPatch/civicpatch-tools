@@ -45,16 +45,6 @@ def _record_row(
     )
 
 
-async def organizations_for_changeset(cur, changeset_id: str) -> list[str]:
-    """Which bodies this changeset read a page for. A body with no record here was not looked at,
-    so publishing must not retire anyone in it."""
-    await cur.execute(
-        "SELECT DISTINCT organization_id::text FROM source_records WHERE changeset_id = %s",
-        (changeset_id,),
-    )
-    return [row[0] for row in await cur.fetchall()]
-
-
 _CHANGESET_IMAGES = """
     SELECT DISTINCT cdn_image FROM source_records
     WHERE changeset_id = %s AND cdn_image IS NOT NULL AND cdn_image <> ''

@@ -89,8 +89,8 @@ def jurisdiction_config(
 
 
 def check_roles_distinct_across(files: list[ConfigFile]) -> None:
-    """Role ids are global and the database keeps one alias per label, so no two files may
-    share an id, label or alias, even files that never merge."""
+    """Role ids and labels are global, so no two files may share one, even files that never
+    merge. An alias may repeat across roles and files."""
     _check_roles_distinct([role for file in files for role in file.roles])
 
 
@@ -162,16 +162,22 @@ def _role(config_role: ConfigRole, priority: int) -> Role:
 
 def _check_roles_distinct(roles: list[ConfigRole]) -> None:
     ids: set[str] = set()
-    names: dict[str, str] = {}
+    role_id_by_label: dict[str, str] = {}
     for role in roles:
         if role.id in ids:
             raise ValueError(f"role id {role.id!r} is listed twice")
         ids.add(role.id)
-        for name in [role.label, *role.aliases]:
-            key = lookup_key(name)
-            if key in names and names[key] != role.id:
-                raise ValueError(f"{name!r} names both {names[key]!r} and {role.id!r}")
-            names[key] = role.id
+        key = lookup_key(role.label)
+        if key in role_id_by_label:
+            raise ValueError(f"{role.label!r} names both {role_id_by_label[key]!r} and {role.id!r}")
+        role_id_by_label[key] = role.id
+    # An alias may name several roles (the record's organization breaks the tie), but never
+    # another role's label: a label names exactly one role.
+    for role in roles:
+        for alias in role.aliases:
+            owner = role_id_by_label.get(lookup_key(alias))
+            if owner is not None and owner != role.id:
+                raise ValueError(f"{alias!r} names both {owner!r} and {role.id!r}")
 
 
 def _check_country_government_forms(government_forms: GovernmentFormsConfig) -> None:
@@ -187,17 +193,21 @@ def _check_state_government_forms(state_government_forms: GovernmentFormsConfig,
 
 
 def _check_role_labels_resolve(config: MergedConfig) -> None:
-    names = {
-        lookup_key(name) for role in config.roles.roles for name in [role.label, *role.aliases]
-    }
+    """A role label, not an alias: an alias may name several roles, so it cannot say which."""
+    labels = {lookup_key(role.label) for role in config.roles.roles}
+    for government_form, organization in _every_organization(config):
+        for label in organization.role_labels:
+            if lookup_key(label) not in labels:
+                raise ValueError(
+                    f"{government_form.value}: {organization.name}'s role {label!r} is not a role's label"
+                )
+
+
+def _every_organization(config: MergedConfig):
     for government_forms in (config.country_government_forms, config.state_government_forms):
         for government_form, form_config in government_forms.items():
             for organization in form_config.organizations:
-                for label in organization.role_labels:
-                    if lookup_key(label) not in names:
-                        raise ValueError(
-                            f"{government_form.value}: {organization.name}'s role {label!r} is not a role"
-                        )
+                yield government_form, organization
 
 
 def _check_one_organization_per_role(config: MergedConfig) -> None:

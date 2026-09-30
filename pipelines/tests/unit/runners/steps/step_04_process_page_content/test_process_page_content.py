@@ -14,11 +14,16 @@ from runners.people_collector.schemas import (
 from runners.people_collector.steps.step_04_process_page_content.heuristics import (
     check_page_heuristics,
 )
+from runners.people_collector.steps.step_04_process_page_content.heuristics_failure import (
+    HeuristicsFailure,
+)
 from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
     _split_content_into_chunks,
     check_page_relevance,
+    process_page_content,
     process_with_llm,
 )
+from shared.utils.content_hash import content_hash
 from runners.people_collector.utils.link_discovery import (
     _pending_sort_key,
     add_relevant_urls,
@@ -273,14 +278,14 @@ def test_has_role_and_contact_info_with_three_contact_info_types():
     assert has_role_and_contact_info(_ROLE_TAXONOMY, records) == True
 
 
-def test_check_page_heuristics_returns_true_with_empty_records():
+def test_check_page_heuristics_passes_with_empty_records():
     assert (
         check_page_heuristics(dummy_logger(), "dummy-link", "Some markdown content", [])
-        is True
+        is None
     )
 
 
-def test_check_page_heuristics_returns_true_with_nonempty_records():
+def test_check_page_heuristics_passes_with_nonempty_records():
     records = [
         PersonSourceRecord(
             name="Laura Palmer",
@@ -297,7 +302,7 @@ def test_check_page_heuristics_returns_true_with_nonempty_records():
     ]
     input_text = "Laura Palmer the mayor is available at laura@palmer.com or 856-358-2509. See http://palmer.com/laura for more details."
     assert (
-        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is True
+        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is None
     )
 
 
@@ -316,11 +321,12 @@ def test_check_page_heuristics_forces_a_retry_on_an_invalid_phone(phone):
     ]
     input_text = f"Laura Palmer the mayor is available at {phone}."
     assert (
-        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is False
+        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records)
+        == HeuristicsFailure.PHONE_NOT_NORMALIZABLE
     )
 
 
-def test_check_page_heuristics_returns_false_if_input_text_empty():
+def test_check_page_heuristics_fails_on_the_name_if_input_text_empty():
     records = [
         PersonSourceRecord(
             name="Laura Palmer",
@@ -335,11 +341,11 @@ def test_check_page_heuristics_returns_false_if_input_text_empty():
     input_text = ""
     assert (
         check_page_heuristics(dummy_logger(), "dummy-link", input_text, records)
-        is False
+        == HeuristicsFailure.NAME_NOT_IN_TEXT
     )
 
 
-def test_check_page_heuristics_returns_false_if_phone_not_in_text():
+def test_check_page_heuristics_fails_if_phone_not_in_text():
     records = [
         PersonSourceRecord(
             name="Pat NoPhoneInText",
@@ -355,11 +361,11 @@ def test_check_page_heuristics_returns_false_if_phone_not_in_text():
     # "555-0000" is not in input_text
     assert (
         check_page_heuristics(dummy_logger(), "dummy-link", input_text, records)
-        is False
+        == HeuristicsFailure.PHONE_NOT_IN_TEXT
     )
 
 
-def test_check_page_heuristics_returns_false_if_email_not_in_text():
+def test_check_page_heuristics_fails_if_email_not_in_text():
     records = [
         PersonSourceRecord(
             name="Alex NoEmailInText",
@@ -375,7 +381,7 @@ def test_check_page_heuristics_returns_false_if_email_not_in_text():
     # "alex@noemail.com" is not in input_text
     assert (
         check_page_heuristics(dummy_logger(), "dummy-link", input_text, records)
-        is False
+        == HeuristicsFailure.EMAIL_NOT_IN_TEXT
     )
 
 
@@ -394,7 +400,7 @@ def test_check_page_heuristics_passes_when_email_has_space_before_at_in_source()
     # Source page has broken email with space before @
     input_text = "Mayor Alexandria Inocencio  alexandria.inocencio @cityofdilleytx.com"
     assert (
-        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is True
+        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is None
     )
 
 
@@ -413,7 +419,7 @@ def test_check_page_heuristics_passes_when_email_has_markdown_escaped_underscore
     # Markdown escapes the underscore as \_
     input_text = "Council Member Alfredo Macedo  amacedo\\_84@hotmail.com"
     assert (
-        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is True
+        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is None
     )
 
 
@@ -433,7 +439,7 @@ def test_check_page_heuristics_passes_when_mailto_href_splits_tld():
     ]
     input_text = "Joseph Smith, District 1  [district1@ci.lamesa.tx](mailto:district1@ci.lamesa.tx) .us"
     assert (
-        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is True
+        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is None
     )
 
 
@@ -453,7 +459,7 @@ def test_check_page_heuristics_does_not_match_email_without_at_sign():
     input_text = "Jane Doe council member notanemail"
     assert (
         check_page_heuristics(dummy_logger(), "dummy-link", input_text, records)
-        is False
+        == HeuristicsFailure.EMAIL_NOT_IN_TEXT
     )
 
 
@@ -473,7 +479,7 @@ def test_check_page_heuristics_matches_name_with_curly_apostrophe_in_text():
     input_text = "Council member Mario D\u2019Agostino represents District 4."
     assert (
         check_page_heuristics(dummy_logger(), "http://example.com", input_text, records)
-        is True
+        is None
     )
 
 
@@ -493,7 +499,7 @@ def test_check_page_heuristics_matches_name_with_curly_apostrophe_in_name():
     input_text = "Council member Mario D'Agostino represents District 4."
     assert (
         check_page_heuristics(dummy_logger(), "http://example.com", input_text, records)
-        is True
+        is None
     )
 
 
@@ -513,27 +519,28 @@ def test_check_page_heuristics_matches_name_split_across_lines():
     input_text = "Councilman Marti\nn Mattessich serves on the council."
     assert (
         check_page_heuristics(dummy_logger(), "http://example.com", input_text, records)
-        is True
+        is None
     )
 
 
-def test_check_page_heuristics_returns_false_if_url_not_in_text():
+def test_check_page_heuristics_fails_if_url_not_in_text():
     records = [
         PersonSourceRecord(
             name="Jamie NoUrlInText",
             other_names=[],
             label="council Ward 4",
-            phone="555-8765",
+            # A real number: `555-8765` failed as not normalizable, so this never reached the url.
+            phone="856-358-2509",
             email="jamie@nourl.com",
             url="http://nourl.com/jamie",
             source_url="http://nourl.com",
         )
     ]
-    input_text = "Council member Jamie NoUrlInText can be reached at jamie@nourl.com or 555-8765. Ward 4."
+    input_text = "Council member Jamie NoUrlInText can be reached at jamie@nourl.com or 856-358-2509. Ward 4."
     # "http://nourl.com/jamie" is not in input_text
     assert (
         check_page_heuristics(dummy_logger(), "dummy-link", input_text, records)
-        is False
+        == HeuristicsFailure.URL_NOT_IN_TEXT
     )
 
 
@@ -559,7 +566,7 @@ def test_check_page_heuristics_rejects_a_compound_phone_and_forces_a_retry():
     input_text = "Alice Boroughman, Mayor. Phone: 856-358-2509 or 856-358-4010 Ext. 112"
     assert (
         check_page_heuristics(dummy_logger(), "http://example.com", input_text, records)
-        is False
+        == HeuristicsFailure.PHONE_NOT_NORMALIZABLE
     )
 
 
@@ -931,6 +938,53 @@ async def test_check_page_relevance_filters_cross_domain_relevant_urls():
     result_pending_urls = pending_urls(result_frontier)
     assert cross_domain_url not in result_pending_urls
     assert "https://seattle.gov/city-council" in result_pending_urls
+
+
+_LLM = "runners.people_collector.steps.step_04_process_page_content.process_page_content"
+
+
+def _context_with_page(page: Link):
+    context = pipeline_run_context_factory(steps={})
+    return context.model_copy(
+        update={"data": context.data.model_copy(update={"frontier": make_frontier(page)})}
+    )
+
+
+@pytest.mark.asyncio
+async def test_the_relevance_verdict_is_kept_on_the_link_with_every_url_the_llm_proposed():
+    """Unfiltered: the cross-domain url never reaches the queue, but a replay re-filters."""
+    page = Link(url="https://seattle.gov/council", status=LinkStatus.PREPROCESSED.value)
+    proposed = ["https://seattle-mayor.gov/mayor", "https://seattle.gov/city-council"]
+    llm_response = RelevantPageResponseSchema(is_relevant=True, relevant_urls=proposed)
+
+    with patch(f"{_LLM}.open_router_llm.run_prompt", new=AsyncMock(return_value=llm_response.model_dump())):
+        frontier, _ = await check_page_relevance(_context_with_page(page), page, "text", [], [], [])
+
+    link = frontier.get(page.url)
+    assert (link.is_relevant, link.relevant_urls) == (True, proposed)
+
+
+@pytest.mark.asyncio
+async def test_an_irrelevant_page_still_gets_both_hashes(tmp_path):
+    """The gate needs them most for pages judged irrelevant: those skip everything next time."""
+    page = Link(
+        url="https://seattle.gov/parks", status=LinkStatus.PREPROCESSED.value, folder_name="parks"
+    )
+    (tmp_path / "parks").mkdir()
+    (tmp_path / "parks" / "preprocessed.md").write_text("# Parks", encoding="utf-8")
+    llm_response = RelevantPageResponseSchema(is_relevant=False, relevant_urls=[])
+
+    with (
+        patch(f"{_LLM}.data_path_utils.get_cache_path", return_value=str(tmp_path)),
+        patch(f"{_LLM}.open_router_llm.run_prompt", new=AsyncMock(return_value=llm_response.model_dump())),
+    ):
+        frontier, _ = await process_page_content(_context_with_page(page), page)
+
+    link = frontier.get(page.url)
+    assert link.status == LinkStatus.PROCESSED_IRRELEVANT.value
+    assert link.is_relevant is False
+    assert link.page_hash == content_hash("# Parks")
+    assert link.prompt_hash is not None
 
 
 def test_split_content_into_chunks_no_split_when_fits():

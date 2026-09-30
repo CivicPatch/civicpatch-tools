@@ -10,7 +10,7 @@ from core.people_roster import partial_roster, roster_from_source_records
 from core.projection.diff import on_roster
 from core.projection.facts import Facts
 from core.projection.roster import Roster, overridden_by_person
-from database import claims, source_records
+from database import claims, source_pages
 from database import changesets as changesets_db
 from database import posts as posts_db
 from database import projection as projection_db
@@ -204,7 +204,7 @@ async def _one_post_each(changeset_id: str, people: list[dict]) -> list[dict]:
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_ids = await source_records.organizations_for_changeset(
+        organization_ids = await source_pages.organizations_read_by_changeset(
             cur, changeset_id
         )
         here = await posts_db.ids_in_organizations(cur, every_id, organization_ids)

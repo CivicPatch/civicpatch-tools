@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, cast
 
 import services.open_router.llm as open_router_llm
-import services.open_router.prompts as open_router_prompt
 import shared.utils.name_utils as name_utils
 from runners.people_collector.schemas import (
     ExpectedMembership,
@@ -32,6 +31,9 @@ from runners.people_collector.steps.step_04_process_page_content.extraction_scop
 from runners.people_collector.steps.step_04_process_page_content.heuristics import (
     check_page_heuristics,
 )
+from runners.people_collector.steps.step_04_process_page_content.heuristics_failure import (
+    HeuristicsFailure,
+)
 from shared.schemas import LOCAL_IMAGE_PREFIX, KnownOrganization
 from runners.people_collector.utils.organization_terms import (
     as_tokens,
@@ -47,16 +49,28 @@ from runners.people_collector.utils.link_discovery import (
     jurisdiction_name_suffix,
     update_links,
 )
+from pydantic import BaseModel
 from semantic_text_splitter import MarkdownSplitter
 from shared.utils import (
     config_utils,
     data_path_utils,
-    id_utils,
     url_utils,
 )
 from shared.utils import merge_utils
 from utils import log_utils
-from shared.utils.government_forms import office_labels
+from runners.people_collector.steps.step_04_process_page_content.page_prompts import (
+    coverage_prompt,
+    extraction_prompt,
+    prompt_hash,
+    relevance_prompt,
+)
+from runners.people_collector.steps.step_04_process_page_content.unchanged_pages import (
+    is_unchanged,
+    published_source_page,
+    source_page_relevance,
+)
+from shared.schemas import PublishedSourcePage
+from shared.utils.content_hash import content_hash
 from shared.utils.label_parser import ParsedLabel, parse_label
 from shared.utils.taxonomy import Taxonomy, build_taxonomy, lookup_key
 
@@ -70,16 +84,6 @@ class ProcessingSetup:
 
 MINIMUM_NUM_PEOPLE = 5
 _CHUNK_OVERLAP_CHARS = 500
-
-
-def _build_prompt(known_roles: list[str], jurisdiction_ocdid: str, scope: ExtractionScope) -> str:
-    ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
-    return open_router_prompt.municipality_officials_prompt(
-        known_roles,
-        state=ocdid_parts.state,
-        county=ocdid_parts.county,
-        organization=scope.prompt_organization,
-    )
 
 
 def _split_content_into_chunks(content: str, max_chars: int) -> list[str]:
@@ -189,33 +193,71 @@ async def process_page_content(
         context.data.jurisdiction_ocdid, page_to_process
     )
 
-    frontier, is_relevant = await check_page_relevance(
-        context,
-        page_to_process,
-        content,
+    page_hash = content_hash(content)
+    page_prompt_hash = prompt_hash(
+        page_to_process.url,
+        context.data.config,
+        context.data.jurisdiction_ocdid,
         known_roles,
         research.known_organizations,
-        research.expected_memberships,
+    )
+    published = published_source_page(
+        context.data.config.published_source_pages, page_to_process.url
+    )
+    if published is not None and not is_unchanged(published, page_hash, page_prompt_hash):
+        published = None
+    if published:
+        logger.info(
+            f"Unchanged since {published.read_source_page_id}, using the published reading: "
+            f"{page_to_process.url}"
+        )
+        frontier, is_relevant = apply_relevance(
+            context,
+            page_to_process,
+            content,
+            source_page_relevance(published),
+            known_roles,
+            research.known_organizations,
+            research.expected_memberships,
+        )
+    else:
+        frontier, is_relevant = await check_page_relevance(
+            context,
+            page_to_process,
+            content,
+            known_roles,
+            research.known_organizations,
+            research.expected_memberships,
+        )
+    frontier = frontier.update_link(
+        page_to_process.url,
+        page_hash=page_hash,
+        prompt_hash=page_prompt_hash,
+        unchanged_since_source_page_id=published.read_source_page_id if published else None,
     )
     if not is_relevant:
         return frontier, current_step
 
-    updated_records, heuristics_passed = await collect_page_records(
-        context,
-        page_to_process,
-        content,
-        known_roles,
-        research.known_organizations,
-        current_step,
-        identities,
-        logger,
-    )
+    if published:
+        extraction = source_page_extraction(published, current_step, identities)
+    else:
+        extraction = await collect_page_records(
+            context,
+            page_to_process,
+            content,
+            known_roles,
+            research.known_organizations,
+            current_step,
+            identities,
+            logger,
+        )
+    updated_records = extraction.records
 
     updated_progress = calculate_progress(
         taxonomy, current_step.progress, updated_records, setup_data
     )
 
-    if heuristics_passed:
+    if extraction.heuristics_passed:
         frontier = update_links(
             context.data.config.url,
             frontier,
@@ -235,6 +277,11 @@ async def process_page_content(
         frontier = frontier.mark_status(
             page_to_process.url, LinkStatus.PROCESSED_HEURISTICS_FAIL
         )
+    frontier = frontier.update_link(
+        page_to_process.url,
+        heuristics_failures=extraction.heuristics_failures,
+        organization_ids=extraction.organization_ids,
+    )
 
     return frontier, ProcessPageContentStep(
         progress=updated_progress,
@@ -293,12 +340,8 @@ async def check_page_relevance(
     known_organizations: List[KnownOrganization],
     expected_memberships: List[ExpectedMembership],
 ) -> Tuple[LinkFrontier, bool]:
-    prompt = open_router_prompt.relevant_page_prompt(
-        page_to_process.url,
-        context.data.config.name or "",
-        known_roles,
-        [organization.name for organization in known_organizations],
-        government_form=context.data.config.government_form,
+    prompt = relevance_prompt(
+        page_to_process.url, context.data.config, known_roles, known_organizations
     )
     raw_response = await open_router_llm.run_prompt(
         context.pipeline_run_id,
@@ -310,8 +353,33 @@ async def check_page_relevance(
         source_url=page_to_process.url,
     )
     response = RelevantPageResponseSchema.model_validate(raw_response)
+    return apply_relevance(
+        context,
+        page_to_process,
+        content,
+        response,
+        known_roles,
+        known_organizations,
+        expected_memberships,
+    )
 
-    frontier = context.data.frontier
+
+def apply_relevance(
+    context: PeopleCollectorContext,
+    page_to_process: Link,
+    content: str,
+    response: RelevantPageResponseSchema,
+    known_roles: list[str],
+    known_organizations: List[KnownOrganization],
+    expected_memberships: List[ExpectedMembership],
+) -> Tuple[LinkFrontier, bool]:
+    """Record a relevance answer and queue the links it proposed, whether the LLM just gave it
+    or it came from an unchanged page's published row."""
+    frontier = context.data.frontier.update_link(
+        page_to_process.url,
+        is_relevant=response.is_relevant,
+        relevant_urls=response.relevant_urls,
+    )
     existing_records = (
         context.data.process_page_content_step.records
         if context.data.process_page_content_step
@@ -370,11 +438,7 @@ async def organizations_covered(
             open_router_llm.run_prompt(
                 context.pipeline_run_id,
                 context.data.jurisdiction_ocdid,
-                open_router_prompt.page_covers_organization_prompt(
-                    organization.name,
-                    office_labels(organization),
-                    context.data.config.name or "",
-                ),
+                coverage_prompt(organization, context.data.config),
                 prompt_name="page_covers_organization",
                 response_schema=OrganizationCoverageResponseSchema,
                 content=content,
@@ -390,6 +454,40 @@ async def organizations_covered(
     ]
 
 
+def covered_organization_ids(
+    organizations: List[KnownOrganization], covers: List[str]
+) -> List[str]:
+    """The page's own answer, for a page already judged relevant. A single organization is never
+    asked, so relevant means it; an empty answer stays empty even though extraction then runs
+    for every organization."""
+    if len(organizations) == 1:
+        return [organizations[0].id]
+    return [organization.id for organization in organizations if organization.name in covers]
+
+
+class PageExtraction(BaseModel):
+    records: PeopleByName
+    # True if any organization's extraction passed.
+    heuristics_passed: bool
+    heuristics_failures: List[HeuristicsFailure]
+    organization_ids: List[str]
+
+
+def source_page_extraction(
+    source_page: PublishedSourcePage, current_step: ProcessPageContentStep, identities: Dict
+) -> PageExtraction:
+    """The records the page gave last time, merged exactly as fresh ones would be. A replay is
+    a full reading: without it the page's people would look absent and retire."""
+    return PageExtraction(
+        records=merge_utils.group_people_by_name(
+            identities, current_step.records, list(source_page.known_records)
+        ),
+        heuristics_passed=True,
+        heuristics_failures=[],
+        organization_ids=source_page.organization_ids,
+    )
+
+
 async def collect_page_records(
     context: PeopleCollectorContext,
     page_to_process: Link,
@@ -399,14 +497,19 @@ async def collect_page_records(
     current_step: ProcessPageContentStep,
     identities: Dict,
     logger,
-) -> Tuple[PeopleByName, bool]:
+) -> PageExtraction:
     """One extraction per organization the page covers. An organization whose results fail the
-    heuristics twice adds nothing from this page; the others' still count. True if any did."""
+    heuristics twice adds nothing from this page; the others' still count."""
     found: List[PersonSourceRecord] = []
+    failures: List[HeuristicsFailure] = []
     any_passed = False
     covers = await organizations_covered(context, page_to_process, content, organizations)
+    organization_ids = covered_organization_ids(organizations, covers)
     for scope in extraction_scopes(organizations, covers):
-        scoped = await _extract_for_scope(context, page_to_process, content, known_roles, scope, logger)
+        scoped, scope_failures = await _extract_for_scope(
+            context, page_to_process, content, known_roles, scope, logger
+        )
+        failures.extend(scope_failures)
         if scoped is not None:
             found.extend(scoped)
             any_passed = True
@@ -415,8 +518,18 @@ async def collect_page_records(
         logger.warning(
             f"Failed heuristics for page after all attempts, skipping page: {page_to_process.url}"
         )
-        return current_step.records, False
-    return merge_utils.group_people_by_name(identities, current_step.records, found), True
+        return PageExtraction(
+            records=current_step.records,
+            heuristics_passed=False,
+            heuristics_failures=failures,
+            organization_ids=organization_ids,
+        )
+    return PageExtraction(
+        records=merge_utils.group_people_by_name(identities, current_step.records, found),
+        heuristics_passed=True,
+        heuristics_failures=failures,
+        organization_ids=organization_ids,
+    )
 
 
 async def _extract_for_scope(
@@ -426,10 +539,12 @@ async def _extract_for_scope(
     known_roles: list[str],
     scope: ExtractionScope,
     logger,
-) -> Optional[List[PersonSourceRecord]]:
-    """This organization's records, stamped with its id — or None if they failed the heuristics twice."""
-    prompt = _build_prompt(known_roles, context.data.jurisdiction_ocdid, scope)
+) -> Tuple[Optional[List[PersonSourceRecord]], List[HeuristicsFailure]]:
+    """This organization's records, stamped with its id — or None if they failed the heuristics
+    twice — and the reason each failed attempt gave."""
+    prompt = extraction_prompt(known_roles, context.data.jurisdiction_ocdid, scope)
     organization = scope.prompt_organization.name if scope.prompt_organization else "unscoped"
+    failures: List[HeuristicsFailure] = []
 
     for attempt in range(2):
         seed = attempt or None
@@ -443,17 +558,21 @@ async def _extract_for_scope(
             seed,
             logger,
         )
-        if check_page_heuristics(logger, page_to_process.url, content, people_found_in_page):
+        failure = check_page_heuristics(
+            logger, page_to_process.url, content, people_found_in_page
+        )
+        if failure is None:
             logger.info(f"Heuristics passed for LLM: {page_to_process.url} organization={organization}")
             return [
                 record.model_copy(update={"organization_id": scope.organization_id})
                 for record in people_found_in_page
-            ]
+            ], failures
+        failures.append(failure)
         if attempt == 0:
             logger.info(
                 f"Heuristics failed for LLM: open_router, retrying: {page_to_process.url} organization={organization}"
             )
-    return None
+    return None, failures
 
 
 async def process_with_llm(

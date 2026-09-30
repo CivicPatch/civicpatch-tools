@@ -83,6 +83,14 @@
   align-items: baseline;
 }
 
+/* Who published or dismissed it; the outcome pill already says which. */
+.tl-entry__by {
+  flex: 0 0 auto;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
 /* A demoted entry: it ran, but it is not the valid review for this jurisdiction. Shown rather
    than hidden — hiding it makes the page lie about what ran. Decision 3. */
 .tl-entry--superseded .tl-entry__summary {

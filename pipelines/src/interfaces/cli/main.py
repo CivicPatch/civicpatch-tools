@@ -11,6 +11,7 @@ from interfaces.schemas import (
     validate_people_request
 )
 from runners.people_collector.schemas import PipelineRunConfig
+from shared.schemas import PublishedSourcePage
 from runners.engine import PipelineRunError
 from runners.people_collector.main import start as start_people_collector
 from shared.utils import id_utils
@@ -63,6 +64,9 @@ async def _run_pipeline_async(args):
         cap = Decimal(str(raw_cap)) if raw_cap is not None else None
         government_form = config_data.get("government_form")
         government_form_choices = config_data.get("government_form_choices") or []
+        published_source_pages = [
+            PublishedSourcePage.model_validate(page) for page in config_data.get("published_source_pages") or []
+        ]
 
     request = PeopleCollectorRequest(
         jurisdiction_ocdid=args.jurisdiction_ocdid,
@@ -75,6 +79,7 @@ async def _run_pipeline_async(args):
             pipeline_run_cap_usd=cap,
             government_form=government_form,
             government_form_choices=government_form_choices,
+            published_source_pages=published_source_pages,
         ),
     )
     await run_pipeline_cli(pipeline_run_id, request)

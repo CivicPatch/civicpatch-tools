@@ -24,6 +24,7 @@ from database.issue_listings import (
 from database.issues import resolve_issue, resolve_issues, set_issue_flagged
 import database.users
 from database.publications import dismiss_changeset
+from database.source_pages import published_source_pages
 from database.pipeline_runs import (
     get_active_pipeline_runs,
     get_pipeline_run,
@@ -278,6 +279,11 @@ def get_router(api_key_header):
             "government_form_choices": await government_form_service.government_form_choices(
                 pipeline_run["jurisdiction_ocdid"]
             ),
+            # Live, like the rest: what the run may reuse is whatever is published when it starts.
+            "published_source_pages": [
+                page.model_dump()
+                for page in await published_source_pages(pipeline_run["jurisdiction_ocdid"])
+            ],
         }
 
     # ── Pipeline Runs: Status & Progress ──────────────
