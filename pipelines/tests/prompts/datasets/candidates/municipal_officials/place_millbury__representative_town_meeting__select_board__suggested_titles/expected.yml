@@ -1,0 +1,52 @@
+generated: true
+organization:
+  name: Select Board
+  suggested_titles:
+  - Select Board Member
+  - Chair
+  - Vice Chair
+people:
+- name: Mary Krumsiek
+  label: Chair
+  phone: (508) 865-4710
+  email: mkrumsiek@townofmillbury.net
+  url: https://www.millburyma.gov/directory.aspx?EID=254
+  start_date: null
+  end_date: null
+  image: null
+- name: Brian A. Sora
+  label: Vice Chair
+  phone: (508) 865-4710
+  email: bsora@millburyma.gov
+  url: https://www.millburyma.gov/directory.aspx?EID=256
+  start_date: null
+  end_date: null
+  image: null
+- name: Brian Tagg
+  label: Council Member
+  phone: (508) 865-4710
+  email: btagg@millburyma.gov
+  url: https://www.millburyma.gov/directory.aspx?EID=259
+  start_date: null
+  end_date: null
+  image: null
+- name: Michael R. Gilchrist
+  label: Council Member
+  phone: (508) 865-4710
+  email: mgilchrist@millburyma.gov
+  url: https://www.millburyma.gov/1506/Board-of-Selectmen
+  start_date: null
+  end_date: null
+  image: null
+- name: Nicholas Lazzaro
+  label: Clerk
+  phone: (508) 865-4710
+  email: nlazzaro@millburyma.gov
+  url: https://www.millburyma.gov/directory.aspx?EID=258
+  start_date: null
+  end_date: null
+  image: null
+thought: 'GENERATED, review before moving into the dataset. Form representative_town_meeting
+  (one of several allowed, so assumed); suggested_titles for Select Board. People
+  are the published roster''s, filed by role (a role no organization lists goes to
+  the main board): check titles, dates and anyone the page lists that the roster lacks.'

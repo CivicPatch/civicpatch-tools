@@ -1,0 +1,40 @@
+generated: true
+organization:
+  name: Council
+people:
+- name: Haley Dale
+  label: Vice Mayor
+  phone: (615) 297-6041
+  email: hdale@citybellemeade.org
+  url: https://citybellemeade.org/person/commissioner-2/
+  start_date: null
+  end_date: null
+  image: null
+- name: Louise Bryan
+  label: Commissioner
+  phone: (615) 297-6041
+  email: lbryan@citybellemeade.org
+  url: https://citybellemeade.org/person/louise-bryan/
+  start_date: null
+  end_date: null
+  image: null
+- name: Neal Clayton
+  label: Commissioner
+  phone: (615) 297-6041
+  email: nclayton@citybellemeade.org
+  url: https://citybellemeade.org/person/commissioner/
+  start_date: null
+  end_date: null
+  image: null
+- name: Tom Starkey
+  label: Commissioner
+  phone: (615) 297-6041
+  email: tstarkey@citybellemeade.org
+  url: https://citybellemeade.org/person/tom-starkey/
+  start_date: null
+  end_date: null
+  image: null
+thought: 'GENERATED, review before moving into the dataset. Form mayor_council (one
+  of several allowed, so assumed); no_titles for Council. People are the published
+  roster''s, filed by role (a role no organization lists goes to the main board):
+  check titles, dates and anyone the page lists that the roster lacks.'

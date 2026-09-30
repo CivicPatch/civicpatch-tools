@@ -1,0 +1,18 @@
+generated: true
+organization:
+  name: Office of the Mayor
+  suggested_titles:
+  - Mayor
+people:
+- name: Harold Bufe
+  label: Mayor
+  phone: null
+  email: null
+  url: https://cityofabernathy.org/your-government/city-council
+  start_date: null
+  end_date: null
+  image: null
+thought: 'GENERATED, review before moving into the dataset. Form mayor_council (one
+  of several allowed, so assumed); suggested_titles for Office of the Mayor. People
+  are the published roster''s, filed by role (a role no organization lists goes to
+  the main board): check titles, dates and anyone the page lists that the roster lacks.'
