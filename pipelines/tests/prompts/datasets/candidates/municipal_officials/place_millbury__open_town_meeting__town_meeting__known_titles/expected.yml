@@ -1,0 +1,9 @@
+generated: true
+organization:
+  name: Town Meeting
+  posts: []
+people: []
+thought: 'GENERATED, review before moving into the dataset. Form open_town_meeting
+  (one of several allowed, so assumed); known_titles for Town Meeting. People are
+  the published roster''s, filed by role (a role no organization lists goes to the
+  main board): check titles, dates and anyone the page lists that the roster lacks.'
