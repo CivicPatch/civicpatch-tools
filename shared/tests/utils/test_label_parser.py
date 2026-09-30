@@ -417,3 +417,4 @@ def test_no_preferred_roles_is_parse_label():
     assert parse_label_preferring(label, _SELECT_BOARD_TAXONOMY, []) == parse_label(
         label, _SELECT_BOARD_TAXONOMY
     )
+

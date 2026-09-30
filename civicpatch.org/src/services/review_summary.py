@@ -8,7 +8,7 @@ summary is read off the fold, and outlives that layer's deletion.
 from core.post_issues import unverified_post_issues
 from core.projection.diff import roster_diff
 from core.review_summary import ReviewSummary, fold_card_summary
-from database import source_records
+from database import source_pages
 from database import changesets as changesets_db
 from database import organizations as organizations_db
 from database import posts as posts_db
@@ -46,7 +46,7 @@ async def summary_of(
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         read_organization_ids = set(
-            await source_records.organizations_for_changeset(cur, changeset_id)
+            await source_pages.organizations_read_by_changeset(cur, changeset_id)
         )
 
     published, proposed = fold.published, fold.proposed

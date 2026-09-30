@@ -230,6 +230,24 @@ erDiagram
         timestamptz     created_at          "default: now()"
     }
 
+    source_pages {
+        uuid            id                          PK  "241: one row per url per run; unique: (pipeline_run_id, source_url)"
+        text            source_url                  "idx: (source_url, created_at DESC); check: <> ''"
+        text            jurisdiction_ocdid          FK  "idx"
+        uuid            pipeline_run_id             FK  "ON DELETE CASCADE"
+        uuid_null       changeset_id                FK  "idx; ON DELETE CASCADE; NULL for a run that never reached ingest"
+        uuid_array      organization_ids            "default '{}'; what the fold reads the row as a read of. No FK (array)"
+        text_null       page_hash                   "sha256 of preprocessed.md; NULL when never preprocessed"
+        text_null       prompt_hash                 "sha256 of every prompt the page could be sent, minus its text"
+        text_null       cache_path                  "the page's cached folder (original.html, preprocessed.md) in the debug bucket, <pipeline_run_id>/<path>, stored whole"
+        text_null       anchor_text                 "the link text the page was reached by"
+        boolean_null    is_relevant                 "NULL = the relevance check never ran"
+        text_array_null relevant_urls               "links the relevance call proposed; replayed on a skip"
+        text_array      heuristics_failures         "default '{}'; one reason per failed extraction attempt"
+        uuid_null       unchanged_since_source_page_id FK "self; ON DELETE SET NULL; the row where the LLM last actually read this page (not the previous row); NULL = read in this run"
+        timestamptz     created_at                  "default: now(); the fold's one clock"
+    }
+
     roles {
         text            id                  PK "SLUG, not a uuid: council-member. Immune to label renames. check: id <> ''"
         text            label               "unique idx: (lower(label)); display name, renameable"
@@ -250,7 +268,7 @@ erDiagram
     role_aliases {
         uuid            id                  PK
         text            role_id             FK  "idx; ON UPDATE CASCADE, ON DELETE CASCADE"
-        text            label               "unique idx: (lower(label)) — across ALL roles"
+        text            label               "242: unique idx: (role_id, lower(label)); may repeat across roles (the record's organization, then priority, picks). Was unique across ALL roles"
         text            status              "check: active|candidate, default: candidate"
         timestamptz     created_at
     }
@@ -261,8 +279,7 @@ erDiagram
         text            name                "one body — City Council, Township Board. Every jurisdiction has a default 'Government' one unconditionally (migration 195); named non-default bodies are created explicitly, not yet by any production path"
         text_null       url                 "198: a scrape target of the body's own, distinct from the jurisdiction's site; null for the default org"
         int             sort_order          "default: 0; display order only"
-        boolean         meta_is_default     "202: default false; idx: unique (jurisdiction_ocdid) WHERE meta_is_default. Unflagged jurisdictions fall back to the first by (sort_order, name)"
-        timestamptz     created_at          "default: now()"
+        boolean         meta_is_default     "202: default false; idx: unique (jurisdiction_ocdid) WHERE meta_is_default. Unflagged jurisdictions fall back to the first by (sort_order, name)"        timestamptz     created_at          "default: now()"
     }
 
     divisions {
@@ -342,6 +359,10 @@ erDiagram
     changeset_batches ||--o{ changesets : "batch_id"
     changesets ||--o{ source_records : "changeset_id"
     jurisdictions ||--o{ source_records : "jurisdiction_ocdid"
+    jurisdictions ||--o{ source_pages : "jurisdiction_ocdid"
+    pipeline_runs ||--o{ source_pages : "pipeline_run_id"
+    changesets ||--o{ source_pages : "changeset_id"
+    source_pages ||--o{ source_pages : "unchanged_since_source_page_id"
     jurisdictions ||--o{ changesets : "jurisdiction_ocdid"
     jurisdictions ||--o{ people : "jurisdiction_ocdid"
     jurisdictions ||--o{ pipeline_runs : "jurisdiction_ocdid"
@@ -455,9 +476,9 @@ erDiagram
 - `core.role_taxonomy.slugify_label` must reproduce migration 109's backfill expression exactly (`trim(both '-' from lower(regexp_replace(label, '[^a-zA-Z0-9]+', '-', 'g')))`), or a role minted by the app and one minted by the migration would disagree.
 - **Slugging is lossy, so the PK is a stricter constraint than `unique (lower(label))`.** Same lowercase label ⟹ same slug, but not the reverse: `Council/Member` and `Council Member` are two distinct labels that reduce to one id. The label index therefore catches nothing the PK doesn't — it is kept as documentation of intent, not for coverage. `core.role_taxonomy.slug_conflict_error` rejects such a pair before the write so the message can name both labels; the PK is the concurrency backstop.
 - `roles_id_not_empty` exists because `NOT NULL` does not cover `''`: a label of pure punctuation slugs to the empty string, which would otherwise insert silently as published identity. `schemas.roles.RoleInput` rejects such a label at the API boundary; the check covers any other writer.
-- **Labels and aliases share one case-insensitive namespace, and no index can enforce it.** `roles_label_lower_uq` spans `roles`, `role_aliases_label_lower_uq` spans `role_aliases`, and a unique index cannot span both — so nothing at the schema level stops one role claiming another's _label_ as an alias. That matters because `get_role_alias_map` lets the last role written win, making the owner depend on priority order (a reorder could silently flip it). `core.role_taxonomy.name_conflict_error` enforces the cross-table half before the write. A role restating _its own_ label as an alias is allowed: it resolves to itself, and seeded rows do it (`Select Board Member`, `Deputy Mayor Pro Tempore`).
+- **A label names exactly one role; an alias may name several (242).** No index can stop one role claiming another's _label_ as an alias (`roles_label_lower_uq` spans `roles` only), so `core.role_taxonomy.name_conflict_error` enforces that before the write, and `shared.utils.layered_config` does the same for the config files. A shared alias ("member": Council Member and Select Board Member) is allowed on purpose: parsing a record moves its organization's roles to the front, and otherwise `get_role_alias_map` gives it to the highest-priority role. A role restating _its own_ label as an alias is allowed: it resolves to itself, and seeded rows do it (`Select Board Member`, `Deputy Mayor Pro Tempore`).
 - `roles.status`: `active` matches; `candidate` matches and flags for #2471's triage; `inactive` is not matched at all, and is what removal sets, so the row and any seat history survive. **`shared.utils.config_utils.get_role_configs` filters to `active` and is the only reader.** Migration 238 dropped `excluded` (a known non-role to drop): its roles became active, ranked last. The `exclude_role` / `include_role` activity types stay, because existing `activity` rows FK to them.
-- `role_aliases` was a `roles.aliases text[]` between migrations 106 and 110. The array could not express either thing the table exists for: a per-alias approval state (an alias must not match until approved), and uniqueness _across_ roles — nothing stopped one string aliasing two roles, which makes the matcher's answer arbitrary. `role_aliases_label_lower_uq` is deliberately global, not per-role.
+- `role_aliases` was a `roles.aliases text[]` between migrations 106 and 110. The array could not express either thing the table exists for: a per-alias approval state (an alias must not match until approved), and uniqueness _across_ roles. Migration 242 gave up the second half on purpose: an alias may now repeat across roles, and the matcher's answer is decided by the record's organization, then priority, not left arbitrary. The index is `role_aliases_role_id_label_lower_uq`, unique per role.
 - `role_aliases.status` defaults to `candidate`, but every alias written through `PUT /api/v1/roles` is set `active`: a maintainer typing one _is_ the approval. The default is aimed at a future auto-mint path, which is the case approval was designed for. `get_roles` returns only `active` aliases, so the wire shape stays `aliases: ["…"]` and the pipeline cannot accidentally match an unapproved one.
 - `roles.priority` stays nullable on purpose: `ORDER BY priority NULLS LAST` treats NULL as a real state (unranked, sorts to the end), which `NOT NULL DEFAULT 0` would collapse into "ranked first". **`PUT /api/v1/roles/reorder` is its only writer**, and it keys on `id`; `RoleInput` deliberately has no `priority` field. Two reasons: reorder is ADMINS-only while the upsert is MAINTAINERS, so accepting it on the upsert would bypass that gate — and an omitted field would read as "clear it", which flattened every role's ordering on any save.
 - `synced_files` is keyed by repo path (e.g. `data_source/tx/local/jurisdictions.yml`) — no FK; it holds the last-synced git blob SHA per file the open-data sync tree-diffs. **`data_source/**`only.** Migration 150 deleted 3,430`data/**`(people) cursors and`get_current_tree`/`get_stored_tree`stopped computing them: people files are rendered *from* the database and overwritten on every publish, so a cursor over them describes a direction that no longer exists — and got staler with every write. The sync is one-way per path:`data_source/**`flows open-data → DB,`data/\*\*` flows DB → open-data.

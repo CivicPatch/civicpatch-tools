@@ -25,9 +25,13 @@ from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from database.publications import SupersededRoster, publish_changeset
 from database.review_priority import issue_count, issue_priority
+from core.source_pages import SourcePageRow
+from database.source_pages import insert_source_pages
 from database.source_records import insert_source_records
 from schemas.claims import Claim, ClaimKind, DefaultNote, EntityType, Source
+from services.review_summary import review_summary_for_changeset
 from services.roster import card_sides
+from shared.schemas import IssueCode
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
@@ -1310,4 +1314,57 @@ async def test_withdrawing_the_claim_reopens_the_membership_on_the_next_publish(
 
     await _publish(at=_T2)
 
+    assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
+
+
+# --- page rows as reads (source_pages, step 9b) -----------------------------------------------
+
+
+async def _page_row_only_scrape(organization_id: str, at: datetime.datetime) -> str:
+    """An unpublished scrape whose only evidence is one page vouched for as this organization's,
+    listing nobody: a page row and no records."""
+    changeset_id = await _published_changeset(at)
+    run_id = str(uuid.uuid4())
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, changeset_id) "
+            "VALUES (%s, %s, '{}', %s)",
+            (run_id, _OCDID, changeset_id),
+        )
+        await conn.commit()
+    await insert_source_pages(
+        [
+            SourcePageRow(
+                source_url=_ROSTER_URL,
+                jurisdiction_ocdid=_OCDID,
+                pipeline_run_id=run_id,
+                changeset_id=changeset_id,
+                organization_ids=[organization_id],
+                page_hash=None,
+                prompt_hash=None,
+                cache_path=None,
+                anchor_text=None,
+                is_relevant=True,
+                relevant_urls=[],
+                heuristics_failures=[],
+            )
+        ]
+    )
+    return changeset_id
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_page_listing_nobody_raises_an_issue_instead_of_retiring_quietly():
+    """Raise, never auto-retire (2026-09-29). The issue blocks auto-publish; only a person
+    publishing retires her. Before page rows this scrape read nothing and said nothing."""
+    person_id = await _seed_person("Ana Reyes")
+    council, _ = await _two_bodies()
+    await _publish((council, person_id, "Council Member Ward 3"))
+
+    changeset_id = await _page_row_only_scrape(council, _T1)
+    summary = await review_summary_for_changeset(changeset_id)
+
+    assert IssueCode.NOBODY_FOUND_IN_ORGANIZATION in {issue.code for issue in summary.issues}
     assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]

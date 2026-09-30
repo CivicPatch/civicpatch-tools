@@ -12,6 +12,7 @@ from pipelines_environment import get_env_vars
 from runners.engine import PipelineRunError
 from runners.people_collector.main import start_threaded
 from runners.people_collector.schemas import PipelineRunConfig
+from shared.schemas import PublishedSourcePage
 import services.civicpatch_api as civicpatch_api
 from services.civicpatch_api import update_pipeline_run_status
 from shared.utils.statuses import PipelineRunStatus
@@ -72,6 +73,9 @@ async def _run(pipeline_run_id: str, jurisdiction_ocdid: str, url: Optional[str]
             pipeline_run_cap_usd=_cap(config_data),
             government_form=config_data.get("government_form"),
             government_form_choices=config_data.get("government_form_choices") or [],
+            published_source_pages=[
+                PublishedSourcePage.model_validate(page) for page in config_data.get("published_source_pages") or []
+            ],
         )
     except Exception:
         logger.exception("pipeline run %s failed during config fetch", pipeline_run_id)

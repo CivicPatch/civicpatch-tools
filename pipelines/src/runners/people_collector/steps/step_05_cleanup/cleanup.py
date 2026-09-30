@@ -13,7 +13,7 @@ IMAGE_MAP_FILE = "image_map.json"
 
 
 def cleanup(context: PeopleCollectorContext):
-    """Drop cached pages and downloaded images no record points at."""
+    """Drop downloaded images no record points at. Every cached page is kept."""
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     logger = log_utils.get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info(f"Step 5: {PipelineStatus.CLEANUP.value}")
@@ -24,11 +24,12 @@ def cleanup(context: PeopleCollectorContext):
     records = context.data.process_page_content_step.all_records()
 
     data_source_dir = get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
-    cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 
-    if os.path.exists(cache_dir):
-        cleanup_cache(cache_dir, records)
+    # Off 2026-09-29: irrelevant and empty pages are training and debugging data.
+    # cache_dir = os.path.join(data_source_dir, "cache")
+    # if os.path.exists(cache_dir):
+    #     cleanup_cache(cache_dir, records)
     if os.path.exists(images_dir):
         cleanup_images(logger, images_dir, records)
 
@@ -58,7 +59,9 @@ def cleanup_images(logger, images_dir: str, records: List[PersonSourceRecord]):
         if name:
             names.add(name)
 
-    missing = {name for name in names if not os.path.exists(os.path.join(images_dir, name))}
+    missing = {
+        name for name in names if not os.path.exists(os.path.join(images_dir, name))
+    }
     if missing:
         logger.error(f"Missing images that were expected to be found: {missing}")
 

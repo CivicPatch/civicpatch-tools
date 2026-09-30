@@ -1,17 +1,20 @@
 import re
-from typing import List
+from typing import List, Optional
 
 from runners.people_collector.schemas import PersonSourceRecord
+from runners.people_collector.steps.step_04_process_page_content.heuristics_failure import (
+    HeuristicsFailure,
+)
 from shared.utils import email_utils, name_utils, phone_utils, url_utils
 
 
 def check_page_heuristics(
     logger, source_url: str, input_text: str, records_found: List[PersonSourceRecord]
-) -> bool:
+) -> Optional[HeuristicsFailure]:
     """
     Per-page heuristics check for a single LLM's results.
-    Returns True if every non-empty field (email, phone, url, role) in each PersonSourceRecord
-    is present in the input_text.
+    Returns None if every non-empty field (email, phone, url, role) in each PersonSourceRecord
+    is present in the input_text, else the first check that failed.
     """
     input_text_lower = input_text.lower()
     for person in records_found:
@@ -19,33 +22,33 @@ def check_page_heuristics(
             logger.warning(
                 f"Name not found in input text: {person.name} under source url: {source_url}"
             )
-            return False
+            return HeuristicsFailure.NAME_NOT_IN_TEXT
         if person.email and not _email_in_text(person.email, input_text_lower):
             logger.warning(
                 f"Email not found in input text: {person.email} under source url: {source_url}"
             )
-            return False
+            return HeuristicsFailure.EMAIL_NOT_IN_TEXT
         if person.phone:
             if not _phone_in_text(person.phone, input_text):
                 logger.warning(
                     f"Phone not found in input text: {person.phone} under source url: {source_url}"
                 )
-                return False
+                return HeuristicsFailure.PHONE_NOT_IN_TEXT
             if phone_utils.normalize_phone_number(person.phone) is None:
                 logger.warning(
                     f"Phone not normalizable, forcing retry: {person.phone} under source url: {source_url}"
                 )
-                return False
+                return HeuristicsFailure.PHONE_NOT_NORMALIZABLE
         if person.url and not url_utils.url_in_text(person.url, input_text):
             if not url_utils.same_url(person.url, source_url):
                 logger.warning(
                     f"URL not found in input text: {person.url} under source url: {source_url}"
                 )
-                return False
+                return HeuristicsFailure.URL_NOT_IN_TEXT
 
         # TODO: Need to use a free model/spacy to do fuzzy matching on roles and dates
         # As needed
-    return True
+    return None
 
 
 def _name_in_text(name: str, text_lower: str) -> bool:

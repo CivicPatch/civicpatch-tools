@@ -84,14 +84,12 @@ def name_conflict_error(
     entries: list[RoleInput],
     stored_by_label: dict[str, Role],
 ) -> str | None:
-    """Pure: labels and aliases share one case-insensitive namespace, so every
-    matchable string must resolve to exactly one role.
+    """Pure: a label names exactly one role, so no other role may use it as a label or an
+    alias. An alias may be shared by several roles: the record's organization, then priority,
+    decides which one it means.
 
-    The DB enforces this within `roles` and within `role_aliases`, but a unique
-    index cannot span two tables. Nothing stopped one role claiming another's
-    label as an alias, and `get_role_alias_map` lets the last role written win —
-    so which role owned the name depended on priority order, and a reorder could
-    silently flip it.
+    A unique index cannot span `roles` and `role_aliases`, so the label-versus-alias half is
+    only enforced here.
     """
     seen: dict[str, tuple[str, str, bool]] = {}
     for name, owner, is_label in _claimed_names(entries, stored_by_label):
@@ -102,9 +100,11 @@ def name_conflict_error(
             continue
         previous_name, previous_owner, previous_is_label = previous
         if previous_owner != owner:
+            if not previous_is_label and not is_label:
+                continue
             return (
                 f"'{name}' is claimed by both '{previous_owner}' and '{owner}'. "
-                "A label or alias must name exactly one role."
+                "A role's label must name only that role."
             )
         # Same role restating its own label as an alias is redundant, not
         # ambiguous — it resolves to itself, and seeded rows do it. Two of its

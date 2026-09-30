@@ -5,11 +5,13 @@ import lib.buckets as buckets
 import lib.pipeline_artifacts as artifacts
 import lib.storage as storage_service
 from core.images import cdn_urls, records_with_images, resolve_images
+from core.source_pages import frontier_links, source_page_rows
 from database.changesets import register_scrape_changeset
 from database.issues import has_pending_issues, upsert_issue
 from database.llm_calls import record_calls
 from database.pipeline_runs import get_pipeline_run
 from database.roles import get_roles
+from database.source_pages import insert_source_pages
 from database.source_records import insert_source_records
 from schemas.pipeline_runs import (
     HandleSubmitPipelineRunArtifactsRequest,
@@ -121,6 +123,25 @@ async def _store_source_records(
         )
 
 
+async def _store_source_pages(
+    pipeline_run_id: str,
+    jurisdiction_ocdid: str,
+    changeset_id: str | None,
+    workflow_context: dict,
+) -> None:
+    """Every page the run tried to fetch. Never fatal, like `_store_source_records`."""
+    try:
+        rows = source_page_rows(
+            frontier_links(workflow_context), pipeline_run_id, jurisdiction_ocdid, changeset_id
+        )
+        stored = await insert_source_pages(rows)
+        logger.info(f"[{pipeline_run_id}] Stored {stored} source page(s)")
+    except Exception as e:
+        logger.error(
+            f"[{pipeline_run_id}] Failed to store source pages: {e}", exc_info=True
+        )
+
+
 async def _publish_if_nothing_to_review(
     changeset_id: str, jurisdiction_ocdid: str
 ) -> None:
@@ -192,6 +213,10 @@ async def _ingest_roster(
         changeset_id,
         request.jurisdiction_ocdid,
         records_with_images(records_by_person, source_urls, served),
+    )
+    # Before any publish: the fold counts a page row as a read of its organizations.
+    await _store_source_pages(
+        request.pipeline_run_id, request.jurisdiction_ocdid, changeset_id, workflow_context
     )
     # Before the publish decision, not after: these are what `_publish_if_nothing_to_review`
     # asks about, and filing them afterwards meant they never gated anything.
@@ -279,6 +304,9 @@ async def _handle_submit_pipeline_run_artifacts(
         await _ingest_roster(request, dirs, filenames_to_urls, workflow_context)
     else:
         await _record_pipeline_error(request.pipeline_run_id, workflow_context)
+        await _store_source_pages(
+            request.pipeline_run_id, request.jurisdiction_ocdid, None, workflow_context
+        )
 
     return SubmitPipelineRunArtifactsResponse(
         status="uploaded",

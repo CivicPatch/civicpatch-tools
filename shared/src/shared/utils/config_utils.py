@@ -110,11 +110,16 @@ def load_pipeline_run_limits(logger=None, pipeline_run_cap_usd: Decimal | None =
 def get_role_alias_map(
     role_config_override: Optional[RoleConfig] = None,
 ) -> Dict[str, str]:
-    alias_map = {}
-    for entry in get_role_configs(role_config_override):
-        alias_map[entry.label.lower()] = entry.label
+    """Each label names its own role. An alias several roles share goes to the one with the
+    highest priority; parsing a record moves its organization's roles to the front first."""
+    roles = sorted(
+        get_role_configs(role_config_override),
+        key=lambda role: (role.priority is None, role.priority or 0),
+    )
+    alias_map = {entry.label.lower(): entry.label for entry in roles}
+    for entry in roles:
         for alias in entry.aliases:
-            alias_map[alias.lower()] = entry.label
+            alias_map.setdefault(alias.lower(), entry.label)
     return alias_map
 
 

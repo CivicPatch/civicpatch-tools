@@ -78,21 +78,37 @@ def test_country_roles_and_forms_stay_in_their_own_files():
         merged_config(_COUNTRY_ROLES, _COUNTRY_ROLES, None)
 
 
-def test_two_states_that_never_merge_still_cannot_share_an_alias():
-    """The database keeps one row per alias, whatever state it came from."""
+def test_two_states_may_share_an_alias():
+    """An alias may name several roles; the record's organization, then priority, picks."""
     tennessee = ConfigFile(roles=[ConfigRole(id="county-mayor", label="County Mayor", aliases=["executive"])])
     hawaii = ConfigFile(roles=[ConfigRole(id="county-executive", label="County Executive", aliases=["executive"])])
 
-    with pytest.raises(ValueError, match="names both 'county-mayor' and 'county-executive'"):
+    check_roles_distinct_across([_COUNTRY_ROLES, tennessee, hawaii])
+
+
+def test_two_states_still_cannot_share_a_label():
+    tennessee = ConfigFile(roles=[ConfigRole(id="county-mayor", label="County Mayor")])
+    hawaii = ConfigFile(roles=[ConfigRole(id="county-mayor-hi", label="County Mayor")])
+
+    with pytest.raises(ValueError, match="names both 'county-mayor' and 'county-mayor-hi'"):
         check_roles_distinct_across([_COUNTRY_ROLES, tennessee, hawaii])
 
 
-def test_one_file_cannot_give_two_roles_one_alias():
-    with pytest.raises(ValidationError, match="names both"):
+def test_one_file_may_give_two_roles_one_alias():
+    ConfigFile(
+        roles=[
+            ConfigRole(id="chair", label="Chair", aliases=["presiding officer"]),
+            ConfigRole(id="president", label="President", aliases=["presiding officer"]),
+        ]
+    )
+
+
+def test_an_alias_may_not_be_another_roles_label():
+    with pytest.raises(ValidationError, match="'chair' names both 'chair' and 'president'"):
         ConfigFile(
             roles=[
-                ConfigRole(id="chair", label="Chair", aliases=["presiding officer"]),
-                ConfigRole(id="president", label="President", aliases=["presiding officer"]),
+                ConfigRole(id="chair", label="Chair"),
+                ConfigRole(id="president", label="President", aliases=["chair"]),
             ]
         )
 
@@ -120,11 +136,12 @@ def test_an_organization_role_must_be_a_role():
         }
     )
 
-    with pytest.raises(ValueError, match="Board of Aldermen's role 'Alderman' is not a role"):
+    with pytest.raises(ValueError, match="Board of Aldermen's role 'Alderman' is not a role's label"):
         merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state)
 
 
-def test_an_organization_role_may_be_an_alias():
+def test_an_organization_role_must_be_a_roles_label_not_an_alias():
+    """An alias may name several roles, so it cannot say which one the organization holds."""
     state = ConfigFile(
         government_forms={
             GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig(
@@ -133,7 +150,8 @@ def test_an_organization_role_may_be_an_alias():
         }
     )
 
-    assert merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state)
+    with pytest.raises(ValueError, match="Council's role 'Councilmember' is not a role's label"):
+        merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state)
 
 
 def test_without_state_forms_every_country_form_is_allowed():

@@ -10,7 +10,7 @@ from datetime import datetime
 
 from core.changeset_lifecycle import PARTIAL_KINDS
 from core.people_edits import POSTS_FIELD
-from core.projection.facts import Claim, ClaimKind, Facts, PostKey, SourceRecord
+from core.projection.facts import Claim, ClaimKind, Facts, PostKey, SourcePage, SourceRecord
 from core.projection.person_ids import PERSON_ID
 from database.changeset_predicates import OPEN_REVIEW_EDIT
 from database.database import get_pool
@@ -40,6 +40,18 @@ _RECORDS = f"""
     FROM source_records
     JOIN changesets ON changesets.id = source_records.changeset_id
     WHERE source_records.jurisdiction_ocdid = %(jurisdiction_ocdid)s
+      AND (changesets.published_at <= %(as_of)s OR {_INCLUDED})
+"""
+
+# Same scope as `_RECORDS`. A failed run's rows have no changeset, and an empty list reads
+# nothing, so neither can be a read.
+_PAGES = f"""
+    SELECT source_pages.id::text, source_pages.changeset_id::text, source_pages.created_at,
+           source_pages.organization_ids::text[]
+    FROM source_pages
+    JOIN changesets ON changesets.id = source_pages.changeset_id
+    WHERE source_pages.jurisdiction_ocdid = %(jurisdiction_ocdid)s
+      AND cardinality(source_pages.organization_ids) > 0
       AND (changesets.published_at <= %(as_of)s OR {_INCLUDED})
 """
 
@@ -125,6 +137,15 @@ def _record(row: tuple) -> SourceRecord:
     )
 
 
+def _page(row: tuple) -> SourcePage:
+    return SourcePage(
+        id=row[0],
+        changeset_id=row[1],
+        created_at=row[2],
+        organization_ids=tuple(row[3]),
+    )
+
+
 def _claim(row: tuple) -> Claim:
     """A claim as the fold reads one. A `posts` claim stores the post's id and the fold works
     in keys, so the join resolves one onto the claim."""
@@ -155,9 +176,8 @@ async def load_facts(
     Claims about records, people and memberships; post, organization and taxonomy claims join as their
     write paths move onto the model (steps 10, 11 and 18).
 
-    `reads` stays empty until `source_pages` exists: `core.projection.reads.reads_of` infers a
-    read from any live record naming the organization, which is today's rule, and page rows
-    will union with that rather than replace it.
+    `reads` are the `source_pages` rows; `core.projection.reads.reads_of` unions them with the
+    organizations live records name, which covers changesets filed before the table existed.
     """
     scope = {
         "jurisdiction_ocdid": jurisdiction_ocdid,
@@ -187,11 +207,14 @@ async def load_facts(
     await cur.execute(_WITHDRAWS, scope)
     withdraws = tuple(_claim(row) for row in await cur.fetchall())
 
+    await cur.execute(_PAGES, scope)
+    reads = tuple(_page(row) for row in await cur.fetchall())
+
     return Facts(
         records=records,
         claims=claims,
         withdraws=withdraws,
-        reads=(),
+        reads=reads,
     )
 
 

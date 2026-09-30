@@ -235,3 +235,23 @@ def test_normalize_roles_selectboard_fuzzy():
     assert normalize_roles(["selectboard vice chair"], _SELECT_BOARD) == [
         "Select Board Vice Chair"
     ]
+
+
+def _shared_member_taxonomy(council_first: bool) -> Taxonomy:
+    council = Role(id="council-member", label="Council Member", aliases=["member"])
+    select_board = Role(id="select-board-member", label="Select Board Member", aliases=["member"])
+    first, second = (council, select_board) if council_first else (select_board, council)
+    return build_taxonomy(
+        RoleConfig(roles=[first.model_copy(update={"priority": 0}), second.model_copy(update={"priority": 1})])
+    )
+
+
+def test_a_shared_alias_goes_to_the_higher_priority_role():
+    assert resolve_role("member", _shared_member_taxonomy(council_first=True)) == "Council Member"
+    assert resolve_role("member", _shared_member_taxonomy(council_first=False)) == "Select Board Member"
+
+
+def test_a_label_always_names_its_own_role_whatever_the_priority():
+    taxonomy = _shared_member_taxonomy(council_first=True)
+
+    assert resolve_role("Select Board Member", taxonomy) == "Select Board Member"

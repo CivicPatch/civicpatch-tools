@@ -163,6 +163,23 @@ class PersonSourceRecord(ExtractedPersonRecord):
     # Which body's extraction produced it — known from which prompt ran, not read off the page.
     # None for records that predate bodies: stored `source_records` rows and older artifacts.
     organization_id: str | None = None
+    # Where we serve the photo. cp.org fills it at ingest from a downloaded `local://` file;
+    # a record replayed from an unchanged page downloads nothing and arrives with it set.
+    cdn_image: Optional[str] = None
+
+
+class PublishedSourcePage(BaseModel):
+    """A url's latest usable `source_pages` row: what a run may reuse if the page is unchanged."""
+
+    source_url: str
+    # The row where the LLM last actually read this page; a reuse points at it.
+    read_source_page_id: str
+    page_hash: str
+    prompt_hash: Optional[str] = None
+    is_relevant: Optional[bool] = None
+    organization_ids: List[str] = []
+    relevant_urls: Optional[List[str]] = None
+    known_records: List[PersonSourceRecord] = []
 
 
 class Post(BaseModel):
@@ -408,6 +425,9 @@ class PipelineRunConfig(BaseModel):
     # The forms research should ask the model to choose between; empty means do not ask.
     # cp.org decides (form unknown, more than one allowed, no pull request waiting or rejected).
     government_form_choices: List[GovernmentForm] = []
+    # Kept out of the saved run context: it is a whole jurisdiction's records, and each reused
+    # row already names where its verdict came from.
+    published_source_pages: List[PublishedSourcePage] = Field(default=[], exclude=True)
 
 
 class IssueCode(str, Enum):

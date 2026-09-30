@@ -18,6 +18,14 @@ def _keyed_aliases(alias_map: dict[str, str]) -> dict[str, str]:
     return {lookup_key(alias): canonical for alias, canonical in alias_map.items()}
 
 
+def _keyed_role_aliases(alias_map: dict[str, str]) -> dict[str, str]:
+    """First wins: `alias_map` is in priority order, and a shared alias belongs to the first role."""
+    keyed: dict[str, str] = {}
+    for alias, canonical in alias_map.items():
+        keyed.setdefault(lookup_key(alias), canonical)
+    return keyed
+
+
 class Taxonomy(NamedTuple):
     role_aliases: dict[str, str]  # key -> canonical role name
     designation_aliases: dict[str, str]  # key -> canonical designation name
@@ -31,7 +39,7 @@ class Taxonomy(NamedTuple):
 def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
     roles = config_utils.get_role_configs(role_config)
     designations = config_utils.get_designations()
-    role_aliases = _keyed_aliases(config_utils.get_role_alias_map(role_config))
+    role_aliases = _keyed_role_aliases(config_utils.get_role_alias_map(role_config))
     designation_aliases = _keyed_aliases(config_utils.get_designation_alias_map())
 
     return Taxonomy(
