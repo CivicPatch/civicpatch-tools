@@ -189,39 +189,24 @@ def test_set_user_role_rejects_self_edit_from_session_caller():
 
 
 @pytest.mark.unit
-def test_set_user_role_allows_service_api_key_against_any_user():
-    # SERVICE_API_KEY's synthetic Identity carries no user_id, so it can't trip
-    # the self-edit check even when targeting an arbitrary user_id.
+def test_set_user_role_refuses_the_service_api_key():
+    """It was the first-admin bootstrap, and so a leaked key could make anyone an admin. The
+    bootstrap is `scripts.grant_admin` inside the pod now; the route never takes the key."""
     service_identity = Identity(
         type="service_api_key",
         provider="system",
         provider_user_id="service_api_key",
         email="service@civicpatch.org",
     )
-    user_row = {
-        "id": TARGET_USER_ID,
-        "provider": "supabase",
-        "provider_user_id": "sb-target",
-        "email": "target@example.com",
-        "username": "target-user",
-    }
-    with (
-        patch(
-            "database.users.get_user_by_id",
-            new_callable=AsyncMock,
-            return_value=user_row,
-        ),
-        patch("database.users.set_user_role", new_callable=AsyncMock) as mock_set,
-        patch("lib.auth_session.invalidate_session", new_callable=AsyncMock),
-    ):
+    with patch("database.users.set_user_role", new_callable=AsyncMock) as mock_set:
         client = _client(service_identity)
         response = client.put(
             f"/api/admin/users/{TARGET_USER_ID}/role",
             json={"role": "admins"},
         )
 
-    assert response.status_code == 200
-    mock_set.assert_awaited_once_with(TARGET_USER_ID, "admins")
+    assert response.status_code == 403
+    mock_set.assert_not_awaited()
 
 
 # ── Get one user ─────────────────────────────────────────────────────────────

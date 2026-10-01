@@ -294,9 +294,7 @@ erDiagram
         uuid            organization_id     FK
         text            role_id             FK "ON UPDATE CASCADE; the POST's own role — other roles the label named are parsed from it, not stored (226)"
         text            division_ocdid      FK "ON UPDATE CASCADE"
-        int             meta_headcount      "check: > 0, default: 1; human-owned. meta_-marked: Popolo has no headcount — our Post is a group of interchangeable seats"
-        bool            meta_is_tracked     "default: true; a roster omitting this post is meaningful — gates the review queue, not the record. Orthogonal to lifecycle"
-        timestamptz     created_at          "default: now()"
+        timestamptz     created_at          "default: now(). Headcount and tracked are claims since 243 (defaults 1 / true), so a row is only its key"
     }
 
     memberships {

@@ -16,7 +16,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from tests.integration.factories import SeededMembership
-from database import organizations, posts
+from database import divisions, organizations, posts
 from database.database import get_pool
 from lib.auth import get_optional_user
 from routers.api import organizations as organizations_router
@@ -33,6 +33,9 @@ _ORG_PREFIX = "/api/v1/organizations"
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_route/government"
 _BASE = "ocd-division/country:us/state:zz/place:zz_route"
 _WARD_3 = f"{_BASE}/ward:3"
+# A post's headcount and tracked state are claims, and a claim names the person who made it, so
+# the fake identities below act as this real user row.
+_ROUTE_USER_ID = "00000000-0000-4000-8000-00000000d0a1"
 
 
 def _fake_admin() -> Identity:
@@ -42,7 +45,7 @@ def _fake_admin() -> Identity:
         provider_user_id="route-test-admin",
         email="route-test@example.com",
         role="admins",
-        user_id=None,
+        user_id=_ROUTE_USER_ID,
     )
 
 
@@ -75,7 +78,7 @@ def _fake_default_user() -> Identity:
         provider_user_id="route-test-default",
         email="route-test-default@example.com",
         role="default",
-        user_id=None,
+        user_id=_ROUTE_USER_ID,
     )
 
 
@@ -95,7 +98,7 @@ def _fake_contributor() -> Identity:
         provider_user_id="route-test-contributor",
         email="route-test-contributor@example.com",
         role="contributors",
-        user_id=None,
+        user_id=_ROUTE_USER_ID,
     )
 
 
@@ -119,10 +122,15 @@ async def _wipe():
         await cur.execute(
             "DELETE FROM activity WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
+        # A post's claims belong to a changeset, which `create` opens; claims cascade with it.
+        await cur.execute(
+            "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
         for table in ("posts", "divisions", "organizations", "people"):
             await cur.execute(
                 f"DELETE FROM {table} WHERE jurisdiction_ocdid = %s", (_OCDID,)
             )
+        await cur.execute("DELETE FROM users WHERE id = %s", (_ROUTE_USER_ID,))
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
@@ -138,6 +146,11 @@ async def clean_sentinels():
             "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level) "
             "VALUES (%s, 'zz', 'local')",
             (_OCDID,),
+        )
+        await cur.execute(
+            "INSERT INTO users (id, email, provider, provider_user_id, username, role) "
+            "VALUES (%s, 'route-test@example.com', 'test', 'route-test', 'route-test', 'admins')",
+            (_ROUTE_USER_ID,),
         )
         # Real jurisdictions get their default organization at sync time (open_data.py); this
         # raw insert bypasses that, so it has to do the pairing itself.
@@ -275,8 +288,12 @@ async def test_patching_a_post_that_is_not_there_is_404(client):
 @pytest.mark.integration
 async def test_verified_is_on_the_wire_both_ways(client):
     """The flag is only useful if it survives serialisation, and absence must never be how a
-    consumer infers it."""
-    unheld = (await _create(client)).json()["data"]["id"]
+    consumer infers it. The unverified one is a scrape's mint: a person's create is a vouch."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await divisions.find_or_create(cur, _BASE, _OCDID)
+        unheld = await posts.find_or_create(cur, _OCDID, await _default_org_id(), "mayor", _BASE)
+        await conn.commit()
     held = (await _create(client, role_id="clerk")).json()["data"]["id"]
     await _seat_someone(held)
 
@@ -362,8 +379,9 @@ async def test_a_rejected_create_leaves_no_trace(client):
 async def _is_tracked(post_id: str) -> bool:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("SELECT meta_is_tracked FROM posts WHERE id::text = %s", (post_id,))
-        return (await cur.fetchone())[0]
+        post = await posts.get(cur, post_id)
+    assert post is not None
+    return post.meta_is_tracked
 
 
 @pytest.mark.asyncio

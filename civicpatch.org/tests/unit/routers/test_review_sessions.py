@@ -9,11 +9,13 @@ from lib.auth import get_optional_user
 from routers.api import review_sessions as review_sessions_router
 
 MOCK_IDENTITY = Identity(
-    type="service_api_key",
-    provider="system",
+    # An admin person: the service key no longer passes every route.
+    type="cookie",
+    provider="supabase",
     provider_user_id="test-user",
     email="test@civicpatch.org",
     user_id="user-id-123",
+    role=UserRole.ADMINS.value,
 )
 
 

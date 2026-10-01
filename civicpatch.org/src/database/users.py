@@ -249,6 +249,20 @@ async def get_user_by_id(user_id: str) -> dict | None:
     }
 
 
+async def get_users_by_email(email: str) -> list[dict]:
+    """Every user with this email: one per sign-in provider, so it can be several."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT id::text, provider, provider_user_id FROM users WHERE email = %s ORDER BY id",
+            (email,),
+        )
+        rows = await cur.fetchall()
+    return [
+        {"id": row[0], "provider": row[1], "provider_user_id": row[2]} for row in rows
+    ]
+
+
 async def get_user_by_username(username: str) -> dict | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

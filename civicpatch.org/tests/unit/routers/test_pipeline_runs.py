@@ -10,21 +10,42 @@ from lib.auth import get_optional_user
 from routers.api import pipeline_runs as pipeline_runs_router
 
 MOCK_IDENTITY = Identity(
-    type="service_api_key",
-    provider="system",
+    # An admin person: the service key no longer passes every route.
+    type="cookie",
+    provider="supabase",
     provider_user_id="test-user",
     email="test@civicpatch.org",
+    role=UserRole.ADMINS.value,
+    user_id="user-id-123",
 )
 
 TEST_CHANGESET_ID = "test-request-id-123"
 
 
-@pytest.fixture
-def client():
+SERVICE_IDENTITY = Identity(
+    type="service_api_key",
+    provider="system",
+    provider_user_id="service_api_key",
+    email="service@civicpatch.org",
+)
+
+
+def _client_as(identity: Identity) -> TestClient:
     app = FastAPI()
-    app.dependency_overrides[get_optional_user] = lambda: MOCK_IDENTITY
+    app.dependency_overrides[get_optional_user] = lambda: identity
     app.include_router(pipeline_runs_router.get_router(None), prefix="/pipeline_runs")
     return TestClient(app)
+
+
+@pytest.fixture
+def client():
+    return _client_as(MOCK_IDENTITY)
+
+
+@pytest.fixture
+def service_client():
+    """For the SERVICE routes: only the pipeline and the worker call them."""
+    return _client_as(SERVICE_IDENTITY)
 
 
 @pytest.mark.unit
@@ -134,33 +155,33 @@ def test_patch_job_status_returns_updated_status(client):
 
 
 @pytest.mark.unit
-def test_get_context_upload_url_returns_url(client):
+def test_get_context_upload_url_returns_url(service_client):
     with patch(
         "routers.api.pipeline_runs.storage_service.get_presigned_put_url",
         return_value="https://storage.example.com/presigned-put",
     ):
-        response = client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/context/upload-url")
+        response = service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/context/upload-url")
 
     assert response.status_code == 200
     assert response.json()["url"] == "https://storage.example.com/presigned-put"
 
 
 @pytest.mark.unit
-def test_get_context_download_url_returns_url(client):
+def test_get_context_download_url_returns_url(service_client):
     with patch(
         "routers.api.pipeline_runs.storage_service.get_presigned_url_cached",
         return_value="https://storage.example.com/presigned-get",
     ):
-        response = client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/context/download-url")
+        response = service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/context/download-url")
 
     assert response.status_code == 200
     assert response.json()["url"] == "https://storage.example.com/presigned-get"
 
 
 @pytest.mark.unit
-def test_delete_context_returns_the_run_id(client):
+def test_delete_context_returns_the_run_id(service_client):
     with patch("routers.api.pipeline_runs.storage_service.delete_object"):
-        response = client.delete(f"/pipeline_runs/{TEST_CHANGESET_ID}/context")
+        response = service_client.delete(f"/pipeline_runs/{TEST_CHANGESET_ID}/context")
 
     assert response.status_code == 200
     assert response.json()["pipeline_run_id"] == TEST_CHANGESET_ID
@@ -304,8 +325,7 @@ def test_batch_starts_a_workflow_and_does_not_pick_candidates(client):
 
 
 def _batch_client():
-    """Its own client, undecorated: `client` authenticates as a service key, which bypasses
-    every role check by design."""
+    """Its own client, undecorated: `client` is always an admin, and these tests vary the role."""
     app = FastAPI()
     app.include_router(pipeline_runs_router.get_router(None), prefix="/pipeline_runs")
     return TestClient(app)
@@ -341,7 +361,7 @@ def test_batch_is_allowed_for_an_admin():
 
 
 @pytest.mark.unit
-def test_claim_registers_and_returns_the_work(client):
+def test_claim_registers_and_returns_the_work(service_client):
     """Synchronous, unlike `/register`: the workflow must know the changesets exist before it
     dispatches anything at them."""
     items = [{"jurisdiction_ocdid": "ocd/x", "changeset_id": "c1", "name": "X", "url": "u"}]
@@ -350,7 +370,7 @@ def test_claim_registers_and_returns_the_work(client):
         new_callable=AsyncMock,
         return_value=items,
     ):
-        response = client.post(
+        response = service_client.post(
             "/pipeline_runs/batch/claim", json={"state": "wa", "num_jurisdictions": 1}
         )
 
@@ -359,38 +379,38 @@ def test_claim_registers_and_returns_the_work(client):
 
 
 @pytest.mark.unit
-def test_claim_404s_for_an_unknown_state(client):
+def test_claim_404s_for_an_unknown_state(service_client):
     with patch(
         "routers.api.pipeline_runs.candidate_service.claim_jurisdictions_to_scrape",
         new_callable=AsyncMock,
         side_effect=ValueError("No such state: zz"),
     ):
-        response = client.post("/pipeline_runs/batch/claim", json={"state": "zz"})
+        response = service_client.post("/pipeline_runs/batch/claim", json={"state": "zz"})
 
     assert response.status_code == 404
 
 
 @pytest.mark.unit
-def test_budget_cap_reports_none_when_nothing_is_reached(client):
+def test_budget_cap_reports_none_when_nothing_is_reached(service_client):
     with patch(
         "routers.api.pipeline_runs.spend_budget_service.cap_reached_for_state",
         new_callable=AsyncMock,
         return_value=None,
     ):
-        response = client.get("/pipeline_runs/budget_cap", params={"state": "wa"})
+        response = service_client.get("/pipeline_runs/budget_cap", params={"state": "wa"})
 
     assert response.status_code == 200
     assert response.json()["data"]["cap"] is None
 
 
 @pytest.mark.unit
-def test_budget_cap_names_which_cap_was_reached(client):
+def test_budget_cap_names_which_cap_was_reached(service_client):
     with patch(
         "routers.api.pipeline_runs.spend_budget_service.cap_reached_for_state",
         new_callable=AsyncMock,
         return_value=Cap.STATE_MONTH,
     ):
-        response = client.get("/pipeline_runs/budget_cap", params={"state": "wa"})
+        response = service_client.get("/pipeline_runs/budget_cap", params={"state": "wa"})
 
     assert response.status_code == 200
     assert response.json()["data"]["cap"] == Cap.STATE_MONTH.value

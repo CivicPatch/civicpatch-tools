@@ -35,6 +35,14 @@ class RouteCategory(str, Enum):
     SERVICE = "service"
 
 
+class ServiceKey(str, Enum):
+    """Whether an AUTHENTICATED or TEAM_REQUIRED route also takes the service API key. PUBLIC and
+    SERVICE routes always do; every other route refuses it unless it says ACCEPTED."""
+
+    ACCEPTED = "accepted"
+    REFUSED = "refused"
+
+
 class ReviewMode(str, Enum):
     BASELINE = "baseline"      # first capture for a jurisdiction; nothing to diff against
     RECONCILE = "reconcile"    # subsequent scrape; old<->new pairing is meaningful

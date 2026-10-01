@@ -16,7 +16,7 @@ from fastapi.responses import JSONResponse
 from core.jurisdiction_patch import build_patch
 from lib.auth import get_optional_user, is_service_key, require_route_access
 from pydantic import BaseModel, field_validator
-from schemas.common import Identity, RouteCategory, UserRole, has_at_least
+from schemas.common import Identity, RouteCategory, ServiceKey, UserRole, has_at_least
 from schemas.jurisdictions import (
     JurisdictionPullRequestRequest,
     JurisdictionRosterEditRequest,
@@ -180,7 +180,9 @@ def get_router() -> APIRouter:
         jurisdiction_ocdid: str,
         body: JurisdictionPullRequestRequest,
         identity: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+            require_route_access(
+                RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS, ServiceKey.ACCEPTED
+            )
         ),
     ):
         """Open a pull request changing the jurisdiction's entry in the jurisdictions repo. It

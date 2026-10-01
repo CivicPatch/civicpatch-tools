@@ -31,8 +31,10 @@ class UnknownOrganization(Exception):
     """No organization with this id on this jurisdiction."""
 
 
-# The fields a human owns. The derivation sets them once at mint and never again.
-_HUMAN_FIELDS = ("meta_headcount", "meta_is_tracked")
+# The fields a human owns, and what a post reads as until somebody claims otherwise. Claims
+# only: no column holds them, so deleting a post row loses nothing.
+_HUMAN_FIELD_DEFAULTS = {"meta_headcount": 1, "meta_is_tracked": True}
+_HUMAN_FIELDS = tuple(_HUMAN_FIELD_DEFAULTS)
 
 # Not a column — 148 dropped `posts.label` in favor of composing it from role and division on
 # read. A human can still override that guess ("Position 8" instead of the bare role), the same
@@ -46,6 +48,21 @@ def _with_label(post: dict, asserted_label: str | None = None) -> dict:
         **post,
         "label": post_label(role_label, post["division_ocdid"], asserted_label),
     }
+
+
+def _accepted(by_field: dict, field: str):
+    accepted = by_field.get(field, {}).get(ClaimKind.ACCEPT) or []
+    return accepted[0] if accepted else None
+
+
+def _with_claims(post: dict, by_field: dict) -> dict:
+    """A posts row with what its claims say: the human fields, else their defaults, and the
+    label. `by_field` is one post's entry from `claims.claimed_values`."""
+    human_fields = {}
+    for field, default in _HUMAN_FIELD_DEFAULTS.items():
+        claimed = _accepted(by_field, field)
+        human_fields[field] = default if claimed is None else claimed
+    return _with_label({**post, **human_fields}, _accepted(by_field, POST_LABEL_FIELD))
 
 
 async def claimed_labels(cur, post_ids: list[str]) -> dict[str, str]:
@@ -153,40 +170,22 @@ async def create_if_absent(
     organization_id: str,
     role_id: str,
     division_ocdid: str,
-    headcount: int = 1,
-    is_tracked: bool = True,
 ) -> str | None:
     """Insert a post, or None if the triple is taken. The only INSERT in this module.
 
-    Both land only here, on mint — a later scrape must not overwrite what somebody typed,
-    which is why neither is ever recomputed. The label is not among them: it is composed on
-    read from the role and the division (148), so there is nothing to seed.
-
-    `meta_headcount` and `meta_is_tracked` carry their marker as column names, because no civic
-    standard defines either. The Python arguments drop it — it is a wire/column concern, not a
-    caller concern.
+    A row is only its key: what a person says about it (headcount, tracked, label) is claims.
     """
     post_id = PostKey(
         organization_id=organization_id, role_id=role_id, division_ocdid=division_ocdid
     ).post_id
     await cur.execute(
         """
-        INSERT INTO posts
-            (id, jurisdiction_ocdid, organization_id, role_id, division_ocdid, meta_headcount,
-             meta_is_tracked)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO posts (id, jurisdiction_ocdid, organization_id, role_id, division_ocdid)
+        VALUES (%s, %s, %s, %s, %s)
         ON CONFLICT (organization_id, role_id, division_ocdid) DO NOTHING
         RETURNING id::text
         """,
-        (
-            post_id,
-            jurisdiction_ocdid,
-            organization_id,
-            role_id,
-            division_ocdid,
-            headcount,
-            is_tracked,
-        ),
+        (post_id, jurisdiction_ocdid, organization_id, role_id, division_ocdid),
     )
     row = await cur.fetchone()
     return row[0] if row else None
@@ -198,8 +197,6 @@ async def find_or_create(
     organization_id: str,
     role_id: str,
     division_ocdid: str,
-    headcount: int = 1,
-    is_tracked: bool = True,
 ) -> str:
     """Make sure this post exists. Returns its id, minted or matched.
 
@@ -207,13 +204,7 @@ async def find_or_create(
     report, so the lookup below is the normal path, not a fallback.
     """
     minted = await create_if_absent(
-        cur,
-        jurisdiction_ocdid,
-        organization_id,
-        role_id,
-        division_ocdid,
-        headcount=headcount,
-        is_tracked=is_tracked,
+        cur, jurisdiction_ocdid, organization_id, role_id, division_ocdid
     )
     if minted:
         return minted
@@ -227,23 +218,6 @@ async def find_or_create(
     )
     return (await cur.fetchone())[0]
 
-
-async def update_human_fields(
-    cur,
-    post_id: str,
-    headcount: int,
-    is_tracked: bool,
-) -> bool:
-    """Set the columns a person owns. The only update path to a post.
-
-    `is_tracked` is seeded at mint from whether the role was recognised, which is a guess.
-    This is where a person corrects it — the clerk their town elects, the attorney it does not.
-    """
-    await cur.execute(
-        "UPDATE posts SET meta_headcount = %s, meta_is_tracked = %s WHERE id::text = %s",
-        (headcount, is_tracked, post_id),
-    )
-    return cur.rowcount > 0
 
 
 async def delete_if_unheld(cur, post_id: str) -> bool:
@@ -302,7 +276,7 @@ async def get_many(cur, post_ids: list[str]) -> dict[str, Post]:
     await cur.execute(
         """
         SELECT posts.id::text, posts.jurisdiction_ocdid, posts.organization_id::text,
-               posts.role_id, posts.division_ocdid, posts.meta_headcount, posts.meta_is_tracked,
+               posts.role_id, posts.division_ocdid,
                roles.label AS role_label
         FROM posts LEFT JOIN roles ON roles.id = posts.role_id
         WHERE posts.id::text = ANY(%s)
@@ -311,8 +285,8 @@ async def get_many(cur, post_ids: list[str]) -> dict[str, Post]:
     )
     columns = [column.name for column in cur.description or []]
     rows = [dict(zip(columns, row)) for row in await cur.fetchall()]
-    labels = await claimed_labels(cur, [row["id"] for row in rows])
-    found = [Post(**_with_label(row, labels.get(row["id"]))) for row in rows]
+    claimed = await claims.claimed_values(cur, EntityType.POST, [row["id"] for row in rows])
+    found = [Post(**_with_claims(row, claimed.get(row["id"], {}))) for row in rows]
     return {post.id: post for post in found}
 
 
@@ -383,11 +357,10 @@ async def list_for_jurisdictions(cur, jurisdiction_ocdids: list[str]) -> dict[st
     """
     await cur.execute(
         f"""
-        -- `meta_headcount`/`meta_is_tracked`/`meta_is_verified` are the fields no civic standard
-        -- defines. Stored ones carry their marker as their column name; only a computed one
-        -- like `meta_is_verified` needs an alias to get it.
+        -- `meta_is_verified` is one of the fields no civic standard defines; the other two,
+        -- `meta_headcount` and `meta_is_tracked`, come from claims after this read.
         SELECT posts.id::text, posts.jurisdiction_ocdid, posts.organization_id::text,
-               posts.role_id, posts.division_ocdid, posts.meta_headcount, posts.meta_is_tracked,
+               posts.role_id, posts.division_ocdid,
                {POST_IS_VERIFIED} AS meta_is_verified,
                roles.label AS role_label
         FROM posts LEFT JOIN roles ON roles.id = posts.role_id
@@ -398,11 +371,11 @@ async def list_for_jurisdictions(cur, jurisdiction_ocdids: list[str]) -> dict[st
     )
     columns = [column.name for column in cur.description or []]
     rows = [dict(zip(columns, row)) for row in await cur.fetchall()]
-    labels = await claimed_labels(cur, [row["id"] for row in rows])
+    claimed = await claims.claimed_values(cur, EntityType.POST, [row["id"] for row in rows])
     by_jurisdiction: dict[str, list[dict]] = {}
     for row in rows:
         by_jurisdiction.setdefault(row["jurisdiction_ocdid"], []).append(
-            _with_label(row, labels.get(row["id"]))
+            _with_claims(row, claimed.get(row["id"], {}))
         )
     return by_jurisdiction
 
@@ -422,7 +395,7 @@ async def list_page_for_state(
             SELECT COUNT(*) OVER() AS total,
                    posts.jurisdiction_ocdid,
                    posts.id::text, posts.organization_id::text, posts.role_id,
-                   posts.division_ocdid, posts.meta_headcount, posts.meta_is_tracked,
+                   posts.division_ocdid,
                    {POST_IS_VERIFIED} AS meta_is_verified,
                    roles.label AS role_label
             FROM posts LEFT JOIN roles ON roles.id = posts.role_id
@@ -441,9 +414,11 @@ async def list_page_for_state(
         if not rows:
             return 0, []
         dict_rows = [{k: v for k, v in zip(columns, row) if k != "total"} for row in rows]
-        labels = await claimed_labels(cur, [row["id"] for row in dict_rows])
+        claimed = await claims.claimed_values(
+            cur, EntityType.POST, [row["id"] for row in dict_rows]
+        )
     total = rows[0][0]
-    return total, [_with_label(row, labels.get(row["id"])) for row in dict_rows]
+    return total, [_with_claims(row, claimed.get(row["id"], {})) for row in dict_rows]
 
 
 async def ids_by_identity(
@@ -533,7 +508,7 @@ async def create(
     role_id: str,
     division_ocdid: str,
     headcount: int,
-    user_id: str | None = None,
+    user_id: str,
     label: str | None = None,
 ) -> str | None:
     """A person asserting a post exists. Returns its id, or None if it already did.
@@ -543,7 +518,8 @@ async def create(
     found-or-created on the way, since it exists because a post needs it, never on its own.
 
     `label` overrides the derived guess ("Position 8" instead of the bare role) — claimed,
-    like `meta_headcount`, not stored as its own column.
+    like `meta_headcount`, not stored as its own column. Always a person: a scrape mints through
+    `create_if_absent` and claims nothing.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -552,24 +528,17 @@ async def create(
             raise UnknownOrganization(organization_id)
         await divisions.find_or_create(cur, division_ocdid, jurisdiction_ocdid)
         post_id = await create_if_absent(
-            cur,
-            jurisdiction_ocdid,
-            organization_id,
-            role_id,
-            division_ocdid,
-            headcount=headcount,
+            cur, jurisdiction_ocdid, organization_id, role_id, division_ocdid
         )
         # Nothing to log when the triple was taken: no post was created.
         if post_id:
-            changeset_id = None
-            if user_id:
-                changeset_id = make_id()
-                await create_roster_edit_changeset(cur, changeset_id, jurisdiction_ocdid, user_id)
-                await _accept_fields(
-                    cur, post_id, {"meta_headcount": headcount}, user_id, changeset_id
-                )
-                if label:
-                    await set_post_label(cur, post_id, label, user_id, changeset_id)
+            changeset_id = make_id()
+            await create_roster_edit_changeset(cur, changeset_id, jurisdiction_ocdid, user_id)
+            await _accept_fields(
+                cur, post_id, {"meta_headcount": headcount}, user_id, changeset_id
+            )
+            if label:
+                await set_post_label(cur, post_id, label, user_id, changeset_id)
             minted = await get(cur, post_id)
             await record_change(
                 cur,
@@ -590,7 +559,7 @@ async def update(
     post_id: str,
     headcount: int,
     is_tracked: bool,
-    user_id: str | None = None,
+    user_id: str,
 ) -> str | None:
     """Set the human-owned fields, logging what actually moved. Returns the jurisdiction, or
     None when there is no such post.
@@ -599,7 +568,8 @@ async def update(
     outward and cannot ask afterwards — it is already read here for the change log.
 
     Read before write so the log can carry before/after. A no-op edit still logs — somebody
-    looked at this post and confirmed it, which is worth as much as a change.
+    looked at this post and confirmed it, which is worth as much as a change. Claims are the
+    whole effect.
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -607,18 +577,15 @@ async def update(
         if before is None:
             return None
 
-        await update_human_fields(cur, post_id, headcount, is_tracked)
-        changeset_id = None
-        if user_id:
-            changeset_id = make_id()
-            await create_roster_edit_changeset(cur, changeset_id, before.jurisdiction_ocdid, user_id)
-            await _accept_fields(
-                cur,
-                post_id,
-                {"meta_headcount": headcount, "meta_is_tracked": is_tracked},
-                user_id,
-                changeset_id,
-            )
+        changeset_id = make_id()
+        await create_roster_edit_changeset(cur, changeset_id, before.jurisdiction_ocdid, user_id)
+        await _accept_fields(
+            cur,
+            post_id,
+            {"meta_headcount": headcount, "meta_is_tracked": is_tracked},
+            user_id,
+            changeset_id,
+        )
         await record_change(
             cur,
             ActivityType.EDIT_POST,

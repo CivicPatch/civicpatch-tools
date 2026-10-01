@@ -5,11 +5,14 @@ rather than going through FastAPI. This isolates the decision logic from the
 HTTP layer and lets us pin every (RouteCategory × required_role × identity)
 combination cheaply.
 """
+from types import SimpleNamespace
+from unittest.mock import AsyncMock, patch
+
 import pytest
 from fastapi import HTTPException
 
-from lib.auth import require_route_access
-from schemas.common import Identity, UserRole, RouteCategory
+from lib.auth import get_user_by_cookie, require_route_access
+from schemas.common import Identity, UserRole, RouteCategory, ServiceKey
 
 
 def _service_identity() -> Identity:
@@ -102,22 +105,41 @@ async def test_service_rejects_anonymous():
     assert exc.value.status_code == 403
 
 
-# ── TEAM_REQUIRED — service-key bypass ───────────────────────────────────────
+# ── The service key outside SERVICE routes ───────────────────────────────────
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_service_key_bypasses_team_check_for_admins():
-    """SERVICE_API_KEY identity has no role but bypasses every TEAM_REQUIRED gate,
-    including the most privileged. This is how `mise run grant_role` works."""
+async def test_service_key_is_refused_by_a_team_route_that_does_not_take_it():
+    """No role to check, so it was let through everything, admin routes included. Now it
+    reaches only the routes that name it, so a leaked key cannot change anyone's role."""
     dep = require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+    with pytest.raises(HTTPException) as exc:
+        await dep(identity=_service_identity())
+    assert exc.value.status_code == 403
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_service_key_is_refused_by_an_authenticated_route_that_does_not_take_it():
+    dep = require_route_access(RouteCategory.AUTHENTICATED)
+    with pytest.raises(HTTPException) as exc:
+        await dep(identity=_service_identity())
+    assert exc.value.status_code == 403
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+@pytest.mark.parametrize("category", [RouteCategory.AUTHENTICATED, RouteCategory.TEAM_REQUIRED])
+async def test_service_key_reaches_a_route_that_takes_it(category: RouteCategory):
+    dep = require_route_access(category, UserRole.MAINTAINERS, ServiceKey.ACCEPTED)
     identity = _service_identity()
     assert (await dep(identity=identity)) is identity
 
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_service_key_bypasses_team_check_with_no_required_role():
-    dep = require_route_access(RouteCategory.TEAM_REQUIRED, None)
+async def test_service_key_reads_public_routes():
+    dep = require_route_access(RouteCategory.PUBLIC)
     identity = _service_identity()
     assert (await dep(identity=identity)) is identity
 
@@ -178,3 +200,20 @@ async def test_unknown_role_string_cannot_elevate_via_team_check():
     with pytest.raises(HTTPException) as exc:
         await dep(identity=identity)
     assert exc.value.status_code == 403
+
+
+# ── Cookie sessions ──────────────────────────────────────────────────────────
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_a_session_whose_user_is_gone_is_refused():
+    """It used to build an identity with no `user_id`, which passes AUTHENTICATED and then has
+    nobody to attribute a write to."""
+    session = {"provider": "supabase", "provider_user_id": "sb-gone", "role": "admins"}
+    with (
+        patch("lib.auth.session_service.get_session", new=AsyncMock(return_value=session)),
+        patch("lib.auth.database.get_user", new=AsyncMock(return_value=None)),
+    ):
+        with pytest.raises(HTTPException) as exc:
+            await get_user_by_cookie(SimpleNamespace(method="GET"), "token")
+    assert exc.value.status_code == 401

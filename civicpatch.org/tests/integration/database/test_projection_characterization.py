@@ -213,8 +213,7 @@ async def _projection(ids: dict) -> dict:
         people_rows = await cur.fetchall()
         await cur.execute(
             """
-            SELECT organization_id::text, role_id, division_ocdid,
-                   meta_is_tracked, meta_headcount
+            SELECT organization_id::text, role_id, division_ocdid
             FROM posts WHERE jurisdiction_ocdid = %s
             ORDER BY role_id, division_ocdid
             """,
@@ -241,8 +240,6 @@ async def _projection(ids: dict) -> dict:
                 "organization": organizations_by_id[row[0]],
                 "role_id": row[1],
                 "division_ocdid": row[2],
-                "meta_is_tracked": row[3],
-                "meta_headcount": row[4],
             }
             for row in post_rows
         ],
@@ -315,15 +312,11 @@ async def test_publishing_two_bodies_derives_this_projection():
                 "organization": "council",
                 "role_id": "council-member",
                 "division_ocdid": _WARD_2,
-                "meta_is_tracked": True,
-                "meta_headcount": 1,
             },
             {
                 "organization": "mayors_office",
                 "role_id": "mayor",
                 "division_ocdid": _BASE,
-                "meta_is_tracked": True,
-                "meta_headcount": 1,
             },
         ],
         "memberships": [
@@ -398,15 +391,11 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
                 "organization": "council",
                 "role_id": "council-member",
                 "division_ocdid": _WARD_2,
-                "meta_is_tracked": True,
-                "meta_headcount": 1,
             },
             {
                 "organization": "mayors_office",
                 "role_id": "mayor",
                 "division_ocdid": _BASE,
-                "meta_is_tracked": True,
-                "meta_headcount": 1,
             },
         ],
         "memberships": [

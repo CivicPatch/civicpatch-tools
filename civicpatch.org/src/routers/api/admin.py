@@ -21,6 +21,14 @@ from services import entry_sheet, jurisdiction_config_sync, rollback
 def get_router() -> APIRouter:
     router = APIRouter()
 
+    @router.post("/jurisdiction_configs/sync", include_in_schema=False)
+    async def sync_jurisdiction_configs_endpoint(
+        request: JurisdictionConfigSyncRequest,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        await jurisdiction_config_sync.sync_jurisdiction_configs(request)
+        return {"data": {"paths": request.paths}}
+
     @router.post("/clear_dashboard_cache", include_in_schema=False)
     async def clear_dashboard_cache_endpoint(
         _: Identity = Depends(
@@ -29,14 +37,6 @@ def get_router() -> APIRouter:
     ):
         await cache_service.invalidate("dashboard_data")
         return {"status": "ok"}
-
-    @router.post("/jurisdiction_configs/sync", include_in_schema=False)
-    async def sync_jurisdiction_configs_endpoint(
-        request: JurisdictionConfigSyncRequest,
-        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
-    ):
-        await jurisdiction_config_sync.sync_jurisdiction_configs(request)
-        return {"data": {"paths": request.paths}}
 
     @router.get("/users", include_in_schema=False)
     async def list_users_endpoint(
@@ -58,8 +58,6 @@ def get_router() -> APIRouter:
         ),
     ):
         user_id_str = str(user_id)
-        # Reject self-edits from session/user-key callers. SERVICE_API_KEY carries
-        # no user_id, so the comparison can never match — the bootstrap path is exempt.
         if identity.user_id and identity.user_id == user_id_str:
             raise HTTPException(status_code=403, detail="Cannot modify your own role")
         user = await users_db.get_user_by_id(user_id_str)

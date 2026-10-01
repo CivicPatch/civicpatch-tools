@@ -48,7 +48,7 @@ from fastapi import (
 )
 from fastapi.responses import JSONResponse
 from lib.auth import require_route_access
-from schemas.common import Identity, RouteCategory, UserRole, has_at_least
+from schemas.common import Identity, RouteCategory, ServiceKey, UserRole, has_at_least
 from schemas.pipeline_runs import (
     BatchPipelineRunRequest,
     CreatePipelineRunRequest,
@@ -299,7 +299,9 @@ def get_router(api_key_header):
         request: UpdatePipelineRunStatusRequest,
         background_tasks: BackgroundTasks,
         user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+            require_route_access(
+                RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS, ServiceKey.ACCEPTED
+            )
         ),
     ):
         background_tasks.add_task(
@@ -332,7 +334,9 @@ def get_router(api_key_header):
         pipeline_run_status: Optional[str] = Form(None),
         env: str = Form("production"),
         _user: Identity = Depends(
-            require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+            require_route_access(
+                RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS, ServiceKey.ACCEPTED
+            )
         ),
     ):
         start_time = time.time()
@@ -675,7 +679,9 @@ def get_router(api_key_header):
     )
     async def get_pipeline_run_status_endpoint(
         pipeline_run_id: str,
-        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+        _: Identity = Depends(
+            require_route_access(RouteCategory.AUTHENTICATED, service_key=ServiceKey.ACCEPTED)
+        ),
     ):
         response = await get_pipeline_run_status(pipeline_run_id)
         if not response:
