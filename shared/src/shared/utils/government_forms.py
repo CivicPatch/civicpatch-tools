@@ -11,7 +11,7 @@ class DerivedOrganization(BaseModel):
 # the one-board forms is whether the chief executive sits and votes on the governing body.
 GOVERNMENT_FORM_DESCRIPTIONS: dict[GovernmentForm, str] = {
     GovernmentForm.MAYOR_COUNCIL: "a council plus a separately elected mayor who does not sit on it",
-    GovernmentForm.COUNCIL_MANAGER: "a council with an appointed manager; any mayor sits on the council",
+    GovernmentForm.COUNCIL_MANAGER: "a council; a mayor, if there is one, sits on it; with or without an appointed manager",
     GovernmentForm.COMMISSION: "elected commissioners who together govern and each head a department",
     GovernmentForm.TOWNSHIP_BOARD: "one elected board whose presiding officer sits and votes on it",
     GovernmentForm.OPEN_TOWN_MEETING: "a select board or board of selectmen, with an open town meeting",

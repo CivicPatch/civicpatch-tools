@@ -221,3 +221,9 @@ class JurisdictionActivityEntry(BaseModel):
     # Display name, absent while pending. `CivicPatch` when a sweep decided rather than a person.
     resolved_by: str | None
     changes: list[RosterChange] = []
+    # The run's LLM spend and what it would have cost with no page cache; with its page counts,
+    # None unless asked for (admins) and for changesets no run produced.
+    cost_usd: float | None = None
+    cost_without_cache_usd: float | None = None
+    pages_cached: int | None = None
+    pages_total: int | None = None

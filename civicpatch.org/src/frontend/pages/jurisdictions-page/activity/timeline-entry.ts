@@ -55,6 +55,11 @@ export interface TimelineEntry {
   resolved_by: string | null;
   pipeline_run_status: string | null;
   changes: RosterChange[];
+  // Null except for admins, and for a changeset no run produced.
+  cost_usd: number | null;
+  cost_without_cache_usd: number | null;
+  pages_cached: number | null;
+  pages_total: number | null;
 }
 
 const KIND_LABEL: Record<string, string> = {
@@ -156,6 +161,22 @@ function renderIssueDetails(entry: TimelineEntry) {
       )}
     </div>
   `;
+}
+
+const dollars = (amount: number) => `$${amount.toFixed(4)}`;
+
+// "$0.0000 spent, $0.0422 without cache, 16 of 16 pages cached". Runs from before pages were
+// recorded have no page count.
+function renderCost(entry: TimelineEntry) {
+  if (entry.cost_usd === null) return nothing;
+  const parts = [`${dollars(entry.cost_usd)} spent`];
+  if (entry.pages_cached && entry.cost_without_cache_usd !== null) {
+    parts.push(`${dollars(entry.cost_without_cache_usd)} without cache`);
+  }
+  if (entry.pages_total) {
+    parts.push(`${entry.pages_cached} of ${entry.pages_total} pages cached`);
+  }
+  return html`<span class="tl-quiet">${parts.join(", ")}</span>`;
 }
 
 function renderSummaryChanges(entry: TimelineEntry) {
@@ -264,6 +285,7 @@ function CivTimelineEntry({
           </span>
         </span>
         <span class="tl-entry__changes">${renderSummaryChanges(entry)}</span>
+        ${renderCost(entry)}
         ${entry.resolved_by
           ? html`<span class="tl-entry__by"
               >by
