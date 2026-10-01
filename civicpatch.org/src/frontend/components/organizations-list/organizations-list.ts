@@ -10,8 +10,10 @@ import {
   deleteOrganization,
   setDefaultOrganization,
 } from "../../api-organizations.js";
+import { deletePost } from "../../api-posts.js";
 import { useAsyncData } from "../../hooks/use-async-data.js";
-import { defaultOrganizationId, type Organization } from "./organizations-model.js";
+import { defaultOrganizationId, mergeTargets, type Organization } from "./organizations-model.js";
+import type { Post } from "../posts-list/posts-model.js";
 
 type OrganizationsListHost = HTMLElement & {
   jurisdictionOcdid?: string;
@@ -27,16 +29,77 @@ type RowActions = {
   onMakeDefault: (id: string) => void;
 };
 
-const renderPosts = (organization: Organization) => html`
+type Deleting = { postId: string; intoPostId: string } | null;
+
+type PostActions = {
+  onDelete: (postId: string) => void;
+  onPickInto: (intoPostId: string) => void;
+  onConfirm: () => void;
+  onCancel: () => void;
+};
+
+const organizationName = (organizations: Organization[], id: string) =>
+  organizations.find((organization) => organization.id === id)?.name ?? "";
+
+const renderDeleteConfirm = (
+  targets: Post[],
+  organizations: Organization[],
+  intoPostId: string,
+  actions: PostActions,
+) => html`
+  <div class="organizations-list__delete-confirm">
+    ${targets.length
+      ? html`<label>
+          Move holders to:
+          <select
+            .value=${intoPostId}
+            @change=${(e: Event) => actions.onPickInto((e.target as HTMLSelectElement).value)}
+          >
+            <option value="">Nobody</option>
+            ${targets.map(
+              (target) => html`<option value=${target.id}>
+                ${organizationName(organizations, target.organization_id)}, ${target.label}
+              </option>`,
+            )}
+          </select>
+        </label>`
+      : ""}
+    <button class="civ-action-btn" @click=${actions.onConfirm}>Delete</button>
+    <button class="civ-action-btn" @click=${actions.onCancel}>Cancel</button>
+  </div>
+`;
+
+const renderPost = (
+  post: Post,
+  organizations: Organization[],
+  deleting: Deleting,
+  actions: PostActions,
+) => html`
+  <li class="organizations-list__post">
+    <span>${post.label}</span>
+    ${deleting?.postId === post.id
+      ? ""
+      : html`<button class="civ-action-btn" @click=${() => actions.onDelete(post.id)}>Delete</button>`}
+  </li>
+  ${deleting?.postId === post.id
+    ? renderDeleteConfirm(
+        mergeTargets(organizations, post),
+        organizations,
+        deleting.intoPostId,
+        actions,
+      )
+    : ""}
+`;
+
+const renderPosts = (
+  organization: Organization,
+  organizations: Organization[],
+  deleting: Deleting,
+  actions: PostActions,
+) => html`
   <li class="organizations-list__posts">
     <ul class="organizations-list__post-rows">
-      ${organization.posts.map(
-        (post) => html`
-          <li class="organizations-list__post">
-            <span>${post.label}</span>
-          </li>
-        `,
-      )}
+      ${organization.posts.map((post) => renderPost(post, organizations, deleting, actions))}
     </ul>
   </li>
 `;
@@ -83,6 +146,7 @@ const renderOrganization = (
 function OrganizationsList(host: OrganizationsListHost) {
   const [editing, setEditing] = useState<Editing>(null);
   const [error, setError] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<Deleting>(null);
   const ocdid = host.jurisdictionOcdid;
   const canManage = !!host.canManage;
 
@@ -112,6 +176,16 @@ function OrganizationsList(host: OrganizationsListHost) {
     onEdit: (id) => setEditing({ entity: "organization", id }),
     onRemove: (id) => runAndReload(() => deleteOrganization(id)),
     onMakeDefault: (id) => runAndReload(() => setDefaultOrganization(id)),
+  };
+  const postActions: PostActions = {
+    onDelete: (postId) => setDeleting({ postId, intoPostId: "" }),
+    onPickInto: (intoPostId) => deleting && setDeleting({ ...deleting, intoPostId }),
+    onConfirm: () => {
+      if (!deleting) return;
+      setDeleting(null);
+      runAndReload(() => deletePost(deleting.postId, deleting.intoPostId || null));
+    },
+    onCancel: () => setDeleting(null),
   };
 
   const controls = html`
@@ -150,7 +224,7 @@ function OrganizationsList(host: OrganizationsListHost) {
           (organization) => html`
             ${renderOrganization(organization, organization.id === defaultId, canManage, actions)}
             ${canManage && organization.posts.length
-              ? renderPosts(organization)
+              ? renderPosts(organization, data, deleting, postActions)
               : ""}
           `,
         )}

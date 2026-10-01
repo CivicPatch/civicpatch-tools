@@ -64,6 +64,7 @@ async def summary_of(
         published,
         proposed,
         roster_diff(published, proposed),
+        fold.known_person_ids,
         read_organization_ids,
         role_labels,
         unique_role_ids,

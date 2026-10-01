@@ -169,9 +169,9 @@ class DismissalReason(StrEnum):
 
 
 class PullRequestLabel(StrEnum):
-    """What cp.org labels its open-data PRs with. A cross-repo contract: open-data's merge gate
-    (scripts/github_actions/merge_config_pr.py) merges the two person labels and never `system`,
-    so a rename here without the same change there stops merging silently."""
+    """What cp.org labels its open-data PRs with. A cross-repo contract: open-data's merge gates
+    (scripts/github_actions/merge_config_pr.py, merge_jurisdiction_pr.py) merge all three, so a
+    rename here without the same change there stops merging silently."""
 
     ADMIN = "civicpatch:admin"
     MAINTAINER = "civicpatch:maintainer"

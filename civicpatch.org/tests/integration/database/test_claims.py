@@ -629,8 +629,7 @@ async def test_a_vouch_does_not_stop_the_voucher_deleting_the_post():
     """A person's *history* blocks a delete; their *opinion* does not.
 
     Somebody who vouched for a post and has since decided it is wrong is the very person
-    deleting it. The vouch goes with the post — `claims` has no foreign key, so leaving it
-    would orphan a row pointing at nothing.
+    deleting it. The vouch stays, as inert history: facts are append-only (R1).
     """
     user_id, post_id = await _seed()
     await claims.create(_vouch(post_id, await factories.hand_edit(_OCDID, user_id)), user_id)
@@ -639,7 +638,7 @@ async def test_a_vouch_does_not_stop_the_voucher_deleting_the_post():
     async with pool.connection() as conn, conn.cursor() as cur:
         assert await posts.delete_if_unheld(cur, post_id) is True
         rows = (await claims.list_for_entities(cur, EntityType.POST, [post_id])).get(post_id, [])
-        assert rows == []
+        assert len(rows) == 1
         await conn.commit()
 
 

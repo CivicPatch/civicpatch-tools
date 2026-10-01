@@ -94,6 +94,7 @@ async def test_the_service_key_reaches_every_route_it_is_used_for(method, path):
     [
         ("POST", "/api/v1/organizations/{organization_id}/posts"),
         ("PATCH", "/api/v1/posts/{post_id}"),
+        ("DELETE", "/api/v1/posts/{post_id}"),
         ("PUT", "/api/admin/users/{user_id}/role"),
         ("GET", "/api/admin/users"),
         ("POST", "/api/admin/users/{user_id}/rollback"),
