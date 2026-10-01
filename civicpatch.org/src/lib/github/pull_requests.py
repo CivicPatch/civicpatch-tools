@@ -63,7 +63,7 @@ async def open_attributed_pr(
         repo_url=repo_url,
         headers=headers,
         labels=all_labels,
-        head_repo=fork_name,
+        head_repo=f"{fork_owner}/{fork_name}",
     )
 
 

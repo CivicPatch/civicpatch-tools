@@ -49,6 +49,28 @@ async def test_a_pr_whose_labels_fail_is_closed_and_reported():
 
 @pytest.mark.unit
 @pytest.mark.asyncio
+async def test_a_fork_pr_names_its_fork_and_asks_for_no_maintainer_edits():
+    """Both found against GitHub 2026-09-30: a bare `head_repo` is "head invalid", and the bot
+    opening the PR cannot write the fork, so it cannot grant maintainer edits."""
+    client = _client_creating_pr(5)
+    with (
+        patch("lib.github.api._get_github_config", return_value=("", "", "", REPO_URL)),
+        patch("lib.github.api.httpx.AsyncClient", return_value=client),
+    ):
+        await create_pull_request(
+            "CivicPatch:civicpatch/jurisdiction-edit/x",
+            title="Government form",
+            repo_url=REPO_URL,
+            headers=HEADERS,
+            head_repo="CivicPatch/j-fork-nonprod",
+        )
+
+    payload = client.post.call_args.kwargs["json"]
+    assert (payload["head_repo"], payload["maintainer_can_modify"]) == ("CivicPatch/j-fork-nonprod", False)
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
 async def test_a_labelled_pr_stays_open():
     (number, _), mock_close = await _open(labels_applied=True)
 

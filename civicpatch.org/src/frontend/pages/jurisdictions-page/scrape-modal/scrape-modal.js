@@ -2,7 +2,7 @@ import "./scrape-modal.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import "../../../components/basic/modal.js";
-import { flattenPages } from "./previous-pages.ts";
+import { flattenSourceUrls } from "./roster-source-urls.ts";
 
 const TOP_LEVEL_SCOPE = "top-level-url";
 const SPECIFIC_URLS_SCOPE = "specific-urls";
@@ -10,20 +10,20 @@ const SPECIFIC_URLS_SCOPE = "specific-urls";
 function ScrapeModal({
   onStartScrape,
   url = "",
-  previousPages = [],
+  rosterSourceUrls = [],
   modalProps = {},
 }) {
   const [scrapeScope, setScrapeScope] = useState(TOP_LEVEL_SCOPE);
   const [currentUrl, setCurrentUrl] = useState(url);
-  const [pageGroups, setPageGroups] = useState(previousPages);
+  const [pageGroups, setPageGroups] = useState(rosterSourceUrls);
 
-  // Typed-in urls replace the previous pages, so each opening starts from them again, and on
+  // Typed-in urls replace the roster's pages, so each opening starts from them again, and on
   // them when there are any: the person sees exactly what will be read.
   useEffect(() => {
     if (!modalProps.open) return;
-    setPageGroups(previousPages);
+    setPageGroups(rosterSourceUrls);
     setScrapeScope(
-      flattenPages(previousPages).length ? SPECIFIC_URLS_SCOPE : TOP_LEVEL_SCOPE,
+      flattenSourceUrls(rosterSourceUrls).length ? SPECIFIC_URLS_SCOPE : TOP_LEVEL_SCOPE,
     );
   }, [modalProps.open]);
 
@@ -62,7 +62,7 @@ function ScrapeModal({
     );
   };
 
-  const currentSourceUrls = flattenPages(pageGroups);
+  const currentSourceUrls = flattenSourceUrls(pageGroups);
 
   const isValidUrl = (urlString) => {
     if (!urlString || urlString.trim() === "") return false;
@@ -158,7 +158,7 @@ function ScrapeModal({
           : pageGroups.map(
               (group, groupIndex) => html`
                 <fieldset class="scrape-modal__group">
-                  <legend>${group.organizationName}</legend>
+                  <legend>${group.organization_name}</legend>
                   ${group.urls.map(
                     (url, urlIndex) => html`
                       <fieldset role="group">

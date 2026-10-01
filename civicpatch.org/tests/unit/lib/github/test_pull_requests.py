@@ -73,7 +73,7 @@ async def test_the_jurisdictions_bot_opens_the_pr_on_the_repo_from_the_fork():
     head = mock_create_pr.call_args.args[0]
     kwargs = mock_create_pr.call_args.kwargs
     assert head == f"CivicPatch:{BRANCH}"
-    assert (kwargs["repo_url"], kwargs["headers"], kwargs["head_repo"]) == (REPO_URL, PR_HEADERS, "jurisdictions")
+    assert (kwargs["repo_url"], kwargs["headers"], kwargs["head_repo"]) == (REPO_URL, PR_HEADERS, "CivicPatch/jurisdictions")
     assert kwargs["labels"] == ["civicpatch:maintainer"]
 
 

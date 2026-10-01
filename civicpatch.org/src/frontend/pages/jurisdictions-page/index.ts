@@ -22,11 +22,11 @@ import "./scrape-modal/name-config-form.js";
 import {
   triggerPipelineRun,
   fetchJurisdictionInFlight,
+  fetchRosterSourceUrls,
   openJurisdictionPullRequest,
 } from "../../api.js";
 import { renderJurisdictionHeader } from "./jurisdiction-header.js";
-import { useOrganizations } from "../../hooks/use-organizations.js";
-import { previousPagesByOrganization } from "./scrape-modal/previous-pages.js";
+import type { RosterSourceUrls } from "./scrape-modal/roster-source-urls.ts";
 import "./roster-editor.js";
 import {
   pendingReviews,
@@ -107,7 +107,7 @@ function JurisdictionPage({
   const { user, permissions } = useAuth();
   const isSignedIn = !!user?.authenticated;
   const { people, isLoading: peopleLoading, refetch: refetchPeople } = usePeople(jurisdiction_ocdid);
-  const { organizations } = useOrganizations(jurisdiction_ocdid);
+  const [rosterSourceUrls, setRosterSourceUrls] = useState<RosterSourceUrls[]>([]);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false);
   const [manageOrgsOpen, setManageOrgsOpen] = useState(false);
   const hasEditPermission = !!permissions.can_edit_jurisdiction_data;
@@ -130,6 +130,14 @@ function JurisdictionPage({
       })
       .catch(() => setInFlight([]));
   }, [jurisdiction_ocdid]);
+
+  // Keyed on `people` so a publish that refetches the roster refetches its pages too.
+  useEffect(() => {
+    if (!jurisdiction_ocdid) return;
+    fetchRosterSourceUrls(jurisdiction_ocdid)
+      .then((body: any) => setRosterSourceUrls(body.data))
+      .catch(() => setRosterSourceUrls([]));
+  }, [jurisdiction_ocdid, people]);
 
   const wsTopic = jurisdiction_ocdid
     ? pipelineRunStatusChannel(jurisdiction_ocdid)
@@ -257,7 +265,7 @@ function JurisdictionPage({
         ? html`<civ-scrape-modal
             .onStartScrape=${handleScrapeStartClick}
             .url=${jurisdictionData?.data?.url}
-            .previousPages=${previousPagesByOrganization(people, organizations)}
+            .rosterSourceUrls=${rosterSourceUrls}
             .modalProps=${{
               open: scrapeModalOpen,
               onClose: () => setScrapeModalOpen(false),

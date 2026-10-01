@@ -7,6 +7,7 @@ import services.roster_edits as roster_edits
 import services.jurisdiction_pull_request as jurisdiction_pr_service
 import services.jurisdiction_scrape_candidate as candidate_service
 import services.government_form as government_form_service
+import services.roster_source_urls as roster_source_urls_service
 from database.users import SYSTEM_USER_ID
 from core.jurisdiction_search import build_fuzzy_tokens, build_tsquery
 from core.people_edits import PeopleValidationError
@@ -364,5 +365,11 @@ def get_router() -> APIRouter:
         ),
     ):
         return {"data": await changesets.get_in_flight(jurisdiction_ocdid)}
+
+    # Public: the urls are already on the public roster's memberships.
+    @router.get("/{jurisdiction_ocdid:path}/roster-source-urls")
+    async def get_roster_source_urls_endpoint(jurisdiction_ocdid: str):
+        groups = await roster_source_urls_service.get_roster_source_urls(jurisdiction_ocdid)
+        return {"data": [group.model_dump() for group in groups]}
 
     return router

@@ -307,8 +307,9 @@ async def create_pull_request(
 ) -> tuple[int, str] | tuple[None, str]:
     """Opens a PR in the target repo from branch_name into base.
     Returns (pr_number, pr_url) on success, or (None, error_message) on failure.
-    `head_repo`: the fork's name when branch_name lives in a fork in the same org; GitHub
-    requires it then."""
+    `head_repo`: the fork as `owner/name` when branch_name lives in a fork in the same org; GitHub
+    requires it then, and rejects the bare name the docs describe. A fork PR asks for no
+    maintainer edits: the bot opening it cannot write the fork, so it cannot grant them."""
     _, _, _, open_data_repo_url = _get_github_config()
     target_repo = repo_url or open_data_repo_url
     auth_headers = headers if headers is not None else await get_default_headers()
@@ -321,7 +322,7 @@ async def create_pull_request(
                 "body": body,
                 "head": branch_name,
                 "base": base,
-                **({"head_repo": head_repo} if head_repo else {}),
+                **({"head_repo": head_repo, "maintainer_can_modify": False} if head_repo else {}),
             },
         )
         if response.status_code != 201:

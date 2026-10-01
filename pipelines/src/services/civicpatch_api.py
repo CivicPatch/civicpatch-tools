@@ -195,6 +195,16 @@ async def get_organizations(
     return [KnownOrganization.model_validate(organization) for organization in organizations]
 
 
+async def get_roster_source_urls(client: httpx.AsyncClient, jurisdiction_ocdid: str) -> List[str]:
+    """The published roster's pages, as cp.org picks them for a re-scrape to start at."""
+    env = get_env_vars()
+    response = await client.get(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/roster-source-urls"
+    )
+    response.raise_for_status()
+    return [url for group in response.json()["data"] for url in group["urls"]]
+
+
 async def fetch_pipeline_run_status(
     client: httpx.AsyncClient, pipeline_run_id: str
 ) -> Optional[str]:
