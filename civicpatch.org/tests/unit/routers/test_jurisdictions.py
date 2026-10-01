@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
 
 from schemas.common import Identity, UserRole
-from schemas.jurisdictions import GovernmentFormSummary, JurisdictionSearchResult
+from schemas.jurisdictions import GovernmentFormSummary, JurisdictionSearchResult, OrganizationRosterSourceUrls
 from shared.schemas import GovernmentForm
 from lib.auth import get_optional_user
 from routers.api import jurisdictions as jurisdictions_router
@@ -509,6 +509,29 @@ def test_in_flight_answers_the_data_envelope(client):
 
     assert response.status_code == 200
     assert response.json()["data"] == payload
+
+
+@pytest.mark.unit
+def test_roster_source_urls_answer_the_data_envelope(client):
+    """Thin on purpose: which urls are kept is `tests/unit/core/test_roster_source_urls.py`'s subject."""
+    groups = [
+        OrganizationRosterSourceUrls(
+            organization_id="org-1", organization_name="Council", urls=["https://oakland.gov/council"]
+        )
+    ]
+    with patch(
+        "services.roster_source_urls.get_roster_source_urls",
+        new_callable=AsyncMock,
+        return_value=groups,
+    ):
+        response = client.get(
+            "/jurisdictions/ocd-jurisdiction/country:us/state:ca/place:oakland/government/roster-source-urls"
+        )
+
+    assert response.status_code == 200
+    assert response.json()["data"] == [
+        {"organization_id": "org-1", "organization_name": "Council", "urls": ["https://oakland.gov/council"]}
+    ]
 
 
 EDIT_OCDID = "ocd-jurisdiction/country:us/state:ca/place:oakland"

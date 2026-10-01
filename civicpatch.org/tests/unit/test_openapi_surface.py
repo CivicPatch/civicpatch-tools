@@ -15,6 +15,7 @@ PUBLIC_ROUTES = {
     ("GET", "/api/v1/jurisdictions/search"),
     ("GET", "/api/v1/jurisdictions/activity"),
     ("GET", "/api/v1/jurisdictions/in-flight"),
+    ("GET", "/api/v1/jurisdictions/{jurisdiction_ocdid}/roster-source-urls"),
     ("GET", "/api/v1/people"),
     ("GET", "/api/v1/people/geo"),
     ("GET", "/api/v1/memberships/{jurisdiction_ocdid}"),

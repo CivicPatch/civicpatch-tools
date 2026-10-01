@@ -360,6 +360,14 @@ export const fetchJurisdictionInFlight = async (jurisdictionOcdid) => {
   return res.json();
 };
 
+export const fetchRosterSourceUrls = async (jurisdictionOcdid) => {
+  const res = await fetch(`/api/v1/jurisdictions/${jurisdictionOcdid}/roster-source-urls`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const generatePersonId = async () => {
   const res = await fetch(`/api/v1/people/generate-id`, {
     method: "POST",

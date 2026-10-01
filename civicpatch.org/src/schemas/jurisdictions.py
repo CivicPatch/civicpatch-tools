@@ -22,6 +22,12 @@ class JurisdictionDetailsFields(BaseModel):
     open_pull_request_url: str | None
 
 
+class OrganizationRosterSourceUrls(BaseModel):
+    organization_id: str
+    organization_name: str
+    urls: List[str]
+
+
 class JurisdictionsByOcdidsRequest(BaseModel):
     ocdids: List[str]
 

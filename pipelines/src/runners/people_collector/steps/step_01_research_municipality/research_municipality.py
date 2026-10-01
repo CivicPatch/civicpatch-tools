@@ -75,9 +75,7 @@ async def research_municipality(
         # Whoever cp.org has published, else whoever research named. Separate from the offices
         # above: a jurisdiction can have posts and nobody accepted onto them yet.
         identities=_identities(existing, researched),
-        source_urls=_source_urls(
-            context.data.config, [Person(**person) for person in existing]
-        ),
+        source_urls=await _source_urls(context.data.config, api_client, jurisdiction_ocdid),
     )
 
 
@@ -232,28 +230,10 @@ def _as_researched_people(people: List[dict]) -> List[ResearchedPerson]:
     return formatted_people
 
 
-def _source_urls(config, people: List[Person]) -> List[str]:
-    """Where to start crawling: a configured list wins, else the pages the published memberships
-    were read from."""
+async def _source_urls(
+    config, api_client: httpx.AsyncClient, jurisdiction_ocdid: str
+) -> List[str]:
+    """Where to start crawling: a configured list wins, else the published roster's pages."""
     if config.source_urls:
         return config.source_urls
-    return _membership_pages(people)
-
-
-def _membership_pages(people: List[Person]) -> List[str]:
-    """Every page each organization was found on, roster pages first.
-
-    Ordered by how many people were read from a page, so a five-member council's directory comes
-    before the five bios it links to. The bios stay: a page that listed one person last time is
-    still where that person was, and dropping it is only correct if the directory really does
-    cover everyone, which is the thing a scrape is running to find out.
-
-    A page can belong to two organizations — a shared "elected officials" listing is where both
-    the council and the mayor were read — so it is counted across organizations and seeded once.
-    """
-    people_by_url: Dict[str, set] = {}
-    for person in people:
-        for membership in person.memberships:
-            for url in membership.source_urls:
-                people_by_url.setdefault(url, set()).add(person.id)
-    return sorted(people_by_url, key=lambda url: -len(people_by_url[url]))
+    return await civicpatch_api.get_roster_source_urls(api_client, jurisdiction_ocdid)

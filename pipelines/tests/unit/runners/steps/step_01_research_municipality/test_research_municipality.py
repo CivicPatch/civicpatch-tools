@@ -7,6 +7,7 @@ split and nothing to resolve — the test for compound office names went with th
 
 from types import SimpleNamespace
 
+import httpx
 import pytest
 
 from runners.people_collector.steps.step_01_research_municipality.research_municipality import (
@@ -18,7 +19,6 @@ from runners.people_collector.schemas import ExpectedMembership, ResearchedPerso
 from shared.schemas import (
     KnownOrganization,
     Membership,
-    Person,
     Post,
     Role,
     RoleConfig,
@@ -171,91 +171,11 @@ def _config(source_urls: list[str] | None = None):
     return SimpleNamespace(source_urls=source_urls or [])
 
 
-def _person(
-    person_id: str = "p",
-    source_urls: list[str] | None = None,
-    memberships: list[Membership] | None = None,
-) -> Person:
-    return Person(
-        id=person_id,
-        name="Someone",
-        jurisdiction_ocdid=_OCDID,
-        source_urls=source_urls or [],
-        memberships=memberships or [],
-    )
-
-
-def _membership(organization_id: str, source_urls: list[str]) -> Membership:
-    return Membership(
-        post_id="post",
-        organization_id=organization_id,
-        role_id="council-member",
-        division_ocdid=_BASE,
-        role_label="Council Member",
-        source_urls=source_urls,
-    )
-
-
-def test_only_membership_pages_seed_the_crawl():
-    """A person's own `source_urls` span every organization they were ever seen in; the pages
-    behind their memberships are the ones that belong to an organization."""
-    seeds = _source_urls(
-        _config(),
-        [
-            _person("a", ["https://zz.gov/news"], [_membership("council", ["https://zz.gov/council"])]),
-            _person("b", ["https://zz.gov/news"]),
-        ],
-    )
-
-    assert seeds == ["https://zz.gov/council"]
-
-
-def test_a_one_person_organization_keeps_its_page():
-    """A mayor's office page is seeded though nobody else was read from it."""
-    seeds = _source_urls(
-        _config(),
-        [_person("a", [], [_membership("mayor", ["https://zz.gov/mayor"])])],
-    )
-
-    assert seeds == ["https://zz.gov/mayor"]
-
-
-def test_the_directory_comes_before_the_bios_it_links_to():
-    """Both are worth fetching; the roster page is worth fetching first."""
-    directory = "https://zz.gov/council"
-    people = [
-        _person(name, [], [_membership("council", [directory, f"https://zz.gov/council/{name}"])])
-        for name in ("ana", "ben", "cal")
-    ]
-
-    seeds = _source_urls(_config(), people)
-
-    assert seeds[0] == directory
-    assert sorted(seeds[1:]) == [f"https://zz.gov/council/{n}" for n in ("ana", "ben", "cal")]
-
-
-def test_a_page_two_organizations_were_read_from_is_seeded_once():
-    """A shared "elected officials" listing belongs to both, and the crawler fetches one page."""
-    shared = "https://zz.gov/elected-officials"
-    people = [
-        _person("a", [], [_membership("council", [shared])]),
-        _person("b", [], [_membership("mayor", [shared])]),
-    ]
-
-    seeds = _source_urls(_config(), people)
-
-    assert seeds == [shared]
-
-
-def test_a_configured_list_wins_over_everything():
+@pytest.mark.asyncio
+async def test_a_configured_list_wins_without_asking_cp_org():
     """A human naming the pages means they know something the last scrape did not."""
-    seeds = _source_urls(
-        _config(["https://zz.gov/only-this"]),
-        [
-            _person("a", ["https://zz.gov/council"]),
-            _person("b", ["https://zz.gov/council"]),
-        ],
-    )
+    async with httpx.AsyncClient(base_url="http://cp-org.invalid") as client:
+        seeds = await _source_urls(_config(["https://zz.gov/only-this"]), client, _OCDID)
 
     assert seeds == ["https://zz.gov/only-this"]
 

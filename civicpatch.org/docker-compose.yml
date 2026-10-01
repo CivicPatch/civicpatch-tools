@@ -21,7 +21,7 @@ services:
       OPEN_DATA_REPO_URL: ${OPEN_DATA_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
       # open-data's own jurisdiction files until the jurisdictions repo exists.
       JURISDICTIONS_REPO_URL: ${JURISDICTIONS_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
-      JURISDICTIONS_FORK_REPO_URL: ${JURISDICTIONS_FORK_REPO_URL:-https://api.github.com/repos/CivicPatch/jurisdictions-nonprod}
+      JURISDICTIONS_FORK_REPO_URL: ${JURISDICTIONS_FORK_REPO_URL:-https://api.github.com/repos/CivicPatch/j-fork-nonprod}
       JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID:-NO_KEY_PROVIDED}
       JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64: ${JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64:-NO_KEY_PROVIDED}
       JURISDICTIONS_SYNC_APP_INSTALLATION_ID: ${JURISDICTIONS_SYNC_APP_INSTALLATION_ID:-NO_KEY_PROVIDED}
@@ -145,7 +145,7 @@ services:
       REDIS_HOST: civicpatch-org-redis
       OPEN_DATA_REPO_URL: ${OPEN_DATA_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
       JURISDICTIONS_REPO_URL: ${JURISDICTIONS_REPO_URL:-https://api.github.com/repos/CivicPatch/test-open-data}
-      JURISDICTIONS_FORK_REPO_URL: ${JURISDICTIONS_FORK_REPO_URL:-https://api.github.com/repos/CivicPatch/jurisdictions-nonprod}
+      JURISDICTIONS_FORK_REPO_URL: ${JURISDICTIONS_FORK_REPO_URL:-https://api.github.com/repos/CivicPatch/j-fork-nonprod}
       JURISDICTIONS_SYNC_APP_ID: ${JURISDICTIONS_SYNC_APP_ID}
       JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64: ${JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64}
       JURISDICTIONS_SYNC_APP_INSTALLATION_ID: ${JURISDICTIONS_SYNC_APP_INSTALLATION_ID}
