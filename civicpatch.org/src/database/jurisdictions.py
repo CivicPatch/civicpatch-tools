@@ -757,14 +757,46 @@ ROSTER_CHANGE_TYPES = [
 # dev holds 400 changesets in total, so it is the wrong place to measure this.
 DEFAULT_ACTIVITY_LIMIT = 25
 
+# A cached page's projected cost is what its original reading's calls cost.
+_RUN_COST_COLUMNS = """
+                   CASE WHEN run.id IS NOT NULL THEN COALESCE(spent.cost_usd, 0) END AS cost_usd,
+                   CASE WHEN run.id IS NOT NULL
+                        THEN COALESCE(spent.cost_usd, 0) + COALESCE(cached.cost_usd, 0)
+                   END AS cost_without_cache_usd,
+                   CASE WHEN run.id IS NOT NULL THEN pages.pages_cached END AS pages_cached,
+                   CASE WHEN run.id IS NOT NULL THEN pages.pages_total END AS pages_total"""
+_NO_COST_COLUMNS = """
+                   NULL::float8 AS cost_usd, NULL::float8 AS cost_without_cache_usd,
+                   NULL::int AS pages_cached, NULL::int AS pages_total"""
+_RUN_COST_JOINS = """
+            LEFT JOIN LATERAL (
+                SELECT sum(cost_usd)::float8 AS cost_usd FROM llm_calls
+                WHERE llm_calls.pipeline_run_id = run.id
+            ) spent ON true
+            LEFT JOIN LATERAL (
+                SELECT sum(llm_calls.cost_usd)::float8 AS cost_usd
+                FROM source_pages page
+                JOIN source_pages original ON original.id = page.unchanged_since_source_page_id
+                JOIN llm_calls ON llm_calls.pipeline_run_id = original.pipeline_run_id
+                              AND llm_calls.source_url = original.source_url
+                WHERE page.pipeline_run_id = run.id
+            ) cached ON true
+            LEFT JOIN LATERAL (
+                SELECT count(*)::int AS pages_total,
+                       count(unchanged_since_source_page_id)::int AS pages_cached
+                FROM source_pages WHERE source_pages.pipeline_run_id = run.id
+            ) pages ON true"""
+
 
 async def get_jurisdiction_activity(
     jurisdiction_ocdid,
     limit: int = DEFAULT_ACTIVITY_LIMIT,
     offset: int = 0,
+    with_costs: bool = False,
 ) -> tuple[int, List[JurisdictionActivityEntry]]:
     """`(total, page)`, matching `get_activity_for_roles` — the caller needs the count to
-    render a pager, and taking it here keeps it on the same connection as the page."""
+    render a pager, and taking it here keeps it on the same connection as the page.
+    `with_costs` joins each run's LLM spend; admins only, so nobody else pays for the join."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
         await cur.execute(
@@ -811,9 +843,10 @@ async def get_jurisdiction_activity(
                    -- shown, so a dismissal read as motiveless.
                    changesets.dismissed_reason,
                    COALESCE(iss.issues, '[]'::jsonb) AS issues,
-                   COALESCE(rc.changes, '[]'::jsonb) AS changes
+                   COALESCE(rc.changes, '[]'::jsonb) AS changes,
+                   {_RUN_COST_COLUMNS if with_costs else _NO_COST_COLUMNS}
             FROM changesets
-            LEFT JOIN pipeline_runs run ON run.changeset_id = changesets.id
+            LEFT JOIN pipeline_runs run ON run.changeset_id = changesets.id{_RUN_COST_JOINS if with_costs else ""}
             LEFT JOIN users resolver ON resolver.id = changesets.resolved_by_user_id
             LEFT JOIN roster_changes rc ON rc.changeset_id = changesets.id::text
             -- Every status: dismissing settles an issue, so filtering to open ones hid the
@@ -872,6 +905,10 @@ async def get_jurisdiction_activity(
                     roster_change(log["type"], log["created_at"], log["changes"] or {})
                     for log in row["changes"]
                 ],
+                cost_usd=row["cost_usd"],
+                cost_without_cache_usd=row["cost_without_cache_usd"],
+                pages_cached=row["pages_cached"],
+                pages_total=row["pages_total"],
             )
             for row in rows
         ]

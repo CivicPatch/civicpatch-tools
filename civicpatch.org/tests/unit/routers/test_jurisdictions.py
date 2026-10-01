@@ -133,6 +133,33 @@ def test_get_jurisdiction_activity_returns_a_paged_envelope(client):
     assert body["data"] == [{"changeset_id": "req-1", "status": "complete"}]
 
 
+def _asks_for_costs(client, identity: Identity | None) -> bool:
+    client.app.dependency_overrides[get_optional_user] = lambda: identity
+    with patch(
+        "database.jurisdictions.get_jurisdiction_activity",
+        new_callable=AsyncMock,
+        return_value=(0, []),
+    ) as get_activity:
+        client.get(
+            "/jurisdictions/activity",
+            params={"jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:oakland"},
+        )
+    return get_activity.call_args.kwargs["with_costs"]
+
+
+@pytest.mark.unit
+def test_an_admin_gets_what_each_scrape_cost(client):
+    admin = _maintainer().model_copy(update={"role": UserRole.ADMINS})
+
+    assert _asks_for_costs(client, admin) is True
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("identity", [None, _maintainer()])
+def test_nobody_below_admin_pays_for_the_cost_join(client, identity):
+    assert _asks_for_costs(client, identity) is False
+
+
 @pytest.mark.unit
 def test_a_jurisdiction_with_no_history_is_an_empty_page_not_a_404(client):
     """Replaces `test_get_jurisdiction_activity_returns_404_when_none`, which mocked the query

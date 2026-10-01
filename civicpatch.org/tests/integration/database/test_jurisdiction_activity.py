@@ -30,6 +30,9 @@ async def _wipe():
             "DELETE FROM activity WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         await cur.execute(
+            "DELETE FROM source_pages WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         # Claim badges resolve their subject against `people`, so those tests seed one.
@@ -500,6 +503,100 @@ async def test_an_entry_carries_what_the_run_reported():
     assert [(i.issue_type, i.status) for i in entry.issues] == [
         ("cost_cap_reached", "pending")
     ]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_scrape_entry_carries_what_its_run_spent():
+    pool = await get_pool()
+    changeset_id = str(uuid.uuid4())
+    run_id = str(uuid.uuid4())
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, data, status) "
+            "VALUES (%s, 'zz', 'local', '{}'::jsonb, 'active') ON CONFLICT DO NOTHING",
+            (_OCDID,),
+        )
+        await cur.execute(
+            "INSERT INTO changesets (id, jurisdiction_ocdid, kind, created_at, updated_at, "
+            "published_at) VALUES (%s, %s, 'scrape', now(), now(), now())",
+            (changeset_id, _OCDID),
+        )
+        await cur.execute(
+            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
+            "changeset_id, finished_at) VALUES (%s, %s, '{}'::jsonb, 'SUCCESS', %s, now())",
+            (run_id, _OCDID, changeset_id),
+        )
+        for cost in ("0.0016", "0.0110"):
+            await cur.execute(
+                "INSERT INTO llm_calls (pipeline_run_id, prompt_name, gateway, model, "
+                "routed_model, upstream_provider, input_tokens, output_tokens, cost_usd) "
+                "VALUES (%s, 'relevant_page', 'openrouter', 'm', 'm', 'p', 1, 1, %s)",
+                (run_id, cost),
+            )
+        await conn.commit()
+
+    _total, with_costs = await db_jurisdictions.get_jurisdiction_activity(_OCDID, with_costs=True)
+    _total, without_costs = await db_jurisdictions.get_jurisdiction_activity(_OCDID)
+
+    assert next(e for e in with_costs if e.changeset_id == changeset_id).cost_usd == pytest.approx(0.0126)
+    assert next(e for e in without_costs if e.changeset_id == changeset_id).cost_usd is None
+
+
+async def _seed_scrape_run(cur) -> tuple[str, str]:
+    changeset_id = str(uuid.uuid4())
+    run_id = str(uuid.uuid4())
+    await cur.execute(
+        "INSERT INTO changesets (id, jurisdiction_ocdid, kind, created_at, updated_at, "
+        "published_at) VALUES (%s, %s, 'scrape', now(), now(), now())",
+        (changeset_id, _OCDID),
+    )
+    await cur.execute(
+        "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
+        "changeset_id, finished_at) VALUES (%s, %s, '{}'::jsonb, 'SUCCESS', %s, now())",
+        (run_id, _OCDID, changeset_id),
+    )
+    return changeset_id, run_id
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_cached_page_costs_nothing_and_counts_what_it_would_have():
+    pool = await get_pool()
+    page_url = "https://zz.gov/council"
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, data, status) "
+            "VALUES (%s, 'zz', 'local', '{}'::jsonb, 'active') ON CONFLICT DO NOTHING",
+            (_OCDID,),
+        )
+        _first_changeset, first_run = await _seed_scrape_run(cur)
+        await cur.execute(
+            "INSERT INTO source_pages (source_url, jurisdiction_ocdid, pipeline_run_id) "
+            "VALUES (%s, %s, %s) RETURNING id::text",
+            (page_url, _OCDID, first_run),
+        )
+        original_page_id = (await cur.fetchone())[0]
+        await cur.execute(
+            "INSERT INTO llm_calls (pipeline_run_id, prompt_name, gateway, model, "
+            "routed_model, upstream_provider, input_tokens, output_tokens, cost_usd, source_url) "
+            "VALUES (%s, 'relevant_page', 'openrouter', 'm', 'm', 'p', 1, 1, 0.0422, %s)",
+            (first_run, page_url),
+        )
+        cached_changeset, cached_run = await _seed_scrape_run(cur)
+        await cur.execute(
+            "INSERT INTO source_pages (source_url, jurisdiction_ocdid, pipeline_run_id, "
+            "unchanged_since_source_page_id) VALUES (%s, %s, %s, %s)",
+            (page_url, _OCDID, cached_run, original_page_id),
+        )
+        await conn.commit()
+
+    _total, entries = await db_jurisdictions.get_jurisdiction_activity(_OCDID, with_costs=True)
+    entry = next(e for e in entries if e.changeset_id == cached_changeset)
+
+    assert entry.cost_usd == 0
+    assert entry.cost_without_cache_usd == pytest.approx(0.0422)
+    assert (entry.pages_cached, entry.pages_total) == (1, 1)
 
 
 @pytest.mark.asyncio

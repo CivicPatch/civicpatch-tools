@@ -14,7 +14,7 @@ from core.people_edits import PeopleValidationError
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
 from core.jurisdiction_patch import build_patch
-from lib.auth import is_service_key, require_route_access
+from lib.auth import get_optional_user, is_service_key, require_route_access
 from pydantic import BaseModel, field_validator
 from schemas.common import Identity, RouteCategory, UserRole, has_at_least
 from schemas.jurisdictions import (
@@ -349,9 +349,13 @@ def get_router() -> APIRouter:
         ),
         page: int = Query(1, ge=1),
         per_page: int = Query(database.DEFAULT_ACTIVITY_LIMIT, ge=1, le=100),
+        identity: Identity | None = Depends(get_optional_user),
     ):
         total, activity = await database.get_jurisdiction_activity(
-            jurisdiction_ocdid, limit=per_page, offset=pagination_offset(page, per_page)
+            jurisdiction_ocdid,
+            limit=per_page,
+            offset=pagination_offset(page, per_page),
+            with_costs=identity is not None and has_at_least(identity.role, UserRole.ADMINS),
         )
         return paginated_response(total, page, per_page, activity)
 
