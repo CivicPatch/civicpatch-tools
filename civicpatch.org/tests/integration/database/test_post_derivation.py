@@ -157,19 +157,16 @@ async def test_a_match_never_overwrites_a_human_edit():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE, headcount=1)
+        post_id = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
+        await conn.commit()
 
-        await cur.execute(
-            "UPDATE posts SET meta_headcount = %s, meta_is_tracked = %s WHERE id = %s",
-            (9, False, post_id),
-        )
-        await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE, headcount=1)
+    await posts.update(post_id, 9, False, SYSTEM_USER_ID)
 
-        await cur.execute(
-            "SELECT meta_headcount, meta_is_tracked FROM posts WHERE id = %s", (post_id,)
-        )
-        assert await cur.fetchone() == (9, False)
-        await conn.rollback()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
+        post = await posts.get(cur, post_id)
+        assert post is not None
+        assert (post.meta_headcount, post.meta_is_tracked) == (9, False)
 
 
 async def _already_published() -> None:
@@ -429,15 +426,16 @@ async def test_a_human_created_post_is_matched_by_a_later_scrape():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
+        await conn.commit()
 
-        created = await posts.create_if_absent(cur, _OCDID, org, "mayor", _BASE, headcount=3)
+    created = await posts.create(org, "mayor", _BASE, 3, SYSTEM_USER_ID)
+
+    async with pool.connection() as conn, conn.cursor() as cur:
         matched = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        post = await posts.get(cur, matched)
 
-        assert created == matched
-        await cur.execute("SELECT meta_headcount FROM posts WHERE id::text = %s", (created,))
-        assert (await cur.fetchone())[0] == 3  # the scrape did not overwrite it
-        await conn.rollback()
+    assert created == matched
+    assert post is not None and post.meta_headcount == 3  # the scrape did not overwrite it
 
 
 @pytest.mark.asyncio
@@ -468,20 +466,15 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "trustee", _BASE)
+        await conn.commit()
 
-        assert await posts.update_human_fields(cur, post_id, 5, False) is True
-        await cur.execute(
-            "SELECT meta_headcount, meta_is_tracked FROM posts WHERE id::text = %s", (post_id,)
-        )
-        assert await cur.fetchone() == (5, False)
+    assert await posts.update(post_id, 5, False, SYSTEM_USER_ID) == _OCDID
+    async with pool.connection() as conn, conn.cursor() as cur:
+        post = await posts.get(cur, post_id)
+    assert post is not None
+    assert (post.meta_headcount, post.meta_is_tracked) == (5, False)
 
-        assert (
-            await posts.update_human_fields(
-                cur, "00000000-0000-0000-0000-000000000000", 1, True
-            )
-            is False
-        )
-        await conn.rollback()
+    assert await posts.update("00000000-0000-0000-0000-000000000000", 1, True, SYSTEM_USER_ID) is None
 
 
 async def _human_sets_label(cur, membership_id: str, label: str) -> None:

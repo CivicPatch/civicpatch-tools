@@ -54,6 +54,8 @@ services:
       # the FE never talks to Supabase directly (auth proxies through this backend).
       SUPABASE_URL: "http://host.docker.internal:54321"
       SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY:-local-dev-secret-key}
+    # One tag for every service built from this Dockerfile: one image on disk, not six copies.
+    image: civicpatch-org-dev
     build:
       context: ..
       dockerfile: civicpatch.org/Dockerfile
@@ -124,6 +126,7 @@ services:
   # or call the API is a question about where the logic lives, not about what it may reach.
   civicpatch-org-sinks:
     container_name: civicpatch-org-sinks
+    image: civicpatch-org-dev
     build: &worker-build
       context: ..
       dockerfile: civicpatch.org/Dockerfile
@@ -186,6 +189,7 @@ services:
   # registers Temporal schedules — for all four queues. See lib/temporal/schedules.py.
   civicpatch-org-source:
     container_name: civicpatch-org-source
+    image: civicpatch-org-dev
     build: *worker-build
     entrypoint: ["python", "src/workers/source.py"]
     depends_on: *worker-depends
@@ -198,6 +202,7 @@ services:
   # Retiring stale runs, idle review sessions and superseded changesets.
   civicpatch-org-cleanup:
     container_name: civicpatch-org-cleanup
+    image: civicpatch-org-dev
     build: *worker-build
     entrypoint: ["python", "src/workers/cleanup.py"]
     depends_on: *worker-depends
@@ -211,6 +216,7 @@ services:
   # ride along on the other three workers, and a wedged map build can't take them down.
   civicpatch-org-maps:
     container_name: civicpatch-org-maps
+    image: civicpatch-org-dev
     build: *worker-build
     entrypoint: ["python", "src/workers/maps.py"]
     depends_on: *worker-depends

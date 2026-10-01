@@ -10,11 +10,13 @@ from routers.api import people as people_router
 from shared.utils.yaml_utils import yaml_dump
 
 MOCK_IDENTITY = Identity(
-    type="service_api_key",
-    provider="system",
+    # An admin person: the service key no longer passes every route.
+    type="cookie",
+    provider="supabase",
     provider_user_id="test-user",
     email="test@civicpatch.org",
-    teams=[UserRole.CONTRIBUTORS, UserRole.MAINTAINERS, UserRole.ADMINS, UserRole.DEFAULT],
+    role=UserRole.ADMINS.value,
+    user_id="user-id-123",
 )
 
 TEST_OCDID = "ocd-jurisdiction/country:us/state:ca/place:oakland"

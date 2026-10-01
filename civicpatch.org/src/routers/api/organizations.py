@@ -25,6 +25,7 @@ def get_router() -> APIRouter:
         returning the existing id would make "created" and "already there" indistinguishable.
         404 if there's no such organization. Registered ahead of the jurisdiction routes below,
         which use a greedy `:path` converter that would otherwise swallow this path too."""
+        assert user.user_id is not None
         try:
             post_id = await posts.create(
                 organization_id,

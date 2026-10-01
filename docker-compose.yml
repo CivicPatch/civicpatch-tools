@@ -28,8 +28,8 @@ services:
     volumes:
       - ./civicpatch.org/src/frontend:/app
       # Keeps host node_modules out of the container — the image builds its own,
-      # for the container's platform.
-      - /app/node_modules
+      # for the container's platform. Named, so a recreate reuses it rather than orphaning a copy.
+      - api_frontend_node_modules:/app/node_modules
     # Installed on start, not only at image build. The volume above outlives
     # `compose up`, so a dependency added since it was created is otherwise
     # invisible to the container while resolving fine on the host.
@@ -121,6 +121,7 @@ services:
   # No database, no storage, no sheets: every activity here goes over HTTP.
   civicpatch-org-pipeline-runs:
     container_name: civicpatch-org-pipeline-runs
+    image: civicpatch-org-dev
     build:
       context: .
       dockerfile: civicpatch.org/Dockerfile
@@ -265,3 +266,4 @@ networks:
 volumes:
   api_civicpatch_org_db_data:
   temporal_db_data:
+  api_frontend_node_modules:

@@ -5,11 +5,12 @@ hold that week — a consumer's query breaks silently when a column is inserted 
 anything added to a table would be published without anyone deciding to. The list is the
 contract, the same job `HEADERS` does for the sheet.
 
-Deliberately left out, and why — every one of them meta_-marked (or, for the one exception,
-a query-time index) to say so at the column itself:
+Deliberately left out, and why:
 
-  posts.meta_headcount, posts.meta_is_tracked       internal, our own tool state
   jurisdictions.search_text                         a search index, not a fact about the place
+
+A post's headcount and tracked state are claims, not columns (243), so they are not here either:
+internal, our own tool state.
 
 UUIDs are cast to text here rather than in the writer, per the project's rule that the database
 layer owns the type contract. It also happens to be what parquet wants: pyarrow has no native

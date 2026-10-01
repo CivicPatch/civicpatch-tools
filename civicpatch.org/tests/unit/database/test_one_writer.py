@@ -31,8 +31,6 @@ _WRITE = re.compile(
 ALLOWED: dict[tuple[str, str], int] = {
     # Mints the persistent post row. Stays: a post's id is stable and the row persists (R1, R4).
     ("database/posts.py", "INSERT INTO posts"): 1,
-    # Derived columns enter the fold at step 10.
-    ("database/posts.py", "UPDATE posts SET meta_headcount"): 1,
     # A post's organization and existence become claims at step 11.
     ("database/posts.py", "DELETE FROM posts"): 1,
     # Organizations become claims at step 11.

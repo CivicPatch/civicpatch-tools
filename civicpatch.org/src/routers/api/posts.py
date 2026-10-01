@@ -20,6 +20,7 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
+        assert user.user_id is not None
         jurisdiction_ocdid = await posts.update(
             post_id, body.meta_headcount, body.meta_is_tracked, user.user_id
         )

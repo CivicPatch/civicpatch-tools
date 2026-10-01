@@ -52,7 +52,7 @@ from lib.auth import get_optional_user, get_ws_user, require_route_access
 from lib.supabase_auth import create_supabase_admin_client, create_supabase_client
 from routers.frontend import get_router as frontend_router, register_page_redirects
 from routers.sso import get_router as auth_router
-from schemas.common import Identity, UserRole, RouteCategory
+from schemas.common import Identity, RouteCategory, ServiceKey
 from schemas.ws import SubscribeMessage
 
 # Set up logger at the top of your file
@@ -140,9 +140,6 @@ app.include_router(
     api_admin_router.get_router(),
     prefix="/api/admin",
     tags=["admin"],
-    dependencies=[
-        Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS))
-    ],
 )
 app.include_router(
     api_jurisdictions_router.get_router(),
@@ -164,8 +161,12 @@ app.include_router(
     api_pipeline_runs_router.get_router(api_key_header),
     prefix="/api/v1/pipeline_runs",
     tags=["pipeline_runs"],
+    # Takes the key so the pipeline can reach its runs; every route here gates itself, and
+    # each refuses the key unless it is SERVICE or opts in.
     dependencies=[
-        Depends(require_route_access(RouteCategory.AUTHENTICATED))
+        Depends(
+            require_route_access(RouteCategory.AUTHENTICATED, service_key=ServiceKey.ACCEPTED)
+        )
     ],
     include_in_schema=False,
 )

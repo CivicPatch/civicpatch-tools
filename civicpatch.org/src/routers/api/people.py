@@ -9,7 +9,7 @@ import shared.utils.name_utils
 from fastapi import APIRouter, Depends, HTTPException, Query
 from lib.auth import require_route_access
 from pydantic import BaseModel
-from schemas.common import Identity, RouteCategory
+from schemas.common import Identity, RouteCategory, ServiceKey
 from schemas.pagination import paginated_response, pagination_offset
 from services.claims import claims_for_people
 from shared.schemas import Person
@@ -93,7 +93,9 @@ def get_router() -> APIRouter:
     @router.get("/search", include_in_schema=False)
     async def search_people_endpoint(
         jurisdiction_ocdid: str,
-        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
+        _: Identity = Depends(
+            require_route_access(RouteCategory.AUTHENTICATED, service_key=ServiceKey.ACCEPTED)
+        ),
     ):
         """Everyone we hold here, seated or not.
 

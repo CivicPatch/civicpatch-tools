@@ -92,18 +92,16 @@ Every account has a `username`, chosen once at sign-up: the email-OTP form (`com
 
 The user must have signed in via Supabase OTP at least once so a `users` row exists.
 
-**Preferred — `mise run grant_role`:**
-
 ```sh
-mise run grant_role -- <user-email> admins         # local dev
-mise run grant_role_prod -- <user-email> admins    # against civicpatch.org
+mise run grant_role -- <user-email> admins         # local dev stack, from this repo
+mise run prod-grant-role -- <user-email> admins    # against civicpatch.org, from cp-infrastructure
 ```
 
-Authenticates via `SERVICE_API_KEY` (local) or `$PROD_SERVICE_API_KEY` (prod). Hits the same `PUT /api/admin/users/{id}/role` endpoint the admin UI uses. **Sets the level unconditionally** — passing `default` demotes back to the baseline. Valid role args: `default`, `contributors`, `maintainers`, `admins`. If multiple `users` rows share an email (rare; legacy pre-Supabase rows), the task sets the role on all matches.
+Runs `src/scripts/grant_role.py` inside the app container (`docker exec` locally, `kubectl exec` in prod), not through the API: the role route takes no service key, so cluster access is what bootstrapping takes. **Sets the level unconditionally** — passing `default` demotes back to the baseline. Valid role args: `default`, `contributors`, `maintainers`, `admins`. If multiple `users` rows share an email (one per sign-in provider), every match gets the role, and their sessions are dropped so it takes effect.
 
 **After bootstrap — admin UI:**
 
-Once your account is at `admins`, visit `/admin/users` to manage other users' roles via clickable chips. Each user shows the chip for their current level filled in; click an outlined chip to promote/demote to that level, or click the currently-filled chip to revoke back to default. Contributor changes toggle instantly with a status toast; Maintainer and Admin changes open a confirm modal. Your own row is locked at both layers — to change your own role, use `mise run grant_role`.
+Once your account is at `admins`, visit `/admin/users` to manage other users' roles via clickable chips. Each user shows the chip for their current level filled in; click an outlined chip to promote/demote to that level, or click the currently-filled chip to revoke back to default. Contributor changes toggle instantly with a status toast; Maintainer and Admin changes open a confirm modal. Your own row is locked at both layers — to change your own role, use `mise run grant_role` (local) or cp-infrastructure's `prod-grant-role`.
 
 **Fallback — direct SQL:**
 
