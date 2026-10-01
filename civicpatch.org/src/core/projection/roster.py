@@ -2,7 +2,7 @@
 
 Each step is a resolver with its own module and tests; this only chains them:
 
-    live_facts → with_person_ids → with_inherited_blanks → canonical_ids → one cluster per canonical id → derive_person
+    live_facts → with_person_ids → with_inherited_blanks → with_post_merges → canonical_ids → one cluster per canonical id → without_stale_claims → derive_person
 """
 
 from pydantic import BaseModel
@@ -16,6 +16,8 @@ from core.projection.live_facts import live_facts
 from core.projection.partial_records import with_inherited_blanks
 from core.projection.people import Person, derive_person
 from core.projection.person_ids import with_person_ids
+from core.projection.post_merges import with_post_merges
+from core.projection.stale_claims import without_stale_claims
 
 
 class Roster(BaseModel, frozen=True):
@@ -28,10 +30,18 @@ def derive_roster(facts: Facts, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> 
     People come back sorted by id so two rebuilds of the same facts agree (R6).
     """
 
-    live = with_inherited_blanks(with_person_ids(live_facts(facts)))
+    live = with_post_merges(
+        with_inherited_blanks(with_person_ids(live_facts(facts))), jurisdiction_ocdid, taxonomy
+    )
     clusters = person_clusters(live)
     people = [
-        derive_person(root_id, clusters[root_id], live, jurisdiction_ocdid, taxonomy)
+        derive_person(
+            root_id,
+            clusters[root_id],
+            without_stale_claims(clusters[root_id], live),
+            jurisdiction_ocdid,
+            taxonomy,
+        )
         for root_id in sorted(clusters.keys())
     ]
     return Roster(people=tuple(people))
@@ -58,7 +68,7 @@ def person_clusters(live: Facts) -> dict[str, set[str]]:
     return clusters
 
 
-def overridden_by_person(facts: Facts) -> dict[str, dict[str, object]]:
+def overridden_page_values(facts: Facts) -> dict[str, dict[str, object]]:
     """Per person, what the page says where a claim overrode it — the card's lock disclosure."""
     live = with_person_ids(live_facts(facts))
     overridden = {

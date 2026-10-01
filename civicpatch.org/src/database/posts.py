@@ -227,16 +227,8 @@ async def delete_if_unheld(cur, post_id: str) -> bool:
     anyway; this makes it a 409 rather than a 500.
 
     Nothing else refuses: whoever vouched for a post and now wants it gone is the same person.
-    Its claims go with it, since `claims` has no foreign key to orphan them by.
+    Its claims stay: facts are append-only (R1), and a claim about a post that is gone is inert.
     """
-    await cur.execute(
-        """
-        DELETE FROM claims
-        WHERE entity_type = 'post' AND entity_id::text = %s
-          AND NOT EXISTS (SELECT 1 FROM memberships m WHERE m.post_id::text = %s)
-        """,
-        (post_id, post_id),
-    )
     await cur.execute(
         """
         DELETE FROM posts

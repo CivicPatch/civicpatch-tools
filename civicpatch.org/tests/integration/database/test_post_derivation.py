@@ -31,6 +31,7 @@ from database.source_records import insert_source_records
 from schemas.claims import Claim, ClaimKind, DefaultNote, EntityType, Source
 from services.review_summary import review_summary_for_changeset
 from services.roster import card_sides
+import services.roster_edits as roster_edits
 from shared.schemas import IssueCode
 from tests.integration import factories
 
@@ -1361,3 +1362,24 @@ async def test_a_page_listing_nobody_raises_an_issue_instead_of_retiring_quietly
 
     assert IssueCode.NOBODY_FOUND_IN_ORGANIZATION in {issue.code for issue in summary.issues}
     assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_deleting_a_post_into_another_moves_its_holder_and_drops_the_row():
+    """Seattle under mayor_council: the Mayor read under Council goes to Office of the Mayor."""
+    person_id = await _seed_person("Katie Wilson")
+    council, mayors_office = await _two_bodies()
+    await _publish((council, person_id, "Mayor"))
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        office_mayor = await posts.find_or_create(cur, _OCDID, mayors_office, "mayor", _BASE)
+        await conn.commit()
+    council_mayor = PostKey(organization_id=council, role_id="mayor", division_ocdid=_BASE).post_id
+
+    changeset_id = await roster_edits.delete_post_into(council_mayor, office_mayor, SYSTEM_USER_ID)
+
+    assert changeset_id
+    assert await _open_memberships(person_id) == [(mayors_office, "mayor", _BASE)]
+    async with pool.connection() as conn, conn.cursor() as cur:
+        assert await posts.get(cur, council_mayor) is None

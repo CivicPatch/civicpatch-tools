@@ -11,6 +11,7 @@ shape for the same act.
 
 from core.display_rows import display_rows
 from core.people_edits import claim_same_as
+from core.post_deletion import claim_post_same_as, merge_refusal
 from core.projection.diff import on_roster
 from core.projection.roster import Roster
 from core.roster_edits import (
@@ -38,6 +39,10 @@ from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
 class AnonymousEdit(Exception):
     """`claims.created_by` is NOT NULL, and a claim nobody made is not a claim."""
+
+
+class PostMergeRefused(Exception):
+    """The post named to take a deleted post's memberships cannot; the message says why."""
 
 
 class UnknownPost(Exception):
@@ -108,6 +113,31 @@ async def edit_published_roster(
     # `publish_roster` reads the feed off that against the roster after (9d), so this path
     # records what it changed without diffing its own payload.
     await publish_roster(changeset_id, jurisdiction_ocdid, user_id, before=before)
+    return changeset_id
+
+
+async def delete_post_into(post_id: str, into_post_id: str, user_id: str) -> str:
+    """Delete a post, its memberships going to `into_post_id`. Files the post's `same_as` and
+    publishes, so the rebuild moves the memberships; then the emptied row goes. Returns the
+    changeset id: rolling it back undoes the move."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        found = await posts_db.get_many(cur, [post_id, into_post_id])
+    post, into = found.get(post_id), found.get(into_post_id)
+    if post is None or into is None:
+        raise UnknownPost(post_id if post is None else into_post_id)
+    refusal = merge_refusal(post, into)
+    if refusal is not None:
+        raise PostMergeRefused(refusal)
+
+    # Read before filing, as `edit_published_roster` does: the changeset is born published.
+    before = on_roster(await _roster(post.jurisdiction_ocdid))
+    changeset_id = make_id()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await create_roster_edit_changeset(cur, changeset_id, post.jurisdiction_ocdid, user_id)
+        await claims_db.upsert(cur, claim_post_same_as(post_id, into_post_id, changeset_id), user_id)
+    await publish_roster(changeset_id, post.jurisdiction_ocdid, user_id, before=before)
+    await posts_db.delete(post_id, user_id)
     return changeset_id
 
 

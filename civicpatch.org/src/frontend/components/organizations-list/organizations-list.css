@@ -67,6 +67,14 @@
     color: var(--text-muted);
 }
 
+.organizations-list__delete-confirm {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0 0.4rem;
+    font-size: var(--font-size-sm);
+}
+
 .organizations-list__capacity {
     font-size: var(--font-size-sm);
     color: var(--text-muted);

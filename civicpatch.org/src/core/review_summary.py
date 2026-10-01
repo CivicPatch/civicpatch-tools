@@ -54,15 +54,16 @@ def _absent_issues(published: Roster, diff: RosterDiff) -> list[Issue]:
     ]
 
 
-def _new_issues(published: Roster, proposed: Roster, diff: RosterDiff) -> list[Issue]:
+def _new_issues(known_person_ids: set[str], proposed: Roster, diff: RosterDiff) -> list[Issue]:
     # A first scrape has nothing to be new against: every person would raise one, and a
     # jurisdiction we hold nothing for could never auto-publish.
-    if not published.people:
+    if not known_person_ids:
         return []
     people = {person.id: person for person in proposed.people}
     return [
         new_person_issue(_name_of(people.get(person_id)), person_id)
         for person_id in diff.only_after
+        if person_id not in known_person_ids
     ]
 
 
@@ -124,12 +125,14 @@ def roster_summary(
     published: Roster,
     proposed: Roster,
     diff: RosterDiff,
+    known_person_ids: set[str],
     unique_role_ids: set[str],
 ) -> ReviewSummary:
+    """`known_person_ids` includes people off the roster, so a returning one is not new."""
     return ReviewSummary(
         issues=[
             *_absent_issues(published, diff),
-            *_new_issues(published, proposed, diff),
+            *_new_issues(known_person_ids, proposed, diff),
             *_too_few_issues(proposed),
             *_changed_field_issues(proposed, diff),
             *_duplicate_unique_role_issues(proposed, unique_role_ids),
@@ -143,6 +146,7 @@ def fold_card_summary(
     published: Roster,
     proposed: Roster,
     diff: RosterDiff,
+    known_person_ids: set[str],
     read_organization_ids: set[str],
     role_labels: dict[str, str],
     unique_role_ids: set[str],
@@ -151,7 +155,7 @@ def fold_card_summary(
 ) -> ReviewSummary:
     """`roster_summary` plus the post checks, all over the fold. The proposal layer is not read:
     a move and an empty body are both statements about the two rosters."""
-    roster = roster_summary(published, proposed, diff, unique_role_ids)
+    roster = roster_summary(published, proposed, diff, known_person_ids, unique_role_ids)
     return ReviewSummary(
         issues=[
             *roster.issues,

@@ -9,7 +9,7 @@ from core.people_edits import source_values_overridden, with_claimed_values
 from core.people_roster import partial_roster, roster_from_source_records
 from core.projection.diff import on_roster
 from core.projection.facts import Facts
-from core.projection.roster import Roster, overridden_by_person
+from core.projection.roster import Roster, overridden_page_values
 from database import claims, source_pages
 from database import changesets as changesets_db
 from database import posts as posts_db
@@ -95,6 +95,8 @@ class CardFold(NamedTuple):
 
     published: Roster
     proposed: Roster
+    # Everyone the published fold derives, off the roster too.
+    known_person_ids: set[str]
     proposed_facts: Facts
     taxonomy: Taxonomy
     # A post a human named. The fold cannot see these — naming a post is a claim on the POST
@@ -128,6 +130,7 @@ async def card_fold(changeset_id: str, jurisdiction_ocdid: str) -> CardFold:
     return CardFold(
         published=on_roster(published),
         proposed=on_roster(proposed),
+        known_person_ids={person.id for person in published.people},
         proposed_facts=proposed_facts,
         taxonomy=taxonomy,
         post_labels=post_labels,
@@ -142,7 +145,7 @@ def sides_of(fold: CardFold, jurisdiction_ocdid: str) -> CardSides:
         proposed=display_rows(
             fold.proposed, jurisdiction_ocdid, fold.taxonomy, fold.post_labels
         ),
-        overridden=overridden_by_person(fold.proposed_facts),
+        overridden=overridden_page_values(fold.proposed_facts),
     )
 
 

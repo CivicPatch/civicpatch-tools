@@ -46,11 +46,14 @@ def _fold_person(
     )
 
 
-def _fold_summary(published_people, proposed_people, unique_role_ids=frozenset()):
+def _fold_summary(
+    published_people, proposed_people, unique_role_ids=frozenset(), retired_ids=frozenset()
+):
     published = Roster(people=tuple(published_people))
     proposed = Roster(people=tuple(proposed_people))
+    known = {person.id for person in published_people} | set(retired_ids)
     return roster_summary(
-        published, proposed, roster_diff(published, proposed), set(unique_role_ids)
+        published, proposed, roster_diff(published, proposed), known, set(unique_role_ids)
     )
 
 
@@ -71,6 +74,17 @@ def test_fold_summary_first_scrape_raises_no_new_people():
     codes = {issue.code for issue in summary.issues}
     assert IssueCode.NEW_PERSON not in codes
     assert IssueCode.ABSENT_PERSON not in codes
+
+
+@pytest.mark.unit
+def test_fold_summary_a_returning_person_is_not_new():
+    summary = _fold_summary(
+        [_fold_person("a", "Ann Lee")],
+        [_fold_person("a", "Ann Lee"), _fold_person("b", "Bob Smith")],
+        retired_ids={"b"},
+    )
+
+    assert IssueCode.NEW_PERSON not in {issue.code for issue in summary.issues}
 
 
 @pytest.mark.unit
@@ -154,6 +168,7 @@ def test_roster_checks_come_first_and_post_checks_after():
         published,
         proposed,
         roster_diff(published, proposed),
+        known_person_ids=set(),
         read_organization_ids=set(),
         role_labels={},
         unique_role_ids=set(),

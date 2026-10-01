@@ -10,6 +10,7 @@ from datetime import datetime
 
 from core.changeset_lifecycle import PARTIAL_KINDS
 from core.people_edits import POSTS_FIELD
+from core.projection.canonical_ids import SAME_AS
 from core.projection.facts import Claim, ClaimKind, Facts, PostKey, SourcePage, SourceRecord
 from core.projection.person_ids import PERSON_ID
 from database.changeset_predicates import OPEN_REVIEW_EDIT
@@ -96,6 +97,21 @@ _MEMBERSHIP_CLAIMS = f"""
     FROM claims
     {_PUBLISHED_OR_INCLUDED}
       AND claims.entity_type = 'membership'
+      AND changesets.jurisdiction_ocdid = %(jurisdiction_ocdid)s
+"""
+
+# A deleted post's `same_as`, valued the post taking its memberships (`core.projection.post_merges`),
+# resolved to that post's key like a `posts` claim. By jurisdiction: the deleted post's row is gone.
+_POST_MERGE_CLAIMS = f"""
+    SELECT claims.id::text, claims.changeset_id::text, claims.created_at,
+           claims.entity_type, claims.entity_id::text, claims.field_path,
+           claims.kind, claims.value,
+           posts.organization_id::text, posts.role_id, posts.division_ocdid
+    FROM claims
+    LEFT JOIN posts ON posts.id::text = claims.value #>> '{{}}'
+    {_PUBLISHED_OR_INCLUDED}
+      AND claims.entity_type = 'post'
+      AND claims.field_path = '{SAME_AS}'
       AND changesets.jurisdiction_ocdid = %(jurisdiction_ocdid)s
 """
 
@@ -202,6 +218,8 @@ async def load_facts(
     await cur.execute(_PERSON_CLAIMS, {**scope, "person_ids": person_ids})
     claims += tuple(_claim(row) for row in await cur.fetchall())
     await cur.execute(_MEMBERSHIP_CLAIMS, scope)
+    claims += tuple(_claim(row) for row in await cur.fetchall())
+    await cur.execute(_POST_MERGE_CLAIMS, scope)
     claims += tuple(_claim(row) for row in await cur.fetchall())
 
     await cur.execute(_WITHDRAWS, scope)

@@ -458,3 +458,42 @@ async def _membership(person_id: str, post_id: str, organization_id: str) -> Non
             cur, SeededMembership(person_id=person_id), post_id, organization_id, "2026-06-15T00:00:00Z"
         )
         await conn.commit()
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_post_nobody_holds_is_deleted(client):
+    post_id = (await _create(client)).json()["data"]["id"]
+
+    response = client.delete(f"{_PREFIX}/{post_id}")
+
+    assert response.status_code == 200, response.text
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        assert await posts.get(cur, post_id) is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_held_post_needs_somewhere_to_move_its_holders(client):
+    post_id = (await _create(client)).json()["data"]["id"]
+    await _seat_someone(post_id)
+
+    response = client.delete(f"{_PREFIX}/{post_id}")
+
+    assert response.status_code == 409
+    assert "choose a post" in response.json()["error"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_post_cannot_be_deleted_into_one_that_cannot_take_it(client):
+    """Another role in the same organization: the route says why rather than filing a claim the
+    fold would ignore."""
+    post_id = (await _create(client)).json()["data"]["id"]
+    clerk_id = (await _create(client, role_id="clerk")).json()["data"]["id"]
+
+    response = client.delete(f"{_PREFIX}/{post_id}", params={"into": clerk_id})
+
+    assert response.status_code == 422
+    assert response.json()["error"]

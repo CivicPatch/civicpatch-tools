@@ -11,6 +11,7 @@ from shared.schemas import Role, RoleConfig, RoleStatus
 from shared.utils.membership_ids import membership_id
 from shared.utils.taxonomy import build_taxonomy
 
+from core.people_edits import POSTS_FIELD
 from core.projection.facts import Claim, ClaimKind, EntityType, Facts, PostKey, SourceRecord
 from core.projection.roster import derive_roster
 
@@ -30,10 +31,12 @@ MAYOR_KEY = PostKey(organization_id=COUNCIL, role_id="mayor", division_ocdid=BAS
 MAYOR = MAYOR_KEY.post_id
 
 
-def record(id: str, person: str, name: str = "Someone", minutes: int = 0) -> SourceRecord:
+def record(
+    id: str, person: str, name: str = "Someone", minutes: int = 0, changeset: str = "c1"
+) -> SourceRecord:
     return SourceRecord(
         id=id,
-        changeset_id="c1",
+        changeset_id=changeset,
         created_at=_T + timedelta(minutes=minutes),
         person_id=person,
         organization_id=COUNCIL,
@@ -224,3 +227,36 @@ def test_the_answer_does_not_depend_on_the_order_the_facts_arrive():
     backwards = derive(Facts(records=tuple(reversed(records)), claims=tuple(reversed(claims))))
 
     assert forwards == backwards
+
+
+def _mayor_reject(minutes: int) -> Claim:
+    reject = claim("k1", EntityType.PERSON, "alice", POSTS_FIELD, MAYOR, ClaimKind.REJECT, minutes)
+    return reject.model_copy(update={"post": MAYOR_KEY})
+
+
+def _posts(facts: Facts) -> list[str]:
+    [person] = derive(facts).people
+    return [membership.post.post_id for membership in person.memberships]
+
+
+@pytest.mark.unit
+def test_a_post_claim_holds_until_the_page_is_read_again():
+    facts = Facts(
+        records=(record("r1", "alice", minutes=0),),
+        claims=(_mayor_reject(minutes=5),),
+    )
+
+    assert _posts(facts) == []
+
+
+@pytest.mark.unit
+def test_a_post_claim_goes_stale_once_the_page_is_read_again():
+    facts = Facts(
+        records=(
+            record("r1", "alice", minutes=0),
+            record("r2", "alice", minutes=10, changeset="c2"),
+        ),
+        claims=(_mayor_reject(minutes=5),),
+    )
+
+    assert _posts(facts) == [MAYOR]
