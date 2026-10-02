@@ -2,6 +2,7 @@ import asyncio
 import os
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, cast
+from urllib.parse import urljoin
 
 import services.open_router.llm as open_router_llm
 import shared.utils.name_utils as name_utils
@@ -609,7 +610,8 @@ async def process_with_llm(
             continue
         p["source_url"] = source_url
         if p["url"]:
-            p["url"] = url_utils.format_url(p["url"])
+            # A model sometimes shortens a link it was given in full to its path.
+            p["url"] = url_utils.format_url(urljoin(source_url, p["url"]))
         p["image"] = _downloaded_image(p.get("image"))
         processed_people.append(PersonSourceRecord.model_validate(p))
 

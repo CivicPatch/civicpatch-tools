@@ -1052,6 +1052,33 @@ async def test_process_with_llm_reorders_inverted_names():
 
 
 @pytest.mark.asyncio
+async def test_process_with_llm_resolves_a_shortened_url_against_its_page():
+    llm_response = PeopleArrayLLMResponseSchema(
+        people=[
+            ExtractedPersonRecord(name="Rod Dembowski", label="Council Member", url="/en/council/rod-dembowski"),
+            ExtractedPersonRecord(name="Rhonda Lewis", label="Council Member", url="https://kingcounty.gov/en/council/rhonda-lewis"),
+        ]
+    )
+
+    with patch(
+        "runners.people_collector.steps.step_04_process_page_content.process_page_content.open_router_llm.run_prompt",
+        new=AsyncMock(return_value=llm_response),
+    ):
+        records = await process_with_llm(
+            "https://kingcounty.gov/en/elected-officials",
+            "test-request",
+            "ocd-jurisdiction/country:us/state:wa/county:king/government",
+            "page content",
+            "prompt",
+        )
+
+    assert [r.url for r in records] == [
+        "https://kingcounty.gov/en/council/rod-dembowski",
+        "https://kingcounty.gov/en/council/rhonda-lewis",
+    ]
+
+
+@pytest.mark.asyncio
 async def test_process_with_llm_keeps_only_downloaded_images():
     """Seattle, 2026-09-19: a relative src the downloader skipped, and a `local://` hash the
     extractor wrapped in a made-up url, each outvoted a real photo at ingest."""
