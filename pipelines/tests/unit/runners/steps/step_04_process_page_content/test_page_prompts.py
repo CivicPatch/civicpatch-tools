@@ -1,6 +1,7 @@
 """A page's verdict may be reused only while everything the LLM saw besides the text is the same."""
 
 import pytest
+from runners.people_collector.schemas import ExpectedMembership
 from runners.people_collector.steps.step_04_process_page_content.page_prompts import (
     prompt_hash,
 )
@@ -31,6 +32,10 @@ def _organization(organization_id: str, name: str, labels: list[str]) -> KnownOr
 
 _COUNCIL = _organization("council", "City Council", ["Council Member District 1"])
 _MAYOR = _organization("mayor", "Office of the Mayor", ["Mayor"])
+_MEMBERSHIPS = [
+    ExpectedMembership(organization_id="council", role_label="Council Member", division="district 1"),
+    ExpectedMembership(organization_id="mayor", role_label="Mayor"),
+]
 
 
 def _hash(
@@ -38,8 +43,9 @@ def _hash(
     config: PipelineRunConfig = _CONFIG,
     roles: list[str] = _ROLES,
     organizations: list[KnownOrganization] = [_COUNCIL, _MAYOR],
+    memberships: list[ExpectedMembership] = _MEMBERSHIPS,
 ) -> str:
-    return prompt_hash(url, config, _OCDID, roles, organizations)
+    return prompt_hash(url, config, _OCDID, roles, organizations, memberships)
 
 
 def test_the_same_inputs_give_the_same_hash():
@@ -59,10 +65,10 @@ def test_a_renamed_organization_moves_it():
     assert _hash(organizations=[renamed, _MAYOR]) != _hash()
 
 
-def test_an_edited_post_label_moves_it():
-    relabelled = _organization("council", "City Council", ["Councilmember, District 1"])
+def test_a_new_expected_division_moves_it():
+    district_2 = ExpectedMembership(organization_id="council", role_label="Council Member", division="district 2")
 
-    assert _hash(organizations=[relabelled, _MAYOR]) != _hash()
+    assert _hash(memberships=[*_MEMBERSHIPS, district_2]) != _hash()
 
 
 def test_a_new_known_role_moves_it():

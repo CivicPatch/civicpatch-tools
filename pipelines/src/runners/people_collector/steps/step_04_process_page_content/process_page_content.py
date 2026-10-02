@@ -200,6 +200,7 @@ async def process_page_content(
         context.data.jurisdiction_ocdid,
         known_roles,
         research.known_organizations,
+        research.expected_memberships,
     )
     published = published_source_page(
         context.data.config.published_source_pages, page_to_process.url
@@ -245,8 +246,8 @@ async def process_page_content(
             context,
             page_to_process,
             content,
-            known_roles,
             research.known_organizations,
+            research.expected_memberships,
             current_step,
             identities,
             logger,
@@ -425,6 +426,7 @@ async def organizations_covered(
     page_to_process: Link,
     content: str,
     organizations: List[KnownOrganization],
+    memberships: List[ExpectedMembership],
 ) -> List[str]:
     """Which organizations this page carries people for, one narrow question each.
 
@@ -438,7 +440,7 @@ async def organizations_covered(
             open_router_llm.run_prompt(
                 context.pipeline_run_id,
                 context.data.jurisdiction_ocdid,
-                coverage_prompt(organization, context.data.config),
+                coverage_prompt(organization, memberships, context.data.config),
                 prompt_name="page_covers_organization",
                 response_schema=OrganizationCoverageResponseSchema,
                 content=content,
@@ -492,8 +494,8 @@ async def collect_page_records(
     context: PeopleCollectorContext,
     page_to_process: Link,
     content: str,
-    known_roles: list[str],
     organizations: List[KnownOrganization],
+    memberships: List[ExpectedMembership],
     current_step: ProcessPageContentStep,
     identities: Dict,
     logger,
@@ -503,11 +505,11 @@ async def collect_page_records(
     found: List[PersonSourceRecord] = []
     failures: List[HeuristicsFailure] = []
     any_passed = False
-    covers = await organizations_covered(context, page_to_process, content, organizations)
+    covers = await organizations_covered(context, page_to_process, content, organizations, memberships)
     organization_ids = covered_organization_ids(organizations, covers)
-    for scope in extraction_scopes(organizations, covers):
+    for scope in extraction_scopes(organizations, memberships, covers):
         scoped, scope_failures = await _extract_for_scope(
-            context, page_to_process, content, known_roles, scope, logger
+            context, page_to_process, content, organizations, memberships, scope, logger
         )
         failures.extend(scope_failures)
         if scoped is not None:
@@ -536,13 +538,14 @@ async def _extract_for_scope(
     context: PeopleCollectorContext,
     page_to_process: Link,
     content: str,
-    known_roles: list[str],
+    organizations: List[KnownOrganization],
+    memberships: List[ExpectedMembership],
     scope: ExtractionScope,
     logger,
 ) -> Tuple[Optional[List[PersonSourceRecord]], List[HeuristicsFailure]]:
     """This organization's records, stamped with its id — or None if they failed the heuristics
     twice — and the reason each failed attempt gave."""
-    prompt = extraction_prompt(known_roles, context.data.jurisdiction_ocdid, scope)
+    prompt = extraction_prompt(organizations, memberships, context.data.jurisdiction_ocdid, scope)
     organization = scope.prompt_organization.name if scope.prompt_organization else "unscoped"
     failures: List[HeuristicsFailure] = []
 

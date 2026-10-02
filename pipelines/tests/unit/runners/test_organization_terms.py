@@ -5,6 +5,8 @@ import pytest
 from runners.people_collector.utils.organization_terms import (
     as_tokens,
     organization_phrases,
+    expected_divisions,
+    government_form_role_labels,
     roles_to_look_for,
     search_phrases,
 )
@@ -87,3 +89,21 @@ def test_roles_to_look_for_names_an_organization_nobody_is_expected_in():
     expected = [ExpectedMembership(organization_id="select", role_label="Select Board Member")]
 
     assert roles_to_look_for(expected, [select_board, town_meeting]) == ["Select Board Member", "Moderator"]
+
+
+def test_the_forms_role_labels_come_only_from_organizations_nobody_is_expected_in():
+    expected_in = KnownOrganization(id="a", name="Select Board", role_labels=["Select Board Member"])
+    nobody = KnownOrganization(id="b", name="Town Meeting", role_labels=["Moderator", "Town Meeting Member"])
+    memberships = [ExpectedMembership(organization_id="a", role_label="Select Board Member")]
+
+    assert government_form_role_labels([expected_in, nobody], memberships) == ["Moderator", "Town Meeting Member"]
+
+
+def test_expected_divisions_skip_at_large_and_repeat_once():
+    memberships = [
+        ExpectedMembership(organization_id="a", role_label="Council Member", division="ward 1"),
+        ExpectedMembership(organization_id="a", role_label="Council Member", division="ward 1"),
+        ExpectedMembership(organization_id="a", role_label="Mayor"),
+    ]
+
+    assert expected_divisions(memberships) == ["ward 1"]

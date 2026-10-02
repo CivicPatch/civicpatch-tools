@@ -60,6 +60,29 @@ def expected_roles(memberships: List[ExpectedMembership]) -> List[str]:
     return list(dict.fromkeys(membership.role_label for membership in memberships))
 
 
+def expected_divisions(memberships: List[ExpectedMembership]) -> List[str]:
+    return list(dict.fromkeys(membership.division for membership in memberships if membership.division))
+
+
+def memberships_in(organization_id: str, memberships: List[ExpectedMembership]) -> List[ExpectedMembership]:
+    return [membership for membership in memberships if membership.organization_id == organization_id]
+
+
+def government_form_role_labels(
+    organizations: List[KnownOrganization], memberships: List[ExpectedMembership]
+) -> List[str]:
+    """What the government form says an organization nobody is expected in usually has: a guess
+    a prompt may mention, never state."""
+    return list(
+        dict.fromkeys(
+            label
+            for organization in organizations
+            if not memberships_in(organization.id, memberships)
+            for label in organization.role_labels
+        )
+    )
+
+
 def expected_designations(memberships: List[ExpectedMembership]) -> List[str]:
     return list(
         dict.fromkeys(

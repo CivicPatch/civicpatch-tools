@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from shared.schemas import GovernmentForm, KnownOrganization
+from shared.schemas import GovernmentForm
 
 
 class DerivedOrganization(BaseModel):
@@ -28,14 +28,6 @@ def government_form_name(form: GovernmentForm) -> str:
 def describe_government_form(form: GovernmentForm) -> str:
     """open_town_meeting -> "open town meeting (a select board or board of selectmen, ...)"."""
     return f"{government_form_name(form)} ({GOVERNMENT_FORM_DESCRIPTIONS[form]})"
-
-
-def office_labels(organization: KnownOrganization) -> list[str]:
-    """What holding office in this organization looks like: its posts' labels, or on a cold
-    start, before any post exists, its derived role labels."""
-    if organization.posts:
-        return [post.label for post in organization.posts]
-    return organization.role_labels
 
 
 def name_suffix(name: str) -> str:

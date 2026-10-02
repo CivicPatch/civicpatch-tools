@@ -181,7 +181,7 @@ async def test_a_tennessee_county_resolves_to_its_board_and_mayors_office():
     resolved = await resolved_government(_TN_COUNTY)
 
     assert resolved.government_form == GovernmentForm.COUNTY_EXECUTIVE
-    assert [o.name for o in resolved.derived_organizations] == [
+    assert [o.name for o in resolved.candidate_organizations] == [
         "County Commission",
         "Office of the County Mayor",
     ]
@@ -353,6 +353,20 @@ async def test_the_organizations_carry_their_derived_role_labels():
 
 @pytest.mark.integration
 @pytest.mark.asyncio
+async def test_while_the_form_is_unknown_an_organization_carries_every_allowed_forms_labels():
+    """Zyform city could be mayor_council or council_manager; its Council gets both forms' roles."""
+    await _seed(_WA_CITY, "wa", {"name": "Zyform city"})
+    await ensure_defaults_exist([_WA_CITY])
+    await _rename_default(_WA_CITY, "Council")
+
+    organizations = await organizations_with_role_labels(_WA_CITY)
+
+    assert {o["name"]: o["role_labels"] for o in organizations} == {"Council": ["Council Member", "Mayor"]}
+    assert (await resolved_government(_WA_CITY)).government_form is None
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
 async def test_the_page_shows_the_resolved_form_by_name():
     await _seed(_TN_COUNTY, "tn", {"name": "Zyform County"})
 
@@ -376,5 +390,5 @@ async def test_the_allowed_forms_are_what_an_undecided_jurisdiction_is_offered()
     await _seed(_WA_CITY, "wa", {"name": "Zyform city"})
     await _seed(_MI_TOWNSHIP, "mi", {"name": "Zyform township"})
 
-    assert len((await resolved_government(_WA_CITY)).allowed_government_forms) == 4
-    assert (await resolved_government(_MI_TOWNSHIP)).allowed_government_forms == [GovernmentForm.TOWNSHIP_BOARD]
+    assert len((await resolved_government(_WA_CITY)).candidate_government_forms) == 4
+    assert (await resolved_government(_MI_TOWNSHIP)).candidate_government_forms == [GovernmentForm.TOWNSHIP_BOARD]
