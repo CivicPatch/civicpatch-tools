@@ -45,6 +45,11 @@ OFFICIALS_CASES = _case_dirs("municipal_officials")
 RELEVANT_PAGE_CASES = _case_dirs("relevant_page")
 CASES_WITH_PEOPLE = _cases_where(OFFICIALS_CASES, lambda people: len(people) > 0)
 CASES_WITH_SEVERAL_PEOPLE = _cases_where(OFFICIALS_CASES, lambda people: len(people) > 1)
+# Rotating names only changes anything when the seats differ in something besides the name.
+CASES_WITH_DISTINCT_SEATS = _cases_where(
+    OFFICIALS_CASES,
+    lambda people: len({(p.get("label"), p.get("phone"), p.get("email"), p.get("url")) for p in people}) > 1,
+)
 CASES_WITH_PHONES = _cases_where(OFFICIALS_CASES, lambda people: any(p.get("phone") for p in people))
 CASES_WITH_EMAILS = _cases_where(OFFICIALS_CASES, lambda people: any(p.get("email") for p in people))
 # Valid under the phone normalizer, so a changed number is a wrong value, not a missing one.
@@ -137,7 +142,7 @@ def test_inventing_as_many_people_again_halves_the_case_score(case_dir):
     assert case_score(aggregate_case(score_cases(padded, people)), person_precision(padded, people)) <= 0.5
 
 
-@pytest.mark.parametrize("case_dir", CASES_WITH_SEVERAL_PEOPLE, ids=lambda path: path.name)
+@pytest.mark.parametrize("case_dir", CASES_WITH_DISTINCT_SEATS, ids=lambda path: path.name)
 def test_rotating_names_between_seats_fails_a_gate(case_dir):
     people = _expected_people(case_dir)
     names = [person.name for person in people]

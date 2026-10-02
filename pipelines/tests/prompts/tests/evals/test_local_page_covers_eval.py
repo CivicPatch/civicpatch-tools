@@ -184,7 +184,11 @@ async def _run_provider(client, cases):
 def prompt_for_body(expected: dict, organization: dict) -> str:
     """The exact prompt a case is sent about one body: used by the run and archived with it."""
     return page_covers_organization_prompt(
-        organization["name"], organization.get("posts", []), expected.get("jurisdiction_name", "")
+        organization["name"],
+        organization.get("role_labels", []),
+        expected.get("jurisdiction_name", ""),
+        divisions=organization.get("divisions", []),
+        government_form_role_labels=organization.get("government_form_role_labels", []),
     )
 
 
@@ -215,7 +219,10 @@ def _write_report(model_client, failed_cases, elapsed_seconds, found, case_ids, 
     run = record_run(
         EVALS_DIR,
         page_covers_organization_prompt(
-            "<body, per case>", ["<its posts, per case>"], "<jurisdiction, per case>"
+            "<body, per case>",
+            ["<its roles, per case>"],
+            "<jurisdiction, per case>",
+            divisions=["<its divisions, per case>"],
         ),
     )
     record_history(

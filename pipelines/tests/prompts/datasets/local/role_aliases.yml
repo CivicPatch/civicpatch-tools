@@ -34,7 +34,26 @@ roles:
   # needs the presiding title to win. Mirrors migration 111, where council-president is 11.
   Council President: []
 
+  # A board's presiding officers (Millbury's Board of Selectmen). Above the board's member title,
+  # like Council President above Council Member.
+  Chair:
+    - Chairman
+    - Chairwoman
+    - Chairperson
+
+  Vice Chair:
+    - Vice Chairman
+    - Vice Chairwoman
+    - Vice Chairperson
+
+  # Belle Meade's board elects these from among its commissioners; the page hyphenates.
+  Vice Mayor:
+    - Vice-Mayor
+
+  Commissioner: []
+
   Supervisor: []
+  County Executive: []
   Clerk: []
 
   Council Member:
@@ -50,3 +69,14 @@ roles:
   Alderman:
     - Alderwoman
     - Alderperson
+
+  # Kept apart from Council Member for the same reason as Alderman: a select board is its own
+  # institution, and Millbury's selectmen published as "Council Member" is the bug a case checks.
+  Select Board Member:
+    - Selectman
+    - Selectmen
+    - Selectwoman
+    - Selectperson
+    - Select Person
+    - Selectboard Member
+    - Board of Selectmen Member

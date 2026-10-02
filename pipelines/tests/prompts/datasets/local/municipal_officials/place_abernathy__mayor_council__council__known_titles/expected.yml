@@ -1,0 +1,47 @@
+generated: true
+organization:
+  name: Council
+  role_labels:
+  - Alderperson
+  - Mayor Pro Tempore
+people:
+- name: Eva Cortez
+  label: Alderperson
+  phone: (806) 298-2546
+  email: ecortez@cityofabernathy.org
+  url: https://cityofabernathy.org/your-government/city-council
+  start_date: null
+  end_date: 2026-05
+  image: null
+- name: Gary Stephenson
+  label: Alderperson
+  phone: (806) 298-2546
+  email: gstephenson@cityofabernathy.org
+  url: https://cityofabernathy.org/your-government/city-council
+  start_date: null
+  end_date: 2025-05
+  image: null
+- name: Matthew Speer
+  label: Alderperson
+  phone: (806) 298-2546
+  email: m.speer@cityofabernathy.org
+  url: https://cityofabernathy.org/your-government/city-council
+  start_date: null
+  end_date: 2026-05
+  image: null
+- name: Tammy Mahan
+  label: Alderperson
+  phone: (806) 298-2546
+  email: tmahan@cityofabernathy.org
+  url: https://cityofabernathy.org/your-government/city-council
+  start_date: null
+  end_date: 2025-05
+  image: null
+- name: Bilinda Prater
+  label: Mayor Pro Tempore
+  phone: (806) 298-2546
+  email: bprater@cityofabernathy.org
+  url: https://cityofabernathy.org/your-government/city-council
+  start_date: null
+  end_date: 2026-05
+  image: null

@@ -62,6 +62,8 @@ def make_together_prompt(expected: dict):
         expected.get("known_roles", []),
         current_date=EVAL_CURRENT_DATE,
         organization=PromptOrganization(**organization) if organization else None,
+        divisions=expected.get("divisions", []),
+        government_form_role_labels=expected.get("government_form_role_labels", []),
     )
 
 
@@ -376,7 +378,7 @@ async def test_provider_comparison(load_eval_cases):
             print(f"\n[{name}] {len(rows)} field(s) below a per-person floor:")
             for row in rows[:20]:
                 print(
-                    f"    {row['case_id']}/{row['subject']} {row['field']}="
+                    f"    {row['case_id']}/{row['person']} {row['field']}="
                     f"{row['score']:.2f} expected={row['expected']!r} actual={row['actual']!r}"
                 )
     assert not under_threshold, "Accuracy below threshold:\n  " + "\n  ".join(under_threshold)
