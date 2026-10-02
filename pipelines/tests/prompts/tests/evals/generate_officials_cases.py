@@ -4,8 +4,9 @@ describe a body's offices: titles found before, suggestions from the form of gov
 Offline: no network, no LLM, no cost. Writes to `datasets/candidates/municipal_officials/` for a
 person to review and move into `datasets/local/municipal_officials/`; nothing here is trusted.
 
-Only forms with two or more organizations: production runs a one-organization jurisdiction
-unscoped, with no titles at all. A form the config cannot decide is tried as each form allowed.
+A form with two or more organizations is scoped to each in turn, as production runs it; a
+one-organization form (a county, a council-manager city, a township) runs unscoped, with the
+titles as `known_roles`. A form the config cannot decide is tried as each form allowed.
 A roster page is one published people cite; its expected people are those people, each filed
 under the organization whose `role_labels` hold their role. A case already staged is never
 overwritten, since it may have been reviewed.
@@ -31,7 +32,9 @@ from shared.utils.layered_config import (
     resolve_government_form,
 )
 from shared.utils.government_forms import DerivedOrganization
-from shared.utils.taxonomy import lookup_key
+from shared.utils import divisions
+from shared.utils.label_parser import parse_label
+from shared.utils.taxonomy import Taxonomy, build_taxonomy, lookup_key
 from shared.utils.url_utils import canonical_url
 from tests.prompts.tests.evals.eval_utils import GENERATED_KEY
 from tests.prompts.tests.evals.generate_relevance_cases import (
@@ -68,8 +71,11 @@ class CandidateCase(BaseModel):
     government_form: GovernmentForm
     form_was_decided: bool
     organization: DerivedOrganization
+    # Production scopes the prompt to a body only when the form has more than one.
+    scoped: bool
     variant: Variant
-    known_titles: list[str]
+    role_labels: list[str]
+    divisions: list[str]
     people: list[PublishedPerson]
 
 
@@ -104,7 +110,7 @@ def read_published_people(open_data: str) -> dict[str, list[PublishedPerson]]:
 
 
 def forms_to_try(configs: dict[str, ConfigFile], run: SavedRun) -> list[tuple[GovernmentForm, bool]]:
-    """(form, whether the config decided it). Only forms with two or more organizations."""
+    """(form, whether the config decided it), for every form that derives an organization."""
     parsed = parse_jurisdiction_ocdid(run.jurisdiction_ocdid)
     if parsed.level == JurisdictionLevel.STATE:
         return []
@@ -116,20 +122,23 @@ def forms_to_try(configs: dict[str, ConfigFile], run: SavedRun) -> list[tuple[Go
         forms = [
             form
             for form in allowed_government_forms(config, run.jurisdiction_name)
-            if _plausible(form, run.jurisdiction_name, config.state_government_forms)
+            if _plausible(form, run.jurisdiction_name, config.state_government_forms, parsed.level)
         ]
-    return [
-        (form, decided is not None)
-        for form in forms
-        if len(derived_organizations(config, form)) >= 2
-    ]
+    return [(form, decided is not None) for form in forms if derived_organizations(config, form)]
 
 
-def _plausible(form: GovernmentForm, jurisdiction_name: str, state_forms) -> bool:
-    """For a form the config leaves open. A town meeting only where the state's own config lists
-    it (Massachusetts): a Census "town" in Tennessee or California has none. Otherwise a city."""
+def _plausible(
+    form: GovernmentForm, jurisdiction_name: str, state_forms, level: JurisdictionLevel
+) -> bool:
+    """For a form the config leaves open. A county may have any its state allows. A town meeting
+    only where the state's own config lists it (Massachusetts): a Census "town" in Tennessee or
+    California has none. A township board only for a township. Otherwise a city."""
+    if level == JurisdictionLevel.COUNTIES:
+        return True
     if form in _TOWN_FORMS:
         return form in state_forms
+    if form is GovernmentForm.TOWNSHIP_BOARD:
+        return jurisdiction_name.endswith(" township")
     return jurisdiction_name.endswith(" city")
 
 
@@ -171,37 +180,64 @@ def people_in(
     ]
 
 
-def known_titles(listed: list[PublishedPerson]) -> list[str]:
-    """What we have published for this body, as a scraped-before body's prompt would list it."""
-    return list(dict.fromkeys(name for person in listed for name in person.role_names))
+def roles_and_divisions(listed: list[PublishedPerson], taxonomy: Taxonomy) -> tuple[list[str], list[str]]:
+    """What we have published for this body, parsed apart the way research is: its roles, and the
+    divisions they sit in."""
+    roles, found = [], []
+    for name in (name for person in listed for name in person.role_names):
+        parsed = parse_label(name, taxonomy)
+        roles.extend(parsed.roles)
+        if parsed.division:
+            found.extend(divisions.filter_divisions([f"{parsed.division.designation} {parsed.division.value}"]))
+    return list(dict.fromkeys(roles)), list(dict.fromkeys(found))
 
 
-def case_id(run_folder: str, form: GovernmentForm, organization: str, variant: Variant) -> str:
-    raw = f"{run_folder}__{form.value}__{organization}__{variant.value}"
+def case_id(
+    run_folder: str, form: GovernmentForm, organization: str, variant: Variant, scoped: bool
+) -> str:
+    """An unscoped run's known titles and its absence of titles are the same whatever form is
+    assumed, so those two ids leave the form out and the second form's copy is "already staged"."""
+    if not scoped and variant is not Variant.SUGGESTED_TITLES:
+        raw = f"{run_folder}__unscoped__{variant.value}"
+    else:
+        raw = f"{run_folder}__{form.value}__{organization}__{variant.value}"
     return re.sub(r"[^a-z0-9_-]", "_", raw.lower())
 
 
-def organization_yaml(case: CandidateCase) -> dict[str, object]:
-    """`posts` is the stronger suggestion, `suggested_titles` the weak one; step 3 of the plan
-    teaches the prompt the difference. Until then `suggested_titles` is ignored."""
+def prompt_inputs(case: CandidateCase) -> dict[str, object]:
+    """What the eval hands the prompt besides the page, in the shape production uses: a scoped
+    body under `organization`, an unscoped run's roles as `known_roles` beside its `divisions`."""
+    if case.scoped:
+        return {"organization": _scoped_organization(case)}
+    if case.variant is Variant.KNOWN_TITLES:
+        return {"known_roles": case.role_labels, **({"divisions": case.divisions} if case.divisions else {})}
+    if case.variant is Variant.SUGGESTED_TITLES:
+        return {"government_form_role_labels": case.organization.role_labels}
+    return {}
+
+
+def _scoped_organization(case: CandidateCase) -> dict[str, object]:
     organization: dict[str, object] = {"name": case.organization.name}
     if case.variant is Variant.KNOWN_TITLES:
-        organization["posts"] = case.known_titles
+        organization["role_labels"] = case.role_labels
+        if case.divisions:
+            organization["divisions"] = case.divisions
     elif case.variant is Variant.SUGGESTED_TITLES:
-        organization["suggested_titles"] = case.organization.role_labels
+        organization["government_form_role_labels"] = case.organization.role_labels
     return organization
 
 
 def expected_yaml(case: CandidateCase) -> str:
     form_note = "decided by the config" if case.form_was_decided else "one of several allowed, so assumed"
+    scope_note = f"scoped to {case.organization.name}" if case.scoped else f"unscoped, its one body {case.organization.name}"
     thought = (
         f"GENERATED, review before moving into the dataset. Form {case.government_form.value} "
-        f"({form_note}); {case.variant.value} for {case.organization.name}. People are the published "
+        f"({form_note}); {case.variant.value}, {scope_note}. People are the published "
         "roster's, filed by role (a role no organization lists goes to the main board): check titles, dates and anyone the page lists that the roster lacks."
     )
     expected = {
         GENERATED_KEY: True,
-        "organization": organization_yaml(case),
+        **prompt_inputs(case),
         "people": [
             {
                 "name": person.name,
@@ -231,21 +267,26 @@ def candidate_cases(
     page_url_key = canonical_url(next(page.url for page in run.pages if page.input_path == input_path))
     parsed = parse_jurisdiction_ocdid(run.jurisdiction_ocdid)
     config = jurisdiction_config(configs, parsed.state, parsed.level)
+    taxonomy = build_taxonomy(config.roles)
     cases = []
     for form, form_was_decided in forms_to_try(configs, run):
         organizations = derived_organizations(config, form)
+        scoped = len(organizations) >= 2
         for organization in organizations:
             listed = people_in(organization, organizations, people, page_url_key)
+            role_labels, found_divisions = roles_and_divisions(listed, taxonomy)
             for variant in Variant:
                 cases.append(
                     CandidateCase(
-                        case_id=case_id(run.folder, form, organization.name, variant),
+                        case_id=case_id(run.folder, form, organization.name, variant, scoped),
                         input_path=input_path,
                         government_form=form,
                         form_was_decided=form_was_decided,
                         organization=organization,
+                        scoped=scoped,
                         variant=variant,
-                        known_titles=known_titles(listed),
+                        role_labels=role_labels,
+                        divisions=found_divisions,
                         people=listed,
                     )
                 )

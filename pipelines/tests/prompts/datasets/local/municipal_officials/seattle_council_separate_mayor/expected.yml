@@ -1,16 +1,16 @@
 organization:
   name: City Council
-  posts:
-  - Council Member District 1
-  - Council Member District 2
-  - Council Member District 3
-  - Council Member District 4
-  - Council Member District 5
-  - Council Member District 6
-  - Council Member District 7
-  - Council Member Position 8
-  - Council Member Position 9
+  role_labels:
+  - Council Member
   - Council President
+  divisions:
+  - district 1
+  - district 2
+  - district 3
+  - district 4
+  - district 5
+  - district 6
+  - district 7
 people:
 - name: Rob Saka
   label: Councilmember District 1
@@ -84,18 +84,15 @@ people:
   start_date: null
   end_date: null
   image: local://f207a4a7733a.png
-thought: 'Seattle splits its elected officials across two bodies with separate pages:
-  the Office of the Mayor at seattle.gov/mayor and the City Council at seattle.gov/council.
-  This is the Council page, so only the nine Councilmembers are extracted. Joy Hollingsworth
-  is Council President, which the member grid states beside her district; she also holds the
-  District 3 Council Member seat, so her label carries both. Mayor Katie
-  Wilson is named four times — once in the site navigation as a link to the Mayor''s
-  Office, and three times in Council Connection news blurbs about Councilmembers
-  responding to her — but she holds no Council seat and this page never presents her
-  as one of its members. Note that STEP 1''s existing news-mention rule is already enough
-  to exclude her, so this case guards that rule — it does not measure whether people are
-  attributed to the right body. No Councilmember has an individual phone or
-  email here, so all nine carry the Council''s own: the number in the footer contact
-  block and the address the page offers for reaching every member. 206-684-2489, repeated
-  around twenty times near the top, is the citywide Google Translate interpreter line,
-  not an office contact.'
+thought: 'Seattle splits its elected officials across two bodies with separate pages: the Office of the
+  Mayor at seattle.gov/mayor and the City Council at seattle.gov/council. This is the Council page, so
+  only the nine Councilmembers are extracted. Joy Hollingsworth is Council President, which the member
+  grid states beside her district; she also holds the District 3 Council Member seat, so her label carries
+  both. Mayor Katie Wilson is named four times — once in the site navigation as a link to the Mayor''s
+  Office, and three times in Council Connection news blurbs about Councilmembers responding to her — but
+  she holds no Council seat and this page never presents her as one of its members. Note that STEP 1''s
+  existing news-mention rule is already enough to exclude her, so this case guards that rule — it does
+  not measure whether people are attributed to the right body. No Councilmember has an individual phone
+  or email here, so all nine carry the Council''s own: the number in the footer contact block and the
+  address the page offers for reaching every member. 206-684-2489, repeated around twenty times near the
+  top, is the citywide Google Translate interpreter line, not an office contact.'

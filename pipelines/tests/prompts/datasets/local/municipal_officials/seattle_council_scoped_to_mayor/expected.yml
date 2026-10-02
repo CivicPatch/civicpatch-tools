@@ -1,10 +1,10 @@
 organization:
   name: Office of the Mayor
-  posts:
+  role_labels:
   - Mayor
 people: []
-thought: 'The same Seattle City Council page as seattle_council_separate_mayor, extracted for the
-  Office of the Mayor instead. Nobody on it belongs to that body: the nine Councilmembers hold
-  City Council posts, and Mayor Katie Wilson appears only in the
-  navigation and in news blurbs, never as an office holder listed on this page. The pair only
-  means something together — a model that returns nobody everywhere fails the companion case.'
+thought: 'The same Seattle City Council page as seattle_council_separate_mayor, extracted for the Office
+  of the Mayor instead. Nobody on it belongs to that body: the nine Councilmembers hold City Council posts,
+  and Mayor Katie Wilson appears only in the navigation and in news blurbs, never as an office holder
+  listed on this page. The pair only means something together — a model that returns nobody everywhere
+  fails the companion case.'

@@ -1,0 +1,46 @@
+generated: true
+known_roles:
+- Mayor
+- Vice Mayor
+- Commissioner
+people:
+- name: Rusty Moore
+  label: Mayor
+  phone: (615) 297-6041
+  email: rmoore@citybellemeade.org
+  url: https://citybellemeade.org/person/rusty-moore/
+  start_date: null
+  end_date: null
+  image: null
+- name: Haley Dale
+  label: Vice Mayor
+  phone: (615) 297-6041
+  email: hdale@citybellemeade.org
+  url: https://citybellemeade.org/person/commissioner-2/
+  start_date: null
+  end_date: null
+  image: null
+- name: Louise Bryan
+  label: Commissioner
+  phone: (615) 297-6041
+  email: lbryan@citybellemeade.org
+  url: https://citybellemeade.org/person/louise-bryan/
+  start_date: null
+  end_date: null
+  image: null
+- name: Neal Clayton
+  label: Commissioner
+  phone: (615) 297-6041
+  email: nclayton@citybellemeade.org
+  url: https://citybellemeade.org/person/commissioner/
+  start_date: null
+  end_date: null
+  image: null
+- name: Tom Starkey
+  label: Commissioner
+  phone: (615) 297-6041
+  email: tstarkey@citybellemeade.org
+  url: https://citybellemeade.org/person/tom-starkey/
+  start_date: null
+  end_date: null
+  image: null

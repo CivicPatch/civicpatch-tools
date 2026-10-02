@@ -1,0 +1,7 @@
+generated: true
+organization:
+  name: Town Meeting
+  government_form_role_labels:
+  - Moderator
+  - Town Meeting Member
+people: []

@@ -1,0 +1,44 @@
+generated: true
+organization:
+  name: Select Board
+people:
+- name: Mary Krumsiek
+  label: Selectman and Chairman
+  phone: (508) 865-4710
+  email: mkrumsiek@millburyma.gov
+  url: https://www.millburyma.gov/1506/Board-of-Selectmen
+  start_date: null
+  end_date: 2028-04
+  image: null
+- name: Brian A. Sora
+  label: Selectman and Vice Chairman
+  phone: (508) 865-4710
+  email: bsora@millburyma.gov
+  url: https://www.millburyma.gov/1506/Board-of-Selectmen
+  start_date: null
+  end_date: 2029-04
+  image: null
+- name: Nicholas Lazzaro
+  label: Selectman and Clerk
+  phone: (508) 865-4710
+  email: nlazzaro@millburyma.gov
+  url: https://www.millburyma.gov/1506/Board-of-Selectmen
+  start_date: null
+  end_date: 2027-04
+  image: null
+- name: Brian Tagg
+  label: Selectman
+  phone: (508) 865-4710
+  email: btagg@millburyma.gov
+  url: https://www.millburyma.gov/1506/Board-of-Selectmen
+  start_date: null
+  end_date: 2028-04
+  image: null
+- name: Michael R. Gilchrist
+  label: Selectman
+  phone: (508) 865-4710
+  email: mgilchrist@millburyma.gov
+  url: https://www.millburyma.gov/1506/Board-of-Selectmen
+  start_date: null
+  end_date: 2027-04
+  image: null

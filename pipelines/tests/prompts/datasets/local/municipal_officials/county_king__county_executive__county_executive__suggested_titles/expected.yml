@@ -1,0 +1,14 @@
+generated: true
+organization:
+  name: County Executive
+  government_form_role_labels:
+  - County Executive
+people:
+- name: Girmay Zahilay
+  label: King County Executive
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/executive
+  start_date: null
+  end_date: null
+  image: null

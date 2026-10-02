@@ -6,7 +6,7 @@ people:
   url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
-  image: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
 - name: Tracy Rankin
   label: Council Member Place 1 (North Ward)
   phone: null
