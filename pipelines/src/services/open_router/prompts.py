@@ -150,10 +150,14 @@ def relevant_page_prompt(
 
 
 class PromptOrganization(BaseModel):
-    """A body as the officials prompt names it: its name and its posts' labels."""
+    """A body as the officials prompt names it: its name, the roles and divisions our posts (or
+    research) say it has, and on a cold start the roles its form of government usually has. Roles
+    and divisions stay apart: the model writes one label and `parse_label` splits it again."""
 
     name: str
-    posts: List[str] = []
+    role_labels: List[str] = []
+    divisions: List[str] = []
+    government_form_role_labels: List[str] = []
 
 
 _PAGE_LABEL_RULES = """    - Everything the page uses to identify which office this person holds, written as one
@@ -197,20 +201,70 @@ def _organization_scope(organization: PromptOrganization) -> str:
 """
 
 
-def _pick_list_label_rules(
+def _divisions_rule(divisions: List[str]) -> str:
+    if not divisions:
+        return ""
+    return f"""    - Its divisions, in our words:
+{_bullets(divisions, "        ")}
+      They tell you which seats exist; write a person's seat as the page writes it.
+"""
+
+
+def _known_roles_label_rules(organization: PromptOrganization, page_label_rules: str) -> str:
+    return f"""    - The roles in {organization.name}, in our words:
+{_bullets(organization.role_labels, "        ")}
+      When the page means one of these roles, prefer our word for it, even if the page writes it
+      differently.
+{_divisions_rule(organization.divisions)}    - A person can hold more than one role, such as a seat and a presiding title. Put every one
+      in the same label, joined with "and".
+    - If the page gives them a {organization.name} role that is not listed, do not swap it for a
+      listed one. Write it from the page and join it with any listed roles they hold:
+        "Deputy Mayor, Ward 5" when the roles are "Council Member" but no Deputy Mayor
+            -> "Council Member Ward 5 and Deputy Mayor"
+      Write a label from the page following these rules:
+{page_label_rules}"""
+
+
+def _government_form_roles_label_rules(
     organization: PromptOrganization, page_label_rules: str
 ) -> str:
-    return f"""    - Choose every post below that is this person's, and copy each exactly as written here —
-      not as the page writes it:
-{_bullets(organization.posts, "        ")}
-    - A person can hold more than one, such as a seat and a presiding title. Put every one in the
-      same label, joined with "and".
-    - If the page gives them a {organization.name} title that is not listed, do not swap it for a
-      listed post. Write that title from the page and join it with any listed posts they hold:
-        "Deputy Mayor, Ward 5" when the list has "Council Member Ward 5" but no Deputy Mayor
-            -> "Council Member Ward 5 and Deputy Mayor"
-      Write a title from the page following these rules:
+    return f"""    - A {organization.name} usually has these roles:
+{_bullets(organization.government_form_role_labels, "        ")}
+      That is a guess from its form of government, not from this page. Use one of these words
+      only when the page clearly means that role; otherwise write the title the page gives.
+{_divisions_rule(organization.divisions)}      Write a label from the page following these rules:
 {page_label_rules}"""
+
+
+def _label_rules(organization: PromptOrganization | None) -> str:
+    if organization and organization.role_labels:
+        return _known_roles_label_rules(organization, _PAGE_LABEL_RULES)
+    if organization and organization.government_form_role_labels:
+        return _government_form_roles_label_rules(organization, _PAGE_LABEL_RULES)
+    if organization and organization.divisions:
+        return _divisions_rule(organization.divisions) + _PAGE_LABEL_RULES
+    return _PAGE_LABEL_RULES
+
+
+def _roles_hint(
+    known_roles: List[str], divisions: List[str], government_form_role_labels: List[str]
+) -> str:
+    """Unscoped only: a scoped run's label rules already name its body's roles and divisions."""
+    lines = []
+    if known_roles:
+        lines.append("- Known elected roles for this municipality: " + ", ".join(known_roles) + ".")
+    elif government_form_role_labels:
+        lines.append(
+            "- Its form of government usually has these roles: "
+            + ", ".join(government_form_role_labels)
+            + ". That is a guess, not from this page; write the title the page gives."
+        )
+    if divisions:
+        lines.append(
+            "- Its divisions: " + ", ".join(divisions)
+            + ". Write a person's seat as the page writes it."
+        )
+    return "\n    ".join(lines)
 
 
 # Note: Claude Sonnet 4.6 Generated prompt
@@ -220,6 +274,8 @@ def municipality_officials_prompt(
     county: str | None = None,
     current_date: str | None = None,
     organization: PromptOrganization | None = None,
+    divisions: List[str] = [],
+    government_form_role_labels: List[str] = [],
 ):
     """
     Generate a prompt for extracting municipality officials (Llama-optimized).
@@ -231,15 +287,9 @@ def municipality_officials_prompt(
     """
     current_date = current_date or datetime.now().strftime("%Y-%m-%d")
 
-    roles_hint_str = ""
-    # A scoped run's pick list already names its organization's posts; the jurisdiction-wide list
-    # would name other organizations' roles beside it.
-    if known_roles and organization is None:
-        roles_hint_str = (
-            "- Known elected roles for this municipality: "
-            + ", ".join(known_roles)
-            + "."
-        )
+    roles_hint_str = (
+        "" if organization else _roles_hint(known_roles, divisions, government_form_role_labels)
+    )
 
     jurisdiction_parts = [f"{county} County" if county else None, state]
     jurisdiction_context = ", ".join(p for p in jurisdiction_parts if p)
@@ -248,11 +298,7 @@ def municipality_officials_prompt(
     )
 
     scope = _organization_scope(organization) if organization else ""
-    label_rules = (
-        _pick_list_label_rules(organization, _PAGE_LABEL_RULES)
-        if organization
-        else _PAGE_LABEL_RULES
-    )
+    label_rules = _label_rules(organization)
 
     return f"""
     You are a data extraction assistant. Extract information about the currently
@@ -341,10 +387,13 @@ def is_official_jurisdiction_url_prompt() -> str:
 
 def page_covers_organization_prompt(
     organization_name: str,
-    # That body's posts, to say what holding office in it looks like. A person is the evidence a
-    # page covers a body, so the offices are the thing to recognise.
-    posts: List[str],
+    # That body's roles and divisions, to say what holding office in it looks like. A person is
+    # the evidence a page covers a body, so the offices are the thing to recognise.
+    role_labels: List[str],
     jurisdiction_name: str = "",
+    divisions: List[str] = [],
+    # On a cold start, what its form of government says it usually has: a guess, said as one.
+    government_form_role_labels: List[str] = [],
 ) -> str:
     """Whether one page carries people of one body.
 
@@ -357,14 +406,33 @@ def page_covers_organization_prompt(
     jurisdiction_line = (
         f"    Municipality: {jurisdiction_name}\n" if jurisdiction_name else ""
     )
-    # One per line: a post's own label can carry a comma ("Council Member, District 1").
-    posts_line = f"    Offices in it:\n{_bullets(posts, '      ')}\n" if posts else ""
+    if role_labels:
+        roles_line = f"    Roles in it:\n{_bullets(role_labels, '      ')}\n"
+    elif government_form_role_labels:
+        roles_line = (
+            "    Roles it usually has (a guess from its form of government, not from this page):\n"
+            f"{_bullets(government_form_role_labels, '      ')}\n"
+        )
+    else:
+        roles_line = ""
+    divisions_line = f"    Its divisions:\n{_bullets(divisions, '      ')}\n" if divisions else ""
+    listed_note = (
+        """
+    Only people who hold office in that body count. Once the page shows they are in it, their
+    title may be one not listed above; the list says what holding office in this body looks like,
+    not every title it has.
+"""
+        if roles_line
+        else """
+    Only people who hold office in that body count, whatever the page calls their office.
+"""
+    )
     return f"""
     Decide whether the provided page content carries people who currently hold office in one
     specific governing body.
 
     Body: {organization_name}
-{jurisdiction_line}{posts_line}
+{jurisdiction_line}{roles_line}{divisions_line}
     Answer true only if this page presents a person holding office in that body as one of its
     officials — a roster entry, a directory row, a profile, or a contact block naming them.
 
@@ -387,9 +455,6 @@ def page_covers_organization_prompt(
     counting it would make every page of a site cover every body, which is no answer at all. The
     same list in the body of a page, as what that page exists to present, does count.
 
-    Only people who hold office in that body count. Once the page shows they are in it, their
-    title may be one not listed above; the list says what holding office in this body looks like,
-    not every title it has. 
-
+{listed_note}
     IMPORTANT: Return only valid JSON, {{"covers": true}} or {{"covers": false}}.
     """

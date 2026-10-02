@@ -1,4 +1,3 @@
-from pydantic import BaseModel
 
 import database.changesets as changesets_db
 import database.government_forms as government_forms_db
@@ -6,8 +5,11 @@ import services.jurisdiction_pull_request as jurisdiction_pr_service
 import database.jurisdiction_configs as jurisdiction_configs_db
 from core.organization_derivation import (
     ExistingOrganization,
+    NOTHING_RESOLVED,
     OrganizationChanges,
+    ResolvedGovernment,
     organization_changes,
+    resolve_government,
     with_role_labels,
 )
 from database import organizations as organizations_db
@@ -22,11 +24,9 @@ from schemas.jurisdictions import GovernmentFormSummary, JurisdictionDetailsFiel
 from shared.schemas import GovernmentForm, JurisdictionLevel
 from shared.utils.government_forms import (
     GOVERNMENT_FORM_DESCRIPTIONS,
-    DerivedOrganization,
     government_form_name,
 )
 from shared.utils.layered_config import (
-    allowed_government_forms,
     in_standard_order,
     derived_organizations,
     jurisdiction_config,
@@ -36,32 +36,15 @@ from shared.utils.id_utils import parse_jurisdiction_ocdid
 from shared.utils.statuses import ActivityType
 
 
-class ResolvedGovernment(BaseModel):
-    government_form: GovernmentForm | None
-    derived_organizations: list[DerivedOrganization]
-    # What the config allows for it: the choices an LLM is offered when the government form is unknown.
-    allowed_government_forms: list[GovernmentForm]
-
-
-_NOTHING_RESOLVED = ResolvedGovernment(government_form=None, derived_organizations=[], allowed_government_forms=[])
-
-
 async def resolved_government(jurisdiction_ocdid: str) -> ResolvedGovernment:
-    """The jurisdiction's government form as of now (open-data's value, else what the config decides) and the
-    organizations it implies. Nothing for a state, or an unknown or inactive jurisdiction."""
+    """The jurisdiction's government form as of now (open-data's value, else what the config decides) and
+    its candidates. Nothing for a state, or an unknown or inactive jurisdiction."""
     jurisdiction = await government_forms_db.get_government_form_inputs(jurisdiction_ocdid)
-    if jurisdiction is None:
-        return _NOTHING_RESOLVED
-    layer = _layer(jurisdiction)
-    if layer is None:
-        return _NOTHING_RESOLVED
+    layer = _layer(jurisdiction) if jurisdiction else None
+    if jurisdiction is None or layer is None:
+        return NOTHING_RESOLVED
     config = jurisdiction_config(await jurisdiction_configs_db.get_jurisdiction_configs(), *layer)
-    government_form = resolve_government_form(config, jurisdiction.name, jurisdiction.government_form)
-    return ResolvedGovernment(
-        government_form=government_form,
-        derived_organizations=derived_organizations(config, government_form),
-        allowed_government_forms=allowed_government_forms(config, jurisdiction.name),
-    )
+    return resolve_government(config, jurisdiction.name, jurisdiction.government_form)
 
 
 async def government_form_summary(jurisdiction_ocdid: str) -> GovernmentFormSummary | None:
@@ -95,7 +78,7 @@ async def organizations_with_role_labels(jurisdiction_ocdid: str) -> list[dict]:
     """Every organization in the jurisdiction with its posts and derived role labels."""
     organizations = await posts_db.list_by_organization(jurisdiction_ocdid)
     government = await resolved_government(jurisdiction_ocdid)
-    return with_role_labels(organizations, government.derived_organizations)
+    return with_role_labels(organizations, government.candidate_organizations)
 
 
 async def ensure_government_form_organizations() -> int:
@@ -184,13 +167,13 @@ async def government_form_choices(jurisdiction_ocdid: str) -> list[GovernmentFor
     the government form is known or decided by the config, a pull request is waiting, or a person closed
     one before (after that, a person sets it)."""
     government = await resolved_government(jurisdiction_ocdid)
-    if government.government_form is not None or len(government.allowed_government_forms) < 2:
+    if government.government_form is not None or len(government.candidate_government_forms) < 2:
         return []
     if await jurisdiction_pr_service.has_open_pull_request(jurisdiction_ocdid):
         return []
     if await changesets_db.has_rejected_jurisdiction_pull_request(jurisdiction_ocdid):
         return []
-    return government.allowed_government_forms
+    return government.candidate_government_forms
 
 
 async def jurisdiction_details_fields(jurisdiction_ocdid: str) -> JurisdictionDetailsFields:

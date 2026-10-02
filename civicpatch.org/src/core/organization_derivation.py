@@ -12,7 +12,14 @@ membership.
 
 from pydantic import BaseModel
 
+from shared.schemas import GovernmentForm
 from shared.utils.government_forms import DerivedOrganization
+from shared.utils.layered_config import (
+    MergedConfig,
+    allowed_government_forms,
+    derived_organizations,
+    resolve_government_form,
+)
 
 
 class ExistingOrganization(BaseModel):
@@ -47,6 +54,42 @@ def organization_changes(
         rename_default_to=first.name if rename else None,
         organizations_to_create=[o for o in others if o.name not in existing_names],
     )
+
+
+class ResolvedGovernment(BaseModel):
+    government_form: GovernmentForm | None
+    # The known form alone, or while it is unknown every form the config lists for the name.
+    candidate_government_forms: list[GovernmentForm]
+    # Those forms' organizations, merged by name.
+    candidate_organizations: list[DerivedOrganization]
+
+
+NOTHING_RESOLVED = ResolvedGovernment(
+    government_form=None, candidate_government_forms=[], candidate_organizations=[]
+)
+
+
+def resolve_government(
+    config: MergedConfig, name: str, saved_form: GovernmentForm | None
+) -> ResolvedGovernment:
+    government_form = resolve_government_form(config, name, saved_form)
+    candidates = [government_form] if government_form else allowed_government_forms(config, name)
+    return ResolvedGovernment(
+        government_form=government_form,
+        candidate_government_forms=candidates,
+        candidate_organizations=merged_by_name([derived_organizations(config, form) for form in candidates]),
+    )
+
+
+def merged_by_name(per_form: list[list[DerivedOrganization]]) -> list[DerivedOrganization]:
+    """Every form's organizations as one list: same-named ones become one, their role labels
+    unioned in order. For a jurisdiction whose form is unknown, where any allowed form may hold."""
+    labels_by_name: dict[str, list[str]] = {}
+    for organizations in per_form:
+        for organization in organizations:
+            labels = labels_by_name.setdefault(organization.name, [])
+            labels.extend(label for label in organization.role_labels if label not in labels)
+    return [DerivedOrganization(name=name, role_labels=labels) for name, labels in labels_by_name.items()]
 
 
 def with_role_labels(

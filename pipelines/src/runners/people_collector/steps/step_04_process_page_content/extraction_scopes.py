@@ -3,9 +3,14 @@
 from typing import List
 
 from pydantic import BaseModel
+from runners.people_collector.schemas import ExpectedMembership
+from runners.people_collector.utils.organization_terms import (
+    expected_divisions,
+    expected_roles,
+    memberships_in,
+)
 from services.open_router.prompts import PromptOrganization
 from shared.schemas import KnownOrganization
-from shared.utils.government_forms import office_labels
 
 
 class ExtractionScope(BaseModel):
@@ -18,8 +23,23 @@ class ExtractionScope(BaseModel):
     prompt_organization: PromptOrganization | None = None
 
 
+def prompt_organization(
+    organization: KnownOrganization, memberships: List[ExpectedMembership]
+) -> PromptOrganization:
+    """Its roles and divisions from who we expect in it; its form's role labels only when we
+    expect nobody, since those are a guess."""
+    own = memberships_in(organization.id, memberships)
+    return PromptOrganization(
+        name=organization.name,
+        role_labels=expected_roles(own),
+        divisions=expected_divisions(own),
+        government_form_role_labels=[] if own else organization.role_labels,
+    )
+
+
 def extraction_scopes(
     organizations: List[KnownOrganization],
+    memberships: List[ExpectedMembership],
     covers: List[str] | None = None,
 ) -> List[ExtractionScope]:
     """One unscoped run unless there are several organizations to tell apart.
@@ -41,9 +61,7 @@ def extraction_scopes(
     return [
         ExtractionScope(
             organization_id=organization.id,
-            prompt_organization=PromptOrganization(
-                name=organization.name, posts=office_labels(organization)
-            ),
+            prompt_organization=prompt_organization(organization, memberships),
         )
         for organization in (named or organizations)
     ]

@@ -4,6 +4,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 from runners.people_collector.schemas import (
+    ExpectedMembership,
     ExtractedPersonRecord,
     Link,
     LinkStatus,
@@ -93,8 +94,8 @@ async def _collect(organizations: list[KnownOrganization]):
         pipeline_run_context_factory(steps={}),
         _PAGE,
         _CONTENT,
-        [],
         organizations,
+        [],
         ProcessPageContentStep(records={}),
         {},
         MagicMock(),
@@ -106,29 +107,39 @@ def _stamps(records) -> dict[str, str | None]:
 
 
 def test_no_organizations_is_one_unscoped_run():
-    [scope] = extraction_scopes([])
+    [scope] = extraction_scopes([], [])
 
     assert scope.organization_id is None
     assert scope.prompt_organization is None
 
 
 def test_one_organization_runs_unscoped_but_is_stamped_with_its_id():
-    [scope] = extraction_scopes([_COUNCIL])
+    [scope] = extraction_scopes([_COUNCIL], [])
 
     assert scope.organization_id == "council"
     assert scope.prompt_organization is None
 
 
-def test_several_organizations_each_get_a_scoped_run_with_their_post_labels():
-    scopes = extraction_scopes([_COUNCIL, _MAYOR])
+def test_several_organizations_each_get_a_scoped_run_with_their_roles_and_divisions():
+    memberships = [
+        ExpectedMembership(organization_id="council", role_label="Council Member", division="district 1"),
+        ExpectedMembership(organization_id="council", role_label="Council Member", division="district 2"),
+        ExpectedMembership(organization_id="mayor", role_label="Mayor"),
+    ]
 
-    assert [(s.organization_id, s.prompt_organization.name, s.prompt_organization.posts) for s in scopes if s.prompt_organization] == [
-        ("council", "City Council", ["Council Member District 1"]),
-        ("mayor", "Office of the Mayor", ["Mayor"]),
+    scopes = extraction_scopes([_COUNCIL, _MAYOR], memberships)
+
+    assert [
+        (s.organization_id, s.prompt_organization.name, s.prompt_organization.role_labels, s.prompt_organization.divisions)
+        for s in scopes
+        if s.prompt_organization
+    ] == [
+        ("council", "City Council", ["Council Member"], ["district 1", "district 2"]),
+        ("mayor", "Office of the Mayor", ["Mayor"], []),
     ]
 
 
-def test_organizations_with_no_posts_yet_take_their_pick_list_from_their_role_labels():
+def test_organizations_nobody_is_expected_in_carry_their_forms_role_labels_as_a_guess():
     select_board = KnownOrganization(
         id="select",
         name="Select Board",
@@ -136,9 +147,11 @@ def test_organizations_with_no_posts_yet_take_their_pick_list_from_their_role_la
     )
     town_meeting = KnownOrganization(id="meeting", name="Town Meeting", role_labels=["Moderator"])
 
-    scopes = extraction_scopes([select_board, town_meeting])
+    scopes = extraction_scopes([select_board, town_meeting], [])
 
-    assert [s.prompt_organization.posts for s in scopes if s.prompt_organization] == [
+    scoped = [s.prompt_organization for s in scopes if s.prompt_organization]
+    assert [o.role_labels for o in scoped] == [[], []]
+    assert [o.government_form_role_labels for o in scoped] == [
         ["Select Board Chair", "Select Board Vice Chair", "Select Board Member"],
         ["Moderator"],
     ]

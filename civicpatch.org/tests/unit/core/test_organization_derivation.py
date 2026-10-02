@@ -1,6 +1,6 @@
 import pytest
 
-from core.organization_derivation import ExistingOrganization, organization_changes, with_role_labels
+from core.organization_derivation import ExistingOrganization, merged_by_name, organization_changes, with_role_labels
 from shared.utils.government_forms import DerivedOrganization
 
 GOVERNMENT = ExistingOrganization(id="gov", name="Government", meta_is_default=True)
@@ -106,3 +106,24 @@ def test_each_organization_gets_the_role_labels_derived_under_its_name():
         [],
     ]
     assert "role_labels" not in organizations[0]
+
+
+@pytest.mark.unit
+def test_an_unknown_forms_organizations_merge_by_name_with_every_forms_labels():
+    representative = [
+        DerivedOrganization(name="Select Board", role_labels=["Select Board Member", "Chair", "Vice Chair"]),
+        DerivedOrganization(name="Town Meeting", role_labels=["Moderator", "Town Meeting Member"]),
+    ]
+
+    merged = merged_by_name([OPEN_TOWN_MEETING, representative])
+
+    assert merged == [
+        DerivedOrganization(name="Select Board", role_labels=["Select Board Member", "Chair", "Vice Chair"]),
+        DerivedOrganization(name="Town Meeting", role_labels=["Moderator", "Town Meeting Member"]),
+    ]
+
+
+@pytest.mark.unit
+def test_merging_keeps_organizations_only_one_form_has():
+    assert [o.name for o in merged_by_name([MAYOR_COUNCIL, COUNCIL_MANAGER])] == ["Council", "Office of the Mayor"]
+    assert merged_by_name([MAYOR_COUNCIL, COUNCIL_MANAGER])[0].role_labels == ["Council Member", "Mayor"]
