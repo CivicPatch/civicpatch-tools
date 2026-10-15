@@ -30,14 +30,8 @@ def _load_config_file(filename: str, key: Optional[str] = None, default=None):
 def get_role_configs(
     role_config_override: Optional[RoleConfig] = None,
 ) -> List[Role]:
-    """Only `active` roles. Every taxonomy consumer funnels through here, so
-    this is the one place that decides what the matcher can see.
-
-    `inactive` is a removed role. `candidate` is matchable by design, so triage
-    has something to show, but that path does not exist yet, and treating it as
-    an ordinary role (which is what happened before this filter) is worse than
-    not matching it at all.
-    """
+    """Only `active` roles: every taxonomy consumer funnels through here, and an `inactive` one
+    is a role its config file no longer lists."""
     if role_config_override is None:
         return []
     return [

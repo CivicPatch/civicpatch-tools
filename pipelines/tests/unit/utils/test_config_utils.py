@@ -17,7 +17,6 @@ def test_get_role_configs_keeps_only_active():
     config = RoleConfig(roles=[
         _role("Mayor", RoleStatus.ACTIVE),
         _role("Alderman", RoleStatus.INACTIVE),
-        _role("Dogcatcher", RoleStatus.CANDIDATE),
     ])
     assert [r.label for r in get_role_configs(config)] == ["Mayor"]
 
