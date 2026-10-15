@@ -3,20 +3,12 @@ from typing import List
 
 from pydantic import BaseModel, field_validator
 
-from shared.schemas import RoleStatus
-
 
 class RoleInput(BaseModel):
-    """A role as submitted. No `id` — it is derived from the label on insert.
-
-    No `priority` either: ordering is owned by `PUT /roles/reorder`, which is
-    ADMINS-only, and accepting it here would both let a MAINTAINER set ordering
-    through the upsert path and make an omitted field read as "clear it".
-    Reads use `shared.schemas.Role`, which carries both.
-    """
+    """A role as the editor submits it. No `id`: an added role's comes from its label, and an
+    edit names it in the url. No `priority`: ordering is `PUT /roles/reorder`, admins only."""
 
     label: str
-    status: RoleStatus = RoleStatus.ACTIVE
     is_unique: bool = False
     aliases: List[str] = []
 

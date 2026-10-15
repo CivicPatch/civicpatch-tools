@@ -1,5 +1,4 @@
 import pytest
-from shared.schemas import RoleStatus
 from shared.utils.layered_config import ConfigFile, ConfigRole
 from shared.utils.yaml_utils import yaml_load
 
@@ -72,11 +71,6 @@ def test_a_renamed_role_keeps_its_id():
 
 def test_editing_an_unlisted_role_changes_nothing():
     assert with_role_edited(_roles(), "unmatched", RoleInput(label="Unmatched")) == _roles()
-
-
-def test_a_role_that_is_not_active_is_refused():
-    with pytest.raises(RoleConfigEditRefused):
-        with_role_edited(_roles(), "trustee", RoleInput(label="Trustee", status=RoleStatus.INACTIVE))
 
 
 def test_an_alias_naming_another_roles_label_is_refused():
