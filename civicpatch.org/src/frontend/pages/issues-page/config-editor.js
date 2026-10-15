@@ -1,7 +1,7 @@
 import "./config-editor.css";
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import { fetchRoles, putRoles, deleteRole } from "../../api.js";
+import { fetchRoles, addRole, editRole, deleteRole } from "../../api.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/basic/modal.js";
 import "../../components/badge/badge.js";
@@ -42,6 +42,7 @@ function seedState(jurisdictions) {
 function useTermEditor() {
   const [isAdding, setIsAdding] = useState(false);
   const [editingValue, setEditingValue] = useState(null);
+  const [editingRoleId, setEditingRoleId] = useState(null);
   const [editName, setEditName] = useState("");
   const [editStatus, setEditStatus] = useState(STATUS_ACTIVE);
   const [editUnique, setEditUnique] = useState(false);
@@ -56,6 +57,7 @@ function useTermEditor() {
   const openEdit = (term) => {
     setIsAdding(false);
     setEditingValue(term.label);
+    setEditingRoleId(term.id);
     setEditName(term.label);
     setEditStatus(term.status || STATUS_ACTIVE);
     setEditUnique(term.is_unique);
@@ -82,6 +84,7 @@ function useTermEditor() {
   return {
     isAdding,
     editingValue,
+    editingRoleId,
     editName,
     setEditName,
     editStatus,
@@ -114,6 +117,7 @@ function TermTable({ terms, editable, editor, onSave, onDelete }) {
   const {
     isAdding,
     editingValue,
+    editingRoleId,
     editName,
     setEditName,
     editStatus,
@@ -143,6 +147,7 @@ function TermTable({ terms, editable, editor, onSave, onDelete }) {
       {
         type: "edit",
         value: editingValue,
+        role_id: editingRoleId,
         label: editName.trim(),
         status: editStatus,
         is_unique: editUnique,
@@ -409,13 +414,8 @@ function ConfigEditor(host) {
 
   const [filter, setFilter] = useState("");
   const [reordering, setReordering] = useState(false);
-  const [reorderToast, setReorderToast] = useState(null);
+  const [proposal, setProposal] = useState(null);
   const [errorState, setErrorState] = useState(null);
-
-  const showReorderToast = () => {
-    setReorderToast("Roles reordered");
-    setTimeout(() => setReorderToast(null), 4000);
-  };
 
   const dispatch = (name, detail) =>
     host.dispatchEvent(
@@ -434,31 +434,19 @@ function ConfigEditor(host) {
     if (permissions.can_write_config && terms === null && !loadError) load();
   }, [permissions.can_write_config]);
 
-  // The taxonomy is one flat global list, so a save sends every role back —
-  // absence is not removal, but an edit still has to carry the others through.
   const handleSave = async (op, reset, setSaveError) => {
     editor.setSaving(true);
     setSaveError(null);
     try {
-      const asPayload = (t) => ({
-        label: t.label,
-        status: t.status || STATUS_ACTIVE,
-        is_unique: t.is_unique,
-        aliases: t.aliases,
-      });
       const edited = {
         label: op.label,
         status: op.status,
         is_unique: op.is_unique,
         aliases: op.aliases,
       };
-      const updated =
-        op.type === "edit"
-          ? (terms || []).map((t) => (t.label === op.value ? edited : asPayload(t)))
-          : [...(terms || []).map(asPayload), edited];
-
-      await putRoles({ roles: updated });
-      load();
+      const { data } =
+        op.type === "edit" ? await editRole(op.role_id, edited) : await addRole(edited);
+      setProposal(data);
       reset();
     } catch (e) {
       setSaveError(e.message);
@@ -469,8 +457,8 @@ function ConfigEditor(host) {
 
   const handleDelete = async (roleId) => {
     try {
-      await deleteRole(roleId);
-      load();
+      const { data } = await deleteRole(roleId);
+      setProposal(data);
     } catch (e) {
       console.error("Remove failed:", e);
       setErrorState(`Remove failed: ${e.message}`);
@@ -495,10 +483,9 @@ function ConfigEditor(host) {
               ? html`
                   <civ-role-reorder
                     .roles=${filtered}
-                    @reordered=${() => {
+                    @reordered=${(e) => {
                       setReordering(false);
-                      load();
-                      showReorderToast();
+                      setProposal(e.detail);
                     }}
                     @cancel=${() => setReordering(false)}
                   ></civ-role-reorder>
@@ -553,9 +540,12 @@ function ConfigEditor(host) {
 
   const content = html`
     ${permissions.can_write_config ? rolesSection : null}
-    ${reorderToast
+    ${proposal
       ? html`<div class="config-editor__toast" role="status" aria-live="polite">
-          ${reorderToast}
+          Proposed in
+          <a href=${proposal.pull_request_url} target="_blank" rel="noopener"
+            >PR #${proposal.pull_request_number}</a
+          >; applies once merged.
         </div>`
       : null}
     ${errorState

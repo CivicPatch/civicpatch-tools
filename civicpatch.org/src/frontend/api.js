@@ -293,18 +293,39 @@ export const fetchUnmatchedText = async (page = 1, perPage = 20) => {
   return res.json();
 };
 
-export const putRoles = async (body) => {
+// A role change opens an open-data pull request; a 409 may name the one already open.
+const roleChangeResponse = async (res) => {
+  const body = await res.json();
+  if (!res.ok) {
+    throw new Error([body.error || `HTTP ${res.status}`, body.pull_request_url].filter(Boolean).join(" "));
+  }
+  return body;
+};
+
+export const addRole = async (role) => {
   const res = await fetch(`/api/v1/roles`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify(role),
+  });
+  return roleChangeResponse(res);
+};
+
+export const editRole = async (roleId, role) => {
+  const res = await fetch(`/api/v1/roles/${encodeURIComponent(roleId)}`, {
     method: "PUT",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
       "X-CSRF-Token": getCsrfCookie(),
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(role),
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+  return roleChangeResponse(res);
 };
 
 export const reorderRoles = async ({ roleOrder, movedRoles }) => {
@@ -317,8 +338,7 @@ export const reorderRoles = async ({ roleOrder, movedRoles }) => {
     },
     body: JSON.stringify({ role_order: roleOrder, moved_roles: movedRoles }),
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+  return roleChangeResponse(res);
 };
 
 export const deleteRole = async (roleId) => {
@@ -330,8 +350,7 @@ export const deleteRole = async (roleId) => {
       headers: { "X-CSRF-Token": getCsrfCookie() },
     },
   );
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+  return roleChangeResponse(res);
 };
 
 export const fetchJurisdictionActivity = async (

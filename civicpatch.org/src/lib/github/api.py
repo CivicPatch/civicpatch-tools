@@ -362,6 +362,32 @@ async def get_pull_request_state(pr_number: int, repo_url: str, headers: dict) -
     return PullRequestState.OPEN if data["state"] == "open" else PullRequestState.CLOSED
 
 
+class OpenPullRequest(BaseModel):
+    number: int
+    url: str
+    branch: str
+
+
+async def list_open_pull_requests(repo_url: str, headers: dict) -> list[OpenPullRequest]:
+    """Uncached, unlike `get_all_open_prs_raw`: a caller refusing a second PR must see one opened a
+    moment ago."""
+    found: list[OpenPullRequest] = []
+    page = 1
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        while True:
+            response = await client.get(
+                f"{repo_url}/pulls", headers=headers, params={"state": "open", "per_page": 100, "page": page}
+            )
+            response.raise_for_status()
+            batch = response.json()
+            found.extend(
+                OpenPullRequest(number=pr["number"], url=pr["html_url"], branch=pr["head"]["ref"]) for pr in batch
+            )
+            if len(batch) < 100:
+                return found
+            page += 1
+
+
 async def close_pull_request(pr_number: int, repo_url: str, headers: dict) -> None:
     async with httpx.AsyncClient(timeout=timeout) as client:
         response = await client.patch(

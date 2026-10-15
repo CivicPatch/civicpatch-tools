@@ -64,6 +64,10 @@
     border-radius: var(--radius);
     font-size: var(--font-size-sm);
 }
+.config-editor__toast a {
+    color: inherit;
+    text-decoration: underline;
+}
 .config-editor__empty {
     color: var(--text-muted);
     font-style: italic;

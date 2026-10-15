@@ -59,8 +59,8 @@ function RoleReorder(host: RoleReorderHost) {
     setSaving(true);
     setError(null);
     try {
-      await reorderRoles({ roleOrder: order.map((r) => r.id), movedRoles: [...movedRoleIds] });
-      host.dispatchEvent(new CustomEvent(REORDERED_EVENT, { bubbles: true, composed: true }));
+      const { data } = await reorderRoles({ roleOrder: order.map((r) => r.id), movedRoles: [...movedRoleIds] });
+      host.dispatchEvent(new CustomEvent(REORDERED_EVENT, { detail: data, bubbles: true, composed: true }));
     } catch (e) {
       setError((e as Error).message);
     } finally {

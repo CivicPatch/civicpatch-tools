@@ -31,12 +31,6 @@ class RoleInput(BaseModel):
         return value
 
 
-class SetRolesRequest(BaseModel):
-    roles: List[RoleInput]
-    # Set when the write resolves a pipeline issue (an unrecognized role the
-    # maintainer is accepting into the taxonomy).
-
-
 class ReorderRolesRequest(BaseModel):
     role_order: List[str]
     moved_roles: List[str] | None = None

@@ -50,15 +50,22 @@ def _get_semaphore() -> asyncio.Semaphore:
     return _SEMAPHORE_CACHE[loop_id]
 
 
-# Only `model` is read. The per-token costs that used to sit here were never consulted —
-# cost_utils owns pricing, keyed by (model, provider), because the price depends on which
-# provider OpenRouter routes to and a single number here cannot express that.
+# Only `model` and `providers` are read. The per-token costs that used to sit here were never
+# consulted: cost_utils owns pricing, keyed by (model, provider), because the price depends on
+# which provider OpenRouter routes to and a single number here cannot express that.
 #
 # A "CHEAP" tier used to exist as an empty dict, which was worse than absent: model_type
 # falls back to STANDARD only when the key is *missing*, so asking for CHEAP returned {}
 # and raised KeyError on the next line.
+#
+# `providers` is OpenRouter's fallback order, and the officials eval runs every one of them.
+# Dropped: NextBit (no longer offered), DigitalOcean (leaves `url` empty for most people),
+# Alibaba (its shared upstream quota keeps returning 429s).
 MODELS_BY_TYPE = {
-    "STANDARD": {"model": "deepseek/deepseek-v4-flash"},
+    "STANDARD": {
+        "model": "deepseek/deepseek-v4-flash",
+        "providers": ["AtlasCloud"],
+    },
 }
 
 
@@ -110,7 +117,8 @@ async def run_prompt(
     if not api_key:
         raise ValueError("OPEN_ROUTER_TOKEN is not set")
 
-    model = model or MODELS_BY_TYPE.get(model_type, MODELS_BY_TYPE["STANDARD"])["model"]
+    model_config = MODELS_BY_TYPE.get(model_type, MODELS_BY_TYPE["STANDARD"])
+    model = model or model_config["model"]
 
     messages = [{"role": "system", "content": prompt}]
     if content:
@@ -156,7 +164,7 @@ async def run_prompt(
                     # went stale silently: an unlisted (model, provider) pair reported zero.
                     "usage": {"include": True},
                     "provider": {
-                        "order": provider_order or ["AtlasCloud", "Alibaba", "DigitalOcean", "NextBit"],
+                        "order": provider_order or model_config["providers"],
                         "allow_fallbacks": False,
                         "data_collection": "deny",
                     },

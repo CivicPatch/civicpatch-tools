@@ -34,11 +34,8 @@ from services.open_router.llm import run_prompt as run_together_prompt
 # Model id -> providers to compare it on. To trial a model, add an entry and run the eval with
 # EVAL_MODEL=<model id>; production keeps routing to MODELS_BY_TYPE["STANDARD"].
 PROVIDERS_BY_MODEL = {
-    "deepseek/deepseek-v4-flash": [
-        "open_router:AtlasCloud",     # $0.14/$0.28, seed, fp4
-        "open_router:Alibaba",        # $0.13/$0.27, seed, fp8 — added 2026-09-16
-        # NextBit dropped 2026-09-28: returned nothing (0 tokens) for a whole evalsr run.
-        # DigitalOcean: leaves `url` empty for most people.
+    MODELS_BY_TYPE["STANDARD"]["model"]: [
+        f"open_router:{provider}" for provider in MODELS_BY_TYPE["STANDARD"]["providers"]
     ],
     "deepseek/deepseek-v4.1-flash": [
         "open_router:Morph",      # $0.18/$0.72, seed, fp8 — catalogue read 2026-09-16
