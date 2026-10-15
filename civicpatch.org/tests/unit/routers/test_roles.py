@@ -2,9 +2,9 @@
 overriding get_optional_user per role; the service layer is mocked at the call
 boundary.
 
-The happy paths run full-stack in tests/integration/routers/test_roles.py — what
-lives here is the per-role gating and the error mapping, which are cheap to
-cover exhaustively with a mock and expensive to cover against a real DB.
+The read runs full-stack in tests/integration/routers/test_roles.py; writes open
+an open-data pull request, so what lives here is the per-role gating and the
+error mapping.
 """
 
 from unittest.mock import AsyncMock, patch
@@ -17,7 +17,18 @@ from routers.api import roles as roles_router
 from schemas.common import Identity, UserRole
 from shared.schemas import Role
 
+from core.role_config_edits import RoleConfigEditRefused
+from services.role_config_pull_request import (
+    OpenedRoleConfigPullRequest,
+    RoleConfigPullRequestAlreadyOpen,
+    RoleConfigPullRequestFailed,
+)
+
 _PREFIX = "/roles"
+_OPEN = "services.role_config_pull_request.open_role_config_pull_request"
+_OPENED = OpenedRoleConfigPullRequest(
+    pull_request_number=12, pull_request_url="https://github.com/civicpatch/open-data/pull/12"
+)
 
 
 def _identity(role: UserRole) -> Identity:
@@ -27,6 +38,7 @@ def _identity(role: UserRole) -> Identity:
         provider_user_id="user-uuid",
         email="user@example.com",
         role=role.value,
+        user_id="user-1",
     )
 
 
@@ -74,102 +86,96 @@ def test_get_roles_is_open_to_everyone():
     assert response.status_code == 200
 
 
-# ── PUT /roles (MAINTAINERS) ────────────────────────────────────────────
+# ── POST /roles, PUT /roles/{role_id} (MAINTAINERS) ─────────────────────
 
 
 @pytest.mark.unit
-def test_put_roles_happy_calls_set_roles():
-    body = {"roles": [{"label": "Mayor"}]}
-    with patch("services.role_config.set_roles", new_callable=AsyncMock) as mock_set:
-        response = _client(UserRole.MAINTAINERS).put(_PREFIX, json=body)
+def test_add_role_returns_the_opened_pull_request():
+    with patch(_OPEN, new_callable=AsyncMock, return_value=_OPENED) as mock_open:
+        response = _client(UserRole.MAINTAINERS).post(_PREFIX, json={"label": "Mayor"})
 
     assert response.status_code == 200
-    assert response.json()["data"] == {"ok": True}
-    mock_set.assert_awaited_once()
+    assert response.json()["data"] == {
+        "pull_request_number": 12,
+        "pull_request_url": "https://github.com/civicpatch/open-data/pull/12",
+    }
+    mock_open.assert_awaited_once()
 
 
 @pytest.mark.unit
-def test_put_roles_runtime_error_is_409():
-    with patch(
-        "services.role_config.set_roles",
-        new_callable=AsyncMock,
-        side_effect=RuntimeError("conflict"),
-    ):
-        response = _client(UserRole.MAINTAINERS).put(_PREFIX, json={"roles": []})
+def test_edit_role_returns_the_opened_pull_request():
+    with patch(_OPEN, new_callable=AsyncMock, return_value=_OPENED) as mock_open:
+        response = _client(UserRole.MAINTAINERS).put(f"{_PREFIX}/mayor", json={"label": "Mayor"})
+
+    assert response.status_code == 200
+    assert response.json()["data"]["pull_request_number"] == 12
+    mock_open.assert_awaited_once()
+
+
+@pytest.mark.unit
+def test_refused_edit_is_409():
+    with patch(_OPEN, new_callable=AsyncMock, side_effect=RoleConfigEditRefused("Nothing to change.")):
+        response = _client(UserRole.MAINTAINERS).put(f"{_PREFIX}/mayor", json={"label": "Mayor"})
 
     assert response.status_code == 409
+    assert response.json() == {"error": "Nothing to change."}
 
 
 @pytest.mark.unit
-def test_put_roles_forbidden_below_maintainer():
-    response = _client(UserRole.CONTRIBUTORS).put(_PREFIX, json={"roles": []})
-    assert response.status_code == 403
+def test_change_while_one_is_open_is_409_with_its_url():
+    url = "https://github.com/civicpatch/open-data/pull/11"
+    with patch(_OPEN, new_callable=AsyncMock, side_effect=RoleConfigPullRequestAlreadyOpen(url)):
+        response = _client(UserRole.MAINTAINERS).post(_PREFIX, json={"label": "Mayor"})
+
+    assert response.status_code == 409
+    assert response.json()["pull_request_url"] == url
+
+
+@pytest.mark.unit
+def test_github_failure_is_502():
+    with patch(_OPEN, new_callable=AsyncMock, side_effect=RoleConfigPullRequestFailed("no branch")):
+        response = _client(UserRole.MAINTAINERS).post(_PREFIX, json={"label": "Mayor"})
+
+    assert response.status_code == 502
+
+
+@pytest.mark.unit
+def test_add_and_edit_forbidden_below_maintainer():
+    client = _client(UserRole.CONTRIBUTORS)
+    assert client.post(_PREFIX, json={"label": "Mayor"}).status_code == 403
+    assert client.put(f"{_PREFIX}/mayor", json={"label": "Mayor"}).status_code == 403
 
 
 # ── PUT /roles/reorder (ADMINS) ─────────────────────────────────────────
 
 
 @pytest.mark.unit
-def test_reorder_happy():
-    body = {"role_order": ["Mayor", "Council Member"]}
-    with patch(
-        "services.role_config.reorder_roles", new_callable=AsyncMock
-    ) as mock_reorder:
-        response = _client(UserRole.ADMINS).put(f"{_PREFIX}/reorder", json=body)
+def test_reorder_returns_the_opened_pull_request():
+    with patch(_OPEN, new_callable=AsyncMock, return_value=_OPENED) as mock_open:
+        response = _client(UserRole.ADMINS).put(f"{_PREFIX}/reorder", json={"role_order": ["mayor"]})
 
     assert response.status_code == 200
-    assert response.json()["data"] == {"ok": True}
-    mock_reorder.assert_awaited_once()
+    assert response.json()["data"]["pull_request_number"] == 12
+    mock_open.assert_awaited_once()
 
 
 @pytest.mark.unit
 def test_reorder_forbidden_for_maintainer():
-    body = {"role_order": ["Mayor"]}
-    response = _client(UserRole.MAINTAINERS).put(f"{_PREFIX}/reorder", json=body)
+    response = _client(UserRole.MAINTAINERS).put(f"{_PREFIX}/reorder", json={"role_order": ["mayor"]})
     assert response.status_code == 403
-
-
-@pytest.mark.unit
-def test_reorder_set_mismatch_is_409():
-    with patch(
-        "services.role_config.reorder_roles",
-        new_callable=AsyncMock,
-        side_effect=RuntimeError("Reorder set mismatch"),
-    ):
-        response = _client(UserRole.ADMINS).put(
-            f"{_PREFIX}/reorder", json={"role_order": ["Mayor"]}
-        )
-
-    assert response.status_code == 409
 
 
 # ── DELETE /roles/{role_id} (MAINTAINERS) ───────────────────────────────
 
 
 @pytest.mark.unit
-def test_delete_role_happy():
-    with patch(
-        "services.role_config.deactivate_role", new_callable=AsyncMock, return_value=True
-    ) as mock_deactivate:
+def test_delete_role_returns_the_opened_pull_request():
+    with patch(_OPEN, new_callable=AsyncMock, return_value=_OPENED) as mock_open:
         response = _client(UserRole.MAINTAINERS).delete(f"{_PREFIX}/mayor")
 
     assert response.status_code == 200
-    assert response.json()["data"] == {"ok": True}
-    mock_deactivate.assert_awaited_once()
-
-
-@pytest.mark.unit
-def test_delete_unknown_role_is_404():
-    """The service returns False both for "no such role" and "already
-    inactive"; the route maps that single signal to 404."""
-    with patch(
-        "services.role_config.deactivate_role",
-        new_callable=AsyncMock,
-        return_value=False,
-    ):
-        response = _client(UserRole.MAINTAINERS).delete(f"{_PREFIX}/nope")
-
-    assert response.status_code == 404
+    assert response.json()["data"]["pull_request_number"] == 12
+    mock_open.assert_awaited_once()
 
 
 @pytest.mark.unit

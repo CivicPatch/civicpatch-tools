@@ -61,28 +61,57 @@ Create `../civicpatch.org.env` with these values. Everything else in `docker-com
 
 ## Permissions
 
-Roles are a **trust ladder** — each level inherits everything below it.
+Each level can do everything the levels below it can.
 
 ```
 default  <  contributors  <  maintainers  <  admins
 ```
 
-Stored as a single `users.role` column. The `build_permissions()` function in `routers/frontend.py` maps the ladder to frontend capabilities; backend routes enforce the same boundaries via `require_route_access(category, required_role)`. Keep both in sync when changing permissions — see the CLAUDE.md note.
+`users.role` stores the level. `build_permissions()` in `routers/frontend.py` gives the frontend
+its flags, and `require_route_access` enforces the same on each route: change both together.
+A page the visitor can't view redirects to `/`.
 
-A page route the visitor cannot view redirects to `/` rather than rendering a dead-end error page.
+### Public (not signed in)
 
-### Public (no sign-in)
+- View a jurisdiction page and all its data: people, history, roles, posts, organizations and
+  memberships.
 
-Viewing a jurisdiction page is open to everyone, so it carries no view permission at all — its data (people, jurisdiction history, the role vocabulary, and the posts and memberships describing who holds what) is served unauthenticated, every action on the page is gated by its own permission, and the page renders without waiting on `/api/permissions`. The jurisdiction links on the Municipalities page and the locality-gaps widget are likewise unconditional, since both only lead here.
+### Default (signed in)
 
-### What each level adds
+- Review: start, move through, pass and end a review session; publish the card being reviewed.
+- Edit a roster within their own review.
+- Create a post in an organization.
+- Assign a person to a post and set their office label.
+- View Activity.
+- Read jurisdictions, people, review cards and unmatched role text through the API.
 
-| Level | Capabilities introduced at this level (all lower-level capabilities are inherited) |
-|---|---|
-| **default** (any signed-in user) | Edit a roster inside a review they are doing (`POST /api/v1/jurisdictions/{ocdid}/roster-edits` **with** `changeset_id` in the body) — the claims are filed under that review, and reviewing is open to anyone signed in. Without a `changeset_id` the same route publishes to the live roster on the spot, which stays maintainer-only (see that row). Create a post under an organization (`POST /api/v1/organizations/{id}/posts`) — a reviewer who knows somebody holds a post that has no row yet should not need a maintainer to mint it; *editing* one stays maintainer+ (see that row). Assign a person to a post and set their office label (`PUT /api/v1/memberships`) — moving them to a different post is a direct write, never an assertion, so a scrape stays free to move or end the membership again; only the label can be asserted, and only when one is given. (The jurisdiction page's own Office field is stricter than the API allows — it only opens once a maintainer has switched the page into edit mode, matching every other field there.) Read-only API access: list jurisdictions, people, review cards. Read review session stats and active session. Create / navigate / pass / end review sessions. Publish the review card they are reviewing — it commits directly, so there is no PR to open or merge. View the Activity section: the change log of curation activity — changes from untrusted (default-role) contributors are shaded in the log and can be filtered to on their own, no role gate — and changeset activity across every state (what is queued for review and how long it has waited, and what ran) — the underlying rows are already public on each jurisdiction page. (No Queue / Issues editor pages — those require Contributor+. Cannot reject a scrape.) |
-| **contributors** | View the Queue page. Delete directory people. Reject a scrape. Publish or dismiss review cards from the Queue. Say a membership ended, or that it never held (`PUT /api/v1/memberships/{id}/assertion`, naming `holding`, `closed` or `never_held`) — a withdrawable claim that publish applies, never a direct write, so its own `DELETE` puts the membership back. ("A member of nothing in this jurisdiction" was its own route until 2026-09-23; it wrote a claim nothing read, and removal is per post.) |
-| **maintainers** | Delete a person (`DELETE /api/v1/people/{id}`) — raised from contributors 2026-09-17: it is the only irreversible act on a person, taking their memberships with them and costing the identity the next scrape resolves against, while every other removal is a claim that can be withdrawn. Edit a jurisdiction's published data — both the Current tab's people list and the Jurisdiction Details sidebar — as manual patches opened as PRs (`can_edit_jurisdiction_data`), and edit the live roster directly (`POST /api/v1/jurisdictions/{ocdid}/roster-edits` with no `changeset_id`), which mints a changeset and publishes in the same beat. Edit a post's headcount and tracked state (`PATCH /api/v1/posts/{id}`) — the same tier as editing a jurisdiction's data; *creating* one is default-tier (see that row). It carried a `can_create_post` frontend flag until 2026-09-24; the flag resolved to the ladder's floor and its route is `AUTHENTICATED`, so it gated nothing and went. The capability is unchanged. Create, edit and delete organizations, and choose which is a jurisdiction's default (`can_manage_organizations`) — a structural change to how a jurisdiction's bodies are divided, unlike creating a post within one. *Reading* posts, organizations and memberships is open to everyone, since they are the public jurisdiction page's own data. Delete a post (`DELETE /api/v1/posts/{id}`): one nobody holds goes outright; one somebody holds needs `?into=<post id>`, the same role and division in another organization, which takes its memberships as a rollback-able changeset. (The cross-jurisdiction unmatched-text triage read stays signed-in-only.) Trigger a pipeline run for a single jurisdiction (from its own page). Open a pull request setting a jurisdiction's government form (`POST /api/v1/jurisdictions/{ocdid}/pull_requests`), labelled with their role (`civicpatch:maintainer`, or `civicpatch:admin` for an admin); the pipeline opens the same with the service key as the CivicPatch system user, labelled `civicpatch:system`. Its branch is pushed to a fork (`JURISDICTIONS_FORK_REPO_URL`, by the regular GitHub app) and the PR opens and is labelled on the jurisdictions repo (`JURISDICTIONS_REPO_URL`, open-data for now, by the jurisdictions-sync app), where a person merges or closes it. The jurisdiction page's details panel opens these for a maintainer. Create, edit and delete roles — the taxonomy is one flat global list, not scoped by state or locality, and *reading* it is open to everyone since the public jurisdiction page needs it to name a post's role. Read pipeline run details. Resume paused runs. Run a curated-sheet import and bulk-publish what it produced (via `/imports`). Create, list, revoke and delete their own API keys — a key inherits its owner's access, and every route is scoped to the caller's own keys. |
-| **admins** | Read what scraping cost, and trigger a state's batch scrape and set its cadence and cost caps. All on one page, `/pipelines`, reachable from the Admin menu: the all-states budget banner and its edit modal, then per state the cadence, next run, cost per run against its cap, month-to-date budget, and the "Scrape now" trigger and its confirm modal. The standalone `/spend` page and its `GET /api/v1/pipeline_runs/spend` endpoint were folded in 2026-09-18 and are gone. That page also lists in-progress pipeline runs across every state — moved there 2026-09-10 from the standalone `/pipeline-runs` page, which is gone; viewing runs is admin-only now, same gate as the rest of the page. Set how often a state is scraped and what it may spend — cadence, the per-run cap, the per-state monthly cap and the monthly cap across all states (`/api/v1/scrape_settings`, read and write). One role for both: how often a state is scraped is what it costs. Moved off the changesets page together with the batch-scrape permission itself — both used to be maintainer-level. View and moderate the Issues page (flag, dismiss, resolve). Manage other users' trust levels (via `/admin/users`). Roll back a user's hand-made edits — list their currently-active `PERSON` claims and withdraw a chosen subset (or all of them), immediately visible on republish (`GET`/`POST /api/admin/users/{id}/rollback-candidates` and `/rollback`). Cancel pipeline runs, and read the Temporal workflow state of one still running. See a scrape's debug copies of each page it read — the fetched HTML and the markdown extracted from it — from the review page's Debug modal (`can_view_source_debug`); every signed-in reviewer still sees which source pages a person came from, but only admins get the presigned links into the debug bucket. Reorder the role list. All admin-bus endpoints (od_sync, sheet_sync, etc.). |
+### Contributors
+
+- View the Queue; publish or dismiss its cards; reject a scrape.
+- Delete directory people.
+- Say a membership ended, or never held.
+
+### Maintainers
+
+- Delete a person.
+- Edit a jurisdiction's published data (opens a PR), and edit the live roster directly.
+- Edit a post's headcount and tracked state; delete a post, or fold it into another.
+- Create, edit and delete organizations; choose a jurisdiction's default organization.
+- Add, edit and remove roles (each opens a PR on open-data's `data_source/config.yml`).
+- Set a jurisdiction's government form (opens a PR on the jurisdictions repo).
+- Scrape a single jurisdiction; read pipeline run details; resume a paused run.
+- Run a curated-sheet import and publish what it produced.
+- Manage their own API keys.
+
+### Admins
+
+- Reorder roles (opens a PR, like the other role changes).
+- `/pipelines`: scrape costs, batch scrapes, cadence, cost caps and in-progress runs.
+- Cancel a run; read a running run's Temporal state.
+- Moderate the Issues page.
+- Change other users' levels; roll back a user's hand-made edits.
+- Open the debug copies of the pages a scrape read.
+- The admin-bus endpoints (`od_sync`, `sheet_sync` and the rest).
 
 ### Username
 
