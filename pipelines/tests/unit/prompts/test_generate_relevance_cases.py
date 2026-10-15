@@ -59,6 +59,7 @@ def _run(*pages: tuple[str, str]) -> SavedRun:
             SavedPage(url=url, status=status, input_path=f"cache/{i}/preprocessed.md")
             for i, (url, status) in enumerate(pages)
         ],
+        read_on="2026-01-01",
     )
 
 
@@ -127,7 +128,7 @@ CONFIGS = {
 
 
 def _run_in(jurisdiction_ocdid: str, name: str) -> SavedRun:
-    return SavedRun(folder="x", jurisdiction_ocdid=jurisdiction_ocdid, jurisdiction_name=name, pages=[])
+    return SavedRun(folder="x", jurisdiction_ocdid=jurisdiction_ocdid, jurisdiction_name=name, pages=[], read_on="2026-01-01")
 
 
 def test_a_rule_decided_form_gives_production_its_organizations_and_roles():

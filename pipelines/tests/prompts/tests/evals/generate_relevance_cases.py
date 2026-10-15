@@ -18,6 +18,7 @@ import glob
 import json
 import os
 import re
+from datetime import datetime
 from enum import Enum
 
 import yaml
@@ -60,6 +61,8 @@ class SavedRun(BaseModel):
     jurisdiction_ocdid: str
     jurisdiction_name: str
     pages: list[SavedPage]
+    # The day the run read its pages, as "YYYY-MM-DD".
+    read_on: str
 
 
 class Candidate(Enum):
@@ -99,7 +102,8 @@ def read_saved_runs() -> list[SavedRun]:
     for context_path in glob.glob(os.path.join(DATA_SOURCE, "*", "*", "*", "pipeline_run_context.json")):
         run_dir = os.path.dirname(context_path)
         with open(context_path) as f:
-            data = json.load(f)["data"]
+            context = json.load(f)
+            data = context["data"]
         pages = []
         for link in data.get("frontier", {}).get("links", {}).values():
             input_path = os.path.join(run_dir, "cache", link.get("folder_name") or "", "preprocessed.md")
@@ -111,6 +115,7 @@ def read_saved_runs() -> list[SavedRun]:
                 jurisdiction_ocdid=data["jurisdiction_ocdid"],
                 jurisdiction_name=data["config"].get("name") or "",
                 pages=pages,
+                read_on=datetime.fromtimestamp(context["created_at"]).date().isoformat(),
             )
         )
     return runs

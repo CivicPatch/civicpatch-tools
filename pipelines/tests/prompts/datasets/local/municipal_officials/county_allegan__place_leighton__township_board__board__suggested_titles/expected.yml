@@ -1,0 +1,48 @@
+generated: true
+current_date: '2026-10-02'
+government_form_role_labels:
+- Supervisor
+- Clerk
+- Treasurer
+- Trustee
+people:
+- name: Steve Wolbrink
+  label: Supervisor
+  phone: (616) 891-8238 ext 111
+  email: supervisor@leightontownship.org
+  url: https://leightontownship.org/officials/
+  start_date: null
+  end_date: null
+  image: null
+- name: Rachel Fennema
+  label: Clerk
+  phone: (616) 891-8238 ext 114
+  email: clerk@leightontownship.org
+  url: https://leightontownship.org/officials/
+  start_date: null
+  end_date: null
+  image: null
+- name: Jacquelynn Bultsma
+  label: Treasurer
+  phone: (616) 891-8238 ext 113
+  email: Treasurer@leightontownship.org
+  url: https://leightontownship.org/officials/
+  start_date: null
+  end_date: null
+  image: null
+- name: John Hooker
+  label: Trustee
+  phone: (616) 813-0594
+  email: jhook1566@gmail.com
+  url: https://leightontownship.org/officials/
+  start_date: null
+  end_date: null
+  image: null
+- name: Brian Bonnema
+  label: Trustee
+  phone: (616) 293-2106
+  email: bbonnema75@gmail.com
+  url: https://leightontownship.org/officials/
+  start_date: null
+  end_date: null
+  image: null
