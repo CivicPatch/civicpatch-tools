@@ -215,9 +215,15 @@ def person_precision(actual: List[ExtractedPersonRecord], expected: List[Extract
     return len(returned.keys() & group_by_name(expected).keys()) / len(returned)
 
 
+# Reported, not scored: an expected label need not list every role, so a role the page gives
+# beyond it is not a mistake.
+REPORT_ONLY_FIELDS = {"roles_precision"}
+
+
 def case_score(case_aggregate: dict, precision: float | None) -> float:
     """Scaled by person precision: score_cases only visits expected people, so invented ones were free."""
-    field_score = sum(case_aggregate.values()) / len(case_aggregate) if case_aggregate else 1.0
+    scored = {field: value for field, value in case_aggregate.items() if field not in REPORT_ONLY_FIELDS}
+    field_score = sum(scored.values()) / len(scored) if scored else 1.0
     return field_score if precision is None else field_score * precision
 
 

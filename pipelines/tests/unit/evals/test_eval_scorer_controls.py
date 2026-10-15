@@ -45,10 +45,12 @@ OFFICIALS_CASES = _case_dirs("municipal_officials")
 RELEVANT_PAGE_CASES = _case_dirs("relevant_page")
 CASES_WITH_PEOPLE = _cases_where(OFFICIALS_CASES, lambda people: len(people) > 0)
 CASES_WITH_SEVERAL_PEOPLE = _cases_where(OFFICIALS_CASES, lambda people: len(people) > 1)
-# Rotating names only changes anything when the seats differ in something besides the name.
+# Rotating names only moves a gate when the seats differ in something a gate sees: the label
+# (role, district) or the url. Contacts are not gated per person, so a council of identical
+# seats with distinct emails still rotates without a gate noticing.
 CASES_WITH_DISTINCT_SEATS = _cases_where(
     OFFICIALS_CASES,
-    lambda people: len({(p.get("label"), p.get("phone"), p.get("email"), p.get("url")) for p in people}) > 1,
+    lambda people: len({(p.get("label"), p.get("url")) for p in people}) > 1,
 )
 CASES_WITH_PHONES = _cases_where(OFFICIALS_CASES, lambda people: any(p.get("phone") for p in people))
 CASES_WITH_EMAILS = _cases_where(OFFICIALS_CASES, lambda people: any(p.get("email") for p in people))
@@ -177,6 +179,17 @@ def test_extra_roles_cost_precision():
     [person] = score_cases(actual, expected)
     assert person["scores"]["roles_precision"] < 1.0
     assert _summary(actual, expected)["roles"].false_positive == 1
+
+
+def test_extra_roles_do_not_lower_the_case_score():
+    expected = [extracted_person_factory("Kirk Watson", "Mayor")]
+    exact = [extracted_person_factory("Kirk Watson", "Mayor")]
+    padded = [extracted_person_factory("Kirk Watson", "Mayor and Council Member")]
+
+    def scored(actual):
+        return case_score(aggregate_case(score_cases(actual, expected)), person_precision(actual, expected))
+
+    assert scored(padded) == scored(exact)
 
 
 def test_an_invented_start_date_is_a_false_positive():

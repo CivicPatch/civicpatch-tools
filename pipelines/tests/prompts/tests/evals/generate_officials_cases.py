@@ -44,6 +44,7 @@ from tests.prompts.tests.evals.generate_relevance_cases import (
 )
 
 CANDIDATES = "tests/prompts/datasets/candidates/municipal_officials"
+REVIEWED = "tests/prompts/datasets/local/municipal_officials"
 # A page at least this many published people cite is a roster, not one person's page.
 MIN_CITING_PEOPLE = 2
 MAX_JURISDICTIONS_PER_FORM = 3
@@ -74,6 +75,8 @@ class CandidateCase(BaseModel):
     # Production scopes the prompt to a body only when the form has more than one.
     scoped: bool
     variant: Variant
+    # The day the page was read: the prompt judges terms as of then.
+    current_date: str
     role_labels: list[str]
     divisions: list[str]
     people: list[PublishedPerson]
@@ -132,13 +135,17 @@ def _plausible(
 ) -> bool:
     """For a form the config leaves open. A county may have any its state allows. A town meeting
     only where the state's own config lists it (Massachusetts): a Census "town" in Tennessee or
-    California has none. A township board only for a township. Otherwise a city."""
+    California has none. A township board for a township or a village (whose council includes its
+    president). Mayor-council for a borough (its mayor is elected apart from the council). Otherwise a
+    city."""
     if level == JurisdictionLevel.COUNTIES:
         return True
     if form in _TOWN_FORMS:
         return form in state_forms
     if form is GovernmentForm.TOWNSHIP_BOARD:
-        return jurisdiction_name.endswith(" township")
+        return jurisdiction_name.endswith((" township", " village"))
+    if jurisdiction_name.endswith(" borough"):
+        return form is GovernmentForm.MAYOR_COUNCIL
     return jurisdiction_name.endswith(" city")
 
 
@@ -237,6 +244,7 @@ def expected_yaml(case: CandidateCase) -> str:
     )
     expected = {
         GENERATED_KEY: True,
+        "current_date": case.current_date,
         **prompt_inputs(case),
         "people": [
             {
@@ -285,6 +293,7 @@ def candidate_cases(
                         organization=organization,
                         scoped=scoped,
                         variant=variant,
+                        current_date=run.read_on,
                         role_labels=role_labels,
                         divisions=found_divisions,
                         people=listed,
@@ -312,9 +321,9 @@ def a_variety(cases_by_run: list[tuple[str, list[CandidateCase]]]) -> list[Candi
 
 
 def write_case(case: CandidateCase) -> bool:
-    """False, writing nothing, when the case is already staged: it may have been reviewed."""
+    """False, writing nothing, when the case is already staged or reviewed."""
     case_dir = os.path.join(CANDIDATES, case.case_id)
-    if os.path.exists(case_dir):
+    if os.path.exists(case_dir) or os.path.exists(os.path.join(REVIEWED, case.case_id)):
         return False
     os.makedirs(case_dir)
     with open(case.input_path) as source, open(os.path.join(case_dir, "input.md"), "w") as target:
@@ -330,20 +339,33 @@ def write_case(case: CandidateCase) -> bool:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--open-data", required=True, help="path to the open-data repo checkout")
-    open_data = parser.parse_args().open_data
+    parser.add_argument(
+        "--jurisdiction",
+        action="append",
+        default=[],
+        help="draft only these run folders (e.g. place_gibbsboro), past the per-form variety limit",
+    )
+    args = parser.parse_args()
+    open_data = args.open_data
 
     configs = read_jurisdiction_configs(open_data)
     people = read_published_people(open_data)
     runs = sorted(read_saved_runs(), key=lambda run: run.jurisdiction_ocdid)
-    cases = a_variety(
-        [
-            (
-                parse_jurisdiction_ocdid(run.jurisdiction_ocdid).state,
-                candidate_cases(configs, run, people.get(run.jurisdiction_ocdid, [])),
-            )
-            for run in runs
+    if args.jurisdiction:
+        named = [run for run in runs if run.folder in args.jurisdiction]
+        cases = [
+            case for run in named for case in candidate_cases(configs, run, people.get(run.jurisdiction_ocdid, []))
         ]
-    )
+    else:
+        cases = a_variety(
+            [
+                (
+                    parse_jurisdiction_ocdid(run.jurisdiction_ocdid).state,
+                    candidate_cases(configs, run, people.get(run.jurisdiction_ocdid, [])),
+                )
+                for run in runs
+            ]
+        )
     written = [case for case in cases if write_case(case)]
 
     for form in GovernmentForm:

@@ -60,7 +60,8 @@ def make_together_prompt(expected: dict):
     organization = expected.get("organization")
     return municipality_officials_prompt(
         expected.get("known_roles", []),
-        current_date=EVAL_CURRENT_DATE,
+        # The day the page was read, where the case records it: terms are judged as of then.
+        current_date=expected.get("current_date", EVAL_CURRENT_DATE),
         organization=PromptOrganization(**organization) if organization else None,
         divisions=expected.get("divisions", []),
         government_form_role_labels=expected.get("government_form_role_labels", []),
@@ -175,11 +176,12 @@ async def run_eval(
 @pytest_asyncio.fixture
 def load_eval_cases(base_dir="tests/prompts/datasets/local/municipal_officials"):
     base = pathlib.Path(base_dir)
-    only_case = os.environ.get("EVAL_CASE")
+    # One case, or several separated by commas.
+    only_cases = set(filter(None, os.environ.get("EVAL_CASE", "").split(",")))
     cases = []
 
     for case_dir in sorted(base.iterdir()):
-        if only_case and case_dir.name != only_case:
+        if only_cases and case_dir.name not in only_cases:
             continue
         print(f"Loading case from {case_dir}")
         if not case_dir.is_dir():

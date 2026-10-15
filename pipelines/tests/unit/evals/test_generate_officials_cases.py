@@ -60,6 +60,9 @@ def test_a_town_meeting_is_tried_only_where_the_state_config_lists_it():
     assert _plausible(GovernmentForm.MAYOR_COUNCIL, "Millbury town", {}, local) is False
     assert _plausible(GovernmentForm.TOWNSHIP_BOARD, "Ada township", {}, local) is True
     assert _plausible(GovernmentForm.TOWNSHIP_BOARD, "Belle Meade city", {}, local) is False
+    assert _plausible(GovernmentForm.TOWNSHIP_BOARD, "Armada village", {}, local) is True
+    assert _plausible(GovernmentForm.MAYOR_COUNCIL, "Gibbsboro borough", {}, local) is True
+    assert _plausible(GovernmentForm.COUNCIL_MANAGER, "Gibbsboro borough", {}, local) is False
 
 
 def test_a_county_may_have_any_form_its_state_allows():
@@ -78,6 +81,7 @@ def _case(form: GovernmentForm, run: str, variant: Variant, scoped: bool = True)
         organization=_SELECT_BOARD,
         scoped=scoped,
         variant=variant,
+        current_date="2026-09-25",
         role_labels=["Select Board Member", "Chair"],
         divisions=["ward 1"],
         people=[],
