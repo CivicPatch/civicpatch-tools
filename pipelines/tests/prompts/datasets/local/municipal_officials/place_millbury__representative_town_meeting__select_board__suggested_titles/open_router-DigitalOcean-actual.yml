@@ -1,0 +1,41 @@
+people:
+- name: Mary Krumsiek
+  label: Select Board Member and Chairman
+  phone: 508-865-4710
+  email: mkrumsiek@millburyma.gov
+  url: null
+  start_date: null
+  end_date: 2028-04
+  image: null
+- name: Brian A. Sora
+  label: Select Board Member and Vice Chairman
+  phone: 508-865-4710
+  email: bsora@millburyma.gov
+  url: null
+  start_date: null
+  end_date: 2029-04
+  image: null
+- name: Nicholas Lazzaro
+  label: Select Board Member and Clerk
+  phone: 508-865-4710
+  email: nlazzaro@millburyma.gov
+  url: null
+  start_date: null
+  end_date: 2027-04
+  image: null
+- name: Brian Tagg
+  label: Select Board Member
+  phone: 508-865-4710
+  email: btagg@millburyma.gov
+  url: null
+  start_date: null
+  end_date: 2028-04
+  image: null
+- name: Michael R. Gilchrist
+  label: Select Board Member
+  phone: 508-865-4710
+  email: mgilchrist@millburyma.gov
+  url: null
+  start_date: null
+  end_date: 2027-04
+  image: null

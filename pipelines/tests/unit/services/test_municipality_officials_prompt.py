@@ -20,56 +20,53 @@ def _prompt(**kwargs) -> str:
     return municipality_officials_prompt([], current_date="2025-09-01", **kwargs)
 
 
-def test_an_unscoped_prompt_names_no_body():
+def test_a_term_that_ended_before_the_current_date_is_left_out():
+    prompt = _prompt()
+
+    assert "Current Date: 2025-09-01" in prompt
+    assert "gives a term that ended before the current date: leave those people out" in prompt
+
+
+def test_an_unscoped_prompt_names_no_body_and_lists_no_roles():
     prompt = _prompt()
 
     assert "TARGET BODY" not in prompt
-    assert "prefer our word" not in prompt
-    assert "usually has" not in prompt
+    assert "Roles" not in prompt
 
 
-def test_a_scoped_prompt_lists_its_roles_and_divisions_apart():
+def test_a_scoped_prompt_lists_its_roles_and_divisions():
     prompt = _prompt(organization=_COUNCIL)
 
     assert "Only extract people who hold a post in City Council." in prompt
-    assert "The roles in City Council, in our words:\n        - Council Member\n        - Council President" in prompt
-    assert "Its divisions, in our words:\n        - district 1" in prompt
+    assert "- Roles in City Council:\n        - Council Member\n        - Council President" in prompt
+    assert "- Divisions in City Council:\n        - district 1" in prompt
+    assert "usually has" not in prompt
 
 
-def test_a_scoped_prompt_prefers_known_roles_rather_than_dictating_them():
-    prompt = _prompt(organization=_COUNCIL)
-
-    assert "prefer our word" in prompt
-    assert "copy each exactly" not in prompt
-
-
-def test_a_scoped_prompt_still_explains_how_to_write_a_label_for_an_unlisted_role():
-    prompt = _prompt(organization=_COUNCIL)
-
-    assert "do not swap it for a" in prompt
-    assert "Write each part exactly as the page writes it" in prompt
-
-
-def test_a_cold_start_body_gets_its_forms_roles_as_a_guess():
+def test_a_cold_start_body_lists_the_roles_its_form_usually_has():
     prompt = _prompt(organization=_COLD_COUNCIL)
 
-    assert "A City Council usually has these roles:" in prompt
-    assert "- Council Member" in prompt
-    assert "not from this page" in prompt
-    assert "prefer our word" not in prompt
+    assert "- Roles a City Council usually has:\n        - Council Member" in prompt
+    assert "Roles in City Council" not in prompt
 
 
-def test_a_body_with_nothing_known_gets_only_the_page_rules():
+def test_a_body_with_nothing_known_lists_nothing():
     prompt = _prompt(organization=_BARE_COUNCIL)
 
     assert "Only extract people who hold a post in City Council." in prompt
-    assert "usually has" not in prompt
-    assert "prefer our word" not in prompt
-    assert "Its divisions" not in prompt
+    assert "Roles" not in prompt
+    assert "Divisions" not in prompt
     assert "Write each part exactly as the page writes it" in prompt
 
 
-def test_an_unscoped_prompt_states_known_roles_and_divisions_and_only_suggests_the_forms():
+def test_every_office_a_person_holds_goes_in_one_label():
+    prompt = _prompt(organization=_COUNCIL)
+
+    assert "include every one in the same label" in prompt
+    assert "presiding title" not in prompt
+
+
+def test_an_unscoped_prompt_lists_known_roles_and_divisions_or_the_forms_usual_roles():
     known = municipality_officials_prompt(
         ["Mayor", "Alderperson"], current_date="2025-09-01", divisions=["ward 1", "ward 2"]
     )
@@ -78,8 +75,8 @@ def test_an_unscoped_prompt_states_known_roles_and_divisions_and_only_suggests_t
     )
     neither = municipality_officials_prompt([], current_date="2025-09-01")
 
-    assert "Known elected roles for this municipality: Mayor, Alderperson." in known
-    assert "Its divisions: ward 1, ward 2." in known
-    assert "usually has these roles: Council Member, Mayor" in guessed
-    assert "Known elected roles" not in guessed
-    assert "usually has" not in neither and "Known elected roles" not in neither
+    assert "- Roles in this municipality: Mayor, Alderperson." in known
+    assert "- Divisions in this municipality: ward 1, ward 2." in known
+    assert "- Roles this municipality usually has: Council Member, Mayor." in guessed
+    assert "Roles in this municipality" not in guessed
+    assert "Roles" not in neither

@@ -1,0 +1,348 @@
+mismatches:
+  place_millbury__open_town_meeting__select_board__known_titles:
+  - actual: "\u2014"
+    actual_label: Select Board Member and Vice Chair
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Vice Chairman
+    field: url
+    person: Brian A. Sora
+  - actual: "\u2014"
+    actual_label: Select Board Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Brian Tagg
+  - actual: "\u2014"
+    actual_label: Select Board Member and Chair
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Chairman
+    field: url
+    person: Mary Krumsiek
+  - actual: "\u2014"
+    actual_label: Select Board Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Michael R. Gilchrist
+  - actual: "\u2014"
+    actual_label: Select Board Member and Clerk
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Clerk
+    field: url
+    person: Nicholas Lazzaro
+  place_millbury__open_town_meeting__select_board__no_titles:
+  - actual: "\u2014"
+    actual_label: Selectman Vice Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Vice Chairman
+    field: url
+    person: Brian A. Sora
+  - actual: "\u2014"
+    actual_label: Selectman Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Brian Tagg
+  - actual: "\u2014"
+    actual_label: Selectman Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Chairman
+    field: url
+    person: Mary Krumsiek
+  - actual: "\u2014"
+    actual_label: Selectman Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Michael R. Gilchrist
+  - actual: "\u2014"
+    actual_label: Selectman Clerk
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Clerk
+    field: url
+    person: Nicholas Lazzaro
+  place_millbury__representative_town_meeting__select_board__known_titles:
+  - actual:
+    - Vice Chair
+    actual_label: Vice Chairman
+    expected:
+    - Select Board Member
+    - Vice Chair
+    expected_label: Selectman and Vice Chairman
+    field: roles
+    person: Brian A. Sora
+  - actual: "\u2014"
+    actual_label: Vice Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Vice Chairman
+    field: url
+    person: Brian A. Sora
+  - actual: "\u2014"
+    actual_label: Select Board Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Brian Tagg
+  - actual:
+    - Chair
+    actual_label: Chair
+    expected:
+    - Chair
+    - Select Board Member
+    expected_label: Selectman and Chairman
+    field: roles
+    person: Mary Krumsiek
+  - actual: "\u2014"
+    actual_label: Chair
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Chairman
+    field: url
+    person: Mary Krumsiek
+  - actual: "\u2014"
+    actual_label: Select Board Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Michael R. Gilchrist
+  - actual:
+    - Clerk
+    actual_label: Clerk
+    expected:
+    - Clerk
+    - Select Board Member
+    expected_label: Selectman and Clerk
+    field: roles
+    person: Nicholas Lazzaro
+  - actual: "\u2014"
+    actual_label: Clerk
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Clerk
+    field: url
+    person: Nicholas Lazzaro
+  seattle_council_pick_list_missing_president:
+  - actual: "\u2014"
+    actual_label: Council Member Position 8
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 8
+    field: email
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Council Member Position 8
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 8
+    field: phone
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Council Member District 7
+    expected: council@seattle.gov
+    expected_label: Councilmember District 7
+    field: email
+    person: Bob Kettle
+  - actual: "\u2014"
+    actual_label: Council Member District 7
+    expected: (206) 684-8888
+    expected_label: Councilmember District 7
+    field: phone
+    person: Bob Kettle
+  - actual: "\u2014"
+    actual_label: Council Member District 6
+    expected: council@seattle.gov
+    expected_label: Councilmember District 6
+    field: email
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Council Member District 6
+    expected: (206) 684-8888
+    expected_label: Councilmember District 6
+    field: phone
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Council Member District 5
+    expected: council@seattle.gov
+    expected_label: Councilmember District 5
+    field: email
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Council Member District 5
+    expected: (206) 684-8888
+    expected_label: Councilmember District 5
+    field: phone
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Council Member Position 9
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 9
+    field: email
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Council Member Position 9
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 9
+    field: phone
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: council@seattle.gov
+    expected_label: Councilmember District 2
+    field: email
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: (206) 684-8888
+    expected_label: Councilmember District 2
+    field: phone
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Council Member District 3 and Council President
+    expected: council@seattle.gov
+    expected_label: Council President and Council Member District 3
+    field: email
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Council Member District 3 and Council President
+    expected: (206) 684-8888
+    expected_label: Council President and Council Member District 3
+    field: phone
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: council@seattle.gov
+    expected_label: Councilmember District 4
+    field: email
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: (206) 684-8888
+    expected_label: Councilmember District 4
+    field: phone
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: council@seattle.gov
+    expected_label: Councilmember District 1
+    field: email
+    person: Rob Saka
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: (206) 684-8888
+    expected_label: Councilmember District 1
+    field: phone
+    person: Rob Saka
+  seattle_council_separate_mayor:
+  - actual: "\u2014"
+    actual_label: Council Member Position 8
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 8
+    field: email
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Council Member Position 8
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 8
+    field: phone
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Council Member District 7
+    expected: council@seattle.gov
+    expected_label: Councilmember District 7
+    field: email
+    person: Bob Kettle
+  - actual: "\u2014"
+    actual_label: Council Member District 7
+    expected: (206) 684-8888
+    expected_label: Councilmember District 7
+    field: phone
+    person: Bob Kettle
+  - actual: "\u2014"
+    actual_label: Council Member District 6
+    expected: council@seattle.gov
+    expected_label: Councilmember District 6
+    field: email
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Council Member District 6
+    expected: (206) 684-8888
+    expected_label: Councilmember District 6
+    field: phone
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Council Member District 5
+    expected: council@seattle.gov
+    expected_label: Councilmember District 5
+    field: email
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Council Member District 5
+    expected: (206) 684-8888
+    expected_label: Councilmember District 5
+    field: phone
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Council Member Position 9
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 9
+    field: email
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Council Member Position 9
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 9
+    field: phone
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: council@seattle.gov
+    expected_label: Councilmember District 2
+    field: email
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: (206) 684-8888
+    expected_label: Councilmember District 2
+    field: phone
+    person: Eddie Lin
+  - actual:
+    - Council President
+    actual_label: Council President District 3
+    expected:
+    - Council Member
+    - Council President
+    expected_label: Council President and Council Member District 3
+    field: roles
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Council President District 3
+    expected: council@seattle.gov
+    expected_label: Council President and Council Member District 3
+    field: email
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Council President District 3
+    expected: (206) 684-8888
+    expected_label: Council President and Council Member District 3
+    field: phone
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: council@seattle.gov
+    expected_label: Councilmember District 4
+    field: email
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: (206) 684-8888
+    expected_label: Councilmember District 4
+    field: phone
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: council@seattle.gov
+    expected_label: Councilmember District 1
+    field: email
+    person: Rob Saka
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: (206) 684-8888
+    expected_label: Councilmember District 1
+    field: phone
+    person: Rob Saka

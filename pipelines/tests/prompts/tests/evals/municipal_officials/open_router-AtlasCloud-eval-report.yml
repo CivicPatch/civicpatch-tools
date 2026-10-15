@@ -1,42 +1,42 @@
 run:
-  timestamp: '2026-10-02T04:53:04+00:00'
-  prompt_sha256: 2fbb219fd4de
-  prompt_file: _prompts/2fbb219fd4de.txt
+  timestamp: '2026-10-15T21:10:39+00:00'
+  prompt_sha256: f35d758c8c80
+  prompt_file: _prompts/f35d758c8c80.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
   providers:
   - AtlasCloud
-  elapsed_seconds: 325.85
-  total_input_tokens: 333397
-  total_output_tokens: 67933
-  total_cost_usd: 0.061797428
+  elapsed_seconds: 173.63
+  total_input_tokens: 432141
+  total_output_tokens: 82679
+  total_cost_usd: 0.077141316
 accuracy:
   person:
-    correct: 177
+    correct: 275
     missing: 0
-    spurious: 20
+    spurious: 2
     wrong: 0
-    precision: 0.8984771573604061
+    precision: 0.9927797833935018
     recall: 1.0
-    f1: 0.946524064171123
+    f1: 0.9963768115942029
   primary_role:
-    correct: 170
-    missing: 7
-    spurious: 3
+    correct: 271
+    missing: 4
+    spurious: 0
     wrong: 0
-    precision: 0.9826589595375722
-    recall: 0.96045197740113
-    f1: 0.9714285714285714
+    precision: 1.0
+    recall: 0.9854545454545455
+    f1: 0.9926739926739927
   roles:
-    correct: 180
-    missing: 14
-    spurious: 5
+    correct: 292
+    missing: 12
+    spurious: 13
     wrong: 0
-    precision: 0.972972972972973
-    recall: 0.9278350515463918
-    f1: 0.9498680738786279
+    precision: 0.9573770491803278
+    recall: 0.9605263157894737
+    f1: 0.9589490968801314
   district:
-    correct: 53
+    correct: 70
     missing: 0
     spurious: 0
     wrong: 0
@@ -52,65 +52,65 @@ accuracy:
     recall: 1.0
     f1: 1.0
   email:
-    correct: 117
-    missing: 5
-    spurious: 0
-    wrong: 1
-    precision: 0.9915254237288136
-    recall: 0.9512195121951219
-    f1: 0.970954356846473
-  phone:
-    correct: 122
-    missing: 23
+    correct: 194
+    missing: 12
     spurious: 0
     wrong: 0
     precision: 1.0
-    recall: 0.8413793103448276
-    f1: 0.9138576779026217
-  url:
-    correct: 163
-    missing: 5
+    recall: 0.941747572815534
+    f1: 0.97
+  phone:
+    correct: 192
+    missing: 20
     spurious: 0
-    wrong: 1
-    precision: 0.9939024390243902
-    recall: 0.9644970414201184
-    f1: 0.978978978978979
+    wrong: 0
+    precision: 1.0
+    recall: 0.9056603773584906
+    f1: 0.9504950495049505
+  url:
+    correct: 243
+    missing: 24
+    spurious: 0
+    wrong: 0
+    precision: 1.0
+    recall: 0.9101123595505618
+    f1: 0.9529411764705882
   start_date:
-    correct: 12
+    correct: 15
     missing: 0
-    spurious: 24
+    spurious: 9
     wrong: 0
-    precision: 0.3333333333333333
+    precision: 0.625
     recall: 1.0
-    f1: 0.5
+    f1: 0.7692307692307693
   end_date:
-    correct: 56
+    correct: 79
     missing: 0
-    spurious: 10
+    spurious: 29
     wrong: 0
-    precision: 0.8484848484848485
+    precision: 0.7314814814814815
     recall: 1.0
-    f1: 0.9180327868852459
+    f1: 0.8449197860962567
   image:
     correct: 33
     missing: 0
-    spurious: 56
+    spurious: 64
     wrong: 0
-    precision: 0.3707865168539326
+    precision: 0.3402061855670103
     recall: 1.0
-    f1: 0.5409836065573771
+    f1: 0.5076923076923077
 aggregated_report:
-  image: 1.0
-  designations_precision: 1.0
-  email: 0.9473684210526315
   start_date: 1.0
-  name: 1.0
-  url: 0.9473684210526315
-  roles_precision: 0.9865497076023392
-  roles: 0.9523391812865497
-  phone: 0.8473684210526315
   end_date: 1.0
   designations: 1.0
+  image: 1.0
+  roles: 0.9719298245614035
+  email: 0.9473684210526315
+  phone: 0.9333333333333333
+  name: 1.0
+  url: 0.9122807017543859
+  roles_precision: 0.9776942355889724
+  designations_precision: 1.0
 per_case_scores:
 - case_id: austin_city_manager_staff
   score: 1.0
@@ -120,136 +120,214 @@ per_case_scores:
   score: 1.0
   person_precision: 1.0
   scores:
-    designations_precision: 1.0
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
+    designations_precision: 1.0
 - case_id: austin_district7_council_member
   score: 1.0
   person_precision: 1.0
   scores:
-    image: 1.0
-    designations_precision: 1.0
-    email: 1.0
     start_date: 1.0
+    end_date: 1.0
+    designations: 1.0
+    image: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    end_date: 1.0
-    designations: 1.0
+    designations_precision: 1.0
 - case_id: board_of_aldermen
-  score: 0.7666666666666666
+  score: 0.7592592592592592
   person_precision: 0.8333333333333334
   scores:
-    image: 1.0
-    email: 1.0
     start_date: 1.0
+    end_date: 1.0
+    designations: 1.0
+    image: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 0.2
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 0.2
-    end_date: 1.0
-    designations: 1.0
 - case_id: coleman_council
   score: 1.0
   person_precision: 1.0
   scores:
-    designations_precision: 1.0
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
-- case_id: county_king__county_executive__county_council__known_titles
-  score: 0.9722222222222222
+    designations_precision: 1.0
+- case_id: county_allegan__place_leighton__township_board__board__suggested_titles
+  score: 1.0
   person_precision: 1.0
   scores:
-    designations_precision: 1.0
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
-    roles_precision: 0.8888888888888888
-    roles: 0.8888888888888888
-    phone: 1.0
+    roles_precision: 1.0
+- case_id: county_allegan__place_leighton__unscoped__no_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
     designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: county_hunterdon__place_alexandria__township_board__board__suggested_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: county_hunterdon__place_alexandria__unscoped__known_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: county_hunterdon__place_alexandria__unscoped__no_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: county_king__county_executive__county_council__known_titles
+  score: 0.8571428571428571
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 0.0
+    roles_precision: 1.0
+    designations_precision: 1.0
 - case_id: county_king__county_executive__county_council__no_titles
   score: 1.0
   person_precision: 1.0
   scores:
-    designations_precision: 1.0
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
+    designations_precision: 1.0
+- case_id: county_king__county_executive__county_council__suggested_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
     designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+    designations_precision: 1.0
 - case_id: county_king__county_executive__county_executive__known_titles
   score: 1.0
   person_precision: 1.0
   scores:
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
 - case_id: county_king__county_executive__county_executive__no_titles
+  score: 0.8333333333333334
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 0.0
+    roles_precision: 1.0
+- case_id: county_king__county_executive__county_executive__suggested_titles
   score: 1.0
   person_precision: 1.0
   scores:
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
 - case_id: golinda_mixed_city_county
   score: 1.0
   person_precision: 1.0
   scores:
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
 - case_id: inverted_name_format
   score: 1.0
   person_precision: 1.0
   scores:
-    designations_precision: 1.0
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
+    designations_precision: 1.0
 - case_id: jackson_mayors_office
-  score: 0.875
+  score: 1.0
   person_precision: 1.0
   scores:
-    image: 1.0
-    email: 1.0
-    name: 1.0
-    url: 0.0
-    roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
     designations: 1.0
+    image: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
 - case_id: jackson_mayors_office_scoped_to_council
   score: 1.0
   person_precision: null
@@ -258,319 +336,466 @@ per_case_scores:
   score: 1.0
   person_precision: 1.0
   scores:
+    designations: 1.0
     image: 1.0
-    designations_precision: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
+    designations_precision: 1.0
 - case_id: millbury_school_committee_scoped_to_select_board
   score: 1.0
   person_precision: null
   scores: {}
 - case_id: mixed_current_past
-  score: 1.0
+  score: 0.6666666666666666
   person_precision: 1.0
   scores:
-    email: 1.0
+    designations: 1.0
+    roles: 1.0
+    email: 0.0
+    phone: 0.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
 - case_id: nav_links_no_names
   score: 0.0
   person_precision: 0.0
   scores: {}
-- case_id: place_abernathy__mayor_council__council__known_titles
-  score: 0.8333333333333334
-  person_precision: 0.8333333333333334
-  scores:
-    email: 1.0
-    name: 1.0
-    url: 1.0
-    roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    end_date: 1.0
-    designations: 1.0
-- case_id: place_abernathy__mayor_council__council__no_titles
-  score: 0.7291666666666667
-  person_precision: 0.8333333333333334
-  scores:
-    email: 1.0
-    name: 1.0
-    url: 0.0
-    roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    end_date: 1.0
-    designations: 1.0
-- case_id: place_abernathy__mayor_council__office_of_the_mayor__known_titles
+- case_id: place_abernathy__council_manager__council__suggested_titles
   score: 1.0
   person_precision: 1.0
   scores:
-    email: 1.0
-    name: 1.0
-    url: 1.0
-    roles_precision: 1.0
+    start_date: 1.0
+    end_date: 1.0
+    designations: 1.0
     roles: 1.0
+    email: 1.0
     phone: 1.0
-    end_date: 1.0
-    designations: 1.0
-- case_id: place_abernathy__mayor_council__office_of_the_mayor__no_titles
-  score: 0.4375
-  person_precision: 0.5
-  scores:
-    email: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 0.0
-    end_date: 1.0
-    designations: 1.0
 - case_id: place_abernathy__unscoped__known_titles
-  score: 0.875
+  score: 1.0
   person_precision: 1.0
   scores:
+    start_date: 1.0
+    end_date: 1.0
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 0.0
-    end_date: 1.0
-    designations: 1.0
 - case_id: place_abernathy__unscoped__no_titles
-  score: 0.875
+  score: 1.0
   person_precision: 1.0
   scores:
-    email: 1.0
-    name: 1.0
-    url: 1.0
-    roles_precision: 1.0
-    roles: 1.0
-    phone: 0.0
+    start_date: 1.0
     end_date: 1.0
     designations: 1.0
-- case_id: place_amador_city__mayor_council__council__known_titles
-  score: 0.7000000000000001
-  person_precision: 1.0
-  scores:
-    email: 0.0
-    name: 1.0
-    url: 1.0
-    roles_precision: 0.9
     roles: 1.0
-    phone: 0.0
-    designations: 1.0
-- case_id: place_amador_city__mayor_council__council__no_titles
-  score: 0.9857142857142858
-  person_precision: 1.0
-  scores:
     email: 1.0
-    name: 1.0
-    url: 1.0
-    roles_precision: 0.9
-    roles: 1.0
     phone: 1.0
-    designations: 1.0
-- case_id: place_amador_city__mayor_council__office_of_the_mayor__known_titles
-  score: 0.8571428571428571
-  person_precision: 1.0
-  scores:
-    email: 0.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
+- case_id: place_amador_city__commission__commission__suggested_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
     designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: place_amador_city__council_manager__council__suggested_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: place_amador_city__mayor_council__council__known_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: place_amador_city__mayor_council__council__no_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: place_amador_city__mayor_council__council__suggested_titles
+  score: 0.8333333333333334
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 1.0
+    email: 0.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: place_amador_city__mayor_council__office_of_the_mayor__known_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
 - case_id: place_amador_city__mayor_council__office_of_the_mayor__no_titles
   score: 1.0
   person_precision: 1.0
   scores:
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
+- case_id: place_amador_city__mayor_council__office_of_the_mayor__suggested_titles
+  score: 0.5
+  person_precision: 1.0
+  scores:
     designations: 1.0
+    roles: 1.0
+    email: 0.0
+    phone: 0.0
+    name: 1.0
+    url: 0.0
+    roles_precision: 1.0
 - case_id: place_amador_city__unscoped__known_titles
-  score: 0.9857142857142858
+  score: 1.0
   person_precision: 1.0
   scores:
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
-    roles_precision: 0.9
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
+    roles_precision: 1.0
 - case_id: place_amador_city__unscoped__no_titles
-  score: 0.9857142857142858
+  score: 1.0
   person_precision: 1.0
   scores:
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
-    roles_precision: 0.9
-    roles: 1.0
-    phone: 1.0
+    roles_precision: 1.0
+- case_id: place_armada__township_board__board__suggested_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    end_date: 1.0
     designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: place_armada__unscoped__no_titles
+  score: 0.8571428571428571
+  person_precision: 1.0
+  scores:
+    end_date: 1.0
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 0.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: place_belle_meade__commission__commission__suggested_titles
+  score: 0.9666666666666667
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 0.8
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: place_belle_meade__council_manager__council__suggested_titles
+  score: 0.9666666666666667
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 0.8
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
 - case_id: place_belle_meade__unscoped__known_titles
-  score: 1.0
+  score: 0.9666666666666667
   person_precision: 1.0
   scores:
+    designations: 1.0
+    roles: 0.8
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
 - case_id: place_belle_meade__unscoped__no_titles
+  score: 0.9666666666666667
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 0.8
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: place_gibbsboro__mayor_council__council__no_titles
+  score: 0.8333333333333334
+  person_precision: 1.0
+  scores:
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 0.0
+    roles_precision: 1.0
+- case_id: place_gibbsboro__mayor_council__council__suggested_titles
   score: 1.0
   person_precision: 1.0
   scores:
-    email: 1.0
-    name: 1.0
-    url: 1.0
-    roles_precision: 1.0
+    designations: 1.0
     roles: 1.0
+    email: 1.0
     phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: place_gibbsboro__mayor_council__office_of_the_mayor__no_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
     designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+- case_id: place_greenwood_village__unscoped__no_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    end_date: 1.0
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 1.0
+    designations_precision: 1.0
 - case_id: place_millbury__open_town_meeting__select_board__known_titles
-  score: 0.9625
+  score: 1.0
   person_precision: 1.0
   scores:
-    email: 1.0
-    name: 1.0
-    url: 1.0
-    roles_precision: 1.0
-    roles: 0.7
-    phone: 1.0
     end_date: 1.0
     designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 0.7
 - case_id: place_millbury__open_town_meeting__select_board__no_titles
-  score: 0.9125
+  score: 0.8571428571428571
   person_precision: 1.0
   scores:
+    end_date: 1.0
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 0.0
+    roles_precision: 0.7
+- case_id: place_millbury__open_town_meeting__select_board__suggested_titles
+  score: 0.9428571428571428
+  person_precision: 1.0
+  scores:
+    end_date: 1.0
+    designations: 1.0
+    roles: 0.6
+    email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 0.3
-    phone: 1.0
-    end_date: 1.0
-    designations: 1.0
 - case_id: place_millbury__open_town_meeting__town_meeting__known_titles
-  score: 0.0
-  person_precision: 0.0
+  score: 1.0
+  person_precision: null
   scores: {}
 - case_id: place_millbury__open_town_meeting__town_meeting__no_titles
-  score: 0.0
-  person_precision: 0.0
+  score: 1.0
+  person_precision: null
+  scores: {}
+- case_id: place_millbury__open_town_meeting__town_meeting__suggested_titles
+  score: 1.0
+  person_precision: null
   scores: {}
 - case_id: place_millbury__representative_town_meeting__select_board__known_titles
   score: 1.0
   person_precision: 1.0
   scores:
-    email: 1.0
-    name: 1.0
-    url: 1.0
-    roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
     end_date: 1.0
     designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 0.7
 - case_id: place_millbury__representative_town_meeting__select_board__no_titles
-  score: 0.9125
+  score: 1.0
   person_precision: 1.0
   scores:
+    end_date: 1.0
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 0.7
+- case_id: place_millbury__representative_town_meeting__select_board__suggested_titles
+  score: 0.9428571428571428
+  person_precision: 1.0
+  scores:
+    end_date: 1.0
+    designations: 1.0
+    roles: 0.6
+    email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 0.3
-    phone: 1.0
-    end_date: 1.0
-    designations: 1.0
 - case_id: place_millbury__representative_town_meeting__town_meeting__known_titles
-  score: 0.0
-  person_precision: 0.0
+  score: 1.0
+  person_precision: null
   scores: {}
 - case_id: place_millbury__representative_town_meeting__town_meeting__no_titles
   score: 1.0
   person_precision: null
   scores: {}
+- case_id: place_millbury__representative_town_meeting__town_meeting__suggested_titles
+  score: 1.0
+  person_precision: null
+  scores: {}
+- case_id: place_payette__unscoped__no_titles
+  score: 1.0
+  person_precision: 1.0
+  scores:
+    end_date: 1.0
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
+    name: 1.0
+    url: 1.0
+    roles_precision: 0.9285714285714286
 - case_id: placeholder_name_council
   score: 1.0
   person_precision: 1.0
   scores:
-    designations_precision: 1.0
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
+    designations_precision: 1.0
 - case_id: raisin_township_clerk
-  score: 0.8571428571428571
+  score: 1.0
   person_precision: 1.0
   scores:
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 0.0
-    designations: 1.0
 - case_id: raisin_township_supervisor
   score: 1.0
   person_precision: 1.0
   scores:
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
 - case_id: redundant_place_role
   score: 1.0
   person_precision: 1.0
   scores:
-    designations_precision: 1.0
-    email: 1.0
     start_date: 1.0
+    end_date: 1.0
+    designations: 1.0
+    roles: 1.0
+    email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    end_date: 1.0
-    designations: 1.0
+    designations_precision: 1.0
 - case_id: seattle_council_pick_list_missing_president
   score: 1.0
   person_precision: 1.0
   scores:
+    designations: 1.0
     image: 1.0
-    designations_precision: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
+    designations_precision: 1.0
 - case_id: seattle_council_scoped_to_mayor
   score: 1.0
   person_precision: null
@@ -579,26 +804,26 @@ per_case_scores:
   score: 1.0
   person_precision: 1.0
   scores:
+    designations: 1.0
     image: 1.0
-    designations_precision: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
+    designations_precision: 1.0
 - case_id: vacant_positions_council
   score: 1.0
   person_precision: 1.0
   scores:
+    designations: 1.0
+    roles: 1.0
     email: 1.0
+    phone: 1.0
     name: 1.0
     url: 1.0
     roles_precision: 1.0
-    roles: 1.0
-    phone: 1.0
-    designations: 1.0
 mismatches:
   board_of_aldermen:
   - subject: Abelardo Gonzalez
@@ -633,128 +858,221 @@ mismatches:
     actual: "\u2014"
   county_king__county_executive__county_council__known_titles:
   - person: Claudia Balducci
+    field: url
+    expected_label: Council Member, District 6
+    actual_label: King County Councilmember District 6
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/claudia-balducci
+    actual: "\u2014"
+  - person: Claudia Balducci
     field: image
     expected_label: Council Member, District 6
-    actual_label: Council Member, District 6
+    actual_label: King County Councilmember District 6
     expected: "\u2014"
     actual: local://4e25e6caf6e2.png
   - person: "Jorge L. Bar\xF3n"
+    field: url
+    expected_label: Council Member, District 4
+    actual_label: King County Councilmember District 4
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/jorge-l-baron
+    actual: "\u2014"
+  - person: "Jorge L. Bar\xF3n"
     field: image
     expected_label: Council Member, District 4
-    actual_label: Council Member, District 4
+    actual_label: King County Councilmember District 4
     expected: "\u2014"
     actual: local://b7781f80cfaa.png
   - person: Pete von Reichbauer
+    field: url
+    expected_label: Council Member, District 7
+    actual_label: King County Councilmember District 7
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/pete-von-reichbauer
+    actual: "\u2014"
+  - person: Pete von Reichbauer
     field: image
     expected_label: Council Member, District 7
-    actual_label: Council Member, District 7
+    actual_label: King County Councilmember District 7
     expected: "\u2014"
     actual: local://a4a58cdeecca.png
   - person: Reagan Dunn
+    field: url
+    expected_label: Council Member, District 9
+    actual_label: King County Councilmember District 9
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/reagan-dunn
+    actual: "\u2014"
+  - person: Reagan Dunn
     field: image
     expected_label: Council Member, District 9
-    actual_label: Council Member, District 9
+    actual_label: King County Councilmember District 9
     expected: "\u2014"
     actual: local://78bd4203babd.png
   - person: Rhonda Lewis
+    field: url
+    expected_label: Council Member, District 2
+    actual_label: King County Councilmember District 2
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/rhonda-lewis
+    actual: "\u2014"
+  - person: Rhonda Lewis
     field: image
     expected_label: Council Member, District 2
-    actual_label: Council Member, District 2
+    actual_label: King County Councilmember District 2
     expected: "\u2014"
     actual: local://2400d22da048.png
   - person: Rod Dembowski
+    field: url
+    expected_label: Council Member, District 1
+    actual_label: King County Councilmember District 1
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/rod-dembowski
+    actual: "\u2014"
+  - person: Rod Dembowski
     field: image
     expected_label: Council Member, District 1
-    actual_label: Council Member, District 1
+    actual_label: King County Councilmember District 1
     expected: "\u2014"
     actual: local://1017c456c9ca.png
   - person: Sarah Perry
-    field: primary_role
-    expected_label: Chair, District 3
-    actual_label: Council Member, District 3
-    expected:
-    - Chair
-    actual:
-    - Council Member
-  - person: Sarah Perry
-    field: roles
-    expected_label: Chair, District 3
-    actual_label: Council Member, District 3
-    expected:
-    - Chair
-    actual:
-    - Council Member
+    field: url
+    expected_label: Council Member, District 3
+    actual_label: King County Councilmember District 3
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/sarah-perry
+    actual: "\u2014"
   - person: Sarah Perry
     field: image
-    expected_label: Chair, District 3
-    actual_label: Council Member, District 3
+    expected_label: Council Member, District 3
+    actual_label: King County Councilmember District 3
     expected: "\u2014"
     actual: local://260753e33326.png
   - person: Steffanie Fain
+    field: url
+    expected_label: Council Member, District 5
+    actual_label: King County Councilmember District 5
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/steffanie-fain
+    actual: "\u2014"
+  - person: Steffanie Fain
     field: image
     expected_label: Council Member, District 5
-    actual_label: Council Member, District 5
+    actual_label: King County Councilmember District 5
     expected: "\u2014"
     actual: local://0b42e9ac8027.png
   - person: Teresa Mosqueda
+    field: url
+    expected_label: Council Member, District 8
+    actual_label: King County Councilmember District 8
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/teresa-mosqueda
+    actual: "\u2014"
+  - person: Teresa Mosqueda
     field: image
     expected_label: Council Member, District 8
-    actual_label: Council Member, District 8
+    actual_label: King County Councilmember District 8
     expected: "\u2014"
     actual: local://eb3637466d89.png
   county_king__county_executive__county_council__no_titles:
   - person: Claudia Balducci
     field: image
     expected_label: King County Councilmember District 6
-    actual_label: Council Member District 6
+    actual_label: King County Councilmember District 6
     expected: "\u2014"
     actual: local://4e25e6caf6e2.png
   - person: "Jorge L. Bar\xF3n"
     field: image
     expected_label: King County Councilmember District 4
-    actual_label: Council Member District 4
+    actual_label: King County Councilmember District 4
     expected: "\u2014"
     actual: local://b7781f80cfaa.png
   - person: Pete von Reichbauer
     field: image
     expected_label: King County Councilmember District 7
-    actual_label: Council Member District 7
+    actual_label: King County Councilmember District 7
     expected: "\u2014"
     actual: local://a4a58cdeecca.png
   - person: Reagan Dunn
     field: image
     expected_label: King County Councilmember District 9
-    actual_label: Council Member District 9
+    actual_label: King County Councilmember District 9
     expected: "\u2014"
     actual: local://78bd4203babd.png
   - person: Rhonda Lewis
     field: image
     expected_label: King County Councilmember District 2
-    actual_label: Council Member District 2
+    actual_label: King County Councilmember District 2
     expected: "\u2014"
     actual: local://2400d22da048.png
   - person: Rod Dembowski
     field: image
     expected_label: King County Councilmember District 1
-    actual_label: Council Member District 1
+    actual_label: King County Councilmember District 1
     expected: "\u2014"
     actual: local://1017c456c9ca.png
   - person: Sarah Perry
     field: image
     expected_label: King County Councilmember District 3
-    actual_label: Council Member District 3
+    actual_label: King County Councilmember District 3
     expected: "\u2014"
     actual: local://260753e33326.png
   - person: Steffanie Fain
     field: image
     expected_label: King County Councilmember District 5
-    actual_label: Council Member District 5
+    actual_label: King County Councilmember District 5
     expected: "\u2014"
     actual: local://0b42e9ac8027.png
   - person: Teresa Mosqueda
     field: image
     expected_label: King County Councilmember District 8
-    actual_label: Council Member District 8
+    actual_label: King County Councilmember District 8
+    expected: "\u2014"
+    actual: local://eb3637466d89.png
+  county_king__county_executive__county_council__suggested_titles:
+  - person: Claudia Balducci
+    field: image
+    expected_label: King County Councilmember District 6
+    actual_label: Councilmember District 6
+    expected: "\u2014"
+    actual: local://4e25e6caf6e2.png
+  - person: "Jorge L. Bar\xF3n"
+    field: image
+    expected_label: King County Councilmember District 4
+    actual_label: Councilmember District 4
+    expected: "\u2014"
+    actual: local://b7781f80cfaa.png
+  - person: Pete von Reichbauer
+    field: image
+    expected_label: King County Councilmember District 7
+    actual_label: Councilmember District 7
+    expected: "\u2014"
+    actual: local://a4a58cdeecca.png
+  - person: Reagan Dunn
+    field: image
+    expected_label: King County Councilmember District 9
+    actual_label: Councilmember District 9
+    expected: "\u2014"
+    actual: local://78bd4203babd.png
+  - person: Rhonda Lewis
+    field: image
+    expected_label: King County Councilmember District 2
+    actual_label: Councilmember District 2
+    expected: "\u2014"
+    actual: local://2400d22da048.png
+  - person: Rod Dembowski
+    field: image
+    expected_label: King County Councilmember District 1
+    actual_label: Councilmember District 1
+    expected: "\u2014"
+    actual: local://1017c456c9ca.png
+  - person: Sarah Perry
+    field: image
+    expected_label: King County Councilmember District 3
+    actual_label: Councilmember District 3
+    expected: "\u2014"
+    actual: local://260753e33326.png
+  - person: Steffanie Fain
+    field: image
+    expected_label: King County Councilmember District 5
+    actual_label: Councilmember District 5
+    expected: "\u2014"
+    actual: local://0b42e9ac8027.png
+  - person: Teresa Mosqueda
+    field: image
+    expected_label: King County Councilmember District 8
+    actual_label: Councilmember District 8
     expected: "\u2014"
     actual: local://eb3637466d89.png
   county_king__county_executive__county_executive__known_titles:
@@ -766,18 +1084,152 @@ mismatches:
     actual: local://456fd6692c50.png
   county_king__county_executive__county_executive__no_titles:
   - person: Girmay Zahilay
+    field: url
+    expected_label: King County Executive
+    actual_label: King County Executive
+    expected: https://kingcounty.gov/en/dept/executive
+    actual: "\u2014"
+  - person: Girmay Zahilay
     field: image
     expected_label: King County Executive
     actual_label: King County Executive
     expected: "\u2014"
     actual: local://456fd6692c50.png
-  jackson_mayors_office:
-  - person: Scott Conger
-    field: url
+  county_king__county_executive__county_executive__suggested_titles:
+  - person: Girmay Zahilay
+    field: image
+    expected_label: King County Executive
+    actual_label: King County Executive
+    expected: "\u2014"
+    actual: local://456fd6692c50.png
+  la_porte_council:
+  - person: Bill Bentley
+    field: end_date
+    expected_label: Council Member District 3
+    actual_label: Councilperson District 3
+    expected: "\u2014"
+    actual: '2027'
+  - person: Brandon Lunsford
+    field: end_date
+    expected_label: Council Member At-Large A
+    actual_label: Councilperson At-Large A
+    expected: "\u2014"
+    actual: '2025'
+  - person: Brent McCaulley
+    field: end_date
+    expected_label: Council Member At-Large B
+    actual_label: Councilperson At-Large B
+    expected: "\u2014"
+    actual: '2026'
+  - person: Chuck Engelken
+    field: end_date
+    expected_label: Council Member District 2
+    actual_label: Councilperson District 2
+    expected: "\u2014"
+    actual: '2027'
+  - person: Jay Martin
+    field: end_date
+    expected_label: Council Member District 5
+    actual_label: Councilperson District 5
+    expected: "\u2014"
+    actual: '2025'
+  - person: Mandi Williams
+    field: end_date
+    expected_label: Council Member District 1
+    actual_label: Councilperson District 1
+    expected: "\u2014"
+    actual: '2026'
+  - person: Rick Helton
+    field: end_date
     expected_label: Mayor
     actual_label: Mayor
-    expected: https://jacksontn.gov/government/mayorsoffice/aboutmayorconger
-    actual: https://jacksontn.gov/government/mayorsoffice
+    expected: "\u2014"
+    actual: '2027'
+  - person: Robbie McLarrin
+    field: end_date
+    expected_label: Council Member District 6
+    actual_label: Councilperson District 6
+    expected: "\u2014"
+    actual: '2026'
+  - person: Robert Guerra
+    field: end_date
+    expected_label: Council Member District 4
+    actual_label: Councilperson District 4
+    expected: "\u2014"
+    actual: '2025'
+  mixed_current_past:
+  - person: Al Stephens
+    field: email
+    expected_label: Mayor Pro Tem
+    actual_label: Mayor Pro Tem
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Al Stephens
+    field: phone
+    expected_label: Mayor Pro Tem
+    actual_label: Mayor Pro Tem
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Billy Wayne Martin
+    field: email
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Billy Wayne Martin
+    field: phone
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Bobby Hanson
+    field: email
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Bobby Hanson
+    field: phone
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Charles Wrenn
+    field: email
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Charles Wrenn
+    field: phone
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Darrell Grintz
+    field: email
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Darrell Grintz
+    field: phone
+    expected_label: Council Member
+    actual_label: Council Member
+    expected: (903) 587-3334
+    actual: "\u2014"
+  - person: Michael Pye
+    field: email
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: cityadmin@cityofleonard.net
+    actual: "\u2014"
+  - person: Michael Pye
+    field: phone
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: (903) 587-3334
+    actual: "\u2014"
   nav_links_no_names:
   - subject: Edward Zapalac
     field: person
@@ -785,202 +1237,7 @@ mismatches:
     actual_label: Councilmember, Place 5
     expected: "\u2014"
     actual: present
-  place_abernathy__mayor_council__council__known_titles:
-  - person: Bilinda Prater
-    field: start_date
-    expected_label: Mayor Pro Tempore
-    actual_label: Mayor Pro Tempore
-    expected: "\u2014"
-    actual: 2018-05
-  - person: Bilinda Prater
-    field: image
-    expected_label: Mayor Pro Tempore
-    actual_label: Mayor Pro Tempore
-    expected: "\u2014"
-    actual: local://f807858b4119.png
-  - person: Eva Cortez
-    field: start_date
-    expected_label: Alderperson
-    actual_label: Alderperson
-    expected: "\u2014"
-    actual: 2022-05
-  - person: Eva Cortez
-    field: image
-    expected_label: Alderperson
-    actual_label: Alderperson
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  - person: Gary Stephenson
-    field: start_date
-    expected_label: Alderperson
-    actual_label: Alderperson
-    expected: "\u2014"
-    actual: 2023-05
-  - person: Gary Stephenson
-    field: image
-    expected_label: Alderperson
-    actual_label: Alderperson
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  - subject: Harold Bufe
-    field: person
-    expected_label: ''
-    actual_label: Mayor
-    expected: "\u2014"
-    actual: present
-  - person: Matthew Speer
-    field: start_date
-    expected_label: Alderperson
-    actual_label: Alderperson
-    expected: "\u2014"
-    actual: 2025-05
-  - person: Matthew Speer
-    field: image
-    expected_label: Alderperson
-    actual_label: Alderperson
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  - person: Tammy Mahan
-    field: start_date
-    expected_label: Alderperson
-    actual_label: Alderperson
-    expected: "\u2014"
-    actual: 2023-05
-  - person: Tammy Mahan
-    field: image
-    expected_label: Alderperson
-    actual_label: Alderperson
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  place_abernathy__mayor_council__council__no_titles:
-  - person: Bilinda Prater
-    field: url
-    expected_label: Mayor Pro-Tempore
-    actual_label: Mayor Pro-Tempore
-    expected: https://cityofabernathy.org/your-government/city-council
-    actual: "\u2014"
-  - person: Bilinda Prater
-    field: start_date
-    expected_label: Mayor Pro-Tempore
-    actual_label: Mayor Pro-Tempore
-    expected: "\u2014"
-    actual: 2018-05
-  - person: Bilinda Prater
-    field: image
-    expected_label: Mayor Pro-Tempore
-    actual_label: Mayor Pro-Tempore
-    expected: "\u2014"
-    actual: local://f807858b4119.png
-  - person: Eva Cortez
-    field: url
-    expected_label: Alderwoman
-    actual_label: Alderwoman
-    expected: https://cityofabernathy.org/your-government/city-council
-    actual: "\u2014"
-  - person: Eva Cortez
-    field: start_date
-    expected_label: Alderwoman
-    actual_label: Alderwoman
-    expected: "\u2014"
-    actual: 2022-05
-  - person: Eva Cortez
-    field: image
-    expected_label: Alderwoman
-    actual_label: Alderwoman
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  - person: Gary Stephenson
-    field: url
-    expected_label: Alderman
-    actual_label: Alderman
-    expected: https://cityofabernathy.org/your-government/city-council
-    actual: "\u2014"
-  - person: Gary Stephenson
-    field: start_date
-    expected_label: Alderman
-    actual_label: Alderman
-    expected: "\u2014"
-    actual: 2023-05
-  - person: Gary Stephenson
-    field: image
-    expected_label: Alderman
-    actual_label: Alderman
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  - subject: Harold Bufe
-    field: person
-    expected_label: ''
-    actual_label: Mayor
-    expected: "\u2014"
-    actual: present
-  - person: Matthew Speer
-    field: url
-    expected_label: Alderman
-    actual_label: Alderman
-    expected: https://cityofabernathy.org/your-government/city-council
-    actual: "\u2014"
-  - person: Matthew Speer
-    field: start_date
-    expected_label: Alderman
-    actual_label: Alderman
-    expected: "\u2014"
-    actual: 2025-05
-  - person: Matthew Speer
-    field: image
-    expected_label: Alderman
-    actual_label: Alderman
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  - person: Tammy Mahan
-    field: url
-    expected_label: Alderwoman
-    actual_label: Alderwoman
-    expected: https://cityofabernathy.org/your-government/city-council
-    actual: "\u2014"
-  - person: Tammy Mahan
-    field: start_date
-    expected_label: Alderwoman
-    actual_label: Alderwoman
-    expected: "\u2014"
-    actual: 2023-05
-  - person: Tammy Mahan
-    field: image
-    expected_label: Alderwoman
-    actual_label: Alderwoman
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  place_abernathy__mayor_council__office_of_the_mayor__known_titles:
-  - person: Harold Bufe
-    field: start_date
-    expected_label: Mayor
-    actual_label: Mayor
-    expected: "\u2014"
-    actual: 2025-06
-  - person: Harold Bufe
-    field: image
-    expected_label: Mayor
-    actual_label: Mayor
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  place_abernathy__mayor_council__office_of_the_mayor__no_titles:
-  - subject: Mrs. Bilinda Prater
-    field: person
-    expected_label: ''
-    actual_label: Mayor Pro-Tempore
-    expected: "\u2014"
-    actual: present
-  - person: Harold Bufe
-    field: phone
-    expected_label: Mayor
-    actual_label: Mayor
-    expected: (806) 298-2546
-    actual: "\u2014"
-  - person: Harold Bufe
-    field: start_date
-    expected_label: Mayor
-    actual_label: Mayor
-    expected: "\u2014"
-    actual: 2025-06
+  place_abernathy__council_manager__council__suggested_titles:
   - person: Harold Bufe
     field: image
     expected_label: Mayor
@@ -988,235 +1245,25 @@ mismatches:
     expected: "\u2014"
     actual: local://48140b328c80.png
   place_abernathy__unscoped__known_titles:
-  - person: Bilinda Prater
-    field: phone
-    expected_label: Mayor Pro Tempore
-    actual_label: Mayor Pro-Tempore
-    expected: (806) 298-2546
-    actual: "\u2014"
-  - person: Bilinda Prater
-    field: start_date
-    expected_label: Mayor Pro Tempore
-    actual_label: Mayor Pro-Tempore
-    expected: "\u2014"
-    actual: 2018-05
-  - person: Bilinda Prater
-    field: image
-    expected_label: Mayor Pro Tempore
-    actual_label: Mayor Pro-Tempore
-    expected: "\u2014"
-    actual: local://f807858b4119.png
-  - person: Eva Cortez
-    field: phone
-    expected_label: Alderperson
-    actual_label: Alderwoman
-    expected: (806) 298-2546
-    actual: "\u2014"
-  - person: Eva Cortez
-    field: start_date
-    expected_label: Alderperson
-    actual_label: Alderwoman
-    expected: "\u2014"
-    actual: 2022-05
-  - person: Eva Cortez
-    field: image
-    expected_label: Alderperson
-    actual_label: Alderwoman
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  - person: Gary Stephenson
-    field: phone
-    expected_label: Alderperson
-    actual_label: Alderman
-    expected: (806) 298-2546
-    actual: "\u2014"
-  - person: Gary Stephenson
-    field: start_date
-    expected_label: Alderperson
-    actual_label: Alderman
-    expected: "\u2014"
-    actual: 2023-05
-  - person: Gary Stephenson
-    field: image
-    expected_label: Alderperson
-    actual_label: Alderman
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  - person: Harold Bufe
-    field: phone
-    expected_label: Mayor
-    actual_label: Mayor
-    expected: (806) 298-2546
-    actual: "\u2014"
-  - person: Harold Bufe
-    field: start_date
-    expected_label: Mayor
-    actual_label: Mayor
-    expected: "\u2014"
-    actual: 2025-06
   - person: Harold Bufe
     field: image
     expected_label: Mayor
     actual_label: Mayor
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  - person: Matthew Speer
-    field: phone
-    expected_label: Alderperson
-    actual_label: Alderman
-    expected: (806) 298-2546
-    actual: "\u2014"
-  - person: Matthew Speer
-    field: start_date
-    expected_label: Alderperson
-    actual_label: Alderman
-    expected: "\u2014"
-    actual: 2025-05
-  - person: Matthew Speer
-    field: image
-    expected_label: Alderperson
-    actual_label: Alderman
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  - person: Tammy Mahan
-    field: phone
-    expected_label: Alderperson
-    actual_label: Alderwoman
-    expected: (806) 298-2546
-    actual: "\u2014"
-  - person: Tammy Mahan
-    field: start_date
-    expected_label: Alderperson
-    actual_label: Alderwoman
-    expected: "\u2014"
-    actual: 2023-05
-  - person: Tammy Mahan
-    field: image
-    expected_label: Alderperson
-    actual_label: Alderwoman
     expected: "\u2014"
     actual: local://48140b328c80.png
   place_abernathy__unscoped__no_titles:
-  - person: Bilinda Prater
-    field: phone
-    expected_label: Mayor Pro-Tempore
-    actual_label: Mayor Pro-Tempore
-    expected: (806) 298-2546
-    actual: "\u2014"
-  - person: Bilinda Prater
-    field: start_date
-    expected_label: Mayor Pro-Tempore
-    actual_label: Mayor Pro-Tempore
-    expected: "\u2014"
-    actual: 2018-05
-  - person: Bilinda Prater
-    field: image
-    expected_label: Mayor Pro-Tempore
-    actual_label: Mayor Pro-Tempore
-    expected: "\u2014"
-    actual: local://f807858b4119.png
-  - person: Eva Cortez
-    field: phone
-    expected_label: Alderwoman
-    actual_label: Alderwoman
-    expected: (806) 298-2546
-    actual: "\u2014"
-  - person: Eva Cortez
-    field: start_date
-    expected_label: Alderwoman
-    actual_label: Alderwoman
-    expected: "\u2014"
-    actual: 2022-05
-  - person: Eva Cortez
-    field: image
-    expected_label: Alderwoman
-    actual_label: Alderwoman
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  - person: Gary Stephenson
-    field: phone
-    expected_label: Alderman
-    actual_label: Alderman
-    expected: (806) 298-2546
-    actual: "\u2014"
-  - person: Gary Stephenson
-    field: start_date
-    expected_label: Alderman
-    actual_label: Alderman
-    expected: "\u2014"
-    actual: 2023-05
-  - person: Gary Stephenson
-    field: image
-    expected_label: Alderman
-    actual_label: Alderman
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  - person: Harold Bufe
-    field: phone
-    expected_label: Mayor
-    actual_label: Mayor
-    expected: (806) 298-2546
-    actual: "\u2014"
-  - person: Harold Bufe
-    field: start_date
-    expected_label: Mayor
-    actual_label: Mayor
-    expected: "\u2014"
-    actual: 2025-06
   - person: Harold Bufe
     field: image
     expected_label: Mayor
     actual_label: Mayor
     expected: "\u2014"
     actual: local://48140b328c80.png
-  - person: Matthew Speer
-    field: phone
-    expected_label: Alderman
-    actual_label: Alderman
-    expected: (806) 298-2546
-    actual: "\u2014"
-  - person: Matthew Speer
-    field: start_date
-    expected_label: Alderman
-    actual_label: Alderman
-    expected: "\u2014"
-    actual: 2025-05
-  - person: Matthew Speer
-    field: image
-    expected_label: Alderman
-    actual_label: Alderman
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  - person: Tammy Mahan
-    field: phone
-    expected_label: Alderwoman
-    actual_label: Alderwoman
-    expected: (806) 298-2546
-    actual: "\u2014"
-  - person: Tammy Mahan
-    field: start_date
-    expected_label: Alderwoman
-    actual_label: Alderwoman
-    expected: "\u2014"
-    actual: 2023-05
-  - person: Tammy Mahan
-    field: image
-    expected_label: Alderwoman
-    actual_label: Alderwoman
-    expected: "\u2014"
-    actual: local://48140b328c80.png
-  place_amador_city__mayor_council__council__known_titles:
+  place_amador_city__mayor_council__council__suggested_titles:
   - person: Bruce Sherrill
     field: email
     expected_label: Council Member
     actual_label: Council Member
     expected: city.clerk@amador-city.com
-    actual: "\u2014"
-  - person: Bruce Sherrill
-    field: phone
-    expected_label: Council Member
-    actual_label: Council Member
-    expected: (209) 267-0682
     actual: "\u2014"
   - person: Nikko Ambroselli
     field: email
@@ -1224,52 +1271,17 @@ mismatches:
     actual_label: Council Member
     expected: city.clerk@amador-city.com
     actual: "\u2014"
-  - person: Nikko Ambroselli
-    field: phone
-    expected_label: Council Member
-    actual_label: Council Member
-    expected: (209) 267-0682
-    actual: "\u2014"
-  - person: Sandra Staples
-    field: primary_role
-    expected_label: Council Member
-    actual_label: Mayor and Council Member
-    expected:
-    - Council Member
-    actual:
-    - Mayor
-  - person: Sandra Staples
-    field: roles
-    expected_label: Council Member
-    actual_label: Mayor and Council Member
-    expected:
-    - Council Member
-    actual:
-    - Council Member
-    - Mayor
   - person: Sandra Staples
     field: email
-    expected_label: Council Member
+    expected_label: Mayor and Council Member
     actual_label: Mayor and Council Member
     expected: city.clerk@amador-city.com
-    actual: "\u2014"
-  - person: Sandra Staples
-    field: phone
-    expected_label: Council Member
-    actual_label: Mayor and Council Member
-    expected: (209) 267-0682
     actual: "\u2014"
   - person: Stephen Testa
     field: email
     expected_label: Council Member
     actual_label: Council Member
     expected: city.clerk@amador-city.com
-    actual: "\u2014"
-  - person: Stephen Testa
-    field: phone
-    expected_label: Council Member
-    actual_label: Council Member
-    expected: (209) 267-0682
     actual: "\u2014"
   - person: Susan Bragstad
     field: email
@@ -1277,67 +1289,99 @@ mismatches:
     actual_label: Council Member
     expected: city.clerk@amador-city.com
     actual: "\u2014"
-  - person: Susan Bragstad
-    field: phone
-    expected_label: Council Member
-    actual_label: Council Member
-    expected: (209) 267-0682
-    actual: "\u2014"
-  place_amador_city__mayor_council__council__no_titles:
-  - person: Sandra Staples
-    field: primary_role
-    expected_label: Council Member
-    actual_label: Mayor and Council Member
-    expected:
-    - Council Member
-    actual:
-    - Mayor
-  - person: Sandra Staples
-    field: roles
-    expected_label: Council Member
-    actual_label: Mayor and Council Member
-    expected:
-    - Council Member
-    actual:
-    - Council Member
-    - Mayor
-  place_amador_city__mayor_council__office_of_the_mayor__known_titles:
+  place_amador_city__mayor_council__office_of_the_mayor__suggested_titles:
   - person: Sandra Staples
     field: email
     expected_label: Mayor
     actual_label: Mayor
     expected: city.clerk@amador-city.com
-    actual: info@amador-city.com
-  place_amador_city__unscoped__known_titles:
+    actual: "\u2014"
   - person: Sandra Staples
-    field: roles
+    field: phone
     expected_label: Mayor
-    actual_label: Mayor and Council Member
-    expected:
-    - Mayor
-    actual:
-    - Council Member
-    - Mayor
-  place_amador_city__unscoped__no_titles:
+    actual_label: Mayor
+    expected: (209) 267-0682
+    actual: "\u2014"
   - person: Sandra Staples
-    field: roles
+    field: url
     expected_label: Mayor
-    actual_label: Mayor and Council Member
+    actual_label: Mayor
+    expected: https://amador-city.com/government-overview
+    actual: "\u2014"
+  place_armada__unscoped__no_titles:
+  - person: Amy Barzyk
+    field: phone
+    expected_label: Trustee and Street Administrator
+    actual_label: Trustee and Street Administrator
+    expected: (586) 784-9151
+    actual: "\u2014"
+  - person: Anne Porter
+    field: phone
+    expected_label: Treasurer
+    actual_label: Treasurer
+    expected: (586) 784-9151
+    actual: "\u2014"
+  - person: David Coenen
+    field: phone
+    expected_label: Village President
+    actual_label: Village President
+    expected: (586) 784-9151
+    actual: "\u2014"
+  - person: Jo Adair
+    field: phone
+    expected_label: Trustee and Police Commissioner
+    actual_label: Trustee and Police Commissioner
+    expected: (586) 784-9151
+    actual: "\u2014"
+  - person: Michael Shall
+    field: phone
+    expected_label: Trustee and Park Commissioner
+    actual_label: Trustee and Park Commissioner
+    expected: (586) 784-9151
+    actual: "\u2014"
+  - person: Michael Stirrett
+    field: phone
+    expected_label: Trustee and Sewer Commissioner
+    actual_label: Trustee and Sewer Commissioner
+    expected: (586) 784-9151
+    actual: "\u2014"
+  - person: Michelle Poulos
+    field: phone
+    expected_label: Clerk
+    actual_label: Clerk
+    expected: (586) 784-9151
+    actual: "\u2014"
+  - person: Ross Boelke
+    field: phone
+    expected_label: Trustee and Water Commissioner
+    actual_label: Trustee and Water Commissioner
+    expected: (586) 784-9151
+    actual: "\u2014"
+  - person: Stephen Clark
+    field: phone
+    expected_label: Trustee and President Pro Tem
+    actual_label: Trustee and President Pro Tem
+    expected: (586) 784-9151
+    actual: "\u2014"
+  place_belle_meade__commission__commission__suggested_titles:
+  - person: Haley Dale
+    field: roles
+    expected_label: Commissioner and Vice Mayor
+    actual_label: Vice-Mayor
     expected:
-    - Mayor
+    - Commissioner
+    - Vice Mayor
     actual:
-    - Council Member
-    - Mayor
-  place_belle_meade__unscoped__known_titles:
+    - Vice Mayor
   - person: Haley Dale
     field: end_date
-    expected_label: Vice Mayor
+    expected_label: Commissioner and Vice Mayor
     actual_label: Vice-Mayor
     expected: "\u2014"
     actual: 2028-11
   - person: Haley Dale
     field: image
-    expected_label: Vice Mayor
+    expected_label: Commissioner and Vice Mayor
     actual_label: Vice-Mayor
     expected: "\u2014"
     actual: local://641567e24b2f.png
@@ -1366,17 +1410,184 @@ mismatches:
     expected: "\u2014"
     actual: local://151c78eb7631.png
   - person: Rusty Moore
+    field: roles
+    expected_label: Commissioner and Mayor
+    actual_label: Mayor
+    expected:
+    - Commissioner
+    - Mayor
+    actual:
+    - Mayor
+  - person: Rusty Moore
     field: end_date
-    expected_label: Mayor
+    expected_label: Commissioner and Mayor
     actual_label: Mayor
     expected: "\u2014"
     actual: 2026-11
   - person: Rusty Moore
     field: image
-    expected_label: Mayor
+    expected_label: Commissioner and Mayor
     actual_label: Mayor
     expected: "\u2014"
     actual: local://5750533ab677.png
+  - person: Tom Starkey
+    field: end_date
+    expected_label: Commissioner
+    actual_label: Commissioner
+    expected: "\u2014"
+    actual: 2028-11
+  - person: Tom Starkey
+    field: image
+    expected_label: Commissioner
+    actual_label: Commissioner
+    expected: "\u2014"
+    actual: local://35c620d76e35.png
+  place_belle_meade__council_manager__council__suggested_titles:
+  - person: Haley Dale
+    field: roles
+    expected_label: Commissioner and Vice Mayor
+    actual_label: Vice-Mayor
+    expected:
+    - Commissioner
+    - Vice Mayor
+    actual:
+    - Vice Mayor
+  - person: Haley Dale
+    field: end_date
+    expected_label: Commissioner and Vice Mayor
+    actual_label: Vice-Mayor
+    expected: "\u2014"
+    actual: 2028-11
+  - person: Haley Dale
+    field: image
+    expected_label: Commissioner and Vice Mayor
+    actual_label: Vice-Mayor
+    expected: "\u2014"
+    actual: local://641567e24b2f.png
+  - person: Louise Bryan
+    field: end_date
+    expected_label: Commissioner
+    actual_label: Commissioner
+    expected: "\u2014"
+    actual: 2026-11
+  - person: Louise Bryan
+    field: image
+    expected_label: Commissioner
+    actual_label: Commissioner
+    expected: "\u2014"
+    actual: local://9f01ba26a40c.png
+  - person: Neal Clayton
+    field: end_date
+    expected_label: Commissioner
+    actual_label: Commissioner
+    expected: "\u2014"
+    actual: 2026-11
+  - person: Neal Clayton
+    field: image
+    expected_label: Commissioner
+    actual_label: Commissioner
+    expected: "\u2014"
+    actual: local://151c78eb7631.png
+  - person: Rusty Moore
+    field: roles
+    expected_label: Commissioner and Mayor
+    actual_label: Mayor
+    expected:
+    - Commissioner
+    - Mayor
+    actual:
+    - Mayor
+  - person: Rusty Moore
+    field: end_date
+    expected_label: Commissioner and Mayor
+    actual_label: Mayor
+    expected: "\u2014"
+    actual: 2026-11
+  - person: Rusty Moore
+    field: image
+    expected_label: Commissioner and Mayor
+    actual_label: Mayor
+    expected: "\u2014"
+    actual: local://5750533ab677.png
+  - person: Tom Starkey
+    field: end_date
+    expected_label: Commissioner
+    actual_label: Commissioner
+    expected: "\u2014"
+    actual: 2028-11
+  - person: Tom Starkey
+    field: image
+    expected_label: Commissioner
+    actual_label: Commissioner
+    expected: "\u2014"
+    actual: local://35c620d76e35.png
+  place_belle_meade__unscoped__known_titles:
+  - person: Haley Dale
+    field: roles
+    expected_label: Commissioner and Vice Mayor
+    actual_label: Vice-Mayor
+    expected:
+    - Commissioner
+    - Vice Mayor
+    actual:
+    - Vice Mayor
+  - person: Haley Dale
+    field: end_date
+    expected_label: Commissioner and Vice Mayor
+    actual_label: Vice-Mayor
+    expected: "\u2014"
+    actual: 2028-11
+  - person: Haley Dale
+    field: image
+    expected_label: Commissioner and Vice Mayor
+    actual_label: Vice-Mayor
+    expected: "\u2014"
+    actual: local://641567e24b2f.png
+  - person: Louise Bryan
+    field: end_date
+    expected_label: Commissioner
+    actual_label: Commissioner
+    expected: "\u2014"
+    actual: 2026-11
+  - person: Louise Bryan
+    field: image
+    expected_label: Commissioner
+    actual_label: Commissioner
+    expected: "\u2014"
+    actual: local://9f01ba26a40c.png
+  - person: Neal Clayton
+    field: end_date
+    expected_label: Commissioner
+    actual_label: Commissioner
+    expected: "\u2014"
+    actual: 2026-11
+  - person: Neal Clayton
+    field: image
+    expected_label: Commissioner
+    actual_label: Commissioner
+    expected: "\u2014"
+    actual: local://151c78eb7631.png
+  - person: Rusty Moore
+    field: roles
+    expected_label: Commissioner and Mayor
+    actual_label: Mayor
+    expected:
+    - Commissioner
+    - Mayor
+    actual:
+    - Mayor
+  - person: Rusty Moore
+    field: end_date
+    expected_label: Commissioner and Mayor
+    actual_label: Mayor
+    expected: "\u2014"
+    actual: 2026-11
+  - person: Rusty Moore
+    field: image
+    expected_label: Commissioner and Mayor
+    actual_label: Mayor
+    expected: "\u2014"
+    actual: local://8e74ecbd4d08.png
   - person: Tom Starkey
     field: end_date
     expected_label: Commissioner
@@ -1391,14 +1602,23 @@ mismatches:
     actual: local://35c620d76e35.png
   place_belle_meade__unscoped__no_titles:
   - person: Haley Dale
+    field: roles
+    expected_label: Commissioner and Vice Mayor
+    actual_label: Vice-Mayor
+    expected:
+    - Commissioner
+    - Vice Mayor
+    actual:
+    - Vice Mayor
+  - person: Haley Dale
     field: end_date
-    expected_label: Vice Mayor
+    expected_label: Commissioner and Vice Mayor
     actual_label: Vice-Mayor
     expected: "\u2014"
     actual: 2028-11
   - person: Haley Dale
     field: image
-    expected_label: Vice Mayor
+    expected_label: Commissioner and Vice Mayor
     actual_label: Vice-Mayor
     expected: "\u2014"
     actual: local://641567e24b2f.png
@@ -1427,14 +1647,23 @@ mismatches:
     expected: "\u2014"
     actual: local://151c78eb7631.png
   - person: Rusty Moore
+    field: roles
+    expected_label: Commissioner and Mayor
+    actual_label: Mayor
+    expected:
+    - Commissioner
+    - Mayor
+    actual:
+    - Mayor
+  - person: Rusty Moore
     field: end_date
-    expected_label: Mayor
+    expected_label: Commissioner and Mayor
     actual_label: Mayor
     expected: "\u2014"
     actual: 2026-11
   - person: Rusty Moore
     field: image
-    expected_label: Mayor
+    expected_label: Commissioner and Mayor
     actual_label: Mayor
     expected: "\u2014"
     actual: local://5750533ab677.png
@@ -1450,67 +1679,265 @@ mismatches:
     actual_label: Commissioner
     expected: "\u2014"
     actual: local://35c620d76e35.png
+  place_gibbsboro__mayor_council__council__no_titles:
+  - person: Andrew Parsinitz
+    field: url
+    expected_label: Councilman
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    actual: "\u2014"
+  - person: Beth Schmidt
+    field: url
+    expected_label: Councilwoman
+    actual_label: Councilwoman
+    expected: https://gibbsborotownhall.com/borough-council
+    actual: "\u2014"
+  - person: Brandon Boots
+    field: url
+    expected_label: Councilman
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    actual: "\u2014"
+  - person: Edward G. Campbell III
+    field: url
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: https://gibbsborotownhall.com/borough-council
+    actual: "\u2014"
+  - person: Glenn Werner
+    field: url
+    expected_label: Councilman
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    actual: "\u2014"
+  - person: John Ritz
+    field: url
+    expected_label: Councilman
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    actual: "\u2014"
+  - person: Marianne Colavita
+    field: url
+    expected_label: Councilman
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    actual: "\u2014"
+  - person: Mitch Brown
+    field: url
+    expected_label: Councilman
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    actual: "\u2014"
+  place_greenwood_village__unscoped__no_titles:
+  - person: Ann Nelson
+    field: start_date
+    expected_label: Council Member District 1
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    actual: 2025-11
+  - person: Ann Nelson
+    field: image
+    expected_label: Council Member District 1
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    actual: local://c175baeebdd2.png
+  - person: Bob Doyle
+    field: start_date
+    expected_label: Council Member District 2
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    actual: 2025-11
+  - person: Bob Doyle
+    field: image
+    expected_label: Council Member District 2
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    actual: local://92195470815f.png
+  - person: Donna Johnston
+    field: start_date
+    expected_label: Council Member District 3
+    actual_label: Council Member District 3
+    expected: "\u2014"
+    actual: 2025-11
+  - person: Donna Johnston
+    field: image
+    expected_label: Council Member District 3
+    actual_label: Council Member District 3
+    expected: "\u2014"
+    actual: local://2716200a4d65.png
+  - person: George Lantz
+    field: start_date
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: "\u2014"
+    actual: 2023-11
+  - person: George Lantz
+    field: image
+    expected_label: Mayor
+    actual_label: Mayor
+    expected: "\u2014"
+    actual: local://05074859a7df.png
+  - person: Jay Schneiderman
+    field: start_date
+    expected_label: Council Member District 2
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    actual: 2025-11
+  - person: Jay Schneiderman
+    field: image
+    expected_label: Council Member District 2
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    actual: local://7ea160bab3ca.png
+  - person: Katrin Mezger
+    field: start_date
+    expected_label: Council Member District 4
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    actual: 2025-11
+  - person: Katrin Mezger
+    field: image
+    expected_label: Council Member District 4
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    actual: local://9aebb99b6152.png
+  - person: Libby Hilton Barnacle
+    field: start_date
+    expected_label: Council Member District 3 and Mayor Pro Tem
+    actual_label: Council Member District 3 and Mayor Pro Tem
+    expected: "\u2014"
+    actual: 2025-11
+  - person: Libby Hilton Barnacle
+    field: image
+    expected_label: Council Member District 3 and Mayor Pro Tem
+    actual_label: Council Member District 3 and Mayor Pro Tem
+    expected: "\u2014"
+    actual: local://513a106f2b44.png
+  - person: Paul Wiesner
+    field: start_date
+    expected_label: Council Member District 1
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    actual: 2025-11
+  - person: Paul Wiesner
+    field: image
+    expected_label: Council Member District 1
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    actual: local://d15ec3fc330d.png
+  - person: Tom Stahl
+    field: start_date
+    expected_label: Council Member District 4
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    actual: 2025-11
+  - person: Tom Stahl
+    field: image
+    expected_label: Council Member District 4
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    actual: local://ae9612794888.png
   place_millbury__open_town_meeting__select_board__known_titles:
   - person: Brian A. Sora
     field: roles
-    expected_label: Selectman and Vice Chairman
-    actual_label: Vice Chair
+    expected_label: Vice Chairman
+    actual_label: Selectman Vice Chairman
     expected:
-    - Select Board Member
     - Vice Chair
     actual:
+    - Select Board Member
     - Vice Chair
   - person: Mary Krumsiek
     field: roles
-    expected_label: Selectman and Chairman
-    actual_label: Chair
+    expected_label: Chairman
+    actual_label: Selectman Chairman
     expected:
     - Chair
-    - Select Board Member
     actual:
     - Chair
+    - Select Board Member
   - person: Nicholas Lazzaro
     field: roles
-    expected_label: Selectman and Clerk
-    actual_label: Clerk
+    expected_label: Clerk
+    actual_label: Selectman Clerk
     expected:
     - Clerk
-    - Select Board Member
     actual:
     - Clerk
+    - Select Board Member
   place_millbury__open_town_meeting__select_board__no_titles:
   - person: Brian A. Sora
     field: roles
-    expected_label: Selectman and Vice Chairman
-    actual_label: Vice Chairman
+    expected_label: Vice Chairman
+    actual_label: Selectman Vice Chairman
     expected:
-    - Select Board Member
     - Vice Chair
     actual:
+    - Select Board Member
     - Vice Chair
+  - person: Brian A. Sora
+    field: url
+    expected_label: Vice Chairman
+    actual_label: Selectman Vice Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    actual: "\u2014"
   - person: Brian Tagg
-    field: primary_role
+    field: url
     expected_label: Selectman
-    actual_label: Member
-    expected:
-    - Select Board Member
-    actual: []
-  - person: Brian Tagg
-    field: roles
-    expected_label: Selectman
-    actual_label: Member
-    expected:
-    - Select Board Member
-    actual: []
+    actual_label: Selectman Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    actual: "\u2014"
   - person: Mary Krumsiek
     field: roles
-    expected_label: Selectman and Chairman
-    actual_label: Chairman
+    expected_label: Chairman
+    actual_label: Selectman Chairman
     expected:
     - Chair
-    - Select Board Member
     actual:
     - Chair
+    - Select Board Member
+  - person: Mary Krumsiek
+    field: url
+    expected_label: Chairman
+    actual_label: Selectman Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    actual: "\u2014"
+  - person: Michael R. Gilchrist
+    field: url
+    expected_label: Selectman
+    actual_label: Selectman Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    actual: "\u2014"
+  - person: Nicholas Lazzaro
+    field: roles
+    expected_label: Clerk
+    actual_label: Selectman Clerk
+    expected:
+    - Clerk
+    actual:
+    - Clerk
+    - Select Board Member
+  - person: Nicholas Lazzaro
+    field: url
+    expected_label: Clerk
+    actual_label: Selectman Clerk
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    actual: "\u2014"
+  place_millbury__open_town_meeting__select_board__suggested_titles:
+  - person: Brian Tagg
+    field: primary_role
+    expected_label: Selectman
+    actual_label: Member
+    expected:
+    - Select Board Member
+    actual: []
+  - person: Brian Tagg
+    field: roles
+    expected_label: Selectman
+    actual_label: Member
+    expected:
+    - Select Board Member
+    actual: []
   - person: Michael R. Gilchrist
     field: primary_role
     expected_label: Selectman
@@ -1525,110 +1952,77 @@ mismatches:
     expected:
     - Select Board Member
     actual: []
+  place_millbury__representative_town_meeting__select_board__known_titles:
+  - person: Brian A. Sora
+    field: roles
+    expected_label: Vice Chairman
+    actual_label: Selectman Vice Chairman
+    expected:
+    - Vice Chair
+    actual:
+    - Select Board Member
+    - Vice Chair
+  - person: Mary Krumsiek
+    field: roles
+    expected_label: Chairman
+    actual_label: Selectman Chairman
+    expected:
+    - Chair
+    actual:
+    - Chair
+    - Select Board Member
   - person: Nicholas Lazzaro
     field: roles
-    expected_label: Selectman and Clerk
-    actual_label: Clerk
+    expected_label: Clerk
+    actual_label: Selectman Clerk
     expected:
     - Clerk
-    - Select Board Member
     actual:
     - Clerk
-  place_millbury__open_town_meeting__town_meeting__known_titles:
-  - subject: Brian A. Sora
-    field: person
-    expected_label: ''
-    actual_label: Selectman Vice Chairman
-    expected: "\u2014"
-    actual: present
-  - subject: Brian Tagg
-    field: person
-    expected_label: ''
-    actual_label: Selectman Member
-    expected: "\u2014"
-    actual: present
-  - subject: Mary Krumsiek
-    field: person
-    expected_label: ''
-    actual_label: Selectman Chairman
-    expected: "\u2014"
-    actual: present
-  - subject: Michael R. Gilchrist
-    field: person
-    expected_label: ''
-    actual_label: Selectman Member
-    expected: "\u2014"
-    actual: present
-  - subject: Nicholas Lazzaro
-    field: person
-    expected_label: ''
-    actual_label: Selectman Clerk
-    expected: "\u2014"
-    actual: present
-  place_millbury__open_town_meeting__town_meeting__no_titles:
-  - subject: Brian A. Sora
-    field: person
-    expected_label: ''
-    actual_label: Selectman Vice Chairman
-    expected: "\u2014"
-    actual: present
-  - subject: Brian Tagg
-    field: person
-    expected_label: ''
-    actual_label: Selectman Member
-    expected: "\u2014"
-    actual: present
-  - subject: Mary Krumsiek
-    field: person
-    expected_label: ''
-    actual_label: Selectman Chairman
-    expected: "\u2014"
-    actual: present
-  - subject: Michael R. Gilchrist
-    field: person
-    expected_label: ''
-    actual_label: Selectman Member
-    expected: "\u2014"
-    actual: present
-  - subject: Nicholas Lazzaro
-    field: person
-    expected_label: ''
-    actual_label: Selectman Clerk
-    expected: "\u2014"
-    actual: present
+    - Select Board Member
   place_millbury__representative_town_meeting__select_board__no_titles:
   - person: Brian A. Sora
     field: roles
-    expected_label: Selectman and Vice Chairman
-    actual_label: Vice Chairman
+    expected_label: Vice Chairman
+    actual_label: Selectman Vice Chairman
     expected:
-    - Select Board Member
     - Vice Chair
     actual:
+    - Select Board Member
     - Vice Chair
-  - person: Brian Tagg
-    field: primary_role
-    expected_label: Selectman
-    actual_label: Member
-    expected:
-    - Select Board Member
-    actual: []
-  - person: Brian Tagg
-    field: roles
-    expected_label: Selectman
-    actual_label: Member
-    expected:
-    - Select Board Member
-    actual: []
   - person: Mary Krumsiek
     field: roles
-    expected_label: Selectman and Chairman
-    actual_label: Chairman
+    expected_label: Chairman
+    actual_label: Selectman Chairman
     expected:
     - Chair
-    - Select Board Member
     actual:
     - Chair
+    - Select Board Member
+  - person: Nicholas Lazzaro
+    field: roles
+    expected_label: Clerk
+    actual_label: Selectman Clerk
+    expected:
+    - Clerk
+    actual:
+    - Clerk
+    - Select Board Member
+  place_millbury__representative_town_meeting__select_board__suggested_titles:
+  - person: Brian Tagg
+    field: primary_role
+    expected_label: Selectman
+    actual_label: Member
+    expected:
+    - Select Board Member
+    actual: []
+  - person: Brian Tagg
+    field: roles
+    expected_label: Selectman
+    actual_label: Member
+    expected:
+    - Select Board Member
+    actual: []
   - person: Michael R. Gilchrist
     field: primary_role
     expected_label: Selectman
@@ -1643,53 +2037,17 @@ mismatches:
     expected:
     - Select Board Member
     actual: []
-  - person: Nicholas Lazzaro
+  place_payette__unscoped__no_titles:
+  - person: Ray Wickersham
     field: roles
-    expected_label: Selectman and Clerk
-    actual_label: Clerk
+    expected_label: Mayor
+    actual_label: Council Member and Mayor
     expected:
-    - Clerk
-    - Select Board Member
+    - Mayor
     actual:
-    - Clerk
-  place_millbury__representative_town_meeting__town_meeting__known_titles:
-  - subject: Brian A. Sora
-    field: person
-    expected_label: ''
-    actual_label: Selectman Vice Chairman
-    expected: "\u2014"
-    actual: present
-  - subject: Brian Tagg
-    field: person
-    expected_label: ''
-    actual_label: Selectman Member
-    expected: "\u2014"
-    actual: present
-  - subject: Mary Krumsiek
-    field: person
-    expected_label: ''
-    actual_label: Selectman Chairman
-    expected: "\u2014"
-    actual: present
-  - subject: Michael R. Gilchrist
-    field: person
-    expected_label: ''
-    actual_label: Selectman Member
-    expected: "\u2014"
-    actual: present
-  - subject: Nicholas Lazzaro
-    field: person
-    expected_label: ''
-    actual_label: Selectman Clerk
-    expected: "\u2014"
-    actual: present
+    - Council Member
+    - Mayor
   raisin_township_clerk:
-  - person: Susan Bunch
-    field: phone
-    expected_label: Clerk
-    actual_label: Clerk
-    expected: (517) 423-3162
-    actual: "\u2014"
   - person: Susan Bunch
     field: image
     expected_label: Clerk
@@ -1704,50 +2062,71 @@ mismatches:
     expected: "\u2014"
     actual: local://c487d9c940ad.png
 case_prompts:
-  austin_city_manager_staff: 9cc8d10d9321
-  austin_council: 9cc8d10d9321
-  austin_district7_council_member: 9cc8d10d9321
-  board_of_aldermen: 9cc8d10d9321
-  coleman_council: 9cc8d10d9321
-  county_king__county_executive__county_council__known_titles: 6e533b671bb8
-  county_king__county_executive__county_council__no_titles: e4355c0605f1
-  county_king__county_executive__county_executive__known_titles: 004ffc683702
-  county_king__county_executive__county_executive__no_titles: 004ffc683702
-  golinda_mixed_city_county: 9cc8d10d9321
-  inverted_name_format: 9cc8d10d9321
-  jackson_mayors_office: eaf44c4e4fbb
-  jackson_mayors_office_scoped_to_council: 377bcf15e581
-  la_porte_council: 9cc8d10d9321
-  millbury_school_committee_scoped_to_select_board: ba41f7d53663
-  mixed_current_past: 9cc8d10d9321
-  nav_links_no_names: 9cc8d10d9321
-  place_abernathy__mayor_council__council__known_titles: e45fbe8479b5
-  place_abernathy__mayor_council__council__no_titles: 740d267a5855
-  place_abernathy__mayor_council__office_of_the_mayor__known_titles: eaf44c4e4fbb
-  place_abernathy__mayor_council__office_of_the_mayor__no_titles: 28265f7de7e3
-  place_abernathy__unscoped__known_titles: c6587f3fcf1d
-  place_abernathy__unscoped__no_titles: 9cc8d10d9321
-  place_amador_city__mayor_council__council__known_titles: 728a742cc3dd
-  place_amador_city__mayor_council__council__no_titles: 740d267a5855
-  place_amador_city__mayor_council__office_of_the_mayor__known_titles: eaf44c4e4fbb
-  place_amador_city__mayor_council__office_of_the_mayor__no_titles: 28265f7de7e3
-  place_amador_city__unscoped__known_titles: 747a6f3e4e50
-  place_amador_city__unscoped__no_titles: 9cc8d10d9321
-  place_belle_meade__unscoped__known_titles: 7edf10eaf2b1
-  place_belle_meade__unscoped__no_titles: 9cc8d10d9321
-  place_millbury__open_town_meeting__select_board__known_titles: e9f0c69e40ce
-  place_millbury__open_town_meeting__select_board__no_titles: a41fb649c5ee
-  place_millbury__open_town_meeting__town_meeting__known_titles: 14a731585c59
-  place_millbury__open_town_meeting__town_meeting__no_titles: 14a731585c59
-  place_millbury__representative_town_meeting__select_board__known_titles: e9f0c69e40ce
-  place_millbury__representative_town_meeting__select_board__no_titles: a41fb649c5ee
-  place_millbury__representative_town_meeting__town_meeting__known_titles: 14a731585c59
-  place_millbury__representative_town_meeting__town_meeting__no_titles: 14a731585c59
-  placeholder_name_council: 9cc8d10d9321
-  raisin_township_clerk: dc8cd11265f6
-  raisin_township_supervisor: dc8cd11265f6
-  redundant_place_role: 9cc8d10d9321
-  seattle_council_pick_list_missing_president: e23f1bfdd3b4
-  seattle_council_scoped_to_mayor: eaf44c4e4fbb
-  seattle_council_separate_mayor: ddd063669fa7
-  vacant_positions_council: 9cc8d10d9321
+  austin_city_manager_staff: 9904fd3283d5
+  austin_council: 9904fd3283d5
+  austin_district7_council_member: 9904fd3283d5
+  board_of_aldermen: 9904fd3283d5
+  coleman_council: 9904fd3283d5
+  county_allegan__place_leighton__township_board__board__suggested_titles: 0dbc9b08b274
+  county_allegan__place_leighton__unscoped__no_titles: a8a22de51687
+  county_hunterdon__place_alexandria__township_board__board__suggested_titles: 0dbc9b08b274
+  county_hunterdon__place_alexandria__unscoped__known_titles: c2099b55857a
+  county_hunterdon__place_alexandria__unscoped__no_titles: a8a22de51687
+  county_king__county_executive__county_council__known_titles: 8f363aaca887
+  county_king__county_executive__county_council__no_titles: 490e0d5015d9
+  county_king__county_executive__county_council__suggested_titles: 046540867f9e
+  county_king__county_executive__county_executive__known_titles: e2ac3f60af2e
+  county_king__county_executive__county_executive__no_titles: e2ac3f60af2e
+  county_king__county_executive__county_executive__suggested_titles: 314cb1b77808
+  golinda_mixed_city_county: 9904fd3283d5
+  inverted_name_format: 9904fd3283d5
+  jackson_mayors_office: fc99c90dcad0
+  jackson_mayors_office_scoped_to_council: 80b53f6360e8
+  la_porte_council: 9904fd3283d5
+  millbury_school_committee_scoped_to_select_board: 275cba2361a2
+  mixed_current_past: 9904fd3283d5
+  nav_links_no_names: 9904fd3283d5
+  place_abernathy__council_manager__council__suggested_titles: 84c81017402d
+  place_abernathy__unscoped__known_titles: 66a5a7cc62d2
+  place_abernathy__unscoped__no_titles: 42198a89b5fd
+  place_amador_city__commission__commission__suggested_titles: f0f191af28d9
+  place_amador_city__council_manager__council__suggested_titles: f00f2edb2b3c
+  place_amador_city__mayor_council__council__known_titles: 816fc9d44705
+  place_amador_city__mayor_council__council__no_titles: '470196955597'
+  place_amador_city__mayor_council__council__suggested_titles: 6018557df6f6
+  place_amador_city__mayor_council__office_of_the_mayor__known_titles: 21275dc93750
+  place_amador_city__mayor_council__office_of_the_mayor__no_titles: f19803fa0601
+  place_amador_city__mayor_council__office_of_the_mayor__suggested_titles: f7c3981b986d
+  place_amador_city__unscoped__known_titles: 083cd793adc4
+  place_amador_city__unscoped__no_titles: e0806323c527
+  place_armada__township_board__board__suggested_titles: 0dbc9b08b274
+  place_armada__unscoped__no_titles: a8a22de51687
+  place_belle_meade__commission__commission__suggested_titles: 00cf36ddc9c9
+  place_belle_meade__council_manager__council__suggested_titles: 047bfc89966a
+  place_belle_meade__unscoped__known_titles: c48345054534
+  place_belle_meade__unscoped__no_titles: 111d69ffd79b
+  place_gibbsboro__mayor_council__council__no_titles: 9e889cd90edb
+  place_gibbsboro__mayor_council__council__suggested_titles: b6ecfe201720
+  place_gibbsboro__mayor_council__office_of_the_mayor__no_titles: 74cf3f1cb47e
+  place_greenwood_village__unscoped__no_titles: a8a22de51687
+  place_millbury__open_town_meeting__select_board__known_titles: 278f58da7c18
+  place_millbury__open_town_meeting__select_board__no_titles: d310b3adeb50
+  place_millbury__open_town_meeting__select_board__suggested_titles: 5f4f6226bc44
+  place_millbury__open_town_meeting__town_meeting__known_titles: 9a5fce3787d1
+  place_millbury__open_town_meeting__town_meeting__no_titles: 9a5fce3787d1
+  place_millbury__open_town_meeting__town_meeting__suggested_titles: cbdbf3af486b
+  place_millbury__representative_town_meeting__select_board__known_titles: 278f58da7c18
+  place_millbury__representative_town_meeting__select_board__no_titles: d310b3adeb50
+  place_millbury__representative_town_meeting__select_board__suggested_titles: 5f4f6226bc44
+  place_millbury__representative_town_meeting__town_meeting__known_titles: 9a5fce3787d1
+  place_millbury__representative_town_meeting__town_meeting__no_titles: 9a5fce3787d1
+  place_millbury__representative_town_meeting__town_meeting__suggested_titles: cd78302eba6d
+  place_payette__unscoped__no_titles: a8a22de51687
+  placeholder_name_council: 9904fd3283d5
+  raisin_township_clerk: d4971d33b92d
+  raisin_township_supervisor: d4971d33b92d
+  redundant_place_role: 9904fd3283d5
+  seattle_council_pick_list_missing_president: f8e7b5deae5e
+  seattle_council_scoped_to_mayor: fc99c90dcad0
+  seattle_council_separate_mayor: 0652d925ede0
+  vacant_positions_council: 9904fd3283d5

@@ -1,0 +1,227 @@
+mismatches:
+  county_allegan__place_leighton__township_board__board__suggested_titles:
+  - actual: (616) 891-8238 ext. 113
+    actual_label: Township Treasurer
+    expected: (616) 891-8238
+    expected_label: Treasurer
+    field: phone
+    person: Jacquelynn Bultsma
+  - actual: (616) 891-8238 ext. 114
+    actual_label: Township Clerk
+    expected: (616) 891-8238
+    expected_label: Clerk
+    field: phone
+    person: Rachel Fennema
+  - actual: (616) 891-8238 ext. 111
+    actual_label: Township Supervisor
+    expected: (616) 891-8238
+    expected_label: Supervisor
+    field: phone
+    person: Steve Wolbrink
+  county_allegan__place_leighton__unscoped__no_titles:
+  - actual: (616) 891-8238 ext. 113
+    actual_label: Township Treasurer
+    expected: (616) 891-8238
+    expected_label: Treasurer
+    field: phone
+    person: Jacquelynn Bultsma
+  - actual: (616) 891-8238 ext. 114
+    actual_label: Township Clerk
+    expected: (616) 891-8238
+    expected_label: Clerk
+    field: phone
+    person: Rachel Fennema
+  - actual: (616) 891-8238 ext. 111
+    actual_label: Township Supervisor
+    expected: (616) 891-8238
+    expected_label: Supervisor
+    field: phone
+    person: Steve Wolbrink
+  county_hunterdon__place_alexandria__unscoped__no_titles:
+  - actual: "\u2014"
+    actual_label: Committee Member
+    expected: https://alexandrianj.gov/government/mayor
+    expected_label: Committee Member
+    field: url
+    person: Brad Patkochis
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: https://alexandrianj.gov/government/mayor
+    expected_label: Mayor
+    field: url
+    person: Jim Kiernan
+  - actual: "\u2014"
+    actual_label: Committee Member
+    expected: https://alexandrianj.gov/government/mayor
+    expected_label: Committee Member
+    field: url
+    person: Robert Mortara
+  - actual: "\u2014"
+    actual_label: Deputy Mayor
+    expected: https://alexandrianj.gov/government/mayor
+    expected_label: Deputy Mayor
+    field: url
+    person: Tom Hudanish
+  place_greenwood_village__unscoped__no_titles:
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: https://greenwoodvillage.com/2707/contact-your-elected-officials
+    expected_label: Council Member District 1
+    field: url
+    person: Ann Nelson
+  - actual: 2025-11
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: start_date
+    person: Ann Nelson
+  - actual: local://c175baeebdd2.png
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: image
+    person: Ann Nelson
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: https://greenwoodvillage.com/2707/contact-your-elected-officials
+    expected_label: Council Member District 2
+    field: url
+    person: Bob Doyle
+  - actual: 2025-11
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: start_date
+    person: Bob Doyle
+  - actual: local://92195470815f.png
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: image
+    person: Bob Doyle
+  - actual: "\u2014"
+    actual_label: Council Member District 3
+    expected: https://greenwoodvillage.com/2707/contact-your-elected-officials
+    expected_label: Council Member District 3
+    field: url
+    person: Donna Johnston
+  - actual: 2025-11
+    actual_label: Council Member District 3
+    expected: "\u2014"
+    expected_label: Council Member District 3
+    field: start_date
+    person: Donna Johnston
+  - actual: local://2716200a4d65.png
+    actual_label: Council Member District 3
+    expected: "\u2014"
+    expected_label: Council Member District 3
+    field: image
+    person: Donna Johnston
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: https://greenwoodvillage.com/2707/contact-your-elected-officials
+    expected_label: Mayor
+    field: url
+    person: George Lantz
+  - actual: 2023-11
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: start_date
+    person: George Lantz
+  - actual: local://05074859a7df.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: George Lantz
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: https://greenwoodvillage.com/2707/contact-your-elected-officials
+    expected_label: Council Member District 2
+    field: url
+    person: Jay Schneiderman
+  - actual: 2025-11
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: start_date
+    person: Jay Schneiderman
+  - actual: local://7ea160bab3ca.png
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: image
+    person: Jay Schneiderman
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: https://greenwoodvillage.com/2707/contact-your-elected-officials
+    expected_label: Council Member District 4
+    field: url
+    person: Katrin Mezger
+  - actual: 2025-11
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: start_date
+    person: Katrin Mezger
+  - actual: local://9aebb99b6152.png
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: image
+    person: Katrin Mezger
+  - actual: "\u2014"
+    actual_label: Council Member District 3 and Mayor Pro Tem
+    expected: https://greenwoodvillage.com/2707/contact-your-elected-officials
+    expected_label: Council Member District 3 and Mayor Pro Tem
+    field: url
+    person: Libby Hilton Barnacle
+  - actual: 2025-11
+    actual_label: Council Member District 3 and Mayor Pro Tem
+    expected: "\u2014"
+    expected_label: Council Member District 3 and Mayor Pro Tem
+    field: start_date
+    person: Libby Hilton Barnacle
+  - actual: local://513a106f2b44.png
+    actual_label: Council Member District 3 and Mayor Pro Tem
+    expected: "\u2014"
+    expected_label: Council Member District 3 and Mayor Pro Tem
+    field: image
+    person: Libby Hilton Barnacle
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: https://greenwoodvillage.com/2707/contact-your-elected-officials
+    expected_label: Council Member District 1
+    field: url
+    person: Paul Wiesner
+  - actual: 2025-11
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: start_date
+    person: Paul Wiesner
+  - actual: local://d15ec3fc330d.png
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: image
+    person: Paul Wiesner
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: https://greenwoodvillage.com/2707/contact-your-elected-officials
+    expected_label: Council Member District 4
+    field: url
+    person: Tom Stahl
+  - actual: 2025-11
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: start_date
+    person: Tom Stahl
+  - actual: local://ae9612794888.png
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: image
+    person: Tom Stahl

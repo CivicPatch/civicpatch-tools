@@ -1,0 +1,32 @@
+mismatches:
+  place_millbury__open_town_meeting__select_board__known_titles:
+  - actual: "\u2014"
+    actual_label: Select Board Member and Vice Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Vice Chairman
+    field: url
+    person: Brian A. Sora
+  - actual: "\u2014"
+    actual_label: Select Board Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Brian Tagg
+  - actual: "\u2014"
+    actual_label: Select Board Member and Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Chairman
+    field: url
+    person: Mary Krumsiek
+  - actual: "\u2014"
+    actual_label: Select Board Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Michael R. Gilchrist
+  - actual: "\u2014"
+    actual_label: Select Board Member and Clerk
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Clerk
+    field: url
+    person: Nicholas Lazzaro

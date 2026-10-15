@@ -1,0 +1,728 @@
+mismatches:
+  county_allegan__place_leighton__township_board__board__suggested_titles:
+  - actual: "\u2014"
+    actual_label: Trustee
+    expected: https://leightontownship.org/officials
+    expected_label: Trustee
+    field: url
+    person: Brian Bonnema
+  - actual: (616) 891-8238 ext. 113
+    actual_label: Township Treasurer
+    expected: (616) 891-8238
+    expected_label: Treasurer
+    field: phone
+    person: Jacquelynn Bultsma
+  - actual: "\u2014"
+    actual_label: Township Treasurer
+    expected: https://leightontownship.org/officials
+    expected_label: Treasurer
+    field: url
+    person: Jacquelynn Bultsma
+  - actual: "\u2014"
+    actual_label: Trustee
+    expected: https://leightontownship.org/officials
+    expected_label: Trustee
+    field: url
+    person: John Hooker
+  - actual: (616) 891-8238 ext. 114
+    actual_label: Township Clerk
+    expected: (616) 891-8238
+    expected_label: Clerk
+    field: phone
+    person: Rachel Fennema
+  - actual: "\u2014"
+    actual_label: Township Clerk
+    expected: https://leightontownship.org/officials
+    expected_label: Clerk
+    field: url
+    person: Rachel Fennema
+  - actual: (616) 891-8238 ext. 111
+    actual_label: Township Supervisor
+    expected: (616) 891-8238
+    expected_label: Supervisor
+    field: phone
+    person: Steve Wolbrink
+  - actual: "\u2014"
+    actual_label: Township Supervisor
+    expected: https://leightontownship.org/officials
+    expected_label: Supervisor
+    field: url
+    person: Steve Wolbrink
+  county_allegan__place_leighton__unscoped__no_titles:
+  - actual: "\u2014"
+    actual_label: Trustee
+    expected: https://leightontownship.org/officials
+    expected_label: Trustee
+    field: url
+    person: Brian Bonnema
+  - actual: (616) 891-8238 ext. 113
+    actual_label: Township Treasurer
+    expected: (616) 891-8238
+    expected_label: Treasurer
+    field: phone
+    person: Jacquelynn Bultsma
+  - actual: "\u2014"
+    actual_label: Township Treasurer
+    expected: https://leightontownship.org/officials
+    expected_label: Treasurer
+    field: url
+    person: Jacquelynn Bultsma
+  - actual: "\u2014"
+    actual_label: Trustee
+    expected: https://leightontownship.org/officials
+    expected_label: Trustee
+    field: url
+    person: John Hooker
+  - actual: (616) 891-8238 ext. 114
+    actual_label: Township Clerk
+    expected: (616) 891-8238
+    expected_label: Clerk
+    field: phone
+    person: Rachel Fennema
+  - actual: "\u2014"
+    actual_label: Township Clerk
+    expected: https://leightontownship.org/officials
+    expected_label: Clerk
+    field: url
+    person: Rachel Fennema
+  - actual: (616) 891-8238 ext. 111
+    actual_label: Township Supervisor
+    expected: (616) 891-8238
+    expected_label: Supervisor
+    field: phone
+    person: Steve Wolbrink
+  - actual: "\u2014"
+    actual_label: Township Supervisor
+    expected: https://leightontownship.org/officials
+    expected_label: Supervisor
+    field: url
+    person: Steve Wolbrink
+  county_hunterdon__place_alexandria__township_board__board__suggested_titles:
+  - actual: "\u2014"
+    actual_label: Township Committee Member
+    expected: (908) 996-7071
+    expected_label: Committee Member
+    field: phone
+    person: Brad Patkochis
+  - actual: "\u2014"
+    actual_label: Township Committee Member
+    expected: https://alexandrianj.gov/government/mayor
+    expected_label: Committee Member
+    field: url
+    person: Brad Patkochis
+  - actual:
+    - Committee Member
+    - Mayor
+    actual_label: Mayor and Township Committee Member
+    expected:
+    - Mayor
+    expected_label: Mayor
+    field: roles
+    person: Jim Kiernan
+  - actual: "\u2014"
+    actual_label: Mayor and Township Committee Member
+    expected: (908) 996-7071
+    expected_label: Mayor
+    field: phone
+    person: Jim Kiernan
+  - actual: "\u2014"
+    actual_label: Mayor and Township Committee Member
+    expected: https://alexandrianj.gov/government/mayor
+    expected_label: Mayor
+    field: url
+    person: Jim Kiernan
+  - actual: "\u2014"
+    actual_label: Township Committee Member
+    expected: (908) 996-7071
+    expected_label: Committee Member
+    field: phone
+    person: Robert Mortara
+  - actual: "\u2014"
+    actual_label: Township Committee Member
+    expected: https://alexandrianj.gov/government/mayor
+    expected_label: Committee Member
+    field: url
+    person: Robert Mortara
+  - actual:
+    - Committee Member
+    - Deputy Mayor
+    actual_label: Township Committee Member and Deputy Mayor
+    expected:
+    - Deputy Mayor
+    expected_label: Deputy Mayor
+    field: roles
+    person: Tom Hudanish
+  - actual: "\u2014"
+    actual_label: Township Committee Member and Deputy Mayor
+    expected: (908) 996-7071
+    expected_label: Deputy Mayor
+    field: phone
+    person: Tom Hudanish
+  - actual: "\u2014"
+    actual_label: Township Committee Member and Deputy Mayor
+    expected: https://alexandrianj.gov/government/mayor
+    expected_label: Deputy Mayor
+    field: url
+    person: Tom Hudanish
+  county_hunterdon__place_alexandria__unscoped__known_titles:
+  - actual: "\u2014"
+    actual_label: Committee Member
+    expected: (908) 996-7071
+    expected_label: Committee Member
+    field: phone
+    person: Brad Patkochis
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (908) 996-7071
+    expected_label: Mayor
+    field: phone
+    person: Jim Kiernan
+  - actual: "\u2014"
+    actual_label: Committee Member
+    expected: (908) 996-7071
+    expected_label: Committee Member
+    field: phone
+    person: Robert Mortara
+  - actual: "\u2014"
+    actual_label: Deputy Mayor
+    expected: (908) 996-7071
+    expected_label: Deputy Mayor
+    field: phone
+    person: Tom Hudanish
+  county_hunterdon__place_alexandria__unscoped__no_titles:
+  - actual: "\u2014"
+    actual_label: Township Committee Member
+    expected: (908) 996-7071
+    expected_label: Committee Member
+    field: phone
+    person: Brad Patkochis
+  - actual:
+    - Committee Member
+    - Mayor
+    actual_label: Mayor and Township Committee Member
+    expected:
+    - Mayor
+    expected_label: Mayor
+    field: roles
+    person: Jim Kiernan
+  - actual: "\u2014"
+    actual_label: Mayor and Township Committee Member
+    expected: (908) 996-7071
+    expected_label: Mayor
+    field: phone
+    person: Jim Kiernan
+  - actual: "\u2014"
+    actual_label: Township Committee Member
+    expected: (908) 996-7071
+    expected_label: Committee Member
+    field: phone
+    person: Robert Mortara
+  - actual:
+    - Committee Member
+    - Deputy Mayor
+    actual_label: Township Committee Member and Deputy Mayor
+    expected:
+    - Deputy Mayor
+    expected_label: Deputy Mayor
+    field: roles
+    person: Tom Hudanish
+  - actual: "\u2014"
+    actual_label: Township Committee Member and Deputy Mayor
+    expected: (908) 996-7071
+    expected_label: Deputy Mayor
+    field: phone
+    person: Tom Hudanish
+  place_armada__township_board__board__suggested_titles:
+  - actual: "\u2014"
+    actual_label: Trustee and Street Administrator
+    expected: (586) 784-9151
+    expected_label: Trustee and Street Administrator
+    field: phone
+    person: Amy Barzyk
+  - actual: "\u2014"
+    actual_label: Trustee and Street Administrator
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Trustee and Street Administrator
+    field: url
+    person: Amy Barzyk
+  - actual: "\u2014"
+    actual_label: Treasurer
+    expected: (586) 784-9151
+    expected_label: Treasurer
+    field: phone
+    person: Anne Porter
+  - actual: "\u2014"
+    actual_label: Treasurer
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Treasurer
+    field: url
+    person: Anne Porter
+  - actual: "\u2014"
+    actual_label: Village President
+    expected: (586) 784-9151
+    expected_label: Village President
+    field: phone
+    person: David Coenen
+  - actual: "\u2014"
+    actual_label: Village President
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Village President
+    field: url
+    person: David Coenen
+  - actual: "\u2014"
+    actual_label: Trustee and Police Commissioner
+    expected: (586) 784-9151
+    expected_label: Trustee and Police Commissioner
+    field: phone
+    person: Jo Adair
+  - actual: "\u2014"
+    actual_label: Trustee and Police Commissioner
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Trustee and Police Commissioner
+    field: url
+    person: Jo Adair
+  - actual: "\u2014"
+    actual_label: Trustee and Park Commissioner
+    expected: (586) 784-9151
+    expected_label: Trustee and Park Commissioner
+    field: phone
+    person: Michael Shall
+  - actual: "\u2014"
+    actual_label: Trustee and Park Commissioner
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Trustee and Park Commissioner
+    field: url
+    person: Michael Shall
+  - actual: "\u2014"
+    actual_label: Trustee and Sewer Commissioner
+    expected: (586) 784-9151
+    expected_label: Trustee and Sewer Commissioner
+    field: phone
+    person: Michael Stirrett
+  - actual: "\u2014"
+    actual_label: Trustee and Sewer Commissioner
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Trustee and Sewer Commissioner
+    field: url
+    person: Michael Stirrett
+  - actual: "\u2014"
+    actual_label: Clerk
+    expected: (586) 784-9151
+    expected_label: Clerk
+    field: phone
+    person: Michelle Poulos
+  - actual: "\u2014"
+    actual_label: Clerk
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Clerk
+    field: url
+    person: Michelle Poulos
+  - actual: watercommissioner@villageofarmada.org/
+    actual_label: Trustee and Water Commissioner
+    expected: watercommissioner@villageofarmada.org
+    expected_label: Trustee and Water Commissioner
+    field: email
+    person: Ross Boelke
+  - actual: "\u2014"
+    actual_label: Trustee and Water Commissioner
+    expected: (586) 784-9151
+    expected_label: Trustee and Water Commissioner
+    field: phone
+    person: Ross Boelke
+  - actual: "\u2014"
+    actual_label: Trustee and Water Commissioner
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Trustee and Water Commissioner
+    field: url
+    person: Ross Boelke
+  - actual: "\u2014"
+    actual_label: Trustee and President Pro Tem
+    expected: (586) 784-9151
+    expected_label: Trustee and President Pro Tem
+    field: phone
+    person: Stephen Clark
+  - actual: "\u2014"
+    actual_label: Trustee and President Pro Tem
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Trustee and President Pro Tem
+    field: url
+    person: Stephen Clark
+  place_armada__unscoped__no_titles:
+  - actual: "\u2014"
+    actual_label: Trustee and Street Administrator
+    expected: (586) 784-9151
+    expected_label: Trustee and Street Administrator
+    field: phone
+    person: Amy Barzyk
+  - actual: "\u2014"
+    actual_label: Trustee and Street Administrator
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Trustee and Street Administrator
+    field: url
+    person: Amy Barzyk
+  - actual: "\u2014"
+    actual_label: Trustee and Street Administrator
+    expected: '2026'
+    expected_label: Trustee and Street Administrator
+    field: end_date
+    person: Amy Barzyk
+  - actual: "\u2014"
+    actual_label: Treasurer
+    expected: (586) 784-9151
+    expected_label: Treasurer
+    field: phone
+    person: Anne Porter
+  - actual: "\u2014"
+    actual_label: Treasurer
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Treasurer
+    field: url
+    person: Anne Porter
+  - actual: "\u2014"
+    actual_label: Treasurer
+    expected: '2026'
+    expected_label: Treasurer
+    field: end_date
+    person: Anne Porter
+  - actual: "\u2014"
+    actual_label: Village President
+    expected: (586) 784-9151
+    expected_label: Village President
+    field: phone
+    person: David Coenen
+  - actual: "\u2014"
+    actual_label: Village President
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Village President
+    field: url
+    person: David Coenen
+  - actual: "\u2014"
+    actual_label: Village President
+    expected: '2026'
+    expected_label: Village President
+    field: end_date
+    person: David Coenen
+  - actual: "\u2014"
+    actual_label: Trustee and Police Commissioner
+    expected: (586) 784-9151
+    expected_label: Trustee and Police Commissioner
+    field: phone
+    person: Jo Adair
+  - actual: "\u2014"
+    actual_label: Trustee and Police Commissioner
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Trustee and Police Commissioner
+    field: url
+    person: Jo Adair
+  - actual: "\u2014"
+    actual_label: Trustee and Police Commissioner
+    expected: '2026'
+    expected_label: Trustee and Police Commissioner
+    field: end_date
+    person: Jo Adair
+  - actual: "\u2014"
+    actual_label: Trustee and Park Commissioner
+    expected: (586) 784-9151
+    expected_label: Trustee and Park Commissioner
+    field: phone
+    person: Michael Shall
+  - actual: "\u2014"
+    actual_label: Trustee and Park Commissioner
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Trustee and Park Commissioner
+    field: url
+    person: Michael Shall
+  - actual: "\u2014"
+    actual_label: Trustee and Park Commissioner
+    expected: '2028'
+    expected_label: Trustee and Park Commissioner
+    field: end_date
+    person: Michael Shall
+  - actual: "\u2014"
+    actual_label: Trustee and Sewer Commissioner
+    expected: (586) 784-9151
+    expected_label: Trustee and Sewer Commissioner
+    field: phone
+    person: Michael Stirrett
+  - actual: "\u2014"
+    actual_label: Trustee and Sewer Commissioner
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Trustee and Sewer Commissioner
+    field: url
+    person: Michael Stirrett
+  - actual: "\u2014"
+    actual_label: Trustee and Sewer Commissioner
+    expected: '2028'
+    expected_label: Trustee and Sewer Commissioner
+    field: end_date
+    person: Michael Stirrett
+  - actual: "\u2014"
+    actual_label: Clerk
+    expected: (586) 784-9151
+    expected_label: Clerk
+    field: phone
+    person: Michelle Poulos
+  - actual: "\u2014"
+    actual_label: Clerk
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Clerk
+    field: url
+    person: Michelle Poulos
+  - actual: "\u2014"
+    actual_label: Clerk
+    expected: '2026'
+    expected_label: Clerk
+    field: end_date
+    person: Michelle Poulos
+  - actual: watercommissioner@villageofarmada.org/
+    actual_label: Trustee and Water Commissioner
+    expected: watercommissioner@villageofarmada.org
+    expected_label: Trustee and Water Commissioner
+    field: email
+    person: Ross Boelke
+  - actual: "\u2014"
+    actual_label: Trustee and Water Commissioner
+    expected: (586) 784-9151
+    expected_label: Trustee and Water Commissioner
+    field: phone
+    person: Ross Boelke
+  - actual: "\u2014"
+    actual_label: Trustee and Water Commissioner
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Trustee and Water Commissioner
+    field: url
+    person: Ross Boelke
+  - actual: "\u2014"
+    actual_label: Trustee and Water Commissioner
+    expected: '2026'
+    expected_label: Trustee and Water Commissioner
+    field: end_date
+    person: Ross Boelke
+  - actual: "\u2014"
+    actual_label: Trustee and President Pro Tem
+    expected: (586) 784-9151
+    expected_label: Trustee and President Pro Tem
+    field: phone
+    person: Stephen Clark
+  - actual: "\u2014"
+    actual_label: Trustee and President Pro Tem
+    expected: https://villageofarmada.org/departments/village_council/members.php
+    expected_label: Trustee and President Pro Tem
+    field: url
+    person: Stephen Clark
+  - actual: "\u2014"
+    actual_label: Trustee and President Pro Tem
+    expected: '2028'
+    expected_label: Trustee and President Pro Tem
+    field: end_date
+    person: Stephen Clark
+  place_gibbsboro__mayor_council__council__no_titles:
+  - actual: "\u2014"
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilman
+    field: url
+    person: Andrew Parsinitz
+  - actual: "\u2014"
+    actual_label: Councilwoman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilwoman
+    field: url
+    person: Beth Schmidt
+  - actual: "\u2014"
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilman
+    field: url
+    person: Brandon Boots
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Mayor
+    field: url
+    person: Edward G. Campbell III
+  - actual: "\u2014"
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilman
+    field: url
+    person: Glenn Werner
+  - actual: "\u2014"
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilman
+    field: url
+    person: John Ritz
+  - actual: "\u2014"
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilman
+    field: url
+    person: Marianne Colavita
+  - actual: "\u2014"
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilman
+    field: url
+    person: Mitch Brown
+  place_greenwood_village__unscoped__no_titles:
+  - actual: 2025-11
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: start_date
+    person: Ann Nelson
+  - actual: local://c175baeebdd2.png
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: image
+    person: Ann Nelson
+  - actual: 2025-11
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: start_date
+    person: Bob Doyle
+  - actual: local://92195470815f.png
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: image
+    person: Bob Doyle
+  - actual: 2025-11
+    actual_label: Council Member District 3
+    expected: "\u2014"
+    expected_label: Council Member District 3
+    field: start_date
+    person: Donna Johnston
+  - actual: local://2716200a4d65.png
+    actual_label: Council Member District 3
+    expected: "\u2014"
+    expected_label: Council Member District 3
+    field: image
+    person: Donna Johnston
+  - actual: 2023-11
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: start_date
+    person: George Lantz
+  - actual: local://05074859a7df.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: George Lantz
+  - actual: 2025-11
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: start_date
+    person: Jay Schneiderman
+  - actual: local://7ea160bab3ca.png
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: image
+    person: Jay Schneiderman
+  - actual: 2025-11
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: start_date
+    person: Katrin Mezger
+  - actual: local://9aebb99b6152.png
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: image
+    person: Katrin Mezger
+  - actual: 2025-11
+    actual_label: Council Member District 3 and Mayor Pro Tem
+    expected: "\u2014"
+    expected_label: Council Member District 3 and Mayor Pro Tem
+    field: start_date
+    person: Libby Hilton Barnacle
+  - actual: local://513a106f2b44.png
+    actual_label: Council Member District 3 and Mayor Pro Tem
+    expected: "\u2014"
+    expected_label: Council Member District 3 and Mayor Pro Tem
+    field: image
+    person: Libby Hilton Barnacle
+  - actual: 2025-11
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: start_date
+    person: Paul Wiesner
+  - actual: local://d15ec3fc330d.png
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: image
+    person: Paul Wiesner
+  - actual: 2025-11
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: start_date
+    person: Tom Stahl
+  - actual: local://ae9612794888.png
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: image
+    person: Tom Stahl
+  place_payette__unscoped__no_titles:
+  - actual: "\u2014"
+    actual_label: City Council
+    expected: https://cityofpayette.com/index.asp?sec=3e868623-d11c-4f30-a389-c51a121fb9a7&type=b_basic
+    expected_label: Council Member
+    field: url
+    person: Denise McGill
+  - actual: "\u2014"
+    actual_label: City Council
+    expected: https://cityofpayette.com/index.asp?sec=3e868623-d11c-4f30-a389-c51a121fb9a7&type=b_basic
+    expected_label: Council Member
+    field: url
+    person: Jim Franklin
+  - actual: "\u2014"
+    actual_label: City Council
+    expected: https://cityofpayette.com/index.asp?sec=3e868623-d11c-4f30-a389-c51a121fb9a7&type=b_basic
+    expected_label: Council Member
+    field: url
+    person: Jody Henderson
+  - actual: "\u2014"
+    actual_label: City Council
+    expected: https://cityofpayette.com/index.asp?sec=3e868623-d11c-4f30-a389-c51a121fb9a7&type=b_basic
+    expected_label: Council Member
+    field: url
+    person: Kathy Patrick
+  - actual: "\u2014"
+    actual_label: City Council
+    expected: https://cityofpayette.com/index.asp?sec=3e868623-d11c-4f30-a389-c51a121fb9a7&type=b_basic
+    expected_label: Council Member
+    field: url
+    person: Lori Steiniker
+  - actual: "\u2014"
+    actual_label: City Council
+    expected: https://cityofpayette.com/index.asp?sec=3e868623-d11c-4f30-a389-c51a121fb9a7&type=b_basic
+    expected_label: Council Member
+    field: url
+    person: Mike Kee
+  - actual:
+    - Council Member
+    - Mayor
+    actual_label: Mayor and City Council
+    expected:
+    - Mayor
+    expected_label: Mayor
+    field: roles
+    person: Ray Wickersham
+  - actual: "\u2014"
+    actual_label: Mayor and City Council
+    expected: https://cityofpayette.com/index.asp?sec=3e868623-d11c-4f30-a389-c51a121fb9a7&type=b_basic
+    expected_label: Mayor
+    field: url
+    person: Ray Wickersham

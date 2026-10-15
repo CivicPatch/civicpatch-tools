@@ -1,0 +1,9 @@
+people:
+- name: Girmay Zahilay
+  label: County Executive
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: local://456fd6692c50.png

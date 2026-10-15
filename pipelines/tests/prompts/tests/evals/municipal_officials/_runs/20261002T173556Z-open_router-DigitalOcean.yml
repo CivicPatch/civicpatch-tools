@@ -1,0 +1,2911 @@
+mismatches:
+  austin_city_manager_staff:
+  - actual: present
+    actual_label: City Manager
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: T.C. Broadnax
+  board_of_aldermen:
+  - actual: present
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Abelardo Gonzalez
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (956) 350-4093
+    expected_label: Alderwoman
+    field: phone
+    person: Christi Burnias
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Alderwoman
+    field: url
+    person: Christi Burnias
+  - actual:
+    - Alderman
+    - Mayor Pro Tem
+    actual_label: Alderman and Mayor Pro Tem
+    expected:
+    - Mayor Pro Tem
+    expected_label: Mayor Pro Tem
+    field: roles
+    person: Javier Vera
+  - actual: "\u2014"
+    actual_label: Alderman and Mayor Pro Tem
+    expected: (956) 350-4093
+    expected_label: Mayor Pro Tem
+    field: phone
+    person: Javier Vera
+  - actual: "\u2014"
+    actual_label: Alderman and Mayor Pro Tem
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Mayor Pro Tem
+    field: url
+    person: Javier Vera
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (956) 350-4093
+    expected_label: Alderman
+    field: phone
+    person: Mark A. Johnson
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Alderman
+    field: url
+    person: Mark A. Johnson
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (956) 350-4093
+    expected_label: Alderman
+    field: phone
+    person: Peter Harris
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Alderman
+    field: url
+    person: Peter Harris
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: https://ranchoviejotexas.com/board-of-aldermen
+    expected_label: Mayor
+    field: url
+    person: Todd Day
+  coleman_council:
+  - actual: "\u2014"
+    actual_label: Council Member Place 3 (Central Ward)
+    expected: (325) 625-5114
+    expected_label: Council Member Place 3 (Central Ward)
+    field: phone
+    person: Beau Brudney
+  - actual: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+    actual_label: Council Member Place 3 (Central Ward)
+    expected: "\u2014"
+    expected_label: Council Member Place 3 (Central Ward)
+    field: image
+    person: Beau Brudney
+  - actual: "\u2014"
+    actual_label: Council Member Place 4 (South Ward)
+    expected: (325) 625-5114
+    expected_label: Council Member Place 4 (South Ward)
+    field: phone
+    person: Monte Sides
+  - actual: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+    actual_label: Council Member Place 4 (South Ward)
+    expected: "\u2014"
+    expected_label: Council Member Place 4 (South Ward)
+    field: image
+    person: Monte Sides
+  - actual: "\u2014"
+    actual_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    expected: (325) 625-5114
+    expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    field: phone
+    person: Sharlene T. Hetzel
+  - actual: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+    actual_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    expected: "\u2014"
+    expected_label: Council Member Place 2 (West Ward) and Mayor Pro-Tem
+    field: image
+    person: Sharlene T. Hetzel
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (325) 625-5114
+    expected_label: Mayor
+    field: phone
+    person: Tommy Sloan
+  - actual: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Tommy Sloan
+  - actual: "\u2014"
+    actual_label: Council Member Place 1 (North Ward)
+    expected: (325) 625-5114
+    expected_label: Council Member Place 1 (North Ward)
+    field: phone
+    person: Tracy Rankin
+  - actual: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+    actual_label: Council Member Place 1 (North Ward)
+    expected: "\u2014"
+    expected_label: Council Member Place 1 (North Ward)
+    field: image
+    person: Tracy Rankin
+  county_king__county_executive__county_council__known_titles:
+  - actual: local://4e25e6caf6e2.png
+    actual_label: Council Member District 6
+    expected: "\u2014"
+    expected_label: Council Member, District 6
+    field: image
+    person: Claudia Balducci
+  - actual: local://b7781f80cfaa.png
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member, District 4
+    field: image
+    person: "Jorge L. Bar\xF3n"
+  - actual: local://a4a58cdeecca.png
+    actual_label: Council Member District 7
+    expected: "\u2014"
+    expected_label: Council Member, District 7
+    field: image
+    person: Pete von Reichbauer
+  - actual: local://78bd4203babd.png
+    actual_label: Council Member District 9
+    expected: "\u2014"
+    expected_label: Council Member, District 9
+    field: image
+    person: Reagan Dunn
+  - actual: local://2400d22da048.png
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member, District 2
+    field: image
+    person: Rhonda Lewis
+  - actual: local://1017c456c9ca.png
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member, District 1
+    field: image
+    person: Rod Dembowski
+  - actual: local://260753e33326.png
+    actual_label: Council Member District 3
+    expected: "\u2014"
+    expected_label: Council Member, District 3
+    field: image
+    person: Sarah Perry
+  - actual: local://0b42e9ac8027.png
+    actual_label: Council Member District 5
+    expected: "\u2014"
+    expected_label: Council Member, District 5
+    field: image
+    person: Steffanie Fain
+  - actual: local://eb3637466d89.png
+    actual_label: Council Member District 8
+    expected: "\u2014"
+    expected_label: Council Member, District 8
+    field: image
+    person: Teresa Mosqueda
+  county_king__county_executive__county_council__no_titles:
+  - actual: local://4e25e6caf6e2.png
+    actual_label: King County Councilmember District 6
+    expected: "\u2014"
+    expected_label: King County Councilmember District 6
+    field: image
+    person: Claudia Balducci
+  - actual: local://b7781f80cfaa.png
+    actual_label: King County Councilmember District 4
+    expected: "\u2014"
+    expected_label: King County Councilmember District 4
+    field: image
+    person: "Jorge L. Bar\xF3n"
+  - actual: local://a4a58cdeecca.png
+    actual_label: King County Councilmember District 7
+    expected: "\u2014"
+    expected_label: King County Councilmember District 7
+    field: image
+    person: Pete von Reichbauer
+  - actual: local://78bd4203babd.png
+    actual_label: King County Councilmember District 9
+    expected: "\u2014"
+    expected_label: King County Councilmember District 9
+    field: image
+    person: Reagan Dunn
+  - actual: local://2400d22da048.png
+    actual_label: King County Councilmember District 2
+    expected: "\u2014"
+    expected_label: King County Councilmember District 2
+    field: image
+    person: Rhonda Lewis
+  - actual: local://1017c456c9ca.png
+    actual_label: King County Councilmember District 1
+    expected: "\u2014"
+    expected_label: King County Councilmember District 1
+    field: image
+    person: Rod Dembowski
+  - actual: local://260753e33326.png
+    actual_label: King County Councilmember District 3
+    expected: "\u2014"
+    expected_label: King County Councilmember District 3
+    field: image
+    person: Sarah Perry
+  - actual: local://0b42e9ac8027.png
+    actual_label: King County Councilmember District 5
+    expected: "\u2014"
+    expected_label: King County Councilmember District 5
+    field: image
+    person: Steffanie Fain
+  - actual: local://eb3637466d89.png
+    actual_label: King County Councilmember District 8
+    expected: "\u2014"
+    expected_label: King County Councilmember District 8
+    field: image
+    person: Teresa Mosqueda
+  county_king__county_executive__county_council__suggested_titles:
+  - actual: local://4e25e6caf6e2.png
+    actual_label: King County Councilmember District 6
+    expected: "\u2014"
+    expected_label: King County Councilmember District 6
+    field: image
+    person: Claudia Balducci
+  - actual: local://b7781f80cfaa.png
+    actual_label: King County Councilmember District 4
+    expected: "\u2014"
+    expected_label: King County Councilmember District 4
+    field: image
+    person: "Jorge L. Bar\xF3n"
+  - actual: local://a4a58cdeecca.png
+    actual_label: King County Councilmember District 7
+    expected: "\u2014"
+    expected_label: King County Councilmember District 7
+    field: image
+    person: Pete von Reichbauer
+  - actual: local://78bd4203babd.png
+    actual_label: King County Councilmember District 9
+    expected: "\u2014"
+    expected_label: King County Councilmember District 9
+    field: image
+    person: Reagan Dunn
+  - actual: local://2400d22da048.png
+    actual_label: King County Councilmember District 2
+    expected: "\u2014"
+    expected_label: King County Councilmember District 2
+    field: image
+    person: Rhonda Lewis
+  - actual: local://1017c456c9ca.png
+    actual_label: King County Councilmember District 1
+    expected: "\u2014"
+    expected_label: King County Councilmember District 1
+    field: image
+    person: Rod Dembowski
+  - actual: local://260753e33326.png
+    actual_label: King County Councilmember District 3
+    expected: "\u2014"
+    expected_label: King County Councilmember District 3
+    field: image
+    person: Sarah Perry
+  - actual: local://0b42e9ac8027.png
+    actual_label: King County Councilmember District 5
+    expected: "\u2014"
+    expected_label: King County Councilmember District 5
+    field: image
+    person: Steffanie Fain
+  - actual: local://eb3637466d89.png
+    actual_label: King County Councilmember District 8
+    expected: "\u2014"
+    expected_label: King County Councilmember District 8
+    field: image
+    person: Teresa Mosqueda
+  county_king__county_executive__county_executive__known_titles:
+  - actual: local://456fd6692c50.png
+    actual_label: King County Executive
+    expected: "\u2014"
+    expected_label: King County Executive
+    field: image
+    person: Girmay Zahilay
+  county_king__county_executive__county_executive__no_titles:
+  - actual: local://456fd6692c50.png
+    actual_label: King County Executive
+    expected: "\u2014"
+    expected_label: King County Executive
+    field: image
+    person: Girmay Zahilay
+  county_king__county_executive__county_executive__suggested_titles:
+  - actual: local://456fd6692c50.png
+    actual_label: King County Executive
+    expected: "\u2014"
+    expected_label: King County Executive
+    field: image
+    person: Girmay Zahilay
+  golinda_mixed_city_county:
+  - actual: "\u2014"
+    actual_label: Council
+    expected: cityofgolinda@gmail.com
+    expected_label: Council
+    field: email
+    person: Billy Elkins
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: cityofgolinda@gmail.com
+    expected_label: Mayor Pro Tem
+    field: email
+    person: Bobby Farney
+  - actual: "\u2014"
+    actual_label: Council
+    expected: cityofgolinda@gmail.com
+    expected_label: Council
+    field: email
+    person: Joe M Farney
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: cityofgolinda@gmail.com
+    expected_label: Mayor
+    field: email
+    person: Joyce Farar
+  - actual: "\u2014"
+    actual_label: Council
+    expected: cityofgolinda@gmail.com
+    expected_label: Council
+    field: email
+    person: Michael Reed
+  - actual: "\u2014"
+    actual_label: Council
+    expected: cityofgolinda@gmail.com
+    expected_label: Council
+    field: email
+    person: Wanda Ray
+  jackson_mayors_office:
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (731) 425-8240
+    expected_label: Mayor
+    field: phone
+    person: Scott Conger
+  la_porte_council:
+  - actual: "\u2014"
+    actual_label: Council Member District 3
+    expected: (281) 471-5021
+    expected_label: Council Member District 3
+    field: phone
+    person: Bill Bentley
+  - actual: "\u2014"
+    actual_label: Council Member At-Large A
+    expected: (281) 471-5021
+    expected_label: Council Member At-Large A
+    field: phone
+    person: Brandon Lunsford
+  - actual: "\u2014"
+    actual_label: Council Member At-Large B
+    expected: (281) 471-5021
+    expected_label: Council Member At-Large B
+    field: phone
+    person: Brent McCaulley
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: (281) 471-5021
+    expected_label: Council Member District 2
+    field: phone
+    person: Chuck Engelken
+  - actual: "\u2014"
+    actual_label: Council Member District 5
+    expected: (281) 471-5021
+    expected_label: Council Member District 5
+    field: phone
+    person: Jay Martin
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: (281) 471-5021
+    expected_label: Council Member District 1
+    field: phone
+    person: Mandi Williams
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (281) 471-5021
+    expected_label: Mayor
+    field: phone
+    person: Rick Helton
+  - actual: "\u2014"
+    actual_label: Council Member District 6
+    expected: (281) 471-5021
+    expected_label: Council Member District 6
+    field: phone
+    person: Robbie McLarrin
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: (281) 471-5021
+    expected_label: Council Member District 4
+    field: phone
+    person: Robert Guerra
+  mixed_current_past:
+  - actual:
+    - Council Member
+    - Mayor Pro Tem
+    actual_label: Council Member and Mayor Pro Tem
+    expected:
+    - Mayor Pro Tem
+    expected_label: Mayor Pro Tem
+    field: roles
+    person: Al Stephens
+  - actual: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+    actual_label: Council Member and Mayor Pro Tem
+    expected: "\u2014"
+    expected_label: Mayor Pro Tem
+    field: image
+    person: Al Stephens
+  - actual: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+    actual_label: Council Member
+    expected: "\u2014"
+    expected_label: Council Member
+    field: image
+    person: Billy Wayne Martin
+  - actual: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+    actual_label: Council Member
+    expected: "\u2014"
+    expected_label: Council Member
+    field: image
+    person: Bobby Hanson
+  - actual: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+    actual_label: Council Member
+    expected: "\u2014"
+    expected_label: Council Member
+    field: image
+    person: Charles Wrenn
+  - actual: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+    actual_label: Council Member
+    expected: "\u2014"
+    expected_label: Council Member
+    field: image
+    person: Darrell Grintz
+  - actual: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Michael Pye
+  nav_links_no_names:
+  - actual: present
+    actual_label: Councilmember Place 5
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Edward Zapalac
+  place_abernathy__commission__commission__suggested_titles:
+  - actual: "\u2014"
+    actual_label: Mayor Pro-Tempore
+    expected: (806) 298-2546
+    expected_label: Mayor Pro-Tempore
+    field: phone
+    person: Bilinda Prater
+  - actual: 2018-05
+    actual_label: Mayor Pro-Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro-Tempore
+    field: start_date
+    person: Bilinda Prater
+  - actual: local://f807858b4119.png
+    actual_label: Mayor Pro-Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro-Tempore
+    field: image
+    person: Bilinda Prater
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderwoman
+    field: phone
+    person: Eva Cortez
+  - actual: 2022-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: start_date
+    person: Eva Cortez
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: image
+    person: Eva Cortez
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderman
+    field: phone
+    person: Gary Stephenson
+  - actual: 2023-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: start_date
+    person: Gary Stephenson
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: image
+    person: Gary Stephenson
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (806) 298-2546
+    expected_label: Mayor
+    field: phone
+    person: Harold Bufe
+  - actual: 2025-06
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: start_date
+    person: Harold Bufe
+  - actual: local://48140b328c80.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Harold Bufe
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderman
+    field: phone
+    person: Matthew Speer
+  - actual: 2025-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: start_date
+    person: Matthew Speer
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: image
+    person: Matthew Speer
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderwoman
+    field: phone
+    person: Tammy Mahan
+  - actual: 2023-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: start_date
+    person: Tammy Mahan
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: image
+    person: Tammy Mahan
+  place_abernathy__council_manager__council__suggested_titles:
+  - actual: "\u2014"
+    actual_label: Mayor Pro-Tempore
+    expected: (806) 298-2546
+    expected_label: Mayor Pro-Tempore
+    field: phone
+    person: Bilinda Prater
+  - actual: "\u2014"
+    actual_label: Mayor Pro-Tempore
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Mayor Pro-Tempore
+    field: url
+    person: Bilinda Prater
+  - actual: 2018-05
+    actual_label: Mayor Pro-Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro-Tempore
+    field: start_date
+    person: Bilinda Prater
+  - actual: local://f807858b4119.png
+    actual_label: Mayor Pro-Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro-Tempore
+    field: image
+    person: Bilinda Prater
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderwoman
+    field: phone
+    person: Eva Cortez
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Alderwoman
+    field: url
+    person: Eva Cortez
+  - actual: 2022-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: start_date
+    person: Eva Cortez
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: image
+    person: Eva Cortez
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderman
+    field: phone
+    person: Gary Stephenson
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Alderman
+    field: url
+    person: Gary Stephenson
+  - actual: 2023-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: start_date
+    person: Gary Stephenson
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: image
+    person: Gary Stephenson
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (806) 298-2546
+    expected_label: Mayor
+    field: phone
+    person: Harold Bufe
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Mayor
+    field: url
+    person: Harold Bufe
+  - actual: 2025-06
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: start_date
+    person: Harold Bufe
+  - actual: local://48140b328c80.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Harold Bufe
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderman
+    field: phone
+    person: Matthew Speer
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Alderman
+    field: url
+    person: Matthew Speer
+  - actual: 2025-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: start_date
+    person: Matthew Speer
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: image
+    person: Matthew Speer
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderwoman
+    field: phone
+    person: Tammy Mahan
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Alderwoman
+    field: url
+    person: Tammy Mahan
+  - actual: 2023-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: start_date
+    person: Tammy Mahan
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: image
+    person: Tammy Mahan
+  place_abernathy__mayor_council__council__known_titles:
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tempore
+    expected: (806) 298-2546
+    expected_label: Mayor Pro Tempore
+    field: phone
+    person: Bilinda Prater
+  - actual: 2018-05
+    actual_label: Mayor Pro Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro Tempore
+    field: start_date
+    person: Bilinda Prater
+  - actual: local://f807858b4119.png
+    actual_label: Mayor Pro Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro Tempore
+    field: image
+    person: Bilinda Prater
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderperson
+    field: phone
+    person: Eva Cortez
+  - actual: 2022-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: start_date
+    person: Eva Cortez
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: image
+    person: Eva Cortez
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderperson
+    field: phone
+    person: Gary Stephenson
+  - actual: 2023-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: start_date
+    person: Gary Stephenson
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: image
+    person: Gary Stephenson
+  - actual: present
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Harold Bufe
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderperson
+    field: phone
+    person: Matthew Speer
+  - actual: 2025-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: start_date
+    person: Matthew Speer
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: image
+    person: Matthew Speer
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderperson
+    field: phone
+    person: Tammy Mahan
+  - actual: 2023-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: start_date
+    person: Tammy Mahan
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: image
+    person: Tammy Mahan
+  place_abernathy__mayor_council__council__no_titles:
+  - actual: "\u2014"
+    actual_label: Mayor Pro-Tempore
+    expected: (806) 298-2546
+    expected_label: Mayor Pro-Tempore
+    field: phone
+    person: Bilinda Prater
+  - actual: "\u2014"
+    actual_label: Mayor Pro-Tempore
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Mayor Pro-Tempore
+    field: url
+    person: Bilinda Prater
+  - actual: 2018-05
+    actual_label: Mayor Pro-Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro-Tempore
+    field: start_date
+    person: Bilinda Prater
+  - actual: local://f807858b4119.png
+    actual_label: Mayor Pro-Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro-Tempore
+    field: image
+    person: Bilinda Prater
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderwoman
+    field: phone
+    person: Eva Cortez
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Alderwoman
+    field: url
+    person: Eva Cortez
+  - actual: 2022-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: start_date
+    person: Eva Cortez
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: image
+    person: Eva Cortez
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderman
+    field: phone
+    person: Gary Stephenson
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Alderman
+    field: url
+    person: Gary Stephenson
+  - actual: 2023-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: start_date
+    person: Gary Stephenson
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: image
+    person: Gary Stephenson
+  - actual: present
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Harold Bufe
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderman
+    field: phone
+    person: Matthew Speer
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Alderman
+    field: url
+    person: Matthew Speer
+  - actual: 2025-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: start_date
+    person: Matthew Speer
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: image
+    person: Matthew Speer
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderwoman
+    field: phone
+    person: Tammy Mahan
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Alderwoman
+    field: url
+    person: Tammy Mahan
+  - actual: 2023-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: start_date
+    person: Tammy Mahan
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: image
+    person: Tammy Mahan
+  place_abernathy__mayor_council__council__suggested_titles:
+  - actual: "\u2014"
+    actual_label: Mayor Pro-Tempore
+    expected: (806) 298-2546
+    expected_label: Mayor Pro-Tempore
+    field: phone
+    person: Bilinda Prater
+  - actual: "\u2014"
+    actual_label: Mayor Pro-Tempore
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Mayor Pro-Tempore
+    field: url
+    person: Bilinda Prater
+  - actual: 2018-05
+    actual_label: Mayor Pro-Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro-Tempore
+    field: start_date
+    person: Bilinda Prater
+  - actual: local://f807858b4119.png
+    actual_label: Mayor Pro-Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro-Tempore
+    field: image
+    person: Bilinda Prater
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderwoman
+    field: phone
+    person: Eva Cortez
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Alderwoman
+    field: url
+    person: Eva Cortez
+  - actual: 2022-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: start_date
+    person: Eva Cortez
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: image
+    person: Eva Cortez
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderman
+    field: phone
+    person: Gary Stephenson
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Alderman
+    field: url
+    person: Gary Stephenson
+  - actual: 2023-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: start_date
+    person: Gary Stephenson
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: image
+    person: Gary Stephenson
+  - actual: present
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Harold Bufe
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderman
+    field: phone
+    person: Matthew Speer
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Alderman
+    field: url
+    person: Matthew Speer
+  - actual: 2025-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: start_date
+    person: Matthew Speer
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: image
+    person: Matthew Speer
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderwoman
+    field: phone
+    person: Tammy Mahan
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Alderwoman
+    field: url
+    person: Tammy Mahan
+  - actual: 2023-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: start_date
+    person: Tammy Mahan
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: image
+    person: Tammy Mahan
+  place_abernathy__mayor_council__office_of_the_mayor__known_titles:
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (806) 298-2546
+    expected_label: Mayor
+    field: phone
+    person: Harold Bufe
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: https://cityofabernathy.org/your-government/city-council
+    expected_label: Mayor
+    field: url
+    person: Harold Bufe
+  - actual: 2025-06
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: start_date
+    person: Harold Bufe
+  - actual: local://48140b328c80.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Harold Bufe
+  place_abernathy__mayor_council__office_of_the_mayor__no_titles:
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (806) 298-2546
+    expected_label: Mayor
+    field: phone
+    person: Harold Bufe
+  - actual: 2025-06
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: start_date
+    person: Harold Bufe
+  - actual: local://48140b328c80.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Harold Bufe
+  place_abernathy__mayor_council__office_of_the_mayor__suggested_titles:
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (806) 298-2546
+    expected_label: Mayor
+    field: phone
+    person: Harold Bufe
+  - actual: 2025-06
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: start_date
+    person: Harold Bufe
+  - actual: local://48140b328c80.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Harold Bufe
+  place_abernathy__unscoped__known_titles:
+  - actual:
+    - Alderman
+    - Mayor Pro Tem
+    actual_label: Alderperson and Mayor Pro-Tempore
+    expected:
+    - Mayor Pro Tem
+    expected_label: Mayor Pro Tempore
+    field: roles
+    person: Bilinda Prater
+  - actual: "\u2014"
+    actual_label: Alderperson and Mayor Pro-Tempore
+    expected: (806) 298-2546
+    expected_label: Mayor Pro Tempore
+    field: phone
+    person: Bilinda Prater
+  - actual: 2018-05
+    actual_label: Alderperson and Mayor Pro-Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro Tempore
+    field: start_date
+    person: Bilinda Prater
+  - actual: local://f807858b4119.png
+    actual_label: Alderperson and Mayor Pro-Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro Tempore
+    field: image
+    person: Bilinda Prater
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderperson
+    field: phone
+    person: Eva Cortez
+  - actual: 2022-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: start_date
+    person: Eva Cortez
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: image
+    person: Eva Cortez
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderperson
+    field: phone
+    person: Gary Stephenson
+  - actual: 2023-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: start_date
+    person: Gary Stephenson
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: image
+    person: Gary Stephenson
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (806) 298-2546
+    expected_label: Mayor
+    field: phone
+    person: Harold Bufe
+  - actual: 2025-06
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: start_date
+    person: Harold Bufe
+  - actual: local://48140b328c80.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Harold Bufe
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderperson
+    field: phone
+    person: Matthew Speer
+  - actual: 2025-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: start_date
+    person: Matthew Speer
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: image
+    person: Matthew Speer
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderperson
+    field: phone
+    person: Tammy Mahan
+  - actual: 2023-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: start_date
+    person: Tammy Mahan
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderperson
+    field: image
+    person: Tammy Mahan
+  place_abernathy__unscoped__no_titles:
+  - actual: "\u2014"
+    actual_label: Mayor Pro-Tempore
+    expected: (806) 298-2546
+    expected_label: Mayor Pro-Tempore
+    field: phone
+    person: Bilinda Prater
+  - actual: 2018-05
+    actual_label: Mayor Pro-Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro-Tempore
+    field: start_date
+    person: Bilinda Prater
+  - actual: local://f807858b4119.png
+    actual_label: Mayor Pro-Tempore
+    expected: "\u2014"
+    expected_label: Mayor Pro-Tempore
+    field: image
+    person: Bilinda Prater
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderwoman
+    field: phone
+    person: Eva Cortez
+  - actual: 2022-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: start_date
+    person: Eva Cortez
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: image
+    person: Eva Cortez
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderman
+    field: phone
+    person: Gary Stephenson
+  - actual: 2023-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: start_date
+    person: Gary Stephenson
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: image
+    person: Gary Stephenson
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (806) 298-2546
+    expected_label: Mayor
+    field: phone
+    person: Harold Bufe
+  - actual: 2025-06
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: start_date
+    person: Harold Bufe
+  - actual: local://48140b328c80.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Harold Bufe
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (806) 298-2546
+    expected_label: Alderman
+    field: phone
+    person: Matthew Speer
+  - actual: 2025-05
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: start_date
+    person: Matthew Speer
+  - actual: local://48140b328c80.png
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: Alderman
+    field: image
+    person: Matthew Speer
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (806) 298-2546
+    expected_label: Alderwoman
+    field: phone
+    person: Tammy Mahan
+  - actual: 2023-05
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: start_date
+    person: Tammy Mahan
+  - actual: local://48140b328c80.png
+    actual_label: Alderwoman
+    expected: "\u2014"
+    expected_label: Alderwoman
+    field: image
+    person: Tammy Mahan
+  place_amador_city__commission__commission__suggested_titles:
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Mayor and Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor and Council Member
+    field: email
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor and Council Member
+    expected: (209) 267-0682
+    expected_label: Mayor and Council Member
+    field: phone
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor and Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Mayor and Council Member
+    field: url
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Susan Bragstad
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Susan Bragstad
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Susan Bragstad
+  place_amador_city__council_manager__council__suggested_titles:
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Mayor | Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor and Council Member
+    field: email
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor | Council Member
+    expected: (209) 267-0682
+    expected_label: Mayor and Council Member
+    field: phone
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Susan Bragstad
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Susan Bragstad
+  place_amador_city__mayor_council__council__known_titles:
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Mayor and Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor and Council Member
+    field: email
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor and Council Member
+    expected: (209) 267-0682
+    expected_label: Mayor and Council Member
+    field: phone
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Susan Bragstad
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Susan Bragstad
+  place_amador_city__mayor_council__council__no_titles:
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Nikko Ambroselli
+  - actual:
+    - Mayor
+    actual_label: Mayor
+    expected:
+    - Council Member
+    - Mayor
+    expected_label: Mayor and Council Member
+    field: roles
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor and Council Member
+    field: email
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (209) 267-0682
+    expected_label: Mayor and Council Member
+    field: phone
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: https://amador-city.com/government-overview
+    expected_label: Mayor and Council Member
+    field: url
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Susan Bragstad
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Susan Bragstad
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Susan Bragstad
+  place_amador_city__mayor_council__council__suggested_titles:
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Nikko Ambroselli
+  - actual:
+    - Mayor
+    actual_label: Mayor
+    expected:
+    - Council Member
+    - Mayor
+    expected_label: Mayor and Council Member
+    field: roles
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor and Council Member
+    field: email
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (209) 267-0682
+    expected_label: Mayor and Council Member
+    field: phone
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: https://amador-city.com/government-overview
+    expected_label: Mayor and Council Member
+    field: url
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Susan Bragstad
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Susan Bragstad
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Susan Bragstad
+  place_amador_city__mayor_council__office_of_the_mayor__known_titles:
+  - actual:
+    - Council Member
+    - Mayor
+    actual_label: Mayor and Council Member
+    expected:
+    - Mayor
+    expected_label: Mayor
+    field: roles
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor and Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor
+    field: email
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor and Council Member
+    expected: (209) 267-0682
+    expected_label: Mayor
+    field: phone
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor and Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Mayor
+    field: url
+    person: Sandra Staples
+  place_amador_city__mayor_council__office_of_the_mayor__no_titles:
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor
+    field: email
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (209) 267-0682
+    expected_label: Mayor
+    field: phone
+    person: Sandra Staples
+  place_amador_city__mayor_council__office_of_the_mayor__suggested_titles:
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor
+    field: email
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (209) 267-0682
+    expected_label: Mayor
+    field: phone
+    person: Sandra Staples
+  place_amador_city__unscoped__known_titles:
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Mayor | Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor and Council Member
+    field: email
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor | Council Member
+    expected: (209) 267-0682
+    expected_label: Mayor and Council Member
+    field: phone
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Susan Bragstad
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Susan Bragstad
+  place_amador_city__unscoped__no_titles:
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Mayor | Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor and Council Member
+    field: email
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor | Council Member
+    expected: (209) 267-0682
+    expected_label: Mayor and Council Member
+    field: phone
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Susan Bragstad
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Susan Bragstad
+  place_belle_meade__commission__commission__suggested_titles:
+  - actual: 2028-11
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: end_date
+    person: Haley Dale
+  - actual: local://641567e24b2f.png
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: image
+    person: Haley Dale
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Louise Bryan
+  - actual: local://9f01ba26a40c.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Louise Bryan
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Neal Clayton
+  - actual: local://151c78eb7631.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Neal Clayton
+  - actual: 2026-11
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: end_date
+    person: Rusty Moore
+  - actual: local://5750533ab677.png
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: image
+    person: Rusty Moore
+  - actual: 2028-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Tom Starkey
+  - actual: local://35c620d76e35.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Tom Starkey
+  place_belle_meade__council_manager__council__suggested_titles:
+  - actual: 2028-11
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: end_date
+    person: Haley Dale
+  - actual: local://641567e24b2f.png
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: image
+    person: Haley Dale
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Louise Bryan
+  - actual: local://9f01ba26a40c.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Louise Bryan
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Neal Clayton
+  - actual: local://151c78eb7631.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Neal Clayton
+  - actual: 2026-11
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: end_date
+    person: Rusty Moore
+  - actual: local://5750533ab677.png
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: image
+    person: Rusty Moore
+  - actual: 2028-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Tom Starkey
+  - actual: local://35c620d76e35.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Tom Starkey
+  place_belle_meade__unscoped__known_titles:
+  - actual:
+    - Vice Mayor
+    actual_label: Vice-Mayor
+    expected:
+    - Commissioner
+    - Vice Mayor
+    expected_label: Commissioner and Vice Mayor
+    field: roles
+    person: Haley Dale
+  - actual: 2028-11
+    actual_label: Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: end_date
+    person: Haley Dale
+  - actual: local://641567e24b2f.png
+    actual_label: Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: image
+    person: Haley Dale
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Louise Bryan
+  - actual: local://9f01ba26a40c.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Louise Bryan
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Neal Clayton
+  - actual: local://151c78eb7631.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Neal Clayton
+  - actual:
+    - Mayor
+    actual_label: Mayor
+    expected:
+    - Commissioner
+    - Mayor
+    expected_label: Commissioner and Mayor
+    field: roles
+    person: Rusty Moore
+  - actual: 2026-11
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: end_date
+    person: Rusty Moore
+  - actual: local://5750533ab677.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: image
+    person: Rusty Moore
+  - actual: 2028-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Tom Starkey
+  - actual: local://35c620d76e35.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Tom Starkey
+  place_belle_meade__unscoped__no_titles:
+  - actual: 2028-11
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: end_date
+    person: Haley Dale
+  - actual: local://641567e24b2f.png
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: image
+    person: Haley Dale
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Louise Bryan
+  - actual: local://9f01ba26a40c.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Louise Bryan
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Neal Clayton
+  - actual: local://151c78eb7631.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Neal Clayton
+  - actual: 2026-11
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: end_date
+    person: Rusty Moore
+  - actual: local://5750533ab677.png
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: image
+    person: Rusty Moore
+  - actual: 2028-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Tom Starkey
+  - actual: local://35c620d76e35.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Tom Starkey
+  place_millbury__open_town_meeting__select_board__known_titles:
+  - actual:
+    - Vice Chair
+    actual_label: Vice Chairman
+    expected:
+    - Select Board Member
+    - Vice Chair
+    expected_label: Selectman and Vice Chairman
+    field: roles
+    person: Brian A. Sora
+  - actual: https://mailto:bsora@millburyma.gov
+    actual_label: Vice Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Vice Chairman
+    field: url
+    person: Brian A. Sora
+  - actual: []
+    actual_label: Member
+    expected:
+    - Select Board Member
+    expected_label: Selectman
+    field: primary_role
+    person: Brian Tagg
+  - actual: []
+    actual_label: Member
+    expected:
+    - Select Board Member
+    expected_label: Selectman
+    field: roles
+    person: Brian Tagg
+  - actual: https://mailto:btagg@millburyma.gov
+    actual_label: Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Brian Tagg
+  - actual:
+    - Chair
+    actual_label: Chairman
+    expected:
+    - Chair
+    - Select Board Member
+    expected_label: Selectman and Chairman
+    field: roles
+    person: Mary Krumsiek
+  - actual: https://mailto:mkrumsiek@millburyma.gov
+    actual_label: Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Chairman
+    field: url
+    person: Mary Krumsiek
+  - actual: []
+    actual_label: Member
+    expected:
+    - Select Board Member
+    expected_label: Selectman
+    field: primary_role
+    person: Michael R. Gilchrist
+  - actual: []
+    actual_label: Member
+    expected:
+    - Select Board Member
+    expected_label: Selectman
+    field: roles
+    person: Michael R. Gilchrist
+  - actual: https://mailto:mgilchrist@millburyma.gov
+    actual_label: Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Michael R. Gilchrist
+  - actual:
+    - Clerk
+    actual_label: Clerk
+    expected:
+    - Clerk
+    - Select Board Member
+    expected_label: Selectman and Clerk
+    field: roles
+    person: Nicholas Lazzaro
+  - actual: https://mailto:nlazzaro@millburyma.gov
+    actual_label: Clerk
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Clerk
+    field: url
+    person: Nicholas Lazzaro
+  place_millbury__open_town_meeting__select_board__no_titles:
+  - actual: https://mailto:bsora@millburyma.gov
+    actual_label: Selectman Vice Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Vice Chairman
+    field: url
+    person: Brian A. Sora
+  - actual: https://mailto:btagg@millburyma.gov
+    actual_label: Selectman Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Brian Tagg
+  - actual: https://mailto:mkrumsiek@millburyma.gov
+    actual_label: Selectman Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Chairman
+    field: url
+    person: Mary Krumsiek
+  - actual: https://mailto:mgilchrist@millburyma.gov
+    actual_label: Selectman Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Michael R. Gilchrist
+  - actual: https://mailto:nlazzaro@millburyma.gov
+    actual_label: Selectman Clerk
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Clerk
+    field: url
+    person: Nicholas Lazzaro
+  place_millbury__open_town_meeting__select_board__suggested_titles:
+  - actual:
+    - Vice Chair
+    actual_label: Vice Chairman
+    expected:
+    - Select Board Member
+    - Vice Chair
+    expected_label: Selectman and Vice Chairman
+    field: roles
+    person: Brian A. Sora
+  - actual: "\u2014"
+    actual_label: Vice Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Vice Chairman
+    field: url
+    person: Brian A. Sora
+  - actual: []
+    actual_label: Member
+    expected:
+    - Select Board Member
+    expected_label: Selectman
+    field: primary_role
+    person: Brian Tagg
+  - actual: []
+    actual_label: Member
+    expected:
+    - Select Board Member
+    expected_label: Selectman
+    field: roles
+    person: Brian Tagg
+  - actual: "\u2014"
+    actual_label: Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Brian Tagg
+  - actual:
+    - Chair
+    actual_label: Chairman
+    expected:
+    - Chair
+    - Select Board Member
+    expected_label: Selectman and Chairman
+    field: roles
+    person: Mary Krumsiek
+  - actual: "\u2014"
+    actual_label: Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Chairman
+    field: url
+    person: Mary Krumsiek
+  - actual: []
+    actual_label: Member
+    expected:
+    - Select Board Member
+    expected_label: Selectman
+    field: primary_role
+    person: Michael R. Gilchrist
+  - actual: []
+    actual_label: Member
+    expected:
+    - Select Board Member
+    expected_label: Selectman
+    field: roles
+    person: Michael R. Gilchrist
+  - actual: "\u2014"
+    actual_label: Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Michael R. Gilchrist
+  - actual:
+    - Clerk
+    actual_label: Clerk
+    expected:
+    - Clerk
+    - Select Board Member
+    expected_label: Selectman and Clerk
+    field: roles
+    person: Nicholas Lazzaro
+  - actual: "\u2014"
+    actual_label: Clerk
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Clerk
+    field: url
+    person: Nicholas Lazzaro
+  place_millbury__open_town_meeting__town_meeting__known_titles:
+  - actual: present
+    actual_label: Selectman Vice Chairman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Brian A. Sora
+  - actual: present
+    actual_label: Selectman Member
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Brian Tagg
+  - actual: present
+    actual_label: Selectman Chairman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Mary Krumsiek
+  - actual: present
+    actual_label: Selectman Member
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Michael R. Gilchrist
+  - actual: present
+    actual_label: Selectman Clerk
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Nicholas Lazzaro
+  place_millbury__open_town_meeting__town_meeting__no_titles:
+  - actual: present
+    actual_label: Selectman Vice Chairman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Brian A. Sora
+  - actual: present
+    actual_label: Selectman Member
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Brian Tagg
+  - actual: present
+    actual_label: Selectman Chairman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Mary Krumsiek
+  - actual: present
+    actual_label: Selectman Member
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Michael R. Gilchrist
+  - actual: present
+    actual_label: Selectman Clerk
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Nicholas Lazzaro
+  place_millbury__representative_town_meeting__select_board__known_titles:
+  - actual:
+    - Vice Chair
+    actual_label: Vice Chair
+    expected:
+    - Select Board Member
+    - Vice Chair
+    expected_label: Selectman and Vice Chairman
+    field: roles
+    person: Brian A. Sora
+  - actual: "\u2014"
+    actual_label: Vice Chair
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Vice Chairman
+    field: url
+    person: Brian A. Sora
+  - actual: "\u2014"
+    actual_label: Select Board Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Brian Tagg
+  - actual:
+    - Chair
+    actual_label: Chair
+    expected:
+    - Chair
+    - Select Board Member
+    expected_label: Selectman and Chairman
+    field: roles
+    person: Mary Krumsiek
+  - actual: "\u2014"
+    actual_label: Chair
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Chairman
+    field: url
+    person: Mary Krumsiek
+  - actual: "\u2014"
+    actual_label: Select Board Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Michael R. Gilchrist
+  - actual:
+    - Clerk
+    actual_label: Clerk
+    expected:
+    - Clerk
+    - Select Board Member
+    expected_label: Selectman and Clerk
+    field: roles
+    person: Nicholas Lazzaro
+  - actual: "\u2014"
+    actual_label: Clerk
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Clerk
+    field: url
+    person: Nicholas Lazzaro
+  place_millbury__representative_town_meeting__select_board__no_titles:
+  - actual: "\u2014"
+    actual_label: Selectman Vice Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Vice Chairman
+    field: url
+    person: Brian A. Sora
+  - actual: "\u2014"
+    actual_label: Selectman Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Brian Tagg
+  - actual: "\u2014"
+    actual_label: Selectman Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Chairman
+    field: url
+    person: Mary Krumsiek
+  - actual: "\u2014"
+    actual_label: Selectman Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Michael R. Gilchrist
+  - actual: "\u2014"
+    actual_label: Selectman Clerk
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Clerk
+    field: url
+    person: Nicholas Lazzaro
+  place_millbury__representative_town_meeting__select_board__suggested_titles:
+  - actual:
+    - Vice Chair
+    actual_label: Select Board Vice Chairman
+    expected:
+    - Select Board Member
+    - Vice Chair
+    expected_label: Selectman and Vice Chairman
+    field: roles
+    person: Brian A. Sora
+  - actual: "\u2014"
+    actual_label: Select Board Vice Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Vice Chairman
+    field: url
+    person: Brian A. Sora
+  - actual: "\u2014"
+    actual_label: Select Board Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Brian Tagg
+  - actual:
+    - Chair
+    actual_label: Select Board Chairman
+    expected:
+    - Chair
+    - Select Board Member
+    expected_label: Selectman and Chairman
+    field: roles
+    person: Mary Krumsiek
+  - actual: "\u2014"
+    actual_label: Select Board Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Chairman
+    field: url
+    person: Mary Krumsiek
+  - actual: "\u2014"
+    actual_label: Select Board Member
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Michael R. Gilchrist
+  - actual:
+    - Clerk
+    actual_label: Select Board Clerk
+    expected:
+    - Clerk
+    - Select Board Member
+    expected_label: Selectman and Clerk
+    field: roles
+    person: Nicholas Lazzaro
+  - actual: "\u2014"
+    actual_label: Select Board Clerk
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Clerk
+    field: url
+    person: Nicholas Lazzaro
+  place_millbury__representative_town_meeting__town_meeting__no_titles:
+  - actual: present
+    actual_label: Selectman Vice Chairman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Brian A. Sora
+  - actual: present
+    actual_label: Selectman Member
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Brian Tagg
+  - actual: present
+    actual_label: Selectman Chairman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Mary Krumsiek
+  - actual: present
+    actual_label: Selectman Member
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Michael R. Gilchrist
+  - actual: present
+    actual_label: Selectman Clerk
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Nicholas Lazzaro
+  placeholder_name_council:
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: bob.harris@anytown.gov
+    expected_label: Mayor
+    field: email
+    person: Bob Harris
+  raisin_township_clerk:
+  - actual: "\u2014"
+    actual_label: Clerk
+    expected: (517) 423-3162
+    expected_label: Clerk
+    field: phone
+    person: Susan Bunch
+  - actual: local://2105ede652ed.png
+    actual_label: Clerk
+    expected: "\u2014"
+    expected_label: Clerk
+    field: image
+    person: Susan Bunch
+  raisin_township_supervisor:
+  - actual: local://c487d9c940ad.png
+    actual_label: Supervisor
+    expected: "\u2014"
+    expected_label: Supervisor
+    field: image
+    person: Deb Brousseau
+  seattle_council_pick_list_missing_president:
+  - actual: "\u2014"
+    actual_label: Council Member Position 8
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 8
+    field: email
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Council Member Position 8
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 8
+    field: phone
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Council Member District 7
+    expected: council@seattle.gov
+    expected_label: Councilmember District 7
+    field: email
+    person: Bob Kettle
+  - actual: "\u2014"
+    actual_label: Council Member District 7
+    expected: (206) 684-8888
+    expected_label: Councilmember District 7
+    field: phone
+    person: Bob Kettle
+  - actual: "\u2014"
+    actual_label: Council Member District 6
+    expected: council@seattle.gov
+    expected_label: Councilmember District 6
+    field: email
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Council Member District 6
+    expected: (206) 684-8888
+    expected_label: Councilmember District 6
+    field: phone
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Council Member District 5
+    expected: council@seattle.gov
+    expected_label: Councilmember District 5
+    field: email
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Council Member District 5
+    expected: (206) 684-8888
+    expected_label: Councilmember District 5
+    field: phone
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Council Member Position 9
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 9
+    field: email
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Council Member Position 9
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 9
+    field: phone
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: council@seattle.gov
+    expected_label: Councilmember District 2
+    field: email
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: (206) 684-8888
+    expected_label: Councilmember District 2
+    field: phone
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Council President and Council Member District 3
+    expected: council@seattle.gov
+    expected_label: Council President and Council Member District 3
+    field: email
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Council President and Council Member District 3
+    expected: (206) 684-8888
+    expected_label: Council President and Council Member District 3
+    field: phone
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: council@seattle.gov
+    expected_label: Councilmember District 4
+    field: email
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: (206) 684-8888
+    expected_label: Councilmember District 4
+    field: phone
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: council@seattle.gov
+    expected_label: Councilmember District 1
+    field: email
+    person: Rob Saka
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: (206) 684-8888
+    expected_label: Councilmember District 1
+    field: phone
+    person: Rob Saka
+  seattle_council_separate_mayor:
+  - actual: "\u2014"
+    actual_label: Council Member Position 8
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 8
+    field: email
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Council Member Position 8
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 8
+    field: phone
+    person: Alexis Mercedes Rinck
+  - actual: "\u2014"
+    actual_label: Council Member District 7
+    expected: council@seattle.gov
+    expected_label: Councilmember District 7
+    field: email
+    person: Bob Kettle
+  - actual: "\u2014"
+    actual_label: Council Member District 7
+    expected: (206) 684-8888
+    expected_label: Councilmember District 7
+    field: phone
+    person: Bob Kettle
+  - actual: "\u2014"
+    actual_label: Council Member District 6
+    expected: council@seattle.gov
+    expected_label: Councilmember District 6
+    field: email
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Council Member District 6
+    expected: (206) 684-8888
+    expected_label: Councilmember District 6
+    field: phone
+    person: Dan Strauss
+  - actual: "\u2014"
+    actual_label: Council Member District 5
+    expected: council@seattle.gov
+    expected_label: Councilmember District 5
+    field: email
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Council Member District 5
+    expected: (206) 684-8888
+    expected_label: Councilmember District 5
+    field: phone
+    person: Debora Juarez
+  - actual: "\u2014"
+    actual_label: Council Member Position 9
+    expected: council@seattle.gov
+    expected_label: Councilmember Position 9
+    field: email
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Council Member Position 9
+    expected: (206) 684-8888
+    expected_label: Councilmember Position 9
+    field: phone
+    person: Dionne Foster
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: council@seattle.gov
+    expected_label: Councilmember District 2
+    field: email
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Council Member District 2
+    expected: (206) 684-8888
+    expected_label: Councilmember District 2
+    field: phone
+    person: Eddie Lin
+  - actual: "\u2014"
+    actual_label: Council Member District 3 and Council President
+    expected: council@seattle.gov
+    expected_label: Council President and Council Member District 3
+    field: email
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Council Member District 3 and Council President
+    expected: (206) 684-8888
+    expected_label: Council President and Council Member District 3
+    field: phone
+    person: Joy Hollingsworth
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: council@seattle.gov
+    expected_label: Councilmember District 4
+    field: email
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Council Member District 4
+    expected: (206) 684-8888
+    expected_label: Councilmember District 4
+    field: phone
+    person: Maritza Rivera
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: council@seattle.gov
+    expected_label: Councilmember District 1
+    field: email
+    person: Rob Saka
+  - actual: "\u2014"
+    actual_label: Council Member District 1
+    expected: (206) 684-8888
+    expected_label: Councilmember District 1
+    field: phone
+    person: Rob Saka

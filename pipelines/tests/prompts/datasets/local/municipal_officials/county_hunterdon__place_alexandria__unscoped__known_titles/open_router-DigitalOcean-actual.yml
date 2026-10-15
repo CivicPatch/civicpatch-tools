@@ -1,0 +1,33 @@
+people:
+- name: Jim Kiernan
+  label: Mayor
+  phone: null
+  email: jkiernan@alexandrianj.gov
+  url: https://www.alexandrianj.gov/government/mayor
+  start_date: null
+  end_date: null
+  image: null
+- name: Tom Hudanish
+  label: Deputy Mayor
+  phone: null
+  email: thudanish@alexandrianj.gov
+  url: https://www.alexandrianj.gov/government/mayor
+  start_date: null
+  end_date: null
+  image: null
+- name: Brad Patkochis
+  label: Committee Member
+  phone: null
+  email: bpatkochis@alexandrianj.gov
+  url: https://www.alexandrianj.gov/government/mayor
+  start_date: null
+  end_date: null
+  image: null
+- name: Robert Mortara
+  label: Committee Member
+  phone: null
+  email: rmortara@alexandrianj.gov
+  url: https://www.alexandrianj.gov/government/mayor
+  start_date: null
+  end_date: null
+  image: null

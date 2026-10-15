@@ -1,0 +1,73 @@
+people:
+- name: David Coenen
+  label: Village President
+  phone: null
+  email: president@villageofarmada.org
+  url: null
+  start_date: null
+  end_date: '2026'
+  image: null
+- name: Michelle Poulos
+  label: Clerk
+  phone: null
+  email: clerk@villageofarmada.org
+  url: null
+  start_date: null
+  end_date: '2026'
+  image: null
+- name: Anne Porter
+  label: Treasurer
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: '2026'
+  image: null
+- name: Michael Stirrett
+  label: Trustee and Sewer Commissioner
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: '2028'
+  image: null
+- name: Ross Boelke
+  label: Trustee and Water Commissioner
+  phone: null
+  email: watercommissioner@villageofarmada.org/
+  url: null
+  start_date: null
+  end_date: '2026'
+  image: null
+- name: Stephen Clark
+  label: Trustee and President Pro Tem
+  phone: null
+  email: sewercommissioner@villageofarmada.org
+  url: null
+  start_date: null
+  end_date: '2028'
+  image: null
+- name: Jo Adair
+  label: Trustee and Police Commissioner
+  phone: null
+  email: streetadministrator@villageofarmada.org
+  url: null
+  start_date: null
+  end_date: '2026'
+  image: null
+- name: Amy Barzyk
+  label: Trustee and Street Administrator
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: '2026'
+  image: null
+- name: Michael Shall
+  label: Trustee and Park Commissioner
+  phone: null
+  email: parkcommissioner@villageofarmada.org
+  url: null
+  start_date: null
+  end_date: '2028'
+  image: null

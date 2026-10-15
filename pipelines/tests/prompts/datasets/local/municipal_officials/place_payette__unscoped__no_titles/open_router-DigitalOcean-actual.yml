@@ -1,0 +1,57 @@
+people:
+- name: Lori Steiniker
+  label: City Council
+  phone: null
+  email: lsteiniker@cityofpayette.com
+  url: null
+  start_date: null
+  end_date: '2027'
+  image: null
+- name: Mike Kee
+  label: City Council
+  phone: null
+  email: mkee@cityofpayette.com
+  url: null
+  start_date: null
+  end_date: '2027'
+  image: null
+- name: Denise McGill
+  label: City Council
+  phone: null
+  email: dmcgill@cityofpayette.com
+  url: null
+  start_date: null
+  end_date: '2029'
+  image: null
+- name: Jody Henderson
+  label: City Council
+  phone: null
+  email: jhenderson@cityofpayette.com
+  url: null
+  start_date: null
+  end_date: '2027'
+  image: null
+- name: Kathy Patrick
+  label: City Council
+  phone: null
+  email: kpatrick@cityofpayette.com
+  url: null
+  start_date: null
+  end_date: '2029'
+  image: null
+- name: Jim Franklin
+  label: City Council
+  phone: null
+  email: jfranklin@cityofpayette.com
+  url: null
+  start_date: null
+  end_date: '2029'
+  image: null
+- name: Ray Wickersham
+  label: Mayor and City Council
+  phone: null
+  email: ray@wickersham.us
+  url: null
+  start_date: null
+  end_date: '2029'
+  image: null

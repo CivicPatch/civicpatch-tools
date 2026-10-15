@@ -1,7 +1,8 @@
 generated: true
+current_date: '2026-05-25'
 people:
 - name: Rusty Moore
-  label: Mayor
+  label: Commissioner and Mayor
   phone: (615) 297-6041
   email: rmoore@citybellemeade.org
   url: https://citybellemeade.org/person/rusty-moore/
@@ -9,7 +10,7 @@ people:
   end_date: null
   image: null
 - name: Haley Dale
-  label: Vice Mayor
+  label: Commissioner and Vice Mayor
   phone: (615) 297-6041
   email: hdale@citybellemeade.org
   url: https://citybellemeade.org/person/commissioner-2/

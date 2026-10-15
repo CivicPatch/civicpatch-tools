@@ -1,7 +1,7 @@
 people:
 - name: Mike Siegel
   label: Council Member District 7
-  phone: 3-1-1
+  phone: null
   email: null
   url: https://www.austintexas.gov/district-7
   start_date: '2025-01-06'

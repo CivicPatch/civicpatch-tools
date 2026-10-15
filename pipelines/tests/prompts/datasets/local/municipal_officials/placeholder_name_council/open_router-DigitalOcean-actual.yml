@@ -7,26 +7,10 @@ people:
   start_date: null
   end_date: null
   image: null
-- name: Councilmember 2 Name
-  label: Councilmember Place 2
-  phone: null
-  email: null
-  url: null
-  start_date: null
-  end_date: null
-  image: null
 - name: Dana Ellis
   label: Councilmember Place 3
   phone: null
   email: dana.ellis@anytown.gov
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Councilmember Place 6 Name
-  label: Councilmember Place 6
-  phone: null
-  email: null
   url: null
   start_date: null
   end_date: null
