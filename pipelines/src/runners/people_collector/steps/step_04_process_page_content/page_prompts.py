@@ -2,7 +2,7 @@ from typing import List
 
 import services.open_router.prompts as open_router_prompt
 from runners.people_collector.schemas import ExpectedMembership
-from runners.people_collector.steps.step_04_process_page_content.extraction_scopes import (
+from runners.people_collector.steps.step_04_process_page_content.extraction_by_organization import (
     ExtractionScope,
     extraction_scopes,
     prompt_organization,
