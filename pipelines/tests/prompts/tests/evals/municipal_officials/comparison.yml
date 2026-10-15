@@ -1,50 +1,18 @@
 providers:
-  open_router-DigitalOcean:
-    elapsed_seconds: 216.7
-    cost_usd: 0.0347977224
-    f1_primary_role: 0.9830508474576272
-    f1_district: 1.0
-    image: 1.0
-    designations_precision: 1.0
-    email: 0.7631578947368421
-    start_date: 1.0
-    name: 1.0
-    url: 0.7631578947368421
-    roles_precision: 0.9891812865497076
-    roles: 0.9891812865497076
-    phone: 0.5052631578947369
-    end_date: 1.0
-    designations: 1.0
   open_router-AtlasCloud:
-    elapsed_seconds: 325.85
-    cost_usd: 0.061797428
-    f1_primary_role: 0.9714285714285714
+    elapsed_seconds: 173.63
+    cost_usd: 0.077141316
+    f1_primary_role: 0.9926739926739927
     f1_district: 1.0
+    start_date: 1.0
+    end_date: 1.0
+    designations: 1.0
     image: 1.0
-    designations_precision: 1.0
+    roles: 0.9719298245614035
     email: 0.9473684210526315
-    start_date: 1.0
+    phone: 0.9333333333333333
     name: 1.0
-    url: 0.9473684210526315
-    roles_precision: 0.9865497076023392
-    roles: 0.9523391812865497
-    phone: 0.8473684210526315
-    end_date: 1.0
-    designations: 1.0
-  open_router-Alibaba:
-    elapsed_seconds: 322.64
-    cost_usd: 0.0535103808
-    f1_primary_role: 0.9772727272727273
-    f1_district: 1.0
-    image: 1.0
+    url: 0.9122807017543859
+    roles_precision: 0.9776942355889724
     designations_precision: 1.0
-    email: 0.9736842105263158
-    start_date: 1.0
-    name: 1.0
-    url: 0.9736842105263158
-    roles_precision: 0.9865497076023392
-    roles: 0.9707602339181286
-    phone: 0.8736842105263158
-    end_date: 1.0
-    designations: 1.0
 failures: {}

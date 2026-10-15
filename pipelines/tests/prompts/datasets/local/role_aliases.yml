@@ -30,9 +30,21 @@ roles:
     - Mayor Pro Tempore
     - Mayor Pro-Tempore
 
+  Deputy Mayor: []
+
+  # A village or township board's presiding deputy (Armada's President Pro Tem).
+  President Pro Tem:
+    - President Pro-Tem
+    - President Pro Tempore
+
   # Presiding, so above Council Member — the holder is both, and seattle_council_separate_mayor
   # needs the presiding title to win. Mirrors migration 111, where council-president is 11.
   Council President: []
+
+  # A Michigan village's president: a seat of its own, not a trustee on top of one.
+  Village President:
+    - President of the Village
+    - Village Board President
 
   # A board's presiding officers (Millbury's Board of Selectmen). Above the board's member title,
   # like Council President above Council Member.
@@ -55,6 +67,7 @@ roles:
   Supervisor: []
   County Executive: []
   Clerk: []
+  Treasurer: []
 
   Council Member:
     - Councilmember
@@ -72,6 +85,19 @@ roles:
 
   # Kept apart from Council Member for the same reason as Alderman: a select board is its own
   # institution, and Millbury's selectmen published as "Council Member" is the bug a case checks.
+  # Michigan township and village boards.
+  Trustee:
+    - Trustees
+    - Township Trustee
+    - Village Trustee
+
+  # New Jersey township committees.
+  Committee Member:
+    - Committeeman
+    - Committeewoman
+    - Committeeperson
+    - Committee Person
+
   Select Board Member:
     - Selectman
     - Selectmen

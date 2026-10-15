@@ -1,0 +1,33 @@
+people:
+- name: Jim Kiernan
+  label: Mayor and Township Committee Member
+  phone: null
+  email: jkiernan@alexandrianj.gov
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Tom Hudanish
+  label: Township Committee Member and Deputy Mayor
+  phone: null
+  email: thudanish@alexandrianj.gov
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Brad Patkochis
+  label: Township Committee Member
+  phone: null
+  email: bpatkochis@alexandrianj.gov
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Robert Mortara
+  label: Township Committee Member
+  phone: null
+  email: rmortara@alexandrianj.gov
+  url: null
+  start_date: null
+  end_date: null
+  image: null

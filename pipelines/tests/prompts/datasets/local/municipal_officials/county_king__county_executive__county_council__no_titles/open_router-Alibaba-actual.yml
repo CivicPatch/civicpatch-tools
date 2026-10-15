@@ -1,6 +1,6 @@
 people:
 - name: Rod Dembowski
-  label: Councilmember District 1
+  label: County Councilmember District 1
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/rod-dembowski
@@ -8,7 +8,7 @@ people:
   end_date: null
   image: local://1017c456c9ca.png
 - name: Rhonda Lewis
-  label: Councilmember District 2
+  label: County Councilmember District 2
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/rhonda-lewis
@@ -16,7 +16,7 @@ people:
   end_date: null
   image: local://2400d22da048.png
 - name: Sarah Perry
-  label: Councilmember District 3
+  label: County Councilmember District 3
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/sarah-perry
@@ -24,7 +24,7 @@ people:
   end_date: null
   image: local://260753e33326.png
 - name: "Jorge L. Bar\xF3n"
-  label: Councilmember District 4
+  label: County Councilmember District 4
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/jorge-l-baron
@@ -32,7 +32,7 @@ people:
   end_date: null
   image: local://b7781f80cfaa.png
 - name: Steffanie Fain
-  label: Councilmember District 5
+  label: County Councilmember District 5
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/steffanie-fain
@@ -40,7 +40,7 @@ people:
   end_date: null
   image: local://0b42e9ac8027.png
 - name: Claudia Balducci
-  label: Councilmember District 6
+  label: County Councilmember District 6
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/claudia-balducci
@@ -48,7 +48,7 @@ people:
   end_date: null
   image: local://4e25e6caf6e2.png
 - name: Pete von Reichbauer
-  label: Councilmember District 7
+  label: County Councilmember District 7
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/pete-von-reichbauer
@@ -56,7 +56,7 @@ people:
   end_date: null
   image: local://a4a58cdeecca.png
 - name: Teresa Mosqueda
-  label: Councilmember District 8
+  label: County Councilmember District 8
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/teresa-mosqueda
@@ -64,7 +64,7 @@ people:
   end_date: null
   image: local://eb3637466d89.png
 - name: Reagan Dunn
-  label: Councilmember District 9
+  label: County Councilmember District 9
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/reagan-dunn

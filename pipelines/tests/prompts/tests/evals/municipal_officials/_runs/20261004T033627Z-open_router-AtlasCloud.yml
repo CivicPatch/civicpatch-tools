@@ -1,0 +1,1021 @@
+mismatches:
+  board_of_aldermen:
+  - actual: present
+    actual_label: Alderman
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Abelardo Gonzalez
+  - actual: "\u2014"
+    actual_label: Alderwoman
+    expected: (956) 350-4093
+    expected_label: Alderwoman
+    field: phone
+    person: Christi Burnias
+  - actual: "\u2014"
+    actual_label: Mayor Pro Tem
+    expected: (956) 350-4093
+    expected_label: Mayor Pro Tem
+    field: phone
+    person: Javier Vera
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (956) 350-4093
+    expected_label: Alderman
+    field: phone
+    person: Mark A. Johnson
+  - actual: "\u2014"
+    actual_label: Alderman
+    expected: (956) 350-4093
+    expected_label: Alderman
+    field: phone
+    person: Peter Harris
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (956) 350-4093
+    expected_label: Mayor
+    field: phone
+    person: Todd Day
+  county_hunterdon__place_alexandria__township_board__board__suggested_titles:
+  - actual:
+    - Committee Member
+    - Deputy Mayor
+    actual_label: Committee Member and Deputy Mayor
+    expected:
+    - Deputy Mayor
+    expected_label: Deputy Mayor
+    field: roles
+    person: Tom Hudanish
+  county_hunterdon__place_alexandria__unscoped__no_titles:
+  - actual:
+    - Committee Member
+    - Deputy Mayor
+    actual_label: Township Committee Member and Deputy Mayor
+    expected:
+    - Deputy Mayor
+    expected_label: Deputy Mayor
+    field: roles
+    person: Tom Hudanish
+  county_king__county_executive__county_council__known_titles:
+  - actual: https:///en/dept/council/governance-leadership/county-council/councilmembers-districts/claudia-balducci
+    actual_label: Council Member District 6
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/claudia-balducci
+    expected_label: Council Member, District 6
+    field: url
+    person: Claudia Balducci
+  - actual: local://4e25e6caf6e2.png
+    actual_label: Council Member District 6
+    expected: "\u2014"
+    expected_label: Council Member, District 6
+    field: image
+    person: Claudia Balducci
+  - actual: https:///en/dept/council/governance-leadership/county-council/councilmembers-districts/jorge-l-baron
+    actual_label: Council Member District 4
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/jorge-l-baron
+    expected_label: Council Member, District 4
+    field: url
+    person: "Jorge L. Bar\xF3n"
+  - actual: local://b7781f80cfaa.png
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member, District 4
+    field: image
+    person: "Jorge L. Bar\xF3n"
+  - actual: https:///en/dept/council/governance-leadership/county-council/councilmembers-districts/pete-von-reichbauer
+    actual_label: Council Member District 7
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/pete-von-reichbauer
+    expected_label: Council Member, District 7
+    field: url
+    person: Pete von Reichbauer
+  - actual: local://a4a58cdeecca.png
+    actual_label: Council Member District 7
+    expected: "\u2014"
+    expected_label: Council Member, District 7
+    field: image
+    person: Pete von Reichbauer
+  - actual: https:///en/dept/council/governance-leadership/county-council/councilmembers-districts/reagan-dunn
+    actual_label: Council Member District 9
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/reagan-dunn
+    expected_label: Council Member, District 9
+    field: url
+    person: Reagan Dunn
+  - actual: local://78bd4203babd.png
+    actual_label: Council Member District 9
+    expected: "\u2014"
+    expected_label: Council Member, District 9
+    field: image
+    person: Reagan Dunn
+  - actual: https:///en/dept/council/governance-leadership/county-council/councilmembers-districts/rhonda-lewis
+    actual_label: Council Member District 2
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/rhonda-lewis
+    expected_label: Council Member, District 2
+    field: url
+    person: Rhonda Lewis
+  - actual: local://2400d22da048.png
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member, District 2
+    field: image
+    person: Rhonda Lewis
+  - actual: https:///en/dept/council/governance-leadership/county-council/councilmembers-districts/rod-dembowski
+    actual_label: Council Member District 1
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/rod-dembowski
+    expected_label: Council Member, District 1
+    field: url
+    person: Rod Dembowski
+  - actual: local://1017c456c9ca.png
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member, District 1
+    field: image
+    person: Rod Dembowski
+  - actual: https:///en/dept/council/governance-leadership/county-council/councilmembers-districts/sarah-perry
+    actual_label: Council Member District 3
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/sarah-perry
+    expected_label: Council Member, District 3
+    field: url
+    person: Sarah Perry
+  - actual: local://260753e33326.png
+    actual_label: Council Member District 3
+    expected: "\u2014"
+    expected_label: Council Member, District 3
+    field: image
+    person: Sarah Perry
+  - actual: https:///en/dept/council/governance-leadership/county-council/councilmembers-districts/steffanie-fain
+    actual_label: Council Member District 5
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/steffanie-fain
+    expected_label: Council Member, District 5
+    field: url
+    person: Steffanie Fain
+  - actual: local://0b42e9ac8027.png
+    actual_label: Council Member District 5
+    expected: "\u2014"
+    expected_label: Council Member, District 5
+    field: image
+    person: Steffanie Fain
+  - actual: https:///en/dept/council/governance-leadership/county-council/councilmembers-districts/teresa-mosqueda
+    actual_label: Council Member District 8
+    expected: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/teresa-mosqueda
+    expected_label: Council Member, District 8
+    field: url
+    person: Teresa Mosqueda
+  - actual: local://eb3637466d89.png
+    actual_label: Council Member District 8
+    expected: "\u2014"
+    expected_label: Council Member, District 8
+    field: image
+    person: Teresa Mosqueda
+  county_king__county_executive__county_council__no_titles:
+  - actual: local://4e25e6caf6e2.png
+    actual_label: King County Councilmember District 6
+    expected: "\u2014"
+    expected_label: King County Councilmember District 6
+    field: image
+    person: Claudia Balducci
+  - actual: local://b7781f80cfaa.png
+    actual_label: King County Councilmember District 4
+    expected: "\u2014"
+    expected_label: King County Councilmember District 4
+    field: image
+    person: "Jorge L. Bar\xF3n"
+  - actual: local://a4a58cdeecca.png
+    actual_label: King County Councilmember District 7
+    expected: "\u2014"
+    expected_label: King County Councilmember District 7
+    field: image
+    person: Pete von Reichbauer
+  - actual: local://78bd4203babd.png
+    actual_label: King County Councilmember District 9
+    expected: "\u2014"
+    expected_label: King County Councilmember District 9
+    field: image
+    person: Reagan Dunn
+  - actual: local://2400d22da048.png
+    actual_label: King County Councilmember District 2
+    expected: "\u2014"
+    expected_label: King County Councilmember District 2
+    field: image
+    person: Rhonda Lewis
+  - actual: local://1017c456c9ca.png
+    actual_label: King County Councilmember District 1
+    expected: "\u2014"
+    expected_label: King County Councilmember District 1
+    field: image
+    person: Rod Dembowski
+  - actual: local://260753e33326.png
+    actual_label: King County Councilmember District 3
+    expected: "\u2014"
+    expected_label: King County Councilmember District 3
+    field: image
+    person: Sarah Perry
+  - actual: local://0b42e9ac8027.png
+    actual_label: King County Councilmember District 5
+    expected: "\u2014"
+    expected_label: King County Councilmember District 5
+    field: image
+    person: Steffanie Fain
+  - actual: local://eb3637466d89.png
+    actual_label: King County Councilmember District 8
+    expected: "\u2014"
+    expected_label: King County Councilmember District 8
+    field: image
+    person: Teresa Mosqueda
+  county_king__county_executive__county_council__suggested_titles:
+  - actual: local://4e25e6caf6e2.png
+    actual_label: King County Councilmember District 6
+    expected: "\u2014"
+    expected_label: King County Councilmember District 6
+    field: image
+    person: Claudia Balducci
+  - actual: local://b7781f80cfaa.png
+    actual_label: King County Councilmember District 4
+    expected: "\u2014"
+    expected_label: King County Councilmember District 4
+    field: image
+    person: "Jorge L. Bar\xF3n"
+  - actual: local://a4a58cdeecca.png
+    actual_label: King County Councilmember District 7
+    expected: "\u2014"
+    expected_label: King County Councilmember District 7
+    field: image
+    person: Pete von Reichbauer
+  - actual: local://78bd4203babd.png
+    actual_label: King County Councilmember District 9
+    expected: "\u2014"
+    expected_label: King County Councilmember District 9
+    field: image
+    person: Reagan Dunn
+  - actual: local://2400d22da048.png
+    actual_label: King County Councilmember District 2
+    expected: "\u2014"
+    expected_label: King County Councilmember District 2
+    field: image
+    person: Rhonda Lewis
+  - actual: local://1017c456c9ca.png
+    actual_label: King County Councilmember District 1
+    expected: "\u2014"
+    expected_label: King County Councilmember District 1
+    field: image
+    person: Rod Dembowski
+  - actual: local://260753e33326.png
+    actual_label: King County Councilmember District 3
+    expected: "\u2014"
+    expected_label: King County Councilmember District 3
+    field: image
+    person: Sarah Perry
+  - actual: local://0b42e9ac8027.png
+    actual_label: King County Councilmember District 5
+    expected: "\u2014"
+    expected_label: King County Councilmember District 5
+    field: image
+    person: Steffanie Fain
+  - actual: local://eb3637466d89.png
+    actual_label: King County Councilmember District 8
+    expected: "\u2014"
+    expected_label: King County Councilmember District 8
+    field: image
+    person: Teresa Mosqueda
+  county_king__county_executive__county_executive__known_titles:
+  - actual: local://456fd6692c50.png
+    actual_label: King County Executive
+    expected: "\u2014"
+    expected_label: King County Executive
+    field: image
+    person: Girmay Zahilay
+  county_king__county_executive__county_executive__no_titles:
+  - actual: local://456fd6692c50.png
+    actual_label: King County Executive
+    expected: "\u2014"
+    expected_label: King County Executive
+    field: image
+    person: Girmay Zahilay
+  county_king__county_executive__county_executive__suggested_titles:
+  - actual: local://456fd6692c50.png
+    actual_label: King County Executive
+    expected: "\u2014"
+    expected_label: King County Executive
+    field: image
+    person: Girmay Zahilay
+  golinda_mixed_city_county:
+  - actual:
+    - Council Member
+    - Mayor Pro Tem
+    actual_label: Council Member and Mayor Pro Tem
+    expected:
+    - Mayor Pro Tem
+    expected_label: Mayor Pro Tem
+    field: roles
+    person: Bobby Farney
+  mixed_current_past:
+  - actual:
+    - Council Member
+    - Mayor Pro Tem
+    actual_label: Council Member at Large and Mayor Pro Tem
+    expected:
+    - Mayor Pro Tem
+    expected_label: Mayor Pro Tem
+    field: roles
+    person: Al Stephens
+  - actual: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+    actual_label: Council Member at Large and Mayor Pro Tem
+    expected: "\u2014"
+    expected_label: Mayor Pro Tem
+    field: image
+    person: Al Stephens
+  - actual: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+    actual_label: Council Member at Large
+    expected: "\u2014"
+    expected_label: Council Member
+    field: image
+    person: Billy Wayne Martin
+  - actual: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+    actual_label: Council Member at Large
+    expected: "\u2014"
+    expected_label: Council Member
+    field: image
+    person: Bobby Hanson
+  - actual: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+    actual_label: Council Member at Large
+    expected: "\u2014"
+    expected_label: Council Member
+    field: image
+    person: Charles Wrenn
+  - actual: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+    actual_label: Council Member at Large
+    expected: "\u2014"
+    expected_label: Council Member
+    field: image
+    person: Darrell Grintz
+  - actual: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Michael Pye
+  nav_links_no_names:
+  - actual: present
+    actual_label: Councilmember Place 5
+    expected: "\u2014"
+    expected_label: ''
+    field: person
+    subject: Edward Zapalac
+  place_abernathy__council_manager__council__suggested_titles:
+  - actual: local://48140b328c80.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Harold Bufe
+  place_abernathy__unscoped__known_titles:
+  - actual: local://48140b328c80.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Harold Bufe
+  place_abernathy__unscoped__no_titles:
+  - actual: local://48140b328c80.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: Harold Bufe
+  place_amador_city__mayor_council__office_of_the_mayor__known_titles:
+  - actual: info@amador-city.com
+    actual_label: Mayor
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor
+    field: email
+    person: Sandra Staples
+  place_amador_city__mayor_council__office_of_the_mayor__no_titles:
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor
+    field: email
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: (209) 267-0682
+    expected_label: Mayor
+    field: phone
+    person: Sandra Staples
+  place_amador_city__mayor_council__office_of_the_mayor__suggested_titles:
+  - actual: info@amador-city.com
+    actual_label: Mayor
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor
+    field: email
+    person: Sandra Staples
+  place_amador_city__unscoped__no_titles:
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Bruce Sherrill
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Nikko Ambroselli
+  - actual: "\u2014"
+    actual_label: Mayor and Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Mayor and Council Member
+    field: email
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor and Council Member
+    expected: (209) 267-0682
+    expected_label: Mayor and Council Member
+    field: phone
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Mayor and Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Mayor and Council Member
+    field: url
+    person: Sandra Staples
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Stephen Testa
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: city.clerk@amador-city.com
+    expected_label: Council Member
+    field: email
+    person: Susan Bragstad
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: (209) 267-0682
+    expected_label: Council Member
+    field: phone
+    person: Susan Bragstad
+  - actual: "\u2014"
+    actual_label: Council Member
+    expected: https://amador-city.com/government-overview
+    expected_label: Council Member
+    field: url
+    person: Susan Bragstad
+  place_armada__unscoped__no_titles:
+  - actual: watercommissioner@villageofarmada.org/
+    actual_label: Trustee and Water Commissioner
+    expected: watercommissioner@villageofarmada.org
+    expected_label: Trustee and Water Commissioner
+    field: email
+    person: Ross Boelke
+  place_belle_meade__commission__commission__suggested_titles:
+  - actual: 2028-11
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: end_date
+    person: Haley Dale
+  - actual: local://641567e24b2f.png
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: image
+    person: Haley Dale
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Louise Bryan
+  - actual: local://9f01ba26a40c.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Louise Bryan
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Neal Clayton
+  - actual: local://151c78eb7631.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Neal Clayton
+  - actual: 2026-11
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: end_date
+    person: Rusty Moore
+  - actual: local://5750533ab677.png
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: image
+    person: Rusty Moore
+  - actual: 2028-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Tom Starkey
+  - actual: local://35c620d76e35.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Tom Starkey
+  place_belle_meade__council_manager__council__suggested_titles:
+  - actual: 2028-11
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: end_date
+    person: Haley Dale
+  - actual: local://641567e24b2f.png
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: image
+    person: Haley Dale
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Louise Bryan
+  - actual: local://9f01ba26a40c.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Louise Bryan
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Neal Clayton
+  - actual: local://151c78eb7631.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Neal Clayton
+  - actual: 2026-11
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: end_date
+    person: Rusty Moore
+  - actual: local://5750533ab677.png
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: image
+    person: Rusty Moore
+  - actual: 2028-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Tom Starkey
+  - actual: local://35c620d76e35.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Tom Starkey
+  place_belle_meade__unscoped__known_titles:
+  - actual: 2028-11
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: end_date
+    person: Haley Dale
+  - actual: local://641567e24b2f.png
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: image
+    person: Haley Dale
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Louise Bryan
+  - actual: local://9f01ba26a40c.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Louise Bryan
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Neal Clayton
+  - actual: local://151c78eb7631.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Neal Clayton
+  - actual: 2026-11
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: end_date
+    person: Rusty Moore
+  - actual: local://5750533ab677.png
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: image
+    person: Rusty Moore
+  - actual: 2028-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Tom Starkey
+  - actual: local://35c620d76e35.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Tom Starkey
+  place_belle_meade__unscoped__no_titles:
+  - actual: 2028-11
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: end_date
+    person: Haley Dale
+  - actual: local://641567e24b2f.png
+    actual_label: Commissioner and Vice-Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Vice Mayor
+    field: image
+    person: Haley Dale
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Louise Bryan
+  - actual: local://9f01ba26a40c.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Louise Bryan
+  - actual: 2026-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Neal Clayton
+  - actual: local://151c78eb7631.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Neal Clayton
+  - actual: 2026-11
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: end_date
+    person: Rusty Moore
+  - actual: local://5750533ab677.png
+    actual_label: Commissioner and Mayor
+    expected: "\u2014"
+    expected_label: Commissioner and Mayor
+    field: image
+    person: Rusty Moore
+  - actual: 2028-11
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: end_date
+    person: Tom Starkey
+  - actual: local://35c620d76e35.png
+    actual_label: Commissioner
+    expected: "\u2014"
+    expected_label: Commissioner
+    field: image
+    person: Tom Starkey
+  place_gibbsboro__mayor_council__council__suggested_titles:
+  - actual: "\u2014"
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilman
+    field: url
+    person: Andrew Parsinitz
+  - actual: "\u2014"
+    actual_label: Councilwoman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilwoman
+    field: url
+    person: Beth Schmidt
+  - actual: "\u2014"
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilman
+    field: url
+    person: Brandon Boots
+  - actual: "\u2014"
+    actual_label: Mayor
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Mayor
+    field: url
+    person: Edward G. Campbell III
+  - actual: "\u2014"
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilman
+    field: url
+    person: Glenn Werner
+  - actual: "\u2014"
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilman
+    field: url
+    person: John Ritz
+  - actual: "\u2014"
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilman
+    field: url
+    person: Marianne Colavita
+  - actual: "\u2014"
+    actual_label: Councilman
+    expected: https://gibbsborotownhall.com/borough-council
+    expected_label: Councilman
+    field: url
+    person: Mitch Brown
+  place_greenwood_village__unscoped__no_titles:
+  - actual: 2025-11
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: start_date
+    person: Ann Nelson
+  - actual: local://c175baeebdd2.png
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: image
+    person: Ann Nelson
+  - actual: 2025-11
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: start_date
+    person: Bob Doyle
+  - actual: local://92195470815f.png
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: image
+    person: Bob Doyle
+  - actual: 2025-11
+    actual_label: Council Member District 3
+    expected: "\u2014"
+    expected_label: Council Member District 3
+    field: start_date
+    person: Donna Johnston
+  - actual: local://2716200a4d65.png
+    actual_label: Council Member District 3
+    expected: "\u2014"
+    expected_label: Council Member District 3
+    field: image
+    person: Donna Johnston
+  - actual: 2023-11
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: start_date
+    person: George Lantz
+  - actual: local://05074859a7df.png
+    actual_label: Mayor
+    expected: "\u2014"
+    expected_label: Mayor
+    field: image
+    person: George Lantz
+  - actual: 2025-11
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: start_date
+    person: Jay Schneiderman
+  - actual: local://7ea160bab3ca.png
+    actual_label: Council Member District 2
+    expected: "\u2014"
+    expected_label: Council Member District 2
+    field: image
+    person: Jay Schneiderman
+  - actual: 2025-11
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: start_date
+    person: Katrin Mezger
+  - actual: local://9aebb99b6152.png
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: image
+    person: Katrin Mezger
+  - actual: 2025-11
+    actual_label: Council Member District 3 and Mayor Pro Tem
+    expected: "\u2014"
+    expected_label: Council Member District 3 and Mayor Pro Tem
+    field: start_date
+    person: Libby Hilton Barnacle
+  - actual: local://513a106f2b44.png
+    actual_label: Council Member District 3 and Mayor Pro Tem
+    expected: "\u2014"
+    expected_label: Council Member District 3 and Mayor Pro Tem
+    field: image
+    person: Libby Hilton Barnacle
+  - actual: 2025-11
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: start_date
+    person: Paul Wiesner
+  - actual: local://d15ec3fc330d.png
+    actual_label: Council Member District 1
+    expected: "\u2014"
+    expected_label: Council Member District 1
+    field: image
+    person: Paul Wiesner
+  - actual: 2025-11
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: start_date
+    person: Tom Stahl
+  - actual: local://ae9612794888.png
+    actual_label: Council Member District 4
+    expected: "\u2014"
+    expected_label: Council Member District 4
+    field: image
+    person: Tom Stahl
+  place_millbury__open_town_meeting__select_board__suggested_titles:
+  - actual: "\u2014"
+    actual_label: Selectman and Vice Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Vice Chairman
+    field: url
+    person: Brian A. Sora
+  - actual: "\u2014"
+    actual_label: Selectman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Brian Tagg
+  - actual: "\u2014"
+    actual_label: Selectman and Chairman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Chairman
+    field: url
+    person: Mary Krumsiek
+  - actual: "\u2014"
+    actual_label: Selectman
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman
+    field: url
+    person: Michael R. Gilchrist
+  - actual: "\u2014"
+    actual_label: Selectman and Clerk
+    expected: https://millburyma.gov/1506/board-of-selectmen
+    expected_label: Selectman and Clerk
+    field: url
+    person: Nicholas Lazzaro
+  raisin_township_clerk:
+  - actual: local://2105ede652ed.png
+    actual_label: Clerk
+    expected: "\u2014"
+    expected_label: Clerk
+    field: image
+    person: Susan Bunch
+  raisin_township_supervisor:
+  - actual: local://c487d9c940ad.png
+    actual_label: Supervisor
+    expected: "\u2014"
+    expected_label: Supervisor
+    field: image
+    person: Deb Brousseau
+  redundant_place_role:
+  - actual:
+    - Council Member
+    actual_label: Council Member Place 5
+    expected:
+    - Mayor
+    expected_label: Council Member Place 5, Mayor
+    field: primary_role
+    person: Garrett Wood
+  - actual:
+    - Council Member
+    actual_label: Council Member Place 5
+    expected:
+    - Council Member
+    - Mayor
+    expected_label: Council Member Place 5, Mayor
+    field: roles
+    person: Garrett Wood
+  vacant_positions_council:
+  - actual:
+    - Alderman
+    actual_label: Alderman
+    expected:
+    - Council Member
+    expected_label: Council
+    field: primary_role
+    person: Alysa Jarvis
+  - actual:
+    - Alderman
+    actual_label: Alderman
+    expected:
+    - Council Member
+    expected_label: Council
+    field: roles
+    person: Alysa Jarvis
+  - actual:
+    - Alderman
+    actual_label: Alderman
+    expected:
+    - Council Member
+    expected_label: Council
+    field: primary_role
+    person: Kenneth Reese
+  - actual:
+    - Alderman
+    actual_label: Alderman
+    expected:
+    - Council Member
+    expected_label: Council
+    field: roles
+    person: Kenneth Reese
+  - actual:
+    - Alderman
+    actual_label: Alderman
+    expected:
+    - Council Member
+    expected_label: Council
+    field: primary_role
+    person: Tracey Johnson
+  - actual:
+    - Alderman
+    actual_label: Alderman
+    expected:
+    - Council Member
+    expected_label: Council
+    field: roles
+    person: Tracey Johnson

@@ -1,49 +1,9 @@
 people:
 - name: Harold Bufe
   label: Mayor
-  phone: null
+  phone: (806) 298-2546
   email: null
   url: https://cityofabernathy.org/your-government/city-council/
   start_date: 2025-06
   end_date: 2028-05
-  image: local://48140b328c80.png
-- name: Bilinda Prater
-  label: Mayor Pro-Tempore
-  phone: null
-  email: bprater@cityofabernathy.org
-  url: https://cityofabernathy.org/your-government/city-council/
-  start_date: 2018-05
-  end_date: 2026-05
-  image: local://f807858b4119.png
-- name: Gary Stephenson
-  label: Alderman
-  phone: null
-  email: gstephenson@cityofabernathy.org
-  url: https://cityofabernathy.org/your-government/city-council/
-  start_date: 2023-05
-  end_date: 2025-05
-  image: local://48140b328c80.png
-- name: Matthew Speer
-  label: Alderman
-  phone: null
-  email: m.speer@cityofabernathy.org
-  url: https://cityofabernathy.org/your-government/city-council/
-  start_date: 2025-05
-  end_date: 2026-05
-  image: local://48140b328c80.png
-- name: Eva Cortez
-  label: Alderwoman
-  phone: null
-  email: ecortez@cityofabernathy.org
-  url: https://cityofabernathy.org/your-government/city-council/
-  start_date: 2022-05
-  end_date: 2026-05
-  image: local://48140b328c80.png
-- name: Tammy Mahan
-  label: Alderwoman
-  phone: null
-  email: tmahan@cityofabernathy.org
-  url: https://cityofabernathy.org/your-government/city-council/
-  start_date: 2023-05
-  end_date: 2025-05
   image: local://48140b328c80.png

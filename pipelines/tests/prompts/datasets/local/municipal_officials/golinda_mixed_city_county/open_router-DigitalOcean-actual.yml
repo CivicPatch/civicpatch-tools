@@ -3,15 +3,7 @@ people:
   label: Mayor
   phone: (254) 881-7333
   email: null
-  url: null
-  start_date: null
-  end_date: null
-  image: null
-- name: Lisa Faulkner
-  label: Administrative Assistant
-  phone: (254) 881-7333
-  email: null
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -19,7 +11,7 @@ people:
   label: Mayor Pro Tem
   phone: (254) 881-7333
   email: null
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -27,7 +19,7 @@ people:
   label: Council
   phone: (254) 881-7333
   email: null
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -35,7 +27,7 @@ people:
   label: Council
   phone: (254) 881-7333
   email: null
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -43,7 +35,7 @@ people:
   label: Council
   phone: (254) 881-7333
   email: null
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null
@@ -51,7 +43,7 @@ people:
   label: Council
   phone: (254) 881-7333
   email: null
-  url: null
+  url: https://www.cityofgolinda.com/city-county-officials
   start_date: null
   end_date: null
   image: null

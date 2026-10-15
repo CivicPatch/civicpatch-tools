@@ -21,7 +21,7 @@ def test_a_cold_start_lists_its_forms_roles_as_a_guess():
         "Select Board", [], government_form_role_labels=["Select Board Member"]
     )
 
-    assert "Roles it usually has (a guess from its form of government, not from this page):" in prompt
+    assert "Roles it usually has:\n      - Select Board Member" in prompt
     assert "- Select Board Member" in prompt
     assert "Roles in it:" not in prompt
 

@@ -201,49 +201,19 @@ def _organization_scope(organization: PromptOrganization) -> str:
 """
 
 
-def _divisions_rule(divisions: List[str]) -> str:
-    if not divisions:
-        return ""
-    return f"""    - Its divisions, in our words:
-{_bullets(divisions, "        ")}
-      They tell you which seats exist; write a person's seat as the page writes it.
-"""
-
-
-def _known_roles_label_rules(organization: PromptOrganization, page_label_rules: str) -> str:
-    return f"""    - The roles in {organization.name}, in our words:
-{_bullets(organization.role_labels, "        ")}
-      When the page means one of these roles, prefer our word for it, even if the page writes it
-      differently.
-{_divisions_rule(organization.divisions)}    - A person can hold more than one role, such as a seat and a presiding title. Put every one
-      in the same label, joined with "and".
-    - If the page gives them a {organization.name} role that is not listed, do not swap it for a
-      listed one. Write it from the page and join it with any listed roles they hold:
-        "Deputy Mayor, Ward 5" when the roles are "Council Member" but no Deputy Mayor
-            -> "Council Member Ward 5 and Deputy Mayor"
-      Write a label from the page following these rules:
-{page_label_rules}"""
-
-
-def _government_form_roles_label_rules(
-    organization: PromptOrganization, page_label_rules: str
-) -> str:
-    return f"""    - A {organization.name} usually has these roles:
-{_bullets(organization.government_form_role_labels, "        ")}
-      That is a guess from its form of government, not from this page. Use one of these words
-      only when the page clearly means that role; otherwise write the title the page gives.
-{_divisions_rule(organization.divisions)}      Write a label from the page following these rules:
-{page_label_rules}"""
+def _listed(heading: str, items: List[str]) -> str:
+    return f"    - {heading}:\n{_bullets(items, '        ')}\n" if items else ""
 
 
 def _label_rules(organization: PromptOrganization | None) -> str:
-    if organization and organization.role_labels:
-        return _known_roles_label_rules(organization, _PAGE_LABEL_RULES)
-    if organization and organization.government_form_role_labels:
-        return _government_form_roles_label_rules(organization, _PAGE_LABEL_RULES)
-    if organization and organization.divisions:
-        return _divisions_rule(organization.divisions) + _PAGE_LABEL_RULES
-    return _PAGE_LABEL_RULES
+    if organization is None:
+        return _PAGE_LABEL_RULES
+    return (
+        _listed(f"Roles in {organization.name}", organization.role_labels)
+        + _listed(f"Roles a {organization.name} usually has", [] if organization.role_labels else organization.government_form_role_labels)
+        + _listed(f"Divisions in {organization.name}", organization.divisions)
+        + _PAGE_LABEL_RULES
+    )
 
 
 def _roles_hint(
@@ -252,18 +222,11 @@ def _roles_hint(
     """Unscoped only: a scoped run's label rules already name its body's roles and divisions."""
     lines = []
     if known_roles:
-        lines.append("- Known elected roles for this municipality: " + ", ".join(known_roles) + ".")
+        lines.append("- Roles in this municipality: " + ", ".join(known_roles) + ".")
     elif government_form_role_labels:
-        lines.append(
-            "- Its form of government usually has these roles: "
-            + ", ".join(government_form_role_labels)
-            + ". That is a guess, not from this page; write the title the page gives."
-        )
+        lines.append("- Roles this municipality usually has: " + ", ".join(government_form_role_labels) + ".")
     if divisions:
-        lines.append(
-            "- Its divisions: " + ", ".join(divisions)
-            + ". Write a person's seat as the page writes it."
-        )
+        lines.append("- Divisions in this municipality: " + ", ".join(divisions) + ".")
     return "\n    ".join(lines)
 
 
@@ -325,7 +288,8 @@ def municipality_officials_prompt(
     Aldermen, Board of Commissioners). Exclude appointed staff and officials of other
     governments (another city or county, the state, a precinct or special district), even when
     listed on the same page.
-    Treat officials as currently serving unless the content says the roster is historical.
+    Treat officials as currently serving unless the content says the roster is historical, or
+    gives a term that ended before the current date: leave those people out.
     If there are no valid sources, return an empty "people" array.
 
     STEP 2 - FOR EACH OFFICIAL, EXTRACT THE FOLLOWING
@@ -409,10 +373,7 @@ def page_covers_organization_prompt(
     if role_labels:
         roles_line = f"    Roles in it:\n{_bullets(role_labels, '      ')}\n"
     elif government_form_role_labels:
-        roles_line = (
-            "    Roles it usually has (a guess from its form of government, not from this page):\n"
-            f"{_bullets(government_form_role_labels, '      ')}\n"
-        )
+        roles_line = f"    Roles it usually has:\n{_bullets(government_form_role_labels, '      ')}\n"
     else:
         roles_line = ""
     divisions_line = f"    Its divisions:\n{_bullets(divisions, '      ')}\n" if divisions else ""
