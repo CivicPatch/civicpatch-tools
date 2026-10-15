@@ -12,14 +12,6 @@ import {
 } from "../../components/confirm-modal/confirm-modal.ts";
 
 const STATUS_ACTIVE = "active";
-const STATUS_CANDIDATE = "candidate";
-const STATUS_INACTIVE = "inactive";
-
-const STATUS_OPTIONS = [
-  STATUS_ACTIVE,
-  STATUS_CANDIDATE,
-  STATUS_INACTIVE,
-];
 
 function parseAliases(text) {
   return text
@@ -44,11 +36,9 @@ function useTermEditor() {
   const [editingValue, setEditingValue] = useState(null);
   const [editingRoleId, setEditingRoleId] = useState(null);
   const [editName, setEditName] = useState("");
-  const [editStatus, setEditStatus] = useState(STATUS_ACTIVE);
   const [editUnique, setEditUnique] = useState(false);
   const [editAliases, setEditAliases] = useState("");
   const [addName, setAddName] = useState("");
-  const [addStatus, setAddStatus] = useState(STATUS_ACTIVE);
   const [addUnique, setAddUnique] = useState(false);
   const [addAliases, setAddAliases] = useState("");
   const [saving, setSaving] = useState(false);
@@ -59,7 +49,6 @@ function useTermEditor() {
     setEditingValue(term.label);
     setEditingRoleId(term.id);
     setEditName(term.label);
-    setEditStatus(term.status || STATUS_ACTIVE);
     setEditUnique(term.is_unique);
     setEditAliases((term.aliases || []).join("\n"));
     setSaveError(null);
@@ -69,7 +58,6 @@ function useTermEditor() {
     setIsAdding(true);
     setEditingValue(null);
     setAddName("");
-    setAddStatus(STATUS_ACTIVE);
     setAddUnique(false);
     setAddAliases("");
     setSaveError(null);
@@ -87,16 +75,12 @@ function useTermEditor() {
     editingRoleId,
     editName,
     setEditName,
-    editStatus,
-    setEditStatus,
     editUnique,
     setEditUnique,
     editAliases,
     setEditAliases,
     addName,
     setAddName,
-    addStatus,
-    setAddStatus,
     addUnique,
     setAddUnique,
     addAliases,
@@ -120,16 +104,12 @@ function TermTable({ terms, editable, editor, onSave, onDelete }) {
     editingRoleId,
     editName,
     setEditName,
-    editStatus,
-    setEditStatus,
     editUnique,
     setEditUnique,
     editAliases,
     setEditAliases,
     addName,
     setAddName,
-    addStatus,
-    setAddStatus,
     addUnique,
     setAddUnique,
     addAliases,
@@ -149,7 +129,6 @@ function TermTable({ terms, editable, editor, onSave, onDelete }) {
         value: editingValue,
         role_id: editingRoleId,
         label: editName.trim(),
-        status: editStatus,
         is_unique: editUnique,
         aliases: parseAliases(editAliases),
       },
@@ -164,7 +143,6 @@ function TermTable({ terms, editable, editor, onSave, onDelete }) {
       {
         type: "add",
         label: addName.trim(),
-        status: addStatus,
         is_unique: addUnique,
         aliases: parseAliases(addAliases),
       },
@@ -182,11 +160,6 @@ function TermTable({ terms, editable, editor, onSave, onDelete }) {
     });
   };
 
-  const statusBadge = (status) => {
-    if (!status || status === STATUS_ACTIVE) return "";
-    return ` (${status})`;
-  };
-
   const editing = editingValue !== null;
   const adding = isAdding;
 
@@ -194,17 +167,6 @@ function TermTable({ terms, editable, editor, onSave, onDelete }) {
     ? html`
         <div class="config-editor__edit-form">
           <label>Label <input type="text" readonly .value=${editName} /></label>
-          <label
-            >Status
-            <select
-              .value=${editStatus}
-              @change=${(e) => setEditStatus(e.target.value)}
-            >
-              ${STATUS_OPTIONS.map(
-                (s) => html`<option value=${s}>${s}</option>`,
-              )}
-            </select>
-          </label>
           <label class="config-editor__checkbox-label"
             ><input
               type="checkbox"
@@ -237,17 +199,6 @@ function TermTable({ terms, editable, editor, onSave, onDelete }) {
               .value=${addName}
               @input=${(e) => setAddName(e.target.value)}
           /></label>
-          <label
-            >Status
-            <select
-              .value=${addStatus}
-              @change=${(e) => setAddStatus(e.target.value)}
-            >
-              ${STATUS_OPTIONS.map(
-                (s) => html`<option value=${s}>${s}</option>`,
-              )}
-            </select>
-          </label>
           <label class="config-editor__checkbox-label"
             ><input
               type="checkbox"
@@ -298,7 +249,6 @@ function TermTable({ terms, editable, editor, onSave, onDelete }) {
       <thead>
         <tr>
           <th>Role</th>
-          <th>Status</th>
           <th>Unique</th>
           <th>Aliases</th>
           ${editable ? html`<th></th>` : null}
@@ -307,7 +257,7 @@ function TermTable({ terms, editable, editor, onSave, onDelete }) {
       <tbody>
         ${terms.length === 0
           ? html`<tr>
-              <td colspan=${editable ? 5 : 4} class="config-editor__empty">
+              <td colspan=${editable ? 4 : 3} class="config-editor__empty">
                 No roles yet.
               </td>
             </tr>`
@@ -315,7 +265,6 @@ function TermTable({ terms, editable, editor, onSave, onDelete }) {
               (t) => html`
                 <tr>
                   <td>${t.label}</td>
-                  <td>${t.status || STATUS_ACTIVE}${statusBadge(t.status)}</td>
                   <td>${t.is_unique ? "Yes" : "No"}</td>
                   <td
                     class=${t.aliases?.length > 1
@@ -426,7 +375,7 @@ function ConfigEditor(host) {
     setTerms(null);
     setLoadError(null);
     fetchRoles()
-      .then((r) => setTerms(r.data?.roles || []))
+      .then((r) => setTerms((r.data?.roles || []).filter((t) => t.status === STATUS_ACTIVE)))
       .catch((e) => setLoadError(e.message));
   };
 
@@ -440,7 +389,6 @@ function ConfigEditor(host) {
     try {
       const edited = {
         label: op.label,
-        status: op.status,
         is_unique: op.is_unique,
         aliases: op.aliases,
       };

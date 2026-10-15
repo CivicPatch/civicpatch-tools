@@ -1,7 +1,6 @@
 from collections.abc import Callable
 
 from schemas.roles import RoleInput
-from shared.schemas import RoleStatus
 from shared.utils.layered_config import ConfigFile, ConfigRole
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
@@ -15,10 +14,6 @@ class RoleConfigEditRefused(Exception):
 
 
 def with_role_added(roles: list[ConfigRole], role: RoleInput) -> list[ConfigRole]:
-    if role.status != RoleStatus.ACTIVE:
-        raise RoleConfigEditRefused(
-            f"{role.label}: a config file lists only active roles; remove it instead"
-        )
     added = ConfigRole(
         id=slugify_label(role.label),
         label=role.label,
@@ -32,10 +27,6 @@ def with_role_edited(
     roles: list[ConfigRole], role_id: str, role: RoleInput
 ) -> list[ConfigRole]:
     """The id stays, so a renamed role keeps its posts."""
-    if role.status != RoleStatus.ACTIVE:
-        raise RoleConfigEditRefused(
-            f"{role.label}: a config file lists only active roles; remove it instead"
-        )
     edit = {
         "label": role.label,
         "is_unique": role.is_unique,
