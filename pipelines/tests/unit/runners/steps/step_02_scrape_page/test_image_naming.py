@@ -39,12 +39,12 @@ def test_hash_file_differs_for_different_bytes(tmp_path):
 @pytest.mark.asyncio
 async def test_register_image_names_the_file_after_its_bytes(tmp_path):
     temp_path = write_temp(tmp_path, "abc123.tmp", b"a photo")
+    expected = f"{hash_file(temp_path)}.png"
     image_map = {}
     img = make_img()
 
     await _register_image(img, str(tmp_path), temp_path, image_map, "https://city.gov/a.jpg")
 
-    expected = f"{hash_file(os.path.join(tmp_path, os.listdir(tmp_path)[0]))}.png"
     assert list(image_map) == [expected]
     assert image_map[expected] == "https://city.gov/a.jpg"
     assert not os.path.exists(temp_path)
