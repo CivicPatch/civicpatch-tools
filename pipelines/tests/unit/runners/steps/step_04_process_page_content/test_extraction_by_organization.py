@@ -12,7 +12,7 @@ from runners.people_collector.schemas import (
     PeopleArrayLLMResponseSchema,
     ProcessPageContentStep,
 )
-from runners.people_collector.steps.step_04_process_page_content.extraction_scopes import (
+from runners.people_collector.steps.step_04_process_page_content.extraction_by_organization import (
     extraction_scopes,
 )
 from runners.people_collector.steps.step_04_process_page_content.heuristics_failure import (

@@ -14,10 +14,7 @@ from shared.schemas import KnownOrganization
 
 
 class ExtractionScope(BaseModel):
-    """One extraction run: the organization its records are stamped with, and what the prompt is told.
-
-    `prompt_organization` is None when the prompt runs unscoped.
-    """
+    """One extraction run. `prompt_organization` None runs the prompt unscoped."""
 
     organization_id: str | None = None
     prompt_organization: PromptOrganization | None = None
@@ -26,8 +23,7 @@ class ExtractionScope(BaseModel):
 def prompt_organization(
     organization: KnownOrganization, memberships: List[ExpectedMembership]
 ) -> PromptOrganization:
-    """Its roles and divisions from who we expect in it; its form's role labels only when we
-    expect nobody, since those are a guess."""
+    """The form's role labels only when we expect nobody in it: they are a guess."""
     own = memberships_in(organization.id, memberships)
     return PromptOrganization(
         name=organization.name,
@@ -42,17 +38,8 @@ def extraction_scopes(
     memberships: List[ExpectedMembership],
     covers: List[str] | None = None,
 ) -> List[ExtractionScope]:
-    """One unscoped run unless there are several organizations to tell apart.
-
-    A single organization keeps today's unscoped prompt — the scoped prompt and its pick list are only
-    measured on the org-scoped eval cases — but its records still carry the organization's id. Scoping
-    turns on once a maintainer has created a second organization.
-
-    `covers` is the relevance check's answer about which bodies this page carries people for, and
-    narrows the runs to those. None means it was not asked; an empty list means the page carries
-    somebody who fits no known body, and both fall back to running every organization, because a
-    page we did not ask about is not a page we know nothing is on.
-    """
+    """One run per organization the page covers; a lone organization runs unscoped.
+    `covers` None or empty means unknown, so every organization runs."""
     if not organizations:
         return [ExtractionScope()]
     if len(organizations) == 1:

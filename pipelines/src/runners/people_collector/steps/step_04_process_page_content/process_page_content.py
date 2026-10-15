@@ -25,7 +25,7 @@ from runners.people_collector.steps.step_04_process_page_content.organization_pr
     organization_needs,
     organizations_progress,
 )
-from runners.people_collector.steps.step_04_process_page_content.extraction_scopes import (
+from runners.people_collector.steps.step_04_process_page_content.extraction_by_organization import (
     ExtractionScope,
     extraction_scopes,
 )
