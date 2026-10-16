@@ -16,7 +16,7 @@ from datetime import date, datetime, timezone
 import pytest
 import pytest_asyncio
 
-from database import divisions, memberships, organizations, people, posts
+from database import divisions, memberships, organizations, people, post_listings, posts
 from database.database import get_pool
 from tests.integration import factories
 
@@ -151,7 +151,7 @@ async def test_before_we_ever_looked_the_seat_is_empty_but_still_there_and_still
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await posts.list_for_jurisdiction(cur, _OCDID)
+        rows = await post_listings.list_for_jurisdiction(cur, _OCDID)
 
     assert len(rows) == 1
     assert await _holders(date(2026, 1, 1)) == 0

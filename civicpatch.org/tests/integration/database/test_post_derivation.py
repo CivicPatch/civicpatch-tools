@@ -19,7 +19,7 @@ from core.people_edits import POSTS_FIELD
 from core.projection.facts import PostKey
 from tests.integration.factories import SeededMembership
 from core.roster_changes import ChangeKind, changes_of
-from database import claims, divisions, memberships, organizations, posts, projection
+from database import claims, divisions, memberships, organizations, post_claims, post_listings, posts, projection
 from database import changesets as changesets_db
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
@@ -165,7 +165,7 @@ async def test_a_match_never_overwrites_a_human_edit():
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
-        post = await posts.get(cur, post_id)
+        post = await post_listings.get(cur, post_id)
         assert post is not None
         assert (post.meta_headcount, post.meta_is_tracked) == (9, False)
 
@@ -233,11 +233,11 @@ async def test_a_post_is_unverified_until_a_publish_puts_somebody_in_it():
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
 
-        unverified = await posts.unverified_by_jurisdiction(cur, [_OCDID])
+        unverified = await post_listings.unverified_by_jurisdiction(cur, [_OCDID])
         assert [post["id"] for post in unverified[_OCDID]] == [post_id]
 
         await factories.bind_membership(cur, SeededMembership(person_id=person_id), post_id, org, _T0)
-        assert await posts.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
+        assert await post_listings.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
         await conn.rollback()
 
 
@@ -281,8 +281,8 @@ async def test_a_jurisdiction_with_no_unverified_posts_still_gets_a_key():
     jurisdictions that are fine, which is most of them."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        assert await posts.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
-        assert await posts.unverified_by_jurisdiction(cur, []) == {}
+        assert await post_listings.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
+        assert await post_listings.unverified_by_jurisdiction(cur, []) == {}
         await conn.rollback()
 
 
@@ -433,7 +433,7 @@ async def test_a_human_created_post_is_matched_by_a_later_scrape():
 
     async with pool.connection() as conn, conn.cursor() as cur:
         matched = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        post = await posts.get(cur, matched)
+        post = await post_listings.get(cur, matched)
 
     assert created == matched
     assert post is not None and post.meta_headcount == 3  # the scrape did not overwrite it
@@ -471,7 +471,7 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
 
     assert await posts.update(post_id, 5, False, SYSTEM_USER_ID) == _OCDID
     async with pool.connection() as conn, conn.cursor() as cur:
-        post = await posts.get(cur, post_id)
+        post = await post_listings.get(cur, post_id)
     assert post is not None
     assert (post.meta_headcount, post.meta_is_tracked) == (5, False)
 
@@ -636,7 +636,7 @@ async def test_a_jurisdictions_first_scrape_raises_no_post_issues():
         await conn.commit()
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        assert await posts.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
+        assert await post_listings.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
 
 
 @pytest.mark.asyncio
@@ -656,7 +656,7 @@ async def test_the_same_post_raises_once_the_jurisdiction_has_been_published():
     await _already_published()
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        unverified = await posts.unverified_by_jurisdiction(cur, [_OCDID])
+        unverified = await post_listings.unverified_by_jurisdiction(cur, [_OCDID])
         assert [post["id"] for post in unverified[_OCDID]] == [post_id]
 
 
@@ -1077,7 +1077,7 @@ async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
         curator_id = (await cur.fetchone())[0]
         edit = str(uuid.uuid4())
         await changesets_db.create_roster_edit_changeset(cur, edit, _OCDID, curator_id)
-        await posts.set_post_label(cur, post_id, "Position 8", curator_id, edit)
+        await post_claims.set_post_label(cur, post_id, "Position 8", curator_id, edit)
         for person_id in (staying, leaving):
             await factories.bind_membership(cur, SeededMembership(person_id=person_id), post_id, council, _T0)
         await conn.commit()
@@ -1382,7 +1382,7 @@ async def test_deleting_a_post_into_another_moves_its_holder_and_drops_the_row()
     assert changeset_id
     assert await _open_memberships(person_id) == [(mayors_office, "mayor", _BASE)]
     async with pool.connection() as conn, conn.cursor() as cur:
-        assert await posts.get(cur, council_mayor) is None
+        assert await post_listings.get(cur, council_mayor) is None
 
 
 async def _council_mayor_deleted_into_the_office() -> tuple[str, str]:
@@ -1410,4 +1410,4 @@ async def test_re_adding_a_deleted_post_undoes_its_deletion():
     assert re_added == council_mayor
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        assert await posts.get_deletion_claim_ids(cur, council_mayor) == []
+        assert await post_claims.get_deletion_claim_ids(cur, council_mayor) == []

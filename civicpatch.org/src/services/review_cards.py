@@ -9,7 +9,7 @@ from typing import NamedTuple
 from core.review_summary import ReviewSummary
 from database import changesets as changesets_db
 from database import pipeline_runs as pipeline_runs_db
-from database import posts as posts_db
+from database import post_listings as post_listings_db
 from schemas.review_cards import ReviewCard, ReviewSource
 from services.claims import claims_for_people
 from services.review_summary import summary_of
@@ -43,7 +43,7 @@ async def with_card_data(changeset_ids: list[str]) -> list[ReviewCard]:
     ]
     # One read each for the whole page rather than a round trip per card.
     organizations, claims, run_ids = await asyncio.gather(
-        posts_db.list_by_organization_for_jurisdictions(list(set(ocdids.values()))),
+        post_listings_db.list_by_organization_for_jurisdictions(list(set(ocdids.values()))),
         claims_for_people(everyone),
         pipeline_runs_db.pipeline_run_ids_for_changesets(known),
     )

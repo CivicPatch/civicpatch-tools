@@ -11,7 +11,7 @@ from core.review_summary import ReviewSummary, fold_card_summary
 from database import source_pages
 from database import changesets as changesets_db
 from database import organizations as organizations_db
-from database import posts as posts_db
+from database import post_listings as post_listings_db
 from database.database import get_pool
 from database.roles import get_roles
 from services.roster import CardFold, card_fold
@@ -86,5 +86,5 @@ async def _unverified_post_issues(
 ) -> dict[str, list[Issue]]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        unverified = await posts_db.unverified_by_jurisdiction(cur, jurisdiction_ocdids)
+        unverified = await post_listings_db.unverified_by_jurisdiction(cur, jurisdiction_ocdids)
     return {ocdid: unverified_post_issues(posts) for ocdid, posts in unverified.items()}

@@ -38,7 +38,7 @@ def _latest(memberships: Sequence[Membership]) -> Membership | None:
     )
 
 
-# The name a human gave a post, keyed by the post's identity. `database.posts._with_label`
+# The name a human gave a post, keyed by the post's identity. `database.post_claims.with_label`
 # spells the same rule: a derived name is the fallback, not the display name.
 PostLabels = Mapping[tuple[str, str, str], str]
 

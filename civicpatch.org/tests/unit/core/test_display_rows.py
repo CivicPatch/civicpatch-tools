@@ -139,7 +139,7 @@ def test_people_come_out_in_the_order_the_card_reads_them():
 
 @pytest.mark.unit
 def test_a_post_shows_the_name_a_human_gave_it():
-    """`database.posts._with_label`'s rule, which the fold cannot apply itself: naming a post
+    """`database.post_claims.with_label`'s rule, which the fold cannot apply itself: naming a post
     writes a claim on the POST entity, and `database/facts.py` does not load those yet."""
     person = Person(id="p1", name="Ann Lee", memberships=(_membership(),))
 

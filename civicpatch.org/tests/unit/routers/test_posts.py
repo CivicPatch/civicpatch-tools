@@ -37,7 +37,7 @@ def client():
 def test_bulk_pages_a_whole_state(client):
     """One request per page instead of one per jurisdiction — Washington is 281 of them."""
     with patch(
-        "routers.api.posts.posts.list_page_for_state",
+        "routers.api.posts.post_listings.list_page_for_state",
         new_callable=AsyncMock,
         return_value=(593, [{"id": "1", "post_label": "Council Member"}]),
     ) as list_page:

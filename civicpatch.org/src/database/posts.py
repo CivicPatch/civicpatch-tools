@@ -1,23 +1,16 @@
-from core.membership_label import post_label
-from shared.schemas import Post
-from core.post_grouping import group_by_organization
-from core.projection.canonical_ids import SAME_AS
+"""Writing posts: minting, editing and deleting the rows."""
+
 from core.projection.facts import PostKey
-from database import claims, divisions, organizations
+from database import divisions, organizations
 from database.activity import record_change
 from database.changesets import create_roster_edit_changeset
-from shared.utils.id_utils import make_id
 from database.database import get_pool
-from schemas.claims import (
-    DefaultNote,
-    Claim,
-    ClaimKind,
-    EntityType,
-    Source,
-)
+from database.post_claims import accept_fields, set_post_label, undo_deletion
+from database.post_listings import get
 from schemas.activity import Change, FieldChange
+from schemas.claims import EntityType
+from shared.utils.id_utils import make_id
 from shared.utils.statuses import ActivityType
-
 
 class PostHasMembers(Exception):
     """Somebody holds, or once held, this post. Refused rather than cascaded — a membership is
@@ -30,139 +23,6 @@ class PostHasMembers(Exception):
 
 class UnknownOrganization(Exception):
     """No organization with this id on this jurisdiction."""
-
-
-# The fields a human owns, and what a post reads as until somebody claims otherwise. Claims
-# only: no column holds them, so deleting a post row loses nothing.
-_HUMAN_FIELD_DEFAULTS = {"meta_headcount": 1, "meta_is_tracked": True}
-_HUMAN_FIELDS = tuple(_HUMAN_FIELD_DEFAULTS)
-
-# Not a column — 148 dropped `posts.label` in favor of composing it from role and division on
-# read. A human can still override that guess ("Position 8" instead of the bare role), the same
-# way `memberships.label` overrides its own derivation: as a claim, read back here.
-POST_LABEL_FIELD = "label"
-
-
-def _with_label(post: dict, asserted_label: str | None = None) -> dict:
-    role_label = post.pop("role_label", None) or post["role_id"]
-    return {
-        **post,
-        "label": post_label(role_label, post["division_ocdid"], asserted_label),
-    }
-
-
-def _accepted(by_field: dict, field: str):
-    accepted = by_field.get(field, {}).get(ClaimKind.ACCEPT) or []
-    return accepted[0] if accepted else None
-
-
-def _with_claims(post: dict, by_field: dict) -> dict:
-    """A posts row with what its claims say: the human fields, else their defaults, and the
-    label. `by_field` is one post's entry from `claims.claimed_values`."""
-    human_fields = {}
-    for field, default in _HUMAN_FIELD_DEFAULTS.items():
-        claimed = _accepted(by_field, field)
-        human_fields[field] = default if claimed is None else claimed
-    return _with_label({**post, **human_fields}, _accepted(by_field, POST_LABEL_FIELD))
-
-
-async def claimed_labels(cur, post_ids: list[str]) -> dict[str, str]:
-    """The name a human gave each post, where one did."""
-    claimed = await claims.claimed_values(cur, EntityType.POST, post_ids)
-    return {
-        post_id: accepted[0]
-        for post_id, by_field in claimed.items()
-        for accepted in [by_field.get(POST_LABEL_FIELD, {}).get(ClaimKind.ACCEPT) or []]
-        if accepted
-    }
-
-
-async def claimed_labels_by_key(
-    cur, jurisdiction_ocdid: str
-) -> dict[tuple[str, str, str], str]:
-    """The name a human gave each post in this jurisdiction, keyed by the post's identity.
-
-    By key rather than by id because the fold names a post `uuid5` over that key while the
-    stored row's id is random, so the two sides cannot be joined on an id. Through
-    `claimed_labels` rather than its own join: clearing a name writes a withdraw, and that
-    is the function that knows it.
-    """
-    await cur.execute(
-        """
-        SELECT id::text, organization_id::text, role_id, division_ocdid
-        FROM posts WHERE jurisdiction_ocdid = %s
-        """,
-        (jurisdiction_ocdid,),
-    )
-    rows = await cur.fetchall()
-    if not rows:
-        return {}
-    labels = await claimed_labels(cur, [row[0] for row in rows])
-    return {
-        (organization_id, role_id, division_ocdid): labels[post_id]
-        for post_id, organization_id, role_id, division_ocdid in rows
-        if post_id in labels
-    }
-
-
-async def set_post_label(
-    cur, post_id: str, label: str, user_id: str, changeset_id: str
-) -> None:
-    """Name this post. No column to write — this is the whole effect, unlike
-    `update_human_fields`'s pair."""
-    await claims.upsert(
-        cur,
-        Claim(
-            entity_type=EntityType.POST,
-            entity_id=post_id,
-            field_path=POST_LABEL_FIELD,
-            kind=ClaimKind.ACCEPT,
-            value=label,
-            sources=[Source(note=DefaultNote.LABEL_SET)],
-            changeset_id=changeset_id,
-        ),
-        user_id,
-    )
-
-
-def _fields_to_accept(values: dict) -> list[tuple[str, object]]:
-    """Which of a post's human fields have a value to accept. `value` is NOT NULL, so a field
-    nobody answered is left out rather than stored as null."""
-    return [
-        (field, value)
-        for field, value in values.items()
-        if field in _HUMAN_FIELDS and value is not None
-    ]
-
-
-async def _accept_fields(
-    cur,
-    post_id: str,
-    values: dict,
-    user_id: str,
-    changeset_id: str,
-) -> None:
-    """Accept this post's human fields on somebody's behalf — what makes a hand-made post
-    verified. A no-op edit claims nothing new: `upsert_all` skips a value already the current
-    answer, so re-saving does not insert a row. Only for a person's act: the derivation's path
-    claims nothing, so its posts stay unverified.
-    """
-    await claims.upsert_all(
-        cur,
-        [
-            Claim(
-                entity_type=EntityType.POST,
-                entity_id=post_id,
-                field_path=field,
-                kind=ClaimKind.ACCEPT,
-                value=value,
-                sources=[Source(note=DefaultNote.EDITED)],
-                changeset_id=changeset_id,
-            )
-            for field, value in _fields_to_accept(values)
-        ],
-        user_id,
-    )
 
 
 async def create_if_absent(
@@ -241,26 +101,6 @@ async def delete_if_unheld(cur, post_id: str) -> bool:
     return cur.rowcount > 0
 
 
-async def get_deletion_claim_ids(cur, post_id: str) -> list[str]:
-    """The live `same_as` claims that deleted this post into another."""
-    await cur.execute(
-        """
-        SELECT id::text FROM claims
-        WHERE entity_type = %s AND entity_id = %s AND field_path = %s AND claim_is_live(id)
-        """,
-        (EntityType.POST.value, post_id, SAME_AS),
-    )
-    return [row[0] for row in await cur.fetchall()]
-
-
-async def _undo_deletion(cur, post_id: str, user_id: str, changeset_id: str) -> bool:
-    """A post's id is derived from its key, so re-adding a post deleted into another gets the old
-    id back, and with it the old `same_as` that would merge it away again. Re-adding undoes that."""
-    deletions = await get_deletion_claim_ids(cur, post_id)
-    await claims.withdraw_facts(cur, EntityType.CLAIM, deletions, user_id, changeset_id)
-    return bool(deletions)
-
-
 async def _holder_count(cur, post_id: str) -> int:
     await cur.execute(
         "SELECT count(*) FROM memberships WHERE memberships.post_id = %s", (post_id,)
@@ -280,259 +120,6 @@ async def _refuse_if_held(cur, post_id: str) -> None:
     )
     if (await cur.fetchone())[0]:
         raise PostHasMembers((await _holder_count(cur, post_id)))
-
-
-async def get_holder_names(post_ids: list[str]) -> dict[str, list[str]]:
-    """Everyone who holds or held each post, by post id. A post nobody held is absent."""
-    if not post_ids:
-        return {}
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT memberships.post_id::text,
-                   array_agg(DISTINCT coalesce(people.name, 'someone unnamed'))
-            FROM memberships JOIN people ON people.id = memberships.person_id
-            WHERE memberships.post_id = ANY(%s::uuid[])
-            GROUP BY memberships.post_id
-            """,
-            (post_ids,),
-        )
-        return {post_id: names for post_id, names in await cur.fetchall()}
-
-
-async def get_many(cur, post_ids: list[str]) -> dict[str, Post]:
-    """Posts by id. An id with no post is absent rather than None."""
-    if not post_ids:
-        return {}
-    await cur.execute(
-        """
-        SELECT posts.id::text, posts.jurisdiction_ocdid, posts.organization_id::text,
-               posts.role_id, posts.division_ocdid,
-               roles.label AS role_label
-        FROM posts LEFT JOIN roles ON roles.id = posts.role_id
-        WHERE posts.id::text = ANY(%s)
-        """,
-        (post_ids,),
-    )
-    columns = [column.name for column in cur.description or []]
-    rows = [dict(zip(columns, row)) for row in await cur.fetchall()]
-    claimed = await claims.claimed_values(cur, EntityType.POST, [row["id"] for row in rows])
-    found = [Post(**_with_claims(row, claimed.get(row["id"], {}))) for row in rows]
-    return {post.id: post for post in found}
-
-
-async def get(cur, post_id: str) -> Post | None:
-    """One post by id, or None. `assign` takes the organization from here, never from the
-    caller, so a request cannot name a mismatched pair."""
-    return (await get_many(cur, [post_id])).get(post_id)
-
-
-# Nobody holds a post here yet, so every one of them is new: a reporting rule, not a fact about
-# a post. Unaliased `posts`, spliced into several queries, per CLAUDE.md.
-JURISDICTIONS_FIRST_SCRAPE = """NOT EXISTS (
-    SELECT 1 FROM memberships
-    JOIN posts held ON held.id = memberships.post_id
-    WHERE held.jurisdiction_ocdid = posts.jurisdiction_ocdid
-)"""
-
-
-# Members mean a publish accepted this post; a claim on `_HUMAN_FIELDS` means a human did, which
-# reaches posts no publish can — a vacant post is real, and a superseded request can never be
-# published. Naming a post is not vouching for it, so a `label` claim does not count.
-#
-# Not as-of filtered: winding the clock back does not un-vouch a post. The field list is
-# `_HUMAN_FIELDS`, spelled out because a LiteralString cannot be joined, and pinned to it by
-# `test_the_verified_arm_names_the_human_fields`.
-POST_IS_VERIFIED = """(
-    EXISTS (SELECT 1 FROM memberships WHERE memberships.post_id = posts.id)
-    OR EXISTS (
-        SELECT 1 FROM claims
-        WHERE claims.entity_type = 'post' AND claims.entity_id = posts.id
-          AND claims.field_path IN ('meta_headcount', 'meta_is_tracked')
-    )
-)"""
-
-
-async def identities_by_id(cur, post_ids: list[str]) -> dict[str, dict]:
-    """The `(organization_id, role_id, division_ocdid)` of each named post — its identity, and
-    all the derivation needs from a post a human picked.
-
-    Batched: a roster is read at once, and one query per picked person would put the number of
-    round trips in the reviewer's hands.
-    """
-    if not post_ids:
-        return {}
-    await cur.execute(
-        """
-        SELECT id::text, organization_id::text, role_id, division_ocdid
-        FROM posts WHERE id::text = ANY(%s)
-        """,
-        (post_ids,),
-    )
-    columns = [column.name for column in cur.description or []]
-    return {row[0]: dict(zip(columns, row)) for row in await cur.fetchall()}
-
-
-async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
-    by_jurisdiction = await list_for_jurisdictions(cur, [jurisdiction_ocdid])
-    return by_jurisdiction.get(jurisdiction_ocdid, [])
-
-
-async def list_for_jurisdictions(cur, jurisdiction_ocdids: list[str]) -> dict[str, list[dict]]:
-    """Every post in each jurisdiction.
-
-    Undated on purpose. A post is not a temporal fact — one minted last week still belongs in
-    a June answer — and who holds it at a given moment is the memberships read, which windows
-    on `opened_at` and `closed_at`. Vouching is not dated either: winding the clock back
-    does not un-vouch a post.
-    """
-    await cur.execute(
-        f"""
-        -- `meta_is_verified` is one of the fields no civic standard defines; the other two,
-        -- `meta_headcount` and `meta_is_tracked`, come from claims after this read.
-        SELECT posts.id::text, posts.jurisdiction_ocdid, posts.organization_id::text,
-               posts.role_id, posts.division_ocdid,
-               {POST_IS_VERIFIED} AS meta_is_verified,
-               roles.label AS role_label
-        FROM posts LEFT JOIN roles ON roles.id = posts.role_id
-        WHERE posts.jurisdiction_ocdid = ANY(%(jurisdiction_ocdids)s)
-        ORDER BY posts.role_id, posts.division_ocdid
-        """,
-        {"jurisdiction_ocdids": jurisdiction_ocdids},
-    )
-    columns = [column.name for column in cur.description or []]
-    rows = [dict(zip(columns, row)) for row in await cur.fetchall()]
-    claimed = await claims.claimed_values(cur, EntityType.POST, [row["id"] for row in rows])
-    by_jurisdiction: dict[str, list[dict]] = {}
-    for row in rows:
-        by_jurisdiction.setdefault(row["jurisdiction_ocdid"], []).append(
-            _with_claims(row, claimed.get(row["id"], {}))
-        )
-    return by_jurisdiction
-
-
-async def list_page_for_state(
-    state: str, limit: int, offset: int
-) -> tuple[int, list[dict]]:
-    """One page of every post in a state, and the total behind it.
-
-    Same projection as `list_for_jurisdiction`, plus the jurisdiction each belongs to — a
-    state-wide read has to say which town a seat is in.
-    """
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            f"""
-            SELECT COUNT(*) OVER() AS total,
-                   posts.jurisdiction_ocdid,
-                   posts.id::text, posts.organization_id::text, posts.role_id,
-                   posts.division_ocdid,
-                   {POST_IS_VERIFIED} AS meta_is_verified,
-                   roles.label AS role_label
-            FROM posts LEFT JOIN roles ON roles.id = posts.role_id
-            WHERE posts.jurisdiction_ocdid LIKE %(prefix)s
-            ORDER BY posts.jurisdiction_ocdid, posts.role_id, posts.division_ocdid
-            LIMIT %(limit)s OFFSET %(offset)s
-            """,
-            {
-                "prefix": f"ocd-jurisdiction/country:us/state:{state.lower()}%",
-                "limit": limit,
-                "offset": offset,
-            },
-        )
-        rows = await cur.fetchall()
-        columns = [column.name for column in cur.description or []]
-        if not rows:
-            return 0, []
-        dict_rows = [{k: v for k, v in zip(columns, row) if k != "total"} for row in rows]
-        claimed = await claims.claimed_values(
-            cur, EntityType.POST, [row["id"] for row in dict_rows]
-        )
-    total = rows[0][0]
-    return total, [_with_claims(row, claimed.get(row["id"], {})) for row in dict_rows]
-
-
-async def ids_by_identity(
-    cur, organization_ids: list[str]
-) -> dict[tuple[str, str, str], str]:
-    """`(organization, role_id, division_ocdid) -> post id`. Reverse of `identities_by_id`, so
-    `propose` can stay pure and unaware of ids.
-
-    Keyed on the organization because that is what `posts_identity_uq` is keyed on. Keyed on the
-    jurisdiction it was unambiguous only while a jurisdiction had one body: two bodies with the
-    same role and division would collapse onto one key and the dict would keep whichever came
-    last.
-    """
-    if not organization_ids:
-        return {}
-    await cur.execute(
-        """
-        SELECT organization_id::text, role_id, division_ocdid, id::text
-        FROM posts WHERE organization_id::text = ANY(%s)
-        """,
-        (organization_ids,),
-    )
-    return {(row[0], row[1], row[2]): row[3] for row in await cur.fetchall()}
-
-
-async def unverified_by_jurisdiction(
-    cur, jurisdiction_ocdids: list[str]
-) -> dict[str, list[dict]]:
-    """Posts nobody has vouched for, grouped by jurisdiction.
-
-    A scrape mints a post at ingest; a membership only lands at publish. So an unverified post
-    is an office some scrape claimed exists and no human has answered for — and it stays that
-    way after the scrape that minted it is superseded, which is why it hangs off the
-    jurisdiction rather than off a request. (Keying it on "created by *this* request" would
-    lose exactly that: a seat minted by a superseded scrape would go unmentioned forever.)
-
-    Nothing is returned for a jurisdiction that has never been published — see the query.
-    """
-    if not jurisdiction_ocdids:
-        return {}
-    await cur.execute(
-        f"""
-        SELECT posts.jurisdiction_ocdid, posts.id::text, posts.role_id,
-               posts.division_ocdid, roles.label AS role_label
-        FROM posts
-        JOIN roles ON roles.id = posts.role_id
-        WHERE posts.jurisdiction_ocdid = ANY(%s) AND NOT {POST_IS_VERIFIED}
-          -- Silent on the jurisdiction's first scrape — see the constant.
-          AND NOT {JURISDICTIONS_FIRST_SCRAPE}
-        ORDER BY posts.role_id, posts.division_ocdid
-        """,
-        (jurisdiction_ocdids,),
-    )
-    columns = [column.name for column in cur.description or []]
-    grouped: dict[str, list[dict]] = {ocdid: [] for ocdid in jurisdiction_ocdids}
-    for row in await cur.fetchall():
-        post = dict(zip(columns, row))
-        grouped[post.pop("jurisdiction_ocdid")].append(post)
-    return grouped
-
-
-async def list_by_organization(jurisdiction_ocdid: str) -> list[dict]:
-    """Every body in a jurisdiction with its posts."""
-    by_jurisdiction = await list_by_organization_for_jurisdictions([jurisdiction_ocdid])
-    return by_jurisdiction[jurisdiction_ocdid]
-
-
-async def list_by_organization_for_jurisdictions(
-    jurisdiction_ocdids: list[str],
-) -> dict[str, list[dict]]:
-    """`list_by_organization` for many jurisdictions: two queries, whatever the count."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        organization_rows = await organizations.list_for_jurisdictions(cur, jurisdiction_ocdids)
-        post_rows = await list_for_jurisdictions(cur, jurisdiction_ocdids)
-    return {
-        jurisdiction_ocdid: group_by_organization(
-            organization_rows.get(jurisdiction_ocdid, []),
-            post_rows.get(jurisdiction_ocdid, []),
-        )
-        for jurisdiction_ocdid in jurisdiction_ocdids
-    }
 
 
 async def create(
@@ -566,8 +153,8 @@ async def create(
         if post_id:
             changeset_id = make_id()
             await create_roster_edit_changeset(cur, changeset_id, jurisdiction_ocdid, user_id)
-            undid_deletion = await _undo_deletion(cur, post_id, user_id, changeset_id)
-            await _accept_fields(
+            undid_deletion = await undo_deletion(cur, post_id, user_id, changeset_id)
+            await accept_fields(
                 cur, post_id, {"meta_headcount": headcount}, user_id, changeset_id
             )
             if label:
@@ -613,7 +200,7 @@ async def update(
 
         changeset_id = make_id()
         await create_roster_edit_changeset(cur, changeset_id, before.jurisdiction_ocdid, user_id)
-        await _accept_fields(
+        await accept_fields(
             cur,
             post_id,
             {"meta_headcount": headcount, "meta_is_tracked": is_tracked},
@@ -675,20 +262,3 @@ async def delete(post_id: str, user_id: str | None = None) -> bool:
             ),
         )
         return True
-
-
-async def ids_in_organizations(
-    cur, post_ids: list[str], organization_ids: list[str]
-) -> set[str]:
-    """Which of these posts belong to those bodies.
-
-    A person can hold one post per organization, so a reviewer's accepted posts may span several:
-    this is what picks out the ones the review in front of them is about.
-    """
-    if not post_ids or not organization_ids:
-        return set()
-    await cur.execute(
-        "SELECT id::text FROM posts WHERE organization_id::text = ANY(%s) AND id::text = ANY(%s)",
-        (organization_ids, post_ids),
-    )
-    return {row[0] for row in await cur.fetchall()}
