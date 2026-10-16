@@ -58,7 +58,6 @@ def _entry_columns(entry: dict) -> tuple:
         int(population) if population is not None else None,
         entry.get("geoid"),
         entry.get("wiki_url"),
-        (entry.get("extras") or {}).get("government_form"),
     )
 
 
@@ -969,8 +968,8 @@ async def bulk_update_jurisdictions(jurisdiction_records: list):
     query = """
         INSERT INTO jurisdictions
             (jurisdiction_ocdid, state, level, data, updated_at, search_text,
-             name, url, population, geoid, wiki_url, extras_government_form)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+             name, url, population, geoid, wiki_url)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         ON CONFLICT (jurisdiction_ocdid)
         DO UPDATE SET
             level = EXCLUDED.level,
@@ -982,7 +981,6 @@ async def bulk_update_jurisdictions(jurisdiction_records: list):
             population = EXCLUDED.population,
             geoid = EXCLUDED.geoid,
             wiki_url = EXCLUDED.wiki_url,
-            extras_government_form = EXCLUDED.extras_government_form,
             status = 'active'
     """
     pool = await get_pool()

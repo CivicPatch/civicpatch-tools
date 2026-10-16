@@ -98,7 +98,7 @@ A page the visitor can't view redirects to `/`.
 - Edit a post's headcount and tracked state; delete a post, or fold it into another.
 - Create, edit and delete organizations; choose a jurisdiction's default organization.
 - Add, edit and remove roles (each opens a PR on open-data's `data_source/config.yml`).
-- Set a jurisdiction's government form (opens a PR on the jurisdictions repo).
+- Set a jurisdiction's government form (saved at once, no PR; a scrape fills it only while unset).
 - Scrape a single jurisdiction; read pipeline run details; resume a paused run.
 - Run a curated-sheet import and publish what it produced.
 - Manage their own API keys.

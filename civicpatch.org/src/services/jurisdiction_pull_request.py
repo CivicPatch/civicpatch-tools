@@ -1,8 +1,8 @@
 """Open a pull request changing one jurisdiction's entry in the jurisdictions repo, and track it as
 a changeset until a person merges or closes it.
 
-Every `jurisdictions.yml` edit comes through here, a maintainer's url fix and the pipeline's
-government government form answer alike; the label says who asked. `JURISDICTIONS_REPO_URL` points at
+Every `jurisdictions.yml` edit comes through here; the label says who asked. The government form
+is not one: it is cp.org's own (`services/government_form.py`). `JURISDICTIONS_REPO_URL` points at
 open-data until the jurisdictions repo exists. After each hourly sync, every open PR's outcome
 is recorded: merged is published, closed is rejected.
 """
@@ -18,15 +18,12 @@ from lib.github.auth import get_jurisdictions_sync_headers
 from lib.github.pull_requests import PrAuthor, open_attributed_pr
 from pydantic import BaseModel
 from schemas.common import UserRole
-from shared.schemas import GovernmentForm, JurisdictionLevel
-from shared.utils.layered_config import jurisdiction_config
 from shared.utils.statuses import DismissalReason, PullRequestLabel
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 import core.jurisdiction_patch as jurisdiction_patch
 import database.changesets as changesets_db
 import database.government_forms as government_forms_db
-import database.jurisdiction_configs as jurisdiction_configs_db
 import database.publications as publications_db
 import database.users as users_db
 from core.jurisdiction_patch import JurisdictionPatch
@@ -37,10 +34,6 @@ logger = logging.getLogger(__name__)
 
 
 class UnknownJurisdiction(Exception):
-    pass
-
-
-class GovernmentFormNotAtLevel(Exception):
     pass
 
 
@@ -57,11 +50,10 @@ class PullRequestFailed(Exception):
 
 
 class JurisdictionEdit(BaseModel):
-    """What to change: top-level fields as a merge patch (absent is untouched, null clears), and
-    `extras.government_form`. `sources` go in the PR body."""
+    """What to change: top-level fields as a merge patch (absent is untouched, null clears).
+    `sources` go in the PR body."""
 
     patch: JurisdictionPatch
-    government_form: GovernmentForm | None = None
     sources: list[str] = []
 
 
@@ -102,15 +94,6 @@ async def fetch_open_pull_request(jurisdiction_ocdid: str) -> WaitingPullRequest
     return None
 
 
-async def has_open_pull_request(jurisdiction_ocdid: str) -> bool:
-    """For a run's config. GitHub unreadable counts as waiting: better to skip one question
-    than to fail the run."""
-    try:
-        return await fetch_open_pull_request(jurisdiction_ocdid) is not None
-    except PullRequestFailed:
-        return True
-
-
 async def fetch_pull_request_outcomes() -> None:
     """After each hourly sync: a merged PR is published (the sync has just read the merge), a
     closed one rejected. A PR GitHub cannot report on waits for the next run."""
@@ -138,12 +121,10 @@ def label_for(author_user_id: str, role: str | None) -> PullRequestLabel | None:
     return None
 
 
-def pull_request_body(edit: JurisdictionEdit, level: str) -> str:
+def pull_request_body(edit: JurisdictionEdit) -> str:
     changes = [
         f"- `{field}`: {value if value is not None else '(cleared)'}" for field, value in edit.patch.items()
     ]
-    if edit.government_form is not None:
-        changes.append(f"- `extras.government_form`: `{edit.government_form.value}` ({level})")
     source_lines = "\n".join(f"- {source}" for source in edit.sources) or "- none given"
     return "Changes:\n" + "\n".join(changes) + f"\n\nSources:\n{source_lines}"
 
@@ -156,16 +137,6 @@ def pull_request_number(pull_request_url: str) -> int:
 async def _check_edit(jurisdiction_ocdid: str, edit: JurisdictionEdit) -> None:
     if await government_forms_db.get_government_form_inputs(jurisdiction_ocdid) is None:
         raise UnknownJurisdiction(jurisdiction_ocdid)
-    if edit.government_form is None:
-        return
-    parsed = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
-    if parsed.level == JurisdictionLevel.STATE:
-        raise GovernmentFormNotAtLevel("a state has no government form")
-    config = jurisdiction_config(
-        await jurisdiction_configs_db.get_jurisdiction_configs(), parsed.state, parsed.level
-    )
-    if edit.government_form not in config.country_government_forms:
-        raise GovernmentFormNotAtLevel(f"{edit.government_form.value} is not a {parsed.level} government form")
 
 
 async def _open_pr(
@@ -181,16 +152,16 @@ async def _open_pr(
     entry = jurisdiction_patch.find_jurisdiction(doc, jurisdiction_ocdid)
     if entry is None:
         raise UnknownJurisdiction(f"{jurisdiction_ocdid} is not in {file_path}")
-    changed = _changed_fields(entry, edit)
+    changed = [field for field, value in edit.patch.items() if entry.get(field) != value]
     if not changed:
         raise NothingToChange("No changes to publish")
     number, url_or_error = await open_attributed_pr(
         branch_name=f"civicpatch/jurisdiction-edit/{id_utils.make_id()}",
         file_path=file_path,
-        content=yaml_dump(_patched(doc, jurisdiction_ocdid, edit)),
+        content=yaml_dump(jurisdiction_patch.apply_patch(doc, jurisdiction_ocdid, edit.patch)),
         commit_message=f"Update {', '.join(changed)}: {jurisdiction_ocdid}",
         pull_request_title=f"Jurisdiction edit: {entry.get('name') or jurisdiction_ocdid}",
-        pull_request_body=pull_request_body(edit, id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid).level),
+        pull_request_body=pull_request_body(edit),
         author=author,
         labels=(label,),
         # The jurisdictions-sync bot opens and labels the PR; the regular bot writes the fork.
@@ -202,24 +173,6 @@ async def _open_pr(
     if number is None:
         raise PullRequestFailed(url_or_error)
     return number, url_or_error
-
-
-def _patched(doc: dict, jurisdiction_ocdid: str, edit: JurisdictionEdit) -> dict:
-    patched = jurisdiction_patch.apply_patch(doc, jurisdiction_ocdid, edit.patch)
-    if edit.government_form is None:
-        return patched
-    return jurisdiction_patch.set_government_form(patched, jurisdiction_ocdid, edit.government_form.value)
-
-
-def _changed_fields(entry: dict, edit: JurisdictionEdit) -> list[str]:
-    """The fields whose value this edit actually changes in the file's current entry."""
-    changed = [field for field, value in edit.patch.items() if entry.get(field) != value]
-    if (
-        edit.government_form is not None
-        and jurisdiction_patch.current_government_form(entry) != edit.government_form.value
-    ):
-        changed.append("government_form")
-    return changed
 
 
 async def _pull_request_state(pull_request_url: str) -> github_service.PullRequestState:

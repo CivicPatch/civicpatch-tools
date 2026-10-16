@@ -98,4 +98,4 @@ def test_the_entry_fields_also_fill_their_own_columns():
 
     columns = jurisdiction_rows([entry], "tx", "local", _UPDATED_AT)[0][6:]
 
-    assert columns == ("Houston city", "https://houstontx.gov", 2300419, "4835000", None, "mayor_council")
+    assert columns == ("Houston city", "https://houstontx.gov", 2300419, "4835000", None)

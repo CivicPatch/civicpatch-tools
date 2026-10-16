@@ -232,20 +232,16 @@ async def fetch_pipeline_run_config(
     return await with_retry(logger, _fetch)
 
 
-async def open_jurisdiction_pull_request(
-    client: httpx.AsyncClient,
-    jurisdiction_ocdid: str,
-    government_form: GovernmentForm,
-    sources: List[str],
-) -> Optional[dict]:
-    """Ask cp.org to open a pull request setting the jurisdiction's government form. None when
-    one is already open for it: that one is still waiting for a person."""
+async def fill_government_form(
+    client: httpx.AsyncClient, jurisdiction_ocdid: str, government_form: GovernmentForm
+) -> bool:
+    """Save the jurisdiction's government form. False when one is already set: cp.org keeps it."""
     env = get_env_vars()
-    response = await client.post(
-        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/pull_requests",
-        json={"government_form": government_form.value, "sources": sources},
+    response = await client.put(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/government_form",
+        json={"government_form": government_form.value},
     )
     if response.status_code == HTTPStatus.CONFLICT:
-        return None
+        return False
     response.raise_for_status()
-    return response.json()["data"]
+    return True

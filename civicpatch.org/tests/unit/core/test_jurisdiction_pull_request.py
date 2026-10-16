@@ -22,7 +22,6 @@ from services.jurisdiction_pull_request import (
     pull_request_body,
     pull_request_number,
 )
-from shared.schemas import GovernmentForm
 from shared.utils.statuses import PullRequestLabel
 
 JURISDICTION_OCDID = "ocd-jurisdiction/country:us/state:tx/place:austin/government"
@@ -97,24 +96,12 @@ async def test_a_url_edit_patches_only_the_url():
 
 @pytest.mark.unit
 @pytest.mark.asyncio
-async def test_a_form_goes_under_extras():
-    _, mock_open_pr = await _open(
-        _file(ENTRY), JurisdictionEdit(patch={}, government_form=GovernmentForm.COUNCIL_MANAGER)
-    )
-
-    entry = _written_entry(mock_open_pr)
-    assert entry["extras"] == {"government_form": "council_manager"}
-    assert entry["url"] == "https://old.example.com"
-
-
-@pytest.mark.unit
-@pytest.mark.asyncio
 async def test_the_commit_names_only_the_fields_that_change():
-    edit = JurisdictionEdit(patch={"url": ENTRY["url"], "geoid": "4805001"}, government_form=GovernmentForm.COMMISSION)
+    edit = JurisdictionEdit(patch={"url": ENTRY["url"], "geoid": "4805001"})
 
     _, mock_open_pr = await _open(_file(ENTRY), edit)
 
-    assert mock_open_pr.call_args.kwargs["commit_message"] == f"Update geoid, government_form: {JURISDICTION_OCDID}"
+    assert mock_open_pr.call_args.kwargs["commit_message"] == f"Update geoid: {JURISDICTION_OCDID}"
 
 
 @pytest.mark.unit
@@ -128,11 +115,8 @@ async def test_a_null_clears_a_field():
 @pytest.mark.unit
 @pytest.mark.asyncio
 async def test_an_edit_that_changes_nothing_is_refused():
-    with_form = {**ENTRY, "extras": {"government_form": "council_manager"}}
-    edit = JurisdictionEdit(patch={"url": ENTRY["url"]}, government_form=GovernmentForm.COUNCIL_MANAGER)
-
     with pytest.raises(NothingToChange):
-        await _open(_file(with_form), edit)
+        await _open(_file(ENTRY), JurisdictionEdit(patch={"url": ENTRY["url"]}))
 
 
 @pytest.mark.unit
@@ -157,21 +141,19 @@ def test_the_label_follows_the_author():
 def test_the_body_lists_each_change_and_source():
     edit = JurisdictionEdit(
         patch={"url": "https://a.gov", "geoid": None},
-        government_form=GovernmentForm.MAYOR_COUNCIL,
         sources=["https://a.gov/charter"],
     )
 
-    body = pull_request_body(edit, "local")
+    body = pull_request_body(edit)
 
     assert "- `url`: https://a.gov" in body
     assert "- `geoid`: (cleared)" in body
-    assert "- `extras.government_form`: `mayor_council` (local)" in body
     assert "- https://a.gov/charter" in body
 
 
 @pytest.mark.unit
 def test_a_body_with_no_sources_says_so():
-    assert "- none given" in pull_request_body(JurisdictionEdit(patch={"url": "https://a.gov"}), "local")
+    assert "- none given" in pull_request_body(JurisdictionEdit(patch={"url": "https://a.gov"}))
 
 
 @pytest.mark.unit

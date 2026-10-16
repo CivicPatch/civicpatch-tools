@@ -39,7 +39,6 @@ class JurisdictionPullRequestRequest(BaseModel):
     url: str | None = None
     population: int | None = None
     geoid: str | None = None
-    government_form: GovernmentForm | None = None
     sources: List[str] = []
 
     # Mirrors urlError in field-validation.ts, so the reviewer is told the same thing

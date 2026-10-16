@@ -339,6 +339,36 @@
   color: var(--text-muted);
 }
 
+/* A bar sliding along a faint track while the government form saves. Not a <progress>: the
+   global style hides its track, which is where an indeterminate one draws. */
+.jurisdiction-details__progress {
+  position: relative;
+  overflow: hidden;
+  block-size: 0.25rem;
+  margin-top: 0.35rem;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--action) 15%, transparent);
+}
+
+.jurisdiction-details__progress::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inline-size: 40%;
+  border-radius: inherit;
+  background: var(--action);
+  animation: jurisdiction-details-progress 1s ease-in-out infinite;
+}
+
+@keyframes jurisdiction-details-progress {
+  from {
+    left: -40%;
+  }
+  to {
+    left: 100%;
+  }
+}
+
 /* ── Buttons ──────────────────────────────────────────────────────────────── */
 
 /* One height and one type size for every button on the page. Quiet and primary

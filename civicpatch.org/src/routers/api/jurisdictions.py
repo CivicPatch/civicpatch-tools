@@ -199,7 +199,6 @@ def get_router() -> APIRouter:
         # exclude_unset: a field left out stays as it is, and an explicit null clears it.
         edit = jurisdiction_pr_service.JurisdictionEdit(
             patch=build_patch(body.model_dump(exclude_unset=True)),
-            government_form=body.government_form,
             sources=body.sources,
         )
         try:
@@ -210,8 +209,6 @@ def get_router() -> APIRouter:
             raise HTTPException(status_code=404, detail=f"No such jurisdiction: {jurisdiction_ocdid}")
         except jurisdiction_pr_service.NothingToChange as exc:
             raise HTTPException(status_code=400, detail=str(exc))
-        except jurisdiction_pr_service.GovernmentFormNotAtLevel as exc:
-            raise HTTPException(status_code=422, detail=str(exc))
         except jurisdiction_pr_service.PullRequestAlreadyOpen as exc:
             raise HTTPException(status_code=409, detail=f"A pull request is already open: {exc.args[0]}")
         except jurisdiction_pr_service.PullRequestFailed as exc:
