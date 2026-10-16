@@ -1,6 +1,7 @@
 """Database queries for `source_pages`: one row per page per run. Write-once, like
 `source_records`."""
 
+from core.source_page_outcomes import ScrapePageRow
 from core.source_pages import SourcePageRow
 from database.database import get_pool
 from schemas.claims import EntityType
@@ -41,6 +42,25 @@ _PUBLISHED_RECORDS = f"""
     FROM source_records
     WHERE source_records.changeset_id::text = ANY(%(changeset_ids)s)
       AND {_NOT_WITHDRAWN.format(table="source_records")}
+"""
+
+# One changeset's pages, with what each listed. The organizations come from the page row, the
+# people count from the records this changeset filed for that url.
+_SCRAPE_PAGES = """
+    SELECT page.jurisdiction_ocdid, page.pipeline_run_id::text, page.source_url,
+           page.page_hash, page.is_relevant, page.heuristics_failures,
+           original.created_at AS unchanged_since,
+           ARRAY(
+               SELECT organizations.name FROM organizations
+               WHERE organizations.id = ANY(page.organization_ids) ORDER BY organizations.name
+           ) AS organization_names,
+           (SELECT count(*) FROM source_records
+            WHERE source_records.changeset_id = page.changeset_id
+              AND source_records.source_url = page.source_url)::int AS people_count
+    FROM source_pages page
+    LEFT JOIN source_pages original ON original.id = page.unchanged_since_source_page_id
+    WHERE page.changeset_id = %(changeset_id)s
+    ORDER BY people_count DESC, page.source_url
 """
 
 _INSERT_PAGE = """
@@ -84,6 +104,14 @@ async def organizations_read_by_changeset(cur, changeset_id: str) -> list[str]:
     uses, so the issue check sees every read that publishing would act on."""
     await cur.execute(_ORGANIZATIONS_READ, {"changeset_id": changeset_id})
     return [row[0] for row in await cur.fetchall()]
+
+
+async def get_scrape_pages(changeset_id: str) -> list[ScrapePageRow]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(_SCRAPE_PAGES, {"changeset_id": changeset_id})
+        columns = [column.name for column in cur.description or []]
+        return [ScrapePageRow(**dict(zip(columns, row))) for row in await cur.fetchall()]
 
 
 async def published_source_pages(jurisdiction_ocdid: str) -> list[PublishedSourcePage]:

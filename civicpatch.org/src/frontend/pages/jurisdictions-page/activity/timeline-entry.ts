@@ -4,10 +4,11 @@
 // Replaces civ-history-modal — the ids it showed live in the expanded body, behind the admin
 // check, rather than behind a second surface reached by clicking a date.
 
-import { component } from "haunted";
+import { component, useState } from "haunted";
 import { html, nothing } from "lit-html";
 import "./timeline.css";
 import "./history.css";
+import "./scrape-pages.ts";
 import {
   dateStringToFriendly,
   durationBetween,
@@ -58,6 +59,7 @@ export interface TimelineEntry {
   // Null except for admins, and for a changeset no run produced.
   cost_usd: number | null;
   cost_without_cache_usd: number | null;
+  // Null for a changeset no run produced.
   pages_cached: number | null;
   pages_total: number | null;
 }
@@ -165,18 +167,21 @@ function renderIssueDetails(entry: TimelineEntry) {
 
 const dollars = (amount: number) => `$${amount.toFixed(4)}`;
 
-// "$0.0000 spent, $0.0422 without cache, 16 of 16 pages cached". Runs from before pages were
-// recorded have no page count.
+// "$0.0000 spent, $0.0422 without cache".
 function renderCost(entry: TimelineEntry) {
   if (entry.cost_usd === null) return nothing;
   const parts = [`${dollars(entry.cost_usd)} spent`];
   if (entry.pages_cached && entry.cost_without_cache_usd !== null) {
     parts.push(`${dollars(entry.cost_without_cache_usd)} without cache`);
   }
-  if (entry.pages_total) {
-    parts.push(`${entry.pages_cached} of ${entry.pages_total} pages cached`);
-  }
   return html`<span class="tl-quiet">${parts.join(", ")}</span>`;
+}
+
+// "12 pages, 9 unchanged". Runs from before pages were recorded count 0, and say nothing.
+function renderPageCounts(entry: TimelineEntry) {
+  if (!entry.pages_total) return nothing;
+  const unchanged = entry.pages_cached ? `, ${entry.pages_cached} unchanged` : "";
+  return html`<span class="tl-quiet">${entry.pages_total} pages${unchanged}</span>`;
 }
 
 function renderSummaryChanges(entry: TimelineEntry) {
@@ -264,14 +269,21 @@ function CivTimelineEntry({
   isSignedIn,
   jurisdictionOcdid,
 }: TimelineEntryProps) {
+  const [isOpen, setIsOpen] = useState(false);
   if (!entry) return html``;
 
   // Demoted, not hidden: a superseded run still happened, and hiding it makes the page lie
   // about what ran. Decision 3.
   const demoted = entry.outcome === SUPERSEDED_OUTCOME;
 
+  const handleToggle = (e: Event) =>
+    setIsOpen((e.currentTarget as HTMLDetailsElement).open);
+
   return html`
-    <details class="tl-entry ${demoted ? "tl-entry--superseded" : ""}">
+    <details
+      class="tl-entry ${demoted ? "tl-entry--superseded" : ""}"
+      @toggle=${handleToggle}
+    >
       <summary class="tl-entry__summary">
         <span class="tl-entry__when"
           >${dateStringToFriendly(entry.created_at)}</span
@@ -285,7 +297,7 @@ function CivTimelineEntry({
           </span>
         </span>
         <span class="tl-entry__changes">${renderSummaryChanges(entry)}</span>
-        ${renderCost(entry)}
+        ${renderPageCounts(entry)} ${renderCost(entry)}
         ${entry.resolved_by
           ? html`<span class="tl-entry__by"
               >by
@@ -295,6 +307,9 @@ function CivTimelineEntry({
       </summary>
       <div class="tl-entry__body">
         ${renderChangeList(entry)} ${renderIssueDetails(entry)}
+        ${isOpen && entry.pages_total
+          ? html`<civ-scrape-pages .changesetId=${entry.changeset_id}></civ-scrape-pages>`
+          : nothing}
         ${renderActions(entry, isSignedIn, jurisdictionOcdid)}
         ${renderIds(entry, isAdmin)}
       </div>

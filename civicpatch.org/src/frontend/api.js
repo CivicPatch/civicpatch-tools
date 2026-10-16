@@ -409,6 +409,14 @@ export const fetchReview = async (changesetId) => {
   return res.json();
 };
 
+export const fetchScrapePages = async (changesetId) => {
+  const res = await fetch(`/api/v1/reviews/${changesetId}/pages`, {
+    credentials: "include",
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+};
+
 export const fetchReportedIssues = async (changesetId) => {
   const res = await fetch(`/api/v1/reviews/${changesetId}/issues`, {
     credentials: "include",
