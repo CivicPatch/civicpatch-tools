@@ -16,7 +16,7 @@ from datetime import date, datetime, timezone
 import pytest
 import pytest_asyncio
 
-from database import divisions, memberships, organizations, people, post_listings, posts
+from database import divisions, memberships, organizations, people, post_listings
 from database.database import get_pool
 from tests.integration import factories
 
@@ -68,7 +68,7 @@ async def _seed_succession() -> str:
         )
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, organization_id, "mayor", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, organization_id, "mayor", _BASE)
 
         for name, opened_at, closed_at in (
             ("Outgoing", _TOOK_OFFICE, _HANDOVER),

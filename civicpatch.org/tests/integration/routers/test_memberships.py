@@ -17,7 +17,7 @@ from fastapi.testclient import TestClient
 
 from core.projection.membership_details import MembershipSource
 from tests.integration.factories import SeededMembership
-from database import activity, divisions, memberships, organizations, posts, projection
+from database import activity, divisions, memberships, organizations, projection
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
 from schemas.jurisdictions import OfficeEdit, PersonEdit
@@ -165,8 +165,8 @@ async def _seed() -> tuple[str, str, str]:
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         await divisions.find_or_create(cur, _WARD_3, _OCDID)
-        mayor = await posts.find_or_create(cur, _OCDID, organization_id, "mayor", _BASE)
-        ward = await posts.find_or_create(
+        mayor = await factories.seed_post(cur, _OCDID, organization_id, "mayor", _BASE)
+        ward = await factories.seed_post(
             cur, _OCDID, organization_id, "council-member", _WARD_3
         )
         elsewhere = await organizations.find_or_create(
@@ -174,7 +174,7 @@ async def _seed() -> tuple[str, str, str]:
         )
         # The post the record below derives, so the first rebuild matches it rather than
         # minting one and logging the mint.
-        await posts.find_or_create(cur, _OCDID, elsewhere, "clerk", _BASE)
+        await factories.seed_post(cur, _OCDID, elsewhere, "clerk", _BASE)
         await conn.commit()
     await factories.published_source_record(
         _OCDID, elsewhere, person_id, "Route Test", "Clerk", _PAGE, _READ_AT

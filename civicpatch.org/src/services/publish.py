@@ -108,6 +108,15 @@ async def publish_roster(
     written = await publish_changeset(
         changeset_id, jurisdiction_ocdid, resolved_by_user_id, changes
     )
+    await write_roster_changes(changeset_id, jurisdiction_ocdid, resolved_by_user_id, before)
+    logger.info(f"[{changeset_id}] Published {written} people for {jurisdiction_ocdid}")
+    return written
+
+
+async def write_roster_changes(
+    changeset_id: str, jurisdiction_ocdid: str, resolved_by_user_id: str | None, before: Roster
+) -> None:
+    """The feed's per-person rows for a publish already committed: the roster now, against `before`."""
     after = await _published_roster(jurisdiction_ocdid)
     await activity_service.write_person_changes(
         changeset_id,
@@ -120,8 +129,6 @@ async def publish_roster(
             await _post_labels(jurisdiction_ocdid, before, after),
         ),
     )
-    logger.info(f"[{changeset_id}] Published {written} people for {jurisdiction_ocdid}")
-    return written
 
 
 async def _post_labels(

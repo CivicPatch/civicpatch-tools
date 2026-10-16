@@ -52,35 +52,6 @@ async def create_if_absent(
     return row[0] if row else None
 
 
-async def find_or_create(
-    cur,
-    jurisdiction_ocdid: str,
-    organization_id: str,
-    role_id: str,
-    division_ocdid: str,
-) -> str:
-    """Make sure this post exists. Returns its id, minted or matched.
-
-    The scrape's way in, where `create_if_absent` is a person's: a match is not an error to
-    report, so the lookup below is the normal path, not a fallback.
-    """
-    minted = await create_if_absent(
-        cur, jurisdiction_ocdid, organization_id, role_id, division_ocdid
-    )
-    if minted:
-        return minted
-
-    await cur.execute(
-        """
-        SELECT id::text FROM posts
-        WHERE organization_id = %s AND role_id = %s AND division_ocdid = %s
-        """,
-        (organization_id, role_id, division_ocdid),
-    )
-    return (await cur.fetchone())[0]
-
-
-
 async def delete_if_unheld(cur, post_id: str) -> bool:
     """Remove a post nobody has ever held. Returns whether it went.
 
@@ -243,22 +214,27 @@ async def delete(post_id: str, user_id: str | None = None) -> bool:
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        before = await get(cur, post_id)
-        if before is None:
-            return False
-        await _refuse_if_held(cur, post_id)
-        if not await delete_if_unheld(cur, post_id):
-            return False
+        return await delete_on(cur, post_id, user_id)
 
-        await record_change(
-            cur,
-            ActivityType.DELETE_POST,
-            user_id,
-            before.jurisdiction_ocdid,
-            Change(
-                entity_type=EntityType.POST,
-                entity_id=post_id,
-                subject=before.label or before.role_id,
-            ),
-        )
-        return True
+
+async def delete_on(cur, post_id: str, user_id: str | None = None) -> bool:
+    """`delete` on the caller's cursor, so a refusal rolls back whatever the caller did first."""
+    before = await get(cur, post_id)
+    if before is None:
+        return False
+    await _refuse_if_held(cur, post_id)
+    if not await delete_if_unheld(cur, post_id):
+        return False
+
+    await record_change(
+        cur,
+        ActivityType.DELETE_POST,
+        user_id,
+        before.jurisdiction_ocdid,
+        Change(
+            entity_type=EntityType.POST,
+            entity_id=post_id,
+            subject=before.label or before.role_id,
+        ),
+    )
+    return True

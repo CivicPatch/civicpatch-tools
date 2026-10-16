@@ -22,7 +22,8 @@ import pyarrow.parquet as pq
 import pytest
 import pytest_asyncio
 
-from database import divisions, organizations, posts
+from database import divisions, organizations
+from tests.integration import factories
 from database.database import get_pool
 from services.sinks import parquet as parquet_sink
 
@@ -77,7 +78,7 @@ async def _seed(count: int, closed: int = 0):
         )
         organization_id = await organizations.find_or_create(cur, _ZZ)
         await divisions.find_or_create(cur, _ZZ_DIVISION, _ZZ)
-        post_id = await posts.find_or_create(
+        post_id = await factories.seed_post(
             cur, _ZZ, organization_id, "mayor", _ZZ_DIVISION
         )
         for index in range(count):

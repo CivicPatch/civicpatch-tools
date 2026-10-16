@@ -17,7 +17,7 @@ import pytest_asyncio
 from core.people_edits import PeopleValidationError
 from core.projection.membership_details import MembershipSource
 from tests.integration.factories import SeededMembership
-from database import divisions, memberships, organizations, posts
+from database import divisions, memberships, organizations
 from database.database import get_pool
 from schemas.jurisdictions import OfficeEdit, PersonEdit
 from services.roster_edits import UnknownPost, edit_published_roster
@@ -115,7 +115,7 @@ async def _seed() -> tuple[str, Identity]:
         # a person without one is not on the roster and the edit would read as an addition.
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
         await factories.bind_membership(
             cur,
             SeededMembership(person_id=person_id, sources=[MembershipSource(note="Mayor")]),
@@ -321,7 +321,7 @@ async def test_leaving_somebody_out_retires_them():
             (other_id, _OCDID),
         )
         org = await organizations.find_or_create(cur, _OCDID)
-        seat = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        seat = await factories.seed_post(cur, _OCDID, org, "clerk", _BASE)
         await factories.bind_membership(
             cur,
             SeededMembership(person_id=other_id, sources=[MembershipSource(note="Clerk")]),
@@ -400,7 +400,7 @@ async def _seed_second_person() -> str:
             (person_id, _OCDID),
         )
         org = await organizations.find_or_create(cur, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, org, "clerk", _BASE)
         await factories.bind_membership(
             cur,
             SeededMembership(person_id=person_id, sources=[MembershipSource(note="Clerk")]),
@@ -614,7 +614,7 @@ async def _clerk_post() -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, org, "clerk", _BASE)
         await conn.commit()
     return post_id
 

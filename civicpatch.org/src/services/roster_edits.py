@@ -29,10 +29,11 @@ from database.changesets import (
     create_roster_edit_changeset,
 )
 from database.database import get_pool
+from database.publications import publish_changeset_on
 from database.roles import get_roles
 from schemas.claims import Claim
 from schemas.jurisdictions import PersonEdit
-from services.publish import publish_roster
+from services.publish import publish_roster, write_roster_changes
 from shared.schemas import RoleConfig
 from shared.utils.id_utils import make_id
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
@@ -118,9 +119,10 @@ async def edit_published_roster(
 
 
 async def delete_post_into(post_id: str, into_post_id: str, user_id: str) -> str:
-    """Delete a post, its memberships going to `into_post_id`. Files the post's `same_as` and
-    publishes, so the rebuild moves the memberships; then the emptied row goes. Returns the
-    changeset id: rolling it back undoes the move."""
+    """Delete a post, its memberships going to `into_post_id`. One transaction: file the post's
+    `same_as`, rebuild so the memberships move, delete the emptied row. A post the rebuild left
+    held raises `PostHasMembers` and nothing of it is kept. Returns the changeset id: rolling it
+    back undoes the move."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         found = await post_listings_db.get_many(cur, [post_id, into_post_id])
@@ -137,8 +139,9 @@ async def delete_post_into(post_id: str, into_post_id: str, user_id: str) -> str
     async with pool.connection() as conn, conn.cursor() as cur:
         await create_roster_edit_changeset(cur, changeset_id, post.jurisdiction_ocdid, user_id)
         await claims_db.upsert(cur, claim_post_same_as(post_id, into_post_id, changeset_id), user_id)
-    await publish_roster(changeset_id, post.jurisdiction_ocdid, user_id, before=before)
-    await posts_db.delete(post_id, user_id)
+        await publish_changeset_on(cur, changeset_id, post.jurisdiction_ocdid, user_id)
+        await posts_db.delete_on(cur, post_id, user_id)
+    await write_roster_changes(changeset_id, post.jurisdiction_ocdid, user_id, before)
     return changeset_id
 
 

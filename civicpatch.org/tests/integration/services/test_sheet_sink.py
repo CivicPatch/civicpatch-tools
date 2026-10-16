@@ -24,7 +24,7 @@ from core.sinks.sheet import (
     people_rows,
     post_rows,
 )
-from database import divisions, organizations, posts
+from database import divisions, organizations
 from database.database import get_pool
 from services.sinks import sheet as roster_sheet
 from tests.integration import factories
@@ -196,7 +196,7 @@ async def _seed(count: int):
         )
         organization_id = await organizations.find_or_create(cur, _ZZ)
         await divisions.find_or_create(cur, _ZZ_DIVISION, _ZZ)
-        post_id = await posts.find_or_create(
+        post_id = await factories.seed_post(
             cur, _ZZ, organization_id, "mayor", _ZZ_DIVISION
         )
         for index in range(count):
@@ -440,7 +440,7 @@ async def _seed_two_stints() -> None:
         )
         organization_id = await organizations.find_or_create(cur, _ZZ)
         await divisions.find_or_create(cur, _ZZ_DIVISION, _ZZ)
-        post_id = await posts.find_or_create(
+        post_id = await factories.seed_post(
             cur, _ZZ, organization_id, "mayor", _ZZ_DIVISION
         )
         person_id = str(uuid.uuid4())

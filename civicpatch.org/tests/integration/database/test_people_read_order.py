@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 import pytest
 import pytest_asyncio
 
-from database import divisions, organizations, people, posts
+from database import divisions, organizations, people
 from database.database import get_pool
 from tests.integration import factories
 
@@ -74,7 +74,7 @@ async def _add_person(cur, name: str) -> str:
 
 
 async def _membership(cur, organization_id: str, person_id: str, role_id: str, label: str) -> str:
-    post_id = await posts.find_or_create(cur, _OCDID, organization_id, role_id, _BASE)
+    post_id = await factories.seed_post(cur, _OCDID, organization_id, role_id, _BASE)
     await cur.execute(
         """
         INSERT INTO memberships

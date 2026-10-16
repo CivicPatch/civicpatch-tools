@@ -32,7 +32,7 @@ from shared.utils.statuses import ActivityType, ChangesetKind
 from core.roster_changes import UNCHANGED_NOTE, ChangeCounts
 from core.source_sites import SiteIndex
 from lib.csv import parse_csv
-from database import activity, changeset_batches, dismissals, divisions, organizations, post_listings, posts
+from database import activity, changeset_batches, dismissals, divisions, organizations, post_listings
 from database.database import get_pool
 from database.publications import publish_attributions
 from services import publish
@@ -174,7 +174,7 @@ async def _seed_open_membership(name: str, source_labels: list[str]) -> None:
         org = await organizations.find_or_create(cur, _OCDID)
         division = "ocd-division/country:us/state:zz/place:zz_sheet_test"
         await divisions.find_or_create(cur, division, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "select-board-chair", division)
+        post_id = await factories.seed_post(cur, _OCDID, org, "select-board-chair", division)
         await cur.execute(
             """
             INSERT INTO memberships

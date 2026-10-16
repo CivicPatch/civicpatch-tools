@@ -16,7 +16,7 @@ import pytest_asyncio
 
 from core.projection.membership_details import MembershipSource
 from tests.integration.factories import SeededMembership
-from database import divisions, organizations, posts
+from database import divisions, organizations
 from database.database import get_pool
 from database.source_records import insert_source_records
 from schemas.common import Identity, UserRole
@@ -129,7 +129,7 @@ async def _seed_person(
         )
         org = await organizations.find_or_create(cur, jurisdiction_ocdid)
         await divisions.find_or_create(cur, base, jurisdiction_ocdid)
-        post_id = await posts.find_or_create(cur, jurisdiction_ocdid, org, post_slug, base)
+        post_id = await factories.seed_post(cur, jurisdiction_ocdid, org, post_slug, base)
         await factories.bind_membership(
             cur,
             SeededMembership(person_id=person_id, sources=[MembershipSource(note=label)]),

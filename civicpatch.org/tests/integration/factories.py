@@ -19,9 +19,10 @@ import uuid
 
 from pydantic import BaseModel
 
+from core.projection.facts import PostKey
 from core.projection.membership_details import MembershipSource
 from shared.utils.membership_ids import membership_id
-from database import memberships, organizations, projection
+from database import memberships, organizations, posts, projection
 from database.changesets import create_roster_edit_changeset, register_scrape_changeset
 from database.database import get_pool
 from database.pipeline_runs import register_run, update_pipeline_run_status
@@ -172,6 +173,14 @@ async def bind_membership(
     row = await cur.fetchone()
     assert row is not None
     return row[0]
+
+
+async def seed_post(
+    cur, jurisdiction_ocdid: str, organization_id: str, role_id: str, division_ocdid: str
+) -> str:
+    """Make sure this post exists, as the rebuild would mint it. Returns its id."""
+    await posts.create_if_absent(cur, jurisdiction_ocdid, organization_id, role_id, division_ocdid)
+    return PostKey(organization_id=organization_id, role_id=role_id, division_ocdid=division_ocdid).post_id
 
 
 async def default_organization(cur, jurisdiction_ocdid: str) -> str:
