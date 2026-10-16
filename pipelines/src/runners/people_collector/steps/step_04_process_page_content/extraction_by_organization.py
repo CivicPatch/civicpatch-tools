@@ -10,7 +10,7 @@ from runners.people_collector.utils.organization_terms import (
     memberships_in,
 )
 from services.open_router.prompts import PromptOrganization
-from shared.schemas import KnownOrganization
+from shared.schemas import PLACEHOLDER_ORGANIZATION_NAME, KnownOrganization
 
 
 class ExtractionScope(BaseModel):
@@ -38,11 +38,12 @@ def extraction_scopes(
     memberships: List[ExpectedMembership],
     covers: List[str] | None = None,
 ) -> List[ExtractionScope]:
-    """One run per organization the page covers; a lone organization runs unscoped.
-    `covers` None or empty means unknown, so every organization runs."""
+    """One run per organization the page covers, a lone one included: unscoped, it stamped a
+    county's sheriff into its board. `covers` None or empty means unknown, so every organization runs."""
     if not organizations:
         return [ExtractionScope()]
-    if len(organizations) == 1:
+    if len(organizations) == 1 and organizations[0].name == PLACEHOLDER_ORGANIZATION_NAME:
+        # The placeholder stands for the whole government, so scoping to it would narrow nothing.
         return [ExtractionScope(organization_id=organizations[0].id)]
     named = [organization for organization in organizations if organization.name in (covers or [])]
     return [

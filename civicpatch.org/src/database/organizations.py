@@ -1,9 +1,10 @@
 from database.database import get_pool
+from shared.schemas import PLACEHOLDER_ORGANIZATION_NAME
 
 # The name a jurisdiction's first body is created with. Generic because the ocdid is:
 # `…/place:berlin/government` says nothing about city vs township. Only a starting name —
 # which body is the default is `meta_is_default`, so this one can be renamed.
-DEFAULT_ORGANIZATION_NAME = "Government"
+DEFAULT_ORGANIZATION_NAME = PLACEHOLDER_ORGANIZATION_NAME
 
 
 async def ensure_defaults_exist(jurisdiction_ocdids: list[str]) -> None:

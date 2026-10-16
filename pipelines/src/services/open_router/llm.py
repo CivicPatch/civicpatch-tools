@@ -20,11 +20,9 @@ _CHARS_PER_TOKEN = 4
 # query string for 92,669 chars and took 734 SECONDS before failing JSON validation — then
 # retried, 5 times over.
 #
-# Sized off real traffic, not the cap: the largest genuine response across 88 recorded
-# runs is 3,314 chars (~828 tokens) and the median is 953 chars. 4,096 is ~5x the largest
-# real answer while cutting that 734s runaway to roughly 130s.
-# It does not make a looping call succeed — it makes it fail fast and cheap.
-_MAX_OUTPUT_TOKENS = 4_096
+# The cap counts reasoning too, and v4-flash reasons well past 4,096 before a ~1,000-token
+# answer: at 4,096, 12% of relevance calls ran out mid-thought and returned no content.
+_MAX_OUTPUT_TOKENS = 16_384
 # Scrapes keep 0.2. Extraction gains nothing from sampling diversity, but two things here
 # depend on it: with_retry treats a malformed-JSON ValidationError as retryable, which only
 # helps if the retry can draw a different sample, and greedy decoding is *more* prone to the

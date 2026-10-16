@@ -317,6 +317,7 @@ def create_process_page_content_step(required_data: int) -> ProcessPageContentSt
 
 def _resolve_candidate_urls(
     response: RelevantPageResponseSchema,
+    page_url: str,
     content: str,
     known_roles: list[str],
     config_name: Optional[str],
@@ -324,10 +325,10 @@ def _resolve_candidate_urls(
     logger,
 ) -> Tuple[list[str], Optional[dict]]:
     if response.relevant_urls:
+        # The model sometimes shortens a link to its path, which has no host to keep it on the site.
+        urls = [urljoin(page_url, url) for url in response.relevant_urls]
         texts = anchor_texts(content)
-        return response.relevant_urls, {
-            url: (None, texts.get(url_utils.canonical_url(url))) for url in response.relevant_urls
-        }
+        return urls, {url: (None, texts.get(url_utils.canonical_url(url))) for url in urls}
     combined_designations = designations + known_roles  # token-exact matching
     roles = known_roles + jurisdiction_name_suffix(config_name)  # substring matching
     heuristic_urls = find_heuristic_urls(content, combined_designations, roles=roles)
@@ -396,7 +397,7 @@ def apply_relevance(
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
 
     candidate_urls, url_comments = _resolve_candidate_urls(
-        response, content, known_roles, context.data.config.name, designations, logger
+        response, page_to_process.url, content, known_roles, context.data.config.name, designations, logger
     )
     if candidate_urls:
         frontier = add_relevant_urls(

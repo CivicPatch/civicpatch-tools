@@ -67,3 +67,17 @@ def test_same_url_trailing_slash_before_a_query():
 
 def test_same_url_keeps_distinct_queries_apart():
     assert not url_utils.same_url("https://example.com/p?x=1", "https://example.com/p?x=2")
+
+
+def test_same_domain_accepts_a_bare_domain_or_a_url_on_either_side():
+    assert url_utils.same_domain("www.nederlandco.gov", "https://nederlandco.gov/1231/Board-of-Trustees")
+    assert url_utils.same_domain("https://www.nederlandco.gov/1231/Board-of-Trustees", "nederlandco.gov/1490")
+
+
+def test_same_domain_rejects_another_host():
+    assert not url_utils.same_domain("seattle.gov", "https://evilseattle.gov/council")
+    assert not url_utils.same_domain("seattle.gov", "https://seattle.gov.example.com/council")
+
+
+def test_same_domain_rejects_a_link_with_no_host():
+    assert not url_utils.same_domain("https://townofrowley.net/", "/board-selectmen")

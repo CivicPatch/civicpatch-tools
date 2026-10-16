@@ -195,6 +195,10 @@ class Post(BaseModel):
     meta_is_tracked: bool = True
 
 
+# The body cp.org creates before a government form names the real ones.
+PLACEHOLDER_ORGANIZATION_NAME = "Government"
+
+
 class KnownOrganization(BaseModel):
     """A body cp.org already holds, with its posts — `GET /api/v1/organizations/{ocdid}`.
 

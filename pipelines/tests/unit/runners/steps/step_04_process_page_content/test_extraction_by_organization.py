@@ -1,4 +1,4 @@
-"""One extraction per organization, stamped with its id; unscoped unless there are organizations to tell apart."""
+"""One extraction per organization, stamped with its id; unscoped only with no organizations or the lone placeholder."""
 
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -22,7 +22,7 @@ from runners.people_collector.steps.step_04_process_page_content.process_page_co
     collect_page_records,
     covered_organization_ids,
 )
-from shared.schemas import KnownOrganization, Post
+from shared.schemas import PLACEHOLDER_ORGANIZATION_NAME, KnownOrganization, Post
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
 pytestmark = pytest.mark.unit
@@ -113,10 +113,20 @@ def test_no_organizations_is_one_unscoped_run():
     assert scope.prompt_organization is None
 
 
-def test_one_organization_runs_unscoped_but_is_stamped_with_its_id():
+def test_one_organization_runs_scoped_to_it():
     [scope] = extraction_scopes([_COUNCIL], [])
 
     assert scope.organization_id == "council"
+    assert scope.prompt_organization is not None
+    assert scope.prompt_organization.name == "City Council"
+
+
+def test_a_lone_placeholder_organization_runs_unscoped_but_is_stamped_with_its_id():
+    placeholder = KnownOrganization(id="placeholder", name=PLACEHOLDER_ORGANIZATION_NAME)
+
+    [scope] = extraction_scopes([placeholder], [])
+
+    assert scope.organization_id == "placeholder"
     assert scope.prompt_organization is None
 
 
@@ -183,13 +193,13 @@ async def test_an_organization_failing_the_heuristics_twice_does_not_discard_the
 
 
 @pytest.mark.asyncio
-async def test_a_single_organization_sends_the_unscoped_prompt():
+async def test_a_single_organization_sends_a_prompt_scoped_to_it():
     run_prompt = AsyncMock(return_value=_answer(("Rob Saka", "Council Member District 1")))
 
     with patch(_RUN_PROMPT, new=run_prompt):
         extraction = await _collect([_COUNCIL])
 
-    assert "TARGET BODY" not in run_prompt.await_args.args[2]
+    assert "hold a post in City Council" in run_prompt.await_args.args[2]
     assert _stamps(extraction.records) == {"Rob Saka": "council"}
 
 
